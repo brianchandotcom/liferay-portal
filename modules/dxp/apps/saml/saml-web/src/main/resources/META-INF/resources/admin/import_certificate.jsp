@@ -54,7 +54,7 @@ if (Validator.isNotNull(tempFileName)) {
 					'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/admin/update_certificate"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /></liferay-portlet:resourceURL>',
 				'fileDescription': '*.p12 *.pfx',
 				'maxFileSize':
-					'<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
+					'<%= UploadServletRequestConfigurationProviderUtil.getMaxSize() %> B',
 				'multipleFiles': false,
 				'namespace': '<portlet:namespace />',
 				'tempFileURL':

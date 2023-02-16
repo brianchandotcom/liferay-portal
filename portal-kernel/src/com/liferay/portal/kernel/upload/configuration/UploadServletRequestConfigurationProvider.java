@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.upload;
+package com.liferay.portal.kernel.upload.configuration;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -20,7 +20,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Pei-Jung Lan
  */
 @ProviderType
-public interface UploadServletRequestConfigurationHelper {
+public interface UploadServletRequestConfigurationProvider {
 
 	public long getMaxSize();
 

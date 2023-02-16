@@ -15,7 +15,7 @@
 package com.liferay.upload.web.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
+import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.upload.UniqueFileNameProvider;
@@ -43,7 +43,7 @@ public class DefaultUniqueFileNameProvider implements UniqueFileNameProvider {
 
 		while (predicate.test(uniqueFileName)) {
 			if (tries >=
-					_uploadServletRequestConfigurationHelper.getMaxTries()) {
+					_uploadServletRequestConfigurationProvider.getMaxTries()) {
 
 				throw new PortalException(
 					"Unable to get a unique file name for " + baseFileName);
@@ -62,7 +62,7 @@ public class DefaultUniqueFileNameProvider implements UniqueFileNameProvider {
 	private File _file;
 
 	@Reference
-	private UploadServletRequestConfigurationHelper
-		_uploadServletRequestConfigurationHelper;
+	private UploadServletRequestConfigurationProvider
+		_uploadServletRequestConfigurationProvider;
 
 }

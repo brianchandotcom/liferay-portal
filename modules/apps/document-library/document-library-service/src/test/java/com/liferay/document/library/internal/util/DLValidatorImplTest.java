@@ -20,7 +20,7 @@ import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
+import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -57,11 +57,11 @@ public class DLValidatorImplTest {
 
 		dlValidatorImpl.setGroupLocalService(_groupLocalService);
 
-		_uploadServletRequestConfigurationHelper = Mockito.mock(
-			UploadServletRequestConfigurationHelper.class);
+		_uploadServletRequestConfigurationProvider = Mockito.mock(
+			UploadServletRequestConfigurationProvider.class);
 
 		dlValidatorImpl.setUploadServletRequestConfigurationHelper(
-			_uploadServletRequestConfigurationHelper);
+			_uploadServletRequestConfigurationProvider);
 
 		_dlValidator = dlValidatorImpl;
 	}
@@ -122,7 +122,7 @@ public class DLValidatorImplTest {
 	@Test
 	public void testMaxAllowableSizeMimeTypeSizeLimit() throws Exception {
 		Mockito.when(
-			_uploadServletRequestConfigurationHelper.getMaxSize()
+			_uploadServletRequestConfigurationProvider.getMaxSize()
 		).thenReturn(
 			15L
 		);
@@ -152,7 +152,7 @@ public class DLValidatorImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_uploadServletRequestConfigurationHelper.getMaxSize()
+			_uploadServletRequestConfigurationProvider.getMaxSize()
 		).thenReturn(
 			10L
 		);
@@ -207,7 +207,7 @@ public class DLValidatorImplTest {
 	private DLSizeLimitManagedServiceFactory _dlSizeLimitManagedServiceFactory;
 	private DLValidator _dlValidator;
 	private GroupLocalService _groupLocalService;
-	private UploadServletRequestConfigurationHelper
-		_uploadServletRequestConfigurationHelper;
+	private UploadServletRequestConfigurationProvider
+		_uploadServletRequestConfigurationProvider;
 
 }

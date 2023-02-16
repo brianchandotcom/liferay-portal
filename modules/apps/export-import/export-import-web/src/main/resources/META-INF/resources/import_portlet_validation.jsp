@@ -71,7 +71,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
 
 			'maxFileSize':
-				'<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
+				'<%= UploadServletRequestConfigurationProviderUtil.getMaxSize() %> B',
 			'metadataContainer': '#<portlet:namespace />commonFileMetadataContainer',
 			'metadataExplanationContainer':
 				'#<portlet:namespace />metadataExplanationContainer',

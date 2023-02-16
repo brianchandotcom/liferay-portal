@@ -63,7 +63,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 				'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
 
 			'maxFileSize':
-				'<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
+				'<%= UploadServletRequestConfigurationProviderUtil.getMaxSize() %> B',
 			'metadataContainer': '#<portlet:namespace />commonFileMetadataContainer',
 			'metadataExplanationContainer':
 				'#<portlet:namespace />metadataExplanationContainer',

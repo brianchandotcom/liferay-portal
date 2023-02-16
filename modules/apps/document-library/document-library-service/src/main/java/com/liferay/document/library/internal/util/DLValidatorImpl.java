@@ -31,7 +31,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
+import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
@@ -322,11 +322,11 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	protected void setUploadServletRequestConfigurationHelper(
-		UploadServletRequestConfigurationHelper
-			uploadServletRequestConfigurationHelper) {
+		UploadServletRequestConfigurationProvider
+			uploadServletRequestConfigurationProvider) {
 
-		_uploadServletRequestConfigurationHelper =
-			uploadServletRequestConfigurationHelper;
+		_uploadServletRequestConfigurationProvider =
+			uploadServletRequestConfigurationProvider;
 	}
 
 	private long _getCompanyId(long groupId) {
@@ -341,7 +341,7 @@ public final class DLValidatorImpl implements DLValidator {
 
 	private long _getGlobalMaxAllowableSize(long companyId, long groupId) {
 		return _min(
-			_uploadServletRequestConfigurationHelper.getMaxSize(),
+			_uploadServletRequestConfigurationProvider.getMaxSize(),
 			_min(
 				_dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(
 					companyId),
@@ -423,7 +423,7 @@ public final class DLValidatorImpl implements DLValidator {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private UploadServletRequestConfigurationHelper
-		_uploadServletRequestConfigurationHelper;
+	private UploadServletRequestConfigurationProvider
+		_uploadServletRequestConfigurationProvider;
 
 }

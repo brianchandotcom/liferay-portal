@@ -12,32 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.kernel.upload;
+package com.liferay.portal.kernel.upload.configuration;
 
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Pei-Jung Lan
  */
-public class UploadServletRequestConfigurationHelperUtil {
+public class UploadServletRequestConfigurationProviderUtil {
 
 	public static long getMaxSize() {
-		return _uploadServletRequestConfigurationHelper.getMaxSize();
+		return _uploadServletRequestConfigurationProvider.getMaxSize();
 	}
 
 	public static long getMaxTries() {
-		return _uploadServletRequestConfigurationHelper.getMaxTries();
+		return _uploadServletRequestConfigurationProvider.getMaxTries();
 	}
 
 	public static String getTempDir() {
-		return _uploadServletRequestConfigurationHelper.getTempDir();
+		return _uploadServletRequestConfigurationProvider.getTempDir();
 	}
 
-	private static volatile UploadServletRequestConfigurationHelper
-		_uploadServletRequestConfigurationHelper =
+	private static volatile UploadServletRequestConfigurationProvider
+		_uploadServletRequestConfigurationProvider =
 			ServiceProxyFactory.newServiceTrackedInstance(
-				UploadServletRequestConfigurationHelper.class,
-				UploadServletRequestConfigurationHelperUtil.class,
-				"_uploadServletRequestConfigurationHelper", false);
+				UploadServletRequestConfigurationProvider.class,
+				UploadServletRequestConfigurationProviderUtil.class,
+				"_uploadServletRequestConfigurationProvider", false);
 
 }

@@ -184,7 +184,6 @@ public class LDAPFormMVCActionCommand extends BaseFormMVCActionCommand {
 		String[] orderedLdapServerIds = orderedLdapServerIdsString.split(",");
 
 		for (int i = 0; i < orderedLdapServerIds.length; i++) {
-			int authServerPriority = i;
 			long ldapServerId = GetterUtil.getLong(orderedLdapServerIds[i]);
 
 			for (Dictionary<String, Object> dictionary :
@@ -198,8 +197,7 @@ public class LDAPFormMVCActionCommand extends BaseFormMVCActionCommand {
 					continue;
 				}
 
-				dictionary.put(
-					LDAPConstants.AUTH_SERVER_PRIORITY, authServerPriority);
+				dictionary.put(LDAPConstants.AUTH_SERVER_PRIORITY, i);
 
 				_ldapServerConfigurationProvider.updateProperties(
 					companyId,

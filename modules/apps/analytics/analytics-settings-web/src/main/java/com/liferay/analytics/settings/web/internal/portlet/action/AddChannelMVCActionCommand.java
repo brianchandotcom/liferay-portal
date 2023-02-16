@@ -19,7 +19,6 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -247,24 +246,19 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 	}
 
 	private void _updateTypeSettingsProperties(String json) throws Exception {
-		JSONArray channelsJSONArray = _jsonFactory.createJSONArray(json);
+		for (Object channelObject : _jsonFactory.createJSONArray(json)) {
+			JSONObject channelJSONObject = (JSONObject)channelObject;
 
-		for (int i = 0; i < channelsJSONArray.length(); i++) {
-			JSONObject channelJSONObject = channelsJSONArray.getJSONObject(i);
-
-			for (Object object :
+			for (Object dataSourceObject :
 					channelJSONObject.getJSONArray("dataSources")) {
 
-				JSONObject dataSourceJSONObject = (JSONObject)object;
+				JSONObject dataSourceJSONObject = (JSONObject)dataSourceObject;
 
-				JSONArray groupIdsJSONArray = dataSourceJSONObject.getJSONArray(
-					"groupIds");
-
-				for (Object groupIdObject : groupIdsJSONArray) {
-					String groupId = String.valueOf(groupIdObject);
+				for (Object groupIdObject :
+						dataSourceJSONObject.getJSONArray("groupIds")) {
 
 					Group group = groupLocalService.fetchGroup(
-						GetterUtil.getLong(groupId));
+						GetterUtil.getLong(groupIdObject));
 
 					UnicodeProperties typeSettingsUnicodeProperties =
 						group.getTypeSettingsProperties();

@@ -765,7 +765,12 @@ public class AnalyticsConfigurationRegistryImpl
 
 			if (GetterUtil.getBoolean(dictionary.get("syncAllContacts"))) {
 				if (!GetterUtil.getBoolean(
-						dictionary.get("previousSyncAllContacts"))) {
+						dictionary.get("previousSyncAllContacts")) ||
+					!Arrays.equals(
+						previousSyncedContactFieldNames,
+						syncedContactFieldNames) ||
+					!Arrays.equals(
+						previousSyncedUserFieldNames, syncedUserFieldNames)) {
 
 					_syncContacts(companyId);
 				}

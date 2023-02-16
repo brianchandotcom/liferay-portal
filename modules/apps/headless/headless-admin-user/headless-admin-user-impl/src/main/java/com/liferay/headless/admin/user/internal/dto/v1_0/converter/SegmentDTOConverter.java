@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.segments.model.SegmentsEntry",
-	service = {DTOConverter.class, SegmentDTOConverter.class}
+	service = DTOConverter.class
 )
 public class SegmentDTOConverter
 	implements DTOConverter<SegmentsEntry, Segment> {

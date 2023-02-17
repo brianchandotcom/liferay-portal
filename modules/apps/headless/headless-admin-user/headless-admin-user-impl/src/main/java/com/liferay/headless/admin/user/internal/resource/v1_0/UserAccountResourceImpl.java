@@ -97,6 +97,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -565,6 +566,14 @@ public class UserAccountResourceImpl
 			postAccountUserAccountByExternalReferenceCodeByEmailAddress(
 				externalReferenceCode, emailAddress);
 		}
+	}
+
+	@Override
+	public void postUserAccountImage(Long id, MultipartBody multipartBody)
+		throws Exception {
+
+		_userService.updatePortrait(
+			id, multipartBody.getBinaryFileAsBytes("image"));
 	}
 
 	@Override

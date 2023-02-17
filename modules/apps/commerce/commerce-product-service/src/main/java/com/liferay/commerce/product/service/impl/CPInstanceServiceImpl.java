@@ -327,14 +327,12 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			Sort sort)
 		throws PortalException {
 
-		List<CommerceCatalog> commerceCatalogs =
-			_commerceCatalogService.getCommerceCatalogs(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
 		return cpInstanceLocalService.searchCPInstances(
 			companyId,
 			TransformUtil.transformToLongArray(
-				commerceCatalogs, CommerceCatalog::getGroupId),
+				_commerceCatalogService.getCommerceCatalogs(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				CommerceCatalog::getGroupId),
 			keywords, status, start, end, sort);
 	}
 

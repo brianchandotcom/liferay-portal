@@ -19,8 +19,6 @@ import com.deque.html.axecore.results.Rule;
 import com.deque.html.axecore.selenium.AxeBuilder;
 import com.deque.html.axecore.selenium.AxeReporter;
 
-import com.liferay.poshi.core.PoshiContext;
-import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.CharPool;
 import com.liferay.poshi.core.util.FileUtil;
@@ -1417,7 +1415,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public String getTestName() {
-		return PoshiContext.getTestCaseNamespacedClassCommandName();
+		return _testName;
 	}
 
 	@Override
@@ -1734,14 +1732,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isTestName(String testName) {
-		String classCommandName =
-			PoshiContext.getTestCaseNamespacedClassCommandName();
-
-		classCommandName =
-			PoshiGetterUtil.getClassCommandNameFromNamespacedClassCommandName(
-				classCommandName);
-
-		if (testName.equals(classCommandName)) {
+		if (testName.equals(getTestName())) {
 			return true;
 		}
 
@@ -2526,6 +2517,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public void setPrimaryTestSuiteName(String primaryTestSuiteName) {
 		_primaryTestSuiteName = primaryTestSuiteName;
+	}
+
+	public void setTestName(String testName) {
+		_testName = testName;
 	}
 
 	@Override
@@ -4660,6 +4655,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	private final Stack<WebElement> _frameWebElements = new Stack<>();
 	private int _navigationBarHeight = 120;
 	private String _primaryTestSuiteName;
+	private String _testName;
 	private int _totalPauseDuration;
 	private final WebDriver _webDriver;
 

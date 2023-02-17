@@ -444,6 +444,8 @@ public interface LiferaySelenium {
 
 	public void setPrimaryTestSuiteName(String primaryTestSuiteName);
 
+	public void setTestName(String testName);
+
 	public void setTimeout(String timeout);
 
 	public void setTimeoutImplicit(String timeout);

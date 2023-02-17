@@ -324,16 +324,7 @@ public class UpgradeReport {
 
 					})));
 
-		Map<String, Map<String, Integer>> sortedErrors = new LinkedHashMap<>(
-			entrys.size());
-
 		for (Map.Entry<String, Map<String, Integer>> entry : entrys) {
-			sortedErrors.put(entry.getKey(), entry.getValue());
-		}
-
-		for (Map.Entry<String, Map<String, Integer>> entry :
-				sortedErrors.entrySet()) {
-
 			sb.append("Class name: ");
 			sb.append(entry.getKey());
 			sb.append(StringPool.NEW_LINE);

@@ -11,15 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 export interface MultiSelectItem {
-    label: string;
-    value: string;
+	label: string;
+	value: string;
 }
 export interface ValidatableMultiSelectItem extends MultiSelectItem {
-    errorMessage?: string;
+	errorMessage?: string;
 }
 export interface InputGroup {
-    accountRoles: ValidatableMultiSelectItem[];
-    emailAddresses: ValidatableMultiSelectItem[];
-    id: string;
+	accountRoles: ValidatableMultiSelectItem[];
+	emailAddresses: ValidatableMultiSelectItem[];
+	id: string;
 }

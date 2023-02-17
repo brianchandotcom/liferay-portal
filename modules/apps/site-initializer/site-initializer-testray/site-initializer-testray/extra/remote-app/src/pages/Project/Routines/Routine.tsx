@@ -113,7 +113,9 @@ const Routine = () => {
 					columns: [
 						{
 							key: 'status',
-							render: (_, {dueStatus, promoted}) => {
+							render: (_, {promoted, tasks}: TestrayBuild) => {
+								const [task] = tasks;
+
 								return (
 									<>
 										{promoted && (
@@ -130,21 +132,18 @@ const Routine = () => {
 											</span>
 										)}
 
-										<span
-											title={
-												(BUILD_STATUS as any)[dueStatus]
-													?.label || ''
-											}
-										>
-											<ClayIcon
-												className={
-													(BUILD_STATUS as any)[
-														dueStatus
-													]?.color
-												}
-												symbol="circle"
-											/>
-										</span>
+										{task && (
+											<span title={task.dueStatus.name}>
+												<ClayIcon
+													className={
+														(BUILD_STATUS as any)[
+															task.dueStatus.key
+														]?.color
+													}
+													symbol="circle"
+												/>
+											</span>
+										)}
 									</>
 								);
 							},

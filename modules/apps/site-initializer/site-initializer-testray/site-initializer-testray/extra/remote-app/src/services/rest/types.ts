@@ -75,6 +75,7 @@ export type UserRole = {
 
 export type TestrayBuild = {
 	active: boolean;
+	buildToTasks: TestrayTask[];
 	caseResultBlocked: string;
 	caseResultFailed: string;
 	caseResultInProgress: string;
@@ -98,6 +99,7 @@ export type TestrayBuild = {
 	r_projectToBuilds_c_project?: TestrayProject;
 	r_routineToBuilds_c_routine?: TestrayRoutine;
 	routine?: TestrayRoutine;
+	tasks: TestrayTask[];
 	template: boolean;
 	templateTestrayBuildId: string;
 };

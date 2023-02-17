@@ -12,10 +12,8 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayChart from '@clayui/charts';
 import {useRef} from 'react';
-import {useNavigate} from 'react-router-dom';
 
 import Container from '../../../../components/Layout/Container';
 import QATable from '../../../../components/Table/QATable';
@@ -24,32 +22,23 @@ import i18n from '../../../../i18n';
 import {TestrayBuild, TestrayTask} from '../../../../services/rest';
 import dayjs from '../../../../util/date';
 import {getDonutLegend} from '../../../../util/graph';
+import BuildAlertBar from './BuildAlertBar';
 
 type BuildOverviewProps = {
 	testrayBuild: TestrayBuild;
 	testrayTask?: TestrayTask;
 };
 
-const BuildOverview: React.FC<BuildOverviewProps> = ({
-	testrayBuild,
-	testrayTask,
-}) => {
-	const navigate = useNavigate();
-
+const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 	const ref = useRef<any>();
+
+	const [testrayTask] = testrayBuild?.tasks as TestrayTask[];
 
 	const totalTestCasesGroup = useCaseResultGroupBy(testrayBuild.id);
 
 	return (
 		<>
-			{!testrayTask && (
-				<ClayButton
-					className="mb-4"
-					onClick={() => navigate('testflow/create')}
-				>
-					{i18n.translate('analyze')}
-				</ClayButton>
-			)}
+			<BuildAlertBar testrayTask={testrayTask} />
 
 			<Container collapsable title={i18n.translate('details')}>
 				<QATable

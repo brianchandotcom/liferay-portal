@@ -59,12 +59,13 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 				template,
 				templateTestrayBuildId,
 			}),
-			nestedFields: 'productVersion',
+			nestedFields: 'buildToTasks,productVersion',
 			transformData: (testrayBuild) => ({
 				...testrayBuild,
 				creator: testrayBuild?.creator || {},
 				productVersion:
 					testrayBuild?.r_productVersionToBuilds_c_productVersion,
+				tasks: testrayBuild.buildToTasks ?? [],
 			}),
 			uri: 'builds',
 		});

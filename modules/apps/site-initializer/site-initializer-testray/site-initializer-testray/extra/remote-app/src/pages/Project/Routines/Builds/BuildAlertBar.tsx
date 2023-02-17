@@ -71,6 +71,17 @@ const alertProperties: AlertProperties = {
 const BuildAlertBar: React.FC<BuildAlertBarProps> = ({testrayTask}) => {
 	const navigate = useNavigate();
 
+	if (!testrayTask) {
+		return (
+			<ClayButton
+				className="mb-4"
+				onClick={() => navigate('testflow/create')}
+			>
+				{i18n.translate('analyze')}
+			</ClayButton>
+		);
+	}
+
 	const alertProperty = alertProperties[testrayTask.dueStatus.key];
 
 	if (!alertProperty) {

@@ -33,6 +33,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
 import com.liferay.portal.search.internal.facet.FacetPostProcessorImpl;
 import com.liferay.portal.search.internal.permission.DefaultSearchResultPermissionFilter;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -307,9 +310,13 @@ public abstract class BasePermissionFilteredPaginationTestCase
 			indexerRegistry, permissionChecker, props,
 			defaultSearchResultPermissionFilterConfiguration);
 
+		SearchRequestBuilderFactory searchRequestBuilderFactory =
+			_getSearchRequestBuilderFactory();
+
 		return new DefaultSearchResultPermissionFilter(
 			new FacetPostProcessorImpl(), indexerRegistry, permissionChecker,
 			props, relatedEntryIndexerRegistry, this::doSearch,
+			searchRequestBuilderFactory,
 			defaultSearchResultPermissionFilterConfiguration);
 	}
 
@@ -511,6 +518,42 @@ public abstract class BasePermissionFilteredPaginationTestCase
 
 	protected int permissionFilteredSearchResultAccurateCountThreshold;
 	protected int searchQueryResultWindowLimit;
+
+	private SearchRequestBuilderFactory _getSearchRequestBuilderFactory() {
+		SearchRequestBuilderFactory searchRequestBuilderFactory = Mockito.mock(
+			SearchRequestBuilderFactory.class);
+
+		SearchRequestBuilder searchRequestBuilder = Mockito.mock(
+			SearchRequestBuilder.class);
+
+		Mockito.when(
+			searchRequestBuilderFactory.builder(Mockito.any())
+		).thenReturn(
+			searchRequestBuilder
+		);
+
+		SearchRequest searchRequest = Mockito.mock(SearchRequest.class);
+
+		Mockito.when(
+			searchRequestBuilder.build()
+		).thenReturn(
+			searchRequest
+		);
+
+		Mockito.when(
+			searchRequest.getFrom()
+		).thenReturn(
+			0
+		);
+
+		Mockito.when(
+			searchRequest.getSize()
+		).thenReturn(
+			10
+		);
+
+		return searchRequestBuilderFactory;
+	}
 
 	private static final long _FILTERED_ENTRY_IDENTIFIER = 1000000;
 

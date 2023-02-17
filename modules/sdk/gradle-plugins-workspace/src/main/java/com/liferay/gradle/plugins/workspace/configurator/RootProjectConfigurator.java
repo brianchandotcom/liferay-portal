@@ -455,10 +455,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerPruneImage.setDescription("Prunes the Docker image.");
 		dockerPruneImage.setGroup(DOCKER_GROUP);
 
-		Property<Boolean> force = dockerPruneImage.getForce();
-
-		force.set(true);
-
 		dockerBuildImage.finalizedBy(PRUNE_DOCKER_IMAGE_TASK_NAME);
 
 		Project rootProject = project.getRootProject();
@@ -475,15 +471,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 					setProperty.add(dockerImageId);
 
-					Property<String> removeImageProperty =
-						dockerRemoveImage.getImageId();
-
-					removeImageProperty.set(dockerImageId);
-
-					Property<String> pruneImageProperty =
+					Property<String> dockerPruneImageIdProperty =
 						dockerPruneImage.getImageId();
 
-					pruneImageProperty.set(dockerImageId);
+					dockerPruneImageIdProperty.set(dockerImageId);
+
+					Property<String> dockerRemoveImageIdProperty =
+						dockerRemoveImage.getImageId();
+
+					dockerRemoveImageIdProperty.set(dockerImageId);
 				}
 
 			});

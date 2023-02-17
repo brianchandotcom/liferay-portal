@@ -1,0 +1,67 @@
+@component-name = "portal-solutions"
+definition {
+	property custom.properties = "feature.flag.LPS-165493=true";
+	property osgi.modules.includes = "site-initializer-raylife-ap";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Raylife AP";
+	var testSiteName = "Raylife AP";
+	var testSiteURL = "raylife-ap";
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+			User.firstLoginPG();
+		}
+		task ("Create a new Raylife AP Site") {
+			Site.openSitesAdmin();
+
+			Raylife.createRaylifeSite(siteName = "Raylife D2C");
+
+			Raylife.createRaylifeSite(siteName = "Raylife AP");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		RaylifeAP.tearDownCP();
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+    @description = "Verify if the user can swicth between the cards."
+	@priority = 3
+	test IfCanSwitchBetweenCards {
+
+        
+
+    }
+
+     @description = "Verify if the Agent can click NEXT to continue on the new Application flow"
+	@priority = 4
+	test IfNextButtonWorks {
+
+        
+
+    }
+
+    @description = "Verify if when the user selects a card, go to next page and click on 'Previous' button the card still selected (active)."
+	@priority = 4
+	test IfCardStillSelectedWhenUserGoToPreviousPage {
+
+        
+
+    }
+
+    @description = "Verify if the 'New Applications' button from the side-bar option 'Applications', works."
+	@priority = 5
+	test IfNewApplicationsFromSideBarWorks {
+
+        
+
+    }
+}

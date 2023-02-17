@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -66,8 +67,8 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 		throws Exception {
 
 		deleteUserGroup(
-			_userGroupResourceDTOConverter.getUserGroupId(
-				externalReferenceCode));
+			DTOConverterUtil.getModelPrimaryKey(
+				_userGroupResourceDTOConverter, externalReferenceCode));
 	}
 
 	@Override

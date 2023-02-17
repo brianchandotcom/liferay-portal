@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -78,8 +79,8 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 			contextCompany.getCompanyId(), emailAddress);
 
 		deleteAccountAccountRoleUserAccountAssociation(
-			_accountResourceDTOConverter.getAccountEntryId(
-				externalReferenceCode),
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, externalReferenceCode),
 			accountRoleId, user.getUserId());
 	}
 
@@ -91,10 +92,11 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 		throws Exception {
 
 		deleteAccountAccountRoleUserAccountAssociation(
-			_accountResourceDTOConverter.getAccountEntryId(
-				accountExternalReferenceCode),
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, accountExternalReferenceCode),
 			accountRoleId,
-			_userResourceDTOConverter.getUserId(externalReferenceCode));
+			DTOConverterUtil.getModelPrimaryKey(
+				_userResourceDTOConverter, externalReferenceCode));
 	}
 
 	@Override
@@ -104,8 +106,8 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 		throws Exception {
 
 		return getAccountAccountRolesPage(
-			_accountResourceDTOConverter.getAccountEntryId(
-				externalReferenceCode),
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, externalReferenceCode),
 			keywords, filter, pagination, sorts);
 	}
 
@@ -171,8 +173,8 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 		return Page.of(
 			transform(
 				_accountRoleLocalService.getAccountRoles(
-					_accountResourceDTOConverter.getAccountEntryId(
-						externalReferenceCode),
+					DTOConverterUtil.getModelPrimaryKey(
+						_accountResourceDTOConverter, externalReferenceCode),
 					user.getUserId()),
 				accountRole -> _toAccountRole(accountRole)));
 	}
@@ -187,9 +189,11 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 		return Page.of(
 			transform(
 				_accountRoleLocalService.getAccountRoles(
-					_accountResourceDTOConverter.getAccountEntryId(
+					DTOConverterUtil.getModelPrimaryKey(
+						_accountResourceDTOConverter,
 						accountExternalReferenceCode),
-					_userResourceDTOConverter.getUserId(externalReferenceCode)),
+					DTOConverterUtil.getModelPrimaryKey(
+						_userResourceDTOConverter, externalReferenceCode)),
 				accountRole -> _toAccountRole(accountRole)));
 	}
 
@@ -220,8 +224,8 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 		throws Exception {
 
 		return postAccountAccountRole(
-			_accountResourceDTOConverter.getAccountEntryId(
-				externalReferenceCode),
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, externalReferenceCode),
 			accountRole);
 	}
 
@@ -245,8 +249,8 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 			contextCompany.getCompanyId(), emailAddress);
 
 		postAccountAccountRoleUserAccountAssociation(
-			_accountResourceDTOConverter.getAccountEntryId(
-				externalReferenceCode),
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, externalReferenceCode),
 			accountRoleId, user.getUserId());
 	}
 
@@ -258,10 +262,11 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 		throws Exception {
 
 		postAccountAccountRoleUserAccountAssociation(
-			_accountResourceDTOConverter.getAccountEntryId(
-				accountExternalReferenceCode),
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, accountExternalReferenceCode),
 			accountRoleId,
-			_userResourceDTOConverter.getUserId(externalReferenceCode));
+			DTOConverterUtil.getModelPrimaryKey(
+				_userResourceDTOConverter, externalReferenceCode));
 	}
 
 	private AccountRole _toAccountRole(

@@ -20,6 +20,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
@@ -27,7 +28,6 @@ import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountEntityM
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -86,8 +87,8 @@ public class AccountResourceImpl
 		throws Exception {
 
 		deleteAccount(
-			_accountResourceDTOConverter.getAccountEntryId(
-				externalReferenceCode));
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, externalReferenceCode));
 	}
 
 	@Override
@@ -109,8 +110,8 @@ public class AccountResourceImpl
 		for (String externalReferenceCode : externalReferenceCodes) {
 			_accountEntryOrganizationRelLocalService.
 				deleteAccountEntryOrganizationRel(
-					_accountResourceDTOConverter.getAccountEntryId(
-						externalReferenceCode),
+					DTOConverterUtil.getModelPrimaryKey(
+						_accountResourceDTOConverter, externalReferenceCode),
 					organizationId);
 		}
 	}
@@ -126,8 +127,8 @@ public class AccountResourceImpl
 		throws Exception {
 
 		return getAccount(
-			_accountResourceDTOConverter.getAccountEntryId(
-				externalReferenceCode));
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, externalReferenceCode));
 	}
 
 	@Override
@@ -182,17 +183,13 @@ public class AccountResourceImpl
 	}
 
 	@NestedField(
-		parentClass = com.liferay.headless.admin.user.dto.v1_0.Organization.class,
-		value = "organizationAccounts"
+		parentClass = Organization.class, value = "organizationAccounts"
 	)
 	@Override
 	public Page<Account> getOrganizationAccountsPage(
 			String organizationId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
-
-		Organization organization = _organizationResourceDTOConverter.getObject(
-			organizationId);
 
 		return _getOrganizationAccountsPage(
 			Collections.emptyMap(),
@@ -203,7 +200,10 @@ public class AccountResourceImpl
 				booleanFilter.add(
 					new TermFilter(
 						"organizationIds",
-						String.valueOf(organization.getOrganizationId())),
+						String.valueOf(
+							DTOConverterUtil.getModelPrimaryKey(
+								_organizationResourceDTOConverter,
+								organizationId))),
 					BooleanClauseOccur.MUST);
 			},
 			search, filter, pagination, sorts);
@@ -268,8 +268,8 @@ public class AccountResourceImpl
 		for (String externalReferenceCode : externalReferenceCodes) {
 			_accountEntryOrganizationRelLocalService.
 				addAccountEntryOrganizationRel(
-					_accountResourceDTOConverter.getAccountEntryId(
-						externalReferenceCode),
+					DTOConverterUtil.getModelPrimaryKey(
+						_accountResourceDTOConverter, externalReferenceCode),
 					organizationId);
 		}
 	}

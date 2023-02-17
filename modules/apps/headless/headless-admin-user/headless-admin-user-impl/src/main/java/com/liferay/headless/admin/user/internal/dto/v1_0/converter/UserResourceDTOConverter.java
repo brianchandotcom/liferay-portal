@@ -101,12 +101,6 @@ public class UserResourceDTOConverter
 		return user;
 	}
 
-	public long getUserId(String externalReferenceCode) throws Exception {
-		User user = getObject(externalReferenceCode);
-
-		return user.getUserId();
-	}
-
 	@Override
 	public UserAccount toDTO(DTOConverterContext dtoConverterContext, User user)
 		throws Exception {

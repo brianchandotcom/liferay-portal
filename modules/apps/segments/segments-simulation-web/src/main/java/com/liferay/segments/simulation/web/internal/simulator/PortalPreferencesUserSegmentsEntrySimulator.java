@@ -86,7 +86,7 @@ public class PortalPreferencesUserSegmentsEntrySimulator
 		}
 
 		return TransformUtil.transformToLongArray(
-			Arrays.asList(simulatedSegmentsEntryIds), Long::valueOf);
+			Arrays.asList(simulatedSegmentsEntryIds), Long::parseLong);
 	}
 
 	@Override

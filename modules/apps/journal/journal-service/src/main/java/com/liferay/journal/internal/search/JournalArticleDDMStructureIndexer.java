@@ -117,14 +117,8 @@ public class JournalArticleDDMStructureIndexer implements DDMStructureIndexer {
 			actionableDynamicQuery.setPerformActionMethod(
 				(JournalArticleResource journalArticleResource) -> {
 					JournalArticle journalArticle =
-						_journalArticleLocalService.fetchJournalArticle(
+						_journalArticleLocalService.fetchLatestArticle(
 							journalArticleResource.getResourcePrimKey());
-
-					if (journalArticle == null) {
-						journalArticle =
-							_journalArticleLocalService.fetchLatestArticle(
-								journalArticleResource.getResourcePrimKey());
-					}
 
 					try {
 						indexer.reindex(journalArticle);

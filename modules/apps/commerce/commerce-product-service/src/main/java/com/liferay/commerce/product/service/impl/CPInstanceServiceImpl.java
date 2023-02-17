@@ -24,6 +24,7 @@ import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.base.CPInstanceServiceBaseImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,8 +41,6 @@ import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -332,14 +331,11 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			_commerceCatalogService.getCommerceCatalogs(
 				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		LongStream longStream = stream.mapToLong(CommerceCatalog::getGroupId);
-
-		long[] groupIds = longStream.toArray();
-
 		return cpInstanceLocalService.searchCPInstances(
-			companyId, groupIds, keywords, status, start, end, sort);
+			companyId,
+			TransformUtil.transformToLongArray(
+				commerceCatalogs, CommerceCatalog::getGroupId),
+			keywords, status, start, end, sort);
 	}
 
 	@Override

@@ -595,7 +595,7 @@ describe('Price', () => {
 
 			const incomingCPInstancePrice = {
 				cpInstance: {
-					prices: {
+					price: {
 						discountPercentage: '0',
 						discountPercentages: null,
 						finalPrice: 0,
@@ -646,7 +646,7 @@ describe('Price', () => {
 					listPrice.classList.contains('price-value-inactive')
 				).toBe(false);
 				expect(listPrice.innerHTML).toEqual(
-					incomingCPInstancePrice.cpInstance.prices.price
+					incomingCPInstancePrice.cpInstance.price.price
 				);
 			});
 		});

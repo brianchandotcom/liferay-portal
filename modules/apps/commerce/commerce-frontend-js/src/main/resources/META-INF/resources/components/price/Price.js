@@ -48,7 +48,7 @@ function Price({
 	const updatePrice = ({cpInstance}) =>
 		setActivePrice((currentPrice) => ({
 			...currentPrice,
-			...adaptLegacyPriceModel(cpInstance.prices),
+			...adaptLegacyPriceModel(cpInstance.price),
 		}));
 
 	useEffect(() => {

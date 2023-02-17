@@ -30,8 +30,10 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 	<liferay-util:include page="/user/user_display_data.jsp" servletContext="<%= application %>" />
 </div>
 
-<div class="form-group">
-	<div class="sheet-subtitle"><liferay-ui:message key="personal-information" /></div>
+<div aria-labelledby="<portlet:namespace />personalInformation" class="form-group" role="group">
+	<div class="sheet-subtitle" id="<portlet:namespace />personalInformation">
+		<liferay-ui:message key="personal-information" />
+	</div>
 
 	<liferay-util:include page="/user/personal_information.jsp" servletContext="<%= application %>" />
 </div>

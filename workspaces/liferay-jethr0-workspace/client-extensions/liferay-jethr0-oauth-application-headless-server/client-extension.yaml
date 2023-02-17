@@ -1,0 +1,3 @@
+liferay-jethr0-oauth-application-headless-server:
+    name: Liferay Jethr0 OAuth Application Headless Server
+    type: oAuthApplicationHeadlessServer

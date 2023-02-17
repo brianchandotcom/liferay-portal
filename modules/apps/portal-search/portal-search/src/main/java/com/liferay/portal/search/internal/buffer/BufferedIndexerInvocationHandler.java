@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
-import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.search.Bufferable;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
@@ -109,12 +108,6 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 
 			Long classPK = (Long)classedModel.getPrimaryKeyObj();
 
-			if (args[0] instanceof ResourcedModel) {
-				ResourcedModel resourcedModel = (ResourcedModel)args[0];
-
-				classPK = resourcedModel.getResourcePrimKey();
-			}
-
 			bufferRequest(
 				methodKey, classedModel.getModelClassName(), classPK,
 				indexerRequestBuffer);
@@ -138,22 +131,16 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			Long classPK = (Long)args[1];
 
 			try {
-				Object object = persistedModelLocalService.getPersistedModel(
-					classPK);
+				persistedModelLocalService.getPersistedModel(classPK);
 
-				if (object instanceof ResourcedModel) {
-					ResourcedModel resourcedModel = (ResourcedModel)object;
-
-					classPK = resourcedModel.getResourcePrimKey();
-				}
+				bufferRequest(
+					methodKey, className, classPK, indexerRequestBuffer);
 			}
 			catch (Exception exception) {
 				if (_log.isTraceEnabled()) {
 					_log.trace(exception);
 				}
 			}
-
-			bufferRequest(methodKey, className, classPK, indexerRequestBuffer);
 		}
 		else {
 			MethodKey methodKey = new MethodKey(

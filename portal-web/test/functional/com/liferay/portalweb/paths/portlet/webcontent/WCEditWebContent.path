@@ -120,12 +120,12 @@
 </tr>
 <tr>
 	<td>SELECT_FIELD_TRIGGER</td>
-	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//div[contains(@class,'select-field-trigger')]</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//..//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FIELD_TRIGGER_2</td>
-	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'select-field')]//div[contains(@class,'select-field-trigger')])[2]</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//..//div[contains(@class,'select-field')]//div[contains(@class,'select-field-trigger')])[2]</td>
 	<td></td>
 </tr>
 <tr>

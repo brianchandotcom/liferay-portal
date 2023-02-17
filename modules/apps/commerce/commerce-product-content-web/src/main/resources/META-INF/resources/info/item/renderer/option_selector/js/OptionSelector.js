@@ -14,22 +14,29 @@
 
 import {CommerceFrontendUtils} from 'commerce-frontend-js';
 
-import {CP_CONTENT_WEB_PORTLET_KEY} from './util/constants';
 import {updateProductFields} from './util/index';
 
 const {Events, FormUtils} = CommerceFrontendUtils;
 const {DDMFormHandler} = FormUtils;
 
-export default function ({actionURL, cpDefinitionId, namespace}) {
+export default function ({
+	accountId,
+	channelId,
+	cpDefinitionId,
+	namespace,
+	productId,
+	quantity,
+}) {
 	Liferay.componentReady('ProductOptions' + cpDefinitionId).then(
 		(DDMFormInstance) => {
 			if (DDMFormInstance) {
 				new DDMFormHandler({
 					DDMFormInstance,
-					actionURL,
-					cpDefinitionId,
+					accountId,
+					channelId,
 					namespace,
-					portletId: CP_CONTENT_WEB_PORTLET_KEY,
+					productId,
+					quantity,
 				});
 
 				Liferay.on(

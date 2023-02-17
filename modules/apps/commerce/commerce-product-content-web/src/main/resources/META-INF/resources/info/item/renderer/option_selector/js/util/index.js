@@ -56,18 +56,38 @@ export function updateProductFields(data) {
 		skuContainer,
 	].forEach(fillField);
 
-	stockQuantityContainer.innerHTML = cpInstance.stockQuantity
-		? sub(Liferay.Language.get('x-in-stock'), cpInstance.stockQuantity)
-		: '';
+	if (stockQuantityContainer) {
+		stockQuantityContainer.innerHTML = cpInstance.availability.stockQuantity
+			? sub(
+					Liferay.Language.get('x-in-stock'),
+					cpInstance.availability.stockQuantity
+			  )
+			: '';
+	}
 
-	document.querySelector(
+	const subscriptionInfoContainer = document.querySelector(
 		'[data-text-cp-instance-subscription-info]'
-	).innerHTML = cpInstance.subscriptionInfo || '';
-	document.querySelector(
-		'[data-text-cp-instance-delivery-subscription-info]'
-	).innerHTML = cpInstance.deliverySubscriptionInfo || '';
+	);
 
-	document.querySelector(
+	if (subscriptionInfoContainer) {
+		subscriptionInfoContainer.innerHTML = cpInstance.subscriptionInfo || '';
+	}
+
+	const deliverySubscriptionInfoContainer = document.querySelector(
+		'[data-text-cp-instance-delivery-subscription-info]'
+	);
+
+	if (deliverySubscriptionInfoContainer) {
+		deliverySubscriptionInfoContainer.innerHTML =
+			cpInstance.deliverySubscriptionInfo || '';
+	}
+
+	const incomingQuantityLabelContainer = document.querySelector(
 		'[data-text-cp-instance-incoming-quantity-label]'
-	).innerHTML = cpInstance.incomingQuantityLabel || '';
+	);
+
+	if (incomingQuantityLabelContainer) {
+		incomingQuantityLabelContainer.innerHTML =
+			cpInstance.incomingQuantityLabel || '';
+	}
 }

@@ -36,12 +36,13 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Set;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -170,15 +171,16 @@ public class UpdateRecordMVCResourceCommand extends BaseMVCResourceCommand {
 	private DDMFormValues _updateDDMFormValues(
 		DDMFormValues ddmFormValues, JSONObject jsonObject) {
 
-		ddmFormValues.setAvailableLocales(
-			Stream.of(
+		Set<Locale> locales = new HashSet<>();
+
+		for (String languageId :
 				JSONUtil.toStringArray(
-					jsonObject.getJSONArray("availableLanguageIds"))
-			).map(
-				LocaleUtil::fromLanguageId
-			).collect(
-				Collectors.toSet()
-			));
+					jsonObject.getJSONArray("availableLanguageIds"))) {
+
+			locales.add(LocaleUtil.fromLanguageId(languageId));
+		}
+
+		ddmFormValues.setAvailableLocales(locales);
 		ddmFormValues.setDefaultLocale(
 			LocaleUtil.fromLanguageId(
 				jsonObject.getString("defaultLanguageId")));

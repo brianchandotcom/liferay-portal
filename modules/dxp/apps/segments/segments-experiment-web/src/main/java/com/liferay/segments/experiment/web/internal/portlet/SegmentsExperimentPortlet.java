@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.version=3.0"
 	},
-	service = {Portlet.class, SegmentsExperimentPortlet.class}
+	service = Portlet.class
 )
 public class SegmentsExperimentPortlet extends MVCPortlet {
 }

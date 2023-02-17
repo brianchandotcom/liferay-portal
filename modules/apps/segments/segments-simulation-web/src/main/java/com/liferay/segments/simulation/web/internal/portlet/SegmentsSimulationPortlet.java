@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.version=3.0"
 	},
-	service = {Portlet.class, SegmentsSimulationPortlet.class}
+	service = Portlet.class
 )
 public class SegmentsSimulationPortlet extends MVCPortlet {
 }

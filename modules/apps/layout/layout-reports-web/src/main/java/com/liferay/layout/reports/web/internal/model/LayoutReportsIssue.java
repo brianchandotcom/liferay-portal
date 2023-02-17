@@ -14,7 +14,6 @@
 
 package com.liferay.layout.reports.web.internal.model;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -95,12 +94,13 @@ public class LayoutReportsIssue {
 	}
 
 	public JSONObject toJSONObject(
-		String configureLayoutSeoURL, String configurePagesSeoURL,
-		ResourceBundle resourceBundle) {
+			String configureLayoutSeoURL, String configurePagesSeoURL,
+			ResourceBundle resourceBundle)
+		throws Exception {
 
 		return JSONUtil.put(
 			"details",
-			TransformUtil.transformToArray(
+			JSONUtil.toJSONArray(
 				_details,
 				detail -> {
 					if (detail.getTotal() <= 0) {
@@ -110,8 +110,7 @@ public class LayoutReportsIssue {
 					return detail.toJSONObject(
 						configureLayoutSeoURL, configurePagesSeoURL,
 						resourceBundle);
-				},
-				JSONObject.class)
+				})
 		).put(
 			"key", _key.toString()
 		).put(

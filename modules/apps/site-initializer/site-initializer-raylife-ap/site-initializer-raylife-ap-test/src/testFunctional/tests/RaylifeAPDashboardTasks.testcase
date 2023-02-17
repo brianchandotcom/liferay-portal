@@ -43,6 +43,10 @@ definition {
 	@description = "LPS-152291 - Verify that when I click on the 'Review Eligibility Reports' subsection in Tasks, I am redirected to the 'Applications' section page"
 	@priority = 4
 	test ClickSubsectionApplicationsRedirectedToApplications {
+		property test.name.skip.portal.instance = "RaylifeAPDashboardTasks#ClickSubsectionApplicationsRedirectedToApplications";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+		
 		task ("Go to Raylife AP Site") {
 			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 		}
@@ -59,6 +63,10 @@ definition {
 	@description = "LPS-152292 - Verify if clicking on the 'Contact Expiring Policies' subsection in Tasks, takes me to the 'Policies' section page"
 	@priority = 4
 	test ClickSubsectionPoliciesRedirectedToPolicies {
+		property test.name.skip.portal.instance = "RaylifeAPDashboardTasks#ClickSubsectionPoliciesRedirectedToPolicies";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+		
 		task ("Go to Raylife AP Site") {
 			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 		}

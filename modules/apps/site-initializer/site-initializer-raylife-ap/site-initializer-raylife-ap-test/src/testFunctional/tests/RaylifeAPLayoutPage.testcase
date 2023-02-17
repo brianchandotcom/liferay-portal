@@ -44,6 +44,10 @@ definition {
 	@description = "LPS-151595 - Check if the left sidebar it should is expand is present"
 	@priority = "4"
 	test CanViewSideBarExpand {
+		property test.name.skip.portal.instance = "RaylifeAPLayoutPage#CanViewSideBarExpand";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		task ("Go to Raylife AP Site") {
 			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 		}

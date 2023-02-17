@@ -44,7 +44,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 <aui:form action="<%= deleteOrphanPortletsURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
 	<div class="alert alert-warning" role="alert">
 		<span class="alert-indicator">
-			<aui:icon image="warning-full" markupView="lexicon" />
+			<clay:icon
+				symbol="warning-full"
+			/>
 		</span>
 
 		<strong class="lead"><liferay-ui:message key="warning-colon" /></strong>
@@ -58,9 +60,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 			</c:otherwise>
 		</c:choose>
 
-		<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" data-dismiss="liferay-alert" type="button">
-			<aui:icon image="times" markupView="lexicon" />
-		</button>
+		<clay:button
+			aria-label='<%= LanguageUtil.get(request, "close") %>'
+			cssClass="close"
+			data-dismiss="liferay-alert"
+			displayType="unstyled"
+			icon="times"
+		/>
 	</div>
 
 	<liferay-ui:search-container

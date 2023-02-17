@@ -16,6 +16,7 @@ package com.liferay.wiki.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -66,7 +67,8 @@ public class WikiPageCTDisplayRenderer extends BaseCTDisplayRenderer<WikiPage> {
 
 	@Override
 	public String getTitle(Locale locale, WikiPage wikiPage) {
-		return wikiPage.getTitle();
+		return StringBundler.concat(
+			wikiPage.getTitle(), " (", wikiPage.getVersion(), ")");
 	}
 
 	@Override

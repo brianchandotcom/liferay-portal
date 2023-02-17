@@ -45,19 +45,6 @@ definition {
 	@description = "LPS-110903 - Alerts are not styled correctly"
 	@priority = 5
 	test IconCanDisplayTooltip {
-		task ("Given Clay Sample Portlet") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Page");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Page",
-				widgetName = "Clay Sample");
-
-			Navigator.gotoPage(pageName = "Clay Page");
-		}
-
 		task ("When an alert icon without text and hovered over the icon") {
 			CustomerPortal.putMouseOverButton(text = "Hover");
 		}

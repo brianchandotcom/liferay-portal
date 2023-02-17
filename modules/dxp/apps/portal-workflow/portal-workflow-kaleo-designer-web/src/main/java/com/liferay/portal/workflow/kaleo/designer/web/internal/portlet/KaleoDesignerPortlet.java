@@ -162,7 +162,15 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				_serveRoles(resourceRequest, resourceResponse);
 			}
 			else if (resourceID.equals("scriptLanguages")) {
-				_serveScriptLanguages(resourceRequest, resourceResponse);
+				writeJSON(
+					resourceRequest, resourceResponse,
+					JSONUtil.toJSONArray(
+						ListUtil.sort(
+							new ArrayList<>(
+								ScriptingUtil.getSupportedLanguages())),
+						language -> JSONUtil.put(
+							"scriptLanguage", StringUtil.toLowerCase(language)),
+						_log));
 			}
 			else if (resourceID.equals("users")) {
 				_serveUsers(resourceRequest, resourceResponse);
@@ -355,20 +363,6 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		}
 
 		writeJSON(resourceRequest, resourceResponse, jsonArray);
-	}
-
-	private void _serveScriptLanguages(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		writeJSON(
-			resourceRequest, resourceResponse,
-			JSONUtil.toJSONArray(
-				ListUtil.sort(
-					new ArrayList<>(ScriptingUtil.getSupportedLanguages())),
-				language -> JSONUtil.put(
-					"scriptLanguage", StringUtil.toLowerCase(language)),
-				_log));
 	}
 
 	private void _serveUsers(

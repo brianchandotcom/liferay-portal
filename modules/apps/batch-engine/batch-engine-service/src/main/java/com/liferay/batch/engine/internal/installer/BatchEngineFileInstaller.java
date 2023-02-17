@@ -27,7 +27,6 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
-import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -99,7 +98,7 @@ public class BatchEngineFileInstaller implements FileInstaller {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(new AutoDeployException(exception));
+				_log.debug(exception);
 			}
 		}
 
@@ -115,12 +114,9 @@ public class BatchEngineFileInstaller implements FileInstaller {
 	}
 
 	@Override
-	public URL transformURL(File file) throws AutoDeployException {
+	public URL transformURL(File file) throws Exception {
 		try (ZipFile zipFile = new ZipFile(file)) {
 			_deploy(zipFile);
-		}
-		catch (Exception exception) {
-			throw new AutoDeployException(exception);
 		}
 		finally {
 			file.delete();

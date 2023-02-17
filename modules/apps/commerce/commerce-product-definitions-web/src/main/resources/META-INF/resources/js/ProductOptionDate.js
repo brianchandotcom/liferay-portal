@@ -13,14 +13,62 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import React from 'react';
+import classnames from 'classnames';
+import React, {useState} from 'react';
 
-const ProductOptionDate = () => (
-	<ClayForm.Group>
-		<label htmlFor="placeholder">Placeholder</label>
+import Asterisk from './Asterisk';
 
-		<ClayInput name="placeholder" type="date" />
-	</ClayForm.Group>
-);
+const ProductOptionDate = ({
+	id,
+	label,
+	name,
+	onChange,
+	productOptionValues,
+	required,
+}) => {
+	const [date, setDate] = useState(productOptionValues[0].value);
+	const [errors, setErrors] = useState({});
+
+	const handleBlur = ({target: {value}}) => {
+		if (required && value === '') {
+			setErrors({emptyField: true});
+		}
+		else {
+			setErrors({});
+			onChange(date);
+		}
+	};
+
+	return (
+		<ClayForm.Group
+			className={classnames({'has-error': errors.emptyField})}
+		>
+			<label htmlFor={id}>
+				{label}
+
+				<Asterisk required={required} />
+			</label>
+
+			<ClayInput
+				id={id}
+				name={name}
+				onBlur={handleBlur}
+				onChange={({target: {value}}) => {
+					setDate(value);
+				}}
+				type="date"
+				value={date}
+			/>
+
+			{errors.emptyField && (
+				<ClayForm.FeedbackItem>
+					<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+					{Liferay.Language.get('this-field-is-required')}
+				</ClayForm.FeedbackItem>
+			)}
+		</ClayForm.Group>
+	);
+};
 
 export default ProductOptionDate;

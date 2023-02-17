@@ -13,16 +13,53 @@
  */
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import React from 'react';
+import React, {useState} from 'react';
 
-const ProductOptionCheckboxMultiple = () => (
-	<ClayForm.Group>
-		<ClayCheckbox label="One" name="placeholder1" value="one" />
+import Asterisk from './Asterisk';
 
-		<ClayCheckbox label="Two" name="placeholder2" value="two" />
+const ProductOptionCheckboxMultiple = ({
+	label,
+	onChange,
+	productOptionValues,
+	required,
+}) => {
+	const [options, setOptions] = useState(
+		productOptionValues.reduce((acc, cur) => {
+			acc[cur.id] = cur;
 
-		<ClayCheckbox label="Three" name="placeholder3" value="three" />
-	</ClayForm.Group>
-);
+			return acc;
+		}, {})
+	);
+
+	const handleChange = ({target: {checked}}, id) => {
+		const updatedOptions = {
+			...options,
+			[id]: {...options[id], selected: checked},
+		};
+
+		setOptions(updatedOptions);
+		onChange(updatedOptions);
+	};
+
+	return (
+		<ClayForm.Group>
+			<label>
+				{label}
+
+				<Asterisk required={required} />
+			</label>
+
+			{Object.values(options).map(({id, key, label, name, selected}) => (
+				<ClayCheckbox
+					checked={selected}
+					key={key}
+					label={label}
+					name={name}
+					onChange={(event) => handleChange(event, id)}
+				/>
+			))}
+		</ClayForm.Group>
+	);
+};
 
 export default ProductOptionCheckboxMultiple;

@@ -13,14 +13,61 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import React from 'react';
+import classnames from 'classnames';
+import React, {useState} from 'react';
 
-const ProductOptionText = () => (
-	<ClayForm.Group>
-		<label htmlFor="placeholder">Placeholder</label>
+import Asterisk from './Asterisk';
 
-		<ClayInput name="placeholder" />
-	</ClayForm.Group>
-);
+const ProductOptionText = ({
+	id,
+	label,
+	name,
+	onChange,
+	productOptionValues,
+	required,
+}) => {
+	const [text, setText] = useState(productOptionValues[0].value);
+	const [errors, setErrors] = useState({});
+
+	const handleBlur = ({target: {value}}) => {
+		if (required && value === '') {
+			setErrors({emptyField: true});
+		}
+		else {
+			setErrors({});
+			onChange(text);
+		}
+	};
+
+	return (
+		<ClayForm.Group
+			className={classnames({'has-error': errors.emptyField})}
+		>
+			<label htmlFor={id}>
+				{label}
+
+				<Asterisk required={required} />
+			</label>
+
+			<ClayInput
+				id={id}
+				name={name}
+				onBlur={handleBlur}
+				onChange={({target: {value}}) => {
+					setText(value);
+				}}
+				value={text}
+			/>
+
+			{errors.emptyField && (
+				<ClayForm.FeedbackItem>
+					<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+					{Liferay.Language.get('this-field-is-required')}
+				</ClayForm.FeedbackItem>
+			)}
+		</ClayForm.Group>
+	);
+};
 
 export default ProductOptionText;

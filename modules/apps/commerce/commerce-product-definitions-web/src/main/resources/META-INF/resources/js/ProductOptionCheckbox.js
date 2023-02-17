@@ -13,14 +13,46 @@
  */
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import React from 'react';
+import React, {useState} from 'react';
 
-const ProductOptionCheckbox = () => (
-	<ClayForm.Group>
-		<label htmlFor="placeholder">Placeholder</label>
+import Asterisk from './Asterisk';
 
-		<ClayCheckbox label="One" name="placeholder" value="one" />
-	</ClayForm.Group>
-);
+const ProductOptionCheckbox = ({
+	id,
+	label,
+	onChange,
+	productOptionValues,
+	required,
+}) => {
+	const [option, setOption] = useState(productOptionValues[0]);
+
+	const handleChange = ({target: {checked}}) => {
+		const updatedOption = {
+			...option,
+			selected: checked,
+		};
+
+		setOption(updatedOption);
+		onChange(updatedOption);
+	};
+
+	return (
+		<ClayForm.Group>
+			<label htmlFor={id}>
+				{label}
+
+				<Asterisk required={required} />
+			</label>
+
+			<ClayCheckbox
+				checked={option.selected}
+				id={id}
+				label={option.label}
+				name={option.name}
+				onChange={handleChange}
+			/>
+		</ClayForm.Group>
+	);
+};
 
 export default ProductOptionCheckbox;

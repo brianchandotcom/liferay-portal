@@ -13,20 +13,52 @@
  */
 
 import ClayForm, {ClayRadio, ClayRadioGroup} from '@clayui/form';
-import React from 'react';
+import React, {useState} from 'react';
 
-const ProductOptionRadio = () => (
-	<ClayForm.Group>
-		<label htmlFor="placeholder">Placeholder</label>
+import Asterisk from './Asterisk';
+import {getInitialOption} from './utils';
 
-		<ClayRadioGroup defaultValue="one" name="placeholder">
-			<ClayRadio label="One" value="one" />
+const ProductOptionRadio = ({
+	id,
+	label,
+	name,
+	onChange,
+	productOptionValues,
+	required,
+}) => {
+	const initialOption = getInitialOption(productOptionValues);
 
-			<ClayRadio label="Two" value="two" />
+	const [selectedOption, setSelectedOption] = useState(initialOption);
 
-			<ClayRadio label="Three" value="three" />
-		</ClayRadioGroup>
-	</ClayForm.Group>
-);
+	const handleChange = (value) => {
+		const updatedOption = productOptionValues.find(
+			(option) => option.value === value
+		);
+
+		setSelectedOption(updatedOption);
+		onChange(updatedOption);
+	};
+
+	return (
+		<ClayForm.Group>
+			<label htmlFor={id}>
+				{label}
+
+				<Asterisk required={required} />
+			</label>
+
+			<ClayRadioGroup
+				id={id}
+				name={name}
+				onChange={handleChange}
+				value={selectedOption.value}
+			>
+				{productOptionValues.map(({key, label, value}) => (
+					<ClayRadio key={key} label={label} value={value} />
+				))}
+			</ClayRadioGroup>
+		</ClayForm.Group>
+	);
+};
 
 export default ProductOptionRadio;

@@ -92,6 +92,16 @@ public interface AsahFaroBackendClient {
 		List<OrderByField> orderByFields);
 
 	/**
+	 * Returns an individual segment.
+	 *
+	 * @param  companyId the company ID
+	 * @param  individualSegmentId the individual segment's ID
+	 * @return an individual segment.
+	 */
+	public IndividualSegment getIndividualSegment(
+		long companyId, String individualSegmentId);
+
+	/**
 	 * Returns the results of an active individual segment with members.
 	 *
 	 * @param  companyId the company ID

@@ -1300,7 +1300,11 @@ definition {
 	}
 
 	macro deleteProfileImage {
-		Button.click(button = "Delete");
+		var key_text = "Delete";
+
+		if (!(IsElementPresent(locator1 = "CustomerPortalSite#ANY_DISABLED_BUTTON"))) {
+			Button.click(button = "Delete");
+		}
 
 		AssertVisible(
 			key_imageName = "user_portrait",

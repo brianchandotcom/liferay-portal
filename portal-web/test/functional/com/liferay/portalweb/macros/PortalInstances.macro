@@ -175,6 +175,18 @@ definition {
 		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 	}
 
+	macro tearDownCustomPortal {
+		JSONUser.tearDownNonAdminUsers(authenticationMethod = ${authenticationMethod});
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		var portalURL = StringUtil.replace(${portalURL}, "http://", "");
+
+		var portalInstanceId = StringUtil.replace(${portalURL}, ":8080", "");
+
+		HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = "${portalInstanceId}");
+	}
+
 	@summary = "Clean up Portal Instances as part of standard teardown but without Selenium usage"
 	macro tearDownCPNoSelenium {
 		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});

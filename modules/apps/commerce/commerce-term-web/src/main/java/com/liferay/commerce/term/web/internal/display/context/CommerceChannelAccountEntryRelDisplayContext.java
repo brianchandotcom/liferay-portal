@@ -26,6 +26,7 @@ import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.commerce.term.web.internal.display.context.helper.CommerceTermEntryRequestHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,12 +36,11 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -169,19 +169,11 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 
 		long[] commerceChannelIds = _getFilteredCommerceChannelIds();
 
-		List<CommerceChannel> commerceChannels =
+		return ListUtil.filter(
 			_commerceChannelService.getCommerceChannels(
-				_commerceTermEntryRequestHelper.getCompanyId());
-
-		Stream<CommerceChannel> commerceChannelsStream =
-			commerceChannels.stream();
-
-		return commerceChannelsStream.filter(
+				_commerceTermEntryRequestHelper.getCompanyId()),
 			commerceChannel -> !ArrayUtil.contains(
-				commerceChannelIds, commerceChannel.getCommerceChannelId())
-		).collect(
-			Collectors.toList()
-		);
+				commerceChannelIds, commerceChannel.getCommerceChannelId()));
 	}
 
 	public String getModalTitle() {
@@ -259,19 +251,15 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
 			fetchCommerceChannelAccountEntryRel();
 
-		List<CommerceChannelAccountEntryRel> commerceChannelAccountEntryRels =
+		List<Long> commerceChannelIds = TransformUtil.transform(
 			_commerceChannelAccountEntryRelService.
 				getCommerceChannelAccountEntryRels(
 					_accountEntry.getAccountEntryId(), _type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
+					QueryUtil.ALL_POS, null),
+			CommerceChannelAccountEntryRel::getCommerceChannelId);
 
-		Stream<CommerceChannelAccountEntryRel>
-			commerceChannelAccountEntryRelsStream =
-				commerceChannelAccountEntryRels.stream();
-
-		return commerceChannelAccountEntryRelsStream.mapToLong(
-			CommerceChannelAccountEntryRel::getCommerceChannelId
-		).filter(
+		return ArrayUtil.filter(
+			ArrayUtil.toLongArray(commerceChannelIds),
 			commerceChannelId -> {
 				if ((commerceChannelAccountEntryRel == null) ||
 					(commerceChannelId !=
@@ -282,8 +270,7 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 				}
 
 				return false;
-			}
-		).toArray();
+			});
 	}
 
 	private final AccountEntry _accountEntry;

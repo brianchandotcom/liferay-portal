@@ -344,8 +344,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void assertElementAccessible(String locator) throws Exception {
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
-
 		AxeBuilder axeBuilder = new AxeBuilder();
 
 		axeBuilder.withTags(
@@ -354,16 +352,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Results results = null;
 
 		if (Validator.isNotNull(locator)) {
-			results = axeBuilder.analyze(webDriver, getWebElement(locator));
+			results = axeBuilder.analyze(this, getWebElement(locator));
 		}
 		else {
-			results = axeBuilder.analyze(webDriver);
+			results = axeBuilder.analyze(this);
 		}
 
 		List<Rule> violations = results.getViolations();
 
 		if (!violations.isEmpty()) {
-			AxeReporter.getReadableAxeResults("analyze", webDriver, violations);
+			AxeReporter.getReadableAxeResults("analyze", this, violations);
 
 			throw new Exception(AxeReporter.getAxeResultString());
 		}

@@ -345,7 +345,7 @@ public class RetryWebElementImpl extends RemoteWebElement {
 
 	@Override
 	public WebDriver getWrappedDriver() {
-		return WebDriverUtil.getWebDriver();
+		return _remoteWebElement.getWrappedDriver();
 	}
 
 	@Override
@@ -463,7 +463,8 @@ public class RetryWebElementImpl extends RemoteWebElement {
 		CharSequence controlCharSequence = Keys.CONTROL;
 
 		if (OSDetector.isApple() &&
-			!(WebDriverUtil.getWebDriver() instanceof RemoteWebDriver)) {
+			!(_remoteWebElement.getWrappedDriver() instanceof
+				RemoteWebDriver)) {
 
 			controlCharSequence = Keys.COMMAND;
 		}
@@ -494,7 +495,7 @@ public class RetryWebElementImpl extends RemoteWebElement {
 		catch (Exception exception) {
 		}
 
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
+		WebDriver webDriver = _remoteWebElement.getWrappedDriver();
 
 		WebElement webElement = webDriver.findElement(
 			LiferaySeleniumUtil.getBy(_locator));

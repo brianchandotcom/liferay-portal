@@ -16,10 +16,10 @@ package com.liferay.oauth2.provider.model.impl;
 
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.petra.string.StringUtil;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -29,19 +29,18 @@ public class OAuth2ApplicationImpl extends OAuth2ApplicationBaseImpl {
 
 	@Override
 	public List<GrantType> getAllowedGrantTypesList() {
-		return TransformUtil.transformToList(
+		return TransformUtil.transform(
 			StringUtil.split(getAllowedGrantTypes()), GrantType::valueOf);
 	}
 
 	@Override
 	public List<String> getFeaturesList() {
-		return Arrays.asList(StringUtil.split(getFeatures()));
+		return StringUtil.split(getFeatures());
 	}
 
 	@Override
 	public List<String> getRedirectURIsList() {
-		return Arrays.asList(
-			StringUtil.split(getRedirectURIs(), StringPool.NEW_LINE));
+		return StringUtil.split(getRedirectURIs(), CharPool.NEW_LINE);
 	}
 
 	@Override
@@ -49,13 +48,13 @@ public class OAuth2ApplicationImpl extends OAuth2ApplicationBaseImpl {
 		List<GrantType> allowedGrantTypesList) {
 
 		setAllowedGrantTypes(
-			com.liferay.petra.string.StringUtil.merge(
+			StringUtil.merge(
 				allowedGrantTypesList, GrantType::toString, StringPool.COMMA));
 	}
 
 	@Override
 	public void setFeaturesList(List<String> featuresList) {
-		setFeatures(StringUtil.merge(featuresList));
+		setFeatures(StringUtil.merge(featuresList, StringPool.COMMA));
 	}
 
 	@Override

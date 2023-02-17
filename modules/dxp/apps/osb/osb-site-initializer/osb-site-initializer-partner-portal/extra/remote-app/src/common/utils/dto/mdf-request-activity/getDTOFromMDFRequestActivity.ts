@@ -12,7 +12,6 @@
 import MDFRequestActivityDTO from '../../../interfaces/dto/mdfRequestActivityDTO';
 import LiferayAccountBrief from '../../../interfaces/liferayAccountBrief';
 import MDFRequestActivity from '../../../interfaces/mdfRequestActivity';
-import {Status} from '../../constants/status';
 
 export default function getDTOFromMDFRequestActivity(
 	mdfRequestActivity: MDFRequestActivity,
@@ -26,7 +25,7 @@ export default function getDTOFromMDFRequestActivity(
 
 	return {
 		...activityDescription,
-		activityStatus: Status.APPROVED,
+		activityStatus: mdfRequestActivity.activityStatus,
 		...mdfRequestActivity,
 		externalReferenceCodeSF,
 		leadFollowUpStrategies: activityDescription.leadFollowUpStrategies?.join(

@@ -168,12 +168,6 @@ public class WebDriverUtil extends PropsValues {
 		WebDriver webDriver = _webDrivers.get(testName);
 
 		if (webDriver != null) {
-			LiferaySelenium liferaySelenium = (LiferaySelenium)webDriver;
-
-			liferaySelenium.stop();
-
-			liferaySelenium.stopLogger();
-
 			webDriver.quit();
 		}
 

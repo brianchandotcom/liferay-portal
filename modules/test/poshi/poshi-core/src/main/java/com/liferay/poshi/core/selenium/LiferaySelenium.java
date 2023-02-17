@@ -399,11 +399,6 @@ public interface LiferaySelenium {
 
 	public void saveScreenshot(String fileName) throws Exception;
 
-	public void saveScreenshotAndSource() throws Exception;
-
-	public void saveScreenshotBeforeAction(boolean actionFailed)
-		throws Exception;
-
 	public void scrollBy(String coordString);
 
 	public void scrollWebElementIntoView(String locator) throws Exception;
@@ -418,10 +413,6 @@ public interface LiferaySelenium {
 
 	public void selectWindow(String windowID);
 
-	public void sendActionDescriptionLogger(String description);
-
-	public boolean sendActionLogger(String command, String[] params);
-
 	public void sendEmail(String to, String subject, String body)
 		throws Exception;
 
@@ -429,14 +420,6 @@ public interface LiferaySelenium {
 
 	public void sendKeysAceEditor(String locator, String value)
 		throws Exception;
-
-	public void sendLogger(String id, String status);
-
-	public void sendMacroDescriptionLogger(String description);
-
-	public void sendTestCaseCommandLogger(String command);
-
-	public void sendTestCaseHeaderLogger(String command);
 
 	public void setDefaultTimeout();
 
@@ -483,12 +466,6 @@ public interface LiferaySelenium {
 
 	public void sikuliUploadTempFile(String image, String value)
 		throws Exception;
-
-	public void startLogger();
-
-	public void stop();
-
-	public void stopLogger();
 
 	public void tripleClick(String locator);
 

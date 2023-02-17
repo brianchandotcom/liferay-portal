@@ -2253,15 +2253,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void saveScreenshotAndSource() throws Exception {
-	}
-
-	@Override
-	public void saveScreenshotBeforeAction(boolean actionFailed)
-		throws Exception {
-	}
-
-	@Override
 	public void scrollBy(String offset) {
 		JavascriptExecutor javascriptExecutor =
 			(JavascriptExecutor)getWrappedWebDriver("//html");
@@ -2424,15 +2415,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void sendActionDescriptionLogger(String description) {
-	}
-
-	@Override
-	public boolean sendActionLogger(String command, String[] params) {
-		return true;
-	}
-
-	@Override
 	public void sendEmail(String to, String subject, String body)
 		throws Exception {
 
@@ -2483,22 +2465,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		String line = value.substring(x);
 
 		webElement.sendKeys(line.trim());
-	}
-
-	@Override
-	public void sendLogger(String id, String status) {
-	}
-
-	@Override
-	public void sendMacroDescriptionLogger(String description) {
-	}
-
-	@Override
-	public void sendTestCaseCommandLogger(String command) {
-	}
-
-	@Override
-	public void sendTestCaseHeaderLogger(String command) {
 	}
 
 	@Override
@@ -2809,19 +2775,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		pause("1000");
 
 		keyboard.type(Key.ENTER);
-	}
-
-	@Override
-	public void startLogger() {
-	}
-
-	@Override
-	public void stop() {
-		quit();
-	}
-
-	@Override
-	public void stopLogger() {
 	}
 
 	@Override

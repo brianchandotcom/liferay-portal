@@ -22,6 +22,7 @@ definition {
 	@description = "Verify if no osgi config file exists, when a config is updated via UI, then the config is added to the database and a config file is not created."
 	@priority = 3
 	test ConfigAddedViaUIDoesNotCreateNewConfigFile {
+		property database.types = "mysql";
 		property test.name.skip.portal.instance = "OSGIConfiguration#ConfigAddedViaUIDoesNotCreateNewConfigFile";
 
 		task ("Given no osgi config file exists for a specific config") {
@@ -62,6 +63,7 @@ definition {
 	@description = "Verify if an osgi config file exists, when a config is updated via UI, then the config file is updated with the new values."
 	@priority = 3
 	test ConfigAddedViaUIUpdatesExistingOSGIConfigFile {
+		property database.types = "mysql";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration.config";
 		property osgi.module.configurations = "checkInterval=I\"33\"";
 		property test.name.skip.portal.instance = "OSGIConfiguration#ConfigAddedViaUIUpdatesExistingOSGIConfigFile";
@@ -115,6 +117,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test ConfigFilesReadOnlyFromOSGIConfigs {
+		property database.types = "mysql";
 		property test.name.skip.portal.instance = "OSGIConfiguration#ConfigFilesReadOnlyFromOSGIConfigs";
 
 		// TODO Un-ignore test when LPS-167572 is fixed
@@ -141,6 +144,7 @@ definition {
 	@description = "Verify multiple factory configurations can be created."
 	@priority = 3
 	test DeployFactoryConfigs {
+		property database.types = "mysql";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test1.config:com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test2.config";
 		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/test1\":urlsIncludes=\"/api/liferay/test2\"";
 		property test.name.skip.portal.instance = "OSGIConfiguration#DeployFactoryConfigs";
@@ -159,6 +163,7 @@ definition {
 	@description = "Verify an existing factory config can be modified."
 	@priority = 3
 	test ModifyFactoryConfig {
+		property database.types = "mysql";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test.config";
 		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/original\"";
 		property test.name.skip.portal.instance = "OSGIConfiguration#ModifyFactoryConfig";
@@ -189,6 +194,7 @@ definition {
 	@description = "Verify if a config exists only in the database, when a OSGI config file is added, the databse entry is updated."
 	@priority = 3
 	test OSGIConfigFileUpdatesExistingConfigInDatabase {
+		property database.types = "mysql";
 		property test.name.skip.portal.instance = "OSGIConfiguration#OSGIConfigFileUpdatesExistingConfigInDatabase";
 
 		task ("Given no osgi config file exists for a specific config") {
@@ -241,6 +247,7 @@ definition {
 	@description = "LPS-132645 Verify the default factory config created by the OSGI configurator can be overriden by an OSGI config file."
 	@priority = 3
 	test OverrideDefaultFactoryConfig {
+		property database.types = "mysql";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~default.config";
 		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/new\"";
 		property test.name.skip.portal.instance = "OSGIConfiguration#OverrideDefaultFactoryConfig";
@@ -259,6 +266,7 @@ definition {
 	@description = "LPS-132645 Verify the default factory config created by the OSGI configurator can be recreated using an OSGI config file if it is deleted."
 	@priority = 3
 	test RecreateDefaultFactoryConfig {
+		property database.types = "mysql";
 		property test.name.skip.portal.instance = "FileInstall#OverrideDefaultFactoryConfig";
 
 		task ("Given the default factory config created by the OSGI configurator is deleted") {
@@ -304,6 +312,7 @@ definition {
 	@description = "Verify when an existing factory config is renamed, the old entry is removed and the new one is added."
 	@priority = 3
 	test RenameFactoryConfig {
+		property database.types = "mysql";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~original.config";
 		property osgi.module.configurations = "enabled=\"true\"";
 		property test.name.skip.portal.instance = "OSGIConfiguration#RenameFactoryConfig";

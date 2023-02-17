@@ -123,6 +123,7 @@ definition {
 
 	@priority = 4
 	test RestartingPortalDuplicatesOSGiConfiguration {
+		property database.types = "mysql";
 		property test.name.skip.portal.instance = "FileInstall#RestartingPortalDuplicatesOSGiConfiguration";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");

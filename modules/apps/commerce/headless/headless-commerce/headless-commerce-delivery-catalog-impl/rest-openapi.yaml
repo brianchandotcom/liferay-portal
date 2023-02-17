@@ -127,6 +127,17 @@ components:
                 - name
                 - type
             type: object
+        DDMOption:
+            properties:
+                key:
+                    type: string
+                required:
+                    type: boolean
+                value:
+                    items:
+                        type: string
+                    type: array
+            type: object
         Error:
             properties:
                 errorCode:
@@ -578,6 +589,11 @@ components:
             type: object
         Sku:
             properties:
+                DDMOptions:
+                    items:
+                        $ref: "#/components/schemas/DDMOption"
+                    readOnly: true
+                    type: array
                 allowedOrderQuantities:
                     example:
                         - 10
@@ -598,6 +614,9 @@ components:
                     example: 2017-07-21
                     format: date
                     type: string
+                displayDiscountLevels:
+                    example: true
+                    type: boolean
                 expirationDate:
                     example: 2017-08-21
                     format: date
@@ -616,6 +635,8 @@ components:
                     minimum: 0
                     readOnly: true
                     type: integer
+                incomingQuantityLabel:
+                    type: string
                 manufacturerPartNumber:
                     example: "12341234"
                     type: string
@@ -1903,6 +1924,110 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Sku"
                                 type: array
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["Sku"]
+        post:
+            description:
+                Retrieves a SKU from selected channel and product ID.
+            operationId: postChannelProductSku
+            parameters:
+                - in: path
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: path
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: accountId
+                  required: false
+                  schema:
+                      description:
+                          Account Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: query
+                  name: quantity
+                  required: false
+                  schema:
+                      description:
+                          Quantity
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/DDMOption"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/DDMOption"
+                            type: array
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Sku"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Sku"
+                    description:
+                        Created
+                400:
+                    description:
+                        Invalid input
                 401:
                     content:
                         application/json:

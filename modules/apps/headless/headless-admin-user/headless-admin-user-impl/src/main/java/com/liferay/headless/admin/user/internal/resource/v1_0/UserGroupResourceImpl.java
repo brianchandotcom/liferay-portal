@@ -16,6 +16,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserGroupResourceDTOConverter;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.DTOConverterUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.UserGroupEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,8 +67,8 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 		throws Exception {
 
 		deleteUserGroup(
-			_userGroupResourceDTOConverter.getUserGroupId(
-				externalReferenceCode));
+			DTOConverterUtil.getModelPrimaryKey(
+				_userGroupResourceDTOConverter, externalReferenceCode));
 	}
 
 	@Override

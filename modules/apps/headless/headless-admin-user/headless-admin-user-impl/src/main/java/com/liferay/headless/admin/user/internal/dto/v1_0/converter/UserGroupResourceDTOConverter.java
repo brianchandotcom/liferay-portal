@@ -58,12 +58,6 @@ public class UserGroupResourceDTOConverter
 		return userGroup;
 	}
 
-	public long getUserGroupId(String externalReferenceCode) throws Exception {
-		UserGroup userGroup = getObject(externalReferenceCode);
-
-		return userGroup.getUserGroupId();
-	}
-
 	@Override
 	public com.liferay.headless.admin.user.dto.v1_0.UserGroup toDTO(
 			DTOConverterContext dtoConverterContext, UserGroup userGroup)

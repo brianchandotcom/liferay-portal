@@ -44,14 +44,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AccountResourceDTOConverter
 	implements DTOConverter<AccountEntry, Account> {
 
-	public long getAccountEntryId(String externalReferenceCode)
-		throws Exception {
-
-		AccountEntry accountEntry = getObject(externalReferenceCode);
-
-		return accountEntry.getAccountEntryId();
-	}
-
 	@Override
 	public String getContentType() {
 		return Account.class.getSimpleName();

@@ -154,13 +154,20 @@ const TypeActivityKey = {
 const ActivityStatus = {
 	ACTIVE: 'active',
 	APPROVED: 'approved',
+	CLAIMED: 'claimed',
 	EXPIRED: 'expired',
+	UNCLAIMED: 'unclaimed',
 };
 
 const activityStatusClassName = {
 	[ActivityStatus.ACTIVE]: 'label label-tonal-success ml-2',
 	[ActivityStatus.APPROVED]: 'label label-tonal-success ml-2',
 	[ActivityStatus.EXPIRED]: 'label label-tonal-danger ml-2',
+};
+
+const activityClaimStatusClassName = {
+	[ActivityStatus.CLAIMED]: 'ml-3 label label-tonal-info ml-2',
+	[ActivityStatus.UNCLAIMED]: 'ml-3 label label-tonal-danger ml-2',
 };
 
 const CampaignActivityTable = ({mdfRequestActivity}) => {
@@ -274,6 +281,15 @@ const RangeDate = ({endDate, startDate}) => (
 );
 
 const Panel = ({children, mdfRequestActivity}) => {
+	const ActivityClaimStatus = mdfRequestActivity.actToMDFClmActs
+		.map((mdfClaimActivity) => {
+			return (
+				mdfClaimActivity.r_mdfClmToMDFClmActs_c_mdfClaim.mdfClaimStatus
+					.key !== 'draft'
+			);
+		})
+		.includes(true);
+
 	return (
 		<ClayPanel
 			className="border-brand-primary-lighten-4"
@@ -289,7 +305,22 @@ const Panel = ({children, mdfRequestActivity}) => {
 						{mdfRequestActivity.name} ({mdfRequestActivity.id})
 					</h4>
 
-					<p className="align-items-center d-flex mb-1">
+					<p className="align-items-center d-flex mb-1 text-neutral-7 text-weight-semi-bold">
+						Claim Status:
+						<div
+							className={
+								activityClaimStatusClassName[
+									ActivityClaimStatus
+										? 'claimed'
+										: 'unclaimed'
+								]
+							}
+						>
+							{ActivityClaimStatus ? 'Claimed' : 'Unclaimed'}
+						</div>
+					</p>
+
+					<p className="align-items-center d-flex mb-1 text-neutral-7 text-weight-semi-bold">
 						Activity Status:
 						<div
 							className={
@@ -329,7 +360,7 @@ export default function () {
 		const getActivities = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			const response = await fetch(
-				`/o/c/mdfrequests/${mdfRequestId}/mdfReqToActs?nestedFields=actToBgts`,
+				`/o/c/mdfrequests/${mdfRequestId}/mdfReqToActs?nestedFields=actToBgts,actToMDFClmActs,r_mdfClmToMDFClmActs_c_mdfClaimId&nestedFieldsDepth=3`,
 				{
 					headers: {
 						'accept': 'application/json',

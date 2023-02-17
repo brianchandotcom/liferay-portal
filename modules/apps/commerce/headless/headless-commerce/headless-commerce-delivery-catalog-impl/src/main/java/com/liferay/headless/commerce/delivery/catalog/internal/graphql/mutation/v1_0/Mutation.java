@@ -14,8 +14,11 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.DDMOption;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishList;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishListItem;
+import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.WishListItemResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.WishListResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -47,6 +50,14 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
+	public static void setSkuResourceComponentServiceObjects(
+		ComponentServiceObjects<SkuResource>
+			skuResourceComponentServiceObjects) {
+
+		_skuResourceComponentServiceObjects =
+			skuResourceComponentServiceObjects;
+	}
+
 	public static void setWishListResourceComponentServiceObjects(
 		ComponentServiceObjects<WishListResource>
 			wishListResourceComponentServiceObjects) {
@@ -61,6 +72,23 @@ public class Mutation {
 
 		_wishListItemResourceComponentServiceObjects =
 			wishListItemResourceComponentServiceObjects;
+	}
+
+	@GraphQLField(
+		description = "Retrieves a SKU from selected channel and product ID."
+	)
+	public Sku createChannelProductSku(
+			@GraphQLName("channelId") Long channelId,
+			@GraphQLName("productId") Long productId,
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("quantity") Integer quantity,
+			@GraphQLName("ddmOptions") DDMOption[] ddmOptions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_skuResourceComponentServiceObjects, this::_populateResourceContext,
+			skuResource -> skuResource.postChannelProductSku(
+				channelId, productId, accountId, quantity, ddmOptions));
 	}
 
 	@GraphQLField
@@ -196,6 +224,22 @@ public class Mutation {
 		}
 	}
 
+	private void _populateResourceContext(SkuResource skuResource)
+		throws Exception {
+
+		skuResource.setContextAcceptLanguage(_acceptLanguage);
+		skuResource.setContextCompany(_company);
+		skuResource.setContextHttpServletRequest(_httpServletRequest);
+		skuResource.setContextHttpServletResponse(_httpServletResponse);
+		skuResource.setContextUriInfo(_uriInfo);
+		skuResource.setContextUser(_user);
+		skuResource.setGroupLocalService(_groupLocalService);
+		skuResource.setRoleLocalService(_roleLocalService);
+
+		skuResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private void _populateResourceContext(WishListResource wishListResource)
 		throws Exception {
 
@@ -230,6 +274,8 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private static ComponentServiceObjects<SkuResource>
+		_skuResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WishListResource>
 		_wishListResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WishListItemResource>

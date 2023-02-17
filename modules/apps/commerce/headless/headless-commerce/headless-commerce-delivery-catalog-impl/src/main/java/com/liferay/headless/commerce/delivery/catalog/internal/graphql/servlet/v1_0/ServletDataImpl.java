@@ -67,6 +67,8 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setSkuResourceComponentServiceObjects(
+			_skuResourceComponentServiceObjects);
 		Mutation.setWishListResourceComponentServiceObjects(
 			_wishListResourceComponentServiceObjects);
 		Mutation.setWishListItemResourceComponentServiceObjects(
@@ -134,6 +136,10 @@ public class ServletDataImpl implements ServletData {
 		_resourceMethodObjectValuePairs =
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
+					put(
+						"mutation#createChannelProductSku",
+						new ObjectValuePair<>(
+							SkuResourceImpl.class, "postChannelProductSku"));
 					put(
 						"mutation#createChannelWishList",
 						new ObjectValuePair<>(
@@ -252,6 +258,10 @@ public class ServletDataImpl implements ServletData {
 			};
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SkuResource>
+		_skuResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<WishListResource>
 		_wishListResourceComponentServiceObjects;
 
@@ -298,9 +308,5 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<RelatedProductResource>
 		_relatedProductResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SkuResource>
-		_skuResourceComponentServiceObjects;
 
 }

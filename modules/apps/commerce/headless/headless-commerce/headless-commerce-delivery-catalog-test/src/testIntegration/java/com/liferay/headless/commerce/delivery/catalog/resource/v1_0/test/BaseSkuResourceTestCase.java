@@ -183,6 +183,7 @@ public abstract class BaseSkuResourceTestCase {
 		Sku sku = randomSku();
 
 		sku.setGtin(regex);
+		sku.setIncomingQuantityLabel(regex);
 		sku.setManufacturerPartNumber(regex);
 		sku.setSku(regex);
 
@@ -193,6 +194,7 @@ public abstract class BaseSkuResourceTestCase {
 		sku = SkuSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, sku.getGtin());
+		Assert.assertEquals(regex, sku.getIncomingQuantityLabel());
 		Assert.assertEquals(regex, sku.getManufacturerPartNumber());
 		Assert.assertEquals(regex, sku.getSku());
 	}
@@ -330,6 +332,21 @@ public abstract class BaseSkuResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testPostChannelProductSku() throws Exception {
+		Sku randomSku = randomSku();
+
+		Sku postSku = testPostChannelProductSku_addSku(randomSku);
+
+		assertEquals(randomSku, postSku);
+		assertValid(postSku);
+	}
+
+	protected Sku testPostChannelProductSku_addSku(Sku sku) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Sku testGraphQLSku_addSku() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -400,6 +417,14 @@ public abstract class BaseSkuResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("DDMOptions", additionalAssertFieldName)) {
+				if (sku.getDDMOptions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"allowedOrderQuantities", additionalAssertFieldName)) {
 
@@ -434,6 +459,16 @@ public abstract class BaseSkuResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"displayDiscountLevels", additionalAssertFieldName)) {
+
+				if (sku.getDisplayDiscountLevels() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
 				if (sku.getExpirationDate() == null) {
 					valid = false;
@@ -452,6 +487,16 @@ public abstract class BaseSkuResourceTestCase {
 
 			if (Objects.equals("height", additionalAssertFieldName)) {
 				if (sku.getHeight() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"incomingQuantityLabel", additionalAssertFieldName)) {
+
+				if (sku.getIncomingQuantityLabel() == null) {
 					valid = false;
 				}
 
@@ -659,6 +704,16 @@ public abstract class BaseSkuResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("DDMOptions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sku1.getDDMOptions(), sku2.getDDMOptions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"allowedOrderQuantities", additionalAssertFieldName)) {
 
@@ -700,6 +755,19 @@ public abstract class BaseSkuResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"displayDiscountLevels", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sku1.getDisplayDiscountLevels(),
+						sku2.getDisplayDiscountLevels())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sku1.getExpirationDate(), sku2.getExpirationDate())) {
@@ -728,6 +796,19 @@ public abstract class BaseSkuResourceTestCase {
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(sku1.getId(), sku2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"incomingQuantityLabel", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sku1.getIncomingQuantityLabel(),
+						sku2.getIncomingQuantityLabel())) {
+
 					return false;
 				}
 
@@ -942,6 +1023,11 @@ public abstract class BaseSkuResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("DDMOptions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("allowedOrderQuantities")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -987,6 +1073,11 @@ public abstract class BaseSkuResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("displayDiscountLevels")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("expirationDate")) {
@@ -1037,6 +1128,14 @@ public abstract class BaseSkuResourceTestCase {
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("incomingQuantityLabel")) {
+			sb.append("'");
+			sb.append(String.valueOf(sku.getIncomingQuantityLabel()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("manufacturerPartNumber")) {
@@ -1150,10 +1249,13 @@ public abstract class BaseSkuResourceTestCase {
 			{
 				depth = RandomTestUtil.randomDouble();
 				displayDate = RandomTestUtil.nextDate();
+				displayDiscountLevels = RandomTestUtil.randomBoolean();
 				expirationDate = RandomTestUtil.nextDate();
 				gtin = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				height = RandomTestUtil.randomDouble();
 				id = RandomTestUtil.randomLong();
+				incomingQuantityLabel = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				manufacturerPartNumber = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				maxOrderQuantity = RandomTestUtil.randomInt();

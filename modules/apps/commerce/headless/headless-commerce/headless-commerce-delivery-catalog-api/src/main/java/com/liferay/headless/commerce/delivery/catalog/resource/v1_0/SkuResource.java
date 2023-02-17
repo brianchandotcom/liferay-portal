@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.delivery.catalog.resource.v1_0;
 
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.DDMOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -58,6 +59,11 @@ public interface SkuResource {
 	public Page<Sku> getChannelProductSkusPage(
 			Long channelId, Long productId, Long accountId,
 			Pagination pagination)
+		throws Exception;
+
+	public Sku postChannelProductSku(
+			Long channelId, Long productId, Long accountId, Integer quantity,
+			DDMOption[] ddmOptions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

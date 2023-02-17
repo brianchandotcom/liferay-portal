@@ -35,6 +35,27 @@ public class Sku implements Cloneable, Serializable {
 		return SkuSerDes.toDTO(json);
 	}
 
+	public DDMOption[] getDDMOptions() {
+		return DDMOptions;
+	}
+
+	public void setDDMOptions(DDMOption[] DDMOptions) {
+		this.DDMOptions = DDMOptions;
+	}
+
+	public void setDDMOptions(
+		UnsafeSupplier<DDMOption[], Exception> DDMOptionsUnsafeSupplier) {
+
+		try {
+			DDMOptions = DDMOptionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected DDMOption[] DDMOptions;
+
 	public String[] getAllowedOrderQuantities() {
 		return allowedOrderQuantities;
 	}
@@ -120,6 +141,28 @@ public class Sku implements Cloneable, Serializable {
 
 	protected Date displayDate;
 
+	public Boolean getDisplayDiscountLevels() {
+		return displayDiscountLevels;
+	}
+
+	public void setDisplayDiscountLevels(Boolean displayDiscountLevels) {
+		this.displayDiscountLevels = displayDiscountLevels;
+	}
+
+	public void setDisplayDiscountLevels(
+		UnsafeSupplier<Boolean, Exception>
+			displayDiscountLevelsUnsafeSupplier) {
+
+		try {
+			displayDiscountLevels = displayDiscountLevelsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean displayDiscountLevels;
+
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
@@ -199,6 +242,27 @@ public class Sku implements Cloneable, Serializable {
 	}
 
 	protected Long id;
+
+	public String getIncomingQuantityLabel() {
+		return incomingQuantityLabel;
+	}
+
+	public void setIncomingQuantityLabel(String incomingQuantityLabel) {
+		this.incomingQuantityLabel = incomingQuantityLabel;
+	}
+
+	public void setIncomingQuantityLabel(
+		UnsafeSupplier<String, Exception> incomingQuantityLabelUnsafeSupplier) {
+
+		try {
+			incomingQuantityLabel = incomingQuantityLabelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String incomingQuantityLabel;
 
 	public String getManufacturerPartNumber() {
 		return manufacturerPartNumber;

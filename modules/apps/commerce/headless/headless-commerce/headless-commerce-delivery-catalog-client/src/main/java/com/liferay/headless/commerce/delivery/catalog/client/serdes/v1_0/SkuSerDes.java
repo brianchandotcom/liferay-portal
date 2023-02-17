@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.delivery.catalog.client.serdes.v1_0;
 
+import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.DDMOption;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.delivery.catalog.client.json.BaseJSONParser;
@@ -60,6 +61,26 @@ public class SkuSerDes {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
+
+		if (sku.getDDMOptions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"DDMOptions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < sku.getDDMOptions().length; i++) {
+				sb.append(String.valueOf(sku.getDDMOptions()[i]));
+
+				if ((i + 1) < sku.getDDMOptions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		if (sku.getAllowedOrderQuantities() != null) {
 			if (sb.length() > 1) {
@@ -119,6 +140,16 @@ public class SkuSerDes {
 			sb.append("\"");
 		}
 
+		if (sku.getDisplayDiscountLevels() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"displayDiscountLevels\": ");
+
+			sb.append(sku.getDisplayDiscountLevels());
+		}
+
 		if (sku.getExpirationDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -165,6 +196,20 @@ public class SkuSerDes {
 			sb.append("\"id\": ");
 
 			sb.append(sku.getId());
+		}
+
+		if (sku.getIncomingQuantityLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"incomingQuantityLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sku.getIncomingQuantityLabel()));
+
+			sb.append("\"");
 		}
 
 		if (sku.getManufacturerPartNumber() != null) {
@@ -316,6 +361,13 @@ public class SkuSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (sku.getDDMOptions() == null) {
+			map.put("DDMOptions", null);
+		}
+		else {
+			map.put("DDMOptions", String.valueOf(sku.getDDMOptions()));
+		}
+
 		if (sku.getAllowedOrderQuantities() == null) {
 			map.put("allowedOrderQuantities", null);
 		}
@@ -348,6 +400,15 @@ public class SkuSerDes {
 				liferayToJSONDateFormat.format(sku.getDisplayDate()));
 		}
 
+		if (sku.getDisplayDiscountLevels() == null) {
+			map.put("displayDiscountLevels", null);
+		}
+		else {
+			map.put(
+				"displayDiscountLevels",
+				String.valueOf(sku.getDisplayDiscountLevels()));
+		}
+
 		if (sku.getExpirationDate() == null) {
 			map.put("expirationDate", null);
 		}
@@ -376,6 +437,15 @@ public class SkuSerDes {
 		}
 		else {
 			map.put("id", String.valueOf(sku.getId()));
+		}
+
+		if (sku.getIncomingQuantityLabel() == null) {
+			map.put("incomingQuantityLabel", null);
+		}
+		else {
+			map.put(
+				"incomingQuantityLabel",
+				String.valueOf(sku.getIncomingQuantityLabel()));
 		}
 
 		if (sku.getManufacturerPartNumber() == null) {
@@ -478,7 +548,21 @@ public class SkuSerDes {
 		protected void setField(
 			Sku sku, String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "allowedOrderQuantities")) {
+			if (Objects.equals(jsonParserFieldName, "DDMOptions")) {
+				if (jsonParserFieldValue != null) {
+					sku.setDDMOptions(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> DDMOptionSerDes.toDTO((String)object)
+						).toArray(
+							size -> new DDMOption[size]
+						));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "allowedOrderQuantities")) {
+
 				if (jsonParserFieldValue != null) {
 					sku.setAllowedOrderQuantities(
 						toStrings((Object[])jsonParserFieldValue));
@@ -500,6 +584,13 @@ public class SkuSerDes {
 					sku.setDisplayDate(toDate((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "displayDiscountLevels")) {
+
+				if (jsonParserFieldValue != null) {
+					sku.setDisplayDiscountLevels((Boolean)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "expirationDate")) {
 				if (jsonParserFieldValue != null) {
 					sku.setExpirationDate(toDate((String)jsonParserFieldValue));
@@ -518,6 +609,13 @@ public class SkuSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					sku.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "incomingQuantityLabel")) {
+
+				if (jsonParserFieldValue != null) {
+					sku.setIncomingQuantityLabel((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

@@ -16,6 +16,7 @@ package com.liferay.jethr0.server;
 
 import java.io.UnsupportedEncodingException;
 
+import java.net.URL;
 import java.net.URLEncoder;
 
 import java.util.Map;
@@ -30,6 +31,11 @@ import reactor.core.publisher.Mono;
  * @author Michael Hashimoto
  */
 public abstract class BaseServer implements Server {
+
+	@Override
+	public URL getURL() {
+		return _url;
+	}
 
 	@Override
 	public String httpRequest(
@@ -108,5 +114,11 @@ public abstract class BaseServer implements Server {
 
 		return responseSpec.bodyToMono(String.class);
 	}
+
+	protected BaseServer(URL url) {
+		_url = url;
+	}
+
+	private final URL _url;
 
 }

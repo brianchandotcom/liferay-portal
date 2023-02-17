@@ -49,6 +49,8 @@ html#{$cadmin-selector} {
 			}
 
 			.default-devices {
+				row-gap: 32px;
+
 				.icon-monospaced {
 					height: 40px;
 					line-height: 34px;

@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>TEXT_INPUT_2</td>
-	<td>//div[@class="ddm-field"][2]//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::input</td>
+	<td>//div[@class="ddm-field"][2]//label[normalize-space(text())='${key_fieldFieldLabel}']//..//input</td>
 	<td></td>
 </tr>
 <tr>

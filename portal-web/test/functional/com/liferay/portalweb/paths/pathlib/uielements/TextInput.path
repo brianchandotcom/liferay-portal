@@ -487,7 +487,7 @@
 </tr>
 <tr>
 	<td>NUMERIC</td>
-	<td>//label[contains(.,'${key_fieldLabel}')]/following-sibling::input[1]</td>
+	<td>//label[contains(.,'${key_fieldLabel}')]/following-sibling::input[1] | //label[contains(.,'${key_fieldLabel}')]//..//input[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -742,7 +742,7 @@
 </tr>
 <tr>
 	<td>TEXT_SPECIFIC</td>
-	<td>//label[contains(.,'Text')]/following-sibling::input[1]</td>
+	<td>//label[contains(.,'Text')]/following-sibling::input[1] | //label[contains(.,'Text')]//..//input[1]</td>
 	<td></td>
 </tr>
 <tr>

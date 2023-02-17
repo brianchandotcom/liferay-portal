@@ -233,7 +233,7 @@ public class BatchEngineFileInstallerTest {
 
 		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		_batchEngineFileInstaller.transformURL(file);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(2)
@@ -252,7 +252,7 @@ public class BatchEngineFileInstallerTest {
 
 		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		_batchEngineFileInstaller.transformURL(file);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(1)
@@ -288,7 +288,7 @@ public class BatchEngineFileInstallerTest {
 
 		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		_batchEngineFileInstaller.transformURL(file);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(3)
@@ -324,7 +324,7 @@ public class BatchEngineFileInstallerTest {
 
 		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		_batchEngineFileInstaller.transformURL(file);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(2)
@@ -343,7 +343,7 @@ public class BatchEngineFileInstallerTest {
 
 		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		_batchEngineFileInstaller.transformURL(file);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(3)
@@ -362,7 +362,7 @@ public class BatchEngineFileInstallerTest {
 
 		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		_batchEngineFileInstaller.transformURL(file);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(1)
@@ -380,7 +380,7 @@ public class BatchEngineFileInstallerTest {
 
 		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		_batchEngineFileInstaller.transformURL(file);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(2)

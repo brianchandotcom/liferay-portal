@@ -377,7 +377,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
 			(InfoItemItemSelectorCriterion)_itemSelectorCriterion;
 
-		long fileEntryTypeId = GetterUtil.getLong(
+		Long fileEntryTypeId = GetterUtil.getLong(
 			infoItemItemSelectorCriterion.getItemSubtype(), -1);
 
 		DLFileEntryType dlFileEntryType = null;
@@ -395,7 +395,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return fileEntryTypeId;
 	}
 
-	private long _getFileEntryTypeId(String fileEntryTypeKey) {
+	private Long _getFileEntryTypeId(String fileEntryTypeKey) {
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.fetchFileEntryType(
 				_themeDisplay.getScopeGroupId(), fileEntryTypeKey);
@@ -409,7 +409,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			return dlFileEntryType.getFileEntryTypeId();
 		}
 
-		return 0;
+		return null;
 	}
 
 	private long _getFolderId(HttpServletRequest httpServletRequest)

@@ -436,6 +436,34 @@ public class ObjectDefinition implements Serializable {
 	protected Map<String, String> label;
 
 	@Schema
+	public Boolean getModifiable() {
+		return modifiable;
+	}
+
+	public void setModifiable(Boolean modifiable) {
+		this.modifiable = modifiable;
+	}
+
+	@JsonIgnore
+	public void setModifiable(
+		UnsafeSupplier<Boolean, Exception> modifiableUnsafeSupplier) {
+
+		try {
+			modifiable = modifiableUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean modifiable;
+
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -1130,6 +1158,16 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"label\": ");
 
 			sb.append(_toJSON(label));
+		}
+
+		if (modifiable != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modifiable\": ");
+
+			sb.append(modifiable);
 		}
 
 		if (name != null) {

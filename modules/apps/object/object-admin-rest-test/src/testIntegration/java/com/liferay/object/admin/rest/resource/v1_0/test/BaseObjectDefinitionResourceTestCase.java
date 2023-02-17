@@ -1198,6 +1198,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("modifiable", additionalAssertFieldName)) {
+				if (objectDefinition.getModifiable() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (objectDefinition.getName() == null) {
 					valid = false;
@@ -1616,6 +1624,17 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!equals(
 						(Map)objectDefinition1.getLabel(),
 						(Map)objectDefinition2.getLabel())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("modifiable", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectDefinition1.getModifiable(),
+						objectDefinition2.getModifiable())) {
 
 					return false;
 				}
@@ -2067,6 +2086,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("modifiable")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
 			sb.append(String.valueOf(objectDefinition.getName()));
@@ -2237,6 +2261,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				modifiable = RandomTestUtil.randomBoolean();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				panelAppOrder = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

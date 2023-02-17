@@ -41,8 +41,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
@@ -423,14 +421,11 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 	private List<String> _getScopeAliasesList(
 		Collection<OAuth2ScopeGrant> oAuth2ScopeGrants) {
 
-		Stream<OAuth2ScopeGrant> stream = oAuth2ScopeGrants.stream();
+		Set<String> scopeAliases = new HashSet<>();
 
-		Set<String> scopeAliases = stream.flatMap(
-			oa2sg -> oa2sg.getScopeAliasesList(
-			).stream()
-		).collect(
-			Collectors.toSet()
-		);
+		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
+			scopeAliases.addAll(oAuth2ScopeGrant.getScopeAliasesList());
+		}
 
 		return new ArrayList<>(scopeAliases);
 	}

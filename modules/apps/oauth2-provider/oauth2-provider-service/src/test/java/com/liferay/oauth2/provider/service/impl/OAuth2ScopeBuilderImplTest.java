@@ -30,7 +30,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 import org.apache.commons.compress.utils.Sets;
 
@@ -234,17 +233,24 @@ public class OAuth2ScopeBuilderImplTest {
 			simpeEntryScopeAliases2.toString(), simpeEntryScopeAliases1.size(),
 			simpeEntryScopeAliases2.size());
 
-		Set<Map.Entry<Map.Entry<String, String>, Set<String>>> entrySet =
-			simpeEntryScopeAliases1.entrySet();
+		boolean equal = true;
 
-		Stream<Map.Entry<Map.Entry<String, String>, Set<String>>> stream =
-			entrySet.stream();
+		for (Map.Entry<Map.Entry<String, String>, Set<String>> entry :
+				simpeEntryScopeAliases1.entrySet()) {
 
-		Assert.assertTrue(
-			stream.allMatch(
-				entry -> Objects.equals(
-					entry.getValue(),
-					simpeEntryScopeAliases2.get(entry.getKey()))));
+			if (Objects.equals(
+					simpeEntryScopeAliases2.get(entry.getKey()),
+					entry.getValue())) {
+
+				continue;
+			}
+
+			equal = false;
+
+			break;
+		}
+
+		Assert.assertTrue(equal);
 
 		// Test separate calls result in each scope mapping to a different scope
 		// alias

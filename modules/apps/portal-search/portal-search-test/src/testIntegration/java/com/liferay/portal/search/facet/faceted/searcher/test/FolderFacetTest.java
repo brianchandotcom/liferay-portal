@@ -208,12 +208,12 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 		List<String> dlFolderIds = Arrays.asList(
 			ArrayUtil.append(getFolderIds(_dlFolders), StringPool.BLANK));
 
-		Map<String, Integer> map = toMap(dlFolderIds, 1);
+		Map<String, Integer> expected = toMap(dlFolderIds, 1);
 
-		map.put(StringPool.BLANK, 2);
+		expected.put(StringPool.BLANK, 2);
 
 		FacetsAssert.assertFrequencies(
-			facet.getFieldName(), searchContext, hits, map);
+			facet.getFieldName(), searchContext, hits, expected);
 	}
 
 	protected void assertEntryClassNames(

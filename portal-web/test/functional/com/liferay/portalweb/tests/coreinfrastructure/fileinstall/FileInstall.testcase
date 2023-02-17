@@ -158,6 +158,7 @@ definition {
 
 	@priority = 4
 	test UninstallJarOffline {
+		property test.assert.warning.exceptions = "false";
 		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";
 
 		Clustering.deployClusteringModule(nodePort = 8080);

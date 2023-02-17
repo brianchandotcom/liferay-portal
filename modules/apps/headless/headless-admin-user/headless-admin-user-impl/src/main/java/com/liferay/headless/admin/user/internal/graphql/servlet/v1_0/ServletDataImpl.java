@@ -502,6 +502,10 @@ public class ServletDataImpl implements ServletData {
 							UserAccountResourceImpl.class,
 							"putUserAccountBatch"));
 					put(
+						"mutation#createProfileImage",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class, "postProfileImage"));
+					put(
 						"mutation#createUserGroup",
 						new ObjectValuePair<>(
 							UserGroupResourceImpl.class, "postUserGroup"));

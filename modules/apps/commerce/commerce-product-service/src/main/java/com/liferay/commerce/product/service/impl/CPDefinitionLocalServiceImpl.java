@@ -781,12 +781,9 @@ public class CPDefinitionLocalServiceImpl
 			newCPInstance.setCPDefinitionId(newCPDefinitionId);
 			newCPInstance.setCPInstanceUuid(_portalUUID.generate());
 
-			List<CPInstanceOptionValueRel> cpInstanceOptionValueRels =
-				_cpInstanceOptionValueRelPersistence.findByCPInstanceId(
-					cpInstance.getCPInstanceId());
-
 			for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
-					cpInstanceOptionValueRels) {
+					_cpInstanceOptionValueRelPersistence.findByCPInstanceId(
+						cpInstance.getCPInstanceId())) {
 
 				CPInstanceOptionValueRel newCPInstanceOptionValueRel =
 					(CPInstanceOptionValueRel)cpInstanceOptionValueRel.clone();
@@ -816,13 +813,9 @@ public class CPDefinitionLocalServiceImpl
 					newCPInstanceOptionValueRel.setCPDefinitionOptionRelId(
 						cpDefinitionOptionRelId);
 
-					List<CPDefinitionOptionValueRel>
-						cpDefinitionOptionValueRels =
-							cpDefinitionOptionRel.
-								getCPDefinitionOptionValueRels();
-
 					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-							cpDefinitionOptionValueRels) {
+							cpDefinitionOptionRel.
+								getCPDefinitionOptionValueRels()) {
 
 						if (cpDefinitionOptionRelId !=
 								cpDefinitionOptionValueRel.
@@ -1167,12 +1160,9 @@ public class CPDefinitionLocalServiceImpl
 			newCPInstance.setCPDefinitionId(newCPDefinitionId);
 			newCPInstance.setCPInstanceUuid(cpInstance.getCPInstanceUuid());
 
-			List<CPInstanceOptionValueRel> cpInstanceOptionValueRels =
-				_cpInstanceOptionValueRelPersistence.findByCPInstanceId(
-					cpInstance.getCPInstanceId());
-
 			for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
-					cpInstanceOptionValueRels) {
+					_cpInstanceOptionValueRelPersistence.findByCPInstanceId(
+						cpInstance.getCPInstanceId())) {
 
 				CPInstanceOptionValueRel newCPInstanceOptionValueRel =
 					(CPInstanceOptionValueRel)cpInstanceOptionValueRel.clone();
@@ -1202,13 +1192,9 @@ public class CPDefinitionLocalServiceImpl
 					newCPInstanceOptionValueRel.setCPDefinitionOptionRelId(
 						cpDefinitionOptionRelId);
 
-					List<CPDefinitionOptionValueRel>
-						cpDefinitionOptionValueRels =
-							cpDefinitionOptionRel.
-								getCPDefinitionOptionValueRels();
-
 					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-							cpDefinitionOptionValueRels) {
+							cpDefinitionOptionRel.
+								getCPDefinitionOptionValueRels()) {
 
 						if (cpDefinitionOptionRelId !=
 								cpDefinitionOptionValueRel.

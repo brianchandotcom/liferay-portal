@@ -46,7 +46,7 @@ definition {
 					userInvite = ${userInvite2});
 			}
 
-			Button.clickNoError(button = "Send");
+			Button.clickNoError(button = "Save");
 
 			if (${userMissingPublicationsRole} == "true") {
 				AssertConfirm(value1 = "You are inviting user ${userInvite} who does not have access to Publications. This user will be assigned the Publications User role to gain access to Publications.");

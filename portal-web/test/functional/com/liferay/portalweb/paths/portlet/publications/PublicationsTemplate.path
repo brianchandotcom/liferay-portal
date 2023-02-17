@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>INVITE_USERS_BUTTON</td>
-	<td>//button[contains(@class,'btn') and contains(.,'Invite Users')]</td>
+	<td>//button[contains(@class,'btn') and contains(.,'Add Users')]</td>
 	<td></td>
 </tr>
 <tr>

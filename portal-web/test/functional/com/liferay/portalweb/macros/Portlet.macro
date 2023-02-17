@@ -647,7 +647,7 @@ definition {
 			var password = "test";
 		}
 
-		if ((${appServerType} == "jboss") || (${appServerType} == "wildfly")) {
+		if ((${appServerType} == "jboss") || (${appServerType} == "weblogic") || (${appServerType} == "websphere") || (${appServerType} == "wildfly")) {
 			User.loginPG(
 				password = ${password},
 				userEmailAddress = ${userEmailAddress});

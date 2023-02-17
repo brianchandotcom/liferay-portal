@@ -49,7 +49,7 @@ public class BaseCardTag extends BaseContainerTag {
 
 	public List<DropdownItem> getActionDropdownItems() {
 		if ((_actionDropdownItems == null) && (_cardModel != null)) {
-			return _cardModel.getActionDropdownItems();
+			_actionDropdownItems = _cardModel.getActionDropdownItems();
 		}
 
 		return _actionDropdownItems;

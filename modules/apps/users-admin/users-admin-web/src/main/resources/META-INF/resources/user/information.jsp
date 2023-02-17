@@ -23,19 +23,19 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>" />
 
 <div class="form-group">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="user-display-data" /></h3>
+	<div class="sheet-subtitle"><liferay-ui:message key="user-display-data" /></div>
 
 	<liferay-util:include page="/user/user_display_data.jsp" servletContext="<%= application %>" />
 </div>
 
 <div class="form-group">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="personal-information" /></h3>
+	<div class="sheet-subtitle"><liferay-ui:message key="personal-information" /></div>
 
 	<liferay-util:include page="/user/personal_information.jsp" servletContext="<%= application %>" />
 </div>
 
 <clay:sheet-section>
-	<h3 class="sheet-subtitle"><liferay-ui:message key="more-information" /></h3>
+	<div class="sheet-subtitle"><liferay-ui:message key="more-information" /></div>
 
 	<div class="form-group">
 		<liferay-util:include page="/user/categorization.jsp" servletContext="<%= application %>" />

@@ -24,6 +24,7 @@ import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.base.CPDefinitionServiceBaseImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +42,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -427,15 +427,11 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			_commerceCatalogService.getCommerceCatalogs(
 				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		long[] groupIds = stream.mapToLong(
-			CommerceCatalog::getGroupId
-		).toArray();
-
 		return cpDefinitionLocalService.searchCPDefinitions(
-			companyId, groupIds, keywords, status, ignoreCommerceAccountGroup,
-			start, end, sort);
+			companyId,
+			TransformUtil.transformToLongArray(
+				commerceCatalogs, CommerceCatalog::getGroupId),
+			keywords, status, ignoreCommerceAccountGroup, start, end, sort);
 	}
 
 	@Override
@@ -448,15 +444,11 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			_commerceCatalogService.getCommerceCatalogs(
 				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		long[] groupIds = stream.mapToLong(
-			CommerceCatalog::getGroupId
-		).toArray();
-
 		return cpDefinitionLocalService.searchCPDefinitions(
-			companyId, groupIds, keywords, filterFields, filterValues, start,
-			end, sort);
+			companyId,
+			TransformUtil.transformToLongArray(
+				commerceCatalogs, CommerceCatalog::getGroupId),
+			keywords, filterFields, filterValues, start, end, sort);
 	}
 
 	@Override
@@ -471,14 +463,11 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			_commerceCatalogService.getCommerceCatalogs(
 				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		long[] groupIds = stream.mapToLong(
-			CommerceCatalog::getGroupId
-		).toArray();
-
 		return cpDefinitionLocalService.searchCPDefinitionsByChannelGroupId(
-			companyId, groupIds, commerceChannelGroupId, keywords, status,
+			companyId,
+			TransformUtil.transformToLongArray(
+				commerceCatalogs, CommerceCatalog::getGroupId),
+			commerceChannelGroupId, keywords, status,
 			ignoreCommerceAccountGroup, start, end, sort);
 	}
 

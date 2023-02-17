@@ -63,12 +63,49 @@ definition {
 	}
 
 	@description = "This test checks that articles can be sorted by the modified date."
-	@ignore = "Test Stub"
 	@priority = 3
 	test AssetsCanBeSortedByModifiedDate {
+		property custom.properties = "feature.flag.LPS-166643=true";
 
-		// TODO LPS-166644
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
 
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "KB Article A",
+			kbArticleTitle = "KB Article A");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "KB Article B",
+			kbArticleTitle = "KB Article B");
+
+		KBArticle.openToKBArticleInSite(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleTitle = "KB Article A",
+			siteURLKey = "guest");
+
+		KBArticle.editCP(
+			editActionToolbar = "true",
+			kbArticleTitleEdit = "KB Article A Edit");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
+
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON");
+
+		KBArticle.viewCP(
+			indexNumber = 1,
+			kbArticleContent = "KB Article A",
+			kbArticleTitle = "KB Article A Edit");
 	}
 
 	@description = "This test checks that articles can be sorted by priority."
@@ -81,12 +118,47 @@ definition {
 	}
 
 	@description = "This test checks that articles can be sorted by view count."
-	@ignore = "Test Stub"
 	@priority = 3
 	test AssetsCanBeSortedByViewCount {
+		property custom.properties = "feature.flag.LPS-166643=true";
 
-		// TODO LPS-166644
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
 
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "KB Article A",
+			kbArticleTitle = "KB Article A");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "KB Article B",
+			kbArticleTitle = "KB Article B");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		KBArticle.viewCP(
+			kbArticleContent = "KB Article A",
+			kbArticleTitle = "KB Article A");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		ManagementBar.setFilterAndOrder(filterBy = "View Count");
+
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON");
+
+		KBArticle.viewCP(
+			indexNumber = 1,
+			kbArticleContent = "KB Article A",
+			kbArticleTitle = "KB Article A");
 	}
 
 	@e2etest

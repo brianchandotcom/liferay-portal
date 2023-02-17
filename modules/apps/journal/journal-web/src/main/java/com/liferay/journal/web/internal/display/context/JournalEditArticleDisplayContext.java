@@ -689,13 +689,29 @@ public class JournalEditArticleDisplayContext {
 
 		Map<Locale, String> friendlyURLMap = _article.getFriendlyURLMap();
 
+		Group group = _themeDisplay.getScopeGroup();
+
+		List<Long> excludedGroupIds = new ArrayList<>();
+
+		excludedGroupIds.add(group.getGroupId());
+
+		if (group.isStagingGroup()) {
+			excludedGroupIds.add(group.getLiveGroupId());
+		}
+		else if (group.hasStagingGroup()) {
+			Group stagingGroup = group.getStagingGroup();
+
+			excludedGroupIds.add(stagingGroup.getGroupId());
+		}
+
 		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
 			List<Long> groupIds = friendlyURLGroupIdsMap.computeIfAbsent(
 				entry.getValue(),
-				key ->
+				key -> ListUtil.remove(
 					JournalArticleLocalServiceUtil.
 						getJournalArticleGroupIdsByUrlTitle(
-							_themeDisplay.getCompanyId(), key));
+							_themeDisplay.getCompanyId(), key),
+					excludedGroupIds));
 
 			if (!groupIds.isEmpty() &&
 				((groupIds.size() > 1) ||

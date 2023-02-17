@@ -22,8 +22,10 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>" />
 
-<div class="form-group">
-	<div class="sheet-subtitle"><liferay-ui:message key="user-display-data" /></div>
+<div aria-labelledby="<portlet:namespace />userDisplayData" class="form-group" role="group">
+	<div class="sheet-subtitle" id="<portlet:namespace />userDisplayData">
+		<liferay-ui:message key="user-display-data" />
+	</div>
 
 	<liferay-util:include page="/user/user_display_data.jsp" servletContext="<%= application %>" />
 </div>

@@ -14,6 +14,7 @@
 
 package com.liferay.segments.web.internal.portlet;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -78,9 +79,9 @@ public class SegmentsPortlet extends MVCPortlet {
 
 		SegmentsDisplayContext segmentsDisplayContext =
 			new SegmentsDisplayContext(
-				_groupLocalService, _language, _portal, _prefsProps,
-				renderRequest, renderResponse, _segmentsConfigurationProvider,
-				_segmentsEntryService);
+				_analyticsSettingsManager, _groupLocalService, _language,
+				_portal, renderRequest, renderResponse,
+				_segmentsConfigurationProvider, _segmentsEntryService);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT, segmentsDisplayContext);
@@ -99,6 +100,9 @@ public class SegmentsPortlet extends MVCPortlet {
 
 		return new String[0];
 	}
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

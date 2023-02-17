@@ -14,6 +14,8 @@
 
 package com.liferay.segments.web.internal.display.context;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -47,7 +49,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -81,16 +82,16 @@ import javax.servlet.http.HttpServletRequest;
 public class SegmentsDisplayContext {
 
 	public SegmentsDisplayContext(
+		AnalyticsSettingsManager analyticsSettingsManager,
 		GroupLocalService groupLocalService, Language language, Portal portal,
-		PrefsProps prefsProps, RenderRequest renderRequest,
-		RenderResponse renderResponse,
+		RenderRequest renderRequest, RenderResponse renderResponse,
 		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		SegmentsEntryService segmentsEntryService) {
 
+		_analyticsSettingsManager = analyticsSettingsManager;
 		_groupLocalService = groupLocalService;
 		_language = language;
 		_portal = portal;
-		_prefsProps = prefsProps;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_segmentsConfigurationProvider = segmentsConfigurationProvider;
@@ -415,7 +416,9 @@ public class SegmentsDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public String getSegmentsEntryURL(SegmentsEntry segmentsEntry) {
+	public String getSegmentsEntryURL(SegmentsEntry segmentsEntry)
+		throws ConfigurationException {
+
 		if (segmentsEntry == null) {
 			return StringPool.BLANK;
 		}
@@ -425,14 +428,18 @@ public class SegmentsDisplayContext {
 				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND) &&
 			Validator.isNull(segmentsEntry.getCriteria())) {
 
-			String asahFaroURL = _prefsProps.getString(
-				segmentsEntry.getCompanyId(), "liferayAnalyticsURL");
+			AnalyticsConfiguration analyticsConfiguration =
+				_analyticsSettingsManager.getAnalyticsConfiguration(
+					segmentsEntry.getCompanyId());
 
-			if (Validator.isNull(asahFaroURL)) {
+			String liferayAnalyticsURL =
+				analyticsConfiguration.liferayAnalyticsURL();
+
+			if (Validator.isNull(liferayAnalyticsURL)) {
 				return StringPool.BLANK;
 			}
 
-			return asahFaroURL + "/contacts/segments/" +
+			return liferayAnalyticsURL + "/contacts/segments/" +
 				segmentsEntry.getSegmentsEntryKey();
 		}
 
@@ -476,14 +483,8 @@ public class SegmentsDisplayContext {
 		return searchContainer.getTotal();
 	}
 
-	public boolean isAsahEnabled(long companyId) {
-		if (Validator.isNotNull(
-				_prefsProps.getString(companyId, "liferayAnalyticsURL"))) {
-
-			return true;
-		}
-
-		return false;
+	public boolean isAsahEnabled(long companyId) throws Exception {
+		return _analyticsSettingsManager.isAnalyticsEnabled(companyId);
 	}
 
 	public boolean isDisabledManagementBar() throws PortalException {
@@ -761,6 +762,7 @@ public class SegmentsDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsDisplayContext.class);
 
+	private final AnalyticsSettingsManager _analyticsSettingsManager;
 	private String _displayStyle;
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
@@ -770,7 +772,6 @@ public class SegmentsDisplayContext {
 	private String _orderByType;
 	private final PermissionChecker _permissionChecker;
 	private final Portal _portal;
-	private final PrefsProps _prefsProps;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<SegmentsEntry> _searchContainer;

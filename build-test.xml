@@ -14779,7 +14779,7 @@ mail.send.blacklist=</echo>
 			<elseif>
 				<equals arg1="${rebuild.staging.database}" arg2="true" />
 				<then>
-					<ant antfile="build-test-staging-mysql.xml" target="rebuild-staging-database" />
+					<ant antfile="build-test-staging.xml" target="rebuild-staging-database" />
 				</then>
 			</elseif>
 			<else>

@@ -220,9 +220,12 @@ public abstract class BaseBuild implements Build {
 
 			});
 
-		if ((downstreamBuilds != null) && !downstreamBuilds.isEmpty()) {
-			for (Build downstreamBuild : downstreamBuilds) {
-				archiveCallables.addAll(downstreamBuild.getArchiveCallables());
+		synchronized (downstreamBuilds) {
+			if ((downstreamBuilds != null) && !downstreamBuilds.isEmpty()) {
+				for (Build downstreamBuild : downstreamBuilds) {
+					archiveCallables.addAll(
+						downstreamBuild.getArchiveCallables());
+				}
 			}
 		}
 
@@ -838,13 +841,15 @@ public abstract class BaseBuild implements Build {
 			return filteredDownstreamBuilds;
 		}
 
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (((status == null) ||
-				 status.equals(downstreamBuild.getStatus())) &&
-				((result == null) ||
-				 result.equals(downstreamBuild.getResult()))) {
+		synchronized (downstreamBuilds) {
+			for (Build downstreamBuild : downstreamBuilds) {
+				if (((status == null) ||
+					 status.equals(downstreamBuild.getStatus())) &&
+					((result == null) ||
+					 result.equals(downstreamBuild.getResult()))) {
 
-				filteredDownstreamBuilds.add(downstreamBuild);
+					filteredDownstreamBuilds.add(downstreamBuild);
+				}
 			}
 		}
 
@@ -1275,11 +1280,13 @@ public abstract class BaseBuild implements Build {
 	public List<Build> getModifiedDownstreamBuildsByStatus(String status) {
 		List<Build> modifiedDownstreamBuilds = new ArrayList<>();
 
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (downstreamBuild.isBuildModified() ||
-				downstreamBuild.hasModifiedDownstreamBuilds()) {
+		synchronized (downstreamBuilds) {
+			for (Build downstreamBuild : downstreamBuilds) {
+				if (downstreamBuild.isBuildModified() ||
+					downstreamBuild.hasModifiedDownstreamBuilds()) {
 
-				modifiedDownstreamBuilds.add(downstreamBuild);
+					modifiedDownstreamBuilds.add(downstreamBuild);
+				}
 			}
 		}
 
@@ -1791,9 +1798,11 @@ public abstract class BaseBuild implements Build {
 			}
 		}
 
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (downstreamBuild.hasBuildURL(buildURL)) {
-				return true;
+		synchronized (downstreamBuilds) {
+			for (Build downstreamBuild : downstreamBuilds) {
+				if (downstreamBuild.hasBuildURL(buildURL)) {
+					return true;
+				}
 			}
 		}
 
@@ -2154,77 +2163,81 @@ public abstract class BaseBuild implements Build {
 				if (downstreamBuilds != null) {
 					List<Callable<Object>> callables = new ArrayList<>();
 
-					for (final Build downstreamBuild : downstreamBuilds) {
-						Callable<Object> callable = new Callable<Object>() {
+					synchronized (downstreamBuilds) {
+						for (final Build downstreamBuild : downstreamBuilds) {
+							Callable<Object> callable = new Callable<Object>() {
 
-							@Override
-							public Object call() {
-								downstreamBuild.update();
+								@Override
+								public Object call() {
+									downstreamBuild.update();
 
-								return null;
-							}
-
-						};
-
-						callables.add(callable);
-					}
-
-					ParallelExecutor<Object> parallelExecutor =
-						new ParallelExecutor<>(callables, getExecutorService());
-
-					parallelExecutor.execute();
-
-					String result = getResult();
-
-					if ((downstreamBuilds.size() == getDownstreamBuildCount(
-							"completed")) &&
-						(result != null)) {
-
-						setResult(result);
-					}
-
-					findDownstreamBuilds();
-
-					if ((result == null) || result.equals("SUCCESS")) {
-						return;
-					}
-
-					JenkinsSlave jenkinsSlave = getJenkinsSlave();
-
-					if (jenkinsSlave != null) {
-						jenkinsSlave.update();
-
-						if (!fromArchive && !jenkinsSlave.isOffline()) {
-							for (SlaveOfflineRule slaveOfflineRule :
-									slaveOfflineRules) {
-
-								if (!slaveOfflineRule.matches(this)) {
-									continue;
+									return null;
 								}
 
-								takeSlaveOffline(slaveOfflineRule);
+							};
 
-								break;
+							callables.add(callable);
+						}
+
+						ParallelExecutor<Object> parallelExecutor =
+							new ParallelExecutor<>(
+								callables, getExecutorService());
+
+						parallelExecutor.execute();
+
+						String result = getResult();
+
+						if ((downstreamBuilds.size() == getDownstreamBuildCount(
+								"completed")) &&
+							(result != null)) {
+
+							setResult(result);
+						}
+
+						findDownstreamBuilds();
+
+						if ((result == null) || result.equals("SUCCESS")) {
+							return;
+						}
+
+						JenkinsSlave jenkinsSlave = getJenkinsSlave();
+
+						if (jenkinsSlave != null) {
+							jenkinsSlave.update();
+
+							if (!fromArchive && !jenkinsSlave.isOffline()) {
+								for (SlaveOfflineRule slaveOfflineRule :
+										slaveOfflineRules) {
+
+									if (!slaveOfflineRule.matches(this)) {
+										continue;
+									}
+
+									takeSlaveOffline(slaveOfflineRule);
+
+									break;
+								}
 							}
 						}
-					}
 
-					if (this instanceof AxisBuild ||
-						this instanceof BatchBuild ||
-						this instanceof TopLevelBuild || fromArchive ||
-						(badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX)) {
+						if (this instanceof AxisBuild ||
+							this instanceof BatchBuild ||
+							this instanceof TopLevelBuild || fromArchive ||
+							(badBuildNumbers.size() >=
+								REINVOCATIONS_SIZE_MAX)) {
 
-						return;
-					}
-
-					for (ReinvokeRule reinvokeRule : reinvokeRules) {
-						if (!reinvokeRule.matches(this)) {
-							continue;
+							return;
 						}
 
-						reinvoke(reinvokeRule);
+						for (ReinvokeRule reinvokeRule : reinvokeRules) {
+							if (!reinvokeRule.matches(this)) {
+								continue;
+							}
 
-						break;
+							reinvoke(reinvokeRule);
+
+							break;
+						}
 					}
 				}
 			}
@@ -3874,10 +3887,12 @@ public abstract class BaseBuild implements Build {
 	protected static final SimpleDateFormat stopWatchTimestampSimpleDateFormat =
 		new SimpleDateFormat("MM-dd-yyyy HH:mm:ss:SSS z");
 
-	protected List<Integer> badBuildNumbers = new ArrayList<>();
+	protected final List<Integer> badBuildNumbers =
+		Collections.synchronizedList(new ArrayList<Integer>());
 	protected String branchName;
 	protected int consoleReadCursor;
-	protected List<Build> downstreamBuilds = new ArrayList<>();
+	protected final List<Build> downstreamBuilds = Collections.synchronizedList(
+		new ArrayList<Build>());
 	protected boolean fromArchive;
 	protected boolean fromCompletedBuild;
 	protected String gitRepositoryName;
@@ -3889,7 +3904,8 @@ public abstract class BaseBuild implements Build {
 	protected List<SlaveOfflineRule> slaveOfflineRules =
 		SlaveOfflineRule.getSlaveOfflineRules();
 	protected Long startTime;
-	protected Map<String, Long> statusDurations = new HashMap<>();
+	protected final Map<String, Long> statusDurations =
+		Collections.synchronizedMap(new HashMap<String, Long>());
 	protected long statusModifiedTime;
 	protected Element upstreamJobFailureMessageElement;
 

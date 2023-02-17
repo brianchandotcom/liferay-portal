@@ -32,7 +32,7 @@ expect {
 }
 
 expect {
-	"show - Show the verify process name if the verify process exists\r\r\n   scope: verify" {}
+	"show - Show the verify process class name via module's symbolic name\r\r\n   scope: verify" {}
 	timeout {send_user "No available command verify:show";exit 2}
 }
 
@@ -47,7 +47,7 @@ expect {
 }
 
 expect {
-	"execute - Execute a specific verify process\r\r\n   scope: verify" {}
+	"execute - Execute a module's verify process via symbolic name\r\r\n   scope: verify" {}
 	timeout {send_user "No available command verify:execute";exit 2}
 }
 
@@ -77,7 +77,7 @@ expect {
 }
 
 expect {
-	"execute - Execute a specific verify process" {send "help verify:executeAll\r"}
+	"execute - Execute a module's verify process via symbolic name" {send "help verify:executeAll\r"}
 	timeout {send_user "No help output for command verify:execute";exit 2}
 }
 
@@ -92,6 +92,6 @@ expect {
 }
 
 expect {
-	"show - Show the verify process name if the verify process exists" {send_user "PASS"}
+	"show - Show the verify process class name via module's symbolic name" {send_user "PASS"}
 	timeout {send_user "No help output for command verify:show";exit 2}
 }

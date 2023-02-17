@@ -16,6 +16,7 @@ package com.liferay.commerce.product.internal.search.spi.model.query.contributor
 
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -27,7 +28,6 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,11 +82,8 @@ public class CPDefinitionModelPreFilterContributor
 			return new long[0];
 		}
 
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		return stream.mapToLong(
-			commerceCatalog -> commerceCatalog.getCommerceCatalogId()
-		).toArray();
+		return TransformUtil.transformToLongArray(
+			commerceCatalogs, CommerceCatalog::getCommerceCatalogId);
 	}
 
 	private boolean _isIndexersSuppressed(SearchContext searchContext) {

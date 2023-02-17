@@ -81,6 +81,7 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -151,11 +152,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -804,19 +801,14 @@ public class CPDefinitionLocalServiceImpl
 					_cpDefinitionOptionRelPersistence.findByPrimaryKey(
 						cpInstanceOptionValueRel.getCPDefinitionOptionRelId());
 
-				Stream<CPDefinitionOptionRel> cpDefinitionOptionRelStream =
-					newCPDefinitionOptionRels.stream();
+				for (CPDefinitionOptionRel newCPDefinitionOptionRel :
+						newCPDefinitionOptionRels) {
 
-				Optional<CPDefinitionOptionRel> cpDefinitionOptionRelOptional =
-					cpDefinitionOptionRelStream.filter(
-						curCPDefinitionOptionRel ->
-							cpDefinitionOptionRel.getCPOptionId() ==
-								curCPDefinitionOptionRel.getCPOptionId()
-					).findFirst();
+					if (cpDefinitionOptionRel.getCPOptionId() !=
+							newCPDefinitionOptionRel.getCPOptionId()) {
 
-				if (cpDefinitionOptionRelOptional.isPresent()) {
-					CPDefinitionOptionRel newCPDefinitionOptionRel =
-						cpDefinitionOptionRelOptional.get();
+						continue;
+					}
 
 					long cpDefinitionOptionRelId =
 						newCPDefinitionOptionRel.getCPDefinitionOptionRelId();
@@ -829,28 +821,25 @@ public class CPDefinitionLocalServiceImpl
 							cpDefinitionOptionRel.
 								getCPDefinitionOptionValueRels();
 
-					Stream<CPDefinitionOptionValueRel>
-						cpDefinitionOptionValueRelsStream =
-							cpDefinitionOptionValueRels.stream();
+					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+							cpDefinitionOptionValueRels) {
 
-					Optional<CPDefinitionOptionValueRel>
-						cpDefinitionOptionValueRelOptional =
-							cpDefinitionOptionValueRelsStream.filter(
-								curCPDefinitionOptionValueRel ->
-									cpDefinitionOptionRelId ==
-										curCPDefinitionOptionValueRel.
-											getCPDefinitionOptionRelId()
-							).findFirst();
+						if (cpDefinitionOptionRelId !=
+								cpDefinitionOptionValueRel.
+									getCPDefinitionOptionRelId()) {
 
-					if (cpDefinitionOptionValueRelOptional.isPresent()) {
-						CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-							cpDefinitionOptionValueRelOptional.get();
+							continue;
+						}
 
 						newCPInstanceOptionValueRel.
 							setCPInstanceOptionValueRelId(
 								cpDefinitionOptionValueRel.
 									getCPDefinitionOptionValueRelId());
+
+						break;
 					}
+
+					break;
 				}
 
 				_cpInstanceOptionValueRelLocalService.
@@ -1198,19 +1187,14 @@ public class CPDefinitionLocalServiceImpl
 					_cpDefinitionOptionRelPersistence.findByPrimaryKey(
 						cpInstanceOptionValueRel.getCPDefinitionOptionRelId());
 
-				Stream<CPDefinitionOptionRel> cpDefinitionOptionRelStream =
-					newCPDefinitionOptionRels.stream();
+				for (CPDefinitionOptionRel newCPDefinitionOptionRel :
+						newCPDefinitionOptionRels) {
 
-				Optional<CPDefinitionOptionRel> cpDefinitionOptionRelOptional =
-					cpDefinitionOptionRelStream.filter(
-						curCPDefinitionOptionRel ->
-							cpDefinitionOptionRel.getCPOptionId() ==
-								curCPDefinitionOptionRel.getCPOptionId()
-					).findFirst();
+					if (cpDefinitionOptionRel.getCPOptionId() !=
+							newCPDefinitionOptionRel.getCPOptionId()) {
 
-				if (cpDefinitionOptionRelOptional.isPresent()) {
-					CPDefinitionOptionRel newCPDefinitionOptionRel =
-						cpDefinitionOptionRelOptional.get();
+						continue;
+					}
 
 					long cpDefinitionOptionRelId =
 						newCPDefinitionOptionRel.getCPDefinitionOptionRelId();
@@ -1223,28 +1207,25 @@ public class CPDefinitionLocalServiceImpl
 							cpDefinitionOptionRel.
 								getCPDefinitionOptionValueRels();
 
-					Stream<CPDefinitionOptionValueRel>
-						cpDefinitionOptionValueRelsStream =
-							cpDefinitionOptionValueRels.stream();
+					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+							cpDefinitionOptionValueRels) {
 
-					Optional<CPDefinitionOptionValueRel>
-						cpDefinitionOptionValueRelOptional =
-							cpDefinitionOptionValueRelsStream.filter(
-								curCPDefinitionOptionValueRel ->
-									cpDefinitionOptionRelId ==
-										curCPDefinitionOptionValueRel.
-											getCPDefinitionOptionRelId()
-							).findFirst();
+						if (cpDefinitionOptionRelId !=
+								cpDefinitionOptionValueRel.
+									getCPDefinitionOptionRelId()) {
 
-					if (cpDefinitionOptionValueRelOptional.isPresent()) {
-						CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-							cpDefinitionOptionValueRelOptional.get();
+							continue;
+						}
 
 						newCPInstanceOptionValueRel.
 							setCPInstanceOptionValueRelId(
 								cpDefinitionOptionValueRel.
 									getCPDefinitionOptionValueRelId());
+
+						break;
 					}
+
+					break;
 				}
 
 				_cpInstanceOptionValueRelLocalService.
@@ -1341,17 +1322,12 @@ public class CPDefinitionLocalServiceImpl
 						cProduct.getCProductId(), 0);
 				}
 				else {
-					Stream<CPDefinition> cpDefinitionsStream =
-						cpDefinitions.stream();
-
 					List<CPDefinition> lastApprovedCPDefinitions =
-						cpDefinitionsStream.filter(
+						ListUtil.filter(
+							cpDefinitions,
 							curCPDefinition ->
 								curCPDefinition.getCPDefinitionId() !=
-									cpDefinition.getCPDefinitionId()
-						).collect(
-							Collectors.toList()
-						);
+									cpDefinition.getCPDefinitionId());
 
 					if (ListUtil.isEmpty(lastApprovedCPDefinitions)) {
 						_cProductLocalService.updatePublishedCPDefinitionId(
@@ -1842,12 +1818,9 @@ public class CPDefinitionLocalServiceImpl
 				searchContext.setAttribute(fieldName, StringUtil.merge(values));
 
 				if (fieldName.equals("assetCategoryIds")) {
-					Stream<String> stream = Arrays.stream(values);
-
-					LongStream longStream = stream.mapToLong(
-						GetterUtil::getLong);
-
-					searchContext.setAssetCategoryIds(longStream.toArray());
+					searchContext.setAssetCategoryIds(
+						TransformUtil.transformToLongArray(
+							Arrays.asList(values), GetterUtil::getLong));
 				}
 
 				facets.add(multiValueFacet);

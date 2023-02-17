@@ -39,6 +39,14 @@ const getInitialFormValues = (
 			requestAmount: budget.cost,
 			selected: false,
 		})),
+		claimed: activity.actToMDFClmActs
+			?.map((mdfClaimActivity) => {
+				return (
+					mdfClaimActivity?.r_mdfClmToMDFClmActs_c_mdfClaim
+						?.mdfClaimStatus.key !== 'draft'
+				);
+			})
+			.includes(true),
 		id: activity.id,
 		metrics: '',
 		name: activity.name,

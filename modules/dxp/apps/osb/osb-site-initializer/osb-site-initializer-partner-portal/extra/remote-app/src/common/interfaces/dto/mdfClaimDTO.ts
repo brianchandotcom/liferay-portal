@@ -10,6 +10,7 @@
  */
 
 import AccountEntry from '../accountEntry';
+import LiferayPicklist from '../liferayPicklist';
 import MDFClaim from '../mdfClaim';
 
 export default interface MDFClaimDTO
@@ -17,6 +18,7 @@ export default interface MDFClaimDTO
 	amountClaimed?: number;
 	companyName?: string;
 	externalReferenceCodeSF?: string;
+	mdfClaimStatus: LiferayPicklist;
 	mdfRequestExternalReferenceCodeSF?: string;
 	mdfRequestTotalCostOfExpense?: number;
 	mdfRequestedAmount?: number;

@@ -11,6 +11,7 @@
 
 import MDFRequestActivity from '../mdfRequestActivity';
 import MDFRequestActivityDescription from '../mdfRequestActivityDescription';
+import MDFClaimActivityDTO from './mdfClaimActivityDTO';
 import MDFRequestBudgetDTO from './mdfRequestBudgetDTO';
 
 type MDFRequestActivityDTO = Omit<
@@ -19,6 +20,7 @@ type MDFRequestActivityDTO = Omit<
 > &
 	Omit<MDFRequestActivityDescription, 'leadFollowUpStrategies'> & {
 		actToBgts?: MDFRequestBudgetDTO[];
+		actToMDFClmActs?: MDFClaimActivityDTO[];
 		externalReferenceCodeSF?: string;
 		leadFollowUpStrategies?: string;
 		mdfRequestExternalReferenceCodeSF?: string;

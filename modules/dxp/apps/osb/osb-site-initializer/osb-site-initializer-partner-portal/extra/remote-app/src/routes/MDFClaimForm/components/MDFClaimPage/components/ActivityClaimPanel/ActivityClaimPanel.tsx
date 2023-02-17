@@ -37,13 +37,20 @@ interface IProps {
 const ActivityStatus = {
 	ACTIVE: 'active',
 	APPROVED: 'approved',
+	CLAIMED: 'claimed',
 	EXPIRED: 'expired',
+	UNCLAIMED: 'unclaimed',
 };
 
 const activityStatusClassName = {
 	[ActivityStatus.ACTIVE]: 'label label-tonal-success ml-2',
 	[ActivityStatus.APPROVED]: 'label label-tonal-success ml-2',
 	[ActivityStatus.EXPIRED]: 'label label-tonal-danger ml-2',
+};
+
+const activityClaimStatusClassName = {
+	[ActivityStatus.CLAIMED]: 'ml-3 label label-tonal-info ml-2',
+	[ActivityStatus.UNCLAIMED]: 'ml-3 label label-tonal-danger ml-2',
 };
 
 const ActivityClaimPanel = ({
@@ -100,7 +107,22 @@ const ActivityClaimPanel = ({
 							{activity.name} ({activity.id})
 						</h5>
 
-						<p className="align-items-center d-flex mb-1">
+						<p className="align-items-center d-flex mb-1 text-neutral-7 text-weight-semi-bold">
+							Claim Status:
+							<div
+								className={
+									activityClaimStatusClassName[
+										activity.claimed
+											? 'claimed'
+											: 'unclaimed'
+									]
+								}
+							>
+								{activity.claimed ? 'Claimed' : 'Unclaimed'}
+							</div>
+						</p>
+
+						<p className="align-items-center d-flex mb-1 text-neutral-7 text-weight-semi-bold">
 							Activity Status:
 							<div
 								className={

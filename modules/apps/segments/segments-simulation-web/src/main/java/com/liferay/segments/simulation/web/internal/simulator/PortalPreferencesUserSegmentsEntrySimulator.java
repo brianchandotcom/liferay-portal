@@ -14,6 +14,7 @@
 
 package com.liferay.segments.simulation.web.internal.simulator;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -25,7 +26,6 @@ import com.liferay.segments.simulator.SegmentsEntrySimulator;
 
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,11 +85,8 @@ public class PortalPreferencesUserSegmentsEntrySimulator
 			return new long[0];
 		}
 
-		Stream<String> stream = Arrays.stream(simulatedSegmentsEntryIds);
-
-		return stream.mapToLong(
-			Long::valueOf
-		).toArray();
+		return TransformUtil.transformToLongArray(
+			Arrays.asList(simulatedSegmentsEntryIds), Long::valueOf);
 	}
 
 	@Override

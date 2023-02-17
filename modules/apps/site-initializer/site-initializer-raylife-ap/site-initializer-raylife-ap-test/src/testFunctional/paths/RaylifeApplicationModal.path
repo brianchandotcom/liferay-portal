@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>RaylifeApplicationModal</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RaylifeApplicationModal</td></tr>
+</thead>
+
+<tbody>
+
+<tr>
+    <td>MODAL_OPTION</td>
+    <td>//div[contains(@class,'modal-body')]//section//*[contains(.,'${key_text}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>MODAL_DESCRIPTION</td>
+    <td>//div[contains(@class,'modal-body')]//div[contains(.,'${key_text}')]</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

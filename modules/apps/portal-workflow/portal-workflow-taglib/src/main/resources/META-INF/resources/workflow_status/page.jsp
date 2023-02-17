@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<react:component
-	module="workflow_status/js/WorkflowStatus"
-	props="<%= workflowStatusDisplayContext.getData(request, locale) %>"
-/>
+<div>
+	<react:component
+		module="workflow_status/js/WorkflowStatus"
+		props="<%= workflowStatusDisplayContext.getData(request, locale) %>"
+	/>
+</div>

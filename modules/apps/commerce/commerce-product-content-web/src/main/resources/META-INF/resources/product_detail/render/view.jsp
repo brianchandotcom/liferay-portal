@@ -92,7 +92,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				<c:choose>
 					<c:when test="<%= cpSku != null %>">
 						<p class="m-0">
-							<%= cpContentHelper.getIncomingQuantityLabel(request, cpSku.getSku()) %>
+							<%= cpContentHelper.getIncomingQuantityLabel(company.getCompanyId(), locale, cpSku.getSku(), user) %>
 						</p>
 					</c:when>
 					<c:otherwise>
@@ -152,25 +152,9 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 			</h4>
 
 			<div class="product-detail-options">
-				<form data-senna-off="true" name="fm">
-					<%= cpContentHelper.renderOptions(renderRequest, renderResponse) %>
-				</form>
-
-				<liferay-portlet:actionURL name="/cp_content_web/check_cp_instance" portletName="com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet" var="checkCPInstanceURL">
-					<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
-				</liferay-portlet:actionURL>
-
-				<liferay-frontend:component
-					context='<%=
-						HashMapBuilder.<String, Object>put(
-							"actionURL", checkCPInstanceURL
-						).put(
-							"cpDefinitionId", cpDefinitionId
-						).put(
-							"namespace", liferayPortletResponse.getNamespace()
-						).build()
-					%>'
-					module="product_detail/render/js/ProductOptionsHandler"
+				<commerce-ui:option-selector
+					CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
+					namespace="<%= liferayPortletResponse.getNamespace() %>"
 				/>
 			</div>
 

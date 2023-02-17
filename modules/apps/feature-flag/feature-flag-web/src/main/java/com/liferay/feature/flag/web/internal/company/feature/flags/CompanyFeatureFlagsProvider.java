@@ -14,10 +14,8 @@
 
 package com.liferay.feature.flag.web.internal.company.feature.flags;
 
-import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
 import com.liferay.portal.instance.lifecycle.Clusterable;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 
@@ -71,11 +69,5 @@ public class CompanyFeatureFlagsProvider
 
 	private final Map<Long, CompanyFeatureFlags> _companyFeatureFlagsMap =
 		new ConcurrentHashMap<>();
-
-	@Reference
-	private FeatureFlagPreferencesManager _featureFlagPreferencesManager;
-
-	@Reference
-	private Language _language;
 
 }

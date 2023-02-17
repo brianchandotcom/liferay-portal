@@ -29,9 +29,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -94,12 +96,12 @@ public class CalendarBookingIndexerLocalizedContentTest
 		String prefix1 = "新";
 		String prefix2 = "作";
 
-		Stream.of(
-			word1, word2, prefix1, prefix2
-		).forEach(
-			keywords -> assertFieldValues(
-				"title", LocaleUtil.JAPAN, titleMap, keywords)
-		);
+		List<String> keywords = new ArrayList<>(
+			Arrays.asList(word1, word2, prefix1, prefix2));
+
+		for (String keyword : keywords) {
+			assertFieldValues("title", LocaleUtil.JAPAN, titleMap, keyword);
+		}
 	}
 
 	@Test
@@ -111,10 +113,11 @@ public class CalendarBookingIndexerLocalizedContentTest
 		String description = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 
-		Stream.of(
-			full, partial1, partial2
-		).forEach(
-			title -> addCalendarBooking(
+		List<String> titles = new ArrayList<>(
+			Arrays.asList(full, partial1, partial2));
+
+		for (String title : titles) {
+			addCalendarBooking(
 				new LocalizedValuesMap() {
 					{
 						put(LocaleUtil.JAPAN, title);
@@ -131,8 +134,8 @@ public class CalendarBookingIndexerLocalizedContentTest
 						put(LocaleUtil.US, description);
 						put(LocaleUtil.HUNGARY, description);
 					}
-				})
-		);
+				});
+		}
 
 		Map<String, String> titleMap = HashMapBuilder.put(
 			"title_ja_JP", "新規作成"
@@ -141,12 +144,11 @@ public class CalendarBookingIndexerLocalizedContentTest
 		String word1 = "新規";
 		String word2 = "作成";
 
-		Stream.of(
-			word1, word2
-		).forEach(
-			keywords -> assertFieldValues(
-				"title", LocaleUtil.JAPAN, titleMap, keywords)
-		);
+		List<String> keywords = new ArrayList<>(Arrays.asList(word1, word2));
+
+		for (String keyword : keywords) {
+			assertFieldValues("title", LocaleUtil.JAPAN, titleMap, keyword);
+		}
 	}
 
 	protected CalendarBooking addCalendarBooking(

@@ -16,24 +16,30 @@ package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.convert
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.Locale;
 
+import javax.ws.rs.core.UriInfo;
+
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 public class SkuDTOConverterContext extends DefaultDTOConverterContext {
 
 	public SkuDTOConverterContext(
-		Locale locale, long resourcePrimKey, CPDefinition cpDefinition,
-		long companyId, CommerceContext commerceContext) {
+		CommerceContext commerceContext, long companyId,
+		CPDefinition cpDefinition, Locale locale, int quantity,
+		long resourcePrimKey, UriInfo uriInfo, User user) {
 
-		super(resourcePrimKey, locale);
+		super(resourcePrimKey, locale, uriInfo, user);
 
-		_cpDefinition = cpDefinition;
-		_companyId = companyId;
 		_commerceContext = commerceContext;
+		_companyId = companyId;
+		_cpDefinition = cpDefinition;
+		_quantity = quantity;
 	}
 
 	public CommerceContext getCommerceContext() {
@@ -48,8 +54,13 @@ public class SkuDTOConverterContext extends DefaultDTOConverterContext {
 		return _cpDefinition;
 	}
 
+	public int getQuantity() {
+		return _quantity;
+	}
+
 	private final CommerceContext _commerceContext;
 	private final long _companyId;
 	private final CPDefinition _cpDefinition;
+	private final int _quantity;
 
 }

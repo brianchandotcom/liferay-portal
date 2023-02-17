@@ -11033,7 +11033,14 @@ ${update.properties}</echo>
 			</then>
 		</if>
 
-		<prepare-portal-security-audit-osgi-configuration />
+		<get-testcase-property property.name="testray.main.component.name" />
+
+		<if>
+			<equals arg1="${testray.main.component.name}" arg2="Audit" />
+			<then>
+				<prepare-portal-security-audit-osgi-configuration />
+			</then>
+		</if>
 
 		<prepare-portal-template-freemarker-osgi-configuration />
 

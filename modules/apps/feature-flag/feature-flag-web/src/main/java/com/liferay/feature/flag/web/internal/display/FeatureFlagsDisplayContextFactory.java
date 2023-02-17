@@ -129,7 +129,7 @@ public class FeatureFlagsDisplayContextFactory {
 		Predicate<FeatureFlag> finalPredicate = predicate;
 
 		CompanyFeatureFlags companyFeatureFlags =
-			_companyFeatureFlagsProvider.getCompanyFeatureFlags(
+			_companyFeatureFlagsProvider.getOrCreateCompanyFeatureFlags(
 				_portal.getCompanyId(httpServletRequest));
 
 		List<FeatureFlagDisplay> featureFlagDisplays = TransformUtil.transform(

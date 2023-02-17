@@ -11,15 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /// <reference types="react" />
-import { InputGroup, MultiSelectItem } from './types';
+
+import {InputGroup, MultiSelectItem} from './types';
 declare type OnItemsChangeFn = (items: MultiSelectItem[]) => void;
 interface IProps extends InputGroup {
-    availableAccountRoles: MultiSelectItem[];
-    index: number;
-    onAccountRoleItemsChange: OnItemsChangeFn;
-    onEmailAddressItemsChange: OnItemsChangeFn;
-    portletNamespace: string;
+	availableAccountRoles: MultiSelectItem[];
+	index: number;
+	onAccountRoleItemsChange: OnItemsChangeFn;
+	onEmailAddressItemsChange: OnItemsChangeFn;
+	portletNamespace: string;
 }
-declare const InviteUserFormGroup: ({ accountRoles, availableAccountRoles, emailAddresses, index, onAccountRoleItemsChange, onEmailAddressItemsChange, portletNamespace, }: IProps) => JSX.Element;
+declare const InviteUserFormGroup: ({
+	accountRoles,
+	availableAccountRoles,
+	emailAddresses,
+	index,
+	onAccountRoleItemsChange,
+	onEmailAddressItemsChange,
+	portletNamespace,
+}: IProps) => JSX.Element;
 export default InviteUserFormGroup;

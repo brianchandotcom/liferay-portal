@@ -11,14 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /// <reference types="react" />
-import { MultiSelectItem } from './types';
+
+import {MultiSelectItem} from './types';
 interface IProps {
-    accountEntryId: number;
-    availableAccountRoles: MultiSelectItem[];
-    inviteAccountUsersURL: string;
-    portletNamespace: string;
-    redirectURL: string;
+	accountEntryId: number;
+	availableAccountRoles: MultiSelectItem[];
+	inviteAccountUsersURL: string;
+	portletNamespace: string;
+	redirectURL: string;
 }
-declare function InviteUsersForm({ accountEntryId, availableAccountRoles, inviteAccountUsersURL, portletNamespace, redirectURL, }: IProps): JSX.Element;
+declare function InviteUsersForm({
+	accountEntryId,
+	availableAccountRoles,
+	inviteAccountUsersURL,
+	portletNamespace,
+	redirectURL,
+}: IProps): JSX.Element;
 export default InviteUsersForm;

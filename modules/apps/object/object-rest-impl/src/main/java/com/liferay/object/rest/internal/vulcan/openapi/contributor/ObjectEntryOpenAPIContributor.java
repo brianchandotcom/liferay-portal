@@ -153,7 +153,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 						}
 					}
 
-					if (_addRelatedSchemas) {
+					if (_addRelatedSchemas && (relatedSchemaName != null)) {
 						_setSchemaDescription(
 							objectRelationship, openAPI, relatedSchemaName);
 
@@ -512,16 +512,16 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			"Information about the relationship ", objectRelationship.getName(),
 			" can be embedded with \"nestedFields\".");
 
-		schema.setDescription(description);
-
 		schema.set$ref(schemaName);
 
-		if (((objectRelationship.getObjectDefinitionId1() ==
-				_objectDefinition.getObjectDefinitionId()) ||
-			 Objects.equals(
-				 objectRelationship.getType(),
-				 ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) &&
-			(schemaName != null)) {
+		if (Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY) ||
+			(Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+			 (objectRelationship.getObjectDefinitionId1() ==
+				 _objectDefinition.getObjectDefinitionId()))) {
 
 			ArraySchema arraySchema = new ArraySchema();
 
@@ -531,6 +531,8 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			return arraySchema;
 		}
+
+		schema.setDescription(description);
 
 		return schema;
 	}

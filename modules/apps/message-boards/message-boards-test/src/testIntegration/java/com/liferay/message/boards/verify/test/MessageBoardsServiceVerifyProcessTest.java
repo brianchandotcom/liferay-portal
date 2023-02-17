@@ -42,7 +42,9 @@ public class MessageBoardsServiceVerifyProcessTest
 		return _verifyProcess;
 	}
 
-	@Inject(filter = "component.name=com.liferay.message.boards.internal.verify.MessageBoardsServiceVerifyProcess")
+	@Inject(
+		filter = "component.name=com.liferay.message.boards.internal.verify.MessageBoardsServiceVerifyProcess"
+	)
 	private VerifyProcess _verifyProcess;
 
 }

@@ -19,7 +19,6 @@ import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
-import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -91,7 +90,7 @@ public class FragmentFileInstaller implements FileInstaller {
 	}
 
 	@Override
-	public URL transformURL(File file) throws AutoDeployException {
+	public URL transformURL(File file) throws Exception {
 		PermissionChecker currentPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 		String currentName = PrincipalThreadLocal.getName();
@@ -100,14 +99,6 @@ public class FragmentFileInstaller implements FileInstaller {
 
 		try {
 			_deploy(file);
-		}
-		catch (AutoDeployException autoDeployException) {
-			_log.error(autoDeployException);
-
-			throw autoDeployException;
-		}
-		catch (Exception exception) {
-			_log.error(exception);
 		}
 		finally {
 			file.delete();
@@ -129,7 +120,7 @@ public class FragmentFileInstaller implements FileInstaller {
 		JSONObject deployJSONObject = _getDeployJSONObject(file);
 
 		if (deployJSONObject == null) {
-			throw new AutoDeployException();
+			throw new Exception();
 		}
 
 		Company company = null;
@@ -154,7 +145,7 @@ public class FragmentFileInstaller implements FileInstaller {
 			List<Company> companies = _companyLocalService.getCompanies(0, 1);
 
 			if (ListUtil.isEmpty(companies)) {
-				throw new AutoDeployException();
+				throw new Exception();
 			}
 
 			company = companies.get(0);
@@ -163,7 +154,7 @@ public class FragmentFileInstaller implements FileInstaller {
 		User user = _getUser(company, group);
 
 		if (user == null) {
-			throw new AutoDeployException();
+			throw new Exception();
 		}
 
 		PermissionThreadLocal.setPermissionChecker(

@@ -244,8 +244,8 @@ public class PoshiGetterUtil {
 	}
 
 	public static Object getMethodReturnValue(
-			List<String> args, String className, String methodName,
-			Object object)
+			String testNamespacedCommandName, List<String> args,
+			String className, String methodName, Object object)
 		throws Exception {
 
 		if (!className.equals("selenium")) {
@@ -269,12 +269,16 @@ public class PoshiGetterUtil {
 
 			Object parameter = null;
 
+			PoshiVariablesContext poshiVariablesContext =
+				PoshiVariablesContext.getPoshiVariables(
+					testNamespacedCommandName);
+
 			if (matcher.matches()) {
-				parameter = PoshiVariablesUtil.getValueFromCommandMap(
+				parameter = poshiVariablesContext.getValueFromCommandMap(
 					matcher.group(1));
 			}
 			else {
-				parameter = PoshiVariablesUtil.replaceCommandVars(arg);
+				parameter = poshiVariablesContext.replaceCommandVars(arg);
 			}
 
 			if (className.endsWith("MathUtil")) {
@@ -311,7 +315,7 @@ public class PoshiGetterUtil {
 			String namespace = matcher.group("namespace");
 
 			if (Validator.isNull(namespace)) {
-				namespace = PoshiStackTraceUtil.getCurrentNamespace();
+				namespace = PoshiContext.getDefaultNamespace();
 			}
 
 			String className = matcher.group("className");
@@ -333,7 +337,7 @@ public class PoshiGetterUtil {
 			String namespace = matcher.group("namespace");
 
 			if (Validator.isNull(namespace)) {
-				namespace = PoshiStackTraceUtil.getCurrentNamespace();
+				namespace = PoshiContext.getDefaultNamespace();
 			}
 
 			return namespace;
@@ -353,7 +357,7 @@ public class PoshiGetterUtil {
 			String namespace = matcher.group("namespace");
 
 			if (Validator.isNull(namespace)) {
-				namespace = PoshiStackTraceUtil.getCurrentNamespace();
+				namespace = PoshiContext.getDefaultNamespace();
 			}
 
 			return namespace;

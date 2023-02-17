@@ -15,7 +15,6 @@
 package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.core.PoshiGetterUtil;
-import com.liferay.poshi.core.PoshiStackTraceUtil;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.util.HtmlUtil;
 
@@ -45,7 +44,7 @@ public final class XMLSyntaxLogger extends SyntaxLogger {
 			updateElementStatus(ifElement, status);
 		}
 
-		PoshiStackTraceUtil.setCurrentElement(element);
+		poshiStackTrace.setCurrentElement(element);
 	}
 
 	@Override

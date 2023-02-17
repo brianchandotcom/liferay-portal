@@ -16,7 +16,7 @@ package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.PoshiGetterUtil;
-import com.liferay.poshi.core.PoshiStackTraceUtil;
+import com.liferay.poshi.core.PoshiStackTrace;
 import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.util.Dom4JUtil;
 import com.liferay.poshi.core.util.FileUtil;
@@ -39,9 +39,14 @@ import org.dom4j.Element;
 public class PoshiLogger {
 
 	public PoshiLogger(String testNamespacedClassCommandName) throws Exception {
-		_commandLogger = new CommandLogger();
+		_commandLogger = new CommandLogger(testNamespacedClassCommandName);
 
 		_syntaxLogger = _getSyntaxLogger(testNamespacedClassCommandName);
+
+		_testNamespacedClassCommandName = testNamespacedClassCommandName;
+
+		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
+			_testNamespacedClassCommandName);
 	}
 
 	public void createPoshiReport() throws IOException {
@@ -134,9 +139,7 @@ public class PoshiLogger {
 		sb.append(currentDirName);
 		sb.append("/test-results/");
 		sb.append(
-			StringUtil.replace(
-				PoshiContext.getTestCaseNamespacedClassCommandName(), "#",
-				"_"));
+			StringUtil.replace(_testNamespacedClassCommandName, "#", "_"));
 		sb.append("/index.html");
 
 		FileUtil.write(sb.toString(), indexHTMLContent);
@@ -152,6 +155,10 @@ public class PoshiLogger {
 
 	public int getDetailsLinkId() {
 		return _commandLogger.getDetailsLinkId();
+	}
+
+	public String getTestNamespacedClassCommandName() {
+		return _testNamespacedClassCommandName;
 	}
 
 	public void logExternalMethodCommand(
@@ -269,7 +276,7 @@ public class PoshiLogger {
 
 	private LoggerElement _getSyntaxLoggerElement() {
 		return _syntaxLogger.getSyntaxLoggerElement(
-			PoshiStackTraceUtil.getSimpleStackTrace());
+			_poshiStackTrace.getSimpleStackTrace());
 	}
 
 	private void _linkLoggerElements(
@@ -295,6 +302,8 @@ public class PoshiLogger {
 
 	private final CommandLogger _commandLogger;
 	private int _functionLinkId;
+	private final PoshiStackTrace _poshiStackTrace;
 	private final SyntaxLogger _syntaxLogger;
+	private final String _testNamespacedClassCommandName;
 
 }

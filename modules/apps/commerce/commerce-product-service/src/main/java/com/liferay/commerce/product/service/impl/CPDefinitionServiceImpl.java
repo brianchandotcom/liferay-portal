@@ -423,14 +423,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			boolean ignoreCommerceAccountGroup, int start, int end, Sort sort)
 		throws PortalException {
 
-		List<CommerceCatalog> commerceCatalogs =
-			_commerceCatalogService.getCommerceCatalogs(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
 		return cpDefinitionLocalService.searchCPDefinitions(
 			companyId,
 			TransformUtil.transformToLongArray(
-				commerceCatalogs, CommerceCatalog::getGroupId),
+				_commerceCatalogService.getCommerceCatalogs(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				CommerceCatalog::getGroupId),
 			keywords, status, ignoreCommerceAccountGroup, start, end, sort);
 	}
 
@@ -440,14 +438,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			String filterValues, int start, int end, Sort sort)
 		throws PortalException {
 
-		List<CommerceCatalog> commerceCatalogs =
-			_commerceCatalogService.getCommerceCatalogs(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
 		return cpDefinitionLocalService.searchCPDefinitions(
 			companyId,
 			TransformUtil.transformToLongArray(
-				commerceCatalogs, CommerceCatalog::getGroupId),
+				_commerceCatalogService.getCommerceCatalogs(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				CommerceCatalog::getGroupId),
 			keywords, filterFields, filterValues, start, end, sort);
 	}
 
@@ -459,14 +455,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 				int end, Sort sort)
 		throws PortalException {
 
-		List<CommerceCatalog> commerceCatalogs =
-			_commerceCatalogService.getCommerceCatalogs(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
 		return cpDefinitionLocalService.searchCPDefinitionsByChannelGroupId(
 			companyId,
 			TransformUtil.transformToLongArray(
-				commerceCatalogs, CommerceCatalog::getGroupId),
+				_commerceCatalogService.getCommerceCatalogs(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				CommerceCatalog::getGroupId),
 			commerceChannelGroupId, keywords, status,
 			ignoreCommerceAccountGroup, start, end, sort);
 	}

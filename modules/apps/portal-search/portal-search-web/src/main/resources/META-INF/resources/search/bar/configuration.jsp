@@ -124,7 +124,7 @@ String suggestionsContributorConfiguration = StringBundler.concat(StringPool.OPE
 						<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
 
 						<react:component
-							module="js/components/SearchBarConfigurationSuggestions"
+							module="js/components/search_bar_configuration_suggestions/index"
 							props='<%=
 								HashMapBuilder.<String, Object>put(
 									"initialSuggestionsContributorConfiguration", suggestionsContributorConfiguration

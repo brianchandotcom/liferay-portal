@@ -148,7 +148,7 @@ class CriteriaRowReadable extends Component {
 				<b className="mr-1 text-lowercase">{criterion.value}</b>
 
 				<span className="mr-1 operator">
-					{Liferay.Language.get('time-s')}
+					{Liferay.Language.get('times')}
 				</span>
 
 				{dateCriteriaPart}

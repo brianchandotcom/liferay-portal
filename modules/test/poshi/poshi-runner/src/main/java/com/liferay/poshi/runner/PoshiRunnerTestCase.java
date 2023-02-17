@@ -17,7 +17,7 @@ package com.liferay.poshi.runner;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.PoshiValidation;
 import com.liferay.poshi.core.util.PropsUtil;
-import com.liferay.poshi.runner.selenium.SeleniumUtil;
+import com.liferay.poshi.runner.selenium.WebDriverUtil;
 
 import java.io.File;
 
@@ -37,7 +37,7 @@ public abstract class PoshiRunnerTestCase extends TestCase {
 
 		poshiRunner.test();
 
-		SeleniumUtil.stopSelenium(testName);
+		WebDriverUtil.stopWebDriver(testName);
 	}
 
 	public void setUpPoshiRunner(String testBaseDirName) throws Exception {

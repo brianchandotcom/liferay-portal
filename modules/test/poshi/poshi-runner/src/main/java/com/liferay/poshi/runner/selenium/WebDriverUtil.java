@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringPool;
@@ -57,6 +58,14 @@ import org.openqa.selenium.safari.SafariOptions;
  */
 public class WebDriverUtil extends PropsValues {
 
+	public static LiferaySelenium getLiferaySelenium(String testName) {
+		if (!_webDrivers.containsKey(testName)) {
+			startWebDriver(testName);
+		}
+
+		return (LiferaySelenium)_webDrivers.get(testName);
+	}
+
 	public static WebDriver getWebDriver(String testName) {
 		return _webDrivers.get(testName);
 	}
@@ -67,45 +76,50 @@ public class WebDriverUtil extends PropsValues {
 				"WebDriver instance already started for: " + testName);
 		}
 
+		String portalURL = PORTAL_URL;
+
+		if (TCAT_ENABLED) {
+			portalURL = "http://localhost:8180/console";
+		}
+
 		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
 			if (BROWSER_TYPE.equals("chrome")) {
-				_webDrivers.put(testName, _getChromeRemoteDriver());
-
-				return;
+				_webDrivers.put(
+					testName,
+					new ChromeWebDriverImpl(
+						portalURL, _getChromeRemoteDriver()));
 			}
-
-			if (BROWSER_TYPE.equals("edge")) {
-				_webDrivers.put(testName, _getEdgeRemoteDriver());
-
-				return;
+			else if (BROWSER_TYPE.equals("edge")) {
+				_webDrivers.put(
+					testName,
+					new EdgeWebDriverImpl(portalURL, _getEdgeRemoteDriver()));
 			}
-
-			if (BROWSER_TYPE.equals("firefox")) {
-				_webDrivers.put(testName, _getFirefoxRemoteDriver());
-
-				return;
+			else if (BROWSER_TYPE.equals("firefox")) {
+				_webDrivers.put(
+					testName,
+					new FirefoxWebDriverImpl(
+						portalURL, _getFirefoxRemoteDriver()));
 			}
-
-			if (BROWSER_TYPE.equals("internetexplorer")) {
-				_webDrivers.put(testName, _getInternetExplorerRemoteDriver());
-
-				return;
+			else if (BROWSER_TYPE.equals("internetexplorer")) {
+				_webDrivers.put(
+					testName,
+					new InternetExplorerRemoteWebDriverImpl(
+						portalURL, _getInternetExplorerRemoteDriver()));
 			}
-
-			if (BROWSER_TYPE.equals("safari")) {
-				_webDrivers.put(testName, _getSafariRemoteDriver());
-
-				return;
+			else if (BROWSER_TYPE.equals("safari")) {
+				_webDrivers.put(
+					testName,
+					new SafariWebDriverImpl(
+						portalURL, _getSafariRemoteDriver()));
 			}
 		}
 
 		if (BROWSER_TYPE.equals("chrome")) {
-			_webDrivers.put(testName, _getChromeDriver());
-
-			return;
+			_webDrivers.put(
+				testName,
+				new ChromeWebDriverImpl(portalURL, _getChromeDriver()));
 		}
-
-		if (BROWSER_TYPE.equals("edge")) {
+		else if (BROWSER_TYPE.equals("edge")) {
 			if (SELENIUM_EDGE_DRIVER_EXECUTABLE != null) {
 				System.setProperty(
 					"webdriver.edge.driver",
@@ -113,18 +127,15 @@ public class WebDriverUtil extends PropsValues {
 						SELENIUM_EDGE_DRIVER_EXECUTABLE);
 			}
 
-			_webDrivers.put(testName, _getEdgeDriver());
-
-			return;
+			_webDrivers.put(
+				testName, new EdgeWebDriverImpl(portalURL, _getEdgeDriver()));
 		}
-
-		if (BROWSER_TYPE.equals("firefox")) {
-			_webDrivers.put(testName, _getFirefoxDriver());
-
-			return;
+		else if (BROWSER_TYPE.equals("firefox")) {
+			_webDrivers.put(
+				testName,
+				new FirefoxWebDriverImpl(portalURL, _getFirefoxDriver()));
 		}
-
-		if (BROWSER_TYPE.equals("internetexplorer")) {
+		else if (BROWSER_TYPE.equals("internetexplorer")) {
 			if (SELENIUM_IE_DRIVER_EXECUTABLE != null) {
 				System.setProperty(
 					"webdriver.ie.driver",
@@ -132,24 +143,37 @@ public class WebDriverUtil extends PropsValues {
 						SELENIUM_IE_DRIVER_EXECUTABLE);
 			}
 
-			_webDrivers.put(testName, _getInternetExplorerDriver());
-
-			return;
+			_webDrivers.put(
+				testName,
+				new InternetExplorerWebDriverImpl(
+					portalURL, _getInternetExplorerDriver()));
+		}
+		else if (BROWSER_TYPE.equals("safari")) {
+			_webDrivers.put(
+				testName,
+				new SafariWebDriverImpl(portalURL, _getSafariDriver()));
 		}
 
-		if (BROWSER_TYPE.equals("safari")) {
-			_webDrivers.put(testName, _getSafariDriver());
-
-			return;
+		if (!_webDrivers.containsKey(testName)) {
+			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);
 		}
 
-		throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);
+		LiferaySelenium liferaySelenium = (LiferaySelenium)_webDrivers.get(
+			testName);
+
+		liferaySelenium.setTestName(testName);
 	}
 
 	public static void stopWebDriver(String testName) {
 		WebDriver webDriver = _webDrivers.get(testName);
 
 		if (webDriver != null) {
+			LiferaySelenium liferaySelenium = (LiferaySelenium)webDriver;
+
+			liferaySelenium.stop();
+
+			liferaySelenium.stopLogger();
+
 			webDriver.quit();
 		}
 

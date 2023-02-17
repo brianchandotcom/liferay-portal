@@ -25,7 +25,7 @@ import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
-import com.liferay.poshi.runner.selenium.SeleniumUtil;
+import com.liferay.poshi.runner.selenium.WebDriverUtil;
 import com.liferay.poshi.runner.util.ProxyUtil;
 
 import java.io.File;
@@ -195,7 +195,7 @@ public class PoshiRunner {
 			if (!GetterUtil.getBoolean(
 					properties.getProperty("disable-webdriver"))) {
 
-				SeleniumUtil.startSelenium(_testNamespacedClassCommandName);
+				WebDriverUtil.startWebDriver(_testNamespacedClassCommandName);
 			}
 
 			_runSetUp();
@@ -237,7 +237,7 @@ public class PoshiRunner {
 
 			_poshiLogger.createPoshiReport();
 
-			SeleniumUtil.stopSelenium(_testNamespacedClassCommandName);
+			WebDriverUtil.stopWebDriver(_testNamespacedClassCommandName);
 		}
 
 		if (!PropsValues.LIFERAY_DATA_GUARD_ENABLED) {

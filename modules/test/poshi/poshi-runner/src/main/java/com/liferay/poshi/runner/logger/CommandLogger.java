@@ -24,7 +24,7 @@ import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
-import com.liferay.poshi.runner.selenium.SeleniumUtil;
+import com.liferay.poshi.runner.selenium.WebDriverUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
 
 import java.io.IOException;
@@ -802,7 +802,7 @@ public final class CommandLogger {
 		testClassCommandName = StringUtil.replace(
 			testClassCommandName, "#", "_");
 
-		LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium(
+		LiferaySelenium liferaySelenium = WebDriverUtil.getLiferaySelenium(
 			getTestNamespacedClassCommandName());
 
 		liferaySelenium.saveScreenshot(

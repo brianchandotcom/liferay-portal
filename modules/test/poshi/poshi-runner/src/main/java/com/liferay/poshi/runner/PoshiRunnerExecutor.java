@@ -26,7 +26,7 @@ import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
-import com.liferay.poshi.runner.selenium.SeleniumUtil;
+import com.liferay.poshi.runner.selenium.WebDriverUtil;
 import com.liferay.poshi.runner.util.TableUtil;
 import com.liferay.poshi.runner.var.type.DefaultTable;
 import com.liferay.poshi.runner.var.type.TableFactory;
@@ -1003,7 +1003,7 @@ public class PoshiRunnerExecutor {
 
 		_poshiLogger.logSeleniumCommand(executeElement, arguments);
 
-		LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium(
+		LiferaySelenium liferaySelenium = WebDriverUtil.getLiferaySelenium(
 			getTestNamespacedClassCommandName());
 
 		Class<?> clazz = liferaySelenium.getClass();
@@ -1237,7 +1237,7 @@ public class PoshiRunnerExecutor {
 		Object object = null;
 
 		if (className.equals("selenium")) {
-			object = SeleniumUtil.getSelenium(
+			object = WebDriverUtil.getLiferaySelenium(
 				getTestNamespacedClassCommandName());
 		}
 
@@ -1249,7 +1249,7 @@ public class PoshiRunnerExecutor {
 	protected Object invokeLiferaySeleniumMethod(Method method, Object... args)
 		throws Exception {
 
-		LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium(
+		LiferaySelenium liferaySelenium = WebDriverUtil.getLiferaySelenium(
 			getTestNamespacedClassCommandName());
 
 		String methodName = method.getName();

@@ -210,8 +210,6 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 					VerifyProcess.class, _initialDeploymentVerifyProcess,
 					HashMapDictionaryBuilder.<String, Object>put(
 						"initial.deployment", true
-					).put(
-						"verify.process.name", _VERIFY_PROCESS_NAME
 					).build());
 
 		return initialDeploymentVerifyProcessRegistration::unregister;
@@ -224,8 +222,6 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 					VerifyProcess.class, _runOnPortalUpgradeVerifyProcess,
 					HashMapDictionaryBuilder.<String, Object>put(
 						"run.on.portal.upgrade", true
-					).put(
-						"verify.process.name", "verify.process.name"
 					).build());
 
 		return runOnPortalUpgradeVerifyProcessRegistration::unregister;
@@ -234,9 +230,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 	private SafeCloseable _registerVerifyProcess() {
 		ServiceRegistration<VerifyProcess> verifyProcessRegistration =
 			_bundleContext.registerService(
-				VerifyProcess.class, _verifyProcess,
-				MapUtil.singletonDictionary(
-					"verify.process.name", "verify.process.name"));
+				VerifyProcess.class, _verifyProcess, null);
 
 		return verifyProcessRegistration::unregister;
 	}
@@ -266,8 +260,6 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 
 		return () -> StartupHelperUtil.setUpgrading(false);
 	}
-
-	private static final String _VERIFY_PROCESS_NAME = "verify.process.name";
 
 	private static BundleContext _bundleContext;
 	private static String _symbolicName;

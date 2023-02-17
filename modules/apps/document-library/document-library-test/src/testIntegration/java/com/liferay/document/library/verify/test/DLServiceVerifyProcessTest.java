@@ -515,7 +515,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 	}
 
 	@Inject(
-		filter = "verify.process.name=com.liferay.document.library.service",
+		filter = "component.name=com.liferay.document.library.internal.verify.DLServiceVerifyProcess",
 		type = VerifyProcess.class
 	)
 	private static VerifyProcess _verifyProcess;

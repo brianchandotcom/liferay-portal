@@ -159,7 +159,7 @@ public class BookmarksServiceVerifyProcessTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "verify.process.name=com.liferay.bookmarks.service")
+	@Inject(filter = "component.name=com.liferay.bookmarks.internal.verify.BookmarksServiceVerifyProcess")
 	private VerifyProcess _verifyProcess;
 
 }

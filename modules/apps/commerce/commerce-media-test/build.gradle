@@ -1,6 +1,7 @@
 dependencies {
 	testIntegrationCompile group: "com.github.ignaciotcrespo", name: "frutilla", version: "0.7.1"
 	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	testIntegrationCompile project(":apps:account:account-api")
 	testIntegrationCompile project(":apps:commerce:commerce-account-api")
 	testIntegrationCompile project(":apps:commerce:commerce-account-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-api")
@@ -9,6 +10,9 @@ dependencies {
 	testIntegrationCompile project(":apps:commerce:commerce-media-api")
 	testIntegrationCompile project(":apps:commerce:commerce-product-api")
 	testIntegrationCompile project(":apps:commerce:commerce-product-test-util")
+	testIntegrationCompile project(":apps:commerce:commerce-product-type-virtual-api")
+	testIntegrationCompile project(":apps:commerce:commerce-product-type-virtual-order-api")
+	testIntegrationCompile project(":apps:commerce:commerce-product-type-virtual-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-test-util")
 	testIntegrationCompile project(":apps:document-library:document-library-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

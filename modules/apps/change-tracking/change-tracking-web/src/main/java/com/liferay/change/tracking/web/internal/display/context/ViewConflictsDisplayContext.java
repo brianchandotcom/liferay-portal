@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.display.context;
 
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -208,6 +210,26 @@ public class ViewConflictsDisplayContext {
 				TimeZone timeZone = _themeDisplay.getTimeZone();
 
 				return timeZone.getID();
+			}
+		).put(
+			"unapprovedChangesAllowed",
+			() -> {
+				boolean unapprovedChangesAllowed = false;
+
+				try {
+					CTSettingsConfiguration ctSettingsConfiguration =
+						ConfigurationProviderUtil.getCompanyConfiguration(
+							CTSettingsConfiguration.class,
+							_themeDisplay.getCompanyId());
+
+					unapprovedChangesAllowed =
+						ctSettingsConfiguration.unapprovedChangesAllowed();
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+
+				return unapprovedChangesAllowed;
 			}
 		).put(
 			"unresolvedConflicts", unresolvedConflictsJSONArray

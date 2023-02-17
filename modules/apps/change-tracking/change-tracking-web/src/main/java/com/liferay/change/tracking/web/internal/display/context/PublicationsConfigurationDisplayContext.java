@@ -47,6 +47,8 @@ public class PublicationsConfigurationDisplayContext {
 
 		_publicationsEnabled = ctSettingsConfiguration.enabled();
 		_sandboxOnlyEnabled = ctSettingsConfiguration.sandboxEnabled();
+		_unapprovedChangesAllowed =
+			ctSettingsConfiguration.unapprovedChangesAllowed();
 
 		_renderResponse = renderResponse;
 	}
@@ -83,10 +85,15 @@ public class PublicationsConfigurationDisplayContext {
 		return _sandboxOnlyEnabled;
 	}
 
+	public boolean isUnapprovedChangesAllowed() {
+		return _unapprovedChangesAllowed;
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private String _navigation;
 	private final boolean _publicationsEnabled;
 	private final RenderResponse _renderResponse;
 	private final boolean _sandboxOnlyEnabled;
+	private final boolean _unapprovedChangesAllowed;
 
 }

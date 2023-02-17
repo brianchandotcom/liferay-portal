@@ -42,6 +42,18 @@
 	</clay:sheet-section>
 </div>
 
+<div id="<portlet:namespace />unapprovedChanges">
+	<clay:sheet-section>
+		<h3 class="sheet-subtitle"><liferay-ui:message key="allow-unapproved-changes" /></h3>
+
+		<div class="sheet-text"><liferay-ui:message key="allow-unapproved-changes-help" /></div>
+
+		<div class="form-group">
+			<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableUnapprovedChanges" type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isUnapprovedChangesAllowed() %>" />
+		</div>
+	</clay:sheet-section>
+</div>
+
 <clay:sheet-footer>
 	<aui:button primary="<%= true %>" type="submit" value="save" />
 </clay:sheet-footer>
@@ -49,6 +61,7 @@
 <aui:script>
 	Liferay.Util.toggleBoxes(
 		'<portlet:namespace />enablePublications',
-		'<portlet:namespace />sandboxOnly'
+		'<portlet:namespace />sandboxOnly',
+		'<portlet:namespace />unapprovedChanges'
 	);
 </aui:script>

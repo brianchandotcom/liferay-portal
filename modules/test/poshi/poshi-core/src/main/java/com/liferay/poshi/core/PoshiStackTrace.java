@@ -16,6 +16,8 @@ package com.liferay.poshi.core;
 
 import com.liferay.poshi.core.util.Validator;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 import org.dom4j.Element;
@@ -24,19 +26,27 @@ import org.dom4j.Element;
  * @author Karen Dang
  * @author Michael Hashimoto
  */
-public final class PoshiStackTraceUtil {
+public final class PoshiStackTrace {
 
-	public static void emptyStackTrace() {
+	public static PoshiStackTrace getPoshiStackTrace(String classCommandName) {
+		if (!_poshiStackTraces.containsKey(classCommandName)) {
+			_poshiStackTraces.put(classCommandName, new PoshiStackTrace());
+		}
+
+		return _poshiStackTraces.get(classCommandName);
+	}
+
+	public void emptyStackTrace() {
 		while (!_stackTrace.isEmpty()) {
 			_stackTrace.pop();
 		}
 	}
 
-	public static String getCurrentFilePath() {
+	public String getCurrentFilePath() {
 		return _filePaths.peek();
 	}
 
-	public static String getCurrentNamespace() {
+	public String getCurrentNamespace() {
 		if (_filePaths.isEmpty()) {
 			return PoshiContext.getDefaultNamespace();
 		}
@@ -48,9 +58,7 @@ public final class PoshiStackTraceUtil {
 		return PoshiContext.getNamespaceFromFilePath(filePath.substring(0, x));
 	}
 
-	public static String getCurrentNamespace(
-		String namespacedClassCommandName) {
-
+	public String getCurrentNamespace(String namespacedClassCommandName) {
 		String defaultNamespace = PoshiContext.getDefaultNamespace();
 
 		String namespace =
@@ -64,7 +72,7 @@ public final class PoshiStackTraceUtil {
 		return namespace;
 	}
 
-	public static String getSimpleStackTrace() {
+	public String getSimpleStackTrace() {
 		StringBuilder sb = new StringBuilder();
 
 		for (String filePath : _stackTrace) {
@@ -86,7 +94,7 @@ public final class PoshiStackTraceUtil {
 		return sb.toString();
 	}
 
-	public static String getStackTrace(String msg) {
+	public String getStackTrace(String msg) {
 		StringBuilder sb = new StringBuilder();
 
 		if (Validator.isNotNull(msg)) {
@@ -108,20 +116,20 @@ public final class PoshiStackTraceUtil {
 		return sb.toString();
 	}
 
-	public static void popStackTrace() {
+	public void popStackTrace() {
 		_filePaths.pop();
 		_stackTrace.pop();
 	}
 
-	public static void printStackTrace() {
+	public void printStackTrace() {
 		printStackTrace(null);
 	}
 
-	public static void printStackTrace(String msg) {
+	public void printStackTrace(String msg) {
 		System.out.println(getStackTrace(msg));
 	}
 
-	public static void pushStackTrace(Element element) throws Exception {
+	public void pushStackTrace(Element element) throws Exception {
 		_stackTrace.push(
 			_filePaths.peek() + ":" + PoshiGetterUtil.getLineNumber(element));
 
@@ -161,17 +169,18 @@ public final class PoshiStackTraceUtil {
 		_pushFilePath(namespacedClassCommandName, classType);
 	}
 
-	public static void setCurrentElement(Element currentElement) {
+	public void setCurrentElement(Element currentElement) {
 		_currentElement = currentElement;
 	}
 
-	public static void startStackTrace(
-		String classCommandName, String classType) {
-
+	public void startStackTrace(String classCommandName, String classType) {
 		_pushFilePath(classCommandName, classType);
 	}
 
-	private static void _pushFilePath(
+	private PoshiStackTrace() {
+	}
+
+	private void _pushFilePath(
 		String namespacedClassCommandName, String classType) {
 
 		String classCommandName =
@@ -202,8 +211,11 @@ public final class PoshiStackTraceUtil {
 		_filePaths.push(filePath + "[" + commandName + "]");
 	}
 
-	private static Element _currentElement;
-	private static final Stack<String> _filePaths = new Stack<>();
-	private static final Stack<String> _stackTrace = new Stack<>();
+	private static final Map<String, PoshiStackTrace> _poshiStackTraces =
+		new HashMap<>();
+
+	private Element _currentElement;
+	private final Stack<String> _filePaths = new Stack<>();
+	private final Stack<String> _stackTrace = new Stack<>();
 
 }

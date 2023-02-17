@@ -28,28 +28,38 @@ import java.util.regex.Pattern;
  * @author Karen Dang
  * @author Michael Hashimoto
  */
-public class PoshiVariablesUtil {
+public class PoshiVariablesContext {
 
-	public static void clear() {
+	public static PoshiVariablesContext getPoshiVariables(
+		String classCommandName) {
+
+		if (!_poshiVariables.containsKey(classCommandName)) {
+			_poshiVariables.put(classCommandName, new PoshiVariablesContext());
+		}
+
+		return _poshiVariables.get(classCommandName);
+	}
+
+	public void clear() {
 		_commandMap.clear();
 		_commandMapStack.clear();
 		_executeMap.clear();
 		_staticMap.clear();
 	}
 
-	public static boolean containsKeyInCommandMap(String key) {
+	public boolean containsKeyInCommandMap(String key) {
 		return _commandMap.containsKey(replaceCommandVars(key));
 	}
 
-	public static boolean containsKeyInExecuteMap(String key) {
+	public boolean containsKeyInExecuteMap(String key) {
 		return _executeMap.containsKey(replaceCommandVars(key));
 	}
 
-	public static boolean containsKeyInStaticMap(String key) {
+	public boolean containsKeyInStaticMap(String key) {
 		return _staticMap.containsKey(replaceCommandVars(key));
 	}
 
-	public static String getReplacedCommandVarsString(String token) {
+	public String getReplacedCommandVarsString(String token) {
 		if (token == null) {
 			return null;
 		}
@@ -63,7 +73,7 @@ public class PoshiVariablesUtil {
 		return tokenObject.toString();
 	}
 
-	public static String getStringFromCommandMap(String key) {
+	public String getStringFromCommandMap(String key) {
 		if (containsKeyInCommandMap((String)replaceCommandVars(key))) {
 			Object object = getValueFromCommandMap(key);
 
@@ -73,7 +83,7 @@ public class PoshiVariablesUtil {
 		return null;
 	}
 
-	public static String getStringFromExecuteMap(String key) {
+	public String getStringFromExecuteMap(String key) {
 		if (containsKeyInExecuteMap((String)replaceCommandVars(key))) {
 			Object object = getValueFromExecuteMap(key);
 
@@ -83,7 +93,7 @@ public class PoshiVariablesUtil {
 		return null;
 	}
 
-	public static String getStringFromStaticMap(String key) {
+	public String getStringFromStaticMap(String key) {
 		if (containsKeyInStaticMap((String)replaceStaticVars(key))) {
 			Object object = getValueFromExecuteMap(key);
 
@@ -93,19 +103,19 @@ public class PoshiVariablesUtil {
 		return null;
 	}
 
-	public static Object getValueFromCommandMap(String key) {
+	public Object getValueFromCommandMap(String key) {
 		return _commandMap.get(replaceCommandVars(key));
 	}
 
-	public static Object getValueFromExecuteMap(String key) {
+	public Object getValueFromExecuteMap(String key) {
 		return _executeMap.get(replaceCommandVars(key));
 	}
 
-	public static Object getValueFromStaticMap(String key) {
+	public Object getValueFromStaticMap(String key) {
 		return _staticMap.get(replaceCommandVars(key));
 	}
 
-	public static void popCommandMap() {
+	public void popCommandMap() {
 		_commandMap = _commandMapStack.pop();
 
 		_commandMap.putAll(_staticMap);
@@ -113,7 +123,7 @@ public class PoshiVariablesUtil {
 		_executeMap = new HashMap<>();
 	}
 
-	public static void pushCommandMap() {
+	public void pushCommandMap() {
 		_commandMapStack.push(_commandMap);
 
 		_commandMap = _executeMap;
@@ -123,7 +133,7 @@ public class PoshiVariablesUtil {
 		_executeMap = new HashMap<>();
 	}
 
-	public static void putIntoCommandMap(String key, Object value) {
+	public void putIntoCommandMap(String key, Object value) {
 		if (value instanceof String) {
 			_commandMap.put(
 				(String)replaceCommandVars(key),
@@ -138,7 +148,7 @@ public class PoshiVariablesUtil {
 		}
 	}
 
-	public static void putIntoExecuteMap(String key, Object value) {
+	public void putIntoExecuteMap(String key, Object value) {
 		if (value instanceof String) {
 			_executeMap.put(
 				(String)replaceCommandVars(key),
@@ -149,7 +159,7 @@ public class PoshiVariablesUtil {
 		}
 	}
 
-	public static void putIntoStaticMap(String key, Object value) {
+	public void putIntoStaticMap(String key, Object value) {
 		if (value instanceof String) {
 			_staticMap.put(
 				(String)replaceCommandVars(key),
@@ -160,7 +170,7 @@ public class PoshiVariablesUtil {
 		}
 	}
 
-	public static Object replaceCommandVars(String token) {
+	public Object replaceCommandVars(String token) {
 		Matcher matcher = _pattern.matcher(token);
 
 		if (matcher.matches() && _commandMap.containsKey(matcher.group(1))) {
@@ -178,7 +188,7 @@ public class PoshiVariablesUtil {
 		return token;
 	}
 
-	public static Object replaceExecuteVars(String token) {
+	public Object replaceExecuteVars(String token) {
 		Matcher matcher = _pattern.matcher(token);
 
 		if (matcher.matches() && _executeMap.containsKey(matcher.group(1))) {
@@ -196,7 +206,7 @@ public class PoshiVariablesUtil {
 		return token;
 	}
 
-	public static Object replaceStaticVars(String token) {
+	public Object replaceStaticVars(String token) {
 		Matcher matcher = _pattern.matcher(token);
 
 		if (matcher.matches() && _staticMap.containsKey(matcher.group(1))) {
@@ -214,11 +224,16 @@ public class PoshiVariablesUtil {
 		return token;
 	}
 
-	private static Map<String, Object> _commandMap = new HashMap<>();
-	private static final Stack<Map<String, Object>> _commandMapStack =
-		new Stack<>();
-	private static Map<String, Object> _executeMap = new HashMap<>();
+	private PoshiVariablesContext() {
+	}
+
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
-	private static final Map<String, Object> _staticMap = new HashMap<>();
+	private static final Map<String, PoshiVariablesContext> _poshiVariables =
+		new HashMap<>();
+
+	private Map<String, Object> _commandMap = new HashMap<>();
+	private final Stack<Map<String, Object>> _commandMapStack = new Stack<>();
+	private Map<String, Object> _executeMap = new HashMap<>();
+	private final Map<String, Object> _staticMap = new HashMap<>();
 
 }

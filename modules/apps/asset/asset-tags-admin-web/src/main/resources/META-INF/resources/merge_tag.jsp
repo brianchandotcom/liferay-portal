@@ -129,17 +129,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 			);
 
 			if (mergeTagNames.length < 2) {
-				if (Liferay.FeatureFlags['LPS-148659']) {
-					Liferay.Util.openAlertModal({
-						message:
-							'<liferay-ui:message arguments="2" key="please-choose-at-least-x-tags" />',
-					});
-				}
-				else {
-					alert(
-						'<liferay-ui:message arguments="2" key="please-choose-at-least-x-tags" />'
-					);
-				}
+				Liferay.Util.openAlertModal({
+					message:
+						'<liferay-ui:message arguments="2" key="please-choose-at-least-x-tags" />',
+				});
 
 				return;
 			}

@@ -124,17 +124,10 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 					return;
 				})
 				.catch(() => {
-					if (Liferay.FeatureFlags['LPS-148659']) {
-						Liferay.Util.openAlertModal({
-							message:
-								'<liferay-ui:message key="your-request-failed-to-complete" />',
-						});
-					}
-					else {
-						alert(
-							'<liferay-ui:message key="your-request-failed-to-complete" />'
-						);
-					}
+					Liferay.Util.openAlertModal({
+						message:
+							'<liferay-ui:message key="your-request-failed-to-complete" />',
+					});
 
 					return;
 				});

@@ -19,6 +19,7 @@ import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
@@ -260,9 +261,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				null, null, _getEmailAddress(account, null), null,
 				account.getTaxId(),
 				GetterUtil.get(
-					account.getType(),
+					_toAccountEntryType(account.getType()),
 					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON),
-				toAccountEntryStatus(
+				_toAccountEntryStatus(
 					GetterUtil.getBoolean(account.getActive(), true)),
 				_serviceContextHelper.getServiceContext());
 
@@ -378,18 +379,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		return responseBuilder.build();
 	}
 
-	public Integer toAccountEntryStatus(Boolean active) {
-		if (active == null) {
-			return WorkflowConstants.STATUS_ANY;
-		}
-
-		if (active) {
-			return WorkflowConstants.STATUS_APPROVED;
-		}
-
-		return WorkflowConstants.STATUS_INACTIVE;
-	}
-
 	public void updateAccountLogo(
 			AccountEntry accountEntry, MultipartBody multipartBody)
 		throws IOException, PortalException {
@@ -472,6 +461,38 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 
+	private Integer _toAccountEntryStatus(Boolean active) {
+		if (active == null) {
+			return WorkflowConstants.STATUS_ANY;
+		}
+
+		if (active) {
+			return WorkflowConstants.STATUS_APPROVED;
+		}
+
+		return WorkflowConstants.STATUS_INACTIVE;
+	}
+
+	private String _toAccountEntryType(int commerceAccountType) {
+		if (commerceAccountType ==
+				CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS) {
+
+			return AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
+		}
+		else if (commerceAccountType ==
+					CommerceAccountConstants.ACCOUNT_TYPE_GUEST) {
+
+			return AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST;
+		}
+		else if (commerceAccountType ==
+					CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL) {
+
+			return AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON;
+		}
+
+		return null;
+	}
+
 	private AccountEntry _updateAccount(Long id, Account account)
 		throws Exception {
 
@@ -494,7 +515,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		accountEntry.setTaxIdNumber(
 			GetterUtil.get(account.getTaxId(), accountEntry.getTaxIdNumber()));
 		accountEntry.setStatus(
-			toAccountEntryStatus(
+			_toAccountEntryStatus(
 				GetterUtil.getBoolean(account.getActive(), true)));
 
 		_accountEntryService.updateAccountEntry(accountEntry);

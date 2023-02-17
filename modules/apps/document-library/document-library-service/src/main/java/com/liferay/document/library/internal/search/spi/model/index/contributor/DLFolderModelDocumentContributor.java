@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.trash.TrashHelper;
@@ -60,9 +59,7 @@ public class DLFolderModelDocumentContributor
 		document.addKeyword(Field.TREE_PATH, dlFolder.getTreePath());
 		document.addKeyword(
 			Field.TREE_PATH,
-			ArrayUtil.remove(
-				StringUtil.split(dlFolder.getTreePath(), CharPool.SLASH),
-				String.valueOf(dlFolder.getFolderId())));
+			StringUtil.split(dlFolder.getTreePath(), CharPool.SLASH));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + dlFolder + " indexed successfully");

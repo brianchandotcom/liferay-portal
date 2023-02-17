@@ -67,15 +67,10 @@ public class MFAFIDO2CredentialRepository implements CredentialRepository {
 			return Collections.emptySet();
 		}
 
-		Set<PublicKeyCredentialDescriptor> publicKeyCredentialDescriptorSet =
-			new HashSet<>();
-
-		publicKeyCredentialDescriptorSet.addAll(
+		return new HashSet<>(
 			TransformUtil.transform(
 				mfaFIDO2CredentialEntryList,
 				this::_buildPublicKeyCredentialDescriptor));
-
-		return publicKeyCredentialDescriptorSet;
 	}
 
 	@Override

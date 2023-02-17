@@ -114,7 +114,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_VIEW_ARTICLE_TITLE_SPECIFIC</td>
-	<td>xpath=(//h2/a[contains(.,'${key_kbArticleTitle}')])[${indexNumber}]</td>
+	<td>xpath=(//*[@data-qa-id='rowItemContent']//h2/a)[${indexNumber}]</td>
 	<td></td>
 </tr>
 <tr>

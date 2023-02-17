@@ -71,7 +71,9 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class VerifyProcessTrackerOSGiCommands {
 
-	@Descriptor("List latest execution result for a specific verify process")
+	@Descriptor(
+		"List latest execution result for a module's verify process via symbolic name"
+	)
 	public void check(String bundleSymbolicName) {
 		VerifyProcess verifyProcess;
 
@@ -120,7 +122,7 @@ public class VerifyProcessTrackerOSGiCommands {
 		}
 	}
 
-	@Descriptor("Execute a specific verify process")
+	@Descriptor("Execute a module's verify process via symbolic name")
 	public void execute(String bundleSymbolicName) {
 		TeeLoggingUtil.runWithTeeLogging(
 			() -> {
@@ -153,7 +155,7 @@ public class VerifyProcessTrackerOSGiCommands {
 		}
 	}
 
-	@Descriptor("Show the verify process name if the verify process exists")
+	@Descriptor("Show the verify process class name via module's symbolic name")
 	public void show(String bundleSymbolicName) {
 		VerifyProcess verifyProcess;
 

@@ -15,7 +15,7 @@
 package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
-import com.liferay.batch.engine.internal.auto.deploy.BatchEngineAutoDeployListener;
+import com.liferay.batch.engine.internal.installer.BatchEngineFileInstaller;
 
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -66,9 +66,9 @@ public class BatchEngineExportTaskItemWriterBuilder {
 		}
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.JSONT) {
-			BatchEngineAutoDeployListener.BatchEngineImportConfiguration
+			BatchEngineFileInstaller.BatchEngineImportConfiguration
 				batchEngineImportConfiguration =
-					new BatchEngineAutoDeployListener.
+					new BatchEngineFileInstaller.
 						BatchEngineImportConfiguration();
 
 			batchEngineImportConfiguration.setClassName(_itemClass.getName());

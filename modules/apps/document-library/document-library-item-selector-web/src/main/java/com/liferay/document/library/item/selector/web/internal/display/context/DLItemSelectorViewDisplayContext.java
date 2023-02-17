@@ -395,14 +395,14 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return fileEntryTypeId;
 	}
 
-	private long _getFileEntryTypeId(String itemSubtype) {
+	private long _getFileEntryTypeId(String fileEntryTypeKey) {
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.fetchFileEntryType(
-				_themeDisplay.getScopeGroupId(), itemSubtype);
+				_themeDisplay.getScopeGroupId(), fileEntryTypeKey);
 
 		if (dlFileEntryType == null) {
 			dlFileEntryType = _dlFileEntryTypeLocalService.fetchFileEntryType(
-				_themeDisplay.getCompanyGroupId(), itemSubtype);
+				_themeDisplay.getCompanyGroupId(), fileEntryTypeKey);
 		}
 
 		if (dlFileEntryType != null) {

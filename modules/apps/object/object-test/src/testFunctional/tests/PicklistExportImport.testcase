@@ -243,7 +243,7 @@ definition {
 			Picklist.addPicklistViaAPI(picklistName = "Export Picklist");
 		}
 
-		task ("When a picklist is exported") {
+		task ("When a Picklist is exported") {
 			Picklist.gotoPicklists();
 
 			Picklist.optionsPicklist(
@@ -267,9 +267,19 @@ definition {
 	@description = "LPS-175645 - It's possible to see an error importing incorrect JSON"
 	@priority = 4
 	test CannotImportWrongPicklist {
+		task ("Given a Power User with access to Picklist") {
+			Picklist.gotoPicklists();
+		}
 
-		// TODO pending implementation
+		task ("When incorrect JSON file is imported") {
+			Picklist.importPicklist(
+				picklistFileName = "ImportedSimpleObject",
+				picklistName = "ImportedPicklist167536");
+		}
 
+		task ("Then an error is displayed") {
+			Alert.viewErrorMessage(errorMessage = "The Picklist failed to import.");
+		}
 	}
 
 	@description = "LPS-175645 - It’s possible to overwrite Picklist when ERC is duplicated (Update Existing Picklist)"

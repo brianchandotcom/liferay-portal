@@ -883,11 +883,6 @@
 			<message key="method.not.found" value="Method ''{0}'' no longer exists, or the signature has changed, in class ''{1}'' for version ''{2}''" />
 			<message key="variable.not.found" value="Variable ''{0}'' no longer exists in class ''{1}'' for version ''{2}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.check.UsePassedInVarCheck">
-			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Finds cases where use passed in var to avoid any possible errors." />
-			<message key="use.passed.in.var" value="Use passed in var to avoid any possible errors for variable ''{0}''" />
-		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ValidatorIsNullCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Ensures that only variable of type `Long`, `Serializable` or `String` is passed to method `com.liferay.portal.kernel.util.Validator.isNull`." />

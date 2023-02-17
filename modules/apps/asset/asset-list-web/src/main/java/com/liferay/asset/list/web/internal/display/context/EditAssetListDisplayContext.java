@@ -413,7 +413,7 @@ public class EditAssetListDisplayContext {
 					continue;
 				}
 
-				StringBundler sb = new StringBundler();
+				StringBundler sb = new StringBundler(keywords.length * 2);
 
 				for (String keyword : keywords) {
 					if (keyword.contains(" ")) {

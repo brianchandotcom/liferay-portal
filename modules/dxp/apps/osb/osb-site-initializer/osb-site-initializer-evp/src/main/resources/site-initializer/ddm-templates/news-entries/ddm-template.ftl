@@ -15,6 +15,10 @@
 		cursor: pointer;
 	}
 
+	.modal-dialog, .modal-dialog:focus {
+outline: none;
+}
+
 	@media (min-width: 320px){
 		.partner-portal-announcements {
 			-webkit-line-clamp: 6;
@@ -79,7 +83,7 @@
 		Liferay.Util.openModal({
 			  headerHTML: title.innerHTML,
 				bodyHTML:
-					text,
+					'<div style=" max-height: 600px; overflow: auto;" class="border-0">' + text + '</div>',
 				size: 'lg',
 			  center: true,
 			  buttons: [

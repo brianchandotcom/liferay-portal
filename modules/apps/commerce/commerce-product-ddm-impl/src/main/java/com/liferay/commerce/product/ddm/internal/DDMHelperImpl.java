@@ -39,6 +39,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -119,19 +120,20 @@ public class DDMHelperImpl implements DDMHelper {
 	@Override
 	public String renderCPAttachmentFileEntryOptions(
 			long cpDefinitionId, String json, PageContext pageContext,
-			RenderRequest renderRequest, RenderResponse renderResponse,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 				cpDefinitionOptionRelCPDefinitionOptionValueRels)
 		throws PortalException {
 
-		Locale locale = _portal.getLocale(renderRequest);
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		DDMForm ddmForm = getCPAttachmentFileEntryDDMForm(
 			locale, cpDefinitionOptionRelCPDefinitionOptionValueRels);
 
 		return _render(
-			cpDefinitionId, locale, ddmForm, json, pageContext, renderRequest,
-			renderResponse);
+			cpDefinitionId, locale, ddmForm, json, pageContext,
+			httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -148,47 +150,50 @@ public class DDMHelperImpl implements DDMHelper {
 	@Override
 	public String renderCPInstanceOptions(
 			long cpDefinitionId, String json, boolean ignoreSKUCombinations,
-			RenderRequest renderRequest, RenderResponse renderResponse,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 				cpDefinitionOptionRelCPDefinitionOptionValueRels)
 		throws PortalException {
 
-		Locale locale = _portal.getLocale(renderRequest);
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		DDMForm ddmForm = getCPInstanceDDMForm(
 			locale, ignoreSKUCombinations,
 			cpDefinitionOptionRelCPDefinitionOptionValueRels);
 
 		return _render(
-			cpDefinitionId, locale, ddmForm, json, renderRequest,
-			renderResponse);
+			cpDefinitionId, locale, ddmForm, json, null, httpServletRequest,
+			httpServletResponse);
 	}
 
 	@Override
 	public String renderPublicStoreOptions(
 			long cpDefinitionId, String json, boolean ignoreSKUCombinations,
-			RenderRequest renderRequest, RenderResponse renderResponse,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 				cpDefinitionOptionRelCPDefinitionOptionValueRels)
 		throws PortalException {
 
-		Locale locale = _portal.getLocale(renderRequest);
+		Locale locale = _portal.getLocale(httpServletRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		DDMForm ddmForm = getPublicStoreDDMForm(
-			_portal.getScopeGroupId(renderRequest),
+			_portal.getScopeGroupId(httpServletRequest),
 			CommerceUtil.getCommerceAccountId(
-				(CommerceContext)renderRequest.getAttribute(
+				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT)),
 			cpDefinitionId, locale, ignoreSKUCombinations,
 			cpDefinitionOptionRelCPDefinitionOptionValueRels,
 			themeDisplay.getCompanyId(), themeDisplay.getUserId());
 
 		return _render(
-			cpDefinitionId, locale, ddmForm, json, renderRequest,
-			renderResponse);
+			cpDefinitionId, locale, ddmForm, json, null, httpServletRequest,
+			httpServletResponse);
 	}
 
 	private DDMFormRule _createDDMFormRule(
@@ -470,19 +475,13 @@ public class DDMHelperImpl implements DDMHelper {
 
 	private String _render(
 			long cpDefinitionId, Locale locale, DDMForm ddmForm, String json,
-			PageContext pageContext, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+			PageContext pageContext, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		if (ddmForm == null) {
 			return StringPool.BLANK;
 		}
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(renderResponse);
 
 		if (pageContext != null) {
 			httpServletResponse =
@@ -498,8 +497,16 @@ public class DDMHelperImpl implements DDMHelper {
 		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
 		ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
 		ddmFormRenderingContext.setLocale(locale);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		ddmFormRenderingContext.setPortletNamespace(
-			renderResponse.getNamespace());
+			portletDisplay.getNamespace());
+
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(false);
 
 		if (Validator.isNotNull(json)) {
@@ -512,16 +519,6 @@ public class DDMHelperImpl implements DDMHelper {
 		}
 
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
-	}
-
-	private String _render(
-			long cpDefinitionId, Locale locale, DDMForm ddmForm, String json,
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		return _render(
-			cpDefinitionId, locale, ddmForm, json, null, renderRequest,
-			renderResponse);
 	}
 
 	private void _setPredefinedValue(

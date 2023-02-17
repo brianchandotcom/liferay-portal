@@ -96,11 +96,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.text.Format;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -464,26 +464,24 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public String getIncomingQuantityLabel(
-			HttpServletRequest httpServletRequest, String sku)
+			long companyId, Locale locale, String sku, User user)
 		throws PortalException {
 
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
 			_commerceInventoryReplenishmentItemLocalService.
 				fetchCommerceInventoryReplenishmentItem(
-					_portal.getCompanyId(httpServletRequest), sku,
+					companyId, sku,
 					new CommerceInventoryReplenishmentItemAvailabilityDateComparator());
 
 		if (commerceInventoryReplenishmentItem == null) {
 			return StringPool.BLANK;
 		}
 
-		User user = _portal.getUser(httpServletRequest);
-
 		Format dateFormat = FastDateFormatFactoryUtil.getDate(
 			user.getLocale(), user.getTimeZone());
 
 		return _language.format(
-			httpServletRequest, "incoming-date-quantity-x-x-items",
+			locale, "incoming-date-quantity-x-x-items",
 			new Object[] {
 				dateFormat.format(
 					commerceInventoryReplenishmentItem.getAvailabilityDate()),
@@ -760,11 +758,11 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public String renderOptions(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		CPCatalogEntry cpCatalogEntry = getCPCatalogEntry(
-			_portal.getHttpServletRequest(renderRequest));
+		CPCatalogEntry cpCatalogEntry = getCPCatalogEntry(httpServletRequest);
 
 		if (cpCatalogEntry == null) {
 			return StringPool.BLANK;
@@ -772,8 +770,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 		return _ddmHelper.renderPublicStoreOptions(
 			cpCatalogEntry.getCPDefinitionId(), null,
-			cpCatalogEntry.isIgnoreSKUCombinations(), renderRequest,
-			renderResponse,
+			cpCatalogEntry.isIgnoreSKUCombinations(), httpServletRequest,
+			httpServletResponse,
 			_filterByInventoryAvailability(
 				_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
 					cpCatalogEntry.getCPDefinitionId(), false, true)));

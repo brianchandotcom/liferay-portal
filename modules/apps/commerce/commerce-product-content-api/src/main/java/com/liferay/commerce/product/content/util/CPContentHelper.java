@@ -25,6 +25,7 @@ import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -32,9 +33,9 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -132,7 +133,7 @@ public interface CPContentHelper {
 		throws Exception;
 
 	public String getIncomingQuantityLabel(
-			HttpServletRequest httpServletRequest, String sku)
+			long companyId, Locale locale, String sku, User user)
 		throws PortalException;
 
 	public int getMinOrderQuantity(long cpDefinitionId);
@@ -180,7 +181,8 @@ public interface CPContentHelper {
 		throws Exception;
 
 	public String renderOptions(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 }

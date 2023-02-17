@@ -14,44 +14,72 @@
 
 package com.liferay.commerce.media.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.media.constants.CommerceMediaConstants;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
-import com.liferay.commerce.product.service.CommerceCatalogLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
+import com.liferay.commerce.product.type.virtual.order.util.CommerceVirtualOrderItemChecker;
+import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.math.BigDecimal;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
@@ -81,21 +109,125 @@ public class CommerceMediaResolverTest {
 
 		_user = UserTestUtil.addUser();
 
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_group.getCompanyId());
-
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
-		_commerceAccount = CommerceAccountTestUtil.addBusinessCommerceAccount(
+		_accountEntry = _accountEntryLocalService.addAccountEntry(
+			_user.getUserId(), 0, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			"business", 1, _serviceContext);
+
+		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + "@liferay.com",
-			RandomTestUtil.randomString(), _serviceContext);
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), BigDecimal.ONE,
+			RandomTestUtil.randomLocaleStringMap(), 2, 2, "HALF_EVEN", false,
+			RandomTestUtil.nextDouble(), true);
+
+		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
+			_group.getCompanyId(), _group.getGroupId(), _user.getUserId(),
+			_commerceCurrency.getCode());
+
+		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
+			RandomTestUtil.randomString(), _group.getGroupId(),
+			RandomTestUtil.randomString(),
+			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
+			_commerceCurrency.getCode(), _serviceContext);
+
+		_commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_accountEntry.getAccountEntryId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		_commerceAccount = _commerceAccountLocalService.getCommerceAccount(
+			_accountEntry.getAccountEntryId());
 
 		CommerceAccountTestUtil.addCommerceAccountGroupAndAccountRel(
 			_user.getCompanyId(), RandomTestUtil.randomString(),
 			CommerceAccountConstants.ACCOUNT_GROUP_TYPE_STATIC,
 			_commerceAccount.getCommerceAccountId(), _serviceContext);
+	}
+
+	@Test
+	public void testGetDownloadVirtualOrderItemURL() throws Exception {
+		frutillaRule.scenario(
+			"Test commerce media resolver URL"
+		).given(
+			"A commerce virtual order item id"
+		).when(
+			"I invoke getDownloadVirtualOrderItemURL method"
+		).then(
+			"I expect the URL to be formatted correctly"
+		);
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, _user.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(
+				CommerceMediaResolverTest.class, "dependencies/image.jpg"),
+			null, null, _serviceContext);
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME, true,
+			true);
+
+		_commerceCPDefinitions.add(cpDefinition);
+
+		List<CPInstance> cpInstances = cpDefinition.getCPInstances();
+
+		CPInstance cpInstance = cpInstances.get(0);
+
+		_commerceCPInstances.addAll(cpInstances);
+
+		_cpDefinitionVirtualSetting =
+			_cpDefinitionVirtualSettingLocalService.
+				addCPDefinitionVirtualSetting(
+					cpDefinition.getModelClassName(),
+					cpDefinition.getCPDefinitionId(),
+					fileEntry.getFileEntryId(), null,
+					CommerceOrderConstants.ORDER_STATUS_PENDING, 0,
+					RandomTestUtil.randomInt(), true, 0, "sampleUrl", false,
+					null, 0, _serviceContext);
+
+		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
+
+		int quantity = RandomTestUtil.randomInt(1, 100);
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemLocalService.addCommerceOrderItem(
+				_commerceOrder.getCommerceOrderId(),
+				cpInstance.getCPInstanceId(), null, quantity, quantity,
+				new TestCommerceContext(
+					_commerceCurrency, _commerceChannel, _user, _group,
+					_commerceAccount, _commerceOrder),
+				_serviceContext);
+
+		_commerceOrderItems.add(commerceOrderItem);
+
+		_commerceVirtualOrderItemChecker.checkCommerceVirtualOrderItems(
+			_commerceOrder.getCommerceOrderId());
+
+		CommerceVirtualOrderItem commerceVirtualOrderItem =
+			_commerceVirtualOrderItemLocalService.
+				fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+					commerceOrderItem.getCommerceOrderItemId());
+
+		String downloadVirtualOrderItemURL =
+			_commerceMediaResolver.getDownloadVirtualOrderItemURL(
+				commerceVirtualOrderItem.getCommerceVirtualOrderItemId());
+
+		String expectedVirtualOrderItemURL = StringBundler.concat(
+			_portal.getPathModule(), StringPool.SLASH,
+			CommerceMediaConstants.SERVLET_PATH,
+			CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_ORDER_ITEM,
+			commerceVirtualOrderItem.getCommerceVirtualOrderItemId(),
+			CommerceMediaConstants.URL_SEPARATOR_FILE,
+			fileEntry.getFileEntryId());
+
+		Assert.assertEquals(
+			expectedVirtualOrderItemURL, downloadVirtualOrderItemURL);
 	}
 
 	@Test
@@ -110,14 +242,10 @@ public class CommerceMediaResolverTest {
 			"I expect the URL to be formatted correctly"
 		);
 
-		CommerceCatalog commerceCatalog =
-			_commerceCatalogLocalService.addCommerceCatalog(
-				null, RandomTestUtil.randomString(),
-				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
-				_serviceContext);
-
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
-			commerceCatalog.getGroupId());
+			_commerceCatalog.getGroupId());
+
+		_commerceCPDefinitions.add(cpDefinition);
 
 		long now = System.currentTimeMillis();
 
@@ -155,7 +283,7 @@ public class CommerceMediaResolverTest {
 		}
 
 		DLFolder dlFolder = DLTestUtil.addDLFolder(
-			commerceCatalog.getGroupId());
+			_commerceCatalog.getGroupId());
 
 		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
 			dlFolder.getFolderId());
@@ -187,23 +315,78 @@ public class CommerceMediaResolverTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	private CommerceAccount _commerceAccount;
 
 	@Inject
-	private CommerceCatalogLocalService _commerceCatalogLocalService;
+	private CommerceAccountLocalService _commerceAccountLocalService;
 
+	private CommerceCatalog _commerceCatalog;
+
+	@DeleteAfterTestRun
+	private CommerceChannel _commerceChannel;
+
+	@Inject
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@DeleteAfterTestRun
+	private final List<CPDefinition> _commerceCPDefinitions = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private final List<CPInstance> _commerceCPInstances = new ArrayList<>();
+
+	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
 
 	@Inject
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Inject
 	private CommerceMediaResolver _commerceMediaResolver;
+
+	@DeleteAfterTestRun
+	private CommerceOrder _commerceOrder;
+
+	@Inject
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@DeleteAfterTestRun
+	private final List<CommerceOrderItem> _commerceOrderItems =
+		new ArrayList<>();
+
+	@Inject
+	private CommerceVirtualOrderItemChecker _commerceVirtualOrderItemChecker;
+
+	@Inject
+	private CommerceVirtualOrderItemLocalService
+		_commerceVirtualOrderItemLocalService;
 
 	@Inject
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
 
+	@DeleteAfterTestRun
+	private CPDefinitionVirtualSetting _cpDefinitionVirtualSetting;
+
+	@Inject
+	private CPDefinitionVirtualSettingLocalService
+		_cpDefinitionVirtualSettingLocalService;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Portal _portal;
+
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

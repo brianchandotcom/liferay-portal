@@ -26,6 +26,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -172,6 +173,10 @@ public interface UserAccountResource {
 		throws Exception;
 
 	public Response putUserAccountBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void postUserAccountImage(
+			Long userAccountId, MultipartBody multipartBody)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

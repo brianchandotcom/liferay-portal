@@ -35,6 +35,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.function.BiFunction;
@@ -1287,6 +1288,25 @@ public class Mutation {
 			this::_populateResourceContext,
 			userAccountResource -> userAccountResource.putUserAccountBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField
+	@GraphQLName(
+		description = "null",
+		value = "postUserAccountImageUserAccountIdMultipartBody"
+	)
+	public boolean createUserAccountImage(
+			@GraphQLName("userAccountId") Long userAccountId,
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource -> userAccountResource.postUserAccountImage(
+				userAccountId, multipartBody));
+
+		return true;
 	}
 
 	@GraphQLField

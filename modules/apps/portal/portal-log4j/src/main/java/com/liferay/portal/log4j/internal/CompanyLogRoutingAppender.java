@@ -14,7 +14,6 @@
 
 package com.liferay.portal.log4j.internal;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -23,8 +22,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
-import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -73,27 +72,22 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 			return;
 		}
 
-		Appender appender = _appenders.computeIfAbsent(
-			CompanyThreadLocal.getCompanyId(), this::_createAppender);
+		List<Appender> appenders = _appenders.computeIfAbsent(
+			CompanyThreadLocal.getCompanyId(), this::_createAppenders);
 
-		appender.append(logEvent);
+		appenders.forEach(appender -> appender.append(logEvent));
 	}
 
 	public File getCompanyLogDirectory(long companyId) {
-		Appender appender = _appenders.get(companyId);
+		List<Appender> appenders = _appenders.get(companyId);
 
-		if (appender instanceof RollingFileAppender) {
-			RollingFileAppender rollingFileAppender =
-				(RollingFileAppender)appender;
-
-			String filePattern = rollingFileAppender.getFilePattern();
-
-			return new File(
-				filePattern.substring(
-					0, filePattern.lastIndexOf(CharPool.SLASH)));
+		if (appenders == null) {
+			return null;
 		}
 
-		return null;
+		return new File(
+			StringUtil.replace(
+				_dirPattern, "@company.id@", String.valueOf(companyId)));
 	}
 
 	public static class Builder
@@ -105,10 +99,10 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 		public CompanyLogRoutingAppender build() {
 			return new CompanyLogRoutingAppender(
 				_advertise, _advertiseUri, _append, _bufferedIo, _bufferSize,
-				_createOnDemand, _fileGroup, _fileName, _fileOwner,
-				_filePattern, _filePermissions, getFilter(), _immediateFlush,
-				getLayout(), _locking, getName(), _rolloverStrategy,
-				_triggeringPolicy);
+				_companyLogRoutingFilePatterns, _createOnDemand, _dirPattern,
+				_fileGroup, _fileName, _fileOwner, _filePermissions,
+				getFilter(), _immediateFlush, _locking, getName(),
+				_rolloverStrategy, _triggeringPolicy);
 		}
 
 		@PluginBuilderAttribute("advertise")
@@ -126,8 +120,16 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 		@PluginBuilderAttribute("bufferSize")
 		private int _bufferSize = Constants.ENCODER_BYTE_BUFFER_SIZE;
 
+		@PluginElement("FilePattern")
+		@Required
+		private CompanyLogRoutingFilePattern[] _companyLogRoutingFilePatterns;
+
 		@PluginBuilderAttribute("createOnDemand")
 		private boolean _createOnDemand;
+
+		@PluginBuilderAttribute("dirPattern")
+		@Required
+		private String _dirPattern;
 
 		@PluginBuilderAttribute("fileGroup")
 		private String _fileGroup;
@@ -137,10 +139,6 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 
 		@PluginBuilderAttribute("fileOwner")
 		private String _fileOwner;
-
-		@PluginBuilderAttribute("filePattern")
-		@Required
-		private String _filePattern;
 
 		@PluginBuilderAttribute("filePermissions")
 		private String _filePermissions;
@@ -162,24 +160,26 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 
 	private CompanyLogRoutingAppender(
 		boolean advertise, String advertiseUri, boolean append,
-		boolean bufferedIo, int bufferSize, boolean createOnDemand,
-		String fileGroup, String fileName, String fileOwner, String filePattern,
-		String filePermissions, Filter filter, boolean immediateFlush,
-		Layout<? extends Serializable> layout, boolean locking, String name,
+		boolean bufferedIo, int bufferSize,
+		CompanyLogRoutingFilePattern[] companyLogRoutingFilePatterns,
+		boolean createOnDemand, String dirPattern, String fileGroup,
+		String fileName, String fileOwner, String filePermissions,
+		Filter filter, boolean immediateFlush, boolean locking, String name,
 		RolloverStrategy rolloverStrategy, TriggeringPolicy triggeringPolicy) {
 
-		super(name, filter, layout, true, null);
+		super(name, filter, null, true, null);
 
 		_advertise = advertise;
 		_advertiseUri = advertiseUri;
 		_append = append;
 		_bufferedIo = bufferedIo;
 		_bufferSize = bufferSize;
+		_companyLogRoutingFilePatterns = companyLogRoutingFilePatterns;
 		_createOnDemand = createOnDemand;
+		_dirPattern = dirPattern;
 		_fileGroup = fileGroup;
 		_fileName = fileName;
 		_fileOwner = fileOwner;
-		_filePattern = filePattern;
 		_filePermissions = filePermissions;
 		_immediateFlush = immediateFlush;
 		_locking = locking;
@@ -187,7 +187,9 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 		_triggeringPolicy = triggeringPolicy;
 	}
 
-	private Appender _createAppender(long companyId) {
+	private Appender _createAppender(
+		Layout layout, String filePattern, String name) {
+
 		RollingFileAppender.Builder builder = RollingFileAppender.newBuilder();
 
 		LoggerContext loggerContext = (LoggerContext)LogManager.getContext();
@@ -195,12 +197,8 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 		builder.setConfiguration(loggerContext.getConfiguration());
 
 		builder.setIgnoreExceptions(ignoreExceptions());
-		builder.setLayout(getLayout());
-
-		String name = companyId + StringPool.DASH + getName();
-
+		builder.setLayout(layout);
 		builder.setName(name);
-
 		builder.withAdvertise(_advertise);
 		builder.withAdvertiseUri(_advertiseUri);
 		builder.withAppend(_append);
@@ -210,9 +208,7 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 		builder.withFileGroup(_fileGroup);
 		builder.withFileName(_fileName);
 		builder.withFileOwner(_fileOwner);
-		builder.withFilePattern(
-			StringUtil.replace(
-				_filePattern, "@company.id@", String.valueOf(companyId)));
+		builder.withFilePattern(filePattern);
 		builder.withFilePermissions(_filePermissions);
 		builder.withImmediateFlush(_immediateFlush);
 		builder.withLocking(_locking);
@@ -269,20 +265,43 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 		return NullAppender.createAppender(name);
 	}
 
+	private List<Appender> _createAppenders(long companyId) {
+		List<Appender> appenders = new ArrayList<>();
+
+		String appenderName = companyId + StringPool.DASH + getName();
+
+		for (int i = 0; i < _companyLogRoutingFilePatterns.length; i++) {
+			String filePattern =
+				_dirPattern + StringPool.FORWARD_SLASH +
+					_companyLogRoutingFilePatterns[i].getFileNamePattern();
+
+			appenders.add(
+				_createAppender(
+					_companyLogRoutingFilePatterns[i].getLayout(),
+					StringUtil.replace(
+						filePattern, "@company.id@", String.valueOf(companyId)),
+					appenderName + i));
+		}
+
+		return appenders;
+	}
+
 	private static final boolean _COMPANY_LOG_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.COMPANY_LOG_ENABLED));
 
 	private final boolean _advertise;
 	private final String _advertiseUri;
 	private final boolean _append;
-	private final Map<Long, Appender> _appenders = new ConcurrentHashMap<>();
+	private final Map<Long, List<Appender>> _appenders =
+		new ConcurrentHashMap<>();
 	private final boolean _bufferedIo;
 	private final int _bufferSize;
+	private final CompanyLogRoutingFilePattern[] _companyLogRoutingFilePatterns;
 	private final boolean _createOnDemand;
+	private final String _dirPattern;
 	private final String _fileGroup;
 	private final String _fileName;
 	private final String _fileOwner;
-	private final String _filePattern;
 	private final String _filePermissions;
 	private final boolean _immediateFlush;
 	private final boolean _locking;

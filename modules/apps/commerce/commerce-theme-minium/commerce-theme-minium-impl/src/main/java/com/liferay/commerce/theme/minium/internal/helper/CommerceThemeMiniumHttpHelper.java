@@ -114,8 +114,15 @@ public class CommerceThemeMiniumHttpHelper {
 		if (!Validator.isBlank(portletURL) &&
 			portletURL.contains(StringPool.QUESTION)) {
 
-			return portletURL.substring(
+			portletURL = portletURL.substring(
 				0, portletURL.lastIndexOf(StringPool.QUESTION));
+		}
+
+		if (!Validator.isBlank(portletURL) &&
+			Validator.isNotNull(themeDisplay.getDoAsUserId())) {
+
+			portletURL = _portal.addPreservedParameters(
+				themeDisplay, portletURL, false, true);
 		}
 
 		return portletURL;

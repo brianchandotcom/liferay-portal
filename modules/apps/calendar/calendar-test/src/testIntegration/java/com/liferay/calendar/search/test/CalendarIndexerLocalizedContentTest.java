@@ -27,8 +27,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -95,19 +97,18 @@ public class CalendarIndexerLocalizedContentTest
 		String prefix1 = "新";
 		String prefix2 = "作";
 
-		Stream.of(
-			word1, word2, prefix1, prefix2
-		).forEach(
-			keywords -> {
-				Document document = searchOnlyOne(keywords, LocaleUtil.JAPAN);
+		List<String> keywords = new ArrayList<>(
+			Arrays.asList(word1, word2, prefix1, prefix2));
 
-				FieldValuesAssert.assertFieldValues(
-					nameMap, "name", document, keywords);
+		for (String keyword : keywords) {
+			Document document = searchOnlyOne(keyword, LocaleUtil.JAPAN);
 
-				FieldValuesAssert.assertFieldValues(
-					descriptionMap, "description", document, keywords);
-			}
-		);
+			FieldValuesAssert.assertFieldValues(
+				nameMap, "name", document, keyword);
+
+			FieldValuesAssert.assertFieldValues(
+				descriptionMap, "description", document, keyword);
+		}
 	}
 
 	@Test
@@ -122,10 +123,11 @@ public class CalendarIndexerLocalizedContentTest
 		String description = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 
-		Stream.of(
-			full, partial1, partial2
-		).forEach(
-			name -> addCalendar(
+		List<String> names = new ArrayList<>(
+			Arrays.asList(full, partial1, partial2));
+
+		for (String name : names) {
+			addCalendar(
 				new LocalizedValuesMap() {
 					{
 						put(LocaleUtil.US, originalName);
@@ -137,8 +139,8 @@ public class CalendarIndexerLocalizedContentTest
 						put(LocaleUtil.US, description);
 						put(LocaleUtil.JAPAN, description);
 					}
-				})
-		);
+				});
+		}
 
 		Map<String, String> nameMap = HashMapBuilder.put(
 			"name", originalName
@@ -151,16 +153,14 @@ public class CalendarIndexerLocalizedContentTest
 		String word1 = "新規";
 		String word2 = "作成";
 
-		Stream.of(
-			word1, word2
-		).forEach(
-			keywords -> {
-				Document document = searchOnlyOne(keywords, LocaleUtil.JAPAN);
+		List<String> keywords = new ArrayList<>(Arrays.asList(word1, word2));
 
-				FieldValuesAssert.assertFieldValues(
-					nameMap, "name", document, keywords);
-			}
-		);
+		for (String keyword : keywords) {
+			Document document = searchOnlyOne(keyword, LocaleUtil.JAPAN);
+
+			FieldValuesAssert.assertFieldValues(
+				nameMap, "name", document, keyword);
+		}
 	}
 
 	protected Calendar addCalendar(

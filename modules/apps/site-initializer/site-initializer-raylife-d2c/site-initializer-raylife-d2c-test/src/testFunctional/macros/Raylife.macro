@@ -86,8 +86,8 @@ definition {
 		Site.openSitesAdmin();
 
 		Site.addSiteTemplateCP(
-			siteName = "${siteName}",
-			siteTemplateName = "${siteName}");
+			siteName = ${siteName},
+			siteTemplateName = ${siteName});
 	}
 
 	macro dismissAlert {

@@ -51,10 +51,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -273,8 +272,8 @@ public class CPAttachmentFileEntriesDisplayContext
 	}
 
 	public String renderOptions(
-			PageContext pageContext, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+			PageContext pageContext, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
@@ -287,8 +286,8 @@ public class CPAttachmentFileEntriesDisplayContext
 		}
 
 		return _ddmHelper.renderCPAttachmentFileEntryOptions(
-			getCPDefinitionId(), json, pageContext, renderRequest,
-			renderResponse,
+			getCPDefinitionId(), json, pageContext, httpServletRequest,
+			httpServletResponse,
 			_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
 				getCPDefinitionId(), true, false));
 	}

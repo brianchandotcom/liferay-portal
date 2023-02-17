@@ -56,10 +56,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Alessio Antonio Rendina
@@ -328,15 +327,14 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 			getCPInstanceId(), null);
 	}
 
-	public String renderOptions(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+	public String renderOptions(HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		CPDefinition cpDefinition = getCPDefinition();
 
 		return _ddmHelper.renderCPInstanceOptions(
 			getCPDefinitionId(), null, cpDefinition.isIgnoreSKUCombinations(),
-			renderRequest, renderResponse,
+			httpServletRequest, httpServletResponse,
 			_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
 				getCPDefinitionId(), true, false));
 	}

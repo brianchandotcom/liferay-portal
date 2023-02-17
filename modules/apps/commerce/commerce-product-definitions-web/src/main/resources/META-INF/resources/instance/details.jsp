@@ -93,7 +93,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 
 						</c:when>
 						<c:otherwise>
-							<%= cpInstanceDisplayContext.renderOptions(renderRequest, renderResponse) %>
+							<%= cpInstanceDisplayContext.renderOptions(PipingServletResponseFactory.createPipingServletResponse(pageContext)) %>
 
 							<aui:input name="ddmFormValues" type="hidden" />
 						</c:otherwise>

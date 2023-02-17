@@ -21,7 +21,7 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		<%= cpAttachmentFileEntriesDisplayContext.renderOptions(pageContext, renderRequest, renderResponse) %>
+		<%= cpAttachmentFileEntriesDisplayContext.renderOptions(pageContext, request, PipingServletResponseFactory.createPipingServletResponse(pageContext)) %>
 
 		<aui:input name="ddmFormValues" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? StringPool.BLANK : cpAttachmentFileEntry.getJson() %>" />
 	</c:otherwise>

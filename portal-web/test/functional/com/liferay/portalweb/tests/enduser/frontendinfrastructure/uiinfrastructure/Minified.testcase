@@ -38,7 +38,7 @@ definition {
 		}
 
 		task ("Then: No liferay log or js console log errors") {
-			User.viewLoggedInPG();
+			AssertJavaScriptErrors();
 		}
 
 		task ("And Then: Smoke test passes") {
@@ -68,7 +68,7 @@ definition {
 		}
 
 		task ("Then No errors in js console or liferay console") {
-			AssertTextNotPresent(value1 = "Client Extension");
+			AssertJavaScriptErrors();
 		}
 	}
 

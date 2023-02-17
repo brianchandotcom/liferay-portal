@@ -290,6 +290,10 @@ const Panel = ({children, mdfRequestActivity}) => {
 		})
 		.includes(true);
 
+	const daysLeftToClaim = Math.ceil(
+		(new Date(mdfRequestActivity.endDate) - new Date()) / (1000 * 3600 * 24)
+	);
+
 	return (
 		<ClayPanel
 			className="border-brand-primary-lighten-4"
@@ -305,33 +309,42 @@ const Panel = ({children, mdfRequestActivity}) => {
 						{mdfRequestActivity.name} ({mdfRequestActivity.id})
 					</h4>
 
-					<p className="align-items-center d-flex mb-1 text-neutral-7 text-weight-semi-bold">
-						Claim Status:
-						<div
-							className={
-								activityClaimStatusClassName[
-									ActivityClaimStatus
-										? 'claimed'
-										: 'unclaimed'
-								]
-							}
-						>
-							{ActivityClaimStatus ? 'Claimed' : 'Unclaimed'}
-						</div>
-					</p>
+					<div className="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
+						<p className="mb-0">
+							Claim Status:
+							<div
+								className={
+									activityClaimStatusClassName[
+										ActivityClaimStatus
+											? 'claimed'
+											: 'unclaimed'
+									]
+								}
+							>
+								{ActivityClaimStatus ? 'Claimed' : 'Unclaimed'}
+							</div>
+						</p>
+					</div>
 
-					<p className="align-items-center d-flex mb-1 text-neutral-7 text-weight-semi-bold">
-						Activity Status:
-						<div
-							className={
-								activityStatusClassName[
-									mdfRequestActivity.activityStatus.key
-								]
-							}
-						>
-							{mdfRequestActivity.activityStatus.name}
+					<div className="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
+						<p className="mb-0">
+							Activity Status:
+							<div
+								className={
+									activityStatusClassName[
+										mdfRequestActivity.activityStatus.key
+									]
+								}
+							>
+								{mdfRequestActivity.activityStatus.name}
+							</div>
+						</p>
+
+						<div className="font-weight-light ml-sm-2">
+							{daysLeftToClaim > 0 &&
+								`${daysLeftToClaim} days left to claim`}
 						</div>
-					</p>
+					</div>
 				</ClayPanel.Title>
 			}
 			showCollapseIcon

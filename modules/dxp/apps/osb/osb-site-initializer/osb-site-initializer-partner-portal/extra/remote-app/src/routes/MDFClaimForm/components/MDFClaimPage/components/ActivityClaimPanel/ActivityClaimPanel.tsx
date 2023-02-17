@@ -107,33 +107,38 @@ const ActivityClaimPanel = ({
 							{activity.name} ({activity.id})
 						</h5>
 
-						<p className="align-items-center d-flex mb-1 text-neutral-7 text-weight-semi-bold">
-							Claim Status:
-							<div
-								className={
-									activityClaimStatusClassName[
-										activity.claimed
-											? 'claimed'
-											: 'unclaimed'
-									]
-								}
-							>
-								{activity.claimed ? 'Claimed' : 'Unclaimed'}
-							</div>
-						</p>
+						<div className="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
+							<p className="mb-0">
+								Claim Status:
+								<div
+									className={
+										activityClaimStatusClassName[
+											activity.claimed
+												? 'claimed'
+												: 'unclaimed'
+										]
+									}
+								>
+									{activity.claimed ? 'Claimed' : 'Unclaimed'}
+								</div>
+							</p>
+						</div>
 
-						<p className="align-items-center d-flex mb-1 text-neutral-7 text-weight-semi-bold">
-							Activity Status:
-							<div
-								className={
-									activityStatusClassName[
-										activity.activityStatus?.key as string
-									]
-								}
-							>
-								{activity.activityStatus?.name}
-							</div>
-						</p>
+						<div className="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
+							<p className="mb-0">
+								Activity Status:
+								<div
+									className={
+										activityStatusClassName[
+											activity.activityStatus
+												?.key as string
+										]
+									}
+								>
+									{activity.activityStatus?.name}
+								</div>
+							</p>
+						</div>
 
 						<div className="d-flex justify-content-end">
 							<h5 className="mb-0 text-neutral-10">

@@ -16,18 +16,24 @@ definition {
 
 	@description = "LPS-158742. Given custom log4j is added to portal and log context is enabled. Then log lines will be marked with custom context name."
 	@priority = 3
-	test LogOutputReturnsMarkedWithCustomName {
-		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.log.context.name=ExampleText${line.separator}upgrade.database.auto.run=true";
-
-		Log.viewLogFileContentPresent(logContent = "ExampleText=ExampleText");
-	}
-
-	@description = "LPS-158742. Given custom log4j is added to portal and log context is enabled. Then log lines will be marked with default context name."
-	@priority = 4
-	test LogOutputReturnsMarkedWithDefaultName {
+	test LogOutputReturnsKeyValueWithExpectedNames {
 		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.database.auto.run=true";
 
-		Log.viewLogFileContentPresent(logContent = "UpgradeLog=UpgradeLog");
+		task ("Verify that marks related to upgrades/verifiers in the scope of portal-kernel/impl are present") {
+			Log.viewLogFileContentPresent(logContent = "upgrade.component=portal");
+		}
+
+		task ("Verify that marks related to the upgrade framework but it is not in the scope of any upgrade nor verify process are present") {
+			Log.viewLogFileContentPresent(logContent = "upgrade.component=framework");
+		}
+
+		task ("Verify that marks related to upgrades/verifiers in the scope of a specific module are present") {
+			Log.viewLogFileContentPresent(logContent = "upgrade.component=com.liferay.portal.workflow.kaleo.service");
+		}
+
+		task ("Verify that no key-value mark is printed when it's not related with Upgrade Framework") {
+			Log.viewLogFileContentPresent(logContent = "{}");
+		}
 	}
 
 	@description = "LPS-158742. Given custom log4j is not added to portal and log context is enabled. Then log lines will not be marked."
@@ -36,7 +42,17 @@ definition {
 		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.database.auto.run=true";
 		property log.context.enabled = "false";
 
-		Log.viewLogFileContentNotPresent(logContent = "UpgradeLog=UpgradeLog");
+		task ("Verify that mark related to upgrades/verifiers in the scope of portal-kernel/impl are not present") {
+			Log.viewLogFileContentNotPresent(logContent = "upgrade.component=portal");
+		}
+
+		task ("Verify that mark related to the upgrade framework but it is not in the scope of any upgrade nor verify process are not present") {
+			Log.viewLogFileContentNotPresent(logContent = "upgrade.component=framework");
+		}
+
+		task ("Verify that mark related to upgrades/verifiers in the scope of a specific module are not present") {
+			Log.viewLogFileContentNotPresent(logContent = "upgrade.component=com.liferay.portal.workflow.kaleo.service");
+		}
 	}
 
 }

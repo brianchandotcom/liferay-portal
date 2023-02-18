@@ -4,7 +4,7 @@
 
 ### Gradle
 
-* [POSHI-474](https://issues.liferay.com/browse/POSHI-474) - Add logic to get latest chromedriver version 
+* [POSHI-474](https://issues.liferay.com/browse/POSHI-474) - Add logic to get latest chromedriver version
 
 ### Runner
 

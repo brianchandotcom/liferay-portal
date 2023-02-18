@@ -214,9 +214,8 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 				ItemSelectorView.class,
 				new SystemObjectEntryItemSelectorView(
 					_itemSelectorViewDescriptorRenderer, objectDefinition,
-					_objectEntryLocalService, _objectFieldLocalService,
-					_objectRelatedModelsProviderRegistry, _portal,
-					systemObjectDefinitionMetadata),
+					_objectFieldLocalService,
+					_objectRelatedModelsProviderRegistry, _portal),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.selector.view.order", 500
 				).build());

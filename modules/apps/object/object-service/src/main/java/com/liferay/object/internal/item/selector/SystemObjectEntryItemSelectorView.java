@@ -25,9 +25,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -72,21 +70,17 @@ public class SystemObjectEntryItemSelectorView
 		ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
 			itemSelectorViewDescriptorRenderer,
 		ObjectDefinition objectDefinition,
-		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
-		Portal portal,
-		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
+		Portal portal) {
 
 		_itemSelectorViewDescriptorRenderer =
 			itemSelectorViewDescriptorRenderer;
 		_objectDefinition = objectDefinition;
-		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
 		_portal = portal;
-		_systemObjectDefinitionMetadata = systemObjectDefinitionMetadata;
 	}
 
 	@Override
@@ -124,8 +118,7 @@ public class SystemObjectEntryItemSelectorView
 			new SystemObjectItemSelectorViewDescriptor(
 				(HttpServletRequest)servletRequest,
 				infoItemItemSelectorCriterion, _objectDefinition,
-				_objectEntryLocalService, _objectRelatedModelsProviderRegistry,
-				portletURL));
+				_objectRelatedModelsProviderRegistry, portletURL));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -138,13 +131,10 @@ public class SystemObjectEntryItemSelectorView
 	private final ItemSelectorViewDescriptorRenderer
 		<InfoItemItemSelectorCriterion> _itemSelectorViewDescriptorRenderer;
 	private final ObjectDefinition _objectDefinition;
-	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;
 	private final Portal _portal;
-	private final SystemObjectDefinitionMetadata
-		_systemObjectDefinitionMetadata;
 
 	private class SystemObjectEntryItemDescriptor
 		implements ItemSelectorViewDescriptor.ItemDescriptor {
@@ -244,7 +234,6 @@ public class SystemObjectEntryItemSelectorView
 			HttpServletRequest httpServletRequest,
 			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
 			ObjectDefinition objectDefinition,
-			ObjectEntryLocalService objectEntryLocalService,
 			ObjectRelatedModelsProviderRegistry
 				objectRelatedModelsProviderRegistry,
 			PortletURL portletURL) {
@@ -252,7 +241,6 @@ public class SystemObjectEntryItemSelectorView
 			_httpServletRequest = httpServletRequest;
 			_infoItemItemSelectorCriterion = infoItemItemSelectorCriterion;
 			_objectDefinition = objectDefinition;
-			_objectEntryLocalService = objectEntryLocalService;
 			_objectRelatedModelsProviderRegistry =
 				objectRelatedModelsProviderRegistry;
 			_portletURL = portletURL;
@@ -331,7 +319,6 @@ public class SystemObjectEntryItemSelectorView
 		private final InfoItemItemSelectorCriterion
 			_infoItemItemSelectorCriterion;
 		private final ObjectDefinition _objectDefinition;
-		private final ObjectEntryLocalService _objectEntryLocalService;
 		private final ObjectRelatedModelsProviderRegistry
 			_objectRelatedModelsProviderRegistry;
 		private final PortletRequest _portletRequest;

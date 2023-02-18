@@ -905,7 +905,8 @@ public class Main {
 
 		String englishTitle = _getTitle(englishText);
 
-		File japaneseFile = new File(fileName.replace("/en/", "/ja/"));
+		File japaneseFile = new File(
+			StringUtil.replace(fileName, "/en/", "/ja/"));
 
 		if (japaneseFile.exists()) {
 			String japaneseText = _processMarkdown(

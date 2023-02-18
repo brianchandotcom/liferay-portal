@@ -46,18 +46,17 @@ import org.dom4j.Element;
 public final class CommandLogger {
 
 	public CommandLogger(String testNamespacedClassCommandName) {
-		_testNamespacedClassCommandName = testNamespacedClassCommandName;
-
 		_commandLogLoggerElement = new LoggerElement("commandLog");
 
 		_commandLogLoggerElement.setAttribute("data-logid", "01");
 		_commandLogLoggerElement.setClassName("collapse command-log");
 		_commandLogLoggerElement.setName("ul");
 
-		_poshiVariablesContext = PoshiVariablesContext.getPoshiVariables(
-			_testNamespacedClassCommandName);
+		_testNamespacedClassCommandName = testNamespacedClassCommandName;
 
 		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
+			_testNamespacedClassCommandName);
+		_poshiVariablesContext = PoshiVariablesContext.getPoshiVariablesContext(
 			_testNamespacedClassCommandName);
 	}
 

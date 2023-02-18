@@ -30,14 +30,15 @@ import java.util.regex.Pattern;
  */
 public class PoshiVariablesContext {
 
-	public static PoshiVariablesContext getPoshiVariables(
+	public static PoshiVariablesContext getPoshiVariablesContext(
 		String classCommandName) {
 
-		if (!_poshiVariables.containsKey(classCommandName)) {
-			_poshiVariables.put(classCommandName, new PoshiVariablesContext());
+		if (!_poshiVariablesContexts.containsKey(classCommandName)) {
+			_poshiVariablesContexts.put(
+				classCommandName, new PoshiVariablesContext());
 		}
 
-		return _poshiVariables.get(classCommandName);
+		return _poshiVariablesContexts.get(classCommandName);
 	}
 
 	public void clear() {
@@ -228,8 +229,8 @@ public class PoshiVariablesContext {
 	}
 
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
-	private static final Map<String, PoshiVariablesContext> _poshiVariables =
-		new HashMap<>();
+	private static final Map<String, PoshiVariablesContext>
+		_poshiVariablesContexts = new HashMap<>();
 
 	private Map<String, Object> _commandMap = new HashMap<>();
 	private final Stack<Map<String, Object>> _commandMapStack = new Stack<>();

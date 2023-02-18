@@ -70,8 +70,7 @@ public class PoshiRunnerExecutor {
 
 		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
 			_testNamespacedClassCommandName);
-
-		_poshiVariablesContext = PoshiVariablesContext.getPoshiVariables(
+		_poshiVariablesContext = PoshiVariablesContext.getPoshiVariablesContext(
 			_testNamespacedClassCommandName);
 	}
 

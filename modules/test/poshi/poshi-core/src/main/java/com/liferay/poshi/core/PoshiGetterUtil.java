@@ -270,7 +270,7 @@ public class PoshiGetterUtil {
 			Object parameter = null;
 
 			PoshiVariablesContext poshiVariablesContext =
-				PoshiVariablesContext.getPoshiVariables(
+				PoshiVariablesContext.getPoshiVariablesContext(
 					testNamespacedCommandName);
 
 			if (matcher.matches()) {

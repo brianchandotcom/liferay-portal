@@ -275,7 +275,7 @@ public final class SummaryLogger {
 
 		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
 			testNamespacedClassCommandName);
-		_poshiVariablesContext = PoshiVariablesContext.getPoshiVariables(
+		_poshiVariablesContext = PoshiVariablesContext.getPoshiVariablesContext(
 			testNamespacedClassCommandName);
 	}
 

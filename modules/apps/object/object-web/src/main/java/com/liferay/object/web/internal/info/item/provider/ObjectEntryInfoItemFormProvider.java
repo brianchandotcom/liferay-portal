@@ -469,11 +469,7 @@ public class ObjectEntryInfoItemFormProvider
 			unsafeConsumer -> {
 				for (ObjectField objectField :
 						_objectFieldLocalService.getObjectFields(
-							objectDefinitionId)) {
-
-					if (objectField.isSystem()) {
-						continue;
-					}
+							objectDefinitionId, false)) {
 
 					if (Validator.isNotNull(
 							objectField.getRelationshipType())) {

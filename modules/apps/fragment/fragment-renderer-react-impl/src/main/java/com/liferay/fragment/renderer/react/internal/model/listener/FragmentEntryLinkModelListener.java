@@ -68,9 +68,9 @@ public class FragmentEntryLinkModelListener
 				return;
 			}
 
-			_jsPackage = _npmResolver.getJSPackage();
+			JSPackage jsPackage = _npmResolver.getJSPackage();
 
-			if (_jsPackage == null) {
+			if (jsPackage == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to initialize because JS package is null");
@@ -88,10 +88,10 @@ public class FragmentEntryLinkModelListener
 
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 				npmRegistryUpdate.registerJSModule(
-					_jsPackage,
+					jsPackage,
 					FragmentEntryFragmentRendererReactUtil.getModuleName(
 						fragmentEntryLink),
-					_dependencies, _getJs(fragmentEntryLink), null);
+					_dependencies, _getJs(fragmentEntryLink, jsPackage), null);
 			}
 
 			npmRegistryUpdate.finish();
@@ -145,7 +145,7 @@ public class FragmentEntryLinkModelListener
 
 	@Deactivate
 	protected void deactivate() {
-		_jsPackage = _npmResolver.getJSPackage();
+		JSPackage jsPackage = _npmResolver.getJSPackage();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
@@ -156,7 +156,7 @@ public class FragmentEntryLinkModelListener
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			npmRegistryUpdate.unregisterJSModule(
-				_jsPackage.getJSModule(
+				jsPackage.getJSModule(
 					FragmentEntryFragmentRendererReactUtil.getModuleName(
 						fragmentEntryLink)));
 		}
@@ -178,7 +178,9 @@ public class FragmentEntryLinkModelListener
 			methodType, oldFragmentEntryLink, newFragmentEntryLink);
 	}
 
-	private String _getJs(FragmentEntryLink fragmentEntryLink) {
+	private String _getJs(
+		FragmentEntryLink fragmentEntryLink, JSPackage jsPackage) {
+
 		return StringUtil.replace(
 			fragmentEntryLink.getJs(),
 			new String[] {
@@ -189,7 +191,7 @@ public class FragmentEntryLinkModelListener
 				StringBundler.concat(
 					StringPool.APOSTROPHE,
 					ModuleNameUtil.getModuleResolvedId(
-						_jsPackage,
+						jsPackage,
 						FragmentEntryFragmentRendererReactUtil.getModuleName(
 							fragmentEntryLink)),
 					StringPool.APOSTROPHE),
@@ -233,11 +235,13 @@ public class FragmentEntryLinkModelListener
 
 		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
 
+		JSPackage jsPackage = _npmResolver.getJSPackage();
+
 		if ((methodType == MethodType.REMOVE) ||
 			(methodType == MethodType.UPDATE)) {
 
 			npmRegistryUpdate.unregisterJSModule(
-				_jsPackage.getJSModule(
+				jsPackage.getJSModule(
 					FragmentEntryFragmentRendererReactUtil.getModuleName(
 						oldFragmentEntryLink)));
 		}
@@ -246,10 +250,10 @@ public class FragmentEntryLinkModelListener
 			(methodType == MethodType.UPDATE)) {
 
 			npmRegistryUpdate.registerJSModule(
-				_jsPackage,
+				jsPackage,
 				FragmentEntryFragmentRendererReactUtil.getModuleName(
 					newFragmentEntryLink),
-				_dependencies, _getJs(newFragmentEntryLink), null);
+				_dependencies, _getJs(newFragmentEntryLink, jsPackage), null);
 		}
 
 		npmRegistryUpdate.finish();
@@ -274,7 +278,6 @@ public class FragmentEntryLinkModelListener
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	private volatile boolean _initialized;
-	private JSPackage _jsPackage;
 
 	@Reference
 	private NPMRegistry _npmRegistry;

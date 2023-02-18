@@ -1009,11 +1009,9 @@ public class Main {
 						title = finalFile.getName();
 					}
 				},
-				new HashMap<>() {
-					{
-						put("file", finalFile);
-					}
-				});
+				HashMapBuilder.<String, File>put(
+					"file", finalFile
+				).build());
 
 			imageURL = document.getContentUrl();
 

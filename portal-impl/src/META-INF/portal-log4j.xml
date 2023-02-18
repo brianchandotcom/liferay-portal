@@ -51,7 +51,6 @@
 		<Logger level="INFO" name="com.liferay.portal.dao.db.BaseDB" />
 		<Logger level="INFO" name="com.liferay.portal.dao.init.DBInitUtil" />
 		<Logger level="INFO" name="com.liferay.portal.dao.jdbc.DataSourceFactoryImpl" />
-		<Logger level="ERROR" name="com.liferay.portal.dao.jdbc.aop" />
 		<Logger level="ERROR" name="com.liferay.portal.dao.jdbc.pool" />
 		<Logger level="ERROR" name="com.liferay.portal.dao.orm.common.SQLTransformer" />
 		<Logger level="ERROR" name="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl" />

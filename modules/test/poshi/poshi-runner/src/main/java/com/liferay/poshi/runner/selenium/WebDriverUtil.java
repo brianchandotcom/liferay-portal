@@ -82,38 +82,6 @@ public class WebDriverUtil extends PropsValues {
 			portalURL = "http://localhost:8180/console";
 		}
 
-		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
-			if (BROWSER_TYPE.equals("chrome")) {
-				_webDrivers.put(
-					testName,
-					new ChromeWebDriverImpl(
-						portalURL, _getChromeRemoteDriver()));
-			}
-			else if (BROWSER_TYPE.equals("edge")) {
-				_webDrivers.put(
-					testName,
-					new EdgeWebDriverImpl(portalURL, _getEdgeRemoteDriver()));
-			}
-			else if (BROWSER_TYPE.equals("firefox")) {
-				_webDrivers.put(
-					testName,
-					new FirefoxWebDriverImpl(
-						portalURL, _getFirefoxRemoteDriver()));
-			}
-			else if (BROWSER_TYPE.equals("internetexplorer")) {
-				_webDrivers.put(
-					testName,
-					new InternetExplorerRemoteWebDriverImpl(
-						portalURL, _getInternetExplorerRemoteDriver()));
-			}
-			else if (BROWSER_TYPE.equals("safari")) {
-				_webDrivers.put(
-					testName,
-					new SafariWebDriverImpl(
-						portalURL, _getSafariRemoteDriver()));
-			}
-		}
-
 		if (BROWSER_TYPE.equals("chrome")) {
 			_webDrivers.put(
 				testName,
@@ -175,6 +143,10 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private static WebDriver _getChromeDriver() {
+		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
+			return _getChromeRemoteDriver();
+		}
+
 		_validateWebDriverBinary("webdriver.chrome.driver", "chromedriver");
 
 		ChromeOptions chromeOptions = _getDefaultChromeOptions();
@@ -245,6 +217,10 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private static WebDriver _getEdgeDriver() {
+		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
+			return _getEdgeRemoteDriver();
+		}
+
 		return new EdgeDriver();
 	}
 
@@ -259,6 +235,10 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private static WebDriver _getFirefoxDriver() {
+		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
+			return _getFirefoxRemoteDriver();
+		}
+
 		_validateWebDriverBinary("webdriver.gecko.driver", "geckodriver");
 
 		FirefoxOptions firefoxOptions = new FirefoxOptions();
@@ -325,6 +305,10 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private static WebDriver _getInternetExplorerDriver() {
+		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
+			return _getInternetExplorerRemoteDriver();
+		}
+
 		return new InternetExplorerDriver(_getDefaultInternetExplorerOptions());
 	}
 
@@ -352,6 +336,10 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private static WebDriver _getSafariDriver() {
+		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
+			return _getSafariRemoteDriver();
+		}
+
 		_setGenericCapabilities(new SafariOptions());
 
 		return new SafariDriver();

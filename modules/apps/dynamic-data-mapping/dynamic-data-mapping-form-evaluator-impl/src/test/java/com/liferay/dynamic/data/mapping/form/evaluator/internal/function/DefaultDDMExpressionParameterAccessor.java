@@ -57,7 +57,7 @@ public class DefaultDDMExpressionParameterAccessor
 
 	@Override
 	public Map<String, Object> getObjectFieldsOldValues() {
-		return _getObjectFieldsOldValues.get();
+		return _getObjectFieldsOldValuesSupplier.get();
 	}
 
 	@Override
@@ -87,9 +87,9 @@ public class DefaultDDMExpressionParameterAccessor
 	}
 
 	protected void setGetObjectFieldsOldValuesSupplier(
-		Supplier<Map<String, Object>> objectFieldsOldValues) {
+		Supplier<Map<String, Object>> getObjectFieldsOldValuesSupplier) {
 
-		_getObjectFieldsOldValues = objectFieldsOldValues;
+		_getObjectFieldsOldValuesSupplier = getObjectFieldsOldValuesSupplier;
 	}
 
 	protected void setGetUserIdSupplier(Supplier<Long> supplier) {
@@ -103,7 +103,7 @@ public class DefaultDDMExpressionParameterAccessor
 	private Supplier<Locale> _getLocaleSupplier = () -> new Locale("pt", "BR");
 	private final Supplier<JSONArray> _getObjectFieldsJSONArraySupplier =
 		JSONFactoryUtil::createJSONArray;
-	private Supplier<Map<String, Object>> _getObjectFieldsOldValues =
+	private Supplier<Map<String, Object>> _getObjectFieldsOldValuesSupplier =
 		() -> Collections.emptyMap();
 	private final Supplier<String> _getTimeZoneIdSupplier = () -> "UTC";
 	private Supplier<Long> _getUserIdSupplier = () -> 0L;

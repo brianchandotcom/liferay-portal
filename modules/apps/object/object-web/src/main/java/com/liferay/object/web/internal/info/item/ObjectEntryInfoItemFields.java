@@ -54,8 +54,8 @@ public class ObjectEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
-	public static final InfoField externalReferenceCodeInfoField =
-		BuilderHolder._builder.infoFieldType(
+	public static final InfoField<TextInfoFieldType>
+		externalReferenceCodeInfoField = BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
 			"externalReferenceCode"
@@ -72,7 +72,7 @@ public class ObjectEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "modified-date")
 		).build();
-	public static final InfoField objectEntryIdInfoField =
+	public static final InfoField<TextInfoFieldType> objectEntryIdInfoField =
 		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
@@ -89,7 +89,7 @@ public class ObjectEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "publish-date")
 		).build();
-	public static final InfoField statusInfoField =
+	public static final InfoField<TextInfoFieldType> statusInfoField =
 		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
@@ -98,8 +98,8 @@ public class ObjectEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "status")
 		).build();
-	public static final InfoField userProfileImageInfoField =
-		BuilderHolder._builder.infoFieldType(
+	public static final InfoField<ImageInfoFieldType>
+		userProfileImageInfoField = BuilderHolder._builder.infoFieldType(
 			ImageInfoFieldType.INSTANCE
 		).name(
 			"userProfileImage"

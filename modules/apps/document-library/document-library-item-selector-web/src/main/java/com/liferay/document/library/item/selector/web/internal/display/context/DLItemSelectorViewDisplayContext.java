@@ -377,22 +377,15 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
 			(InfoItemItemSelectorCriterion)_itemSelectorCriterion;
 
-		Long fileEntryTypeId = GetterUtil.getLong(
-			infoItemItemSelectorCriterion.getItemSubtype(), -1);
+		Long fileEntryTypeId = _getFileEntryTypeId(
+			infoItemItemSelectorCriterion.getItemSubtype());
 
-		DLFileEntryType dlFileEntryType = null;
-
-		if (fileEntryTypeId >= 0) {
-			dlFileEntryType = _dlFileEntryTypeLocalService.fetchFileEntryType(
-				fileEntryTypeId);
+		if (fileEntryTypeId != null) {
+			return fileEntryTypeId;
 		}
 
-		if (dlFileEntryType == null) {
-			fileEntryTypeId = _getFileEntryTypeId(
-				infoItemItemSelectorCriterion.getItemSubtype());
-		}
-
-		return fileEntryTypeId;
+		return GetterUtil.getLong(
+			infoItemItemSelectorCriterion.getItemSubtype());
 	}
 
 	private Long _getFileEntryTypeId(String fileEntryTypeKey) {

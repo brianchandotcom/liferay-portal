@@ -114,33 +114,39 @@ definition {
 	@description = "This is a test for LPS-133105. Verify if adding more than 1 valid and 1 invalid documents will prevent collecting the digital signature"
 	@priority = 5
 	test CannotCollectDSWithUnsupportedFileExtensions {
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+		task ("Given that Digital Signature is enabled with credentials and multiple files are added--one of which is unsupported by Digital Envelopes") {
+			DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.png,Document_3.odt");
+			DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.png,Document_3.odt");
+		}
 
-		PortletEntry.selectAll();
+		task ("When all the files are selected for collecting Digital Signature for a Digital Envelope") {
+			PortletEntry.selectAll();
 
-		Click.javaScriptClick(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
+			Click.javaScriptClick(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
+		}
 
-		SelectFrame(locator1 = "Modal#MODAL");
+		task ("Then the admin is notified that a document has an invalid file extension and the invalid file is not included in the new envelope") {
+			SelectFrame(locator1 = "Modal#MODAL");
 
-		AssertElementPresent(
-			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_MODAL_TITLE",
-			modalTitle = "File Extensions Not Supported");
+			AssertElementPresent(
+				locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_MODAL_TITLE",
+				modalTitle = "File Extensions Not Supported");
 
-		AssertElementPresent(
-			fileTitle = "Document_3",
-			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_MODAL_UNSUPPORTED_FILE");
+			AssertElementPresent(
+				fileTitle = "Document_3",
+				locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_MODAL_UNSUPPORTED_FILE");
 
-		Click(locator1 = "Button#CONTINUE");
+			Click(locator1 = "Button#CONTINUE");
 
-		SelectFrameTop();
+			SelectFrameTop();
 
-		AssertElementNotPresent(
-			fileTitle = "Document_3",
-			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_ENVELOPE_ADDED_FILE");
+			AssertElementNotPresent(
+				fileTitle = "Document_3",
+				locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_ENVELOPE_ADDED_FILE");
+		}
 	}
 
 	@description = "This is a test for LPS-131425. Verify if unsuportted files Error message appear"

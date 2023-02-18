@@ -59,10 +59,8 @@ public class ObjectEntryAssetRendererTest {
 			assetRenderer.getURLViewInContext(
 				liferayPortletRequest, liferayPortletResponse, null));
 
-		String friendlyURL = _getFriendlyURL(liferayPortletRequest);
-
 		Assert.assertEquals(
-			friendlyURL,
+			_getFriendlyURL(liferayPortletRequest),
 			assetRenderer.getURLViewInContext(
 				liferayPortletRequest, liferayPortletResponse, null));
 	}

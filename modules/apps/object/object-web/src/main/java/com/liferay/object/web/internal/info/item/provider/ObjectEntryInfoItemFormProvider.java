@@ -17,12 +17,14 @@ package com.liferay.object.web.internal.info.item.provider;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -300,6 +302,86 @@ public class ObjectEntryInfoItemFormProvider
 		return acceptedFileExtensionsObjectFieldSetting.getValue();
 	}
 
+	private List<InfoFieldSetEntry>
+		_getAttachmentObjectDefinitionInfoFieldSetEntries(
+			long objectDefinitionId) {
+
+		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
+
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					objectDefinitionId, false)) {
+
+			if (!Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				continue;
+			}
+
+			infoFieldSetEntries.add(
+				InfoFieldSet.builder(
+				).infoFieldSetEntry(
+					InfoField.builder(
+					).infoFieldType(
+						URLInfoFieldType.INSTANCE
+					).namespace(
+						ObjectField.class.getSimpleName()
+					).name(
+						objectField.getObjectFieldId() + "#downloadURL"
+					).labelInfoLocalizedValue(
+						InfoLocalizedValue.localize(
+							ObjectEntryInfoItemFields.class, "download-url")
+					).build()
+				).infoFieldSetEntry(
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).namespace(
+						ObjectField.class.getSimpleName()
+					).name(
+						objectField.getObjectFieldId() + "#fileName"
+					).labelInfoLocalizedValue(
+						InfoLocalizedValue.localize(
+							ObjectEntryInfoItemFields.class, "file-name")
+					).build()
+				).infoFieldSetEntry(
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).namespace(
+						ObjectField.class.getSimpleName()
+					).name(
+						objectField.getObjectFieldId() + "#mimeType"
+					).labelInfoLocalizedValue(
+						InfoLocalizedValue.localize(
+							ObjectEntryInfoItemFields.class, "mime-type")
+					).build()
+				).infoFieldSetEntry(
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).namespace(
+						ObjectField.class.getSimpleName()
+					).name(
+						objectField.getObjectFieldId() + "#size"
+					).labelInfoLocalizedValue(
+						InfoLocalizedValue.localize(
+							ObjectEntryInfoItemFields.class, "size")
+					).build()
+				).labelInfoLocalizedValue(
+					InfoLocalizedValue.<String>builder(
+					).values(
+						objectField.getLabelMap()
+					).build()
+				).name(
+					objectField.getName()
+				).build());
+		}
+
+		return infoFieldSetEntries;
+	}
+
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
@@ -397,6 +479,9 @@ public class ObjectEntryInfoItemFormProvider
 						_getObjectDefinitionInfoFieldSet(objectDefinitionId));
 				}
 			}
+		).infoFieldSetEntries(
+			_getAttachmentObjectDefinitionInfoFieldSetEntries(
+				objectDefinitionId)
 		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(modelClassName)
 		).infoFieldSetEntry(

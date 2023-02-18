@@ -210,8 +210,6 @@ public final class CommandLogger {
 				lineGroupLoggerElement);
 		}
 		catch (Throwable throwable) {
-			throwable.printStackTrace();
-
 			throw new PoshiRunnerLoggerException(
 				throwable.getMessage(), throwable);
 		}

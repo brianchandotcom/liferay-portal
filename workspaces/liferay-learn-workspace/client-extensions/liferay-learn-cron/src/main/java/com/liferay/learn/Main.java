@@ -464,7 +464,8 @@ public class Main {
 	}
 
 	private void _initFlexmark() {
-		MutableDataSet mutableDataSet = new MutableDataSet().set(
+		MutableDataSet mutableDataSet = new MutableDataSet(
+		).set(
 			AsideExtension.ALLOW_LEADING_SPACE, true
 		).set(
 			AsideExtension.EXTEND_TO_BLANK_LINE, false
@@ -1044,22 +1045,25 @@ public class Main {
 		FileUtils.writeStringToFile(file, content, StandardCharsets.UTF_8);
 	}
 
-	private Map<String, Long> _documentFolderIds = new HashMap<>();
+	private static final Pattern _literalIncludeParameterPattern =
+		Pattern.compile(":(.*): (.*)");
+	private static final Pattern _sphinxBadgePattern = Pattern.compile(
+		"\\{bdg-(.*)\\}`(.*)`");
+
+	private final Map<String, Long> _documentFolderIds = new HashMap<>();
 	private DocumentFolderResource _documentFolderResource;
 	private DocumentResource _documentResource;
-	private Set<String> _fileNames = new TreeSet<>();
-	private Map<String, String> _imageURLs = new HashMap<>();
+	private final Set<String> _fileNames = new TreeSet<>();
+	private final Map<String, String> _imageURLs = new HashMap<>();
 	private final long _liferayContentStructureId;
 	private final long _liferayGroupId;
 	private final String _liferayOAuthClientId;
 	private final String _liferayOAuthClientSecret;
 	private final URL _liferayURL;
-	private final Pattern _literalIncludeParameterPattern = Pattern.compile(
-		":(.*): (.*)");
 	private File _markdownFile;
 	private final String _markdownImportDirName;
 
-	private NodeVisitor _nodeVisitor = new NodeVisitor(
+	private final NodeVisitor _nodeVisitor = new NodeVisitor(
 		new VisitHandler<Image>(
 			Image.class,
 			new Visitor<Image>() {
@@ -1094,11 +1098,10 @@ public class Main {
 	private long _oauthExpirationMillis;
 	private Parser _parser;
 	private HtmlRenderer _renderer;
-	private final Pattern _sphinxBadgePattern = Pattern.compile(
-		"\\{bdg-(.*)\\}`(.*)`");
-	private Map<String, Long> _structuredContentFolderIds = new HashMap<>();
+	private final Map<String, Long> _structuredContentFolderIds =
+		new HashMap<>();
 	private StructuredContentFolderResource _structuredContentFolderResource;
 	private StructuredContentResource _structuredContentResource;
-	private Map<String, String> _tokens = new HashMap<>();
+	private final Map<String, String> _tokens = new HashMap<>();
 
 }

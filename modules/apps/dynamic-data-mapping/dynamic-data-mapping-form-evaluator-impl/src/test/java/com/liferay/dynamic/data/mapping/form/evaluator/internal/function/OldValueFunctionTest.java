@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,13 +33,8 @@ public class OldValueFunctionTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() throws Exception {
-		_oldValueFunction = new OldValueFunction();
-	}
-
 	@Test
-	public void testApply() {
+	public void testApply1() {
 		DefaultDDMExpressionParameterAccessor ddmExpressionParameterAccessor =
 			new DefaultDDMExpressionParameterAccessor();
 
@@ -58,17 +52,16 @@ public class OldValueFunctionTest {
 			"objectFieldValue1", _oldValueFunction.apply("objectField1"));
 		Assert.assertEquals(
 			"objectFieldValue2", _oldValueFunction.apply("objectField2"));
-
 		Assert.assertNull(
 			_oldValueFunction.apply(RandomTestUtil.randomString()));
 	}
 
 	@Test
-	public void testNullObserver() {
+	public void testApply2() {
 		Assert.assertNull(
 			_oldValueFunction.apply(RandomTestUtil.randomString()));
 	}
 
-	private OldValueFunction _oldValueFunction;
+	private final OldValueFunction _oldValueFunction = new OldValueFunction();
 
 }

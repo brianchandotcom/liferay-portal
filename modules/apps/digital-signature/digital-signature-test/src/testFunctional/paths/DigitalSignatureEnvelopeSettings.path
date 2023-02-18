@@ -25,6 +25,21 @@
 	<td>//button[@disabled and contains (text(),'${key_value}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_ENVELOPE_ADDED_FILE</td>
+	<td>//ul[contains(@class,'file-entries-list')]//li//*[contains(., '${fileTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_MODAL_TITLE</td>
+	<td>//h1[contains(@class, 'modal-title') and contains(., '${modalTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_MODAL_UNSUPPORTED_FILE</td>
+	<td>//*[contains(@class,'modal-body')]//ul//li[contains(., '${fileTitle}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

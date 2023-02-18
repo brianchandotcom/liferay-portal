@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.learn.dxp.importer;
+package com.liferay.learn;
 
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;

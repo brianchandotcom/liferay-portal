@@ -16,6 +16,7 @@ package com.liferay.fragment.renderer.react.internal.model.listener;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.react.internal.helper.FragmentEntryLinkJSModuleInitializerHelper;
 import com.liferay.fragment.renderer.react.internal.util.FragmentEntryFragmentRendererReactUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
@@ -25,6 +26,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -70,6 +72,8 @@ public class FragmentEntryLinkModelListener
 			return;
 		}
 
+		_fragmentEntryLinkJSModuleInitializerHelper.ensureInitialized();
+
 		_updateNPMRegistry(MethodType.REMOVE, fragmentEntryLink, null);
 
 		_notifyCluster(MethodType.REMOVE, fragmentEntryLink, null);
@@ -84,11 +88,20 @@ public class FragmentEntryLinkModelListener
 			return;
 		}
 
+		_fragmentEntryLinkJSModuleInitializerHelper.ensureInitialized();
+
 		_updateNPMRegistry(
 			MethodType.UPDATE, originalFragmentEntryLink, fragmentEntryLink);
 
 		_notifyCluster(
 			MethodType.UPDATE, originalFragmentEntryLink, fragmentEntryLink);
+	}
+
+	@Override
+	public void onBeforeCreate(FragmentEntryLink fragmentEntryLink)
+		throws ModelListenerException {
+
+		_fragmentEntryLinkJSModuleInitializerHelper.ensureInitialized();
 	}
 
 	@Deactivate
@@ -193,6 +206,10 @@ public class FragmentEntryLinkModelListener
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;
+
+	@Reference
+	private FragmentEntryLinkJSModuleInitializerHelper
+		_fragmentEntryLinkJSModuleInitializerHelper;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

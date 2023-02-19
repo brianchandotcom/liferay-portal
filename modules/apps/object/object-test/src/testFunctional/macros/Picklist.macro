@@ -201,9 +201,7 @@ definition {
 		var key_picklistItemName = ${picklistItemName};
 		var key_picklistItemKey = ${picklistItemKey};
 
-		if (IsElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM")) {
-			Picklist.gotoPicklistView(picklistName = ${picklistItemName});
-		}
+		WaitForPageLoad();
 
 		AssertElementPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
 	}
@@ -304,7 +302,7 @@ definition {
 			key_picklistName = ${picklistName},
 			locator1 = "Picklist#SELECT_PICKLIST_VIEW");
 
-		Click.javaScriptClick(locator1 = "Picklist#GOTO_PICKLIST_VIEW");
+		MenuItem.clickNoError(menuItem = "View");
 	}
 
 	macro optionsPicklist {
@@ -312,14 +310,11 @@ definition {
 			key_picklistName = ${picklistName},
 			locator1 = "Picklist#PICKLIST_KEBAB_MENU");
 
-		Click.javaScriptClick(
-			key_picklistOption = ${picklistOption},
-			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
 	macro optionsPicklistItem {
 		var key_itemKey = ${itemKey};
-		var key_picklistItemOption = ${picklistItemOption};
 
 		SelectFrameTop();
 
@@ -327,7 +322,7 @@ definition {
 
 		Click.javaScriptClick(locator1 = "Picklist#PICKLIST_ITEM_KEBAB_MENU");
 
-		Click.javaScriptClick(locator1 = "Picklist#PICKLIST_ITEM_KEBAB_MENU_OPTION");
+		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
 	macro searchPicklist {
@@ -359,7 +354,7 @@ definition {
 	macro updatePicklistItemName {
 		Picklist.optionsPicklistItem(
 			itemKey = ${itemkey},
-			picklistItemOption = "View");
+			menuItem = "View");
 
 		SelectFrameTop();
 

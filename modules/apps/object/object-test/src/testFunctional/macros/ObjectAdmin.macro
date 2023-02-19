@@ -234,9 +234,7 @@ definition {
 
 		Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTION");
 
-		Click(
-			key_picklistOption = ${picklistOption},
-			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+		MenuItem.clickNoError(menuItem = ${picklistOption});
 
 		if (IsElementPresent(key_text = ${saveName}, locator1 = "Button#ANY")) {
 			Click(

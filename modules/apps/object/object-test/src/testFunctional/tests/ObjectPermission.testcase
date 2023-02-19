@@ -211,8 +211,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "Delete");
+			menuItem = "Delete",
+			picklistName = "Picklist Test");
 
 		Picklist.assertPicklistNotPresent(picklistName = "Picklist Test");
 	}
@@ -394,8 +394,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Custom Picklist 148938",
-			picklistOption = "Delete");
+			menuItem = "Delete",
+			picklistName = "Custom Picklist 148938");
 
 		Picklist.assertPicklistNotPresent(picklistName = "Custom Picklist 148938");
 	}

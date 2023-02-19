@@ -41,8 +41,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.addPicklistItemViaUI(
 			picklistItemKey = "PicklistItemKeyTest",
@@ -63,8 +63,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist Test");
 
@@ -190,8 +190,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "Delete");
+			menuItem = "Delete",
+			picklistName = "Picklist Test");
 
 		Picklist.assertPicklistNotPresent(picklistName = "Picklist Test");
 	}
@@ -211,12 +211,12 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.optionsPicklistItem(
 			itemKey = "PicklistItemKeyTest",
-			picklistItemOption = "Delete");
+			menuItem = "Delete");
 
 		Picklist.assertPicklistItemNotPresent(
 			picklistItemKey = "PicklistItemKeyTest",
@@ -352,8 +352,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.addPicklistItemViaUI(picklistItemKey = "PicklistItemKeyTest");
 
@@ -391,12 +391,12 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.optionsPicklistItem(
 			itemKey = "itemKeyName",
-			picklistItemOption = "View");
+			menuItem = "View");
 
 		Picklist.assertDisableKey(keyName = "itemKeyName");
 	}
@@ -435,8 +435,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.searchPicklistItem(picklistItemName = "Test 2");
 
@@ -462,12 +462,12 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.optionsPicklistItem(
 			itemKey = "itemTest",
-			picklistItemOption = "View");
+			menuItem = "View");
 
 		Picklist.addLanguageOnPicklistItem(
 			itemName = "Teste de entrada",
@@ -478,12 +478,12 @@ definition {
 		Refresh();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.optionsPicklistItem(
 			itemKey = "itemTest",
-			picklistItemOption = "View");
+			menuItem = "View");
 
 		Picklist.assertPicklistItemByLanguage(
 			nameItem = "Teste de entrada",
@@ -498,8 +498,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.addPicklistItemWithTranslationViaUI(
 			defaultLanguage = "en_US",
@@ -512,12 +512,12 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.optionsPicklistItem(
 			itemKey = "itemTest",
-			picklistItemOption = "View");
+			menuItem = "View");
 
 		Picklist.assertItemNameAndItemKeyOnModal(
 			itemKey = "itemTest",
@@ -536,8 +536,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.addLanguageOnPicklist(
 			itemName = "Teste na lista",
@@ -548,8 +548,8 @@ definition {
 		Refresh();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.assertPicklistNameByLanguage(
 			nameItem = "Teste na lista",
@@ -571,8 +571,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.assertPicklistItemInTable(
 			picklistItemKey = "entryTest",
@@ -587,8 +587,8 @@ definition {
 		Refresh();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.assertPicklistItemInTable(
 			picklistItemKey = "entryTest",
@@ -607,8 +607,8 @@ definition {
 		Picklist.assertPicklist(picklistName = "Picklist Test");
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 
@@ -627,8 +627,8 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.assertPicklistDetails(title = "Basic Info");
 	}
@@ -646,12 +646,12 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.optionsPicklist(
-			picklistName = "Picklist Test",
-			picklistOption = "View");
+			menuItem = "View",
+			picklistName = "Picklist Test");
 
 		Picklist.optionsPicklistItem(
 			itemKey = "PicklistItemKeyTest",
-			picklistItemOption = "View");
+			menuItem = "View");
 
 		IFrame.selectTopFrame();
 
@@ -735,7 +735,7 @@ definition {
 		task ("Go to Picklist Item and add a new language") {
 			Picklist.optionsPicklistItem(
 				itemKey = "PicklistItemKeyTest",
-				picklistItemOption = "View");
+				menuItem = "View");
 
 			Picklist.addLanguageOnPicklistItem(
 				itemName = "Teste de entrada",
@@ -912,7 +912,7 @@ definition {
 
 		Picklist.optionsPicklistItem(
 			itemKey = "PicklistItemKeyTest",
-			picklistItemOption = "View");
+			menuItem = "View");
 
 		Picklist.addLanguageOnPicklistItem(
 			itemName = "Teste de entrada",
@@ -1052,7 +1052,7 @@ definition {
 
 		Picklist.optionsPicklistItem(
 			itemKey = "PicklistItemKeyTest",
-			picklistItemOption = "View");
+			menuItem = "View");
 
 		Picklist.addLanguageOnPicklistItem(
 			itemName = "Teste de entrada",

@@ -89,9 +89,7 @@ definition {
 
 		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
-		Click(
-			key_picklistOption = ${filterBy},
-			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+		MenuItem.clickNoError(menuItem = ${filterBy});
 
 		if (isSet(filterType)) {
 			Click(

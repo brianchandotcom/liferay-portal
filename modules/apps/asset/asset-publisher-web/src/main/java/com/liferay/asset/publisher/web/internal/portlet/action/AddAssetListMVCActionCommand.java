@@ -20,6 +20,7 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.handler.AssetListExceptionRequestHandler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,7 +40,9 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -137,6 +141,34 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 
 			if (Validator.isNull(value)) {
 				continue;
+			}
+
+			if (name.equals("scopeIds")) {
+				List<Long> groupIds = new ArrayList<>();
+				String[] parts = value.split(StringPool.COMMA);
+
+				for (String part : parts) {
+					if (part.equals("Group_default")) {
+						groupIds.add(serviceContext.getScopeGroupId());
+					}
+					else {
+						if (part.startsWith("Group_")) {
+							long groupId = GetterUtil.getLong(
+								part.replace("Group_", StringPool.BLANK), -1);
+
+							if (groupId != -1) {
+								groupIds.add(groupId);
+							}
+						}
+					}
+				}
+
+				if (groupIds.isEmpty()) {
+					continue;
+				}
+
+				name = "groupIds";
+				value = ListUtil.toString(groupIds, StringPool.BLANK);
 			}
 
 			unicodeProperties.put(name, value);

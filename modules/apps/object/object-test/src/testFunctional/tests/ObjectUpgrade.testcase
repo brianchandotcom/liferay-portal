@@ -17,7 +17,7 @@ definition {
 	}
 
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test ViewActionWithNotificationAfterUpgrade7413U33 {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test ViewObjectDefinitionAfterUpgrade7413U33 {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test ViewObjectEntryAfterUpgrade7413U33 {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
@@ -49,15 +49,112 @@ definition {
 
 	}
 
-	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test ViewPicklistAfterUpgrade7413U33 {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
 
-		// TODO LPS-174662 ViewPicklistAfterUpgrade7413U33
+		task ("View a Picklist after Upgrade") {
+			Picklist.gotoPicklists();
 
+			Picklist.optionsPicklist(
+				menuItem = "View",
+				picklistName = "Custom Picklist");
+
+			SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
+
+			for (var itemNumber : list "1,2,3") {
+				Picklist.assertPicklistItem(
+					picklistItemKey = "picklistItem${itemNumber}",
+					picklistItemName = "Picklist Item ${itemNumber}");
+			}
+		}
+
+		task ("Edit a Picklist and items") {
+			SelectFrameTop();
+
+			Picklist.updatePicklistName(picklistName = "Custom Picklist Edit After Upgrade");
+
+			Type(
+				key_text = "External Reference Code",
+				locator1 = "TextInput#ANY",
+				value1 = "ERC Edit After Upgrade");
+
+			PortletEntry.save();
+
+			Picklist.optionsPicklist(
+				menuItem = "View",
+				picklistName = "Custom Picklist Edit After Upgrade");
+
+			for (var itemNumber : list "1,2,3") {
+				Picklist.updatePicklistItemName(
+					itemkey = "picklistItem${itemNumber}",
+					newItemName = "Picklist Item ${itemNumber} Edit After Upgrade");
+
+				PortletEntry.save();
+			}
+		}
+
+		task ("Add a new item to the existing Picklist and create a brand new Picklist") {
+			Picklist.addPicklistItemViaUI(picklistItemName = "New Picklist Item");
+
+			PortletEntry.save();
+
+			Picklist.gotoPicklists();
+
+			Picklist.addPicklistViaUI(picklistName = "Custom Picklist Add After Upgrade");
+
+			Picklist.gotoPicklistView(picklistName = "Custom Picklist Add After Upgrade");
+
+			for (var itemNumber : list "1,2") {
+				Picklist.addPicklistItemViaUI(picklistItemName = "Picklist After Upgrade Item ${itemNumber}");
+
+				PortletEntry.save();
+			}
+		}
+
+		task ("Delete items from both Picklists") {
+			Picklist.optionsPicklistItem(
+				itemKey = "picklistAfterUpgradeItem2",
+				menuItem = "Delete");
+
+			PortletEntry.save();
+
+			SelectFrameTop();
+
+			Picklist.gotoPicklistView(picklistName = "Custom Picklist Edit After Upgrade");
+
+			Picklist.optionsPicklistItem(
+				itemKey = "picklistItem2",
+				menuItem = "Delete");
+
+			PortletEntry.save();
+		}
+
+		task ("Delete any Custom Objects that use a picklist and then delete all picklists") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.deleteCustomObjectViaUI(
+				labelName = "Custom Object3",
+				objectName = "CustomObject3");
+
+			Picklist.gotoPicklists();
+
+			Picklist.optionsPicklist(
+				menuItem = "Delete",
+				picklistName = "Custom Picklist Edit After Upgrade");
+
+			Picklist.optionsPicklist(
+				menuItem = "Delete",
+				picklistName = "Custom Picklist Add After Upgrade");
+
+			for (var picklistName : list "Custom Picklist Add After Upgrade,Custom Picklist Edit After Upgrade") {
+				AssertElementNotPresent(
+					key_picklistName = ${picklistName},
+					locator1 = "Picklist#VIEW_PICKLIST");
+			}
+		}
 	}
 
 }

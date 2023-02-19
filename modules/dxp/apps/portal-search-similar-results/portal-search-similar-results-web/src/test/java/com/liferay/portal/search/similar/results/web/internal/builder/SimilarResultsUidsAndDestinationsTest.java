@@ -1024,10 +1024,10 @@ public class SimilarResultsUidsAndDestinationsTest {
 	}
 
 	private String _resolveUID(SimilarResultsRoute similarResultsContributor) {
-		Criteria similarResultsInput = _resolveCriteria(
+		Criteria similarResultsInputCriteria = _resolveCriteria(
 			similarResultsContributor);
 
-		return similarResultsInput.getUID();
+		return similarResultsInputCriteria.getUID();
 	}
 
 	private void _setUpAssetEntryLocalServiceFetchGroupIdUUID(

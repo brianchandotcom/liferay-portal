@@ -64,15 +64,15 @@ public class JSONObjectIndividualSegmentsExpressionVisitorImpl
 	}
 
 	@Override
-	public Object visitChildren(@NotNull RuleNode node) {
+	public Object visitChildren(@NotNull RuleNode ruleNode) {
 		Object result = defaultResult();
 
-		for (int i = 0; i < node.getChildCount(); i++) {
-			if (!shouldVisitNextChild(node, result)) {
+		for (int i = 0; i < ruleNode.getChildCount(); i++) {
+			if (!shouldVisitNextChild(ruleNode, result)) {
 				break;
 			}
 
-			ParseTree parseTree = node.getChild(i);
+			ParseTree parseTree = ruleNode.getChild(i);
 
 			Object object = parseTree.accept(this);
 

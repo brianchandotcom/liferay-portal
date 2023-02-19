@@ -99,16 +99,16 @@ public class IndividualSegmentsExpressionVisitorImpl
 
 	@Override
 	protected Criteria aggregateResult(
-		Criteria aggregate, Criteria nextResult) {
+		Criteria aggregateCriteria, Criteria nextResultCriteria) {
 
-		if (aggregate == null) {
-			return nextResult;
+		if (aggregateCriteria == null) {
+			return nextResultCriteria;
 		}
-		else if (nextResult == null) {
-			return aggregate;
+		else if (nextResultCriteria == null) {
+			return aggregateCriteria;
 		}
 
-		return aggregate;
+		return aggregateCriteria;
 	}
 
 	@Override

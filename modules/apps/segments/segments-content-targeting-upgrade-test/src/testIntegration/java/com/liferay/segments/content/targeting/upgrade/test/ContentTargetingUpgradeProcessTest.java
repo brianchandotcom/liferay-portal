@@ -153,11 +153,11 @@ public class ContentTargetingUpgradeProcessTest {
 
 		Assert.assertNotNull(segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		Assert.assertNotNull(criteriaObj);
+		Assert.assertNotNull(criteria);
 
-		Criteria.Criterion criterion = criteriaObj.getCriterion("context");
+		Criteria.Criterion criterion = criteria.getCriterion("context");
 
 		Assert.assertNotNull(criterion);
 
@@ -198,11 +198,11 @@ public class ContentTargetingUpgradeProcessTest {
 
 		Assert.assertNotNull(segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		Assert.assertNotNull(criteriaObj);
+		Assert.assertNotNull(criteria);
 
-		Criteria.Criterion criterion = criteriaObj.getCriterion("user");
+		Criteria.Criterion criterion = criteria.getCriterion("user");
 
 		Assert.assertNotNull(criterion);
 
@@ -237,11 +237,11 @@ public class ContentTargetingUpgradeProcessTest {
 
 		Assert.assertNotNull(segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		Assert.assertNotNull(criteriaObj);
+		Assert.assertNotNull(criteria);
 
-		Criteria.Criterion criterion = criteriaObj.getCriterion("context");
+		Criteria.Criterion criterion = criteria.getCriterion("context");
 
 		Assert.assertNotNull(criterion);
 
@@ -285,11 +285,11 @@ public class ContentTargetingUpgradeProcessTest {
 
 		Assert.assertNotNull(segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		Assert.assertNotNull(criteriaObj);
+		Assert.assertNotNull(criteria);
 
-		Criteria.Criterion criterion = criteriaObj.getCriterion("context");
+		Criteria.Criterion criterion = criteria.getCriterion("context");
 
 		Assert.assertNotNull(criterion);
 
@@ -330,11 +330,11 @@ public class ContentTargetingUpgradeProcessTest {
 
 		Assert.assertNotNull(segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		Assert.assertNotNull(criteriaObj);
+		Assert.assertNotNull(criteria);
 
-		Criteria.Criterion criterion = criteriaObj.getCriterion(
+		Criteria.Criterion criterion = criteria.getCriterion(
 			"user-organization");
 
 		Assert.assertNotNull(criterion);
@@ -369,11 +369,11 @@ public class ContentTargetingUpgradeProcessTest {
 
 		Assert.assertNotNull(segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		Assert.assertNotNull(criteriaObj);
+		Assert.assertNotNull(criteria);
 
-		Criteria.Criterion criterion = criteriaObj.getCriterion("context");
+		Criteria.Criterion criterion = criteria.getCriterion("context");
 
 		Assert.assertNotNull(criterion);
 
@@ -410,11 +410,11 @@ public class ContentTargetingUpgradeProcessTest {
 
 		Assert.assertNotNull(segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		Assert.assertNotNull(criteriaObj);
+		Assert.assertNotNull(criteria);
 
-		Criteria.Criterion criterion = criteriaObj.getCriterion("context");
+		Criteria.Criterion criterion = criteria.getCriterion("context");
 
 		Assert.assertNotNull(criterion);
 
@@ -448,11 +448,11 @@ public class ContentTargetingUpgradeProcessTest {
 
 		Assert.assertNotNull(segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		Assert.assertNotNull(criteriaObj);
+		Assert.assertNotNull(criteria);
 
-		Criteria.Criterion criterion = criteriaObj.getCriterion("user");
+		Criteria.Criterion criterion = criteria.getCriterion("user");
 
 		Assert.assertNotNull(criterion);
 
@@ -519,11 +519,11 @@ public class ContentTargetingUpgradeProcessTest {
 
 		Assert.assertNotNull(segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		Assert.assertNotNull(criteriaObj);
+		Assert.assertNotNull(criteria);
 
-		Criteria.Criterion criterion = criteriaObj.getCriterion("user");
+		Criteria.Criterion criterion = criteria.getCriterion("user");
 
 		Assert.assertNotNull(criterion);
 
@@ -557,11 +557,11 @@ public class ContentTargetingUpgradeProcessTest {
 
 		Assert.assertNotNull(segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		Assert.assertNotNull(criteriaObj);
+		Assert.assertNotNull(criteria);
 
-		Criteria.Criterion criterion = criteriaObj.getCriterion("user");
+		Criteria.Criterion criterion = criteria.getCriterion("user");
 
 		Assert.assertNotNull(criterion);
 
@@ -595,11 +595,11 @@ public class ContentTargetingUpgradeProcessTest {
 
 		Assert.assertNotNull(segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		Assert.assertNotNull(criteriaObj);
+		Assert.assertNotNull(criteria);
 
-		Criteria.Criterion criterion = criteriaObj.getCriterion("context");
+		Criteria.Criterion criterion = criteria.getCriterion("context");
 
 		Assert.assertNotNull(criterion);
 

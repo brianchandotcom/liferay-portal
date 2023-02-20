@@ -73,7 +73,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class AddLayoutUtilityPageMVCActionCommandTest {
+public class AddLayoutUtilityPageEntryMVCActionCommandTest {
 
 	@ClassRule
 	@Rule
@@ -101,7 +101,7 @@ public class AddLayoutUtilityPageMVCActionCommandTest {
 	}
 
 	@Test
-	public void testAddLayoutUtilityPageFromTemplate() throws Exception {
+	public void testAddLayoutUtilityPageEntry() throws Exception {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			ReflectionTestUtil.invoke(
 				_mvcActionCommand, "_addLayoutUtilityPageEntry",

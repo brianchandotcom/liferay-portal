@@ -39,7 +39,7 @@ public class ServletWrapper implements Servlet {
 
 		_servletContext = servletContext;
 
-		_classLoader = _servletContext.getClassLoader();
+		_classLoader = servletContext.getClassLoader();
 	}
 
 	@Override

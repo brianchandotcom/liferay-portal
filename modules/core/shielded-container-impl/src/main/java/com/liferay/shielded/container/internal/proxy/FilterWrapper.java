@@ -40,7 +40,7 @@ public class FilterWrapper implements Filter {
 
 		_servletContext = servletContext;
 
-		_classLoader = _servletContext.getClassLoader();
+		_classLoader = servletContext.getClassLoader();
 	}
 
 	@Override

@@ -14,6 +14,9 @@
 
 package com.liferay.product.navigation.personal.menu.web.internal.portlet.action;
 
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -38,11 +41,14 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 import com.liferay.product.navigation.personal.menu.constants.PersonalMenuPortletKeys;
 import com.liferay.product.navigation.personal.menu.util.PersonalApplicationURLUtil;
-import com.liferay.product.navigation.personal.menu.web.internal.PersonalMenuEntryRegistry;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
@@ -50,6 +56,8 @@ import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -65,6 +73,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GetPersonalMenuItemsMVCResourceCommand
 	extends BaseMVCResourceCommand {
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, PersonalMenuEntry.class,
+			"(product.navigation.personal.menu.group=*)",
+			(serviceReference, emitter) -> emitter.emit(
+				String.valueOf(
+					serviceReference.getProperty(
+						"product.navigation.personal.menu.group"))),
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator<>(
+					"product.navigation.personal.menu.entry.order")));
+	}
 
 	@Override
 	protected void doServeResource(
@@ -85,6 +107,21 @@ public class GetPersonalMenuItemsMVCResourceCommand
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
+
+	private List<List<PersonalMenuEntry>> _getGroupedPersonalMenuEntries() {
+		SortedSet<String> personalMenuGroups = new TreeSet<>(
+			_serviceTrackerMap.keySet());
+
+		List<List<PersonalMenuEntry>> groupedPersonalMenuEntries =
+			new ArrayList<>(personalMenuGroups.size());
+
+		for (String group : personalMenuGroups) {
+			groupedPersonalMenuEntries.add(
+				_serviceTrackerMap.getService(group));
+		}
+
+		return groupedPersonalMenuEntries;
 	}
 
 	private JSONArray _getImpersonationItemsJSONArray(
@@ -246,7 +283,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		List<List<PersonalMenuEntry>> groupedPersonalMenuEntries =
-			_personalMenuEntryRegistry.getGroupedPersonalMenuEntries();
+			_getGroupedPersonalMenuEntries();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -321,9 +358,9 @@ public class GetPersonalMenuItemsMVCResourceCommand
 	private Language _language;
 
 	@Reference
-	private PersonalMenuEntryRegistry _personalMenuEntryRegistry;
-
-	@Reference
 	private Portal _portal;
+
+	private ServiceTrackerMap<String, List<PersonalMenuEntry>>
+		_serviceTrackerMap;
 
 }

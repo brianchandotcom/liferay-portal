@@ -148,3 +148,5 @@ CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = (CPOptio
 		</c:choose>
 	</c:otherwise>
 </c:choose>
+
+<aui:script use="liferay-search-facet-util" />

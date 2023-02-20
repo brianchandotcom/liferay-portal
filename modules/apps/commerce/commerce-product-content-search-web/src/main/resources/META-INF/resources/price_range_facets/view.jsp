@@ -141,6 +141,8 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 	</c:otherwise>
 </c:choose>
 
+<aui:script use="liferay-search-facet-util" />
+
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(

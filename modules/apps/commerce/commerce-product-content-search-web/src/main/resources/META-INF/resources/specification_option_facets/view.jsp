@@ -136,3 +136,5 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 
 	</c:otherwise>
 </c:choose>
+
+<aui:script use="liferay-search-facet-util" />

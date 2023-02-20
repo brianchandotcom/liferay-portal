@@ -67,7 +67,7 @@ if (parentOrganization != null) {
 %>
 
 <clay:content-row
-	containerElement="h3"
+	containerElement="div"
 	cssClass="sheet-subtitle"
 >
 	<clay:content-col

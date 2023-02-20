@@ -367,11 +367,10 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			return;
 		}
 
-		String cachedLibraryVulnerabilitiesContent =
-			_getCachedLibraryVulnerabilitiesContent();
+		String cachedKnownVulnerabilities = _getCachedKnownVulnerabilities();
 
-		if (Validator.isNotNull(cachedLibraryVulnerabilitiesContent)) {
-			int x = cachedLibraryVulnerabilitiesContent.indexOf(
+		if (Validator.isNotNull(cachedKnownVulnerabilities)) {
+			int x = cachedKnownVulnerabilities.indexOf(
 				StringBundler.concat(
 					securityAdvisoryEcosystemEnum, StringPool.COMMA,
 					packageName, StringPool.COMMA, version, StringPool.COMMA));
@@ -379,16 +378,16 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			if (x != -1) {
 				String cachedLibraryVulnerabilities;
 
-				int y = cachedLibraryVulnerabilitiesContent.indexOf(
+				int y = cachedKnownVulnerabilities.indexOf(
 					StringPool.NEW_LINE, x);
 
 				if (y != -1) {
 					cachedLibraryVulnerabilities =
-						cachedLibraryVulnerabilitiesContent.substring(x, y);
+						cachedKnownVulnerabilities.substring(x, y);
 				}
 				else {
 					cachedLibraryVulnerabilities =
-						cachedLibraryVulnerabilitiesContent.substring(x);
+						cachedKnownVulnerabilities.substring(x);
 				}
 
 				String[] parts = StringUtil.split(cachedLibraryVulnerabilities);
@@ -454,26 +453,26 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 				_githubAccessToken));
 	}
 
-	private synchronized String _getCachedLibraryVulnerabilitiesContent()
+	private synchronized String _getCachedKnownVulnerabilities()
 		throws Exception {
 
-		if (Validator.isNotNull(_cachedLibraryVulnerabilitiesContent)) {
-			return _cachedLibraryVulnerabilitiesContent;
+		if (Validator.isNotNull(_cachedKnownVulnerabilities)) {
+			return _cachedKnownVulnerabilities;
 		}
 
-		_cachedLibraryVulnerabilitiesContent = StringPool.BLANK;
+		_cachedKnownVulnerabilities = StringPool.BLANK;
 
 		File file = new File(
 			System.getProperty("user.home") +
 				"/cachedLibraryVulnerabilities.text");
 
 		if (!file.exists()) {
-			return _cachedLibraryVulnerabilitiesContent;
+			return _cachedKnownVulnerabilities;
 		}
 
-		_cachedLibraryVulnerabilitiesContent = FileUtil.read(file);
+		_cachedKnownVulnerabilities = FileUtil.read(file);
 
-		return _cachedLibraryVulnerabilitiesContent;
+		return _cachedKnownVulnerabilities;
 	}
 
 	private synchronized String _getCiGithubAccessToken() throws Exception {
@@ -656,7 +655,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LibraryVulnerabilitiesCheck.class);
 
-	private String _cachedLibraryVulnerabilitiesContent;
+	private String _cachedKnownVulnerabilities;
 	private final Map<String, List<SecurityVulnerabilityNode>>
 		_cachedVulnerableVersionMap = new ConcurrentHashMap<>();
 	private String _githubAccessToken;

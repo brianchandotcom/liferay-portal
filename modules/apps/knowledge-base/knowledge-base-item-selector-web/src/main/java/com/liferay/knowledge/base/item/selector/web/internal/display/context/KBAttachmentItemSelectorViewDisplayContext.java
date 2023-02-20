@@ -63,7 +63,7 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 		_search = search;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
+			httpServletRequest);
 	}
 
 	public long getAttachmentsFolderId() throws PortalException {

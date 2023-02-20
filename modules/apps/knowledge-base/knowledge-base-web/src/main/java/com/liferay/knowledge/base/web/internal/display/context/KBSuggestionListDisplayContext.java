@@ -40,7 +40,7 @@ public class KBSuggestionListDisplayContext {
 
 		_groupId = kbArticle.getGroupId();
 		_navigation = ParamUtil.getString(
-			_httpServletRequest, "navigation", "all");
+			httpServletRequest, "navigation", "all");
 	}
 
 	public KBSuggestionListDisplayContext(
@@ -50,7 +50,7 @@ public class KBSuggestionListDisplayContext {
 		_groupId = groupId;
 
 		_navigation = ParamUtil.getString(
-			_httpServletRequest, "navigation", "all");
+			httpServletRequest, "navigation", "all");
 	}
 
 	public int getCompletedKBCommentsCount() throws PortalException {

@@ -63,7 +63,7 @@ public class KBSelectParentDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_renderRequest = renderRequest;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_initParentData();

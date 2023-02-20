@@ -58,7 +58,7 @@ public class ViewKBSuggestionDisplayContext {
 		_renderResponse = renderResponse;
 		_rootPortletId = rootPortletId;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

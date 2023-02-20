@@ -40,7 +40,7 @@ public class ViewPrpKBArticlesDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_iteratorURL = iteratorURL;
 
-		_portletRequest = (PortletRequest)_httpServletRequest.getAttribute(
+		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 

@@ -80,12 +80,12 @@ public class KBAdminNavigationDisplayContext {
 		_kbArticleURLHelper = new KBArticleURLHelper(
 			renderRequest, renderResponse);
 		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
-			(PortletRequest)_httpServletRequest.getAttribute(
+			(PortletRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST));
 		_liferayPortletResponse = LiferayPortletUtil.getLiferayPortletResponse(
 			renderResponse);
 		_selectedItemAncestorIds = _getSelectedItemAncestorIds();
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_kbDropdownItemsProvider = new KBDropdownItemsProvider(

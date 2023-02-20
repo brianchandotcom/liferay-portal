@@ -24,11 +24,8 @@ import com.liferay.portal.kernel.lock.NoSuchLockException;
 import com.liferay.portal.lock.service.LockLocalService;
 
 import java.util.Date;
-import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -36,11 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LockManager.class)
 public class LockManagerImpl implements LockManager {
-
-	@Override
-	public void clear() {
-		_lockLocalService.clear();
-	}
 
 	@Override
 	public Lock createLock(
@@ -229,12 +221,6 @@ public class LockManagerImpl implements LockManager {
 	@Override
 	public void unlock(String className, String key, String owner) {
 		_lockLocalService.unlock(className, key, owner);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		clear();
 	}
 
 	private PortalException _translate(PortalException portalException) {

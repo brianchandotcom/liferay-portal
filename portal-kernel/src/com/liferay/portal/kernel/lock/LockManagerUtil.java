@@ -22,10 +22,6 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
  */
 public class LockManagerUtil {
 
-	public static void clear() {
-		_lockManager.clear();
-	}
-
 	public static Lock createLock(
 		long lockId, long companyId, long userId, String userName) {
 

@@ -24,8 +24,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LockManager {
 
-	public void clear();
-
 	public Lock createLock(
 		long lockId, long companyId, long userId, String userName);
 

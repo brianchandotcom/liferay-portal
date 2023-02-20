@@ -15,6 +15,7 @@
 package com.liferay.portal.dao.db;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -58,8 +59,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.naming.NamingException;
 
@@ -220,16 +219,10 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public List<Index> getIndexes(Connection connection) throws SQLException {
-		List<IndexMetadata> indexes = getIndexes(connection, null, null, false);
-
-		Stream<IndexMetadata> stream = indexes.stream();
-
-		return stream.map(
+		return TransformUtil.transform(
+			getIndexes(connection, null, null, false),
 			index -> new Index(
-				index.getIndexName(), index.getTableName(), index.isUnique())
-		).collect(
-			Collectors.toList()
-		);
+				index.getIndexName(), index.getTableName(), index.isUnique()));
 	}
 
 	@Override

@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>MULTIPLE_LINES_2</td>
-	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::textarea)[2]</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//..//textarea)[2]</td>
 	<td></td>
 </tr>
 <tr>

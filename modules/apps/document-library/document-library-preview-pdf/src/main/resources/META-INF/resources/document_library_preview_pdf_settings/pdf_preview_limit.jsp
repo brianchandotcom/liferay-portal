@@ -50,5 +50,18 @@ PDFPreviewConfigurationDisplayContext pdfPreviewConfigurationDisplayContext = (P
 		<clay:sheet-footer>
 			<aui:button primary="<%= true %>" type="submit" value="save" />
 		</clay:sheet-footer>
+
+		<div>
+			<span aria-hidden="true" class="loading-animation"></span>
+
+			<react:component
+				module="document_library_preview_pdf_settings/js/PdfPreviewLimit"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"maxLimitSize", "test"
+					).build()
+				%>'
+			/>
+		</div>
 	</clay:sheet>
 </aui:form>

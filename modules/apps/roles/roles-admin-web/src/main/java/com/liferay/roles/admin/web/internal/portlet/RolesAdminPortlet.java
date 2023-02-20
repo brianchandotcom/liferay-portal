@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntryRegistry;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 import com.liferay.roles.admin.constants.RolesAdminWebKeys;
@@ -337,10 +336,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 					segmentsEntryId, roleId);
 			}
 		}
-	}
-
-	public List<PersonalMenuEntry> getPersonalMenuEntries() {
-		return _personalMenuEntryRegistry.getPersonalMenuEntries();
 	}
 
 	@Override
@@ -641,7 +636,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 			_panelCategoryRegistry);
 
 		PersonalMenuEntryHelper personalMenuEntryHelper =
-			new PersonalMenuEntryHelper(getPersonalMenuEntries());
+			new PersonalMenuEntryHelper(
+				_personalMenuEntryRegistry.getPersonalMenuEntries());
 
 		portletRequest.setAttribute(
 			ApplicationListWebKeys.PERSONAL_MENU_ENTRY_HELPER,

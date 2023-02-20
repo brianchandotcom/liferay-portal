@@ -373,23 +373,22 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 			String[] parts = StringUtil.split(line);
 
-			if (parts.length != 5) {
+			if ((parts.length != 5) ||
+				!Objects.equals(
+					securityAdvisoryEcosystemEnum.name(), parts[0]) ||
+				!packageName.equals(parts[1]) || version.equals(parts[2])) {
+
 				continue;
 			}
 
-			if (Objects.equals(
-					securityAdvisoryEcosystemEnum.name(), parts[0]) &&
-				packageName.equals(parts[1]) && version.equals(parts[2])) {
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Library '", packageName, ":", version,
+					"' contains known vulnerabilities(", parts[3], ", ",
+					parts[4], ")"));
 
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Library '", packageName, ":", version,
-						"' contains known vulnerabilities(", parts[3], ", ",
-						parts[4], ")"));
-
-				return;
-			}
+			return;
 		}
 
 		if (!_cachedVulnerableVersionMap.containsKey(

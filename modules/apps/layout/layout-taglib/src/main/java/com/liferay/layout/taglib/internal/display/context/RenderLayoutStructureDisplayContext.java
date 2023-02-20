@@ -101,7 +101,7 @@ public class RenderLayoutStructureDisplayContext {
 		_mode = mode;
 		_showPreview = showPreview;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Theme theme = _themeDisplay.getTheme();

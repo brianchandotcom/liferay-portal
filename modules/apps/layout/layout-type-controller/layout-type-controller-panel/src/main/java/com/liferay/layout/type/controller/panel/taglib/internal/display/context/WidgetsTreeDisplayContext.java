@@ -64,9 +64,9 @@ public class WidgetsTreeDisplayContext {
 		_layoutTypePortlet = layoutTypePortlet;
 		_user = user;
 
-		_selLayout = (Layout)_httpServletRequest.getAttribute(
+		_selLayout = (Layout)httpServletRequest.getAttribute(
 			WebKeys.SEL_LAYOUT);
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

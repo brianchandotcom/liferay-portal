@@ -71,7 +71,7 @@ public class LayoutClassedModelUsagesDisplayContext {
 			(FragmentEntryLinkHelper)renderRequest.getAttribute(
 				FragmentEntryLinkHelper.class.getName());
 
-		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

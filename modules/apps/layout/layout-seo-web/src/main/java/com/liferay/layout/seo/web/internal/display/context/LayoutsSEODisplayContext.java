@@ -116,7 +116,7 @@ public class LayoutsSEODisplayContext {
 		_storageEngine = storageEngine;
 
 		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest);
+			PortalUtil.getHttpServletRequest(liferayPortletRequest);
 
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(
 			httpServletRequest);

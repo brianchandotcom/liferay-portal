@@ -65,8 +65,8 @@ public class SelectLayoutCollectionDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
-			_liferayPortletRequest);
-		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
+			liferayPortletRequest);
+		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(

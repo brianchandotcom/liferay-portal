@@ -79,9 +79,9 @@ public class LayoutLookAndFeelDisplayContext {
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_cetManager = (CETManager)_httpServletRequest.getAttribute(
+		_cetManager = (CETManager)httpServletRequest.getAttribute(
 			CETManager.class.getName());
-		_itemSelector = (ItemSelector)_httpServletRequest.getAttribute(
+		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ItemSelector.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

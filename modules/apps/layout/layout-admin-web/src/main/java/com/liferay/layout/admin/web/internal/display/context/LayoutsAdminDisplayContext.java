@@ -148,14 +148,14 @@ public class LayoutsAdminDisplayContext {
 		_stagingGroupHelper = stagingGroupHelper;
 
 		httpServletRequest = PortalUtil.getHttpServletRequest(
-			_liferayPortletRequest);
+			liferayPortletRequest);
 
 		_cetManager = (CETManager)httpServletRequest.getAttribute(
 			CETManager.class.getName());
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(
 			httpServletRequest);
 
-		themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
+		themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

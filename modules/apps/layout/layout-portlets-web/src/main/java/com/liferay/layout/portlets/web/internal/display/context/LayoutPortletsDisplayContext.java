@@ -60,7 +60,7 @@ public class LayoutPortletsDisplayContext {
 		_renderResponse = renderResponse;
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
+			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		_initPortlets(themeDisplay.getCompanyId());

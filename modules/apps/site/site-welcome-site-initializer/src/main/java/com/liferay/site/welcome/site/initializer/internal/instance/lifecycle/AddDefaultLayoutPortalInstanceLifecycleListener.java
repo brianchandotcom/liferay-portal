@@ -33,6 +33,9 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -74,10 +77,16 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 			if (defaultLayout == null) {
 				String name = PrincipalThreadLocal.getName();
 
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
 				try {
 					User user = _getUser(company.getCompanyId());
 
 					PrincipalThreadLocal.setName(user.getUserId());
+
+					PermissionThreadLocal.setPermissionChecker(
+						_defaultPermissionCheckerFactory.create(user));
 
 					ServiceContextThreadLocal.pushServiceContext(
 						new ServiceContext());
@@ -86,6 +95,10 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 				}
 				finally {
 					PrincipalThreadLocal.setName(name);
+
+					PermissionThreadLocal.setPermissionChecker(
+						permissionChecker);
+
 					ServiceContextThreadLocal.popServiceContext();
 				}
 			}
@@ -109,6 +122,9 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 
 		return adminUsers.get(0);
 	}
+
+	@Reference
+	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
 
 	@Reference(target = "(fragment.collection.key=BASIC_COMPONENT)")
 	private FragmentCollectionContributor _fragmentCollectionContributor;

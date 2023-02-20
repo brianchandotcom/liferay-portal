@@ -68,28 +68,9 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String type = ParamUtil.getString(actionRequest, "type");
-		long masterLayoutPlid = ParamUtil.getLong(
-			actionRequest, "masterLayoutPlid");
-
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
-
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
-				_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-					null, serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), 0, 0, false, name, type,
-					masterLayoutPlid);
-
-			String pageElementJSON =
-				_layoutUtilityPageEntryDefaultPageElementDefinitionProvider.
-					getDefaultPageElementJSON(type);
-
-			if (pageElementJSON != null) {
-				_importPageElement(layoutUtilityPageEntry, pageElementJSON);
-			}
+				_addLayoutUtilityPageEntry(actionRequest);
 
 			JSONObject jsonObject = JSONUtil.put(
 				"redirectURL",
@@ -108,6 +89,35 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 				handlePortalException(
 					actionRequest, actionResponse, portalException);
 		}
+	}
+
+	private LayoutUtilityPageEntry _addLayoutUtilityPageEntry(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		String type = ParamUtil.getString(actionRequest, "type");
+		long masterLayoutPlid = ParamUtil.getLong(
+			actionRequest, "masterLayoutPlid");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, serviceContext.getUserId(),
+				serviceContext.getScopeGroupId(), 0, 0, false, name, type,
+				masterLayoutPlid);
+
+		String pageElementJSON =
+			_layoutUtilityPageEntryDefaultPageElementDefinitionProvider.
+				getDefaultPageElementJSON(type);
+
+		if (pageElementJSON != null) {
+			_importPageElement(layoutUtilityPageEntry, pageElementJSON);
+		}
+
+		return layoutUtilityPageEntry;
 	}
 
 	private String _getRedirectURL(

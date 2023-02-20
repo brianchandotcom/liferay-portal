@@ -22,13 +22,12 @@ public class UsePassedInVar {
 	public UsePassedInVar(String testA) {
 		_testA = testA;
 
-		_testBytes = _testA.getBytes();
+		_testBytes = testA.getBytes();
 
-		_testB = _getMethod(_testA);
+		_testB = _getMethod(testA);
 	}
 
 	private String _getMethod(String a) {
-
 		return a.subString(1);
 	}
 

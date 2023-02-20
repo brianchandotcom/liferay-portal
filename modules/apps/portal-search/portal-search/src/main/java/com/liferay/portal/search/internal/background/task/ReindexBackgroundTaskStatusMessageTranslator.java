@@ -71,11 +71,11 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 			backgroundTaskStatus.getAttribute(
 				ReindexBackgroundTaskConstants.COMPANY_IDS));
 
-		for (long companyId : companyIds) {
-			long currentCompanyId = GetterUtil.getLong(
-				backgroundTaskStatus.getAttribute(
-					ReindexBackgroundTaskConstants.COMPANY_ID));
+		long currentCompanyId = GetterUtil.getLong(
+			backgroundTaskStatus.getAttribute(
+				ReindexBackgroundTaskConstants.COMPANY_ID));
 
+		for (long companyId : companyIds) {
 			if (companyId == currentCompanyId) {
 				break;
 			}
@@ -87,21 +87,25 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 
 		if (phase.equals(ReindexBackgroundTaskConstants.PORTAL_START)) {
 			String[] pastIndexers = GetterUtil.getStringValues(
-				backgroundTaskStatus.getAttribute("pastIndexers"));
+				backgroundTaskStatus.getAttribute(
+					"pastIndexers" + currentCompanyId));
 			int indexerCount = GetterUtil.getInteger(
-				backgroundTaskStatus.getAttribute("indexerCount"));
+				backgroundTaskStatus.getAttribute(
+					"indexerCount" + currentCompanyId));
 
 			Set<String> pastIndexersSet = SetUtil.fromArray(pastIndexers);
 
 			if (pastIndexersSet.isEmpty()) {
 				backgroundTaskStatus.setAttribute(
-					"pastIndexers", new String[] {className});
+					"pastIndexers" + currentCompanyId,
+					new String[] {className});
 			}
 			else if (pastIndexersSet.add(className)) {
 				backgroundTaskStatus.setAttribute(
-					"indexerCount", ++indexerCount);
+					"indexerCount" + currentCompanyId, ++indexerCount);
 				backgroundTaskStatus.setAttribute(
-					"pastIndexers", ArrayUtil.toStringArray(pastIndexersSet));
+					"pastIndexers" + currentCompanyId,
+					ArrayUtil.toStringArray(pastIndexersSet));
 			}
 
 			Set<Indexer<?>> indexers = IndexerRegistryUtil.getIndexers();

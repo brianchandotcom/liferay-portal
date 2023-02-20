@@ -373,7 +373,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		int x = cachedLibraryVulnerabilitiesContent.indexOf(
 			StringBundler.concat(
 				securityAdvisoryEcosystemEnum, StringPool.COMMA, packageName,
-				StringPool.COMMA, version));
+				StringPool.COMMA, version, StringPool.COMMA));
 
 		if (x != -1) {
 			String cachedLibraryVulnerabilities;

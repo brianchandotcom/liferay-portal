@@ -14,11 +14,12 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.check.util.JavaSourceUtil;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
@@ -53,7 +54,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 			content = _fixIncorrectEmptyLines(
 				content, _missingLineBreakPattern2, parameters);
 
-			return _checkPassedInVar(content, parameters, fileContent);
+			return _checkUsePassedInVar(content, parameters, fileContent);
 		}
 
 		return javaTerm.getContent();
@@ -62,6 +63,138 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CONSTRUCTOR};
+	}
+
+	private String _checkCallMethodOrLocationMethod(
+		String content, int pos, String globalVariableName,
+		String parameterName) {
+
+		Pattern pattern = Pattern.compile(
+			StringBundler.concat(
+				"\\b(", globalVariableName, "|", parameterName, ")\\b"));
+
+		Matcher matcher1 = pattern.matcher(content);
+
+		outLoop:
+		while (matcher1.find()) {
+			int start = matcher1.start();
+
+			if ((start < pos) || ToolsUtil.isInsideQuotes(content, start)) {
+				continue;
+			}
+
+			String followingCode = content.substring(matcher1.end());
+
+			if (followingCode.startsWith(" =")) {
+				break;
+			}
+
+			String group = matcher1.group();
+
+			if (followingCode.startsWith(".")) {
+				String methodName = null;
+
+				int x = -1;
+
+				while (true) {
+					x = followingCode.indexOf(
+						StringPool.OPEN_PARENTHESIS, x + 1);
+
+					if (x == -1) {
+						continue outLoop;
+					}
+
+					if (ToolsUtil.isInsideQuotes(followingCode, x + 1)) {
+						continue;
+					}
+
+					methodName = StringUtil.trim(followingCode.substring(1, x));
+
+					break;
+				}
+
+				if (!methodName.startsWith("get")) {
+					break;
+				}
+
+				if (StringUtil.equals(group, globalVariableName)) {
+					return StringUtil.replaceFirst(
+						content, globalVariableName, parameterName, start);
+				}
+
+				continue;
+			}
+
+			char preChar = content.charAt(start - 1);
+
+			if ((preChar == CharPool.TAB) || (preChar == CharPool.SPACE) ||
+				(preChar == CharPool.OPEN_PARENTHESIS)) {
+
+				int preOpenParenthesisIndex = start;
+
+				while (true) {
+					preOpenParenthesisIndex = content.lastIndexOf(
+						StringPool.OPEN_PARENTHESIS,
+						preOpenParenthesisIndex - 1);
+
+					if (preOpenParenthesisIndex == -1) {
+						continue outLoop;
+					}
+
+					if (ToolsUtil.isInsideQuotes(
+							content, preOpenParenthesisIndex)) {
+
+						continue;
+					}
+
+					String methodCall = content.substring(
+						preOpenParenthesisIndex, start);
+
+					if (ToolsUtil.getLevel(methodCall) == 1) {
+						break;
+					}
+				}
+
+				Matcher matcher2 = _methodCallPattern.matcher(content);
+
+				while (matcher2.find()) {
+					int parenthesisIndex = matcher2.end() - 1;
+
+					if (parenthesisIndex > preOpenParenthesisIndex) {
+						break;
+					}
+
+					if (parenthesisIndex != preOpenParenthesisIndex) {
+						continue;
+					}
+
+					if (Validator.isNull(matcher2.group(2))) {
+						String preCode = content.substring(0, matcher2.start());
+
+						if (preCode.endsWith("new ")) {
+							continue;
+						}
+					}
+
+					String methodFullName = matcher2.group();
+					String methodName = matcher2.group(3);
+
+					if (!methodName.startsWith("get") &&
+						!methodName.startsWith("_get") &&
+						!methodFullName.startsWith("StringBundler.concat(")) {
+
+						return content;
+					}
+
+					if (StringUtil.equals(group, globalVariableName)) {
+						return StringUtil.replaceFirst(
+							content, globalVariableName, parameterName, start);
+					}
+				}
+			}
+		}
+
+		return content;
 	}
 
 	private void _checkConstructorParameterOrder(
@@ -114,182 +247,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private ReturnResult _checkMethod(
-		String statementBlock, String globalVariableName,
-		String parameterName) {
-
-		return _checkMethod(
-			statementBlock, globalVariableName, parameterName, false);
-	}
-
-	private ReturnResult _checkMethod(
-		String statementBlock, String globalVariableName, String parameterName,
-		boolean inGetMethod) {
-
-		if (Validator.isNull(statementBlock)) {
-			return ReturnResult.continueReturnResult(statementBlock);
-		}
-
-		Matcher matcher1 = _methodCallPattern.matcher(statementBlock);
-
-		if (!matcher1.find()) {
-			if (StringUtil.equals(globalVariableName, statementBlock) ||
-				StringUtil.equals(parameterName, statementBlock)) {
-
-				if (inGetMethod) {
-					return ReturnResult.continueReturnResult(parameterName);
-				}
-
-				return ReturnResult.finishReturnResult(statementBlock);
-			}
-
-			Pattern pattern2 = Pattern.compile(
-				StringBundler.concat(
-					"\\b(", globalVariableName, "|", parameterName, ")\\b"));
-
-			Matcher matcher2 = pattern2.matcher(statementBlock);
-
-			if (matcher2.find()) {
-				return ReturnResult.continueReturnResult(parameterName);
-			}
-		}
-
-		matcher1.reset();
-
-		while (matcher1.find()) {
-			String methodName = matcher1.group(3);
-
-			String methodCall = JavaSourceUtil.getMethodCall(
-				statementBlock, matcher1.start());
-
-			List<String> parameters = JavaSourceUtil.getParameterList(
-				methodCall);
-
-			inGetMethod =
-				methodName.startsWith("get") || methodName.startsWith("_get") ||
-				methodCall.startsWith("StringBundler.concat(");
-
-			String newMethodCall = methodCall;
-
-			for (String parameter : parameters) {
-				ReturnResult returnResult = _checkMethod(
-					parameter, globalVariableName, parameterName, inGetMethod);
-
-				if (returnResult.getFinishFlg()) {
-					return ReturnResult.finishReturnResult(newMethodCall);
-				}
-
-				String newParameter = returnResult.getNewParameter();
-
-				if (!StringUtil.equals(parameter, newParameter)) {
-					newMethodCall = StringUtil.replace(
-						newMethodCall, parameter, newParameter);
-				}
-			}
-
-			if (!StringUtil.equals(methodCall, newMethodCall)) {
-				return ReturnResult.continueReturnResult(
-					StringUtil.replace(
-						statementBlock, methodCall, newMethodCall,
-						matcher1.start()));
-			}
-
-			String methodCallName = matcher1.group(2);
-
-			if (Validator.isNull(methodCallName) ||
-				!(StringUtil.equals(globalVariableName, methodCallName) ||
-				  StringUtil.equals(parameterName, methodCallName))) {
-
-				continue;
-			}
-
-			if (methodName.startsWith("get")) {
-				if (StringUtil.equals(globalVariableName, methodCallName)) {
-					return ReturnResult.continueReturnResult(
-						StringUtil.replaceFirst(
-							statementBlock, globalVariableName, parameterName,
-							matcher1.start()));
-				}
-			}
-			else {
-				return ReturnResult.finishReturnResult(statementBlock);
-			}
-		}
-
-		return ReturnResult.continueReturnResult(statementBlock);
-	}
-
-	private String _checkNextStatementBlock(
-		String content, String indent, int pos, String globalVariableName,
-		String parameterName) {
-
-		int curLineNumber = getLineNumber(content, pos);
-		String[] lines = StringUtil.splitLines(content);
-
-		int startPos = -1;
-
-		for (int i = curLineNumber; i < (lines.length - 1); i++) {
-			String line = lines[i];
-
-			if (Validator.isNull(line)) {
-				continue;
-			}
-
-			if ((startPos == -1) && indent.equals(SourceUtil.getIndent(line))) {
-				startPos = getLineStartPos(content, i + 1);
-			}
-
-			String nextLine = lines[i + 1];
-
-			int endPos = -1;
-
-			if (indent.equals(SourceUtil.getIndent(nextLine)) ||
-				((indent.length() > 1) &&
-				 nextLine.equals(indent.substring(1) + "}")) ||
-				Validator.isNull(nextLine)) {
-
-				endPos = getLineStartPos(content, i + 1) + line.length();
-			}
-
-			if ((startPos == -1) || (endPos == -1)) {
-				continue;
-			}
-
-			String nextAdjacentStatementBlock = StringUtil.trim(
-				content.substring(startPos, endPos));
-
-			if (nextAdjacentStatementBlock.matches(
-					StringBundler.concat(
-						globalVariableName, "|", parameterName,
-						" =[\\s\\S]+;"))) {
-
-				continue;
-			}
-
-			ReturnResult returnResult = _checkMethod(
-				nextAdjacentStatementBlock, globalVariableName, parameterName);
-
-			String newStatementBlock = returnResult.getNewParameter();
-
-			if (!StringUtil.equals(
-					nextAdjacentStatementBlock, newStatementBlock)) {
-
-				return StringUtil.replaceFirst(
-					content, nextAdjacentStatementBlock, newStatementBlock,
-					startPos);
-			}
-
-			if (returnResult.getFinishFlg()) {
-				break;
-			}
-
-			startPos = -1;
-		}
-
-		return content;
-	}
-
-	private String _checkPassedInVar(
+	private String _checkUsePassedInVar(
 		String content, List<JavaParameter> parameters, String fileContent) {
 
 		for (JavaParameter parameter : parameters) {
@@ -313,19 +271,15 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 			}
 
 			String globalVariableTypeName = getVariableTypeName(
-				content, fileContent, globalVariableName);
+				content, fileContent, globalVariableName, true);
 			String parameterTypeName = parameter.getParameterType();
 
 			if (!StringUtil.equals(parameterTypeName, globalVariableTypeName)) {
 				continue;
 			}
 
-			String line = getLine(
-				content, getLineNumber(content, matcher.start(2)));
-
-			String newContent = _checkNextStatementBlock(
-				content, SourceUtil.getIndent(line), matcher.end(),
-				globalVariableName, parameterName);
+			String newContent = _checkCallMethodOrLocationMethod(
+				content, matcher.end(), globalVariableName, parameterName);
 
 			if (!StringUtil.equals(content, newContent)) {
 				return newContent;
@@ -556,49 +510,5 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 	private static final Pattern _missingLineBreakPattern2 = Pattern.compile(
 		"\n(\t+)(this\\.)(\\w+) =[ \t\n]+\\3;(?=(\n\n)\\1this\\.(\\w+) " +
 			"=[ \t\n]+\\5(;)\n)");
-
-	private static class ReturnResult {
-
-		public static ReturnResult continueReturnResult(String parameter) {
-			ReturnResult returnResult = new ReturnResult();
-
-			returnResult.setNewParameter(parameter);
-
-			return returnResult;
-		}
-
-		public static ReturnResult finishReturnResult(String parameter) {
-			ReturnResult returnResult = new ReturnResult();
-
-			returnResult.setFinishFlg(true);
-			returnResult.setNewParameter(parameter);
-
-			return returnResult;
-		}
-
-		public ReturnResult() {
-			_finishFlg = false;
-		}
-
-		public boolean getFinishFlg() {
-			return _finishFlg;
-		}
-
-		public String getNewParameter() {
-			return _newParameter;
-		}
-
-		public void setFinishFlg(boolean finishFlg) {
-			_finishFlg = finishFlg;
-		}
-
-		public void setNewParameter(String newParameter) {
-			_newParameter = newParameter;
-		}
-
-		private boolean _finishFlg;
-		private String _newParameter;
-
-	}
 
 }

@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Set;
@@ -84,18 +86,22 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 		int percentage = 100;
 
 		if (phase.equals(ReindexBackgroundTaskConstants.PORTAL_START)) {
-			String lastIndexer = GetterUtil.getString(
-				backgroundTaskStatus.getAttribute("lastIndexer"));
+			String[] pastIndexers = GetterUtil.getStringValues(
+				backgroundTaskStatus.getAttribute("pastIndexers"));
 			int indexerCount = GetterUtil.getInteger(
 				backgroundTaskStatus.getAttribute("indexerCount"));
 
-			if (Validator.isNull(lastIndexer)) {
-				backgroundTaskStatus.setAttribute("lastIndexer", className);
+			Set<String> pastIndexersSet = SetUtil.fromArray(pastIndexers);
+
+			if (pastIndexersSet.isEmpty()) {
+				backgroundTaskStatus.setAttribute(
+					"pastIndexers", new String[] {className});
 			}
-			else if (!lastIndexer.equals(className)) {
+			else if (pastIndexersSet.add(className)) {
 				backgroundTaskStatus.setAttribute(
 					"indexerCount", ++indexerCount);
-				backgroundTaskStatus.setAttribute("lastIndexer", className);
+				backgroundTaskStatus.setAttribute(
+					"pastIndexers", ArrayUtil.toStringArray(pastIndexersSet));
 			}
 
 			Set<Indexer<?>> indexers = IndexerRegistryUtil.getIndexers();

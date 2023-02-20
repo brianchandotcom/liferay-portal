@@ -75,6 +75,10 @@ export const PROPERTY_TYPES = {
 	STRING: 'string',
 };
 
+export const PROPERTY_GROUPS = {
+	EVENT: 'event',
+};
+
 /**
  * Constants for CriteriaBuilder component.
  */

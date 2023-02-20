@@ -12,7 +12,12 @@
  * details.
  */
 
-import {CONJUNCTIONS, SUPPORTED_CONJUNCTIONS} from './constants.es';
+import {buildEventQueryString} from './ac-grammar.es';
+import {
+	CONJUNCTIONS,
+	PROPERTY_GROUPS,
+	SUPPORTED_CONJUNCTIONS,
+} from './constants.es';
 import {buildQueryString} from './odata.es';
 
 /**
@@ -67,6 +72,18 @@ export function initialContributorsToContributors(
 				(propertyGroup) =>
 					initialContributor.propertyKey === propertyGroup.propertyKey
 			);
+		let query = '';
+		if (initialContributor.initialQuery) {
+			query =
+				initialContributor.propertyKey === PROPERTY_GROUPS.EVENT
+					? buildEventQueryString()
+					: buildQueryString(
+							[initialContributor.initialQuery],
+							initialContributor.conjunctionId ||
+								initialConjunction,
+							propertyGroup && propertyGroup.properties
+					  );
+		}
 
 		return {
 			conjunctionId:
@@ -78,13 +95,7 @@ export function initialContributorsToContributors(
 			modelLabel: propertyGroup && propertyGroup.name,
 			properties: propertyGroup && propertyGroup.properties,
 			propertyKey: initialContributor.propertyKey,
-			query: initialContributor.initialQuery
-				? buildQueryString(
-						[initialContributor.initialQuery],
-						initialContributor.conjunctionId || initialConjunction,
-						propertyGroup && propertyGroup.properties
-				  )
-				: '',
+			query,
 		};
 	});
 }
@@ -107,11 +118,14 @@ export function applyCriteriaChangeToContributors(contributors, change) {
 			? {
 					...contributor,
 					criteriaMap: change.criteriaChange,
-					query: buildQueryString(
-						[change.criteriaChange],
-						conjunctionId,
-						properties
-					),
+					query:
+						propertyKey === PROPERTY_GROUPS.EVENT
+							? buildEventQueryString()
+							: buildQueryString(
+									[change.criteriaChange],
+									conjunctionId,
+									properties
+							  ),
 			  }
 			: contributor;
 	});

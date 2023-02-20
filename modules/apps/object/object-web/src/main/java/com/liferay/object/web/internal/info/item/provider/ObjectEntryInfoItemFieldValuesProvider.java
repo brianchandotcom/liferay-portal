@@ -48,6 +48,7 @@ import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -137,6 +138,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 	private List<InfoFieldValue<Object>> _getAttachmentInfoFieldValues(
 		List<ObjectField> objectFields, Map<String, ?> values) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("feature.flag.LPS-176083")) {
+			return Collections.emptyList();
+		}
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 

@@ -55,6 +55,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -69,6 +70,7 @@ import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -305,6 +307,10 @@ public class ObjectEntryInfoItemFormProvider
 	private List<InfoFieldSetEntry>
 		_getAttachmentObjectDefinitionInfoFieldSetEntries(
 			long objectDefinitionId) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("feature.flag.LPS-176083")) {
+			return Collections.emptyList();
+		}
 
 		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
 

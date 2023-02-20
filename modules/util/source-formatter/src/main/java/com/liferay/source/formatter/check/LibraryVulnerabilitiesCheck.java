@@ -45,6 +45,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -367,39 +368,25 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			return;
 		}
 
-		String cachedKnownVulnerabilities = _getCachedKnownVulnerabilities();
+		for (String line :
+				StringUtil.splitLines(_getCachedKnownVulnerabilities())) {
 
-		if (Validator.isNotNull(cachedKnownVulnerabilities)) {
-			int x = cachedKnownVulnerabilities.indexOf(
-				StringBundler.concat(
-					securityAdvisoryEcosystemEnum, StringPool.COMMA,
-					packageName, StringPool.COMMA, version, StringPool.COMMA));
+			String[] parts = StringUtil.split(line);
 
-			if (x != -1) {
-				String cachedLibraryVulnerabilities;
+			if (parts.length != 5) {
+				continue;
+			}
 
-				int y = cachedKnownVulnerabilities.indexOf(
-					StringPool.NEW_LINE, x);
+			if (Objects.equals(
+					securityAdvisoryEcosystemEnum.name(), parts[0]) &&
+				packageName.equals(parts[1]) && version.equals(parts[2])) {
 
-				if (y != -1) {
-					cachedLibraryVulnerabilities =
-						cachedKnownVulnerabilities.substring(x, y);
-				}
-				else {
-					cachedLibraryVulnerabilities =
-						cachedKnownVulnerabilities.substring(x);
-				}
-
-				String[] parts = StringUtil.split(cachedLibraryVulnerabilities);
-
-				if (parts.length > 3) {
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Library '", packageName, ":", version,
-							"' contains known vulnerabilities(", parts[3], ", ",
-							parts[4], ")"));
-				}
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Library '", packageName, ":", version,
+						"' contains known vulnerabilities(", parts[3], ", ",
+						parts[4], ")"));
 
 				return;
 			}

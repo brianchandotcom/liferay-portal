@@ -370,38 +370,40 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		String cachedLibraryVulnerabilitiesContent =
 			_getCachedLibraryVulnerabilitiesContent();
 
-		int x = cachedLibraryVulnerabilitiesContent.indexOf(
-			StringBundler.concat(
-				securityAdvisoryEcosystemEnum, StringPool.COMMA, packageName,
-				StringPool.COMMA, version, StringPool.COMMA));
+		if (Validator.isNotNull(cachedLibraryVulnerabilitiesContent)) {
+			int x = cachedLibraryVulnerabilitiesContent.indexOf(
+				StringBundler.concat(
+					securityAdvisoryEcosystemEnum, StringPool.COMMA,
+					packageName, StringPool.COMMA, version, StringPool.COMMA));
 
-		if (x != -1) {
-			String cachedLibraryVulnerabilities;
+			if (x != -1) {
+				String cachedLibraryVulnerabilities;
 
-			int y = cachedLibraryVulnerabilitiesContent.indexOf(
-				StringPool.NEW_LINE, x);
+				int y = cachedLibraryVulnerabilitiesContent.indexOf(
+					StringPool.NEW_LINE, x);
 
-			if (y != -1) {
-				cachedLibraryVulnerabilities =
-					cachedLibraryVulnerabilitiesContent.substring(x, y);
+				if (y != -1) {
+					cachedLibraryVulnerabilities =
+						cachedLibraryVulnerabilitiesContent.substring(x, y);
+				}
+				else {
+					cachedLibraryVulnerabilities =
+						cachedLibraryVulnerabilitiesContent.substring(x);
+				}
+
+				String[] parts = StringUtil.split(cachedLibraryVulnerabilities);
+
+				if (parts.length > 3) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Library '", packageName, ":", version,
+							"' contains known vulnerabilities(", parts[3], ", ",
+							parts[4], ")"));
+				}
+
+				return;
 			}
-			else {
-				cachedLibraryVulnerabilities =
-					cachedLibraryVulnerabilitiesContent.substring(x);
-			}
-
-			String[] parts = StringUtil.split(cachedLibraryVulnerabilities);
-
-			if (parts.length > 3) {
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Library '", packageName, ":", version,
-						"' contains known vulnerabilities(", parts[3], ", ",
-						parts[4], ")"));
-			}
-
-			return;
 		}
 
 		if (!_cachedVulnerableVersionMap.containsKey(

@@ -82,6 +82,76 @@ definition {
 		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
+	@description = "Add custom fragments into a publication and publish"
+	@priority = 3
+	test CanCreateCustomFragmentsAndPublish {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a new fragment") {
+			var htmlSnippet = '''<div class="component-test-fragment-name">%0A%09<h2 data-lfr-editable-id="title1" data-lfr-editable-type="rich-text"></h2>%0A</div>''';
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Site Name",
+				html = ${htmlSnippet},
+				name = "Test Fragment Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+		}
+
+		task ("Add a new fragment to the page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Test Fragment Name");
+		}
+
+		task ("Publish the new fragment") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Example Rich Text",
+				fragmentName = "Test Fragment Name",
+				id = "title1");
+
+			PageEditor.publish();
+		}
+
+		task ("View the new fragment") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Site Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "test-fragment-name",
+				id = "title1",
+				text = "Example Rich Text");
+		}
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+	}
+
 	@description = "Create pages through an existing page template into a publication and publish"
 	@priority = 3
 	test CanCreatePagethroughExistingPageTemplateAndPublish {

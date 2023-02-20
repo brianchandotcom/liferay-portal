@@ -1196,7 +1196,11 @@ public class EditAssetListDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(_portletResponse);
 
-		assetListEntrySegmentsEntryRels.sort(
+		assetListEntrySegmentsEntryRels = ListUtil.copy(
+			assetListEntrySegmentsEntryRels);
+
+		Collections.sort(
+			assetListEntrySegmentsEntryRels,
 			Comparator.comparingInt(
 				AssetListEntrySegmentsEntryRel::getPriority));
 

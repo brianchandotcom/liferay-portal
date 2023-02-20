@@ -76,7 +76,7 @@ export function initialContributorsToContributors(
 		if (initialContributor.initialQuery) {
 			query =
 				initialContributor.propertyKey === PROPERTY_GROUPS.EVENT
-					? buildEventQueryString()
+					? buildEventQueryString(initialContributor.initialQuery)
 					: buildQueryString(
 							[initialContributor.initialQuery],
 							initialContributor.conjunctionId ||
@@ -120,7 +120,7 @@ export function applyCriteriaChangeToContributors(contributors, change) {
 					criteriaMap: change.criteriaChange,
 					query:
 						propertyKey === PROPERTY_GROUPS.EVENT
-							? buildEventQueryString()
+							? buildEventQueryString(change.criteriaChange)
 							: buildQueryString(
 									[change.criteriaChange],
 									conjunctionId,

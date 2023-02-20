@@ -17,10 +17,9 @@ package com.liferay.portal.kernel.dao.search;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -147,13 +146,13 @@ public class SearchContainerTest {
 	}
 
 	private List<Object> _getResultsOfSize(int size) {
-		return Stream.generate(
-			Object::new
-		).limit(
-			size
-		).collect(
-			Collectors.toList()
-		);
+		List<Object> objects = new ArrayList<>();
+
+		while (objects.size() < size) {
+			objects.add(new Object());
+		}
+
+		return objects;
 	}
 
 	private static final int _DEFAULT_DELTA = 20;

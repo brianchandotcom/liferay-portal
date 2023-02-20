@@ -42,7 +42,6 @@ import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 import com.liferay.product.navigation.personal.menu.constants.PersonalMenuPortletKeys;
 import com.liferay.product.navigation.personal.menu.util.PersonalApplicationURLUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -107,21 +106,6 @@ public class GetPersonalMenuItemsMVCResourceCommand
 		catch (Exception exception) {
 			_log.error(exception);
 		}
-	}
-
-	private List<List<PersonalMenuEntry>> _getGroupedPersonalMenuEntries() {
-		SortedSet<String> personalMenuGroups = new TreeSet<>(
-			_serviceTrackerMap.keySet());
-
-		List<List<PersonalMenuEntry>> groupedPersonalMenuEntries =
-			new ArrayList<>(personalMenuGroups.size());
-
-		for (String group : personalMenuGroups) {
-			groupedPersonalMenuEntries.add(
-				_serviceTrackerMap.getService(group));
-		}
-
-		return groupedPersonalMenuEntries;
 	}
 
 	private JSONArray _getImpersonationItemsJSONArray(
@@ -282,9 +266,6 @@ public class GetPersonalMenuItemsMVCResourceCommand
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		List<List<PersonalMenuEntry>> groupedPersonalMenuEntries =
-			_getGroupedPersonalMenuEntries();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -311,12 +292,14 @@ public class GetPersonalMenuItemsMVCResourceCommand
 
 		JSONObject dividerJSONObject = JSONUtil.put("type", "divider");
 
-		for (List<PersonalMenuEntry> groupedPersonalMenuEntry :
-				groupedPersonalMenuEntries) {
+		SortedSet<String> personalMenuGroups = new TreeSet<>(
+			_serviceTrackerMap.keySet());
 
+		for (String personalMenuGroup : personalMenuGroups) {
 			JSONArray personalMenuEntriesJSONArray =
 				_getPersonalMenuEntriesJSONArray(
-					portletRequest, groupedPersonalMenuEntry);
+					portletRequest,
+					_serviceTrackerMap.getService(personalMenuGroup));
 
 			if (personalMenuEntriesJSONArray.length() == 0) {
 				continue;

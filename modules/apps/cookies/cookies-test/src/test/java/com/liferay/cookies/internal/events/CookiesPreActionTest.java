@@ -72,10 +72,10 @@ public class CookiesPreActionTest {
 			{
 				add(
 					new Cookie(
-						CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, "true"));
+						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"));
 				add(
 					new Cookie(
-						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"));
+						CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, "true"));
 				add(
 					new Cookie(
 						CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,

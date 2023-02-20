@@ -461,10 +461,6 @@ public class CookiesManagerImpl implements CookiesManager {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		boolean hasUserConsentConfiguredCookie = Validator.isNotNull(
-			getCookieValue(
-				CookiesConstants.NAME_USER_CONSENT_CONFIGURED,
-				httpServletRequest));
 		boolean hasConsentTypeFunctionalCookie = Validator.isNotNull(
 			getCookieValue(
 				CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
@@ -477,18 +473,22 @@ public class CookiesManagerImpl implements CookiesManager {
 			getCookieValue(
 				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
 				httpServletRequest));
+		boolean hasUserConsentConfiguredCookie = Validator.isNotNull(
+			getCookieValue(
+				CookiesConstants.NAME_USER_CONSENT_CONFIGURED,
+				httpServletRequest));
 
-		if (hasUserConsentConfiguredCookie || hasConsentTypeFunctionalCookie ||
-			hasConsentTypePerformanceCookie ||
-			hasConsentTypePersonalizationCookie) {
+		if (hasConsentTypeFunctionalCookie || hasConsentTypePerformanceCookie ||
+			hasConsentTypePersonalizationCookie ||
+			hasUserConsentConfiguredCookie) {
 
 			return deleteCookies(
 				getDomain(httpServletRequest), httpServletRequest,
 				httpServletResponse,
-				CookiesConstants.NAME_USER_CONSENT_CONFIGURED,
 				CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
 				CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
-				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION);
+				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
+				CookiesConstants.NAME_USER_CONSENT_CONFIGURED);
 		}
 
 		return false;

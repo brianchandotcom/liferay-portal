@@ -248,10 +248,12 @@ export function FieldBase({
 		type === 'image' ||
 		type === 'search_location' ||
 		type === 'select';
+	const readFieldDetails = !showFor || type === 'select';
 
 	const accessibleProps = {
 		...(accessible && fieldDetails && {'aria-labelledby': fieldDetailsId}),
-		...(showFor ? {htmlFor: id ?? name} : {tabIndex: 0}),
+		...(showFor ? {htmlFor: id ?? name} : {}),
+		...(readFieldDetails ? {tabIndex: 0} : {}),
 	};
 
 	const defaultRows = nestedFields?.map((field) => ({

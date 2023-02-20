@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.google.constants.GoogleAuthorizationConfigurationKeys;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
 import com.liferay.portal.security.sso.google.constants.LegacyGoogleLoginPropsKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
@@ -78,8 +80,8 @@ public class GoogleLoginCompanySettingsVerifyProcessTest
 	}
 
 	@Override
-	protected String getVerifyProcessName() {
-		return "com.liferay.portal.security.sso.google";
+	protected VerifyProcess getVerifyProcess() {
+		return _verifyProcess;
 	}
 
 	@Override
@@ -92,5 +94,10 @@ public class GoogleLoginCompanySettingsVerifyProcessTest
 		unicodeProperties.put(
 			LegacyGoogleLoginPropsKeys.CLIENT_SECRET, "test_client_secret");
 	}
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.security.sso.google.internal.verify.GoogleLoginCompanySettingsVerifyProcess"
+	)
+	private VerifyProcess _verifyProcess;
 
 }

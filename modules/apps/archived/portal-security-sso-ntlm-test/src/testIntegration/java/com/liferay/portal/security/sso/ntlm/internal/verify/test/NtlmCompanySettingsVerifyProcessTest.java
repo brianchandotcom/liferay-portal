@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.ntlm.constants.LegacyNtlmPropsKeys;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConfigurationKeys;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
@@ -94,8 +96,8 @@ public class NtlmCompanySettingsVerifyProcessTest
 	}
 
 	@Override
-	protected String getVerifyProcessName() {
-		return "com.liferay.portal.security.sso.ntlm";
+	protected VerifyProcess getVerifyProcess() {
+		return _verifyProcess;
 	}
 
 	@Override
@@ -122,5 +124,10 @@ public class NtlmCompanySettingsVerifyProcessTest
 			LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_PASSWORD,
 			"testServicePassword");
 	}
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.security.sso.ntlm.internal.verify.NtlmCompanySettingsVerifyProcess"
+	)
+	private VerifyProcess _verifyProcess;
 
 }

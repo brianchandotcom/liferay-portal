@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConfigurationKeys;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 import com.liferay.portal.security.sso.facebook.connect.constants.LegacyFacebookConnectPropsKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
@@ -102,8 +104,8 @@ public class FacebookConnectCompanySettingsVerifyProcessTest
 	}
 
 	@Override
-	protected String getVerifyProcessName() {
-		return "com.liferay.portal.security.sso.facebook.connect";
+	protected VerifyProcess getVerifyProcess() {
+		return _verifyProcess;
 	}
 
 	@Override
@@ -130,5 +132,10 @@ public class FacebookConnectCompanySettingsVerifyProcessTest
 		unicodeProperties.put(
 			LegacyFacebookConnectPropsKeys.VERIFIED_ACCOUNT_REQUIRED, "true");
 	}
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.security.sso.facebook.connect.internal.verify.FacebookConnectCompanySettingsVerifyProcess"
+	)
+	private VerifyProcess _verifyProcess;
 
 }

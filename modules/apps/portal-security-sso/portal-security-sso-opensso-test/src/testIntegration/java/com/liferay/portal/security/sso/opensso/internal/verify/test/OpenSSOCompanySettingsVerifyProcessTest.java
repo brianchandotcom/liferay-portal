@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.opensso.constants.LegacyOpenSSOPropsKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConfigurationKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
@@ -106,8 +108,8 @@ public class OpenSSOCompanySettingsVerifyProcessTest
 	}
 
 	@Override
-	protected String getVerifyProcessName() {
-		return "com.liferay.portal.security.sso.opensso";
+	protected VerifyProcess getVerifyProcess() {
+		return _verifyProcess;
 	}
 
 	@Override
@@ -142,5 +144,10 @@ public class OpenSSOCompanySettingsVerifyProcessTest
 			LegacyOpenSSOPropsKeys.OPENSSO_SERVICE_URL,
 			"http://test.com/service/url");
 	}
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.security.sso.opensso.internal.verify.OpenSSOCompanySettingsVerifyProcess"
+	)
+	private VerifyProcess _verifyProcess;
 
 }

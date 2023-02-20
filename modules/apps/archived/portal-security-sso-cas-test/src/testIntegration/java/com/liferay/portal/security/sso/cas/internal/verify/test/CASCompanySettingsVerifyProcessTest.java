@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.cas.constants.CASConfigurationKeys;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.security.sso.cas.constants.LegacyCASPropsKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
@@ -102,8 +104,8 @@ public class CASCompanySettingsVerifyProcessTest
 	}
 
 	@Override
-	protected String getVerifyProcessName() {
-		return "com.liferay.portal.security.sso.cas";
+	protected VerifyProcess getVerifyProcess() {
+		return _verifyProcess;
 	}
 
 	@Override
@@ -135,5 +137,10 @@ public class CASCompanySettingsVerifyProcessTest
 			LegacyCASPropsKeys.CAS_SERVICE_URL,
 			"http://test.com/cas/service/url");
 	}
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.security.sso.cas.internal.verify.CASCompanySettingsVerifyProcess"
+	)
+	private VerifyProcess _verifyProcess;
 
 }

@@ -38,15 +38,20 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 		</div>
 	</c:when>
 	<c:otherwise>
-		<c:if test="<%= navigationItems.size() > 1 %>">
-			<clay:navigation-bar
-				cssClass="border-bottom"
-				inverted="<%= false %>"
-				navigationItems="<%= navigationItems %>"
-			/>
-		</c:if>
+		<c:choose>
+			<c:when test="<%= navigationItems.size() > 1 %>">
+				<clay:navigation-bar
+					cssClass="border-bottom"
+					inverted="<%= false %>"
+					navigationItems="<%= navigationItems %>"
+				/>
 
-		<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>
 

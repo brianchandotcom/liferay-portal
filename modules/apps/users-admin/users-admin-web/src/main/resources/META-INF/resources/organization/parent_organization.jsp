@@ -77,16 +77,14 @@ if (parentOrganization != null) {
 	</clay:content-col>
 
 	<clay:content-col>
-		<span class="heading-end">
-			<liferay-ui:icon
-				cssClass="modify-link"
-				id="selectOrganizationLink"
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message='<%= (parentOrganizations.size() > 0) ? "change" : "select" %>'
-				url="javascript:void(0);"
-			/>
-		</span>
+		<clay:button
+			aria-label='<%= LanguageUtil.format(request, (parentOrganizations.size() > 0) ? "change-x" : "select-x", "accounts") %>'
+			cssClass="heading-end modify-link"
+			displayType="secondary"
+			id='<%= liferayPortletResponse.getNamespace() + "selectOrganizationLink" %>'
+			label='<%= LanguageUtil.get(request, (parentOrganizations.size() > 0) ? "change" : "select") %>'
+			small="<%= true %>"
+		/>
 	</clay:content-col>
 </clay:content-row>
 

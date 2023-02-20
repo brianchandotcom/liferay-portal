@@ -170,7 +170,7 @@ definition {
 
 	macro uncheckChildPagesNameList {
 		for (var childPagesName : list ${uncheckChildPagesNameList}) {
-			Check.checkNotVisible(
+			Uncheck.uncheckNotVisible(
 				key_pageName = ${childPagesName},
 				locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
 		}

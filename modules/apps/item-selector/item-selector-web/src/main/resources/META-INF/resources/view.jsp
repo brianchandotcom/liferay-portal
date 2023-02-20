@@ -46,20 +46,7 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 			/>
 		</c:if>
 
-		<c:choose>
-			<c:when test='<%= ParamUtil.getBoolean(request, "showGroupSelector") %>'>
-				<liferay-item-selector:group-selector />
-			</c:when>
-			<c:otherwise>
-
-				<%
-				ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getSelectedItemSelectorViewRenderer();
-
-				itemSelectorViewRenderer.renderHTML(pageContext);
-				%>
-
-			</c:otherwise>
-		</c:choose>
+		<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>
 

@@ -37,7 +37,7 @@ public class AuthVerifierServletRequest extends ProtectedServletRequest {
 		_userId = userId;
 
 		httpServletRequest.removeAttribute(WebKeys.USER);
-		httpServletRequest.removeAttribute(WebKeys.USER_ID);
+		httpServletRequest.setAttribute(WebKeys.USER_ID, userId);
 	}
 
 	@Override

@@ -52,7 +52,7 @@ public class PortletTitleComparator
 		_locale = locale;
 		_ascending = ascending;
 
-		_collator = CollatorUtil.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(locale);
 	}
 
 	@Override

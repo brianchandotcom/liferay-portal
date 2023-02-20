@@ -33,7 +33,7 @@ public class TemplateHandlerComparator
 	public TemplateHandlerComparator(Locale locale) {
 		_locale = locale;
 
-		_collator = CollatorUtil.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(locale);
 	}
 
 	@Override

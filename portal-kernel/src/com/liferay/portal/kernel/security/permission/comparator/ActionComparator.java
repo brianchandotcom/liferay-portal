@@ -32,7 +32,7 @@ public class ActionComparator implements Comparator<String>, Serializable {
 	public ActionComparator(Locale locale) {
 		_locale = locale;
 
-		_collator = CollatorUtil.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(locale);
 	}
 
 	@Override

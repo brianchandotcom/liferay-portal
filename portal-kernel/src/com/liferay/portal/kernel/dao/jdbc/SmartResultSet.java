@@ -35,7 +35,7 @@ public class SmartResultSet {
 	public SmartResultSet(ResultSet resultSet) throws SQLException {
 		_resultSet = resultSet;
 
-		_metaData = _resultSet.getMetaData();
+		_metaData = resultSet.getMetaData();
 
 		_columnCount = _metaData.getColumnCount();
 

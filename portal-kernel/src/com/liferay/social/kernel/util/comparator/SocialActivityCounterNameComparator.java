@@ -30,7 +30,7 @@ public class SocialActivityCounterNameComparator implements Comparator<String> {
 	public SocialActivityCounterNameComparator(Locale locale) {
 		_locale = locale;
 
-		_collator = CollatorUtil.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(locale);
 	}
 
 	@Override

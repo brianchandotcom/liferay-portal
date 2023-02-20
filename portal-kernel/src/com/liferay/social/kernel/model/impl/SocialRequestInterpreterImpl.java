@@ -34,7 +34,7 @@ public class SocialRequestInterpreterImpl implements SocialRequestInterpreter {
 
 		_requestInterpreter = requestInterpreter;
 
-		String[] classNames = _requestInterpreter.getClassNames();
+		String[] classNames = requestInterpreter.getClassNames();
 
 		for (String className : classNames) {
 			_classNames.add(className);

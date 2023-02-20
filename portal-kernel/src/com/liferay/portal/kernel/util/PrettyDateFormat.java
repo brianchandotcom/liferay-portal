@@ -36,8 +36,8 @@ public class PrettyDateFormat extends DateFormat {
 		_locale = locale;
 		_timeZone = timeZone;
 
-		_todayString = LanguageUtil.get(_locale, "today");
-		_yesterdayString = LanguageUtil.get(_locale, "yesterday");
+		_todayString = LanguageUtil.get(locale, "today");
+		_yesterdayString = LanguageUtil.get(locale, "yesterday");
 	}
 
 	@Override

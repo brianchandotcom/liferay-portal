@@ -38,7 +38,7 @@ public class SocialActivityInterpreterImpl
 
 		_activityInterpreter = activityInterpreter;
 
-		String[] classNames = _activityInterpreter.getClassNames();
+		String[] classNames = activityInterpreter.getClassNames();
 
 		for (String className : classNames) {
 			_classNames.add(className);

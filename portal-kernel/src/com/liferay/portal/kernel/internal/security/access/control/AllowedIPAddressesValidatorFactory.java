@@ -130,7 +130,7 @@ public final class AllowedIPAddressesValidatorFactory {
 
 			_allowedIpAddress = allowedIpAddress;
 
-			_allowedIpAddressBytes = _allowedIpAddress.getAddress();
+			_allowedIpAddressBytes = allowedIpAddress.getAddress();
 
 			if (_hasNetmask(ipAddressAndNetmask)) {
 				String netmask = GetterUtil.getString(ipAddressAndNetmask[1]);

@@ -109,7 +109,7 @@ public class SearchContainer<R> {
 		else {
 			if (cur < 1) {
 				_cur = ParamUtil.getInteger(
-					portletRequest, _curParam, DEFAULT_CUR);
+					portletRequest, curParam, DEFAULT_CUR);
 
 				if (_cur < 1) {
 					_cur = DEFAULT_CUR;

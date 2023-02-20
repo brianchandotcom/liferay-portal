@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.headless.admin.user.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.HoursAvailable;
 import com.liferay.headless.admin.user.dto.v1_0.Location;
@@ -511,6 +512,9 @@ public class OrganizationResourceImpl
 			}
 		}
 
+		_patchCustomFields(
+			organization.getCustomFields(), existingOrganization);
+
 		Organization parentOrganization = organization.getParentOrganization();
 
 		if (parentOrganization != null) {
@@ -793,6 +797,29 @@ public class OrganizationResourceImpl
 				webUrl -> ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
 					ListTypeConstants.ORGANIZATION_WEBSITE, webUrl)),
 			Objects::nonNull);
+	}
+
+	private void _patchCustomFields(
+		CustomField[] customFields, Organization organization) {
+
+		if ((customFields == null) || (customFields.length == 0)) {
+			return;
+		}
+
+		CustomField[] existingCustomFields = organization.getCustomFields();
+
+		for (CustomField customField : customFields) {
+			for (int i = 0; i < existingCustomFields.length; i++) {
+				if (Objects.equals(
+						customField.getName(),
+						existingCustomFields[i].getName())) {
+
+					existingCustomFields[i] = customField;
+
+					break;
+				}
+			}
+		}
 	}
 
 	private Organization _toOrganization(String organizationId)

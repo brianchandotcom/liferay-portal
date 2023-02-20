@@ -468,7 +468,8 @@ public class TaxonomyCategoryResourceImpl
 		throws Exception {
 
 		if ((taxonomyCategory.getTaxonomyVocabularyId() != null) &&
-			(taxonomyCategory.getTaxonomyVocabularyId() > 0)) {
+			(taxonomyCategory.getTaxonomyVocabularyId() !=
+				assetCategory.getVocabularyId())) {
 
 			AssetVocabulary existingAssetVocabulary =
 				_assetVocabularyService.getVocabulary(

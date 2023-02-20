@@ -70,6 +70,10 @@ public interface ItemSelectorViewDescriptor<T> {
 		return null;
 	}
 
+	public default boolean isMultipleSelection() {
+		return false;
+	}
+
 	public default boolean isShowBreadcrumb() {
 		return true;
 	}

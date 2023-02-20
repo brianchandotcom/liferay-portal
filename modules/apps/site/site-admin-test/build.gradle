@@ -1,4 +1,8 @@
 dependencies {
+	testIntegrationCompile project(":apps:fragment:fragment-api")
+	testIntegrationCompile project(":apps:layout:layout-page-template-api")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
+	testIntegrationCompile project(":apps:layout:layout-utility-page-api")
+	testIntegrationCompile project(":apps:site:site-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

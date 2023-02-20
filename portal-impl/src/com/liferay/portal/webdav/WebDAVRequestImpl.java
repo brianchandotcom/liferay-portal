@@ -45,7 +45,7 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 		_lockUuid = WebDAVUtil.getLockUuid(httpServletRequest);
 
 		String pathInfo = HttpComponentsUtil.fixPath(
-			_httpServletRequest.getPathInfo(), false, true);
+			httpServletRequest.getPathInfo(), false, true);
 
 		String strippedPathInfo = WebDAVUtil.stripManualCheckInRequiredPath(
 			pathInfo);
@@ -67,7 +67,7 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 
 		_permissionChecker = permissionChecker;
 
-		_userId = GetterUtil.getLong(_httpServletRequest.getRemoteUser());
+		_userId = GetterUtil.getLong(httpServletRequest.getRemoteUser());
 	}
 
 	@Override

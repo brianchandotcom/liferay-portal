@@ -238,9 +238,9 @@ public class LoggerTestUtil {
 
 			_logger = logger;
 
-			_level = _logger.getLevel();
+			_level = logger.getLevel();
 
-			_loggerConfig = _logger.get();
+			_loggerConfig = logger.get();
 
 			_additive = _loggerConfig.isAdditive();
 

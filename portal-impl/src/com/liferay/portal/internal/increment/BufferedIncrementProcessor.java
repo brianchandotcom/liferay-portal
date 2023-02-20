@@ -39,8 +39,8 @@ public class BufferedIncrementProcessor {
 		_bufferedIncrementConfiguration = bufferedIncrementConfiguration;
 
 		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-			0, _bufferedIncrementConfiguration.getThreadpoolMaxSize(),
-			_bufferedIncrementConfiguration.getThreadpoolKeepAliveTime(),
+			0, bufferedIncrementConfiguration.getThreadpoolMaxSize(),
+			bufferedIncrementConfiguration.getThreadpoolKeepAliveTime(),
 			TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
 
 		threadPoolExecutor.setRejectedExecutionHandler(

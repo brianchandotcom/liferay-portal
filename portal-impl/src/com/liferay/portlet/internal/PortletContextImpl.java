@@ -53,7 +53,7 @@ public class PortletContextImpl implements LiferayPortletContext {
 		_servletContext = servletContext;
 
 		_servletContextName = GetterUtil.getString(
-			_servletContext.getServletContextName());
+			servletContext.getServletContextName());
 	}
 
 	@Override

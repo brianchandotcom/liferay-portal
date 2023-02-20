@@ -62,7 +62,7 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		_portletContext = portletContext;
 
 		_portletInfos = PortletResourceBundle.getPortletInfos(
-			_portlet.getPortletInfo());
+			portlet.getPortletInfo());
 
 		_copyRequestParameters = GetterUtil.getBoolean(
 			getInitParameter("copy-request-parameters"));

@@ -74,8 +74,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		JspFactory jspFactory = JspFactory.getDefaultFactory();
 
 		_pageContext = jspFactory.getPageContext(
-			new JSPSupportServlet(_servletContext), _httpServletRequest,
-			_httpServletResponse, null, false, 0, false);
+			new JSPSupportServlet(_servletContext), httpServletRequest,
+			httpServletResponse, null, false, 0, false);
 	}
 
 	@Override

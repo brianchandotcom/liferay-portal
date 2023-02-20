@@ -14,7 +14,6 @@
 
 package com.liferay.segments.context.vocabulary.internal.field.customizer;
 
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -108,21 +107,8 @@ public class SegmentsContextVocabularySegmentsFieldCustomizer
 			return Collections.emptyList();
 		}
 
-		List<AssetCategory> assetCategories = groupVocabulary.getCategories();
-
-		if (assetCategories == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"No vocabulary was found with name ", assetVocabulary,
-						" in company ", companyId));
-			}
-
-			return Collections.emptyList();
-		}
-
 		return TransformUtil.transform(
-			assetCategories,
+			groupVocabulary.getCategories(),
 			assetCategory -> new Field.Option(
 				assetCategory.getTitle(locale), assetCategory.getName()));
 	}

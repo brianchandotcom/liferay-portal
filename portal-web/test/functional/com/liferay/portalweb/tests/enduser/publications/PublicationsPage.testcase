@@ -25,6 +25,63 @@ definition {
 		}
 	}
 
+	@description = "Create content page template into a Publication and publish"
+	@priority = 3
+	test CanCreateContentPageTemplateAndPublish {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		task ("Add a content page template") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Content Page Template Name",
+				pageTemplateType = "Content Page Template");
+		}
+
+		task ("Add fragments to content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("Add a content page based on content page template") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+			ContentPages.addPage(
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Content Page Template Name");
+		}
+
+		task ("View the fragments are shown in content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			PageEditor.viewFragment(fragmentName = "Button");
+		}
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+	}
+
 	@description = "This is a use case for LPS-164162 - Styling Content Pages is not properly applied when the user edits a page in a Publication"
 	@priority = 3
 	test CanStyleContentPages {

@@ -65,7 +65,12 @@ Set<PublicRenderParameter> publicRenderParameters = (Set<PublicRenderParameter>)
 				<liferay-ui:error key="duplicateMapping" message="several-shared-parameters-are-mapped-to-the-same-parameter" />
 
 				<div class="alert alert-info">
-					<liferay-ui:message arguments="https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/configuring-widgets/communication-between-widgets.html" key="set-up-the-communication-among-the-portlets-that-use-public-render-parameters" translateArguments="<%= false %>" />
+					<liferay-ui:message key="set-up-the-communication-among-the-portlets-that-use-public-render-parameters" />
+
+					<liferay-learn:message
+						key="general"
+						resource="portlet-configuration-web"
+					/>
 				</div>
 
 				<liferay-ui:search-container

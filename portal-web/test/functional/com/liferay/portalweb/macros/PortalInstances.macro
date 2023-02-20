@@ -175,6 +175,13 @@ definition {
 		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 	}
 
+	@summary = "Clean up Portal Instances as part of standard teardown but without Selenium usage"
+	macro tearDownCPNoSelenium {
+		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
+
+		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
+	}
+
 	macro tearDownCustomPortal {
 		JSONUser.tearDownNonAdminUsers(authenticationMethod = ${authenticationMethod});
 
@@ -184,14 +191,7 @@ definition {
 
 		var portalInstanceId = StringUtil.replace(${portalURL}, ":8080", "");
 
-		HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = "${portalInstanceId}");
-	}
-
-	@summary = "Clean up Portal Instances as part of standard teardown but without Selenium usage"
-	macro tearDownCPNoSelenium {
-		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
-
-		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
+		HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = ${portalInstanceId});
 	}
 
 	macro viewCP {

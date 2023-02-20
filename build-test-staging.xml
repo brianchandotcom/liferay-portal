@@ -14,13 +14,13 @@
 			src="${liferay.home}/${custom.database.name}.zip"
 		/>
 
-		<!-- <copy
+		<!--<copy
 			todir="${liferay.home}"
 		>
 			<fileset
 				dir="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${custom.database.file.name}"
 			/>
-		</copy> -->
+		</copy>-->
 
 		<get-database-property property.name="database.docker.image" />
 

@@ -172,7 +172,7 @@ definition {
 
 			var portalInstanceId = StringUtil.replace(${portalURL}, ":8080", "");
 
-			HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = "${portalInstanceId}");
+			HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = ${portalInstanceId});
 
 			if (${testPortalInstance} == "true") {
 				SignIn.signInPortalInstanceSetUp();

@@ -1099,11 +1099,11 @@ public class JournalDisplayContext {
 		_journalHelper = (JournalHelper)httpServletRequest.getAttribute(
 			JournalHelper.class.getName());
 		_journalWebConfiguration =
-			(JournalWebConfiguration)_httpServletRequest.getAttribute(
+			(JournalWebConfiguration)httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			httpServletRequest);
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

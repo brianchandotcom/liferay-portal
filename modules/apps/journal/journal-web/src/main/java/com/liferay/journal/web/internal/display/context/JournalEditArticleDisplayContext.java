@@ -118,12 +118,12 @@ public class JournalEditArticleDisplayContext {
 
 		_ffJournalAutoSaveDraftConfiguration =
 			(FFJournalAutoSaveDraftConfiguration)
-				_httpServletRequest.getAttribute(
+				httpServletRequest.getAttribute(
 					FFJournalAutoSaveDraftConfiguration.class.getName());
-		_itemSelector = (ItemSelector)_httpServletRequest.getAttribute(
+		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ItemSelector.class.getName());
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_setViewAttributes();

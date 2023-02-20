@@ -67,16 +67,15 @@ public class JournalEditDDMTemplateDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 
-		_ddmTemplateHelper =
-			(DDMTemplateHelper)_httpServletRequest.getAttribute(
-				DDMTemplateHelper.class.getName());
+		_ddmTemplateHelper = (DDMTemplateHelper)httpServletRequest.getAttribute(
+			DDMTemplateHelper.class.getName());
 
 		_journalFileUploadsConfiguration =
-			(JournalFileUploadsConfiguration)_httpServletRequest.getAttribute(
+			(JournalFileUploadsConfiguration)httpServletRequest.getAttribute(
 				JournalFileUploadsConfiguration.class.getName());
 
 		_journalWebConfiguration =
-			(JournalWebConfiguration)_httpServletRequest.getAttribute(
+			(JournalWebConfiguration)httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
 	}
 

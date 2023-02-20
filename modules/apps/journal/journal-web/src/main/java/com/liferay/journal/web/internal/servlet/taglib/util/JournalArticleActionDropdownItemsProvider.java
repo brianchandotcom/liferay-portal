@@ -99,10 +99,10 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		_ffJournalAutoSaveDraftConfiguration =
 			(FFJournalAutoSaveDraftConfiguration)
-				_liferayPortletRequest.getAttribute(
+				liferayPortletRequest.getAttribute(
 					FFJournalAutoSaveDraftConfiguration.class.getName());
 		_journalWebConfiguration =
-			(JournalWebConfiguration)_liferayPortletRequest.getAttribute(
+			(JournalWebConfiguration)liferayPortletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);

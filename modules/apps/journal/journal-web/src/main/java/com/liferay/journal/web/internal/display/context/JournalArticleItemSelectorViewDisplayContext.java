@@ -115,7 +115,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 		_portletResponse = (RenderResponse)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

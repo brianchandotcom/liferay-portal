@@ -122,12 +122,11 @@ public class SegmentsContextVocabularyConfigurationModelListener
 				).orElse(
 					new Configuration[0]
 				)
-			).filter(
+			).anyMatch(
 				configuration -> _isDefined(
 					assetVocabularyName, companyId, configuration,
 					entityFieldName)
-			).findFirst(
-			).isPresent();
+			);
 		}
 		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(

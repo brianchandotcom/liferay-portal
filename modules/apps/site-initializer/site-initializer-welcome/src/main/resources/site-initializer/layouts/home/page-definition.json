@@ -433,7 +433,7 @@
 																			"fieldKey": "FileEntry_fileURL",
 																			"itemReference": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/tree.png$]"
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Provided by Liferay/tree.png$]"
 																			}
 																		}
 																	}

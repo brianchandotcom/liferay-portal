@@ -11,7 +11,7 @@
 								"value": "Stars"
 							},
 							"url": {
-								"value": "[$DOCUMENT_URL:/site-initializer/documents/group/stars.png$]"
+								"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/stars.png$]"
 							}
 						},
 						"borderRadius": "",
@@ -46,7 +46,7 @@
 										"value": "Earth"
 									},
 									"url": {
-										"value": "[$DOCUMENT_URL:/site-initializer/documents/group/earth.png$]"
+										"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/earth.png$]"
 									}
 								},
 								"borderRadius": "",
@@ -471,7 +471,7 @@
 																				"value": "Satellite"
 																			},
 																			"url": {
-																				"value": "[$DOCUMENT_URL:/site-initializer/documents/group/satellite.png$]"
+																				"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/satellite.png$]"
 																			}
 																		},
 																		"borderRadius": "",
@@ -578,7 +578,7 @@
 																				"value": "Moon"
 																			},
 																			"url": {
-																				"value": "[$DOCUMENT_URL:/site-initializer/documents/group/moon.png$]"
+																				"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/moon.png$]"
 																			}
 																		},
 																		"borderRadius": "",

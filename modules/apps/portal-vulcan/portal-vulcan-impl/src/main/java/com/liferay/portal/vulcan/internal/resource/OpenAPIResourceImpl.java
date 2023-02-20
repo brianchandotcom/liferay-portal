@@ -518,19 +518,13 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			return UriInfoUtil.getBasePath(uriInfo);
 		}
 
-		String scheme = Http.HTTP;
-
-		if (_portal.isSecure(httpServletRequest)) {
-			scheme = Http.HTTPS;
-		}
-
 		UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(uriInfo);
 
-		uriBuilder.host(
-			_portal.getForwardedHost(httpServletRequest)
-		).scheme(
-			scheme
-		);
+		uriBuilder.host(_portal.getForwardedHost(httpServletRequest));
+
+		if (_portal.isSecure(httpServletRequest)) {
+			uriBuilder.scheme(Http.HTTPS);
+		}
 
 		return String.valueOf(uriBuilder.build());
 	}

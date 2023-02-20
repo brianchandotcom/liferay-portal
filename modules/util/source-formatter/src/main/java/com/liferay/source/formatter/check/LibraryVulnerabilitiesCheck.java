@@ -448,15 +448,8 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 		_cachedKnownVulnerabilities = StringPool.BLANK;
 
-		File file = new File(
-			System.getProperty("user.home") +
-				"/cachedLibraryVulnerabilities.text");
-
-		if (!file.exists()) {
-			return _cachedKnownVulnerabilities;
-		}
-
-		_cachedKnownVulnerabilities = FileUtil.read(file);
+		// TODO: Read from cached known vulnerabilities from
+		// liferay-binaries-cache-2020
 
 		return _cachedKnownVulnerabilities;
 	}

@@ -21,7 +21,6 @@ import {dateToInternationalHuman} from '../../../../src/main/resources/META-INF/
 import '@testing-library/jest-dom/extend-expect';
 
 const equalsOperator = {label: 'Equals', name: 'eq'};
-const atLeastOperator = {label: 'At least', name: 'gt'};
 
 const stringCriterion = {
 	operatorName: 'eq',
@@ -115,7 +114,19 @@ const eventCriterion = {
 		operator: 'gt',
 		value: '2023-02-07',
 	},
-	operatorName: 'gt',
+	operatorName: 'ge',
+	operatorNot: true,
+	propertyName: 'downloadedDocuments',
+	value: 1,
+};
+
+const eventCriterionAtMost = {
+	assetId: '545188693724480037',
+	day: {
+		operator: 'gt',
+		value: '2023-02-07',
+	},
+	operatorName: 'le',
 	operatorNot: true,
 	propertyName: 'downloadedDocuments',
 	value: 1,
@@ -254,7 +265,6 @@ describe('CriteriaRowReadable', () => {
 		const {getByText} = render(
 			<CriteriaRowReadable
 				criterion={eventCriterion}
-				selectedOperator={atLeastOperator}
 				selectedProperty={eventProperty}
 			/>
 		);
@@ -264,17 +274,28 @@ describe('CriteriaRowReadable', () => {
 		expect(getByText(eventCriterion.value)).toBeInTheDocument();
 	});
 
-	it('renders event criterion with ever date modifier', () => {
+	it('renders event criterion with at most operator', () => {
 		const {getByText} = render(
 			<CriteriaRowReadable
-				criterion={eventCriterionEver}
-				selectedOperator={atLeastOperator}
+				criterion={eventCriterionAtMost}
 				selectedProperty={eventProperty}
 			/>
 		);
 
 		expect(getByText(eventProperty.label)).toBeInTheDocument();
-		expect(getByText('at-least')).toBeInTheDocument();
+		expect(getByText('at-most')).toBeInTheDocument();
+		expect(getByText(eventCriterion.value)).toBeInTheDocument();
+	});
+
+	it('renders event criterion with ever date modifier', () => {
+		const {getByText} = render(
+			<CriteriaRowReadable
+				criterion={eventCriterionEver}
+				selectedProperty={eventProperty}
+			/>
+		);
+
+		expect(getByText(eventProperty.label)).toBeInTheDocument();
 		expect(getByText(eventCriterionEver.value)).toBeInTheDocument();
 		expect(getByText('ever')).toBeInTheDocument();
 	});
@@ -283,7 +304,6 @@ describe('CriteriaRowReadable', () => {
 		const {getByText} = render(
 			<CriteriaRowReadable
 				criterion={eventCriterionBetween}
-				selectedOperator={atLeastOperator}
 				selectedProperty={eventProperty}
 			/>
 		);
@@ -312,13 +332,11 @@ describe('CriteriaRowReadable', () => {
 		const {getByText} = render(
 			<CriteriaRowReadable
 				criterion={eventCriterionSince}
-				selectedOperator={atLeastOperator}
 				selectedProperty={eventProperty}
 			/>
 		);
 
 		expect(getByText(eventProperty.label)).toBeInTheDocument();
-		expect(getByText('at-least')).toBeInTheDocument();
 		expect(getByText('since')).toBeInTheDocument();
 		expect(getByText(eventCriterionSince.value)).toBeInTheDocument();
 	});

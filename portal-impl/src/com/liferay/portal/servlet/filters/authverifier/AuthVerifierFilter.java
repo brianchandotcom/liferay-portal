@@ -18,11 +18,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierConfiguration;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterChain;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -44,11 +46,14 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * <p>
@@ -133,6 +138,8 @@ public class AuthVerifierFilter extends BasePortalFilter {
 					_buildAuthVerifierConfigurations(_initParametersMap),
 					servletContext.getContextPath()));
 		}
+
+		_serviceTracker.open();
 	}
 
 	@Override
@@ -206,6 +213,19 @@ public class AuthVerifierFilter extends BasePortalFilter {
 					httpServletRequest, userId, authType);
 
 			accessControlContext.setRequest(authVerifierServletRequest);
+
+			Filter filter = _serviceTracker.getService();
+
+			if (filter != null) {
+				InvokerFilterChain invokerFilterChain = new InvokerFilterChain(
+					(servletRequest, servletResponse) -> {
+					});
+
+				invokerFilterChain.addFilter(filter);
+
+				invokerFilterChain.doFilter(
+					authVerifierServletRequest, httpServletResponse);
+			}
 
 			Class<?> clazz = getClass();
 
@@ -354,6 +374,14 @@ public class AuthVerifierFilter extends BasePortalFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AuthVerifierFilter.class.getName());
+
+	private static final ServiceTracker<Filter, Filter> _serviceTracker =
+		new ServiceTracker<>(
+			SystemBundleUtil.getBundleContext(),
+			SystemBundleUtil.createFilter(
+				"(component.name=com.liferay.portal.security.audit.wiring." +
+					"internal.servlet.filter.AuditFilter)"),
+			null);
 
 	private boolean _guestAllowed = true;
 	private final Set<String> _hostsAllowed = new HashSet<>();

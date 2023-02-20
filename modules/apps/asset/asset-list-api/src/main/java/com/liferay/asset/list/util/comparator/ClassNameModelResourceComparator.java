@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.list.web.internal.util.comparator;
+package com.liferay.asset.list.util.comparator;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

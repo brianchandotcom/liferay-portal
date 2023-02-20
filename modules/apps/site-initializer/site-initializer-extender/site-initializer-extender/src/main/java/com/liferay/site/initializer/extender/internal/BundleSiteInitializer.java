@@ -18,10 +18,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -1388,6 +1390,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 				unicodePropertiesJSONObject.getString("classNameIds")),
 			assetListJSONObject.getString("ddmStructureKey"));
 
+		List<String> classNameIdsInString = new ArrayList<>();
+
+		List<Long> classNameIds = ListUtil.fromArray(
+			AssetRendererFactoryRegistryUtil.getIndexableClassNameIds(
+				serviceContext.getCompanyId(), true));
+
+		classNameIds = ListUtil.sort(
+			classNameIds,
+			new ClassNameModelResourceComparator(
+				true, serviceContext.getLocale()));
+
+		classNameIds.forEach(
+			classNameId -> classNameIdsInString.add(classNameId.toString()));
+
 		Map<String, String> map = HashMapBuilder.put(
 			"anyAssetType",
 			String.valueOf(
@@ -1397,8 +1413,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			unicodePropertiesJSONObject.getString("anyClassType"),
 			String.valueOf(ddmStructure.getStructureId())
 		).put(
-			"classNameIds",
-			unicodePropertiesJSONObject.getString("classNameIds")
+			"classNameIds", StringUtil.merge(classNameIdsInString, ",")
 		).put(
 			unicodePropertiesJSONObject.getString("classTypeIds"),
 			String.valueOf(ddmStructure.getStructureId())

@@ -131,8 +131,6 @@ public class LayoutLookAndFeelDisplayContext {
 				_layoutsAdminDisplayContext.getCETItemSelectorURL(
 					"selectGlobalCSSCETs",
 					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)
-			).setParameter(
-				"multipleSelection", true
 			).buildString()
 		).put(
 			"selectGlobalCSSCETsEventName", "selectGlobalCSSCETs"
@@ -153,8 +151,6 @@ public class LayoutLookAndFeelDisplayContext {
 				_layoutsAdminDisplayContext.getCETItemSelectorURL(
 					"selectGlobalJSCETs",
 					ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
-			).setParameter(
-				"multipleSelection", true
 			).buildString()
 		).put(
 			"selectGlobalJSCETsEventName", "selectGlobalJSCETs"

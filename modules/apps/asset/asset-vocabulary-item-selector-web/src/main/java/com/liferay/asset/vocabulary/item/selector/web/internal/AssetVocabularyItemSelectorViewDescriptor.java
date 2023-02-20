@@ -110,6 +110,11 @@ public class AssetVocabularyItemSelectorViewDescriptor
 	}
 
 	@Override
+	public boolean isMultipleSelection() {
+		return _assetVocabularyItemSelectorCriterion.isMultiSelection();
+	}
+
+	@Override
 	public boolean isShowBreadcrumb() {
 		return false;
 	}

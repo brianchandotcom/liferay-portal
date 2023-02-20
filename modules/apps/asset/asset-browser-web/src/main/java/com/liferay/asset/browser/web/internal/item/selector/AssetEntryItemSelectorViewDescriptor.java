@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -46,10 +47,12 @@ public class AssetEntryItemSelectorViewDescriptor
 	public AssetEntryItemSelectorViewDescriptor(
 		HttpServletRequest httpServletRequest,
 		AssetBrowserDisplayContext assetBrowserDisplayContext,
+		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion,
 		PortletURL portletURL) {
 
 		_httpServletRequest = httpServletRequest;
 		_assetBrowserDisplayContext = assetBrowserDisplayContext;
+		_assetEntryItemSelectorCriterion = assetEntryItemSelectorCriterion;
 		_portletURL = portletURL;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -147,6 +150,11 @@ public class AssetEntryItemSelectorViewDescriptor
 	}
 
 	@Override
+	public boolean isMultipleSelection() {
+		return !_assetEntryItemSelectorCriterion.isSingleSelect();
+	}
+
+	@Override
 	public boolean isShowSearch() {
 		return true;
 	}
@@ -172,6 +180,8 @@ public class AssetEntryItemSelectorViewDescriptor
 	}
 
 	private final AssetBrowserDisplayContext _assetBrowserDisplayContext;
+	private final AssetEntryItemSelectorCriterion
+		_assetEntryItemSelectorCriterion;
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
 	private final ThemeDisplay _themeDisplay;

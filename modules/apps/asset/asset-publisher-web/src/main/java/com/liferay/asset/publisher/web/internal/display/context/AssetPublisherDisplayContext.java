@@ -2288,8 +2288,6 @@ public class AssetPublisherDisplayContext {
 				scopeGroup, _themeDisplay.getScopeGroupId(),
 				_portletResponse.getNamespace() + "selectAsset",
 				assetEntryItemSelectorCriterion)
-		).setParameter(
-			"multipleSelection", true
 		).buildString();
 	}
 

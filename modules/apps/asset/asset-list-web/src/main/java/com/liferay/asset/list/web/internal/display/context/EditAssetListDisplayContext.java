@@ -1184,8 +1184,6 @@ public class EditAssetListDisplayContext {
 				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
 				_portletResponse.getNamespace() + "selectAsset",
 				assetEntryItemSelectorCriterion)
-		).setParameter(
-			"multipleSelection", true
 		).buildPortletURL();
 	}
 

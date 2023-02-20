@@ -105,7 +105,8 @@ public class BlogsEntryItemSelectorView
 			servletRequest, servletResponse, infoItemItemSelectorCriterion,
 			portletURL, itemSelectedEventName, search,
 			new BlogsItemSelectorViewDescriptor(
-				(HttpServletRequest)servletRequest, portletURL));
+				(HttpServletRequest)servletRequest,
+				infoItemItemSelectorCriterion, portletURL));
 	}
 
 	private static final List<ItemSelectorReturnType>
@@ -233,9 +234,12 @@ public class BlogsEntryItemSelectorView
 		implements ItemSelectorViewDescriptor<BlogsEntry> {
 
 		public BlogsItemSelectorViewDescriptor(
-			HttpServletRequest httpServletRequest, PortletURL portletURL) {
+			HttpServletRequest httpServletRequest,
+			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
+			PortletURL portletURL) {
 
 			_httpServletRequest = httpServletRequest;
+			_infoItemItemSelectorCriterion = infoItemItemSelectorCriterion;
 			_portletURL = portletURL;
 		}
 
@@ -312,7 +316,14 @@ public class BlogsEntryItemSelectorView
 			return entriesSearchContainer;
 		}
 
+		@Override
+		public boolean isMultipleSelection() {
+			return _infoItemItemSelectorCriterion.isMultiSelection();
+		}
+
 		private HttpServletRequest _httpServletRequest;
+		private final InfoItemItemSelectorCriterion
+			_infoItemItemSelectorCriterion;
 		private String _orderByCol;
 		private String _orderByType;
 		private final PortletURL _portletURL;

@@ -389,8 +389,6 @@ public class InputAssetLinksDisplayContext {
 				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
 				getEventName(), assetEntryItemSelectorCriterion)
 		).setParameter(
-			"multipleSelection", true
-		).setParameter(
 			"refererAssetEntryId", _assetEntryId
 		).buildPortletURL();
 	}

@@ -198,8 +198,6 @@ public class AssetVocabularySiteNavigationMenuItemType
 				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 				renderResponse.getNamespace() + "selectItem",
 				assetVocabularyItemSelectorCriterion)
-		).setParameter(
-			"multipleSelection", isMultiSelection()
 		).buildString();
 	}
 

@@ -134,7 +134,7 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 	}
 
 	public boolean isMultipleSelection() {
-		return ParamUtil.getBoolean(_httpServletRequest, "multipleSelection");
+		return _itemSelectorViewDescriptor.isMultipleSelection();
 	}
 
 	private BreadcrumbEntry _getCurrentGroupBreadcrumbEntry(

@@ -112,7 +112,8 @@ public class CPDefinitionItemSelectorView
 			servletRequest, servletResponse, infoItemItemSelectorCriterion,
 			portletURL, itemSelectedEventName, search,
 			new CPDefinitionItemSelectorViewDescriptor(
-				(HttpServletRequest)servletRequest, portletURL));
+				(HttpServletRequest)servletRequest,
+				infoItemItemSelectorCriterion, portletURL));
 	}
 
 	private static final List<ItemSelectorReturnType>
@@ -226,9 +227,12 @@ public class CPDefinitionItemSelectorView
 		implements ItemSelectorViewDescriptor<CPDefinition> {
 
 		public CPDefinitionItemSelectorViewDescriptor(
-			HttpServletRequest httpServletRequest, PortletURL portletURL) {
+			HttpServletRequest httpServletRequest,
+			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
+			PortletURL portletURL) {
 
 			_httpServletRequest = httpServletRequest;
+			_infoItemItemSelectorCriterion = infoItemItemSelectorCriterion;
 			_portletURL = portletURL;
 		}
 
@@ -260,7 +264,14 @@ public class CPDefinitionItemSelectorView
 			return entriesSearchContainer;
 		}
 
+		@Override
+		public boolean isMultipleSelection() {
+			return _infoItemItemSelectorCriterion.isMultiSelection();
+		}
+
 		private HttpServletRequest _httpServletRequest;
+		private final InfoItemItemSelectorCriterion
+			_infoItemItemSelectorCriterion;
 		private final PortletURL _portletURL;
 
 	}

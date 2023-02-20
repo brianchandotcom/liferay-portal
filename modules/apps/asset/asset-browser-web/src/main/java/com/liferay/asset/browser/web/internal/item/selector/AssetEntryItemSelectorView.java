@@ -24,8 +24,6 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.servlet.DynamicServletRequest;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -79,8 +77,8 @@ public class AssetEntryItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		HttpServletRequest httpServletRequest = _getDynamicServletRequest(
-			assetEntryItemSelectorCriterion, servletRequest);
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
 
 		RenderRequest renderRequest =
 			(RenderRequest)httpServletRequest.getAttribute(
@@ -101,27 +99,8 @@ public class AssetEntryItemSelectorView
 			assetEntryItemSelectorCriterion, portletURL, itemSelectedEventName,
 			search,
 			new AssetEntryItemSelectorViewDescriptor(
-				httpServletRequest, assetBrowserDisplayContext, portletURL));
-	}
-
-	private DynamicServletRequest _getDynamicServletRequest(
-		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion,
-		ServletRequest servletRequest) {
-
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)servletRequest;
-
-		return new DynamicServletRequest(
-			httpServletRequest,
-			HashMapBuilder.put(
-				"multipleSelection",
-				_toStringArray(
-					!assetEntryItemSelectorCriterion.isSingleSelect())
-			).build());
-	}
-
-	private <T> String[] _toStringArray(T value) {
-		return new String[] {String.valueOf(value)};
+				httpServletRequest, assetBrowserDisplayContext,
+				assetEntryItemSelectorCriterion, portletURL));
 	}
 
 	private static final List<ItemSelectorReturnType>

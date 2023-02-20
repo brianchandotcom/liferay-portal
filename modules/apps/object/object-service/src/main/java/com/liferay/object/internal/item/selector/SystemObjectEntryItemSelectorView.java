@@ -122,7 +122,8 @@ public class SystemObjectEntryItemSelectorView
 			servletRequest, servletResponse, infoItemItemSelectorCriterion,
 			portletURL, itemSelectedEventName, search,
 			new SystemObjectItemSelectorViewDescriptor(
-				(HttpServletRequest)servletRequest, _objectDefinition,
+				(HttpServletRequest)servletRequest,
+				infoItemItemSelectorCriterion, _objectDefinition,
 				_objectEntryLocalService, _objectRelatedModelsProviderRegistry,
 				portletURL));
 	}
@@ -241,6 +242,7 @@ public class SystemObjectEntryItemSelectorView
 
 		public SystemObjectItemSelectorViewDescriptor(
 			HttpServletRequest httpServletRequest,
+			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
 			ObjectDefinition objectDefinition,
 			ObjectEntryLocalService objectEntryLocalService,
 			ObjectRelatedModelsProviderRegistry
@@ -248,6 +250,7 @@ public class SystemObjectEntryItemSelectorView
 			PortletURL portletURL) {
 
 			_httpServletRequest = httpServletRequest;
+			_infoItemItemSelectorCriterion = infoItemItemSelectorCriterion;
 			_objectDefinition = objectDefinition;
 			_objectEntryLocalService = objectEntryLocalService;
 			_objectRelatedModelsProviderRegistry =
@@ -319,7 +322,14 @@ public class SystemObjectEntryItemSelectorView
 			return searchContainer;
 		}
 
+		@Override
+		public boolean isMultipleSelection() {
+			return _infoItemItemSelectorCriterion.isMultiSelection();
+		}
+
 		private final HttpServletRequest _httpServletRequest;
+		private final InfoItemItemSelectorCriterion
+			_infoItemItemSelectorCriterion;
 		private final ObjectDefinition _objectDefinition;
 		private final ObjectEntryLocalService _objectEntryLocalService;
 		private final ObjectRelatedModelsProviderRegistry

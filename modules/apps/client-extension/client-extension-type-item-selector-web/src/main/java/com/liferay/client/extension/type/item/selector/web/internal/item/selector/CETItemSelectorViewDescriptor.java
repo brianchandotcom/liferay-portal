@@ -86,6 +86,11 @@ public class CETItemSelectorViewDescriptor
 	}
 
 	@Override
+	public boolean isMultipleSelection() {
+		return true;
+	}
+
+	@Override
 	public boolean isShowBreadcrumb() {
 		return false;
 	}

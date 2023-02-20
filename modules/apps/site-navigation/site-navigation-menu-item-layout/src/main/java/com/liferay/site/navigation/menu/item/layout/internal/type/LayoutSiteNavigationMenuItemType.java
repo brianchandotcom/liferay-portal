@@ -192,8 +192,6 @@ public class LayoutSiteNavigationMenuItemType
 				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 				renderResponse.getNamespace() + "selectItem",
 				layoutItemSelectorCriterion)
-		).setParameter(
-			"multipleSelection", isMultiSelection()
 		).buildString();
 	}
 

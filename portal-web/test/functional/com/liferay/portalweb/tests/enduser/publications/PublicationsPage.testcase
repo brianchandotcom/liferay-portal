@@ -82,6 +82,59 @@ definition {
 		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
+	@description = "Create pages through an existing page template into a publication and publish"
+	@priority = 3
+	test CanCreatePagethroughExistingPageTemplateAndPublish {
+		task ("Add a widget page template") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Widget Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Widget Page Template Name",
+				pageTemplateType = "Widget Page Template");
+		}
+
+		task ("Add a Blogs widget to widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Widget Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Widget Page Template Name");
+
+			Portlet.addPG(portletName = "Blogs");
+		}
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		task ("Adds a widget page based on template") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+			PagesAdmin.addPage(
+				collectionName = "Widget Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Widget Page Template Name");
+		}
+
+		task ("View Blogs widget in widget page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			Portlet.viewSpecificPG(portletName = "Blogs");
+		}
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+	}
+
 	@description = "This is a use case for LPS-164162 - Styling Content Pages is not properly applied when the user edits a page in a Publication"
 	@priority = 3
 	test CanStyleContentPages {

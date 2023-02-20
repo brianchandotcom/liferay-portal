@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Michael Hashimoto
  */
 @RestController
-public class CE02RestController {
+public class Jethr0RestController {
 
 	@GetMapping("/")
 	public ResponseEntity<String> home() {
@@ -43,6 +43,7 @@ public class CE02RestController {
 		return new ResponseEntity<>(jsonObject.toString(), HttpStatus.CREATED);
 	}
 
-	private static final Log _log = LogFactory.getLog(CE02RestController.class);
+	private static final Log _log = LogFactory.getLog(
+		Jethr0RestController.class);
 
 }

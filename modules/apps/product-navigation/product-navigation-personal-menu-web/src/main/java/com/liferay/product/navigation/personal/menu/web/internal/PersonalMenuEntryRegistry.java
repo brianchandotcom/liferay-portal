@@ -20,12 +20,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
@@ -59,28 +59,12 @@ public class PersonalMenuEntryRegistry {
 				String.valueOf(
 					serviceReference.getProperty(
 						"product.navigation.personal.menu.group"))),
-			new PersonalMenuEntryOrderComparator(
-				"product.navigation.personal.menu.entry.order"));
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator<>(
+					"product.navigation.personal.menu.entry.order")));
 	}
 
 	private ServiceTrackerMap<String, List<PersonalMenuEntry>>
 		_serviceTrackerMap;
-
-	private class PersonalMenuEntryOrderComparator
-		extends PropertyServiceReferenceComparator<PersonalMenuEntry> {
-
-		public PersonalMenuEntryOrderComparator(String propertyKey) {
-			super(propertyKey);
-		}
-
-		@Override
-		public int compare(
-			ServiceReference<PersonalMenuEntry> serviceReference1,
-			ServiceReference<PersonalMenuEntry> serviceReference2) {
-
-			return -super.compare(serviceReference1, serviceReference2);
-		}
-
-	}
 
 }

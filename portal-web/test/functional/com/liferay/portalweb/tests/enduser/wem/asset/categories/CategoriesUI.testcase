@@ -632,4 +632,30 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-171967. View new configuration for managing asset.categories.search.hierarchical property from the UI."
+	@priority = 4
+	test ViewIncludeChildCategoriesWhenSearchingParentCategoriesInstanceSetting {
+		task ("Given an administrator navigates to the Instance Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("When the administrator accesses to the Categorization") {
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Categorization",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Then the administrator sees the configuration of Include child categories when searching parent categories") {
+			FormFields.viewCheckboxChecked(fieldName = "Include child categories when searching parent categories.");
+
+			FormFields.viewFieldHelpText(
+				fieldHelpText = "When checked, assets with child categories also appear in search results. When unchecked, only assets with the exact category matches appear in search results.",
+				fieldName = "Include child categories when searching parent categories.");
+		}
+	}
+
 }

@@ -18,11 +18,9 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutUtilityPageEntryPermission;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.layout.utility.page.constants.LayoutUtilityPageActionKeys;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -35,7 +33,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -80,10 +77,6 @@ public class LayoutActionsDisplayContext {
 	public List<DropdownItem> getDropdownItems() {
 		Layout layout = _getLayout();
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			LayoutUtilityPageEntryLocalServiceUtil.
-				fetchLayoutUtilityPageEntryByPlid(layout.getPlid());
-
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
@@ -119,9 +112,7 @@ public class LayoutActionsDisplayContext {
 							dropdownItem.setTarget("_blank");
 						}
 					).add(
-						() ->
-							_isContentLayout(layout) &&
-							(layoutUtilityPageEntry == null),
+						() -> _isContentLayout(layout),
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "convertToPageTemplate");
@@ -155,7 +146,6 @@ public class LayoutActionsDisplayContext {
 					DropdownItemListBuilder.add(
 						() ->
 							_isContentLayout(layout) &&
-							(layoutUtilityPageEntry == null) &&
 							_isShowDeleteAction(layout),
 						dropdownItem -> {
 							dropdownItem.putData("action", "deleteLayout");
@@ -195,62 +185,6 @@ public class LayoutActionsDisplayContext {
 										layout.getName(
 											_themeDisplay.getLocale()))));
 
-							dropdownItem.setIcon("trash");
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "delete"));
-						}
-					).build());
-				dropdownGroupItem.setSeparator(true);
-			}
-		).addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
-						() ->
-							_isContentLayout(layout) &&
-							(layoutUtilityPageEntry != null) &&
-							_isShowDeleteAction(layoutUtilityPageEntry),
-						dropdownItem -> {
-							dropdownItem.putData("action", "deleteLayout");
-
-							String key = "are-you-sure-you-want-to-delete-this";
-
-							if (layoutUtilityPageEntry.
-									isDefaultLayoutUtilityPageEntry()) {
-
-								key =
-									"are-you-sure-you-want-to-delete-the-" +
-										"default-utility-page";
-							}
-
-							dropdownItem.putData(
-								"deleteLayoutURL",
-								PortletURLBuilder.create(
-									PortalUtil.getControlPanelPortletURL(
-										_httpServletRequest,
-										LayoutAdminPortletKeys.GROUP_PAGES,
-										PortletRequest.ACTION_PHASE)
-								).setActionName(
-									"/layout_admin" +
-										"/delete_layout_utility_page_entry"
-								).setRedirect(
-									PortletURLBuilder.create(
-										PortalUtil.getControlPanelPortletURL(
-											_httpServletRequest,
-											LayoutAdminPortletKeys.GROUP_PAGES,
-											PortletRequest.RENDER_PHASE)
-									).setTabs1(
-										"utility-pages"
-									).buildString()
-								).setParameter(
-									"layoutUtilityPageEntryId",
-									layoutUtilityPageEntry.
-										getLayoutUtilityPageEntryId()
-								).buildString());
-							dropdownItem.putData(
-								"message",
-								LanguageUtil.get(_httpServletRequest, key));
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
@@ -400,7 +334,16 @@ public class LayoutActionsDisplayContext {
 		}
 
 		if (layoutPageTemplateEntry == null) {
-			_contentLayout = true;
+			LayoutUtilityPageEntry layoutUtilityPageEntry =
+				LayoutUtilityPageEntryLocalServiceUtil.
+					fetchLayoutUtilityPageEntryByPlid(layout.getPlid());
+
+			if (layoutUtilityPageEntry != null) {
+				_contentLayout = false;
+			}
+			else {
+				_contentLayout = true;
+			}
 		}
 		else {
 			_contentLayout = false;
@@ -437,30 +380,6 @@ public class LayoutActionsDisplayContext {
 		}
 
 		return true;
-	}
-
-	private boolean _isShowDeleteAction(
-			LayoutUtilityPageEntry layoutUtilityPageEntry)
-		throws PortalException {
-
-		boolean deletePermission = LayoutUtilityPageEntryPermission.contains(
-			_themeDisplay.getPermissionChecker(), layoutUtilityPageEntry,
-			ActionKeys.DELETE);
-
-		if (!layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
-			return deletePermission;
-		}
-
-		if (GroupPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(),
-				layoutUtilityPageEntry.getGroupId(),
-				LayoutUtilityPageActionKeys.
-					ASSIGN_DEFAULT_LAYOUT_UTILITY_PAGE_ENTRY)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isShowPermissionsAction(Layout layout)

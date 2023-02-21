@@ -24,7 +24,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -33,9 +33,9 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,7 +64,8 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 			assetEntryAssetCategoryRelLocalService,
 		AssetEntryLocalService assetEntryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
-		CompanyLocalService companyLocalService,
+		CompanyLocalService companyLocalService, Language language,
+		Localization localization, Portal portal,
 		UserLocalService userLocalService) {
 
 		_assetCategoryLocalService = assetCategoryLocalService;
@@ -73,6 +74,9 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		_assetEntryLocalService = assetEntryLocalService;
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_companyLocalService = companyLocalService;
+		_language = language;
+		_localization = localization;
+		_portal = portal;
 		_userLocalService = userLocalService;
 	}
 
@@ -113,9 +117,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 			new AssetVocabularySettingsHelper();
 
 		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
-			new long[] {
-				PortalUtil.getClassNameId(JournalArticle.class.getName())
-			},
+			new long[] {_portal.getClassNameId(JournalArticle.class.getName())},
 			new long[] {-1}, new boolean[] {false});
 		assetVocabularySettingsHelper.setMultiValued(false);
 
@@ -283,8 +285,8 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 							assetVocabulary = _addAssetVocabulary(
 								company.getGroupId(), company.getCompanyId(),
 								"type",
-								LocalizationUtil.getLocalizationMap(
-									LanguageUtil.getAvailableLocales(
+								_localization.getLocalizationMap(
+									_language.getAvailableLocales(
 										company.getGroupId()),
 									LocaleUtil.fromLanguageId(
 										UpgradeProcessUtil.getDefaultLanguageId(
@@ -346,6 +348,9 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final CompanyLocalService _companyLocalService;
+	private final Language _language;
+	private final Localization _localization;
+	private final Portal _portal;
 	private final UserLocalService _userLocalService;
 
 }

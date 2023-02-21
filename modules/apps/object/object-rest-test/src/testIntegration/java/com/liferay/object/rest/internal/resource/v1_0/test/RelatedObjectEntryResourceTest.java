@@ -241,6 +241,23 @@ public class RelatedObjectEntryResourceTest {
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(1, itemsJSONArray.length());
+
+		// Inactive Object Definition
+
+		_objectDefinition.setActive(false);
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				jaxRsApplicationDescriptor.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				_objectRelationship.getName(), StringPool.SLASH,
+				_objectEntry.getPrimaryKey()),
+			Http.Method.DELETE);
+
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 	}
 
 	@Test
@@ -282,6 +299,23 @@ public class RelatedObjectEntryResourceTest {
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(1, itemsJSONArray.length());
+
+		// Inactive Object Definition
+
+		_objectDefinition.setActive(false);
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				jaxRsApplicationDescriptor.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				_objectRelationship.getName(), StringPool.SLASH,
+				_objectEntry.getPrimaryKey()),
+			Http.Method.DELETE);
+
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 	}
 
 	@Test
@@ -372,6 +406,28 @@ public class RelatedObjectEntryResourceTest {
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(1, itemsJSONArray.length());
+
+		// Inactive Object Definition
+
+		_objectRelationship = _addObjectRelationship(
+			StringUtil.randomId(), _objectDefinition.getObjectDefinitionId(),
+			_userSystemObjectDefinition.getObjectDefinitionId(),
+			_objectEntry.getPrimaryKey(), _user.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectDefinition.setActive(false);
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				jaxRsApplicationDescriptor.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				_objectRelationship.getName()),
+			Http.Method.GET);
+
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 	}
 
 	@Test
@@ -510,6 +566,28 @@ public class RelatedObjectEntryResourceTest {
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(1, itemsJSONArray.length());
+
+		// Inactive Object Definition
+
+		String objectFieldValue = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition, _OBJECT_FIELD_NAME, objectFieldValue);
+
+		_objectDefinition.setActive(false);
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				jaxRsApplicationDescriptor.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				_objectRelationship.getName(), StringPool.SLASH,
+				objectEntry.getPrimaryKey()),
+			Http.Method.PUT);
+
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 	}
 
 	private ObjectRelationship _addObjectRelationship(

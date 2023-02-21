@@ -1,7 +1,6 @@
 import './CheckboxDataCard.scss';
-
-import {Tooltip} from '../Tooltip/Tooltip';
 import {Checkbox} from '../Checkbox/Checkbox';
+import {Tooltip} from '../Tooltip/Tooltip';
 
 interface CheckboxItem {
 	checked: boolean;
@@ -26,10 +25,10 @@ export function CheckboxDataCard({
 	checkboxItems,
 	icon,
 	name,
+	onChange,
 	title,
 	tooltip,
 	tooltipText,
-	onChange,
 }: CheckboxDataCardProps) {
 	return (
 		<div className="checkbox-data-card-container">
@@ -38,10 +37,11 @@ export function CheckboxDataCard({
 					<span className="checkbox-data-card-left-info-title">
 						{title}
 					</span>
+
 					<img
+						alt="Person Fill"
 						className="checkbox-data-card-left-info-icon"
 						src={icon}
-						alt="Person Fill"
 					/>
 				</div>
 
@@ -53,8 +53,8 @@ export function CheckboxDataCard({
 					<Checkbox
 						checked={checkboxItem.checked}
 						description={checkboxItem.description}
-						label={checkboxItem.label}
 						key={checkboxItem.name}
+						label={checkboxItem.label}
 						onChange={() => onChange(name, checkboxItem.name)}
 					/>
 				))}

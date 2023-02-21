@@ -3,23 +3,23 @@ import {useState} from 'react';
 import {Footer} from '../../components/Footer/Footer';
 import {AppFlowList} from '../../components/NewAppFlowList/AppFlowList';
 import {NewAppToolBar} from '../../components/NewAppToolBar/NewAppToolBar';
-import {CreateNewAppPage} from '../CreateNewAppPage/CreateNewAppPage';
-import {initialFLowListItems} from './AppCreationFlowUtil';
-
-import {ProvideAppBuildPage} from '../ProvideAppBuildPage/ProvideAppBuildPage';
-import {CustomizeAppStorefrontPage} from '../StorefrontPage/CustomizeAppStorefrontPage';
 import {ChoosePricingModelPage} from '../ChoosePricingModelPage/ChoosePricingModelPage';
+import {CreateNewAppPage} from '../CreateNewAppPage/CreateNewAppPage';
 import {InformLicensingTermsPage} from '../InformLicensingTermsPage/InformLicensingTermsPage';
 import {InformLicensingTermsPricePage} from '../InformLicensingTermsPage/InformLicensingTermsPricePage';
-import {ProvideVersionDetailsPage} from '../ProvideVersionDetailsPage/ProvideVersionDetailsPage';
+import {ProvideAppBuildPage} from '../ProvideAppBuildPage/ProvideAppBuildPage';
 import {ProvideAppSupportAndHelpPage} from '../ProvideAppSupportAndHelpPage/ProvideAppSupportAndHelpPage';
+import {ProvideVersionDetailsPage} from '../ProvideVersionDetailsPage/ProvideVersionDetailsPage';
 import {ReviewAndSubmitAppPage} from '../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
+import {CustomizeAppStorefrontPage} from '../StorefrontPage/CustomizeAppStorefrontPage';
+import {initialFLowListItems} from './AppCreationFlowUtil';
 
 import './AppCreationFlow.scss';
-import {DefineAppProfilePage} from '../DefineAppProfilePage/DefineAppProfilePage';
+
+import {useNavigate} from 'react-router-dom';
 
 import {useAppContext} from '../../manage-app-state/AppManageState';
-import {useNavigate} from 'react-router-dom';
+import {DefineAppProfilePage} from '../DefineAppProfilePage/DefineAppProfilePage';
 
 type SetAppFlowListStateProps = {
 	checkedItems?: string[];

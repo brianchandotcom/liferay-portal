@@ -1,14 +1,15 @@
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 
-import mainAccountLogo from '../../assets/icons/mainAppLogo.svg';
-import emptyImage from '../../assets/icons/emptyImage.svg';
 import chevronRight from '../../assets/icons/chevron-right.svg';
 import circleFill from '../../assets/icons/circle_fill.svg';
 import dotsIcon from '../../assets/icons/dots-icon.svg';
+import emptyImage from '../../assets/icons/emptyImage.svg';
+import mainAccountLogo from '../../assets/icons/mainAppLogo.svg';
 
 import './NewAppToolBar.scss';
+
 import ClayIcon from '@clayui/icon';
 
 interface NewAppToolBarProps {
@@ -20,10 +21,10 @@ interface NewAppToolBarProps {
 }
 
 export function NewAppToolBar({
-	accountName,
-	appName,
-	appImage,
 	accountImage,
+	accountName,
+	appImage,
+	appName,
 	enableDropdown,
 }: NewAppToolBarProps) {
 	type Item = {
@@ -64,9 +65,9 @@ export function NewAppToolBar({
 			<ClayManagementToolbar.ItemList expand>
 				<div className="new-app-tool-bar-main-account-logo">
 					<img
+						alt="Main account logo"
 						className="new-app-tool-bar-main-account-logo-img"
 						src={accountImage ?? mainAccountLogo}
-						alt="Main account logo"
 					/>
 
 					<span className="new-app-tool-bar-main-account-logo-text">
@@ -75,16 +76,16 @@ export function NewAppToolBar({
 				</div>
 
 				<img
+					alt="Arrow right"
 					className="new-app-tool-bar-arrow-right"
 					src={chevronRight}
-					alt="Arrow right"
 				/>
 
 				<div className="new-app-tool-bar-new-app-logo">
 					<img
+						alt="New App logo"
 						className="new-app-tool-bar-new-app-logo-img"
 						src={appImage ?? emptyImage}
-						alt="New App logo"
 					/>
 
 					<span className="new-app-tool-bar-new-app-logo-text">
@@ -96,10 +97,11 @@ export function NewAppToolBar({
 			<ClayManagementToolbar.ItemList expand>
 				<div className="new-app-tool-bar-status-container">
 					<img
+						alt="Status"
 						className="new-app-tool-bar-status-icon"
 						src={circleFill}
-						alt="Status"
 					/>
+
 					<span className="new-app-tool-bar-status-text">Draft</span>
 				</div>
 			</ClayManagementToolbar.ItemList>
@@ -125,6 +127,7 @@ export function NewAppToolBar({
 						Preview Storefront
 					</button>
 				</ClayButton.Group>
+
 				{enableDropdown && (
 					<div className="new-app-tool-bar-button-dropdown">
 						<ClayDropDownWithItems
@@ -132,9 +135,9 @@ export function NewAppToolBar({
 							trigger={
 								<ClayButton displayType={null}>
 									<img
+										alt="Icon"
 										className="new-app-tool-bar-button-dropdown-icon"
 										src={dotsIcon}
-										alt="Icon"
 									/>
 								</ClayButton>
 							}

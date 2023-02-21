@@ -28,6 +28,7 @@ export function Tooltip({tooltip, tooltipText}: TooltipProps) {
 					title={tooltip}
 				>
 					<span className="tooltip-optional-text">{tooltipText}</span>
+
 					<img className="tooltip-icon" src={helpFillIcon} />
 				</div>
 			</div>

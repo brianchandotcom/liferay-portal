@@ -1,21 +1,19 @@
-import {CardView} from '../../components/Card/CardView';
-import {CardLink} from '../../components/Card/CardLink';
-import {CardTags} from '../../components/Card/CardTags';
-import {LicensePriceChildren} from '../../components/LicensePriceCard/LicensePriceChildren';
-import unitedStatesIcon from '../../assets/icons/united-states.svg';
-
-import {Tag} from '../../components/Tag/Tag';
-import {RequiredMask} from '../../components/FieldBase';
-
 import ClayButton from '@clayui/button';
-import {Tooltip} from '../../components/Tooltip/Tooltip';
-import arrowDown from '../../assets/icons/arrow-down.svg';
 
+import arrowDown from '../../assets/icons/arrow-down.svg';
 import documentIcon from '../../assets/icons/document-icon.svg';
 import folderIcon from '../../assets/icons/folder-fill.svg';
-
-import {useAppContext} from '../../manage-app-state/AppManageState';
+import unitedStatesIcon from '../../assets/icons/united-states.svg';
+import {CardLink} from '../../components/Card/CardLink';
+import {CardTags} from '../../components/Card/CardTags';
+import {CardView} from '../../components/Card/CardView';
+import {RequiredMask} from '../../components/FieldBase';
 import {UploadedFile} from '../../components/FileList/FileList';
+import {LicensePriceChildren} from '../../components/LicensePriceCard/LicensePriceChildren';
+import {Tag} from '../../components/Tag/Tag';
+import {Tooltip} from '../../components/Tooltip/Tooltip';
+import {useAppContext} from '../../manage-app-state/AppManageState';
+
 import './CardSection.scss';
 
 interface CardSectionProps {
@@ -45,25 +43,25 @@ interface CardSectionProps {
 export function CardSection({
 	build,
 	buildZIPTitles,
-	cardInfos,
-	cardTitle,
 	cardDescription,
-	enableEdit = true,
-	files,
-	paragraph,
-	description,
-	title,
-	icon,
-	cardView,
+	cardInfos,
 	cardLink,
 	cardTags,
+	cardTitle,
+	cardView,
+	description,
+	enableEdit = true,
+	files,
+	icon,
+	localized,
+	paragraph,
 	price,
 	required,
 	sectionName,
 	storefront,
 	tags,
+	title,
 	version,
-	localized,
 }: CardSectionProps) {
 	const priceData = {
 		currency: {
@@ -76,11 +74,13 @@ export function CardSection({
 		},
 	};
 	const [{priceModel}] = useAppContext();
+
 	return (
 		<div className="card-section-body-section">
 			<div className="card-section-body-section-header">
 				<span className="card-section-body-section-header-title">
 					{sectionName}
+
 					{required && <RequiredMask />}
 				</span>
 
@@ -88,7 +88,7 @@ export function CardSection({
 					{localized && (
 						<div className="field-base-localized-field">
 							<ClayButton displayType={null}>
-								{'English (US)'}
+								English (US)
 								<img
 									className="arrow-down-icon"
 									src={arrowDown}
@@ -97,14 +97,14 @@ export function CardSection({
 
 							<>
 								&nbsp;
-								<Tooltip tooltip={'choose a language'} />
+								<Tooltip tooltip="choose a language" />
 							</>
 						</div>
 					)}
 
 					{enableEdit && (
 						<ClayButton className="edit-button" displayType={null}>
-							{'Edit'}
+							Edit
 						</ClayButton>
 					)}
 				</div>
@@ -129,16 +129,18 @@ export function CardSection({
 					<div className="card-section-body-section-file">
 						<div className="card-section-body-section-file-container">
 							<img
+								alt="Folder Icon"
 								className="card-section-body-section-file-container-icon"
 								src={folderIcon}
-								alt="Folder Icon"
 							/>
 						</div>
+
 						<img
+							alt="Document Icon"
 							className="card-section-body-section-file-icon"
 							src={documentIcon}
-							alt="Document Icon"
 						/>
+
 						<span className="card-section-body-section-file-name">
 							{buildZIPTitle}
 						</span>
@@ -177,24 +179,26 @@ export function CardSection({
 										}}
 									/>
 								</div>
+
 								<div className="card-section-body-section-files-data">
 									<img
+										alt={fileName}
 										className="card-section-body-section-files-data-icon"
 										src={documentIcon}
-										alt={fileName}
 									/>
+
 									<span className="card-section-body-section-files-data-name">
 										{fileName}
 									</span>
+
 									<span className="card-section-body-section-files-data-description"></span>
 								</div>
 							</div>
 						);
 					})}
+
 					<div className="card-section-body-section-files-info">
-						{
-							'Important: Images will be displayed following the numerical order above'
-						}
+						Important: Images will be displayed following the numerical order above
 					</div>
 				</div>
 			)}
@@ -206,10 +210,12 @@ export function CardSection({
 							{version}
 						</div>
 					</div>
+
 					<div className="card-section-body-section-version-data">
 						<span className="card-section-body-section-version-data-name">
 							{title}
 						</span>
+
 						<span className="card-section-body-section-version-data-description">
 							{description}
 						</span>
@@ -221,9 +227,9 @@ export function CardSection({
 				cardInfos?.map(({icon, link, title}) => {
 					return (
 						<CardLink
+							description={link as string}
 							icon={icon}
 							title={title as string}
-							description={link as string}
 						/>
 					);
 				})}
@@ -233,8 +239,8 @@ export function CardSection({
 					return (
 						<CardTags
 							icon={icon}
-							title={title as string}
 							tags={tags}
+							title={title as string}
 						/>
 					);
 				})}

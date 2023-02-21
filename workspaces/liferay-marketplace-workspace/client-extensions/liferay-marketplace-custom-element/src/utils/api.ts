@@ -29,8 +29,8 @@ export function createApp({
 }
 
 export async function createAppLicensePrice({
-	body,
 	appProductId,
+	body,
 }: {
 	body: Object;
 	appProductId: number;
@@ -44,6 +44,7 @@ export async function createAppLicensePrice({
 			method: 'POST',
 		}
 	);
+
 	return await response.json();
 }
 
@@ -82,8 +83,8 @@ export function createImage({
 }
 
 export async function createProductSpecification({
-	body,
 	appId,
+	body,
 }: {
 	body: Object;
 	appId: string;
@@ -148,6 +149,7 @@ export async function getProduct({appERC}: {appERC: string}) {
 			method: 'GET',
 		}
 	);
+
 	return await response.json();
 }
 
@@ -159,6 +161,7 @@ export async function getProductImages({appProductId}: {appProductId: number}) {
 			method: 'GET',
 		}
 	);
+
 	return await response.json();
 }
 
@@ -170,6 +173,7 @@ export async function getProductSKU({appProductId}: {appProductId: number}) {
 			method: 'GET',
 		}
 	);
+
 	return await response.json();
 }
 

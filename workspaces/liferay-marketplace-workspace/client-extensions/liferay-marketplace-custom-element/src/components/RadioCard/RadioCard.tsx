@@ -1,13 +1,15 @@
-import classNames from 'classnames';
 import {ClayToggle} from '@clayui/form';
+import classNames from 'classnames';
 
 import radioChecked from '../../assets/icons/radio-button-checked.svg';
 import radioUnchecked from '../../assets/icons/radio-button-unchecked.svg';
 
 import './RadioCard.scss';
-import {Tooltip} from '../Tooltip/Tooltip';
-import {TYPES} from '../../manage-app-state/actionTypes';
+
 import {useState} from 'react';
+
+import {TYPES} from '../../manage-app-state/actionTypes';
+import {Tooltip} from '../Tooltip/Tooltip';
 
 interface RadioCardProps {
 	title: string;
@@ -22,13 +24,13 @@ interface RadioCardProps {
 
 export function RadioCard({
 	description,
+	disabled = false,
+	icon,
+	onChange,
+	selected,
 	title,
 	toggle = false,
 	tooltip,
-	icon,
-	selected,
-	onChange,
-	disabled = false,
 }: RadioCardProps) {
 	return (
 		<div
@@ -52,13 +54,13 @@ export function RadioCard({
 							onClick={() => !disabled && onChange()}
 						>
 							<img
-								className="radio-card-button-icon"
-								src={selected ? radioChecked : radioUnchecked}
 								alt={
 									selected
 										? 'Radio Checked'
 										: 'Radio unchecked'
 								}
+								className="radio-card-button-icon"
+								src={selected ? radioChecked : radioUnchecked}
 							/>
 						</button>
 					)}
@@ -72,11 +74,11 @@ export function RadioCard({
 					</span>
 
 					<img
+						alt="Icon"
 						className={classNames('radio-card-title-icon', {
 							'radio-card-title-icon-selected': selected,
 						})}
 						src={icon}
-						alt="Icon"
 					/>
 				</div>
 

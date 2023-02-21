@@ -1,5 +1,4 @@
 import './App.scss';
-
 import AppRoutes from './Routes';
 
 interface AppProps {

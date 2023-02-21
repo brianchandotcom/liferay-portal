@@ -1,4 +1,5 @@
 import {DocumentFileItem} from './DocumentFileItem';
+
 import './FileList.scss';
 import {ImageFileItem} from './ImageFileItem';
 
@@ -28,7 +29,7 @@ interface FileListProps {
 	type: 'document' | 'image';
 }
 
-export function FileList({uploadedFiles, onDelete, type}: FileListProps) {
+export function FileList({onDelete, type, uploadedFiles}: FileListProps) {
 	return (
 		<div className="file-list-container">
 			{uploadedFiles.map((uploadedFile) => {
@@ -47,8 +48,8 @@ export function FileList({uploadedFiles, onDelete, type}: FileListProps) {
 						<ImageFileItem
 							key={uploadedFile.id}
 							onDelete={onDelete}
-							uploadedFile={uploadedFile}
 							tooltip="More Info"
+							uploadedFile={uploadedFile}
 						/>
 					);
 				}

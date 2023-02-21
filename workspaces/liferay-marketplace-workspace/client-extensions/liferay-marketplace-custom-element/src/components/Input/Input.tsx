@@ -1,7 +1,9 @@
 import {ClayInput} from '@clayui/form';
+
 import {FieldBase} from '../FieldBase';
 
 import './Input.scss';
+
 import classNames from 'classnames';
 
 interface InputProps
@@ -25,12 +27,12 @@ export function Input({
 	hideFeedback,
 	label,
 	localized = false,
+	onChange,
 	placeholder,
 	required,
 	tooltip,
-	onChange,
-	value,
 	type,
+	value,
 	...otherProps
 }: InputProps) {
 	return (
@@ -46,8 +48,8 @@ export function Input({
 			<ClayInput
 				className="custom-input"
 				component={component}
-				placeholder={placeholder}
 				onChange={onChange}
+				placeholder={placeholder}
 				type={type}
 				value={value}
 				{...otherProps}

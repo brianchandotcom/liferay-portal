@@ -4,6 +4,7 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
+
 import './ProvideAppSupportAndHelpPage.scss';
 import {createProductSpecification, createSpecification} from '../../utils/api';
 
@@ -36,7 +37,7 @@ export function ProvideAppSupportAndHelpPage({
 	): Promise<void> {
 		const dataSpecification = await createSpecification({
 			body: {
-				key: key,
+				key,
 				title: {en_US: title},
 			},
 		});
@@ -49,6 +50,7 @@ export function ProvideAppSupportAndHelpPage({
 			},
 			appId,
 		});
+
 		return;
 	}
 
@@ -56,8 +58,8 @@ export function ProvideAppSupportAndHelpPage({
 		<div className="provide-app-support-and-help-page-container">
 			<div className="provide-app-support-and-help-page-header">
 				<Header
-					title="Provide app support and help"
 					description="Inform the support and help references. This will impact how users will experience this app’s customer support and learning."
+					title="Provide app support and help"
 				/>
 			</div>
 
@@ -140,7 +142,6 @@ export function ProvideAppSupportAndHelpPage({
 
 			<NewAppPageFooterButtons
 				disableContinueButton={!supportURL}
-				showBackButton={true}
 				onClickBack={() => onClickBack()}
 				onClickContinue={() => {
 					submitSupportURLasync(
@@ -179,6 +180,7 @@ export function ProvideAppSupportAndHelpPage({
 					}
 					onClickContinue();
 				}}
+				showBackButton={true}
 			/>
 		</div>
 	);

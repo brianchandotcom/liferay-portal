@@ -1,11 +1,12 @@
+import ClayButton from '@clayui/button';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import ClayButton from '@clayui/button';
 import classnames from 'classnames';
 
 import liferayIcon from '../../assets/icons/liferay-icon.svg';
 
 import './DashboardToolbar.scss';
+
 import {useState} from 'react';
 
 export function DashboardToolbar() {
@@ -19,6 +20,7 @@ export function DashboardToolbar() {
 						className="dashboard-toolbar-liferay-icon"
 						src={liferayIcon}
 					/>
+
 					<span className="dashboard-toolbar-title">Marketplace</span>
 				</div>
 			</ClayManagementToolbar.ItemList>
@@ -43,6 +45,7 @@ export function DashboardToolbar() {
 							</span>
 						</ClayButton>
 					</ClayNavigationBar.Item>
+
 					<ClayNavigationBar.Item active={active === 'Solutions'}>
 						<ClayButton
 							className="dashboard-toolbar-navigation-bar-button"
@@ -61,6 +64,7 @@ export function DashboardToolbar() {
 							</span>
 						</ClayButton>
 					</ClayNavigationBar.Item>
+
 					<ClayNavigationBar.Item active={active === 'Dashboard'}>
 						<ClayButton
 							className="dashboard-toolbar-navigation-bar-button"

@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 
 import './DashboardNavigationList.scss';
-import {DashboardNavigationListItem} from './DashboardNavigationListItem';
-import {DashboardListItems} from './DashboardNavigation';
 import {AppProps} from '../DashboardTable/DashboardTable';
+import {DashboardListItems} from './DashboardNavigation';
+import {DashboardNavigationListItem} from './DashboardNavigationListItem';
 
 interface DashboardNavigationListProps {
 	navigationItemsMock: DashboardListItems[];
@@ -14,13 +14,13 @@ interface DashboardNavigationListProps {
 }
 
 export function DashboardNavigationList({
-	navigationItemsMock,
-	navigationItemMock,
 	dashboardNavigationItems,
-	setDashboardNavigationItems,
+	navigationItemMock,
+	navigationItemsMock,
 	onSelectAppChange,
+	setDashboardNavigationItems,
 }: DashboardNavigationListProps) {
-	const {itemIcon, itemTitle, itemName, itemSelected, items} =
+	const {itemIcon, itemName, itemSelected, itemTitle, items} =
 		navigationItemMock;
 
 	return (
@@ -50,6 +50,7 @@ export function DashboardNavigationList({
 				}}
 			>
 				<img
+					alt="Apps icon"
 					className={classNames(
 						'dashboard-navigation-body-list-icon',
 						{
@@ -58,8 +59,8 @@ export function DashboardNavigationList({
 						}
 					)}
 					src={itemIcon}
-					alt="Apps icon"
 				/>
+
 				<span
 					className={classNames(
 						'dashboard-navigation-body-list-text',
@@ -76,15 +77,15 @@ export function DashboardNavigationList({
 			{itemSelected &&
 				items?.map((item) => (
 					<DashboardNavigationListItem
-						key={item.name}
-						items={items}
-						item={item}
-						listName={itemName}
 						dashboardNavigationItems={dashboardNavigationItems}
+						item={item}
+						items={items}
+						key={item.name}
+						listName={itemName}
+						onSelectAppChange={onSelectAppChange}
 						setDashboardNavigationItems={
 							setDashboardNavigationItems
 						}
-						onSelectAppChange={onSelectAppChange}
 					/>
 				))}
 		</>

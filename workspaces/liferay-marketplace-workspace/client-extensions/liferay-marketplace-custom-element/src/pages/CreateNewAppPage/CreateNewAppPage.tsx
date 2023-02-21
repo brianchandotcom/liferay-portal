@@ -5,6 +5,7 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {getMasterCatalogId} from '../../utils/util';
+
 import './CreateNewAppPage.scss';
 
 interface CreateNewAppPageProps {
@@ -18,8 +19,8 @@ export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 		<div className="create-new-app-container">
 			<div className="create-new-app-header">
 				<Header
-					title="Create new app"
 					description="Review and accept the legal agreement between Acme Co. (publisher), you, and Liferay before proceeding, You are about to create a new app submission."
+					title="Create new app"
 				/>
 			</div>
 
@@ -28,9 +29,9 @@ export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 					<div className="create-new-app-card-header-left-content">
 						<div className="create-new-app-card-header-icon-container">
 							<img
+								alt="Document Icon"
 								className="create-new-app-card-header-icon"
 								src={documentIcon}
-								alt="Document Icon"
 							/>
 						</div>
 
@@ -42,9 +43,9 @@ export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 					<button className="create-new-app-card-header-button">
 						Download
 						<img
+							alt="Download Icon"
 							className="create-new-app-card-header-button-icon"
 							src={downloadIcon}
-							alt="Download Icon"
 						/>
 					</button>
 				</div>
@@ -81,6 +82,7 @@ export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 				<span className="create-new-app-info-footer">
 					By clicking on the button "continue" below, I confirm that I
 					have read and agree to be bound by the{' '}
+
 					<a href="#">Liferay Publisher Program License Agreement.</a>{' '}
 					I also confirm that I am of the legal age of majority in the
 					jurisdiction where I reside (at least 18 years of age in
@@ -89,7 +91,6 @@ export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 			</div>
 
 			<NewAppPageFooterButtons
-				showBackButton={false}
 				onClickContinue={() => {
 					getMasterCatalogId().then((catalogId: number) => {
 						dispatch({
@@ -102,6 +103,7 @@ export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 
 					onClickContinue();
 				}}
+				showBackButton={false}
 			/>
 		</div>
 	);

@@ -1,4 +1,5 @@
 import {ReactNode} from 'react';
+
 import './CardView.scss';
 
 interface CardViewProps {
@@ -8,7 +9,7 @@ interface CardViewProps {
 	description: string;
 }
 
-export function CardView({children, description, title, icon}: CardViewProps) {
+export function CardView({children, description, icon, title}: CardViewProps) {
 	return (
 		<div className="card-view-container">
 			<div className="card-view-main-info">
@@ -16,9 +17,9 @@ export function CardView({children, description, title, icon}: CardViewProps) {
 					<span className="card-view-title-text">{title}</span>
 
 					<img
+						alt="Icon"
 						className="card-view-title-icon"
 						src={icon}
-						alt="Icon"
 					/>
 				</div>
 
@@ -30,6 +31,7 @@ export function CardView({children, description, title, icon}: CardViewProps) {
 			</div>
 
 			<span className="card-view-description">{description}</span>
+
 			{children}
 		</div>
 	);

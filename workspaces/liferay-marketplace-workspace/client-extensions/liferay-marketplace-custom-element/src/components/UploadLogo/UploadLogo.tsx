@@ -10,13 +10,14 @@ interface UploadLogoProps {
 }
 
 export function UploadLogo({
-	uploadedFile,
 	onDeleteFile,
 	onUpload,
+	uploadedFile,
 }: UploadLogoProps) {
 	return (
 		<div className="upload-logo-container">
 			<div
+				className="upload-logo-icon"
 				style={{
 					backgroundImage: `url(${
 						uploadedFile?.preview ?? emptyImage
@@ -25,23 +26,24 @@ export function UploadLogo({
 					backgroundSize: 'cover',
 					backgroundPosition: '50% 50%',
 				}}
-				className="upload-logo-icon"
 			/>
 
 			<input
 				accept="image/jpeg, image/png, image/gif"
-				type="file"
-				name="file"
 				id="file"
+				name="file"
 				onChange={({target: {files}}) => {
 					if (files !== null) {
 						onUpload(files);
 					}
 				}}
+				type="file"
 			/>
+
 			<label className="upload-logo-upload-label" htmlFor="file">
 				Upload Image
 			</label>
+
 			{uploadedFile?.uploaded && (
 				<button
 					className="upload-logo-delete-button"

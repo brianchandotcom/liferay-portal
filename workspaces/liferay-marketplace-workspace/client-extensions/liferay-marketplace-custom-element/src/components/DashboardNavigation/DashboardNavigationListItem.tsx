@@ -16,14 +16,14 @@ interface DashboardNavigationListItem {
 }
 
 export function DashboardNavigationListItem({
+	dashboardNavigationItems,
 	item,
 	items,
 	listName,
-	setDashboardNavigationItems,
 	onSelectAppChange,
-	dashboardNavigationItems,
+	setDashboardNavigationItems,
 }: DashboardNavigationListItem) {
-	const {image, name, version, status, selected} = item;
+	const {image, name, selected, status, version} = item;
 
 	return (
 		<div
@@ -64,18 +64,22 @@ export function DashboardNavigationListItem({
 		>
 			<div>
 				<img
+					alt="App Image"
 					className="dashboard-navigation-body-list-item-app-logo"
 					src={image}
-					alt="App Image"
 				/>
+
 				<span className="dashboard-navigation-body-list-item-app-title">
 					{name}
 				</span>
+
 				<span className="dashboard-navigation-body-list-item-app-version">
 					{version}
 				</span>
 			</div>
+
 			<img
+				alt="Circle fill"
 				className={classNames(
 					'dashboard-navigation-body-list-item-app-status',
 					{
@@ -88,7 +92,6 @@ export function DashboardNavigationListItem({
 					}
 				)}
 				src={circleFill}
-				alt="Circle fill"
 			/>
 		</div>
 	);

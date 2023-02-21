@@ -12,6 +12,7 @@ import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {createApp, createImage} from '../../utils/api';
 import {submitBase64EncodedFile} from '../../utils/util';
+
 import './DefineAppProfilePage.scss';
 
 interface DefineAppProfilePageProps {
@@ -96,11 +97,12 @@ export function DefineAppProfilePage({
 	return (
 		<div className="profile-page-container">
 			<Header
-				title="Define the app profile"
 				description="Enter your new app details. 
                                 This information will be used for submission, 
                                 presentation, customer support, and search capabilities."
+				title="Define the app profile"
 			/>
+
 			<div className="profile-page-body-container">
 				<Section
 					label="App Info"
@@ -108,9 +110,9 @@ export function DefineAppProfilePage({
 					tooltipText="More info"
 				>
 					<UploadLogo
-						uploadedFile={appLogo}
-						onUpload={handleLogoUpload}
 						onDeleteFile={handleLogoDelete}
+						onUpload={handleLogoUpload}
+						uploadedFile={appLogo}
 					/>
 
 					<div>
@@ -133,7 +135,6 @@ export function DefineAppProfilePage({
 
 						<Input
 							component="textarea"
-							placeholder="Enter app description"
 							label="Description"
 							localized
 							onChange={({target}) =>
@@ -144,16 +145,15 @@ export function DefineAppProfilePage({
 									type: TYPES.UPDATE_APP_DESCRIPTION,
 								})
 							}
+							placeholder="Enter app description"
 							required
 							tooltip="Description"
 							value={appDescription}
 						/>
 
 						<MultiSelect
-							label="Categories"
-							required
-							tooltip="Categories"
 							items={CategoriesItems}
+							label="Categories"
 							onChange={(value) =>
 								dispatch({
 									payload: {
@@ -163,15 +163,17 @@ export function DefineAppProfilePage({
 								})
 							}
 							placeholder="Select categories"
+							required
+							tooltip="Categories"
 						/>
 
 						<MultiSelect
-							label="Tags"
-							required
-							tooltip="Tags"
 							items={TagsItems}
+							label="Tags"
 							onChange={() => {}}
 							placeholder="Select tags"
+							required
+							tooltip="Tags"
 						/>
 					</div>
 				</Section>

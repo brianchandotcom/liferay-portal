@@ -20,6 +20,7 @@ import {
 	createSpecification,
 } from '../../utils/api';
 import {submitBase64EncodedFile} from '../../utils/util';
+
 import './ProvideAppBuildPage.scss';
 
 interface ProvideAppBuildPageProps {
@@ -89,90 +90,90 @@ export function ProvideAppBuildPage({
 			/>
 
 			<Section
-				required
 				label="LXC SaaS Compatible?"
+				required
 				tooltip="More Info"
 				tooltipText="MoreInfo"
 			>
 				<div className="provide-app-build-page-saas-compatible-container">
 					<RadioCard
 						description="Lorem ipsum dolor sit amet consectetur."
-						title="Yes"
 						icon={taskCheckedIcon}
-						selected={appType === 'saas'}
 						onChange={() => {
 							dispatch({
 								payload: {value: 'saas'},
 								type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
 							});
 						}}
+						selected={appType === 'saas'}
+						title="Yes"
 						tooltip="More Info"
 					/>
 
 					<RadioCard
 						description="Lorem ipsum dolor sit amet consectetur."
-						title="No"
 						icon={cancelIcon}
-						selected={appType === 'osgi'}
 						onChange={() => {
 							dispatch({
 								payload: {value: 'osgi'},
 								type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
 							});
 						}}
+						selected={appType === 'osgi'}
+						title="No"
 						tooltip="More Info"
 					/>
 				</div>
 			</Section>
 
 			<Section
-				required
 				label="App Build"
+				required
 				tooltip="More Info"
 				tooltipText="MoreInfo"
 			>
 				<div className="provide-app-build-page-app-build-radio-container">
 					<RadioCard
-						disabled
 						description="Use any build from any available Liferay Experience Cloud account (requires LXC account) "
-						title="Via Liferay Experience Cloud Integration"
+						disabled
 						icon={cloudIcon}
-						selected={appBuild === 'LXC'}
 						onChange={() => {
 							dispatch({
 								payload: {value: 'LXC'},
 								type: TYPES.UPDATE_APP_BUILD,
 							});
 						}}
+						selected={appBuild === 'LXC'}
+						title="Via Liferay Experience Cloud Integration"
 						tooltip="More Info"
 					/>
 
 					<RadioCard
-						disabled
 						description="Use any build from your computer connecting with a Github provider"
-						title="Via GitHub Repo"
+						disabled
 						icon={githubIcon}
-						selected={appBuild === 'GitHub'}
 						onChange={() => {
 							dispatch({
 								payload: {value: 'GitHub'},
 								type: TYPES.UPDATE_APP_BUILD,
 							});
 						}}
+						selected={appBuild === 'GitHub'}
+						title="Via GitHub Repo"
 						tooltip="More Info"
 					/>
 
 					<RadioCard
 						description="Use any local ZIP files to upload. Max file size is 500MB"
-						title="Via ZIP Upload"
 						icon={uploadIcon}
-						selected={appBuild === 'upload'}
 						onChange={() => {
 							dispatch({
 								payload: {value: 'upload'},
 								type: TYPES.UPDATE_APP_BUILD,
 							});
 						}}
+						selected={appBuild === 'upload'}
+						title="Via ZIP Upload"
 						tooltip="More Info"
 					/>
 				</div>
@@ -192,14 +193,14 @@ export function ProvideAppBuildPage({
 				/>
 
 				<DropzoneUpload
+					acceptFileTypes={acceptFileTypes}
 					buttonText="Select a file"
-					title="Drag and drop to upload or"
 					description="Only ZIP files are allowed. Max file size is 500MB "
 					maxFiles={1}
-					multiple={false}
 					maxSize={500000000}
+					multiple={false}
 					onHandleUpload={handleUpload}
-					acceptFileTypes={acceptFileTypes}
+					title="Drag and drop to upload or"
 				/>
 			</Section>
 

@@ -1,16 +1,18 @@
 import ClayAlert from '@clayui/alert';
-import ClayNavigationBar from '@clayui/navigation-bar';
 import ClayButton from '@clayui/button';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import classNames from 'classnames';
 
 import appImageTest from '../../assets/icons/app-image-test.svg';
-import circleInfoIcon from '../../assets/icons/info-circle-icon.svg';
-import circleFullIcon from '../../assets/icons/circle_fill.svg';
-import arrowLeft from '../../assets/icons/arrow-left.svg';
 import arrowDown from '../../assets/icons/arrow-down.svg';
+import arrowLeft from '../../assets/icons/arrow-left.svg';
+import circleFullIcon from '../../assets/icons/circle_fill.svg';
+import circleInfoIcon from '../../assets/icons/info-circle-icon.svg';
 
 import './AppDetailsPage.scss';
+
 import {useState} from 'react';
+
 import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import {ReviewAndSubmitAppPage} from '../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
@@ -49,9 +51,9 @@ export function AppDetailsPage({
 			>
 				<div>
 					<img
+						alt="arrow left"
 						className="app-details-page-back-button-icon"
 						src={arrowLeft}
-						alt="arrow left"
 					/>
 					Back to Apps
 				</div>
@@ -63,10 +65,11 @@ export function AppDetailsPage({
 			>
 				<div className="app-details-page-alert-items-container">
 					<img
+						alt="Circle Info "
 						className="app-details-page-alert-icon"
 						src={circleInfoIcon}
-						alt="Circle Info "
 					/>
+
 					<span className="app-details-page-alert-text">
 						This submission is currently under review by Liferay.
 						Once the process is complete, you will be able to
@@ -81,20 +84,24 @@ export function AppDetailsPage({
 				<div className="app-details-page-app-info-left-container">
 					<div>
 						<img
+							alt="App Logo"
 							className="app-details-page-app-info-logo"
 							src={selectedApp.image}
-							alt="App Logo"
 						/>
 					</div>
+
 					<div>
 						<span className="app-details-page-app-info-title">
 							{selectedApp.name}
 						</span>
+
 						<div className="app-details-page-app-info-subtitle-container">
 							<span className="app-details-page-app-info-subtitle-text">
 								v{selectedApp.version}
 							</span>
+
 							<img
+								alt="status icon"
 								className={classNames(
 									'app-details-page-app-info-subtitle-icon',
 									{
@@ -107,24 +114,26 @@ export function AppDetailsPage({
 									}
 								)}
 								src={circleFullIcon}
-								alt="status icon"
 							/>
+
 							<span className="app-details-page-app-info-subtitle-text">
 								{selectedApp.status}
 							</span>
 						</div>
 					</div>
 				</div>
+
 				<div className="app-details-page-app-info-buttons-container">
 					<button className="app-details-page-app-info-button-preview-app-page">
 						Preview App Page
 					</button>
+
 					<button className="app-details-page-app-info-button-manage">
 						Manage
 						<img
+							alt="Arrow Down"
 							className="app-details-page-app-info-button-manage-icon"
 							src={arrowDown}
-							alt="Arrow Down"
 						/>
 					</button>
 				</div>
@@ -146,6 +155,7 @@ export function AppDetailsPage({
 							<span>App Details</span>
 						</ClayButton>
 					</ClayNavigationBar.Item>
+
 					<ClayNavigationBar.Item
 						active={navigationBarActive === 'Comments'}
 					>
@@ -155,6 +165,7 @@ export function AppDetailsPage({
 							<span>Comments (3)</span>
 						</ClayButton>
 					</ClayNavigationBar.Item>
+
 					<ClayNavigationBar.Item
 						active={navigationBarActive === 'Activity history'}
 					>
@@ -166,6 +177,7 @@ export function AppDetailsPage({
 							<span>Activity history</span>
 						</ClayButton>
 					</ClayNavigationBar.Item>
+
 					<ClayNavigationBar.Item
 						active={navigationBarActive === 'App versions'}
 					>
@@ -180,9 +192,9 @@ export function AppDetailsPage({
 				</ClayNavigationBar>
 
 				<ReviewAndSubmitAppPage
-					readonly
 					onClickBack={() => {}}
 					onClickContinue={() => {}}
+					readonly
 				/>
 			</div>
 		</div>

@@ -1,5 +1,5 @@
-import Dropzone from 'react-dropzone';
 import classnames from 'classnames';
+import Dropzone from 'react-dropzone';
 
 import documentIcon from '../../assets/icons/document-icon.svg';
 
@@ -36,7 +36,7 @@ export function DropzoneUpload({
 			multiple={multiple}
 			onDropAccepted={onHandleUpload}
 		>
-			{({getRootProps, getInputProps, isDragActive, isDragReject}) => (
+			{({getInputProps, getRootProps, isDragActive, isDragReject}) => (
 				<div
 					className={classnames('dropzone-upload-container', {
 						'dropzone-upload-container-active': isDragActive,
@@ -46,9 +46,9 @@ export function DropzoneUpload({
 				>
 					<div className="dropzone-upload-document-container">
 						<img
+							alt="Document icon"
 							className="dropzone-upload-document-icon"
 							src={documentIcon}
-							alt="Document icon"
 						/>
 					</div>
 
@@ -65,6 +65,7 @@ export function DropzoneUpload({
 					<span className="dropzone-upload-description">
 						{description}
 					</span>
+
 					<input {...getInputProps()} />
 				</div>
 			)}

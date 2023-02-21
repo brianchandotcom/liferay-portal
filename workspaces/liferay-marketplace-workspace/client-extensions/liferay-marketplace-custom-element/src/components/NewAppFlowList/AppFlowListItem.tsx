@@ -1,10 +1,11 @@
 import ClayIcon from '@clayui/icon';
 
-import circleFill from '../../assets/icons/circle_fill.svg';
 import checkFill from '../../assets/icons/check_fill.svg';
+import circleFill from '../../assets/icons/circle_fill.svg';
 import radioSelected from '../../assets/icons/radio-button-checked-2.svg';
 
 import './AppFlowListItem.scss';
+
 import classNames from 'classnames';
 
 interface AppFlowListItemProps {
@@ -33,11 +34,6 @@ export function AppFlowListItem({
 	return (
 		<div className="app-flow-list-item-container">
 			<img
-				className={classNames('app-flow-list-item-icon', {
-					'app-flow-list-item-icon-checked': checked,
-					'app-flow-list-item-icon-selected': selected,
-				})}
-				src={getIcon()}
 				alt={
 					checkFill
 						? 'check fill'
@@ -45,6 +41,11 @@ export function AppFlowListItem({
 						? 'radio selected'
 						: 'circle fill'
 				}
+				className={classNames('app-flow-list-item-icon', {
+					'app-flow-list-item-icon-checked': checked,
+					'app-flow-list-item-icon-selected': selected,
+				})}
+				src={getIcon()}
 			/>
 
 			<li

@@ -7,12 +7,15 @@ export function Footer() {
 				<span className="footer-text">
 					© 2022 Liferay Inc. All Rights Reserved
 				</span>
+
 				<a className="footer-text" href="#">
 					Content Policy
 				</a>
+
 				<a className="footer-text" href="#">
 					Terms
 				</a>
+
 				<a className="footer-text" href="#">
 					Privacy
 				</a>

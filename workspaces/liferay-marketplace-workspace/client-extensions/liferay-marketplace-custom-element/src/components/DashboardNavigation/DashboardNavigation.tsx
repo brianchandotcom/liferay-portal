@@ -1,10 +1,8 @@
 import ClayButton from '@clayui/button';
+import {useState} from 'react';
 
 import arrowDown from '../../assets/icons/arrow-down.svg';
 import arrowUP from '../../assets/icons/arrow-up.svg';
-
-import {useState} from 'react';
-
 import {DashboardNavigationList} from './DashboardNavigationList';
 
 import './DashboardNavigation.scss';
@@ -31,8 +29,8 @@ export function DashboardNavigation({
 	accountIcon,
 	accountTitle,
 	dashboardNavigationItems,
-	setDashboardNavigationItems,
 	onSelectAppChange,
+	setDashboardNavigationItems,
 }: DashboardNavigationProps) {
 	const [expandList, setExpandList] = useState(true);
 
@@ -41,27 +39,30 @@ export function DashboardNavigation({
 			<div className="dashboard-navigation-header">
 				<div className="dashboard-navigation-header-left-content">
 					<img
+						alt="account logo"
 						className="dashboard-navigation-header-logo"
 						src={accountIcon}
-						alt="account logo"
 					/>
+
 					<div className="dashboard-navigation-header-text-container">
 						<span className="dashboard-navigation-header-title">
 							{accountTitle}
 						</span>
+
 						<span className="dashboard-navigation-header-apps">
 							{accountAppsNumber} apps
 						</span>
 					</div>
 				</div>
+
 				<ClayButton
-					onClick={() => setExpandList(!expandList)}
 					displayType="unstyled"
+					onClick={() => setExpandList(!expandList)}
 				>
 					<img
+						alt="Arrow Down"
 						className="dashboard-navigation-header-arrow-down"
 						src={expandList ? arrowUP : arrowDown}
-						alt="Arrow Down"
 					/>
 				</ClayButton>
 			</div>
@@ -70,11 +71,11 @@ export function DashboardNavigation({
 				<div className="dashboard-navigation-body">
 					{dashboardNavigationItems.map((navigationMock) => (
 						<DashboardNavigationList
-							onSelectAppChange={onSelectAppChange}
+							dashboardNavigationItems={dashboardNavigationItems}
 							key={navigationMock.itemName}
 							navigationItemMock={navigationMock}
 							navigationItemsMock={dashboardNavigationItems}
-							dashboardNavigationItems={dashboardNavigationItems}
+							onSelectAppChange={onSelectAppChange}
 							setDashboardNavigationItems={
 								setDashboardNavigationItems
 							}

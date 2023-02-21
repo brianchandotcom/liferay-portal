@@ -3,6 +3,7 @@ import {LicensePriceCard} from '../../components/LicensePriceCard/LicensePriceCa
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
+
 import './InformLicensingTermsPage.scss';
 import {createAppLicensePrice} from '../../utils/api';
 
@@ -15,7 +16,7 @@ export function InformLicensingTermsPricePage({
 	onClickBack,
 	onClickContinue,
 }: InformLicensingTermsPricePageProps) {
-	const [{appLicense, appLicensePrice, appProductId, appId}, _] =
+	const [{appId, appLicense, appLicensePrice, appProductId}, _] =
 		useAppContext();
 
 	return (

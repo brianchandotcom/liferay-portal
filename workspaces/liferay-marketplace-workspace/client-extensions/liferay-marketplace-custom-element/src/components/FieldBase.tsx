@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
@@ -60,9 +61,9 @@ export function FieldBase({
 	description,
 	disabled,
 	errorMessage,
-	id,
 	helpMessage,
 	hideFeedback,
+	id,
 	label,
 	localized,
 	required,
@@ -100,14 +101,14 @@ export function FieldBase({
 				{localized && (
 					<div className="field-base-localized-field">
 						<ClayButton displayType={null}>
-							{'English (US)'}
+							English (US)
 							<img className="arrow-down-icon" src={arrowDown} />
 						</ClayButton>
 
 						<>
 							&nbsp;
 							<Tooltip
-								tooltip={'choose a language'}
+								tooltip="choose a language"
 								tooltipText={tooltipText}
 							/>
 						</>
@@ -120,6 +121,7 @@ export function FieldBase({
 			)}
 
 			{children}
+
 			{!hideFeedback && helpMessage && (
 				<div className="field-base-feedback">{helpMessage}</div>
 			)}

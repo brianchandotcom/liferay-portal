@@ -30,7 +30,6 @@ export type ReviewAndSubmitAppPageUtilProps = {
 };
 
 import brightnessEmptyIcon from '../../assets/icons/brightness-empty.svg';
-
 import scheduleIcon from '../../assets/icons/schedule-icon.svg';
 import file1 from '../../assets/images/file1.svg';
 import file2 from '../../assets/images/file2.svg';

@@ -1,26 +1,26 @@
 import {useEffect, useState} from 'react';
 
-import emptyImage from '../../assets/icons/emptyImage.svg';
 import documentationIcon from '../../assets/icons/documentation-icon.svg';
-import phoneIcon from '../../assets/icons/phone-icon.svg';
-import guideIcon from '../../assets/icons/guide-icon.svg';
+import emptyImage from '../../assets/icons/emptyImage.svg';
 import globeIcon from '../../assets/icons/globe-icon.svg';
+import guideIcon from '../../assets/icons/guide-icon.svg';
+import phoneIcon from '../../assets/icons/phone-icon.svg';
 import usageTermsIcon from '../../assets/icons/usage-terms-icon.svg';
-
+import {Checkbox} from '../../components/Checkbox/Checkbox';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../components/Section/Section';
-import {Checkbox} from '../../components/Checkbox/Checkbox';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {CardSection} from './CardSection';
-import {initialReviewAndSubmitAppPageItems} from './ReviewAndSubmitAppPageUtil';
 import {
 	getProduct,
 	getProductImages,
 	getProductSKU,
 	getProductSpecifications,
 } from '../../utils/api';
+import {CardSection} from './CardSection';
+import {initialReviewAndSubmitAppPageItems} from './ReviewAndSubmitAppPageUtil';
+
 import './ReviewAndSubmitAppPage.scss';
 
 interface ReviewAndSubmitAppPageProps {
@@ -30,19 +30,19 @@ interface ReviewAndSubmitAppPageProps {
 }
 
 export function ReviewAndSubmitAppPage({
-	readonly = false,
 	onClickBack,
 	onClickContinue,
+	readonly = false,
 }: ReviewAndSubmitAppPageProps) {
 	const [
 		{
 			appERC,
-			appLogo,
 			appLicensePrice,
+			appLogo,
+			appProductId,
 			appStorefrontImages,
 			buildZIPFiles,
 			priceModel,
-			appProductId,
 		},
 		dispatch,
 	] = useAppContext();
@@ -170,8 +170,8 @@ export function ReviewAndSubmitAppPage({
 			{!readonly && (
 				<div className="review-and-submit-app-page-header">
 					<Header
-						title={'Review and submit app'}
 						description="Please, review before submitting. Once sent, you will not be able to edit any information until this submission is completely reviewed by Liferay."
+						title="Review and submit app"
 					/>
 				</div>
 			)}
@@ -205,6 +205,7 @@ export function ReviewAndSubmitAppPage({
 									<span className="review-and-submit-app-page-card-header-title-text">
 										{name}
 									</span>
+
 									<span className="review-and-submit-app-page-card-header-title-version">
 										{version}
 									</span>
@@ -215,8 +216,8 @@ export function ReviewAndSubmitAppPage({
 
 					<div className="review-and-submit-app-page-card-body">
 						<CardSection
-							localized
 							enableEdit={!readonly}
+							localized
 							paragraph={description}
 							required
 							sectionName="Description"
@@ -225,11 +226,11 @@ export function ReviewAndSubmitAppPage({
 						{initialReviewAndSubmitAppPageItems.map((item) => {
 							const cardTitle = () => {
 								if (item.section === 'Pricing')
-									return priceModel;
+									{return priceModel;}
 								else if (item.section === 'Licensing')
-									return appLicense;
+									{return appLicense;}
 								else if (item.section === 'Version')
-									return item.title;
+									{return item.title;}
 							};
 
 							const cardDescription = () => {
@@ -241,12 +242,12 @@ export function ReviewAndSubmitAppPage({
 										return 'To enable paid apps, you must be a business and enter payment information in your Marketplace account profile.';
 									}
 								}
-								else return item.description;
+								else {return item.description;}
 							};
 
 							const description = () => {
-								if (item.section === 'Version') return notes;
-								else return item.description;
+								if (item.section === 'Version') {return notes;}
+								else {return item.description;}
 							};
 
 							return (
@@ -296,6 +297,7 @@ export function ReviewAndSubmitAppPage({
 							setChecked(!checked);
 						}}
 					></Checkbox>
+
 					<span>
 						<span className="review-and-submit-app-page-agreement-highlight">
 							{'Attention: this cannot be undone. '}
@@ -304,6 +306,7 @@ export function ReviewAndSubmitAppPage({
 						regarding this app submission until Liferay completes
 						its review process and I agree with the Liferay
 						Marketplace <a href="#">terms</a> and{' '}
+
 						<a href="#">privacy</a>
 					</span>
 				</div>
@@ -313,7 +316,6 @@ export function ReviewAndSubmitAppPage({
 				<NewAppPageFooterButtons
 					continueButtonText="Submit App"
 					disableContinueButton={!checked}
-					showBackButton={true}
 					onClickBack={() => onClickBack()}
 					onClickContinue={() => {
 						dispatch({
@@ -322,6 +324,7 @@ export function ReviewAndSubmitAppPage({
 
 						onClickContinue();
 					}}
+					showBackButton={true}
 				/>
 			)}
 		</div>

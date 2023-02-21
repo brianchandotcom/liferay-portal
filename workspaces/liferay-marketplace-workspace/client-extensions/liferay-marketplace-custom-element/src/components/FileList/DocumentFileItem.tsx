@@ -20,19 +20,19 @@ export function DocumentFileItem({
 				<div className="document-file-list-item-left-content-icon-container">
 					{uploadedFile.uploaded && !uploadedFile.error ? (
 						<img
+							alt="Folder Icon"
 							className="document-file-list-item-left-content-icon"
 							src={folderIcon}
-							alt="Folder Icon"
 						/>
 					) : (
 						<CircularProgressbarWithChildren
-							value={uploadedFile.progress}
 							styles={{
 								root: {
 									width: 50,
 								},
 								path: {stroke: '#0B5FFF'},
 							}}
+							value={uploadedFile.progress}
 						>
 							<div style={{fontSize: 10}}>
 								<strong>{uploadedFile.progress}</strong>
@@ -53,8 +53,8 @@ export function DocumentFileItem({
 			</div>
 
 			<button
-				onClick={() => onDelete(uploadedFile.id)}
 				className="document-file-list-item-button"
+				onClick={() => onDelete(uploadedFile.id)}
 			>
 				{uploadedFile.uploaded ? 'Remove' : 'Cancel Upload'}
 			</button>

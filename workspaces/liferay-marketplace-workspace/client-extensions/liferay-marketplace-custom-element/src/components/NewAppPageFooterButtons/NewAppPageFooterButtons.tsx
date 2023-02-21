@@ -27,8 +27,8 @@ export function NewAppPageFooterButtons({
 			)}
 
 			<button
-				disabled={disableContinueButton}
 				className="new-app-page-footer-button-continue"
+				disabled={disableContinueButton}
 				onClick={() => onClickContinue()}
 			>
 				{continueButtonText}

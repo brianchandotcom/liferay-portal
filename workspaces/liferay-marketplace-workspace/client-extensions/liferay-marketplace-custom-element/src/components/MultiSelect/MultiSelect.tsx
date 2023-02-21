@@ -2,9 +2,11 @@ import Select, {StylesConfig} from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 import './MultiSelect.scss';
-import {FieldBase} from '../FieldBase';
+
 import classNames from 'classnames';
 import {useRef, useState} from 'react';
+
+import {FieldBase} from '../FieldBase';
 
 type Item = {
 	label: string;
@@ -49,16 +51,16 @@ const colourStyles: StylesConfig<any, true> = {
 };
 
 export function MultiSelect({
+	className,
 	helpMessage,
 	hideFeedback,
+	items,
 	label,
 	localized,
-	placeholder,
 	onChange,
+	placeholder,
 	required,
 	tooltip,
-	className,
-	items,
 }: MultiSelectProps) {
 	const animatedComponents = makeAnimated();
 
@@ -73,14 +75,14 @@ export function MultiSelect({
 			tooltip={tooltip}
 		>
 			<Select
-				isMulti
 				components={animatedComponents}
-				placeholder={placeholder}
-				styles={colourStyles}
+				isMulti
 				onChange={(newValue) =>
 					newValue && onChange(newValue as Item[])
 				}
 				options={items}
+				placeholder={placeholder}
+				styles={colourStyles}
 			/>
 		</FieldBase>
 	);

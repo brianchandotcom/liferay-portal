@@ -1,18 +1,17 @@
-import {BaseCheckboxDataCard} from '../../components/CheckboxDataCard/CheckboxDataCard';
-
-import personIcon from '../../assets/icons/person-fill.svg';
-import creditCardIcon from '../../assets/icons/credit-card.svg';
-import locationIcon from '../../assets/icons/location-on-icon.svg';
-import visibilityIcon from '../../assets/icons/visibility-icon.svg';
-import personGroupIcon from '../../assets/icons/person-group-icon.svg';
-import documentIcon from '../../assets/icons/document-icon.svg';
-import scheduleIcon from '../../assets/icons/schedule-icon.svg';
-import manageSearchIcon from '../../assets/icons/manage-search-icon.svg';
 import accountCircleIcon from '../../assets/icons/account-circle-icon.svg';
-import shoppingCartIcon from '../../assets/icons/shopping-cart-icon.svg';
-import monitoringIcon from '../../assets/icons/monitoring-icon.svg';
-import settingsIcon from '../../assets/icons/settings-icon.svg';
+import creditCardIcon from '../../assets/icons/credit-card.svg';
+import documentIcon from '../../assets/icons/document-icon.svg';
 import circleInfoIcon from '../../assets/icons/info-circle-icon.svg';
+import locationIcon from '../../assets/icons/location-on-icon.svg';
+import manageSearchIcon from '../../assets/icons/manage-search-icon.svg';
+import monitoringIcon from '../../assets/icons/monitoring-icon.svg';
+import personIcon from '../../assets/icons/person-fill.svg';
+import personGroupIcon from '../../assets/icons/person-group-icon.svg';
+import scheduleIcon from '../../assets/icons/schedule-icon.svg';
+import settingsIcon from '../../assets/icons/settings-icon.svg';
+import shoppingCartIcon from '../../assets/icons/shopping-cart-icon.svg';
+import visibilityIcon from '../../assets/icons/visibility-icon.svg';
+import {BaseCheckboxDataCard} from '../../components/CheckboxDataCard/CheckboxDataCard';
 
 export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 	{

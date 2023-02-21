@@ -1,5 +1,5 @@
 import ClayDropDown from '@clayui/drop-down';
-import {useState, ReactNode, HTMLAttributes} from 'react';
+import {HTMLAttributes, ReactNode, useState} from 'react';
 
 import {FieldBase} from '../FieldBase';
 
@@ -67,7 +67,7 @@ export default function AutoComplete<T>({
 			disabled={disabled}
 			errorMessage={error}
 
-			//helpMessage={feedbackMessage}
+			// helpMessage={feedbackMessage}
 
 			id={id}
 			label={label}

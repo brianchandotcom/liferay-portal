@@ -20,8 +20,10 @@ export function LoadingPage({appTitle, appVersion}: LoadingPageProps) {
 				<span className="loading-page-text">
 					Hang tight, the submission of <strong>{appTitle}</strong>
 				</span>
+
 				<span className="loading-page-text">
 					<strong>{appVersion}</strong> is being sent to{' '}
+
 					<strong>Liferay</strong>
 				</span>
 			</div>

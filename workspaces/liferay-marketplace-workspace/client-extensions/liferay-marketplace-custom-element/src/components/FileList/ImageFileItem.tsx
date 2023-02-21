@@ -1,10 +1,10 @@
 import ClayButton from '@clayui/button';
+import {CircularProgressbarWithChildren} from 'react-circular-progressbar';
 
 import arrowNorth from '../../assets/icons/arrow-north.svg';
 import arrowSouth from '../../assets/icons/arrow-south.svg';
 import {Tooltip} from '../Tooltip/Tooltip';
 import {UploadedFile} from './FileList';
-import {CircularProgressbarWithChildren} from 'react-circular-progressbar';
 
 import './ImageFileItem.scss';
 
@@ -24,17 +24,17 @@ export function ImageFileItem({
 			<div className="image-file-item-arrow-container">
 				<ClayButton displayType="unstyled">
 					<img
+						alt="Arrow Up"
 						className="image-file-item-arrow-icon"
 						src={arrowNorth}
-						alt="Arrow Up"
 					/>
 				</ClayButton>
 
 				<ClayButton displayType="unstyled">
 					<img
+						alt="Arrow South"
 						className="image-file-item-arrow-icon"
 						src={arrowSouth}
-						alt="Arrow South"
 					/>
 				</ClayButton>
 			</div>
@@ -48,7 +48,6 @@ export function ImageFileItem({
 				/>
 			) : (
 				<CircularProgressbarWithChildren
-					value={uploadedFile.progress}
 					styles={{
 						root: {
 							width: 50,
@@ -56,6 +55,7 @@ export function ImageFileItem({
 						},
 						path: {stroke: '#0B5FFF'},
 					}}
+					value={uploadedFile.progress}
 				>
 					<div
 						style={{
@@ -74,6 +74,7 @@ export function ImageFileItem({
 					<span className="image-file-item-info-content-text">
 						{uploadedFile.fileName}
 					</span>
+
 					<button
 						className="image-file-item-info-content-button"
 						onClick={() => onDelete(uploadedFile.id)}

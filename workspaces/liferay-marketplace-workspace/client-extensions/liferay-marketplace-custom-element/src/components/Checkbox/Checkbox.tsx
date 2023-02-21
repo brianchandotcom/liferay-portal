@@ -20,13 +20,14 @@ export function Checkbox({
 	return (
 		<div className="checkbox-base-container">
 			<ClayCheckbox
-				readOnly={readOnly}
 				checked={checked}
 				onChange={() => onChange()}
+				readOnly={readOnly}
 			/>
 
 			<div className="checkbox-texts-container">
 				<span className="checkbox-label-text">{label}</span>
+
 				<span className="checkbox-description-text">{description}</span>
 			</div>
 		</div>

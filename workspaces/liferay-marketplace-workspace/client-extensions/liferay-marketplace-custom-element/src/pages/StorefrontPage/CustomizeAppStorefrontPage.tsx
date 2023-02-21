@@ -9,6 +9,7 @@ import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {createImage} from '../../utils/api';
+
 import './CustomizeAppStorefrontPage.scss';
 import {submitBase64EncodedFile} from '../../utils/util';
 
@@ -79,13 +80,13 @@ export function CustomizeAppStorefrontPage({
 	return (
 		<div className="storefront-page-container">
 			<Header
-				title="Customize app storefront"
 				description="Design the storefront for your app. This will set the information displayed on ths app’s page."
+				title="Customize app storefront"
 			/>
 
 			<Section
-				required
 				label="App Storefront"
+				required
 				tooltip="More Info"
 				tooltipText="More Info"
 			>
@@ -133,7 +134,7 @@ export function CustomizeAppStorefrontPage({
 
 			<NewAppPageFooterButtons
 				disableContinueButton={
-					!appStorefrontImages || appStorefrontImages.length === 0
+					!appStorefrontImages || !appStorefrontImages.length
 				}
 				onClickBack={() => onClickBack()}
 				onClickContinue={() => {

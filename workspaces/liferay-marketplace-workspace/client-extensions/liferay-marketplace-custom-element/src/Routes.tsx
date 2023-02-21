@@ -1,5 +1,5 @@
-import {DashboardPage} from './pages/DashboardPage/DashboardPage';
 import {AppCreationFlow} from './pages/AppCreationFlow/AppCreationFlow';
+import {DashboardPage} from './pages/DashboardPage/DashboardPage';
 
 interface AppRoutesProps {
 	route: string;

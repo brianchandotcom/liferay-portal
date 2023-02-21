@@ -1,17 +1,18 @@
+import analyticsIcon from '../../assets/icons/analytics-icon.svg';
 import {Header} from '../../components/Header/Header';
 import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';
 
-import analyticsIcon from '../../assets/icons/analytics-icon.svg';
-
 import './SetAppPrivacyPage.scss';
+
 import {useState} from 'react';
-import {initialCheckboxDataCardsValues} from './SetAppPrivacyUtil';
+
 import {
 	BaseCheckboxDataCard,
 	CheckboxDataCard,
 } from '../../components/CheckboxDataCard/CheckboxDataCard';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
+import {initialCheckboxDataCardsValues} from './SetAppPrivacyUtil';
 
 interface SetAppPrivacyPageProps {
 	onClickBack: () => void;
@@ -33,7 +34,7 @@ export function SetAppPrivacyPage({
 	) => {
 		const newCheckboxDataCardsValues = checkboxDataCardsValues.map(
 			(dataCard) => {
-				const {name, checkboxItems} = dataCard;
+				const {checkboxItems, name} = dataCard;
 				if (name === cardName) {
 					const newCheckboxItems = checkboxItems.map(
 						(checkboxItem) => {
@@ -100,18 +101,18 @@ export function SetAppPrivacyPage({
 					{checkboxDataCardsValues.map(
 						({
 							checkboxItems,
-							name,
 							icon,
+							name,
 							title,
 							tooltip,
 							tooltipText,
 						}) => (
 							<CheckboxDataCard
-								key={name}
 								checkboxItems={checkboxItems}
-								onChange={handleSelectCheckbox}
-								name={name}
 								icon={icon}
+								key={name}
+								name={name}
+								onChange={handleSelectCheckbox}
 								title={title}
 								tooltip={tooltip}
 								tooltipText={tooltipText}

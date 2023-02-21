@@ -13,9 +13,9 @@ export function CardTags({icon, tags, title}: CardTagsProps) {
 			<div className="card-tags-main-info">
 				<div className="card-tags-icon">
 					<img
+						alt="Icon"
 						className="card-tags-icon-image"
 						src={icon}
-						alt="Icon"
 					/>
 				</div>
 

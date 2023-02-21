@@ -23,7 +23,7 @@ interface DashboardTableProps {
 
 export function DashboardTable({apps}: DashboardTableProps) {
 	return (
-		<ClayTable className="dashboard-table-container" borderless>
+		<ClayTable borderless className="dashboard-table-container">
 			<ClayTable.Head>
 				<ClayTable.Cell headingCell>
 					<div className="dashboard-table-header-name">
@@ -32,9 +32,9 @@ export function DashboardTable({apps}: DashboardTableProps) {
 						</span>
 
 						<img
+							alt="Swap Vert"
 							className="dashboard-table-header-name-icon"
 							src={swapVert}
-							alt="Swap Vert"
 						/>
 					</div>
 				</ClayTable.Cell>

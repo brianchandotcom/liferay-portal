@@ -1,7 +1,7 @@
 import React, {ReactNode, createContext, useContext, useReducer} from 'react';
-import {UploadedFile} from '../components/FileList/FileList';
 
-import {appReducer, TAction} from './reducer';
+import {UploadedFile} from '../components/FileList/FileList';
+import {TAction, appReducer} from './reducer';
 
 type Categories = {
 	label: string;

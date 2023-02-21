@@ -1,8 +1,8 @@
+import ClayButton from '@clayui/button';
+
 import githubIcon from '../../assets/icons/github-icon.svg';
 import linkIcon from '../../assets/icons/link-icon.svg';
-
 import AutoComplete from '../AutoComplete';
-import ClayButton from '@clayui/button';
 
 import './GithubCard.scss';
 
@@ -21,23 +21,28 @@ export function GithubCard({user}: GithubCard) {
 							src={githubIcon}
 						/>
 					</div>
+
 					<img
 						className="github-card-header-icon-link"
 						src={linkIcon}
 					/>
+
 					<span>
 						Connected to <b>{user}</b> account
 					</span>
 				</div>
+
 				<div className="github-card-header-button">
-					<ClayButton size="sm" displayType="secondary">
+					<ClayButton displayType="secondary" size="sm">
 						<span>Remove</span>
 					</ClayButton>
 				</div>
 			</div>
+
 			<div>
 				<hr className="github-card-divider"></hr>
 			</div>
+
 			<div className="github-card-content">
 				<AutoComplete
 					emptyStateMessage="Not found"
@@ -50,6 +55,7 @@ export function GithubCard({user}: GithubCard) {
 				>
 					{() => <div></div>}
 				</AutoComplete>
+
 				<AutoComplete
 					emptyStateMessage="Not found"
 					items={[]}

@@ -25,10 +25,19 @@ public class CETItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _type;
 	}
 
+	public boolean isMultipleSelection() {
+		return _multipleSelection;
+	}
+
+	public void setMultipleSelection(boolean multipleSelection) {
+		_multipleSelection = multipleSelection;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
 
+	private boolean _multipleSelection;
 	private String _type;
 
 }

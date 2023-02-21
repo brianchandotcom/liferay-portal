@@ -1,0 +1,469 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp();
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-10709 | As a buyer I want to be able to download virtual products when the order status matches the activation status"
+	@ignore = "true"
+	@priority = 4
+	test CanDownloadVirtualProductWhenOrderStatusMatchesActivationStatusCompleted {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a business account with a buyer user are created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a virtual product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				gtin = "GTIN1",
+				manufacturerPartNumber = "MPN1",
+				productDescription = "Full Description",
+				productName = "Virtual Product",
+				productType = "Virtual",
+				shortDescription = "Short Description",
+				sku = "VIRTUALSKU");
+		}
+
+		task ("And the admin selects a file for the virtual product along with the activation status") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceNavigator.searchEntry(entryName = "Virtual");
+
+			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
+
+			Click(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
+
+			SelectFrameTop();
+
+			SelectFrame(
+				key_frameTitle = "Select File",
+				locator1 = "CommerceEntry#ANY_IFRAME");
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "Commerce_Black.jpg");
+
+			Click(
+				key_filterOption = "Add",
+				locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+			SelectFrameTop();
+
+			WaitForElementNotPresent(locator1 = "CommerceEntry#ANY_IFRAME");
+
+			if (IsElementPresent(key_contentType = "Base Information", locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED")) {
+				Click(
+					key_contentType = "Base Information",
+					locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED");
+			}
+
+			Select(
+				key_fieldLabel = "Activation Status",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Completed");
+
+			Click(locator1 = "Button#SAVE");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the admin deploys 'product downloads' widget inside the Minium catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceAcceleratorsInitializer.addPortlet(portletName = "Product Downloads");
+		}
+
+		task ("When the buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And completes a checkout adding the virtual product to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "Virtual Product",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "Virtual Product",
+				productQuantity = 1,
+				productUnitPrice = 0);
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+
+		task ("And the admin logs in again") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("And the admin changes the order status to 'completed'") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			Click(
+				key_text = "Completed",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the buyer user logs in again") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the product along with the download button are present inside the widget") {
+			AssertElementPresent(locator1 = "Link#DOWNLOAD");
+		}
+	}
+
+	@description = "COMMERCE-10709 | As a buyer I want to be able to download virtual products when the order status matches the activation status"
+	@priority = 4
+	test CanDownloadVirtualProductWhenOrderStatusMatchesActivationStatusPending {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a business account with a buyer user are created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a virtual product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				gtin = "GTIN1",
+				manufacturerPartNumber = "MPN1",
+				productDescription = "Full Description",
+				productName = "Virtual Product",
+				productType = "Virtual",
+				shortDescription = "Short Description",
+				sku = "VIRTUALSKU");
+		}
+
+		task ("And the admin selects a file for the virtual product along with the activation status") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceNavigator.searchEntry(entryName = "Virtual");
+
+			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
+
+			Click(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
+
+			SelectFrameTop();
+
+			SelectFrame(
+				key_frameTitle = "Select File",
+				locator1 = "CommerceEntry#ANY_IFRAME");
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "Commerce_Black.jpg");
+
+			Click(
+				key_filterOption = "Add",
+				locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+			SelectFrameTop();
+
+			WaitForElementNotPresent(locator1 = "CommerceEntry#ANY_IFRAME");
+
+			if (IsElementPresent(key_contentType = "Base Information", locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED")) {
+				Click(
+					key_contentType = "Base Information",
+					locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED");
+			}
+
+			Select(
+				key_fieldLabel = "Activation Status",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Pending");
+
+			Click(locator1 = "Button#SAVE");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the admin deploys 'product downloads' widget inside the Minium catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceAcceleratorsInitializer.addPortlet(portletName = "Product Downloads");
+		}
+
+		task ("When the buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And completes a checkout adding the virtual product to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "Virtual Product",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "Virtual Product",
+				productQuantity = 1,
+				productUnitPrice = 0);
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+
+		task ("And returns to the Minium catalog page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		}
+
+		task ("Then the product along with the download button are present inside the widget") {
+			AssertElementPresent(locator1 = "Link#DOWNLOAD");
+		}
+	}
+
+	@description = "COMMERCE-10709 | As a buyer I want to be able to download virtual products when the order status matches the activation status"
+	@ignore = "true"
+	@priority = 4
+	test CanDownloadVirtualProductWhenOrderStatusMatchesActivationStatusProcessing {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a business account with a buyer user are created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a virtual product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				gtin = "GTIN1",
+				manufacturerPartNumber = "MPN1",
+				productDescription = "Full Description",
+				productName = "Virtual Product",
+				productType = "Virtual",
+				shortDescription = "Short Description",
+				sku = "VIRTUALSKU");
+		}
+
+		task ("And the admin selects a file for the virtual product along with the activation status") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceNavigator.searchEntry(entryName = "Virtual");
+
+			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
+
+			Click(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
+
+			SelectFrameTop();
+
+			SelectFrame(
+				key_frameTitle = "Select File",
+				locator1 = "CommerceEntry#ANY_IFRAME");
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "Commerce_Black.jpg");
+
+			Click(
+				key_filterOption = "Add",
+				locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+			SelectFrameTop();
+
+			WaitForElementNotPresent(locator1 = "CommerceEntry#ANY_IFRAME");
+
+			if (IsElementPresent(key_contentType = "Base Information", locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED")) {
+				Click(
+					key_contentType = "Base Information",
+					locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED");
+			}
+
+			Select(
+				key_fieldLabel = "Activation Status",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Processing");
+
+			Click(locator1 = "Button#SAVE");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the admin deploys 'product downloads' widget inside the Minium catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceAcceleratorsInitializer.addPortlet(portletName = "Product Downloads");
+		}
+
+		task ("When the buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And completes a checkout adding the virtual product to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "Virtual Product",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "Virtual Product",
+				productQuantity = 1,
+				productUnitPrice = 0);
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+
+		task ("And the admin logs in again") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("And the admin changes the order status to 'Processing'") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the buyer user logs in again") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the product along with the download button are present inside the widget") {
+			AssertElementPresent(locator1 = "Link#DOWNLOAD");
+		}
+	}
+
+}

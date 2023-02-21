@@ -260,15 +260,15 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 				long commerceChannelId =
 					curCommerceChannelAccountEntryRel.getCommerceChannelId();
 
-				if ((commerceChannelAccountEntryRel == null) ||
-					(commerceChannelId !=
+				if ((commerceChannelAccountEntryRel != null) &&
+					(commerceChannelId ==
 						commerceChannelAccountEntryRel.
 							getCommerceChannelId())) {
 
-					return commerceChannelId;
+					return null;
 				}
 
-				return null;
+				return commerceChannelId;
 			});
 	}
 

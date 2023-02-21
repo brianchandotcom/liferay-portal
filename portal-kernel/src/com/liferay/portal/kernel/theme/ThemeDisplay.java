@@ -1202,6 +1202,10 @@ public class ThemeDisplay
 		return _secure;
 	}
 
+	public boolean isShowControlMenu() {
+		return _showControlMenu;
+	}
+
 	public boolean isShowControlPanelIcon() {
 		return _showControlPanelIcon;
 	}
@@ -1707,6 +1711,10 @@ public class ThemeDisplay
 		_sessionId = sessionId;
 	}
 
+	public void setShowControlMenu(boolean showControlMenu) {
+		_showControlMenu = showControlMenu;
+	}
+
 	public void setShowControlPanelIcon(boolean showControlPanelIcon) {
 		_showControlPanelIcon = showControlPanelIcon;
 	}
@@ -2037,6 +2045,7 @@ public class ThemeDisplay
 	private String _serverName;
 	private int _serverPort;
 	private String _sessionId = StringPool.BLANK;
+	private boolean _showControlMenu;
 	private boolean _showControlPanelIcon;
 	private boolean _showHomeIcon;
 	private boolean _showLayoutTemplatesIcon;

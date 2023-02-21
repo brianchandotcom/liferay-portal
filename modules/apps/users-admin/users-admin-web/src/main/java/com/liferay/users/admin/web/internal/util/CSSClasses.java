@@ -15,9 +15,12 @@
 package com.liferay.users.admin.web.internal.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author Drew Brokke
@@ -59,22 +62,19 @@ public class CSSClasses {
 
 		private Builder _add(String cssClass, boolean condition) {
 			if (condition) {
-				_streamBuilder.accept(cssClass);
+				_list.add(cssClass);
 			}
 
 			return this;
 		}
 
 		private String _build() {
-			return _streamBuilder.build(
-			).distinct(
-			).sorted(
-			).collect(
-				Collectors.joining(StringPool.SPACE)
-			);
+			ListUtil.distinct(_list, Comparator.naturalOrder());
+
+			return StringUtil.merge(_list, StringPool.SPACE);
 		}
 
-		private final Stream.Builder<String> _streamBuilder = Stream.builder();
+		private final List<String> _list = new ArrayList<>();
 
 	}
 

@@ -131,10 +131,10 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 					try (PreparedStatement preparedStatement =
 							connection.prepareStatement(
 								StringBundler.concat(
-									"select uuid_,id_,groupid,userid, ",
-									"createdate,modifieddate,name,description ",
-									"from JournalFeed where companyId = ",
-									companyId));
+									"select uuid_, id_, groupId, userId, ",
+									"createDate, modifiedDate, name, ",
+									"description from JournalFeed where ",
+									"companyId = ", companyId));
 						ResultSet resultSet =
 							preparedStatement.executeQuery()) {
 
@@ -147,12 +147,12 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 							if (assetEntry == null) {
 								String uuid = resultSet.getString("uuid_");
-								long groupId = resultSet.getLong("groupid");
-								long userId = resultSet.getLong("userid");
+								long groupId = resultSet.getLong("groupId");
+								long userId = resultSet.getLong("userId");
 								Date createDate = resultSet.getDate(
-									"createdate");
+									"createDate");
 								Date modifiedDate = resultSet.getDate(
-									"modifieddate");
+									"modifiedDate");
 								String name = resultSet.getString("name");
 								String description = resultSet.getString(
 									"description");
@@ -184,8 +184,8 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select uuid_,id_,groupid,userid,createdate, ",
-					"modifieddate,name,description,type_ from JournalFeed ",
+					"select uuid_, id_, groupId, userId, createDate, ",
+					"modifiedDate, name, description, type_ from JournalFeed ",
 					"where companyId = ", companyId));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -197,10 +197,10 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 				if (assetEntry == null) {
 					String uuid = resultSet.getString("uuid_");
-					long groupId = resultSet.getLong("groupid");
-					long userId = resultSet.getLong("userid");
-					Date createDate = resultSet.getDate("createdate");
-					Date modifiedDate = resultSet.getDate("modifieddate");
+					long groupId = resultSet.getLong("groupId");
+					long userId = resultSet.getLong("userId");
+					Date createDate = resultSet.getDate("createDate");
+					Date modifiedDate = resultSet.getDate("modifiedDate");
 					String name = resultSet.getString("name");
 					String description = resultSet.getString("description");
 

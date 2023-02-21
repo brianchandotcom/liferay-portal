@@ -86,6 +86,38 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private void _addAssetEntry(
+			long[] assetCategoryIds, long classNameId, long defaultUserId,
+			ResultSet resultSet)
+		throws Exception {
+
+		long id = resultSet.getLong("id_");
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			classNameId, id);
+
+		if (assetEntry == null) {
+			String uuid = resultSet.getString("uuid_");
+			long groupId = resultSet.getLong("groupId");
+			long userId = resultSet.getLong("userId");
+			Date createDate = resultSet.getDate("createDate");
+			Date modifiedDate = resultSet.getDate("modifiedDate");
+			String name = resultSet.getString("name");
+			String description = resultSet.getString("description");
+
+			if (_userLocalService.fetchUser(userId) == null) {
+				userId = defaultUserId;
+			}
+
+			_assetEntryLocalService.updateEntry(
+				userId, groupId, createDate, modifiedDate,
+				JournalFeed.class.getName(), id, uuid, 0, assetCategoryIds,
+				new String[0], true, true, null, null, createDate, null,
+				ContentTypes.TEXT_PLAIN, name, description, null, null, null, 0,
+				0, 0.0);
+		}
+	}
+
 	private void _alterTable() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			alterTableDropColumn("JournalFeed", "type_");
@@ -134,38 +166,9 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 							preparedStatement.executeQuery()) {
 
 						while (resultSet.next()) {
-							long id = resultSet.getLong("id_");
-
-							AssetEntry assetEntry =
-								_assetEntryLocalService.fetchEntry(
-									classNameId, id);
-
-							if (assetEntry == null) {
-								String uuid = resultSet.getString("uuid_");
-								long groupId = resultSet.getLong("groupId");
-								long userId = resultSet.getLong("userId");
-								Date createDate = resultSet.getDate(
-									"createDate");
-								Date modifiedDate = resultSet.getDate(
-									"modifiedDate");
-								String name = resultSet.getString("name");
-								String description = resultSet.getString(
-									"description");
-
-								if (_userLocalService.fetchUser(userId) ==
-										null) {
-
-									userId = defaultUserId;
-								}
-
-								_assetEntryLocalService.updateEntry(
-									userId, groupId, createDate, modifiedDate,
-									JournalFeed.class.getName(), id, uuid, 0,
-									new long[0], new String[0], true, true,
-									null, null, createDate, null,
-									ContentTypes.TEXT_PLAIN, name, description,
-									null, null, null, 0, 0, 0.0);
-							}
+							_addAssetEntry(
+								new long[0], classNameId, defaultUserId,
+								resultSet);
 						}
 					}
 				});
@@ -185,45 +188,21 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long id = resultSet.getLong("id_");
+				long[] assetCategoryIds = new long[0];
 
-				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-					classNameId, id);
+				String type = StringUtil.toLowerCase(
+					resultSet.getString("type_"));
 
-				if (assetEntry == null) {
-					String uuid = resultSet.getString("uuid_");
-					long groupId = resultSet.getLong("groupId");
-					long userId = resultSet.getLong("userId");
-					Date createDate = resultSet.getDate("createDate");
-					Date modifiedDate = resultSet.getDate("modifiedDate");
-					String name = resultSet.getString("name");
-					String description = resultSet.getString("description");
+				if (Validator.isNotNull(type) &&
+					journalArticleTypesToAssetCategoryIds.containsKey(type)) {
 
-					if (_userLocalService.fetchUser(userId) == null) {
-						userId = defaultUserId;
-					}
-
-					long[] assetCategoryIds = new long[0];
-
-					String type = StringUtil.toLowerCase(
-						resultSet.getString("type_"));
-
-					if (Validator.isNotNull(type) &&
-						journalArticleTypesToAssetCategoryIds.containsKey(
-							type)) {
-
-						assetCategoryIds = new long[] {
-							journalArticleTypesToAssetCategoryIds.get(type)
-						};
-					}
-
-					_assetEntryLocalService.updateEntry(
-						userId, groupId, createDate, modifiedDate,
-						JournalFeed.class.getName(), id, uuid, 0,
-						assetCategoryIds, new String[0], true, true, null, null,
-						createDate, null, ContentTypes.TEXT_PLAIN, name,
-						description, null, null, null, 0, 0, 0.0);
+					assetCategoryIds = new long[] {
+						journalArticleTypesToAssetCategoryIds.get(type)
+					};
 				}
+
+				_addAssetEntry(
+					assetCategoryIds, classNameId, defaultUserId, resultSet);
 			}
 		}
 	}

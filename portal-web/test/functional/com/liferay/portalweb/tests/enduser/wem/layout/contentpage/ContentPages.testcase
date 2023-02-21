@@ -863,7 +863,7 @@ definition {
 					fragmentName = ${fragmentName},
 					height = "Tall",
 					navTab = "Fragments",
-					ratio = "9 / 8",
+					ratio = "11 / 10",
 					targetElementName = "Blogs");
 			}
 		}

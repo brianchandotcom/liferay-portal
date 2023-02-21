@@ -211,10 +211,11 @@ public abstract class BaseCalendarResourceTestCase {
 		assertValid(page, testGetCalendarsPage_getExpectedActions());
 	}
 
-	protected Map<String, Map> testGetCalendarsPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetCalendarsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -337,7 +338,7 @@ public abstract class BaseCalendarResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Calendar> page, Map<String, Map> expectedActions) {
+		Page<Calendar> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -354,7 +355,7 @@ public abstract class BaseCalendarResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

@@ -1534,12 +1534,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeAccountChannelBillingAddressesPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1712,12 +1712,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeAccountChannelCurrenciesPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1890,12 +1890,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -2068,12 +2068,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeAccountChannelDiscountsPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -2246,12 +2246,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -2424,12 +2424,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeAccountChannelPaymentTermsPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -2602,12 +2602,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeAccountChannelPriceListsPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -2780,12 +2780,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeAccountChannelShippingAddressesPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -2958,12 +2958,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeAccountChannelUsersPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -3134,12 +3134,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountIdAccountChannelBillingAddressesPage_getExpectedActions(
 				Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -3307,12 +3307,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountIdAccountChannelCurrenciesPage_getExpectedActions(
 				Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -3478,12 +3478,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountIdAccountChannelDeliveryTermsPage_getExpectedActions(
 				Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -3644,12 +3644,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountIdAccountChannelDiscountsPage_getExpectedActions(id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountIdAccountChannelDiscountsPage_getExpectedActions(
 				Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -3811,12 +3811,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountIdAccountChannelPaymentMethodsPage_getExpectedActions(
 				Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -3984,12 +3984,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountIdAccountChannelPaymentTermsPage_getExpectedActions(
 				Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -4155,12 +4155,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountIdAccountChannelPriceListsPage_getExpectedActions(
 				Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -4326,12 +4326,12 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountIdAccountChannelShippingAddressesPage_getExpectedActions(
 				Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -4492,11 +4492,11 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			testGetAccountIdAccountChannelUsersPage_getExpectedActions(id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountIdAccountChannelUsersPage_getExpectedActions(Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -4801,7 +4801,8 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<AccountChannelEntry> page, Map<String, Map> expectedActions) {
+		Page<AccountChannelEntry> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -4819,7 +4820,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

@@ -250,11 +250,11 @@ public abstract class BaseUserGroupResourceTestCase {
 		userGroupResource.deleteUserGroup(userGroup2.getId());
 	}
 
-	protected Map<String, Map> testGetUserUserGroups_getExpectedActions(
-			Long userAccountId)
+	protected Map<String, Map<String, String>>
+			testGetUserUserGroups_getExpectedActions(Long userAccountId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -305,10 +305,11 @@ public abstract class BaseUserGroupResourceTestCase {
 		userGroupResource.deleteUserGroup(userGroup2.getId());
 	}
 
-	protected Map<String, Map> testGetUserGroupsPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetUserGroupsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1177,7 +1178,8 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<UserGroup> page, Map<String, Map> expectedActions) {
+		Page<UserGroup> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1194,7 +1196,7 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

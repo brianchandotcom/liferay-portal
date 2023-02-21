@@ -212,10 +212,11 @@ public abstract class BaseReindexStatusResourceTestCase {
 		assertValid(page, testGetReindexStatusesPage_getExpectedActions());
 	}
 
-	protected Map<String, Map> testGetReindexStatusesPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetReindexStatusesPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -340,7 +341,8 @@ public abstract class BaseReindexStatusResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<ReindexStatus> page, Map<String, Map> expectedActions) {
+		Page<ReindexStatus> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -357,7 +359,7 @@ public abstract class BaseReindexStatusResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

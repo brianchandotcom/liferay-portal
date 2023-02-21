@@ -252,11 +252,11 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			notificationTemplate2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetNotificationTemplatesPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1310,7 +1310,8 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<NotificationTemplate> page, Map<String, Map> expectedActions) {
+		Page<NotificationTemplate> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1328,7 +1329,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

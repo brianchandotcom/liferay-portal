@@ -298,11 +298,11 @@ public abstract class BaseFormResourceTestCase {
 		assertValid(page, testGetSiteFormsPage_getExpectedActions(siteId));
 	}
 
-	protected Map<String, Map> testGetSiteFormsPage_getExpectedActions(
-			Long siteId)
+	protected Map<String, Map<String, String>>
+			testGetSiteFormsPage_getExpectedActions(Long siteId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -619,7 +619,7 @@ public abstract class BaseFormResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Form> page, Map<String, Map> expectedActions) {
+		Page<Form> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -636,7 +636,7 @@ public abstract class BaseFormResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

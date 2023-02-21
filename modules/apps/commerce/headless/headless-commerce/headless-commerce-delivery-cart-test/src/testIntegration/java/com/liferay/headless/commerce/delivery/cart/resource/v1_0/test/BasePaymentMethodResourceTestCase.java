@@ -243,11 +243,11 @@ public abstract class BasePaymentMethodResourceTestCase {
 			page, testGetCartPaymentMethodsPage_getExpectedActions(cartId));
 	}
 
-	protected Map<String, Map> testGetCartPaymentMethodsPage_getExpectedActions(
-			Long cartId)
+	protected Map<String, Map<String, String>>
+			testGetCartPaymentMethodsPage_getExpectedActions(Long cartId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -384,7 +384,8 @@ public abstract class BasePaymentMethodResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<PaymentMethod> page, Map<String, Map> expectedActions) {
+		Page<PaymentMethod> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -401,7 +402,7 @@ public abstract class BasePaymentMethodResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

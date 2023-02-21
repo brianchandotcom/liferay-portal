@@ -109,7 +109,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		protected Map<String, Map> actions;
+		protected Map<String, Map<String, String>> actions;
 
 		@GraphQLField
 		protected java.util.Collection<DSEnvelope> items;

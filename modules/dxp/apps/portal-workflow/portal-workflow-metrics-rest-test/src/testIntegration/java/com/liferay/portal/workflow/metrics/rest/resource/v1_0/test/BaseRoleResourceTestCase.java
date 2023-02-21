@@ -230,11 +230,11 @@ public abstract class BaseRoleResourceTestCase {
 			page, testGetProcessRolesPage_getExpectedActions(processId));
 	}
 
-	protected Map<String, Map> testGetProcessRolesPage_getExpectedActions(
-			Long processId)
+	protected Map<String, Map<String, String>>
+			testGetProcessRolesPage_getExpectedActions(Long processId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -351,7 +351,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Role> page, Map<String, Map> expectedActions) {
+		Page<Role> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -368,7 +368,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

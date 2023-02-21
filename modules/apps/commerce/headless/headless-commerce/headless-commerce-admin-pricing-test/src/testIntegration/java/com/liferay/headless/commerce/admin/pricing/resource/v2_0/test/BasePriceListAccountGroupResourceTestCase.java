@@ -279,12 +279,12 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetPriceListByExternalReferenceCodePriceListAccountGroupsPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -455,12 +455,12 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 				id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetPriceListIdPriceListAccountGroupsPage_getExpectedActions(
 				Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1011,7 +1011,8 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<PriceListAccountGroup> page, Map<String, Map> expectedActions) {
+		Page<PriceListAccountGroup> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1029,7 +1030,7 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

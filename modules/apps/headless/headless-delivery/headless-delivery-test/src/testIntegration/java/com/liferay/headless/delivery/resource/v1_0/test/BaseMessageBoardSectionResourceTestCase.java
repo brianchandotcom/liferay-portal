@@ -607,12 +607,12 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			messageBoardSection2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetMessageBoardSectionMessageBoardSectionsPage_getExpectedActions(
 				Long parentMessageBoardSectionId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1046,11 +1046,11 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			messageBoardSection2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetSiteMessageBoardSectionsPage_getExpectedActions(Long siteId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -1862,7 +1862,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<MessageBoardSection> page, Map<String, Map> expectedActions) {
+		Page<MessageBoardSection> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1880,7 +1881,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

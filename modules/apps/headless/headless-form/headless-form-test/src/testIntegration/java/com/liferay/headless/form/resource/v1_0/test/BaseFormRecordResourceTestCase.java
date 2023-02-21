@@ -324,11 +324,11 @@ public abstract class BaseFormRecordResourceTestCase {
 			page, testGetFormFormRecordsPage_getExpectedActions(formId));
 	}
 
-	protected Map<String, Map> testGetFormFormRecordsPage_getExpectedActions(
-			Long formId)
+	protected Map<String, Map<String, String>>
+			testGetFormFormRecordsPage_getExpectedActions(Long formId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -650,7 +650,8 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<FormRecord> page, Map<String, Map> expectedActions) {
+		Page<FormRecord> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -667,7 +668,7 @@ public abstract class BaseFormRecordResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

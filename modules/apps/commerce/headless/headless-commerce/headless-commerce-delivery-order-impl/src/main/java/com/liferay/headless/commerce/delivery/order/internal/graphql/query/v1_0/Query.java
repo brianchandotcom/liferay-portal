@@ -378,7 +378,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		protected Map<String, Map> actions;
+		protected Map<String, Map<String, String>> actions;
 
 		@GraphQLField
 		protected java.util.Collection<PlacedOrder> items;
@@ -411,7 +411,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		protected Map<String, Map> actions;
+		protected Map<String, Map<String, String>> actions;
 
 		@GraphQLField
 		protected java.util.Collection<PlacedOrderAddress> items;
@@ -444,7 +444,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		protected Map<String, Map> actions;
+		protected Map<String, Map<String, String>> actions;
 
 		@GraphQLField
 		protected java.util.Collection<PlacedOrderComment> items;
@@ -477,7 +477,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		protected Map<String, Map> actions;
+		protected Map<String, Map<String, String>> actions;
 
 		@GraphQLField
 		protected java.util.Collection<PlacedOrderItem> items;
@@ -510,7 +510,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		protected Map<String, Map> actions;
+		protected Map<String, Map<String, String>> actions;
 
 		@GraphQLField
 		protected java.util.Collection<PlacedOrderItemShipment> items;

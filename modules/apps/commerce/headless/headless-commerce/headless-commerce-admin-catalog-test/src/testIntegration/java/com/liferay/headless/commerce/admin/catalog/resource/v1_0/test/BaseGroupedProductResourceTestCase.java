@@ -310,12 +310,12 @@ public abstract class BaseGroupedProductResourceTestCase {
 		groupedProductResource.deleteGroupedProduct(groupedProduct2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetProductByExternalReferenceCodeGroupedProductsPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -476,12 +476,12 @@ public abstract class BaseGroupedProductResourceTestCase {
 		groupedProductResource.deleteGroupedProduct(groupedProduct2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetProductIdGroupedProductsPage_getExpectedActions(
 				Long productId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -749,7 +749,8 @@ public abstract class BaseGroupedProductResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<GroupedProduct> page, Map<String, Map> expectedActions) {
+		Page<GroupedProduct> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -766,7 +767,7 @@ public abstract class BaseGroupedProductResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

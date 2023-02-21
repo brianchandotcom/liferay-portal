@@ -374,7 +374,8 @@ public abstract class BaseSearchResponseResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<SearchResponse> page, Map<String, Map> expectedActions) {
+		Page<SearchResponse> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -391,7 +392,7 @@ public abstract class BaseSearchResponseResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

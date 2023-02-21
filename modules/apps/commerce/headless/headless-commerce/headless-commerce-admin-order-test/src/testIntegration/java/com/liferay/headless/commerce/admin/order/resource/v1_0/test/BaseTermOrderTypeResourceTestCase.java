@@ -267,12 +267,12 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetTermByExternalReferenceCodeTermOrderTypesPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -427,11 +427,11 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 			page, testGetTermIdTermOrderTypesPage_getExpectedActions(id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetTermIdTermOrderTypesPage_getExpectedActions(Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -673,7 +673,8 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<TermOrderType> page, Map<String, Map> expectedActions) {
+		Page<TermOrderType> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -690,7 +691,7 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

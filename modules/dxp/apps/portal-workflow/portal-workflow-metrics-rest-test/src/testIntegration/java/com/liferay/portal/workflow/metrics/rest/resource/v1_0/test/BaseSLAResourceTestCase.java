@@ -243,11 +243,11 @@ public abstract class BaseSLAResourceTestCase {
 		slaResource.deleteSLA(sla2.getId());
 	}
 
-	protected Map<String, Map> testGetProcessSLAsPage_getExpectedActions(
-			Long processId)
+	protected Map<String, Map<String, String>>
+			testGetProcessSLAsPage_getExpectedActions(Long processId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -620,7 +620,7 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<SLA> page, Map<String, Map> expectedActions) {
+		Page<SLA> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -637,7 +637,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

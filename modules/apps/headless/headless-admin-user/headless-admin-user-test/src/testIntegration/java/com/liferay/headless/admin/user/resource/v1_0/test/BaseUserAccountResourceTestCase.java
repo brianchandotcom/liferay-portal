@@ -355,12 +355,12 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccountResource.deleteUserAccount(userAccount2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountUserAccountsByExternalReferenceCodePage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -901,11 +901,11 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccountResource.deleteUserAccount(userAccount2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountUserAccountsPage_getExpectedActions(Long accountId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -1438,12 +1438,12 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccountResource.deleteUserAccount(userAccount2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetOrganizationUserAccountsPage_getExpectedActions(
 				String organizationId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1815,11 +1815,11 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccountResource.deleteUserAccount(userAccount2.getId());
 	}
 
-	protected Map<String, Map> testGetSiteUserAccountsPage_getExpectedActions(
-			Long siteId)
+	protected Map<String, Map<String, String>>
+			testGetSiteUserAccountsPage_getExpectedActions(Long siteId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -2137,10 +2137,11 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccountResource.deleteUserAccount(userAccount2.getId());
 	}
 
-	protected Map<String, Map> testGetUserAccountsPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetUserAccountsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -3153,7 +3154,8 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<UserAccount> page, Map<String, Map> expectedActions) {
+		Page<UserAccount> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -3170,7 +3172,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

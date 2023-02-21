@@ -342,13 +342,13 @@ public abstract class BaseAccountRoleResourceTestCase {
 				accountExternalReferenceCode, externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getExpectedActions(
 				String accountExternalReferenceCode,
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -458,12 +458,12 @@ public abstract class BaseAccountRoleResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountAccountRolesByExternalReferenceCodePage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -963,12 +963,12 @@ public abstract class BaseAccountRoleResourceTestCase {
 				externalReferenceCode, emailAddress));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage_getExpectedActions(
 				String externalReferenceCode, String emailAddress)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1064,11 +1064,11 @@ public abstract class BaseAccountRoleResourceTestCase {
 			page, testGetAccountAccountRolesPage_getExpectedActions(accountId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountAccountRolesPage_getExpectedActions(Long accountId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -1621,7 +1621,8 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<AccountRole> page, Map<String, Map> expectedActions) {
+		Page<AccountRole> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1638,7 +1639,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

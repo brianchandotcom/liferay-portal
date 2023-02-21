@@ -282,12 +282,12 @@ public abstract class BaseDataListViewResourceTestCase {
 		dataListViewResource.deleteDataListView(dataListView2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetDataDefinitionDataListViewsPage_getExpectedActions(
 				Long dataDefinitionId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -855,7 +855,8 @@ public abstract class BaseDataListViewResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<DataListView> page, Map<String, Map> expectedActions) {
+		Page<DataListView> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -872,7 +873,7 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

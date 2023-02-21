@@ -234,10 +234,11 @@ public abstract class BaseOrderRuleResourceTestCase {
 		orderRuleResource.deleteOrderRule(orderRule2.getId());
 	}
 
-	protected Map<String, Map> testGetOrderRulesPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetOrderRulesPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1101,7 +1102,8 @@ public abstract class BaseOrderRuleResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<OrderRule> page, Map<String, Map> expectedActions) {
+		Page<OrderRule> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1118,7 +1120,7 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

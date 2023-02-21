@@ -225,11 +225,11 @@ public abstract class BaseUserNotificationResourceTestCase {
 		assertValid(page, testGetMyUserNotificationsPage_getExpectedActions());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetMyUserNotificationsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -590,12 +590,12 @@ public abstract class BaseUserNotificationResourceTestCase {
 				userAccountId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetUserAccountUserNotificationsPage_getExpectedActions(
 				Long userAccountId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1192,7 +1192,8 @@ public abstract class BaseUserNotificationResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<UserNotification> page, Map<String, Map> expectedActions) {
+		Page<UserNotification> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1210,7 +1211,7 @@ public abstract class BaseUserNotificationResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

@@ -403,12 +403,12 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 			availabilityEstimate2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage_getExpectedActions(
 				Long groupId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -657,7 +657,8 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<AvailabilityEstimate> page, Map<String, Map> expectedActions) {
+		Page<AvailabilityEstimate> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -675,7 +676,7 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

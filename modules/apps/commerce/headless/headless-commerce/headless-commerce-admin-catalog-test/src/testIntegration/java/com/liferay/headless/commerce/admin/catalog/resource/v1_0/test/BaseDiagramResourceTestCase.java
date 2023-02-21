@@ -575,7 +575,7 @@ public abstract class BaseDiagramResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Diagram> page, Map<String, Map> expectedActions) {
+		Page<Diagram> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -592,7 +592,7 @@ public abstract class BaseDiagramResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

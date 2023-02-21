@@ -344,7 +344,7 @@ public abstract class BaseWorkflowTaskAssignableUsersResourceTestCase {
 
 	protected void assertValid(
 		Page<WorkflowTaskAssignableUsers> page,
-		Map<String, Map> expectedActions) {
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -362,7 +362,7 @@ public abstract class BaseWorkflowTaskAssignableUsersResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

@@ -305,7 +305,8 @@ public abstract class BasePageDefinitionResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<PageDefinition> page, Map<String, Map> expectedActions) {
+		Page<PageDefinition> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -322,7 +323,7 @@ public abstract class BasePageDefinitionResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

@@ -469,11 +469,12 @@ public abstract class BaseCartResourceTestCase {
 		cartResource.deleteCart(cart2.getId());
 	}
 
-	protected Map<String, Map> testGetChannelCartsPage_getExpectedActions(
-			Long accountId, Long channelId)
+	protected Map<String, Map<String, String>>
+			testGetChannelCartsPage_getExpectedActions(
+				Long accountId, Long channelId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -943,7 +944,7 @@ public abstract class BaseCartResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Cart> page, Map<String, Map> expectedActions) {
+		Page<Cart> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -960,7 +961,7 @@ public abstract class BaseCartResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

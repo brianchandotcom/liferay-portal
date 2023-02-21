@@ -361,7 +361,8 @@ public abstract class BaseContactConfigurationResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<ContactConfiguration> page, Map<String, Map> expectedActions) {
+		Page<ContactConfiguration> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -379,7 +380,7 @@ public abstract class BaseContactConfigurationResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

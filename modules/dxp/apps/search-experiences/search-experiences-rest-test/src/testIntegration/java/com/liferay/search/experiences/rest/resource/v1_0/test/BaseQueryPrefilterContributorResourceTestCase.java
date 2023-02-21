@@ -233,11 +233,11 @@ public abstract class BaseQueryPrefilterContributorResourceTestCase {
 			page, testGetQueryPrefilterContributorsPage_getExpectedActions());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetQueryPrefilterContributorsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -379,7 +379,7 @@ public abstract class BaseQueryPrefilterContributorResourceTestCase {
 
 	protected void assertValid(
 		Page<QueryPrefilterContributor> page,
-		Map<String, Map> expectedActions) {
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -397,7 +397,7 @@ public abstract class BaseQueryPrefilterContributorResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

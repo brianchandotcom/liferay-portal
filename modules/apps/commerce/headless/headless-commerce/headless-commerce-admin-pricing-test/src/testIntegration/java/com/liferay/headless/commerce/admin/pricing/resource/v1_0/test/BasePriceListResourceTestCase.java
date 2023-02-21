@@ -228,10 +228,11 @@ public abstract class BasePriceListResourceTestCase {
 		priceListResource.deletePriceList(priceList2.getId());
 	}
 
-	protected Map<String, Map> testGetPriceListsPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetPriceListsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -992,7 +993,8 @@ public abstract class BasePriceListResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<PriceList> page, Map<String, Map> expectedActions) {
+		Page<PriceList> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1009,7 +1011,7 @@ public abstract class BasePriceListResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

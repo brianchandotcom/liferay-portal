@@ -252,12 +252,12 @@ public abstract class BaseCommentResourceTestCase {
 		commentResource.deleteComment(comment2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetBlogPostingCommentsPage_getExpectedActions(
 				Long blogPostingId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -767,11 +767,11 @@ public abstract class BaseCommentResourceTestCase {
 		commentResource.deleteComment(comment2.getId());
 	}
 
-	protected Map<String, Map> testGetCommentCommentsPage_getExpectedActions(
-			Long parentCommentId)
+	protected Map<String, Map<String, String>>
+			testGetCommentCommentsPage_getExpectedActions(Long parentCommentId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1123,11 +1123,11 @@ public abstract class BaseCommentResourceTestCase {
 		commentResource.deleteComment(comment2.getId());
 	}
 
-	protected Map<String, Map> testGetDocumentCommentsPage_getExpectedActions(
-			Long documentId)
+	protected Map<String, Map<String, String>>
+			testGetDocumentCommentsPage_getExpectedActions(Long documentId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -2625,12 +2625,12 @@ public abstract class BaseCommentResourceTestCase {
 		commentResource.deleteComment(comment2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetStructuredContentCommentsPage_getExpectedActions(
 				Long structuredContentId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -3118,7 +3118,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Comment> page, Map<String, Map> expectedActions) {
+		Page<Comment> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -3135,7 +3135,7 @@ public abstract class BaseCommentResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

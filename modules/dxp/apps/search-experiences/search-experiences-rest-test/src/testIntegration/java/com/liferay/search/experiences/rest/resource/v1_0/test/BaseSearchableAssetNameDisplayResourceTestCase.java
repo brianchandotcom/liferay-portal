@@ -262,12 +262,12 @@ public abstract class BaseSearchableAssetNameDisplayResourceTestCase {
 				languageId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetSearchableAssetNameLanguagePage_getExpectedActions(
 				String languageId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -425,7 +425,7 @@ public abstract class BaseSearchableAssetNameDisplayResourceTestCase {
 
 	protected void assertValid(
 		Page<SearchableAssetNameDisplay> page,
-		Map<String, Map> expectedActions) {
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -443,7 +443,7 @@ public abstract class BaseSearchableAssetNameDisplayResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

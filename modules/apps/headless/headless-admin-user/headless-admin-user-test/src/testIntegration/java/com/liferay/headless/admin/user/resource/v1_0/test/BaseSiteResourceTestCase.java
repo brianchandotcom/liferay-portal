@@ -222,11 +222,11 @@ public abstract class BaseSiteResourceTestCase {
 		assertValid(page, testGetMyUserAccountSitesPage_getExpectedActions());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetMyUserAccountSitesPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -597,7 +597,7 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Site> page, Map<String, Map> expectedActions) {
+		Page<Site> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -614,7 +614,7 @@ public abstract class BaseSiteResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

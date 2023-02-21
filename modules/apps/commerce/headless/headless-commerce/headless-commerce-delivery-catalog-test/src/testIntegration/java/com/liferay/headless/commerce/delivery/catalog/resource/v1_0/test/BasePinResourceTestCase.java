@@ -246,11 +246,12 @@ public abstract class BasePinResourceTestCase {
 				channelId, productId));
 	}
 
-	protected Map<String, Map> testGetChannelProductPinsPage_getExpectedActions(
-			Long channelId, Long productId)
+	protected Map<String, Map<String, String>>
+			testGetChannelProductPinsPage_getExpectedActions(
+				Long channelId, Long productId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -570,7 +571,7 @@ public abstract class BasePinResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Pin> page, Map<String, Map> expectedActions) {
+		Page<Pin> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -587,7 +588,7 @@ public abstract class BasePinResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

@@ -499,7 +499,7 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Process> page, Map<String, Map> expectedActions) {
+		Page<Process> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -516,7 +516,7 @@ public abstract class BaseProcessResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

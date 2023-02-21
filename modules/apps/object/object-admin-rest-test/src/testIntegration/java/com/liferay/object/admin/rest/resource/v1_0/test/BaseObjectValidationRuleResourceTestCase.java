@@ -276,12 +276,12 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 			objectValidationRule2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -461,12 +461,12 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 			objectValidationRule2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetObjectDefinitionObjectValidationRulesPage_getExpectedActions(
 				Long objectDefinitionId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -1007,7 +1007,8 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<ObjectValidationRule> page, Map<String, Map> expectedActions) {
+		Page<ObjectValidationRule> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1025,7 +1026,7 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

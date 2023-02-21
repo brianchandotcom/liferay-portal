@@ -255,11 +255,11 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			notificationQueueEntry2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetNotificationQueueEntriesPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1017,7 +1017,8 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<NotificationQueueEntry> page, Map<String, Map> expectedActions) {
+		Page<NotificationQueueEntry> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1035,7 +1036,7 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

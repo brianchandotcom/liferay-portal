@@ -201,7 +201,7 @@ public abstract class BaseActiveViewResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Object> page, Map<String, Map> expectedActions) {
+		Page<Object> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -218,7 +218,7 @@ public abstract class BaseActiveViewResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

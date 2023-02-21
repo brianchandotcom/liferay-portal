@@ -385,7 +385,8 @@ public abstract class BaseSamlProviderResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<SamlProvider> page, Map<String, Map> expectedActions) {
+		Page<SamlProvider> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -402,7 +403,7 @@ public abstract class BaseSamlProviderResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

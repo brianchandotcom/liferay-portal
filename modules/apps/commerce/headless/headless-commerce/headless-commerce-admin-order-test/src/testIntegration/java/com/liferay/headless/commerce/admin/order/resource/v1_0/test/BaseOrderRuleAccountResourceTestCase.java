@@ -272,12 +272,12 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetOrderRuleByExternalReferenceCodeOrderRuleAccountsPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -435,11 +435,11 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 			testGetOrderRuleIdOrderRuleAccountsPage_getExpectedActions(id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetOrderRuleIdOrderRuleAccountsPage_getExpectedActions(Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -952,7 +952,8 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<OrderRuleAccount> page, Map<String, Map> expectedActions) {
+		Page<OrderRuleAccount> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -970,7 +971,7 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

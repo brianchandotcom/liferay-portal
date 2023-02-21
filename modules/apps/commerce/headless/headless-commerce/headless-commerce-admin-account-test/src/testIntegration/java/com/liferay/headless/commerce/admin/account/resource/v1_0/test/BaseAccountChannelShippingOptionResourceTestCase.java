@@ -479,12 +479,12 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 			accountChannelShippingOption2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeAccountChannelShippingOptionPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -666,12 +666,12 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 			accountChannelShippingOption2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountIdAccountChannelShippingOptionPage_getExpectedActions(
 				Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1004,7 +1004,7 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 
 	protected void assertValid(
 		Page<AccountChannelShippingOption> page,
-		Map<String, Map> expectedActions) {
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1022,7 +1022,7 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

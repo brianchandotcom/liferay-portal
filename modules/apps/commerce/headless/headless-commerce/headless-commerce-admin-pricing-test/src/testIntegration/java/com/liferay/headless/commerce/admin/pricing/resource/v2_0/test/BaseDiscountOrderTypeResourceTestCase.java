@@ -273,12 +273,12 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetDiscountByExternalReferenceCodeDiscountOrderTypesPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -438,11 +438,11 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 			testGetDiscountIdDiscountOrderTypesPage_getExpectedActions(id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetDiscountIdDiscountOrderTypesPage_getExpectedActions(Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -963,7 +963,8 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<DiscountOrderType> page, Map<String, Map> expectedActions) {
+		Page<DiscountOrderType> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -981,7 +982,7 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

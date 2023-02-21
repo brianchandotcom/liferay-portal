@@ -284,7 +284,7 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Keyword> page, Map<String, Map> expectedActions) {
+		Page<Keyword> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -301,7 +301,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

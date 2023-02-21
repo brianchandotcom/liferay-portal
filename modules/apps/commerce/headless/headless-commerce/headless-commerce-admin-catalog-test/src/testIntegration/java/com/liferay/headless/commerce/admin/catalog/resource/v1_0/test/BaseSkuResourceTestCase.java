@@ -263,12 +263,12 @@ public abstract class BaseSkuResourceTestCase {
 		skuResource.deleteSku(sku2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetProductByExternalReferenceCodeSkusPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -396,11 +396,11 @@ public abstract class BaseSkuResourceTestCase {
 		skuResource.deleteSku(sku2.getId());
 	}
 
-	protected Map<String, Map> testGetProductIdSkusPage_getExpectedActions(
-			Long id)
+	protected Map<String, Map<String, String>>
+			testGetProductIdSkusPage_getExpectedActions(Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -493,10 +493,11 @@ public abstract class BaseSkuResourceTestCase {
 		skuResource.deleteSku(sku2.getId());
 	}
 
-	protected Map<String, Map> testGetSkusPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetSkusPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1336,7 +1337,7 @@ public abstract class BaseSkuResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Sku> page, Map<String, Map> expectedActions) {
+		Page<Sku> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1353,7 +1354,7 @@ public abstract class BaseSkuResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

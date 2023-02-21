@@ -554,12 +554,12 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			knowledgeBaseFolder2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getExpectedActions(
 				Long parentKnowledgeBaseFolderId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -729,11 +729,11 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			knowledgeBaseFolder2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetSiteKnowledgeBaseFoldersPage_getExpectedActions(Long siteId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -1555,7 +1555,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<KnowledgeBaseFolder> page, Map<String, Map> expectedActions) {
+		Page<KnowledgeBaseFolder> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1573,7 +1574,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

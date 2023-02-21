@@ -503,12 +503,12 @@ public abstract class BaseOrderNoteResourceTestCase {
 		orderNoteResource.deleteOrderNote(orderNote2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetOrderByExternalReferenceCodeOrderNotesPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -655,11 +655,11 @@ public abstract class BaseOrderNoteResourceTestCase {
 		orderNoteResource.deleteOrderNote(orderNote2.getId());
 	}
 
-	protected Map<String, Map> testGetOrderIdOrderNotesPage_getExpectedActions(
-			Long id)
+	protected Map<String, Map<String, String>>
+			testGetOrderIdOrderNotesPage_getExpectedActions(Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -884,7 +884,8 @@ public abstract class BaseOrderNoteResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<OrderNote> page, Map<String, Map> expectedActions) {
+		Page<OrderNote> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -901,7 +902,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

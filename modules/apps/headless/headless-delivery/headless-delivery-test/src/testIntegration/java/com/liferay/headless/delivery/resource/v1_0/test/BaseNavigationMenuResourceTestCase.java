@@ -484,11 +484,11 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		navigationMenuResource.deleteNavigationMenu(navigationMenu2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetSiteNavigationMenusPage_getExpectedActions(Long siteId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -963,7 +963,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<NavigationMenu> page, Map<String, Map> expectedActions) {
+		Page<NavigationMenu> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -980,7 +981,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

@@ -252,11 +252,11 @@ public abstract class BaseInstanceResourceTestCase {
 			page, testGetProcessInstancesPage_getExpectedActions(processId));
 	}
 
-	protected Map<String, Map> testGetProcessInstancesPage_getExpectedActions(
-			Long processId)
+	protected Map<String, Map<String, String>>
+			testGetProcessInstancesPage_getExpectedActions(Long processId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -880,7 +880,7 @@ public abstract class BaseInstanceResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Instance> page, Map<String, Map> expectedActions) {
+		Page<Instance> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -897,7 +897,7 @@ public abstract class BaseInstanceResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

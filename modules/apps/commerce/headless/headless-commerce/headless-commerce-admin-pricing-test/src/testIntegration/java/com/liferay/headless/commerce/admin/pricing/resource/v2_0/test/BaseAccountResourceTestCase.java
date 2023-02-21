@@ -466,7 +466,7 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Account> page, Map<String, Map> expectedActions) {
+		Page<Account> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -483,7 +483,7 @@ public abstract class BaseAccountResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

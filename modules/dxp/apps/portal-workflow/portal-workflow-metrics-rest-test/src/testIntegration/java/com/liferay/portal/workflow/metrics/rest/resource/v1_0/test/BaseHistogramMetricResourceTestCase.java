@@ -321,7 +321,8 @@ public abstract class BaseHistogramMetricResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<HistogramMetric> page, Map<String, Map> expectedActions) {
+		Page<HistogramMetric> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -339,7 +340,7 @@ public abstract class BaseHistogramMetricResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

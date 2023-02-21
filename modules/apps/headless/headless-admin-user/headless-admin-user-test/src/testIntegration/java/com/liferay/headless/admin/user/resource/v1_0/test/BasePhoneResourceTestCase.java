@@ -240,11 +240,12 @@ public abstract class BasePhoneResourceTestCase {
 			testGetOrganizationPhonesPage_getExpectedActions(organizationId));
 	}
 
-	protected Map<String, Map> testGetOrganizationPhonesPage_getExpectedActions(
-			String organizationId)
+	protected Map<String, Map<String, String>>
+			testGetOrganizationPhonesPage_getExpectedActions(
+				String organizationId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -375,11 +376,11 @@ public abstract class BasePhoneResourceTestCase {
 			testGetUserAccountPhonesPage_getExpectedActions(userAccountId));
 	}
 
-	protected Map<String, Map> testGetUserAccountPhonesPage_getExpectedActions(
-			Long userAccountId)
+	protected Map<String, Map<String, String>>
+			testGetUserAccountPhonesPage_getExpectedActions(Long userAccountId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -524,7 +525,7 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Phone> page, Map<String, Map> expectedActions) {
+		Page<Phone> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -541,7 +542,7 @@ public abstract class BasePhoneResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

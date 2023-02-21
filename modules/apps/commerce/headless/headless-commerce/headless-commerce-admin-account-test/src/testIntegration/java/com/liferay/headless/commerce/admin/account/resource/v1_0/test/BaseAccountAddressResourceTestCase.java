@@ -600,12 +600,12 @@ public abstract class BaseAccountAddressResourceTestCase {
 		accountAddressResource.deleteAccountAddress(accountAddress2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountByExternalReferenceCodeAccountAddressesPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -765,11 +765,11 @@ public abstract class BaseAccountAddressResourceTestCase {
 		accountAddressResource.deleteAccountAddress(accountAddress2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountIdAccountAddressesPage_getExpectedActions(Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1095,7 +1095,8 @@ public abstract class BaseAccountAddressResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<AccountAddress> page, Map<String, Map> expectedActions) {
+		Page<AccountAddress> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1112,7 +1113,7 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

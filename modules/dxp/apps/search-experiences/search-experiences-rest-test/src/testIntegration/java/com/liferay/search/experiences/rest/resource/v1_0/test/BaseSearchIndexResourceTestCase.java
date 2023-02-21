@@ -212,10 +212,11 @@ public abstract class BaseSearchIndexResourceTestCase {
 		assertValid(page, testGetSearchIndexesPage_getExpectedActions());
 	}
 
-	protected Map<String, Map> testGetSearchIndexesPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetSearchIndexesPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -335,7 +336,8 @@ public abstract class BaseSearchIndexResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<SearchIndex> page, Map<String, Map> expectedActions) {
+		Page<SearchIndex> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -352,7 +354,7 @@ public abstract class BaseSearchIndexResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

@@ -253,11 +253,11 @@ public abstract class BaseWikiNodeResourceTestCase {
 		wikiNodeResource.deleteWikiNode(wikiNode2.getId());
 	}
 
-	protected Map<String, Map> testGetSiteWikiNodesPage_getExpectedActions(
-			Long siteId)
+	protected Map<String, Map<String, String>>
+			testGetSiteWikiNodesPage_getExpectedActions(Long siteId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -1403,7 +1403,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<WikiNode> page, Map<String, Map> expectedActions) {
+		Page<WikiNode> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1420,7 +1420,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

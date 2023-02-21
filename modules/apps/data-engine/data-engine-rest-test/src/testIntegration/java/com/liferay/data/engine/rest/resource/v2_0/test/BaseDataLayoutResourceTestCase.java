@@ -285,12 +285,12 @@ public abstract class BaseDataLayoutResourceTestCase {
 		dataLayoutResource.deleteDataLayout(dataLayout2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetDataDefinitionDataLayoutsPage_getExpectedActions(
 				Long dataDefinitionId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -991,7 +991,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<DataLayout> page, Map<String, Map> expectedActions) {
+		Page<DataLayout> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1008,7 +1009,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

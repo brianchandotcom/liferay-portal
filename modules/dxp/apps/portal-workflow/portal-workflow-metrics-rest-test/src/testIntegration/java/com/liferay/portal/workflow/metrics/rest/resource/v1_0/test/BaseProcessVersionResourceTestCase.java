@@ -241,11 +241,11 @@ public abstract class BaseProcessVersionResourceTestCase {
 			testGetProcessProcessVersionsPage_getExpectedActions(processId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetProcessProcessVersionsPage_getExpectedActions(Long processId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -369,7 +369,8 @@ public abstract class BaseProcessVersionResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<ProcessVersion> page, Map<String, Map> expectedActions) {
+		Page<ProcessVersion> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -386,7 +387,7 @@ public abstract class BaseProcessVersionResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

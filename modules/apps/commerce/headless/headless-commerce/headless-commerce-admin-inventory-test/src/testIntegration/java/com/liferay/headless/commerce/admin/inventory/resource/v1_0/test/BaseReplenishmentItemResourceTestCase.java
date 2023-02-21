@@ -595,11 +595,11 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			replenishmentItem2.getId());
 	}
 
-	protected Map<String, Map> testGetReplenishmentItemsPage_getExpectedActions(
-			String sku)
+	protected Map<String, Map<String, String>>
+			testGetReplenishmentItemsPage_getExpectedActions(String sku)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -782,12 +782,12 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			replenishmentItem2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetWarehouseIdReplenishmentItemsPage_getExpectedActions(
 				Long warehouseId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1036,7 +1036,8 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<ReplenishmentItem> page, Map<String, Map> expectedActions) {
+		Page<ReplenishmentItem> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1054,7 +1055,7 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

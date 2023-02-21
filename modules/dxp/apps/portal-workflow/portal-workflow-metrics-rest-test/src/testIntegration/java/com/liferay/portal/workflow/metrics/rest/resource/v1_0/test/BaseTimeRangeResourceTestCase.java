@@ -213,10 +213,11 @@ public abstract class BaseTimeRangeResourceTestCase {
 		assertValid(page, testGetTimeRangesPage_getExpectedActions());
 	}
 
-	protected Map<String, Map> testGetTimeRangesPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetTimeRangesPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -398,7 +399,8 @@ public abstract class BaseTimeRangeResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<TimeRange> page, Map<String, Map> expectedActions) {
+		Page<TimeRange> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -415,7 +417,7 @@ public abstract class BaseTimeRangeResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

@@ -225,10 +225,11 @@ public abstract class BaseContactUserGroupResourceTestCase {
 		assertValid(page, testGetContactUserGroupsPage_getExpectedActions());
 	}
 
-	protected Map<String, Map> testGetContactUserGroupsPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetContactUserGroupsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -602,7 +603,8 @@ public abstract class BaseContactUserGroupResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<ContactUserGroup> page, Map<String, Map> expectedActions) {
+		Page<ContactUserGroup> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -620,7 +622,7 @@ public abstract class BaseContactUserGroupResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

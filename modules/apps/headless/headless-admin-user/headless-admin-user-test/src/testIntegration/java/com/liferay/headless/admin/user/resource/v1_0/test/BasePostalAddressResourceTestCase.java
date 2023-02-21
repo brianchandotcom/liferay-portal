@@ -256,11 +256,11 @@ public abstract class BasePostalAddressResourceTestCase {
 			testGetAccountPostalAddressesPage_getExpectedActions(accountId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountPostalAddressesPage_getExpectedActions(Long accountId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -340,12 +340,12 @@ public abstract class BasePostalAddressResourceTestCase {
 				organizationId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetOrganizationPostalAddressesPage_getExpectedActions(
 				String organizationId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -498,12 +498,12 @@ public abstract class BasePostalAddressResourceTestCase {
 				userAccountId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetUserAccountPostalAddressesPage_getExpectedActions(
 				Long userAccountId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -727,7 +727,8 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<PostalAddress> page, Map<String, Map> expectedActions) {
+		Page<PostalAddress> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -744,7 +745,7 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

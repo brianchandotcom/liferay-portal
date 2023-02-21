@@ -460,10 +460,11 @@ public abstract class BaseCatalogResourceTestCase {
 		catalogResource.deleteCatalog(catalog2.getId());
 	}
 
-	protected Map<String, Map> testGetCatalogsPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetCatalogsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1095,7 +1096,7 @@ public abstract class BaseCatalogResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Catalog> page, Map<String, Map> expectedActions) {
+		Page<Catalog> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1112,7 +1113,7 @@ public abstract class BaseCatalogResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

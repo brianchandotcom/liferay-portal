@@ -246,11 +246,11 @@ public abstract class BaseSitePageResourceTestCase {
 		assertValid(page, testGetSiteSitePagesPage_getExpectedActions(siteId));
 	}
 
-	protected Map<String, Map> testGetSiteSitePagesPage_getExpectedActions(
-			Long siteId)
+	protected Map<String, Map<String, String>>
+			testGetSiteSitePagesPage_getExpectedActions(Long siteId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -604,12 +604,12 @@ public abstract class BaseSitePageResourceTestCase {
 				siteId, friendlyUrlPath));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetSiteSitePagesExperiencesPage_getExpectedActions(
 				Long siteId, String friendlyUrlPath)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -944,7 +944,7 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<SitePage> page, Map<String, Map> expectedActions) {
+		Page<SitePage> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -961,7 +961,7 @@ public abstract class BaseSitePageResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

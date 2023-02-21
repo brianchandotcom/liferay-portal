@@ -238,12 +238,12 @@ public abstract class BaseWebUrlResourceTestCase {
 			testGetOrganizationWebUrlsPage_getExpectedActions(organizationId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetOrganizationWebUrlsPage_getExpectedActions(
 				String organizationId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -315,11 +315,11 @@ public abstract class BaseWebUrlResourceTestCase {
 			testGetUserAccountWebUrlsPage_getExpectedActions(userAccountId));
 	}
 
-	protected Map<String, Map> testGetUserAccountWebUrlsPage_getExpectedActions(
-			Long userAccountId)
+	protected Map<String, Map<String, String>>
+			testGetUserAccountWebUrlsPage_getExpectedActions(Long userAccountId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -516,7 +516,7 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<WebUrl> page, Map<String, Map> expectedActions) {
+		Page<WebUrl> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -533,7 +533,7 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

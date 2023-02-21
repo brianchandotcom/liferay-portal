@@ -222,10 +222,11 @@ public abstract class BaseFieldResourceTestCase {
 		assertValid(page, testGetFieldsAccountsPage_getExpectedActions());
 	}
 
-	protected Map<String, Map> testGetFieldsAccountsPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetFieldsAccountsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -421,10 +422,11 @@ public abstract class BaseFieldResourceTestCase {
 		assertValid(page, testGetFieldsOrdersPage_getExpectedActions());
 	}
 
-	protected Map<String, Map> testGetFieldsOrdersPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetFieldsOrdersPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -620,10 +622,11 @@ public abstract class BaseFieldResourceTestCase {
 		assertValid(page, testGetFieldsPeoplePage_getExpectedActions());
 	}
 
-	protected Map<String, Map> testGetFieldsPeoplePage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetFieldsPeoplePage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -819,10 +822,11 @@ public abstract class BaseFieldResourceTestCase {
 		assertValid(page, testGetFieldsProductsPage_getExpectedActions());
 	}
 
-	protected Map<String, Map> testGetFieldsProductsPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetFieldsProductsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1123,7 +1127,7 @@ public abstract class BaseFieldResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Field> page, Map<String, Map> expectedActions) {
+		Page<Field> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1140,7 +1144,7 @@ public abstract class BaseFieldResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

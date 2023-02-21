@@ -235,10 +235,11 @@ public abstract class BaseSXPElementResourceTestCase {
 		sxpElementResource.deleteSXPElement(sxpElement2.getId());
 	}
 
-	protected Map<String, Map> testGetSXPElementsPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetSXPElementsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -936,7 +937,8 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<SXPElement> page, Map<String, Map> expectedActions) {
+		Page<SXPElement> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -953,7 +955,7 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

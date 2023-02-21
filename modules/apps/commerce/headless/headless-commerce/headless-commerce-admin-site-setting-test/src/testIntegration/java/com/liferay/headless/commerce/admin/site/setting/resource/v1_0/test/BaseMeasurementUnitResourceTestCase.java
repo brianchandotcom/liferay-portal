@@ -234,10 +234,11 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		measurementUnitResource.deleteMeasurementUnit(measurementUnit2.getId());
 	}
 
-	protected Map<String, Map> testGetMeasurementUnitsPage_getExpectedActions()
+	protected Map<String, Map<String, String>>
+			testGetMeasurementUnitsPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -890,11 +891,12 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		measurementUnitResource.deleteMeasurementUnit(measurementUnit2.getId());
 	}
 
-	protected Map<String, Map> testGetMeasurementUnitsByType_getExpectedActions(
-			String measurementUnitType)
+	protected Map<String, Map<String, String>>
+			testGetMeasurementUnitsByType_getExpectedActions(
+				String measurementUnitType)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1423,7 +1425,8 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<MeasurementUnit> page, Map<String, Map> expectedActions) {
+		Page<MeasurementUnit> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1441,7 +1444,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

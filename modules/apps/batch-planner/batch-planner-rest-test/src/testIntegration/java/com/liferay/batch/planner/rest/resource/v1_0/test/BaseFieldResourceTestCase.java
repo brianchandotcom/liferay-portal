@@ -243,12 +243,12 @@ public abstract class BaseFieldResourceTestCase {
 				internalClassName));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetPlanInternalClassNameFieldsPage_getExpectedActions(
 				String internalClassName)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -386,7 +386,7 @@ public abstract class BaseFieldResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<Field> page, Map<String, Map> expectedActions) {
+		Page<Field> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -403,7 +403,7 @@ public abstract class BaseFieldResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

@@ -257,12 +257,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				workflowInstanceId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetWorkflowInstanceWorkflowTasksPage_getExpectedActions(
 				Long workflowInstanceId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -404,12 +404,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				workflowInstanceId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_getExpectedActions(
 				Long workflowInstanceId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -554,12 +554,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				workflowInstanceId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_getExpectedActions(
 				Long workflowInstanceId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -697,11 +697,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			page, testGetWorkflowTasksAssignedToMePage_getExpectedActions());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetWorkflowTasksAssignedToMePage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -794,11 +794,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			testGetWorkflowTasksAssignedToMyRolesPage_getExpectedActions());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetWorkflowTasksAssignedToMyRolesPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -891,11 +891,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			page, testGetWorkflowTasksAssignedToRolePage_getExpectedActions());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetWorkflowTasksAssignedToRolePage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -988,11 +988,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			page, testGetWorkflowTasksAssignedToUserPage_getExpectedActions());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetWorkflowTasksAssignedToUserPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1086,11 +1086,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			testGetWorkflowTasksAssignedToUserRolesPage_getExpectedActions());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetWorkflowTasksAssignedToUserRolesPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1209,11 +1209,11 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			page, testGetWorkflowTasksSubmittingUserPage_getExpectedActions());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetWorkflowTasksSubmittingUserPage_getExpectedActions()
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -1697,7 +1697,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<WorkflowTask> page, Map<String, Map> expectedActions) {
+		Page<WorkflowTask> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1714,7 +1715,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

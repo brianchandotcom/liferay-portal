@@ -388,11 +388,11 @@ public abstract class BaseWishListItemResourceTestCase {
 		wishListItemResource.deleteWishListItem(wishListItem2.getId());
 	}
 
-	protected Map<String, Map> testGetWishListItemsPage_getExpectedActions(
-			Long wishListId)
+	protected Map<String, Map<String, String>>
+			testGetWishListItemsPage_getExpectedActions(Long wishListId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -669,7 +669,8 @@ public abstract class BaseWishListItemResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<WishListItem> page, Map<String, Map> expectedActions) {
+		Page<WishListItem> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -686,7 +687,7 @@ public abstract class BaseWishListItemResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

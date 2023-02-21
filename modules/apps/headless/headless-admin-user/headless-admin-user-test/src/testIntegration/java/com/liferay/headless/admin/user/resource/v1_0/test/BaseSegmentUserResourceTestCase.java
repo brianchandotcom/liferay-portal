@@ -243,11 +243,11 @@ public abstract class BaseSegmentUserResourceTestCase {
 			page, testGetSegmentUserAccountsPage_getExpectedActions(segmentId));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetSegmentUserAccountsPage_getExpectedActions(Long segmentId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -431,7 +431,8 @@ public abstract class BaseSegmentUserResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<SegmentUser> page, Map<String, Map> expectedActions) {
+		Page<SegmentUser> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -448,7 +449,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

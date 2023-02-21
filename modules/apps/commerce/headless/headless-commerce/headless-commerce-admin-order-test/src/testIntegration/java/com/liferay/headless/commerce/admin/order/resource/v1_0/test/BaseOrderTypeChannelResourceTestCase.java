@@ -271,12 +271,12 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 				externalReferenceCode));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetOrderTypeByExternalReferenceCodeOrderTypeChannelsPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -434,11 +434,11 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 			testGetOrderTypeIdOrderTypeChannelsPage_getExpectedActions(id));
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetOrderTypeIdOrderTypeChannelsPage_getExpectedActions(Long id)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -846,7 +846,8 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<OrderTypeChannel> page, Map<String, Map> expectedActions) {
+		Page<OrderTypeChannel> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -864,7 +865,7 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

@@ -627,7 +627,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<BillingAddress> page, Map<String, Map> expectedActions) {
+		Page<BillingAddress> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -644,7 +645,7 @@ public abstract class BaseBillingAddressResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

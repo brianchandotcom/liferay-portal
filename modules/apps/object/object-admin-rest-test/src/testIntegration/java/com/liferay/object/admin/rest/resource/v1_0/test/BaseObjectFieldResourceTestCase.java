@@ -274,12 +274,12 @@ public abstract class BaseObjectFieldResourceTestCase {
 		objectFieldResource.deleteObjectField(objectField2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_getExpectedActions(
 				String externalReferenceCode)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
 	}
@@ -700,12 +700,12 @@ public abstract class BaseObjectFieldResourceTestCase {
 		objectFieldResource.deleteObjectField(objectField2.getId());
 	}
 
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetObjectDefinitionObjectFieldsPage_getExpectedActions(
 				Long objectDefinitionId)
 		throws Exception {
 
-		Map<String, Map> expectedActions = new HashMap<>();
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		Map createBatchAction = new HashMap<>();
 		createBatchAction.put("method", "POST");
@@ -1496,7 +1496,8 @@ public abstract class BaseObjectFieldResourceTestCase {
 	}
 
 	protected void assertValid(
-		Page<ObjectField> page, Map<String, Map> expectedActions) {
+		Page<ObjectField> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
@@ -1513,7 +1514,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		Map<String, Map> actions = page.getActions();
+		Map<String, Map<String, String>> actions = page.getActions();
 
 		for (String key : expectedActions.keySet()) {
 			Map action = actions.get(key);

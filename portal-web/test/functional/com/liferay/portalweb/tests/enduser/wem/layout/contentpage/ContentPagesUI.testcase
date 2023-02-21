@@ -642,7 +642,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "//div[contains(@class,'status-bar')]//span[contains(@class,'sr-only')]",
-				value1 = "Page editor autosaves your work.");
+				value1 = "Changes have been saved. Page editor will autosave new changes.");
 		}
 	}
 

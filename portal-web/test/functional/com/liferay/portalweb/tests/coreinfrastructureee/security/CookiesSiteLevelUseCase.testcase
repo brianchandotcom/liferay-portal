@@ -1,0 +1,148 @@
+@component-name = "portal-security"
+definition {
+
+	property ci.retries.disabled = "true";
+	property custom.properties = "feature.flag.LPS-142518=true";
+	property portal.release = "quarantine";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Cookies";
+
+	setUp {
+		task ("Setup: Setup portal instance") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+	}
+
+	@description = "This is a use case for LPS-170904 TC-1. Verify no cookies are set in Site level and Explicit mode, when the user is a first-time visitor"
+	@priority = "3"
+	test VerifyNoCookiesForFirstVisitInSiteLevelExplicitMode {
+		property test.name.skip.portal.instance = "CookiesUseCase#VerifyNoCookiesForFirstVisitInSiteLevelExplicitMode";
+
+		task ("Given: Site Administrator enabled the cookie preference handling in site level and the explicit cookie consent mode.") {
+			for (var count : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "userea${count}@liferay.com",
+					userFirstName = "userfn${count}",
+					userLastName = "userln${count}",
+					userScreenName = "usersn${count}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "userea${count}@liferay.com");
+
+				JSONUser.addUserToSite(
+					groupName = "Guest",
+					userEmailAddress = "userea${count}@liferay.com");
+			}
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Guest",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "userea1@liferay.com");
+
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.addVirtualHostsURLCP(
+				pageVirtualHosts = "true",
+				pageVirtualHostURL = "www.able.com");
+
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "userea1@liferay.com");
+			
+			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithCookieConsentInSiteSettings(
+				baseURL = "http://www.able.com:8080",
+				portlet = "Preference Handling",
+				siteURLKey = "guest");
+		}
+
+		task ("When: End User first visits the site") {
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "userea2@liferay.com");
+		}
+
+		task ("Then: Verify No cookies are set, not even the functional cookie: GUEST_LANGUAGE_ID verify cookie banner is present.") {
+			CookieBanner.verifyCookieBannerIsPresent();
+
+			CookieHelper.checkSelectedCookieIsNotPresent(
+				cookieName = "GUEST_LANGUAGE_ID",
+				expectedCookieValue = "en_US");
+		}
+	}
+
+	@description = "This is a use case for LPS-170904 TC-2. Verify cookies are set in Site level and Implicit mode, when the user is a first-time visitor."
+	@priority = "3"
+	test VerifyNoCookiesForFirstVisitInSiteLevelExplicitMode {
+		property test.name.skip.portal.instance = "CookiesUseCase#VerifyNoCookiesForFirstVisitInSiteLevelExplicitMode";
+
+		task ("Given: Site Administrator enabled the cookie preference handling in site level and the explicit cookie consent mode.") {
+			for (var count : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "userea${count}@liferay.com",
+					userFirstName = "userfn${count}",
+					userLastName = "userln${count}",
+					userScreenName = "usersn${count}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "userea${count}@liferay.com");
+
+				JSONUser.addUserToSite(
+					groupName = "Guest",
+					userEmailAddress = "userea${count}@liferay.com");
+			}
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Guest",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "userea1@liferay.com");
+
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.addVirtualHostsURLCP(
+				pageVirtualHosts = "true",
+				pageVirtualHostURL = "www.able.com");
+
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "userea1@liferay.com");
+			
+			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithCookieConsentInSiteSettings(
+				baseURL = "http://www.able.com:8080",
+				portlet = "Preference Handling",
+				siteURLKey = "guest");
+		}
+
+		task ("When: End User first visits the site") {
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "userea2@liferay.com");
+		}
+
+		task ("Then: Verify No cookies are set, not even the functional cookie: GUEST_LANGUAGE_ID verify cookie banner is present.") {
+			CookieBanner.verifyCookieBannerIsPresent();
+
+			CookieHelper.checkSelectedCookieIsNotPresent(
+				cookieName = "GUEST_LANGUAGE_ID",
+				expectedCookieValue = "en_US");
+		}
+	}
+
+}

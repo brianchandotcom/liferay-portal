@@ -14,6 +14,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -240,15 +241,28 @@ public class RelatedObjectEntryResourceImpl
 			ObjectRelationship objectRelationship)
 		throws Exception {
 
-		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
+		ObjectDefinition relatedObjectDefinition = null;
 
-		if (objectDefinitionId1 != objectDefinition.getObjectDefinitionId()) {
-			return _objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
+		if (objectRelationship.getObjectDefinitionId1() !=
+				objectDefinition.getObjectDefinitionId()) {
+
+			relatedObjectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+		}
+		else {
+			relatedObjectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId2());
 		}
 
-		return _objectDefinitionLocalService.getObjectDefinition(
-			objectRelationship.getObjectDefinitionId2());
+		if (!relatedObjectDefinition.isActive()) {
+			throw new NoSuchObjectDefinitionException(
+				"No active object definition found for the relationship " +
+					objectRelationship.getName());
+		}
+
+		return relatedObjectDefinition;
 	}
 
 	private ObjectEntry _getRelatedObjectEntry(

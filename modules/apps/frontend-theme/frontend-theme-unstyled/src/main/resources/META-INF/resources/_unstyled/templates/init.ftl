@@ -39,6 +39,8 @@
 	company_logo_height = theme_display.getCompanyLogoHeight()
 	company_logo_width = theme_display.getCompanyLogoWidth()
 	company_url = theme_display.getURLHome()
+
+	show_control_menu = theme_display.isShowControlMenu()
 />
 
 <#if !request.isRequestedSessionIdFromCookie()>

@@ -72,7 +72,7 @@ export function SetAppPrivacyPage({
                     setSelected={() => setCollectUsersData(!collectUsersData)}
                 />
                 <span className='set-app-privacy-page-text'>
-                    By collecting users data or not, you agree to the <a href="#">Content Policy.</a> Liferay’s  <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> apply to your use of this service
+                    By collecting users data or not, you agree to the <a href="#">Content Policy.</a> Liferay's  <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> apply to your use of this service
                 </span> */}
             </Section>
 

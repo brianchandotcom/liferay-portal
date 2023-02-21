@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/friendly-url" prefix="liferay-friendly-url" %
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/journal" prefix="liferay-journal" %><%@
 taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %><%@
+taglib uri="http://liferay.com/tld/portal-workflow" prefix="liferay-portal-workflow" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@

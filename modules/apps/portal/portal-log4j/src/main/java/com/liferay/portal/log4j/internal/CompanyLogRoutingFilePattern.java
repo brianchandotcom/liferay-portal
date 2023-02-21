@@ -42,7 +42,7 @@ public final class CompanyLogRoutingFilePattern {
 		return _fileNamePattern;
 	}
 
-	public Layout getLayout() {
+	public Layout<?> getLayout() {
 		return _layout;
 	}
 
@@ -61,18 +61,18 @@ public final class CompanyLogRoutingFilePattern {
 
 		@PluginElement("Layout")
 		@Required
-		private Layout _layout;
+		private Layout<?> _layout;
 
 	}
 
 	private CompanyLogRoutingFilePattern(
-		String fileNamePattern, Layout layout) {
+		String fileNamePattern, Layout<?> layout) {
 
 		_fileNamePattern = fileNamePattern;
 		_layout = layout;
 	}
 
 	private final String _fileNamePattern;
-	private final Layout _layout;
+	private final Layout<?> _layout;
 
 }

@@ -188,7 +188,7 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 	}
 
 	private Appender _createAppender(
-		Layout layout, String filePattern, String name) {
+		Layout<?> layout, String filePattern, String name) {
 
 		RollingFileAppender.Builder builder = RollingFileAppender.newBuilder();
 

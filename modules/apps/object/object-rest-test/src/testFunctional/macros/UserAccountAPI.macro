@@ -73,6 +73,25 @@ definition {
 		return ${response};
 	}
 
+	macro createUserRoleByUserAccountId {
+		Variables.assertDefined(parameterList = "${roleName},${streetNumber},${userAccountId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var roleId = UserAccountAPI.getRoleId(
+			roleName = ${roleName},
+			streetNumber = ${streetNumber});
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/roles/${roleId}/association/user-account/${userAccountId} \
+				-H accept: application/json \
+				-u test@liferay.com:test \
+		''';
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
 	macro deleteObjectEntryRelatedToUserAccount {
 		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${customObjectEntryId}");
 
@@ -99,6 +118,29 @@ definition {
 		var response = JSONCurlUtil.get(${curl});
 
 		return ${response};
+	}
+
+	macro getRoleId {
+		Variables.assertDefined(parameterList = "${roleName},${streetNumber}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/roles \
+				-H accept: application/json \
+				-u test@liferay.com:test \
+		''';
+
+		var response = JSONCurlUtil.get(${curl});
+
+		if (isSet(streetNumber)) {
+			var roleId = JSONUtil.getWithJSONPath(${response}, "$.items[${streetNumber}].id");
+
+			return ${roleId};
+		}
+		else {
+			return ${response};
+		}
 	}
 
 	macro getSystemObjectsWithNestedField {
@@ -173,12 +215,12 @@ definition {
 
 	macro setUpGlobalUserAccountId {
 		var response = UserAccountAPI.createUserAccount(
-			alternateName = "user",
-			emailAddress = "user@liferay.com",
-			familyName = "userfn",
+			alternateName = ${alternateName},
+			emailAddress = ${emailAddress},
+			familyName = ${familyName},
 			fieldName = ${fieldName},
 			fieldValue = ${fieldValue},
-			givenName = "usergn");
+			givenName = ${givenName});
 
 		static var staticResponse = ${response};
 

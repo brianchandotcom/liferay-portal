@@ -34,6 +34,7 @@ import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -54,7 +55,6 @@ import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -199,14 +199,9 @@ public class CommerceShipmentFDSDataProvider
 	private long[] _getCommerceChannelGroupIds(long companyId)
 		throws PortalException {
 
-		List<CommerceChannel> commerceChannels =
-			_commerceChannelLocalService.search(companyId);
-
-		Stream<CommerceChannel> stream = commerceChannels.stream();
-
-		return stream.mapToLong(
-			CommerceChannel::getGroupId
-		).toArray();
+		return TransformUtil.transformToLongArray(
+			_commerceChannelLocalService.search(companyId),
+			CommerceChannel::getGroupId);
 	}
 
 	private String _getDescriptiveAddress(CommerceShipment commerceShipment)

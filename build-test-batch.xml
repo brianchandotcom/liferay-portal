@@ -3224,7 +3224,6 @@ information. Make sure to commit in all build-iw results.
 							<matches pattern=".*[+-]\s+&#60;((?!.*publish-date).*).*" string="${build.lib.versions.diff.txt.content}" />
 						</and>
 					</or>
-
 					<then>
 						<echo>${build.lib.versions.diff.txt.content}</echo>
 

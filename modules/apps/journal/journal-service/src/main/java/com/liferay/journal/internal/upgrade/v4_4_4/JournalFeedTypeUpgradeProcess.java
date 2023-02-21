@@ -95,7 +95,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 	private Set<String> _getArticleTypes(long companyId) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select distinct type_ from JournalFeed where companyId = " +
-					companyId);
+					companyId + " and type_ != 'general'");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Set<String> types = new HashSet<>();
@@ -208,7 +208,10 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 					String type = StringUtil.toLowerCase(
 						resultSet.getString("type_"));
 
-					if (Validator.isNotNull(type)) {
+					if (Validator.isNotNull(type) &&
+						journalArticleTypesToAssetCategoryIds.containsKey(
+							type)) {
+
 						assetCategoryIds = new long[] {
 							journalArticleTypesToAssetCategoryIds.get(type)
 						};

@@ -35,8 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -94,20 +92,19 @@ public class JournalArticleDDMTemplateInfoItemTemplatedRenderer
 					GetterUtil.getLong(classTypeKey)));
 		}
 
-		Stream<DDMStructure> stream = ddmStructures.stream();
+		List<InfoItemRendererTemplate> infoItemRendererTemplates =
+			new ArrayList<>();
 
-		return stream.flatMap(
-			ddmStructure -> {
-				List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
-
-				return ddmTemplates.stream();
+		for (DDMStructure ddmStructure : ddmStructures) {
+			for (DDMTemplate ddmTemplate : ddmStructure.getTemplates()) {
+				infoItemRendererTemplates.add(
+					new InfoItemRendererTemplate(
+						ddmTemplate.getName(locale),
+						ddmTemplate.getTemplateKey()));
 			}
-		).map(
-			ddmTemplate -> new InfoItemRendererTemplate(
-				ddmTemplate.getName(locale), ddmTemplate.getTemplateKey())
-		).collect(
-			Collectors.toList()
-		);
+		}
+
+		return infoItemRendererTemplates;
 	}
 
 	@Override

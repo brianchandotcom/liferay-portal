@@ -251,7 +251,7 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
 			fetchCommerceChannelAccountEntryRel();
 
-		List<Long> commerceChannelIds = TransformUtil.transform(
+		long[] commerceChannelIds = TransformUtil.transformToLongArray(
 			_commerceChannelAccountEntryRelService.
 				getCommerceChannelAccountEntryRels(
 					_accountEntry.getAccountEntryId(), _type, QueryUtil.ALL_POS,
@@ -259,7 +259,7 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 			CommerceChannelAccountEntryRel::getCommerceChannelId);
 
 		return ArrayUtil.filter(
-			ArrayUtil.toLongArray(commerceChannelIds),
+			commerceChannelIds,
 			commerceChannelId -> {
 				if ((commerceChannelAccountEntryRel == null) ||
 					(commerceChannelId !=

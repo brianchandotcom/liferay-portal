@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>TEXT_INPUT_INDEXED</td>
-	<td>xpath=((//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::textarea) | (//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::input[@type='text']))[${index}]</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']/..//input[@type='text'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

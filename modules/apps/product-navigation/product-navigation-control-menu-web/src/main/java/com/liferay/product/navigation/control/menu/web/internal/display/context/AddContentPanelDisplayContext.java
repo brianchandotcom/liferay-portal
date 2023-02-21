@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -194,9 +193,7 @@ public class AddContentPanelDisplayContext {
 				).put(
 					"title",
 					HtmlUtil.escape(
-						StringUtil.shorten(
-							assetRenderer.getTitle(_themeDisplay.getLocale()),
-							60))
+						assetRenderer.getTitle(_themeDisplay.getLocale()))
 				).put(
 					"type",
 					_getAssetEntryTypeLabel(

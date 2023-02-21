@@ -410,6 +410,17 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
+	public void testDropNonexistentTable() throws Exception {
+		dropTable("nonexistentTable");
+	}
+
+	@Test
+	public void testDropTable() throws Exception {
+		dropTable(_TABLE_NAME);
+		Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME));
+	}
+
+	@Test
 	public void testProcessConcurrently() throws Exception {
 		_validateProcessConcurrently(
 			threadIds -> processConcurrently(

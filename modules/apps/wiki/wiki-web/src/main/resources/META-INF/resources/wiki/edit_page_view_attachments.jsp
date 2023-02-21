@@ -67,6 +67,10 @@ if (wikiPage != null) {
 
 		viewRemovedAttachmentsLink.on('click', (event) => {
 			Liferay.Util.openWindow({
+				dialog: {
+					destroyOnHide: true,
+					modal: true,
+				},
 				id: '<portlet:namespace />openRemovedPageAttachments',
 				title: '<%= LanguageUtil.get(request, "removed-attachments") %>',
 				uri: '<%= viewTrashAttachmentsURL %>',

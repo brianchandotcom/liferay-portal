@@ -42,9 +42,4 @@ public class CredentialExceptionMapper
 			Response.Status.BAD_REQUEST, credentialException.getMessage());
 	}
 
-	@Override
-	protected boolean isSanitize() {
-		return false;
-	}
-
 }

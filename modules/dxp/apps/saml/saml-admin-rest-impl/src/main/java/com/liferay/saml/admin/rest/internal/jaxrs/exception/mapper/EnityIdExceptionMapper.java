@@ -42,9 +42,4 @@ public class EnityIdExceptionMapper
 			Response.Status.BAD_REQUEST, entityIdException.getMessage());
 	}
 
-	@Override
-	protected boolean isSanitize() {
-		return false;
-	}
-
 }

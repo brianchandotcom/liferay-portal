@@ -53,7 +53,11 @@ definition {
 		}
 
 		task ("Given userAccount entry created") {
-			UserAccountAPI.setUpGlobalUserAccountId();
+			UserAccountAPI.setUpGlobalUserAccountId(
+				alternateName = "user",
+				emailAddress = "user@liferay.com",
+				familyName = "userfn",
+				givenName = "usergn");
 		}
 	}
 

@@ -20,8 +20,12 @@ definition {
 
 		task ("When with post request postUserAccount to create a user with the new field") {
 			UserAccountAPI.setUpGlobalUserAccountId(
+				alternateName = "user",
+				emailAddress = "user@liferay.com",
+				familyName = "userfn",
 				fieldName = "passportNumber",
-				fieldValue = "passportNum2022");
+				fieldValue = "passportNum2022",
+				givenName = "usergn");
 		}
 	}
 

@@ -4,10 +4,21 @@
 	<import file="build-test.xml" />
 
 	<target name="copy-translation-file">
-		<copy
-			file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}"
-			tofile="${selenium.output.dir.name}/${translation.file.name}"
-		/>
+		<if>
+			<equals arg1="${dependencyFile}" arg2="true" />
+			<then>
+				<copy
+					file="modules/apps/translation/translation-test/src/testFunctional/tests/dependencies/${translation.zip.file.name}/${translation.file.name}"
+					tofile="${selenium.output.dir.name}/${translation.file.name}"
+				/>
+			</then>
+			<else>
+				<copy
+					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}"
+					tofile="${selenium.output.dir.name}/${translation.file.name}"
+				/>
+			</else>
+		</if>
 	</target>
 
 	<target name="unzip-translation-file">
@@ -157,10 +168,24 @@
 			</then>
 		</if>
 
-		<replace
-			file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
-			token="${translation.entry.type}:"
-			value="${translation.entry.type}:1"
-		/>
+		<if>
+			<equals arg1="${dependencyFile}" arg2="true" />
+			<then>
+				<var name="translation.file.path" value="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}" />
+				<replace
+					file="${translation.file.path}"
+					token="${translation.entry.type}:"
+					value="${translation.entry.type}:${structuredContentId}"
+				/>
+			</then>
+			<else>
+				<var name="translation.file.path" value="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}" />
+				<replace
+					file="${translation.file.path}"
+					token="${translation.entry.type}:"
+					value="${translation.entry.type}:1"
+				/>
+			</else>
+		</if>
 	</target>
 </project>

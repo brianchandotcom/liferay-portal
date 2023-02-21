@@ -125,7 +125,11 @@ public class CPDefinitionsDisplayContext
 		).setParameter(
 			"checkedCommerceAccountGroupIds",
 			StringUtil.merge(
-				getCommerceAccountGroupRelCommerceAccountGroupIds())
+				TransformUtil.transformToLongArray(
+					_commerceAccountGroupRelService.getCommerceAccountGroupRels(
+						CPDefinition.class.getName(), getCPDefinitionId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+					CommerceAccountGroupRel::getCommerceAccountGroupId))
 		).buildString();
 	}
 
@@ -186,7 +190,12 @@ public class CPDefinitionsDisplayContext
 				commerceChannelItemSelectorCriterion)
 		).setParameter(
 			"checkedCommerceChannelIds",
-			StringUtil.merge(getCommerceChannelRelCommerceChannelIds())
+			StringUtil.merge(
+				TransformUtil.transformToLongArray(
+					_commerceChannelRelService.getCommerceChannelRels(
+						CPDefinition.class.getName(), getCPDefinitionId(), null,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					CommerceChannelRel::getCommerceChannelId))
 		).buildString();
 	}
 
@@ -214,30 +223,10 @@ public class CPDefinitionsDisplayContext
 		).build();
 	}
 
-	public long[] getCommerceAccountGroupRelCommerceAccountGroupIds()
-		throws PortalException {
-
-		return TransformUtil.transformToLongArray(
-			_commerceAccountGroupRelService.getCommerceAccountGroupRels(
-				CPDefinition.class.getName(), getCPDefinitionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			CommerceAccountGroupRel::getCommerceAccountGroupId);
-	}
-
 	public List<CommerceCatalog> getCommerceCatalogs() throws PortalException {
 		return _commerceCatalogService.search(
 			cpRequestHelper.getCompanyId(), null, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
-	}
-
-	public long[] getCommerceChannelRelCommerceChannelIds()
-		throws PortalException {
-
-		return TransformUtil.transformToLongArray(
-			_commerceChannelRelService.getCommerceChannelRels(
-				CPDefinition.class.getName(), getCPDefinitionId(), null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			CommerceChannelRel::getCommerceChannelId);
 	}
 
 	public String getCPDefinitionThumbnailURL() throws Exception {

@@ -94,6 +94,8 @@ public interface CommerceAccount extends CommerceAccountModel {
 
 	public boolean isBusinessAccount();
 
+	public boolean isGuestAccount();
+
 	public boolean isPersonalAccount();
 
 	public boolean isRoot();

@@ -574,6 +574,11 @@ public class CommerceAccountWrapper
 		return model.isExpired();
 	}
 
+	@Override
+	public boolean isGuestAccount() {
+		return model.isGuestAccount();
+	}
+
 	/**
 	 * Returns <code>true</code> if this commerce account is inactive.
 	 *

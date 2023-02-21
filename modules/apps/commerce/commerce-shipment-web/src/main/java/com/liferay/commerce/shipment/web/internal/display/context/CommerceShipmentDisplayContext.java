@@ -482,7 +482,8 @@ public class CommerceShipmentDisplayContext
 		searchContext.setCompanyId(cpRequestHelper.getCompanyId());
 		searchContext.setEnd(QueryUtil.ALL_POS);
 
-		long[] commerceChannelGroupIds = _getCommerceChannelGroupIds();
+		long[] commerceChannelGroupIds = TransformUtil.transformToLongArray(
+			getCommerceChannels(), CommerceChannel::getGroupId);
 
 		if ((commerceChannelGroupIds != null) &&
 			(commerceChannelGroupIds.length > 0)) {
@@ -498,11 +499,6 @@ public class CommerceShipmentDisplayContext
 		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
-	}
-
-	private long[] _getCommerceChannelGroupIds() throws PortalException {
-		return TransformUtil.transformToLongArray(
-			getCommerceChannels(), CommerceChannel::getGroupId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

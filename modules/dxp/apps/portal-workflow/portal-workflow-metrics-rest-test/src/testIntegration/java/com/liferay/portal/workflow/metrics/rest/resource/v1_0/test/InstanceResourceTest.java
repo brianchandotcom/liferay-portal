@@ -55,6 +55,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -475,6 +476,14 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		return _testGetProcessInstancesPage_addInstance(
 			Collections.emptyList(), instance, processId);
+	}
+
+	@Override
+	protected Map<String, Map> testGetProcessInstancesPage_getExpectedActions(
+			Long processId)
+		throws Exception {
+
+		return Collections.emptyMap();
 	}
 
 	@Override

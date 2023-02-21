@@ -600,6 +600,51 @@ public interface LayoutUtilityPageEntryPersistence
 	public int filterCountByGroupId(long groupId);
 
 	/**
+	 * Returns the layout utility page entry where plid = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
+	 *
+	 * @param plid the plid
+	 * @return the matching layout utility page entry
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
+	 */
+	public LayoutUtilityPageEntry findByPlid(long plid)
+		throws NoSuchLayoutUtilityPageEntryException;
+
+	/**
+	 * Returns the layout utility page entry where plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param plid the plid
+	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
+	 */
+	public LayoutUtilityPageEntry fetchByPlid(long plid);
+
+	/**
+	 * Returns the layout utility page entry where plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param plid the plid
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
+	 */
+	public LayoutUtilityPageEntry fetchByPlid(
+		long plid, boolean useFinderCache);
+
+	/**
+	 * Removes the layout utility page entry where plid = &#63; from the database.
+	 *
+	 * @param plid the plid
+	 * @return the layout utility page entry that was removed
+	 */
+	public LayoutUtilityPageEntry removeByPlid(long plid)
+		throws NoSuchLayoutUtilityPageEntryException;
+
+	/**
+	 * Returns the number of layout utility page entries where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the number of matching layout utility page entries
+	 */
+	public int countByPlid(long plid);
+
+	/**
 	 * Returns all the layout utility page entries where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID

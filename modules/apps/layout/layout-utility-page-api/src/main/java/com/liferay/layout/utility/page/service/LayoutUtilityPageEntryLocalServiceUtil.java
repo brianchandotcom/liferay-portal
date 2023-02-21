@@ -264,6 +264,12 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 			externalReferenceCode, groupId);
 	}
 
+	public static LayoutUtilityPageEntry fetchLayoutUtilityPageEntryByPlid(
+		long plid) {
+
+		return getService().fetchLayoutUtilityPageEntryByPlid(plid);
+	}
+
 	/**
 	 * Returns the layout utility page entry matching the UUID and group.
 	 *

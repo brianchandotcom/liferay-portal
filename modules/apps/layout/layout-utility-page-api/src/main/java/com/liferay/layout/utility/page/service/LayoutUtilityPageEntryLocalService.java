@@ -243,6 +243,9 @@ public interface LayoutUtilityPageEntryLocalService
 		fetchLayoutUtilityPageEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntryByPlid(long plid);
+
 	/**
 	 * Returns the layout utility page entry matching the UUID and group.
 	 *

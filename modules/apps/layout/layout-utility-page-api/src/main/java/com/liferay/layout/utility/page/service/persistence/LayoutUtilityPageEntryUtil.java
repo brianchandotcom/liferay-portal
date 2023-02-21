@@ -806,6 +806,66 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
+	 * Returns the layout utility page entry where plid = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
+	 *
+	 * @param plid the plid
+	 * @return the matching layout utility page entry
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
+	 */
+	public static LayoutUtilityPageEntry findByPlid(long plid)
+		throws com.liferay.layout.utility.page.exception.
+			NoSuchLayoutUtilityPageEntryException {
+
+		return getPersistence().findByPlid(plid);
+	}
+
+	/**
+	 * Returns the layout utility page entry where plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param plid the plid
+	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
+	 */
+	public static LayoutUtilityPageEntry fetchByPlid(long plid) {
+		return getPersistence().fetchByPlid(plid);
+	}
+
+	/**
+	 * Returns the layout utility page entry where plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param plid the plid
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
+	 */
+	public static LayoutUtilityPageEntry fetchByPlid(
+		long plid, boolean useFinderCache) {
+
+		return getPersistence().fetchByPlid(plid, useFinderCache);
+	}
+
+	/**
+	 * Removes the layout utility page entry where plid = &#63; from the database.
+	 *
+	 * @param plid the plid
+	 * @return the layout utility page entry that was removed
+	 */
+	public static LayoutUtilityPageEntry removeByPlid(long plid)
+		throws com.liferay.layout.utility.page.exception.
+			NoSuchLayoutUtilityPageEntryException {
+
+		return getPersistence().removeByPlid(plid);
+	}
+
+	/**
+	 * Returns the number of layout utility page entries where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the number of matching layout utility page entries
+	 */
+	public static int countByPlid(long plid) {
+		return getPersistence().countByPlid(plid);
+	}
+
+	/**
 	 * Returns all the layout utility page entries where groupId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID

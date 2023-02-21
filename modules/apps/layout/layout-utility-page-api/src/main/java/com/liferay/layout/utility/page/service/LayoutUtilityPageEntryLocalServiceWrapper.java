@@ -297,6 +297,12 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 				externalReferenceCode, groupId);
 	}
 
+	@Override
+	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntryByPlid(long plid) {
+		return _layoutUtilityPageEntryLocalService.
+			fetchLayoutUtilityPageEntryByPlid(plid);
+	}
+
 	/**
 	 * Returns the layout utility page entry matching the UUID and group.
 	 *

@@ -291,6 +291,13 @@ public class LayoutUtilityPageEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByPlid() throws Exception {
+		_persistence.countByPlid(RandomTestUtil.nextLong());
+
+		_persistence.countByPlid(0L);
+	}
+
+	@Test
 	public void testCountByG_T() throws Exception {
 		_persistence.countByG_T(RandomTestUtil.nextLong(), "");
 
@@ -674,6 +681,12 @@ public class LayoutUtilityPageEntryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				layoutUtilityPageEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
+			Long.valueOf(layoutUtilityPageEntry.getPlid()),
+			ReflectionTestUtil.<Long>invoke(
+				layoutUtilityPageEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "plid"));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutUtilityPageEntry.getGroupId()),

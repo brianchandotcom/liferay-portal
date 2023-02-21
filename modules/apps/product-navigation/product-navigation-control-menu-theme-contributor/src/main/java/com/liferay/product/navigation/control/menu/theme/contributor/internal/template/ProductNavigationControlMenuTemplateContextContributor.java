@@ -15,17 +15,15 @@
 package com.liferay.product.navigation.control.menu.theme.contributor.internal.template;
 
 import com.liferay.portal.kernel.template.TemplateContextContributor;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.product.navigation.control.menu.theme.contributor.internal.util.ProductNavigationControlMenuUtil;
-import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry;
-import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -42,11 +40,11 @@ public class ProductNavigationControlMenuTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
-		if (!ProductNavigationControlMenuUtil.isShowControlMenu(
-				httpServletRequest,
-				_productNavigationControlMenuCategoryRegistry,
-				_productNavigationControlMenuEntryRegistry)) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
+		if (!themeDisplay.isShowControlMenu()) {
 			return;
 		}
 
@@ -55,13 +53,5 @@ public class ProductNavigationControlMenuTemplateContextContributor
 
 		contextObjects.put("bodyCssClass", cssClass + " has-control-menu");
 	}
-
-	@Reference
-	private ProductNavigationControlMenuCategoryRegistry
-		_productNavigationControlMenuCategoryRegistry;
-
-	@Reference
-	private ProductNavigationControlMenuEntryRegistry
-		_productNavigationControlMenuEntryRegistry;
 
 }

@@ -20,7 +20,6 @@ Export-Package:\
 	!aQute.lib.filter,\
 	\
 	!com.liferay.portal.cache.thread.local,\
-	!com.liferay.portal.dao.jdbc.aop,\
 	!com.liferay.portal.freemarker,\
 	!com.liferay.portal.increment,\
 	!com.liferay.portal.javadoc,\

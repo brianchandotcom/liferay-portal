@@ -130,6 +130,14 @@ public class ElasticsearchConfigurationWrapper
 		return _elasticsearchConfiguration.logExceptionsOnly();
 	}
 
+	public int maxConnectionPerRoute() {
+		return _elasticsearchConfiguration.maxConnectionPerRoute();
+	}
+
+	public int maxConnectionTotal() {
+		return _elasticsearchConfiguration.maxConnectionTotal();
+	}
+
 	public String minimumRequiredNodeVersion() {
 		return _elasticsearchConfiguration.minimumRequiredNodeVersion();
 	}

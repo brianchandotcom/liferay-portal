@@ -386,6 +386,10 @@ public class ElasticsearchConnectionManager
 			ConnectionConstants.REMOTE_CONNECTION_ID
 		).httpSSLEnabled(
 			elasticsearchConfigurationWrapper.httpSSLEnabled()
+		).maxConnectionPerRoute(
+			elasticsearchConfigurationWrapper.maxConnectionPerRoute()
+		).maxConnectionTotal(
+			elasticsearchConfigurationWrapper.maxConnectionTotal()
 		).networkHostAddresses(
 			elasticsearchConfigurationWrapper.networkHostAddresses()
 		).password(

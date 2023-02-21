@@ -181,9 +181,12 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 
 			<p class="sidebar-dt"><liferay-ui:message key="status" /></p>
 
-			<p class="sidebar-dd">
-				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
-			</p>
+			<div class="sidebar-dd">
+				<liferay-portal-workflow:status
+					showStatusLabel="<%= false %>"
+					status="<%= article.getStatus() %>"
+				/>
+			</div>
 
 			<p class="sidebar-dt"><liferay-ui:message key="title" /></p>
 

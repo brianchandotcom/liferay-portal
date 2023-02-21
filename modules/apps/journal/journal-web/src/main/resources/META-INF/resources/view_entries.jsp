@@ -322,10 +322,6 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									<%= journalDisplayContext.getAbsolutePath(curFolder.getParentFolderId()) %>
 								</h5>
 							</c:if>
-
-							<span class="text-default">
-								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curFolder.getStatus() %>" />
-							</span>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text>

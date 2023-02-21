@@ -44,9 +44,4 @@ public class ConfigurationExceptionMapper
 			Response.Status.BAD_REQUEST, configurationException.getMessage());
 	}
 
-	@Override
-	protected boolean isSanitize() {
-		return false;
-	}
-
 }

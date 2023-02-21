@@ -13,9 +13,10 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-export default function PdfPreviewLimit({maxLimitSize, namespace, value}) {
+const PdfPreviewLimit =  ({maxLimitSize, namespace, value}) => {
 	const [warning, setWarning] = useState(false);
 	const [inputValue, setInputValue] = useState(value);
 
@@ -49,7 +50,9 @@ export default function PdfPreviewLimit({maxLimitSize, namespace, value}) {
 							<ClayForm.FeedbackIndicator symbol="info-circle" />
 
 							<span>
-								{Liferay.Language.get('this-limit-is-higher-than-system-settings-limit')}
+								{Liferay.Language.get(
+									'this-limit-is-higher-than-system-settings-limit'
+								)}
 							</span>
 						</ClayForm.FeedbackItem>
 					</ClayForm.FeedbackGroup>
@@ -62,3 +65,11 @@ export default function PdfPreviewLimit({maxLimitSize, namespace, value}) {
 		</>
 	);
 }
+
+PdfPreviewLimit.propTypes = {
+	maxLimitSize: PropTypes.number,
+	namespace: PropTypes.string.isRequired,
+	value: PropTypes.number,
+};
+
+export default PdfPreviewLimit;

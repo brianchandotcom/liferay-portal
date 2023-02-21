@@ -124,10 +124,14 @@ public class RelatedObjectEntryOpenAPIContributor
 			ObjectRelationship systemObjectRelationship, String version)
 		throws Exception {
 
-		Paths paths = openAPI.getPaths();
-
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
 			systemObjectDefinition, systemObjectRelationship);
+
+		if (!relatedObjectDefinition.isActive()) {
+			return;
+		}
+
+		Paths paths = openAPI.getPaths();
 
 		String relatedSchemaName = getSchemaName(relatedObjectDefinition);
 

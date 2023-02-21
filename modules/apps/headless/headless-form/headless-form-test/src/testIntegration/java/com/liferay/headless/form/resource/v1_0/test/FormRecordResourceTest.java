@@ -25,6 +25,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -79,6 +82,14 @@ public class FormRecordResourceTest extends BaseFormRecordResourceTestCase {
 		formRecord.setFormId(_ddmFormInstance.getFormInstanceId());
 
 		return formRecord;
+	}
+
+	@Override
+	protected Map<String, Map> testGetFormFormRecordsPage_getExpectedActions(
+			Long formId)
+		throws Exception {
+
+		return Collections.emptyMap();
 	}
 
 	@Override

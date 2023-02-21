@@ -39,7 +39,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -655,6 +657,15 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	}
 
 	@Override
+	protected Map<String, Map>
+			testGetDataDefinitionDataRecordsPage_getExpectedActions(
+				Long dataDefinitionId)
+		throws Exception {
+
+		return Collections.emptyMap();
+	}
+
+	@Override
 	protected DataRecord testGetDataRecord_addDataRecord() throws Exception {
 		return dataRecordResource.postDataRecordCollectionDataRecord(
 			_dataRecordCollectionId, randomDataRecord());
@@ -676,6 +687,15 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 		throws Exception {
 
 		return _dataRecordCollectionId;
+	}
+
+	@Override
+	protected Map<String, Map>
+			testGetDataRecordCollectionDataRecordsPage_getExpectedActions(
+				Long dataRecordCollectionId)
+		throws Exception {
+
+		return Collections.emptyMap();
 	}
 
 	@Override

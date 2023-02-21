@@ -5,6 +5,7 @@ import {FieldBase} from '../FieldBase';
 import './Section.scss';
 
 interface SectionProps {
+	children: ReactNode;
 	className?: string;
 	description?: string;
 	disabled?: boolean;
@@ -12,7 +13,6 @@ interface SectionProps {
 	required?: boolean;
 	tooltip?: string;
 	tooltipText?: string;
-	children: ReactNode;
 }
 
 export function Section({

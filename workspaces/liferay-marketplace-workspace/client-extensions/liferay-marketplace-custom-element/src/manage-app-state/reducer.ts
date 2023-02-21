@@ -17,9 +17,9 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 
 			return {
 				...state,
+				appERC,
 				appId,
 				appProductId,
-				appERC,
 				appWorkflowStatusInfo,
 			};
 		}

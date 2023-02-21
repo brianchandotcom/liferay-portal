@@ -4,9 +4,9 @@ import './UploadLogo.scss';
 import {UploadedFile} from '../FileList/FileList';
 
 interface UploadLogoProps {
-	uploadedFile?: UploadedFile;
-	onUpload: (files: FileList) => void;
 	onDeleteFile: (id: string) => void;
+	onUpload: (files: FileList) => void;
+	uploadedFile?: UploadedFile;
 }
 
 export function UploadLogo({
@@ -22,9 +22,9 @@ export function UploadLogo({
 					backgroundImage: `url(${
 						uploadedFile?.preview ?? emptyImage
 					})`,
+					backgroundPosition: '50% 50%',
 					backgroundRepeat: 'no-repeat',
 					backgroundSize: 'cover',
-					backgroundPosition: '50% 50%',
 				}}
 			/>
 

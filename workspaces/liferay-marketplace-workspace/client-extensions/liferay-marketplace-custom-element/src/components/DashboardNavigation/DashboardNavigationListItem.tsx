@@ -7,11 +7,11 @@ import {AppProps} from '../DashboardTable/DashboardTable';
 import {DashboardListItems} from './DashboardNavigation';
 
 interface DashboardNavigationListItem {
+	dashboardNavigationItems: DashboardListItems[];
 	item: AppProps;
 	items: AppProps[];
 	listName: string;
 	onSelectAppChange: (value: AppProps) => void;
-	dashboardNavigationItems: DashboardListItems[];
 	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
 }
 

@@ -83,13 +83,13 @@ export function ProvideVersionDetailsPage({
 						});
 
 						createProductSpecification({
+							appId,
 							body: {
 								productId: appProductId,
 								specificationId: dataSpecification.id,
 								specificationKey: dataSpecification.key,
 								value: {en_US: appVersion},
 							},
-							appId,
 						});
 					};
 
@@ -102,13 +102,13 @@ export function ProvideVersionDetailsPage({
 						});
 
 						createProductSpecification({
+							appId,
 							body: {
 								productId: appProductId,
 								specificationId: dataSpecification.id,
 								specificationKey: dataSpecification.key,
 								value: {en_US: appNotes},
 							},
-							appId,
 						});
 					};
 

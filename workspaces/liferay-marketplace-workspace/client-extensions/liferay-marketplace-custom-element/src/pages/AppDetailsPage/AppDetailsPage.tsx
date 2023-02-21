@@ -3,7 +3,6 @@ import ClayButton from '@clayui/button';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import classNames from 'classnames';
 
-import appImageTest from '../../assets/icons/app-image-test.svg';
 import arrowDown from '../../assets/icons/arrow-down.svg';
 import arrowLeft from '../../assets/icons/arrow-left.svg';
 import circleFullIcon from '../../assets/icons/circle_fill.svg';
@@ -105,10 +104,10 @@ export function AppDetailsPage({
 								className={classNames(
 									'app-details-page-app-info-subtitle-icon',
 									{
-										'app-details-page-app-info-subtitle-icon-pending':
-											selectedApp.status === 'Pending',
 										'app-details-page-app-info-subtitle-icon-hidden':
 											selectedApp.status === 'Hidden',
+										'app-details-page-app-info-subtitle-icon-pending':
+											selectedApp.status === 'Pending',
 										'app-details-page-app-info-subtitle-icon-published':
 											selectedApp.status === 'Published',
 									}

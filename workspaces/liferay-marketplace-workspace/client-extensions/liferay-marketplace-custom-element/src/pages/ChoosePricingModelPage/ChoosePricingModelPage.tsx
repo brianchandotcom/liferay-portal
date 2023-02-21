@@ -5,9 +5,6 @@ import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';
 
 import './ChoosePricingModelPage.scss';
-
-import {useState} from 'react';
-
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';

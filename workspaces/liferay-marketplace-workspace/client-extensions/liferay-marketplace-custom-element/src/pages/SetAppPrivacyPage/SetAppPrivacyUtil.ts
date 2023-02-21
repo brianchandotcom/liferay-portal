@@ -15,11 +15,6 @@ import {BaseCheckboxDataCard} from '../../components/CheckboxDataCard/CheckboxDa
 
 export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 	{
-		title: 'Contact info',
-		name: 'contactInfo',
-		icon: personIcon,
-		tooltip: 'More Info',
-		tooltipText: 'More Info',
 		checkboxItems: [
 			{
 				checked: false,
@@ -56,13 +51,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'otherUserContactInfo',
 			},
 		],
-	},
-	{
-		title: 'Financial Info',
-		name: 'financialInfo',
-		icon: creditCardIcon,
+		icon: personIcon,
+		name: 'contactInfo',
+		title: 'Contact info',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -85,13 +80,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'otherFinancialInfo',
 			},
 		],
-	},
-	{
-		title: 'Location',
-		name: 'location',
-		icon: locationIcon,
+		icon: creditCardIcon,
+		name: 'financialInfo',
+		title: 'Financial Info',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -108,13 +103,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'coarseLocation',
 			},
 		],
-	},
-	{
-		title: 'Sensitive info',
-		name: 'sensitiveInfo',
-		icon: visibilityIcon,
+		icon: locationIcon,
+		name: 'location',
+		title: 'Location',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -124,13 +119,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'sensitiveData',
 			},
 		],
-	},
-	{
-		title: 'Contacts',
-		name: 'contacts',
-		icon: personGroupIcon,
+		icon: visibilityIcon,
+		name: 'sensitiveInfo',
+		title: 'Sensitive info',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -140,13 +135,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'contactsData',
 			},
 		],
-	},
-	{
-		title: 'User Content',
-		name: 'userContent',
-		icon: documentIcon,
+		icon: personGroupIcon,
+		name: 'contacts',
+		title: 'Contacts',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -187,13 +182,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'otherUserContent',
 			},
 		],
-	},
-	{
-		title: 'Browsing History',
-		name: 'browsingHistory',
-		icon: scheduleIcon,
+		icon: documentIcon,
+		name: 'userContent',
+		title: 'User Content',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -203,13 +198,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'browsingHistory',
 			},
 		],
-	},
-	{
-		title: 'Search History',
-		name: 'searchHistory',
-		icon: manageSearchIcon,
+		icon: scheduleIcon,
+		name: 'browsingHistory',
+		title: 'Browsing History',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -218,13 +213,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'searchHistory',
 			},
 		],
-	},
-	{
-		title: 'Identifiers',
-		name: 'identifiers',
-		icon: accountCircleIcon,
+		icon: manageSearchIcon,
+		name: 'searchHistory',
+		title: 'Search History',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -241,13 +236,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'deviceID',
 			},
 		],
-	},
-	{
-		title: 'Purchases',
-		name: 'purchases',
-		icon: shoppingCartIcon,
+		icon: accountCircleIcon,
+		name: 'identifiers',
+		title: 'Identifiers',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -257,13 +252,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'userID',
 			},
 		],
-	},
-	{
-		title: 'Usage Data',
-		name: 'usageData',
-		icon: monitoringIcon,
+		icon: shoppingCartIcon,
+		name: 'purchases',
+		title: 'Purchases',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -286,13 +281,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'otherUsageData',
 			},
 		],
-	},
-	{
-		title: 'Diagnostics',
-		name: 'diagnostics',
-		icon: settingsIcon,
+		icon: monitoringIcon,
+		name: 'usageData',
+		title: 'Usage Data',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -314,13 +309,13 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'otherDiagnosticData',
 			},
 		],
-	},
-	{
-		title: 'Other Data',
-		name: 'otherData',
-		icon: circleInfoIcon,
+		icon: settingsIcon,
+		name: 'diagnostics',
+		title: 'Diagnostics',
 		tooltip: 'More Info',
 		tooltipText: 'More Info',
+	},
+	{
 		checkboxItems: [
 			{
 				checked: false,
@@ -329,5 +324,10 @@ export const initialCheckboxDataCardsValues: BaseCheckboxDataCard[] = [
 				name: 'otherData',
 			},
 		],
+		icon: circleInfoIcon,
+		name: 'otherData',
+		title: 'Other Data',
+		tooltip: 'More Info',
+		tooltipText: 'More Info',
 	},
 ];

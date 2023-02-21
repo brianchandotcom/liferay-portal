@@ -1,63 +1,63 @@
 export type AppFlowListItemProps = {
+	checked: boolean;
 	label: string;
 	name: string;
-	checked: boolean;
 	selected: boolean;
 };
 
 export const initialFLowListItems: AppFlowListItemProps[] = [
 	{
+		checked: false,
 		label: 'Create',
 		name: 'create',
-		checked: false,
 		selected: true,
 	},
 	{
+		checked: false,
 		label: 'Profile',
 		name: 'profile',
-		checked: false,
 		selected: false,
 	},
 	{
+		checked: false,
 		label: 'Build',
 		name: 'build',
-		checked: false,
 		selected: false,
 	},
 	{
+		checked: false,
 		label: 'Storefront',
 		name: 'storefront',
-		checked: false,
 		selected: false,
 	},
 	{
+		checked: false,
 		label: 'Version',
 		name: 'version',
-		checked: false,
 		selected: false,
 	},
 	{
+		checked: false,
 		label: 'Pricing',
 		name: 'pricing',
-		checked: false,
 		selected: false,
 	},
 	{
+		checked: false,
 		label: 'Licensing',
 		name: 'licensing',
-		checked: false,
 		selected: false,
 	},
 	{
+		checked: false,
 		label: 'Support',
 		name: 'support',
-		checked: false,
 		selected: false,
 	},
 	{
+		checked: false,
 		label: 'Submit',
 		name: 'submit',
-		checked: false,
 		selected: false,
 	},
 ];

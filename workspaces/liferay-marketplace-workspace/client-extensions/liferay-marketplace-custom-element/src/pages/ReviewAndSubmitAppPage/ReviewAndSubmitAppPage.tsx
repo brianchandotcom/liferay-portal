@@ -124,36 +124,36 @@ export function ReviewAndSubmitAppPage({
 					else if (specificationKey === 'supporturl') {
 						newCardInfos.push({
 							icon: phoneIcon,
-							title: 'Support URL',
 							link: localizedValue,
+							title: 'Support URL',
 						});
 					}
 					else if (specificationKey === 'publisherwebsiteurl') {
 						newCardInfos.push({
 							icon: globeIcon,
-							title: 'Publisher website URL',
 							link: localizedValue,
+							title: 'Publisher website URL',
 						});
 					}
 					else if (specificationKey === 'appusagetermsurl') {
 						newCardInfos.push({
 							icon: usageTermsIcon,
-							title: 'App usage terms (EULA) URL',
 							link: localizedValue,
+							title: 'App usage terms (EULA) URL',
 						});
 					}
 					else if (specificationKey === 'appdocumentationurl') {
 						newCardInfos.push({
 							icon: documentationIcon,
-							title: 'App documentation URL',
 							link: localizedValue,
+							title: 'App documentation URL',
 						});
 					}
 					else if (specificationKey === 'appinstallationguideurl') {
 						newCardInfos.push({
 							icon: guideIcon,
-							title: 'App installation guide URL',
 							link: localizedValue,
+							title: 'App installation guide URL',
 						});
 					}
 				}
@@ -194,9 +194,9 @@ export function ReviewAndSubmitAppPage({
 											backgroundImage: `url(${
 												appLogo?.preview || emptyImage
 											})`,
+											backgroundPosition: '50% 50%',
 											backgroundRepeat: 'no-repeat',
 											backgroundSize: 'cover',
-											backgroundPosition: '50% 50%',
 										}}
 									/>
 								</div>
@@ -223,7 +223,7 @@ export function ReviewAndSubmitAppPage({
 							sectionName="Description"
 						/>
 
-						{initialReviewAndSubmitAppPageItems.map((item) => {
+						{initialReviewAndSubmitAppPageItems.map((item, index) => {
 							const cardTitle = () => {
 								if (item.section === 'Pricing')
 									{return priceModel;}
@@ -267,6 +267,7 @@ export function ReviewAndSubmitAppPage({
 									enableEdit={!readonly}
 									files={appStorefrontImages}
 									icon={item.icon}
+									key={index}
 									price={appLicensePrice}
 									required
 									sectionName={item.section}

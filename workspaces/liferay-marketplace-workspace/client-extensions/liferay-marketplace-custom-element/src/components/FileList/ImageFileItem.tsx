@@ -49,11 +49,11 @@ export function ImageFileItem({
 			) : (
 				<CircularProgressbarWithChildren
 					styles={{
-						root: {
-							width: 50,
-							marginRight: 40,
-						},
 						path: {stroke: '#0B5FFF'},
+						root: {
+							marginRight: 40,
+							width: 50,
+						},
 					}}
 					value={uploadedFile.progress}
 				>

@@ -10,13 +10,11 @@ import mainAccountLogo from '../../assets/icons/mainAppLogo.svg';
 
 import './NewAppToolBar.scss';
 
-import ClayIcon from '@clayui/icon';
-
 interface NewAppToolBarProps {
-	accountName: string;
-	appName?: string;
-	appImage?: string;
 	accountImage?: string;
+	accountName: string;
+	appImage?: string;
+	appName?: string;
 	enableDropdown?: boolean;
 }
 

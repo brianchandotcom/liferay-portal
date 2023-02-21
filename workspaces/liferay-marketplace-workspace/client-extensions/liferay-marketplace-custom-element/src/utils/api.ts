@@ -32,8 +32,8 @@ export async function createAppLicensePrice({
 	appProductId,
 	body,
 }: {
-	body: Object;
 	appProductId: number;
+	body: Object;
 }) {
 	const response = await fetch(
 		`http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/${appProductId}/skus
@@ -86,8 +86,8 @@ export async function createProductSpecification({
 	appId,
 	body,
 }: {
-	body: Object;
 	appId: string;
+	body: Object;
 }) {
 	const response = await fetch(
 		`http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/${appId}/productSpecifications`,

@@ -100,10 +100,10 @@ export function DashboardTableRow({app}: DashboardTableRowProps) {
 							{
 								'dashboard-table-row-status-icon-hidden':
 									status === 'Hidden',
-								'dashboard-table-row-status-icon-published':
-									status === 'Published',
 								'dashboard-table-row-status-icon-pending':
 									status === 'Pending',
+								'dashboard-table-row-status-icon-published':
+									status === 'Published',
 							}
 						)}
 						src={circleFill}

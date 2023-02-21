@@ -6,11 +6,11 @@ import {DashboardListItems} from './DashboardNavigation';
 import {DashboardNavigationListItem} from './DashboardNavigationListItem';
 
 interface DashboardNavigationListProps {
-	navigationItemsMock: DashboardListItems[];
-	navigationItemMock: DashboardListItems;
-	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
 	dashboardNavigationItems: DashboardListItems[];
+	navigationItemMock: DashboardListItems;
+	navigationItemsMock: DashboardListItems[];
 	onSelectAppChange: (value: AppProps) => void;
+	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
 }
 
 export function DashboardNavigationList({

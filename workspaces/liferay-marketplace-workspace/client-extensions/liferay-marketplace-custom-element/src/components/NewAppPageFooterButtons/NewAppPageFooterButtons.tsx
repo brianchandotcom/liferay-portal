@@ -1,8 +1,8 @@
 import './NewAppPageFooterButtons.scss';
 
 interface NewAppPageFooterButtonsProps {
-	disableContinueButton?: boolean;
 	continueButtonText?: string;
+	disableContinueButton?: boolean;
 	onClickBack?: () => void;
 	onClickContinue: () => void;
 	showBackButton?: boolean;

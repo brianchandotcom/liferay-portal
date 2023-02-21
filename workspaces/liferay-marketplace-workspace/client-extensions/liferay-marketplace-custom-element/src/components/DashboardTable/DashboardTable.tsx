@@ -8,14 +8,14 @@ import {DashboardTableRow} from './DashboardTableRow';
 export type AppProps = {
 	image: string;
 	name: string;
-	version: string;
+	rating: string;
+	selected: boolean;
+	status: string;
 	type: string;
+	updatedBy: string;
 	updatedDate: string;
 	updatedResponsible: string;
-	updatedBy: string;
-	rating: string;
-	status: string;
-	selected: boolean;
+	version: string;
 };
 interface DashboardTableProps {
 	apps: AppProps[];

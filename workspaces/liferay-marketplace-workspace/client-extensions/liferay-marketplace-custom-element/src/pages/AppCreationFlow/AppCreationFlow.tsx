@@ -15,7 +15,6 @@ import {CustomizeAppStorefrontPage} from '../StorefrontPage/CustomizeAppStorefro
 import {initialFLowListItems} from './AppCreationFlowUtil';
 
 import './AppCreationFlow.scss';
-
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {DefineAppProfilePage} from '../DefineAppProfilePage/DefineAppProfilePage';
 

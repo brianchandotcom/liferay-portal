@@ -12,9 +12,7 @@ import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
 	createAppLicensePrice,
-	createProductSpecification,
 	createProductSubscriptionConfiguration,
-	createSpecification,
 } from '../../utils/api';
 
 interface InformLicensingTermsPageProps {
@@ -117,21 +115,21 @@ export function InformLicensingTermsPage({
 					const submitLicenseTermsPage = async () => {
 						if (priceModel === 'free') {
 							createAppLicensePrice({
-								body: {
-									sku: 'default',
-									price: 0,
-								},
 								appProductId,
+								body: {
+									price: 0,
+									sku: 'default',
+								},
 							});
 						}
 
 						if (dayTrial === 'yes') {
 							createAppLicensePrice({
-								body: {
-									sku: 'trial',
-									price: 0,
-								},
 								appProductId,
+								body: {
+									price: 0,
+									sku: 'trial',
+								},
 							});
 						}
 

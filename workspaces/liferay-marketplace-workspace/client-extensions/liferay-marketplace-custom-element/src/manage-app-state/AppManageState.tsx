@@ -4,9 +4,9 @@ import {UploadedFile} from '../components/FileList/FileList';
 import {TAction, appReducer} from './reducer';
 
 type Categories = {
+	checked: boolean;
 	label: string;
 	value: string;
-	checked: boolean;
 };
 
 export interface InitialStateProps {
@@ -17,17 +17,17 @@ export interface InitialStateProps {
 	appERC: string;
 	appId: string;
 	appInstallationGuideURL: string;
-	appProductId: number;
-	appWorkflowStatusInfo: string;
-	appLogo: UploadedFile;
 	appLicense: string;
 	appLicensePrice: string;
+	appLogo: UploadedFile;
 	appName: string;
 	appNotes: string;
+	appProductId: number;
 	appStorefrontImages: UploadedFile[];
 	appType: string;
 	appUsageTermsURL: string;
 	appVersion: string;
+	appWorkflowStatusInfo: string;
 	buildZIPFiles: UploadedFile[];
 	catalogId: number;
 	dayTrial: string;

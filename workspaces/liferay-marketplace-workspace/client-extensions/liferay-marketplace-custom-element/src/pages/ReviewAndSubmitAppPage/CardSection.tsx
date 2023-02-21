@@ -19,25 +19,25 @@ import './CardSection.scss';
 interface CardSectionProps {
 	build?: boolean;
 	buildZIPTitles?: string[];
-	cardInfos?: {title: string; link: string; icon: string}[];
+	cardDescription?: string;
+	cardInfos?: {icon: string; link: string; title: string;}[];
+	cardLink?: boolean;
+	cardTags?: {icon: string; tags: string[]; title: string;}[];
 	cardTitle?: string;
+	cardView?: boolean;
+	description?: string;
 	enableEdit?: boolean;
 	files?: UploadedFile[];
-	cardDescription?: string;
-	paragraph?: string;
-	description?: string;
-	title?: string;
 	icon?: string;
-	cardView?: boolean;
-	cardLink?: boolean;
-	cardTags?: {icon: string; title: string; tags: string[]}[];
+	localized?: boolean;
+	paragraph?: string;
 	price?: string;
 	required?: boolean;
 	sectionName?: string;
 	storefront?: boolean;
 	tags?: string[];
+	title?: string;
 	version?: string | null;
-	localized?: boolean;
 }
 
 export function CardSection({
@@ -112,8 +112,8 @@ export function CardSection({
 
 			{tags && (
 				<div className="card-section-body-section-tags">
-					{tags.map((tag) => {
-						return <Tag label={tag}></Tag>;
+					{tags.map((tag, index) => {
+						return <Tag key={index} label={tag}></Tag>;
 					})}
 				</div>
 			)}
@@ -125,8 +125,8 @@ export function CardSection({
 			)}
 
 			{build &&
-				buildZIPTitles?.map((buildZIPTitle: string) => (
-					<div className="card-section-body-section-file">
+				buildZIPTitles?.map((buildZIPTitle: string, index) => (
+					<div className="card-section-body-section-file" key={index}>
 						<div className="card-section-body-section-file-container">
 							<img
 								alt="Folder Icon"
@@ -150,7 +150,7 @@ export function CardSection({
 			{cardView && (
 				<CardView
 					children={
-						sectionName == 'Licensing' && priceModel !== 'free' ? (
+						sectionName === 'Licensing' && priceModel !== 'free' ? (
 							<LicensePriceChildren
 								currency={priceData.currency}
 								quantity={priceData.quantity}
@@ -168,9 +168,9 @@ export function CardSection({
 
 			{storefront && (
 				<div>
-					{files?.map(({fileName, preview}) => {
+					{files?.map(({fileName, id, preview}) => {
 						return (
-							<div className="card-section-body-section-files">
+							<div className="card-section-body-section-files" key={id}>
 								<div className="card-section-body-section-files-container">
 									<img
 										className="preview-image"
@@ -229,6 +229,7 @@ export function CardSection({
 						<CardLink
 							description={link as string}
 							icon={icon}
+							key={title}
 							title={title as string}
 						/>
 					);
@@ -239,6 +240,7 @@ export function CardSection({
 					return (
 						<CardTags
 							icon={icon}
+							key={title}
 							tags={tags}
 							title={title as string}
 						/>

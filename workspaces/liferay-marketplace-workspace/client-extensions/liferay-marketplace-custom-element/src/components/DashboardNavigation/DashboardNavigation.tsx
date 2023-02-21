@@ -9,16 +9,16 @@ import './DashboardNavigation.scss';
 import {AppProps} from '../DashboardTable/DashboardTable';
 export interface DashboardListItems {
 	itemIcon: string;
-	itemTitle: string;
 	itemName: string;
-	items?: AppProps[];
 	itemSelected: boolean;
+	itemTitle: string;
+	items?: AppProps[];
 }
 
 interface DashboardNavigationProps {
+	accountAppsNumber: string;
 	accountIcon: string;
 	accountTitle: string;
-	accountAppsNumber: string;
 	dashboardNavigationItems: DashboardListItems[];
 	onSelectAppChange: (value: AppProps) => void;
 	setDashboardNavigationItems: (values: DashboardListItems[]) => void;

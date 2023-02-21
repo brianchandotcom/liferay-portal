@@ -35,14 +35,14 @@ export function CustomizeAppStorefrontPage({
 
 		if ((appStorefrontImages?.length || 0) + files.length < 6) {
 			const newUploadedFiles: UploadedFile[] = files.map((file) => ({
+				error: false,
 				file,
-				id: uniqueId(),
 				fileName: file.name,
-				readableSize: filesize(file.size),
+				id: uniqueId(),
 				preview: URL.createObjectURL(file),
 				progress: 0,
+				readableSize: filesize(file.size),
 				uploaded: true,
-				error: false,
 			}));
 
 			if (appStorefrontImages?.length) {

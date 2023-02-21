@@ -1,5 +1,5 @@
 import ClayDropDown from '@clayui/drop-down';
-import {HTMLAttributes, ReactNode, useState} from 'react';
+import {ReactNode, useState} from 'react';
 
 import {FieldBase} from '../FieldBase';
 
@@ -8,12 +8,11 @@ import {CustomSelect} from './CustomSelect';
 
 interface AutoCompleteProps<T> {
 	children: (item: T) => ReactNode;
-	contentRight?: ReactNode;
 	className?: string;
+	contentRight?: ReactNode;
 	disabled?: boolean;
 	emptyStateMessage: string;
 	error?: string;
-	feedbackMessage?: string;
 	hasEmptyItem?: boolean;
 	id?: string;
 	items: T[];
@@ -40,7 +39,6 @@ export default function AutoComplete<T>({
 	disabled,
 	emptyStateMessage,
 	error,
-	feedbackMessage,
 	hasEmptyItem,
 	id,
 	items,
@@ -66,9 +64,6 @@ export default function AutoComplete<T>({
 			className={className}
 			disabled={disabled}
 			errorMessage={error}
-
-			// helpMessage={feedbackMessage}
-
 			id={id}
 			label={label}
 			required={required}

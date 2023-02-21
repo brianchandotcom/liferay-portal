@@ -27,10 +27,10 @@ export function DocumentFileItem({
 					) : (
 						<CircularProgressbarWithChildren
 							styles={{
+								path: {stroke: '#0B5FFF'},
 								root: {
 									width: 50,
 								},
-								path: {stroke: '#0B5FFF'},
 							}}
 							value={uploadedFile.progress}
 						>

@@ -4,8 +4,6 @@ import {FieldBase} from '../FieldBase';
 
 import './Input.scss';
 
-import classNames from 'classnames';
-
 interface InputProps
 	extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
 	component?: 'input' | 'textarea';
@@ -16,8 +14,8 @@ interface InputProps
 	localized?: boolean;
 	required?: boolean;
 	tooltip?: string;
-	value?: string;
 	type?: 'number' | 'textarea' | 'text' | 'date';
+	value?: string;
 }
 
 export function Input({

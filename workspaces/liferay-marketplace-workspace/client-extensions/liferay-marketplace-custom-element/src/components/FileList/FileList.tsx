@@ -4,29 +4,29 @@ import './FileList.scss';
 import {ImageFileItem} from './ImageFileItem';
 
 export type UploadedFile = {
+	error: boolean;
 	file: File;
-	id: string;
 	fileName: string;
+	id: string;
+	preview?: string;
+	progress: number;
 	readableSize:
 		| string
 		| number
 		| any[]
 		| {
-				value: any;
-				symbol: any;
 				exponent: number;
+				symbol: any;
 				unit: string;
+				value: any;
 		  };
-	preview?: string;
-	progress: number;
 	uploaded: boolean;
-	error: boolean;
 };
 
 interface FileListProps {
-	uploadedFiles: UploadedFile[];
 	onDelete: (id: string) => void;
 	type: 'document' | 'image';
+	uploadedFiles: UploadedFile[];
 }
 
 export function FileList({onDelete, type, uploadedFiles}: FileListProps) {

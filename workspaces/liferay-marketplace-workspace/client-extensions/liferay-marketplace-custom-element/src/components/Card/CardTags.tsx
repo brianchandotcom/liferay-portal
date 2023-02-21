@@ -2,9 +2,9 @@ import './CardTags.scss';
 import {Tag} from '../../components/Tag/Tag';
 
 interface CardTagsProps {
-	title: string;
 	icon?: string;
 	tags: string[];
+	title: string;
 }
 
 export function CardTags({icon, tags, title}: CardTagsProps) {
@@ -23,8 +23,8 @@ export function CardTags({icon, tags, title}: CardTagsProps) {
 					<span className="card-tags-info-text">{title}</span>
 
 					<div className="card-tags-info-tags">
-						{tags.map((tag) => {
-							return <Tag label={tag}></Tag>;
+						{tags.map((tag, index) => {
+							return <Tag key={index} label={tag}></Tag>;
 						})}
 					</div>
 				</div>

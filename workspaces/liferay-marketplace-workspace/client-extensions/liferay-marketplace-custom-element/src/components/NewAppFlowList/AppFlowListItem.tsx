@@ -1,5 +1,3 @@
-import ClayIcon from '@clayui/icon';
-
 import checkFill from '../../assets/icons/check_fill.svg';
 import circleFill from '../../assets/icons/circle_fill.svg';
 import radioSelected from '../../assets/icons/radio-button-checked-2.svg';

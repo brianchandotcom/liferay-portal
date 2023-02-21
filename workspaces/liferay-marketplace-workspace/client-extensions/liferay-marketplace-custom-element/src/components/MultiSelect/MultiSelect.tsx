@@ -4,27 +4,26 @@ import makeAnimated from 'react-select/animated';
 import './MultiSelect.scss';
 
 import classNames from 'classnames';
-import {useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase';
 
 type Item = {
+	checked: boolean;
 	label: string;
 	value: string;
-	checked: boolean;
 };
 
 interface MultiSelectProps {
 	className?: string;
 	helpMessage?: string;
 	hideFeedback?: boolean;
+	items: Item[];
 	label?: string;
 	localized?: boolean;
-	placeholder?: string;
 	onChange: (values: Item[]) => void;
+	placeholder?: string;
 	required?: boolean;
 	tooltip?: string;
-	items: Item[];
 }
 
 const colourStyles: StylesConfig<any, true> = {
@@ -42,11 +41,11 @@ const colourStyles: StylesConfig<any, true> = {
 	},
 	multiValueRemove: (styles) => ({
 		...styles,
-		'color': '#1C3667',
 		':hover': {
 			backgroundColor: '#1C3667',
 			color: 'white',
 		},
+		'color': '#1C3667',
 	}),
 };
 

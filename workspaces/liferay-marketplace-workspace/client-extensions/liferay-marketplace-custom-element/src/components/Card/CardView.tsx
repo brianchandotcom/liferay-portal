@@ -4,9 +4,9 @@ import './CardView.scss';
 
 interface CardViewProps {
 	children?: ReactNode;
-	title: string;
-	icon?: string;
 	description: string;
+	icon?: string;
+	title: string;
 }
 
 export function CardView({children, description, icon, title}: CardViewProps) {

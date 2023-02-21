@@ -22,37 +22,37 @@ interface DefineAppProfilePageProps {
 
 const CategoriesItems = [
 	{
+		checked: false,
 		label: 'Experience Management',
 		value: 'Experience Management',
-		checked: false,
 	},
 	{
+		checked: false,
 		label: 'Collaboration and Knowledge Sharing',
 		value: 'Collaboration and Knowledge Sharing',
-		checked: false,
 	},
 ];
 
 const TagsItems = [
 	{
+		checked: false,
 		label: 'Analytics',
 		value: 'Analytics',
-		checked: false,
 	},
 	{
+		checked: false,
 		label: 'Database',
 		value: 'Database',
-		checked: false,
 	},
 	{
+		checked: false,
 		label: 'Data Visualization',
 		value: 'Data Visualization',
-		checked: false,
 	},
 	{
+		checked: false,
 		label: 'Performance Management',
 		value: 'Performance Management',
-		checked: false,
 	},
 ];
 
@@ -194,9 +194,9 @@ export function DefineAppProfilePage({
 					dispatch({
 						payload: {
 							value: {
-								appProductId: product.productId,
-								appId: product.id,
 								appERC: product.externalReferenceCode,
+								appId: product.id,
+								appProductId: product.productId,
 								appWorkflowStatusInfo:
 									product.workflowStatusInfo,
 							},

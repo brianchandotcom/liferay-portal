@@ -1,9 +1,9 @@
 import './CardLink.scss';
 
 interface CardLinkProps {
-	title: string;
-	icon?: string;
 	description: string;
+	icon?: string;
+	title: string;
 }
 
 export function CardLink({description, icon, title}: CardLinkProps) {

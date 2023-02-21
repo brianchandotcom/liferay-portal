@@ -43,14 +43,14 @@ export function ProvideAppBuildPage({
 
 	const handleUpload = (files: File[]) => {
 		const newUploadedFiles: UploadedFile[] = files.map((file) => ({
+			error: false,
 			file,
-			id: uniqueId(),
 			fileName: file.name,
-			readableSize: filesize(file.size),
+			id: uniqueId(),
 			preview: URL.createObjectURL(file),
 			progress: 0,
+			readableSize: filesize(file.size),
 			uploaded: true,
-			error: false,
 		}));
 
 		if (buildZIPFiles?.length) {
@@ -217,13 +217,13 @@ export function ProvideAppBuildPage({
 						});
 
 						createProductSpecification({
+							appId,
 							body: {
 								productId: appProductId,
 								specificationId: dataSpecification.id,
 								specificationKey: dataSpecification.key,
 								value: {en_US: appType},
 							},
-							appId,
 						});
 					};
 

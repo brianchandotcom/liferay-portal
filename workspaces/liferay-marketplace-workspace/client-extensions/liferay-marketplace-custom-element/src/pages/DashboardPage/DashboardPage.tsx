@@ -6,7 +6,6 @@ import {
 	AppProps,
 	DashboardTable,
 } from '../../components/DashboardTable/DashboardTable';
-import {DashboardToolbar} from '../../components/DashboardToolbar/DashboardToolbar';
 import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
 import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';

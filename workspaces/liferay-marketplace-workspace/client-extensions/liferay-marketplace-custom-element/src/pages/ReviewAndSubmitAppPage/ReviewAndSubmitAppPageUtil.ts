@@ -1,38 +1,36 @@
+import brightnessEmptyIcon from '../../assets/icons/brightness-empty.svg';
+import scheduleIcon from '../../assets/icons/schedule-icon.svg';
+
 export type File = {
-	image: string;
-	fileName: string;
 	fileDescription: string;
+	fileName: string;
+	image: string;
 };
 
 export type CardInfo = {
 	icon: string;
-	title: string;
 	link: string;
+	title: string;
 };
 
 export type CardTag = {
 	icon: string;
-	title: string;
 	tags: string[];
+	title: string;
 };
 
 export type ReviewAndSubmitAppPageUtilProps = {
 	cardInfos?: CardInfo[];
 	cardTags?: CardTag[];
 	description?: string;
-	icon?: string;
 	fileName?: string;
 	files?: File[];
+	icon?: string;
 	section: string;
 	tags?: string[];
 	title?: string;
 	version?: string;
 };
-
-import brightnessEmptyIcon from '../../assets/icons/brightness-empty.svg';
-import scheduleIcon from '../../assets/icons/schedule-icon.svg';
-import file1 from '../../assets/images/file1.svg';
-import file2 from '../../assets/images/file2.svg';
 
 export const initialReviewAndSubmitAppPageItems: ReviewAndSubmitAppPageUtilProps[] =
 	[
@@ -53,8 +51,8 @@ export const initialReviewAndSubmitAppPageItems: ReviewAndSubmitAppPageUtilProps
 			],
 		},
 		{
-			section: 'Build',
 			fileName: 'a-co-libraries-01.lpkg',
+			section: 'Build',
 		},
 		{
 			icon: brightnessEmptyIcon,

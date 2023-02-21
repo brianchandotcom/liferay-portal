@@ -17,8 +17,8 @@ export function Tooltip({tooltip, tooltipText}: TooltipProps) {
 				className={
 					'tooltip-base ' +
 					classNames({
-						'tooltip-base-container': !tooltipText,
 						'tooltip-base-auto': tooltipText,
+						'tooltip-base-container': !tooltipText,
 					})
 				}
 			>

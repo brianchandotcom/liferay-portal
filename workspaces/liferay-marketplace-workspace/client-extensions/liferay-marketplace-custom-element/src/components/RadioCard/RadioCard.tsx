@@ -5,21 +5,17 @@ import radioChecked from '../../assets/icons/radio-button-checked.svg';
 import radioUnchecked from '../../assets/icons/radio-button-unchecked.svg';
 
 import './RadioCard.scss';
-
-import {useState} from 'react';
-
-import {TYPES} from '../../manage-app-state/actionTypes';
 import {Tooltip} from '../Tooltip/Tooltip';
 
 interface RadioCardProps {
-	title: string;
-	icon?: string;
-	tooltip: string;
 	description: string;
-	selected: boolean;
-	onChange: (value?: boolean) => void;
 	disabled?: boolean;
+	icon?: string;
+	onChange: (value?: boolean) => void;
+	selected: boolean;
+	title: string;
 	toggle?: boolean;
+	tooltip: string;
 }
 
 export function RadioCard({
@@ -35,8 +31,8 @@ export function RadioCard({
 	return (
 		<div
 			className={classNames('radio-card-container', {
-				'radio-card-container-selected': selected,
 				'radio-card-container-disabled': disabled,
+				'radio-card-container-selected': selected,
 			})}
 		>
 			<div className="radio-card-main-info">

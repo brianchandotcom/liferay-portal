@@ -16,7 +16,7 @@ export function InformLicensingTermsPricePage({
 	onClickBack,
 	onClickContinue,
 }: InformLicensingTermsPricePageProps) {
-	const [{appId, appLicense, appLicensePrice, appProductId}, _] =
+	const [{appLicensePrice, appProductId}, _] =
 		useAppContext();
 
 	return (
@@ -40,11 +40,11 @@ export function InformLicensingTermsPricePage({
 				onClickBack={() => onClickBack()}
 				onClickContinue={() => {
 					createAppLicensePrice({
-						body: {
-							sku: 'default',
-							price: parseFloat(appLicensePrice),
-						},
 						appProductId,
+						body: {
+							price: parseFloat(appLicensePrice),
+							sku: 'default',
+						},
 					});
 
 					onClickContinue();

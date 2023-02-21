@@ -3,9 +3,9 @@ import {ClayCheckbox} from '@clayui/form';
 import './Checkbox.scss';
 
 interface CheckboxProps {
-	label?: string;
-	description?: string;
 	checked: boolean;
+	description?: string;
+	label?: string;
 	onChange: () => void;
 	readOnly?: boolean;
 }

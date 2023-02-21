@@ -1,0 +1,222 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-83384=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		task ("Given user test2@liferay.com with Administrator role created") {
+			UserAccountAPI.setUpGlobalUserAccountId(
+				alternateName = "test2",
+				emailAddress = "test2@liferay.com",
+				familyName = "test2fn",
+				fieldName = "password",
+				fieldValue = "test",
+				givenName = "test2gn");
+
+			UserAccountAPI.createUserRoleByUserAccountId(
+				roleName = "Administrator",
+				streetNumber = 1,
+				userAccountId = ${staticUserAccountId});
+
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+
+			Site.assignUserAsMemberCP(
+				userFirstName = "test2gn",
+				userLastName = "test2fn",
+				userScreenName = "test2");
+
+			Navigator.openURL();
+		}
+
+		task ("Given Notification Template created") {
+			UserNotificationAPI.createNotificationTemplate(
+				en_US = "The entry name is [%STUDENT_NAME%].",
+				externalReferenceCode = "test",
+				name = "User Notification Template",
+				recipientType = "user",
+				type = "userNotification",
+				userScreenName = "test");
+		}
+
+		task ("And Given Student object definition") {
+			var customObjectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given in Student an Action of trigger OnAfterAdd including Notification Template created") {
+			ObjectActionAPI.createObjectAction(
+				label = "Object Entry Notification",
+				name = "objectEntryNotification",
+				notificationTemplateErc = "test",
+				notificationTemplateId = ${staticNotificationTemplateId},
+				objectActionExecutorKey = "notification",
+				objectActionTriggerKey = "onAfterAdd",
+				objectDefinitionId = ${customObjectDefinitionId},
+				type = "userNotification");
+		}
+
+		task ("Given student entry created") {
+			var studentId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Student Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONUser.deleteUserByUserId(userId = ${staticUserAccountId});
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			Navigator.gotoNotifications();
+
+			Notifications.deleteNotification(contentBody = "The entry name is Student Name.");
+
+			UserNotificationAPI.deleteNotificationTemplate();
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "Student");
+		}
+	}
+
+	@priority = 4
+	test CanGetCurrentUserNotifications {
+		task ("When requesting getMyUserNotificationsPage") {
+			var response = UserNotificationAPI.getUserNotifications();
+		}
+
+		task ("Then the response contains a notification of the created Student entry") {
+			var actual = JSONUtil.getWithJSONPath(${response}, "$..items..message");
+
+			TestUtils.assertEquals(
+				actual = ${actual},
+				expected = "The entry name is Student Name.");
+		}
+	}
+
+	@priority = 4
+	test CanGetOwnedUserNotifications {
+		property portal.acceptance = "true";
+
+		task ("Given Web Content Folder created as user test@liferay.com") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "content-structure");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+			FormFields.editFieldReference(key_fieldReference = "Text");
+
+			Button.clickSave();
+
+			var responseFromCreate = HeadlessWebcontentFolderAPI.createStructuredContentFolder(
+				groupName = "Site Name",
+				name = "Test Folder");
+		}
+
+		task ("And Given user test2 subscribed to the Web Content Folder") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test2@liferay.com",
+				userLoginFullName = "test2fn test2gn");
+
+			var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+				element = "$.id",
+				responseToParse = ${responseFromCreate});
+
+			HeadlessWebcontentFolderAPI.structuredContentFolderSubscribeByUserName(
+				structuredContentFolderId = ${structuredContentFolderId},
+				userName = "test2");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("And Given Web Content in Web Content Folder created by test user") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			NavItem.gotoStructures();
+
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			HeadlessWebcontentAPI.createStructuredContent(
+				data = "<p>My content</p>",
+				ddmStructureId = ${ddmStructureId},
+				label = "Text",
+				name = "Text",
+				structuredContentFolderId = ${structuredContentFolderId},
+				title = "WC WebContent Title 1");
+
+			Navigator.openURL();
+		}
+
+		task ("When user test requests getUserAccountUserNotificationsPage with userAccountId of user test2") {
+			var response = UserNotificationAPI.getUserAccountUserNotifications(userAccountId = ${staticUserAccountId});
+		}
+
+		task ("Then the response contains the recently created notification") {
+			var actual = JSONUtil.getWithJSONPath(${response}, "$..items..message");
+
+			TestUtils.assertEquals(
+				actual = ${actual},
+				expected = "Test Test added a new web content article.");
+		}
+	}
+
+	@priority = 4
+	test CanPutUserNotificationRead {
+		task ("When requesting putUserNotificationRead") {
+			UserNotificationAPI.putUserNotificationReadOrUnread(parameter = "read");
+		}
+
+		task ("Then the response contains a notification of the created Student entry") {
+			var response = UserNotificationAPI.getUserNotifications();
+
+			var actual = JSONUtil.getWithJSONPath(${response}, "$..items..read");
+
+			TestUtils.assertEquals(
+				actual = ${actual},
+				expected = "true");
+		}
+	}
+
+	@priority = 4
+	test CanPutUserNotificationUnread {
+		task ("And Given boolean field 'read' set to 'true' with putUserNotificationRead") {
+			UserNotificationAPI.putUserNotificationReadOrUnread(parameter = "read");
+		}
+
+		task ("When requesting putUserNotificationUnread") {
+			UserNotificationAPI.putUserNotificationReadOrUnread(parameter = "unread");
+		}
+
+		task ("Then the read field of the response of getMyUserNotificationsPage shows false") {
+			var response = UserNotificationAPI.getUserNotifications();
+
+			var actual = JSONUtil.getWithJSONPath(${response}, "$..items..read");
+
+			TestUtils.assertEquals(
+				actual = ${actual},
+				expected = "false");
+		}
+	}
+
+}

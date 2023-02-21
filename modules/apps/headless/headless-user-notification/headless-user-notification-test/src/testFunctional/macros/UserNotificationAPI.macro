@@ -1,0 +1,123 @@
+definition {
+
+	macro _curlNotificationTemplates {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(notificationTemplateId)) {
+			var api = "notification-templates/${notificationTemplateId}";
+		}
+		else {
+			var api = "notification-templates";
+		}
+
+		var curl = '''
+			${portalURL}/o/notification/v1.0/${api} \
+				-u test@liferay.com:test \
+				-H accept: application/json \
+				-H 'Content-Type: application/json' \
+		''';
+
+		return ${curl};
+	}
+
+	macro _curlUserNotifications {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(userNotificationId)) {
+			var api = "user-notifications/${userNotificationId}";
+
+			if (isSet(parameter)) {
+				var api = "user-notifications/${userNotificationId}/${parameter}";
+			}
+		}
+		else if (isSet(userAccountId)) {
+			var api = "user-accounts/${userAccountId}/user-notifications";
+		}
+		else {
+			var api = "my-user-notifications";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-user-notification/v1.0/${api} \
+				-H accept: application/json \
+				-H 'Content-Type: application/json' \
+				-u test@liferay.com:test \
+		''';
+
+		return ${curl};
+	}
+
+	macro createNotificationTemplate {
+		Variables.assertDefined(parameterList = "${name},${recipientType},${userScreenName},${en_US},${type}");
+
+		var curl = UserNotificationAPI._curlNotificationTemplates();
+		var body = '''
+			-d {
+				"editorType": "richText",
+				"externalReferenceCode": "${externalReferenceCode}",
+				"name": "${name}",
+				"recipientType": "${recipientType}",
+				"recipients": [
+					{
+						"userScreenName": "${userScreenName}"
+					}
+				],
+				"subject": {
+					"en_US": "${en_US}"
+				},
+				"type": "${type}"
+			}
+		''';
+
+		var curl = StringUtil.add(${curl}, ${body}, " ");
+
+		var curl = JSONCurlUtil.post(${curl});
+
+		var notificationTemplateId = JSONUtil.getWithJSONPath(${curl}, "$.id");
+
+		static var staticNotificationTemplateId = ${notificationTemplateId};
+
+		return ${staticNotificationTemplateId};
+	}
+
+	macro deleteNotificationTemplate {
+		var curl = UserNotificationAPI._curlNotificationTemplates(notificationTemplateId = ${staticNotificationTemplateId});
+
+		JSONCurlUtil.delete(${curl});
+	}
+
+	macro getUserAccountUserNotifications {
+		Variables.assertDefined(parameterList = ${userAccountId});
+
+		var curl = UserNotificationAPI._curlUserNotifications(userAccountId = ${userAccountId});
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+	macro getUserNotifications {
+		var curl = UserNotificationAPI._curlUserNotifications();
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+	macro putUserNotificationReadOrUnread {
+		Variables.assertDefined(parameterList = ${parameter});
+
+		var response = UserNotificationAPI.getUserNotifications();
+
+		var userNotificationId = JSONUtil.getWithJSONPath(${response}, "$..items..id");
+
+		var curl = UserNotificationAPI._curlUserNotifications(
+			parameter = ${parameter},
+			userNotificationId = ${userNotificationId});
+
+		var response = JSONCurlUtil.put(${curl});
+
+		return ${response};
+	}
+
+}

@@ -136,8 +136,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 								modelVar="layoutPageTemplateEntry"
 							>
 								<liferay-ui:search-container-column-text>
-									<clay:vertical-card
-										verticalCard="<%= new SelectLayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse) %>"
+									<react:component
+										module="js/LayoutPageTemplateEntryCard"
+										props="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntryCardProps(layoutPageTemplateEntry) %>"
 									/>
 								</liferay-ui:search-container-column-text>
 							</liferay-ui:search-container-row>

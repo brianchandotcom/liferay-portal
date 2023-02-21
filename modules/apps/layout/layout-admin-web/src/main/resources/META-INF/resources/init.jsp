@@ -62,7 +62,6 @@ page import="com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.
 page import="com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib.SelectBasicTemplatesVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib.SelectGlobalTemplatesVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib.SelectLayoutMasterLayoutVerticalCard" %><%@
-page import="com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib.SelectLayoutPageTemplateEntryVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib.SelectThemeVerticalCard" %><%@
 page import="com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider" %><%@
 page import="com.liferay.layout.admin.web.internal.util.CustomizationSettingsUtil" %><%@

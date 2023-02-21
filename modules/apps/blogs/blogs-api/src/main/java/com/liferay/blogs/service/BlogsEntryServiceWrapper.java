@@ -95,12 +95,26 @@ public class BlogsEntryServiceWrapper
 	}
 
 	@Override
+	public BlogsEntry fetchBlogsEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _blogsEntryService.fetchBlogsEntry(entryId);
+	}
+
+	@Override
 	public BlogsEntry fetchBlogsEntryByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _blogsEntryService.fetchBlogsEntryByExternalReferenceCode(
 			groupId, externalReferenceCode);
+	}
+
+	@Override
+	public BlogsEntry fetchEntry(long groupId, String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _blogsEntryService.fetchEntry(groupId, urlTitle);
 	}
 
 	@Override

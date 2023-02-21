@@ -29,6 +29,7 @@ import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
+import com.liferay.portal.vulcan.util.MessageUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -101,7 +102,7 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 	public Filter createContext(Message message) {
 		try {
 			HttpServletRequest httpServletRequest =
-				ContextProviderUtil.getHttpServletRequest(message);
+				MessageUtil.getHttpServletRequest(message);
 
 			return createContext(
 				new AcceptLanguageImpl(httpServletRequest, _language, _portal),

@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
 import com.liferay.portal.vulcan.fields.FieldsQueryParam;
+import com.liferay.portal.vulcan.util.MessageUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +40,7 @@ public class FieldsQueryParamContextProvider
 	@Override
 	public FieldsQueryParam createContext(Message message) {
 		HttpServletRequest httpServletRequest =
-			ContextProviderUtil.getHttpServletRequest(message);
+			MessageUtil.getHttpServletRequest(message);
 
 		String fieldNamesString = httpServletRequest.getParameter("fields");
 

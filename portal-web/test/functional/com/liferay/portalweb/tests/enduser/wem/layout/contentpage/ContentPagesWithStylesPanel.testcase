@@ -123,6 +123,8 @@ definition {
 
 		task ("When the page creator selects an existing token on Padding Left of Spacing") {
 			DropdownMenuItem.click(menuItem = "Spacer 2");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("Then the page creator should see the cleared input field and second token as selected on dropdown menu") {

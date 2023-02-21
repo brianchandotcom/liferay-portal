@@ -14,6 +14,7 @@
 
 package com.liferay.portal.log4j.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -268,19 +269,24 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 	private List<Appender> _createAppenders(long companyId) {
 		List<Appender> appenders = new ArrayList<>();
 
-		String appenderName = companyId + StringPool.DASH + getName();
+		String appenderName = StringBundler.concat(
+			companyId, StringPool.DASH, getName(), StringPool.DASH);
 
-		for (int i = 0; i < _companyLogRoutingFilePatterns.length; i++) {
-			String filePattern =
-				_dirPattern + StringPool.FORWARD_SLASH +
-					_companyLogRoutingFilePatterns[i].getFileNamePattern();
+		for (CompanyLogRoutingFilePattern companyLogRoutingFilePattern :
+				_companyLogRoutingFilePatterns) {
+
+			Layout<?> layout = companyLogRoutingFilePattern.getLayout();
+
+			Class<?> layoutClass = layout.getClass();
 
 			appenders.add(
 				_createAppender(
-					_companyLogRoutingFilePatterns[i].getLayout(),
+					layout,
 					StringUtil.replace(
-						filePattern, "@company.id@", String.valueOf(companyId)),
-					appenderName + i));
+						_dirPattern + StringPool.FORWARD_SLASH +
+							companyLogRoutingFilePattern.getFileNamePattern(),
+						"@company.id@", String.valueOf(companyId)),
+					appenderName.concat(layoutClass.getSimpleName())));
 		}
 
 		return appenders;

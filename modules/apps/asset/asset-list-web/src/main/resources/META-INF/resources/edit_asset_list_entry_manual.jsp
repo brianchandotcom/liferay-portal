@@ -157,16 +157,6 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 							truncate="<%= true %>"
 						>
 							<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
-
-							<c:if test="<%= !assetEntry.isVisible() %>">
-								(<aui:workflow-status
-								markupView="lexicon"
-								showIcon="<%= false %>"
-								showLabel="<%= false %>"
-								status="<%= assetRenderer.getStatus() %>"
-								statusMessage='<%= (assetRenderer.getStatus() == 0) ? "not-visible" : WorkflowConstants.getStatusLabel(assetRenderer.getStatus()) %>'
-							/>)
-							</c:if>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text

@@ -5879,13 +5879,11 @@ public class ServiceBuilder {
 			return false;
 		}
 
-		List<String> columnNames = TransformUtil.transform(
-			columnElements,
-			columnElement -> columnElement.attributeValue("name"));
-
 		boolean hasCompanyId = false;
 
-		for (String columnName : columnNames) {
+		for (Element columnElement : columnElements) {
+			String columnName = columnElement.attributeValue("name");
+
 			if (columnName.equals("companyId")) {
 				hasCompanyId = true;
 

@@ -562,21 +562,21 @@ public class WabProcessorTest {
 
 						@Override
 						public FileVisitResult postVisitDirectory(
-								Path dirPath, IOException ioException)
+								Path path, IOException ioException)
 							throws IOException {
 
-							Files.delete(dirPath);
+							Files.delete(path);
 
 							return FileVisitResult.CONTINUE;
 						}
 
 						@Override
 						public FileVisitResult visitFile(
-								Path filePath,
+								Path path,
 								BasicFileAttributes basicFileAttributes)
 							throws IOException {
 
-							Files.delete(filePath);
+							Files.delete(path);
 
 							return FileVisitResult.CONTINUE;
 						}

@@ -891,15 +891,13 @@ public class WabProcessor {
 		Map<String, Resource> resources = jar.getResources();
 
 		for (String resourceName : resources.keySet()) {
-			if (!resourceName.startsWith("OSGI-INF/configurator/")) {
-				continue;
+			if (resourceName.startsWith("OSGI-INF/configurator/")) {
+				_appendProperty(
+					analyzer, Constants.REQUIRE_CAPABILITY,
+					_REQUIRE_CAPABILITY_OSGI_CONFIGURATOR);
+
+				break;
 			}
-
-			_appendProperty(
-				analyzer, Constants.REQUIRE_CAPABILITY,
-				_REQUIRE_CAPABILITY_OSGI_CONFIGURATOR);
-
-			break;
 		}
 	}
 

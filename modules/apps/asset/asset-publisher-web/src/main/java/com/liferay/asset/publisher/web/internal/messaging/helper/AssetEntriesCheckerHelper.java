@@ -75,8 +75,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -143,14 +141,10 @@ public class AssetEntriesCheckerHelper {
 			return;
 		}
 
-		Stream<AssetEntry> stream = assetEntries.stream();
+		ListUtil.distinct(assetEntries);
 
-		assetEntries = stream.distinct(
-		).filter(
-			AssetEntry::isVisible
-		).collect(
-			Collectors.toList()
-		);
+		assetEntries = ListUtil.filter(
+			assetEntries, assetEntry -> assetEntry.isVisible());
 
 		long[] notifiedAssetEntryIds = GetterUtil.getLongValues(
 			portletPreferences.getValues("notifiedAssetEntryIds", null));

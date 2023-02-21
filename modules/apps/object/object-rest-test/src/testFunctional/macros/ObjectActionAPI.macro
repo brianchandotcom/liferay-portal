@@ -1,0 +1,48 @@
+definition {
+
+	macro _curlCreateObjectAction {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-actions \
+				-u test@liferay.com:test \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-d {
+					"active": true,
+					"label":{
+						"en_US":"${label}"
+					},
+					"name": "${name}",
+					"objectActionExecutorKey": "${objectActionExecutorKey}",
+					"objectActionTriggerKey": "${objectActionTriggerKey}",
+					"parameters":{
+						"notificationTemplateExternalReferenceCode": "${notificationTemplateErc}",
+						"type": "${type}",
+						"notificationTemplateId": "${notificationTemplateId}"
+					}
+				}
+		''';
+
+		return ${curl};
+	}
+
+	macro createObjectAction {
+		Variables.assertDefined(parameterList = "${objectDefinitionId},${label},${name},${objectActionExecutorKey},${objectActionTriggerKey},${notificationTemplateId},${type},${notificationTemplateErc}");
+
+		var curl = ObjectActionAPI._curlCreateObjectAction(
+			label = ${label},
+			name = ${name},
+			notificationTemplateErc = ${notificationTemplateErc},
+			notificationTemplateId = ${notificationTemplateId},
+			objectActionExecutorKey = ${objectActionExecutorKey},
+			objectActionTriggerKey = ${objectActionTriggerKey},
+			objectDefinitionId = ${objectDefinitionId},
+			type = ${type});
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+}

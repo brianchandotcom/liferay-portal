@@ -16,10 +16,10 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="versionUserId" type="long" />
-		<column name="versionUserName" type="String" />
+		<column name="userId" type="long" uad-anonymize-field-name="userId" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
+		<column name="versionUserId" type="long" uad-anonymize-field-name="userId" />
+		<column name="versionUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -157,8 +157,8 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userId" type="long" uad-anonymize-field-name="userId" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 
 		<!-- Other fields -->
@@ -170,8 +170,8 @@
 		<column name="version" type="String" />
 		<column name="displayIndex" type="int" />
 		<column name="status" type="int" />
-		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserId" type="long" uad-anonymize-field-name="userId" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Finder methods -->

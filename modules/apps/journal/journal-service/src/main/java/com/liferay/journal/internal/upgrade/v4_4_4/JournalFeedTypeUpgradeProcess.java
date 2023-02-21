@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
@@ -133,9 +134,10 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private Set<String> _getArticleTypes() throws Exception {
+	private Set<String> _getArticleTypes(long companyId) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select distinct type_ from JournalFeed");
+				"select distinct type_ from JournalFeed where companyId = " +
+					companyId);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Set<String> types = new HashSet<>();
@@ -259,18 +261,19 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeFeedType() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			Set<String> types = _getArticleTypes();
-
-			if (types.size() <= 0) {
-				return;
-			}
-
 			Locale localeThreadLocalDefaultLocale =
 				LocaleThreadLocal.getDefaultLocale();
 
 			try {
 				_companyLocalService.forEachCompany(
 					company -> {
+						Set<String> types = _getArticleTypes(
+							company.getCompanyId());
+
+						if (types.size() <= 0) {
+							return;
+						}
+
 						LocaleThreadLocal.setDefaultLocale(company.getLocale());
 
 						Set<Locale> locales = LanguageUtil.getAvailableLocales(

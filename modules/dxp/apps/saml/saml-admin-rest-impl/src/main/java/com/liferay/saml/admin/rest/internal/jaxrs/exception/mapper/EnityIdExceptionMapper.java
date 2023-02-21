@@ -12,11 +12,11 @@
  *
  */
 
-package com.liferay.saml.admin.rest.internal.jaxrs.mapper;
+package com.liferay.saml.admin.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
-import com.liferay.saml.runtime.exception.CredentialException;
+import com.liferay.saml.runtime.exception.EntityIdException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -33,13 +33,13 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ExceptionMapper.class
 )
-public class CredentialExceptionMapper
-	extends BaseExceptionMapper<CredentialException> {
+public class EnityIdExceptionMapper
+	extends BaseExceptionMapper<EntityIdException> {
 
 	@Override
-	protected Problem getProblem(CredentialException credentialException) {
+	protected Problem getProblem(EntityIdException entityIdException) {
 		return new Problem(
-			Response.Status.BAD_REQUEST, credentialException.getMessage());
+			Response.Status.BAD_REQUEST, entityIdException.getMessage());
 	}
 
 	@Override

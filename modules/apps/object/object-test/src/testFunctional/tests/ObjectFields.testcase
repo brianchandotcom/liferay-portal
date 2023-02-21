@@ -2841,24 +2841,6 @@ definition {
 				filterBy = "Custom Long Integer",
 				filterType = "Is Equal To",
 				filterValue = 1);
-
-			//Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
-			//Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
-			//Click(
-			//	key_picklistOption = "Custom Long Integer",
-			//	locator1 = "ObjectCustomViews#FIELD_VIEW_FILTER_DROPDOWN_OPTION");
-			//Click(
-			//	key_filterLabel = "Filter Type",
-			//	locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
-			//Click(
-			//	key_fieldType = "Is Equal To",
-			//	locator1 = "ObjectField#TYPE_OPTION");
-			//Type(
-			//	key_text = "Value",
-			//	locator1 = "TextInput#ANY",
-			//	value1 = 1);
-			//ObjectCustomViews.clickSaveOnModal();
-
 		}
 
 		task ("Then: The new filter is created") {
@@ -2910,24 +2892,6 @@ definition {
 				filterBy = "Custom Long Integer",
 				filterType = "Is Not Equal To",
 				filterValue = 1);
-
-			//Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
-			//Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
-			//Click(
-			//	key_picklistOption = "Custom Long Integer",
-			//	locator1 = "ObjectCustomViews#FIELD_VIEW_FILTER_DROPDOWN_OPTION");
-			//Click(
-			//	key_filterLabel = "Filter Type",
-			//	locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
-			//Click(
-			//	key_fieldType = "Is Equal To",
-			//	locator1 = "ObjectField#TYPE_OPTION");
-			//Type(
-			//	key_text = "Value",
-			//	locator1 = "TextInput#ANY",
-			//	value1 = 1);
-			//ObjectCustomViews.clickSaveOnModal();
-
 		}
 
 		task ("Then: The new filter is created") {

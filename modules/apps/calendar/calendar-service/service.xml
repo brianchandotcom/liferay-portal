@@ -65,8 +65,8 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userId" type="long" uad-anonymize-field-name="userId" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -90,8 +90,8 @@
 		<column name="secondReminderType" type="String" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
-		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserId" type="long" uad-anonymize-field-name="userId" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column change-tracking-resolution-type="merge" name="statusDate" type="Date" />
 
 		<!-- Order -->

@@ -166,11 +166,27 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		public DisplayBuilder<T> display(String languageKey, Object value);
 
 		public DisplayBuilder<T> display(
+			String languageKey, Object value, boolean escape);
+
+		public DisplayBuilder<T> display(
+			String languageKey, Object value, boolean escape,
+			boolean formatted);
+
+		public DisplayBuilder<T> display(
 			String languageKey, String value, boolean escape);
 
 		public DisplayBuilder<T> display(
 			String languageKey,
 			UnsafeSupplier<Object, Exception> unsafeSupplier);
+
+		public DisplayBuilder<T> display(
+			String languageKey,
+			UnsafeSupplier<Object, Exception> unsafeSupplier, boolean escape);
+
+		public DisplayBuilder<T> display(
+			String languageKey,
+			UnsafeSupplier<Object, Exception> unsafeSupplier, boolean escape,
+			boolean formatted);
 
 		public DisplayContext<T> getDisplayContext();
 
@@ -187,6 +203,21 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 
 		@Override
 		public DisplayBuilder<T> display(String languageKey, Object value) {
+			return display(languageKey, value, true);
+		}
+
+		@Override
+		public DisplayBuilder<T> display(
+			String languageKey, Object value, boolean escape) {
+
+			return display(languageKey, value, escape, false);
+		}
+
+		@Override
+		public DisplayBuilder<T> display(
+			String languageKey, Object value, boolean escape,
+			boolean formatted) {
+
 			HttpServletResponse httpServletResponse =
 				_displayContext.getHttpServletResponse();
 
@@ -197,6 +228,10 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				writer.write("table-cell-expand-small\">");
 				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
 				writer.write("</td><td class=\"table-cell-expand\">");
+
+				if (formatted) {
+					writer.write("<pre>");
+				}
 
 				if (value instanceof Blob) {
 					String downloadURL = _displayContext.getDownloadURL(
@@ -223,7 +258,16 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 					writer.write(format.format(value));
 				}
 				else {
-					writer.write(HtmlUtil.escape(String.valueOf(value)));
+					if (escape) {
+						writer.write(HtmlUtil.escape(String.valueOf(value)));
+					}
+					else {
+						writer.write(String.valueOf(value));
+					}
+				}
+
+				if (formatted) {
+					writer.write("</pre>");
 				}
 
 				writer.write("</td></tr>");
@@ -239,30 +283,7 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 		public DisplayBuilder<T> display(
 			String languageKey, String value, boolean escape) {
 
-			HttpServletResponse httpServletResponse =
-				_displayContext.getHttpServletResponse();
-
-			try {
-				Writer writer = httpServletResponse.getWriter();
-
-				writer.write("<tr><td class=\"publications-key-td ");
-				writer.write("table-cell-expand-small\">");
-				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
-				writer.write("</td><td class=\"table-cell-expand\">");
-
-				if (escape) {
-					value = HtmlUtil.escape(value);
-				}
-
-				writer.write(value);
-
-				writer.write("</td></tr>");
-			}
-			catch (IOException ioException) {
-				throw new UncheckedIOException(ioException);
-			}
-
-			return this;
+			return display(languageKey, value, escape, false);
 		}
 
 		@Override
@@ -270,11 +291,28 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 			String languageKey,
 			UnsafeSupplier<Object, Exception> unsafeSupplier) {
 
+			return display(languageKey, unsafeSupplier, true);
+		}
+
+		@Override
+		public DisplayBuilder<T> display(
+			String languageKey,
+			UnsafeSupplier<Object, Exception> unsafeSupplier, boolean escape) {
+
+			return display(languageKey, unsafeSupplier, escape, false);
+		}
+
+		@Override
+		public DisplayBuilder<T> display(
+			String languageKey,
+			UnsafeSupplier<Object, Exception> unsafeSupplier, boolean escape,
+			boolean formatted) {
+
 			try {
 				Object value = unsafeSupplier.get();
 
 				if (value != null) {
-					display(languageKey, value);
+					display(languageKey, value, escape, formatted);
 				}
 			}
 			catch (Exception exception) {

@@ -640,7 +640,9 @@ definition {
 		}
 
 		task ("Assert no Page option in drop down list") {
-			Click(locator1 = "Button#PLUS");
+			Click(
+				key_text = "Add",
+				locator1 = "Button#ANY");
 
 			MenuItem.viewNotPresent(menuItem = "Page");
 

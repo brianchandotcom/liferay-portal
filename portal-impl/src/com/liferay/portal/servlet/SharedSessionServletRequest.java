@@ -14,9 +14,6 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
@@ -33,8 +30,6 @@ public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 		super(httpServletRequest);
 
 		_shared = shared;
-
-		_portalHttpSession = httpServletRequest.getSession();
 	}
 
 	@Override
@@ -44,53 +39,28 @@ public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public HttpSession getSession(boolean create) {
-		if (create) {
-			checkPortalSession();
+		if (_shared || !create) {
+			return _getPortalHttpSession(create);
 		}
 
-		if (_shared) {
-			return _portalHttpSession;
-		}
-
-		HttpSession portletHttpSession = super.getSession(create);
-
-		if ((portletHttpSession != null) &&
-			(portletHttpSession != _portalHttpSession)) {
-
-			return getSharedSessionWrapper(
-				_portalHttpSession, portletHttpSession);
-		}
-
-		return portletHttpSession;
+		return new SharedSessionWrapper(
+			_getPortalHttpSession(true), super.getSession(true));
 	}
 
 	public HttpSession getSharedSession() {
-		return _portalHttpSession;
+		return _getPortalHttpSession(true);
 	}
 
-	protected void checkPortalSession() {
-		try {
-			_portalHttpSession.isNew();
+	private HttpSession _getPortalHttpSession(boolean create) {
+		HttpSession httpSession = super.getSession(false);
+
+		if (httpSession == null) {
+			httpSession = super.getSession(create);
 		}
-		catch (IllegalStateException illegalStateException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException);
-			}
 
-			_portalHttpSession = super.getSession(true);
-		}
+		return httpSession;
 	}
 
-	protected HttpSession getSharedSessionWrapper(
-		HttpSession portalHttpSession, HttpSession portletHttpSession) {
-
-		return new SharedSessionWrapper(portalHttpSession, portletHttpSession);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SharedSessionServletRequest.class);
-
-	private HttpSession _portalHttpSession;
 	private final boolean _shared;
 
 }

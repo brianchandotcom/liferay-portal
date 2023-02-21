@@ -425,6 +425,93 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-171967. Disable and enable configuration for managing asset.categories.search.hierarchical property from the UI."
+	@priority = 4
+	test DisableAndEnableIncludeChildCategoriesWhenSearchingParentCategories {
+		task ("Given an administrator disables the Include child categories when searching parent categories") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Categorization",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.disableCheckbox(fieldName = "Include child categories when searching parent categories.");
+
+			PortletEntry.save();
+		}
+
+		task ("When the administrator configure the Asset Publisher to filter assets by parent category") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "SUV");
+
+			var wenjieId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "AITO Wenjie",
+				vocabularyName = "SUV");
+			var interiorId = JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "AITO Wenjie",
+				title = "Interior",
+				vocabularyName = "SUV");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = ${wenjieId},
+				content = "AITO Wenjie M9",
+				groupName = "Test Site Name",
+				title = "AITO Wenjie M9");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = ${interiorId},
+				content = "Hongmeng OS 3",
+				groupName = "Test Site Name",
+				title = "Hongmeng OS 3");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureCategoriesFilterPG(
+				categoryName = "AITO Wenjie",
+				portletName = "Asset Publisher");
+		}
+
+		task ("Then the administrator only sees the assets with parent category shown on the Asset Publisher") {
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "AITO Wenjie M9");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Hongmeng OS 3");
+		}
+
+		task ("When the administrator enables the Include child categories when searching parent categories") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Categorization",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.enableCheckbox(fieldName = "Include child categories when searching parent categories.");
+
+			PortletEntry.update();
+		}
+
+		task ("Then the administrator can see the assets with child category shown on the Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "AITO Wenjie M9");
+
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "Hongmeng OS 3");
+		}
+	}
+
 	@description = "Edit a category."
 	@priority = 5
 	@uitest

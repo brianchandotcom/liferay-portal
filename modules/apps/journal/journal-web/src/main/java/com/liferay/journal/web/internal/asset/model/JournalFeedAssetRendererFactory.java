@@ -39,13 +39,9 @@ public class JournalFeedAssetRendererFactory
 	public static final String TYPE = "content_feed";
 
 	public JournalFeedAssetRendererFactory() {
-		setCategorizable(true);
 		setClassName(JournalFeed.class.getName());
 		setPortletId(JournalPortletKeys.JOURNAL);
-		setSearchable(false);
-		setLinkable(false);
 		setSelectable(false);
-		setSupportsClassTypes(false);
 	}
 
 	@Override

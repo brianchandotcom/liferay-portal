@@ -1,12 +1,12 @@
 .dashboard-navigation-body-list {
-	width: 16.5rem;
-	height: 2.5rem;
-	display: flex;
-	justify-content: flex-start;
 	align-items: center;
 	border-radius: 0.375rem;
-	padding: 1rem 0.75rem;
 	cursor: pointer;
+	display: flex;
+	height: 2.5rem;
+	justify-content: flex-start;
+	padding: 1rem 0.75rem;
+	width: 16.5rem;
 
 	&-selected {
 		background-color: #e6edfb;
@@ -19,9 +19,9 @@
 	transition: background-color 0.3s;
 
 	&-icon {
-		width: 1.5rem;
 		height: 1.5rem;
 		margin-right: 0.625rem;
+		width: 1.5rem;
 		filter: invert(33%) sepia(8%) saturate(551%) hue-rotate(197deg)
 			brightness(95%) contrast(91%);
 
@@ -41,8 +41,8 @@
 	&-text {
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.813rem;
-		line-height: 1.5rem;
 		font-weight: 600;
+		line-height: 1.5rem;
 
 		&-selected {
 			color: #004ad7;

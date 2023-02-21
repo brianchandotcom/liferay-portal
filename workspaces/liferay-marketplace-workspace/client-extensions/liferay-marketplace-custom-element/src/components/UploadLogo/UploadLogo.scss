@@ -4,30 +4,30 @@ input[type='file'] {
 
 .upload-logo {
 	&-container {
-		display: flex;
-		justify-content: center;
 		align-items: center;
-		margin-bottom: 1.5rem;
+		display: flex;
 		gap: 1rem;
+		justify-content: center;
+		margin-bottom: 1.5rem;
 	}
 
 	&-icon {
-		width: 4.5rem;
 		height: 4.5rem;
+		width: 4.5rem;
 	}
 
 	&-upload-label {
+		background-color: #0b5fff;
+		border-radius: 6px;
+		color: #fff;
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.875rem;
-		line-height: 1rem;
 		font-weight: 600;
-		text-align: center;
-		padding-top: 0.438rem;
-		border-radius: 6px;
-		background-color: #0b5fff;
-		color: #fff;
-		width: 6.75rem;
 		height: 2rem;
+		line-height: 1rem;
+		padding-top: 0.438rem;
+		text-align: center;
+		width: 6.75rem;
 
 		&:hover {
 			background-color: #0a58e7;
@@ -37,18 +37,18 @@ input[type='file'] {
 	}
 
 	&-delete-button {
-		width: 3.938rem;
-		height: 2rem;
 		background-color: transparent;
 		border: 1.5px solid #2b3a4b;
 		border-radius: 6px;
+		height: 2rem;
+		width: 3.938rem;
 
 		&-text {
+			color: #2b3a4b;
 			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 0.875rem;
-			line-height: 1rem;
 			font-weight: 600;
-			color: #2b3a4b;
+			line-height: 1rem;
 
 			transition: color 0.3s;
 		}

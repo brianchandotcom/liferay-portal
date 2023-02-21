@@ -26,8 +26,8 @@
 
 					.edit-button {
 						color: #0b5fff;
-						font-weight: 600;
 						font-size: 14px;
+						font-weight: 600;
 						line-height: 16px;
 					}
 				}
@@ -63,13 +63,13 @@
 			}
 
 			&-file {
-				padding-top: 20px;
-				display: flex;
 				align-items: center;
+				display: flex;
+				padding-top: 20px;
 
 				&-container {
-					background-color: #e7efff;
 					align-items: center;
+					background-color: #e7efff;
 					border-radius: 4px;
 					display: flex;
 					height: 72px;
@@ -77,8 +77,8 @@
 					width: 72px;
 
 					&-icon {
-						width: 24px;
 						height: 24px;
+						width: 24px;
 						filter: invert(35%) sepia(86%) saturate(1411%)
 							hue-rotate(206deg) brightness(102%) contrast(101%);
 					}
@@ -87,48 +87,48 @@
 				&-icon {
 					filter: invert(26%) sepia(83%) saturate(5507%)
 						hue-rotate(220deg) brightness(104%) contrast(97%);
+					height: 16px;
 					margin-left: 16px;
 					width: 16px;
-					height: 16px;
 				}
 
 				&-name {
 					color: #282934;
 					font-family: 'Source Sans Pro', sans-serif;
-					font-weight: 600;
 					font-size: 16px;
+					font-weight: 600;
 					line-height: 24px;
 					margin-left: 4px;
 				}
 			}
 
 			&-files {
-				padding-top: 20px;
 				display: flex;
-				width: 100%;
 				gap: 16px;
+				padding-top: 20px;
+				width: 100%;
 
 				&-info {
 					font-family: 'Source Sans Pro';
-					margin-top: 16px;
 					font-size: 13px;
 					line-height: 16px;
+					margin-top: 16px;
 				}
 
 				&-container {
-					background-color: #e7efff;
 					align-items: center;
+					background-color: #e7efff;
 					border-radius: 4px;
 					display: flex;
-					width: 220px;
 					height: 128px;
+					width: 220px;
 
 					.preview-image {
-						background-size: cover;
 						background-position: 50% 50%;
-						width: 220px;
-						height: 128px;
+						background-size: cover;
 						border-radius: 0.625rem;
+						height: 128px;
+						width: 220px;
 					}
 				}
 
@@ -140,56 +140,56 @@
 					&-icon {
 						filter: invert(26%) sepia(83%) saturate(5507%)
 							hue-rotate(220deg) brightness(104%) contrast(97%);
-						width: 16px;
 						height: 16px;
 						margin-bottom: 4px;
+						width: 16px;
 					}
 
 					&-name {
 						color: #282934;
 						font-family: 'Source Sans Pro', sans-serif;
-						font-weight: 600;
 						font-size: 16px;
+						font-weight: 600;
 						line-height: 24px;
 						margin-bottom: 4px;
 					}
 
 					&-description {
-						word-break: break-all;
 						font-family: 'Source Sans Pro';
+						word-break: break-all;
 					}
 				}
 			}
 
 			&-version {
-				padding-top: 20px;
 				display: flex;
-				width: 100%;
 				gap: 16px;
+				padding-top: 20px;
+				width: 100%;
 
 				&-container {
+					align-items: center;
 					background: #e6ebf5;
 					border-radius: 4px;
-					width: 106px;
-					height: 80px;
 					display: flex;
+					height: 80px;
 					justify-content: center;
-					align-items: center;
+					width: 106px;
 
 					&-icon {
+						align-items: center;
 						align-self: center;
 						background-color: #2e5aac;
 						border-radius: 4px;
 						color: #fff;
-						font-family: 'Source Sans Pro', sans-serif;
-						width: 42px;
-						height: 24px;
-						font-weight: 400;
-						font-size: 13px;
-						line-height: 16px;
 						display: flex;
+						font-family: 'Source Sans Pro', sans-serif;
+						font-size: 13px;
+						font-weight: 400;
+						height: 24px;
 						justify-content: center;
-						align-items: center;
+						line-height: 16px;
+						width: 42px;
 					}
 				}
 
@@ -201,8 +201,8 @@
 					&-name {
 						color: #282934;
 						font-family: 'Source Sans Pro', sans-serif;
-						font-weight: 600;
 						font-size: 16px;
+						font-weight: 600;
 						line-height: 24px;
 						margin-bottom: 4px;
 					}

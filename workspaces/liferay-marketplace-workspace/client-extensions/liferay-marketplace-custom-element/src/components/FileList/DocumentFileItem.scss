@@ -1,38 +1,38 @@
 .document-file-list-item {
 	&-container {
-		width: 37.5rem;
-		height: 6.5rem;
-		padding: 1rem;
+		align-items: center;
 		border: 1px solid #e2e2e4;
 		border-radius: 0.625rem;
-		margin-bottom: 1.5rem;
 		display: flex;
 		flex-direction: row;
-		align-items: center;
+		height: 6.5rem;
 		justify-content: space-between;
+		margin-bottom: 1.5rem;
+		padding: 1rem;
+		width: 37.5rem;
 	}
 
 	&-left-content {
+		align-items: center;
 		display: flex;
 		justify-content: center;
-		align-items: center;
 
 		&-icon {
-			width: 1.5rem;
 			height: 1.5rem;
+			width: 1.5rem;
 			filter: invert(35%) sepia(86%) saturate(1411%) hue-rotate(206deg)
 				brightness(102%) contrast(101%);
 		}
 
 		&-icon-container {
-			display: flex;
 			align-items: center;
-			justify-content: center;
-			width: 4.5rem;
-			height: 4.5rem;
 			background-color: #e7efff;
 			border-radius: 0.25rem;
+			display: flex;
+			height: 4.5rem;
+			justify-content: center;
 			margin-right: 1rem;
+			width: 4.5rem;
 		}
 
 		&-text {
@@ -42,34 +42,34 @@
 			}
 
 			&-file-name {
+				color: #282934;
 				font-family: 'Source Sans Pro', sans-serif;
 				font-size: 1rem;
-				line-height: 1.5rem;
 				font-weight: 400;
-				color: #282934;
+				line-height: 1.5rem;
 			}
 
 			&-file-size {
+				color: #6c6c75;
 				font-family: 'Source Sans Pro', sans-serif;
 				font-size: 0.813rem;
-				line-height: 1rem;
 				font-weight: 400;
-				color: #6c6c75;
+				line-height: 1rem;
 			}
 		}
 	}
 
 	&-button {
-		width: 6.938rem;
-		height: 2rem;
 		background-color: transparent;
 		border: 1.5px solid #2b3a4b;
 		border-radius: 0.375rem;
+		color: #2b3a4b;
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.875rem;
-		line-height: 1rem;
 		font-weight: 600;
-		color: #2b3a4b;
+		height: 2rem;
+		line-height: 1rem;
+		width: 6.938rem;
 
 		&:hover {
 			background-color: #2b3a4b;

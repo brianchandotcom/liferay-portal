@@ -1,16 +1,16 @@
 .radio-card {
 	&-container {
+		border: 1px solid #e2e2e4;
+		border-radius: 0.5rem;
 		display: flex;
 		flex-direction: column;
 		max-width: 37.5rem;
 		padding: 1rem;
-		border: 1px solid #e2e2e4;
-		border-radius: 0.5rem;
 		width: 100%;
 
 		&-selected {
-			border: 1px solid #004ad7;
 			background-color: #e6edfb;
+			border: 1px solid #004ad7;
 		}
 
 		&-disabled {
@@ -22,8 +22,8 @@
 	}
 
 	&-main-info {
-		display: flex;
 		align-items: center;
+		display: flex;
 		justify-content: space-between;
 	}
 
@@ -43,16 +43,16 @@
 	}
 
 	&-title {
-		display: flex;
 		align-items: flex-start;
-		justify-content: center;
+		display: flex;
 		gap: 0.5rem;
+		justify-content: center;
 
 		&-text {
 			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 1.125rem;
-			line-height: 1.25rem;
 			font-weight: 600;
+			line-height: 1.25rem;
 
 			&-selected {
 				color: #004ad7;
@@ -62,9 +62,9 @@
 		}
 
 		&-icon {
-			width: 1rem;
 			height: 1rem;
 			margin-top: 2px;
+			width: 1rem;
 			filter: invert(20%) sepia(92%) saturate(5175%) hue-rotate(214deg)
 				brightness(86%) contrast(110%);
 
@@ -77,11 +77,11 @@
 	}
 
 	&-description {
+		color: #54555f;
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.813rem;
-		line-height: 1rem;
 		font-weight: 400;
-		color: #54555f;
+		line-height: 1rem;
 		margin-left: 2.5rem;
 		word-break: break-word;
 	}

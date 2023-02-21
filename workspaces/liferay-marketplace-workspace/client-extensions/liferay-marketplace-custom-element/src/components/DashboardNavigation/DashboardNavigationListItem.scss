@@ -1,10 +1,10 @@
 .dashboard-navigation-body-list-item {
+	align-items: center;
+	cursor: pointer;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	align-items: center;
 	padding: 1rem;
-	cursor: pointer;
 
 	transition: background-color 0.3s;
 
@@ -17,30 +17,30 @@
 	}
 
 	&-app-logo {
-		width: 1.5rem;
 		height: 1.5rem;
 		margin-right: 0.75rem;
+		width: 1.5rem;
 	}
 
 	&-app-title {
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.875rem;
-		line-height: 1rem;
 		font-weight: 600;
+		line-height: 1rem;
 		margin-right: 0.5rem;
 	}
 
 	&-app-version {
+		color: #54555f;
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.813rem;
-		line-height: 1rem;
 		font-weight: 400;
-		color: #54555f;
+		line-height: 1rem;
 	}
 
 	&-app-status {
-		width: 0.5rem;
 		height: 0.5rem;
+		width: 0.5rem;
 
 		&-published {
 			filter: invert(32%) sepia(12%) saturate(6208%) hue-rotate(194deg)

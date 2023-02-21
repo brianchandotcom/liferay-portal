@@ -5,8 +5,8 @@
 
 	&-alert {
 		&-container {
-			border: none;
 			background-color: #e6ebf5;
+			border: none;
 			border-radius: 0.5rem;
 			margin-bottom: 32px;
 		}
@@ -171,7 +171,7 @@
 	}
 
 	&-navigation-bar {
-		max-width: max-content;
 		margin-bottom: 32px;
+		max-width: max-content;
 	}
 }

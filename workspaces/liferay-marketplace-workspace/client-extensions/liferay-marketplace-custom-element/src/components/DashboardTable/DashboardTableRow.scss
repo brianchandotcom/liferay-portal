@@ -1,77 +1,77 @@
 .dashboard-table-row {
 	&-name {
 		&-container {
+			align-items: center;
 			display: flex;
 			flex-direction: row;
-			align-items: center;
 			gap: 1.5rem;
 		}
 
 		&-logo {
-			width: 2.25rem;
-			height: 2.25rem;
 			border-radius: 0.25rem;
+			height: 2.25rem;
+			width: 2.25rem;
 		}
 
 		&-text {
+			color: #282934;
 			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 1rem;
-			line-height: 1.5rem;
 			font-weight: 600;
-			color: #282934;
+			line-height: 1.5rem;
 		}
 	}
 
 	&-text {
+		color: #282934;
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 1rem;
-		line-height: 1.5rem;
 		font-weight: 400;
-		color: #282934;
+		line-height: 1.5rem;
 	}
 
 	&-last-updated {
 		&-container {
-			display: flex;
 			align-items: center;
+			display: flex;
 			gap: 0.25rem;
 		}
 
 		&-date {
+			color: #282934;
 			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 1rem;
-			line-height: 1.5rem;
 			font-weight: 600;
-			color: #282934;
+			line-height: 1.5rem;
 		}
 
 		&-responsible {
+			color: #82828c;
 			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 0.813rem;
-			line-height: 1rem;
 			font-weight: 400;
-			color: #82828c;
+			line-height: 1rem;
 		}
 
 		&-by {
+			color: #54555f;
 			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 0.813rem;
-			line-height: 1rem;
 			font-weight: 400;
-			color: #54555f;
+			line-height: 1rem;
 		}
 	}
 
 	&-status {
 		&-container {
-			display: flex;
 			align-items: center;
+			display: flex;
 			gap: 0.5rem;
 		}
 
 		&-icon {
-			width: 0.5rem;
 			height: 0.5rem;
+			width: 0.5rem;
 
 			&-published {
 				filter: invert(35%) sepia(17%) saturate(3748%)
@@ -90,32 +90,32 @@
 		}
 
 		&-text {
+			color: #6c6c75;
 			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 0.813rem;
-			line-height: 1rem;
 			font-weight: 600;
-			color: #6c6c75;
+			line-height: 1rem;
 		}
 	}
 
 	&-rating {
 		&-container {
-			display: flex;
 			align-items: center;
+			display: flex;
 			gap: 1rem;
 		}
 
 		&-text {
+			color: #282934;
 			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 1rem;
-			line-height: 1.5rem;
 			font-weight: 400;
-			color: #282934;
+			line-height: 1.5rem;
 		}
 
 		&-star {
-			width: 1rem;
 			height: 1rem;
+			width: 1rem;
 			filter: invert(94%) sepia(47%) saturate(5926%) hue-rotate(316deg)
 				brightness(98%) contrast(107%);
 		}

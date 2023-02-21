@@ -2,10 +2,10 @@ html.dev body {
 	align-items: center;
 	display: flex;
 	justify-content: center;
-	place-items: center;
 	margin: 0;
-	min-width: 320px;
 	min-height: 100vh;
+	min-width: 320px;
+	place-items: center;
 
 	liferay-marketplace-custom-element {
 		flex: 1;

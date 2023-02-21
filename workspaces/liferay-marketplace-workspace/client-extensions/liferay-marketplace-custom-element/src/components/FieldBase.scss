@@ -4,16 +4,16 @@
 		justify-content: space-between;
 
 		&_label {
+			align-items: center;
 			display: flex;
 			justify-content: flex-start;
-			align-items: center;
 		}
 	}
 
 	&-required-asterisk-icon {
+		height: 9px;
 		margin-bottom: 6px;
 		width: 9px;
-		height: 9px;
 		filter: invert(10%) sepia(92%) saturate(5864%) hue-rotate(358deg)
 			brightness(101%) contrast(97%);
 	}
@@ -23,11 +23,11 @@
 	}
 
 	&-description {
+		color: #54555f;
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.813rem;
-		line-height: 1rem;
 		font-weight: 400;
-		color: #54555f;
+		line-height: 1rem;
 		word-break: break-word;
 	}
 

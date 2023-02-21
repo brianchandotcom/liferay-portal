@@ -4,24 +4,24 @@
 	}
 
 	&-header-name {
+		align-items: center;
 		display: flex;
 		flex-direction: row;
-		align-items: center;
 		gap: 0.5rem;
 
 		&-icon {
-			width: 1rem;
 			height: 1rem;
+			width: 1rem;
 			filter: invert(66%) sepia(2%) saturate(933%) hue-rotate(197deg)
 				brightness(93%) contrast(91%);
 		}
 	}
 
 	&-header-text {
+		color: #6c6c75;
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.875rem;
-		line-height: 1rem;
 		font-weight: 600;
-		color: #6c6c75;
+		line-height: 1rem;
 	}
 }

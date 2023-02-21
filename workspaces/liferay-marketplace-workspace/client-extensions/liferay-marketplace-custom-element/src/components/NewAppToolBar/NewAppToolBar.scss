@@ -82,18 +82,18 @@
 		}
 
 		&-dropdown {
-			width: 32px;
-			height: 32px;
+			align-items: center;
 			border-radius: 6px;
-			margin-left: 16px;
 			display: flex;
 			flex-direction: row;
+			height: 32px;
 			justify-content: center;
-			align-items: center;
+			margin-left: 16px;
+			width: 32px;
 
 			&-icon {
-				width: 16px;
 				height: 16px;
+				width: 16px;
 			}
 
 			&:hover {
@@ -119,8 +119,8 @@
 		}
 
 		&-save-draft {
-			border: 0.125rem solid #2b3a4b;
 			background: none;
+			border: 0.125rem solid #2b3a4b;
 			border-radius: 6px;
 			color: #2b3a4b;
 			font-family: 'Source Sans Pro', sans-serif;
@@ -129,8 +129,8 @@
 			line-height: 1rem;
 
 			&:hover {
-				color: #ffff;
 				background: #2b3a4b;
+				color: #ffff;
 			}
 
 			transition: color 0.3s;
@@ -138,19 +138,19 @@
 		}
 
 		&-preview-storefront {
-			color: #0b5fff;
-			border: 0.125rem solid #0b5fff;
 			background: none;
+			border: 0.125rem solid #0b5fff;
 			border-radius: 6px;
+			color: #0b5fff;
 			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 0.813rem;
 			font-weight: 600;
-			line-height: 1rem;
 			height: 32px;
+			line-height: 1rem;
 
 			&:hover {
-				color: #ffff;
 				background: #0b5fff;
+				color: #ffff;
 			}
 
 			transition: color 0.3s;

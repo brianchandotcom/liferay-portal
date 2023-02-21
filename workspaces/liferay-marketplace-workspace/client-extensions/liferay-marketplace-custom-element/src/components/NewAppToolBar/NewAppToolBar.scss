@@ -1,160 +1,160 @@
 .new-app-tool-bar {
-    &-container {
-        align-items: center;
-        display: flex;
-        justify-content: center;
-        padding: 1.5rem;
-        width: 100vw;
-    }
+	&-container {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		padding: 1.5rem;
+		width: 100vw;
+	}
 
-    &-arrow-right {
-        align-self: center;
-        height: 1rem;
-        width: 1rem;
-    }
+	&-arrow-right {
+		align-self: center;
+		height: 1rem;
+		width: 1rem;
+	}
 
-    &-main-account-logo {
-        align-items: center;
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin-right: 1.438rem;
+	&-main-account-logo {
+		align-items: center;
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		margin-right: 1.438rem;
 
-        &-img {
-            height: 3rem;
-            width: 3rem;
-        }
+		&-img {
+			height: 3rem;
+			width: 3rem;
+		}
 
-        &-text {
-            font-family: 'Source Sans Pro', sans-serif;
-            font-size: 1.125rem;
-            font-weight: 600;
-            line-height: 1.25rem;
-        }
-    }
+		&-text {
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 1.125rem;
+			font-weight: 600;
+			line-height: 1.25rem;
+		}
+	}
 
-    &-new-app-logo {
-        align-items: center;
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin-left: 1.438rem;
+	&-new-app-logo {
+		align-items: center;
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		margin-left: 1.438rem;
 
-        &-img {
-            height: 3rem;
-            width: 3rem;
-        }
+		&-img {
+			height: 3rem;
+			width: 3rem;
+		}
 
-        &-text {
-            font-family: 'Source Sans Pro', sans-serif;
-            font-size: 1.125rem;
-            font-weight: 600;
-            line-height: 1.25rem;
-        }
-    }
+		&-text {
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 1.125rem;
+			font-weight: 600;
+			line-height: 1.25rem;
+		}
+	}
 
-    &-status {
-        &-container {
-            align-items: center;
-            display: flex;
-            gap: 0.375rem;
-            justify-content: center;
-        }
+	&-status {
+		&-container {
+			align-items: center;
+			display: flex;
+			gap: 0.375rem;
+			justify-content: center;
+		}
 
-        &-icon {
-            filter: invert(54%) sepia(5%) saturate(427%) hue-rotate(201deg) brightness(94%) contrast(98%);
-            height: 0.5rem;
-            width: 0.5rem;
-        }
+		&-icon {
+			filter: invert(54%) sepia(5%) saturate(427%) hue-rotate(201deg)
+				brightness(94%) contrast(98%);
+			height: 0.5rem;
+			width: 0.5rem;
+		}
 
-        &-text {
-            color: #6C6C75;
-            font-family: 'Source Sans Pro', sans-serif;
-            font-weight: 600;
-        }
-    }
+		&-text {
+			color: #6c6c75;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-weight: 600;
+		}
+	}
 
-    &-button {
-        &-container {
-            display: flex;
-            gap: 1rem;
-        }
+	&-button {
+		&-container {
+			display: flex;
+			gap: 1rem;
+		}
 
-        &-dropdown {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            margin-left: 16px;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
+		&-dropdown {
+			width: 32px;
+			height: 32px;
+			border-radius: 6px;
+			margin-left: 16px;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
 
-            &-icon {
-                width: 16px;
-                height: 16px;
-            }
+			&-icon {
+				width: 16px;
+				height: 16px;
+			}
 
-            &:hover {
-                background: #edf3fe;
-            }
-        }
+			&:hover {
+				background: #edf3fe;
+			}
+		}
 
-        &-text {
-            font-family: 'Source Sans Pro', sans-serif;
-            font-size: 0.875rem;
-            font-weight: 600;
-            line-height: 1rem;
-        }
+		&-text {
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 0.875rem;
+			font-weight: 600;
+			line-height: 1rem;
+		}
 
-        &-exit {
-            color: #2B3A4B;
-            height: 32px;
-            padding: 0;
+		&-exit {
+			color: #2b3a4b;
+			height: 32px;
+			padding: 0;
 
+			&:hover {
+				background: #e2e2e4;
+			}
+		}
 
-            &:hover {
-                background: #E2E2E4;
-            }
-        }
+		&-save-draft {
+			border: 0.125rem solid #2b3a4b;
+			background: none;
+			border-radius: 6px;
+			color: #2b3a4b;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 0.813rem;
+			font-weight: 600;
+			line-height: 1rem;
 
-        &-save-draft {
-            border: 0.125rem solid #2B3A4B;
-            background: none;
-            border-radius: 6px;
-            color: #2B3A4B;
-            font-family: 'Source Sans Pro', sans-serif;
-            font-size: 0.813rem;
-            font-weight: 600;
-            line-height: 1rem;
+			&:hover {
+				color: #ffff;
+				background: #2b3a4b;
+			}
 
-            &:hover {
-                color: #FFFF;
-                background: #2B3A4B;
-            }
+			transition: color 0.3s;
+			transition: background 0.3s;
+		}
 
-            transition: color 0.3s;
-            transition: background 0.3s;
-        }
+		&-preview-storefront {
+			color: #0b5fff;
+			border: 0.125rem solid #0b5fff;
+			background: none;
+			border-radius: 6px;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 0.813rem;
+			font-weight: 600;
+			line-height: 1rem;
+			height: 32px;
 
-        &-preview-storefront {
-            color: #0B5FFF;
-            border: 0.125rem solid #0B5FFF;
-            background: none;
-            border-radius: 6px;
-            font-family: 'Source Sans Pro', sans-serif;
-            font-size: 0.813rem;
-            font-weight: 600;
-            line-height: 1rem;
-            height: 32px;
+			&:hover {
+				color: #ffff;
+				background: #0b5fff;
+			}
 
-            &:hover {
-                color: #FFFF;
-                background: #0B5FFF;
-            }
-
-            transition: color 0.3s;
-            transition: background 0.3s;
-        }
-    }
+			transition: color 0.3s;
+			transition: background 0.3s;
+		}
+	}
 }

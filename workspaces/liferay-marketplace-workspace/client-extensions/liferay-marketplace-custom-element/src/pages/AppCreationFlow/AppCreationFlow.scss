@@ -1,17 +1,17 @@
 .app-creation-flow {
-    &-container {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        justify-content: space-between;
-        overflow-x: hidden;
-        width: 100vw;
-    }
+	&-container {
+		display: flex;
+		flex-direction: column;
+		height: 100vh;
+		justify-content: space-between;
+		overflow-x: hidden;
+		width: 100vw;
+	}
 
-    &-body {
-        display: flex;
-        flex-direction: row;
-        gap: 5rem;
-        justify-content: center;
-    }
+	&-body {
+		display: flex;
+		flex-direction: row;
+		gap: 5rem;
+		justify-content: center;
+	}
 }

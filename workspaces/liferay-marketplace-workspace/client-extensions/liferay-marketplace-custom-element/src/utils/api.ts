@@ -1,5 +1,5 @@
 const headers = {
-	Authorization: 'Basic ' + btoa('test@liferay.com:test'),
+	'Authorization': 'Basic ' + btoa('test@liferay.com:test'),
 	'Content-Type': 'application/json',
 };
 
@@ -18,8 +18,8 @@ export function createApp({
 			body: JSON.stringify({
 				active: true,
 				catalogId,
-				description: { en_US: appDescription },
-				name: { en_US: appName },
+				description: {en_US: appDescription},
+				name: {en_US: appName},
 				productType: 'simple',
 			}),
 			headers,
@@ -113,10 +113,11 @@ export async function createProductSubscriptionConfiguration({
 			body: JSON.stringify(body),
 			headers,
 			method: 'PATCH',
-		})
-};
+		}
+	);
+}
 
-export async function createSpecification({ body }: { body: Object }) {
+export async function createSpecification({body}: {body: Object}) {
 	const response = await fetch(
 		`http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/specifications`,
 		{
@@ -132,13 +133,13 @@ export async function createSpecification({ body }: { body: Object }) {
 export async function getCatalogs() {
 	const response = await fetch(
 		'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/catalogs',
-		{ headers, method: 'GET' }
+		{headers, method: 'GET'}
 	);
 
 	return response.json();
 }
 
-export async function getProduct({ appERC }: { appERC: string }) {
+export async function getProduct({appERC}: {appERC: string}) {
 	const response = await fetch(
 		`http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${appERC}
 		`,
@@ -150,11 +151,7 @@ export async function getProduct({ appERC }: { appERC: string }) {
 	return await response.json();
 }
 
-export async function getProductImages({
-	appProductId,
-}: {
-	appProductId: number;
-}) {
+export async function getProductImages({appProductId}: {appProductId: number}) {
 	const response = await fetch(
 		`http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/${appProductId}/images`,
 		{
@@ -165,11 +162,7 @@ export async function getProductImages({
 	return await response.json();
 }
 
-export async function getProductSKU({
-	appProductId,
-}: {
-	appProductId: number;
-}) {
+export async function getProductSKU({appProductId}: {appProductId: number}) {
 	const response = await fetch(
 		`http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/${appProductId}/skus`,
 		{

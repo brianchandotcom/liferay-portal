@@ -16,6 +16,6 @@ window.Liferay = {
 	ThemeDisplay: {
 		getLanguageId() {
 			return 'en_US';
-		}
-	}
+		},
+	},
 };

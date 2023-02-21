@@ -2,16 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
-import { AppContextProvider } from './manage-app-state/AppManageState';
+import {AppContextProvider} from './manage-app-state/AppManageState';
 
 class WebComponent extends HTMLElement {
 	connectedCallback() {
 		ReactDOM.render(
-		<React.StrictMode>
-			<AppContextProvider>
-				<App />
-			</AppContextProvider>
-		</React.StrictMode>, this);
+			<React.StrictMode>
+				<AppContextProvider>
+					<App />
+				</AppContextProvider>
+			</React.StrictMode>,
+			this
+		);
 	}
 }
 const ELEMENT_ID = 'liferay-marketplace-custom-element';

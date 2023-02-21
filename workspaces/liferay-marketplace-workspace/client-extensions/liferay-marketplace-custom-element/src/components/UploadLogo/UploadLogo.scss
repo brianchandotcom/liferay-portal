@@ -1,69 +1,66 @@
-
-input[type="file"] {
-    display: none;
+input[type='file'] {
+	display: none;
 }
 
 .upload-logo {
-    &-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 1.5rem;
-        gap: 1rem;
-    }
+	&-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 1.5rem;
+		gap: 1rem;
+	}
 
-    &-icon {
-        width: 4.5rem;
-        height: 4.5rem;
-    }
+	&-icon {
+		width: 4.5rem;
+		height: 4.5rem;
+	}
 
-    &-upload-label {
-        font-family: 'Source Sans Pro', sans-serif;
-        font-size: 0.875rem;
-        line-height: 1rem;
-        font-weight: 600;
-        text-align: center;
-        padding-top: 0.438rem;
-        border-radius: 6px;
-        background-color: #0B5FFF;
-        color: #FFFFFF;
-        width: 6.75rem;
-        height: 2rem;
+	&-upload-label {
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 0.875rem;
+		line-height: 1rem;
+		font-weight: 600;
+		text-align: center;
+		padding-top: 0.438rem;
+		border-radius: 6px;
+		background-color: #0b5fff;
+		color: #ffffff;
+		width: 6.75rem;
+		height: 2rem;
 
-        &:hover {
-            background-color: #0a58e7;
-        }
+		&:hover {
+			background-color: #0a58e7;
+		}
 
-        transition: background-color 0.3s;
-    }
+		transition: background-color 0.3s;
+	}
 
-    &-delete-button {
-        width: 3.938rem;
-        height: 2rem;
-        background-color: transparent;
-        border: 1.5px solid #2B3A4B;
-        border-radius: 6px;
+	&-delete-button {
+		width: 3.938rem;
+		height: 2rem;
+		background-color: transparent;
+		border: 1.5px solid #2b3a4b;
+		border-radius: 6px;
 
-        &-text {
-            font-family: 'Source Sans Pro', sans-serif;
-            font-size: 0.875rem;
-            line-height: 1rem;
-            font-weight: 600;
-            color: #2B3A4B;
+		&-text {
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 0.875rem;
+			line-height: 1rem;
+			font-weight: 600;
+			color: #2b3a4b;
 
-            transition: color 0.3s;
+			transition: color 0.3s;
+		}
 
-        }
+		&:hover {
+			background-color: #2b3a4b;
 
-        &:hover {
-            background-color: #2B3A4B;
+			:first-child {
+				color: #fff;
+			}
+		}
 
-            :first-child {
-                color: #FFF;
-            }
-        }
-
-        transition: background-color 0.3s;
-        
-    }
+		transition: background-color 0.3s;
+	}
 }

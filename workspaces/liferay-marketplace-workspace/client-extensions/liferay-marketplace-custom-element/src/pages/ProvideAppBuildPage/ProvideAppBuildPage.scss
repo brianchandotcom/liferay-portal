@@ -1,24 +1,24 @@
 .provide-app-build-page {
-    &-container {
-        width: 37.5rem;
-    }
+	&-container {
+		width: 37.5rem;
+	}
 
-    &-app-build {
-        &-container {
-            margin-bottom: 1.5rem;
-        }
+	&-app-build {
+		&-container {
+			margin-bottom: 1.5rem;
+		}
 
-        &-radio-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-    }
+		&-radio-container {
+			display: flex;
+			flex-direction: column;
+			gap: 1.5rem;
+		}
+	}
 
-    &-saas-compatible-container {
-        align-items: center;
-        display: flex;
-        gap: 1.5rem;
-        justify-content: flex-start;
-    }
+	&-saas-compatible-container {
+		align-items: center;
+		display: flex;
+		gap: 1.5rem;
+		justify-content: flex-start;
+	}
 }

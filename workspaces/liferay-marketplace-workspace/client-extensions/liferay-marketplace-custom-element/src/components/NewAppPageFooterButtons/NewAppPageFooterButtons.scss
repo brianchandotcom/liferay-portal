@@ -1,55 +1,55 @@
 .new-app-page-footer-button {
-  &-container {
-    align-items: center;
-    border-top: 1px solid #e2e2e4;
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-    margin-bottom: 50px;
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
-    width: 37.5rem;
-  }
+	&-container {
+		align-items: center;
+		border-top: 1px solid #e2e2e4;
+		display: flex;
+		gap: 1rem;
+		justify-content: flex-end;
+		margin-bottom: 50px;
+		margin-top: 2.5rem;
+		padding-top: 1.5rem;
+		width: 37.5rem;
+	}
 
-  &-back {
-    background: none;
-    border: 1.5px solid #2b3a4b;
-    border-radius: 0.5rem;
-    color: #2b3a4b;
-    height: 2.5rem;
-    width: 4.125rem;
+	&-back {
+		background: none;
+		border: 1.5px solid #2b3a4b;
+		border-radius: 0.5rem;
+		color: #2b3a4b;
+		height: 2.5rem;
+		width: 4.125rem;
 
-    &:hover {
-      background: #2b3a4b;
-      color: #ffffff;
-    }
-  }
+		&:hover {
+			background: #2b3a4b;
+			color: #ffffff;
+		}
+	}
 
-  &-continue {
-    background: #0b5fff;
-    border: none;
-    border-radius: 0.5rem;
-    color: #ffffff;
-    height: 2.5rem;
-    width: 113px;
+	&-continue {
+		background: #0b5fff;
+		border: none;
+		border-radius: 0.5rem;
+		color: #ffffff;
+		height: 2.5rem;
+		width: 113px;
 
-    &:hover {
-      background: #0053f0;
-    }
+		&:hover {
+			background: #0053f0;
+		}
 
-    &:disabled {
-      background-color: #6d9fff;
-      cursor: not-allowed;
-    }
-  }
+		&:disabled {
+			background-color: #6d9fff;
+			cursor: not-allowed;
+		}
+	}
 }
 
 button {
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.5rem;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.5rem;
 
-  transition: background 0.3s;
-  transition: color 0.3s;
+	transition: background 0.3s;
+	transition: color 0.3s;
 }

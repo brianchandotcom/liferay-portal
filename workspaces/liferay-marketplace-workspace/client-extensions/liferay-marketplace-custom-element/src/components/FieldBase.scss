@@ -1,64 +1,65 @@
 .field-base {
-    &-container {
-        display: flex;
-        justify-content: space-between;
+	&-container {
+		display: flex;
+		justify-content: space-between;
 
-        &_label {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
-    }
+		&_label {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+		}
+	}
 
+	&-required-asterisk-icon {
+		margin-bottom: 6px;
+		width: 9px;
+		height: 9px;
+		filter: invert(10%) sepia(92%) saturate(5864%) hue-rotate(358deg)
+			brightness(101%) contrast(97%);
+	}
 
+	&-tooltip {
+		margin-left: 22px;
+	}
 
-    &-required-asterisk-icon {
-        margin-bottom: 6px;
-        width: 9px;
-        height: 9px;
-        filter: invert(10%) sepia(92%) saturate(5864%) hue-rotate(358deg) brightness(101%) contrast(97%);
-    }
+	&-description {
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 0.813rem;
+		line-height: 1rem;
+		font-weight: 400;
+		color: #54555f;
+		word-break: break-word;
+	}
 
-    &-tooltip {
-        margin-left: 22px;
-    }
+	&-feedback {
+		color: #6c6c75;
+		font-size: 13px;
+		margin-top: 8px;
+	}
 
-    &-description {
-        font-family: 'Source Sans Pro', sans-serif;
-        font-size: 0.813rem;
-        line-height: 1rem;
-        font-weight: 400;
-        color: #54555F;
-        word-break: break-word;
-    }
+	&-localized-field {
+		align-items: center;
+		display: flex;
+		justify-content: flex-start;
 
-    &-feedback {
-        color: #6c6c75;
-        font-size: 13px;
-        margin-top: 8px;
-    }
+		.arrow-down-icon {
+			height: 16px;
+			width: 16px;
+			filter: invert(26%) sepia(83%) saturate(5507%) hue-rotate(220deg)
+				brightness(104%) contrast(97%);
 
-    &-localized-field {
-        align-items: center;
-        display: flex;
-        justify-content: flex-start;
+			&:hover {
+				filter: invert(20%) sepia(92%) saturate(5175%)
+					hue-rotate(214deg) brightness(86%) contrast(110%);
+			}
+		}
 
-        .arrow-down-icon {
-            height: 16px;
-            width: 16px;
-            filter: invert(26%) sepia(83%) saturate(5507%) hue-rotate(220deg) brightness(104%) contrast(97%);
+		button {
+			color: #0b5fff;
 
-            &:hover {
-                filter: invert(20%) sepia(92%) saturate(5175%) hue-rotate(214deg) brightness(86%) contrast(110%);
-            }
-        }
-
-        button {
-            color: #0b5fff;
-
-            &:hover {
-                color: #0053f0;
-            }
-        }
-    }
+			&:hover {
+				color: #0053f0;
+			}
+		}
+	}
 }

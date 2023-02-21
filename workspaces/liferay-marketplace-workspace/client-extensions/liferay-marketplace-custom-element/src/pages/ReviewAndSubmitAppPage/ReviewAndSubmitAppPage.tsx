@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
 import emptyImage from '../../assets/icons/emptyImage.svg';
 import documentationIcon from '../../assets/icons/documentation-icon.svg';
@@ -7,14 +7,14 @@ import guideIcon from '../../assets/icons/guide-icon.svg';
 import globeIcon from '../../assets/icons/globe-icon.svg';
 import usageTermsIcon from '../../assets/icons/usage-terms-icon.svg';
 
-import { Header } from '../../components/Header/Header';
-import { NewAppPageFooterButtons } from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
-import { Section } from '../../components/Section/Section';
-import { Checkbox } from '../../components/Checkbox/Checkbox';
-import { useAppContext } from '../../manage-app-state/AppManageState';
-import { TYPES } from '../../manage-app-state/actionTypes';
-import { CardSection } from './CardSection';
-import { initialReviewAndSubmitAppPageItems } from './ReviewAndSubmitAppPageUtil';
+import {Header} from '../../components/Header/Header';
+import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
+import {Section} from '../../components/Section/Section';
+import {Checkbox} from '../../components/Checkbox/Checkbox';
+import {useAppContext} from '../../manage-app-state/AppManageState';
+import {TYPES} from '../../manage-app-state/actionTypes';
+import {CardSection} from './CardSection';
+import {initialReviewAndSubmitAppPageItems} from './ReviewAndSubmitAppPageUtil';
 import {
 	getProduct,
 	getProductImages,
@@ -34,20 +34,34 @@ export function ReviewAndSubmitAppPage({
 	onClickBack,
 	onClickContinue,
 }: ReviewAndSubmitAppPageProps) {
-	const [{ appERC, appLogo, appLicensePrice, appStorefrontImages, buildZIPFiles, priceModel, appProductId }, dispatch] =
-		useAppContext();
+	const [
+		{
+			appERC,
+			appLogo,
+			appLicensePrice,
+			appStorefrontImages,
+			buildZIPFiles,
+			priceModel,
+			appProductId,
+		},
+		dispatch,
+	] = useAppContext();
 	const [checked, setChecked] = useState(false);
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
 	const [version, setVersion] = useState('');
 	const [notes, setNotes] = useState('');
 	const [appLicense, setAppLicense] = useState('');
+
 	// const [price, setPrice] = useState('');
+
 	const [cardInfos, setCardInfos] = useState<
-		{ icon: string; link: string; title: string }[]
+		{icon: string; link: string; title: string}[]
 	>([]);
 
-  const buildZIPTitles = buildZIPFiles.map((buildZIPFile) => buildZIPFile.fileName);
+	const buildZIPTitles = buildZIPFiles.map(
+		(buildZIPFile) => buildZIPFile.fileName
+	);
 
 	useEffect(() => {
 		const getData = async () => {
@@ -86,70 +100,78 @@ export function ReviewAndSubmitAppPage({
 			setName(productResponse.name['en_US']);
 			setDescription(productResponse.description['en_US']);
 
-      const newCardInfos: { icon: string; link: string; title: string }[] = [];
+			const newCardInfos: {icon: string; link: string; title: string}[] =
+				[];
 
 			productSpecificationsResponse.items.map(
 				(specification: {
 					specificationKey: string;
-					title: { [key: string]: string };
-					value: { [key: string]: string };
+					title: {[key: string]: string};
+					value: {[key: string]: string};
 				}) => {
-					const { specificationKey, value } = specification;
+					const {specificationKey, value} = specification;
 					const localizedValue = value['en_US'];
 
 					if (specificationKey === 'version') {
 						setVersion(localizedValue);
-					} else if (specificationKey === 'notes') {
+					}
+					else if (specificationKey === 'notes') {
 						setNotes(localizedValue);
-					} else if (specificationKey === 'app-license') {
+					}
+					else if (specificationKey === 'app-license') {
 						setAppLicense(localizedValue);
-					} else if (specificationKey === 'supporturl') {
-            newCardInfos.push({
-              icon: phoneIcon,
-              title: 'Support URL',
-              link: localizedValue,
-            })
-					} else if (specificationKey === 'publisherwebsiteurl') {
-            newCardInfos.push({
-              icon: globeIcon,
-              title: 'Publisher website URL',
-              link: localizedValue,
-            })
-					} else if (specificationKey === 'appusagetermsurl') {
-            newCardInfos.push({
-              icon: usageTermsIcon,
-              title: 'App usage terms (EULA) URL',
-              link: localizedValue,
-            })
-					} else if (specificationKey === 'appdocumentationurl') {
-            newCardInfos.push({
-              icon: documentationIcon,
-              title: 'App documentation URL',
-              link: localizedValue,
-            })
-					} else if (specificationKey === 'appinstallationguideurl') {
-            newCardInfos.push({
-              icon: guideIcon,
-              title: 'App installation guide URL',
-              link: localizedValue,
-            })
+					}
+					else if (specificationKey === 'supporturl') {
+						newCardInfos.push({
+							icon: phoneIcon,
+							title: 'Support URL',
+							link: localizedValue,
+						});
+					}
+					else if (specificationKey === 'publisherwebsiteurl') {
+						newCardInfos.push({
+							icon: globeIcon,
+							title: 'Publisher website URL',
+							link: localizedValue,
+						});
+					}
+					else if (specificationKey === 'appusagetermsurl') {
+						newCardInfos.push({
+							icon: usageTermsIcon,
+							title: 'App usage terms (EULA) URL',
+							link: localizedValue,
+						});
+					}
+					else if (specificationKey === 'appdocumentationurl') {
+						newCardInfos.push({
+							icon: documentationIcon,
+							title: 'App documentation URL',
+							link: localizedValue,
+						});
+					}
+					else if (specificationKey === 'appinstallationguideurl') {
+						newCardInfos.push({
+							icon: guideIcon,
+							title: 'App installation guide URL',
+							link: localizedValue,
+						});
 					}
 				}
 			);
 
-      setCardInfos(newCardInfos);
+			setCardInfos(newCardInfos);
 		};
 
 		getData();
 	}, []);
 
 	return (
-		<div className='review-and-submit-app-page-container'>
+		<div className="review-and-submit-app-page-container">
 			{!readonly && (
-				<div className='review-and-submit-app-page-header'>
+				<div className="review-and-submit-app-page-header">
 					<Header
 						title={'Review and submit app'}
-						description='Please, review before submitting. Once sent, you will not be able to edit any information until this submission is completely reviewed by Liferay.'
+						description="Please, review before submitting. Once sent, you will not be able to edit any information until this submission is completely reviewed by Liferay."
 					/>
 				</div>
 			)}
@@ -161,27 +183,29 @@ export function ReviewAndSubmitAppPage({
 				tooltip={!readonly ? 'More info' : ''}
 				tooltipText={!readonly ? 'More Info' : ''}
 			>
-				<div className='review-and-submit-app-page-card-container'>
+				<div className="review-and-submit-app-page-card-container">
 					{!readonly && (
-						<div className='review-and-submit-app-page-card-header'>
-							<div className='review-and-submit-app-page-card-header-left-content'>
-								<div className='review-and-submit-app-page-card-header-icon-container'>
-                  <div
-                    className='upload-logo-icon'
-                    style={{
-                      backgroundImage: `url(${appLogo?.preview || emptyImage})`,
-                      backgroundRepeat: 'no-repeat',
-                      backgroundSize: 'cover',
-                      backgroundPosition: "50% 50%",
-                     }}
-            />
+						<div className="review-and-submit-app-page-card-header">
+							<div className="review-and-submit-app-page-card-header-left-content">
+								<div className="review-and-submit-app-page-card-header-icon-container">
+									<div
+										className="upload-logo-icon"
+										style={{
+											backgroundImage: `url(${
+												appLogo?.preview || emptyImage
+											})`,
+											backgroundRepeat: 'no-repeat',
+											backgroundSize: 'cover',
+											backgroundPosition: '50% 50%',
+										}}
+									/>
 								</div>
 
-								<div className='review-and-submit-app-page-card-header-title'>
-									<span className='review-and-submit-app-page-card-header-title-text'>
+								<div className="review-and-submit-app-page-card-header-title">
+									<span className="review-and-submit-app-page-card-header-title-text">
 										{name}
 									</span>
-									<span className='review-and-submit-app-page-card-header-title-version'>
+									<span className="review-and-submit-app-page-card-header-title-version">
 										{version}
 									</span>
 								</div>
@@ -189,13 +213,13 @@ export function ReviewAndSubmitAppPage({
 						</div>
 					)}
 
-					<div className='review-and-submit-app-page-card-body'>
+					<div className="review-and-submit-app-page-card-body">
 						<CardSection
 							localized
 							enableEdit={!readonly}
 							paragraph={description}
 							required
-							sectionName='Description'
+							sectionName="Description"
 						/>
 
 						{initialReviewAndSubmitAppPageItems.map((item) => {
@@ -212,10 +236,12 @@ export function ReviewAndSubmitAppPage({
 								if (item.section === 'Pricing') {
 									if (priceModel === 'free') {
 										return 'The app is offered in the Marketplace with no charge.';
-									} else {
+									}
+									else {
 										return 'To enable paid apps, you must be a business and enter payment information in your Marketplace account profile.';
 									}
-								} else return item.description;
+								}
+								else return item.description;
 							};
 
 							const description = () => {
@@ -226,7 +252,7 @@ export function ReviewAndSubmitAppPage({
 							return (
 								<CardSection
 									build={item.section === 'Build'}
-                  					buildZIPTitles={buildZIPTitles}
+									buildZIPTitles={buildZIPTitles}
 									cardDescription={cardDescription()}
 									cardInfos={cardInfos}
 									cardLink={item.section === 'Support & Help'}
@@ -263,7 +289,7 @@ export function ReviewAndSubmitAppPage({
 			</Section>
 
 			{!readonly && (
-				<div className='review-and-submit-app-page-agreement'>
+				<div className="review-and-submit-app-page-agreement">
 					<Checkbox
 						checked={checked}
 						onChange={() => {
@@ -271,21 +297,21 @@ export function ReviewAndSubmitAppPage({
 						}}
 					></Checkbox>
 					<span>
-						<span className='review-and-submit-app-page-agreement-highlight'>
+						<span className="review-and-submit-app-page-agreement-highlight">
 							{'Attention: this cannot be undone. '}
 						</span>
 						I am aware I cannot edit any data or information
 						regarding this app submission until Liferay completes
 						its review process and I agree with the Liferay
-						Marketplace <a href='#'>terms</a> and{' '}
-						<a href='#'>privacy</a>
+						Marketplace <a href="#">terms</a> and{' '}
+						<a href="#">privacy</a>
 					</span>
 				</div>
 			)}
 
 			{!readonly && (
 				<NewAppPageFooterButtons
-					continueButtonText='Submit App'
+					continueButtonText="Submit App"
 					disableContinueButton={!checked}
 					showBackButton={true}
 					onClickBack={() => onClickBack()}

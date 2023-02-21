@@ -1,38 +1,37 @@
 .storefront-page {
-    &-container {
-        width: 37.5rem;
-    }
+	&-container {
+		width: 37.5rem;
+	}
 
-    &-info {
-        &-container {
-            align-items: center;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-        }
+	&-info {
+		&-container {
+			align-items: center;
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 1.5rem;
+		}
 
-        &-text {
-            color: #282934;
-            font-family: "Source Sans Pro", sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            line-height: 1.5rem;
-        }
+		&-text {
+			color: #282934;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 1rem;
+			font-weight: 600;
+			line-height: 1.5rem;
+		}
 
-        &-button {
-            border: none;
-            background-color: transparent;
-            border-radius: 0.375rem;
-            color: #0B5FFF;
-            height: 2rem;
-            width: 5.813rem;
+		&-button {
+			border: none;
+			background-color: transparent;
+			border-radius: 0.375rem;
+			color: #0b5fff;
+			height: 2rem;
+			width: 5.813rem;
 
-            &:hover {
-                background-color: #EDF3FE;
-            }
+			&:hover {
+				background-color: #edf3fe;
+			}
 
-            transition: background-color 0.3s;
-        }
-    }
-
+			transition: background-color 0.3s;
+		}
+	}
 }

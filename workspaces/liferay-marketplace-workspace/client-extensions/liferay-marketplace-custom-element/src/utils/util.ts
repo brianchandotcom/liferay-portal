@@ -1,11 +1,11 @@
-import { getCatalogs } from "./api";
+import {getCatalogs} from './api';
 
 export async function getMasterCatalogId() {
 	const response = await getCatalogs();
 
 	const catalogs = response.items;
 
-	return catalogs.find(({ name }: { name: string }) => name === 'Master')?.id;
+	return catalogs.find(({name}: {name: string}) => name === 'Master')?.id;
 }
 
 export async function submitFile(
@@ -17,7 +17,7 @@ export async function submitFile(
 	const response = await requestFunction({
 		body: {
 			attachment: fileBase64,
-			title: { en_US: title },
+			title: {en_US: title},
 		},
 		externalReferenceCode: appERC,
 	});
@@ -39,12 +39,14 @@ export function submitBase64EncodedFile(
 
 			if (result?.includes('application/zip')) {
 				result = result?.substring(28);
-			} else if (
+			}
+			else if (
 				result?.includes('image/gif') ||
 				result?.includes('image/png')
 			) {
 				result = result?.substring(22);
-			} else if (result?.includes('image/jpeg')) {
+			}
+			else if (result?.includes('image/jpeg')) {
 				result = result?.substring(23);
 			}
 

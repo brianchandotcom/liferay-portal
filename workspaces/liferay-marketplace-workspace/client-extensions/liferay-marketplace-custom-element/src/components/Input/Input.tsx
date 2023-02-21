@@ -1,5 +1,5 @@
-import { ClayInput } from '@clayui/form';
-import { FieldBase } from '../FieldBase';
+import {ClayInput} from '@clayui/form';
+import {FieldBase} from '../FieldBase';
 
 import './Input.scss';
 import classNames from 'classnames';
@@ -44,7 +44,7 @@ export function Input({
 			tooltip={tooltip}
 		>
 			<ClayInput
-				className='custom-input'
+				className="custom-input"
 				component={component}
 				placeholder={placeholder}
 				onChange={onChange}

@@ -1,217 +1,217 @@
 .card-section {
-    &-container {
-        border: 1px solid #E2E2E4;
-        border-radius: 0.625rem;
-        width: 37.5rem;
-    }
+	&-container {
+		border: 1px solid #e2e2e4;
+		border-radius: 0.625rem;
+		width: 37.5rem;
+	}
 
-    &-body {
-        &-section {
-            border-bottom: 1px solid #E2E2E4;
-            padding-bottom: 33px;
-            padding-top: 33px;
+	&-body {
+		&-section {
+			border-bottom: 1px solid #e2e2e4;
+			padding-bottom: 33px;
+			padding-top: 33px;
 
-            &:last-child {
-                border-bottom: none;
-            }
+			&:last-child {
+				border-bottom: none;
+			}
 
-            &-header {
-                align-items: center;
-                display: flex;
-                justify-content: space-between;
+			&-header {
+				align-items: center;
+				display: flex;
+				justify-content: space-between;
 
-                &-actions {
-                    display: flex;
-                    gap: 12px;
+				&-actions {
+					display: flex;
+					gap: 12px;
 
-                    .edit-button {
-                        color: #0B5FFF;
-                        font-weight: 600;
-                        font-size: 14px;
-                        line-height: 16px;
-                    }
-                }
+					.edit-button {
+						color: #0b5fff;
+						font-weight: 600;
+						font-size: 14px;
+						line-height: 16px;
+					}
+				}
 
-                .field-base-localized-field {
-                    button {
-                        color: #2B3A4B;
-                    }
+				.field-base-localized-field {
+					button {
+						color: #2b3a4b;
+					}
 
-                    .tooltip-base-container {
-                        margin-bottom: 0;
-                    }
+					.tooltip-base-container {
+						margin-bottom: 0;
+					}
 
-                    .arrow-down-icon {
-                        filter: invert(20%) sepia(24%) saturate(334%) hue-rotate(196deg) brightness(92%) contrast(82%);
-                    }
-                }
+					.arrow-down-icon {
+						filter: invert(20%) sepia(24%) saturate(334%)
+							hue-rotate(196deg) brightness(92%) contrast(82%);
+					}
+				}
 
-                &-title {
-                    font-size: 18px;
-                    font-weight: 600;
-                }
-            }
+				&-title {
+					font-size: 18px;
+					font-weight: 600;
+				}
+			}
 
-            &-tags {
-                margin-top: 22px;
-            }
+			&-tags {
+				margin-top: 22px;
+			}
 
-            &-paragraph {
-                margin-bottom: 0px;
-                margin-top: 22px;
-            }
+			&-paragraph {
+				margin-bottom: 0px;
+				margin-top: 22px;
+			}
 
-            &-file {
-                padding-top: 20px;
-                display: flex;
-                align-items: center;
+			&-file {
+				padding-top: 20px;
+				display: flex;
+				align-items: center;
 
-                &-container {
-                    background-color: #E7EFFF;
-                    align-items: center;
-                    border-radius: 4px;
-                    display: flex;
-                    height: 72px;
-                    justify-content: center;
-                    width: 72px;
+				&-container {
+					background-color: #e7efff;
+					align-items: center;
+					border-radius: 4px;
+					display: flex;
+					height: 72px;
+					justify-content: center;
+					width: 72px;
 
-                    &-icon {
-                        width: 24px;
-                        height: 24px;
-                        filter: invert(35%) sepia(86%) saturate(1411%) hue-rotate(206deg) brightness(102%) contrast(101%);
-                    }
-                }
+					&-icon {
+						width: 24px;
+						height: 24px;
+						filter: invert(35%) sepia(86%) saturate(1411%)
+							hue-rotate(206deg) brightness(102%) contrast(101%);
+					}
+				}
 
-                &-icon {
-                    filter: invert(26%) sepia(83%) saturate(5507%) hue-rotate(220deg) brightness(104%) contrast(97%);
-                    margin-left: 16px;
-                    width: 16px;
-                    height: 16px;
-                }
+				&-icon {
+					filter: invert(26%) sepia(83%) saturate(5507%)
+						hue-rotate(220deg) brightness(104%) contrast(97%);
+					margin-left: 16px;
+					width: 16px;
+					height: 16px;
+				}
 
-                &-name {
-                    color: #282934;
-                    font-family: 'Source Sans Pro', sans-serif;
-                    font-weight: 600;
-                    font-size: 16px;
-                    line-height: 24px;
-                    margin-left: 4px;
-                }
-            }
+				&-name {
+					color: #282934;
+					font-family: 'Source Sans Pro', sans-serif;
+					font-weight: 600;
+					font-size: 16px;
+					line-height: 24px;
+					margin-left: 4px;
+				}
+			}
 
-            &-files {
-                padding-top: 20px;
-                display: flex;
-                width: 100%;
-                gap: 16px;
+			&-files {
+				padding-top: 20px;
+				display: flex;
+				width: 100%;
+				gap: 16px;
 
-                &-info {
-                    font-family: 'Source Sans Pro';
-                    margin-top: 16px;
-                    font-size: 13px;
-                    line-height: 16px;
-                }
+				&-info {
+					font-family: 'Source Sans Pro';
+					margin-top: 16px;
+					font-size: 13px;
+					line-height: 16px;
+				}
 
-                &-container {
-                    background-color: #E7EFFF;
-                    align-items: center;
-                    border-radius: 4px;
-                    display: flex;
-                    width: 220px;
-                    height: 128px;
+				&-container {
+					background-color: #e7efff;
+					align-items: center;
+					border-radius: 4px;
+					display: flex;
+					width: 220px;
+					height: 128px;
 
-                    .preview-image {
-                        background-size: cover;
-                        background-position: 50% 50%;
-                        width: 220px;
-                        height: 128px;
-                        border-radius: 0.625rem;
-                    }
-                }
+					.preview-image {
+						background-size: cover;
+						background-position: 50% 50%;
+						width: 220px;
+						height: 128px;
+						border-radius: 0.625rem;
+					}
+				}
 
-                &-data {
-                    display: flex;
-                    flex-direction: column;
-                    width: 314px;
+				&-data {
+					display: flex;
+					flex-direction: column;
+					width: 314px;
 
-                    &-icon {
-                        filter: invert(26%) sepia(83%) saturate(5507%) hue-rotate(220deg) brightness(104%) contrast(97%);
-                        width: 16px;
-                        height: 16px;
-                        margin-bottom: 4px;
-                    }
+					&-icon {
+						filter: invert(26%) sepia(83%) saturate(5507%)
+							hue-rotate(220deg) brightness(104%) contrast(97%);
+						width: 16px;
+						height: 16px;
+						margin-bottom: 4px;
+					}
 
-                    &-name {
-                        color: #282934;
-                        font-family: 'Source Sans Pro', sans-serif;
-                        font-weight: 600;
-                        font-size: 16px;
-                        line-height: 24px;
-                        margin-bottom: 4px;
-                    }
+					&-name {
+						color: #282934;
+						font-family: 'Source Sans Pro', sans-serif;
+						font-weight: 600;
+						font-size: 16px;
+						line-height: 24px;
+						margin-bottom: 4px;
+					}
 
-                    &-description {
-                        word-break: break-all;
-                        font-family: 'Source Sans Pro';
-                    }
-                }
+					&-description {
+						word-break: break-all;
+						font-family: 'Source Sans Pro';
+					}
+				}
+			}
 
+			&-version {
+				padding-top: 20px;
+				display: flex;
+				width: 100%;
+				gap: 16px;
 
-            }
+				&-container {
+					background: #e6ebf5;
+					border-radius: 4px;
+					width: 106px;
+					height: 80px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
 
-            &-version {
-                padding-top: 20px;
-                display: flex;
-                width: 100%;
-                gap: 16px;
+					&-icon {
+						align-self: center;
+						background-color: #2e5aac;
+						border-radius: 4px;
+						color: #ffffff;
+						font-family: 'Source Sans Pro', sans-serif;
+						width: 42px;
+						height: 24px;
+						font-weight: 400;
+						font-size: 13px;
+						line-height: 16px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+				}
 
-                &-container {
+				&-data {
+					display: flex;
+					flex-direction: column;
+					width: 430px;
 
-                    background: #E6EBF5;
-                    border-radius: 4px;
-                    width: 106px;
-                    height: 80px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
+					&-name {
+						color: #282934;
+						font-family: 'Source Sans Pro', sans-serif;
+						font-weight: 600;
+						font-size: 16px;
+						line-height: 24px;
+						margin-bottom: 4px;
+					}
 
-                    &-icon {
-                        align-self: center;
-                        background-color: #2E5AAC;
-                        border-radius: 4px;
-                        color: #FFFFFF;
-                        font-family: 'Source Sans Pro', sans-serif;
-                        width: 42px;
-                        height: 24px;
-                        font-weight: 400;
-                        font-size: 13px;
-                        line-height: 16px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-
-                    }
-                }
-
-                &-data {
-                    display: flex;
-                    flex-direction: column;
-                    width: 430px;
-
-                    &-name {
-                        color: #282934;
-                        font-family: 'Source Sans Pro', sans-serif;
-                        font-weight: 600;
-                        font-size: 16px;
-                        line-height: 24px;
-                        margin-bottom: 4px;
-                    }
-
-                    &-description {
-                        word-break: break-all;
-                    }
-                }
-            }
-        }
-    }
+					&-description {
+						word-break: break-all;
+					}
+				}
+			}
+		}
+	}
 }

@@ -1,41 +1,41 @@
 .tooltip {
-    &-base {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 28px;
-        background-color: #E6EBF5;
-        border-radius: 0.25rem;
-        margin-bottom: 9px;
+	&-base {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 28px;
+		background-color: #e6ebf5;
+		border-radius: 0.25rem;
+		margin-bottom: 9px;
 
-        &-auto {
-            font-weight: 600;
-            padding-left: 8px;
-            padding-right: 8px;
-            width: auto;
+		&-auto {
+			font-weight: 600;
+			padding-left: 8px;
+			padding-right: 8px;
+			width: auto;
+		}
 
-        }
+		&-container {
+			width: 28px;
+		}
+	}
 
-        &-container {
-            width: 28px;
-        }
-    }
+	&-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-    &-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+	&-optional-text {
+		font-size: 0.688rem;
+		color: #2e5aac;
+		margin-right: 0.125rem;
+	}
 
-    &-optional-text {
-        font-size: 0.688rem;
-        color: #2E5AAC;
-        margin-right: 0.125rem;
-    }
-
-    &-icon {
-        width: 12px;
-        height: 12px;
-        filter: invert(34%) sepia(14%) saturate(4340%) hue-rotate(190deg) brightness(88%) contrast(91%);
-    }
+	&-icon {
+		width: 12px;
+		height: 12px;
+		filter: invert(34%) sepia(14%) saturate(4340%) hue-rotate(190deg)
+			brightness(88%) contrast(91%);
+	}
 }

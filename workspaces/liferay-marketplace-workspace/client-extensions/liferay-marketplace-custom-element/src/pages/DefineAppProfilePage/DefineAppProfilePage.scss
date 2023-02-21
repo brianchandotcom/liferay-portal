@@ -1,11 +1,11 @@
 .profile-page {
-    &-container {
-        width: 600px;
-    }
+	&-container {
+		width: 600px;
+	}
 
-    &-body-container {
-        .upload-logo-container {
-            justify-content: flex-start;
-        }
-    }
+	&-body-container {
+		.upload-logo-container {
+			justify-content: flex-start;
+		}
+	}
 }

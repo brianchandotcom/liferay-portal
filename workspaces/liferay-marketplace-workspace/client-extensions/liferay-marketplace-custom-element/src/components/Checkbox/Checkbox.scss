@@ -1,33 +1,31 @@
-
 .checkbox {
-    &-base-container {
-        display: flex;
-        justify-content: center;
-        max-width: 20.5rem;
-    }
+	&-base-container {
+		display: flex;
+		justify-content: center;
+		max-width: 20.5rem;
+	}
 
-    &-texts-container {
-        display: flex;
-        flex-direction: column;
-        margin-left: 0.75rem;
-    }
+	&-texts-container {
+		display: flex;
+		flex-direction: column;
+		margin-left: 0.75rem;
+	}
 
-    &-label-text {
-        color: #282934;
-        font-family: 'Source Sans Pro', sans-serif;
-        font-size: 1rem;
-        font-weight: 600;
-        line-height: 1.25rem;
-        word-break: break-word;
-    }
+	&-label-text {
+		color: #282934;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 1rem;
+		font-weight: 600;
+		line-height: 1.25rem;
+		word-break: break-word;
+	}
 
-    &-description-text {
-        color: #54555F;
-        font-family: 'Source Sans Pro', sans-serif;
-        font-size: 0.813rem;
-        font-weight: 400;
-        line-height: 1rem;
-        word-break: break-word;
-
-    }
+	&-description-text {
+		color: #54555f;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-size: 0.813rem;
+		font-weight: 400;
+		line-height: 1rem;
+		word-break: break-word;
+	}
 }

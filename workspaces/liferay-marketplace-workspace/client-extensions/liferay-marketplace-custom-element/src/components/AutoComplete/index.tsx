@@ -58,7 +58,7 @@ export default function AutoComplete<T>({
 
 	const emptyStateItem = {
 		id: '',
-		label:'choose-an-option',
+		label: 'choose-an-option',
 	};
 
 	return (
@@ -66,7 +66,9 @@ export default function AutoComplete<T>({
 			className={className}
 			disabled={disabled}
 			errorMessage={error}
+
 			//helpMessage={feedbackMessage}
+
 			id={id}
 			label={label}
 			required={required}
@@ -81,17 +83,14 @@ export default function AutoComplete<T>({
 					<CustomSelect
 						contentRight={<>{value && contentRight}</>}
 						disabled={disabled}
-						placeholder={
-							placeholder ??
-							'choose-an-option'
-						}
+						placeholder={placeholder ?? 'choose-an-option'}
 						value={value}
 					/>
 				}
 			>
 				<ClayDropDown.Search
 					onChange={onChangeQuery}
-					placeholder='search'
+					placeholder="search"
 					value={query}
 				/>
 

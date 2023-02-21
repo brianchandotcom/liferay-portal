@@ -1,16 +1,16 @@
-import { filesize } from 'filesize';
-import { uniqueId } from 'lodash';
+import {filesize} from 'filesize';
+import {uniqueId} from 'lodash';
 
-import { DropzoneUpload } from '../../components/DropzoneUpload/DropzoneUpload';
-import { FileList, UploadedFile } from '../../components/FileList/FileList';
-import { Header } from '../../components/Header/Header';
-import { NewAppPageFooterButtons } from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
-import { Section } from '../../components/Section/Section';
-import { useAppContext } from '../../manage-app-state/AppManageState';
-import { TYPES } from '../../manage-app-state/actionTypes';
-import { createImage } from '../../utils/api';
+import {DropzoneUpload} from '../../components/DropzoneUpload/DropzoneUpload';
+import {FileList, UploadedFile} from '../../components/FileList/FileList';
+import {Header} from '../../components/Header/Header';
+import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
+import {Section} from '../../components/Section/Section';
+import {useAppContext} from '../../manage-app-state/AppManageState';
+import {TYPES} from '../../manage-app-state/actionTypes';
+import {createImage} from '../../utils/api';
 import './CustomizeAppStorefrontPage.scss';
-import { submitBase64EncodedFile } from '../../utils/util';
+import {submitBase64EncodedFile} from '../../utils/util';
 
 const acceptFileTypes = {
 	'image/*': ['.png', '.svg', '.jpg'],
@@ -25,7 +25,7 @@ export function CustomizeAppStorefrontPage({
 	onClickBack,
 	onClickContinue,
 }: CustomizeAppStorefrontPageProps) {
-	const [{ appERC, appStorefrontImages }, dispatch] = useAppContext();
+	const [{appERC, appStorefrontImages}, dispatch] = useAppContext();
 
 	const handleUpload = (files: File[]) => {
 		if (files.length > 5 || appStorefrontImages?.length > 5) {
@@ -51,7 +51,8 @@ export function CustomizeAppStorefrontPage({
 					},
 					type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
 				});
-			} else {
+			}
+			else {
 				dispatch({
 					payload: {
 						files: newUploadedFiles,
@@ -76,26 +77,26 @@ export function CustomizeAppStorefrontPage({
 	};
 
 	return (
-		<div className='storefront-page-container'>
+		<div className="storefront-page-container">
 			<Header
-				title='Customize app storefront'
-				description='Design the storefront for your app. This will set the information displayed on ths app’s page.'
+				title="Customize app storefront"
+				description="Design the storefront for your app. This will set the information displayed on ths app’s page."
 			/>
 
 			<Section
 				required
-				label='App Storefront'
-				tooltip='More Info'
-				tooltipText='More Info'
+				label="App Storefront"
+				tooltip="More Info"
+				tooltipText="More Info"
 			>
-				<div className='storefront-page-info-container'>
-					<span className='storefront-page-info-text'>
+				<div className="storefront-page-info-container">
+					<span className="storefront-page-info-text">
 						Add up to 5 images
 					</span>
 
 					{appStorefrontImages?.length > 0 && (
 						<button
-							className='storefront-page-info-button'
+							className="storefront-page-info-button"
 							onClick={() => {
 								dispatch({
 									payload: {
@@ -113,25 +114,27 @@ export function CustomizeAppStorefrontPage({
 				{appStorefrontImages?.length > 0 && (
 					<FileList
 						onDelete={handleDelete}
-						type='image'
+						type="image"
 						uploadedFiles={appStorefrontImages}
 					/>
 				)}
 
 				<DropzoneUpload
 					acceptFileTypes={acceptFileTypes}
-					buttonText='Select a file'
-					description='Only gif, jpg, png are allowed. Max file size is 5MB '
+					buttonText="Select a file"
+					description="Only gif, jpg, png are allowed. Max file size is 5MB "
 					maxFiles={5}
 					maxSize={5000000}
 					multiple={true}
 					onHandleUpload={handleUpload}
-					title='Drag and drop to upload or'
+					title="Drag and drop to upload or"
 				/>
 			</Section>
 
 			<NewAppPageFooterButtons
-				disableContinueButton={!appStorefrontImages || appStorefrontImages.length === 0}
+				disableContinueButton={
+					!appStorefrontImages || appStorefrontImages.length === 0
+				}
 				onClickBack={() => onClickBack()}
 				onClickContinue={() => {
 					appStorefrontImages?.forEach((image) => {

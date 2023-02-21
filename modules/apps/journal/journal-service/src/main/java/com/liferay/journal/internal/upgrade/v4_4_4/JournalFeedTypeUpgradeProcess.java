@@ -97,24 +97,22 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 			classNameId, id);
 
 		if (assetEntry == null) {
-			String uuid = resultSet.getString("uuid_");
-			long groupId = resultSet.getLong("groupId");
 			long userId = resultSet.getLong("userId");
 			Date createDate = resultSet.getDate("createDate");
-			Date modifiedDate = resultSet.getDate("modifiedDate");
-			String name = resultSet.getString("name");
-			String description = resultSet.getString("description");
 
 			if (_userLocalService.fetchUser(userId) == null) {
 				userId = defaultUserId;
 			}
 
 			_assetEntryLocalService.updateEntry(
-				userId, groupId, createDate, modifiedDate,
-				JournalFeed.class.getName(), id, uuid, 0, assetCategoryIds,
+				userId, resultSet.getLong("groupId"),
+				resultSet.getDate("createDate"),
+				resultSet.getDate("modifiedDate"), JournalFeed.class.getName(),
+				id, resultSet.getString("uuid_"), 0, assetCategoryIds,
 				new String[0], true, true, null, null, createDate, null,
-				ContentTypes.TEXT_PLAIN, name, description, null, null, null, 0,
-				0, 0.0);
+				ContentTypes.TEXT_PLAIN, resultSet.getString("name"),
+				resultSet.getString("description"), null, null, null, 0, 0,
+				0.0);
 		}
 	}
 

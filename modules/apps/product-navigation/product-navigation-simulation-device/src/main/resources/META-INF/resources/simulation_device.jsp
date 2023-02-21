@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <c:choose>
-	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135863")) %>'>
+	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-135863") %>'>
 		<div id="<portlet:namespace />simulationDeviceContainer">
 			<div class="inline-item my-5 p-5 w-100">
 				<span aria-hidden="true" class="loading-animation"></span>

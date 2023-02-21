@@ -134,7 +134,9 @@ public class ObjectRelationshipExtensionProvider
 				_getRelatedObjectDefinition(
 					objectDefinition, objectRelationship);
 
-			if (relatedObjectDefinition.isSystem()) {
+			if (!relatedObjectDefinition.isActive() ||
+				relatedObjectDefinition.isSystem()) {
+
 				continue;
 			}
 
@@ -214,7 +216,9 @@ public class ObjectRelationshipExtensionProvider
 				_getRelatedObjectDefinition(
 					objectDefinition, objectRelationship);
 
-			if (relatedObjectDefinition.isSystem()) {
+			if (!relatedObjectDefinition.isActive() ||
+				relatedObjectDefinition.isSystem()) {
+
 				continue;
 			}
 

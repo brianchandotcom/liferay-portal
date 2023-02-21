@@ -111,38 +111,10 @@ const doubleProperty = {
 const eventCriterion = {
 	assetId: '545188693724480037',
 	day: {
-		operator: 'gt',
+		operatorName: 'gt',
 		value: '2023-02-07',
 	},
 	operatorName: 'ge',
-	operatorNot: true,
-	propertyName: 'downloadedDocuments',
-	value: 1,
-};
-
-const eventCriterionAtMost = {
-	assetId: '545188693724480037',
-	day: {
-		operator: 'gt',
-		value: '2023-02-07',
-	},
-	operatorName: 'le',
-	operatorNot: true,
-	propertyName: 'downloadedDocuments',
-	value: 1,
-};
-
-const eventCriterionBetween = {
-	assetId: '545188693724480037',
-	day: {
-		operatorName: 'between',
-		value: {
-			end: '2024-01-26T23:00:00.000Z',
-			start: '2023-01-26T23:00:00.000Z',
-		},
-	},
-	operatorName: 'gt',
-	operatorNot: true,
 	propertyName: 'downloadedDocuments',
 	value: 1,
 };
@@ -150,19 +122,6 @@ const eventCriterionBetween = {
 const eventCriterionEver = {
 	assetId: '545188693724480037',
 	operatorName: 'gt',
-	operatorNot: true,
-	propertyName: 'downloadedDocuments',
-	value: 1,
-};
-
-const eventCriterionSince = {
-	assetId: '545188693724480037',
-	day: {
-		operatorName: 'gt',
-		value: 'last28Days',
-	},
-	operatorName: 'gt',
-	operatorNot: true,
 	propertyName: 'downloadedDocuments',
 	value: 1,
 };
@@ -270,11 +229,34 @@ describe('CriteriaRowReadable', () => {
 		);
 
 		expect(getByText(eventProperty.label)).toBeInTheDocument();
+		expect(getByText('has')).toBeInTheDocument();
 		expect(getByText('at-least')).toBeInTheDocument();
 		expect(getByText(eventCriterion.value)).toBeInTheDocument();
 	});
 
+	it('renders event criterion with not operator', () => {
+		const eventCriterionNotOperator = {
+			...eventCriterion,
+			...{operatorNot: true},
+		};
+		const {getByText} = render(
+			<CriteriaRowReadable
+				criterion={eventCriterionNotOperator}
+				selectedProperty={eventProperty}
+			/>
+		);
+
+		expect(getByText(eventProperty.label)).toBeInTheDocument();
+		expect(getByText('has-not')).toBeInTheDocument();
+		expect(getByText('at-least')).toBeInTheDocument();
+		expect(getByText(eventCriterionNotOperator.value)).toBeInTheDocument();
+	});
+
 	it('renders event criterion with at most operator', () => {
+		const eventCriterionAtMost = {
+			...eventCriterion,
+			...{operatorName: 'le'},
+		};
 		const {getByText} = render(
 			<CriteriaRowReadable
 				criterion={eventCriterionAtMost}
@@ -284,7 +266,79 @@ describe('CriteriaRowReadable', () => {
 
 		expect(getByText(eventProperty.label)).toBeInTheDocument();
 		expect(getByText('at-most')).toBeInTheDocument();
-		expect(getByText(eventCriterion.value)).toBeInTheDocument();
+		expect(getByText(eventCriterionAtMost.value)).toBeInTheDocument();
+	});
+
+	it('renders event criterion with on date modifier', () => {
+		const eventCriterionOn = {
+			...eventCriterion,
+			...{
+				day: {
+					operatorName: 'eq',
+					value: '2023-02-07',
+				},
+			},
+		};
+		const {getByText} = render(
+			<CriteriaRowReadable
+				criterion={eventCriterionOn}
+				selectedProperty={eventProperty}
+			/>
+		);
+
+		expect(getByText(eventProperty.label)).toBeInTheDocument();
+		expect(getByText('on')).toBeInTheDocument();
+		expect(
+			getByText(dateToInternationalHuman(eventCriterionOn.day.value), {
+				exact: false,
+			})
+		).toBeInTheDocument();
+	});
+
+	it('renders event criterion with after date modifier', () => {
+		const {getByText} = render(
+			<CriteriaRowReadable
+				criterion={eventCriterion}
+				selectedProperty={eventProperty}
+			/>
+		);
+
+		expect(getByText(eventProperty.label)).toBeInTheDocument();
+		expect(getByText('after')).toBeInTheDocument();
+		expect(
+			getByText(dateToInternationalHuman(eventCriterion.day.value), {
+				exact: false,
+			})
+		).toBeInTheDocument();
+	});
+
+	it('renders event criterion with before date modifier', () => {
+		const eventCriterionBefore = {
+			...eventCriterion,
+			...{
+				day: {
+					operatorName: 'lt',
+					value: '2023-02-07',
+				},
+			},
+		};
+		const {getByText} = render(
+			<CriteriaRowReadable
+				criterion={eventCriterionBefore}
+				selectedProperty={eventProperty}
+			/>
+		);
+
+		expect(getByText(eventProperty.label)).toBeInTheDocument();
+		expect(getByText('before')).toBeInTheDocument();
+		expect(
+			getByText(
+				dateToInternationalHuman(eventCriterionBefore.day.value),
+				{
+					exact: false,
+				}
+			)
+		).toBeInTheDocument();
 	});
 
 	it('renders event criterion with ever date modifier', () => {
@@ -301,6 +355,19 @@ describe('CriteriaRowReadable', () => {
 	});
 
 	it('renders event criterion with between date modifier', () => {
+		const eventCriterionBetween = {
+			...eventCriterion,
+			...{
+				day: {
+					operatorName: 'between',
+					value: {
+						end: '2024-01-26T23:00:00.000Z',
+						start: '2023-01-26T23:00:00.000Z',
+					},
+				},
+			},
+		};
+
 		const {getByText} = render(
 			<CriteriaRowReadable
 				criterion={eventCriterionBetween}
@@ -329,6 +396,16 @@ describe('CriteriaRowReadable', () => {
 	});
 
 	it('renders event criterion with since date modifier', () => {
+		const eventCriterionSince = {
+			...eventCriterion,
+			...{
+				day: {
+					operatorName: 'gt',
+					value: 'last28Days',
+				},
+			},
+		};
+
 		const {getByText} = render(
 			<CriteriaRowReadable
 				criterion={eventCriterionSince}

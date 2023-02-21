@@ -802,7 +802,7 @@ public class OrganizationResourceImpl
 	private void _patchCustomFields(
 		CustomField[] customFields, Organization organization) {
 
-		if ((customFields == null) || (customFields.length == 0)) {
+		if (ArrayUtil.isEmpty(customFields)) {
 			return;
 		}
 
@@ -810,9 +810,10 @@ public class OrganizationResourceImpl
 
 		for (CustomField customField : customFields) {
 			for (int i = 0; i < existingCustomFields.length; i++) {
+				CustomField existingCustomField = existingCustomFields[i];
+
 				if (Objects.equals(
-						customField.getName(),
-						existingCustomFields[i].getName())) {
+						customField.getName(), existingCustomField.getName())) {
 
 					existingCustomFields[i] = customField;
 

@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>ANY_LABELED</td>
-	<td>//*[normalize-space(text())='${key_label}']/..//textarea | //label[normalize-space()='${key_label}']/..//textarea</td>
+	<td>//*[normalize-space(text())='${key_label}']/..//textarea | //label[normalize-space()='${key_label}']/..//textarea | //label[normalize-space(text())='${key_label}']//..//following-sibling::textarea</td>
 	<td></td>
 </tr>
 <tr>

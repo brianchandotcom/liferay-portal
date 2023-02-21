@@ -39,6 +39,7 @@ import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipment.web.internal.portlet.action.helper.ActionHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -67,7 +68,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -111,13 +111,8 @@ public class CommerceShipmentDisplayContext
 	public List<AccountEntry> getCommerceAccountsWithShippableOrders()
 		throws PortalException {
 
-		List<CommerceOrder> commerceOrders = getCommerceOrders();
-
-		Stream<CommerceOrder> stream = commerceOrders.stream();
-
-		long[] commerceAccountIds = stream.mapToLong(
-			CommerceOrder::getCommerceAccountId
-		).toArray();
+		long[] commerceAccountIds = TransformUtil.transformToLongArray(
+			getCommerceOrders(), CommerceOrder::getCommerceAccountId);
 
 		commerceAccountIds = ArrayUtil.unique(commerceAccountIds);
 
@@ -506,13 +501,8 @@ public class CommerceShipmentDisplayContext
 	}
 
 	private long[] _getCommerceChannelGroupIds() throws PortalException {
-		List<CommerceChannel> commerceChannels = getCommerceChannels();
-
-		Stream<CommerceChannel> stream = commerceChannels.stream();
-
-		return stream.mapToLong(
-			CommerceChannel::getGroupId
-		).toArray();
+		return TransformUtil.transformToLongArray(
+			getCommerceChannels(), CommerceChannel::getGroupId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

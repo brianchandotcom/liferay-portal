@@ -92,7 +92,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 	@After
 	public void tearDown() throws Exception {
-		runSQL("drop table " + _TABLE_NAME);
+		runSQL("DROP_TABLE_IF_EXISTS(" + _TABLE_NAME + ")");
 	}
 
 	@Test

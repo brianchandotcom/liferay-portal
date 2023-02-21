@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -290,7 +291,10 @@ public abstract class BaseFormStructureResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantFormStructure),
 				(List<FormStructure>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteFormStructuresPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		FormStructure formStructure1 =
@@ -309,7 +313,17 @@ public abstract class BaseFormStructureResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(formStructure1, formStructure2),
 			(List<FormStructure>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetSiteFormStructuresPage_getExpectedActions(siteId));
+	}
+
+	protected Map<String, Map> testGetSiteFormStructuresPage_getExpectedActions(
+			Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -600,7 +614,9 @@ public abstract class BaseFormStructureResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<FormStructure> page) {
+	protected void assertValid(
+		Page<FormStructure> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<FormStructure> formStructures = page.getItems();
@@ -615,6 +631,25 @@ public abstract class BaseFormStructureResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<FormStructure> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -54,6 +54,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -216,7 +217,10 @@ public abstract class BasePhoneResourceTestCase {
 
 			assertEquals(
 				Arrays.asList(irrelevantPhone), (List<Phone>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrganizationPhonesPage_getExpectedActions(
+					irrelevantOrganizationId));
 		}
 
 		Phone phone1 = testGetOrganizationPhonesPage_addPhone(
@@ -231,7 +235,18 @@ public abstract class BasePhoneResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(phone1, phone2), (List<Phone>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetOrganizationPhonesPage_getExpectedActions(organizationId));
+	}
+
+	protected Map<String, Map> testGetOrganizationPhonesPage_getExpectedActions(
+			String organizationId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected Phone testGetOrganizationPhonesPage_addPhone(
@@ -337,7 +352,10 @@ public abstract class BasePhoneResourceTestCase {
 
 			assertEquals(
 				Arrays.asList(irrelevantPhone), (List<Phone>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetUserAccountPhonesPage_getExpectedActions(
+					irrelevantUserAccountId));
 		}
 
 		Phone phone1 = testGetUserAccountPhonesPage_addPhone(
@@ -352,7 +370,18 @@ public abstract class BasePhoneResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(phone1, phone2), (List<Phone>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetUserAccountPhonesPage_getExpectedActions(userAccountId));
+	}
+
+	protected Map<String, Map> testGetUserAccountPhonesPage_getExpectedActions(
+			Long userAccountId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected Phone testGetUserAccountPhonesPage_addPhone(
@@ -490,7 +519,9 @@ public abstract class BasePhoneResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Phone> page) {
+	protected void assertValid(
+		Page<Phone> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Phone> phones = page.getItems();
@@ -505,6 +536,25 @@ public abstract class BasePhoneResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Phone> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

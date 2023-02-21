@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -396,7 +397,9 @@ public abstract class BaseCartCommentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantCartComment),
 				(List<CartComment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetCartCommentsPage_getExpectedActions(irrelevantCartId));
 		}
 
 		CartComment cartComment1 = testGetCartCommentsPage_addCartComment(
@@ -413,11 +416,20 @@ public abstract class BaseCartCommentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(cartComment1, cartComment2),
 			(List<CartComment>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetCartCommentsPage_getExpectedActions(cartId));
 
 		cartCommentResource.deleteCartComment(cartComment1.getId());
 
 		cartCommentResource.deleteCartComment(cartComment2.getId());
+	}
+
+	protected Map<String, Map> testGetCartCommentsPage_getExpectedActions(
+			Long cartId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -666,7 +678,9 @@ public abstract class BaseCartCommentResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<CartComment> page) {
+	protected void assertValid(
+		Page<CartComment> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<CartComment> cartComments = page.getItems();
@@ -681,6 +695,25 @@ public abstract class BaseCartCommentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<CartComment> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

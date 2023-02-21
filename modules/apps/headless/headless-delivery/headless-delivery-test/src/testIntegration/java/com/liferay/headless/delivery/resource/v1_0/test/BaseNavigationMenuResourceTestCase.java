@@ -61,6 +61,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -453,7 +454,10 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantNavigationMenu),
 				(List<NavigationMenu>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteNavigationMenusPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		NavigationMenu navigationMenu1 =
@@ -472,11 +476,30 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(navigationMenu1, navigationMenu2),
 			(List<NavigationMenu>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetSiteNavigationMenusPage_getExpectedActions(siteId));
 
 		navigationMenuResource.deleteNavigationMenu(navigationMenu1.getId());
 
 		navigationMenuResource.deleteNavigationMenu(navigationMenu2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetSiteNavigationMenusPage_getExpectedActions(Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -935,7 +958,9 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<NavigationMenu> page) {
+	protected void assertValid(
+		Page<NavigationMenu> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<NavigationMenu> navigationMenus = page.getItems();
@@ -950,6 +975,25 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<NavigationMenu> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

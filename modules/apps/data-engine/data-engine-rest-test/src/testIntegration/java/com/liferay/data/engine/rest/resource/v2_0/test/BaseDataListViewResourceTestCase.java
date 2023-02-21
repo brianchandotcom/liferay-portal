@@ -250,7 +250,10 @@ public abstract class BaseDataListViewResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDataListView),
 				(List<DataListView>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDataDefinitionDataListViewsPage_getExpectedActions(
+					irrelevantDataDefinitionId));
 		}
 
 		DataListView dataListView1 =
@@ -269,11 +272,34 @@ public abstract class BaseDataListViewResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dataListView1, dataListView2),
 			(List<DataListView>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetDataDefinitionDataListViewsPage_getExpectedActions(
+				dataDefinitionId));
 
 		dataListViewResource.deleteDataListView(dataListView1.getId());
 
 		dataListViewResource.deleteDataListView(dataListView2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetDataDefinitionDataListViewsPage_getExpectedActions(
+				Long dataDefinitionId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views/batch".
+				replace(
+					"{dataDefinitionId}", String.valueOf(dataDefinitionId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -824,7 +850,9 @@ public abstract class BaseDataListViewResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<DataListView> page) {
+	protected void assertValid(
+		Page<DataListView> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<DataListView> dataListViews = page.getItems();
@@ -839,6 +867,25 @@ public abstract class BaseDataListViewResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<DataListView> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

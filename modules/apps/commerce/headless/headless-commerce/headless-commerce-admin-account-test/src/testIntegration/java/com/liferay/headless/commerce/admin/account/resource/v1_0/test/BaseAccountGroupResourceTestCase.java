@@ -219,11 +219,19 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		assertContains(accountGroup1, (List<AccountGroup>)page.getItems());
 		assertContains(accountGroup2, (List<AccountGroup>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetAccountGroupsPage_getExpectedActions());
 
 		accountGroupResource.deleteAccountGroup(accountGroup1.getId());
 
 		accountGroupResource.deleteAccountGroup(accountGroup2.getId());
+	}
+
+	protected Map<String, Map> testGetAccountGroupsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -852,7 +860,10 @@ public abstract class BaseAccountGroupResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountGroup),
 				(List<AccountGroup>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountGroupsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountGroup accountGroup1 =
@@ -873,11 +884,24 @@ public abstract class BaseAccountGroupResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountGroup1, accountGroup2),
 			(List<AccountGroup>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountGroupsPage_getExpectedActions(
+				externalReferenceCode));
 
 		accountGroupResource.deleteAccountGroup(accountGroup1.getId());
 
 		accountGroupResource.deleteAccountGroup(accountGroup2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeAccountGroupsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -981,7 +1005,10 @@ public abstract class BaseAccountGroupResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountGroup),
 				(List<AccountGroup>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountIdAccountGroupsPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		AccountGroup accountGroup1 =
@@ -1000,11 +1027,21 @@ public abstract class BaseAccountGroupResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountGroup1, accountGroup2),
 			(List<AccountGroup>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetAccountIdAccountGroupsPage_getExpectedActions(id));
 
 		accountGroupResource.deleteAccountGroup(accountGroup1.getId());
 
 		accountGroupResource.deleteAccountGroup(accountGroup2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetAccountIdAccountGroupsPage_getExpectedActions(Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1197,7 +1234,9 @@ public abstract class BaseAccountGroupResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<AccountGroup> page) {
+	protected void assertValid(
+		Page<AccountGroup> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<AccountGroup> accountGroups = page.getItems();
@@ -1212,6 +1251,25 @@ public abstract class BaseAccountGroupResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<AccountGroup> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

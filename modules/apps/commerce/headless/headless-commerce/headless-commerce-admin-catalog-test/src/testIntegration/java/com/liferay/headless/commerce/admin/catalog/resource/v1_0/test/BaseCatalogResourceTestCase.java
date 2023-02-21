@@ -453,11 +453,19 @@ public abstract class BaseCatalogResourceTestCase {
 
 		assertContains(catalog1, (List<Catalog>)page.getItems());
 		assertContains(catalog2, (List<Catalog>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetCatalogsPage_getExpectedActions());
 
 		catalogResource.deleteCatalog(catalog1.getId());
 
 		catalogResource.deleteCatalog(catalog2.getId());
+	}
+
+	protected Map<String, Map> testGetCatalogsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1082,7 +1090,9 @@ public abstract class BaseCatalogResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Catalog> page) {
+	protected void assertValid(
+		Page<Catalog> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Catalog> catalogs = page.getItems();
@@ -1097,6 +1107,25 @@ public abstract class BaseCatalogResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Catalog> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

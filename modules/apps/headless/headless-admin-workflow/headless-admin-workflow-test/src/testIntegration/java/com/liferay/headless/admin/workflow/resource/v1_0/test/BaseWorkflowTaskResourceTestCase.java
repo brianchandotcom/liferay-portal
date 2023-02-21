@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -228,7 +229,10 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWorkflowTask),
 				(List<WorkflowTask>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWorkflowInstanceWorkflowTasksPage_getExpectedActions(
+					irrelevantWorkflowInstanceId));
 		}
 
 		WorkflowTask workflowTask1 =
@@ -247,7 +251,20 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(workflowTask1, workflowTask2),
 			(List<WorkflowTask>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWorkflowInstanceWorkflowTasksPage_getExpectedActions(
+				workflowInstanceId));
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowInstanceWorkflowTasksPage_getExpectedActions(
+				Long workflowInstanceId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -357,7 +374,10 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWorkflowTask),
 				(List<WorkflowTask>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWorkflowInstanceWorkflowTasksAssignedToMePage_getExpectedActions(
+					irrelevantWorkflowInstanceId));
 		}
 
 		WorkflowTask workflowTask1 =
@@ -378,7 +398,20 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(workflowTask1, workflowTask2),
 			(List<WorkflowTask>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_getExpectedActions(
+				workflowInstanceId));
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_getExpectedActions(
+				Long workflowInstanceId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -491,7 +524,10 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWorkflowTask),
 				(List<WorkflowTask>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_getExpectedActions(
+					irrelevantWorkflowInstanceId));
 		}
 
 		WorkflowTask workflowTask1 =
@@ -512,7 +548,20 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(workflowTask1, workflowTask2),
 			(List<WorkflowTask>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_getExpectedActions(
+				workflowInstanceId));
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_getExpectedActions(
+				Long workflowInstanceId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -644,7 +693,17 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		assertContains(workflowTask1, (List<WorkflowTask>)page.getItems());
 		assertContains(workflowTask2, (List<WorkflowTask>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetWorkflowTasksAssignedToMePage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowTasksAssignedToMePage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -730,7 +789,18 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		assertContains(workflowTask1, (List<WorkflowTask>)page.getItems());
 		assertContains(workflowTask2, (List<WorkflowTask>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWorkflowTasksAssignedToMyRolesPage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowTasksAssignedToMyRolesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -817,7 +887,17 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		assertContains(workflowTask1, (List<WorkflowTask>)page.getItems());
 		assertContains(workflowTask2, (List<WorkflowTask>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetWorkflowTasksAssignedToRolePage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowTasksAssignedToRolePage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -904,7 +984,17 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		assertContains(workflowTask1, (List<WorkflowTask>)page.getItems());
 		assertContains(workflowTask2, (List<WorkflowTask>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetWorkflowTasksAssignedToUserPage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowTasksAssignedToUserPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -991,7 +1081,18 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		assertContains(workflowTask1, (List<WorkflowTask>)page.getItems());
 		assertContains(workflowTask2, (List<WorkflowTask>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWorkflowTasksAssignedToUserRolesPage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowTasksAssignedToUserRolesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1104,7 +1205,17 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		assertContains(workflowTask1, (List<WorkflowTask>)page.getItems());
 		assertContains(workflowTask2, (List<WorkflowTask>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetWorkflowTasksSubmittingUserPage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowTasksSubmittingUserPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1581,7 +1692,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<WorkflowTask> page) {
+	protected void assertValid(
+		Page<WorkflowTask> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<WorkflowTask> workflowTasks = page.getItems();
@@ -1596,6 +1709,25 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<WorkflowTask> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -299,7 +300,10 @@ public abstract class BaseFormRecordResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantFormRecord),
 				(List<FormRecord>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetFormFormRecordsPage_getExpectedActions(
+					irrelevantFormId));
 		}
 
 		FormRecord formRecord1 = testGetFormFormRecordsPage_addFormRecord(
@@ -316,7 +320,26 @@ public abstract class BaseFormRecordResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(formRecord1, formRecord2),
 			(List<FormRecord>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetFormFormRecordsPage_getExpectedActions(formId));
+	}
+
+	protected Map<String, Map> testGetFormFormRecordsPage_getExpectedActions(
+			Long formId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}/form-records/batch".
+				replace("{formId}", String.valueOf(formId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -622,7 +645,9 @@ public abstract class BaseFormRecordResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<FormRecord> page) {
+	protected void assertValid(
+		Page<FormRecord> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<FormRecord> formRecords = page.getItems();
@@ -637,6 +662,25 @@ public abstract class BaseFormRecordResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<FormRecord> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

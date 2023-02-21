@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -226,7 +227,10 @@ public abstract class BaseAttachmentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAttachment),
 				(List<Attachment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetChannelProductAttachmentsPage_getExpectedActions(
+					irrelevantChannelId, irrelevantProductId));
 		}
 
 		Attachment attachment1 =
@@ -245,7 +249,20 @@ public abstract class BaseAttachmentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(attachment1, attachment2),
 			(List<Attachment>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetChannelProductAttachmentsPage_getExpectedActions(
+				channelId, productId));
+	}
+
+	protected Map<String, Map>
+			testGetChannelProductAttachmentsPage_getExpectedActions(
+				Long channelId, Long productId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -357,7 +374,10 @@ public abstract class BaseAttachmentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAttachment),
 				(List<Attachment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetChannelProductImagesPage_getExpectedActions(
+					irrelevantChannelId, irrelevantProductId));
 		}
 
 		Attachment attachment1 = testGetChannelProductImagesPage_addAttachment(
@@ -374,7 +394,20 @@ public abstract class BaseAttachmentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(attachment1, attachment2),
 			(List<Attachment>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetChannelProductImagesPage_getExpectedActions(
+				channelId, productId));
+	}
+
+	protected Map<String, Map>
+			testGetChannelProductImagesPage_getExpectedActions(
+				Long channelId, Long productId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -615,7 +648,9 @@ public abstract class BaseAttachmentResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Attachment> page) {
+	protected void assertValid(
+		Page<Attachment> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Attachment> attachments = page.getItems();
@@ -630,6 +665,25 @@ public abstract class BaseAttachmentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Attachment> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -223,7 +223,16 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 			contactAccountGroup1, (List<ContactAccountGroup>)page.getItems());
 		assertContains(
 			contactAccountGroup2, (List<ContactAccountGroup>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetContactAccountGroupsPage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetContactAccountGroupsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -610,7 +619,9 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ContactAccountGroup> page) {
+	protected void assertValid(
+		Page<ContactAccountGroup> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ContactAccountGroup> contactAccountGroups =
@@ -626,6 +637,25 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ContactAccountGroup> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

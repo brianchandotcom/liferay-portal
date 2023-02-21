@@ -617,7 +617,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantKnowledgeBaseArticle),
 				(List<KnowledgeBaseArticle>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getExpectedActions(
+					irrelevantParentKnowledgeBaseArticleId));
 		}
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
@@ -639,13 +642,26 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
 			(List<KnowledgeBaseArticle>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getExpectedActions(
+				parentKnowledgeBaseArticleId));
 
 		knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
 			knowledgeBaseArticle1.getId());
 
 		knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
 			knowledgeBaseArticle2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getExpectedActions(
+				Long parentKnowledgeBaseArticleId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1057,7 +1073,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantKnowledgeBaseArticle),
 				(List<KnowledgeBaseArticle>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getExpectedActions(
+					irrelevantKnowledgeBaseFolderId));
 		}
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
@@ -1079,13 +1098,37 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
 			(List<KnowledgeBaseArticle>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getExpectedActions(
+				knowledgeBaseFolderId));
 
 		knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
 			knowledgeBaseArticle1.getId());
 
 		knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
 			knowledgeBaseArticle2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getExpectedActions(
+				Long knowledgeBaseFolderId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles/batch".
+				replace(
+					"{knowledgeBaseFolderId}",
+					String.valueOf(knowledgeBaseFolderId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1490,7 +1533,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantKnowledgeBaseArticle),
 				(List<KnowledgeBaseArticle>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteKnowledgeBaseArticlesPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
@@ -1509,13 +1555,33 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
 			(List<KnowledgeBaseArticle>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSiteKnowledgeBaseArticlesPage_getExpectedActions(siteId));
 
 		knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
 			knowledgeBaseArticle1.getId());
 
 		knowledgeBaseArticleResource.deleteKnowledgeBaseArticle(
 			knowledgeBaseArticle2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetSiteKnowledgeBaseArticlesPage_getExpectedActions(Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2780,7 +2846,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<KnowledgeBaseArticle> page) {
+	protected void assertValid(
+		Page<KnowledgeBaseArticle> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<KnowledgeBaseArticle> knowledgeBaseArticles =
@@ -2796,6 +2864,25 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<KnowledgeBaseArticle> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(Rating rating) {

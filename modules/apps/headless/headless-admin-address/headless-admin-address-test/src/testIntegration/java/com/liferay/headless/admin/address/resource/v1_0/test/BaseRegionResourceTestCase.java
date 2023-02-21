@@ -220,7 +220,10 @@ public abstract class BaseRegionResourceTestCase {
 
 			assertEquals(
 				Arrays.asList(irrelevantRegion), (List<Region>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetCountryRegionsPage_getExpectedActions(
+					irrelevantCountryId));
 		}
 
 		Region region1 = testGetCountryRegionsPage_addRegion(
@@ -236,11 +239,30 @@ public abstract class BaseRegionResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(region1, region2), (List<Region>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetCountryRegionsPage_getExpectedActions(countryId));
 
 		regionResource.deleteRegion(region1.getId());
 
 		regionResource.deleteRegion(region2.getId());
+	}
+
+	protected Map<String, Map> testGetCountryRegionsPage_getExpectedActions(
+			Long countryId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}/regions/batch".
+				replace("{countryId}", String.valueOf(countryId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -552,11 +574,19 @@ public abstract class BaseRegionResourceTestCase {
 
 		assertContains(region1, (List<Region>)page.getItems());
 		assertContains(region2, (List<Region>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetRegionsPage_getExpectedActions());
 
 		regionResource.deleteRegion(region1.getId());
 
 		regionResource.deleteRegion(region2.getId());
+	}
+
+	protected Map<String, Map> testGetRegionsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1063,7 +1093,9 @@ public abstract class BaseRegionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Region> page) {
+	protected void assertValid(
+		Page<Region> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Region> regions = page.getItems();
@@ -1078,6 +1110,25 @@ public abstract class BaseRegionResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Region> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

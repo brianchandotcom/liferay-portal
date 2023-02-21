@@ -254,7 +254,10 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantShippingFixedOptionOrderType),
 				(List<ShippingFixedOptionOrderType>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		ShippingFixedOptionOrderType shippingFixedOptionOrderType1 =
@@ -276,7 +279,20 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 			Arrays.asList(
 				shippingFixedOptionOrderType1, shippingFixedOptionOrderType2),
 			(List<ShippingFixedOptionOrderType>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPage_getExpectedActions(
+				id));
+	}
+
+	protected Map<String, Map>
+			testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -848,7 +864,10 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ShippingFixedOptionOrderType> page) {
+	protected void assertValid(
+		Page<ShippingFixedOptionOrderType> page,
+		Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ShippingFixedOptionOrderType>
@@ -864,6 +883,25 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ShippingFixedOptionOrderType> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

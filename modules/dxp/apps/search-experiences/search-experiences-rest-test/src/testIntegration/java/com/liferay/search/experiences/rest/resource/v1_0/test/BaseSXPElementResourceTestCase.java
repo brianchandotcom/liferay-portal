@@ -228,11 +228,19 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		assertContains(sxpElement1, (List<SXPElement>)page.getItems());
 		assertContains(sxpElement2, (List<SXPElement>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetSXPElementsPage_getExpectedActions());
 
 		sxpElementResource.deleteSXPElement(sxpElement1.getId());
 
 		sxpElementResource.deleteSXPElement(sxpElement2.getId());
+	}
+
+	protected Map<String, Map> testGetSXPElementsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -923,7 +931,9 @@ public abstract class BaseSXPElementResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<SXPElement> page) {
+	protected void assertValid(
+		Page<SXPElement> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<SXPElement> sxpElements = page.getItems();
@@ -938,6 +948,25 @@ public abstract class BaseSXPElementResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<SXPElement> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -470,7 +471,10 @@ public abstract class BaseOrderNoteResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantOrderNote),
 				(List<OrderNote>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrderByExternalReferenceCodeOrderNotesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		OrderNote orderNote1 =
@@ -489,11 +493,24 @@ public abstract class BaseOrderNoteResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(orderNote1, orderNote2),
 			(List<OrderNote>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetOrderByExternalReferenceCodeOrderNotesPage_getExpectedActions(
+				externalReferenceCode));
 
 		orderNoteResource.deleteOrderNote(orderNote1.getId());
 
 		orderNoteResource.deleteOrderNote(orderNote2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetOrderByExternalReferenceCodeOrderNotesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -612,7 +629,9 @@ public abstract class BaseOrderNoteResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantOrderNote),
 				(List<OrderNote>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetOrderIdOrderNotesPage_getExpectedActions(irrelevantId));
 		}
 
 		OrderNote orderNote1 = testGetOrderIdOrderNotesPage_addOrderNote(
@@ -629,11 +648,20 @@ public abstract class BaseOrderNoteResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(orderNote1, orderNote2),
 			(List<OrderNote>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetOrderIdOrderNotesPage_getExpectedActions(id));
 
 		orderNoteResource.deleteOrderNote(orderNote1.getId());
 
 		orderNoteResource.deleteOrderNote(orderNote2.getId());
+	}
+
+	protected Map<String, Map> testGetOrderIdOrderNotesPage_getExpectedActions(
+			Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -851,7 +879,9 @@ public abstract class BaseOrderNoteResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<OrderNote> page) {
+	protected void assertValid(
+		Page<OrderNote> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<OrderNote> orderNotes = page.getItems();
@@ -866,6 +896,25 @@ public abstract class BaseOrderNoteResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<OrderNote> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

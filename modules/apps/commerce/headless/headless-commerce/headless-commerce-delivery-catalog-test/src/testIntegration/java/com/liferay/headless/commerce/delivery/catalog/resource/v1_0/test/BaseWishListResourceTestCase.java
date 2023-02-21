@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -215,7 +216,10 @@ public abstract class BaseWishListResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWishList),
 				(List<WishList>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetChannelWishListsPage_getExpectedActions(
+					irrelevantChannelId));
 		}
 
 		WishList wishList1 = testGetChannelWishListsPage_addWishList(
@@ -232,11 +236,21 @@ public abstract class BaseWishListResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(wishList1, wishList2),
 			(List<WishList>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetChannelWishListsPage_getExpectedActions(channelId));
 
 		wishListResource.deleteWishList(wishList1.getId());
 
 		wishListResource.deleteWishList(wishList2.getId());
+	}
+
+	protected Map<String, Map> testGetChannelWishListsPage_getExpectedActions(
+			Long channelId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -545,7 +559,9 @@ public abstract class BaseWishListResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<WishList> page) {
+	protected void assertValid(
+		Page<WishList> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<WishList> wishLists = page.getItems();
@@ -560,6 +576,25 @@ public abstract class BaseWishListResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<WishList> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -231,13 +231,22 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			workflowDefinition1, (List<WorkflowDefinition>)page.getItems());
 		assertContains(
 			workflowDefinition2, (List<WorkflowDefinition>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetWorkflowDefinitionsPage_getExpectedActions());
 
 		workflowDefinitionResource.deleteWorkflowDefinition(
 			workflowDefinition1.getId());
 
 		workflowDefinitionResource.deleteWorkflowDefinition(
 			workflowDefinition2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetWorkflowDefinitionsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1057,7 +1066,9 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<WorkflowDefinition> page) {
+	protected void assertValid(
+		Page<WorkflowDefinition> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<WorkflowDefinition> workflowDefinitions =
@@ -1073,6 +1084,25 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<WorkflowDefinition> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

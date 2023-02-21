@@ -242,7 +242,10 @@ public abstract class BaseDiscountAccountResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDiscountAccount),
 				(List<DiscountAccount>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDiscountByExternalReferenceCodeDiscountAccountsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		DiscountAccount discountAccount1 =
@@ -263,7 +266,20 @@ public abstract class BaseDiscountAccountResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(discountAccount1, discountAccount2),
 			(List<DiscountAccount>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetDiscountByExternalReferenceCodeDiscountAccountsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetDiscountByExternalReferenceCodeDiscountAccountsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -391,7 +407,10 @@ public abstract class BaseDiscountAccountResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDiscountAccount),
 				(List<DiscountAccount>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDiscountIdDiscountAccountsPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		DiscountAccount discountAccount1 =
@@ -410,7 +429,17 @@ public abstract class BaseDiscountAccountResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(discountAccount1, discountAccount2),
 			(List<DiscountAccount>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetDiscountIdDiscountAccountsPage_getExpectedActions(id));
+	}
+
+	protected Map<String, Map>
+			testGetDiscountIdDiscountAccountsPage_getExpectedActions(Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -910,7 +939,9 @@ public abstract class BaseDiscountAccountResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<DiscountAccount> page) {
+	protected void assertValid(
+		Page<DiscountAccount> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<DiscountAccount> discountAccounts =
@@ -926,6 +957,25 @@ public abstract class BaseDiscountAccountResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<DiscountAccount> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

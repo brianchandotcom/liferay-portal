@@ -54,6 +54,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -225,7 +226,10 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDataDefinitionFieldLink),
 				(List<DataDefinitionFieldLink>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDataDefinitionDataDefinitionFieldLinksPage_getExpectedActions(
+					irrelevantDataDefinitionId));
 		}
 
 		DataDefinitionFieldLink dataDefinitionFieldLink1 =
@@ -246,7 +250,20 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dataDefinitionFieldLink1, dataDefinitionFieldLink2),
 			(List<DataDefinitionFieldLink>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetDataDefinitionDataDefinitionFieldLinksPage_getExpectedActions(
+				dataDefinitionId));
+	}
+
+	protected Map<String, Map>
+			testGetDataDefinitionDataDefinitionFieldLinksPage_getExpectedActions(
+				Long dataDefinitionId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected DataDefinitionFieldLink
@@ -400,7 +417,9 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<DataDefinitionFieldLink> page) {
+	protected void assertValid(
+		Page<DataDefinitionFieldLink> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<DataDefinitionFieldLink> dataDefinitionFieldLinks =
@@ -416,6 +435,25 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<DataDefinitionFieldLink> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

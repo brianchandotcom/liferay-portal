@@ -54,6 +54,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -207,7 +208,15 @@ public abstract class BaseIndexResourceTestCase {
 
 		assertContains(index1, (List<Index>)page.getItems());
 		assertContains(index2, (List<Index>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetIndexesPage_getExpectedActions());
+	}
+
+	protected Map<String, Map> testGetIndexesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected Index testGetIndexesPage_addIndex(Index index) throws Exception {
@@ -327,7 +336,9 @@ public abstract class BaseIndexResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Index> page) {
+	protected void assertValid(
+		Page<Index> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Index> indexes = page.getItems();
@@ -342,6 +353,25 @@ public abstract class BaseIndexResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Index> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

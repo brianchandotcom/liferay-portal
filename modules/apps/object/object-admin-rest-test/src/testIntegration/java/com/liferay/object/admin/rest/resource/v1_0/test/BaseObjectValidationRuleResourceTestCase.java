@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -239,7 +240,10 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantObjectValidationRule),
 				(List<ObjectValidationRule>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		ObjectValidationRule objectValidationRule1 =
@@ -260,13 +264,26 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(objectValidationRule1, objectValidationRule2),
 			(List<ObjectValidationRule>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage_getExpectedActions(
+				externalReferenceCode));
 
 		objectValidationRuleResource.deleteObjectValidationRule(
 			objectValidationRule1.getId());
 
 		objectValidationRuleResource.deleteObjectValidationRule(
 			objectValidationRule2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -408,7 +425,10 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantObjectValidationRule),
 				(List<ObjectValidationRule>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetObjectDefinitionObjectValidationRulesPage_getExpectedActions(
+					irrelevantObjectDefinitionId));
 		}
 
 		ObjectValidationRule objectValidationRule1 =
@@ -429,13 +449,37 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(objectValidationRule1, objectValidationRule2),
 			(List<ObjectValidationRule>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetObjectDefinitionObjectValidationRulesPage_getExpectedActions(
+				objectDefinitionId));
 
 		objectValidationRuleResource.deleteObjectValidationRule(
 			objectValidationRule1.getId());
 
 		objectValidationRuleResource.deleteObjectValidationRule(
 			objectValidationRule2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetObjectDefinitionObjectValidationRulesPage_getExpectedActions(
+				Long objectDefinitionId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-validation-rules/batch".
+				replace(
+					"{objectDefinitionId}",
+					String.valueOf(objectDefinitionId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -958,7 +1002,9 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ObjectValidationRule> page) {
+	protected void assertValid(
+		Page<ObjectValidationRule> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ObjectValidationRule> objectValidationRules =
@@ -974,6 +1020,25 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ObjectValidationRule> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

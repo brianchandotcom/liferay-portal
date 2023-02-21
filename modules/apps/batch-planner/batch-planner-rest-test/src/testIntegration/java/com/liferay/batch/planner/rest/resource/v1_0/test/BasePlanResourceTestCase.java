@@ -57,6 +57,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -216,11 +217,19 @@ public abstract class BasePlanResourceTestCase {
 
 		assertContains(plan1, (List<Plan>)page.getItems());
 		assertContains(plan2, (List<Plan>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetPlansPage_getExpectedActions());
 
 		planResource.deletePlan(plan1.getId());
 
 		planResource.deletePlan(plan2.getId());
+	}
+
+	protected Map<String, Map> testGetPlansPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -532,7 +541,9 @@ public abstract class BasePlanResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Plan> page) {
+	protected void assertValid(
+		Page<Plan> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Plan> plans = page.getItems();
@@ -547,6 +558,25 @@ public abstract class BasePlanResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Plan> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

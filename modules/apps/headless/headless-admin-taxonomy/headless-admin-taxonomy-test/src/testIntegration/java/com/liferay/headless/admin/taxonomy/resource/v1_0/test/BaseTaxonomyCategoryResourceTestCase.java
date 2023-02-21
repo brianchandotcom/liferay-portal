@@ -232,13 +232,23 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			taxonomyCategory1, (List<TaxonomyCategory>)page.getItems());
 		assertContains(
 			taxonomyCategory2, (List<TaxonomyCategory>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetTaxonomyCategoriesRankedPage_getExpectedActions());
 
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			taxonomyCategory1.getId());
 
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			taxonomyCategory2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetTaxonomyCategoriesRankedPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -340,7 +350,10 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantTaxonomyCategory),
 				(List<TaxonomyCategory>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetTaxonomyCategoryTaxonomyCategoriesPage_getExpectedActions(
+					irrelevantParentTaxonomyCategoryId));
 		}
 
 		TaxonomyCategory taxonomyCategory1 =
@@ -361,13 +374,26 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(taxonomyCategory1, taxonomyCategory2),
 			(List<TaxonomyCategory>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getExpectedActions(
+				parentTaxonomyCategoryId));
 
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			taxonomyCategory1.getId());
 
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			taxonomyCategory2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getExpectedActions(
+				String parentTaxonomyCategoryId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1037,7 +1063,10 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantTaxonomyCategory),
 				(List<TaxonomyCategory>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetTaxonomyVocabularyTaxonomyCategoriesPage_getExpectedActions(
+					irrelevantTaxonomyVocabularyId));
 		}
 
 		TaxonomyCategory taxonomyCategory1 =
@@ -1059,13 +1088,37 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(taxonomyCategory1, taxonomyCategory2),
 			(List<TaxonomyCategory>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getExpectedActions(
+				taxonomyVocabularyId));
 
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			taxonomyCategory1.getId());
 
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			taxonomyCategory2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getExpectedActions(
+				Long taxonomyVocabularyId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/batch".
+				replace(
+					"{taxonomyVocabularyId}",
+					String.valueOf(taxonomyVocabularyId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1927,7 +1980,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<TaxonomyCategory> page) {
+	protected void assertValid(
+		Page<TaxonomyCategory> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<TaxonomyCategory> taxonomyCategories =
@@ -1943,6 +1998,25 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<TaxonomyCategory> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

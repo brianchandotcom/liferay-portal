@@ -224,7 +224,10 @@ public abstract class BaseCommentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantComment),
 				(List<Comment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetBlogPostingCommentsPage_getExpectedActions(
+					irrelevantBlogPostingId));
 		}
 
 		Comment comment1 = testGetBlogPostingCommentsPage_addComment(
@@ -240,11 +243,32 @@ public abstract class BaseCommentResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(comment1, comment2), (List<Comment>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetBlogPostingCommentsPage_getExpectedActions(blogPostingId));
 
 		commentResource.deleteComment(comment1.getId());
 
 		commentResource.deleteComment(comment2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetBlogPostingCommentsPage_getExpectedActions(
+				Long blogPostingId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/comments/batch".
+				replace("{blogPostingId}", String.valueOf(blogPostingId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -715,7 +739,10 @@ public abstract class BaseCommentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantComment),
 				(List<Comment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetCommentCommentsPage_getExpectedActions(
+					irrelevantParentCommentId));
 		}
 
 		Comment comment1 = testGetCommentCommentsPage_addComment(
@@ -731,11 +758,22 @@ public abstract class BaseCommentResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(comment1, comment2), (List<Comment>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetCommentCommentsPage_getExpectedActions(parentCommentId));
 
 		commentResource.deleteComment(comment1.getId());
 
 		commentResource.deleteComment(comment2.getId());
+	}
+
+	protected Map<String, Map> testGetCommentCommentsPage_getExpectedActions(
+			Long parentCommentId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1058,7 +1096,10 @@ public abstract class BaseCommentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantComment),
 				(List<Comment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDocumentCommentsPage_getExpectedActions(
+					irrelevantDocumentId));
 		}
 
 		Comment comment1 = testGetDocumentCommentsPage_addComment(
@@ -1074,11 +1115,30 @@ public abstract class BaseCommentResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(comment1, comment2), (List<Comment>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetDocumentCommentsPage_getExpectedActions(documentId));
 
 		commentResource.deleteComment(comment1.getId());
 
 		commentResource.deleteComment(comment2.getId());
+	}
+
+	protected Map<String, Map> testGetDocumentCommentsPage_getExpectedActions(
+			Long documentId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/comments/batch".
+				replace("{documentId}", String.valueOf(documentId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2536,7 +2596,10 @@ public abstract class BaseCommentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantComment),
 				(List<Comment>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetStructuredContentCommentsPage_getExpectedActions(
+					irrelevantStructuredContentId));
 		}
 
 		Comment comment1 = testGetStructuredContentCommentsPage_addComment(
@@ -2552,11 +2615,35 @@ public abstract class BaseCommentResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(comment1, comment2), (List<Comment>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetStructuredContentCommentsPage_getExpectedActions(
+				structuredContentId));
 
 		commentResource.deleteComment(comment1.getId());
 
 		commentResource.deleteComment(comment2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetStructuredContentCommentsPage_getExpectedActions(
+				Long structuredContentId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/comments/batch".
+				replace(
+					"{structuredContentId}",
+					String.valueOf(structuredContentId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -3026,7 +3113,9 @@ public abstract class BaseCommentResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Comment> page) {
+	protected void assertValid(
+		Page<Comment> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Comment> comments = page.getItems();
@@ -3041,6 +3130,25 @@ public abstract class BaseCommentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Comment> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

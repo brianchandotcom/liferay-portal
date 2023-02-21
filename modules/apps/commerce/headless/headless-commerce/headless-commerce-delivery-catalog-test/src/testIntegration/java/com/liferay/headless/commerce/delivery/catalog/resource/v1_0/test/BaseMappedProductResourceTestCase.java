@@ -235,7 +235,10 @@ public abstract class BaseMappedProductResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMappedProduct),
 				(List<MappedProduct>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetChannelProductMappedProductsPage_getExpectedActions(
+					irrelevantChannelId, irrelevantProductId));
 		}
 
 		MappedProduct mappedProduct1 =
@@ -254,7 +257,20 @@ public abstract class BaseMappedProductResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(mappedProduct1, mappedProduct2),
 			(List<MappedProduct>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetChannelProductMappedProductsPage_getExpectedActions(
+				channelId, productId));
+	}
+
+	protected Map<String, Map>
+			testGetChannelProductMappedProductsPage_getExpectedActions(
+				Long channelId, Long productId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -770,7 +786,9 @@ public abstract class BaseMappedProductResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<MappedProduct> page) {
+	protected void assertValid(
+		Page<MappedProduct> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<MappedProduct> mappedProducts = page.getItems();
@@ -785,6 +803,25 @@ public abstract class BaseMappedProductResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<MappedProduct> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

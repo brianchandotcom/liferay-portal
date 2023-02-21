@@ -70,7 +70,7 @@ const TabItem = ({item}) => {
 				</div>
 
 				<div className="text">
-					<div className="text-truncate title">{item.label}</div>
+					<div className="mr-1 text-truncate title">{item.label}</div>
 
 					{isContent && (
 						<div className="subtitle text-truncate">

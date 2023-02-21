@@ -52,9 +52,9 @@ export function LicensePriceCard() {
 						<ClayInput.GroupItem prepend shrink>
 							<ClayInput.GroupText>
 								<img
-										className="license-card-price-icon"
-										src={unitedStatesIcon}
-									/>
+									className="license-card-price-icon"
+									src={unitedStatesIcon}
+								/>
 								USD
 							</ClayInput.GroupText>
 						</ClayInput.GroupItem>

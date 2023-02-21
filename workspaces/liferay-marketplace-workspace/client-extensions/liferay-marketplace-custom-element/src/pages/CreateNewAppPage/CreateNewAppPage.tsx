@@ -80,9 +80,8 @@ export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 
 			<div className="create-new-app-info-footer-container">
 				<span className="create-new-app-info-footer">
-					By clicking on the button &quot;continue&quot; below, I confirm that I
-					have read and agree to be bound by the{' '}
-
+					By clicking on the button &quot;continue&quot; below, I
+					confirm that I have read and agree to be bound by the{' '}
 					<a href="#">Liferay Publisher Program License Agreement.</a>{' '}
 					I also confirm that I am of the legal age of majority in the
 					jurisdiction where I reside (at least 18 years of age in

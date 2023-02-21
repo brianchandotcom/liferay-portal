@@ -223,69 +223,84 @@ export function ReviewAndSubmitAppPage({
 							sectionName="Description"
 						/>
 
-						{initialReviewAndSubmitAppPageItems.map((item, index) => {
-							const cardTitle = () => {
-								if (item.section === 'Pricing')
-									{return priceModel;}
-								else if (item.section === 'Licensing')
-									{return appLicense;}
-								else if (item.section === 'Version')
-									{return item.title;}
-							};
+						{initialReviewAndSubmitAppPageItems.map(
+							(item, index) => {
+								const cardTitle = () => {
+									if (item.section === 'Pricing') {
+										return priceModel;
+									}
+									else if (item.section === 'Licensing') {
+										return appLicense;
+									}
+									else if (item.section === 'Version') {
+										return item.title;
+									}
+								};
 
-							const cardDescription = () => {
-								if (item.section === 'Pricing') {
-									if (priceModel === 'free') {
-										return 'The app is offered in the Marketplace with no charge.';
+								const cardDescription = () => {
+									if (item.section === 'Pricing') {
+										if (priceModel === 'free') {
+											return 'The app is offered in the Marketplace with no charge.';
+										}
+										else {
+											return 'To enable paid apps, you must be a business and enter payment information in your Marketplace account profile.';
+										}
 									}
 									else {
-										return 'To enable paid apps, you must be a business and enter payment information in your Marketplace account profile.';
+										return item.description;
 									}
-								}
-								else {return item.description;}
-							};
+								};
 
-							const description = () => {
-								if (item.section === 'Version') {return notes;}
-								else {return item.description;}
-							};
+								const description = () => {
+									if (item.section === 'Version') {
+										return notes;
+									}
+									else {
+										return item.description;
+									}
+								};
 
-							return (
-								<CardSection
-									build={item.section === 'Build'}
-									buildZIPTitles={buildZIPTitles}
-									cardDescription={cardDescription()}
-									cardInfos={cardInfos}
-									cardLink={item.section === 'Support & Help'}
-									cardTags={item.cardTags}
-									cardTitle={cardTitle()}
-									cardView={
-										item.section === 'Pricing' ||
-										item.section === 'Licensing'
-									}
-									description={description()}
-									enableEdit={!readonly}
-									files={appStorefrontImages}
-									icon={item.icon}
-									key={index}
-									price={appLicensePrice}
-									required
-									sectionName={item.section}
-									storefront={item.section === 'Storefront'}
-									tags={item.tags}
-									title={
-										item.section === 'Build'
-											? item.fileName
-											: item.title
-									}
-									version={
-										item.section === 'Version'
-											? version
-											: null
-									}
-								/>
-							);
-						})}
+								return (
+									<CardSection
+										build={item.section === 'Build'}
+										buildZIPTitles={buildZIPTitles}
+										cardDescription={cardDescription()}
+										cardInfos={cardInfos}
+										cardLink={
+											item.section === 'Support & Help'
+										}
+										cardTags={item.cardTags}
+										cardTitle={cardTitle()}
+										cardView={
+											item.section === 'Pricing' ||
+											item.section === 'Licensing'
+										}
+										description={description()}
+										enableEdit={!readonly}
+										files={appStorefrontImages}
+										icon={item.icon}
+										key={index}
+										price={appLicensePrice}
+										required
+										sectionName={item.section}
+										storefront={
+											item.section === 'Storefront'
+										}
+										tags={item.tags}
+										title={
+											item.section === 'Build'
+												? item.fileName
+												: item.title
+										}
+										version={
+											item.section === 'Version'
+												? version
+												: null
+										}
+									/>
+								);
+							}
+						)}
 					</div>
 				</div>
 			</Section>
@@ -307,7 +322,6 @@ export function ReviewAndSubmitAppPage({
 						regarding this app submission until Liferay completes
 						its review process and I agree with the Liferay
 						Marketplace <a href="#">terms</a> and{' '}
-
 						<a href="#">privacy</a>
 					</span>
 				</div>

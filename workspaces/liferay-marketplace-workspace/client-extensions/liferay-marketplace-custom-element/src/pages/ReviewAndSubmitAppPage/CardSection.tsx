@@ -20,9 +20,9 @@ interface CardSectionProps {
 	build?: boolean;
 	buildZIPTitles?: string[];
 	cardDescription?: string;
-	cardInfos?: {icon: string; link: string; title: string;}[];
+	cardInfos?: {icon: string; link: string; title: string}[];
 	cardLink?: boolean;
-	cardTags?: {icon: string; tags: string[]; title: string;}[];
+	cardTags?: {icon: string; tags: string[]; title: string}[];
 	cardTitle?: string;
 	cardView?: boolean;
 	description?: string;
@@ -170,7 +170,10 @@ export function CardSection({
 				<div>
 					{files?.map(({fileName, id, preview}) => {
 						return (
-							<div className="card-section-body-section-files" key={id}>
+							<div
+								className="card-section-body-section-files"
+								key={id}
+							>
 								<div className="card-section-body-section-files-container">
 									<img
 										className="preview-image"
@@ -198,7 +201,8 @@ export function CardSection({
 					})}
 
 					<div className="card-section-body-section-files-info">
-						Important: Images will be displayed following the numerical order above
+						Important: Images will be displayed following the
+						numerical order above
 					</div>
 				</div>
 			)}

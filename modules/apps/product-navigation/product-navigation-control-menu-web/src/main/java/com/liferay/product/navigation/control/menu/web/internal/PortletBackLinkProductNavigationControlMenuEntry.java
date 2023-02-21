@@ -17,8 +17,11 @@ package com.liferay.product.navigation.control.menu.web.internal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
@@ -57,6 +60,25 @@ public class PortletBackLinkProductNavigationControlMenuEntry
 
 	@Override
 	public String getLabel(Locale locale) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext == null) ||
+			(serviceContext.getThemeDisplay() == null)) {
+
+			return _language.get(locale, "back");
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String urlBackTitle = portletDisplay.getURLBackTitle();
+
+		if (Validator.isNotNull(urlBackTitle)) {
+			return urlBackTitle;
+		}
+
 		return _language.get(locale, "back");
 	}
 

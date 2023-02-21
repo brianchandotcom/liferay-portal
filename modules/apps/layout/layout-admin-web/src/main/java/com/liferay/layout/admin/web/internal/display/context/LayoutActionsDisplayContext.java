@@ -75,6 +75,9 @@ public class LayoutActionsDisplayContext {
 	public List<DropdownItem> getDropdownItems() {
 		Layout layout = _getLayout();
 
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			LayoutUtilityPageEntryLocalServiceUtil.
+				fetchLayoutUtilityPageEntryByPlid(layout.getPlid());
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
@@ -110,7 +113,9 @@ public class LayoutActionsDisplayContext {
 							dropdownItem.setTarget("_blank");
 						}
 					).add(
-						() -> _isContentLayout(layout),
+						() ->
+							_isContentLayout(layout) &&
+							(layoutUtilityPageEntry == null),
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "convertToPageTemplate");

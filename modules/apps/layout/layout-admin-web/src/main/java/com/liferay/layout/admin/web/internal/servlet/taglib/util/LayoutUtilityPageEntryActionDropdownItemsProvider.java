@@ -24,6 +24,8 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutUtilityPageThumbnailConfiguration;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutUtilityPageEntryPermission;
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageActionKeys;
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -382,8 +384,21 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			if (Validator.isNull(message) &&
 				_layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
 
-				message = LanguageUtil.get(
-					_httpServletRequest, "unmark-default-confirmation");
+				LayoutUtilityPageEntryViewRenderer
+					layoutUtilityPageEntryViewRenderer =
+						LayoutUtilityPageEntryViewRendererRegistryUtil.
+							getLayoutUtilityPageEntryViewRenderer(
+								_layoutUtilityPageEntry.getType());
+
+				message = LanguageUtil.format(
+					_httpServletRequest,
+					"the-site-will-use-the-default-x-system-page-from-now-" +
+						"on.-are-you-sure-you-want-to-unmark-this",
+					new String[] {
+						layoutUtilityPageEntryViewRenderer.getLabel(
+							_themeDisplay.getLocale())
+					},
+					false);
 			}
 
 			dropdownItem.putData("message", message);

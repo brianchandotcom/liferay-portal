@@ -73,7 +73,9 @@ definition {
 	macro addItem {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "Button#PLUS");
+		Click(
+			key_text = "Add",
+			locator1 = "Button#ANY");
 
 		MenuItem.click(menuItem = ${item});
 
@@ -266,6 +268,10 @@ definition {
 	}
 
 	macro deleteItem {
+		MouseOver(
+			key_itemName = ${itemName},
+			locator1 = "SiteNavigationMenu#ITEM_ENTRY");
+
 		Click(
 			key_itemName = ${itemName},
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
@@ -410,9 +416,7 @@ definition {
 	macro openPreviewMenu {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(
-			key_text = "view",
-			locator1 = "Icon#ANY");
+		Click(locator1 = "Button#PREVIEW");
 	}
 
 	macro toggleAutomaticallyAddNewPagesToMenu {

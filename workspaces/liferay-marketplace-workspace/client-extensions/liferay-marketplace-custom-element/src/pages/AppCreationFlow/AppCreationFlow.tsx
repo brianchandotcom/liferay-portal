@@ -16,8 +16,6 @@ import {initialFLowListItems} from './AppCreationFlowUtil';
 
 import './AppCreationFlow.scss';
 
-import {useNavigate} from 'react-router-dom';
-
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {DefineAppProfilePage} from '../DefineAppProfilePage/DefineAppProfilePage';
 
@@ -30,7 +28,6 @@ export function AppCreationFlow() {
 	const [{priceModel}] = useAppContext();
 	const [appFlowListItems, setAppFlowListItems] =
 		useState(initialFLowListItems);
-	const navigate = useNavigate();
 	const [currentFlow, setCurrentFlow] = useState('create');
 
 	const setAppFlowListState = ({
@@ -390,7 +387,7 @@ export function AppCreationFlow() {
 								selectedItem: '',
 							});
 
-							navigate('/');
+							location.href = '/';
 						}}
 					/>
 				)}

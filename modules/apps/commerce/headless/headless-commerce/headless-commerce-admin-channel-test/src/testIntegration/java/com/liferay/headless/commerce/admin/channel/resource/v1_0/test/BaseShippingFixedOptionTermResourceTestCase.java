@@ -245,7 +245,10 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantShippingFixedOptionTerm),
 				(List<ShippingFixedOptionTerm>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetShippingFixedOptionIdShippingFixedOptionTermsPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		ShippingFixedOptionTerm shippingFixedOptionTerm1 =
@@ -266,7 +269,20 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(shippingFixedOptionTerm1, shippingFixedOptionTerm2),
 			(List<ShippingFixedOptionTerm>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetShippingFixedOptionIdShippingFixedOptionTermsPage_getExpectedActions(
+				id));
+	}
+
+	protected Map<String, Map>
+			testGetShippingFixedOptionIdShippingFixedOptionTermsPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -807,7 +823,9 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ShippingFixedOptionTerm> page) {
+	protected void assertValid(
+		Page<ShippingFixedOptionTerm> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ShippingFixedOptionTerm> shippingFixedOptionTerms =
@@ -823,6 +841,25 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ShippingFixedOptionTerm> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

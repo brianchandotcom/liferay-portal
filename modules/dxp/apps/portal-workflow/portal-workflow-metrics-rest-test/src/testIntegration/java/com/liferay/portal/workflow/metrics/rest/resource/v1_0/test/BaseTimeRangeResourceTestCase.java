@@ -54,6 +54,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -209,7 +210,15 @@ public abstract class BaseTimeRangeResourceTestCase {
 
 		assertContains(timeRange1, (List<TimeRange>)page.getItems());
 		assertContains(timeRange2, (List<TimeRange>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetTimeRangesPage_getExpectedActions());
+	}
+
+	protected Map<String, Map> testGetTimeRangesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected TimeRange testGetTimeRangesPage_addTimeRange(TimeRange timeRange)
@@ -384,7 +393,9 @@ public abstract class BaseTimeRangeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<TimeRange> page) {
+	protected void assertValid(
+		Page<TimeRange> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<TimeRange> timeRanges = page.getItems();
@@ -399,6 +410,25 @@ public abstract class BaseTimeRangeResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<TimeRange> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

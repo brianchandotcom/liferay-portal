@@ -259,7 +259,10 @@ public abstract class BaseDocumentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDocument),
 				(List<Document>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAssetLibraryDocumentsPage_getExpectedActions(
+					irrelevantAssetLibraryId));
 		}
 
 		Document document1 = testGetAssetLibraryDocumentsPage_addDocument(
@@ -276,11 +279,33 @@ public abstract class BaseDocumentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(document1, document2),
 			(List<Document>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAssetLibraryDocumentsPage_getExpectedActions(
+				assetLibraryId));
 
 		documentResource.deleteDocument(document1.getId());
 
 		documentResource.deleteDocument(document2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetAssetLibraryDocumentsPage_getExpectedActions(
+				Long assetLibraryId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/documents/batch".
+				replace("{assetLibraryId}", String.valueOf(assetLibraryId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -928,7 +953,10 @@ public abstract class BaseDocumentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDocument),
 				(List<Document>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDocumentFolderDocumentsPage_getExpectedActions(
+					irrelevantDocumentFolderId));
 		}
 
 		Document document1 = testGetDocumentFolderDocumentsPage_addDocument(
@@ -946,11 +974,34 @@ public abstract class BaseDocumentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(document1, document2),
 			(List<Document>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetDocumentFolderDocumentsPage_getExpectedActions(
+				documentFolderId));
 
 		documentResource.deleteDocument(document1.getId());
 
 		documentResource.deleteDocument(document2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetDocumentFolderDocumentsPage_getExpectedActions(
+				Long documentFolderId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/document-folders/{documentFolderId}/documents/batch".
+				replace(
+					"{documentFolderId}", String.valueOf(documentFolderId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1571,7 +1622,9 @@ public abstract class BaseDocumentResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDocument),
 				(List<Document>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteDocumentsPage_getExpectedActions(irrelevantSiteId));
 		}
 
 		Document document1 = testGetSiteDocumentsPage_addDocument(
@@ -1588,11 +1641,29 @@ public abstract class BaseDocumentResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(document1, document2),
 			(List<Document>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetSiteDocumentsPage_getExpectedActions(siteId));
 
 		documentResource.deleteDocument(document1.getId());
 
 		documentResource.deleteDocument(document2.getId());
+	}
+
+	protected Map<String, Map> testGetSiteDocumentsPage_getExpectedActions(
+			Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/documents/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2674,7 +2745,9 @@ public abstract class BaseDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected void assertValid(Page<Document> page) {
+	protected void assertValid(
+		Page<Document> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Document> documents = page.getItems();
@@ -2689,6 +2762,25 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Document> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(Rating rating) {

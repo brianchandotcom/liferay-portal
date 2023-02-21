@@ -54,6 +54,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -217,7 +218,10 @@ public abstract class BasePaymentMethodResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantPaymentMethod),
 				(List<PaymentMethod>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetCartPaymentMethodsPage_getExpectedActions(
+					irrelevantCartId));
 		}
 
 		PaymentMethod paymentMethod1 =
@@ -235,7 +239,17 @@ public abstract class BasePaymentMethodResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(paymentMethod1, paymentMethod2),
 			(List<PaymentMethod>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetCartPaymentMethodsPage_getExpectedActions(cartId));
+	}
+
+	protected Map<String, Map> testGetCartPaymentMethodsPage_getExpectedActions(
+			Long cartId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected PaymentMethod testGetCartPaymentMethodsPage_addPaymentMethod(
@@ -365,7 +379,9 @@ public abstract class BasePaymentMethodResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<PaymentMethod> page) {
+	protected void assertValid(
+		Page<PaymentMethod> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<PaymentMethod> paymentMethods = page.getItems();
@@ -380,6 +396,25 @@ public abstract class BasePaymentMethodResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<PaymentMethod> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -221,11 +221,19 @@ public abstract class BaseChannelResourceTestCase {
 
 		assertContains(channel1, (List<Channel>)page.getItems());
 		assertContains(channel2, (List<Channel>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetChannelsPage_getExpectedActions());
 
 		channelResource.deleteChannel(channel1.getId());
 
 		channelResource.deleteChannel(channel2.getId());
+	}
+
+	protected Map<String, Map> testGetChannelsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1012,7 +1020,9 @@ public abstract class BaseChannelResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Channel> page) {
+	protected void assertValid(
+		Page<Channel> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Channel> channels = page.getItems();
@@ -1027,6 +1037,25 @@ public abstract class BaseChannelResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<Channel> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

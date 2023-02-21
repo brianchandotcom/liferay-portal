@@ -248,7 +248,10 @@ public abstract class BaseContentSetElementResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContentSetElement),
 				(List<ContentSetElement>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAssetLibraryContentSetByKeyContentSetElementsPage_getExpectedActions(
+					irrelevantAssetLibraryId, irrelevantKey));
 		}
 
 		ContentSetElement contentSetElement1 =
@@ -269,7 +272,20 @@ public abstract class BaseContentSetElementResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contentSetElement1, contentSetElement2),
 			(List<ContentSetElement>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getExpectedActions(
+				assetLibraryId, key));
+	}
+
+	protected Map<String, Map>
+			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getExpectedActions(
+				Long assetLibraryId, String key)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -404,7 +420,10 @@ public abstract class BaseContentSetElementResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContentSetElement),
 				(List<ContentSetElement>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAssetLibraryContentSetByUuidContentSetElementsPage_getExpectedActions(
+					irrelevantAssetLibraryId, irrelevantUuid));
 		}
 
 		ContentSetElement contentSetElement1 =
@@ -425,7 +444,20 @@ public abstract class BaseContentSetElementResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contentSetElement1, contentSetElement2),
 			(List<ContentSetElement>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getExpectedActions(
+				assetLibraryId, uuid));
+	}
+
+	protected Map<String, Map>
+			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getExpectedActions(
+				Long assetLibraryId, String uuid)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -551,7 +583,10 @@ public abstract class BaseContentSetElementResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContentSetElement),
 				(List<ContentSetElement>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetContentSetContentSetElementsPage_getExpectedActions(
+					irrelevantContentSetId));
 		}
 
 		ContentSetElement contentSetElement1 =
@@ -570,7 +605,20 @@ public abstract class BaseContentSetElementResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contentSetElement1, contentSetElement2),
 			(List<ContentSetElement>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetContentSetContentSetElementsPage_getExpectedActions(
+				contentSetId));
+	}
+
+	protected Map<String, Map>
+			testGetContentSetContentSetElementsPage_getExpectedActions(
+				Long contentSetId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -682,7 +730,10 @@ public abstract class BaseContentSetElementResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContentSetElement),
 				(List<ContentSetElement>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteContentSetByKeyContentSetElementsPage_getExpectedActions(
+					irrelevantSiteId, irrelevantKey));
 		}
 
 		ContentSetElement contentSetElement1 =
@@ -703,7 +754,20 @@ public abstract class BaseContentSetElementResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contentSetElement1, contentSetElement2),
 			(List<ContentSetElement>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSiteContentSetByKeyContentSetElementsPage_getExpectedActions(
+				siteId, key));
+	}
+
+	protected Map<String, Map>
+			testGetSiteContentSetByKeyContentSetElementsPage_getExpectedActions(
+				Long siteId, String key)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -833,7 +897,10 @@ public abstract class BaseContentSetElementResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContentSetElement),
 				(List<ContentSetElement>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteContentSetByUuidContentSetElementsPage_getExpectedActions(
+					irrelevantSiteId, irrelevantUuid));
 		}
 
 		ContentSetElement contentSetElement1 =
@@ -854,7 +921,20 @@ public abstract class BaseContentSetElementResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contentSetElement1, contentSetElement2),
 			(List<ContentSetElement>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSiteContentSetByUuidContentSetElementsPage_getExpectedActions(
+				siteId, uuid));
+	}
+
+	protected Map<String, Map>
+			testGetSiteContentSetByUuidContentSetElementsPage_getExpectedActions(
+				Long siteId, String uuid)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1084,7 +1164,9 @@ public abstract class BaseContentSetElementResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ContentSetElement> page) {
+	protected void assertValid(
+		Page<ContentSetElement> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ContentSetElement> contentSetElements =
@@ -1100,6 +1182,25 @@ public abstract class BaseContentSetElementResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ContentSetElement> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

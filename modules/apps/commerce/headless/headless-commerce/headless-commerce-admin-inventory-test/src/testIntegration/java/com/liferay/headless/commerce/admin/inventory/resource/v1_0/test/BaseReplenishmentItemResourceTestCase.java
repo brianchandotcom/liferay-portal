@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -562,7 +563,10 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantReplenishmentItem),
 				(List<ReplenishmentItem>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetReplenishmentItemsPage_getExpectedActions(
+					irrelevantSku));
 		}
 
 		ReplenishmentItem replenishmentItem1 =
@@ -581,13 +585,23 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(replenishmentItem1, replenishmentItem2),
 			(List<ReplenishmentItem>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetReplenishmentItemsPage_getExpectedActions(sku));
 
 		replenishmentItemResource.deleteReplenishmentItem(
 			replenishmentItem1.getId());
 
 		replenishmentItemResource.deleteReplenishmentItem(
 			replenishmentItem2.getId());
+	}
+
+	protected Map<String, Map> testGetReplenishmentItemsPage_getExpectedActions(
+			String sku)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -734,7 +748,10 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantReplenishmentItem),
 				(List<ReplenishmentItem>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWarehouseIdReplenishmentItemsPage_getExpectedActions(
+					irrelevantWarehouseId));
 		}
 
 		ReplenishmentItem replenishmentItem1 =
@@ -753,13 +770,26 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(replenishmentItem1, replenishmentItem2),
 			(List<ReplenishmentItem>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWarehouseIdReplenishmentItemsPage_getExpectedActions(
+				warehouseId));
 
 		replenishmentItemResource.deleteReplenishmentItem(
 			replenishmentItem1.getId());
 
 		replenishmentItemResource.deleteReplenishmentItem(
 			replenishmentItem2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetWarehouseIdReplenishmentItemsPage_getExpectedActions(
+				Long warehouseId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1001,7 +1031,9 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ReplenishmentItem> page) {
+	protected void assertValid(
+		Page<ReplenishmentItem> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ReplenishmentItem> replenishmentItems =
@@ -1017,6 +1049,25 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ReplenishmentItem> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

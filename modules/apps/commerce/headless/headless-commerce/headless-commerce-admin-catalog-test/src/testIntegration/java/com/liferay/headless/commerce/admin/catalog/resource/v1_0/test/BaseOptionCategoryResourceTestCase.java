@@ -221,11 +221,19 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 		assertContains(optionCategory1, (List<OptionCategory>)page.getItems());
 		assertContains(optionCategory2, (List<OptionCategory>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetOptionCategoriesPage_getExpectedActions());
 
 		optionCategoryResource.deleteOptionCategory(optionCategory1.getId());
 
 		optionCategoryResource.deleteOptionCategory(optionCategory2.getId());
+	}
+
+	protected Map<String, Map> testGetOptionCategoriesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -849,7 +857,9 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<OptionCategory> page) {
+	protected void assertValid(
+		Page<OptionCategory> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<OptionCategory> optionCategories = page.getItems();
@@ -864,6 +874,25 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<OptionCategory> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -231,7 +232,10 @@ public abstract class BaseSearchableAssetNameDisplayResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantSearchableAssetNameDisplay),
 				(List<SearchableAssetNameDisplay>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSearchableAssetNameLanguagePage_getExpectedActions(
+					irrelevantLanguageId));
 		}
 
 		SearchableAssetNameDisplay searchableAssetNameDisplay1 =
@@ -252,7 +256,20 @@ public abstract class BaseSearchableAssetNameDisplayResourceTestCase {
 			Arrays.asList(
 				searchableAssetNameDisplay1, searchableAssetNameDisplay2),
 			(List<SearchableAssetNameDisplay>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSearchableAssetNameLanguagePage_getExpectedActions(
+				languageId));
+	}
+
+	protected Map<String, Map>
+			testGetSearchableAssetNameLanguagePage_getExpectedActions(
+				String languageId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected SearchableAssetNameDisplay
@@ -402,7 +419,10 @@ public abstract class BaseSearchableAssetNameDisplayResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<SearchableAssetNameDisplay> page) {
+	protected void assertValid(
+		Page<SearchableAssetNameDisplay> page,
+		Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<SearchableAssetNameDisplay>
@@ -418,6 +438,25 @@ public abstract class BaseSearchableAssetNameDisplayResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<SearchableAssetNameDisplay> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

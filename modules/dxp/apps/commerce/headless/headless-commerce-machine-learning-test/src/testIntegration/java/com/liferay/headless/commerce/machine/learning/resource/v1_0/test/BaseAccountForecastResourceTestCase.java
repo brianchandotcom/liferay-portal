@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -220,7 +221,18 @@ public abstract class BaseAccountForecastResourceTestCase {
 			accountForecast1, (List<AccountForecast>)page.getItems());
 		assertContains(
 			accountForecast2, (List<AccountForecast>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountForecastsByMonthlyRevenuePage_getExpectedActions());
+	}
+
+	protected Map<String, Map>
+			testGetAccountForecastsByMonthlyRevenuePage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -437,7 +449,9 @@ public abstract class BaseAccountForecastResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<AccountForecast> page) {
+	protected void assertValid(
+		Page<AccountForecast> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<AccountForecast> accountForecasts =
@@ -453,6 +467,25 @@ public abstract class BaseAccountForecastResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<AccountForecast> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

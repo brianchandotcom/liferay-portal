@@ -243,7 +243,10 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDiscountOrderType),
 				(List<DiscountOrderType>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDiscountByExternalReferenceCodeDiscountOrderTypesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		DiscountOrderType discountOrderType1 =
@@ -264,7 +267,20 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(discountOrderType1, discountOrderType2),
 			(List<DiscountOrderType>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetDiscountByExternalReferenceCodeDiscountOrderTypesPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetDiscountByExternalReferenceCodeDiscountOrderTypesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -395,7 +411,10 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantDiscountOrderType),
 				(List<DiscountOrderType>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetDiscountIdDiscountOrderTypesPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		DiscountOrderType discountOrderType1 =
@@ -414,7 +433,18 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(discountOrderType1, discountOrderType2),
 			(List<DiscountOrderType>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetDiscountIdDiscountOrderTypesPage_getExpectedActions(id));
+	}
+
+	protected Map<String, Map>
+			testGetDiscountIdDiscountOrderTypesPage_getExpectedActions(Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -928,7 +958,9 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<DiscountOrderType> page) {
+	protected void assertValid(
+		Page<DiscountOrderType> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<DiscountOrderType> discountOrderTypes =
@@ -944,6 +976,25 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<DiscountOrderType> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

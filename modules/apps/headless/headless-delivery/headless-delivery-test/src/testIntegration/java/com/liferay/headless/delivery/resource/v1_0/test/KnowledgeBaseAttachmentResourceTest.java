@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -119,6 +120,15 @@ public class KnowledgeBaseAttachmentResourceTest
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
 				_kbArticle.getResourcePrimKey(),
 				randomKnowledgeBaseAttachment(), getMultipartFiles());
+	}
+
+	@Override
+	protected Map<String, Map>
+			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getExpectedActions(
+				Long knowledgeBaseArticleId)
+		throws Exception {
+
+		return Collections.emptyMap();
 	}
 
 	@Override

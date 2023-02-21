@@ -243,7 +243,10 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWarehouseOrderType),
 				(List<WarehouseOrderType>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWarehouseByExternalReferenceCodeWarehouseOrderTypesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		WarehouseOrderType warehouseOrderType1 =
@@ -264,7 +267,20 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(warehouseOrderType1, warehouseOrderType2),
 			(List<WarehouseOrderType>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWarehouseByExternalReferenceCodeWarehouseOrderTypesPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetWarehouseByExternalReferenceCodeWarehouseOrderTypesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -397,7 +413,10 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWarehouseOrderType),
 				(List<WarehouseOrderType>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWarehouseIdWarehouseOrderTypesPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		WarehouseOrderType warehouseOrderType1 =
@@ -416,7 +435,19 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(warehouseOrderType1, warehouseOrderType2),
 			(List<WarehouseOrderType>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWarehouseIdWarehouseOrderTypesPage_getExpectedActions(id));
+	}
+
+	protected Map<String, Map>
+			testGetWarehouseIdWarehouseOrderTypesPage_getExpectedActions(
+				Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -942,7 +973,9 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<WarehouseOrderType> page) {
+	protected void assertValid(
+		Page<WarehouseOrderType> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<WarehouseOrderType> warehouseOrderTypes =
@@ -958,6 +991,25 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<WarehouseOrderType> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

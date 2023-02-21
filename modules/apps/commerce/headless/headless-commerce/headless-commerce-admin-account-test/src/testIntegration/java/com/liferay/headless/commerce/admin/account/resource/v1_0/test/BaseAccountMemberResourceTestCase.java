@@ -55,6 +55,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -229,7 +230,10 @@ public abstract class BaseAccountMemberResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountMember),
 				(List<AccountMember>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeAccountMembersPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountMember accountMember1 =
@@ -250,7 +254,20 @@ public abstract class BaseAccountMemberResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountMember1, accountMember2),
 			(List<AccountMember>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeAccountMembersPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map>
+			testGetAccountByExternalReferenceCodeAccountMembersPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -413,7 +430,10 @@ public abstract class BaseAccountMemberResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAccountMember),
 				(List<AccountMember>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountIdAccountMembersPage_getExpectedActions(
+					irrelevantId));
 		}
 
 		AccountMember accountMember1 =
@@ -432,7 +452,17 @@ public abstract class BaseAccountMemberResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(accountMember1, accountMember2),
 			(List<AccountMember>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetAccountIdAccountMembersPage_getExpectedActions(id));
+	}
+
+	protected Map<String, Map>
+			testGetAccountIdAccountMembersPage_getExpectedActions(Long id)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -694,7 +724,9 @@ public abstract class BaseAccountMemberResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<AccountMember> page) {
+	protected void assertValid(
+		Page<AccountMember> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<AccountMember> accountMembers = page.getItems();
@@ -709,6 +741,25 @@ public abstract class BaseAccountMemberResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<AccountMember> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -54,6 +54,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -214,7 +215,10 @@ public abstract class BaseProcessVersionResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantProcessVersion),
 				(List<ProcessVersion>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProcessProcessVersionsPage_getExpectedActions(
+					irrelevantProcessId));
 		}
 
 		ProcessVersion processVersion1 =
@@ -232,7 +236,18 @@ public abstract class BaseProcessVersionResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(processVersion1, processVersion2),
 			(List<ProcessVersion>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetProcessProcessVersionsPage_getExpectedActions(processId));
+	}
+
+	protected Map<String, Map>
+			testGetProcessProcessVersionsPage_getExpectedActions(Long processId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected ProcessVersion
@@ -349,7 +364,9 @@ public abstract class BaseProcessVersionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ProcessVersion> page) {
+	protected void assertValid(
+		Page<ProcessVersion> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ProcessVersion> processVersions = page.getItems();
@@ -364,6 +381,25 @@ public abstract class BaseProcessVersionResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ProcessVersion> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

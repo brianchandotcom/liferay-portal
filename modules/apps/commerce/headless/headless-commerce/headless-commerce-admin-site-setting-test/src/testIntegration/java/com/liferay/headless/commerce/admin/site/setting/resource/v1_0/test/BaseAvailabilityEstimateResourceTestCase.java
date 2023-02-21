@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -366,7 +367,10 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantAvailabilityEstimate),
 				(List<AvailabilityEstimate>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage_getExpectedActions(
+					irrelevantGroupId));
 		}
 
 		AvailabilityEstimate availabilityEstimate1 =
@@ -387,13 +391,26 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(availabilityEstimate1, availabilityEstimate2),
 			(List<AvailabilityEstimate>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage_getExpectedActions(
+				groupId));
 
 		availabilityEstimateResource.deleteAvailabilityEstimate(
 			availabilityEstimate1.getId());
 
 		availabilityEstimateResource.deleteAvailabilityEstimate(
 			availabilityEstimate2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage_getExpectedActions(
+				Long groupId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -635,7 +652,9 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<AvailabilityEstimate> page) {
+	protected void assertValid(
+		Page<AvailabilityEstimate> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<AvailabilityEstimate> availabilityEstimates =
@@ -651,6 +670,25 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<AvailabilityEstimate> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -56,6 +56,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -502,7 +503,10 @@ public abstract class BaseShipmentItemResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantShipmentItem),
 				(List<ShipmentItem>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetShipmentByExternalReferenceCodeItemsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
 		}
 
 		ShipmentItem shipmentItem1 =
@@ -521,11 +525,24 @@ public abstract class BaseShipmentItemResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(shipmentItem1, shipmentItem2),
 			(List<ShipmentItem>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetShipmentByExternalReferenceCodeItemsPage_getExpectedActions(
+				externalReferenceCode));
 
 		shipmentItemResource.deleteShipmentItem(shipmentItem1.getId());
 
 		shipmentItemResource.deleteShipmentItem(shipmentItem2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetShipmentByExternalReferenceCodeItemsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -667,7 +684,10 @@ public abstract class BaseShipmentItemResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantShipmentItem),
 				(List<ShipmentItem>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetShipmentItemsPage_getExpectedActions(
+					irrelevantShipmentId));
 		}
 
 		ShipmentItem shipmentItem1 = testGetShipmentItemsPage_addShipmentItem(
@@ -684,11 +704,21 @@ public abstract class BaseShipmentItemResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(shipmentItem1, shipmentItem2),
 			(List<ShipmentItem>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetShipmentItemsPage_getExpectedActions(shipmentId));
 
 		shipmentItemResource.deleteShipmentItem(shipmentItem1.getId());
 
 		shipmentItemResource.deleteShipmentItem(shipmentItem2.getId());
+	}
+
+	protected Map<String, Map> testGetShipmentItemsPage_getExpectedActions(
+			Long shipmentId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1005,7 +1035,9 @@ public abstract class BaseShipmentItemResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ShipmentItem> page) {
+	protected void assertValid(
+		Page<ShipmentItem> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ShipmentItem> shipmentItems = page.getItems();
@@ -1020,6 +1052,25 @@ public abstract class BaseShipmentItemResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<ShipmentItem> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

@@ -217,7 +217,10 @@ public abstract class BaseNodeMetricResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantNodeMetric),
 				(List<NodeMetric>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProcessNodeMetricsPage_getExpectedActions(
+					irrelevantProcessId));
 		}
 
 		NodeMetric nodeMetric1 = testGetProcessNodeMetricsPage_addNodeMetric(
@@ -235,7 +238,17 @@ public abstract class BaseNodeMetricResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(nodeMetric1, nodeMetric2),
 			(List<NodeMetric>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetProcessNodeMetricsPage_getExpectedActions(processId));
+	}
+
+	protected Map<String, Map> testGetProcessNodeMetricsPage_getExpectedActions(
+			Long processId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -577,7 +590,9 @@ public abstract class BaseNodeMetricResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<NodeMetric> page) {
+	protected void assertValid(
+		Page<NodeMetric> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<NodeMetric> nodeMetrics = page.getItems();
@@ -592,6 +607,25 @@ public abstract class BaseNodeMetricResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<NodeMetric> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

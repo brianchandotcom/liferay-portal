@@ -453,7 +453,10 @@ public abstract class BaseWikiPageResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWikiPage),
 				(List<WikiPage>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWikiNodeWikiPagesPage_getExpectedActions(
+					irrelevantWikiNodeId));
 		}
 
 		WikiPage wikiPage1 = testGetWikiNodeWikiPagesPage_addWikiPage(
@@ -470,11 +473,30 @@ public abstract class BaseWikiPageResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(wikiPage1, wikiPage2),
 			(List<WikiPage>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetWikiNodeWikiPagesPage_getExpectedActions(wikiNodeId));
 
 		wikiPageResource.deleteWikiPage(wikiPage1.getId());
 
 		wikiPageResource.deleteWikiPage(wikiPage2.getId());
+	}
+
+	protected Map<String, Map> testGetWikiNodeWikiPagesPage_getExpectedActions(
+			Long wikiNodeId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/wiki-pages/batch".
+				replace("{wikiNodeId}", String.valueOf(wikiNodeId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -801,7 +823,10 @@ public abstract class BaseWikiPageResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantWikiPage),
 				(List<WikiPage>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetWikiPageWikiPagesPage_getExpectedActions(
+					irrelevantParentWikiPageId));
 		}
 
 		WikiPage wikiPage1 = testGetWikiPageWikiPagesPage_addWikiPage(
@@ -817,11 +842,22 @@ public abstract class BaseWikiPageResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(wikiPage1, wikiPage2),
 			(List<WikiPage>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetWikiPageWikiPagesPage_getExpectedActions(parentWikiPageId));
 
 		wikiPageResource.deleteWikiPage(wikiPage1.getId());
 
 		wikiPageResource.deleteWikiPage(wikiPage2.getId());
+	}
+
+	protected Map<String, Map> testGetWikiPageWikiPagesPage_getExpectedActions(
+			Long parentWikiPageId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	protected WikiPage testGetWikiPageWikiPagesPage_addWikiPage(
@@ -1366,7 +1402,9 @@ public abstract class BaseWikiPageResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<WikiPage> page) {
+	protected void assertValid(
+		Page<WikiPage> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<WikiPage> wikiPages = page.getItems();
@@ -1381,6 +1419,25 @@ public abstract class BaseWikiPageResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String expectedActionName : expectedActions.keySet()) {
+			Map action = actions.get(expectedActionName);
+
+			Assert.assertNotNull(
+				expectedActionName + " action is missing", action);
+
+			Map expectedAction = expectedActions.get(expectedActionName);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
+	}
+
+	protected void assertValid(Page<WikiPage> page) {
+		assertValid(page, Collections.emptyMap());
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {

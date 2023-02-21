@@ -100,6 +100,14 @@ public class ElasticsearchConnection {
 		_httpSSLEnabled = httpSSLEnabled;
 	}
 
+	public void setMaxConnections(int maxConnections) {
+		_maxConnections = maxConnections;
+	}
+
+	public void setMaxConnectionsPerRoute(int maxConnectionsPerRoute) {
+		_maxConnectionsPerRoute = maxConnectionsPerRoute;
+	}
+
 	public void setNetworkHostAddresses(String[] networkHostAddresses) {
 		_networkHostAddresses = networkHostAddresses;
 	}
@@ -146,6 +154,10 @@ public class ElasticsearchConnection {
 			_authenticationEnabled
 		).httpSSLEnabled(
 			_httpSSLEnabled
+		).maxConnections(
+			_maxConnections
+		).maxConnectionsPerRoute(
+			_maxConnectionsPerRoute
 		).networkHostAddresses(
 			_networkHostAddresses
 		).password(
@@ -171,6 +183,8 @@ public class ElasticsearchConnection {
 	private boolean _authenticationEnabled;
 	private String _connectionId;
 	private boolean _httpSSLEnabled;
+	private int _maxConnections;
+	private int _maxConnectionsPerRoute;
 	private String[] _networkHostAddresses;
 	private String _password;
 	private Runnable _postCloseRunnable;

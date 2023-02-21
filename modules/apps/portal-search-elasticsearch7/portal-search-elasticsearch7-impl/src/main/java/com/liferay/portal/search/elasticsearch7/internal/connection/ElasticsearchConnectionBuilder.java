@@ -44,6 +44,9 @@ public class ElasticsearchConnectionBuilder {
 			_authenticationEnabled);
 		elasticsearchConnection.setConnectionId(_connectionId);
 		elasticsearchConnection.setHttpSSLEnabled(_httpSSLEnabled);
+		elasticsearchConnection.setMaxConnections(_maxConnections);
+		elasticsearchConnection.setMaxConnectionsPerRoute(
+			_maxConnectionsPerRoute);
 		elasticsearchConnection.setNetworkHostAddresses(_networkHostAddresses);
 		elasticsearchConnection.setPassword(_password);
 		elasticsearchConnection.setPostCloseRunnable(_postCloseRunnable);
@@ -68,6 +71,20 @@ public class ElasticsearchConnectionBuilder {
 		boolean httpSSLEnabled) {
 
 		_httpSSLEnabled = httpSSLEnabled;
+
+		return this;
+	}
+
+	public ElasticsearchConnectionBuilder maxConnections(int maxConnections) {
+		_maxConnections = maxConnections;
+
+		return this;
+	}
+
+	public ElasticsearchConnectionBuilder maxConnectionsPerRoute(
+		int maxConnectionsPerRoute) {
+
+		_maxConnectionsPerRoute = maxConnectionsPerRoute;
 
 		return this;
 	}
@@ -145,6 +162,8 @@ public class ElasticsearchConnectionBuilder {
 	private boolean _authenticationEnabled;
 	private String _connectionId;
 	private boolean _httpSSLEnabled;
+	private int _maxConnections;
+	private int _maxConnectionsPerRoute;
 	private String[] _networkHostAddresses;
 	private String _password;
 	private Runnable _postCloseRunnable;

@@ -51,6 +51,10 @@ public class ElasticsearchConnectionConfigurationActivationHandler {
 			elasticsearchConnectionConfiguration.connectionId()
 		).httpSSLEnabled(
 			elasticsearchConnectionConfiguration.httpSSLEnabled()
+		).maxConnections(
+			elasticsearchConnectionConfiguration.maxConnections()
+		).maxConnectionsPerRoute(
+			elasticsearchConnectionConfiguration.maxConnectionsPerRoute()
 		).networkHostAddresses(
 			elasticsearchConnectionConfiguration.networkHostAddresses()
 		).password(

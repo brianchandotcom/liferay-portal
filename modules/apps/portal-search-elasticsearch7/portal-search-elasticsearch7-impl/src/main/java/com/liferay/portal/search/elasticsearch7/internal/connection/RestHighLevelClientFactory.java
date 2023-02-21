@@ -96,6 +96,19 @@ public class RestHighLevelClientFactory {
 			return this;
 		}
 
+		public Builder maxConnections(int maxConnections) {
+			_restHighLevelClientFactory._maxConnections = maxConnections;
+
+			return this;
+		}
+
+		public Builder maxConnectionsPerRoute(int maxConnectionsPerRoute) {
+			_restHighLevelClientFactory._maxConnectionsPerRoute =
+				maxConnectionsPerRoute;
+
+			return this;
+		}
+
 		public Builder networkHostAddresses(String[] networkHostAddresses) {
 			_restHighLevelClientFactory._networkHostAddresses =
 				networkHostAddresses;
@@ -154,6 +167,9 @@ public class RestHighLevelClientFactory {
 		_authenticationEnabled =
 			restHighLevelClientFactory._authenticationEnabled;
 		_httpSSLEnabled = restHighLevelClientFactory._httpSSLEnabled;
+		_maxConnections = restHighLevelClientFactory._maxConnections;
+		_maxConnectionsPerRoute =
+			restHighLevelClientFactory._maxConnectionsPerRoute;
 		_networkHostAddresses =
 			restHighLevelClientFactory._networkHostAddresses;
 		_password = restHighLevelClientFactory._password;
@@ -233,10 +249,8 @@ public class RestHighLevelClientFactory {
 		httpClientBuilder.disableDefaultUserAgent();
 		httpClientBuilder.disableRedirectHandling();
 
-		httpClientBuilder.setMaxConnPerRoute(
-			RestClientBuilder.DEFAULT_MAX_CONN_PER_ROUTE);
-		httpClientBuilder.setMaxConnTotal(
-			RestClientBuilder.DEFAULT_MAX_CONN_TOTAL);
+		httpClientBuilder.setMaxConnPerRoute(_maxConnectionsPerRoute);
+		httpClientBuilder.setMaxConnTotal(_maxConnections);
 
 		CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
 
@@ -314,6 +328,8 @@ public class RestHighLevelClientFactory {
 
 	private boolean _authenticationEnabled;
 	private boolean _httpSSLEnabled;
+	private int _maxConnections;
+	private int _maxConnectionsPerRoute;
 	private String[] _networkHostAddresses;
 	private String _password;
 	private ProxyConfig _proxyConfig;

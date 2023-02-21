@@ -128,6 +128,10 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 				true
 			).connectionId(
 				ConnectionConstants.SIDECAR_CONNECTION_ID
+			).maxConnections(
+				elasticsearchConfigurationWrapper.maxConnections()
+			).maxConnectionsPerRoute(
+				elasticsearchConfigurationWrapper.maxConnectionsPerRoute()
 			).postCloseRunnable(
 				_sidecar::stop
 			).preConnectElasticsearchConnectionConsumer(

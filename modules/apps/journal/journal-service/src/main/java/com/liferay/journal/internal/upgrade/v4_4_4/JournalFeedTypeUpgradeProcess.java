@@ -14,7 +14,6 @@
 
 package com.liferay.journal.internal.upgrade.v4_4_4;
 
-import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -60,8 +59,6 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 	public JournalFeedTypeUpgradeProcess(
 		AssetCategoryLocalService assetCategoryLocalService,
-		AssetEntryAssetCategoryRelLocalService
-			assetEntryAssetCategoryRelLocalService,
 		AssetEntryLocalService assetEntryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		CompanyLocalService companyLocalService, Language language,
@@ -69,8 +66,6 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		UserLocalService userLocalService) {
 
 		_assetCategoryLocalService = assetCategoryLocalService;
-		_assetEntryAssetCategoryRelLocalService =
-			assetEntryAssetCategoryRelLocalService;
 		_assetEntryLocalService = assetEntryLocalService;
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_companyLocalService = companyLocalService;
@@ -208,23 +203,22 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 						userId = defaultUserId;
 					}
 
-					assetEntry = _assetEntryLocalService.updateEntry(
-						userId, groupId, createDate, modifiedDate,
-						JournalFeed.class.getName(), id, uuid, 0, new long[0],
-						new String[0], true, true, null, null, createDate, null,
-						ContentTypes.TEXT_PLAIN, name, description, null, null,
-						null, 0, 0, 0.0);
+					long[] assetCategoryIds = new long[0];
 
 					String type = resultSet.getString("type_");
 
 					if (Validator.isNotNull(type)) {
-						long assetCategoryId =
-							journalArticleTypesToAssetCategoryIds.get(type);
-
-						_assetEntryAssetCategoryRelLocalService.
-							addAssetEntryAssetCategoryRel(
-								assetEntry.getEntryId(), assetCategoryId);
+						assetCategoryIds = new long[] {
+							journalArticleTypesToAssetCategoryIds.get(type)
+						};
 					}
+
+					_assetEntryLocalService.updateEntry(
+						userId, groupId, createDate, modifiedDate,
+						JournalFeed.class.getName(), id, uuid, 0,
+						assetCategoryIds, new String[0], true, true, null, null,
+						createDate, null, ContentTypes.TEXT_PLAIN, name,
+						description, null, null, null, 0, 0, 0.0);
 				}
 			}
 		}
@@ -337,8 +331,6 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 	}
 
 	private final AssetCategoryLocalService _assetCategoryLocalService;
-	private final AssetEntryAssetCategoryRelLocalService
-		_assetEntryAssetCategoryRelLocalService;
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final CompanyLocalService _companyLocalService;

@@ -22,6 +22,7 @@ import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,12 +70,20 @@ public class JournalFeedAssetRendererFactory
 
 	@Override
 	public boolean hasPermission(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws Exception {
 
-		return false;
+		return _journalFeedModelResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	@Reference
 	private JournalFeedLocalService _journalFeedLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalFeed)"
+	)
+	private ModelResourcePermission<JournalFeed>
+		_journalFeedModelResourcePermission;
 
 }

@@ -35,6 +35,7 @@ import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.journal.web.internal.util.JournalSearcherUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -48,20 +49,13 @@ import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -355,18 +349,15 @@ public class JournalRSSHelper {
 
 		syndFeed.setEntries(syndEntries);
 
-		Document[] documents = _getDocuments(feed, resourceRequest);
+		List<JournalArticle> articles =
+			JournalSearcherUtil.searchJournalArticles(
+				searchContext -> _populateSearchContext(feed, searchContext));
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Syndicating " + documents.length + " articles");
+			_log.debug("Syndicating " + articles.size() + " articles");
 		}
 
-		for (Document document : documents) {
-			String articleId = document.get(Field.ARTICLE_ID);
-
-			JournalArticle article = _journalArticleLocalService.getArticle(
-				feed.getGroupId(), articleId);
-
+		for (JournalArticle article : articles) {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
 			syndEntry.setAuthor(_portal.getUserName(article));
@@ -428,76 +419,6 @@ public class JournalRSSHelper {
 		syndFeed.setUri(feedURL.toString());
 
 		return _rssExporter.export(syndFeed);
-	}
-
-	private Document[] _getDocuments(
-			JournalFeed feed, ResourceRequest resourceRequest)
-		throws Exception {
-
-		SearchContext searchContext = SearchContextFactory.getInstance(
-			_portal.getHttpServletRequest(resourceRequest));
-
-		searchContext.setEnd(feed.getDelta());
-		searchContext.setStart(0);
-
-		List<AssetCategory> selectedAssetCategories =
-			_assetCategoryLocalService.getCategories(
-				JournalFeed.class.getName(), feed.getId());
-
-		if (!selectedAssetCategories.isEmpty()) {
-			AssetCategory assetCategory = selectedAssetCategories.get(0);
-
-			long queryAssetCategoryId = assetCategory.getCategoryId();
-
-			searchContext.setAssetCategoryIds(
-				new long[] {queryAssetCategoryId});
-		}
-
-		String ddmStructureKey = feed.getDDMStructureKey();
-
-		if (Validator.isNull(ddmStructureKey)) {
-			ddmStructureKey = null;
-		}
-
-		String ddmTemplateKey = feed.getDDMTemplateKey();
-
-		if (Validator.isNull(ddmTemplateKey)) {
-			ddmTemplateKey = null;
-		}
-
-		searchContext.setAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				Field.STATUS, WorkflowConstants.STATUS_APPROVED
-			).put(
-				"ddmStructureKey", ddmStructureKey
-			).put(
-				"ddmTemplateKey", ddmTemplateKey
-			).build());
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		String orderByCol = feed.getOrderByCol();
-
-		String orderByType = feed.getOrderByType();
-
-		boolean orderByDesc = orderByType.equals("desc");
-
-		String orderByIndexCol =
-			orderByCol.equals("modified-date") ? "modified" : "displayDate";
-
-		searchContext.setSorts(
-			SortFactoryUtil.create(
-				orderByIndexCol, Sort.LONG_TYPE, orderByDesc));
-
-		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
-			JournalArticle.class);
-
-		Hits hits = indexer.search(searchContext);
-
-		return hits.getDocs();
 	}
 
 	private String _getEntryURL(
@@ -566,6 +487,59 @@ public class JournalRSSHelper {
 		}
 
 		return null;
+	}
+
+	private void _populateSearchContext(
+		JournalFeed feed, SearchContext searchContext) {
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(
+				JournalFeed.class.getName(), feed.getId());
+
+		if (!assetCategories.isEmpty()) {
+			AssetCategory assetCategory = assetCategories.get(0);
+
+			searchContext.setAndSearch(true);
+			searchContext.setAssetCategoryIds(
+				new long[] {assetCategory.getCategoryId()});
+		}
+
+		Map<String, Serializable> attributes = searchContext.getAttributes();
+
+		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		attributes.put("head", true);
+
+		if (Validator.isNotNull(feed.getDDMStructureKey())) {
+			attributes.put("ddmStructureKey", feed.getDDMStructureKey());
+		}
+
+		if (Validator.isNotNull(feed.getDDMTemplateKey())) {
+			attributes.put("ddmTemplateKey", feed.getDDMTemplateKey());
+		}
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(feed.getCompanyId());
+		searchContext.setEnd(feed.getDelta());
+		searchContext.setGroupIds(new long[] {feed.getGroupId()});
+
+		String fieldName = "modified";
+
+		if (StringUtil.equalsIgnoreCase(feed.getOrderByCol(), "display-date")) {
+			fieldName = "displayDate";
+		}
+
+		searchContext.setSorts(
+			new Sort(
+				fieldName, Sort.LONG_TYPE,
+				StringUtil.equalsIgnoreCase(feed.getOrderByType(), "desc")));
+
+		searchContext.setStart(0);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
 	}
 
 	private String _processContent(

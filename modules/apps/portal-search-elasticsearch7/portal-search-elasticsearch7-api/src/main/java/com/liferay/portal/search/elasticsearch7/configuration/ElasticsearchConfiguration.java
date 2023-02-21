@@ -260,6 +260,18 @@ public interface ElasticsearchConfiguration {
 	public String httpCORSConfigurations();
 
 	@Meta.AD(
+		deflt = "75", description = "max-connection-per-route-help",
+		name = "max-connection-per-route", required = false
+	)
+	public int maxConnectionPerRoute();
+
+	@Meta.AD(
+		deflt = "75", description = "max-connection-total-help",
+		name = "max-connection-total", required = false
+	)
+	public int maxConnectionTotal();
+
+	@Meta.AD(
 		deflt = "false", description = "sidecar-debug-help",
 		name = "sidecar-debug", required = false
 	)

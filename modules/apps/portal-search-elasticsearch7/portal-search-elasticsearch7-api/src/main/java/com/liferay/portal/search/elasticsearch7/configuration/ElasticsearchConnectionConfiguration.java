@@ -80,6 +80,18 @@ public interface ElasticsearchConnectionConfiguration {
 	public boolean httpSSLEnabled();
 
 	@Meta.AD(
+		deflt = "75", description = "max-connection-per-route-help",
+		name = "max-connection-per-route", required = false
+	)
+	public int maxConnectionPerRoute();
+
+	@Meta.AD(
+		deflt = "75", description = "max-connection-total-help",
+		name = "max-connection-total", required = false
+	)
+	public int maxConnectionTotal();
+
+	@Meta.AD(
 		deflt = "pkcs12", description = "truststore-type-help",
 		name = "truststore-type", required = false
 	)

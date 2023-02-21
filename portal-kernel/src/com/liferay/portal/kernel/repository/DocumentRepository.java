@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.File;
@@ -101,7 +100,8 @@ public interface DocumentRepository extends CapabilityProvider {
 	public default FileEntry fetchFileEntryByExternalReferenceCode(
 		String externalReferenceCode) {
 
-		return null;
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public default Folder fetchFolderByExternalReferenceCode(
@@ -156,16 +156,8 @@ public interface DocumentRepository extends CapabilityProvider {
 			String externalReferenceCode)
 		throws PortalException {
 
-		try {
-			return getFileEntry(
-				GetterUtil.getLongStrict(externalReferenceCode));
-		}
-		catch (NumberFormatException numberFormatException) {
-			throw new NoSuchFileEntryException(
-				"No file entry exists with external reference code " +
-					externalReferenceCode,
-				numberFormatException);
-		}
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public default FileEntry getFileEntryByFileName(

@@ -85,6 +85,8 @@ public class ModulesStructureTest {
 
 		_modulesDirPath = Paths.get("modules");
 
+		_cloudDirPath = _modulesDirPath.resolve("cloud");
+
 		_checkoutPrivateAppsDirs = new HashSet<>();
 
 		if (Files.exists(Paths.get("working.dir.properties"))) {
@@ -179,7 +181,8 @@ public class ModulesStructureTest {
 					String dirName = String.valueOf(dirPath.getFileName());
 
 					if ((dirName.charAt(0) == '.') ||
-						_excludedDirNames.contains(dirName)) {
+						_excludedDirNames.contains(dirName) ||
+						dirPath.equals(_cloudDirPath)) {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
@@ -383,7 +386,8 @@ public class ModulesStructureTest {
 
 					if (_excludedDirNames.contains(dirName) ||
 						dirName.equals("archetype-resources") ||
-						dirName.equals("gradleTest")) {
+						dirName.equals("gradleTest") ||
+						_cloudDirPath.equals(dirPath)) {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
@@ -1692,6 +1696,7 @@ public class ModulesStructureTest {
 	private static String _branchName;
 	private static Properties _buildProperties;
 	private static Set<String> _checkoutPrivateAppsDirs;
+	private static Path _cloudDirPath;
 	private static final Set<String> _excludedDirNames = SetUtil.fromList(
 		Arrays.asList(
 			"bin", "build", "classes", "ext-test-impl", "node_modules",

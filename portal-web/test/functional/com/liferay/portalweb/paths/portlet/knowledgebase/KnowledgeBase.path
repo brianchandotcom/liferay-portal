@@ -85,6 +85,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_TABLE_EXPIRATION_STATUS</td>
+	<td>//a[contains(.,'${key_kbArticleTitle}')]/parent::h2/following-sibling::span[@class='text-default']//span[contains(@class,'label-warning')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ARTICLE_TABLE_KB_GENERIC</td>
 	<td>//tr[1]/td[3]</td>
 	<td></td>

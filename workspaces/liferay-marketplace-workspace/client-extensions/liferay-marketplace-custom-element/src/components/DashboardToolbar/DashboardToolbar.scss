@@ -1,0 +1,44 @@
+.dashboard-toolbar {
+    &-container {
+        width: 100vw;
+        display: flex;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    &-navigation-bar-button {
+        background-color: #FFF !important;
+
+        &-text {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5rem;
+
+            &-active {
+                color: #004AD7;
+            }
+        }
+    }
+
+    &-liferay-icon {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    &-title-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.75rem;
+
+    }
+
+    &-title {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 1.875rem;
+        font-weight: 600;
+        line-height: 2rem;
+    }
+
+
+}

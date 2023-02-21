@@ -1,0 +1,120 @@
+.dashboard-table-row {
+    &-name {
+        &-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        &-logo {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 0.25rem;
+        }
+
+        &-text {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            font-weight: 600;
+            color: #282934;
+        }
+    }
+
+    &-text {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 1rem;
+        line-height: 1.5rem;
+        font-weight: 400;
+        color: #282934;
+    }
+
+    &-last-updated {
+        &-container {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        &-date {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            font-weight: 600;
+            color: #282934;
+        }
+
+        &-responsible {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 0.813rem;
+            line-height: 1rem;
+            font-weight: 400;
+            color: #82828C;
+        }
+
+        &-by {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 0.813rem;
+            line-height: 1rem;
+            font-weight: 400;
+            color: #54555F;
+        }
+    }
+
+
+    &-status {
+        &-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        &-icon {
+            width: 0.5rem;
+            height: 0.5rem;
+
+            &-published {
+                filter: invert(35%) sepia(17%) saturate(3748%) hue-rotate(189deg) brightness(86%) contrast(89%);
+            }
+
+            &-pending {
+                filter: invert(29%) sepia(96%) saturate(3804%) hue-rotate(29deg) brightness(97%) contrast(101%);
+            }
+
+            &-hidden {
+                filter: invert(54%) sepia(7%) saturate(388%) hue-rotate(202deg) brightness(94%) contrast(91%);
+            }
+        }
+
+        &-text {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 0.813rem;
+            line-height: 1rem;
+            font-weight: 600;
+            color: #6C6C75;
+        }
+    }
+
+    &-rating {
+        &-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        &-text {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            font-weight: 400;
+            color: #282934;
+        }
+
+        &-star {
+            width: 1rem;
+            height: 1rem;
+            filter: invert(94%) sepia(47%) saturate(5926%) hue-rotate(316deg) brightness(98%) contrast(107%);
+        }
+    }
+}

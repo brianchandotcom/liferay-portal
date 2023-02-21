@@ -1,0 +1,51 @@
+.dashboard-page {
+    &-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        justify-content: space-between;
+        width: 100vw;
+        overflow-x: hidden;
+    }
+
+    &-header-container {
+        margin-bottom: 4.5rem;
+    }
+
+    &-body {
+        &-container {
+            display: flex;
+            gap: 2rem;
+            padding: 1.5rem;
+        }
+
+        &-header-container {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &-header-button {
+            border: none;
+            background-color: #0053F0;
+            border-radius: 0.5rem;
+            color: #FFFFFF;
+            font-size: 1rem;
+            font-weight: 600;
+            height: 2.5rem;
+            line-height: 1.5rem;
+            width: 7.313rem;
+
+            &:hover {
+                background-color: #FFFF;
+                border: 1px solid #0053F0;
+                color: #0053F0;
+            }
+
+            transition: background-color 0.3s;
+            transition: border 0.3s;
+            transition: color 0.3s;
+
+        }
+    }
+}

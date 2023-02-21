@@ -1,0 +1,61 @@
+.github-card {
+    &-container {
+        border: 1px solid #E2E2E4;
+        border-radius: 0.5rem;
+        height: 13.5rem;
+        padding:1.5rem 0;
+        width: 37.5rem;
+    }
+    &-content{
+        display: flex;
+        justify-content: space-between;
+        margin: 0 1.5rem;
+
+        .custom-select__content{
+            font-size: 14px;
+            width: 16.5rem;
+        }
+    }
+
+    &-divider{
+        margin-bottom: 1.5rem;
+    }
+
+    &-header{
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 1.5rem 1.5rem;
+
+        &-title{
+            align-items: center;
+            display: flex;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 16px;
+            justify-content: space-between;
+            width: 18.5rem;
+        }
+
+        &-circle{
+            align-items: center;
+            background-color: #E2E2E4;
+            border-radius: 2rem;
+            display: flex;
+            height: 2.5rem;
+            justify-content: center;
+            width: 2.5rem;
+        }
+
+        &-icon {
+            &-github{
+                filter: invert(20%) sepia(18%) saturate(443%) hue-rotate(196deg) brightness(98%) contrast(82%);
+                height: 1rem;
+            }
+            &-link{
+                filter: invert(69%) sepia(5%) saturate(380%) hue-rotate(196deg) brightness(90%) contrast(85%);
+                height: 1rem;
+                transform: rotate(120deg);
+            }
+        }
+    }
+}

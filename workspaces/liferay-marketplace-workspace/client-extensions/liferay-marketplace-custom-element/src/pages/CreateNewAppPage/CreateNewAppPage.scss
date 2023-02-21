@@ -1,0 +1,114 @@
+.create-new-app {
+    &-container {
+        width: 37.5rem;
+    }
+
+    &-header {
+        margin-bottom: 2.5rem;
+    }
+
+    &-card {
+        &-container {
+            border: 2px solid #E2E2E4;
+            border-radius: 0.625rem;
+            height: 21.563rem;
+            width: 37.5rem;
+        }
+
+        &-header {
+            align-items: center;
+            border-bottom: 2px solid #E2E2E4;
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem;
+
+            &-button {
+                background: none;
+                border: 1px solid #2B3A4B;
+                border-radius: 0.375rem;
+                font-family: 'Source Sans Pro', sans-serif;
+                font-size: 0.875rem;
+                font-weight: 600;
+                height: 2rem;
+                line-height: 1rem;
+                width: 6.625rem;
+
+                &:hover {
+                    background-color: #2B3A4B;
+                    color: #FFF;
+                }
+
+                transition: background-color 0.3s;
+                transition: color 0.3s;
+            }
+
+            &-text {
+                color: #282934;
+                font-family: 'Source Sans Pro', sans-serif;
+                font-size: 1.125rem;
+                font-weight: 600;
+                line-height: 1.25rem;
+            }
+
+            &-left-content {
+                align-items: center;
+                display: flex;
+                gap: 1rem;
+            }
+
+            &-icon {
+                filter: invert(20%) sepia(24%) saturate(334%) hue-rotate(196deg) brightness(92%) contrast(82%);
+                width: 1rem;
+                height: 1rem;
+
+                &-container {
+                    align-items: center;
+                    background-color: #E2E2E4;
+                    border-radius: 50%;
+                    display: flex;
+                    height: 2.5rem;
+                    justify-content: center;
+                    width: 2.5rem;
+                }
+            }
+        }
+
+        &-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 1.5rem;
+
+            &-text-primary {
+                color: #3F404B;
+                font-family: 'Source Sans Pro', sans-serif;
+                font-size: 0.813rem;
+                font-weight: 400;
+                line-height: 1rem;
+                margin-bottom: 0.625rem;
+            }
+
+            &-text-secondary {
+                color: #3F404B;
+                font-family: 'Source Sans Pro', sans-serif;
+                font-size: 0.813rem;
+                font-weight: 400;
+                line-height: 1rem;
+            }
+        }
+    }
+
+    &-info-footer {
+        color: #54555F;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 0.813rem;
+        font-weight: 400;
+        line-height: 1rem;
+
+        &-container {
+            margin-left: 0.313rem;
+            margin-top: 1.563rem;
+        }
+
+    }
+}

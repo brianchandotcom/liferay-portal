@@ -1,0 +1,31 @@
+.custom-select {
+	&__wrapper {
+		cursor: not-allowed;
+	}
+
+	&__icon {
+		color: #666;
+
+		&--disabled {
+			color: #a7a9bc;
+			cursor: not-allowed;
+		}
+	}
+
+	&__content {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+
+		&--disabled {
+			color: #a7a9bc;
+			pointer-events: none;
+		}
+	}
+}
+
+.label-inside-custom-select {
+	font-size: 0.625rem !important;
+	height: auto !important;
+	text-transform: uppercase !important;
+}

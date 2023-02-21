@@ -1,0 +1,57 @@
+.dashboard-navigation-body-list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    cursor: pointer;
+
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #E6EDFB;
+    }
+
+    &-selected {
+        background-color: #E6EDFB;
+    }
+
+    &-app-logo {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.75rem;
+    }
+
+    &-app-title {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 0.875rem;
+        line-height: 1rem;
+        font-weight: 600;
+        margin-right: 0.5rem;
+    }
+
+    &-app-version {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 0.813rem;
+        line-height: 1rem;
+        font-weight: 400;
+        color: #54555F;
+    }
+
+    &-app-status {
+        width: 0.5rem;
+        height: 0.5rem;
+
+        &-published {
+            filter: invert(32%) sepia(12%) saturate(6208%) hue-rotate(194deg) brightness(90%) contrast(87%);
+        }
+
+        &-hidden {
+            filter: invert(56%) sepia(4%) saturate(723%) hue-rotate(202deg) brightness(91%) contrast(83%);
+        }
+
+        &-pending {
+            filter: invert(29%) sepia(88%) saturate(3491%) hue-rotate(27deg) brightness(96%) contrast(101%);
+        } 
+    }
+}

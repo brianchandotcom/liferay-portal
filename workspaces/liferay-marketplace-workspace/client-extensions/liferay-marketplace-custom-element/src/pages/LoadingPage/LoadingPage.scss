@@ -1,0 +1,25 @@
+.loading-page {
+    &-container {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        height: 100vh;
+        justify-content: center;
+        width: 100vw;
+    }
+
+    &-text {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5rem;
+
+        &-container {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+}

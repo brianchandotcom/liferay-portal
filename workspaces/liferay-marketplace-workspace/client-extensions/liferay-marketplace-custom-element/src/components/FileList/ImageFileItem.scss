@@ -1,0 +1,114 @@
+.image-file-item {
+    &-container {
+        display: flex;
+        align-items: center;
+        width: 37.5rem;
+        height: 8.5rem;
+        padding: 1rem;
+        border: 1.5px solid #E2E2E4;
+        border-radius: 0.625rem;
+        margin-bottom: 1.5rem;
+    }
+
+    &-arrow {
+        &-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 3.5rem;
+            margin-right: 1.5rem;
+        }
+
+        &-icon {
+            width: 1rem;
+            height: 1rem;
+            filter: invert(18%) sepia(36%) saturate(526%) hue-rotate(170deg) brightness(95%) contrast(89%);
+        }
+    }
+
+    &-uploaded-preview {
+        background-repeat: 'no-repeat';
+        background-size: cover;
+        background-position: 50% 50%;
+        width: 6.5rem;
+        height: 6.5rem;
+        margin-right: 1rem;
+        border-radius: 0.625rem;
+    }
+
+    &-info {
+        &-container {
+            display: flex;
+            width: 75%;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.25rem;
+            margin-top: 0.75rem;
+        }
+
+        &-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &-text {
+                font-family: "Source Sans Pro", sans-serif;
+                font-size: 1rem;
+                font-weight: 400;
+                line-break: break-all;
+                line-height: 1.5rem;
+            }
+
+            &-button {
+                width: 4.563rem;
+                height: 2rem;
+                background-color: transparent;
+                border: 1.5px solid #2B3A4B;
+                border-radius: 0.375rem;
+                font-family: "Source Sans Pro", sans-serif;
+                font-size: 0.875;
+                line-height: 1rem;
+                font-weight: 600;
+                color: #2B3A4B;
+
+                &:hover {
+                    background-color: #2B3A4B;
+                    color: #FFF;
+                }
+
+                transition: background-color 0.3s;
+                transition: color 0.3s;
+            }
+        }
+
+        &-input {
+            width: 95%;
+            height: 3rem;
+            border: 1px solid #999AA3;
+            border-radius: 0.5rem;
+            padding-left: 1rem;
+            font-family: "Source Sans Pro", sans-serif;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            font-weight: 400;
+            padding-left: 0.75rem;
+            margin-right: 0.5rem;
+
+            &::-webkit-input-placeholder {
+                font-family: "Source Sans Pro", sans-serif;
+                font-size: 1rem;
+                line-height: 1.5rem;
+                font-weight: 400;
+                padding-left: 0.75rem;
+            }
+
+            &-container {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    }
+}

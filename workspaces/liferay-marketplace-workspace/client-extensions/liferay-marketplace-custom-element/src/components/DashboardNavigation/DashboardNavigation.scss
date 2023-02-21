@@ -1,0 +1,65 @@
+.dashboard-navigation {
+    &-container {
+        max-width: 17.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-header {
+        width: 17.5rem;
+        height: 4.5rem;
+        border-radius: 0.625rem;
+        background-color: #F7F7F8;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+
+        &-left-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &-logo {
+            width: 3rem;
+            height: 3rem;
+            margin-right: 0.75rem;
+        }
+
+        &-text-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-title {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            font-weight: 600;
+            color: #282934;
+        }
+
+        &-apps {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 0.813rem;
+            line-height: 1rem;
+            color: #54555F;
+        }
+
+        &-arrow-down {
+            width: 1rem;
+            height: 1rem;
+            filter: invert(65%) sepia(4%) saturate(515%) hue-rotate(196deg) brightness(95%) contrast(84%);
+        }
+
+    }
+
+    &-body {
+        width: 17.5rem;
+        background-color: #F7F7F8;
+        border-radius: 0.625rem;
+        padding: 0.5rem;
+    }
+}

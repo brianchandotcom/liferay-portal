@@ -1,0 +1,93 @@
+.license-card {
+    &-container {
+        border: 1px solid #E2E2E4;
+        border-radius: 0.5rem;
+        height: 8.25rem;
+        padding: 1rem;
+        width: 37.5rem;
+
+        .form-control {
+            font-size: 13px;
+            line-height: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .field-base-tooltip {
+            margin-left: 8px;
+        }
+    }
+
+    &-quantity {
+        display: flex;
+        flex-direction: column;
+        height: 6.1rem;
+        margin-right: 10px;
+        width: 9rem;
+
+        .input-group-item {
+            flex-grow: 0;
+            justify-content: center;
+            width: 4rem;
+        }
+    }
+
+    &-price {
+        display: flex;
+        flex-direction: column;
+        font-size: 16px;
+        height: 6.1rem;
+        width: 25.5em;
+
+        &-icon {
+            height: 1rem;
+            margin: 0 5px;
+        }
+
+        &-currency-input {
+            width: 8rem;
+
+        }
+
+        .input-group-append {
+            .form-control {
+                background-color: white;
+                border-left-width: 0;
+                text-align: right;
+            }
+        }
+
+        .input-group-text {
+            font-size: 10px;
+        }
+
+        .input-group-text {
+            background-color: white;
+        }
+    }
+
+    &-input-title {
+        align-items: center;
+        background-color: white;
+        border-radius: 2rem;
+        color: #282934;
+        display: flex;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        height: 16px;
+        justify-content: center;
+        margin-top: -8px;
+        position: absolute;
+        width: 38px;
+        z-index: 2;
+
+        &-total {
+            margin-left: 10px;
+        }
+    }
+
+}

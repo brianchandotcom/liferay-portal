@@ -1,0 +1,83 @@
+.dropzone-upload {
+    &-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 37.5rem;
+        height: 15rem;
+        border: 2px dashed #B1B2B9;
+        border-radius: 0.5rem;
+
+        &-active {
+            border-color: #78e5d5;
+        }
+
+        &-reject {
+            border-color: #e57878;
+        }
+
+        transition: border-color 0.3s;
+    }
+
+    &-document {
+        &-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.563rem;
+            width: 14.5rem;
+            height: 5rem;
+            background-color: #E6EDFB;
+            margin-bottom: 1.688rem;
+        }
+
+        &-icon {
+            width: 2rem;
+            height: 2rem;
+            filter: invert(23%) sepia(90%) saturate(3736%) hue-rotate(217deg) brightness(100%) contrast(96%);
+        }
+    }
+
+    &-text {
+        &-container {
+            margin-bottom: 0.813rem;
+        }
+
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 1rem;
+        line-height: 1.5rem;
+        font-weight: 400;
+        color: #282934;
+    }
+
+    &-button {
+        width: 5.813rem;
+        height: 2rem;
+        background-color: transparent;
+        border-radius: 0.375rem;
+        border: none;
+
+        &:hover {
+            background-color: #EDF3FE;
+        }
+
+        transition: background-color 0.3s;
+        
+        &-text {
+            font-family: "Source Sans Pro", sans-serif;
+            font-size: 0.875rem;
+            line-height: 1rem;
+            font-weight: 600;
+            color: #0053F0;
+        }
+    }
+
+    &-description {
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 0.813rem;
+        line-height: 1rem;
+        font-weight: 400;
+        color: #6C6C75;
+    }
+}

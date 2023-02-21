@@ -1,0 +1,27 @@
+.dashboard-table {
+    &-container {
+        width: 85.5rem;
+    }
+
+    &-header-name {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+
+
+        &-icon {
+            width: 1rem;
+            height: 1rem;
+            filter: invert(66%) sepia(2%) saturate(933%) hue-rotate(197deg) brightness(93%) contrast(91%);
+        }
+    }
+
+    &-header-text {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 0.875rem;
+        line-height: 1rem;
+        font-weight: 600;
+        color: #6C6C75;
+    }
+}

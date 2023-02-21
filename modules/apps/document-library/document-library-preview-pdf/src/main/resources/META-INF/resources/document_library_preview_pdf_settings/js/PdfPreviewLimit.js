@@ -12,8 +12,53 @@
  * details.
  */
 
-import React from 'react';
+import ClayForm, {ClayInput} from '@clayui/form';
+import React, {useState} from 'react';
 
-export default function PdfPreviewLimit({maxLimitSize}) {
-	return <h1>PdfPreviewLimit {maxLimitSize}</h1>;
+export default function PdfPreviewLimit({maxLimitSize, namespace, value}) {
+	const [warning, setWarning] = useState(false);
+	const [inputValue, setInputValue] = useState(value);
+
+	const onChange = (event) => {
+		const value = event.target.value;
+
+		setInputValue(value);
+
+		setWarning(maxLimitSize && value > maxLimitSize);
+	};
+
+	return (
+		<>
+			<ClayForm.Group className={warning ? 'has-warning' : ''}>
+				<label htmlFor={`${namespace}maxNumberOfPages`}>
+					{Liferay.Language.get('maximum-number-of-pages')}
+				</label>
+
+				<ClayInput
+					autoFocus
+					className="form-control"
+					name={`${namespace}maxNumberOfPages`}
+					onChange={onChange}
+					type="number"
+					value={inputValue}
+				/>
+
+				{warning && (
+					<ClayForm.FeedbackGroup>
+						<ClayForm.FeedbackItem>
+							<ClayForm.FeedbackIndicator symbol="info-circle" />
+
+							<span>
+								{Liferay.Language.get('this-limit-is-higher-than-system-settings-limit')}
+							</span>
+						</ClayForm.FeedbackItem>
+					</ClayForm.FeedbackGroup>
+				)}
+			</ClayForm.Group>
+
+			<p className="text-muted">
+				{Liferay.Language.get('maximum-number-of-pages-help')}
+			</p>
+		</>
+	);
 }

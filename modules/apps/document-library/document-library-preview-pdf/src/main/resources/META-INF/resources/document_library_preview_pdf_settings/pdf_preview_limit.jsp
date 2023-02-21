@@ -40,18 +40,6 @@ PDFPreviewConfigurationDisplayContext pdfPreviewConfigurationDisplayContext = (P
 		</clay:sheet-header>
 
 		<clay:sheet-section>
-			<aui:input label="maximum-number-of-pages" min="0" name="maxNumberOfPages" value="<%= pdfPreviewConfigurationDisplayContext.getMaxNumberOfPages() %>" />
-
-			<p class="text-muted">
-				<liferay-ui:message key="maximum-number-of-pages-help" />
-			</p>
-		</clay:sheet-section>
-
-		<clay:sheet-footer>
-			<aui:button primary="<%= true %>" type="submit" value="save" />
-		</clay:sheet-footer>
-
-		<div>
 			<span aria-hidden="true" class="loading-animation"></span>
 
 			<react:component
@@ -59,9 +47,17 @@ PDFPreviewConfigurationDisplayContext pdfPreviewConfigurationDisplayContext = (P
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"maxLimitSize", "test"
+					).put(
+						"namespace", liferayPortletResponse.getNamespace()
+					).put(
+						"value", pdfPreviewConfigurationDisplayContext.getMaxNumberOfPages()
 					).build()
 				%>'
 			/>
-		</div>
+		</clay:sheet-section>
+
+		<clay:sheet-footer>
+			<aui:button primary="<%= true %>" type="submit" value="save" />
+		</clay:sheet-footer>
 	</clay:sheet>
 </aui:form>

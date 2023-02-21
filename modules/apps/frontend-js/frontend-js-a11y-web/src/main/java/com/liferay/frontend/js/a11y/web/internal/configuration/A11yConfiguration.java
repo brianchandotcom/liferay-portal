@@ -35,6 +35,9 @@ public @interface A11yConfiguration {
 	)
 	public String target();
 
+	@Meta.AD(deflt = "false", required = false)
+	public boolean enable();
+
 	@Meta.AD(deflt = "false", name = "control-menu-name", required = false)
 	public boolean enableControlMenu();
 

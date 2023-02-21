@@ -15,7 +15,6 @@
 package com.liferay.frontend.js.a11y.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.a11y.web.internal.configuration.A11yConfiguration;
-import com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfigurationUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -36,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -44,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.a11y.web.internal.configuration.A11yConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = DynamicInclude.class
 )
 public class A11yBottomJSPDynamicInclude implements DynamicInclude {
@@ -141,7 +142,7 @@ public class A11yBottomJSPDynamicInclude implements DynamicInclude {
 	public void register(
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 
-		if (FFA11yConfigurationUtil.getEnable()) {
+		if (_a11yConfiguration.enable()) {
 			dynamicIncludeRegistry.register(
 				"/html/common/themes/bottom.jsp#post");
 		}

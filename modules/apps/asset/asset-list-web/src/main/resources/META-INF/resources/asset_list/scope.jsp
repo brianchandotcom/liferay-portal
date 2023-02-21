@@ -54,6 +54,7 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 				name="options"
 			>
 				<clay:button
+					aria-label='<%= LanguageUtil.get(request, "remove") %>'
 					cssClass="modify-link"
 					data-rowId="<%= group.getGroupId() %>"
 					displayType="unstyled"

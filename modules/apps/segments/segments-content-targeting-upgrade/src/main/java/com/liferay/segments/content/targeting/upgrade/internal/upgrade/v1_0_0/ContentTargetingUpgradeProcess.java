@@ -39,8 +39,6 @@ import java.sql.ResultSet;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.liferay.portal.kernel.upgrade.UpgradeProcessFactory.dropTables;
-
 /**
  * @author Eduardo García
  */
@@ -67,14 +65,17 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
-			dropTables("CT_AU_AnonymousUser", "CT_Analytics_AnalyticsEvent",
-				"CT_Analytics_AnalyticsReferrer","CT_AnonymousUserUserSegment",
-				"CT_CCR_CampaignContent","CT_CTA_CTAction","CT_CTA_CTActionTotal",
-				"CT_Campaign","CT_Campaigns_UserSegments","CT_ChannelInstance",
-				"CT_ReportInstance","CT_RuleInstance","CT_ScorePoints_ScorePoint",
-				"CT_Tactic","CT_Tactics_UserSegments","CT_TrackingActionInstance",
-				"CT_USCR_UserSegmentContent","CT_UserSegment","CT_Visited_ContentVisited",
-				"CT_Visited_PageVisited")
+			UpgradeProcessFactory.dropTables(
+				"CT_AU_AnonymousUser", "CT_Analytics_AnalyticsEvent",
+				"CT_Analytics_AnalyticsReferrer", "CT_AnonymousUserUserSegment",
+				"CT_CCR_CampaignContent", "CT_CTA_CTAction",
+				"CT_CTA_CTActionTotal", "CT_Campaign",
+				"CT_Campaigns_UserSegments", "CT_ChannelInstance",
+				"CT_ReportInstance", "CT_RuleInstance",
+				"CT_ScorePoints_ScorePoint", "CT_Tactic",
+				"CT_Tactics_UserSegments", "CT_TrackingActionInstance",
+				"CT_USCR_UserSegmentContent", "CT_UserSegment",
+				"CT_Visited_ContentVisited", "CT_Visited_PageVisited")
 		};
 	}
 

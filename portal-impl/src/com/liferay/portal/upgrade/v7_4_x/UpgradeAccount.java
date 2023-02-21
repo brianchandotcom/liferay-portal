@@ -146,6 +146,11 @@ public class UpgradeAccount extends UpgradeProcess {
 	}
 
 	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {UpgradeProcessFactory.dropTables("Account_")};
+	}
+
+	@Override
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
@@ -158,14 +163,6 @@ public class UpgradeAccount extends UpgradeProcess {
 				"size_ VARCHAR(75) null"),
 			UpgradeProcessFactory.dropColumns("Company", "accountId"),
 			UpgradeProcessFactory.dropColumns("Contact", "accountId")
-		};
-	}
-
-	@Override
-	protected UpgradeStep[] getPostUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropTables(
-				"Account_")
 		};
 	}
 

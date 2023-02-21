@@ -78,8 +78,7 @@ public class CommerceAccountGroupCommerceAccountRelUpgradeProcess
 	@Override
 	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropTables(
-				"CAccountGroupCAccountRel")
+			UpgradeProcessFactory.dropTables("CAccountGroupCAccountRel")
 		};
 	}
 

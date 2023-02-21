@@ -56,8 +56,7 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropTables(
-				"JournalArticleImage")
+			UpgradeProcessFactory.dropTables("JournalArticleImage")
 		};
 	}
 

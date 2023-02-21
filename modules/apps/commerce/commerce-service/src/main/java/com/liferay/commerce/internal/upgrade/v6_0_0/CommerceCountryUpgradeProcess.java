@@ -111,8 +111,7 @@ public class CommerceCountryUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropTables(
-				"CommerceCountry")
+			UpgradeProcessFactory.dropTables("CommerceCountry")
 		};
 	}
 

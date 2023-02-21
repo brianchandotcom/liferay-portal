@@ -132,9 +132,8 @@ public class UpgradeProcessFactoryTest {
 	@Test
 	public void testDropTables() throws Exception {
 		_db.runSQL(
-			StringBundler.concat(
 			"create table UpgradeProcessFactoryTest_2 (id LONG not null " +
-				"primary key)"));
+				"primary key)");
 
 		UpgradeProcess upgradeProcess = UpgradeProcessFactory.dropTables(
 			_TABLE_NAME, "UpgradeProcessFactoryTest_2");
@@ -142,7 +141,8 @@ public class UpgradeProcessFactoryTest {
 		upgradeProcess.upgrade();
 
 		Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME, false));
-		Assert.assertFalse(_dbInspector.hasTable("UpgradeProcessFactoryTest_2", false));
+		Assert.assertFalse(
+			_dbInspector.hasTable("UpgradeProcessFactoryTest_2", false));
 	}
 
 	@Test

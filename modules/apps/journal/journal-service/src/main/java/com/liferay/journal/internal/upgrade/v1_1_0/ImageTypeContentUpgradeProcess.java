@@ -52,6 +52,13 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 		_copyJournalArticleImagesToJournalRepository();
 	}
 
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropTables("JournalArticleImage")
+		};
+	}
+
 	private void _copyJournalArticleImagesToJournalRepository()
 		throws Exception {
 
@@ -133,14 +140,6 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 				},
 				"Unable to copy journal article images to the file repository");
 		}
-	}
-
-	@Override
-	protected UpgradeStep[] getPostUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropTables(
-				"JournalArticleImage")
-		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

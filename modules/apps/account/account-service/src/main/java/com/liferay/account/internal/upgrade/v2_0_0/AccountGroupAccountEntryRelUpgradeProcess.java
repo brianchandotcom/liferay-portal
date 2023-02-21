@@ -36,8 +36,7 @@ public class AccountGroupAccountEntryRelUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropTables(
-				"AccountGroupAccountEntryRel")
+			UpgradeProcessFactory.dropTables("AccountGroupAccountEntryRel")
 		};
 	}
 

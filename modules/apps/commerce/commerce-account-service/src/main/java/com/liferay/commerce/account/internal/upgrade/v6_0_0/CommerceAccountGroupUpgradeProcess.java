@@ -90,8 +90,7 @@ public class CommerceAccountGroupUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropTables(
-				"CommerceAccountGroup")
+			UpgradeProcessFactory.dropTables("CommerceAccountGroup")
 		};
 	}
 

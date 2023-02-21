@@ -38,18 +38,17 @@ public class CommerceSubscriptionCycleEntryUpgradeProcess
 	}
 
 	@Override
-	protected UpgradeStep[] getPreUpgradeSteps() {
+	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CommerceSubscriptionEntry", "currentCycle LONG")
+			UpgradeProcessFactory.dropTables("CSubscriptionCycleEntry")
 		};
 	}
 
 	@Override
-	protected UpgradeStep[] getPostUpgradeSteps() {
+	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropTables(
-				"CSubscriptionCycleEntry")
+			UpgradeProcessFactory.addColumns(
+				"CommerceSubscriptionEntry", "currentCycle LONG")
 		};
 	}
 

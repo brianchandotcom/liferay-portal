@@ -46,8 +46,7 @@ public class UpgradeLayout extends UpgradeProcess {
 	@Override
 	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropTables(
-				"TEMP_TABLE")
+			UpgradeProcessFactory.dropTables("TEMP_TABLE")
 		};
 	}
 

@@ -102,8 +102,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropTables(
-				"CommerceAddress")
+			UpgradeProcessFactory.dropTables("CommerceAddress")
 		};
 	}
 

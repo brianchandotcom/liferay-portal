@@ -146,7 +146,12 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 			Set<String> types = new HashSet<>();
 
 			while (resultSet.next()) {
-				types.add(StringUtil.toLowerCase(resultSet.getString("type_")));
+				String type = StringUtil.toLowerCase(
+					resultSet.getString("type_"));
+
+				if (Validator.isNotNull(type)) {
+					types.add(type);
+				}
 			}
 
 			return types;
@@ -299,10 +304,6 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 								new HashMap<>();
 
 						for (String type : types) {
-							if (Validator.isNull(type)) {
-								continue;
-							}
-
 							AssetCategory assetCategory =
 								_verifyIfAssetCategoryExists(
 									assetVocabulary.getCategories(), type);

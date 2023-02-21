@@ -44,6 +44,7 @@ import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -103,7 +104,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 	private AssetVocabulary _addAssetVocabulary(
 			long groupId, long companyId, String title,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap)
+			Map<Locale, String> nameMap)
 		throws Exception {
 
 		long userId = _userLocalService.getDefaultUserId(companyId);
@@ -124,7 +125,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		serviceContext.setAddGuestPermissions(true);
 
 		return _assetVocabularyLocalService.addVocabulary(
-			userId, groupId, title, nameMap, descriptionMap,
+			userId, groupId, title, nameMap, Collections.emptyMap(),
 			assetVocabularySettingsHelper.toString(), serviceContext);
 	}
 
@@ -152,10 +153,8 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeFeedsToAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_companyLocalService.forEachCompany(
-				company -> {
-					long companyId = company.getCompanyId();
-
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
 					try (PreparedStatement preparedStatement =
 							connection.prepareStatement(
 								StringBundler.concat(
@@ -270,33 +269,27 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 						Set<String> types = _getArticleTypes(
 							company.getCompanyId());
 
-						if (types.size() <= 0) {
+						if (SetUtil.isEmpty(types)) {
 							return;
 						}
 
 						LocaleThreadLocal.setDefaultLocale(company.getLocale());
 
-						Set<Locale> locales = LanguageUtil.getAvailableLocales(
-							company.getGroupId());
-
-						Locale defaultLocale = LocaleUtil.fromLanguageId(
-							UpgradeProcessUtil.getDefaultLanguageId(
-								company.getCompanyId()));
-
-						String title = "type";
-
-						Map<Locale, String> nameMap =
-							LocalizationUtil.getLocalizationMap(
-								locales, defaultLocale, title);
-
 						AssetVocabulary assetVocabulary =
 							_assetVocabularyLocalService.getGroupVocabulary(
-								company.getGroupId(), title);
+								company.getGroupId(), "type");
 
 						if (assetVocabulary == null) {
 							assetVocabulary = _addAssetVocabulary(
 								company.getGroupId(), company.getCompanyId(),
-								title, nameMap, new HashMap<Locale, String>());
+								"type",
+								LocalizationUtil.getLocalizationMap(
+									LanguageUtil.getAvailableLocales(
+										company.getGroupId()),
+									LocaleUtil.fromLanguageId(
+										UpgradeProcessUtil.getDefaultLanguageId(
+											company.getCompanyId())),
+									"type"));
 						}
 
 						Map<String, Long>

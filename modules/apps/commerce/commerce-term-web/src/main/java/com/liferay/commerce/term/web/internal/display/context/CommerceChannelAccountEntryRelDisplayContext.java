@@ -251,25 +251,24 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
 			fetchCommerceChannelAccountEntryRel();
 
-		long[] commerceChannelIds = TransformUtil.transformToLongArray(
+		return TransformUtil.transformToLongArray(
 			_commerceChannelAccountEntryRelService.
 				getCommerceChannelAccountEntryRels(
 					_accountEntry.getAccountEntryId(), _type, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null),
-			CommerceChannelAccountEntryRel::getCommerceChannelId);
+			curCommerceChannelAccountEntryRel -> {
+				long commerceChannelId =
+					curCommerceChannelAccountEntryRel.getCommerceChannelId();
 
-		return ArrayUtil.filter(
-			commerceChannelIds,
-			commerceChannelId -> {
 				if ((commerceChannelAccountEntryRel == null) ||
 					(commerceChannelId !=
 						commerceChannelAccountEntryRel.
 							getCommerceChannelId())) {
 
-					return true;
+					return commerceChannelId;
 				}
 
-				return false;
+				return null;
 			});
 	}
 

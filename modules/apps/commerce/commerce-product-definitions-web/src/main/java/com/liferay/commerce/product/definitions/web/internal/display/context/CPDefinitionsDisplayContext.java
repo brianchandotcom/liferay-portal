@@ -41,6 +41,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,7 +72,6 @@ import com.liferay.taglib.util.CustomAttributesUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -217,17 +217,11 @@ public class CPDefinitionsDisplayContext
 	public long[] getCommerceAccountGroupRelCommerceAccountGroupIds()
 		throws PortalException {
 
-		List<CommerceAccountGroupRel> commerceAccountGroupRels =
+		return TransformUtil.transformToLongArray(
 			_commerceAccountGroupRelService.getCommerceAccountGroupRels(
 				CPDefinition.class.getName(), getCPDefinitionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Stream<CommerceAccountGroupRel> stream =
-			commerceAccountGroupRels.stream();
-
-		return stream.mapToLong(
-			CommerceAccountGroupRel::getCommerceAccountGroupId
-		).toArray();
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			CommerceAccountGroupRel::getCommerceAccountGroupId);
 	}
 
 	public List<CommerceCatalog> getCommerceCatalogs() throws PortalException {
@@ -239,16 +233,11 @@ public class CPDefinitionsDisplayContext
 	public long[] getCommerceChannelRelCommerceChannelIds()
 		throws PortalException {
 
-		List<CommerceChannelRel> commerceChannelRels =
+		return TransformUtil.transformToLongArray(
 			_commerceChannelRelService.getCommerceChannelRels(
 				CPDefinition.class.getName(), getCPDefinitionId(), null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Stream<CommerceChannelRel> stream = commerceChannelRels.stream();
-
-		return stream.mapToLong(
-			CommerceChannelRel::getCommerceChannelId
-		).toArray();
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			CommerceChannelRel::getCommerceChannelId);
 	}
 
 	public String getCPDefinitionThumbnailURL() throws Exception {

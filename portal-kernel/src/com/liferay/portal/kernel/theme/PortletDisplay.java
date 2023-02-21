@@ -313,6 +313,10 @@ public class PortletDisplay implements Cloneable, Serializable {
 		return _urlBack;
 	}
 
+	public String getURLBackTitle() {
+		return _urlBackTitle;
+	}
+
 	public String getURLClose() {
 		return _urlClose;
 	}
@@ -860,6 +864,10 @@ public class PortletDisplay implements Cloneable, Serializable {
 		}
 	}
 
+	public void setURLBackTitle(String urlBackTitle) {
+		_urlBackTitle = urlBackTitle;
+	}
+
 	public void setURLClose(String urlClose) {
 		_urlClose = urlClose;
 	}
@@ -985,6 +993,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 	private ThemeDisplay _themeDisplay;
 	private String _title = StringPool.BLANK;
 	private String _urlBack = StringPool.BLANK;
+	private String _urlBackTitle = StringPool.BLANK;
 	private String _urlClose = StringPool.BLANK;
 	private String _urlConfiguration = StringPool.BLANK;
 	private String _urlConfigurationJS = StringPool.BLANK;

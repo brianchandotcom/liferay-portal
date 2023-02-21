@@ -59,7 +59,7 @@ export function ReviewAndSubmitAppPage({
 		{icon: string; link: string; title: string}[]
 	>([]);
 
-	const buildZIPTitles = buildZIPFiles.map(
+	const buildZIPTitles = buildZIPFiles?.map(
 		(buildZIPFile) => buildZIPFile.fileName
 	);
 

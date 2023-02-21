@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
@@ -8,16 +8,29 @@ import {
 } from '../../components/DashboardTable/DashboardTable';
 import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
+import {getProducts} from '../../utils/api';
 import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';
-import {appList, initialDashboardNavigationItems} from './DashboardPageUtil';
+import {initialDashboardNavigationItems} from './DashboardPageUtil';
 
 import './DashboardPage.scss';
 
 export function DashboardPage() {
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
+	const [apps, setApps] = useState<AppProps[]>(Array<AppProps>());
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
 		initialDashboardNavigationItems
 	);
+
+	useEffect(() => {
+		(async () => {
+			const products = await getProducts();
+
+			const liferayApps = products.items.map((product: any) => ({
+				name: product.name.en_US,
+			}));
+			setApps(liferayApps);
+		})();
+	}, []);
 
 	return (
 		<div className="dashboard-page-container">
@@ -55,7 +68,7 @@ export function DashboardPage() {
 								</a>
 							</div>
 
-							<DashboardTable apps={appList} />
+							<DashboardTable apps={apps} />
 						</div>
 					)}
 				</div>

@@ -208,6 +208,20 @@ definition {
 		return ${curl};
 	}
 
+	macro _subscribeStructuredContentFolder {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/structured-content-folders/${structuredContentFolderId}/subscribe \
+				-u ${userName}@liferay.com:test \
+				-H accept: application/json \
+		''';
+
+		var curl = JSONCurlUtil.put(${curl});
+
+		return ${curl};
+	}
+
 	macro _updateStructureContentFolderByErc {
 		Variables.assertDefined(parameterList = "${externalReferenceCode},${name}");
 
@@ -349,6 +363,21 @@ definition {
 		return ${response};
 	}
 
+	macro createStructuredContentInStructuredContentFolder {
+		Variables.assertDefined(parameterList = "${structuredContentFolderId},${name}");
+
+		var response = HeadlessWebcontentFolderAPI._addSubfolderInAnExistingStructuredContentFolder(
+			description = ${description},
+			externalReferenceCode = ${externalReferenceCode},
+			name = ${name},
+			parentStructuredContentFolderId = ${parentStructuredContentFolderId},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword},
+			viewableBy = ${viewableBy});
+
+		return ${response};
+	}
+
 	macro createSubfolderInStructuredContentFolder {
 		Variables.assertDefined(parameterList = "${parentStructuredContentFolderId},${name}");
 
@@ -419,6 +448,16 @@ definition {
 			assetLibraryId = ${assetLibraryId},
 			parameter = ${parameter},
 			parameterValue = ${parameterValue});
+
+		return ${response};
+	}
+
+	macro structuredContentFolderSubscribeByUserName {
+		Variables.assertDefined(parameterList = "${structuredContentFolderId},${userName}");
+
+		var response = HeadlessWebcontentFolderAPI._subscribeStructuredContentFolder(
+			structuredContentFolderId = ${structuredContentFolderId},
+			userName = ${userName});
 
 		return ${response};
 	}

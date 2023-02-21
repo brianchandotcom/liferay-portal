@@ -205,7 +205,8 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 					long[] assetCategoryIds = new long[0];
 
-					String type = resultSet.getString("type_");
+					String type = StringUtil.toLowerCase(
+						resultSet.getString("type_"));
 
 					if (Validator.isNotNull(type)) {
 						assetCategoryIds = new long[] {

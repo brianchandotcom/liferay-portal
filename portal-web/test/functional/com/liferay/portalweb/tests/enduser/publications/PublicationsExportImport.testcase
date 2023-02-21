@@ -1,0 +1,102 @@
+@component-name = "portal-publications"
+definition {
+
+	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+	property osgi.module.configurations = "enabled=B\"true\"";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "This is a use case for LPS-164716."
+	@priority = 4
+	test CanImportExportedWCStructuresTemplatesAndFolders {
+		JSONGroup.addGroup(groupName = "Site Name 1");
+
+		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name-1");
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addFields(fieldNameList = "Numeric,Text,Image");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Numeric,Text,Image",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-1");
+
+		JSONWebcontent.addFolder(
+			folderDescription = "Folder Description",
+			folderName = "WC Folder Name",
+			groupName = "Site Name 1");
+
+		LAR.exportPortlet(larFileName = "publications-web-content-files.lar");
+
+		JSONGroup.addGroup(groupName = "Site Name 2");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		LAR.importPortlet(larFileName = "publications-web-content-files.lar");
+
+		AssertElementPresent(
+			key_webContentTitle = "WC Folder Name",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name-2");
+
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.viewCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		AssertElementPresent(
+			key_webContentTitle = "WC Folder Name",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+	}
+
+}

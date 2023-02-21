@@ -11012,7 +11012,10 @@ ${update.properties}</echo>
 		<get-testcase-property property.name="testray.main.component.name" />
 
 		<if>
-			<equals arg1="${testray.main.component.name}" arg2="Audit" />
+			<or>
+				<equals arg1="${testray.main.component.name}" arg2="Audit" />
+				<equals arg1="${testray.main.component.name}" arg2="Multi Factor Authentication" />
+			</or>
 			<then>
 				<prepare-portal-security-audit-osgi-configuration />
 			</then>

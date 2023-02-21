@@ -219,6 +219,15 @@ public class CommerceAccountImpl extends CommerceAccountBaseImpl {
 	}
 
 	@Override
+	public boolean isGuestAccount() {
+		if (getType() == CommerceAccountConstants.ACCOUNT_TYPE_GUEST) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isPersonalAccount() {
 		if (getType() == CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL) {
 			return true;

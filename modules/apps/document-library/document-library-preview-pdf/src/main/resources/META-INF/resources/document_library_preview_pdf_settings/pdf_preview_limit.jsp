@@ -46,7 +46,7 @@ PDFPreviewConfigurationDisplayContext pdfPreviewConfigurationDisplayContext = (P
 				module="document_library_preview_pdf_settings/js/PdfPreviewLimit"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
-						"maxLimitSize", "test"
+						"maxLimitSize", pdfPreviewConfigurationDisplayContext.getMaxLimitSize()
 					).put(
 						"namespace", liferayPortletResponse.getNamespace()
 					).put(

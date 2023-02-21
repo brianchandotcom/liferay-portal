@@ -16,7 +16,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const PdfPreviewLimit =  ({maxLimitSize, namespace, value}) => {
+const PdfPreviewLimit = ({maxLimitSize, namespace, value}) => {
 	const [warning, setWarning] = useState(false);
 	const [inputValue, setInputValue] = useState(value);
 
@@ -25,7 +25,7 @@ const PdfPreviewLimit =  ({maxLimitSize, namespace, value}) => {
 
 		setInputValue(value);
 
-		setWarning(maxLimitSize && value > maxLimitSize);
+		setWarning(maxLimitSize > 0 && value > maxLimitSize);
 	};
 
 	return (
@@ -64,7 +64,7 @@ const PdfPreviewLimit =  ({maxLimitSize, namespace, value}) => {
 			</p>
 		</>
 	);
-}
+};
 
 PdfPreviewLimit.propTypes = {
 	maxLimitSize: PropTypes.number,

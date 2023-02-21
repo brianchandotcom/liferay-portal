@@ -61,6 +61,44 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		_unmapPid(pid);
 	}
 
+	public int getMaxLimitOfPages(String scope, long scopePK)
+		throws PortalException {
+
+		if (scope.equals(
+				ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
+
+			return 0;
+		}
+
+		if (scope.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			return _getSystemMaxNumberOfPages();
+		}
+
+		if (scope.equals(
+				ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
+
+			Group group = _groupLocalService.getGroup(scopePK);
+
+			int companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(
+				group.getCompanyId());
+
+			int systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
+
+			if ((companyMaxNumberOfPages != 0) &&
+				((systemMaxNumberOfPages == 0) ||
+				 (companyMaxNumberOfPages < systemMaxNumberOfPages))) {
+
+				return companyMaxNumberOfPages;
+			}
+
+			return systemMaxNumberOfPages;
+		}
+
+		throw new IllegalArgumentException("Unsupported scope: " + scope);
+	}
+
 	public int getMaxNumberOfPages(String scope, long scopePK)
 		throws PortalException {
 

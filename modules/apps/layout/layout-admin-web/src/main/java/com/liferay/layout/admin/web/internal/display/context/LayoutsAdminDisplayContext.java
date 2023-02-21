@@ -311,13 +311,14 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public PortletURL getCETItemSelectorURL(
-		String selectEventName, String type) {
+		boolean multipleSelection, String selectEventName, String type) {
 
 		CETItemSelectorCriterion cetItemSelectorCriterion =
 			new CETItemSelectorCriterion();
 
 		cetItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new CETItemSelectorReturnType());
+		cetItemSelectorCriterion.setMultipleSelection(multipleSelection);
 		cetItemSelectorCriterion.setType(type);
 
 		return _itemSelector.getItemSelectorURL(
@@ -1272,7 +1273,7 @@ public class LayoutsAdminDisplayContext {
 			"selectThemeCSSClientExtensionURL",
 			() -> String.valueOf(
 				getCETItemSelectorURL(
-					selectThemeCSSClientExtensionEventName,
+					false, selectThemeCSSClientExtensionEventName,
 					ClientExtensionEntryConstants.TYPE_THEME_CSS))
 		).put(
 			"themeCSSCETExternalReferenceCode",

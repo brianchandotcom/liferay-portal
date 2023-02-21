@@ -164,7 +164,7 @@ public class Query {
 			}
 
 			@GraphQLField
-			protected Map<String, Map> actions;
+			protected Map<String, Map<String, String>> actions;
 
 			<#if generateAggregationFunction>
 				@GraphQLField

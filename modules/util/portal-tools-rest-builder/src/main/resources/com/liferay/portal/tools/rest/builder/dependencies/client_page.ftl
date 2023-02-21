@@ -41,7 +41,7 @@ public class Page<T> {
 		return null;
 	}
 
-	public Map<String, Map> getActions() {
+	public Map<String, Map<String, String>> getActions() {
 		return _actions;
 	}
 
@@ -89,7 +89,7 @@ public class Page<T> {
 		return false;
 	}
 
-	public void setActions(Map<String, Map> actions) {
+	public void setActions(Map<String, Map<String, String>> actions) {
 		_actions = actions;
 	}
 
@@ -269,7 +269,7 @@ public class Page<T> {
 		return sb.toString();
 	}
 
-	private Map<String, Map> _actions;
+	private Map<String, Map<String, String>> _actions;
 	private List<Facet> _facets = new ArrayList<>();
 	private Collection<T> _items;
 	private long _page;

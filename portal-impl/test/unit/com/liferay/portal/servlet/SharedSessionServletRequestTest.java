@@ -14,6 +14,8 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.servlet.http.HttpSession;
@@ -32,22 +34,53 @@ public class SharedSessionServletRequestTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
+
+	@Test
+	public void testGetSharedSession() {
+		_testGetSharedSession(true);
+		_testGetSharedSession(false);
+	}
 
 	@Test
 	public void testInvalidateSession() {
+		_testInvalidateSession(true);
+		_testInvalidateSession(false);
+	}
+
+	private void _testGetSharedSession(boolean shared) {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		SharedSessionServletRequest sharedSessionServletRequest =
-			new SharedSessionServletRequest(mockHttpServletRequest, true);
+			new SharedSessionServletRequest(mockHttpServletRequest, shared);
+
+		Assert.assertSame(
+			sharedSessionServletRequest.getSharedSession(),
+			sharedSessionServletRequest.getSharedSession());
+	}
+
+	private void _testInvalidateSession(boolean shared) {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		SharedSessionServletRequest sharedSessionServletRequest =
+			new SharedSessionServletRequest(mockHttpServletRequest, shared);
 
 		HttpSession httpSession = sharedSessionServletRequest.getSession();
 
 		httpSession.invalidate();
 
 		Assert.assertNull(sharedSessionServletRequest.getSession(false));
+
+		HttpSession newHttpSession = sharedSessionServletRequest.getSession(
+			true);
+
+		Assert.assertNotNull(newHttpSession);
+
+		Assert.assertNotSame(httpSession, newHttpSession);
 	}
 
 }

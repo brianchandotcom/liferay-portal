@@ -253,13 +253,13 @@ export default function PageContent({
 									Liferay.Language.get('actions-for-x'),
 									title
 								)}
-								className="btn-sm flex-shrink-0 mr-2 page-editor__page-contents__button"
+								className="btn-sm flex-shrink-0 mr-1 page-editor__page-contents__button"
 								displayType="unstyled"
+								title={sub(
+									Liferay.Language.get('open-actions-menu'),
+									title
+								)}
 							>
-								<span className="sr-only">
-									{Liferay.Language.get('open-actions-menu')}
-								</span>
-
 								<ClayIcon symbol="ellipsis-v" />
 							</ClayButton>
 						}

@@ -309,7 +309,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 						serviceContext.setAddGuestPermissions(true);
 
 						AssetVocabulary assetVocabulary =
-							_assetVocabularyLocalService.getGroupVocabulary(
+							_assetVocabularyLocalService.fetchGroupVocabulary(
 								company.getGroupId(), "type");
 
 						if (assetVocabulary == null) {

@@ -1465,7 +1465,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 				_sendFailureResponse(
 					samlProviderConfiguration.
-						authnRequestSigningAllowsDynamicAcsUrl(),
+						authnRequestSigningAllowsDynamicACSURL(),
 					httpServletResponse, samlSsoRequestContext,
 					StatusCode.NO_PASSIVE);
 
@@ -1526,7 +1526,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			_sendSuccessResponse(
 				samlProviderConfiguration.
-					authnRequestSigningAllowsDynamicAcsUrl(),
+					authnRequestSigningAllowsDynamicACSURL(),
 				httpServletRequest, httpServletResponse, samlSsoRequestContext);
 
 			HttpSession httpSession = httpServletRequest.getSession(false);

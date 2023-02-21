@@ -111,19 +111,11 @@ public class CommerceShipmentDisplayContext
 	public List<AccountEntry> getCommerceAccountsWithShippableOrders()
 		throws PortalException {
 
-		long[] commerceAccountIds = TransformUtil.transformToLongArray(
-			getCommerceOrders(), CommerceOrder::getCommerceAccountId);
-
-		commerceAccountIds = ArrayUtil.unique(commerceAccountIds);
-
-		List<AccountEntry> accountEntries = new ArrayList<>();
-
-		for (long commerceAccountId : commerceAccountIds) {
-			accountEntries.add(
-				AccountEntryServiceUtil.getAccountEntry(commerceAccountId));
-		}
-
-		return accountEntries;
+		return TransformUtil.transformToList(
+			ArrayUtil.unique(
+				TransformUtil.transformToLongArray(
+					getCommerceOrders(), CommerceOrder::getCommerceAccountId)),
+			AccountEntryServiceUtil::getAccountEntry);
 	}
 
 	public String getCommerceAccountThumbnailURL(

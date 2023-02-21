@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -143,6 +144,53 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private AssetVocabulary _updateAssetVocabulary(
+			AssetVocabulary assetVocabulary, long journalFeedClassNameId)
+		throws Exception {
+
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper(assetVocabulary.getSettings());
+
+		long[] selectedClassNameIds =
+			assetVocabularySettingsHelper.getClassNameIds();
+
+		if (ArrayUtil.contains(selectedClassNameIds, 0) ||
+			ArrayUtil.contains(selectedClassNameIds, journalFeedClassNameId)) {
+
+			return assetVocabulary;
+		}
+
+		long[] requiredClassNameIds =
+			assetVocabularySettingsHelper.getRequiredClassNameIds();
+
+		selectedClassNameIds = ArrayUtil.append(
+			selectedClassNameIds, journalFeedClassNameId);
+
+		boolean[] requireds = new boolean[selectedClassNameIds.length];
+
+		for (int i = 0; i < selectedClassNameIds.length; i++) {
+			if (ArrayUtil.contains(
+					requiredClassNameIds, selectedClassNameIds[i])) {
+
+				requireds[i] = true;
+			}
+			else {
+				requireds[i] = false;
+			}
+		}
+
+		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
+			selectedClassNameIds,
+			ArrayUtil.append(
+				assetVocabularySettingsHelper.getClassTypePKs(), -1),
+			requireds);
+
+		return _assetVocabularyLocalService.updateVocabulary(
+			assetVocabulary.getVocabularyId(), assetVocabulary.getTitleMap(),
+			assetVocabulary.getDescriptionMap(),
+			assetVocabularySettingsHelper.toString());
+	}
+
 	private void _upgradeFeedsToAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long classNameId = _portal.getClassNameId(
@@ -246,8 +294,12 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 							assetVocabularySettingsHelper.
 								setClassNameIdsAndClassTypePKs(
-									new long[] {journalArticleClassNameId},
-									new long[] {-1}, new boolean[] {false});
+									new long[] {
+										journalArticleClassNameId,
+										journalFeedClassNameId
+									},
+									new long[] {-1, -1},
+									new boolean[] {false, false});
 							assetVocabularySettingsHelper.setMultiValued(false);
 
 							assetVocabulary =
@@ -264,6 +316,10 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 									Collections.emptyMap(),
 									assetVocabularySettingsHelper.toString(),
 									serviceContext);
+						}
+						else {
+							assetVocabulary = _updateAssetVocabulary(
+								assetVocabulary, journalFeedClassNameId);
 						}
 
 						Map<String, Long>

@@ -48,7 +48,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -142,6 +141,32 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 			return types;
 		}
+	}
+
+	private long _getAssetCategoryId(
+			AssetVocabulary assetVocabulary, String name,
+			ServiceContext serviceContext, long userId)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select categoryId from AssetCategory where name = ? and " +
+					"vocabularyId = ?")) {
+
+			preparedStatement.setString(1, name);
+			preparedStatement.setLong(2, assetVocabulary.getVocabularyId());
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getLong("categoryId");
+				}
+			}
+		}
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			userId, assetVocabulary.getGroupId(), name,
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		return assetCategory.getCategoryId();
 	}
 
 	private AssetVocabulary _updateAssetVocabulary(
@@ -327,20 +352,11 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 								new HashMap<>();
 
 						for (String type : types) {
-							AssetCategory assetCategory =
-								_verifyIfAssetCategoryExists(
-									assetVocabulary.getCategories(), type);
-
-							if (assetCategory == null) {
-								assetCategory =
-									_assetCategoryLocalService.addCategory(
-										userId, company.getGroupId(), type,
-										assetVocabulary.getVocabularyId(),
-										serviceContext);
-							}
-
 							journalArticleTypesToAssetCategoryIds.put(
-								type, assetCategory.getCategoryId());
+								type,
+								_getAssetCategoryId(
+									assetVocabulary, type, serviceContext,
+									userId));
 						}
 
 						_upgradeFeedsToAssets(
@@ -353,18 +369,6 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 					localeThreadLocalDefaultLocale);
 			}
 		}
-	}
-
-	private AssetCategory _verifyIfAssetCategoryExists(
-		List<AssetCategory> categories, String categoryName) {
-
-		for (AssetCategory category : categories) {
-			if (categoryName.equals(category.getName())) {
-				return category;
-			}
-		}
-
-		return null;
 	}
 
 	private final AssetCategoryLocalService _assetCategoryLocalService;

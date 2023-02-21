@@ -70,6 +70,23 @@ definition {
 			locator1 = "Translation#CONTENT_TITLE");
 	}
 
+	macro copyTranslateFile {
+		if (contains(${translationZipFileName}, " ")) {
+			var translationZipFileName = StringUtil.replace(${translationZipFileName}, " ", "*");
+		}
+
+		if (isSet(dependencyFile)) {
+			AntCommand(
+				locator1 = "build-test-translation.xml",
+				value1 = "copy-translation-file -DdependencyFile=${dependencyFile} -Dtranslation.file.name=${translationFileName} -Dtranslation.zip.file.name=${translationZipFileName}");
+		}
+		else {
+			AntCommand(
+				locator1 = "build-test-translation.xml",
+				value1 = "copy-translation-file -Dtranslation.file.name=${translationFileName} -Dtranslation.zip.file.name=${translationZipFileName}");
+		}
+	}
+
 	macro deleteTranslationEntry {
 		LexiconEntry.delete(
 			confirmationText = ${confirmationText},
@@ -663,9 +680,16 @@ definition {
 			var translationZipFileName = StringUtil.replace(${translationZipFileName}, " ", "*");
 		}
 
-		AntCommand(
-			locator1 = "build-test-translation.xml",
-			value1 = "update-translation-file-id -Dtranslation.entry.type=${translationEntryType} -Dtranslation.file.name=${translationFileName} -Dtranslation.zip.file.name=${translationZipFileName}");
+		if (isSet(dependencyFile)) {
+			AntCommand(
+				locator1 = "build-test-translation.xml",
+				value1 = "update-translation-file-id -DdependencyFile=${dependencyFile} -DstructuredContentId=${structuredContentId} -Dtranslation.entry.type=${translationEntryType} -Dtranslation.file.name=${translationFileName} -Dtranslation.zip.file.name=${translationZipFileName}");
+		}
+		else {
+			AntCommand(
+				locator1 = "build-test-translation.xml",
+				value1 = "update-translation-file-id -Dtranslation.entry.type=${translationEntryType} -Dtranslation.file.name=${translationFileName} -Dtranslation.zip.file.name=${translationZipFileName}");
+		}
 	}
 
 	macro uploadTranslationsFile {

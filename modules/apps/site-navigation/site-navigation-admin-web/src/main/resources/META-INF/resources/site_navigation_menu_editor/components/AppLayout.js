@@ -14,9 +14,10 @@
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 
 import {APP_LAYOUT_CONTENT_CLASS_NAME} from '../constants/appLayoutClassName';
+import {useConstants} from '../contexts/ConstantsContext';
 import {
 	useSetSidebarPanelId,
 	useSidebarPanelId,
@@ -32,6 +33,8 @@ export function AppLayout({
 	const setSidebarPanelId = useSetSidebarPanelId();
 	const sidebarPanelId = useSidebarPanelId();
 
+	const {portletNamespace} = useConstants();
+
 	const SidebarPanel = useMemo(
 		() =>
 			sidebarPanels?.find(
@@ -39,6 +42,8 @@ export function AppLayout({
 			)?.component,
 		[sidebarPanelId, sidebarPanels]
 	);
+
+	const appLayoutContentRef = useRef();
 
 	useEffect(() => {
 		const handler = onProductMenuOpen(() => setSidebarPanelId(null));
@@ -54,6 +59,21 @@ export function AppLayout({
 		}
 	}, [SidebarPanel]);
 
+	useEffect(() => {
+		const key = `${portletNamespace}itemAdded`;
+
+		const itemAdded = window.sessionStorage.getItem(key);
+
+		if (itemAdded) {
+			appLayoutContentRef.current?.scrollTo(
+				0,
+				appLayoutContentRef.current?.scrollHeight
+			);
+
+			window.sessionStorage.removeItem(key);
+		}
+	}, [portletNamespace]);
+
 	return (
 		<>
 			<div className="bg-white component-tbar tbar">
@@ -68,6 +88,7 @@ export function AppLayout({
 				className={classNames(APP_LAYOUT_CONTENT_CLASS_NAME, {
 					[`${APP_LAYOUT_CONTENT_CLASS_NAME}--with-sidebar`]: !!SidebarPanel,
 				})}
+				ref={appLayoutContentRef}
 			>
 				{contentChildren}
 

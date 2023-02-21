@@ -157,6 +157,9 @@ export function SidebarPanelContent({contentRequestBody, contentUrl, title}) {
 
 					<ClayLayout.ContentCol>
 						<ClayButton
+							aria-label={Liferay.Language.get(
+								'close-configuration-panel'
+							)}
 							displayType="unstyled"
 							monospaced
 							onClick={() => {
@@ -167,6 +170,9 @@ export function SidebarPanelContent({contentRequestBody, contentUrl, title}) {
 								setSelectedMenuItemId(null);
 								setSidebarPanelId(null);
 							}}
+							title={Liferay.Language.get(
+								'close-configuration-panel'
+							)}
 						>
 							<ClayIcon symbol="times" />
 						</ClayButton>

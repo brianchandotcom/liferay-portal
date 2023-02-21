@@ -149,12 +149,13 @@ export function MenuItem({item}) {
 			>
 				<ClayCard
 					className={classNames(
-						'site_navigation_menu_editor_MenuItem',
+						'mb-3 site_navigation_menu_editor_MenuItem',
 						{
-							'dragging': isDragging,
-							'site_navigation_menu_editor_MenuItem--selected': selected,
+							active: selected,
+							dragging: isDragging,
 						}
 					)}
+					ref={handlerRef}
 					selectable
 					style={itemStyle}
 				>
@@ -172,64 +173,71 @@ export function MenuItem({item}) {
 						}}
 					>
 						<ClayCard.Body className="px-0">
-							<ClayCard.Row>
-								<ClayLayout.ContentCol gutters ref={handlerRef}>
-									<ClayIcon symbol="drag" />
-								</ClayLayout.ContentCol>
+							<div ref={handlerRef}>
+								<ClayCard.Row>
+									<ClayLayout.ContentCol gutters>
+										<ClayIcon symbol="drag" />
+									</ClayLayout.ContentCol>
 
-								<ClayLayout.ContentCol expand>
-									<ClayCard.Description
-										displayType="title"
-										title={title}
-									>
-										{title}
-
-										{item.icon && (
-											<ClayIcon
-												className="ml-2 text-warning"
-												symbol={item.icon}
-											/>
-										)}
-									</ClayCard.Description>
-
-									<div className="d-flex">
-										<ClayLabel
-											className="mt-1"
-											displayType="secondary"
+									<ClayLayout.ContentCol expand>
+										<ClayCard.Description
+											displayType="title"
+											title={title}
 										>
-											{type}
-										</ClayLabel>
+											{title}
 
-										{item.dynamic && (
+											{item.icon && (
+												<ClayIcon
+													className="ml-2 text-warning"
+													symbol={item.icon}
+												/>
+											)}
+										</ClayCard.Description>
+
+										<div className="d-flex">
 											<ClayLabel
 												className="mt-1"
-												displayType="info"
+												displayType="secondary"
 											>
-												{Liferay.Language.get(
-													'dynamic'
-												)}
+												{type}
 											</ClayLabel>
-										)}
-									</div>
-								</ClayLayout.ContentCol>
 
-								<ClayLayout.ContentCol gutters>
-									<ClayButtonWithIcon
-										aria-label={sub(
-											Liferay.Language.get('delete-x'),
-											`${title} (${type})`
-										)}
-										displayType="unstyled"
-										onClick={() =>
-											item.children.length
-												? setDeletionModalVisible(true)
-												: deleteMenuItem()
-										}
-										size="sm"
-										symbol="times-circle"
-									/>
-								</ClayLayout.ContentCol>
-							</ClayCard.Row>
+											{item.dynamic && (
+												<ClayLabel
+													className="mt-1"
+													displayType="info"
+												>
+													{Liferay.Language.get(
+														'dynamic'
+													)}
+												</ClayLabel>
+											)}
+										</div>
+									</ClayLayout.ContentCol>
+
+									<ClayLayout.ContentCol gutters>
+										<ClayButtonWithIcon
+											aria-label={sub(
+												Liferay.Language.get(
+													'delete-x'
+												),
+												`${title} (${type})`
+											)}
+											className="delete-item-button"
+											displayType="unstyled"
+											onClick={() =>
+												item.children.length
+													? setDeletionModalVisible(
+															true
+													  )
+													: deleteMenuItem()
+											}
+											size="sm"
+											symbol="times-circle"
+										/>
+									</ClayLayout.ContentCol>
+								</ClayCard.Row>
+							</div>
 						</ClayCard.Body>
 					</ClayCheckbox>
 				</ClayCard>

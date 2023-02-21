@@ -91,46 +91,6 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private AssetCategory _addAssetCategory(
-			long groupId, long companyId, String title, long assetVocabularyId)
-		throws Exception {
-
-		long userId = _userLocalService.getDefaultUserId(companyId);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		return _assetCategoryLocalService.addCategory(
-			userId, groupId, title, assetVocabularyId, serviceContext);
-	}
-
-	private AssetVocabulary _addAssetVocabulary(
-			long groupId, long companyId, String title,
-			Map<Locale, String> nameMap)
-		throws Exception {
-
-		long userId = _userLocalService.getDefaultUserId(companyId);
-
-		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
-			new AssetVocabularySettingsHelper();
-
-		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
-			new long[] {_portal.getClassNameId(JournalArticle.class.getName())},
-			new long[] {-1}, new boolean[] {false});
-		assetVocabularySettingsHelper.setMultiValued(false);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		return _assetVocabularyLocalService.addVocabulary(
-			userId, groupId, title, nameMap, Collections.emptyMap(),
-			assetVocabularySettingsHelper.toString(), serviceContext);
-	}
-
 	private void _alterTable() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			alterTableDropColumn("JournalFeed", "type_");
@@ -160,8 +120,14 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeFeedsToAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = _portal.getClassNameId(
+				JournalFeed.class.getName());
+
 			_companyLocalService.forEachCompanyId(
 				companyId -> {
+					long defaultUserId = _userLocalService.getDefaultUserId(
+						companyId);
+
 					try (PreparedStatement preparedStatement =
 							connection.prepareStatement(
 								StringBundler.concat(
@@ -177,7 +143,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 							AssetEntry assetEntry =
 								_assetEntryLocalService.fetchEntry(
-									JournalFeed.class.getName(), id);
+									classNameId, id);
 
 							if (assetEntry == null) {
 								String uuid = resultSet.getString("uuid_");
@@ -194,8 +160,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 								if (_userLocalService.fetchUser(userId) ==
 										null) {
 
-									userId = _userLocalService.getDefaultUserId(
-										companyId);
+									userId = defaultUserId;
 								}
 
 								_assetEntryLocalService.updateEntry(
@@ -213,7 +178,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeFeedsToAssets(
-			long companyId,
+			long classNameId, long companyId, long defaultUserId,
 			Map<String, Long> journalArticleTypesToAssetCategoryIds)
 		throws Exception {
 
@@ -228,7 +193,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 				long id = resultSet.getLong("id_");
 
 				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-					JournalFeed.class.getName(), id);
+					classNameId, id);
 
 				if (assetEntry == null) {
 					String uuid = resultSet.getString("uuid_");
@@ -240,7 +205,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 					String description = resultSet.getString("description");
 
 					if (_userLocalService.fetchUser(userId) == null) {
-						userId = _userLocalService.getDefaultUserId(companyId);
+						userId = defaultUserId;
 					}
 
 					assetEntry = _assetEntryLocalService.updateEntry(
@@ -270,6 +235,11 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 			Locale localeThreadLocalDefaultLocale =
 				LocaleThreadLocal.getDefaultLocale();
 
+			long journalArticleClassNameId = _portal.getClassNameId(
+				JournalArticle.class.getName());
+			long journalFeedClassNameId = _portal.getClassNameId(
+				JournalFeed.class.getName());
+
 			try {
 				_companyLocalService.forEachCompany(
 					company -> {
@@ -282,21 +252,43 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 						LocaleThreadLocal.setDefaultLocale(company.getLocale());
 
+						long userId = _userLocalService.getDefaultUserId(
+							company.getCompanyId());
+
+						ServiceContext serviceContext = new ServiceContext();
+
+						serviceContext.setAddGroupPermissions(true);
+						serviceContext.setAddGuestPermissions(true);
+
 						AssetVocabulary assetVocabulary =
 							_assetVocabularyLocalService.getGroupVocabulary(
 								company.getGroupId(), "type");
 
 						if (assetVocabulary == null) {
-							assetVocabulary = _addAssetVocabulary(
-								company.getGroupId(), company.getCompanyId(),
-								"type",
-								_localization.getLocalizationMap(
-									_language.getAvailableLocales(
-										company.getGroupId()),
-									LocaleUtil.fromLanguageId(
-										UpgradeProcessUtil.getDefaultLanguageId(
-											company.getCompanyId())),
-									"type"));
+							AssetVocabularySettingsHelper
+								assetVocabularySettingsHelper =
+									new AssetVocabularySettingsHelper();
+
+							assetVocabularySettingsHelper.
+								setClassNameIdsAndClassTypePKs(
+									new long[] {journalArticleClassNameId},
+									new long[] {-1}, new boolean[] {false});
+							assetVocabularySettingsHelper.setMultiValued(false);
+
+							assetVocabulary =
+								_assetVocabularyLocalService.addVocabulary(
+									userId, company.getGroupId(), "type",
+									_localization.getLocalizationMap(
+										_language.getAvailableLocales(
+											company.getGroupId()),
+										LocaleUtil.fromLanguageId(
+											UpgradeProcessUtil.
+												getDefaultLanguageId(
+													company.getCompanyId())),
+										"type"),
+									Collections.emptyMap(),
+									assetVocabularySettingsHelper.toString(),
+									serviceContext);
 						}
 
 						Map<String, Long>
@@ -309,10 +301,11 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 									assetVocabulary.getCategories(), type);
 
 							if (assetCategory == null) {
-								assetCategory = _addAssetCategory(
-									company.getGroupId(),
-									company.getCompanyId(), type,
-									assetVocabulary.getVocabularyId());
+								assetCategory =
+									_assetCategoryLocalService.addCategory(
+										userId, company.getGroupId(), type,
+										assetVocabulary.getVocabularyId(),
+										serviceContext);
 							}
 
 							journalArticleTypesToAssetCategoryIds.put(
@@ -320,8 +313,8 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 						}
 
 						_upgradeFeedsToAssets(
-							company.getCompanyId(),
-							journalArticleTypesToAssetCategoryIds);
+							journalFeedClassNameId, company.getCompanyId(),
+							userId, journalArticleTypesToAssetCategoryIds);
 					});
 			}
 			finally {

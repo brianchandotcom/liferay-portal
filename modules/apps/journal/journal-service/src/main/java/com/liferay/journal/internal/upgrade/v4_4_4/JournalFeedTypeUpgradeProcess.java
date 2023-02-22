@@ -79,7 +79,6 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		if (hasColumn("JournalFeed", "type_")) {
 			_upgradeFeedType();
-			_alterTable();
 		}
 		else {
 			_upgradeFeedsToAssets();
@@ -113,12 +112,6 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 				ContentTypes.TEXT_PLAIN, resultSet.getString("name"),
 				resultSet.getString("description"), null, null, null, 0, 0,
 				0.0);
-		}
-	}
-
-	private void _alterTable() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			alterTableDropColumn("JournalFeed", "type_");
 		}
 	}
 

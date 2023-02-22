@@ -367,6 +367,10 @@ public class JournalServiceUpgradeStepRegistrator
 				_assetCategoryLocalService, _assetEntryLocalService,
 				_assetVocabularyLocalService, _companyLocalService, _language,
 				_localization, _portal, _userLocalService));
+
+		registry.register(
+			"4.4.4", "5.0.0",
+			UpgradeProcessFactory.dropColumns("JournalFeed", "type_"));
 	}
 
 	private void _deleteTempImages() throws Exception {

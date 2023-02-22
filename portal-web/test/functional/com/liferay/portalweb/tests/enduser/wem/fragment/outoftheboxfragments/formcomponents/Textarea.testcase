@@ -1,0 +1,121 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-161631=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a company Object with a Long Text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongText",
+				fieldLabelName = "Comments",
+				fieldName = "comments",
+				fieldType = "Clob",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
+		}
+	}
+
+	@description = "This is a test for LPS-170206. The page designer can map Textarea fragment to Long Text field."
+	@priority = 4
+	test MapTextareaFragmentToLongTextField {
+		task ("Given a pages designer has a Form Container on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+		}
+
+		task ("When the pages designer maps the Form Container to object") {
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+		}
+
+		task ("Then the pages designer sees the Textarea fragment mapped to Long Text field") {
+			PageEditor.viewInputStyle(
+				label = "Comments",
+				showLabel = "true",
+				type = "textarea");
+		}
+
+		task ("When the page designer enables the Show Help Text") {
+			PageEditor.editInput(
+				fragmentName = "Textarea",
+				hideHelpText = "false");
+		}
+
+		task ("Then the pages designer sees the Help Text on Textarea fragment") {
+			PageEditor.viewInputStyle(
+				helpText = "Add your help text here.",
+				showHelpText = "true",
+				type = "textarea");
+		}
+
+		task ("When the pages designer types a new label") {
+			PageEditor.editInput(
+				fragmentName = "Textarea",
+				label = "Additional Comments");
+		}
+
+		task ("Then the pages designer sees the new label on Textarea fragment") {
+			PageEditor.viewInputStyle(
+				label = "Additional Comments",
+				showLabel = "true",
+				type = "textarea");
+		}
+
+		task ("When the page designer types a placeholder") {
+			PageEditor.editInput(
+				fragmentName = "Textarea",
+				placeholder = "Comments Example");
+		}
+
+		task ("Then the pages designer sees the placeholder on Textarea fragment") {
+			PageEditor.viewInputStyle(
+				placeholder = "Comments Example",
+				type = "textarea");
+		}
+	}
+
+}

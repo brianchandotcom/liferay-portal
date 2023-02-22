@@ -61,10 +61,8 @@ public class SynonymSetIndexReaderImplTest extends BaseSynonymsWebTestCase {
 		SynonymSetIndexName synonymSetIndexName = Mockito.mock(
 			SynonymSetIndexName.class);
 
-		SynonymSet synonymSet = _synonymSetIndexReaderImpl.fetch(
-			synonymSetIndexName, "id");
-
-		Assert.assertNull(synonymSet);
+		Assert.assertNull(
+			_synonymSetIndexReaderImpl.fetch(synonymSetIndexName, "id"));
 	}
 
 	@Test
@@ -87,10 +85,9 @@ public class SynonymSetIndexReaderImplTest extends BaseSynonymsWebTestCase {
 
 	@Test
 	public void testFetchWithNullId() {
-		SynonymSet synonymSet = _synonymSetIndexReaderImpl.fetch(
-			Mockito.mock(SynonymSetIndexName.class), null);
-
-		Assert.assertNull(synonymSet);
+		Assert.assertNull(
+			_synonymSetIndexReaderImpl.fetch(
+				Mockito.mock(SynonymSetIndexName.class), null));
 	}
 
 	@Test

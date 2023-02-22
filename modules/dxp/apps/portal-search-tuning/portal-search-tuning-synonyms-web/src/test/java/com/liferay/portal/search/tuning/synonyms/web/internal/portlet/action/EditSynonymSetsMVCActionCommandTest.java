@@ -89,16 +89,15 @@ public class EditSynonymSetsMVCActionCommandTest
 
 	@Test
 	public void testGetSynonymSet() {
-		SynonymSet synonymSet = _editSynonymSetsMVCActionCommand.getSynonymSet(
-			Mockito.mock(SynonymSetIndexName.class), _actionRequest);
-
-		Assert.assertNull(synonymSet);
+		Assert.assertNull(
+			_editSynonymSetsMVCActionCommand.getSynonymSet(
+				Mockito.mock(SynonymSetIndexName.class), _actionRequest));
 
 		setUpPortletRequestParameterValue(
 			_actionRequest, "synonymSetId", "synonymSetIdValue");
 		setUpSynonymSetIndexReader("id", "car,automobile");
 
-		synonymSet = _editSynonymSetsMVCActionCommand.getSynonymSet(
+		SynonymSet synonymSet = _editSynonymSetsMVCActionCommand.getSynonymSet(
 			Mockito.mock(SynonymSetIndexName.class), _actionRequest);
 
 		Assert.assertEquals("car,automobile", synonymSet.getSynonyms());
@@ -118,11 +117,8 @@ public class EditSynonymSetsMVCActionCommandTest
 
 	@Test
 	public void testUpdateSynonymSetIndex() throws PortalException {
-		SynonymSet synonymSet = null;
-
 		_editSynonymSetsMVCActionCommand.updateSynonymSetIndex(
-			Mockito.mock(SynonymSetIndexName.class), "car,automobile",
-			synonymSet);
+			Mockito.mock(SynonymSetIndexName.class), "car,automobile", null);
 
 		Mockito.verify(
 			synonymSetStorageAdapter, Mockito.times(1)
@@ -133,7 +129,7 @@ public class EditSynonymSetsMVCActionCommandTest
 		SynonymSet.SynonymSetBuilder synonymSetBuilder =
 			new SynonymSet.SynonymSetBuilder();
 
-		synonymSet = synonymSetBuilder.synonyms(
+		SynonymSet synonymSet = synonymSetBuilder.synonyms(
 			"car,atumobile"
 		).synonymSetDocumentId(
 			"id-1"

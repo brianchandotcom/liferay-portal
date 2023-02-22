@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Jenkins Plugin Events
+Bundle-SymbolicName: com.liferay.jenkins.plugin.events
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.jenkins.plugin.events

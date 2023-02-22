@@ -1,0 +1,21 @@
+buildscript {
+	repositories {
+		gradlePluginPortal()
+
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.1.178"
+		classpath group: "org.jenkins-ci.jpi", name: "org.jenkins-ci.jpi.gradle.plugin", version: "0.48.0-rc.1"
+	}
+}
+
+apply plugin: "com.liferay.source.formatter"
+apply plugin: "org.jenkins-ci.jpi"
+
+jenkinsPlugin {
+	jenkinsVersion = "2.164.2"
+}

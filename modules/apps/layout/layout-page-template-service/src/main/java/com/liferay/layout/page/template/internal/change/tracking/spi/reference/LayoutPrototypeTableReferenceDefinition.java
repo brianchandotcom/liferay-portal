@@ -18,6 +18,8 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.GroupTable;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutPrototypeTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPrototypePersistence;
@@ -36,6 +38,14 @@ public class LayoutPrototypeTableReferenceDefinition
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<LayoutPrototypeTable>
 			childTableReferenceInfoBuilder) {
+
+		childTableReferenceInfoBuilder.classNameReference(
+			LayoutPrototypeTable.INSTANCE.layoutPrototypeId,
+			GroupTable.INSTANCE.classPK, LayoutPrototype.class
+		).resourcePermissionReference(
+			LayoutPrototypeTable.INSTANCE.layoutPrototypeId,
+			LayoutPrototype.class
+		);
 	}
 
 	@Override

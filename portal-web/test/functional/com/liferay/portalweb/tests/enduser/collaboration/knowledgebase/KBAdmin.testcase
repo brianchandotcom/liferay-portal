@@ -214,4 +214,38 @@ definition {
 			kbChildArticleTitle = "Knowledge Base Article Title Child");
 	}
 
+	@description = "This test covers LPS-171314. It ensures that the expiration label is displayed when the Notification Date is reached."
+	@priority = 4
+	test ExpirationNotificationShowsWhenNotificationDateIsReached {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+
+		task ("Given the Knowledge Base article is created with the expiration date of 1 week and 2 minutes in the future") {
+			KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+			KBArticle.addCP(
+				enableExpirationDate = "true",
+				extendedMinutes = 2,
+				kbArticleContent = "Knowledge Base Article Content",
+				kbArticleTitle = "Knowledge Base Article Title",
+				notificationDate = 7);
+
+			KBArticle.viewNoExpirationStatus(kbArticleTitle = "Knowledge Base Article Title");
+		}
+
+		task ("When waiting 2 minutes and refreshing the page") {
+
+			// This pause is required to wait for the Knowledge Base Article to expire according to the steps in LPS-171314.
+
+			Pause(locator1 = 120000);
+
+			Refresh();
+		}
+
+		task ("Then the expiration label of the Knowledge Base article is displayed") {
+			KBArticle.viewExpirationStatus(
+				kbArticleTitle = "Knowledge Base Article Title",
+				kbExpirationStatus = "Expiring Soon");
+		}
+	}
+
 }

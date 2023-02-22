@@ -6565,6 +6565,7 @@ public class DLFileVersionPersistenceImpl
 		ctStrictColumnNames.add("changeLog");
 		ctStrictColumnNames.add("extraSettings");
 		ctStrictColumnNames.add("fileEntryTypeId");
+		ctStrictColumnNames.add("storeUUID");
 		ctStrictColumnNames.add("version");
 		ctStrictColumnNames.add("size_");
 		ctStrictColumnNames.add("checksum");

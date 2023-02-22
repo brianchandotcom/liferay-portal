@@ -78,6 +78,8 @@ public class DLFileVersionTable extends BaseTable<DLFileVersionTable> {
 	public final Column<DLFileVersionTable, Long> fileEntryTypeId =
 		createColumn(
 			"fileEntryTypeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<DLFileVersionTable, String> storeUUID = createColumn(
+		"storeUUID", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DLFileVersionTable, String> version = createColumn(
 		"version", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DLFileVersionTable, Long> size = createColumn(

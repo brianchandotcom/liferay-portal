@@ -321,7 +321,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_ITEM_HIGHLIGHT</td>
-	<td>//li[contains(@class,'treeview-item')]//div[contains(@class,'knowledge-base-navigation-item-active')]//div[normalize-space(text())='${key_itemName}']</td>
+	<td>//li[contains(@class,'treeview-item')]//div[contains(@class,'knowledge-base-navigation-item-active')]//span[normalize-space(text())='${key_itemName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -341,7 +341,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_ITEM_NAME</td>
-	<td>//li[contains(@class,'treeview-item')]//div[contains(@class,'component-text')][normalize-space(text())='${key_itemName}']</td>
+	<td>//li[contains(@class,'treeview-item')]//span[contains(@class,'component-text')][normalize-space(text())='${key_itemName}']</td>
 	<td></td>
 </tr>
 <tr>

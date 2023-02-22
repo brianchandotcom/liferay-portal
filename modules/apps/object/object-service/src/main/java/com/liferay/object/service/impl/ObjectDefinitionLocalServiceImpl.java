@@ -126,6 +126,7 @@ import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -800,18 +801,11 @@ public class ObjectDefinitionLocalServiceImpl
 		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			new ConcurrentHashMap<>();
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				List<ObjectDefinition> objectDefinitions =
-					objectDefinitionLocalService.getObjectDefinitions(
-						companyId, true, WorkflowConstants.STATUS_APPROVED);
-
-				for (ObjectDefinition objectDefinition : objectDefinitions) {
-					serviceRegistrationsMap.put(
-						objectDefinition.getObjectDefinitionId(),
-						objectDefinitionDeployer.deploy(objectDefinition));
-				}
-			});
+		for (ObjectDefinition objectDefinition : _getObjectDefinitions()) {
+			serviceRegistrationsMap.put(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinitionDeployer.deploy(objectDefinition));
+		}
 
 		_serviceRegistrationsMaps.put(
 			objectDefinitionDeployer, serviceRegistrationsMap);
@@ -1068,6 +1062,17 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return name;
+	}
+
+	private List<ObjectDefinition> _getObjectDefinitions() {
+		List<ObjectDefinition> objectDefinitions = new ArrayList<>();
+
+		_companyLocalService.forEachCompanyId(
+			companyId -> objectDefinitions.addAll(
+				objectDefinitionLocalService.getObjectDefinitions(
+					companyId, true, WorkflowConstants.STATUS_APPROVED)));
+
+		return objectDefinitions;
 	}
 
 	private String _getPKObjectFieldDBColumnName(

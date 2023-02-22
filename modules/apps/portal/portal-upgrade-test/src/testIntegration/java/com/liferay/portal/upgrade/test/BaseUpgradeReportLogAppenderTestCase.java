@@ -77,6 +77,10 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			DBUpgrader.class, "_upgradeClient", _originalUpgradeClient);
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED",
+			_originalUpgradeLogContextEnabled);
 	}
 
 	@Before
@@ -418,6 +422,12 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			DBUpgrader.class, "_upgradeClient", upgradeClient);
+
+		_originalUpgradeLogContextEnabled = ReflectionTestUtil.getFieldValue(
+			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED");
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED", true);
 	}
 
 	protected abstract String getFilePath();
@@ -520,6 +530,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	private static final Pattern _logContextDatabaseTablePattern =
 		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");
 	private static boolean _originalUpgradeClient;
+	private static boolean _originalUpgradeLogContextEnabled;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
 	private static UnsyncStringWriter _unsyncStringWriter;

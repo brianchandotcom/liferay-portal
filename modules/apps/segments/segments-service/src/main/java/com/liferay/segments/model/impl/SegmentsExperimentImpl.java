@@ -101,11 +101,11 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
 				getSegmentsExperienceId());
 
-		if (segmentsExperience != null) {
-			return segmentsExperience.getSegmentsExperienceKey();
+		if (segmentsExperience == null) {
+			return null;
 		}
 
-		return null;
+		return segmentsExperience.getSegmentsExperienceKey();
 	}
 
 	@Override

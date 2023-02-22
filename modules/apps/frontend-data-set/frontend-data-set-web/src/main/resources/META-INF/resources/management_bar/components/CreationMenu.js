@@ -23,6 +23,8 @@ import {triggerAction} from '../../utils/actionItems/index';
 function CreationMenu({primaryItems}) {
 	const frontendDataSetContext = useContext(FrontendDataSetContext);
 
+	const {loadData} = frontendDataSetContext;
+
 	const [active, setActive] = useState(false);
 
 	return (
@@ -51,7 +53,9 @@ function CreationMenu({primaryItems}) {
 
 											setActive(false);
 
-											item.onClick?.();
+											item.onClick?.({
+												loadData,
+											});
 
 											if (item.href || item.target) {
 												triggerAction(
@@ -77,7 +81,9 @@ function CreationMenu({primaryItems}) {
 							onClick={() => {
 								const item = primaryItems[0];
 
-								item.onClick?.();
+								item.onClick?.({
+									loadData,
+								});
 
 								if (item.href || item.target) {
 									triggerAction(item, frontendDataSetContext);

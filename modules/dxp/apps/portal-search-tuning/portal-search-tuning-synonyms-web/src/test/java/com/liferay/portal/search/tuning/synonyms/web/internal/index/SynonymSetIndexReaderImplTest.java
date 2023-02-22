@@ -76,11 +76,8 @@ public class SynonymSetIndexReaderImplTest extends BaseSynonymsWebTestCase {
 			synonymSetIndexName, "id");
 
 		Assert.assertNotNull(synonymSet);
-
-		if (synonymSet != null) {
-			Assert.assertEquals("car,automobile", synonymSet.getSynonyms());
-			Assert.assertEquals("id", synonymSet.getSynonymSetDocumentId());
-		}
+		Assert.assertEquals("car,automobile", synonymSet.getSynonyms());
+		Assert.assertEquals("id", synonymSet.getSynonymSetDocumentId());
 	}
 
 	@Test

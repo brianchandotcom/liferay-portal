@@ -137,6 +137,10 @@ public class SourceFormatter {
 					ArgumentsUtil.getString(
 						arguments, "source.check.names", null),
 					StringPool.COMMA));
+			sourceFormatterArgs.setCheckVulnerabilities(
+				ArgumentsUtil.getBoolean(
+					arguments, "check.vulnerabilities",
+					SourceFormatterArgs.CHECK_VULNERABILITIES));
 			sourceFormatterArgs.setFailOnAutoFix(
 				ArgumentsUtil.getBoolean(
 					arguments, "source.fail.on.auto.fix",

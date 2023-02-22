@@ -80,6 +80,15 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		SourceProcessor sourceProcessor = getSourceProcessor();
+
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
+
+		if (!sourceFormatterArgs.isCheckVulnerabilities()) {
+			return content;
+		}
+
 		if (fileName.endsWith(".gradle")) {
 			_checkGradleLibraryVulnerabilities(fileName, absolutePath, content);
 		}
@@ -422,9 +431,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			SourceFormatterArgs sourceFormatterArgs =
 				sourceProcessor.getSourceFormatterArgs();
 
-			if (sourceFormatterArgs.isFormatCurrentBranch() &&
-				sourceFormatterArgs.isUseCiGithubAccessToken()) {
-
+			if (sourceFormatterArgs.isUseCiGithubAccessToken()) {
 				_githubAccessToken = _getCiGithubAccessToken();
 			}
 			else {

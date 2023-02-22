@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.processor;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.source.formatter.SourceFormatterArgs;
 
 import org.junit.Test;
 
@@ -36,18 +37,20 @@ public class LibrarySourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"ivy.testxml",
 			StringBundler.concat(
-				"Library 'org.springframework.security:spring-security-core:",
-				"5.6.1' contains known vulnerabilities(Authorization bypass ",
-				"in Spring Security, https://github.com/advisories/GHSA-hh32-",
-				"7344-cg2f)"));
+				"Library 'org.springframework.security:spring-security-",
+				"core:5.6.1' contains known vulnerabilities(Spring Security ",
+				"authorization rules can be bypassed via forward or include ",
+				"dispatcher types, https://github.com/advisories",
+				"/GHSA-mmmh-wcxm-2wr4)"));
 
 		test(
 			"pom.testxml",
 			StringBundler.concat(
-				"Library 'org.springframework.security:spring-security-core:",
-				"5.6.1' contains known vulnerabilities(Authorization bypass ",
-				"in Spring Security, https://github.com/advisories/GHSA-hh32-",
-				"7344-cg2f)"));
+				"Library 'org.springframework.security:spring-security-",
+				"core:5.6.1' contains known vulnerabilities(Spring Security ",
+				"authorization rules can be bypassed via forward or include ",
+				"dispatcher types, https://github.com/advisories",
+				"/GHSA-mmmh-wcxm-2wr4)"));
 
 		test(
 			"build.testgradle",
@@ -69,9 +72,10 @@ public class LibrarySourceProcessorTest extends BaseSourceProcessorTestCase {
 					"/advisories/GHSA-gchv-364h-r896)"),
 				StringBundler.concat(
 					"Library 'org.springframework.security:spring-security-",
-					"core:5.6.2' contains known vulnerabilities(Authorization ",
-					"bypass in Spring Security, https://github.com/advisories",
-					"/GHSA-hh32-7344-cg2f)")
+					"core:5.6.2' contains known vulnerabilities(Spring ",
+					"Security authorization rules can be bypassed via forward ",
+					"or include dispatcher types, https://github.com",
+					"/advisories/GHSA-mmmh-wcxm-2wr4)")
 			});
 
 		test(
@@ -87,6 +91,16 @@ public class LibrarySourceProcessorTest extends BaseSourceProcessorTestCase {
 					"vulnerabilities(Command injection in workspace-tools, ",
 					"https://github.com/advisories/GHSA-5875-m6jq-vf78)")
 			});
+	}
+
+	@Override
+	protected SourceFormatterArgs getSourceFormatterArgs() {
+		SourceFormatterArgs sourceFormatterArgs =
+			super.getSourceFormatterArgs();
+
+		sourceFormatterArgs.setCheckVulnerabilities(true);
+
+		return sourceFormatterArgs;
 	}
 
 }

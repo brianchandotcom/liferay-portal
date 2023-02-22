@@ -101,6 +101,10 @@ public class FormatSourceTask extends JavaExec {
 		return _sourceFormatterArgs.isAutoFix();
 	}
 
+	public boolean isCheckVulnerabilities() {
+		return _sourceFormatterArgs.isCheckVulnerabilities();
+	}
+
 	public boolean isFailOnAutoFix() {
 		return _sourceFormatterArgs.isFailOnAutoFix();
 	}
@@ -165,6 +169,10 @@ public class FormatSourceTask extends JavaExec {
 
 	public void setCheckNames(String... checkNames) {
 		_sourceFormatterArgs.setCheckNames(CollectionUtils.toList(checkNames));
+	}
+
+	public void setCheckVulnerabilities(boolean checkVulnerabilities) {
+		_sourceFormatterArgs.setCheckVulnerabilities(checkVulnerabilities);
 	}
 
 	public void setFailOnAutoFix(boolean failOnAutoFix) {
@@ -241,6 +249,7 @@ public class FormatSourceTask extends JavaExec {
 	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
+		args.add("check.vulnerabilities=" + isCheckVulnerabilities());
 		args.add("format.current.branch=" + isFormatCurrentBranch());
 		args.add("format.latest.author=" + isFormatLatestAuthor());
 		args.add("format.local.changes=" + isFormatLocalChanges());

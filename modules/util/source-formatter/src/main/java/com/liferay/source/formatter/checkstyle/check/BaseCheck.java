@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checkstyle.check;
 import antlr.CommonASTWithHiddenTokens;
 import antlr.CommonHiddenStreamToken;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -59,8 +60,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Hugo Huijser
@@ -516,16 +515,9 @@ public abstract class BaseCheck extends AbstractCheck {
 	}
 
 	protected List<String> getNames(DetailAST detailAST, boolean recursive) {
-		List<DetailAST> childDetailASTs = getAllChildTokens(
-			detailAST, recursive, TokenTypes.IDENT);
-
-		Stream<DetailAST> stream = childDetailASTs.stream();
-
-		return stream.map(
-			DetailAST::getText
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			getAllChildTokens(detailAST, recursive, TokenTypes.IDENT),
+			DetailAST::getText);
 	}
 
 	protected String getPackageName(DetailAST detailAST) {

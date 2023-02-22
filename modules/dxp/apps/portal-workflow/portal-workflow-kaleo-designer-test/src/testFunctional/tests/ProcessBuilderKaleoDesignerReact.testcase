@@ -2164,12 +2164,53 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that when the user adds a translation to another language the user is able to localize the Step Label of the node."
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanLocalizeStepLabelWhenTranslated {
+		task ("Given adding a new workflow definition") {
+			Workflow.openWorkflowListView();
 
-		// TODO LRQA-72982 CanLocalizeStepLabelWhenTranslated pending implementation
+			Workflow.addNewDefinition(workflowDefinitionTitle = "Test title");
+		}
 
+		task ("When translating the title and the node labels and save") {
+			Translations.changeBaseLocale(
+				currentBaseLocale = "en-us",
+				newBaseLocale = "pt_BR");
+
+			ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titulo do teste");
+
+			for (var nodeTypes : list "start,end") {
+				ProcessBuilderKaleoDesignerReact.selectNode(nodeType = ${nodeTypes});
+
+				ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+					infoOption = "Label",
+					infoValue = "br_${nodeTypes}");
+			}
+
+			Workflow.saveDefinition(newKaleoDesigner = "True");
+		}
+
+		task ("Then assert the workflow title is saved as the default language and another language is also saved") {
+			AssertElementPresent(
+				locator1 = "TextInput#TITLE",
+				value1 = "Test title");
+
+			ProcessBuilderKaleoDesignerReact.viewTranslationLanguageStatus(
+				newTranslationOption = "pt_BR",
+				translationStatus = "success");
+
+			Translations.changeBaseLocale(
+				currentBaseLocale = "en-us",
+				newBaseLocale = "pt_BR");
+
+			AssertElementPresent(
+				locator1 = "TextInput#TITLE",
+				value1 = "Titulo do teste");
+
+			for (var nodeLabels : list "br_start,br_end") {
+				ProcessBuilderKaleoDesignerReact.viewNodeLabel(nodeLabel = ${nodeLabels});
+			}
+		}
 	}
 
 	@description = "LPS-140056 - Verify that the user is able to localize the label of the transition"

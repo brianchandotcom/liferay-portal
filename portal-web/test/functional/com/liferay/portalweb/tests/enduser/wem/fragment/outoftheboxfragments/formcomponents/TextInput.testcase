@@ -51,24 +51,22 @@ definition {
 	@priority = 4
 	test AddCustomTextInputFieldsOnContentPage {
 		task ("Given a pages designer has a Text Input fragment inside a mapped Form Container") {
-			task ("Add a Form Container framgment to content page") {
-				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Page Name",
-					type = "content");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
 
-				ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Page Name",
-					siteName = "Test Site Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-				PageEditor.addFragment(
-					collectionName = "Form Components",
-					fragmentName = "Form Container");
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
 
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
-			}
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
 		}
 
 		task ("When the pages designer adds a custom name in Text Input fields") {

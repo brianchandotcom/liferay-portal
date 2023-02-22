@@ -21,7 +21,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsWebKeys" %><%@
 page import="com.liferay.frontend.data.set.views.web.internal.display.context.FDSViewsDisplayContext" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
 
 <liferay-theme:defineObjects />

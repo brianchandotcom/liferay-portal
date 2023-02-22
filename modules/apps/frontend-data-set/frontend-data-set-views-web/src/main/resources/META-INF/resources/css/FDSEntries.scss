@@ -1,0 +1,20 @@
+html:not(#__):not(#___) .cadmin {
+	.dropdown-menu.headless-resources-dropdown-menu {
+		max-height: 500px;
+		max-width: 700px;
+		width: 100%;
+	}
+
+	.modal-dialog {
+		max-width: 750px;
+	}
+}
+
+.headless-resource {
+	align-items: baseline;
+	justify-content: space-between;
+
+	.context {
+		font-size: 0.775rem;
+	}
+}

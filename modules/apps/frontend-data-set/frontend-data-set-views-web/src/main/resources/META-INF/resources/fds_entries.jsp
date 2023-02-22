@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,15 +12,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-/// <reference types="react" />
+<%@ include file="/init.jsp" %>
 
-interface IFDSViewsProps {
-	addFDSViewURL: string;
-	namespace: string;
-}
-declare const FDSViews: ({
-	addFDSViewURL,
-	namespace,
-}: IFDSViewsProps) => JSX.Element;
-export default FDSViews;
+<react:component
+	module="js/FDSEntries"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"apiURL", fdsViewsDisplayContext.getFDSEntriesAPIURL()
+		).put(
+			"headlessResources", fdsViewsDisplayContext.getHeadlessResourcesJSONArray()
+		).put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).build()
+	%>'
+/>

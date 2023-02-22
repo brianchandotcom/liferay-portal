@@ -161,19 +161,6 @@ public class Dom4JUtil {
 		return childElement;
 	}
 
-	public static boolean isValidDocument(URL url) {
-		SAXReader saxReader = new SAXReader();
-
-		try {
-			saxReader.read(url);
-		}
-		catch (DocumentException documentException) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public static Document parse(String xml) throws DocumentException {
 		SAXReader saxReader = new SAXReader();
 
@@ -279,6 +266,21 @@ public class Dom4JUtil {
 		}
 
 		return nodeList;
+	}
+
+	public static void validateDocument(URL url) throws DocumentException {
+		SAXReader saxReader = new SAXReader();
+
+		try {
+			saxReader.read(url);
+		}
+		catch (DocumentException documentException) {
+			if (PropsValues.DEBUG_STACKTRACE) {
+				documentException.printStackTrace();
+			}
+
+			throw documentException;
+		}
 	}
 
 }

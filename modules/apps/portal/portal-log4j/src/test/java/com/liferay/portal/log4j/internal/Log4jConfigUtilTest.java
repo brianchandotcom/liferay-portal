@@ -576,7 +576,16 @@ public class Log4jConfigUtilTest {
 		Log4jConfigUtil.configureLog4J(
 			_generateXMLConfigurationContent(loggerName, _INFO));
 
-		Assert.assertNull(Log4jConfigUtil.getCompanyLogDirectory(companyId));
+		try {
+			Log4jConfigUtil.getCompanyLogDirectory(companyId);
+
+			Assert.fail("Should throw IllegalStateException");
+		}
+		catch (IllegalStateException illegalStateException) {
+			Assert.assertEquals(
+				"No company log routing appender defined",
+				illegalStateException.getMessage());
+		}
 
 		File tempLogFileDir = null;
 
@@ -590,7 +599,8 @@ public class Log4jConfigUtilTest {
 
 			Log4jConfigUtil.configureLog4J(
 				_generateCompanyLogRoutingAppenderConfigurationContent(
-					"COMPANY_LOG_ROUTING_TEXT_FILE", tempLogFileDirPathString,
+					"COMPANY_LOG_ROUTING_TEXT_FILE",
+					tempLogFileDirPathString + "/@company.id@",
 					"liferay-@company.id@.%d{yyyy-MM-dd}.xml.log", loggerName,
 					_INFO));
 
@@ -601,14 +611,19 @@ public class Log4jConfigUtilTest {
 			File companyLogDirectory = Log4jConfigUtil.getCompanyLogDirectory(
 				companyId);
 
+			String expectedCompanyLogDirectory =
+				tempLogFileDirPathString + "/" + companyId;
+
+			Assert.assertEquals(
+				"Company log directory should be " +
+					expectedCompanyLogDirectory,
+				expectedCompanyLogDirectory, companyLogDirectory.getPath());
+
 			if (enabled) {
-				Assert.assertEquals(
-					"Company log directory should be " +
-						tempLogFileDirPathString,
-					tempLogFileDirPathString, companyLogDirectory.getPath());
+				Assert.assertTrue(companyLogDirectory.exists());
 			}
 			else {
-				Assert.assertNull(companyLogDirectory);
+				Assert.assertFalse(companyLogDirectory.exists());
 			}
 		}
 		finally {

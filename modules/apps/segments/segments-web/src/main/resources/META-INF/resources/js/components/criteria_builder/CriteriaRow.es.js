@@ -13,9 +13,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
-import {ClaySelectWithOption} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import {fetch} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
@@ -34,13 +31,7 @@ import {
 	getSupportedOperatorsFromType,
 	objectToFormData,
 } from '../../utils/utils.es';
-import BooleanInput from '../inputs/BooleanInput.es';
-import CollectionInput from '../inputs/CollectionInput.es';
-import DateTimeInput from '../inputs/DateTimeInput.es';
-import DecimalInput from '../inputs/DecimalInput.es';
-import IntegerInput from '../inputs/IntegerInput.es';
-import SelectEntityInput from '../inputs/SelectEntityInput.es';
-import StringInput from '../inputs/StringInput.es';
+import CriteriaRowEditable from './CriteriaRowEditable.es';
 import CriteriaRowReadable from './CriteriaRowReadable.es';
 
 const acceptedDragTypes = [DragTypes.CRITERIA_ROW, DragTypes.PROPERTY];
@@ -259,95 +250,6 @@ class CriteriaRow extends Component {
 			  };
 	};
 
-	_handleDelete = (event) => {
-		event.preventDefault();
-
-		const {index, onDelete} = this.props;
-
-		onDelete(index);
-	};
-
-	_handleDuplicate = (event) => {
-		event.preventDefault();
-
-		const {criterion, index, onAdd} = this.props;
-
-		onAdd(index + 1, criterion);
-	};
-
-	_handleInputChange = (propertyName) => (event) => {
-		const {criterion, onChange} = this.props;
-
-		onChange({
-			...criterion,
-			[propertyName]: event.target.value,
-		});
-	};
-
-	/**
-	 * Updates the criteria with a criterion value change. The param 'value'
-	 * will only be an array when selecting multiple entities (see
-	 * {@link SelectEntityInput.es.js}). And in the case of an array, a new
-	 * group with multiple criterion rows will be created.
-	 * @param {Array|object} value The properties or list of objects with
-	 * properties to update.
-	 */
-	_handleTypedInputChange = (value) => {
-		const {criterion, onChange} = this.props;
-
-		if (Array.isArray(value)) {
-			const items = value.map((item) => ({
-				...criterion,
-				...item,
-			}));
-
-			onChange(createNewGroup(items));
-		}
-		else {
-			onChange({
-				...criterion,
-				...value,
-			});
-		}
-	};
-
-	_renderValueInput = (
-		disabled,
-		propertyLabel,
-		renderEmptyValuesErrors,
-		selectedProperty,
-		value
-	) => {
-		const inputComponentsMap = {
-			[PROPERTY_TYPES.BOOLEAN]: BooleanInput,
-			[PROPERTY_TYPES.COLLECTION]: CollectionInput,
-			[PROPERTY_TYPES.DATE]: DateTimeInput,
-			[PROPERTY_TYPES.DATE_TIME]: DateTimeInput,
-			[PROPERTY_TYPES.DOUBLE]: DecimalInput,
-			[PROPERTY_TYPES.ID]: SelectEntityInput,
-			[PROPERTY_TYPES.INTEGER]: IntegerInput,
-			[PROPERTY_TYPES.STRING]: StringInput,
-		};
-
-		const InputComponent =
-			inputComponentsMap[selectedProperty.type] ||
-			inputComponentsMap[PROPERTY_TYPES.STRING];
-
-		return (
-			<InputComponent
-				disabled={disabled}
-				displayValue={this.props.criterion.displayValue || ''}
-				onChange={this._handleTypedInputChange}
-				options={selectedProperty.options}
-				propertyLabel={propertyLabel}
-				propertyType={selectedProperty.type}
-				renderEmptyValueErrors={renderEmptyValuesErrors}
-				selectEntity={selectedProperty.selectEntity}
-				value={value}
-			/>
-		);
-	};
-
 	_renderErrorMessages({errorOnProperty, unknownEntityError}) {
 		const {editing} = this.props;
 		const errors = [];
@@ -410,119 +312,20 @@ class CriteriaRow extends Component {
 		});
 	}
 
-	_renderEditContainer({
-		error,
-		propertyLabel,
-		selectedOperator,
-		selectedProperty,
-		value,
-	}) {
-		const {connectDragSource, renderEmptyValuesErrors} = this.props;
-
-		if (selectedProperty.type === PROPERTY_TYPES.EVENT) {
-			return <div className="edit-container"></div>;
-		}
-
-		const propertyType = selectedProperty ? selectedProperty.type : '';
-
-		const filteredSupportedOperators = getSupportedOperatorsFromType(
-			SUPPORTED_OPERATORS,
-			SUPPORTED_PROPERTY_TYPES,
-			propertyType
-		);
-
-		const disabledInput = !!error;
-
-		return (
-			<div className="edit-container">
-				{connectDragSource(
-					<div className="drag-icon">
-						<ClayIcon symbol="drag" />
-					</div>
-				)}
-
-				<span className="criterion-string">
-					<b>{propertyLabel}</b>
-				</span>
-
-				<ClaySelectWithOption
-					aria-label={`${propertyLabel}: ${Liferay.Language.get(
-						'select-property-operator-option'
-					)}`}
-					className="criterion-input form-control operator-input"
-					disabled={disabledInput}
-					onChange={this._handleInputChange('operatorName')}
-					options={filteredSupportedOperators.map(
-						({label, name}) => ({
-							label,
-							value: name,
-						})
-					)}
-					value={selectedOperator && selectedOperator.name}
-				/>
-
-				{this._renderValueInput(
-					disabledInput,
-					propertyLabel,
-					renderEmptyValuesErrors,
-					selectedProperty,
-					value
-				)}
-
-				{error ? (
-					<ClayButton
-						className="btn-outline-danger btn-sm"
-						displayType=""
-						onClick={this._handleDelete}
-					>
-						{Liferay.Language.get('delete-segment-property')}
-					</ClayButton>
-				) : (
-					<>
-						<ClayButton
-							aria-label={Liferay.Language.get(
-								'duplicate-segment-property'
-							)}
-							className="btn-outline-borderless btn-sm mr-1"
-							displayType="secondary"
-							monospaced
-							onClick={this._handleDuplicate}
-							title={Liferay.Language.get(
-								'duplicate-segment-property'
-							)}
-						>
-							<ClayIcon symbol="paste" />
-						</ClayButton>
-
-						<ClayButton
-							aria-label={Liferay.Language.get(
-								'delete-segment-property'
-							)}
-							className="btn-outline-borderless btn-sm"
-							displayType="secondary"
-							monospaced
-							onClick={this._handleDelete}
-							title={Liferay.Language.get(
-								'delete-segment-property'
-							)}
-						>
-							<ClayIcon symbol="times-circle" />
-						</ClayButton>
-					</>
-				)}
-			</div>
-		);
-	}
-
 	render() {
 		const {
 			canDrop,
 			connectDragPreview,
+			connectDragSource,
 			connectDropTarget,
 			criterion,
 			dragging,
 			editing,
 			hover,
+			index,
+			onAdd,
+			onChange,
+			onDelete,
 			renderEmptyValuesErrors,
 			supportedProperties,
 		} = this.props;
@@ -553,8 +356,7 @@ class CriteriaRow extends Component {
 							option.disabled === undefined
 						);
 				  });
-		const warning =
-			warningOnProperty || warningOnProperty === false ? false : true;
+		const warning = !(warningOnProperty || warningOnProperty === false);
 
 		if (
 			selectedProperty.options !== undefined &&
@@ -571,8 +373,6 @@ class CriteriaRow extends Component {
 			});
 		}
 
-		const propertyLabel = selectedProperty ? selectedProperty.label : '';
-
 		const classes = getCN('criterion-row-root', {
 			'criterion-row-root-error': error,
 			'criterion-row-root-warning': warning,
@@ -586,14 +386,20 @@ class CriteriaRow extends Component {
 					connectDragPreview(
 						<div className={classes}>
 							{editing ? (
-								this._renderEditContainer({
-									error,
-									propertyLabel,
-									renderEmptyValuesErrors,
-									selectedOperator,
-									selectedProperty,
-									value,
-								})
+								<CriteriaRowEditable
+									connectDragSource={connectDragSource}
+									criterion={criterion}
+									error={error}
+									index={index}
+									onAdd={onAdd}
+									onChange={onChange}
+									onDelete={onDelete}
+									renderEmptyValuesErrors={
+										renderEmptyValuesErrors
+									}
+									selectedOperator={selectedOperator}
+									selectedProperty={selectedProperty}
+								/>
 							) : (
 								<CriteriaRowReadable
 									criterion={criterion}

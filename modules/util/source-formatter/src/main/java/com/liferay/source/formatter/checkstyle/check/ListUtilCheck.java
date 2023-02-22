@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
@@ -33,8 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Hugo Huijser
@@ -302,16 +301,9 @@ public class ListUtilCheck extends BaseCheck {
 	private List<DetailAST> _getIdentDetailASTList(
 		DetailAST detailAST, String name) {
 
-		List<DetailAST> childDetailASTList = getAllChildTokens(
-			detailAST, true, TokenTypes.IDENT);
-
-		Stream<DetailAST> stream = childDetailASTList.stream();
-
-		return stream.filter(
-			childDetailAST -> name.equals(childDetailAST.getText())
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.filter(
+			getAllChildTokens(detailAST, true, TokenTypes.IDENT),
+			childDetailAST -> name.equals(childDetailAST.getText()));
 	}
 
 	private DetailAST _getNextStatementDetailAST(DetailAST detailAST) {

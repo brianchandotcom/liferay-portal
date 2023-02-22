@@ -17,6 +17,7 @@ package com.liferay.search.experiences.internal.blueprint.test;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -61,7 +62,9 @@ public class SXPBlueprintSearchResultTestUtil {
 
 			for (SXPElement sxpE : sxpElements) {
 				if (StringUtil.equalsIgnoreCase(
-						sxpE.getTitle(LocaleUtil.US), sxpElementNames[i])) {
+						LanguageUtil.get(
+							LocaleUtil.US, sxpE.getTitle(LocaleUtil.US)),
+						sxpElementNames[i])) {
 
 					sxpElement = sxpE;
 

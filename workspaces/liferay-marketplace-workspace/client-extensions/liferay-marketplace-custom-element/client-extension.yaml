@@ -13,4 +13,4 @@ liferay-marketplace-custom-element:
     type: customElement
     urls:
         - .*.js
-    useESM: false
+    useESM: true

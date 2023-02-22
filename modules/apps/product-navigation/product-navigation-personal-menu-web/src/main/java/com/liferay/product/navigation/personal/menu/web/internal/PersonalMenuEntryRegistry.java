@@ -18,8 +18,6 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 
 import java.util.ArrayList;
@@ -63,9 +61,6 @@ public class PersonalMenuEntryRegistry {
 				"product.navigation.personal.menu.entry.order"));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PersonalMenuEntryRegistry.class);
-
 	private ServiceTrackerMap<String, List<PersonalMenuEntry>>
 		_serviceTrackerMap;
 
@@ -94,18 +89,10 @@ public class PersonalMenuEntryRegistry {
 			ServiceReference<PersonalMenuEntry> serviceReference,
 			Emitter<String> emitter) {
 
-			Integer personalMenuGroup = (Integer)serviceReference.getProperty(
-				"product.navigation.personal.menu.group");
-
-			if (personalMenuGroup == null) {
-				_log.error(
-					"Unable to register personal menu entry because of " +
-						"missing service property " +
-							"\"product.navigation.personal.menu.group\"");
-			}
-			else {
-				emitter.emit(String.valueOf(personalMenuGroup));
-			}
+			emitter.emit(
+				String.valueOf(
+					serviceReference.getProperty(
+						"product.navigation.personal.menu.group")));
 		}
 
 	}

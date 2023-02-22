@@ -15,7 +15,6 @@
 package com.liferay.product.navigation.personal.menu.web.internal;
 
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
@@ -56,7 +55,10 @@ public class PersonalMenuEntryRegistry {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, PersonalMenuEntry.class,
 			"(product.navigation.personal.menu.group=*)",
-			new PersonalMenuEntryServiceReferenceMapper(),
+			(serviceReference, emitter) -> emitter.emit(
+				String.valueOf(
+					serviceReference.getProperty(
+						"product.navigation.personal.menu.group"))),
 			new PersonalMenuEntryOrderComparator(
 				"product.navigation.personal.menu.entry.order"));
 	}
@@ -77,22 +79,6 @@ public class PersonalMenuEntryRegistry {
 			ServiceReference<PersonalMenuEntry> serviceReference2) {
 
 			return -super.compare(serviceReference1, serviceReference2);
-		}
-
-	}
-
-	private class PersonalMenuEntryServiceReferenceMapper
-		implements ServiceReferenceMapper<String, PersonalMenuEntry> {
-
-		@Override
-		public void map(
-			ServiceReference<PersonalMenuEntry> serviceReference,
-			Emitter<String> emitter) {
-
-			emitter.emit(
-				String.valueOf(
-					serviceReference.getProperty(
-						"product.navigation.personal.menu.group")));
 		}
 
 	}

@@ -444,6 +444,64 @@ definition {
 		Button.clickPublish();
 	}
 
+	macro configureVirtualProduct {
+		Click(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
+
+		SelectFrameTop();
+
+		SelectFrame(
+			key_frameTitle = "Select File",
+			locator1 = "CommerceEntry#ANY_IFRAME");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = ${attachment});
+
+		Click(
+			key_filterOption = "Add",
+			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+		SelectFrameTop();
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+
+		if (isSet(assertUploaded) && (${assertUploaded} == "true")) {
+			Refresh();
+
+			AssertElementPresent(
+				key_index = ${attachment},
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+		}
+
+		if (isSet(activationStatus) || isSet(maxDownloads)) {
+			if (IsElementPresent(key_contentType = "Base Information", locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED")) {
+				Click(
+					key_contentType = "Base Information",
+					locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED");
+			}
+
+			if (isSet(activationStatus)) {
+				Select(
+					key_fieldLabel = "Activation Status",
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+					value1 = ${activationStatus});
+			}
+
+			if (isSet(maxDownloads)) {
+				Type(
+					key_fieldLabel = "Max Number of Downloads",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${maxDownloads});
+			}
+
+			Click(locator1 = "Button#SAVE");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro convertProductToDraft {
 		if (${status} == "Draft") {
 			AssertElementPresent(

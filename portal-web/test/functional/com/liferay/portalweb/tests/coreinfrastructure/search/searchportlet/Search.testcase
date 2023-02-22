@@ -1302,6 +1302,10 @@ definition {
 
 	@priority = 3
 	test CanOrderFolderFacetTerms {
+		JSONFolder.moveFolderToTrash(
+			folderName = "Provided by Liferay",
+			groupName = "Guest");
+
 		for (var folder : list "Product,Engineering,2021,2022") {
 			JSONFolder.addFolder(
 				dmFolderName = ${folder},
@@ -1523,6 +1527,10 @@ definition {
 	@description = "This is a use case for LPS-162049. When configuring the Type Facet, I can choose from different ordering options so that facet terms are displayed according to the sort strategy"
 	@priority = 3
 	test CanOrderTypeFacetTerms {
+		JSONFolder.moveFolderToTrash(
+			folderName = "Provided by Liferay",
+			groupName = "Guest");
+
 		task ("Add some Wiki Page examples") {
 			for (var wikiNumber : list "1,2,3,4") {
 				JSONWiki.addWikiPage(

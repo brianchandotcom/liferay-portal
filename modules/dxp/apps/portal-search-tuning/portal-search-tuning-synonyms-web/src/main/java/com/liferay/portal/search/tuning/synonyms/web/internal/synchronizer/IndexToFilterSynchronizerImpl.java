@@ -36,20 +36,13 @@ public class IndexToFilterSynchronizerImpl
 		SynonymSetIndexName synonymSetIndexName, String companyIndexName,
 		boolean deletion) {
 
-		_updateFilters(
-			companyIndexName,
-			TransformUtil.transformToArray(
-				_synonymSetIndexReader.search(synonymSetIndexName),
-				SynonymSet::getSynonyms, String.class),
-			deletion);
-	}
-
-	private void _updateFilters(
-		String companyIndexName, String[] synonyms, boolean deletion) {
-
 		for (String filterName : _synonymSetFilterNameHolder.getFilterNames()) {
 			_synonymSetFilterWriter.updateSynonymSets(
-				companyIndexName, filterName, synonyms, deletion);
+				companyIndexName, filterName,
+				TransformUtil.transformToArray(
+					_synonymSetIndexReader.search(synonymSetIndexName),
+					SynonymSet::getSynonyms, String.class),
+				deletion);
 		}
 	}
 

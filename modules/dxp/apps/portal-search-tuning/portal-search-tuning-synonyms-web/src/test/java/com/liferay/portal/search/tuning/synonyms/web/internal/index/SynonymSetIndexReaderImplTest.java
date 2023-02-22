@@ -58,11 +58,9 @@ public class SynonymSetIndexReaderImplTest extends BaseSynonymsWebTestCase {
 	public void testFetchWithDocExistsFalse() {
 		setUpSearchEngineAdapter(_setUpGetDocumentResponse(false));
 
-		SynonymSetIndexName synonymSetIndexName = Mockito.mock(
-			SynonymSetIndexName.class);
-
 		Assert.assertNull(
-			_synonymSetIndexReaderImpl.fetch(synonymSetIndexName, "id"));
+			_synonymSetIndexReaderImpl.fetch(
+				Mockito.mock(SynonymSetIndexName.class), "id"));
 	}
 
 	@Test
@@ -100,12 +98,12 @@ public class SynonymSetIndexReaderImplTest extends BaseSynonymsWebTestCase {
 	public void testSearch() {
 		setUpSearchEngineAdapter(setUpSearchHits("car,automobile"));
 
-		List<SynonymSet> synonymSetList = _synonymSetIndexReaderImpl.search(
+		List<SynonymSet> synonymSets = _synonymSetIndexReaderImpl.search(
 			Mockito.mock(SynonymSetIndexName.class));
 
-		Assert.assertEquals(1, synonymSetList.size(), 0.0);
+		Assert.assertEquals(1, synonymSets.size(), 0.0);
 
-		SynonymSet synonymSet = synonymSetList.get(0);
+		SynonymSet synonymSet = synonymSets.get(0);
 
 		Assert.assertEquals("car,automobile", synonymSet.getSynonyms());
 		Assert.assertEquals("id", synonymSet.getSynonymSetDocumentId());

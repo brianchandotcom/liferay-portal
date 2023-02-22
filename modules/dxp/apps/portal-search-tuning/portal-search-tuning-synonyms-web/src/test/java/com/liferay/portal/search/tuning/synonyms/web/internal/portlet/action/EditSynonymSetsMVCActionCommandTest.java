@@ -129,15 +129,13 @@ public class EditSynonymSetsMVCActionCommandTest
 		SynonymSet.SynonymSetBuilder synonymSetBuilder =
 			new SynonymSet.SynonymSetBuilder();
 
-		SynonymSet synonymSet = synonymSetBuilder.synonyms(
-			"car,atumobile"
-		).synonymSetDocumentId(
-			"id-1"
-		).build();
-
 		_editSynonymSetsMVCActionCommand.updateSynonymSetIndex(
 			Mockito.mock(SynonymSetIndexName.class), "car,automobile",
-			synonymSet);
+			synonymSetBuilder.synonyms(
+				"car,atumobile"
+			).synonymSetDocumentId(
+				"id-1"
+			).build());
 
 		Mockito.verify(
 			synonymSetStorageAdapter, Mockito.times(1)

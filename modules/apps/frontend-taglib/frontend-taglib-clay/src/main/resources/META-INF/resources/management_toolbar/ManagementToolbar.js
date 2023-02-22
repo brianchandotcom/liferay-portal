@@ -92,10 +92,9 @@ function ManagementToolbar({
 		() => viewTypeItems?.find((item) => item.active),
 		[viewTypeItems]
 	);
-	const viewTypeIcon = activeViewType.icon;
 	const viewTypeTitle = sub(
 		Liferay.Language.get('select-view-currently-selected-x'),
-		activeViewType.label
+		activeViewType?.label
 	);
 
 	return (
@@ -200,10 +199,10 @@ function ManagementToolbar({
 													displayType="unstyled"
 													title={viewTypeTitle}
 												>
-													{viewTypeIcon && (
+													{activeViewType?.icon && (
 														<ClayIcon
 															symbol={
-																viewTypeIcon
+																activeViewType?.icon
 															}
 														/>
 													)}
@@ -218,7 +217,9 @@ function ManagementToolbar({
 													aria-label={viewTypeTitle}
 													className="nav-link nav-link-monospaced"
 													displayType="unstyled"
-													symbol={viewTypeIcon}
+													symbol={
+														activeViewType?.icon
+													}
 													title={viewTypeTitle}
 												/>
 											)

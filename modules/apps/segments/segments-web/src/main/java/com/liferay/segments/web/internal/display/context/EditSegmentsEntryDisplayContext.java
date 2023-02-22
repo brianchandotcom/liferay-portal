@@ -472,10 +472,17 @@ public class EditSegmentsEntryDisplayContext {
 	}
 
 	private SegmentsEntry _getSegmentsEntry() throws PortalException {
+		if (_segmentsEntry != null) {
+			return _segmentsEntry;
+		}
+
 		long segmentsEntryId = getSegmentsEntryId();
 
 		if (segmentsEntryId > 0) {
-			return _segmentsEntryService.getSegmentsEntry(segmentsEntryId);
+			_segmentsEntry = _segmentsEntryService.getSegmentsEntry(
+				segmentsEntryId);
+
+			return _segmentsEntry;
 		}
 
 		return null;
@@ -575,6 +582,7 @@ public class EditSegmentsEntryDisplayContext {
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 	private final SegmentsCriteriaContributorRegistry
 		_segmentsCriteriaContributorRegistry;
+	private SegmentsEntry _segmentsEntry;
 	private Long _segmentsEntryId;
 	private String _segmentsEntryKey;
 	private final SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;

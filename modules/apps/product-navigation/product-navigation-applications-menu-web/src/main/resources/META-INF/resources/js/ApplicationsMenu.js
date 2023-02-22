@@ -494,6 +494,7 @@ const ApplicationsMenu = ({
 			)}
 
 			<ClayButtonWithIcon
+				aria-haspopup="dialog"
 				aria-labelledby={buttonTitleId}
 				className="dropdown-toggle lfr-portal-tooltip"
 				data-qa-id="applicationsMenu"

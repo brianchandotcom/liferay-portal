@@ -75,7 +75,7 @@ public class ResponsiveLayoutStructureUtil {
 				rowStyledLayoutStructureItem.getVerticalAlignment(),
 				"middle")) {
 
-			sb.append("d-flex flex-column ");
+			sb.append(" d-flex flex-column ");
 		}
 
 		return sb.toString();

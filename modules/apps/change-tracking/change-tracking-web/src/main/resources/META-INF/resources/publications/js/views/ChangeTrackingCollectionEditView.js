@@ -26,6 +26,7 @@ export default function ChangeTrackingCollectionEditView({
 	ctCollectionId,
 	ctCollectionTemplates,
 	ctCollectionTemplatesData,
+	defaultCTCollectionTemplateId,
 	descriptionFieldMaxLength,
 	inviteUsersURL,
 	nameFieldMaxLength,
@@ -37,19 +38,26 @@ export default function ChangeTrackingCollectionEditView({
 	saveButtonLabel,
 	showTemplates,
 }) {
-	const [nameField, setNameField] = useState(publicationName);
+	const templates = JSON.parse(ctCollectionTemplates);
+	const data = JSON.parse(ctCollectionTemplatesData);
+
+	const [nameField, setNameField] = useState(
+		defaultCTCollectionTemplateId > 0
+			? data[defaultCTCollectionTemplateId].name
+			: publicationName
+	);
 	const [descriptionField, setDescriptionField] = useState(
-		publicationDescription
+		defaultCTCollectionTemplateId > 0
+			? data[defaultCTCollectionTemplateId].description
+			: publicationDescription
 	);
 	const [publishTimeField, setPublishTimeField] = useState(null);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(
 		revertingPublication
 	);
-	const [ctCollectionTemplateId, setCtCollectionTemplateId] = useState(0);
-
-	const templates = JSON.parse(ctCollectionTemplates);
-	const data = JSON.parse(ctCollectionTemplatesData);
-
+	const [ctCollectionTemplateId, setCtCollectionTemplateId] = useState(
+		defaultCTCollectionTemplateId ? defaultCTCollectionTemplateId : 0
+	);
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
@@ -199,7 +207,11 @@ export default function ChangeTrackingCollectionEditView({
 								Liferay.Language.get('select-x'),
 								Liferay.Language.get('template')
 							)}
-							defaultValue={0}
+							defaultValue={
+								defaultCTCollectionTemplateId
+									? defaultCTCollectionTemplateId
+									: 0
+							}
 							id="templateSelector"
 							onChange={(event) => {
 								onSelectValueChange(event.target.value);

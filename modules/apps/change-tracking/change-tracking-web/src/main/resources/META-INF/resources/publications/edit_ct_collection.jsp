@@ -82,6 +82,8 @@ portletDisplay.setShowBackIcon(true);
 			).put(
 				"ctCollectionTemplatesData", request.getAttribute(CTWebKeys.CT_COLLECTION_TEMPLATES_DATA)
 			).put(
+				"defaultCTCollectionTemplateId", request.getAttribute(CTWebKeys.DEFAULT_CT_COLLECTION_TEMPLATE_ID)
+			).put(
 				"descriptionFieldMaxLength", ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "description")
 			).put(
 				"inviteUsersURL", inviteUsersURL

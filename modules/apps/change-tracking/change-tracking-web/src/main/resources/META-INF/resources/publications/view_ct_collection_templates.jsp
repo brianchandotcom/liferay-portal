@@ -85,6 +85,28 @@ portletDisplay.setShowBackIcon(true);
 						</div>
 					</liferay-ui:search-container-column-text>
 
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller table-column-text-center"
+						name="default-template"
+					>
+						<c:if test="<%= viewTemplatesDisplayContext.isDefaultTemplate(ctCollectionTemplate) %>">
+							<clay:icon
+								symbol="check"
+							/>
+						</c:if>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller table-column-text-center"
+						name="default-sandbox-template"
+					>
+						<c:if test="<%= viewTemplatesDisplayContext.isDefaultSandboxTemplate(ctCollectionTemplate) %>">
+							<clay:icon
+								symbol="check"
+							/>
+						</c:if>
+					</liferay-ui:search-container-column-text>
+
 					<%
 					Date modifiedDate = ctCollectionTemplate.getModifiedDate();
 					%>

@@ -14,8 +14,11 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionTemplateService;
+import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -55,8 +58,12 @@ public class EditCTCollectionTemplateMVCActionCommand
 		long ctCollectionTemplateId = ParamUtil.getLong(
 			actionRequest, "ctCollectionTemplateId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
+		boolean defaultSandboxTemplate = ParamUtil.getBoolean(
+			actionRequest, "defaultSandboxTemplate");
+		boolean defaultTemplate = ParamUtil.getBoolean(
+			actionRequest, "defaultTemplate");
+		String name = ParamUtil.getString(actionRequest, "name");
 		String json = JSONUtil.put(
 			"description",
 			ParamUtil.getString(actionRequest, "publicationDescription")
@@ -74,14 +81,54 @@ public class EditCTCollectionTemplateMVCActionCommand
 		).toString();
 
 		try {
+			CTCollectionTemplate ctCollectionTemplate = null;
+
 			if (ctCollectionTemplateId > 0) {
-				_ctCollectionTemplateService.updateCTCollectionTemplate(
-					ctCollectionTemplateId, name, description, json);
+				ctCollectionTemplate =
+					_ctCollectionTemplateService.updateCTCollectionTemplate(
+						ctCollectionTemplateId, name, description, json);
 			}
 			else {
-				_ctCollectionTemplateService.addCTCollectionTemplate(
-					name, description, json);
+				ctCollectionTemplate =
+					_ctCollectionTemplateService.addCTCollectionTemplate(
+						name, description, json);
+
+				ctCollectionTemplateId =
+					ctCollectionTemplate.getCtCollectionTemplateId();
 			}
+
+			CTSettingsConfiguration ctSettingsConfiguration =
+				_ctSettingsConfigurationHelper.getCTSettingsConfiguration(
+					ctCollectionTemplate.getCompanyId());
+
+			long defaultCTCollectionTemplateId =
+				ctSettingsConfiguration.defaultCTCollectionTemplateId();
+			long defaultSandboxCTCollectionTemplateId =
+				ctSettingsConfiguration.defaultSandboxCTCollectionTemplateId();
+
+			if (defaultTemplate) {
+				defaultCTCollectionTemplateId = ctCollectionTemplateId;
+			}
+			else if (defaultCTCollectionTemplateId == ctCollectionTemplateId) {
+				defaultCTCollectionTemplateId = 0;
+			}
+
+			if (defaultSandboxTemplate) {
+				defaultSandboxCTCollectionTemplateId = ctCollectionTemplateId;
+			}
+			else if (defaultSandboxCTCollectionTemplateId ==
+						ctCollectionTemplateId) {
+
+				defaultSandboxCTCollectionTemplateId = 0;
+			}
+
+			_ctSettingsConfigurationHelper.save(
+				ctCollectionTemplate.getCompanyId(),
+				defaultCTCollectionTemplateId,
+				defaultSandboxCTCollectionTemplateId,
+				ctSettingsConfiguration.enabled(),
+				ctSettingsConfiguration.sandboxEnabled(),
+				ctSettingsConfiguration.unapprovedChangesAllowed());
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(actionRequest, portalException.getClass());
@@ -101,6 +148,9 @@ public class EditCTCollectionTemplateMVCActionCommand
 
 	@Reference
 	private CTCollectionTemplateService _ctCollectionTemplateService;
+
+	@Reference
+	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;
 
 	@Reference
 	private JSONFactory _jsonFactory;

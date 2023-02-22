@@ -14,6 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import {ClayCheckbox} from '@clayui/form';
 import {fetch, navigate, objectToFormData} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -26,6 +27,8 @@ export default function PublicationTemplateEditView({
 	actionUrl,
 	collaboratorsProps,
 	ctCollectionTemplateId,
+	defaultSandboxTemplate,
+	defaultTemplate,
 	description,
 	getTemplateCollaboratorsURL,
 	name,
@@ -36,17 +39,25 @@ export default function PublicationTemplateEditView({
 	saveButtonLabel,
 	tokens,
 }) {
-	const [showModal, setShowModal] = useState(false);
 	const [collaboratorData, setCollaboratorData] = useState(null);
-	const [nameField, setNameField] = useState(name);
-	const [descriptionField, setDescriptionField] = useState(description);
-	const [publicationNameField, setPublicationNameField] = useState(
-		publicationName
+	const [defaultTemplateField, setDefaultTemplateField] = useState(
+		defaultTemplate
 	);
+	const [
+		defaultSandboxTemplateField,
+		setDefaultSandboxTemplateField,
+	] = useState(defaultSandboxTemplate);
+	const [descriptionField, setDescriptionField] = useState(description);
+	const [nameField, setNameField] = useState(name);
 	const [
 		publicationDescriptionField,
 		setPublicationDescriptionField,
 	] = useState(publicationDescription);
+	const [publicationNameField, setPublicationNameField] = useState(
+		publicationName
+	);
+
+	const [showModal, setShowModal] = useState(false);
 
 	const afterSubmitNotification = () => {
 		setShowModal(false);
@@ -69,6 +80,8 @@ export default function PublicationTemplateEditView({
 			[`${namespace}userIds`]: collaboratorData
 				? collaboratorData['userIds']
 				: null,
+			[`${namespace}defaultTemplate`]: defaultTemplateField,
+			[`${namespace}defaultSandboxTemplate`]: defaultSandboxTemplateField,
 		});
 
 		fetch(actionUrl, {
@@ -147,6 +160,20 @@ export default function PublicationTemplateEditView({
 					'publication-template-description-placeholder'
 				)}
 				required={false}
+			/>
+
+			<ClayCheckbox
+				checked={defaultTemplateField}
+				label={Liferay.Language.get('default-template')}
+				onChange={() => setDefaultTemplateField(!defaultTemplateField)}
+			/>
+
+			<ClayCheckbox
+				checked={defaultSandboxTemplateField}
+				label={Liferay.Language.get('default-sandbox-template')}
+				onChange={() =>
+					setDefaultSandboxTemplateField(!defaultSandboxTemplateField)
+				}
 			/>
 
 			<CollapsablePanel

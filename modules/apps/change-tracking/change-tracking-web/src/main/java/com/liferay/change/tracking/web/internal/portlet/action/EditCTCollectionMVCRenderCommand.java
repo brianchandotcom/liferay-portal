@@ -18,6 +18,7 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
+import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -75,6 +76,11 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 			CTWebKeys.CT_COLLECTION_TEMPLATES,
 			jsonSerializer.serializeDeep(ctCollectionTemplates));
 
+		renderRequest.setAttribute(
+			CTWebKeys.DEFAULT_CT_COLLECTION_TEMPLATE_ID,
+			_ctSettingsConfigurationHelper.getDefaultCTCollectionTemplateId(
+				themeDisplay.getCompanyId()));
+
 		Map<Long, JSONObject> map = new HashMap<>();
 
 		for (CTCollectionTemplate ctCollectionTemplate :
@@ -105,6 +111,9 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTCollectionTemplateLocalService _ctCollectionTemplateLocalService;
+
+	@Reference
+	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;
 
 	@Reference
 	private JSONFactory _jsonFactory;

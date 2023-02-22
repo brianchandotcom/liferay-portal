@@ -14,8 +14,11 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
+import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -47,10 +50,32 @@ public class EditCTCollectionTemplateMVCRenderCommand
 			renderRequest, "ctCollectionTemplateId");
 
 		if (ctCollectionTemplateId > 0) {
-			renderRequest.setAttribute(
-				CTWebKeys.CT_COLLECTION_TEMPLATE,
+			CTCollectionTemplate ctCollectionTemplate =
 				_ctCollectionTemplateLocalService.fetchCTCollectionTemplate(
-					ctCollectionTemplateId));
+					ctCollectionTemplateId);
+
+			renderRequest.setAttribute(
+				CTWebKeys.CT_COLLECTION_TEMPLATE, ctCollectionTemplate);
+
+			CTSettingsConfiguration ctSettingsConfiguration =
+				_ctSettingsConfigurationHelper.getCTSettingsConfiguration(
+					ctCollectionTemplate.getCompanyId());
+
+			if (ctCollectionTemplateId ==
+					ctSettingsConfiguration.defaultCTCollectionTemplateId()) {
+
+				renderRequest.setAttribute(
+					CTWebKeys.DEFAULT_CT_COLLECTION_TEMPLATE, Boolean.TRUE);
+			}
+
+			if (ctCollectionTemplateId ==
+					ctSettingsConfiguration.
+						defaultSandboxCTCollectionTemplateId()) {
+
+				renderRequest.setAttribute(
+					CTWebKeys.DEFAULT_SANDBOX_CT_COLLECTION_TEMPLATE,
+					Boolean.TRUE);
+			}
 		}
 
 		return "/publications/edit_ct_collection_template.jsp";
@@ -58,5 +83,8 @@ public class EditCTCollectionTemplateMVCRenderCommand
 
 	@Reference
 	private CTCollectionTemplateLocalService _ctCollectionTemplateLocalService;
+
+	@Reference
+	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;
 
 }

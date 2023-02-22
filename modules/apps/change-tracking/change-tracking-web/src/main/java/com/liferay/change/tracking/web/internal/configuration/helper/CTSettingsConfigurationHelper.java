@@ -43,6 +43,20 @@ public class CTSettingsConfigurationHelper {
 		return _getCTSettingsConfiguration(companyId);
 	}
 
+	public long getDefaultCTCollectionTemplateId(long companyId) {
+		CTSettingsConfiguration ctSettingsConfiguration =
+			_getCTSettingsConfiguration(companyId);
+
+		return ctSettingsConfiguration.defaultCTCollectionTemplateId();
+	}
+
+	public long getDefaultSandboxCTCollectionTemplateId(long companyId) {
+		CTSettingsConfiguration ctSettingsConfiguration =
+			_getCTSettingsConfiguration(companyId);
+
+		return ctSettingsConfiguration.defaultSandboxCTCollectionTemplateId();
+	}
+
 	public boolean isDefaultSandboxTemplate(
 		long companyId, long ctCollectionTemplateId) {
 

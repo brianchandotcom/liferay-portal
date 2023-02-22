@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -192,11 +191,14 @@ public class CTCollectionTemplateLocalServiceImpl
 				ServiceContext serviceContext =
 					ServiceContextThreadLocal.getServiceContext();
 
-				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+				User user = _userLocalService.fetchUser(
+					serviceContext.getUserId());
 
-				User user = themeDisplay.getUser();
+				if (user != null) {
+					return user.getScreenName();
+				}
 
-				return user.getScreenName();
+				return StringPool.BLANK;
 			}
 		).put(
 			"${RANDOM_HASH}",

@@ -715,8 +715,7 @@ public class DDMFormAdminDisplayContext {
 
 		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
 			DDMFormBuilderContextRequest.with(
-				Optional.ofNullable(null), themeDisplay.getRequest(),
-				themeDisplay.getResponse(),
+				null, themeDisplay.getRequest(), themeDisplay.getResponse(),
 				LocaleUtil.fromLanguageId(getDefaultLanguageId()), true);
 
 		ddmFormBuilderContextRequest.addProperty(

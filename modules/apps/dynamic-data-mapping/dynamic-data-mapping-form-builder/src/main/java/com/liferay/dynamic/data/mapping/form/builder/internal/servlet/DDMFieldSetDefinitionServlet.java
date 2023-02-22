@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -79,13 +78,10 @@ public class DDMFieldSetDefinitionServlet extends BaseDDMFormBuilderServlet {
 
 		LocaleThreadLocal.setThemeDisplayLocale(locale);
 
-		Optional<DDMStructure> ddmStructureOptional = Optional.ofNullable(
-			_getDDMStructure(ddmStructureId));
-
 		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
 			DDMFormBuilderContextRequest.with(
-				ddmStructureOptional, httpServletRequest, httpServletResponse,
-				locale, true);
+				_getDDMStructure(ddmStructureId), httpServletRequest,
+				httpServletResponse, locale, true);
 
 		String portletNamespace = ParamUtil.getString(
 			httpServletRequest, "portletNamespace");

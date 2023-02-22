@@ -38,8 +38,8 @@ public class AssetVocabularyItemSelectorCriterion
 		return _includeInternalVocabularies;
 	}
 
-	public boolean isMultiSelection() {
-		return _multiSelection;
+	public boolean isMultiSelect() {
+		return _multiSelect;
 	}
 
 	public void setGroupId(long groupId) {
@@ -59,13 +59,13 @@ public class AssetVocabularyItemSelectorCriterion
 		_includeInternalVocabularies = includeInternalVocabularies;
 	}
 
-	public void setMultiSelection(boolean multiSelection) {
-		_multiSelection = multiSelection;
+	public void setMultiSelect(boolean multiSelect) {
+		_multiSelect = multiSelect;
 	}
 
 	private long _groupId;
 	private boolean _includeAncestorSiteAndDepotGroupIds;
 	private boolean _includeInternalVocabularies;
-	private boolean _multiSelection;
+	private boolean _multiSelect;
 
 }

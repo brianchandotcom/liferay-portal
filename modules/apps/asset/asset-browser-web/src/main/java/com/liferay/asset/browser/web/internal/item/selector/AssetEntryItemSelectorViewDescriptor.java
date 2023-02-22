@@ -150,7 +150,7 @@ public class AssetEntryItemSelectorViewDescriptor
 	}
 
 	@Override
-	public boolean isMultipleSelection() {
+	public boolean isMultiSelect() {
 		return !_assetEntryItemSelectorCriterion.isSingleSelect();
 	}
 

@@ -157,7 +157,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>multiSelection</name>
+			<name>multiSelect</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>

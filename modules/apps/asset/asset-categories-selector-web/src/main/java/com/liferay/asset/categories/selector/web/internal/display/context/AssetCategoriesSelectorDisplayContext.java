@@ -132,7 +132,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		).put(
 			"moveCategory", isMoveCategory()
 		).put(
-			"multiSelection", !isSingleSelect()
+			"multiSelect", !isSingleSelect()
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(

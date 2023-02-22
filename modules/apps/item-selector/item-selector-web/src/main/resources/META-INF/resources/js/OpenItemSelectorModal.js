@@ -18,7 +18,7 @@ const openItemSelectorModal = ({multiple, url, ...props}) => {
 	openSelectionModal({
 		multiple,
 		url: createPortletURL(url, {
-			multipleSelection: multiple || false,
+			multiSelect: multiple || false,
 			p_p_id: 'com_liferay_item_selector_web_portlet_ItemSelectorPortlet',
 		}),
 		...props,

@@ -518,7 +518,7 @@ public class SiteNavigationAdminDisplayContext {
 			).put(
 				"itemSelector", siteNavigationMenuItemType.isItemSelector()
 			).put(
-				"multiSelection", siteNavigationMenuItemType.isMultiSelection()
+				"multiSelect", siteNavigationMenuItemType.isMultiSelect()
 			).put(
 				"siteNavigationMenuId", getSiteNavigationMenuId()
 			).put(

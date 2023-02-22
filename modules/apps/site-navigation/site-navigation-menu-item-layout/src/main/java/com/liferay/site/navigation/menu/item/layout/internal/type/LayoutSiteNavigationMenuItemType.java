@@ -185,7 +185,7 @@ public class LayoutSiteNavigationMenuItemType
 			new UUIDItemSelectorReturnType());
 		layoutItemSelectorCriterion.setShowBreadcrumb(false);
 		layoutItemSelectorCriterion.setShowHiddenPages(true);
-		layoutItemSelectorCriterion.setMultiSelection(true);
+		layoutItemSelectorCriterion.setMultiSelect(true);
 
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
@@ -454,7 +454,7 @@ public class LayoutSiteNavigationMenuItemType
 	}
 
 	@Override
-	public boolean isMultiSelection() {
+	public boolean isMultiSelect() {
 		return true;
 	}
 

@@ -17,8 +17,8 @@ package com.liferay.site.navigation.menu.item.display.page.internal.portlet.acti
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.HierarchicalInfoItemReference;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderRegistry;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectProviderRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -117,15 +117,15 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 					}
 				}
 
-				LayoutDisplayPageMultiSelectionProvider<?>
-					layoutDisplayPageMultiSelectionProvider =
-						_layoutDisplayPageMultiSelectionProviderRegistry.
-							getLayoutDisplayPageMultiSelectionProvider(
+				LayoutDisplayPageMultiSelectProvider<?>
+					layoutDisplayPageMultiSelectProvider =
+						_layoutDisplayPageMultiSelectProviderRegistry.
+							getLayoutDisplayPageMultiSelectProvider(
 								siteNavigationMenuItemTypeString);
 
-				if (layoutDisplayPageMultiSelectionProvider != null) {
+				if (layoutDisplayPageMultiSelectProvider != null) {
 					infoItemReferences =
-						layoutDisplayPageMultiSelectionProvider.process(
+						layoutDisplayPageMultiSelectProvider.process(
 							infoItemReferences);
 				}
 
@@ -149,14 +149,14 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 							themeDisplay.getLocale())));
 
 				if ((jsonArray.length() > 1) &&
-					(layoutDisplayPageMultiSelectionProvider != null)) {
+					(layoutDisplayPageMultiSelectProvider != null)) {
 
 					message = _language.format(
 						themeDisplay.getLocale(), "x-x-were-added-to-this-menu",
 						Arrays.asList(
 							jsonArray.length(),
-							layoutDisplayPageMultiSelectionProvider.
-								getPluralLabel(themeDisplay.getLocale())));
+							layoutDisplayPageMultiSelectProvider.getPluralLabel(
+								themeDisplay.getLocale())));
 				}
 
 				SessionMessages.add(
@@ -271,8 +271,8 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 	private Language _language;
 
 	@Reference
-	private LayoutDisplayPageMultiSelectionProviderRegistry
-		_layoutDisplayPageMultiSelectionProviderRegistry;
+	private LayoutDisplayPageMultiSelectProviderRegistry
+		_layoutDisplayPageMultiSelectProviderRegistry;
 
 	@Reference
 	private Portal _portal;

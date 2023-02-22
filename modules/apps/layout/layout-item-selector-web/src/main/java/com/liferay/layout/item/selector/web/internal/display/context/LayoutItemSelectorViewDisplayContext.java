@@ -110,8 +110,8 @@ public class LayoutItemSelectorViewDisplayContext {
 		return _layoutItemSelectorCriterion.isFollowURLOnTitleClick();
 	}
 
-	public boolean isMultiSelection() {
-		return _layoutItemSelectorCriterion.isMultiSelection();
+	public boolean isMultiSelect() {
+		return _layoutItemSelectorCriterion.isMultiSelect();
 	}
 
 	public boolean isPrivateLayout() {

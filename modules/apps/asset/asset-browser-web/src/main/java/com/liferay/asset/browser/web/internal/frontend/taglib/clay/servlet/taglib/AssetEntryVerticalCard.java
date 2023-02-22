@@ -149,7 +149,7 @@ public class AssetEntryVerticalCard implements VerticalCard {
 
 	@Override
 	public boolean isSelectable() {
-		return _assetBrowserDisplayContext.isMultipleSelection();
+		return _assetBrowserDisplayContext.isMultiSelect();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

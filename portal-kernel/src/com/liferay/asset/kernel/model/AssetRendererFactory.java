@@ -68,7 +68,7 @@ public interface AssetRendererFactory<T> {
 	public default PortletURL getItemSelectorURL(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId,
-		String eventName, Group group, boolean multiSelection,
+		String eventName, Group group, boolean multiSelect,
 		long refererAssetEntryId) {
 
 		return null;

@@ -33,7 +33,7 @@ import {SelectLayoutTree} from './SelectLayoutTree.es';
 const SelectLayout = ({
 	followURLOnTitleClick,
 	itemSelectorSaveEvent,
-	multiSelection,
+	multiSelect,
 	nodes,
 	selectedLayoutIds,
 }) => {
@@ -69,7 +69,7 @@ const SelectLayout = ({
 				<EmptyState />
 			) : (
 				<>
-					{Boolean(selectedItemsCount) && multiSelection && (
+					{Boolean(selectedItemsCount) && multiSelect && (
 						<ClayLayout.Container
 							className="align-items-center d-flex layout-tree-count-feedback px-3"
 							containerElement="section"
@@ -94,7 +94,7 @@ const SelectLayout = ({
 						followURLOnTitleClick={followURLOnTitleClick}
 						itemSelectorSaveEvent={itemSelectorSaveEvent}
 						items={nodes}
-						multiSelection={multiSelection}
+						multiSelect={multiSelect}
 						onItemsCountChange={setSelectedItemsCount}
 						selectedLayoutIds={selectedLayoutIds}
 					/>
@@ -120,7 +120,7 @@ const EmptyState = () => {
 SelectLayout.propTypes = {
 	followURLOnTitleClick: PropTypes.bool,
 	itemSelectorSaveEvent: PropTypes.string,
-	multiSelection: PropTypes.bool,
+	multiSelect: PropTypes.bool,
 	namespace: PropTypes.string,
 	nodes: PropTypes.array.isRequired,
 };

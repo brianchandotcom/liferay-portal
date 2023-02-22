@@ -22,7 +22,7 @@ import java.util.Locale;
 /**
  * @author Lourdes Fernández Besada
  */
-public interface LayoutDisplayPageMultiSelectionProvider<T> {
+public interface LayoutDisplayPageMultiSelectProvider<T> {
 
 	public String getClassName();
 

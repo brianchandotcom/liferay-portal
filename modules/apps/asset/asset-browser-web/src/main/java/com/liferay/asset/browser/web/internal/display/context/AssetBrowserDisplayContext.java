@@ -123,7 +123,7 @@ public class AssetBrowserDisplayContext {
 		assetEntrySearchContainer.setResultsAndTotal(
 			() -> _assetHelper.getAssetEntries(hits), hits.getLength());
 
-		if (isMultipleSelection()) {
+		if (isMultiSelect()) {
 			assetEntrySearchContainer.setRowChecker(
 				new AddAssetEntryChecker(
 					_renderResponse, getRefererAssetEntryId()));
@@ -198,7 +198,7 @@ public class AssetBrowserDisplayContext {
 		return _assetEntryItemSelectorCriterion.getTypeSelection();
 	}
 
-	public boolean isMultipleSelection() {
+	public boolean isMultiSelect() {
 		return !_assetEntryItemSelectorCriterion.isSingleSelect();
 	}
 

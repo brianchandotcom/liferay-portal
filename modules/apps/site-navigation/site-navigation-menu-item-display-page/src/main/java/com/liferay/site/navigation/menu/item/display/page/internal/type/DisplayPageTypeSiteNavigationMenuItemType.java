@@ -21,7 +21,7 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
@@ -132,14 +132,13 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	public String getAddTitle(Locale locale) {
 		String label = _displayPageTypeContext.getLabel(locale);
 
-		LayoutDisplayPageMultiSelectionProvider<?>
-			layoutDisplayPageMultiSelectionProvider =
+		LayoutDisplayPageMultiSelectProvider<?>
+			layoutDisplayPageMultiSelectProvider =
 				_displayPageTypeContext.
-					getLayoutDisplayPageMultiSelectionProvider();
+					getLayoutDisplayPageMultiSelectProvider();
 
-		if (layoutDisplayPageMultiSelectionProvider != null) {
-			label = layoutDisplayPageMultiSelectionProvider.getPluralLabel(
-				locale);
+		if (layoutDisplayPageMultiSelectProvider != null) {
+			label = layoutDisplayPageMultiSelectProvider.getPluralLabel(locale);
 		}
 
 		return LanguageUtil.format(locale, "select-x", label);
@@ -153,7 +152,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			renderResponse
 		).setActionName(
 			() -> {
-				if (isMultiSelection()) {
+				if (isMultiSelect()) {
 					return "/navigation_menu" +
 						"/add_multiple_display_page_type_site_navigation_" +
 							"menu_item";
@@ -185,7 +184,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			new InfoItemItemSelectorReturnType());
 		itemSelectorCriterion.setItemType(
 			_displayPageTypeContext.getClassName());
-		itemSelectorCriterion.setMultiSelection(isMultiSelection());
+		itemSelectorCriterion.setMultiSelect(isMultiSelect());
 
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
@@ -395,13 +394,13 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	}
 
 	@Override
-	public boolean isMultiSelection() {
-		LayoutDisplayPageMultiSelectionProvider<?>
-			layoutDisplayPageMultiSelectionProvider =
+	public boolean isMultiSelect() {
+		LayoutDisplayPageMultiSelectProvider<?>
+			layoutDisplayPageMultiSelectProvider =
 				_displayPageTypeContext.
-					getLayoutDisplayPageMultiSelectionProvider();
+					getLayoutDisplayPageMultiSelectProvider();
 
-		if (layoutDisplayPageMultiSelectionProvider != null) {
+		if (layoutDisplayPageMultiSelectProvider != null) {
 			return true;
 		}
 

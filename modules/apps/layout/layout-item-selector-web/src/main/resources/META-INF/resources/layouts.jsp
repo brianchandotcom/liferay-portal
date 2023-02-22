@@ -34,7 +34,7 @@ LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (Lay
 	followURLOnTitleClick="<%= layoutItemSelectorViewDisplayContext.isFollowURLOnTitleClick() %>"
 	itemSelectorReturnType="<%= layoutItemSelectorViewDisplayContext.getItemSelectedReturnType() %>"
 	itemSelectorSaveEvent="<%= layoutItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
-	multiSelection="<%= layoutItemSelectorViewDisplayContext.isMultiSelection() %>"
+	multiSelect="<%= layoutItemSelectorViewDisplayContext.isMultiSelect() %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	privateLayout="<%= layoutItemSelectorViewDisplayContext.isPrivateLayout() %>"
 	showDraftLayouts="<%= layoutItemSelectorViewDisplayContext.isShowDraftPages() %>"

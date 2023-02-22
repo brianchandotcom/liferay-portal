@@ -129,7 +129,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
 									disabled="<%= journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle) %>"
-									verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, renderRequest, journalArticleItemSelectorViewDisplayContext.isMultiSelection()) %>"
+									verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, renderRequest, journalArticleItemSelectorViewDisplayContext.isMultiSelect()) %>"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
@@ -364,7 +364,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 </clay:container-fluid>
 
 <c:choose>
-	<c:when test="<%= journalArticleItemSelectorViewDisplayContext.isMultiSelection() %>">
+	<c:when test="<%= journalArticleItemSelectorViewDisplayContext.isMultiSelect() %>">
 		<aui:script use="liferay-search-container">
 			var searchContainer = Liferay.SearchContainer.get(
 				'<portlet:namespace />articles'

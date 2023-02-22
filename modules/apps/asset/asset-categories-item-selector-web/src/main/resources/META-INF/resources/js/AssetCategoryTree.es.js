@@ -49,7 +49,7 @@ export function AssetCategoryTree({
 	inheritSelection,
 	itemSelectedEventName,
 	items,
-	multiSelection,
+	multiSelect,
 	onItems,
 	onSelectedItemsCount,
 	selectedKeys,
@@ -110,7 +110,7 @@ export function AssetCategoryTree({
 		selectedKeys,
 		itemsById,
 		itemSelectedEventName,
-		multiSelection,
+		multiSelect,
 		onSelectedItemsCount,
 	]);
 
@@ -123,7 +123,7 @@ export function AssetCategoryTree({
 			return;
 		}
 
-		if (!multiSelection) {
+		if (!multiSelect) {
 			selection.toggle(item.id);
 
 			return;
@@ -143,7 +143,7 @@ export function AssetCategoryTree({
 				return;
 			}
 
-			if (!multiSelection) {
+			if (!multiSelect) {
 				selection.toggle(item.id);
 
 				return;
@@ -158,7 +158,7 @@ export function AssetCategoryTree({
 
 	return filteredItems.length ? (
 		<>
-			{multiSelection && (
+			{multiSelect && (
 				<p
 					className="mb-4"
 					dangerouslySetInnerHTML={{
@@ -180,7 +180,7 @@ export function AssetCategoryTree({
 				selectionMode={
 					inheritSelection
 						? 'multiple-recursive'
-						: multiSelection
+						: multiSelect
 						? 'multiple'
 						: 'single'
 				}
@@ -196,7 +196,7 @@ export function AssetCategoryTree({
 								onKeyDown(event, item, selection)
 							}
 						>
-							{multiSelection && !item.disabled && (
+							{multiSelect && !item.disabled && (
 								<Checkbox
 									checked={selection.has(item.id)}
 									onChange={(event) => {
@@ -228,7 +228,7 @@ export function AssetCategoryTree({
 										onKeyDown(event, item, selection)
 									}
 								>
-									{multiSelection && !item.disabled && (
+									{multiSelect && !item.disabled && (
 										<Checkbox
 											checked={selection.has(item.id)}
 											onChange={(event) => {

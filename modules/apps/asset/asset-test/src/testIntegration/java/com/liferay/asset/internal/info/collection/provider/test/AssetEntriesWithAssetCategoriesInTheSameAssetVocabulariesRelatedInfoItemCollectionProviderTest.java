@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -171,6 +172,68 @@ public class
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
+			InfoPage<AssetEntry> collectionInfoPage =
+				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
+					collectionQuery);
+
+			List<? extends AssetEntry> pageItems =
+				collectionInfoPage.getPageItems();
+
+			Assert.assertEquals(pageItems.toString(), 1, pageItems.size());
+
+			AssetEntry assetEntry = pageItems.get(0);
+
+			Assert.assertEquals(_getAssetEntry(journalArticle), assetEntry);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testGetCollectionInfoPageWithSameAssetCategoryNoLatestAsset()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory = _addAssetCategory(
+			_group, serviceContext, assetVocabulary);
+
+		JournalArticle journalArticle = _addJournalArticle(
+			assetCategory, serviceContext);
+		JournalArticle relatedJournalArticle = _addJournalArticle(
+			assetCategory, serviceContext);
+
+		CollectionQuery collectionQuery = new CollectionQuery();
+
+		collectionQuery.setRelatedItemObject(
+			_getAssetEntry(relatedJournalArticle));
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			JournalArticle updateJournalArticle = JournalTestUtil.updateArticle(
+				journalArticle, journalArticle.getTitleMap(),
+				journalArticle.getContent(), true, false,
+				ServiceContextTestUtil.getServiceContext());
+
+			int compare = Double.compare(
+				journalArticle.getVersion(), updateJournalArticle.getVersion());
+
+			Assert.assertTrue(compare < 0);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_DRAFT,
+				updateJournalArticle.getStatus());
+
 			InfoPage<AssetEntry> collectionInfoPage =
 				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
 					collectionQuery);

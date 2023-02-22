@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -502,6 +503,68 @@ public class
 				_getAssetEntry(
 					JournalArticle.class.getName(),
 					expectedJournalArticle2.getResourcePrimKey()));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testGetCollectionInfoPageWithSameAssetCategoryNoLatestAsset()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory = _addAssetCategory(
+			_group, serviceContext, assetVocabulary);
+
+		long[] assetCategoryIds = {assetCategory.getCategoryId()};
+
+		JournalArticle journalArticle = _addJournalArticle(
+			assetCategoryIds, serviceContext);
+		JournalArticle relatedJournalArticle = _addJournalArticle(
+			assetCategoryIds, serviceContext);
+
+		_reindex();
+
+		CollectionQuery collectionQuery = new CollectionQuery();
+
+		collectionQuery.setRelatedItemObject(
+			_getAssetEntry(
+				JournalArticle.class.getName(),
+				relatedJournalArticle.getResourcePrimKey()));
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			JournalArticle updateJournalArticle = JournalTestUtil.updateArticle(
+				journalArticle, journalArticle.getTitleMap(),
+				journalArticle.getContent(), true, false,
+				ServiceContextTestUtil.getServiceContext());
+
+			int compare = Double.compare(
+				journalArticle.getVersion(), updateJournalArticle.getVersion());
+
+			Assert.assertTrue(compare < 0);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_DRAFT,
+				updateJournalArticle.getStatus());
+
+			_assertInfoPage(
+				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
+					collectionQuery),
+				_getAssetEntry(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

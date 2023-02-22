@@ -15,8 +15,10 @@
 package com.liferay.asset.categories.info.collection.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
@@ -25,6 +27,7 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -133,6 +137,89 @@ public class
 				relatedItemsInfoPage.getPageItems();
 
 			Assert.assertEquals(pageItems.toString(), 2, pageItems.size());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testGetRelatedItemsInfoPageNoLatestAsset() throws Exception {
+		ServiceContext serviceContext = _getServiceContext();
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			AssetVocabulary assetVocabulary =
+				_assetVocabularyLocalService.addVocabulary(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					RandomTestUtil.randomString(), serviceContext);
+
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.addCategory(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					RandomTestUtil.randomString(),
+					assetVocabulary.getVocabularyId(), serviceContext);
+
+			serviceContext.setAssetCategoryIds(
+				new long[] {assetCategory.getCategoryId()});
+
+			JournalArticle journalArticle = JournalTestUtil.addArticle(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				serviceContext);
+
+			JournalArticle updateJournalArticle = JournalTestUtil.updateArticle(
+				journalArticle, journalArticle.getTitleMap(),
+				journalArticle.getContent(), true, false,
+				ServiceContextTestUtil.getServiceContext());
+
+			int compare = Double.compare(
+				journalArticle.getVersion(), updateJournalArticle.getVersion());
+
+			Assert.assertTrue(compare < 0);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_DRAFT,
+				updateJournalArticle.getStatus());
+
+			RelatedInfoItemCollectionProvider<AssetCategory, AssetEntry>
+				relatedInfoItemCollectionProvider =
+					_infoItemServiceRegistry.getInfoItemService(
+						RelatedInfoItemCollectionProvider.class,
+						StringBundler.concat(
+							"com.liferay.asset.categories.admin.web.internal.",
+							"info.collection.provider.",
+							"AssetEntriesWithSameAssetCategoryRelatedInfoItem",
+							"CollectionProvider"));
+
+			Assert.assertNotNull(relatedInfoItemCollectionProvider);
+
+			CollectionQuery collectionQuery = new CollectionQuery();
+
+			collectionQuery.setRelatedItemObject(assetCategory);
+
+			InfoPage<? extends AssetEntry> relatedItemsInfoPage =
+				relatedInfoItemCollectionProvider.getCollectionInfoPage(
+					collectionQuery);
+
+			Assert.assertNotNull(relatedItemsInfoPage);
+
+			List<? extends AssetEntry> pageItems =
+				relatedItemsInfoPage.getPageItems();
+
+			Assert.assertEquals(pageItems.toString(), 1, pageItems.size());
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						JournalArticle.class.getName());
+
+			Assert.assertEquals(
+				assetRendererFactory.getAssetEntry(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()),
+				pageItems.get(0));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

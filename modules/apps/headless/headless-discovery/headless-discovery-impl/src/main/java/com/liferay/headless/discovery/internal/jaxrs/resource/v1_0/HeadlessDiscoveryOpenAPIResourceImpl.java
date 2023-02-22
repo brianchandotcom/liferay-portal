@@ -255,7 +255,7 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 
 		String serverURL =
 			_portal.getPortalURL(_httpServletRequest) + _portal.getPathProxy() +
-				Portal.PATH_MODULE;
+				_portal.getPathContext() + Portal.PATH_MODULE;
 
 		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
 

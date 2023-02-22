@@ -95,6 +95,53 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title Edit");
 	}
 
+	@description = "This test covers LPS-171314. It ensures that the expiration label for Knowledge Base article works."
+	@priority = 4
+	test CanEnableArticleExpirationLabel {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property test.name.skip.portal.instance = "KBAdmin#CanEnableArticleExpirationLabel";
+
+		task ("Given the Notification Date is changed to 2 weeks") {
+			KBNavigator.openToConfigInSystemSettings(portlet = "System Service");
+
+			AssertTextEquals(
+				key_sectionTitle = "Article Expiration Date Notification",
+				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				value1 = "Define the timeline (in weeks) in which the user will receive a notification informing of an article expiration date. Articles within the specified expiration date will display the label \"Expiring Soon\" in the knowledge base management screen.");
+
+			Type(
+				key_text = "Notification Date (Weeks)",
+				locator1 = "TextInput#ANY",
+				value1 = 2);
+
+			Button.clickSave();
+		}
+
+		task ("When a Knowledge Base article is created that has expired and another that has not") {
+			KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+			KBArticle.addCP(
+				enableExpirationDate = "true",
+				kbArticleContent = "Knowledge Base Article Content",
+				kbArticleTitle = "Knowledge Base Article Title",
+				notificationDate = 7);
+
+			KBArticle.addCP(
+				enableExpirationDate = "true",
+				kbArticleContent = "Knowledge Base Article Content",
+				kbArticleTitle = "Knowledge Base Article Title 2",
+				notificationDate = 15);
+		}
+
+		task ("Then the first Knowledge Base article has the expiration label and the second does not") {
+			KBArticle.viewExpirationStatus(
+				kbArticleTitle = "Knowledge Base Article Title",
+				kbExpirationStatus = "Expiring Soon");
+
+			KBArticle.viewNoExpirationStatus(kbArticleTitle = "Knowledge Base Article Title 2");
+		}
+	}
+
 	@priority = 4
 	@refactordone
 	test CanRemoveParentArticle {

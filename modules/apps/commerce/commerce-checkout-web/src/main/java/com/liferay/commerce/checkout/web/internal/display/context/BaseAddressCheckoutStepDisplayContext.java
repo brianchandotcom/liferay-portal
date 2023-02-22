@@ -21,6 +21,8 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
@@ -69,6 +71,8 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		this.commerceChannelLocalService = commerceChannelLocalService;
 		this.portletResourcePermission = portletResourcePermission;
 
+		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT);
 		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 	}
@@ -84,6 +88,10 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 			_commerceOrder.getCompanyId(), AccountEntry.class.getName(),
 			_commerceOrder.getCommerceAccountId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new CommerceAddressNameComparator());
+	}
+
+	public CommerceContext getCommerceContext() {
+		return _commerceContext;
 	}
 
 	public abstract String getCommerceCountrySelectionColumnName();
@@ -234,6 +242,7 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 	protected final CommerceChannelLocalService commerceChannelLocalService;
 	protected PortletResourcePermission portletResourcePermission;
 
+	private final CommerceContext _commerceContext;
 	private final CommerceOrder _commerceOrder;
 
 }

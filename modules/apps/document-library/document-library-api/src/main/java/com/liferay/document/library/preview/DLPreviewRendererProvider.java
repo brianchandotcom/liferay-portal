@@ -16,7 +16,6 @@ package com.liferay.document.library.preview;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
-import java.util.Optional;
 import java.util.Set;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -42,40 +41,7 @@ public interface DLPreviewRendererProvider {
 	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion);
 
-	/**
-	 * Returns the DL preview renderer responsible for rendering the file
-	 * preview. If no such provider exists, the default preview is rendered.
-	 *
-	 * @param      fileVersion the file version to preview
-	 * @return     the optional DL preview renderer
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getPreviewDLPreviewRenderer(FileVersion)}
-	 */
-	@Deprecated
-	public default Optional<DLPreviewRenderer>
-		getPreviewDLPreviewRendererOptional(FileVersion fileVersion) {
-
-		return Optional.ofNullable(getPreviewDLPreviewRenderer(fileVersion));
-	}
-
 	public DLPreviewRenderer getThumbnailDLPreviewRenderer(
 		FileVersion fileVersion);
-
-	/**
-	 * Returns the DL preview renderer responsible for rendering the file
-	 * thumbnail in the card view. If no such provider exists, the default
-	 * thumbnail is rendered.
-	 *
-	 * @param      fileVersion the file version to preview
-	 * @return     the optional DL preview renderer
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getThumbnailDLPreviewRenderer(FileVersion)}
-	 */
-	@Deprecated
-	public default Optional<DLPreviewRenderer>
-		getThumbnailDLPreviewRendererOptional(FileVersion fileVersion) {
-
-		return Optional.ofNullable(getThumbnailDLPreviewRenderer(fileVersion));
-	}
 
 }

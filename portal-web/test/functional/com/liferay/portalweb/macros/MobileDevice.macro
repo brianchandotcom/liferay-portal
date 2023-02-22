@@ -72,7 +72,7 @@ definition {
 			takeScreenshot();
 
 			Click(
-				key_deviceType = "SmarkPhone",
+				key_deviceType = "Mobile",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");

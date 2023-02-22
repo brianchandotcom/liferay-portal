@@ -352,7 +352,7 @@ definition {
 			SelectFrameTop();
 
 			Click(
-				key_deviceType = "Smartphone",
+				key_deviceType = "Mobile",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(
@@ -649,7 +649,7 @@ definition {
 			SelectFrameTop();
 
 			Click(
-				key_deviceType = "Smartphone",
+				key_deviceType = "Mobile",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(

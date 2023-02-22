@@ -44,7 +44,18 @@ import org.dom4j.Element;
  */
 public final class SummaryLogger {
 
-	public static SummaryLogger getSummaryLogger(
+	public static void clear(String testNamespacedClassCommandName) {
+		if (_summaryLoggers.containsKey(testNamespacedClassCommandName)) {
+			SummaryLogger summaryLogger = _summaryLoggers.get(
+				testNamespacedClassCommandName);
+
+			summaryLogger.stopRunning();
+
+			_summaryLoggers.remove(testNamespacedClassCommandName);
+		}
+	}
+
+	public static synchronized SummaryLogger getSummaryLogger(
 		String testNamespacedClassCommandName) {
 
 		if (!_summaryLoggers.containsKey(testNamespacedClassCommandName)) {

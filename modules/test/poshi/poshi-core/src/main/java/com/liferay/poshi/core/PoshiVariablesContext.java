@@ -30,7 +30,13 @@ import java.util.regex.Pattern;
  */
 public class PoshiVariablesContext {
 
-	public static PoshiVariablesContext getPoshiVariablesContext(
+	public static void clear(String classCommandName) {
+		if (_poshiVariablesContexts.containsKey(classCommandName)) {
+			_poshiVariablesContexts.remove(classCommandName);
+		}
+	}
+
+	public static synchronized PoshiVariablesContext getPoshiVariablesContext(
 		String classCommandName) {
 
 		if (!_poshiVariablesContexts.containsKey(classCommandName)) {
@@ -39,13 +45,6 @@ public class PoshiVariablesContext {
 		}
 
 		return _poshiVariablesContexts.get(classCommandName);
-	}
-
-	public void clear() {
-		_commandMap.clear();
-		_commandMapStack.clear();
-		_executeMap.clear();
-		_staticMap.clear();
 	}
 
 	public boolean containsKeyInCommandMap(String key) {

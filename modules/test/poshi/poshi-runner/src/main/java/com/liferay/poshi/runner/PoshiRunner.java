@@ -19,6 +19,7 @@ import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.PoshiStackTrace;
 import com.liferay.poshi.core.PoshiValidation;
+import com.liferay.poshi.core.PoshiVariablesContext;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.PropsValues;
@@ -233,11 +234,13 @@ public class PoshiRunner {
 				ProxyUtil.stopBrowserMobProxy();
 			}
 
-			_summaryLogger.stopRunning();
-
 			_poshiLogger.createPoshiReport();
 
 			WebDriverUtil.stopWebDriver(_testNamespacedClassCommandName);
+
+			PoshiStackTrace.clear(_testNamespacedClassCommandName);
+			PoshiVariablesContext.clear(_testNamespacedClassCommandName);
+			SummaryLogger.clear(_testNamespacedClassCommandName);
 		}
 
 		if (!PropsValues.LIFERAY_DATA_GUARD_ENABLED) {

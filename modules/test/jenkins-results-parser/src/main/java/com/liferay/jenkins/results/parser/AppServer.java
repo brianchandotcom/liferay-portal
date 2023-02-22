@@ -134,7 +134,7 @@ public class AppServer {
 			"app.server.max.log.size.in.mb");
 
 		if (appServerMaxLogSizeInMB == null) {
-			appServerMaxLogSizeInMB = "5";
+			appServerMaxLogSizeInMB = "1";
 		}
 
 		return Long.valueOf(appServerMaxLogSizeInMB) * 1024 * 1024;

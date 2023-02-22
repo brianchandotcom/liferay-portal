@@ -130,7 +130,6 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Wiki Node",
-				changeOrder = 1,
 				changeSite = "Guest",
 				changeTitle = "WIKI NODE",
 				changeType = "Modified",
@@ -138,10 +137,17 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Wiki Page",
+				changeSite = "Guest",
+				changeTitle = "Wiki Page Test (1.0)",
+				changeType = "Modified",
+				changeUser = "Test Test");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Wiki Page",
 				changeOrder = 2,
 				changeSite = "Guest",
-				changeTitle = "Wiki Page Test",
-				changeType = "Modified",
+				changeTitle = "Wiki Page Test (1.1)",
+				changeType = "Added",
 				changeUser = "Test Test");
 		}
 

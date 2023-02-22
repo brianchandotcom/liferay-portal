@@ -29,6 +29,8 @@ import com.liferay.object.internal.upgrade.v3_24_0.ObjectFieldSettingUpgradeProc
 import com.liferay.object.internal.upgrade.v3_27_0.ObjectActionUpgradeProcess;
 import com.liferay.object.internal.upgrade.v3_3_0.util.ObjectViewFilterColumnTable;
 import com.liferay.object.internal.upgrade.v3_9_0.ObjectLayoutBoxUpgradeProcess;
+import com.liferay.object.internal.upgrade.v4_0_1.CleanObjectEntriesWithNonExistentGroupIdUpgradeProcess;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -265,7 +267,15 @@ public class ObjectServiceUpgradeStepRegistrator
 				"ObjectAction", "description", "VARCHAR(75) null"),
 			UpgradeProcessFactory.alterColumnType(
 				"ObjectValidationRule", "script", "TEXT null"));
+
+		registry.register(
+			"4.0.0", "4.0.1",
+			new CleanObjectEntriesWithNonExistentGroupIdUpgradeProcess(
+				_objectEntryLocalService));
 	}
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private PortalUUID _portalUUID;

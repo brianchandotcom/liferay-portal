@@ -5605,12 +5605,22 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		if (isSet(placeholder)) {
-			AssertAttributeValue(
-				attribute1 = "placeholder",
-				index = ${position},
-				locator1 = "Fragment#INPUT_FIELD",
-				type = ${type},
-				value1 = ${placeholder});
+			if (${type} == "textarea") {
+				AssertAttributeValue(
+					attribute1 = "placeholder",
+					index = ${position},
+					locator1 = "Fragment#TEXTAREA_FIELD",
+					type = ${type},
+					value1 = ${placeholder});
+			}
+			else {
+				AssertAttributeValue(
+					attribute1 = "placeholder",
+					index = ${position},
+					locator1 = "Fragment#INPUT_FIELD",
+					type = ${type},
+					value1 = ${placeholder});
+			}
 		}
 
 		if (isSet(markAsRequired)) {

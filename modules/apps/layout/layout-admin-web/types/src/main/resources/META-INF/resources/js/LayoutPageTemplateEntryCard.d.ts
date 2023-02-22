@@ -17,8 +17,8 @@
 interface IProps {
 	addLayoutURL: string;
 	portletNamespace: string;
-	previewURL: string;
 	subtitle: string;
+	thumbnailURL: string;
 	title: string;
 }
 export default function LayoutPageTemplateEntryCard({

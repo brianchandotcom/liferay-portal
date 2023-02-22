@@ -19,8 +19,8 @@ import {KeyboardEvent, default as React} from 'react';
 interface IProps {
 	addLayoutURL: string;
 	portletNamespace: string;
-	previewURL: string;
 	subtitle: string;
+	thumbnailURL: string;
 	title: string;
 }
 

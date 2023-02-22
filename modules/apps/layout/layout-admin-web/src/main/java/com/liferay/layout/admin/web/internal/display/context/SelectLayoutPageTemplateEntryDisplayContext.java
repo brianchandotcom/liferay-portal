@@ -163,9 +163,6 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 				LiferayWindowState.POP_UP
 			).buildString()
 		).put(
-			"previewURL",
-			layoutPageTemplateEntry.getImagePreviewURL(_themeDisplay)
-		).put(
 			"subtitle",
 			() -> {
 				if (Objects.equals(
@@ -180,6 +177,9 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 				return LanguageUtil.get(
 					_httpServletRequest, "content-page-template");
 			}
+		).put(
+			"thumbnailURL",
+			layoutPageTemplateEntry.getImagePreviewURL(_themeDisplay)
 		).put(
 			"title", HtmlUtil.escape(layoutPageTemplateEntry.getName())
 		).build();

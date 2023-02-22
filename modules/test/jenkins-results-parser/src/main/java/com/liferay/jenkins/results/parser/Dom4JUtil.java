@@ -422,11 +422,16 @@ public class Dom4JUtil {
 
 		JenkinsResultsParserUtil.toFile(url, entitiesFile);
 
-		JenkinsResultsParserUtil.executeBashCommands(
-			"sed -ni '/^  \"&/s/\"&\\([^;\"]*\\)[^0-9]*\\[\\([0-9]*\\)\\]." +
-				"*/<!ENTITY \\1 \"\\&#\\2;\">/p' " + entitiesFile);
+		String entities = JenkinsResultsParserUtil.read(entitiesFile);
 
-		return JenkinsResultsParserUtil.read(entitiesFile);
+		entities = entities.replaceAll(
+			"\\\"\\&([\\w]+);?\\\": \\{ \\\"[\\w]+\\\": \\[(\\d+)(, " +
+				"\\d+)?\\], \\\"[\\w]+\\\": \\\"[\\\\\\w\\d]+\\\" },?",
+			"<!ENTITY $1 \"\\&#$2;\">");
+
+		entities = entities.replaceAll("([{|}])", "");
+
+		return entities;
 	}
 
 }

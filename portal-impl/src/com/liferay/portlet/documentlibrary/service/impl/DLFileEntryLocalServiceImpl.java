@@ -170,6 +170,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -2084,6 +2085,7 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setChangeLog(changeLog);
 		dlFileVersion.setExtraSettings(extraSettings);
 		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
+		dlFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setSize(size);
 		dlFileVersion.setExpirationDate(expirationDate);
@@ -3140,6 +3142,7 @@ public class DLFileEntryLocalServiceImpl
 			latestDLFileVersion.getExtraSettings());
 		lastDLFileVersion.setFileEntryTypeId(
 			latestDLFileVersion.getFileEntryTypeId());
+		lastDLFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		lastDLFileVersion.setSize(latestDLFileVersion.getSize());
 		lastDLFileVersion.setExpirationDate(
 			latestDLFileVersion.getExpirationDate());
@@ -3425,6 +3428,7 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setChangeLog(changeLog);
 		dlFileVersion.setExtraSettings(extraSettings);
 		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
+		dlFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setSize(size);
 		dlFileVersion.setSize(size);

@@ -12,6 +12,23 @@ definition {
 			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
 	}
 
+	macro assertDownloadedFile {
+		var tempDir = PropsUtil.get("output.dir.name");
+
+		var downloadedFilePath = "${tempDir}/${downloadedFileName}";
+
+		var fileExists = FileUtil.exists(${downloadedFilePath});
+
+		if (${fileExists} == "true") {
+			echo("File named ${downloadedFileName} was downloaded.");
+		}
+		else {
+			echo("Files named ${downloadedFileName}  NOT FOUND in folder ${tempDir}!");
+		}
+
+		return ${fileExists};
+	}
+
 	macro checkSuccessAlertAppearsAndDisappears {
 		WaitForElementPresent(locator1 = "Message#SUCCESS");
 

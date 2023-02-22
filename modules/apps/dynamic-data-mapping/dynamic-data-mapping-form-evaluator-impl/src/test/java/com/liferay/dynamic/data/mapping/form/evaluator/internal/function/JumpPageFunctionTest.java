@@ -61,15 +61,8 @@ public class JumpPageFunctionTest {
 
 		Assert.assertEquals("jumpPage", executeActionRequest.getAction());
 		Assert.assertEquals(
-			1,
-			executeActionRequest.getParameterOptional(
-				"from"
-			).get());
-		Assert.assertEquals(
-			3,
-			executeActionRequest.getParameterOptional(
-				"to"
-			).get());
+			1, (Object)executeActionRequest.getParameter("from"));
+		Assert.assertEquals(3, (Object)executeActionRequest.getParameter("to"));
 
 		Assert.assertTrue(result);
 	}

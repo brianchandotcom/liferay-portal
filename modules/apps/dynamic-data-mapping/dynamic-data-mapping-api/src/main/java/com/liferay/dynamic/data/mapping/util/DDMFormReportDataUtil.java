@@ -46,7 +46,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.stream.Stream;
 
 /**
  * @author Bruno Farache
@@ -71,17 +70,16 @@ public class DDMFormReportDataUtil {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		Set<String> set = ddmFormFieldsMap.keySet();
+		for (Map.Entry<String, DDMFormField> entry :
+				ddmFormFieldsMap.entrySet()) {
 
-		Stream<String> stream = set.stream();
+			DDMFormField ddmFormField = entry.getValue();
 
-		stream.map(
-			ddmFormFieldName -> ddmFormFieldsMap.get(ddmFormFieldName)
-		).filter(
-			ddmFormField -> !StringUtil.equals(
-				ddmFormField.getType(), "fieldset")
-		).forEach(
-			ddmFormField -> fieldsJSONArray.put(
+			if (StringUtil.equals(ddmFormField.getType(), "fieldset")) {
+				continue;
+			}
+
+			fieldsJSONArray.put(
 				JSONUtil.put(
 					"columns",
 					_getPropertyLabelsJSONObject(ddmFormField, "columns")
@@ -97,8 +95,8 @@ public class DDMFormReportDataUtil {
 					"rows", _getPropertyLabelsJSONObject(ddmFormField, "rows")
 				).put(
 					"type", ddmFormField.getType()
-				))
-		);
+				));
+		}
 
 		return fieldsJSONArray;
 	}
@@ -214,25 +212,25 @@ public class DDMFormReportDataUtil {
 			LocalizedValue visibleFields =
 				(LocalizedValue)ddmFormField.getProperty("visibleFields");
 
-			Stream.of(
-				StringUtil.split(
-					StringUtil.removeChars(
-						GetterUtil.getString(
-							visibleFields.getString(
-								visibleFields.getDefaultLocale())),
-						CharPool.CLOSE_BRACKET, CharPool.OPEN_BRACKET,
-						CharPool.QUOTE))
-			).map(
-				String::trim
-			).forEach(
-				visibleField -> jsonObject.put(
+			for (String visibleField :
+					StringUtil.split(
+						StringUtil.removeChars(
+							GetterUtil.getString(
+								visibleFields.getString(
+									visibleFields.getDefaultLocale())),
+							CharPool.CLOSE_BRACKET, CharPool.OPEN_BRACKET,
+							CharPool.QUOTE))) {
+
+				visibleField = visibleField.trim();
+
+				jsonObject.put(
 					visibleField,
 					LanguageUtil.get(
 						ResourceBundleUtil.getModuleAndPortalResourceBundle(
 							visibleFields.getDefaultLocale(),
 							DDMFormReportDataUtil.class),
-						visibleField))
-			);
+						visibleField));
+			}
 
 			return jsonObject.toString();
 		}

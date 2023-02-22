@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import java.math.BigDecimal;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.Collections;
 
 /**
  * @author Rafael Praxedes
@@ -29,11 +29,7 @@ public class MaxFunction
 
 	@Override
 	public BigDecimal apply(BigDecimal[] numbers) {
-		Stream<BigDecimal> stream = Arrays.stream(numbers);
-
-		return stream.max(
-			BigDecimal::compareTo
-		).get();
+		return Collections.max(Arrays.asList(numbers));
 	}
 
 	@Override

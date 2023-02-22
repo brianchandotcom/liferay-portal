@@ -60,128 +60,24 @@ public class TaxonomyCategoryResourceTest
 	public void testPatchTaxonomyCategory() throws Exception {
 		super.testPatchTaxonomyCategory();
 
-		// Patch parent taxonomy category
+		_testPatchTaxonomyCategoryWithExistingParentTaxonomyCategory(
+			testPatchTaxonomyCategory_addTaxonomyCategory(),
+			_addAssetVocabulary());
 
-		TaxonomyCategory taxonomyCategory1 =
-			testPatchTaxonomyCategory_addTaxonomyCategory();
+		_testPatchTaxonomyCategoryWithinExistentParentTaxonomyCategory(
+			randomTaxonomyCategory(),
+			testPatchTaxonomyCategory_addTaxonomyCategory());
 
-		AssetVocabulary assetVocabulary = _addAssetVocabulary();
+		_testPatchTaxonomyCategoryWithinExistentParentTaxonomyVocabulary(
+			testPatchTaxonomyCategory_addTaxonomyCategory(),
+			_randomTaxonomyVocabulary());
 
-		taxonomyCategoryResource.patchTaxonomyCategory(
-			taxonomyCategory1.getId(),
-			new TaxonomyCategory() {
-				{
-					taxonomyVocabularyId = assetVocabulary.getVocabularyId();
-				}
-			});
+		AssetVocabulary assetVocabulary1 = _addAssetVocabulary();
+		AssetVocabulary assetVocabulary2 = _addAssetVocabulary();
 
-		TaxonomyCategory patchParentTaxonomyCategory =
-			taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
-				assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
-
-		TaxonomyCategory patchTaxonomyCategory =
-			taxonomyCategoryResource.patchTaxonomyCategory(
-				taxonomyCategory1.getId(),
-				new TaxonomyCategory() {
-					{
-						parentTaxonomyCategory = new ParentTaxonomyCategory() {
-							{
-								setId(
-									Long.valueOf(
-										patchParentTaxonomyCategory.getId()));
-							}
-						};
-					}
-				});
-
-		Assert.assertEquals(
-			patchTaxonomyCategory.getTaxonomyVocabularyId(),
-			Long.valueOf(assetVocabulary.getVocabularyId()));
-
-		ParentTaxonomyCategory parentTaxonomyCategory =
-			patchTaxonomyCategory.getParentTaxonomyCategory();
-
-		Assert.assertEquals(
-			parentTaxonomyCategory.getId(),
-			Long.valueOf(patchParentTaxonomyCategory.getId()));
-
-		// Patch nonexistent parent taxonomy vocabulary
-
-		TaxonomyVocabulary irrelevantTaxonomyVocabulary =
-			_randomTaxonomyVocabulary();
-
-		taxonomyCategory1 = testPatchTaxonomyCategory_addTaxonomyCategory();
-
-		assertHttpResponseStatusCode(
-			404,
-			taxonomyCategoryResource.patchTaxonomyCategoryHttpResponse(
-				taxonomyCategory1.getId(),
-				new TaxonomyCategory() {
-					{
-						taxonomyVocabularyId =
-							irrelevantTaxonomyVocabulary.getId();
-					}
-				}));
-
-		// Patch nonexistent parent taxonomy category
-
-		TaxonomyCategory irrelevantTaxonomyCategory = randomTaxonomyCategory();
-
-		taxonomyCategory1 = testPatchTaxonomyCategory_addTaxonomyCategory();
-
-		assertHttpResponseStatusCode(
-			404,
-			taxonomyCategoryResource.patchTaxonomyCategoryHttpResponse(
-				taxonomyCategory1.getId(),
-				new TaxonomyCategory() {
-					{
-						parentTaxonomyCategory = new ParentTaxonomyCategory() {
-							{
-								setId(
-									Long.valueOf(
-										irrelevantTaxonomyCategory.getId()));
-							}
-						};
-					}
-				}));
-
-		// Patch parent taxonomy category with a different taxonomy vocabulary
-
-		_assetVocabulary = _addAssetVocabulary();
-
-		AssetVocabulary parentAssetVocabulary = _assetVocabulary;
-
-		taxonomyCategory1 = testPatchTaxonomyCategory_addTaxonomyCategory();
-
-		_assetVocabulary = _addAssetVocabulary();
-
-		TaxonomyCategory taxonomyCategory2 =
-			testPatchTaxonomyCategory_addTaxonomyCategory();
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.WARN)) {
-
-			assertHttpResponseStatusCode(
-				400,
-				taxonomyCategoryResource.patchTaxonomyCategoryHttpResponse(
-					taxonomyCategory1.getId(),
-					new TaxonomyCategory() {
-						{
-							parentTaxonomyCategory =
-								new ParentTaxonomyCategory() {
-									{
-										setId(
-											Long.valueOf(
-												taxonomyCategory2.getId()));
-									}
-								};
-							taxonomyVocabularyId =
-								parentAssetVocabulary.getVocabularyId();
-						}
-					}));
-		}
+		_testPatchTaxonomyCategoryWithParentTaxonomyCategoryInADifferentTaxonomyVocabulary(
+			_addTaxonomyCategoryWithParentAssetVocabulary(assetVocabulary1),
+			_addTaxonomyCategoryWithParentAssetVocabulary(assetVocabulary2));
 	}
 
 	@Override
@@ -194,6 +90,7 @@ public class TaxonomyCategoryResourceTest
 		TaxonomyCategory taxonomyCategory = super.randomTaxonomyCategory();
 
 		taxonomyCategory.setId(String.valueOf(RandomTestUtil.randomLong()));
+
 		taxonomyCategory.setTaxonomyVocabularyId(
 			_assetVocabulary.getVocabularyId());
 
@@ -336,6 +233,14 @@ public class TaxonomyCategoryResourceTest
 			new ServiceContext());
 	}
 
+	private TaxonomyCategory _addTaxonomyCategoryWithParentAssetVocabulary(
+			AssetVocabulary assetVocabulary)
+		throws Exception {
+
+		return taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+			assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
+	}
+
 	private TaxonomyVocabulary _randomTaxonomyVocabulary() {
 		return new TaxonomyVocabulary() {
 			{
@@ -356,6 +261,123 @@ public class TaxonomyCategoryResourceTest
 				siteId = testGroup.getGroupId();
 			}
 		};
+	}
+
+	private void _testPatchTaxonomyCategoryWithExistingParentTaxonomyCategory(
+			TaxonomyCategory taxonomyCategory, AssetVocabulary assetVocabulary)
+		throws Exception {
+
+		taxonomyCategoryResource.patchTaxonomyCategory(
+			taxonomyCategory.getId(),
+			new TaxonomyCategory() {
+				{
+					taxonomyVocabularyId = assetVocabulary.getVocabularyId();
+				}
+			});
+
+		TaxonomyCategory patchParentTaxonomyCategory =
+			taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+				assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
+
+		TaxonomyCategory patchTaxonomyCategory =
+			taxonomyCategoryResource.patchTaxonomyCategory(
+				taxonomyCategory.getId(),
+				new TaxonomyCategory() {
+					{
+						parentTaxonomyCategory = new ParentTaxonomyCategory() {
+							{
+								setId(
+									Long.valueOf(
+										patchParentTaxonomyCategory.getId()));
+							}
+						};
+					}
+				});
+
+		Assert.assertEquals(
+			patchTaxonomyCategory.getTaxonomyVocabularyId(),
+			Long.valueOf(assetVocabulary.getVocabularyId()));
+
+		ParentTaxonomyCategory parentTaxonomyCategory =
+			patchTaxonomyCategory.getParentTaxonomyCategory();
+
+		Assert.assertEquals(
+			parentTaxonomyCategory.getId(),
+			Long.valueOf(patchParentTaxonomyCategory.getId()));
+	}
+
+	private void _testPatchTaxonomyCategoryWithinExistentParentTaxonomyCategory(
+			TaxonomyCategory irrelevantTaxonomyCategory,
+			TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.patchTaxonomyCategoryHttpResponse(
+				taxonomyCategory.getId(),
+				new TaxonomyCategory() {
+					{
+						parentTaxonomyCategory = new ParentTaxonomyCategory() {
+							{
+								setId(
+									Long.valueOf(
+										irrelevantTaxonomyCategory.getId()));
+							}
+						};
+					}
+				}));
+	}
+
+	private void
+			_testPatchTaxonomyCategoryWithinExistentParentTaxonomyVocabulary(
+				TaxonomyCategory taxonomyCategory,
+				TaxonomyVocabulary irrelevantTaxonomyVocabulary)
+		throws Exception {
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.patchTaxonomyCategoryHttpResponse(
+				taxonomyCategory.getId(),
+				new TaxonomyCategory() {
+					{
+						taxonomyVocabularyId =
+							irrelevantTaxonomyVocabulary.getId();
+					}
+				}));
+	}
+
+	private void
+			_testPatchTaxonomyCategoryWithParentTaxonomyCategoryInADifferentTaxonomyVocabulary(
+				TaxonomyCategory taxonomyCategory1,
+				TaxonomyCategory taxonomyCategory2)
+		throws Exception {
+
+		Long taxonomyVocabularyId1 =
+			taxonomyCategory1.getTaxonomyVocabularyId();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.WARN)) {
+
+			assertHttpResponseStatusCode(
+				400,
+				taxonomyCategoryResource.patchTaxonomyCategoryHttpResponse(
+					taxonomyCategory1.getId(),
+					new TaxonomyCategory() {
+						{
+							parentTaxonomyCategory =
+								new ParentTaxonomyCategory() {
+									{
+										setId(
+											Long.valueOf(
+												taxonomyCategory2.getId()));
+									}
+								};
+							taxonomyVocabularyId = taxonomyVocabularyId1;
+						}
+					}));
+		}
 	}
 
 	private AssetVocabulary _assetVocabulary;

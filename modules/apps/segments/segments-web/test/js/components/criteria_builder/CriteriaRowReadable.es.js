@@ -20,93 +20,22 @@ import {dateToInternationalHuman} from '../../../../src/main/resources/META-INF/
 
 import '@testing-library/jest-dom/extend-expect';
 
+import {
+	booleanCriterion,
+	booleanProperty,
+	collectionCriterion,
+	collectionProperty,
+	dateCriterion,
+	dateProperty,
+	doubleCriterion,
+	doubleProperty,
+	entityCriterion,
+	entityProperty,
+	stringCriterion,
+	stringProperty,
+} from '../../mockData';
+
 const equalsOperator = {label: 'Equals', name: 'eq'};
-
-const stringCriterion = {
-	operatorName: 'eq',
-	propertyName: 'firstName',
-	value: 'string value',
-};
-
-const stringProperty = {
-	label: 'First Name',
-	name: 'firstName',
-	options: [],
-	type: 'string',
-};
-
-const booleanCriterion = {
-	operatorName: 'eq',
-	propertyName: 'signedIn',
-	value: 'true',
-};
-
-const booleanProperty = {
-	label: 'Signed In',
-	name: 'signedIn',
-	options: [],
-	type: 'boolean',
-};
-
-const dateCriterion = {
-	operatorName: 'eq',
-	propertyName: 'birthDate',
-	value: '2023-09-22',
-};
-
-const dateProperty = {
-	label: 'Date of Birth',
-	name: 'birthDate',
-	options: [],
-	type: 'date',
-};
-
-const entityCriterion = {
-	displayValue: 'Liferay DXP',
-	operatorName: 'eq',
-	propertyName: 'groupIds',
-	unknownEntity: false,
-	value: '20121',
-};
-
-const entityProperty = {
-	label: 'Site',
-	name: 'groupIds',
-	options: [],
-	selectEntity: {
-		id: 'selectEntity',
-		multiple: false,
-		title: 'Select Site',
-		uri: 'http://localhost:8080/test',
-	},
-	type: 'id',
-};
-
-const collectionCriterion = {
-	operatorName: 'eq',
-	propertyName: 'cookies',
-	value: 'key_name=key_value',
-};
-
-const collectionProperty = {
-	label: 'Cookies',
-	name: 'cookies',
-	options: [],
-	type: 'collection',
-};
-
-const doubleCriterion = {
-	operatorName: 'eq',
-	propertyName: 'deviceScreenResolutionHeight',
-	value: '700.00',
-};
-
-const doubleProperty = {
-	label: 'Device Screen Resolution Height',
-	name: 'deviceScreenResolutionHeight',
-	options: [],
-	type: 'double',
-};
 
 const eventCriterion = {
 	assetId: '545188693724480037',

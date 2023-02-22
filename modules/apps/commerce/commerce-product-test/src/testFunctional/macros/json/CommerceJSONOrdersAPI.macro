@@ -512,4 +512,32 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
+	macro getOrderField {
+		Variables.assertDefined(parameterList = "${jsonPath},${orderId}");
+
+		var response = CommerceJSONOrdersAPI._getOrderById(
+			email = ${email},
+			orderId = ${orderId},
+			parameter = ${parameter},
+			parameterValue = ${parameterValue},
+			password = ${password});
+
+		var fieldValue = JSONUtil.getWithJSONPath(${response}, ${jsonPath});
+
+		return ${fieldValue};
+	}
+
+	macro getOrderItemField {
+		Variables.assertDefined(parameterList = "${jsonPath},${orderId}");
+
+		var response = CommerceJSONOrdersAPI._getOrderItemById(
+			email = ${email},
+			orderId = ${orderId},
+			password = ${password});
+
+		var fieldValue = JSONUtil.getWithJSONPath(${response}, ${jsonPath});
+
+		return ${fieldValue};
+	}
+
 }

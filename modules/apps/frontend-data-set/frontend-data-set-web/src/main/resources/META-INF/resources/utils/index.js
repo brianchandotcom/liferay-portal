@@ -232,10 +232,13 @@ export async function loadData(
 
 	const url = new URL(fullUrl);
 
+	if (currentURL) {
+		url.searchParams.set('currentURL', currentURL);
+	}
+
 	const providedFilters = url.searchParams.get('filter');
 
 	url.searchParams.delete('filter');
-	url.searchParams.append('currentURL', currentURL);
 
 	if (providedFilters || odataFiltersStrings.length) {
 		url.searchParams.append(

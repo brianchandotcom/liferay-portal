@@ -39,8 +39,8 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _followURLOnTitleClick;
 	}
 
-	public boolean isMultiSelection() {
-		return _multiSelection;
+	public boolean isMultiSelect() {
+		return _multiSelect;
 	}
 
 	public boolean isShowActionsMenu() {
@@ -79,8 +79,8 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_followURLOnTitleClick = followURLOnTitleClick;
 	}
 
-	public void setMultiSelection(boolean multiSelection) {
-		_multiSelection = multiSelection;
+	public void setMultiSelect(boolean multiSelect) {
+		_multiSelect = multiSelect;
 	}
 
 	public void setShowActionsMenu(boolean showActionsMenu) {
@@ -110,7 +110,7 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private boolean _checkDisplayPage;
 	private boolean _enableCurrentPage;
 	private boolean _followURLOnTitleClick;
-	private boolean _multiSelection;
+	private boolean _multiSelect;
 	private boolean _showActionsMenu;
 	private boolean _showBreadcrumb;
 	private boolean _showDraftPages;

@@ -70,7 +70,7 @@ public interface ItemSelectorViewDescriptor<T> {
 		return null;
 	}
 
-	public default boolean isMultipleSelection() {
+	public default boolean isMultiSelect() {
 		return false;
 	}
 

@@ -1426,7 +1426,7 @@ public class ContentPageEditorDisplayContext {
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
-		layoutItemSelectorCriterion.setMultiSelection(false);
+		layoutItemSelectorCriterion.setMultiSelect(false);
 		layoutItemSelectorCriterion.setShowHiddenPages(true);
 		layoutItemSelectorCriterion.setShowPrivatePages(true);
 

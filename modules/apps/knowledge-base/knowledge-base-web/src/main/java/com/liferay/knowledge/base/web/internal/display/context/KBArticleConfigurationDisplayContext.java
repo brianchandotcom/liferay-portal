@@ -244,7 +244,7 @@ public class KBArticleConfigurationDisplayContext {
 			new InfoItemItemSelectorCriterion();
 
 		infoItemItemSelectorCriterion.setItemType(KBArticle.class.getName());
-		infoItemItemSelectorCriterion.setMultiSelection(false);
+		infoItemItemSelectorCriterion.setMultiSelect(false);
 		infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoItemItemSelectorReturnType());
 

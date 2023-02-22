@@ -229,7 +229,7 @@ public interface SiteNavigationMenuItemType {
 		return false;
 	}
 
-	public default boolean isMultiSelection() {
+	public default boolean isMultiSelect() {
 		return false;
 	}
 

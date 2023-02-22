@@ -22,7 +22,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.HierarchicalInfoItemReference;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectProvider;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -51,9 +51,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = LayoutDisplayPageMultiSelectionProvider.class)
-public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
-	implements LayoutDisplayPageMultiSelectionProvider<AssetCategory> {
+@Component(service = LayoutDisplayPageMultiSelectProvider.class)
+public class AssetCategoryLayoutDisplayPageMultiSelectProvider
+	implements LayoutDisplayPageMultiSelectProvider<AssetCategory> {
 
 	@Override
 	public String getClassName() {

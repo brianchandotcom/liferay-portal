@@ -70,7 +70,7 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"itemSelectedEventName", _itemSelectedEventName
 		).put(
-			"multiSelection", _infoItemItemSelectorCriterion.isMultiSelection()
+			"multiSelect", _infoItemItemSelectorCriterion.isMultiSelect()
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(

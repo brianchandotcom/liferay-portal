@@ -28,7 +28,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderRegistry;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -117,8 +117,8 @@ public class SiteNavigationMenuItemDisplayPageTest {
 	}
 
 	@Test
-	public void testDisplayPageTypeMultiSelection() throws Exception {
-		ServiceRegistration<LayoutDisplayPageMultiSelectionProvider>
+	public void testDisplayPageTypeMultiSelect() throws Exception {
+		ServiceRegistration<LayoutDisplayPageMultiSelectProvider>
 			serviceRegistration = null;
 
 		try {
@@ -127,16 +127,16 @@ public class SiteNavigationMenuItemDisplayPageTest {
 					getSiteNavigationMenuItemType(
 						JournalArticle.class.getName());
 
-			Assert.assertFalse(siteNavigationMenuItemType.isMultiSelection());
+			Assert.assertFalse(siteNavigationMenuItemType.isMultiSelect());
 
 			Bundle bundle = FrameworkUtil.getBundle(
-				LayoutDisplayPageMultiSelectionProvider.class);
+				LayoutDisplayPageMultiSelectProvider.class);
 
 			BundleContext bundleContext = bundle.getBundleContext();
 
 			serviceRegistration = bundleContext.registerService(
-				LayoutDisplayPageMultiSelectionProvider.class,
-				new LayoutDisplayPageMultiSelectionProvider() {
+				LayoutDisplayPageMultiSelectProvider.class,
+				new LayoutDisplayPageMultiSelectProvider() {
 
 					@Override
 					public String getClassName() {
@@ -151,7 +151,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 				},
 				new HashMapDictionary<String, String>());
 
-			Assert.assertTrue(siteNavigationMenuItemType.isMultiSelection());
+			Assert.assertTrue(siteNavigationMenuItemType.isMultiSelect());
 		}
 		finally {
 			if (serviceRegistration != null) {
@@ -161,12 +161,12 @@ public class SiteNavigationMenuItemDisplayPageTest {
 	}
 
 	@Test
-	public void testDisplayPageTypeMultiSelectionCategories() throws Exception {
+	public void testDisplayPageTypeMultiSelectCategories() throws Exception {
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
 				AssetCategory.class.getName());
 
-		Assert.assertTrue(siteNavigationMenuItemType.isMultiSelection());
+		Assert.assertTrue(siteNavigationMenuItemType.isMultiSelect());
 	}
 
 	@Test

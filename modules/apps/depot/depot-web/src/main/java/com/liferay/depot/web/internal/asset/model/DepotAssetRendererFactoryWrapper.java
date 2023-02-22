@@ -125,12 +125,12 @@ public class DepotAssetRendererFactoryWrapper<T>
 	public PortletURL getItemSelectorURL(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId,
-		String eventName, Group group, boolean multiSelection,
+		String eventName, Group group, boolean multiSelect,
 		long refererAssetEntryId) {
 
 		return _assetRendererFactory.getItemSelectorURL(
 			liferayPortletRequest, liferayPortletResponse, classTypeId,
-			eventName, group, multiSelection, refererAssetEntryId);
+			eventName, group, multiSelect, refererAssetEntryId);
 	}
 
 	@Override

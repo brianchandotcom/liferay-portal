@@ -27,7 +27,7 @@ function SelectAssetCategory({
 	inheritSelection,
 	itemSelectedEventName,
 	moveCategory,
-	multiSelection,
+	multiSelect,
 	namespace,
 	nodes,
 	selectedCategoryIds,
@@ -93,7 +93,7 @@ function SelectAssetCategory({
 				</ClayLayout.ContainerFluid>
 			</form>
 
-			{selectedItemsCount && multiSelection ? (
+			{selectedItemsCount && multiSelect ? (
 				<ClayLayout.Container
 					className="align-items-center category-tree-count-feedback d-flex justify-content-between px-3"
 					containerElement="section"
@@ -136,7 +136,7 @@ function SelectAssetCategory({
 								inheritSelection={inheritSelection}
 								itemSelectedEventName={itemSelectedEventName}
 								items={items}
-								multiSelection={multiSelection}
+								multiSelect={multiSelect}
 								onItems={setItems}
 								onSelectedItemsCount={setSelectedItemsCount}
 								selectedKeys={selectedKeys}

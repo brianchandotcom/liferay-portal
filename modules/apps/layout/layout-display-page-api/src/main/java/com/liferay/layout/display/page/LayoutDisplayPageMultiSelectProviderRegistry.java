@@ -19,12 +19,12 @@ import java.util.List;
 /**
  * @author Lourdes Fernández Besada
  */
-public interface LayoutDisplayPageMultiSelectionProviderRegistry {
+public interface LayoutDisplayPageMultiSelectProviderRegistry {
 
-	public LayoutDisplayPageMultiSelectionProvider<?>
-		getLayoutDisplayPageMultiSelectionProvider(String className);
+	public LayoutDisplayPageMultiSelectProvider<?>
+		getLayoutDisplayPageMultiSelectProvider(String className);
 
-	public List<LayoutDisplayPageMultiSelectionProvider<?>>
-		getLayoutDisplayPageMultiSelectionProviders();
+	public List<LayoutDisplayPageMultiSelectProvider<?>>
+		getLayoutDisplayPageMultiSelectProviders();
 
 }

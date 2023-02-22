@@ -339,7 +339,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		SearchContainer<Object> articleAndFolderSearchContainer =
 			new SearchContainer<>(_portletRequest, portletURL, null, null);
 
-		if (_infoItemItemSelectorCriterion.isMultiSelection()) {
+		if (_infoItemItemSelectorCriterion.isMultiSelect()) {
 			JournalRowChecker journalRowChecker = new JournalRowChecker(
 				JournalArticleLocalServiceUtil.fetchJournalArticle(
 					_infoItemItemSelectorCriterion.getRefererClassPK()),
@@ -430,8 +430,8 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return _articleSearchContainer;
 	}
 
-	public boolean isMultiSelection() {
-		return _infoItemItemSelectorCriterion.isMultiSelection();
+	public boolean isMultiSelect() {
+		return _infoItemItemSelectorCriterion.isMultiSelect();
 	}
 
 	public boolean isRefererArticle(JournalArticle journalArticle) {

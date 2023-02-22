@@ -21,8 +21,8 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderRegistry;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderRegistry;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectProviderRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
@@ -38,16 +38,16 @@ public class DisplayPageTypeContext {
 		String className, InfoItemServiceRegistry infoItemServiceRegistry,
 		LayoutDisplayPageInfoItemFieldValuesProviderRegistry
 			layoutDisplayPageInfoItemFieldValuesProviderRegistry,
-		LayoutDisplayPageMultiSelectionProviderRegistry
-			layoutDisplayPageMultiSelectionProviderRegistry,
+		LayoutDisplayPageMultiSelectProviderRegistry
+			layoutDisplayPageMultiSelectProviderRegistry,
 		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry) {
 
 		_className = className;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_layoutDisplayPageInfoItemFieldValuesProviderRegistry =
 			layoutDisplayPageInfoItemFieldValuesProviderRegistry;
-		_layoutDisplayPageMultiSelectionProviderRegistry =
-			layoutDisplayPageMultiSelectionProviderRegistry;
+		_layoutDisplayPageMultiSelectProviderRegistry =
+			layoutDisplayPageMultiSelectProviderRegistry;
 		_layoutDisplayPageProviderRegistry = layoutDisplayPageProviderRegistry;
 	}
 
@@ -91,11 +91,11 @@ public class DisplayPageTypeContext {
 			getLayoutDisplayPageInfoItemFieldValuesProvider(_className);
 	}
 
-	public LayoutDisplayPageMultiSelectionProvider<?>
-		getLayoutDisplayPageMultiSelectionProvider() {
+	public LayoutDisplayPageMultiSelectProvider<?>
+		getLayoutDisplayPageMultiSelectProvider() {
 
-		return _layoutDisplayPageMultiSelectionProviderRegistry.
-			getLayoutDisplayPageMultiSelectionProvider(_className);
+		return _layoutDisplayPageMultiSelectProviderRegistry.
+			getLayoutDisplayPageMultiSelectProvider(_className);
 	}
 
 	public LayoutDisplayPageObjectProvider<?>
@@ -133,8 +133,8 @@ public class DisplayPageTypeContext {
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final LayoutDisplayPageInfoItemFieldValuesProviderRegistry
 		_layoutDisplayPageInfoItemFieldValuesProviderRegistry;
-	private final LayoutDisplayPageMultiSelectionProviderRegistry
-		_layoutDisplayPageMultiSelectionProviderRegistry;
+	private final LayoutDisplayPageMultiSelectProviderRegistry
+		_layoutDisplayPageMultiSelectProviderRegistry;
 	private final LayoutDisplayPageProviderRegistry
 		_layoutDisplayPageProviderRegistry;
 

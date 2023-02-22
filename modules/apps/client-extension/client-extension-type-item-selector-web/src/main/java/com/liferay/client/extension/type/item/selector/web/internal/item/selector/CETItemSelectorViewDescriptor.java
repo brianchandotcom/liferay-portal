@@ -86,8 +86,8 @@ public class CETItemSelectorViewDescriptor
 	}
 
 	@Override
-	public boolean isMultipleSelection() {
-		return _cetItemSelectorCriterion.isMultipleSelection();
+	public boolean isMultiSelect() {
+		return _cetItemSelectorCriterion.isMultiSelect();
 	}
 
 	@Override

@@ -312,14 +312,14 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public PortletURL getCETItemSelectorURL(
-		boolean multipleSelection, String selectEventName, String type) {
+		boolean multiSelect, String selectEventName, String type) {
 
 		CETItemSelectorCriterion cetItemSelectorCriterion =
 			new CETItemSelectorCriterion();
 
 		cetItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new CETItemSelectorReturnType());
-		cetItemSelectorCriterion.setMultipleSelection(multipleSelection);
+		cetItemSelectorCriterion.setMultiSelect(multiSelect);
 		cetItemSelectorCriterion.setType(type);
 
 		return _itemSelector.getItemSelectorURL(

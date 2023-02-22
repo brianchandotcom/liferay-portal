@@ -38,7 +38,7 @@ export function SelectLayoutTree({
 	itemSelectorSaveEvent,
 	items: initialItems = [],
 	onItemsCountChange,
-	multiSelection,
+	multiSelect,
 	selectedLayoutIds,
 }) {
 	const [items, setItems] = useState(initialItems);
@@ -81,7 +81,7 @@ export function SelectLayoutTree({
 		}
 	};
 
-	const handleMultipleSelectionChange = (item, selection, recursive) => {
+	const handleMultiSelectChange = (item, selection, recursive) => {
 		selection.toggle(item.id, {
 			parentSelection: false,
 			selectionMode: recursive ? 'multiple-recursive' : null,
@@ -153,8 +153,8 @@ export function SelectLayoutTree({
 			return;
 		}
 
-		if (multiSelection) {
-			handleMultipleSelectionChange(item, selection, event.shiftKey);
+		if (multiSelect) {
+			handleMultiSelectChange(item, selection, event.shiftKey);
 		}
 		else {
 			handleSingleSelection(item, selection);
@@ -165,8 +165,8 @@ export function SelectLayoutTree({
 		if (event.key === ' ' || event.key === 'Enter') {
 			event.stopPropagation();
 
-			if (multiSelection) {
-				handleMultipleSelectionChange(item, selection, event.shiftKey);
+			if (multiSelect) {
+				handleMultiSelectChange(item, selection, event.shiftKey);
 			}
 			else {
 				handleSingleSelection(item, selection);
@@ -176,7 +176,7 @@ export function SelectLayoutTree({
 
 	return filteredItems.length ? (
 		<div className="pt-3 px-3">
-			{multiSelection && (
+			{multiSelect && (
 				<p
 					className="mb-4"
 					dangerouslySetInnerHTML={{
@@ -195,7 +195,7 @@ export function SelectLayoutTree({
 				onItemsChange={(items) => setItems(items)}
 				onSelectionChange={(keys) => setSelectionChange(keys)}
 				selectedKeys={selectedKeys}
-				selectionMode={multiSelection ? 'multiple' : 'single'}
+				selectionMode={multiSelect ? 'multiple' : 'single'}
 				showExpanderOnHover={false}
 			>
 				{(item, selection, expand) => (
@@ -209,11 +209,11 @@ export function SelectLayoutTree({
 								onKeyDown(event, item, selection)
 							}
 						>
-							{multiSelection && !item.disabled && (
+							{multiSelect && !item.disabled && (
 								<Checkbox
 									checked={selection.has(item.id)}
 									onChange={(event) =>
-										handleMultipleSelectionChange(
+										handleMultiSelectChange(
 											item,
 											selection,
 											event.nativeEvent.shiftKey
@@ -245,11 +245,11 @@ export function SelectLayoutTree({
 										onKeyDown(event, item, selection)
 									}
 								>
-									{multiSelection && !item.disabled && (
+									{multiSelect && !item.disabled && (
 										<Checkbox
 											checked={selection.has(item.id)}
 											onChange={(event) =>
-												handleMultipleSelectionChange(
+												handleMultiSelectChange(
 													item,
 													selection,
 													event.nativeEvent.shiftKey

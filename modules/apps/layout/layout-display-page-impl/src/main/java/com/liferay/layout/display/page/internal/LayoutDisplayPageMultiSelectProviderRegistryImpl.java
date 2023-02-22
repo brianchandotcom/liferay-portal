@@ -14,8 +14,8 @@
 
 package com.liferay.layout.display.page.internal;
 
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderRegistry;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -30,42 +30,42 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = LayoutDisplayPageMultiSelectionProviderRegistry.class)
-public class LayoutDisplayPageMultiSelectionProviderRegistryImpl
-	implements LayoutDisplayPageMultiSelectionProviderRegistry {
+@Component(service = LayoutDisplayPageMultiSelectProviderRegistry.class)
+public class LayoutDisplayPageMultiSelectProviderRegistryImpl
+	implements LayoutDisplayPageMultiSelectProviderRegistry {
 
 	@Override
-	public LayoutDisplayPageMultiSelectionProvider<?>
-		getLayoutDisplayPageMultiSelectionProvider(String className) {
+	public LayoutDisplayPageMultiSelectProvider<?>
+		getLayoutDisplayPageMultiSelectProvider(String className) {
 
-		return _layoutDisplayPageMultiSelectionProviderServiceTrackerMap.
+		return _layoutDisplayPageMultiSelectProviderServiceTrackerMap.
 			getService(className);
 	}
 
 	@Override
-	public List<LayoutDisplayPageMultiSelectionProvider<?>>
-		getLayoutDisplayPageMultiSelectionProviders() {
+	public List<LayoutDisplayPageMultiSelectProvider<?>>
+		getLayoutDisplayPageMultiSelectProviders() {
 
 		return new ArrayList(
-			_layoutDisplayPageMultiSelectionProviderServiceTrackerMap.values());
+			_layoutDisplayPageMultiSelectProviderServiceTrackerMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_layoutDisplayPageMultiSelectionProviderServiceTrackerMap =
+		_layoutDisplayPageMultiSelectProviderServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext,
-				(Class<LayoutDisplayPageMultiSelectionProvider<?>>)
-					(Class<?>)LayoutDisplayPageMultiSelectionProvider.class,
+				(Class<LayoutDisplayPageMultiSelectProvider<?>>)
+					(Class<?>)LayoutDisplayPageMultiSelectProvider.class,
 				null,
 				(serviceReference, emitter) -> {
-					LayoutDisplayPageMultiSelectionProvider<?>
-						layoutDisplayPageMultiSelectionProvider =
+					LayoutDisplayPageMultiSelectProvider<?>
+						layoutDisplayPageMultiSelectProvider =
 							bundleContext.getService(serviceReference);
 
 					try {
 						emitter.emit(
-							layoutDisplayPageMultiSelectionProvider.
+							layoutDisplayPageMultiSelectProvider.
 								getClassName());
 					}
 					finally {
@@ -75,8 +75,7 @@ public class LayoutDisplayPageMultiSelectionProviderRegistryImpl
 				new PropertyServiceReferenceComparator<>("service.ranking"));
 	}
 
-	private ServiceTrackerMap
-		<String, LayoutDisplayPageMultiSelectionProvider<?>>
-			_layoutDisplayPageMultiSelectionProviderServiceTrackerMap;
+	private ServiceTrackerMap<String, LayoutDisplayPageMultiSelectProvider<?>>
+		_layoutDisplayPageMultiSelectProviderServiceTrackerMap;
 
 }

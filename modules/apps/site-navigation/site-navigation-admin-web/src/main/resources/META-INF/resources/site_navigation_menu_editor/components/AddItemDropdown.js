@@ -117,18 +117,18 @@ export function AddItemDropDown({trigger}) {
 
 								if (data.itemSelector) {
 									openSelectionModal({
-										buttonAddLabel: data.multiSelection
+										buttonAddLabel: data.multiSelect
 											? Liferay.Language.get('select')
 											: null,
 										height: useSmallerModal
 											? '60vh'
 											: undefined,
-										multiple: data.multiSelection,
+										multiple: data.multiSelect,
 
 										onSelect: (selection) => {
 											fetch(data.addItemURL, {
 												body: objectToFormData(
-													data.multiSelection
+													data.multiSelect
 														? getNamespacedInfoItems(
 																portletNamespace,
 																selection,

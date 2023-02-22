@@ -190,8 +190,7 @@ public class AssetVocabularySiteNavigationMenuItemType
 			setIncludeAncestorSiteAndDepotGroupIds(true);
 		assetVocabularyItemSelectorCriterion.setIncludeInternalVocabularies(
 			false);
-		assetVocabularyItemSelectorCriterion.setMultiSelection(
-			isMultiSelection());
+		assetVocabularyItemSelectorCriterion.setMultiSelect(isMultiSelect());
 
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
@@ -424,7 +423,7 @@ public class AssetVocabularySiteNavigationMenuItemType
 	}
 
 	@Override
-	public boolean isMultiSelection() {
+	public boolean isMultiSelect() {
 		return true;
 	}
 

@@ -155,7 +155,7 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isSelectable() {
-		return _journalArticleItemSelectorViewDisplayContext.isMultiSelection();
+		return _journalArticleItemSelectorViewDisplayContext.isMultiSelect();
 	}
 
 	@Override

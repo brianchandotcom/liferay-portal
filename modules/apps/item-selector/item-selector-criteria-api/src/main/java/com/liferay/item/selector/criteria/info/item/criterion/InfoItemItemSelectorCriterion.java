@@ -42,8 +42,8 @@ public class InfoItemItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _status;
 	}
 
-	public boolean isMultiSelection() {
-		return _multiSelection;
+	public boolean isMultiSelect() {
+		return _multiSelect;
 	}
 
 	public void setItemSubtype(String itemSubtype) {
@@ -58,8 +58,8 @@ public class InfoItemItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_mimeTypes = mimeTypes;
 	}
 
-	public void setMultiSelection(boolean multiSelection) {
-		_multiSelection = multiSelection;
+	public void setMultiSelect(boolean multiSelect) {
+		_multiSelect = multiSelect;
 	}
 
 	public void setRefererClassPK(long refererClassPK) {
@@ -73,7 +73,7 @@ public class InfoItemItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private String _itemSubtype;
 	private String _itemType;
 	private String[] _mimeTypes;
-	private boolean _multiSelection;
+	private boolean _multiSelect;
 	private long _refererClassPK;
 	private int _status = WorkflowConstants.STATUS_APPROVED;
 

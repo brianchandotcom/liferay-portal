@@ -96,8 +96,8 @@ public class SelectLayoutTag extends IncludeTag {
 		return _enableCurrentPage;
 	}
 
-	public boolean isMultiSelection() {
-		return _multiSelection;
+	public boolean isMultiSelect() {
+		return _multiSelect;
 	}
 
 	public boolean isPrivateLayout() {
@@ -136,8 +136,8 @@ public class SelectLayoutTag extends IncludeTag {
 		_itemSelectorSaveEvent = itemSelectorSaveEvent;
 	}
 
-	public void setMultiSelection(boolean multiSelection) {
-		_multiSelection = multiSelection;
+	public void setMultiSelect(boolean multiSelect) {
+		_multiSelect = multiSelect;
 	}
 
 	public void setNamespace(String namespace) {
@@ -189,7 +189,7 @@ public class SelectLayoutTag extends IncludeTag {
 		_followURLOnTitleClick = false;
 		_itemSelectorReturnType = null;
 		_itemSelectorSaveEvent = null;
-		_multiSelection = false;
+		_multiSelect = false;
 		_namespace = null;
 		_pathThemeImages = null;
 		_privateLayout = false;
@@ -223,7 +223,7 @@ public class SelectLayoutTag extends IncludeTag {
 		).put(
 			"itemSelectorSaveEvent", _itemSelectorSaveEvent
 		).put(
-			"multiSelection", _multiSelection
+			"multiSelect", _multiSelect
 		).put(
 			"namespace", _namespace
 		).put(
@@ -420,7 +420,7 @@ public class SelectLayoutTag extends IncludeTag {
 	private boolean _followURLOnTitleClick;
 	private String _itemSelectorReturnType;
 	private String _itemSelectorSaveEvent;
-	private boolean _multiSelection;
+	private boolean _multiSelect;
 	private String _namespace;
 	private String _pathThemeImages;
 	private boolean _privateLayout;

@@ -179,7 +179,7 @@ public class JournalArticleAssetRendererFactory
 	public PortletURL getItemSelectorURL(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId,
-		String eventName, Group group, boolean multiSelection,
+		String eventName, Group group, boolean multiSelect,
 		long refererAssetEntryId) {
 
 		ThemeDisplay themeDisplay =
@@ -203,7 +203,7 @@ public class JournalArticleAssetRendererFactory
 			}
 		}
 
-		itemSelectorCriterion.setMultiSelection(multiSelection);
+		itemSelectorCriterion.setMultiSelect(multiSelect);
 
 		if (refererAssetEntryId > 0) {
 			AssetEntry assetEntry = _assetEntryLocalService.fetchAssetEntry(

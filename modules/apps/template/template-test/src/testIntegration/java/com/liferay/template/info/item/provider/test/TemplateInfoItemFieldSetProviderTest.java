@@ -547,7 +547,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 	}
 
 	@Test
-	public void testGetInfoFieldValuesRenderingSelectInfoFieldTypeMultipleSelection()
+	public void testGetInfoFieldValuesRenderingSelectInfoFieldTypeMultiSelect()
 		throws Exception {
 
 		_group = GroupTestUtil.updateDisplaySettings(

@@ -19,7 +19,7 @@ export function createApp({
 			catalogId,
 			description: {en_US: appDescription},
 			name: {en_US: appName},
-			productType: 'simple',
+			productType: 'virtual',
 		}),
 		headers,
 		method: 'POST',

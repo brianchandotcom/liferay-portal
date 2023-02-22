@@ -55,7 +55,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -68,8 +67,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DDMFormBuilderContextFactoryHelper {
 
 	public DDMFormBuilderContextFactoryHelper(
-		Optional<DDMStructure> ddmStructureOptional,
-		Optional<DDMStructureVersion> ddmStructureVersionOptional,
+		DDMStructure ddmStructure, DDMStructureVersion ddmStructureVersion,
 		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		DDMFormTemplateContextFactory ddmFormTemplateContextFactory,
 		HttpServletRequest httpServletRequest,
@@ -77,8 +75,8 @@ public class DDMFormBuilderContextFactoryHelper {
 		Locale locale, NPMResolver npmResolver, String portletNamespace,
 		boolean readOnly) {
 
-		_ddmStructureOptional = ddmStructureOptional;
-		_ddmStructureVersionOptional = ddmStructureVersionOptional;
+		_ddmStructure = ddmStructure;
+		_ddmStructureVersion = ddmStructureVersion;
 		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 		_ddmFormTemplateContextFactory = ddmFormTemplateContextFactory;
 		_httpServletRequest = httpServletRequest;
@@ -91,19 +89,21 @@ public class DDMFormBuilderContextFactoryHelper {
 	}
 
 	public Map<String, Object> create() {
-		Optional<Map<String, Object>> contextOptional = Optional.empty();
+		Map<String, Object> context = null;
 
-		if (_ddmStructureVersionOptional.isPresent()) {
-			contextOptional = _ddmStructureVersionOptional.map(
-				this::_createFormContext);
+		if (_ddmStructureVersion != null) {
+			context = _createFormContext(_ddmStructureVersion);
 		}
 
-		if (_ddmStructureOptional.isPresent()) {
-			contextOptional = _ddmStructureOptional.map(
-				this::_createFormContext);
+		if (_ddmStructure != null) {
+			context = _createFormContext(_ddmStructure);
 		}
 
-		return contextOptional.orElseGet(this::_createEmptyStateContext);
+		if (context != null) {
+			return context;
+		}
+
+		return _createEmptyStateContext();
 	}
 
 	private Map<String, Object> _createDDMFormFieldSettingContext(
@@ -128,12 +128,9 @@ public class DDMFormBuilderContextFactoryHelper {
 			_createDDMFormFieldSettingContextDDMFormValues(
 				ddmForm, ddmFormField));
 
-		if (_ddmStructureVersionOptional.isPresent()) {
-			DDMStructureVersion ddmStructureVersion =
-				_ddmStructureVersionOptional.get();
-
+		if (_ddmStructureVersion != null) {
 			ddmFormRenderingContext.setGroupId(
-				ddmStructureVersion.getGroupId());
+				_ddmStructureVersion.getGroupId());
 		}
 
 		ddmFormRenderingContext.setHttpServletRequest(_httpServletRequest);
@@ -478,8 +475,8 @@ public class DDMFormBuilderContextFactoryHelper {
 	private final DDMFormFieldTypeServicesRegistry
 		_ddmFormFieldTypeServicesRegistry;
 	private final DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
-	private final Optional<DDMStructure> _ddmStructureOptional;
-	private final Optional<DDMStructureVersion> _ddmStructureVersionOptional;
+	private final DDMStructure _ddmStructure;
+	private final DDMStructureVersion _ddmStructureVersion;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final JSONFactory _jsonFactory;

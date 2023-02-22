@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.repository;
 
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
@@ -107,7 +105,8 @@ public interface DocumentRepository extends CapabilityProvider {
 	public default Folder fetchFolderByExternalReferenceCode(
 		String externalReferenceCode) {
 
-		return null;
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public List<FileEntry> getFileEntries(
@@ -184,18 +183,8 @@ public interface DocumentRepository extends CapabilityProvider {
 			String externalReferenceCode)
 		throws PortalException {
 
-		// TODO LPS-154730 Fix bad pattern from
-		// getFileEntryByExternalReferenceCode
-
-		try {
-			return getFolder(GetterUtil.getLongStrict(externalReferenceCode));
-		}
-		catch (NumberFormatException numberFormatException) {
-			throw new NoSuchFolderException(
-				"No folder exists with external reference code " +
-					externalReferenceCode,
-				numberFormatException);
-		}
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public List<Folder> getFolders(

@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.upgrade.internal.report.UpgradeReport;
+import com.liferay.portal.upgrade.util.DBUpgradeStatus;
 
 import java.io.Serializable;
 
@@ -59,7 +60,7 @@ public class UpgradeReportLogAppender implements Appender {
 		}
 
 		if (logEvent.getLevel() == Level.ERROR) {
-			_upgradeReport.addErrorMessage(
+			DBUpgradeStatus.addErrorMessage(
 				logEvent.getLoggerName(), formattedMessage);
 		}
 		else if (logEvent.getLevel() == Level.INFO) {
@@ -67,12 +68,12 @@ public class UpgradeReportLogAppender implements Appender {
 					logEvent.getLoggerName(), UpgradeProcess.class.getName()) &&
 				formattedMessage.startsWith("Completed upgrade process ")) {
 
-				_upgradeReport.addEventMessage(
+				DBUpgradeStatus.addUpgradeProcessMessage(
 					logEvent.getLoggerName(), formattedMessage);
 			}
 		}
 		else if (logEvent.getLevel() == Level.WARN) {
-			_upgradeReport.addWarningMessage(
+			DBUpgradeStatus.addWarningMessage(
 				logEvent.getLoggerName(), message.getFormattedMessage());
 		}
 	}
@@ -132,6 +133,8 @@ public class UpgradeReportLogAppender implements Appender {
 	@Override
 	public void stop() {
 		if (_started) {
+			DBUpgradeStatus.upgradeFinished();
+
 			_upgradeReport.generateReport(
 				_persistenceManager, _releaseManagerOSGiCommands);
 

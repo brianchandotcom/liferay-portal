@@ -123,6 +123,8 @@ public class WabProcessor {
 	public File getProcessedFile() throws IOException {
 		String fileExtension = MapUtil.getString(_parameters, "fileExtension");
 
+		Properties pluginPackageProperties = _getPluginPackageProperties();
+
 		if (Objects.equals(fileExtension, "zip")) {
 			_pluginDir = _convertToClientExtensionBundleDir();
 		}
@@ -140,7 +142,8 @@ public class WabProcessor {
 
 		try (Jar jar = new Jar(_pluginDir)) {
 			if (jar.getBsn() == null) {
-				outputFile = _transformToOSGiBundle(jar);
+				outputFile = _transformToOSGiBundle(
+					jar, pluginPackageProperties);
 			}
 		}
 		catch (Exception exception) {
@@ -418,24 +421,32 @@ public class WabProcessor {
 		return deployableAutoDeployListeners.get(0);
 	}
 
-	private Properties _getPluginPackageProperties() {
-		File file = new File(
-			_pluginDir, "WEB-INF/liferay-plugin-package.properties");
+	private Properties _getPluginPackageProperties() throws IOException {
+		if (_pluginPackageProperties == null) {
+			try (ZipFile zipFile = new ZipFile(_file)) {
+				ZipEntry zipEntry = zipFile.getEntry(
+					"WEB-INF/liferay-plugin-package.properties");
 
-		if (!file.exists()) {
-			return new Properties();
-		}
+				if (zipEntry == null) {
+					return _pluginPackageProperties = new Properties();
+				}
 
-		try {
-			return PropertiesUtil.load(FileUtil.read(file));
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
+				try {
+					return _pluginPackageProperties = PropertiesUtil.load(
+						zipFile.getInputStream(zipEntry),
+						StandardCharsets.UTF_8.name());
+				}
+				catch (IOException ioException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(ioException);
+					}
+
+					return _pluginPackageProperties = new Properties();
+				}
 			}
-
-			return new Properties();
 		}
+
+		return _pluginPackageProperties;
 	}
 
 	private String _getVersionedServicePackageName(String partialPackageName) {
@@ -1373,7 +1384,10 @@ public class WabProcessor {
 		}
 	}
 
-	private File _transformToOSGiBundle(Jar jar) throws IOException {
+	private File _transformToOSGiBundle(
+			Jar jar, Properties pluginPackageProperties)
+		throws IOException {
+
 		try (Builder analyzer = new Builder()) {
 			analyzer.setBase(_pluginDir);
 			analyzer.setJar(jar);
@@ -1409,8 +1423,6 @@ public class WabProcessor {
 			plugins.removeAll(disabledPlugins);
 
 			plugins.add(new JspAnalyzerPlugin());
-
-			Properties pluginPackageProperties = _getPluginPackageProperties();
 
 			if (pluginPackageProperties.containsKey("portal-dependency-jars") &&
 				_log.isWarnEnabled()) {
@@ -1699,6 +1711,7 @@ public class WabProcessor {
 	private final Map<String, String[]> _parameters;
 	private File _pluginDir;
 	private PluginPackage _pluginPackage;
+	private Properties _pluginPackageProperties;
 	private String _servicePackageName;
 
 }

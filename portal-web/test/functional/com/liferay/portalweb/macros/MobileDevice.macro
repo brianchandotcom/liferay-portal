@@ -71,32 +71,42 @@ definition {
 		if (${deviceType} == "smartphone") {
 			takeScreenshot();
 
-			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
+			Click(
+				key_deviceType = "SmarkPhone",
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
 
 			takeScreenshot();
 		}
 		else if (${deviceType} == "tablet") {
-			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
+			Click(
+				key_deviceType = "Tablet",
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			takeScreenshot();
 
-			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
+			Click(
+				key_deviceType = "Tablet",
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
 
 			takeScreenshot();
 		}
 		else if (${deviceType} == "desktop") {
-			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
+			Click(
+				key_deviceType = "Desktop",
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 
 			takeScreenshot();
 		}
 		else if (${deviceType} == "custom") {
-			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
+			Click(
+				key_deviceType = "Custom",
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 

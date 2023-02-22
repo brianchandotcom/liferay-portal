@@ -180,14 +180,14 @@ definition {
 			SelectFrameTop();
 
 			Click(
-				key_deviceType = "tablet",
+				key_deviceType = "Tablet",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(
 				key_deviceType = "tablet",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "//iframe[@id='simulationDeviceIframe']");
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
@@ -352,14 +352,14 @@ definition {
 			SelectFrameTop();
 
 			Click(
-				key_deviceType = "smartphone",
+				key_deviceType = "Smartphone",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(
 				key_deviceType = "smartphone",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "//iframe[@id='simulationDeviceIframe']");
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
@@ -526,14 +526,14 @@ definition {
 			SelectFrameTop();
 
 			Click(
-				key_deviceType = "tablet",
+				key_deviceType = "Tablet",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(
 				key_deviceType = "tablet",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "//iframe[@id='simulationDeviceIframe']");
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
@@ -649,14 +649,14 @@ definition {
 			SelectFrameTop();
 
 			Click(
-				key_deviceType = "smartphone",
+				key_deviceType = "Smartphone",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(
 				key_deviceType = "smartphone",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "//iframe[@id='simulationDeviceIframe']");
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
@@ -771,14 +771,14 @@ definition {
 			SelectFrameTop();
 
 			Click(
-				key_deviceType = "tablet",
+				key_deviceType = "Tablet",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(
 				key_deviceType = "tablet",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "//iframe[@id='simulationDeviceIframe']");
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
@@ -893,14 +893,14 @@ definition {
 			SelectFrameTop();
 
 			Click(
-				key_deviceType = "tablet",
+				key_deviceType = "Tablet",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(
 				key_deviceType = "tablet",
 				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "//iframe[@id='simulationDeviceIframe']");
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {

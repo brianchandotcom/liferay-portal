@@ -3019,6 +3019,12 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 		else if (sqlType == Types.DECIMAL) {
+			String valueString = String.valueOf(value);
+
+			if ((value == null) || valueString.isEmpty()) {
+				value = BigDecimal.ZERO;
+			}
+
 			preparedStatement.setBigDecimal(
 				index, new BigDecimal(String.valueOf(value)));
 		}

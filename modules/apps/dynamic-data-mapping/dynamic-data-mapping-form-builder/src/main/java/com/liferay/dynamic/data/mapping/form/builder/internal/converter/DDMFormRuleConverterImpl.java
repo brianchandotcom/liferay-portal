@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRule;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRuleAction;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRuleCondition;
 import com.liferay.dynamic.data.mapping.spi.converter.serializer.SPIDDMFormRuleSerializerContext;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -37,10 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.UnaryOperator;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,13 +65,10 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 		List<SPIDDMFormRule> spiDDMFormRules,
 		SPIDDMFormRuleSerializerContext spiDDMFormRuleSerializerContext) {
 
-		Stream<SPIDDMFormRule> spiDDMFormRulesStream = spiDDMFormRules.stream();
-
-		Stream<DDMFormRule> ddmFormRuleStream = spiDDMFormRulesStream.map(
+		return TransformUtil.transform(
+			spiDDMFormRules,
 			formRule -> _convertRule(
 				formRule, spiDDMFormRuleSerializerContext));
-
-		return ddmFormRuleStream.collect(Collectors.toList());
 	}
 
 	protected void setSPIDDMFormRuleActions(
@@ -193,18 +187,25 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 			return StringUtil.quote(value);
 		}
 
-		String[] values = StringUtil.split(value);
+		String operandType = operand.getType();
 
-		UnaryOperator<String> quoteOperation = StringUtil::quote;
-		UnaryOperator<String> trimOperation = StringUtil::trim;
+		String string = StringUtil.merge(
+			TransformUtil.transformToList(
+				StringUtil.split(value),
+				curVal -> StringUtil.quote(StringUtil.trim(curVal))),
+			StringPool.COMMA_AND_SPACE);
 
-		return Stream.of(
-			values
-		).map(
-			trimOperation.andThen(quoteOperation)
-		).collect(
-			_getCollector(operand.getType())
-		);
+		if (!operandType.equals("list")) {
+			return string;
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(StringPool.OPEN_BRACKET);
+		sb.append(string);
+		sb.append(StringPool.CLOSE_BRACKET);
+
+		return sb.toString();
 	}
 
 	private String _convertOperands(
@@ -310,26 +311,16 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 		}
 	}
 
-	private Collector<CharSequence, ?, String> _getCollector(
-		String operandType) {
-
-		if (operandType.equals("list")) {
-			return Collectors.joining(
-				StringPool.COMMA_AND_SPACE, StringPool.OPEN_BRACKET,
-				StringPool.CLOSE_BRACKET);
-		}
-
-		return Collectors.joining(StringPool.COMMA_AND_SPACE);
-	}
-
 	private boolean _hasNestedFunction(
 		List<SPIDDMFormRuleCondition.Operand> operands) {
 
-		Stream<SPIDDMFormRuleCondition.Operand> operandsStream =
-			operands.stream();
+		for (SPIDDMFormRuleCondition.Operand operand : operands) {
+			if (_isNestedFunction(operand.getValue())) {
+				return true;
+			}
+		}
 
-		return operandsStream.anyMatch(
-			operand -> _isNestedFunction(operand.getValue()));
+		return false;
 	}
 
 	private boolean _isNestedFunction(String operandValue) {

@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>PREVIEW_DATA_DEVICE_BUTTON</td>
-	<td>//div[contains(@class,'devices')]//button[@data-device='${key_deviceType}']</td>
+	<td>//div[contains(@class,'devices')]//button[normalize-space()='${key_deviceType}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -27,12 +27,12 @@
 </tr>
 <tr>
 	<td>PREVIEW_DEVICE_IFRAME</td>
-	<td>//div[contains(@class,'${key_deviceType}')]//iframe[@id='simulationDeviceIframe']</td>
+	<td>//div[contains(@class,'${key_deviceType}')]//iframe</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_DEVICE_GENERAL_IFRAME</td>
-	<td>//iframe[@id='simulationDeviceIframe']</td>
+	<td>//div[contains(@class,'simulation-device')]//iframe</td>
 	<td></td>
 </tr>
 </tbody>

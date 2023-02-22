@@ -175,7 +175,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 		attributes.put("ddmStructureKey", "BASIC-WEB-CONTENT");
 		attributes.put("head", true);
-		attributes.put("latest", true);
 
 		searchContext.setAttributes(attributes);
 

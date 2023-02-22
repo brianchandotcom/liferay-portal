@@ -654,8 +654,6 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(
 				"head", true
-			).put(
-				"latest", true
 			).build(),
 			serviceContext.getCompanyId(), null, themeDisplay.getLayout(), null,
 			serviceContext.getScopeGroupId(), null, serviceContext.getUserId());

@@ -153,7 +153,6 @@ public class DDMStructureRelatedInfoCollectionProvider
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 		attributes.put("ddmStructureKey", _ddmStructure.getStructureKey());
 		attributes.put("head", true);
-		attributes.put("latest", true);
 
 		searchContext.setAttributes(attributes);
 

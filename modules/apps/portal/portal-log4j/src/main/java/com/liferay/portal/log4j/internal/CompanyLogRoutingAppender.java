@@ -80,12 +80,6 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 	}
 
 	public File getCompanyLogDirectory(long companyId) {
-		List<Appender> appenders = _appenders.get(companyId);
-
-		if (appenders == null) {
-			return null;
-		}
-
 		return new File(
 			StringUtil.replace(
 				_dirPattern, "@company.id@", String.valueOf(companyId)));

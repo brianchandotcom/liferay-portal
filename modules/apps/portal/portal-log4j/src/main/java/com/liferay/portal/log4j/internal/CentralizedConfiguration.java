@@ -73,7 +73,8 @@ public class CentralizedConfiguration extends AbstractConfiguration {
 			_companyLogRoutingAppender;
 
 		if (companyLogRoutingAppender == null) {
-			return null;
+			throw new IllegalStateException(
+				"No company log routing appender defined");
 		}
 
 		return companyLogRoutingAppender.getCompanyLogDirectory(companyId);

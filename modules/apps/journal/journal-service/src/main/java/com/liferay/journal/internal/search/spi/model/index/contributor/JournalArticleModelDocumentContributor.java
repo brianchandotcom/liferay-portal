@@ -198,6 +198,8 @@ public class JournalArticleModelDocumentContributor
 		document.addNumber(
 			"versionCount", GetterUtil.getDouble(journalArticle.getVersion()));
 
+		document.addKeyword(Field.UUID, journalArticle.getUuid());
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + journalArticle + " indexed successfully");
 		}

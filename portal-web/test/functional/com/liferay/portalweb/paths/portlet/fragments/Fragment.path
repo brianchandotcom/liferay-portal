@@ -190,6 +190,11 @@
 	<td>xpath=(//div[contains(@id,'fragment-')]/div[contains(@class,'${type}')]//button[*[name()='svg'][contains(@class,'icon-caret-double')]])[${index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TEXTAREA_FIELD</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]/div[contains(@class,'${type}')]//textarea[contains(@id,'${type}')])[${index}]</td>
+	<td></td>
+</tr>
 
 <!--FRAGMENT_COMMENT-->
 

@@ -19,6 +19,10 @@ definition {
 	}
 
 	macro addChildPage {
+		WaitForElementPresent(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "Pages");
+
 		MouseOver(
 			key_itemName = ${parentPageName},
 			locator1 = "PagesAdmin#LIST_GROUP_ITEM");

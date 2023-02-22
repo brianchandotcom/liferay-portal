@@ -36,6 +36,9 @@ public class LayoutPrototypeTable extends BaseTable<LayoutPrototypeTable> {
 
 	public final Column<LayoutPrototypeTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<LayoutPrototypeTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutPrototypeTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutPrototypeTable, Long> layoutPrototypeId =

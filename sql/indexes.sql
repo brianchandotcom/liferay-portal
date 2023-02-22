@@ -291,8 +291,10 @@ create index IX_9DE5C8B2 on LayoutFriendlyURL (uuid_[$COLUMN_LENGTH:75$], compan
 create index IX_C765BBB2 on LayoutFriendlyURL (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_58E59034 on LayoutFriendlyURL (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
-create index IX_557A639F on LayoutPrototype (companyId, active_);
-create index IX_63ED2532 on LayoutPrototype (uuid_[$COLUMN_LENGTH:75$], companyId);
+create index IX_81401BFD on LayoutPrototype (companyId, active_, ctCollectionId);
+create index IX_CA85AD08 on LayoutPrototype (companyId, ctCollectionId);
+create index IX_CD9B5790 on LayoutPrototype (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_7FD4CB94 on LayoutPrototype (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 
 create index IX_43E8286A on LayoutRevision (head, plid);
 create index IX_E10AC39 on LayoutRevision (layoutSetBranchId, head, plid);

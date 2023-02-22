@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -36,8 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutPrototypeModel
-	extends BaseModel<LayoutPrototype>, LocalizedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<LayoutPrototype>, CTModel<LayoutPrototype>,
+			LocalizedModel, MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -50,6 +51,7 @@ public interface LayoutPrototypeModel
 	 *
 	 * @return the primary key of this layout prototype
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -57,6 +59,7 @@ public interface LayoutPrototypeModel
 	 *
 	 * @param primaryKey the primary key of this layout prototype
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -74,6 +77,22 @@ public interface LayoutPrototypeModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this layout prototype.
+	 *
+	 * @return the ct collection ID of this layout prototype
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this layout prototype.
+	 *
+	 * @param ctCollectionId the ct collection ID of this layout prototype
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this layout prototype.

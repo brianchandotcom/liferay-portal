@@ -92,16 +92,18 @@ public class ForPoshiElement extends PoshiElement {
 				int quoteCount = StringUtils.countMatches(value, "\"");
 
 				if (escapedQuoteCount != quoteCount) {
-					throw new RuntimeException(
-						"Unescaped quotes in list value: " + value);
+					throw new PoshiScriptParserException(
+						"Unescaped quotes in list value: " + value, poshiScript,
+						(PoshiElement)getParent());
 				}
 			}
 
 			addAttribute(matcher.group(2), value);
 		}
 		else {
-			throw new RuntimeException(
-				"Invalid parameter syntax:\n" + parentheticalContent);
+			throw new PoshiScriptParserException(
+				"Invalid parameter syntax: " + parentheticalContent,
+				poshiScript, (PoshiElement)getParent());
 		}
 
 		String blockContent = getBlockContent(poshiScript);

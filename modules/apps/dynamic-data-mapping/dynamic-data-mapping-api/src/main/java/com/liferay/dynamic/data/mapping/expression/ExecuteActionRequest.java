@@ -27,10 +27,6 @@ public final class ExecuteActionRequest {
 	}
 
 	public <T> T getParameter(String name) {
-		if (!_parameters.containsKey(name)) {
-			return null;
-		}
-
 		return (T)_parameters.get(name);
 	}
 

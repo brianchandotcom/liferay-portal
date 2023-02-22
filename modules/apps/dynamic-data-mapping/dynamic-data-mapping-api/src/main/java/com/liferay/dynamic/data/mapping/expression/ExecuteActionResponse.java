@@ -23,10 +23,6 @@ import java.util.Map;
 public final class ExecuteActionResponse {
 
 	public <T> T getOutput(String name) {
-		if (!_output.containsKey(name)) {
-			return null;
-		}
-
 		return (T)_output.get(name);
 	}
 

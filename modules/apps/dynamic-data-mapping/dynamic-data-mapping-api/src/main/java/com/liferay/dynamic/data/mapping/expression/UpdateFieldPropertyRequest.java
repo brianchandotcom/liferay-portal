@@ -36,10 +36,6 @@ public final class UpdateFieldPropertyRequest {
 	}
 
 	public <T> T getProperty(String name) {
-		if (!_properties.containsKey(name)) {
-			return null;
-		}
-
 		return (T)_properties.get(name);
 	}
 

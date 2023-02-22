@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -73,9 +75,7 @@ public class DescriptionPoshiElement extends PoshiElement {
 		Matcher matcher = _messagePattern.matcher(message);
 
 		if (matcher.find()) {
-			throw new PoshiScriptParserException(
-				"Description cannot contain <> in its message, please remove",
-				message, (PoshiElement)getParent());
+			message = StringEscapeUtils.escapeXml(message);
 		}
 
 		addAttribute("message", message);
@@ -88,7 +88,14 @@ public class DescriptionPoshiElement extends PoshiElement {
 		sb.append("@");
 		sb.append(_ELEMENT_NAME);
 		sb.append(" = \"");
-		sb.append(attributeValue("message"));
+
+		String message = attributeValue("message");
+
+		if (message.contains("&lt;") || message.contains("&gt;")) {
+			message = StringEscapeUtils.unescapeXml(message);
+		}
+
+		sb.append(message);
 		sb.append("\"");
 
 		return sb.toString();

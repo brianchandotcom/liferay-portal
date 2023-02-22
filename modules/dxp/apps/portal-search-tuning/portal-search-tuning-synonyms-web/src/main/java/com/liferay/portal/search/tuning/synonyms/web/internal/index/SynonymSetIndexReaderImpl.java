@@ -99,11 +99,11 @@ public class SynonymSetIndexReaderImpl implements SynonymSetIndexReader {
 		GetDocumentResponse getDocumentResponse = _searchEngineAdapter.execute(
 			getDocumentRequest);
 
-		if (getDocumentResponse.isExists()) {
-			return getDocumentResponse.getDocument();
+		if (!getDocumentResponse.isExists()) {
+			return null;
 		}
 
-		return null;
+		return getDocumentResponse.getDocument();
 	}
 
 	private static final int _SIZE = 10000;

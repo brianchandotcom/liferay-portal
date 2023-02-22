@@ -429,6 +429,66 @@ definition {
 		return ${ordersCount};
 	}
 
+	macro _getOrderById {
+		Variables.assertDefined(parameterList = ${orderId});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(parameter)) {
+			var parameter = "?${parameter}=${parameterValue}";
+		}
+
+		if (!(isSet(email))) {
+			var email = "test@liferay.com";
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId}${parameter} \
+				-u ${email}:${password} \
+				-H 'accept: application/json' \
+		''';
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+	macro _getOrderItemById {
+		Variables.assertDefined(parameterList = ${orderId});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(email))) {
+			var email = "test@liferay.com";
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId}/orderItems \
+				-u ${email}:${password} \
+				-H 'accept: application/json' \
+		''';
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
 	macro _updateCommerceOrderERC {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 

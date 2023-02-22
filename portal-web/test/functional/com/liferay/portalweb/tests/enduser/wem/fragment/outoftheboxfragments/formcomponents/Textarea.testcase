@@ -48,6 +48,96 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-170206. The page designer can define the number of lines of Textarea fragment."
+	@priority = 3
+	test DefineNumberOfLines {
+		task ("Given a pages designer has a Textarea fragment inside a mapped Form Container") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+		}
+
+		task ("When the page designer accesses to the General tab of Textarea fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Textarea");
+		}
+
+		task ("Then the page designer sees the default Number of Lines is 5") {
+			AssertTextEquals(
+				key_text = "Number of Lines",
+				locator1 = "TextInput#ANY",
+				value1 = 5);
+		}
+
+		task ("When the pages designer changes the Number of Lines to 10") {
+			PageEditor.editInput(
+				fragmentName = "Textarea",
+				numberOfLines = 10);
+		}
+
+		task ("Then the pages designer sees the rows of Textarea fragment is 10") {
+			PageEditor.viewInputStyle(
+				numberOfLines = 10,
+				type = "textarea");
+		}
+
+		task ("When the pages designer changes the Number of Lines to 2") {
+			PageEditor.editInput(
+				fragmentName = "Textarea",
+				numberOfLines = 2);
+		}
+
+		task ("Then the pages designer sees the rows of Textarea fragment is 2") {
+			PageEditor.viewInputStyle(
+				numberOfLines = 2,
+				type = "textarea");
+		}
+
+		task ("When the pages designer changes the Number of Lines to 0") {
+			PageEditor.editInput(
+				fragmentName = "Textarea",
+				numberOfLines = 0);
+		}
+
+		task ("Then the pages designer sees the height of Textarea fragment is 64px") {
+			var height = Css.getCssValue(
+				attribute = "height",
+				element = "//div[contains(@id,'fragment-')]/div[contains(@class,'textarea')]//textarea[contains(@id,'textarea')]");
+
+			TestUtils.assertEquals(
+				actual = ${height},
+				expected = "64px");
+		}
+
+		task ("When the pages designer leaves the Number of Lines empty") {
+			PageEditor.editInput(
+				fragmentName = "Textarea",
+				numberOfLines = "");
+		}
+
+		task ("Then the pages designer sees the height of Textarea fragment is 64px") {
+			var height = Css.getCssValue(
+				attribute = "height",
+				element = "//div[contains(@id,'fragment-')]/div[contains(@class,'textarea')]//textarea[contains(@id,'textarea')]");
+
+			TestUtils.assertEquals(
+				actual = ${height},
+				expected = "64px");
+		}
+	}
+
 	@description = "This is a test for LPS-170206. The page designer can map Textarea fragment to Long Text field."
 	@priority = 4
 	test MapTextareaFragmentToLongTextField {

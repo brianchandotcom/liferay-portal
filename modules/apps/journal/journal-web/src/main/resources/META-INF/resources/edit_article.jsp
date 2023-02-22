@@ -20,6 +20,8 @@
 JournalArticle article = journalDisplayContext.getArticle();
 
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
+
+DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 %>
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
@@ -55,11 +57,6 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
-
-		<%
-		DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
-		%>
-
 		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">

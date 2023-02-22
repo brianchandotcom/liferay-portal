@@ -378,11 +378,13 @@ public class PoshiGetterUtil {
 	public static Element getRootElementFromURL(URL url, boolean addLineNumbers)
 		throws Exception {
 
-		if (Dom4JUtil.isValidDocument(url)) {
+		String filePath = url.getFile();
+
+		if (filePath.endsWith(".path")) {
+			Dom4JUtil.validateDocument(url);
+
 			return _preparePoshiXMLElement(url, addLineNumbers);
 		}
-
-		String filePath = url.getFile();
 
 		if (filePath.endsWith(".function") || filePath.endsWith(".macro") ||
 			filePath.endsWith(".testcase")) {

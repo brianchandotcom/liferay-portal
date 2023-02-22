@@ -23,6 +23,7 @@ import com.liferay.headless.delivery.internal.odata.entity.v1_0.ContentStructure
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -51,6 +52,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/content-structure.properties",
 	scope = ServiceScope.PROTOTYPE, service = ContentStructureResource.class
 )
+@CTAware
 public class ContentStructureResourceImpl
 	extends BaseContentStructureResourceImpl {
 

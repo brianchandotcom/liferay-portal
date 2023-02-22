@@ -44,6 +44,7 @@ import com.liferay.message.boards.util.comparator.ThreadCreateDateComparator;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -110,6 +111,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/message-board-thread.properties",
 	scope = ServiceScope.PROTOTYPE, service = MessageBoardThreadResource.class
 )
+@CTAware
 public class MessageBoardThreadResourceImpl
 	extends BaseMessageBoardThreadResourceImpl {
 

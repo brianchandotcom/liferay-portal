@@ -27,6 +27,7 @@ import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.search.filter.FilterUtil;
 import com.liferay.headless.delivery.search.sort.SortUtil;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -77,6 +78,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/wiki-page.properties",
 	scope = ServiceScope.PROTOTYPE, service = WikiPageResource.class
 )
+@CTAware
 public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 
 	@Override

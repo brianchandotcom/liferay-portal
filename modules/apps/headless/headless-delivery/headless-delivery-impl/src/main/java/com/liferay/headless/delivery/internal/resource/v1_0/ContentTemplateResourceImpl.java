@@ -22,6 +22,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentTemplateUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.ContentTemplateEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -56,6 +57,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/content-template.properties",
 	scope = ServiceScope.PROTOTYPE, service = ContentTemplateResource.class
 )
+@CTAware
 public class ContentTemplateResourceImpl
 	extends BaseContentTemplateResourceImpl {
 

@@ -37,6 +37,7 @@ import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -81,6 +82,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/blog-posting.properties",
 	scope = ServiceScope.PROTOTYPE, service = BlogPostingResource.class
 )
+@CTAware
 public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Override

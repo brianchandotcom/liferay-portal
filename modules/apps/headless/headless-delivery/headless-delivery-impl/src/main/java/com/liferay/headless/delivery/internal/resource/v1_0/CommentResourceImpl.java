@@ -31,6 +31,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
@@ -75,6 +76,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/comment.properties",
 	scope = ServiceScope.PROTOTYPE, service = CommentResource.class
 )
+@CTAware
 public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 	@Override

@@ -1221,6 +1221,9 @@ definition {
 	@priority = 3
 	test OrganizationUserManagement {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Organizations#OrganizationUserManagement";
+
+		SearchAdministration.executeReindex();
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 

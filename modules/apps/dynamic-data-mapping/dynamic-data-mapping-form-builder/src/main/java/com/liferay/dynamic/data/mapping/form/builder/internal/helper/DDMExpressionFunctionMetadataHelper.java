@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,13 +84,17 @@ public class DDMExpressionFunctionMetadataHelper {
 
 			Class<?> clazz = ddmExpressionFunction.getClass();
 
-			Stream<Method> stream = Arrays.stream(clazz.getMethods());
+			Optional<Method> optional = Optional.empty();
 
-			Optional<Method> optional = stream.filter(
-				method ->
-					Objects.equals(method.getName(), "apply") &&
-					Objects.equals(method.getReturnType(), Boolean.class)
-			).findFirst();
+			for (Method method : clazz.getMethods()) {
+				if (Objects.equals(method.getName(), "apply") &&
+					Objects.equals(method.getReturnType(), Boolean.class)) {
+
+					optional = Optional.of(method);
+
+					break;
+				}
+			}
 
 			if (!optional.isPresent()) {
 				continue;

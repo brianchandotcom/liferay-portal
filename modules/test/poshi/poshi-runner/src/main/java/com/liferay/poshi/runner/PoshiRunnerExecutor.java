@@ -48,6 +48,8 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import org.dom4j.Element;
 
 import org.openqa.selenium.StaleElementReferenceException;
@@ -355,6 +357,8 @@ public class PoshiRunnerExecutor {
 		if (message == null) {
 			message = element.getText();
 		}
+
+		message = StringEscapeUtils.unescapeXml(message);
 
 		System.out.println(_poshiVariablesContext.replaceCommandVars(message));
 	}
@@ -755,6 +759,11 @@ public class PoshiRunnerExecutor {
 		}
 
 		_poshiVariablesContext.pushCommandMap();
+
+		if (commandElement == null) {
+			throw new RuntimeException(
+				"Nonexistent Macro command: " + namespacedClassCommandName);
+		}
 
 		parseElement(commandElement);
 

@@ -20,11 +20,15 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
+import com.liferay.object.internal.info.collection.provider.ManyToManyObjectRelationshipRelatedInfoCollectionProvider;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
+import com.liferay.object.internal.info.collection.provider.OneToManyObjectRelationshipRelatedInfoCollectionProvider;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermEvaluator;
 import com.liferay.object.internal.persistence.ObjectDefinitionTableArgumentsResolver;
@@ -45,6 +49,7 @@ import com.liferay.object.internal.security.permission.resource.util.ObjectDefin
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayout;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
@@ -63,6 +68,8 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -89,6 +96,7 @@ import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -351,6 +359,51 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				"item.class.name", objectDefinition.getClassName()
 			).build());
 
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.getObjectRelationships(
+				objectDefinition.getObjectDefinitionId());
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			try {
+				if (Objects.equals(
+						objectRelationship.getType(),
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
+					!objectRelationship.isReverse()) {
+
+					_bundleContext.registerService(
+						RelatedInfoItemCollectionProvider.class,
+						new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+							objectDefinition, objectRelationship,
+							_objectDefinitionLocalService,
+							_objectEntryLocalService),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"company.id", objectDefinition.getCompanyId()
+						).put(
+							"item.class.name", objectDefinition.getClassName()
+						).build());
+				}
+				else if (Objects.equals(
+							objectRelationship.getType(),
+							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+					_bundleContext.registerService(
+						RelatedInfoItemCollectionProvider.class,
+						new OneToManyObjectRelationshipRelatedInfoCollectionProvider(
+							objectDefinition, objectRelationship,
+							_objectDefinitionLocalService,
+							_objectEntryLocalService),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"company.id", objectDefinition.getCompanyId()
+						).put(
+							"item.class.name", objectDefinition.getClassName()
+						).build());
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
+
 		try {
 			for (Locale locale : LanguageUtil.getAvailableLocales()) {
 				String languageId = LocaleUtil.toLanguageId(locale);
@@ -399,6 +452,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_persistedModelLocalServiceRegistry.unregister(
 			objectDefinition.getClassName());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectDefinitionDeployerImpl.class);
 
 	private final AccountEntryLocalService _accountEntryLocalService;
 	private final AccountEntryOrganizationRelLocalService

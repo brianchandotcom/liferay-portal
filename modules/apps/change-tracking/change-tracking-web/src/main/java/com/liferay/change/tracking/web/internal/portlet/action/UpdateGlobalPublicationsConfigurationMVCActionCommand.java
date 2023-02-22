@@ -92,8 +92,10 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 				ActionKeys.CONFIGURATION);
 
 			_ctSettingsConfigurationHelper.save(
-				companyId, enablePublications, enableSandboxOnly,
-				enableUnapprovedChanges);
+				companyId,
+				ctSettingsConfiguration.defaultCTCollectionTemplateId(),
+				ctSettingsConfiguration.defaultSandboxCTCollectionTemplateId(),
+				enablePublications, enableSandboxOnly, enableUnapprovedChanges);
 		}
 		catch (ConfigurationException configurationException) {
 			Throwable throwable = configurationException.getCause();

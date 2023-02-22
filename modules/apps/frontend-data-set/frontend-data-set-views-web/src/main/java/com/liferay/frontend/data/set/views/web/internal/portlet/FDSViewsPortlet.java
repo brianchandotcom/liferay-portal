@@ -18,16 +18,29 @@ import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortle
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsWebKeys;
 import com.liferay.frontend.data.set.views.web.internal.display.context.FDSViewsDisplayContext;
 import com.liferay.frontend.data.set.views.web.internal.resource.FDSHeadlessResource;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.Locale;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -42,6 +55,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -52,7 +66,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.layout-cacheable=true",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/fds_views.jsp",
+		"javax.portlet.init-param.view-template=/fds_entries.jsp",
 		"javax.portlet.name=" + FDSViewsPortletKeys.FDS_VIEWS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,power-user,user",
@@ -79,12 +93,66 @@ public class FDSViewsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			_generate(
+				themeDisplay.getCompanyId(), themeDisplay.getLocale(),
+				themeDisplay.getUserId());
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
 		renderRequest.setAttribute(
 			FDSViewsWebKeys.FDS_VIEWS_DISPLAY_CONTEXT,
 			new FDSViewsDisplayContext(renderRequest, _serviceTrackerList));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
+
+	private synchronized void _generate(
+			long companyId, Locale locale, long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				companyId, "C_FDSEntry");
+
+		if (objectDefinition != null) {
+			return;
+		}
+
+		objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				userId, false, LocalizedMapUtil.getLocalizedMap("FDS Entry"),
+				"FDSEntry", "100", null,
+				LocalizedMapUtil.getLocalizedMap("FDS Entries"),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "name"), "label", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						"entityClassName", "entityClassName", true)));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FDSViewsPortlet.class);
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private ServiceTrackerList<FDSHeadlessResource> _serviceTrackerList;
 

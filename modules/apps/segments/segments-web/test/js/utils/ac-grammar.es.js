@@ -42,5 +42,27 @@ describe('ac-grammar-util', () => {
 
 			testConversionToQueryString(criterion, testQuery);
 		});
+
+		it('translate a query string with not operator', () => {
+			const criterion = {
+				conjunctionName: 'and',
+				groupId: 'group_01',
+				items: [
+					{
+						assetId: '603744226255659006',
+						day: {operatorName: 'lt', value: '2023-02-23'},
+						operatorName: 'ge',
+						operatorNot: true,
+						propertyName: 'documentDownloaded',
+						value: '2',
+					},
+				],
+			};
+
+			const testQuery =
+				"((not activities.filterByCount(filter='()',operator='ge',value=2)))";
+
+			testConversionToQueryString(criterion, testQuery);
+		});
 	});
 });

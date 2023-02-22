@@ -23,7 +23,11 @@ function buildEventQueryString(criteria) {
 	const operatorName = items[0]?.operatorName;
 	const value = items[0]?.value;
 
-	return `(activities.filterByCount(filter='()',operator='${operatorName}',value=${value}))`;
+	let query = `activities.filterByCount(filter='()',operator='${operatorName}',value=${value})`;
+
+	query = items[0]?.operatorNot ? `((not ${query}))` : `(${query})`;
+
+	return query;
 }
 
 export {buildEventQueryString};

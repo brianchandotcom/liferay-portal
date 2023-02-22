@@ -144,6 +144,10 @@ public class PoshiValidation {
 
 	public static void validate(String testName) throws Exception {
 		validateTestName(testName);
+
+		if (!_exceptions.isEmpty()) {
+			_throwExceptions();
+		}
 	}
 
 	protected static String getPrimaryAttributeName(

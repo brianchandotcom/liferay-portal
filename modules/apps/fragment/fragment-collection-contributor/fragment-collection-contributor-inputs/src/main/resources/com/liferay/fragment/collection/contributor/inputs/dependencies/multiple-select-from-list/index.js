@@ -16,7 +16,11 @@ if (layoutMode === 'edit') {
 	button.setAttribute('disabled', true);
 }
 
-fieldSet.addEventListener('change', () => {
+const updateInputStatus = () => {
+	if (!input.required) {
+		return;
+	}
+
 	const someInputIsChecked = allInputs.some((input) => input.checked);
 
 	if (someInputIsChecked) {
@@ -25,7 +29,9 @@ fieldSet.addEventListener('change', () => {
 	else {
 		allInputs.forEach((input) => input.setAttribute('required', true));
 	}
-});
+};
+
+fieldSet.addEventListener('change', updateInputStatus);
 
 if (numberOfOptions < options.length) {
 	const missionOptions = options.slice(numberOfOptions);
@@ -59,9 +65,11 @@ if (numberOfOptions < options.length) {
 			text.textContent = option.label;
 
 			fieldSet.appendChild(node);
-			allInputs.push(node);
+			allInputs.push(input);
 		});
 
 		fieldSet.removeChild(button);
+
+		updateInputStatus();
 	});
 }

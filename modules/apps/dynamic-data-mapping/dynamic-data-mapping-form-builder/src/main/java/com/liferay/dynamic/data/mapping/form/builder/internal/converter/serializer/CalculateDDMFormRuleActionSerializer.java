@@ -24,10 +24,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Leonardo Barros
@@ -57,15 +56,13 @@ public class CalculateDDMFormRuleActionSerializer
 		String expression = _removeBrackets(
 			_calculateDDMFormRuleAction.getExpression());
 
-		Set<String> keySet = ddmFormFieldsMap.keySet();
+		Set<String> ddmFormFieldNames = new HashSet<>();
 
-		Stream<String> ddmFormFieldsStream = keySet.stream();
-
-		Set<String> ddmFormFieldNames = ddmFormFieldsStream.filter(
-			ddmFormField -> expression.contains(ddmFormField)
-		).collect(
-			Collectors.toSet()
-		);
+		for (String ddmFormField : ddmFormFieldsMap.keySet()) {
+			if (expression.contains(ddmFormField)) {
+				ddmFormFieldNames.add(ddmFormField);
+			}
+		}
 
 		String newExpression = buildExpression(expression, ddmFormFieldNames);
 

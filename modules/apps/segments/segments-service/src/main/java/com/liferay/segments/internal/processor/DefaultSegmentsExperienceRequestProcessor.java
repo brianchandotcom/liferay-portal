@@ -16,12 +16,8 @@ package com.liferay.segments.internal.processor;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessor;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,15 +42,16 @@ public class DefaultSegmentsExperienceRequestProcessor
 			long classNameId, long classPK, long[] segmentsExperienceIds)
 		throws PortalException {
 
-		List<SegmentsExperience> segmentsExperiencesAfterFilter =
-			ListUtil.filter(
-				_segmentsExperienceLocalService.getSegmentsExperiences(
-					groupId, classNameId, classPK, true),
-				segmentsExperience -> segmentsExperience.getPriority() >= 0);
-
 		return TransformUtil.transformToLongArray(
-			segmentsExperiencesAfterFilter,
-			SegmentsExperience::getSegmentsExperienceId);
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				groupId, classNameId, classPK, true),
+			segmentsExperience -> {
+				if (segmentsExperience.getPriority() < 0) {
+					return null;
+				}
+
+				return segmentsExperience.getSegmentsExperienceId();
+			});
 	}
 
 	@Override
@@ -65,15 +62,16 @@ public class DefaultSegmentsExperienceRequestProcessor
 			long[] segmentsExperienceIds)
 		throws PortalException {
 
-		List<SegmentsExperience> segmentsExperiencesAfterFilter =
-			ListUtil.filter(
-				_segmentsExperienceLocalService.getSegmentsExperiences(
-					groupId, segmentsEntryIds, classNameId, classPK, true),
-				segmentsExperience -> segmentsExperience.getPriority() >= 0);
-
 		return TransformUtil.transformToLongArray(
-			segmentsExperiencesAfterFilter,
-			SegmentsExperience::getSegmentsExperienceId);
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				groupId, segmentsEntryIds, classNameId, classPK, true),
+			segmentsExperience -> {
+				if (segmentsExperience.getPriority() < 0) {
+					return null;
+				}
+
+				return segmentsExperience.getSegmentsExperienceId();
+			});
 	}
 
 	@Reference

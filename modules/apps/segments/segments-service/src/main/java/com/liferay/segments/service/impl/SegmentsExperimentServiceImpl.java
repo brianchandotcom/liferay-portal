@@ -32,7 +32,6 @@ import com.liferay.segments.service.base.SegmentsExperimentServiceBaseImpl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -219,13 +218,10 @@ public class SegmentsExperimentServiceImpl
 
 		_checkPermissions(segmentsExperiment, ActionKeys.UPDATE);
 
-		Set<Map.Entry<String, Double>> segmentsExperienceKeySplits =
-			segmentsExperienceKeySplitMap.entrySet();
-
 		Map<Long, Double> segmentsExperienceIdSplitMap = new HashMap<>();
 
 		for (Map.Entry<String, Double> segmentsExperienceKeySplit :
-				segmentsExperienceKeySplits) {
+				segmentsExperienceKeySplitMap.entrySet()) {
 
 			segmentsExperienceIdSplitMap.put(
 				_getSegmentsExperienceId(

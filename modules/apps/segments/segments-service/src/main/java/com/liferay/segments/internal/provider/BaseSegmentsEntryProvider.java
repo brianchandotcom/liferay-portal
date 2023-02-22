@@ -141,19 +141,18 @@ public abstract class BaseSegmentsEntryProvider
 			return new long[0];
 		}
 
-		segmentsEntries = ListUtil.filter(
-			segmentsEntries,
-			segmentsEntry ->
-				(ArrayUtil.isEmpty(filterSegmentsEntryIds) ||
-				 ArrayUtil.contains(
-					 filterSegmentsEntryIds,
-					 segmentsEntry.getSegmentsEntryId())) &&
-				isMember(
-					className, classPK, context, segmentsEntry,
-					segmentsEntryIds));
-
 		return TransformUtil.transformToLongArray(
-			segmentsEntries, SegmentsEntry::getSegmentsEntryId);
+			ListUtil.filter(
+				segmentsEntries,
+				segmentsEntry ->
+					(ArrayUtil.isEmpty(filterSegmentsEntryIds) ||
+					 ArrayUtil.contains(
+						 filterSegmentsEntryIds,
+						 segmentsEntry.getSegmentsEntryId())) &&
+					isMember(
+						className, classPK, context, segmentsEntry,
+						segmentsEntryIds)),
+			SegmentsEntry::getSegmentsEntryId);
 	}
 
 	protected Criteria.Conjunction getConjunction(

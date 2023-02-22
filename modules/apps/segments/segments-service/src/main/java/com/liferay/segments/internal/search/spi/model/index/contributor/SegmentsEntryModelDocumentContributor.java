@@ -65,16 +65,13 @@ public class SegmentsEntryModelDocumentContributor
 				segmentsEntry.getGroupId()),
 			true, true);
 		document.addKeyword(
-			"roleIds", _getRoleIds(segmentsEntry.getSegmentsEntryId()));
+			"roleIds",
+			TransformUtil.transformToLongArray(
+				_segmentsEntryRoleLocalService.getSegmentsEntryRoles(
+					segmentsEntry.getSegmentsEntryId()),
+				SegmentsEntryRole::getRoleId));
 		document.addKeyword(
 			"source", StringUtil.toLowerCase(segmentsEntry.getSource()));
-	}
-
-	private long[] _getRoleIds(long segmentsEntryId) {
-		return TransformUtil.transformToLongArray(
-			_segmentsEntryRoleLocalService.getSegmentsEntryRoles(
-				segmentsEntryId),
-			SegmentsEntryRole::getRoleId);
 	}
 
 	private Locale _getSiteDefaultLocale(long groupId) {

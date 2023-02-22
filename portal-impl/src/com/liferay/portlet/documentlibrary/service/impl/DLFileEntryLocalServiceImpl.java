@@ -3431,7 +3431,6 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setSize(size);
-		dlFileVersion.setSize(size);
 		dlFileVersion.setExpirationDate(expirationDate);
 		dlFileVersion.setReviewDate(reviewDate);
 		dlFileVersion.setStatus(status);

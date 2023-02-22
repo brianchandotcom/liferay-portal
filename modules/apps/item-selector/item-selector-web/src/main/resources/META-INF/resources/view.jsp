@@ -48,7 +48,7 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 							navigationItems="<%= navigationItems %>"
 						/>
 
-						<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+						<liferay-util:include page="/view_item_selector.jsp" servletContext="<%= application %>" />
 					</c:when>
 					<c:otherwise>
 
@@ -106,7 +106,7 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 										</c:if>
 
 										<clay:sheet-section>
-											<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+											<liferay-util:include page="/view_item_selector.jsp" servletContext="<%= application %>" />
 										</clay:sheet-section>
 									</clay:sheet>
 								</clay:col>
@@ -116,7 +116,7 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/view_item_selector.jsp" servletContext="<%= application %>" />
 			</c:otherwise>
 		</c:choose>
 	</c:otherwise>

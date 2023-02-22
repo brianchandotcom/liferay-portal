@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>USER_ADDRESS_TABLE_ADDRESS_TYPE</td>
-	<td>//div[contains(.,'${key_primaryValue}')]/h3</td>
+	<td>//li[contains(.,'${key_primaryValue}')]//span[contains(@class,'h3')]</td>
 	<td></td>
 </tr>
 <tr>

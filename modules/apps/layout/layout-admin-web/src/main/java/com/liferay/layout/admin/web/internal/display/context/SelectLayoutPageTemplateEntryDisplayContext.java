@@ -19,6 +19,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -146,6 +147,32 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"addLayoutURL",
 			_getLayoutPageTemplateEntryAddLayoutURL(layoutPageTemplateEntry)
+		).put(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+		).put(
+			"layoutPageTemplateEntryList",
+			() -> {
+				List<Map<String, Object>> layoutPageTemplateEntryList =
+					new ArrayList<>();
+
+				layoutPageTemplateEntryList.add(
+					HashMapBuilder.<String, Object>put(
+						"addLayoutURL",
+						_getLayoutPageTemplateEntryAddLayoutURL(
+							layoutPageTemplateEntry)
+					).put(
+						"layoutPageTemplateEntryId",
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+					).put(
+						"name", layoutPageTemplateEntry.getName()
+					).put(
+						"previewLayoutURL", StringPool.BLANK
+					).build());
+
+				return layoutPageTemplateEntryList;
+			}
 		).put(
 			"subtitle",
 			() -> {

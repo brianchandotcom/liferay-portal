@@ -16,6 +16,13 @@
 
 interface IProps {
 	addLayoutURL: string;
+	layoutPageTemplateEntryId: string;
+	layoutPageTemplateEntryList: Array<{
+		addLayoutURL: string;
+		layoutPageTemplateEntryId: string;
+		name: string;
+		previewLayoutURL: string;
+	}>;
 	portletNamespace: string;
 	subtitle: string;
 	thumbnailURL: string;
@@ -23,6 +30,8 @@ interface IProps {
 }
 export default function LayoutPageTemplateEntryCard({
 	addLayoutURL,
+	layoutPageTemplateEntryId,
+	layoutPageTemplateEntryList,
 	subtitle,
 	title,
 }: IProps): JSX.Element;

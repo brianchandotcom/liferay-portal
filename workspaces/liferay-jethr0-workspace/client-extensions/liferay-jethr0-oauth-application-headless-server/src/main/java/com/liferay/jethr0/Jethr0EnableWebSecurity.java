@@ -22,10 +22,10 @@ import com.nimbusds.jwt.proc.DefaultJWTProcessor;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -71,20 +71,7 @@ public class Jethr0EnableWebSecurity {
 		corsConfiguration.setAllowedMethods(
 			Arrays.asList(
 				"DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"));
-		corsConfiguration.setAllowedOrigins(
-			Stream.of(
-				_dxpDomains.split("\\s*[,\n]\\s*")
-			).map(
-				String::trim
-			).flatMap(
-				domain -> Stream.of(
-					"http://", "https://"
-				).map(
-					scheme -> scheme.concat(domain)
-				)
-			).collect(
-				Collectors.toList()
-			));
+		corsConfiguration.setAllowedOrigins(_getAllowedOrigins());
 
 		urlBasedCorsConfigurationSource.registerCorsConfiguration(
 			"/**", corsConfiguration);
@@ -140,6 +127,17 @@ public class Jethr0EnableWebSecurity {
 		).oauth2ResourceServer(
 			OAuth2ResourceServerConfigurer::jwt
 		).build();
+	}
+
+	private List<String> _getAllowedOrigins() {
+		List<String> allowedOrigins = new ArrayList<>();
+
+		for (String dxpDomain : _dxpDomains.split("\\s*[,\n]\\s*")) {
+			allowedOrigins.add("http://" + dxpDomain);
+			allowedOrigins.add("https://" + dxpDomain);
+		}
+
+		return allowedOrigins;
 	}
 
 	private String _getClientId() throws Exception {

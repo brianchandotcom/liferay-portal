@@ -97,17 +97,15 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 
 		synonymSetBuilder.synonyms(synonyms);
 
-		if (synonymSet != null) {
-			synonymSetBuilder.synonymSetDocumentId(
-				synonymSet.getSynonymSetDocumentId());
-		}
-
-		if (synonymSet != null) {
-			_synonymSetStorageAdapter.update(
+		if (synonymSet == null) {
+			_synonymSetStorageAdapter.create(
 				synonymSetIndexName, synonymSetBuilder.build());
 		}
 		else {
-			_synonymSetStorageAdapter.create(
+			synonymSetBuilder.synonymSetDocumentId(
+				synonymSet.getSynonymSetDocumentId());
+
+			_synonymSetStorageAdapter.update(
 				synonymSetIndexName, synonymSetBuilder.build());
 		}
 	}

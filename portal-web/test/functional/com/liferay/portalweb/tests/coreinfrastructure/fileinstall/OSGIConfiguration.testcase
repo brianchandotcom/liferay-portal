@@ -353,6 +353,7 @@ definition {
 	@description = "This is a test for LPS-169760. Verify the tika configurations in custom tika.xml file can be loaded."
 	@priority = 3
 	test TikaConfigurationWithCustomTikaXML {
+		property app.server.types = "tomcat";
 		property test.name.skip.portal.instance = "OSGIConfiguration#TikaConfigurationWithCustomTikaXML";
 
 		var projectDir = PropsUtil.get("project.dir");

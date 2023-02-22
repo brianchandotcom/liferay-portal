@@ -1476,6 +1476,13 @@ definition {
 		AssertElementNotPresent(locator1 = "KnowledgeBase#ARTICLE_TABLE_KB_GENERIC");
 	}
 
+	macro viewExpirationStatus {
+		AssertTextEquals(
+			key_kbArticleTitle = ${kbArticleTitle},
+			locator1 = "KnowledgeBase#ARTICLE_TABLE_EXPIRATION_STATUS",
+			value1 = ${kbExpirationStatus});
+	}
+
 	macro viewFieldRequiredAsterisk {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
 
@@ -1630,6 +1637,12 @@ definition {
 		else if (${next} == "false") {
 			AssertElementNotPresent(locator1 = "KnowledgeBaseArticle#NEXT");
 		}
+	}
+
+	macro viewNoExpirationStatus {
+		AssertElementNotPresent(
+			key_kbArticleTitle = ${kbArticleTitle},
+			locator1 = "KnowledgeBase#ARTICLE_TABLE_EXPIRATION_STATUS");
 	}
 
 	macro viewNoHierarchyPG {

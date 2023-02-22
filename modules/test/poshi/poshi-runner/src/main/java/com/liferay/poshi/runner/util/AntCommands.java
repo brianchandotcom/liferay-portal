@@ -47,12 +47,10 @@ public class AntCommands implements Callable<Void> {
 		Future<Void> future = executorService.submit(antCommands);
 
 		try {
-			future.get(150, TimeUnit.SECONDS);
+			future.get(600, TimeUnit.SECONDS);
 		}
-		catch (ExecutionException executionException) {
-			throw executionException;
-		}
-		catch (TimeoutException timeoutException) {
+		catch (ExecutionException | TimeoutException exception) {
+			throw exception;
 		}
 	}
 

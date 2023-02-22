@@ -42,7 +42,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
@@ -188,15 +187,20 @@ public class DDMFormFactoryHelper {
 
 	protected Locale getDefaultLocale() {
 		if (Validator.isNull(_ddmForm.defaultLanguageId())) {
-			return Optional.ofNullable(
-				LocaleThreadLocal.getThemeDisplayLocale()
-			).orElse(
-				Optional.ofNullable(
-					LocaleThreadLocal.getSiteDefaultLocale()
-				).orElse(
-					LocaleUtil.getDefault()
-				)
-			);
+			Locale themeDisplayLocal =
+				LocaleThreadLocal.getThemeDisplayLocale();
+
+			if (themeDisplayLocal != null) {
+				return themeDisplayLocal;
+			}
+
+			Locale siteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
+
+			if (siteDefaultLocale != null) {
+				return siteDefaultLocale;
+			}
+
+			return LocaleUtil.getDefault();
 		}
 
 		return LocaleUtil.fromLanguageId(_ddmForm.defaultLanguageId());

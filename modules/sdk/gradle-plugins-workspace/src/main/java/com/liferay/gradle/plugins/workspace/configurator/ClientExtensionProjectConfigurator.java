@@ -54,6 +54,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -66,6 +67,7 @@ import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
+import org.gradle.api.file.RelativePath;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
@@ -199,6 +201,16 @@ public class ClientExtensionProjectConfigurator
 									ClientExtension.class);
 
 							clientExtension.id = id;
+
+							if ((clientExtension.type == null) ||
+								clientExtension.type.isEmpty()) {
+
+								clientExtension.type = id;
+							}
+
+							clientExtension.classification = _getClassification(
+								clientExtension.id, clientExtension.type);
+
 							clientExtension.projectName = project.getName();
 
 							createClientExtensionConfigTaskProvider.configure(
@@ -388,14 +400,31 @@ public class ClientExtensionProjectConfigurator
 					createClientExtensionConfigTask.getInputs();
 
 				taskInputs.file(project.file(_CLIENT_EXTENSION_YAML));
+
+				createClientExtensionConfigTask.addClientExtensionProperties(
+					_getClientExtensionProperties());
 			});
 
 		assembleClientExtensionTaskProvider.configure(
 			copy -> {
-				copy.setDestinationDir(
-					new File(project.getBuildDir(), "clientExtension"));
+				copy.from(
+					createClientExtensionConfigTaskProvider,
+					spec -> spec.eachFile(
+						fileCopyDetails -> {
+							File buildDir = project.getBuildDir();
 
-				copy.from(createClientExtensionConfigTaskProvider);
+							File file = fileCopyDetails.getFile();
+
+							Path buildPath = buildDir.toPath();
+
+							Path relativePath = buildPath.relativize(
+								file.toPath());
+
+							fileCopyDetails.setRelativePath(
+								new RelativePath(
+									false, relativePath.toString()));
+						}));
+				copy.into(new File(project.getBuildDir(), "clientExtension"));
 			});
 
 		buildClientExtensionZipTaskProvider.configure(
@@ -503,6 +532,43 @@ public class ClientExtensionProjectConfigurator
 		copy.from(_getZipFile(project));
 	}
 
+	private String _getClassification(String id, String type) {
+		Properties clientExtensionProperties = _getClientExtensionProperties();
+
+		String classification = clientExtensionProperties.getProperty(
+			type + ".classification");
+
+		if (classification != null) {
+			return classification;
+		}
+
+		throw new GradleException(
+			StringBundler.concat(
+				"Client extension ", id, " with type ", type,
+				" is of unkown classification"));
+	}
+
+	private Properties _getClientExtensionProperties() {
+		if (_clientExtensionProperties == null) {
+			try {
+				Properties properties = new Properties();
+
+				properties.load(
+					ClientExtension.class.getResourceAsStream(
+						"client-extension.properties"));
+
+				return _clientExtensionProperties = properties;
+			}
+			catch (Exception exception) {
+				throw new GradleException(
+					"Failed parsing client-extension.properties file",
+					exception);
+			}
+		}
+
+		return _clientExtensionProperties;
+	}
+
 	private File _getZipFile(Project project) {
 		return project.file(
 			"dist/" + GradleUtil.getArchivesBaseName(project) + ".zip");
@@ -515,6 +581,7 @@ public class ClientExtensionProjectConfigurator
 
 	private final Map<String, List<ClientExtensionConfigurer>>
 		_clientExtensionConfigurers = new HashMap<>();
+	private Properties _clientExtensionProperties;
 	private final boolean _defaultRepositoryEnabled;
 
 }

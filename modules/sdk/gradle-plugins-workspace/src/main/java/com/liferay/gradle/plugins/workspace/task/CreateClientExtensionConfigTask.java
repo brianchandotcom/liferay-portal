@@ -18,22 +18,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import com.google.common.collect.Sets;
+
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
+import com.liferay.petra.string.StringBundler;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 
-import java.util.Collections;
+import java.util.AbstractMap;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.gradle.api.DefaultTask;
@@ -60,94 +71,83 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		_dockerFile = _addTaskOutputFile("Dockerfile");
 		_lcpJsonFile = _addTaskOutputFile("LCP.json");
+		_pluginPackagePropertiesFile = _addTaskOutputFile(
+			_PLUGIN_PACKAGE_PROPERTIES_FILE_NAME);
 	}
 
 	public void addClientExtension(ClientExtension clientExtension) {
 		_clientExtensions.add(clientExtension);
 	}
 
+	public void addClientExtensionProperties(
+		Properties clientExtensionProperties) {
+
+		_clientExtensionProperties = clientExtensionProperties;
+	}
+
 	@TaskAction
 	public void createClientExtensionConfig() {
-		Project project = getProject();
+		Properties pluginPackageProperties = _getPluginPackageProperties();
 
-		File outputDockerFile = getDockerFile();
-
-		try {
-			String dockerFileContent = _getFileContentFromProject(
-				project, "Dockerfile");
-
-			if (dockerFileContent == null) {
-				dockerFileContent = _loadTemplate(
-					"templates/" + _type + "/Dockerfile.tpl",
-					Collections.emptyMap());
-			}
-
-			if (dockerFileContent == null) {
-				throw new GradleException("Dockerfile not specified");
-			}
-
-			Files.write(
-				outputDockerFile.toPath(), dockerFileContent.getBytes());
-		}
-		catch (IOException ioException) {
-			throw new GradleException(ioException.getMessage(), ioException);
-		}
-
-		File outputLcpJsonFile = getLcpJsonFile();
-
-		try {
-			String lcpJsonContent = _getFileContentFromProject(
-				project, "LCP.json");
-
-			if (lcpJsonContent == null) {
-				lcpJsonContent = _loadTemplate(
-					"templates/" + _type + "/LCP.json.tpl",
-					Collections.singletonMap(
-						"__CLIENT_EXTENSION_ID__",
-						StringUtil.toAlphaNumericLowerCase(project.getName())));
-			}
-
-			if (lcpJsonContent == null) {
-				throw new GradleException("LCP.json not specified");
-			}
-
-			Files.write(outputLcpJsonFile.toPath(), lcpJsonContent.getBytes());
-		}
-		catch (IOException ioException) {
-			throw new GradleException(ioException.getMessage(), ioException);
-		}
-
-		File clientExtensionConfigFile = getClientExtensionConfigFile();
+		String classificationGrouping =
+			_validateClientExtensionClassificationGroupings(_clientExtensions);
 
 		Map<String, Object> jsonMap = new HashMap<>();
 
 		_clientExtensions.forEach(
 			clientExtension -> {
-				try {
-					jsonMap.putAll(clientExtension.toJSONMap());
+				String pid = _clientExtensionProperties.getProperty(
+					clientExtension.type + ".pid");
+
+				if (pid != null) {
+					jsonMap.putAll(clientExtension.toJSONMap(pid));
 				}
-				catch (Exception exception) {
-					throw new GradleException(
-						exception.getMessage(), exception);
+
+				if (Objects.equals(clientExtension.classification, "batch")) {
+					pluginPackageProperties.put(
+						"Liferay-Client-Extension-Batch", "batch/");
+				}
+
+				if (Objects.equals(clientExtension.classification, "static")) {
+					pluginPackageProperties.put(
+						"Liferay-Client-Extension-Static", "static/");
 				}
 			});
 
-		try {
-			ObjectMapper objectMapper = new ObjectMapper();
+		_storePluginPackageProperties(pluginPackageProperties);
 
-			objectMapper.configure(
-				SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
+		Project project = getProject();
 
-			ObjectWriter objectWriter =
-				objectMapper.writerWithDefaultPrettyPrinter();
+		Stream<ClientExtension> stream = _clientExtensions.stream();
 
-			String json = objectWriter.writeValueAsString(jsonMap);
+		Map<String, String> substitutionMap = stream.flatMap(
+			clientExtension -> {
+				Set<Map.Entry<String, Object>> entrySet =
+					clientExtension.typeSettings.entrySet();
 
-			Files.write(clientExtensionConfigFile.toPath(), json.getBytes());
-		}
-		catch (Exception exception) {
-			throw new GradleException(exception.getMessage(), exception);
-		}
+				Stream<Map.Entry<String, Object>> entrySetStream =
+					entrySet.stream();
+
+				return entrySetStream.map(
+					entry -> new AbstractMap.SimpleEntry<>(
+						StringBundler.concat(
+							"__", clientExtension.id, ".", entry.getKey(),
+							"__"),
+						String.valueOf(entry.getValue())));
+			}
+		).collect(
+			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+		);
+
+		substitutionMap.put(
+			"__CLIENT_EXTENSION_ID__",
+			StringUtil.toAlphaNumericLowerCase(project.getName()));
+
+		_createDockerConfig(project, classificationGrouping, substitutionMap);
+
+		_createLCPJSONConfig(project, classificationGrouping, substitutionMap);
+
+		_createClientExtensionConfigFile(jsonMap);
 	}
 
 	public File getClientExtensionConfigFile() {
@@ -164,6 +164,10 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 	public File getLcpJsonFile() {
 		return GradleUtil.toFile(getProject(), _lcpJsonFile);
+	}
+
+	public File getPluginPackagePropertiesFile() {
+		return GradleUtil.toFile(getProject(), _pluginPackagePropertiesFile);
 	}
 
 	@Input
@@ -201,6 +205,82 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		return buildFileProvider;
 	}
 
+	private void _createClientExtensionConfigFile(Map<String, Object> jsonMap) {
+		File clientExtensionConfigFile = getClientExtensionConfigFile();
+
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			objectMapper.configure(
+				SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
+
+			ObjectWriter objectWriter =
+				objectMapper.writerWithDefaultPrettyPrinter();
+
+			String json = objectWriter.writeValueAsString(jsonMap);
+
+			Files.write(clientExtensionConfigFile.toPath(), json.getBytes());
+		}
+		catch (Exception exception) {
+			throw new GradleException(exception.getMessage(), exception);
+		}
+	}
+
+	private void _createDockerConfig(
+		Project project, String classificationGrouping,
+		Map<String, String> substitutionMap) {
+
+		File outputDockerFile = getDockerFile();
+
+		try {
+			String dockerFileContent = _getFileContentFromProject(
+				project, "Dockerfile");
+
+			if (dockerFileContent == null) {
+				dockerFileContent = _loadTemplate(
+					"templates/" + classificationGrouping + "/Dockerfile.tpl",
+					substitutionMap);
+			}
+
+			if (dockerFileContent == null) {
+				throw new GradleException("Dockerfile not specified");
+			}
+
+			Files.write(
+				outputDockerFile.toPath(), dockerFileContent.getBytes());
+		}
+		catch (IOException ioException) {
+			throw new GradleException(ioException.getMessage(), ioException);
+		}
+	}
+
+	private void _createLCPJSONConfig(
+		Project project, String classificationGrouping,
+		Map<String, String> substitutionMap) {
+
+		File outputLcpJsonFile = getLcpJsonFile();
+
+		try {
+			String lcpJsonContent = _getFileContentFromProject(
+				project, "LCP.json");
+
+			if (lcpJsonContent == null) {
+				lcpJsonContent = _loadTemplate(
+					"templates/" + classificationGrouping + "/LCP.json.tpl",
+					substitutionMap);
+			}
+
+			if (lcpJsonContent == null) {
+				throw new GradleException("LCP.json not specified");
+			}
+
+			Files.write(outputLcpJsonFile.toPath(), lcpJsonContent.getBytes());
+		}
+		catch (IOException ioException) {
+			throw new GradleException(ioException.getMessage(), ioException);
+		}
+	}
+
 	private String _getFileContentFromProject(Project project, String path) {
 		File file = project.file(path);
 
@@ -215,6 +295,26 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		}
 
 		return null;
+	}
+
+	private Properties _getPluginPackageProperties() {
+		Properties pluginPackageProperties = new Properties();
+
+		try {
+			String pluginPackagePropertiesFileContent =
+				_getFileContentFromProject(
+					getProject(), "liferay-plugin-package.properties");
+
+			if (pluginPackagePropertiesFileContent != null) {
+				pluginPackageProperties.load(
+					new StringReader(pluginPackagePropertiesFileContent));
+			}
+		}
+		catch (IOException ioException) {
+			throw new GradleException(ioException.getMessage(), ioException);
+		}
+
+		return pluginPackageProperties;
 	}
 
 	private String _loadTemplate(
@@ -245,14 +345,106 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		}
 	}
 
+	private void _storePluginPackageProperties(
+		Properties pluginPackageProperties) {
+
+		File pluginPackagePropertiesFile = getPluginPackagePropertiesFile();
+
+		try {
+			File parentFile = pluginPackagePropertiesFile.getParentFile();
+
+			parentFile.mkdirs();
+
+			BufferedWriter bufferedWriter = Files.newBufferedWriter(
+				pluginPackagePropertiesFile.toPath(),
+				StandardOpenOption.CREATE);
+
+			pluginPackageProperties.store(bufferedWriter, null);
+		}
+		catch (IOException ioException) {
+			throw new GradleException(ioException.getMessage(), ioException);
+		}
+	}
+
+	private String _validateClientExtensionClassificationGroupings(
+		Set<ClientExtension> clientExtensions) {
+
+		Set<String> classificationsFound = new HashSet<>();
+
+		clientExtensions.forEach(
+			clientExtension -> classificationsFound.add(
+				clientExtension.classification));
+
+		// This order is relevant
+
+		if (_groupConfiguration.containsAll(classificationsFound)) {
+			return "configuration";
+		}
+		else if (_groupBatch.containsAll(classificationsFound)) {
+			Stream<ClientExtension> stream = clientExtensions.stream();
+
+			List<ClientExtension> batches = stream.filter(
+				clientExtension -> Objects.equals(clientExtension.type, "batch")
+			).collect(
+				Collectors.toList()
+			);
+
+			if (batches.size() > 1) {
+				throw new GradleException(
+					"A client extension project must not contain more than " +
+						"one batch type client extension");
+			}
+
+			ClientExtension batchClientExtension = batches.get(0);
+
+			if (!Objects.equals(batchClientExtension.id, "batch")) {
+				throw new GradleException(
+					"The batch client extension must be named batch");
+			}
+
+			return "batch";
+		}
+		else if (_groupService.containsAll(classificationsFound)) {
+			return "service";
+		}
+		else if (_groupStatic.containsAll(classificationsFound)) {
+			return "static";
+		}
+		else if (!classificationsFound.isEmpty()) {
+			throw new GradleException(
+				StringBundler.concat(
+					"The combination of client extensions in ",
+					classificationsFound,
+					" cannot be grouped in a single project. The following ",
+					"groupings are allowed: ", _groupBatch, _groupService,
+					_groupStatic));
+		}
+
+		return "static";
+	}
+
 	private static final String _CLIENT_EXTENSION_CONFIG_FILE_NAME =
 		".client-extension-config.json";
 
+	private static final String _PLUGIN_PACKAGE_PROPERTIES_FILE_NAME =
+		"WEB-INF/liferay-plugin-package.properties";
+
+	private static final Set<String> _groupBatch = Sets.newHashSet(
+		"batch", "configuration");
+	private static final Set<String> _groupConfiguration = Sets.newHashSet(
+		"configuration");
+	private static final Set<String> _groupService = Sets.newHashSet(
+		"configuration", "service");
+	private static final Set<String> _groupStatic = Sets.newHashSet(
+		"configuration", "static");
+
 	private final Object _clientExtensionConfigFile;
+	private Properties _clientExtensionProperties;
 	private final Set<ClientExtension> _clientExtensions =
 		new LinkedHashSet<>();
 	private Object _dockerFile;
 	private Object _lcpJsonFile;
+	private final Object _pluginPackagePropertiesFile;
 	private String _type = "static";
 
 }

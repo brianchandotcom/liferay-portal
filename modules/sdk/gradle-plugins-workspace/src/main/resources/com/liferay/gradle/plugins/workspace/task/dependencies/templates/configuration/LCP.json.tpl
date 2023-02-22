@@ -1,5 +1,5 @@
 {
-	"cpu": 0.2,
+	"cpu": 0.1,
 	"environments": {
 		"infra": {
 			"deploy": false
@@ -7,6 +7,6 @@
 	},
 	"id": "__CLIENT_EXTENSION_ID__",
 	"kind": "Job",
-	"memory": 300,
+	"memory": 10,
 	"scale": 1
 }

@@ -145,23 +145,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"addLayoutURL",
-			PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCRenderCommandName(
-				"/layout_admin/add_layout"
-			).setBackURL(
-				ParamUtil.getString(_httpServletRequest, "redirect")
-			).setParameter(
-				"layoutPageTemplateEntryId",
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-			).setParameter(
-				"privateLayout",
-				ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
-			).setParameter(
-				"selPlid", ParamUtil.getLong(_httpServletRequest, "selPlid")
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString()
+			_getLayoutPageTemplateEntryAddLayoutURL(layoutPageTemplateEntry)
 		).put(
 			"subtitle",
 			() -> {
@@ -313,6 +297,28 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		}
 
 		return true;
+	}
+
+	private String _getLayoutPageTemplateEntryAddLayoutURL(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/layout_admin/add_layout"
+		).setBackURL(
+			ParamUtil.getString(_httpServletRequest, "redirect")
+		).setParameter(
+			"layoutPageTemplateEntryId",
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		).setParameter(
+			"privateLayout",
+			ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
+		).setParameter(
+			"selPlid", ParamUtil.getLong(_httpServletRequest, "selPlid")
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private String _backURL;

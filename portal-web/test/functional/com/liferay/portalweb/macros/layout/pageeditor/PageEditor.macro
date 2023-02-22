@@ -3120,6 +3120,19 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (isSet(numberOfLines)) {
+			Type(
+				key_text = "Number of Lines",
+				locator1 = "TextInput#ANY",
+				value1 = ${numberOfLines});
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(placeholder)) {
 			Type(
 				key_text = "Placeholder",
@@ -5602,6 +5615,15 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				index = ${position},
 				locator1 = "Fragment#INPUT_HELP_TEXT",
 				type = ${type});
+		}
+
+		if (isSet(numberOfLines)) {
+			AssertAttributeValue(
+				attribute1 = "rows",
+				index = ${position},
+				locator1 = "Fragment#TEXTAREA_FIELD",
+				type = ${type},
+				value1 = ${numberOfLines});
 		}
 
 		if (isSet(placeholder)) {

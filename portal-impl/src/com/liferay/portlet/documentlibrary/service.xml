@@ -301,6 +301,7 @@
 		<column name="changeLog" type="String" />
 		<column name="extraSettings" type="String" />
 		<column name="fileEntryTypeId" type="long" />
+		<column name="storeUUID" type="String" />
 		<column name="version" type="String" />
 		<column name="size" type="long" />
 		<column name="checksum" type="String" />

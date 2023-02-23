@@ -14,14 +14,15 @@
 
 package com.liferay.analytics.batch.exportimport.internal.engine;
 
+import com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
-import com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter.DXPEntityDTOConverter;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
@@ -138,8 +140,8 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 	@Reference
 	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
-	@Reference
-	private DXPEntityDTOConverter _dxpEntityDTOConverter;
+	@Reference(target = DTOConverterConstants.DXP_ENTITY_DTO_CONVERTER)
+	private DTOConverter<BaseModel<?>, DXPEntity> _dxpEntityDTOConverter;
 
 	@Reference
 	private UserLocalService _userLocalService;

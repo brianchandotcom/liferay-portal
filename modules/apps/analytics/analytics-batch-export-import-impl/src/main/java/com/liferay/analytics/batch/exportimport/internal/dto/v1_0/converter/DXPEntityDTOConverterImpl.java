@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity",
-	service = {DTOConverter.class, DXPEntityDTOConverter.class}
+	service = DTOConverter.class
 )
 public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 

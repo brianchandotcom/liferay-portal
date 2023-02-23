@@ -79,7 +79,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -180,18 +179,9 @@ public abstract class BaseIndexingTestCase {
 		Function<String, DocumentCreationHelper> function,
 		Collection<String> values) {
 
-		addDocuments(function, values.stream());
-	}
-
-	protected void addDocuments(
-		Function<String, DocumentCreationHelper> function,
-		Stream<String> stream) {
-
-		stream.map(
-			function
-		).forEach(
-			this::addDocument
-		);
+		for (String value : values) {
+			addDocument(function.apply(value));
+		}
 	}
 
 	protected void assertSearch(

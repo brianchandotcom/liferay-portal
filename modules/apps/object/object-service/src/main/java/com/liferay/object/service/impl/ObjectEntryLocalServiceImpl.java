@@ -448,7 +448,7 @@ public class ObjectEntryLocalServiceImpl
 			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
 			values);
 
-		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
+		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			objectDefinition.getClassName());
 
 		indexer.delete(objectEntry);

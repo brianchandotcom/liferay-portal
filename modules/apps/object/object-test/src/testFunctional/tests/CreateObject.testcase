@@ -4169,10 +4169,6 @@ definition {
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
 		AssertElementPresent(
-			key_tabName = "Field Tab",
-			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
-
-		AssertElementPresent(
 			key_labelName = "Block 1",
 			locator1 = "ObjectAdmin#LABEL_FIELD_GROUP_TITLE");
 

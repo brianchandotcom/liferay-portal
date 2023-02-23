@@ -21,9 +21,7 @@ import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -37,17 +35,12 @@ public abstract class BaseMatchAllQueryTestCase extends BaseIndexingTestCase {
 	public void testMatchAllQuery() {
 		int count = 20;
 
-		List<Double> list = IntStream.rangeClosed(
-			1, count
-		).mapToObj(
-			Double::valueOf
-		).collect(
-			Collectors.toList()
-		);
+		double[] sequence = _generateNumberSequenceClosed(count);
 
-		list.forEach(
-			i -> addDocument(
-				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i)));
+		addDocuments(
+			number -> DocumentCreationHelpers.singleNumber(
+				Field.PRIORITY, number),
+			sequence);
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -74,7 +67,7 @@ public abstract class BaseMatchAllQueryTestCase extends BaseIndexingTestCase {
 						DocumentsAssert.assertValues(
 							searchResponse.getRequestString(),
 							searchResponse.getDocuments(), Field.PRIORITY,
-							String.valueOf(list));
+							String.valueOf(Arrays.asList(sequence)));
 					});
 			});
 	}
@@ -83,12 +76,10 @@ public abstract class BaseMatchAllQueryTestCase extends BaseIndexingTestCase {
 	public void testMatchAllQueryWithSize0() {
 		int count = 20;
 
-		IntStream.rangeClosed(
-			1, count
-		).forEach(
-			i -> addDocument(
-				DocumentCreationHelpers.singleNumber(Field.PRIORITY, i))
-		);
+		addDocuments(
+			number -> DocumentCreationHelpers.singleNumber(
+				Field.PRIORITY, number),
+			_generateNumberSequenceClosed(count));
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -124,6 +115,14 @@ public abstract class BaseMatchAllQueryTestCase extends BaseIndexingTestCase {
 			).query(
 				queries.matchAll()
 			).build());
+	}
+
+	private double[] _generateNumberSequenceClosed(int count) {
+		double[] sequence = new double[count];
+
+		Arrays.setAll(sequence, i -> i + 1);
+
+		return sequence;
 	}
 
 }

@@ -226,10 +226,16 @@ const filterSchema = {
 	},
 	buildComponents: {
 		fields: [
-			baseFilters.priority,
-			overrides(baseFilters.caseType, {disabled: false}),
-			baseFilters.team,
-			baseFilters.run,
+			overrides(baseFilters.priority, {
+				type: 'select',
+			}),
+			overrides(baseFilters.caseType, {
+			}),
+			overrides(baseFilters.team, {
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.run, {
+			}),
 		] as RendererFields[],
 	},
 	buildResults: {

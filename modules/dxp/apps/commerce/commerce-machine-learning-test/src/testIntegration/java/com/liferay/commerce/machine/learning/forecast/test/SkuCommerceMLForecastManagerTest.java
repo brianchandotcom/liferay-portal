@@ -20,6 +20,7 @@ import com.liferay.commerce.machine.learning.forecast.SkuCommerceMLForecastManag
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -34,8 +35,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -87,22 +86,16 @@ public class SkuCommerceMLForecastManagerTest {
 				RandomTestUtil.randomInt(
 					0, _skuCommerceMLForecasts.size() - 1));
 
-		Stream<SkuCommerceMLForecast> skuCommerceMLForecastStream =
-			_skuCommerceMLForecasts.stream();
-
-		List<SkuCommerceMLForecast> skuCommerceMLForecasts =
-			skuCommerceMLForecastStream.filter(
-				forecast -> Objects.equals(
-					forecast.getSku(), skuCommerceMLForecast.getSku())
-			).collect(
-				Collectors.toList()
-			);
-
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> {
 				_assertResultEquals(
-					skuCommerceMLForecast.getSku(), skuCommerceMLForecasts);
+					skuCommerceMLForecast.getSku(),
+					ListUtil.filter(
+						_skuCommerceMLForecasts,
+						forecast -> Objects.equals(
+							forecast.getSku(),
+							skuCommerceMLForecast.getSku())));
 
 				return null;
 			});

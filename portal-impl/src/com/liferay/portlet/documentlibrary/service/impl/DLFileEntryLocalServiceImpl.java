@@ -439,6 +439,8 @@ public class DLFileEntryLocalServiceImpl
 
 		latestDLFileVersion.setChangeLog(changeLog);
 
+		latestDLFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
+
 		latestDLFileVersion = _dlFileVersionPersistence.update(
 			latestDLFileVersion);
 

@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 const PdfPreviewLimit = ({maxLimitSize, namespace, value}) => {
-	const [warning, setWarning] = useState(false);
+	const [error, setError] = useState(false);
 	const [inputValue, setInputValue] = useState(value);
 
 	const onChange = (event) => {
@@ -25,12 +25,16 @@ const PdfPreviewLimit = ({maxLimitSize, namespace, value}) => {
 
 		setInputValue(value);
 
-		setWarning(maxLimitSize > 0 && value > maxLimitSize);
+		setError(maxLimitSize > 0 && value > maxLimitSize);
 	};
 
 	return (
 		<>
-			<ClayForm.Group className={warning ? 'has-warning' : ''}>
+			<p className="text-muted">
+				{Liferay.Language.get('maximum-number-of-pages-help')}
+			</p>
+
+			<ClayForm.Group className={error ? 'has-error' : ''}>
 				<label htmlFor={`${namespace}maxNumberOfPages`}>
 					{Liferay.Language.get('maximum-number-of-pages')}
 				</label>
@@ -44,7 +48,7 @@ const PdfPreviewLimit = ({maxLimitSize, namespace, value}) => {
 					value={inputValue}
 				/>
 
-				{warning && (
+				{error && (
 					<ClayForm.FeedbackGroup>
 						<ClayForm.FeedbackItem>
 							<ClayForm.FeedbackIndicator symbol="info-circle" />
@@ -58,10 +62,6 @@ const PdfPreviewLimit = ({maxLimitSize, namespace, value}) => {
 					</ClayForm.FeedbackGroup>
 				)}
 			</ClayForm.Group>
-
-			<p className="text-muted">
-				{Liferay.Language.get('maximum-number-of-pages-help')}
-			</p>
 		</>
 	);
 };

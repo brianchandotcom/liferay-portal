@@ -24,7 +24,6 @@ import com.liferay.list.type.service.persistence.ListTypeEntryPersistence;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -191,10 +190,6 @@ public class ListTypeDefinitionLocalServiceImpl
 			long userId, long listTypeDefinitionId,
 			List<ListTypeEntry> listTypeEntries)
 		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-167536")) {
-			return;
-		}
 
 		List<ListTypeEntry> existingListTypeEntries = new ArrayList<>(
 			_listTypeEntryLocalService.getListTypeEntries(

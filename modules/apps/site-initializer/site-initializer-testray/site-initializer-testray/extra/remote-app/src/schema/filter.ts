@@ -272,27 +272,27 @@ const filterSchema = {
 			overrides(baseFilters.dueStatus, {
 				options: [
 					{
-						label: 'Blocked',
+						label: i18n.translate('blocked'),
 						value: CaseResultStatuses.BLOCKED,
 					},
 					{
-						label: 'Failed',
+						label: i18n.translate('failed'),
 						value: CaseResultStatuses.FAILED,
 					},
 					{
-						label: 'In Progress',
+						label: i18n.translate('in-progress'),
 						value: CaseResultStatuses.IN_PROGRESS,
 					},
 					{
-						label: 'Passed',
+						label: i18n.translate('passed'),
 						value: CaseResultStatuses.PASSED,
 					},
 					{
-						label: 'Test Fix',
+						label: i18n.translate('test-fix'),
 						value: CaseResultStatuses.TEST_FIX,
 					},
 					{
-						label: 'Untested',
+						label: i18n.translate('untested'),
 						value: CaseResultStatuses.UNTESTED,
 					},
 				],
@@ -419,21 +419,44 @@ const filterSchema = {
 	},
 	builds: {
 		fields: [
-			baseFilters.priority,
-			baseFilters.productVersion,
-			baseFilters.caseType,
+			overrides(baseFilters.priority, {
+				disabled: true,
+			}),
+			overrides(baseFilters.productVersion, {
+				name: 'productVersionToBuilds/id',
+				type: 'select',
+			}),
+			overrides(baseFilters.caseType, {disabled: true}),
 			{
 				label: i18n.translate('build-name'),
-				name: 'buildName',
+				name: 'name',
+				operator: 'contains',
 				type: 'text',
 			},
 			{
 				label: i18n.translate('status'),
-				name: 'status',
-				options: ['Open', 'Abandoned', 'Complete', 'In Analysis'],
+				name: 'buildToTasks/dueStatus',
+				options: [
+					{
+						label: i18n.translate('abandoned'),
+						value: TaskStatuses.ABANDONED,
+					},
+					{
+						label: i18n.translate('complete'),
+						value: TaskStatuses.COMPLETE,
+					},
+					{
+						label: i18n.translate('in-analysis'),
+						value: TaskStatuses.IN_ANALYSIS,
+					},
+					{
+						label: i18n.translate('open'),
+						value: TaskStatuses.OPEN,
+					},
+				],
 				type: 'checkbox',
 			},
-			baseFilters.team,
+			overrides(baseFilters.team, {disabled: true}),
 		] as RendererFields[],
 	},
 	cases: {
@@ -547,9 +570,18 @@ const filterSchema = {
 				label: i18n.translate('status'),
 				name: 'dueStatus',
 				options: [
-					{label: 'Complete', value: SubTaskStatuses.COMPLETE},
-					{label: 'In Analysis', value: SubTaskStatuses.IN_ANALYSIS},
-					{label: 'Open', value: SubTaskStatuses.OPEN},
+					{
+						label: i18n.translate('complete'),
+						value: SubTaskStatuses.COMPLETE,
+					},
+					{
+						label: i18n.translate('in-analysis'),
+						value: SubTaskStatuses.IN_ANALYSIS,
+					},
+					{
+						label: i18n.translate('open'),
+						value: SubTaskStatuses.OPEN,
+					},
 				],
 				type: 'checkbox',
 			},
@@ -617,15 +649,15 @@ const filterSchema = {
 			overrides(baseFilters.dueStatus, {
 				options: [
 					{
-						label: 'Abandoned',
+						label: i18n.translate('abandoned'),
 						value: TaskStatuses.ABANDONED,
 					},
 					{
-						label: 'Complete',
+						label: i18n.translate('complete'),
 						value: TaskStatuses.COMPLETE,
 					},
 					{
-						label: 'In Analysis',
+						label: i18n.translate('in-analysis'),
 						value: TaskStatuses.IN_ANALYSIS,
 					},
 				],

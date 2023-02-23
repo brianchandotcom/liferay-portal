@@ -16,6 +16,7 @@ export default {
 	'a-task-for-this-build-already-exists':
 		'A task for this build already exists.',
 	'abandon': 'Abandon',
+	'abandoned': 'Abandoned',
 	'activate': 'Activate',
 	'active': 'Active',
 	'add': 'Add',
@@ -186,6 +187,7 @@ export default {
 	'hide': 'Hide',
 	'history': 'History',
 	'import-jira-issues': 'Import JIRA Issues',
+	'in-analysis': 'In Analysis',
 	'in-progress': 'In Progress',
 	'issue': 'Issue',
 	'issues': 'Issues',

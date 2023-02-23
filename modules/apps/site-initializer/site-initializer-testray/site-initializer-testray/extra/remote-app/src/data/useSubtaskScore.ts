@@ -29,8 +29,8 @@ const useSubtaskScore = ({
 	userId: number;
 }) => {
 	const progressScore = {
-		completed: testrayTask.subtaskScoreCompleted,
-		incomplete: testrayTask.subtaskScoreSelfIncomplete,
+		completed: testrayTask?.subtaskScoreCompleted,
+		incomplete: testrayTask?.subtaskScoreSelfIncomplete,
 		othersCompleted: 0,
 		selfCompleted: 0,
 	};

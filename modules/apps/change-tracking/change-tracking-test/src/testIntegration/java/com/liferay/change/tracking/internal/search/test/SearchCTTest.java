@@ -52,7 +52,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -425,7 +425,7 @@ public class SearchCTTest {
 
 			DocumentsAssert.assertValuesIgnoreRelevance(
 				searchResponse.getRequestString(),
-				searchResponse.getDocuments(), Field.UID, Stream.of(uids));
+				searchResponse.getDocuments(), Field.UID, Arrays.asList(uids));
 		}
 	}
 

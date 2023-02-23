@@ -14,12 +14,12 @@
 
 package com.liferay.portal.search.test.util;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -93,7 +93,7 @@ public class DocumentsAssert {
 
 	public static void assertValuesIgnoreRelevance(
 		String message, List<Document> documentsList, String fieldName,
-		Stream<?> expectedValues) {
+		Collection<?> expectedValues) {
 
 		Document[] documents = documentsList.toArray(new Document[0]);
 
@@ -132,7 +132,7 @@ public class DocumentsAssert {
 			return String.valueOf(fieldValues.get(0));
 		}
 
-		return _sort(fieldValues.stream());
+		return _sort(fieldValues);
 	}
 
 	private static List<String> _getFieldValueStrings(
@@ -174,21 +174,13 @@ public class DocumentsAssert {
 			message, "->", StringUtil.merge(objects), "->", values);
 	}
 
-	private static String _sort(Collection<String> collection) {
-		List<String> list = new ArrayList<>(collection);
+	private static String _sort(Collection<?> collection) {
+		List<String> list = TransformUtil.transform(
+			collection, String::valueOf);
 
 		Collections.sort(list);
 
 		return list.toString();
-	}
-
-	private static String _sort(Stream<?> stream) {
-		return stream.map(
-			String::valueOf
-		).sorted(
-		).collect(
-			Collectors.toList()
-		).toString();
 	}
 
 }

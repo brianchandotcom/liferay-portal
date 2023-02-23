@@ -14,6 +14,7 @@
 
 package com.liferay.journal.internal.upgrade.v4_4_4;
 
+import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -59,6 +60,8 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 	public JournalFeedTypeUpgradeProcess(
 		AssetCategoryLocalService assetCategoryLocalService,
+		AssetEntryAssetCategoryRelLocalService
+			assetEntryAssetCategoryRelLocalService,
 		AssetEntryLocalService assetEntryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		CompanyLocalService companyLocalService, Language language,
@@ -66,6 +69,8 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		UserLocalService userLocalService) {
 
 		_assetCategoryLocalService = assetCategoryLocalService;
+		_assetEntryAssetCategoryRelLocalService =
+			assetEntryAssetCategoryRelLocalService;
 		_assetEntryLocalService = assetEntryLocalService;
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_companyLocalService = companyLocalService;
@@ -86,7 +91,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _addAssetEntry(
-			long[] assetCategoryIds, long classNameId, long defaultUserId,
+			long assetCategoryId, long classNameId, long defaultUserId,
 			ResultSet resultSet)
 		throws Exception {
 
@@ -103,15 +108,21 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 				userId = defaultUserId;
 			}
 
-			_assetEntryLocalService.updateEntry(
+			assetEntry = _assetEntryLocalService.updateEntry(
 				userId, resultSet.getLong("groupId"),
 				resultSet.getDate("createDate"),
 				resultSet.getDate("modifiedDate"), JournalFeed.class.getName(),
-				id, resultSet.getString("uuid_"), 0, assetCategoryIds,
-				new String[0], true, true, null, null, createDate, null,
+				id, resultSet.getString("uuid_"), 0, new long[0], new String[0],
+				true, true, null, null, createDate, null,
 				ContentTypes.TEXT_PLAIN, resultSet.getString("name"),
 				resultSet.getString("description"), null, null, null, 0, 0,
 				0.0);
+
+			if (assetCategoryId > 0) {
+				_assetEntryAssetCategoryRelLocalService.
+					addAssetEntryAssetCategoryRel(
+						assetEntry.getEntryId(), assetCategoryId);
+			}
 		}
 	}
 
@@ -231,8 +242,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 
 						while (resultSet.next()) {
 							_addAssetEntry(
-								new long[0], classNameId, defaultUserId,
-								resultSet);
+								0, classNameId, defaultUserId, resultSet);
 						}
 					}
 				});
@@ -252,7 +262,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long[] assetCategoryIds = new long[0];
+				long assetCategoryId = 0;
 
 				String type = StringUtil.toLowerCase(
 					resultSet.getString("type_"));
@@ -260,13 +270,12 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 				if (Validator.isNotNull(type) &&
 					journalArticleTypesToAssetCategoryIds.containsKey(type)) {
 
-					assetCategoryIds = new long[] {
-						journalArticleTypesToAssetCategoryIds.get(type)
-					};
+					assetCategoryId = journalArticleTypesToAssetCategoryIds.get(
+						type);
 				}
 
 				_addAssetEntry(
-					assetCategoryIds, classNameId, defaultUserId, resultSet);
+					assetCategoryId, classNameId, defaultUserId, resultSet);
 			}
 		}
 	}
@@ -365,6 +374,8 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 	}
 
 	private final AssetCategoryLocalService _assetCategoryLocalService;
+	private final AssetEntryAssetCategoryRelLocalService
+		_assetEntryAssetCategoryRelLocalService;
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final CompanyLocalService _companyLocalService;

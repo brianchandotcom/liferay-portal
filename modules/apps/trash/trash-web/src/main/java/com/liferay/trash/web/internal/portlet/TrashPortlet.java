@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.version=3.0"
 	},
-	service = {Portlet.class, TrashPortlet.class}
+	service = Portlet.class
 )
 public class TrashPortlet extends MVCPortlet {
 

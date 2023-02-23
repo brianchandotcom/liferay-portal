@@ -30,6 +30,7 @@ import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,11 +43,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author David Arques
@@ -91,24 +91,36 @@ public class AnalyticsReportsDataProvider {
 
 			Collection<Long> values = acquisitionChannelValues.values();
 
-			Stream<Long> valuesStream = values.stream();
+			Double total = 0.0;
 
-			Double total = Double.valueOf(valuesStream.reduce(0L, Long::sum));
+			for (Long value : values) {
+				total += value;
+			}
+
+			Double totalValue = total;
 
 			Set<Map.Entry<String, Long>> entries =
 				acquisitionChannelValues.entrySet();
 
-			Stream<Map.Entry<String, Long>> entriesStream = entries.stream();
+			List<AbstractMap.SimpleEntry> simplyEntryList =
+				TransformUtil.transform(
+					entries,
+					entry -> new AbstractMap.SimpleEntry<>(
+						entry.getKey(),
+						new AcquisitionChannel(
+							entry.getKey(), entry.getValue(),
+							(entry.getValue() / totalValue) * 100)));
 
-			return entriesStream.map(
-				entry -> new AbstractMap.SimpleEntry<>(
-					entry.getKey(),
-					new AcquisitionChannel(
-						entry.getKey(), entry.getValue(),
-						(entry.getValue() / total) * 100))
-			).collect(
-				Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-			);
+			Map<String, AcquisitionChannel> acquisitionChannelMap =
+				new HashMap<>();
+
+			for (AbstractMap.SimpleEntry simpleEntry : simplyEntryList) {
+				acquisitionChannelMap.put(
+					(String)simpleEntry.getKey(),
+					(AcquisitionChannel)simpleEntry.getValue());
+			}
+
+			return acquisitionChannelMap;
 		}
 		catch (Exception exception) {
 			throw new PortalException(
@@ -140,16 +152,10 @@ public class AnalyticsReportsDataProvider {
 					Map.class, typeFactory.constructType(String.class),
 					typeFactory.constructType(Long.class)));
 
-			Set<Map.Entry<String, Long>> entries = pageReferrerHosts.entrySet();
-
-			Stream<Map.Entry<String, Long>> entriesStream = entries.stream();
-
-			return entriesStream.map(
+			return TransformUtil.transform(
+				pageReferrerHosts.entrySet(),
 				entry -> new ReferringURL(
-					Math.toIntExact(entry.getValue()), entry.getKey())
-			).collect(
-				Collectors.toList()
-			);
+					Math.toIntExact(entry.getValue()), entry.getKey()));
 		}
 		catch (Exception exception) {
 			throw new PortalException(
@@ -229,16 +235,10 @@ public class AnalyticsReportsDataProvider {
 					Map.class, typeFactory.constructType(String.class),
 					typeFactory.constructType(Long.class)));
 
-			Set<Map.Entry<String, Long>> entries = pageReferrers.entrySet();
-
-			Stream<Map.Entry<String, Long>> entriesStream = entries.stream();
-
-			return entriesStream.map(
+			return TransformUtil.transform(
+				pageReferrers.entrySet(),
 				entry -> new ReferringURL(
-					Math.toIntExact(entry.getValue()), entry.getKey())
-			).collect(
-				Collectors.toList()
-			);
+					Math.toIntExact(entry.getValue()), entry.getKey()));
 		}
 		catch (Exception exception) {
 			throw new PortalException(
@@ -270,17 +270,10 @@ public class AnalyticsReportsDataProvider {
 					Map.class, typeFactory.constructType(String.class),
 					typeFactory.constructType(Long.class)));
 
-			Set<Map.Entry<String, Long>> entries =
-				socialPageReferrers.entrySet();
-
-			Stream<Map.Entry<String, Long>> entriesStream = entries.stream();
-
-			return entriesStream.map(
+			return TransformUtil.transform(
+				socialPageReferrers.entrySet(),
 				entry -> new ReferringSocialMedia(
-					entry.getKey(), Math.toIntExact(entry.getValue()))
-			).collect(
-				Collectors.toList()
-			);
+					entry.getKey(), Math.toIntExact(entry.getValue())));
 		}
 		catch (Exception exception) {
 			throw new PortalException(
@@ -333,16 +326,22 @@ public class AnalyticsReportsDataProvider {
 			Collection<AcquisitionChannel> values =
 				acquisitionChannels.values();
 
-			Stream<AcquisitionChannel> stream = values.stream();
+			Map<TrafficChannel.Type, TrafficChannel> trafficChannels =
+				new HashMap<>();
 
-			return stream.map(
-				TrafficChannel::newInstance
-			).map(
-				trafficChannel -> new AbstractMap.SimpleEntry<>(
-					trafficChannel.getType(), trafficChannel)
-			).collect(
-				Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-			);
+			for (AbstractMap.SimpleEntry simpleEntry :
+					TransformUtil.transform(
+						TransformUtil.transform(
+							values, TrafficChannel::newInstance),
+						trafficChannel -> new AbstractMap.SimpleEntry<>(
+							trafficChannel.getType(), trafficChannel))) {
+
+				trafficChannels.put(
+					(TrafficChannel.Type)simpleEntry.getKey(),
+					(TrafficChannel)simpleEntry.getValue());
+			}
+
+			return trafficChannels;
 		}
 		catch (Exception exception) {
 			throw new PortalException(
@@ -359,20 +358,23 @@ public class AnalyticsReportsDataProvider {
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
-			List<TrafficSource> trafficSources = _objectMapper.readValue(
-				response,
-				typeFactory.constructCollectionType(
-					List.class, TrafficSource.class));
+			Map<String, TrafficSource> trafficSources = new HashMap<>();
 
-			Stream<TrafficSource> trafficSourcesStream =
-				trafficSources.stream();
+			for (AbstractMap.SimpleEntry simpleEntry :
+					TransformUtil.transform(
+						(List<TrafficSource>)_objectMapper.readValue(
+							response,
+							typeFactory.constructCollectionType(
+								List.class, TrafficSource.class)),
+						trafficSource -> new AbstractMap.SimpleEntry<>(
+							trafficSource.getName(), trafficSource))) {
 
-			return trafficSourcesStream.map(
-				trafficSource -> new AbstractMap.SimpleEntry<>(
-					trafficSource.getName(), trafficSource)
-			).collect(
-				Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-			);
+				trafficSources.put(
+					(String)simpleEntry.getKey(),
+					(TrafficSource)simpleEntry.getValue());
+			}
+
+			return trafficSources;
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get traffic sources", exception);

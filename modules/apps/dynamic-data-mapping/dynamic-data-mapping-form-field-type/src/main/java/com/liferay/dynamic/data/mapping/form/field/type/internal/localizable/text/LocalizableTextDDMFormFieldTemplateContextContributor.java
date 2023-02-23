@@ -39,8 +39,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -117,15 +115,9 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 	private JSONArray _getAvailableLocalesJSONArray() {
 		JSONArray jsonArray = jsonFactory.createJSONArray();
 
-		Set<Locale> locales = _language.getAvailableLocales();
-
-		Stream<Locale> stream = locales.stream();
-
-		stream.map(
-			this::_getLocaleJSONObject
-		).forEach(
-			jsonArray::put
-		);
+		for (Locale locale : _language.getAvailableLocales()) {
+			jsonArray.put(_getLocaleJSONObject(locale));
+		}
 
 		return jsonArray;
 	}
@@ -171,15 +163,10 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 		JSONArray placeholdersSubmitLabelJSONArray =
 			jsonFactory.createJSONArray();
 
-		Set<Locale> availableLocales = _language.getAvailableLocales();
-
-		Stream<Locale> stream = availableLocales.stream();
-
-		stream.map(
-			this::_getPlaceholdersSubmitLabelJSONObject
-		).forEach(
-			placeholdersSubmitLabelJSONArray::put
-		);
+		for (Locale locale : _language.getAvailableLocales()) {
+			placeholdersSubmitLabelJSONArray.put(
+				_getPlaceholdersSubmitLabelJSONObject(locale));
+		}
 
 		return placeholdersSubmitLabelJSONArray;
 	}

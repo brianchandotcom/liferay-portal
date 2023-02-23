@@ -37,16 +37,19 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.model.SegmentsEntry;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mikel Lorza
@@ -56,7 +59,7 @@ public class SegmentsEntryLocalServiceWrapper
 	extends com.liferay.segments.service.SegmentsEntryLocalServiceWrapper {
 
 	@Override
-	public SegmentsEntry getSegmentsEntry(long segmentsEntryId)
+	public SegmentsEntry recalculateSegmentsEntry(long segmentsEntryId)
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry = super.getSegmentsEntry(segmentsEntryId);
@@ -97,7 +100,7 @@ public class SegmentsEntryLocalServiceWrapper
 						serviceContext.getScopeGroupId()),
 					individualSegment.getName());
 
-				return super.updateSegmentsEntry(
+				return updateSegmentsEntry(
 					segmentsEntry.getSegmentsEntryId(),
 					individualSegment.getId(), nameMap, null, true,
 					_serialize(criteria), serviceContext);
@@ -161,5 +164,8 @@ public class SegmentsEntryLocalServiceWrapper
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 }

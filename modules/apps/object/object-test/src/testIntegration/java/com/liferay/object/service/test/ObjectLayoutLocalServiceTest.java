@@ -95,6 +95,42 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService);
 
+		_objectDefinition.setStorageType(RandomTestUtil.randomString());
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		_assertFailure(
+			"Categorization layout box can only be used in object " +
+				"definitions with a default storage type",
+			() -> {
+				ObjectLayoutTab objectLayoutTab =
+					_objectLayoutTabPersistence.create(0);
+
+				objectLayoutTab.setNameMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()));
+
+				objectLayoutTab.setPriority(0);
+				objectLayoutTab.setObjectLayoutBoxes(
+					Arrays.asList(
+						_addObjectLayoutBox(),
+						_addObjectLayoutBox(
+							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
+
+				return _objectLayoutLocalService.addObjectLayout(
+					TestPropsValues.getUserId(),
+					_objectDefinition.getObjectDefinitionId(), false,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					Collections.singletonList(objectLayoutTab));
+			});
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService);
+
 		_objectDefinition.setEnableCategorization(false);
 
 		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
@@ -150,42 +186,6 @@ public class ObjectLayoutLocalServiceTest {
 
 				objectLayoutTab.setObjectLayoutBoxes(
 					Arrays.asList(_addObjectLayoutBox(), objectLayoutBox));
-
-				return _objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
-					_objectDefinition.getObjectDefinitionId(), false,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					Collections.singletonList(objectLayoutTab));
-			});
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition.getObjectDefinitionId());
-
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService);
-
-		_objectDefinition.setStorageType(RandomTestUtil.randomString());
-
-		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
-
-		_assertFailure(
-			"Categorization layout box can only be used in object " +
-				"definitions with a default storage type",
-			() -> {
-				ObjectLayoutTab objectLayoutTab =
-					_objectLayoutTabPersistence.create(0);
-
-				objectLayoutTab.setNameMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()));
-
-				objectLayoutTab.setPriority(0);
-				objectLayoutTab.setObjectLayoutBoxes(
-					Arrays.asList(
-						_addObjectLayoutBox(),
-						_addObjectLayoutBox(
-							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
 
 				return _objectLayoutLocalService.addObjectLayout(
 					TestPropsValues.getUserId(),

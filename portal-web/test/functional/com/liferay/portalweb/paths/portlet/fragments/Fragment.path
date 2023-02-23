@@ -181,6 +181,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INPUT_LENGTH_INFO</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]/div[contains(@class,'${type}')]//p[contains(@id,'length-info')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INPUT_REQUIRED</td>
 	<td>xpath=(//div[contains(@id,'fragment-')]/div[contains(@class,'${type}')]//label[normalize-space()='${fieldLabel}'])[${index}]//*[name()='svg'][contains(@class,'icon-asterisk')]</td>
 	<td></td>

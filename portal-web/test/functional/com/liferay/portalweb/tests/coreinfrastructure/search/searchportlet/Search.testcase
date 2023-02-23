@@ -1541,18 +1541,22 @@ definition {
 			}
 		}
 
-		task ("Add two new Pages") {
-			for (var quantity : list "1,2") {
+		task ("Add Pages and Documents") {
+			for (var count : list "1,2") {
 				JSONLayout.addPublicLayout(
 					groupName = "Guest",
-					layoutName = "Test Page ${quantity}");
+					layoutName = "Test Page ${count}");
+
+				JSONDocument.addFile(
+					dmDocumentTitle = "DM Document Title ${count}",
+					groupName = "Guest");
 			}
 		}
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
 		task ("Assert that the Type facet sorts by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Document,Wiki Page,Page,User");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Wiki Page,Page,Document,User");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term frequency ascending") {
@@ -1562,7 +1566,7 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "User,Page,Wiki Page,Document");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "User,Document,Page,Wiki Page");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term value ascending") {

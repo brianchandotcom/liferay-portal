@@ -17,9 +17,9 @@ import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import {Card, SingleSelect} from '@liferay/object-js-components-web';
 import React, {useMemo} from 'react';
 
+import {defaultLanguageId} from '../../../../utils/constants';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const languages = Liferay.Language.available;
 const languageLabels = Object.values(languages).map((language) => {
 	return {label: language};

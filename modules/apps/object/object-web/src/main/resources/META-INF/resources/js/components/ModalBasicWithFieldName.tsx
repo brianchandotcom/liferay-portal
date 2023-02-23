@@ -26,7 +26,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+import {defaultLanguageId} from '../utils/constants';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;

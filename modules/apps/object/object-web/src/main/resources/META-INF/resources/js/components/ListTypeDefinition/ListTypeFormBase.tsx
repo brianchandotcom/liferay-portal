@@ -19,7 +19,7 @@ import {
 	useForm,
 } from '@liferay/object-js-components-web';
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+import {defaultLanguageId} from '../../utils/constants';
 
 export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
 	const validate = (picklist: Partial<PickList>) => {

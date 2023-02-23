@@ -24,13 +24,12 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
+import {defaultLanguageId} from '../../../utils/constants';
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import {HeaderDropdown} from './HeaderDropdown';
 import {ModalAddObjectLayoutBox} from './ModalAddObjectLayoutBox';
 import {ObjectLayoutBox} from './ObjectLayoutBox';
 import {ObjectLayoutRelationship} from './ObjectLayoutRelationship';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [

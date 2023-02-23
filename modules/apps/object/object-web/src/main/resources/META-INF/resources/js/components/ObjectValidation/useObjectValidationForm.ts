@@ -20,6 +20,8 @@ import {
 } from '@liferay/object-js-components-web';
 import {ChangeEventHandler} from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
+
 interface IUseObjectValidationForm {
 	initialValues: Partial<ObjectValidation>;
 	onSubmit: (validation: ObjectValidation) => void;
@@ -34,8 +36,6 @@ export interface TabProps {
 	setValues: (values: Partial<ObjectValidation>) => void;
 	values: Partial<ObjectValidation>;
 }
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function useObjectValidationForm({
 	initialValues,

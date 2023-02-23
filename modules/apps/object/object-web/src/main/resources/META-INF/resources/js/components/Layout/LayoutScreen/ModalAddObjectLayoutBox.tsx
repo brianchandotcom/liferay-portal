@@ -24,6 +24,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React from 'react';
 
+import {defaultLanguageId} from '../../../utils/constants';
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
 
 type TInitialValues = {
@@ -51,7 +52,7 @@ export function ModalAddObjectLayoutBox({
 		dispatch({
 			payload: {
 				name: {
-					[Liferay.ThemeDisplay.getDefaultLanguageId()]: values.name,
+					[defaultLanguageId]: values.name,
 				},
 				tabIndex,
 				type: 'regular',

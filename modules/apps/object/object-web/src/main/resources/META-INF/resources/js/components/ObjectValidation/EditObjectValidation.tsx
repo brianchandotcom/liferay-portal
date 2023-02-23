@@ -22,6 +22,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
 import {BasicInfo} from './BasicInfo';
 import {Conditions} from './Conditions';
 import {
@@ -119,11 +120,7 @@ export default function EditObjectValidation({
 	return (
 		<SidePanelForm
 			onSubmit={handleSubmit}
-			title={
-				initialValues.name?.[
-					Liferay.ThemeDisplay.getDefaultLanguageId()
-				]!
-			}
+			title={initialValues.name?.[defaultLanguageId]!}
 		>
 			<ClayTabs className="side-panel-iframe__tabs">
 				{TABS.map(({label}, index) => (

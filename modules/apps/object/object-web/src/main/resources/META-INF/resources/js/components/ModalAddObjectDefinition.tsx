@@ -27,6 +27,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
+import {defaultLanguageId} from '../utils/constants';
 import {
 	firstLetterUppercase,
 	removeAllSpecialCharacters,
@@ -62,7 +63,6 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 		pluralLabel,
 		storageType,
 	}: TInitialValues) => {
-		const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 		const objectDefinition: ObjectDefinition = {
 			label: {
 				[defaultLanguageId]: label,

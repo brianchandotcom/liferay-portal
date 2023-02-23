@@ -29,6 +29,7 @@ import React, {
 	useState,
 } from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
 import {toCamelCase} from '../../utils/string';
 import {AggregationFormBase} from './AggregationFormBase';
 import {AttachmentFormBase} from './AttachmentFormBase';
@@ -66,8 +67,6 @@ type TObjectRelationship = {
 export type ObjectFieldErrors = FormError<
 	ObjectField & {[key in ObjectFieldSettingName]: unknown}
 >;
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 	[

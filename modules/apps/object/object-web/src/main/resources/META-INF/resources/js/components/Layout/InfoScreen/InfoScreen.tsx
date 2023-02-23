@@ -22,9 +22,8 @@ import {
 } from '@liferay/object-js-components-web';
 import React from 'react';
 
+import {defaultLanguageId} from '../../../utils/constants';
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [

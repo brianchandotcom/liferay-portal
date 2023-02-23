@@ -21,6 +21,8 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {ChangeEventHandler, useState} from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
+
 interface ObjectDataContainerProps {
 	dbTableName: string;
 	errors: FormError<ObjectDefinition>;
@@ -30,8 +32,6 @@ interface ObjectDataContainerProps {
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function ObjectDataContainer({
 	dbTableName,

@@ -21,9 +21,8 @@ import {
 } from '@liferay/object-js-components-web';
 import React from 'react';
 
+import {defaultLanguageId} from '../../../utils/constants';
 import {toCamelCase} from '../../../utils/string';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 interface BasicInfoProps {
 	errors: FormError<ObjectAction & ObjectActionParameters>;

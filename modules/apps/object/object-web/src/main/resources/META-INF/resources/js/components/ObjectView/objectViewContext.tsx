@@ -15,6 +15,7 @@
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
 import React, {createContext, useContext, useReducer} from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
 import {
 	TObjectView,
 	TObjectViewColumn,
@@ -23,6 +24,7 @@ import {
 	TState,
 	TWorkflowStatus,
 } from './types';
+
 interface IViewContextProps extends Array<TState | Function> {
 	0: typeof initialState;
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
@@ -33,7 +35,6 @@ interface TInitialFilterColumn extends TObjectViewFilterColumn {
 	valueSummary: string;
 }
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const ViewContext = createContext({} as IViewContextProps);
 
 export enum TYPES {

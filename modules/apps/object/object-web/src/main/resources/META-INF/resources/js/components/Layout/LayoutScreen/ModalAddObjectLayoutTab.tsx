@@ -30,6 +30,7 @@ import {
 import classNames from 'classnames';
 import React, {useMemo, useState} from 'react';
 
+import {defaultLanguageId} from '../../../utils/constants';
 import {TYPES as EVENT_TYPES, useLayoutContext} from '../objectLayoutContext';
 import {TObjectLayoutTab, TObjectRelationship} from '../types';
 
@@ -83,8 +84,6 @@ interface TabTypeProps extends React.HTMLAttributes<HTMLElement> {
 	selected: string;
 	type: string;
 }
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 function TabType({
 	description,

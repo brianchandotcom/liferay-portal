@@ -22,6 +22,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
 import {TabsVisitor} from '../../utils/visitor';
 import InfoScreen from './InfoScreen/InfoScreen';
 import LayoutScreen from './LayoutScreen/LayoutScreen';
@@ -36,8 +37,6 @@ import {
 	TObjectLayoutTab,
 	TObjectRelationship,
 } from './types';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const TABS = [
 	{

@@ -23,6 +23,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {defaultLanguageId} from '../../../utils/constants';
 import {ActionError} from '../index';
 import {ActionContainer} from './ActionContainer/ActionContainer';
 import {ConditionContainer} from './ConditionContainer';
@@ -44,8 +45,6 @@ export interface WarningStates {
 	mandatoryRelationships: boolean;
 	requiredFields: boolean;
 }
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const triggerKeys = [
 	'liferay/commerce_order_status',

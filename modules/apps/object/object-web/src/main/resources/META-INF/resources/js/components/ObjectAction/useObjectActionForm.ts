@@ -21,14 +21,13 @@ import {
 } from '@liferay/object-js-components-web';
 import {useEffect, useMemo, useState} from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
 import {ActionError} from './index';
 
 interface UseObjectActionFormProps {
 	initialValues: Partial<ObjectAction>;
 	onSubmit: (field: ObjectAction) => void;
 }
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function useObjectActionForm({
 	initialValues,

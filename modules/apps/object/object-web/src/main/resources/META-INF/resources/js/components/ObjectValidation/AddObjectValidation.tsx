@@ -25,6 +25,8 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {FormEvent, useEffect, useState} from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
+
 interface ModalAddObjectValidationProps extends AddObjectValidationProps {
 	observer: Observer;
 	onClose: () => void;
@@ -44,7 +46,6 @@ interface ObjectValidationErrors {
 	typeError: string;
 }
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const requiredLabel = REQUIRED_MSG;
 
 function ModalAddObjectValidation({

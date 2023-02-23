@@ -27,6 +27,7 @@ import {
 import classNames from 'classnames';
 import React, {useMemo, useState} from 'react';
 
+import {defaultLanguageId} from '../../../utils/constants';
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import {TObjectField} from '../types';
 
@@ -42,8 +43,6 @@ type TInitialValues = {
 interface IBoxBtnColumnsProps {
 	setValues: (values: Partial<TInitialValues>) => void;
 }
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 function BoxBtnColumns({setValues}: IBoxBtnColumnsProps) {
 	const [activeIndex, setActiveIndex] = useState<number>(0);

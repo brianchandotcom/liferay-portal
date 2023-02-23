@@ -22,6 +22,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
 import BasicInfoScreen from './BasicInfoScreen/BasicInfoScreen';
 import {DefaultSortScreen} from './DefaultSortScreen/DefaultSortScreen';
 import {FilterScreen} from './FilterScreen/FilterScreen';
@@ -161,11 +162,7 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 		const {objectViewColumns} = newObjectView;
 
-		if (
-			invalidateRequired(
-				objectView.name[Liferay.ThemeDisplay.getDefaultLanguageId()]
-			)
-		) {
+		if (invalidateRequired(objectView.name[defaultLanguageId])) {
 			openToast({
 				message: Liferay.Language.get('a-name-is-required'),
 				type: 'danger',

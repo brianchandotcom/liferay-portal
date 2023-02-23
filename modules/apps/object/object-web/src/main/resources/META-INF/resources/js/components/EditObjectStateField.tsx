@@ -21,6 +21,7 @@ import {
 import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {defaultLanguageId} from '../utils/constants';
 import {useObjectFieldForm} from './ObjectField/useObjectFieldForm';
 import StateDefinition from './StateManager/StateDefinition';
 
@@ -101,7 +102,7 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 			onSubmit={handleSubmit}
 			readOnly={readOnly}
 			title={`${
-				objectField.label[Liferay.ThemeDisplay.getDefaultLanguageId()]
+				objectField.label[defaultLanguageId]
 			} ${Liferay.Language.get('settings')}`}
 		>
 			<Card title={Liferay.Language.get('select-the-state-flow')}>

@@ -27,6 +27,8 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
+
 export enum ObjectRelationshipType {
 	MANY_TO_MANY = 'manyToMany',
 	ONE_TO_MANY = 'oneToMany',
@@ -63,8 +65,7 @@ export function useObjectRelationshipForm({
 	const validate = (relationship: Partial<ObjectRelationship>) => {
 		const errors: FormError<ObjectRelationship> = {};
 
-		const label =
-			relationship.label?.[Liferay.ThemeDisplay.getDefaultLanguageId()];
+		const label = relationship.label?.[defaultLanguageId];
 
 		if (invalidateRequired(label)) {
 			errors.label = REQUIRED_MSG;

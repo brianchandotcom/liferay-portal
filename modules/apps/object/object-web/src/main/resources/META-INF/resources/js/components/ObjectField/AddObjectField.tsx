@@ -22,6 +22,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {API, Input} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
 import {toCamelCase} from '../../utils/string';
 import ObjectFieldFormBase from './ObjectFieldFormBase';
 import {useObjectFieldForm} from './useObjectFieldForm';
@@ -39,8 +40,6 @@ interface IProps {
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 }
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 function ModalAddObjectField({
 	apiURL,

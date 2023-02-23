@@ -188,9 +188,10 @@ public class CommerceCountryManagerImpl implements CommerceCountryManager {
 						commerceChannelId));
 
 				groupFilterPredicate = groupFilterPredicate.or(
-					channelFilterPredicate);
+					channelFilterPredicate.withParentheses());
 
-				predicate = predicate.and(groupFilterPredicate);
+				predicate = predicate.and(
+					groupFilterPredicate.withParentheses());
 
 				if (billingAllowed) {
 					predicate = predicate.and(

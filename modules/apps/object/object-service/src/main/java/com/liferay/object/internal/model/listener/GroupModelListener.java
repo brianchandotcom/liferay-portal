@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -41,20 +39,18 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onAfterRemove(Group group) throws ModelListenerException {
-		List<ObjectDefinition> definitions =
-			_objectDefinitionLocalService.getObjectDefinitions(
-				group.getCompanyId(), true, false,
-				WorkflowConstants.STATUS_APPROVED);
-
 		try {
-			for (ObjectDefinition objectDefinition : definitions) {
-				List<ObjectEntry> objectEntries =
-					_objectEntryLocalService.getObjectEntries(
-						group.getGroupId(),
-						objectDefinition.getObjectDefinitionId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			for (ObjectDefinition objectDefinition :
+					_objectDefinitionLocalService.getObjectDefinitions(
+						group.getCompanyId(), true, false,
+						WorkflowConstants.STATUS_APPROVED)) {
 
-				for (ObjectEntry objectEntry : objectEntries) {
+				for (ObjectEntry objectEntry :
+						_objectEntryLocalService.getObjectEntries(
+							group.getGroupId(),
+							objectDefinition.getObjectDefinitionId(),
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
 					try {
 						_objectEntryLocalService.deleteObjectEntry(objectEntry);
 					}

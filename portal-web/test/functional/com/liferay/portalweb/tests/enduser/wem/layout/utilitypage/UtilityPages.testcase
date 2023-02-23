@@ -14,7 +14,12 @@ definition {
 		}
 
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			Site.addBlankCP(siteName = "Test Site Name");
 		}
 	}
 
@@ -42,10 +47,6 @@ definition {
 
 		task ("Then the page designer can add a 404 error utility page") {
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -88,7 +89,10 @@ definition {
 		}
 
 		task ("Then the page designer sees the default 404 page") {
-			AssertTextPresent(value1 = "The requested resource could not be found.");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Page Not Found");
 		}
 	}
 
@@ -111,10 +115,6 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "First 404 Error Utility Page");
 
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -124,14 +124,10 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "Second 404 Error Utility Page");
 
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-
 			PageEditor.editFragmentText(
-				fragmentName = "Button",
-				id = "link",
-				text = "Resource Not Found");
+				fragmentName = "Heading",
+				id = "element-text",
+				text = 404);
 
 			PageEditor.publish();
 		}
@@ -140,6 +136,8 @@ definition {
 			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
 				menuItem = "Mark as Default",
 				pageName = "First 404 Error Utility Page");
+
+			Confirm();
 
 			Alert.viewSuccessMessage();
 		}
@@ -175,9 +173,9 @@ definition {
 				siteName = "Test Site Name");
 
 			ContentPages.viewFragmentText(
-				fragmentName = "button",
-				id = "link",
-				text = "Resource Not Found");
+				fragmentName = "heading",
+				id = "element-text",
+				text = 404);
 		}
 	}
 
@@ -190,10 +188,6 @@ definition {
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -231,10 +225,6 @@ definition {
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -282,10 +272,6 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -299,10 +285,10 @@ definition {
 				menuItem = "Edit",
 				pageName = "404 Error Utility Page");
 
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button",
-				targetFragmentName = "Heading");
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "Status Code: 404");
 		}
 
 		task ("Then the page designer sees the changes persisted") {
@@ -324,9 +310,9 @@ definition {
 				id = "element-text");
 
 			PageEditor.viewFragmentEditableText(
-				editableText = "Go Somewhere",
-				fragmentName = "Button",
-				id = "link");
+				editableText = "Status Code: 404",
+				fragmentName = "Paragraph",
+				id = "element-text");
 		}
 	}
 
@@ -342,10 +328,6 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -358,6 +340,8 @@ definition {
 			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
 				menuItem = "Mark as Default",
 				pageName = "404 Error Utility Page");
+
+			Confirm();
 
 			Alert.viewSuccessMessage();
 		}
@@ -438,10 +422,6 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -497,10 +477,10 @@ definition {
 				menuItem = "Edit",
 				pageName = "404 Error Utility Page");
 
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button",
-				targetFragmentName = "Heading");
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "Status Code: 404");
 		}
 
 		task ("Then the page designer could preview the latest draft of utility page") {
@@ -518,9 +498,9 @@ definition {
 				text = "Resource Not Found");
 
 			ContentPages.viewFragmentText(
-				fragmentName = "button",
-				id = "link",
-				text = "Go Somewhere");
+				fragmentName = "paragragh",
+				id = "element-text",
+				text = "Status Code: 404");
 		}
 	}
 
@@ -533,10 +513,6 @@ definition {
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -586,6 +562,8 @@ definition {
 				menuItem = "Mark as Default",
 				pageName = "404 Error Utility Page");
 
+			Confirm();
+
 			Alert.viewSuccessMessage();
 
 			JSONLayout.addPublicLayout(
@@ -608,7 +586,10 @@ definition {
 				pageName = "Non Exist Page",
 				siteName = "Test Site Name");
 
-			AssertTextPresent(value1 = "The requested resource could not be found.");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Page Not Found");
 		}
 	}
 

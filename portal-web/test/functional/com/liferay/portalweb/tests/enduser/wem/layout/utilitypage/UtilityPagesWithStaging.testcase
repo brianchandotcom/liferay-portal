@@ -14,7 +14,12 @@ definition {
 		}
 
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			Site.addBlankCP(siteName = "Test Site Name");
 		}
 
 		task ("Enable local live") {
@@ -46,10 +51,6 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -60,6 +61,8 @@ definition {
 			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
 				menuItem = "Mark as Default",
 				pageName = "404 Error Utility Page");
+
+			Confirm();
 
 			Alert.viewSuccessMessage();
 

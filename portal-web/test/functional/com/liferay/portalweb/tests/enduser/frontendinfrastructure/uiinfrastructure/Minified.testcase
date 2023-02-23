@@ -1,8 +1,10 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
+	property custom.properties = "minified.enabled=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
 	property testray.main.component.name = "User Interface";
 
 	setUp {
@@ -22,11 +24,6 @@ definition {
 	@description = "Check for errors in the minified browser console"
 	@priority = 3
 	test SmokeMinifiedEnabled {
-		task ("Given: Minified property set to true") {
-			property custom.properties = "minified.enabled=true";
-			property test.assert.warning.exceptions = "true";
-		}
-
 		task ("When: Restart portal") {
 			Portlet.shutdownServer();
 

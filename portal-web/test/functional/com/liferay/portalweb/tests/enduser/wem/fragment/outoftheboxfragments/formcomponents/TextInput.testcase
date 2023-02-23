@@ -345,10 +345,9 @@ definition {
 		}
 
 		task ("Then the pages designer sees alert message below the Text Input field") {
-			AssertTextEquals(
-				key_alertMessage = "Maximum Number of Characters Exceeded: 281/280",
-				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
-				value1 = "Maximum Number of Characters Exceeded: 281/280");
+			PageEditor.viewInputStyle(
+				charactersCount = "Maximum Number of Characters Exceeded: 281 / 280",
+				type = "text-input");
 		}
 
 		task ("When the pages designer types 280 characters in the Input Fragment") {

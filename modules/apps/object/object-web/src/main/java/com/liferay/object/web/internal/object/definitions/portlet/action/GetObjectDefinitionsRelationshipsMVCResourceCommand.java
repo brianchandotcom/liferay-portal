@@ -65,7 +65,7 @@ public class GetObjectDefinitionsRelationshipsMVCResourceCommand
 
 		for (ObjectDefinition objectDefinition :
 				_objectDefinitionLocalService.getObjectDefinitions(
-					_portal.getCompanyId(resourceRequest), true, false,
+					_portal.getCompanyId(resourceRequest), true,
 					WorkflowConstants.STATUS_APPROVED)) {
 
 			objectDefinitionsJSONArray.put(

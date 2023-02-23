@@ -1,23 +1,23 @@
 {
-	"accountEntryRestricted": false,
+	"accountEntryRestricted": true,
 	"label": {
-		"en_US": "Test Object Definition 2"
+		"en_US": "Test Object Definition 4"
 	},
-	"name": "TestObjectDefinition2",
+	"name": "TestObjectDefinition4",
 	"objectFields": [
 		{
 			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Field 1"
+				"en_US": "Field 4"
 			},
-			"name": "field1",
+			"name": "field4",
 			"required": false
 		}
 	],
 	"pluralLabel": {
-		"en_US": "Test Object Definitions 2"
+		"en_US": "Test Object Definitions 4"
 	},
 	"scope": "site"
 }

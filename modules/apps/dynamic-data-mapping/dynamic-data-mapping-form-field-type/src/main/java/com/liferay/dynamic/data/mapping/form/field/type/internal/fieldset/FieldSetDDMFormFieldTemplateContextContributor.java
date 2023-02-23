@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -135,13 +133,8 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 			rowsJSONArray.put(_createRowJSONObject(visibleNestedFields));
 		}
 
-		Stream<Object> invisibleNestedFieldsStream = nestedFields.stream();
-
-		List<Object> invisibleNestedFields = invisibleNestedFieldsStream.filter(
-			nestedField -> !_isNestedFieldVisible(nestedField)
-		).collect(
-			Collectors.toList()
-		);
+		List<Object> invisibleNestedFields = ListUtil.filter(
+			nestedFields, nestedField -> !_isNestedFieldVisible(nestedField));
 
 		if (!invisibleNestedFields.isEmpty()) {
 			rowsJSONArray.put(_createRowJSONObject(invisibleNestedFields));
@@ -212,13 +205,7 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 	}
 
 	private List<Object> _getVisibleNestedFields(List<Object> nestedFields) {
-		Stream<Object> visibleNestedFieldsStream = nestedFields.stream();
-
-		return visibleNestedFieldsStream.filter(
-			this::_isNestedFieldVisible
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.filter(nestedFields, this::_isNestedFieldVisible);
 	}
 
 	private boolean _isNestedFieldVisible(Object nestedField) {

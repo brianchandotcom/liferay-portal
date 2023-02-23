@@ -114,8 +114,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
@@ -252,14 +250,13 @@ public class ObjectEntryDisplayContextImpl
 			return objectLayoutTabs.get(0);
 		}
 
-		Stream<ObjectLayoutTab> stream = objectLayoutTabs.stream();
+		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+			if (objectLayoutTab.getObjectLayoutTabId() == objectLayoutTabId) {
+				return objectLayoutTab;
+			}
+		}
 
-		Optional<ObjectLayoutTab> optional = stream.filter(
-			objectLayoutTab ->
-				objectLayoutTab.getObjectLayoutTabId() == objectLayoutTabId
-		).findFirst();
-
-		return optional.orElseGet(() -> objectLayoutTabs.get(0));
+		return objectLayoutTabs.get(0);
 	}
 
 	@Override
@@ -966,36 +963,38 @@ public class ObjectEntryDisplayContextImpl
 			for (ObjectLayoutColumn objectLayoutColumn :
 					objectLayoutRow.getObjectLayoutColumns()) {
 
-				Stream<ObjectField> stream = objectFields.stream();
+				ObjectField currentObjectField = null;
 
-				Optional<ObjectField> objectFieldOptional = stream.filter(
-					objectField ->
-						objectField.getObjectFieldId() ==
-							objectLayoutColumn.getObjectFieldId()
-				).findFirst();
+				for (ObjectField objectField : objectFields) {
+					if (objectField.getObjectFieldId() ==
+							objectLayoutColumn.getObjectFieldId()) {
 
-				if (objectFieldOptional.isPresent()) {
-					ObjectField objectField = objectFieldOptional.get();
+						currentObjectField = objectField;
 
-					if (!_isActive(objectField)) {
+						break;
+					}
+				}
+
+				if (currentObjectField != null) {
+					if (!_isActive(currentObjectField)) {
 						continue;
 					}
 
 					_objectFieldNames.put(
 						objectLayoutColumn.getObjectFieldId(),
-						objectField.getName());
+						currentObjectField.getName());
 
-					if (objectField.compareBusinessType(
+					if (currentObjectField.compareBusinessType(
 							ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-						objectField.compareBusinessType(
+						currentObjectField.compareBusinessType(
 							ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 						nestedDDMFormFields.add(
-							_getDDMFormField(objectField, true));
+							_getDDMFormField(currentObjectField, true));
 					}
 					else {
 						nestedDDMFormFields.add(
-							_getDDMFormField(objectField, readOnly));
+							_getDDMFormField(currentObjectField, readOnly));
 					}
 				}
 			}

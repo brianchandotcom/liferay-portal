@@ -24,8 +24,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 
@@ -136,35 +134,21 @@ public class DocumentsAssert {
 	}
 
 	private static List<String> _getFieldValueStrings(
-		Stream<List<Object>> stream) {
-
-		return stream.map(
-			DocumentsAssert::_getFieldValueString
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	private static List<String> _getFieldValueStrings(
 		String fieldName,
 		com.liferay.portal.kernel.search.Document... documents) {
 
-		Stream<com.liferay.portal.kernel.search.Document> stream = Stream.of(
-			documents);
-
-		return _getFieldValueStrings(
-			stream.map(document -> _getFieldValues(fieldName, document)));
+		return TransformUtil.transformToList(
+			documents,
+			document -> _getFieldValueString(
+				_getFieldValues(fieldName, document)));
 	}
 
 	private static List<String> _getFieldValueStrings(
 		String fieldName, Document... documents) {
 
-		return _getFieldValueStrings(
-			Stream.of(
-				documents
-			).map(
-				document -> document.getValues(fieldName)
-			));
+		return TransformUtil.transformToList(
+			documents,
+			document -> _getFieldValueString(document.getValues(fieldName)));
 	}
 
 	private static String _getMessage(

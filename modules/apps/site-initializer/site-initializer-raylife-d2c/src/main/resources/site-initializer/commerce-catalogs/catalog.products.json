@@ -64,31 +64,6 @@
 		"categories": [
 			"Business"
 		],
-		"description": "Provides benefits to employees who experience a work-related injury or illness.",
-		"displayAvailability": true,
-		"displayStockQuantity": true,
-		"externalReferenceCode": "RAY003",
-		"height": 2,
-		"images": [
-		],
-		"length": 7,
-		"minStockQuantity": 5,
-		"name": "Workers Compensation",
-		"price": 40.0,
-		"promoPrice": 18.0,
-		"shippable": false,
-		"sku": "RAY003",
-		"specificationOptions": [
-		],
-		"taxCategory": "Normal Product",
-		"warehouse1": 60
-	},
-	{
-		"availabilityEstimate": "3-5 days",
-		"backOrders": true,
-		"categories": [
-			"Business"
-		],
 		"description": "Combines coverage for all major property and liability risks into one insurance policy.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,

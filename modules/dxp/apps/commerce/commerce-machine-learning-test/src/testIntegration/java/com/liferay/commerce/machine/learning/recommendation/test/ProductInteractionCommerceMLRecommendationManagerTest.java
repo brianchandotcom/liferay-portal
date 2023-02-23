@@ -20,6 +20,7 @@ import com.liferay.commerce.machine.learning.recommendation.ProductInteractionCo
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -29,8 +30,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -68,23 +67,19 @@ public class ProductInteractionCommerceMLRecommendationManagerTest {
 						_productInteractionCommerceMLRecommendations.size() -
 							1));
 
-		Stream<ProductInteractionCommerceMLRecommendation>
-			productInteractionCommerceMLRecommendationStream =
-				_productInteractionCommerceMLRecommendations.stream();
-
 		List<ProductInteractionCommerceMLRecommendation>
 			expectedProductInteractionCommerceMLRecommendations =
-				productInteractionCommerceMLRecommendationStream.filter(
+				ListUtil.filter(
+					_productInteractionCommerceMLRecommendations,
 					recommendation ->
 						recommendation.getEntryClassPK() ==
 							productInteractionCommerceMLRecommendation.
-								getEntryClassPK()
-				).sorted(
-					Comparator.comparingInt(
-						ProductInteractionCommerceMLRecommendation::getRank)
-				).collect(
-					Collectors.toList()
-				);
+								getEntryClassPK());
+
+		Collections.sort(
+			expectedProductInteractionCommerceMLRecommendations,
+			Comparator.comparingInt(
+				ProductInteractionCommerceMLRecommendation::getRank));
 
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,

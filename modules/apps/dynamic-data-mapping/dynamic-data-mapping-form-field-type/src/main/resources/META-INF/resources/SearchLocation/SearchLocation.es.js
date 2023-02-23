@@ -67,6 +67,17 @@ const Field = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [initialValid, pageValidationFailed]);
 
+	const accessibleProps = {
+		...(otherProps.tip && {
+			'aria-describedby': `${id ?? name}_fieldHelp`,
+		}),
+		...(otherProps.errorMessage && {
+			'aria-errormessage': `${id ?? name}_fieldError`,
+		}),
+		'aria-invalid': !valid,
+		'aria-required': otherProps.required,
+	};
+
 	return (
 		<FieldBase
 			{...otherProps}
@@ -80,6 +91,7 @@ const Field = ({
 			valid={!!parsedValue[visibleField] || valid}
 		>
 			<ClayInput
+				{...accessibleProps}
 				className="ddm-field-text"
 				dir={Liferay.Language.direction[editingLanguageId]}
 				disabled={disabled}

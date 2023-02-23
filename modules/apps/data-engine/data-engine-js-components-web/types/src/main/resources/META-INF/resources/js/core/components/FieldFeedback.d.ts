@@ -17,12 +17,14 @@ import './FieldFeedback.scss';
 export declare function FieldFeedback({
 	errorMessage,
 	helpMessage,
+	name,
 	warningMessage,
 	...otherProps
 }: IProps): JSX.Element | null;
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	errorMessage?: string;
 	helpMessage?: string;
+	name?: string;
 	warningMessage?: string;
 }
 export {};

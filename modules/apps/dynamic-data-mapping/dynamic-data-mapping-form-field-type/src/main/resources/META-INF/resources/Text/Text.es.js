@@ -72,6 +72,7 @@ const CounterContainer = ({
 };
 
 const Text = ({
+	accessibleProps,
 	defaultLanguageId,
 	disabled,
 	displayErrors,
@@ -168,6 +169,7 @@ const Text = ({
 					{...getTooltipTitle({placeholder, value})}
 				>
 					<ClayInput
+						{...accessibleProps}
 						className="ddm-field-text"
 						dir={Liferay.Language.direction[editingLanguageId]}
 						disabled={disabled}
@@ -204,6 +206,7 @@ const Text = ({
 };
 
 const Textarea = ({
+	accessibleProps,
 	disabled,
 	displayErrors,
 	editingLanguageId,
@@ -231,6 +234,7 @@ const Textarea = ({
 					{...getTooltipTitle({placeholder, value})}
 				>
 					<textarea
+						{...accessibleProps}
 						className="ddm-field-text form-control"
 						dir={Liferay.Language.direction[editingLanguageId]}
 						disabled={disabled}
@@ -265,6 +269,7 @@ const Textarea = ({
 };
 
 const Autocomplete = ({
+	accessibleProps,
 	disabled,
 	editingLanguageId,
 	id,
@@ -345,6 +350,7 @@ const Autocomplete = ({
 	return (
 		<ClayAutocomplete>
 			<ClayAutocomplete.Input
+				{...accessibleProps}
 				dir={Liferay.Language.direction[editingLanguageId]}
 				disabled={disabled}
 				id={id}
@@ -495,6 +501,16 @@ const Main = ({
 			valid={error.valid ?? valid}
 		>
 			<Component
+				accessibleProps={{
+					...(otherProps.tip && {
+						'aria-describedby': `${id ?? name}_fieldHelp`,
+					}),
+					...(otherProps.errorMessage && {
+						'aria-errormessage': `${id ?? name}_fieldError`,
+					}),
+					'aria-invalid': !valid,
+					'aria-required': otherProps.required,
+				}}
 				defaultLanguageId={defaultLanguageId}
 				disabled={readOnly}
 				displayErrors={displayErrors}

@@ -24,6 +24,7 @@ import {useSyncValue} from '../hooks/useSyncValue.es';
 const defaultValue = {description: '', title: '', url: ''};
 
 const ImagePicker = ({
+	accessibleProps,
 	editingLanguageId,
 	id,
 	inputValue,
@@ -134,6 +135,7 @@ const ImagePicker = ({
 				<ClayInput.Group>
 					<ClayInput.GroupItem className="d-none d-sm-block" prepend>
 						<ClayInput
+							{...accessibleProps}
 							className="field"
 							dir={Liferay.Language.direction[editingLanguageId]}
 							disabled={readOnly}
@@ -314,6 +316,16 @@ const Main = ({
 			valid={isSignedIn ? valid : false}
 		>
 			<ImagePicker
+				accessibleProps={{
+					...(otherProps.tip && {
+						'aria-describedby': `${id ?? name}_fieldHelp`,
+					}),
+					...(otherProps.requiredErrorMessage && {
+						'aria-errormessage': `${id ?? name}_fieldError`,
+					}),
+					'aria-invalid': !valid,
+					'aria-required': otherProps.required,
+				}}
 				editingLanguageId={editingLanguageId}
 				id={id ?? name}
 				inputValue={

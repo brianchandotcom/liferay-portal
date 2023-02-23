@@ -20,6 +20,7 @@ import './FieldFeedback.scss';
 export function FieldFeedback({
 	errorMessage,
 	helpMessage,
+	name,
 	warningMessage,
 	...otherProps
 }: IProps) {
@@ -33,7 +34,7 @@ export function FieldFeedback({
 			{...otherProps}
 		>
 			{errorMessage && (
-				<ClayForm.FeedbackItem>
+				<ClayForm.FeedbackItem id={`${name}_fieldError`} role="alert">
 					<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
 					{errorMessage}
@@ -41,14 +42,14 @@ export function FieldFeedback({
 			)}
 
 			{warningMessage && !errorMessage && (
-				<ClayForm.FeedbackItem>
+				<ClayForm.FeedbackItem id={`${name}_fieldError`} role="alert">
 					<ClayForm.FeedbackIndicator symbol="warning-full" />
 
 					{warningMessage}
 				</ClayForm.FeedbackItem>
 			)}
 
-			{helpMessage && <div>{helpMessage}</div>}
+			{helpMessage && <div id={`${name}_fieldHelp`}>{helpMessage}</div>}
 		</ClayForm.FeedbackGroup>
 	);
 }
@@ -56,5 +57,6 @@ export function FieldFeedback({
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	errorMessage?: string;
 	helpMessage?: string;
+	name?: string;
 	warningMessage?: string;
 }

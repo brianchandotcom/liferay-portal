@@ -304,6 +304,17 @@ const Numeric: React.FC<IProps> = ({
 		}
 	};
 
+	const accessibleProps = {
+		...(otherProps.tip && {
+			'aria-describedby': `${id ?? name}_fieldHelp`,
+		}),
+		...(otherProps.errorMessage && {
+			'aria-errormessage': `${id ?? name}_fieldError`,
+		}),
+		'aria-invalid': !otherProps.valid,
+		'aria-required': otherProps.required,
+	};
+
 	const input = (
 		<ClayTooltipProvider>
 			<div
@@ -314,6 +325,7 @@ const Numeric: React.FC<IProps> = ({
 				})}
 			>
 				<ClayInput
+					{...accessibleProps}
 					className={classNames({
 						'ddm-form-field-type__numeric--rtl':
 							Liferay.Language.direction[editingLanguageId] ===
@@ -395,6 +407,7 @@ interface IProps {
 	dataType: NumericDataType;
 	decimalPlaces: number;
 	defaultLanguageId: Locale;
+	errorMessage?: string;
 	focused: boolean;
 	id: string;
 	inputMask?: boolean;
@@ -408,8 +421,11 @@ interface IProps {
 	placeholder?: string;
 	predefinedValue?: string;
 	readOnly: boolean;
+	required?: boolean;
 	settingsContext?: any;
 	symbols: ISymbols;
+	tip?: string;
+	valid?: boolean;
 	value?: string;
 }
 

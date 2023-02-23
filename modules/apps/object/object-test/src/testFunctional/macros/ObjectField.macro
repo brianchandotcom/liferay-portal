@@ -93,12 +93,6 @@ definition {
 		MenuItem.click(menuItem = ${picklistName});
 	}
 
-	macro selectSearchableLanguage {
-		Click(
-			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
-			value1 = ${selected});
-	}
-
 	macro selectType {
 		Click(locator1 = "ObjectField#TYPE_FIELD");
 

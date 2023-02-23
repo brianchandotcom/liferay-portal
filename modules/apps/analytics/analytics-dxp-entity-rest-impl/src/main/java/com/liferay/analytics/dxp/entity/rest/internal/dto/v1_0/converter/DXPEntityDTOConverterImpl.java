@@ -29,6 +29,8 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -398,13 +400,13 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				return String.valueOf(value);
 			}
 
-			List<Object> objects = new ArrayList<>();
+			JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 			for (int i = 0; i < Array.getLength(value); i++) {
-				objects.add(Array.get(value, i));
+				jsonArray.put(Array.get(value, i));
 			}
 
-			return "[" + StringUtil.merge(objects.toArray(), ",") + "]";
+			return jsonArray.toString();
 		}
 
 		return null;
@@ -448,5 +450,8 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

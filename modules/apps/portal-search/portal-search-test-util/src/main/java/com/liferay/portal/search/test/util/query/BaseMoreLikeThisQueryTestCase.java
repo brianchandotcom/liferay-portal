@@ -162,7 +162,7 @@ public abstract class BaseMoreLikeThisQueryTestCase
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(
 				_FIELD_DESCRIPTION, value),
-			Arrays.asList("bravo charlie"));
+			"bravo charlie");
 
 		MoreLikeThisQuery moreLikeThisQuery = queries.moreLikeThis(
 			new String[] {_FIELD_TITLE}, "alpha", "bravo");
@@ -186,7 +186,7 @@ public abstract class BaseMoreLikeThisQueryTestCase
 	protected void addDocuments(String... values) throws Exception {
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(_FIELD_TITLE, value),
-			Arrays.asList(values));
+			values);
 	}
 
 	protected void assertSearch(

@@ -39,7 +39,7 @@ public abstract class BaseDocumentSortTestCase extends BaseDocumentTestCase {
 		addDocuments(
 			screenName -> document -> populate(
 				document, FIELD_DOUBLE, screenName),
-			Arrays.asList(SCREEN_NAMES));
+			SCREEN_NAMES);
 
 		assertSort(
 			"Smith", FIELD_DOUBLE, Sort.DOUBLE_TYPE,
@@ -51,7 +51,7 @@ public abstract class BaseDocumentSortTestCase extends BaseDocumentTestCase {
 		addDocuments(
 			screenName -> document -> populate(
 				document, FIELD_DOUBLE, screenName),
-			Arrays.asList(SCREEN_NAMES));
+			SCREEN_NAMES);
 
 		for (String keywords : _KEYWORDS) {
 			assertSort(
@@ -71,7 +71,7 @@ public abstract class BaseDocumentSortTestCase extends BaseDocumentTestCase {
 		addDocuments(
 			screenName -> document -> populate(
 				document, FIELD_FLOAT, screenName),
-			Arrays.asList(SCREEN_NAMES));
+			SCREEN_NAMES);
 
 		assertSort(
 			"Smith", FIELD_FLOAT, Sort.FLOAT_TYPE, _SCREEN_NAMES_FLOAT_ORDER);
@@ -82,7 +82,7 @@ public abstract class BaseDocumentSortTestCase extends BaseDocumentTestCase {
 		addDocuments(
 			screenName -> document -> populate(
 				document, FIELD_FLOAT, screenName),
-			Arrays.asList(SCREEN_NAMES));
+			SCREEN_NAMES);
 
 		for (String keywords : _KEYWORDS) {
 			assertSort(
@@ -102,7 +102,7 @@ public abstract class BaseDocumentSortTestCase extends BaseDocumentTestCase {
 		addDocuments(
 			screenName -> document -> populate(
 				document, FIELD_INTEGER, screenName),
-			Arrays.asList(SCREEN_NAMES));
+			SCREEN_NAMES);
 
 		assertSort(
 			"Smith", FIELD_INTEGER, Sort.INT_TYPE, _SCREEN_NAMES_INTEGER_ORDER);
@@ -113,7 +113,7 @@ public abstract class BaseDocumentSortTestCase extends BaseDocumentTestCase {
 		addDocuments(
 			screenName -> document -> populate(
 				document, FIELD_INTEGER, screenName),
-			Arrays.asList(SCREEN_NAMES));
+			SCREEN_NAMES);
 
 		for (String keywords : _KEYWORDS) {
 			assertSort(
@@ -133,7 +133,7 @@ public abstract class BaseDocumentSortTestCase extends BaseDocumentTestCase {
 		addDocuments(
 			screenName -> document -> populate(
 				document, FIELD_LONG, screenName),
-			Arrays.asList(SCREEN_NAMES));
+			SCREEN_NAMES);
 
 		assertSort(
 			"Smith", FIELD_LONG, Sort.LONG_TYPE, _SCREEN_NAMES_LONG_ORDER);
@@ -144,7 +144,7 @@ public abstract class BaseDocumentSortTestCase extends BaseDocumentTestCase {
 		addDocuments(
 			screenName -> document -> populate(
 				document, FIELD_LONG, screenName),
-			Arrays.asList(SCREEN_NAMES));
+			SCREEN_NAMES);
 
 		for (String keywords : _KEYWORDS) {
 			assertSort(

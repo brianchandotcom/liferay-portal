@@ -28,7 +28,6 @@ import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
 import java.util.Date;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.junit.Test;
 
@@ -70,7 +69,7 @@ public abstract class BaseSortTestCase extends BaseIndexingTestCase {
 
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(fieldName, value),
-			Stream.of("alpha", "charlie"));
+			"alpha", "charlie");
 
 		Query query = getScoredQuery(fieldName, "charlie");
 

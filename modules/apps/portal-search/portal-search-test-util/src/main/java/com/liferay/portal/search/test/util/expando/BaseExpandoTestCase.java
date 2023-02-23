@@ -46,7 +46,6 @@ import com.liferay.portal.search.test.util.indexing.DocumentCreationHelper;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
@@ -90,16 +89,17 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 
 	@Test
 	public void testMultipleClassNames() throws Exception {
-		List<String> duplicates = Arrays.asList(
-			"alpha", "alpha", "alpha bravo", "charlie", "delta");
+		String[] duplicates = {
+			"alpha", "alpha", "alpha bravo", "charlie", "delta"
+		};
 
 		addDocuments(this::addKeyword, duplicates);
 
-		addDocuments(this::addKeyword, Arrays.asList("keyword"));
+		addDocuments(this::addKeyword, "keyword");
 
 		addDocuments(this::addText, duplicates);
 
-		addDocuments(this::addText, Arrays.asList("text"));
+		addDocuments(this::addText, "text");
 
 		assertSearch("alpha", 6);
 		assertSearch("bravo", 2);

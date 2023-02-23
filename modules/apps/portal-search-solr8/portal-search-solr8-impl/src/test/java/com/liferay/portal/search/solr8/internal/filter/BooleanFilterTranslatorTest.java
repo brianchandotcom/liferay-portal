@@ -45,7 +45,9 @@ public class BooleanFilterTranslatorTest extends BaseIndexingTestCase {
 
 	@Test
 	public void testMustNotContainsReturnsResultsSolr() {
-		addDocuments("alpha bravo", "alpha charlie", "charlie delta");
+		addDocuments(
+			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
+			"alpha bravo", "alpha charlie", "charlie delta");
 
 		BooleanFilter mustNotContainBooleanFilter = new BooleanFilter();
 
@@ -57,12 +59,6 @@ public class BooleanFilterTranslatorTest extends BaseIndexingTestCase {
 		assertSearch(
 			mustNotContainBooleanFilter,
 			Arrays.asList("alpha bravo", "alpha charlie"));
-	}
-
-	protected void addDocuments(String... values) {
-		addDocuments(
-			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
-			Arrays.asList(values));
 	}
 
 	protected void assertSearch(

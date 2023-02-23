@@ -41,7 +41,7 @@ public abstract class BaseDocumentMappingTestCase extends BaseDocumentTestCase {
 
 		addDocuments(
 			screenName -> document -> populate(document, screenName),
-			getScreenNamesStream());
+			SCREEN_NAMES);
 	}
 
 	@Test

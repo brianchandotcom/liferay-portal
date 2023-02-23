@@ -24,7 +24,6 @@ import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelper;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.function.Function;
 
@@ -140,7 +139,7 @@ public abstract class BaseMultiLanguageSortTestCase
 		addDocuments(
 			value -> DocumentCreationHelpers.twoKeywords(
 				fieldName, value, fieldNameSortable, value),
-			Arrays.asList(values));
+			values);
 		assertOrder(
 			new Sort[] {new Sort(fieldNameSortable, Sort.STRING_TYPE, false)},
 			fieldName, expected, locale);

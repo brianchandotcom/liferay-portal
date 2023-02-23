@@ -45,7 +45,7 @@ public abstract class BaseRescoreTestCase extends BaseIndexingTestCase {
 	public void testRescore() {
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(_TITLE, value),
-			Arrays.asList("alpha zeta", "alpha alpha", "alpha beta beta"));
+			"alpha zeta", "alpha alpha", "alpha beta beta");
 
 		Query query = queries.string(_TITLE.concat(":alpha"));
 
@@ -62,8 +62,7 @@ public abstract class BaseRescoreTestCase extends BaseIndexingTestCase {
 	public void testRescoreQuery() {
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(_TITLE, value),
-			Arrays.asList(
-				"alpha alpha", "alpha gamma gamma", "alpha beta beta"));
+			"alpha alpha", "alpha gamma gamma", "alpha beta beta");
 
 		Query query = queries.string(_TITLE.concat(":alpha"));
 
@@ -82,8 +81,7 @@ public abstract class BaseRescoreTestCase extends BaseIndexingTestCase {
 	public void testRescores() {
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(_TITLE, value),
-			Arrays.asList(
-				"alpha alpha", "alpha gamma gamma", "alpha beta beta beta"));
+			"alpha alpha", "alpha gamma gamma", "alpha beta beta beta");
 
 		Query query = queries.string(_TITLE.concat(":alpha"));
 

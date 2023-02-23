@@ -51,7 +51,7 @@ public abstract class BaseMatchPhrasePrefixQueryTestCase
 	protected void addDocuments(String... values) {
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
-			Arrays.asList(values));
+			values);
 	}
 
 	protected void assertSearch(Object value, List<String> expectedValues) {

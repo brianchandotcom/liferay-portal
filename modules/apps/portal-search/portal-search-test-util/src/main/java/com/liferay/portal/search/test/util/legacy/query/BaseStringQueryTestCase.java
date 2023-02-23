@@ -141,7 +141,7 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 	protected void addDocuments(String... values) throws Exception {
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
-			Arrays.asList(values));
+			values);
 	}
 
 	protected void assertSearch(String queryString, List<String> expectedValues)

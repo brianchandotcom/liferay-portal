@@ -21,7 +21,6 @@ import com.liferay.headless.admin.list.type.internal.odata.entity.v1_0.ListTypeE
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -174,15 +173,6 @@ public class ListTypeEntryResourceImpl
 			Long listTypeDefinitionId, ListTypeEntry listTypeEntry)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-168886")) {
-			return ListTypeEntryUtil.toListTypeEntry(
-				null, contextAcceptLanguage.getPreferredLocale(),
-				_listTypeEntryService.addListTypeEntry(
-					null, listTypeDefinitionId, listTypeEntry.getKey(),
-					LocalizedMapUtil.getLocalizedMap(
-						listTypeEntry.getName_i18n())));
-		}
-
 		return ListTypeEntryUtil.toListTypeEntry(
 			null, contextAcceptLanguage.getPreferredLocale(),
 			_listTypeEntryService.addListTypeEntry(
@@ -196,15 +186,6 @@ public class ListTypeEntryResourceImpl
 	public ListTypeEntry putListTypeEntry(
 			Long listTypeEntryId, ListTypeEntry listTypeEntry)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-168886")) {
-			return ListTypeEntryUtil.toListTypeEntry(
-				null, contextAcceptLanguage.getPreferredLocale(),
-				_listTypeEntryService.updateListTypeEntry(
-					null, listTypeEntryId,
-					LocalizedMapUtil.getLocalizedMap(
-						listTypeEntry.getName_i18n())));
-		}
 
 		return ListTypeEntryUtil.toListTypeEntry(
 			null, contextAcceptLanguage.getPreferredLocale(),

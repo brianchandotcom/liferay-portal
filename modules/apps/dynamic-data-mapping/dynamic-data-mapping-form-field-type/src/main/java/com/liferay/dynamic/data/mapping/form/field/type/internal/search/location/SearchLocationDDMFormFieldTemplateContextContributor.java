@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -116,16 +115,14 @@ public class SearchLocationDDMFormFieldTemplateContextContributor
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		Stream.of(
-			visibleFields
-		).forEach(
-			visibleField -> jsonObject.put(
+		for (String visibleField : visibleFields) {
+			jsonObject.put(
 				visibleField,
 				_language.get(
 					ResourceBundleUtil.getModuleAndPortalResourceBundle(
 						locale, getClass()),
-					visibleField))
-		);
+					visibleField));
+		}
 
 		return jsonObject;
 	}

@@ -103,7 +103,7 @@ function ManagementToolbar({
 							actionDropdownItems={actionDropdownItems}
 							active={active}
 							clearSelectionURL={clearSelectionURL}
-							disabled={disabled}
+							disabled={disabled || itemsTotal === 0}
 							initialCheckboxStatus={initialCheckboxStatus}
 							initialSelectAllButtonVisible={
 								initialSelectAllButtonVisible

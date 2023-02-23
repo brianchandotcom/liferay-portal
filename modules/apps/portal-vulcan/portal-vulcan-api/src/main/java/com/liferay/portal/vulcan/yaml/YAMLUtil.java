@@ -14,6 +14,9 @@
 
 package com.liferay.portal.vulcan.yaml;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.config.Security;
 import com.liferay.portal.vulcan.yaml.exception.InvalidYAMLException;
@@ -22,6 +25,7 @@ import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
 import com.liferay.portal.vulcan.yaml.openapi.PathItem;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
+import com.liferay.portal.vulcan.yaml.openapi.SchemaDefinition;
 
 import java.util.List;
 import java.util.Map;
@@ -32,6 +36,7 @@ import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
+import org.yaml.snakeyaml.introspector.Property;
 import org.yaml.snakeyaml.introspector.PropertyUtils;
 import org.yaml.snakeyaml.representer.Representer;
 
@@ -58,6 +63,10 @@ public class YAMLUtil {
 		}
 	}
 
+	private static final String[] _LIFERAY_PROPERTIES = {
+		"x-field-definition", "x-operation-definition", "x-schema-definition"
+	};
+
 	private static final Yaml _YAML_CONFIG;
 
 	private static final Yaml _YAML_OPEN_API;
@@ -65,9 +74,25 @@ public class YAMLUtil {
 	static {
 		Representer representer = new Representer();
 
-		PropertyUtils propertyUtils = representer.getPropertyUtils();
+		PropertyUtils propertyUtils = new PropertyUtils() {
+
+			@Override
+			public Property getProperty(
+				Class<? extends Object> type, String name) {
+
+				if (ArrayUtil.contains(_LIFERAY_PROPERTIES, name, false)) {
+					name = CamelCaseUtil.toCamelCase(
+						StringUtil.removeFirst(name, "x-"));
+				}
+
+				return super.getProperty(type, name);
+			}
+
+		};
 
 		propertyUtils.setSkipMissingProperties(true);
+
+		representer.setPropertyUtils(propertyUtils);
 
 		Constructor configYAMLConstructor = new Constructor(ConfigYAML.class);
 
@@ -168,6 +193,10 @@ public class YAMLUtil {
 			"setRequiredPropertySchemaNames");
 
 		schemaTypeDescription.addPropertyParameters("required", String.class);
+
+		schemaTypeDescription.substituteProperty(
+			"xSchemaDefinition", SchemaDefinition.class, "getSchemaDefinition",
+			"setSchemaDefinition");
 
 		openAPIYAMLConstructor.addTypeDescription(schemaTypeDescription);
 

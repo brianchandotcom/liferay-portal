@@ -18,6 +18,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemImpl;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemFinder;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -213,6 +215,11 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
+			queryPos.add(
+				_portal.getClassNameId(
+					CommerceInventoryWarehouse.class.getName()));
+			queryPos.add(
+				_portal.getClassNameId(CommerceChannel.class.getName()));
 			queryPos.add(companyId);
 			queryPos.add(commerceChannelGroupId);
 			queryPos.add(sku);
@@ -370,5 +377,8 @@ public class CommerceInventoryWarehouseItemFinderImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private Portal _portal;
 
 }

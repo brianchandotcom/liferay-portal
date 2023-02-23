@@ -89,10 +89,12 @@
 			INNER JOIN
 				CommerceChannelRel
 			ON
+				CommerceChannelRel.classNameId = ? AND
 				CIWarehouseItem.commerceInventoryWarehouseId = CommerceChannelRel.classPK
 			INNER JOIN
 				Group_
 			ON
+				Group_.classNameId = ? AND
 				CommerceChannelRel.commerceChannelId = Group_.classPK
 			INNER JOIN
 				CIWarehouse

@@ -40,13 +40,11 @@ import com.liferay.portal.kernel.util.Http;
 
 import java.time.format.DateTimeFormatter;
 
-import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author David Arques
@@ -97,27 +95,17 @@ public class AnalyticsReportsDataProvider {
 				total += value;
 			}
 
-			Double totalValue = total;
-
-			Set<Map.Entry<String, Long>> entries =
-				acquisitionChannelValues.entrySet();
-
-			List<AbstractMap.SimpleEntry> simplyEntryList =
-				TransformUtil.transform(
-					entries,
-					entry -> new AbstractMap.SimpleEntry<>(
-						entry.getKey(),
-						new AcquisitionChannel(
-							entry.getKey(), entry.getValue(),
-							(entry.getValue() / totalValue) * 100)));
-
 			Map<String, AcquisitionChannel> acquisitionChannelMap =
 				new HashMap<>();
 
-			for (AbstractMap.SimpleEntry simpleEntry : simplyEntryList) {
+			for (Map.Entry<String, Long> entry :
+					acquisitionChannelValues.entrySet()) {
+
 				acquisitionChannelMap.put(
-					(String)simpleEntry.getKey(),
-					(AcquisitionChannel)simpleEntry.getValue());
+					entry.getKey(),
+					new AcquisitionChannel(
+						entry.getKey(), entry.getValue(),
+						(entry.getValue() / total) * 100));
 			}
 
 			return acquisitionChannelMap;
@@ -329,16 +317,11 @@ public class AnalyticsReportsDataProvider {
 			Map<TrafficChannel.Type, TrafficChannel> trafficChannels =
 				new HashMap<>();
 
-			for (AbstractMap.SimpleEntry simpleEntry :
+			for (TrafficChannel trafficChannel :
 					TransformUtil.transform(
-						TransformUtil.transform(
-							values, TrafficChannel::newInstance),
-						trafficChannel -> new AbstractMap.SimpleEntry<>(
-							trafficChannel.getType(), trafficChannel))) {
+						values, TrafficChannel::newInstance)) {
 
-				trafficChannels.put(
-					(TrafficChannel.Type)simpleEntry.getKey(),
-					(TrafficChannel)simpleEntry.getValue());
+				trafficChannels.put(trafficChannel.getType(), trafficChannel);
 			}
 
 			return trafficChannels;
@@ -360,18 +343,13 @@ public class AnalyticsReportsDataProvider {
 
 			Map<String, TrafficSource> trafficSources = new HashMap<>();
 
-			for (AbstractMap.SimpleEntry simpleEntry :
-					TransformUtil.transform(
-						(List<TrafficSource>)_objectMapper.readValue(
-							response,
-							typeFactory.constructCollectionType(
-								List.class, TrafficSource.class)),
-						trafficSource -> new AbstractMap.SimpleEntry<>(
-							trafficSource.getName(), trafficSource))) {
+			for (TrafficSource trafficSource :
+					(List<TrafficSource>)_objectMapper.readValue(
+						response,
+						typeFactory.constructCollectionType(
+							List.class, TrafficSource.class))) {
 
-				trafficSources.put(
-					(String)simpleEntry.getKey(),
-					(TrafficSource)simpleEntry.getValue());
+				trafficSources.put(trafficSource.getName(), trafficSource);
 			}
 
 			return trafficSources;

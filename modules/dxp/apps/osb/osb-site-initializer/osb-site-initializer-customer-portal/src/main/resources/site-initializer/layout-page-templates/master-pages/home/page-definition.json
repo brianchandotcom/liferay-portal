@@ -299,7 +299,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "DIALECT-dialect-text"
+																"key": "custom-dialect-text"
 															},
 															"fragmentConfig": {
 																"textType": "h6"
@@ -312,7 +312,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "© 2022 Liferay Inc. All Rights Reserved&nbsp; &nbsp; &nbsp; |"
+																				"en_US": "© 2023 Liferay Inc. All Rights Reserved&nbsp; &nbsp; &nbsp; |"
 																			}
 																		}
 																	}
@@ -369,7 +369,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "DIALECT-dialect-text"
+																"key": "custom-dialect-text"
 															},
 															"fragmentConfig": {
 																"textType": "h6"

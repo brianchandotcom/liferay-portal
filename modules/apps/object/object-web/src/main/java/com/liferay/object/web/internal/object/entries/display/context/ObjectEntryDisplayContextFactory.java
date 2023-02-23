@@ -20,6 +20,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
@@ -36,16 +37,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ObjectEntryDisplayContextFactory.class)
 public class ObjectEntryDisplayContextFactory {
 
-	public ObjectEntryDisplayContext create(
+	public ObjectEntryDisplayContextImpl create(
 		HttpServletRequest httpServletRequest, boolean readOnly) {
 
-		return new ObjectEntryDisplayContext(
+		return new ObjectEntryDisplayContextImpl(
 			_ddmFormRenderer, httpServletRequest, _itemSelector,
 			_objectDefinitionLocalService, _objectEntryManagerRegistry,
-			_objectEntryService, _objectFieldBusinessTypeRegistry,
-			_objectFieldLocalService, _objectLayoutLocalService,
-			_objectRelationshipLocalService, _objectScopeProviderRegistry,
-			readOnly);
+			_objectEntryLocalService, _objectEntryService,
+			_objectFieldBusinessTypeRegistry, _objectFieldLocalService,
+			_objectLayoutLocalService, _objectRelationshipLocalService,
+			_objectScopeProviderRegistry, readOnly);
 	}
 
 	@Reference
@@ -56,6 +57,9 @@ public class ObjectEntryDisplayContextFactory {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;

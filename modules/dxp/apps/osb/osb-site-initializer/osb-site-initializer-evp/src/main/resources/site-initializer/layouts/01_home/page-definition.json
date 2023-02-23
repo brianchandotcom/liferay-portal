@@ -3,8 +3,12 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"marginBottom": "8"
+					},
 					"indexed": true,
 					"layout": {
+						"marginBottom": 10,
 						"opacity": 100,
 						"widthType": "Fluid"
 					},

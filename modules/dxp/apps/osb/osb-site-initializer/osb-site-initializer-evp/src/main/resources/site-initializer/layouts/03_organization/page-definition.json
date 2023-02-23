@@ -3,8 +3,12 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"marginBottom": "6"
+					},
 					"indexed": true,
 					"layout": {
+						"marginBottom": 6,
 						"widthType": "Fluid"
 					},
 					"name": "Organization Container"
@@ -172,9 +176,9 @@
 											"fragmentStyle": {
 												"borderColor": "colorNeutral4",
 												"height": "65px",
-												"maxWidth": "16%",
+												"maxWidth": "19%",
 												"paddingLeft": "2",
-												"width": "16%"
+												"width": "19%"
 											},
 											"indexed": true,
 											"layout": {
@@ -432,9 +436,9 @@
 											"fragmentStyle": {
 												"borderColor": "colorNeutral4",
 												"height": "65px",
-												"maxWidth": "14%",
+												"maxWidth": "15%",
 												"paddingLeft": "2",
-												"width": "14%"
+												"width": "15%"
 											},
 											"indexed": true,
 											"layout": {
@@ -550,9 +554,9 @@
 															"fragmentStyle": {
 																"borderWidth": "0",
 																"height": "65px",
-																"maxWidth": "16%",
+																"maxWidth": "19%",
 																"paddingLeft": "2",
-																"width": "16%"
+																"width": "19%"
 															},
 															"indexed": true,
 															"layout": {
@@ -811,10 +815,10 @@
 														"definition": {
 															"fragmentStyle": {
 																"height": "65px",
-																"maxWidth": "14%",
+																"maxWidth": "15%",
 																"paddingLeft": "2",
 																"paddingRight": "2",
-																"width": "14%"
+																"width": "15%"
 															},
 															"indexed": true,
 															"layout": {
@@ -870,8 +874,8 @@
 															},
 															"fragmentStyle": {
 																"height": "65px",
-																"maxWidth": "8%",
-																"width": "8%"
+																"maxWidth": "4%",
+																"width": "4%"
 															},
 															"indexed": true,
 															"layout": {
@@ -885,38 +889,12 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "DIALECT-dialect-button"
+																		"key": "evp-kebab-organization",
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
-																		"buttonSize": "btn-sm",
-																		"inverted": false,
-																		"style": "primary",
-																		"type": "ghost",
-																		"uppercase": false
 																	},
 																	"fragmentFields": [
-																		{
-																			"id": "link",
-																			"value": {
-																				"fragmentLink": {
-																					"value": {
-																						"href": {
-																							"mapping": {
-																								"fieldKey": "ObjectEntry_displayPageURL",
-																								"itemReference": {
-																									"contextSource": "CollectionItem"
-																								}
-																							}
-																						}
-																					}
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Details"
-																					}
-																				}
-																			}
-																		}
 																	],
 																	"indexed": true
 																},

@@ -4,9 +4,11 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"marginBottom": "6"
 					},
 					"indexed": true,
 					"layout": {
+						"marginBottom": 6,
 						"opacity": 100,
 						"widthType": "Fluid"
 					},

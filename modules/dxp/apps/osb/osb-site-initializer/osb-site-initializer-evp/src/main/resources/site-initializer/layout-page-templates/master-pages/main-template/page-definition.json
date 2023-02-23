@@ -286,11 +286,19 @@
 			},
 			{
 				"definition": {
+					"cssClasses": [
+						"w-100",
+						"position-absolute"
+					],
+					"customCSS": ".[$FRAGMENT_CLASS$] {\nbottom:0;\n}",
 					"fragmentStyle": {
 						"backgroundColor": "colorBrandPrimaryLighten6",
 						"borderWidth": "0",
 						"paddingBottom": "2",
 						"paddingTop": "4"
+					},
+					"htmlProperties": {
+						"htmlTag": "Footer"
 					},
 					"indexed": true,
 					"layout": {

@@ -43,7 +43,6 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.AcceptLanguageC
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.AggregationContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.CompanyContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FieldsQueryParamContextProvider;
-import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.PaginationContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.RestrictFieldsQueryParamContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
@@ -157,9 +156,6 @@ public class VulcanFeature implements Feature {
 		featureContext.register(
 			new EntityExtensionHandlerContextResolver(
 				_extensionProviderRegistry));
-		featureContext.register(
-			new FilterContextProvider(
-				_expressionConvert, _filterParserProvider, _language, _portal));
 		featureContext.register(
 			new MultipartBodyMessageBodyReader(
 				_dlValidator.getMaxAllowableSize(

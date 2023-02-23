@@ -23,6 +23,8 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Marco Leo
  */
@@ -41,10 +43,14 @@ public class EditObjectEntryMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		httpServletRequest.setAttribute("readOnly", Boolean.FALSE);
+
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			_objectEntryDisplayContextFactory.create(
-				_portal.getHttpServletRequest(renderRequest), false));
+			_objectEntryDisplayContextFactory.create(httpServletRequest));
 
 		return "/object_entries/edit_object_entry.jsp";
 	}

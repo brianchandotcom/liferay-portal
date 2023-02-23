@@ -1191,8 +1191,11 @@ public class EditAssetListDisplayContext {
 		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
 			getAssetListEntrySegmentsEntryRels();
 
+		assetListEntrySegmentsEntryRels = new ArrayList<>(
+			assetListEntrySegmentsEntryRels);
+
 		Collections.sort(
-			new ArrayList<>(assetListEntrySegmentsEntryRels),
+			assetListEntrySegmentsEntryRels,
 			Comparator.comparingInt(
 				AssetListEntrySegmentsEntryRel::getPriority));
 

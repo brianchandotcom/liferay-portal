@@ -51,6 +51,7 @@ const CaseRequirement = () => {
 							{i18n.translate('link-requirements')}
 						</Button>
 					),
+					filterSchema: 'caseRequirements',
 					title: i18n.translate('requirements'),
 				}}
 				resource={testrayCaseRequirementsImpl.resource}

@@ -541,6 +541,8 @@ public class TaxonomyCategoryResourceImpl
 		projectionList.add(ProjectionFactoryUtil.property("companyId"));
 		projectionList.add(ProjectionFactoryUtil.property("createDate"));
 		projectionList.add(ProjectionFactoryUtil.property("description"));
+		projectionList.add(
+			ProjectionFactoryUtil.property("externalReferenceCode"));
 		projectionList.add(ProjectionFactoryUtil.property("groupId"));
 		projectionList.add(ProjectionFactoryUtil.property("modifiedDate"));
 		projectionList.add(ProjectionFactoryUtil.property("name"));
@@ -611,11 +613,12 @@ public class TaxonomyCategoryResourceImpl
 				setCompanyId((long)assetCategory[2]);
 				setCreateDate(_toDate((Timestamp)assetCategory[3]));
 				setDescription((String)assetCategory[4]);
-				setGroupId((long)assetCategory[5]);
-				setModifiedDate(_toDate((Timestamp)assetCategory[6]));
-				setName((String)assetCategory[7]);
-				setUserId((long)assetCategory[8]);
-				setVocabularyId((long)assetCategory[9]);
+				setExternalReferenceCode((String)assetCategory[5]);
+				setGroupId((long)assetCategory[6]);
+				setModifiedDate(_toDate((Timestamp)assetCategory[7]));
+				setName((String)assetCategory[8]);
+				setUserId((long)assetCategory[9]);
+				setVocabularyId((long)assetCategory[10]);
 			}
 		};
 	}

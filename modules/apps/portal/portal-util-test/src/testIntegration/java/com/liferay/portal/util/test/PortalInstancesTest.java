@@ -138,7 +138,7 @@ public class PortalInstancesTest {
 	}
 
 	@Test
-	public void testGetI18nLanguageId() throws Exception {
+	public void testGetVirtualHostLanguageId() throws Exception {
 		Group group = GroupTestUtil.addGroupToCompany(_company.getCompanyId());
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -160,21 +160,20 @@ public class PortalInstancesTest {
 		_updateLayoutSetVirtualHostname(
 			StringPool.BLANK, group.getPublicLayoutSet(), hostname);
 
-		_testGetI18NLanguageId(null, hostname, null);
-		_testGetI18NLanguageId(null, hostname, LanguageUtil.getLocale("vi_VN"));
+		_testGetVirtualHostLanguageId(null, hostname, null);
+		_testGetVirtualHostLanguageId(
+			null, hostname, LanguageUtil.getLocale("vi_VN"));
 
 		// Spanish virtual host language
 
 		_updateLayoutSetVirtualHostname(
 			"es_ES", group.getPublicLayoutSet(), hostname);
 
-		_testGetI18NLanguageId("es_ES", hostname, null);
+		_testGetVirtualHostLanguageId("es_ES", hostname, null);
 
-		// Company available locale is still usable
+		// Session locale shouldn't impact virtualhost locale
 
-		_testGetI18NLanguageId(
-			LanguageUtil.getLanguageId(_company.getLocale()), hostname,
-			_company.getLocale());
+		_testGetVirtualHostLanguageId("es_ES", hostname, _company.getLocale());
 	}
 
 	private void _testGetCompanyId(
@@ -197,7 +196,7 @@ public class PortalInstancesTest {
 				WebKeys.VIRTUAL_HOST_LAYOUT_SET));
 	}
 
-	private void _testGetI18NLanguageId(
+	private void _testGetVirtualHostLanguageId(
 		String expectedLanguageId, String hostname, Locale locale) {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -219,7 +218,8 @@ public class PortalInstancesTest {
 			PortalInstances.getCompanyId(mockHttpServletRequest));
 		Assert.assertEquals(
 			expectedLanguageId,
-			mockHttpServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
+			mockHttpServletRequest.getAttribute(
+				WebKeys.VIRTUAL_HOST_LANGUAGE_ID));
 	}
 
 	private void _updateLayoutSetVirtualHostname(

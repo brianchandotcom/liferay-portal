@@ -9,7 +9,7 @@
 			"label": {
 				"en_US": "Subtask Score Completed"
 			},
-			"name": "subTaskScoreCompleted",
+			"name": "subtaskScoreCompleted",
 			"objectFieldSettings": [
 				{
 					"name": "objectRelationshipName",
@@ -51,7 +51,7 @@
 			"label": {
 				"en_US": "Subtask Score"
 			},
-			"name": "subTaskScore",
+			"name": "subtaskScore",
 			"objectFieldSettings": [
 				{
 					"name": "objectRelationshipName",
@@ -79,7 +79,7 @@
 			"label": {
 				"en_US": "Subtask Score Self Incomplete"
 			},
-			"name": "subTaskScoreSelfIncomplete",
+			"name": "subtaskScoreSelfIncomplete",
 			"objectFieldSettings": [
 				{
 					"name": "objectRelationshipName",

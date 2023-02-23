@@ -31,16 +31,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -72,18 +68,6 @@ public class MappedProductResourceTest
 		_cpDefinition = _cpInstance.getCPDefinition();
 
 		_cProduct = _cpDefinition.getCProduct();
-	}
-
-	@Override
-	protected Collection<EntityField> getEntityFields() throws Exception {
-		try {
-			return super.getEntityFields();
-		}
-		catch (NullPointerException nullPointerException) {
-			Map<String, EntityField> entityFieldsMap = new HashMap<>();
-
-			return entityFieldsMap.values();
-		}
 	}
 
 	@Override

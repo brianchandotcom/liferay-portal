@@ -26,14 +26,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -55,18 +51,6 @@ public class PinResourceTest extends BasePinResourceTestCase {
 			testGroup.getGroupId(), RandomTestUtil.randomString());
 		_cpDefinition = CPTestUtil.addCPDefinition(
 			testGroup.getGroupId(), "simple", true, false);
-	}
-
-	@Override
-	protected Collection<EntityField> getEntityFields() throws Exception {
-		try {
-			return super.getEntityFields();
-		}
-		catch (NullPointerException nullPointerException) {
-			Map<String, EntityField> entityFieldsMap = new HashMap<>();
-
-			return entityFieldsMap.values();
-		}
 	}
 
 	@Override

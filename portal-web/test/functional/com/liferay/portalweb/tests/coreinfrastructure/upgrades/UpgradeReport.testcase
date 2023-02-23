@@ -168,6 +168,165 @@ definition {
 		}
 	}
 
+	@description = "LPS-158740: Upgrade Report is created and populated when using auto-upgrade"
+	@priority = 4
+	test ReportGeneratedWithAutoUpgrade {
+		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true";
+		property skip.start.app.server = "false";
+		property skip.upgrade-legacy-database = "true";
+		property test.name.skip.portal.instance = "UpgradeReport#ReportGeneratedWithAutoUpgrade";
+		property upgrade.reports.enabled = "false";
+
+		task ("Look for the upgrade report") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			var reportFileExists = FileUtil.exists("${liferayHome}/reports/upgrade_report.info");
+			var reportFileContent = FileUtil.read("${liferayHome}/reports/upgrade_report.info");
+		}
+
+		task ("Check if file exists") {
+			if (${reportFileExists} != "true") {
+				fail("Upgrade report not found in ${liferayHome}/reports");
+			}
+		}
+
+		task ("Check the total runtime is present") {
+			if (!(contains(${reportFileContent}, "Upgrade completed in"))) {
+				echo(${reportFileContent});
+
+				fail("Total runtime is not present in upgrade report.");
+			}
+		}
+
+		task ("Check the intial portal build number") {
+			if (!(contains(${reportFileContent}, "Initial portal build number:"))) {
+				echo(${reportFileContent});
+
+				fail("Inital portal build number is not present in upgrade report.");
+			}
+		}
+
+		task ("Check the final portal build number") {
+			if (!(contains(${reportFileContent}, "Final portal build number:"))) {
+				echo(${reportFileContent});
+
+				fail("Final portal build number is not present in upgrade report.");
+			}
+		}
+
+		task ("Check the expected portal build number") {
+			if (!(contains(${reportFileContent}, "Expected portal build number:"))) {
+				echo(${reportFileContent});
+
+				fail("Expected portal build number is not present in upgrade report.");
+			}
+		}
+
+		task ("Check the intial schema version") {
+			if (!(contains(${reportFileContent}, "Initial portal schema version:"))) {
+				echo(${reportFileContent});
+
+				fail("Inital schema version is not present in upgrade report.");
+			}
+		}
+
+		task ("check the final schema version") {
+			if (!(contains(${reportFileContent}, "Final portal schema version:"))) {
+				echo(${reportFileContent});
+
+				fail("Final schema version is not present in upgrade report.");
+			}
+		}
+
+		task ("Check the expected schema version") {
+			if (!(contains(${reportFileContent}, "Expected portal schema version:"))) {
+				echo(${reportFileContent});
+
+				fail("Expected schema version is not present in upgrade report.");
+			}
+		}
+
+		task ("Read the type and version is correct in the report") {
+			var databaseType = PropsUtil.get("database.type");
+
+			var databaseVersion = PropsUtil.get("database.${databaseType}.version");
+
+			if (!(contains(${reportFileContent}, "Using ${databaseType} version ${databaseVersion}"))) {
+				echo(${reportFileContent});
+
+				fail("Database type and version is not present in upgrade report.");
+			}
+		}
+
+		task ("Check the Document Library Store is present") {
+			if (!(contains(${reportFileContent}, "dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore"))) {
+				echo(${reportFileContent});
+
+				fail("Document library store is not present in upgrade report.");
+			}
+		}
+
+		task ("Check the size of document library storage is present") {
+			if (!(contains(${reportFileContent}, "The document library storage size is"))) {
+				echo(${reportFileContent});
+
+				fail("Size of document library storage is not present in upgrade report.");
+			}
+		}
+
+		task ("Check the row counts references") {
+			if (!(contains(${reportFileContent}, "Rows (initial)"))) {
+				echo(${reportFileContent});
+
+				fail("Initial rows numbers column not present in upgrade report.");
+			}
+
+			if (!(contains(${reportFileContent}, "Rows (final)"))) {
+				echo(${reportFileContent});
+
+				fail("Final rows numbers column not present in upgrade report.");
+			}
+		}
+
+		task ("Check the longest processes list is present") {
+			if (!(contains(${reportFileContent}, "Top 20 longest running upgrade processes"))) {
+				echo(${reportFileContent});
+
+				fail("List with the 20 longest upgrade processes not found.");
+			}
+		}
+
+		task ("Check no errors are thrown") {
+			if (!(contains(${reportFileContent}, "No errors thrown during upgrade"))) {
+				fail("Upgrade report contains unexpected errors.");
+			}
+		}
+
+		task ("Check no warnings are thrown") {
+			if (!(contains(${reportFileContent}, "No warnings thrown during upgrade"))) {
+				fail("Upgrade report contains unexpected warnings.");
+			}
+		}
+
+		task ("Shutdown server and execute upgrade again") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Look for the new upgrade report") {
+			var upgradeReportNew = FileUtil.read("${liferayHome}/reports/upgrade_report.info");
+		}
+
+		task ("Read the new report. No upgrade processes are expected") {
+			if (!(contains(${upgradeReportNew}, "No upgrade processes registered"))) {
+				echo(${upgradeReportNew});
+
+				fail("New upgrade report contains unexpected upgrades.");
+			}
+		}
+	}
+
 	@description = "LPS-154683: Upgrade Report is not created when property is not set to true"
 	@priority = 4
 	test ReportNotGenerated {

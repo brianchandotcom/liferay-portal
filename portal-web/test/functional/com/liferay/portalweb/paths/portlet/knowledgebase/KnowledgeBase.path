@@ -90,6 +90,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_TABLE_EXPIRATION_TIME</td>
+	<td>//*[name()='svg'][contains(@class,'lexicon-icon-question-circle-full')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ARTICLE_TABLE_KB_GENERIC</td>
 	<td>//tr[1]/td[3]</td>
 	<td></td>

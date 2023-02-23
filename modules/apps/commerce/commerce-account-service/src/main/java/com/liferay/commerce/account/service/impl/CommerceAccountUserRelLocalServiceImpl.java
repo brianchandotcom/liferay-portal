@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -187,18 +186,12 @@ public class CommerceAccountUserRelLocalServiceImpl
 			roles.add(role);
 		}
 
-		Stream<Role> stream = roles.stream();
-
-		long[] roleIds = stream.mapToLong(
-			Role::getRoleId
-		).toArray();
-
-		List<CommerceAccountUserRel> commerceAccountUserRels =
-			commerceAccountUserRelLocalService.
-				getCommerceAccountUserRelsByCommerceAccountUserId(userId);
+		long[] roleIds = TransformUtil.transformToLongArray(
+			roles, Role::getRoleId);
 
 		for (CommerceAccountUserRel commerceAccountUserRel :
-				commerceAccountUserRels) {
+				commerceAccountUserRelLocalService.
+					getCommerceAccountUserRelsByCommerceAccountUserId(userId)) {
 
 			CommerceAccount commerceAccount =
 				CommerceAccountImpl.fromAccountEntry(

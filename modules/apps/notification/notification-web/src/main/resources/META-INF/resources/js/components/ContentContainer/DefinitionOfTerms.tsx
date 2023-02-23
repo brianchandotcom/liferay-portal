@@ -41,7 +41,7 @@ export function DefinitionOfTerms({
 	const [selectedEntity, setSelectedEntity] = useState<ObjectDefinition>();
 	const [query, setQuery] = useState<string>('');
 
-	const [entityFields, setEntityFields] = useState<Item[]>([]);
+	const [entityFields, setObjectFieldTerms] = useState<Item[]>([]);
 
 	const filteredObjectDefinitions = useMemo(() => {
 		if (objectDefinitions) {
@@ -53,18 +53,18 @@ export function DefinitionOfTerms({
 		}
 	}, [objectDefinitions, query]);
 
-	const getEntityFields = async (objectDefinition: ObjectDefinition) => {
+	const getObjectFieldTerms = async (objectDefinition: ObjectDefinition) => {
 		const response = await fetch(
 			createResourceURL(baseResourceURL, {
 				objectDefinitionId: objectDefinition.id,
 				p_p_resource_id:
-					'/notification_templates/notification_template_terms',
+					'/notification_templates/object_field_notification_template_terms',
 			}).toString()
 		);
 
 		const responseJSON = (await response.json()) as Item[];
 
-		setEntityFields(responseJSON);
+		setObjectFieldTerms(responseJSON);
 	};
 
 	const copyObjectFieldTerm = ({itemData}: {itemData: Item}) => {
@@ -104,7 +104,7 @@ export function DefinitionOfTerms({
 					label={Liferay.Language.get('entity')}
 					onChangeQuery={setQuery}
 					onSelectItem={(item) => {
-						getEntityFields(item);
+						getObjectFieldTerms(item);
 						setSelectedEntity(item);
 					}}
 					query={query}

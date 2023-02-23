@@ -52,9 +52,27 @@ definition {
     @description = "Verify if when the user selects a card, go to next page and click on 'Previous' button the card still selected (active)."
 	@priority = 4
 	test IfCardStillSelectedWhenUserGoToPreviousPage {
+		
+	property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#IfCardStillSelectedWhenUserGoToPreviousPage";
 
-        
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
+        task ("Given the New Application modal is open") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+			RaylifeApApplication.modalFlow(
+				insurance="Personal",
+				button="Previous");
+		}
+
+		task("Then Assert that the Insurance options is still active after click in 'previous' button") {
+			AssertElementNotPresent(
+				locator1="RaylifeApplicationModal#MODAL_INSURANCE",
+				key_text="Business");
+
+			AssertElementPresent(
+				locator1="RaylifeApplicationModal#MODAL_INSURANCE",
+				key_text="Personal");
+		}
     }
 
     @description = "Verify if the 'New Applications' button from the side-bar option 'Applications', works."

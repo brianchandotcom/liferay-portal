@@ -2499,7 +2499,7 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			if (isSet(documentandmedia)) {
-				NavItem.click(navItem = "Documents and Media");
+				MenuBar.click(menuBar = "Documents and Media");
 
 				LexiconCard.clickCard(card = ${imageFileName});
 
@@ -2515,7 +2515,7 @@ definition {
 			}
 
 			if (isSet(blogs)) {
-				NavItem.click(navItem = "Blogs");
+				MenuBar.click(menuBar = "Blogs");
 
 				LexiconCard.clickCard(card = ${entryTitle});
 
@@ -2534,7 +2534,7 @@ definition {
 			}
 
 			if (isSet(categories)) {
-				NavItem.click(navItem = "Categories");
+				MenuBar.click(menuBar = "Categories");
 
 				Portlet.expandTree();
 
@@ -2552,6 +2552,8 @@ definition {
 			}
 
 			if (isSet(knowledgeBase)) {
+				MenuBar.click(menuBar = "Knowledge Base Articles");
+
 				Click(
 					key_kbArticleTitle = ${entryTitle},
 					locator1 = "KnowledgeBaseSelectParent#SELECTOR_FIELD");
@@ -2571,7 +2573,7 @@ definition {
 			}
 
 			if (isSet(webcontent)) {
-				NavItem.click(navItem = "Web Content");
+				MenuBar.click(menuBar = "Web Content");
 
 				if (isSet(depotName)) {
 					var key_contentName = ${webContentTitle};

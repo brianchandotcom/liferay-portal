@@ -214,6 +214,53 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
 	}
 
+	@description = "This is a use case for LPS-172496. Deleting a portlet with a modified configuration from a Publication incorrectly leads to a Deletion Modification Conflict"
+	@priority = 3
+	test CanDeletePortletModifiedConfigurationWithoutDeletionModificationConflict {
+		task ("Add a Widget Page with Asset Publisher") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page",
+				widgetName = "Asset Publisher");
+		}
+
+		JSONPublications.addPublication(publicationName = "Test Publication");
+
+		JSONPublications.selectPublication(publicationName = "Test Publication");
+
+		task ("Go to the Widget Page and edit Asset Publisher") {
+			Navigator.gotoPage(pageName = "Test Page");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Asset Publisher",
+				portletOption = "Configuration");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
+
+			Click(
+				locator1 = "Radio#ANY",
+				radioLabel = "Manual");
+		}
+
+		task ("Remove Asset Publisher from the Page and publish the Publication") {
+			Navigator.gotoPage(pageName = "Test Page");
+
+			Portlet.deletePG(portletName = "Asset Publisher");
+
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+
+			Publications.publishPublication(publicationName = "Test Publication");
+		}
+	}
+
 	@priority = 5
 	test ConflictingPublicationsAutomaticallyResolved {
 

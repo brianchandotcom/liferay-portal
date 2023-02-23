@@ -110,8 +110,9 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 								"/users_admin/edit_organization", "type",
 								organizationType);
 							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, organizationType));
+								LanguageUtil.format(
+									_httpServletRequest, "add-x",
+									organizationType));
 						});
 				}
 			}

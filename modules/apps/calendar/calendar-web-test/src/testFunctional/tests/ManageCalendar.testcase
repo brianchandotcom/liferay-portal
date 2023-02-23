@@ -244,13 +244,14 @@ definition {
 
 		CalendarNavigator.gotoMyCalendarsManage();
 
-		ManageCalendar.viewColorByColumn(colorList = "D96666");
-
 		ManageCalendar.editCalendar(
 			calendarCurrentName = "Test Test",
-			newColor = "E67399");
+			newColor = "#E0C240");
 
-		ManageCalendar.viewColorByColumn(colorList = "E67399");
+		AssertElementPresent(
+			key_color = "#E0C240",
+			key_rowNumber = 1,
+			locator1 = "ManageCalendar#COLOR_BY_COLUMN");
 	}
 
 	@priority = 4

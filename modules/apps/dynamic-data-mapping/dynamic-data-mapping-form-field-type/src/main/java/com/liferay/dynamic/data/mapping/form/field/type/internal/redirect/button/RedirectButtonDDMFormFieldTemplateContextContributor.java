@@ -27,9 +27,8 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,31 +83,34 @@ public class RedirectButtonDDMFormFieldTemplateContextContributor
 					RequestBackedPortletURLFactoryUtil.create(
 						ddmFormFieldRenderingContext.getHttpServletRequest());
 
+				Map<String, String[]> parameterMap = new HashMap<>();
+
+				for (Object object :
+						(Object[])ddmFormField.getProperty("parameters")) {
+
+					String parameter = (String)object;
+
+					String[] parameters = parameter.split(StringPool.EQUAL);
+
+					parameterMap.put(
+						parameters[0], new String[] {parameters[1]});
+				}
+
 				return PortletURLBuilder.create(
 					requestBackedPortletURLFactory.createActionURL(
 						GetterUtil.getString(
 							((Object[])ddmFormField.getProperty("portletId"))
 								[0]))
 				).setParameters(
-					HashMapBuilder.put(
+					HashMapBuilder.putAll(
+						parameterMap
+					).put(
 						"mvcRenderCommandName",
 						new String[] {
 							GetterUtil.getString(
 								((Object[])ddmFormField.getProperty(
 									"mvcRenderCommandName"))[0])
 						}
-					).putAll(
-						Stream.of(
-							(Object[])ddmFormField.getProperty("parameters")
-						).map(
-							String.class::cast
-						).map(
-							parameter -> parameter.split(StringPool.EQUAL)
-						).collect(
-							Collectors.toMap(
-								keyValue -> keyValue[0],
-								keyValue -> new String[] {keyValue[1]})
-						)
 					).build()
 				).buildString();
 			}

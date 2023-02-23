@@ -36,17 +36,41 @@ definition {
     @description = "Verify if the user can swicth between the cards."
 	@priority = 3
 	test IfCanSwitchBetweenCards {
+		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#IfCanSwitchBetweenCards";
 
-        
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+		task("Given the modal for new application is open"){
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 
-    }
+			Click(
+				locator1="Button#ANY",
+				key_text="Application");
+		}
 
-     @description = "Verify if the Agent can click NEXT to continue on the new Application flow"
-	@priority = 4
-	test IfNextButtonWorks {
+		task("Then Assert if the user can switch between the cards"){
+              
+			RaylifeApApplication.modalOption(option="Business");  
 
-        
+			AssertElementPresent(
+				locator1="RaylifeApplicationModal#MODAL_INSURANCE",
+				key_text="Business");
 
+			RaylifeApApplication.modalOption(option="Personal");  
+
+			AssertElementPresent(
+				locator1="RaylifeApplicationModal#MODAL_INSURANCE",
+				key_text="Personal");
+
+			Click(
+				locator1="Button#ANY",
+				key_text="Next");
+
+			RaylifeApApplication.modalOption(option="Auto");
+
+			AssertElementPresent(
+				locator1="RaylifeApplicationModal#MODAL_INSURANCE",
+				key_text="Auto");        
+		}
     }
 
     @description = "Verify if when the user selects a card, go to next page and click on 'Previous' button the card still selected (active)."

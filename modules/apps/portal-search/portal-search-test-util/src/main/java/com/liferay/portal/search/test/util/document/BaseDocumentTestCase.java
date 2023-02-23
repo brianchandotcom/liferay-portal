@@ -22,12 +22,9 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.junit.BeforeClass;
 
@@ -115,12 +112,6 @@ public abstract class BaseDocumentTestCase extends BaseIndexingTestCase {
 		floats.put(screenName, floatNumber);
 		integers.put(screenName, numberInteger);
 		longs.put(screenName, longNumber);
-	}
-
-	protected Stream<String> getScreenNamesStream() {
-		Collection<String> screenNames = Arrays.asList(SCREEN_NAMES);
-
-		return screenNames.stream();
 	}
 
 	protected void populate(Document document, String screenName) {

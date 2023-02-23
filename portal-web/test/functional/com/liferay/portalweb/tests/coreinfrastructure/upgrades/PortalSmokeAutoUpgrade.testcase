@@ -85,6 +85,16 @@ definition {
 		property test.run.environment = "EE";
 
 		Upgrade.viewUpgrade();
+
+		task ("Check the upgrade report is not present") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			var reportFileExists = FileUtil.exists("${liferayHome}/reports/upgrade_report.info");
+
+			if (${reportFileExists} == "true") {
+				fail("Upgrade report found in ${liferayHome}/reports");
+			}
+		}
 	}
 
 	@priority = 5

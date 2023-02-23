@@ -399,7 +399,7 @@ const filterSchema = {
 		fields: [
 			baseFilters.priority,
 			baseFilters.caseType,
-			baseFilters.team,
+			overrides(baseFilters.team, {type: 'multiselect'}),
 			baseFilters.run,
 		] as RendererFields[],
 	},

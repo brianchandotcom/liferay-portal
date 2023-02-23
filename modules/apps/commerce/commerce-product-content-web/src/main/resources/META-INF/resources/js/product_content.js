@@ -196,48 +196,60 @@ AUI.add(
 					}
 
 					if (cpInstance.subscriptionInfo) {
-						subscriptionInfo.setHTML(cpInstance.subscriptionInfo);
+						subscriptionInfo.setHTML(
+							Liferay.Util.escape(cpInstance.subscriptionInfo)
+						);
 						subscriptionInfoShow.show();
 					}
 
 					if (cpInstance.deliverySubscriptionInfo) {
 						deliverySubscriptionInfo.setHTML(
-							cpInstance.deliverySubscriptionInfo
+							Liferay.Util.escape(
+								cpInstance.deliverySubscriptionInfo
+							)
 						);
 						deliverySubscriptionInfoShow.show();
 					}
 
 					if (cpInstance.gtin) {
-						gtins.setHTML(cpInstance.gtin);
+						gtins.setHTML(Liferay.Util.escape(cpInstance.gtin));
 						gtinsShow.show();
 					}
 
 					if (cpInstance.manufacturerPartNumber) {
 						manufacturerPartNumbers.setHTML(
-							cpInstance.manufacturerPartNumber
+							Liferay.Util.escape(
+								cpInstance.manufacturerPartNumber
+							)
 						);
 						manufacturerPartNumbersShow.show();
 					}
 
 					if (cpInstance.availability) {
-						availabilities.setHTML(cpInstance.availability);
+						availabilities.setHTML(
+							Liferay.Util.escape(cpInstance.availability)
+						);
 						availabilitiesShow.show();
 					}
 
 					if (cpInstance.availabilityEstimate) {
 						availabilityEstimates.setHTML(
-							cpInstance.availabilityEstimate
+							Liferay.Util.escape(cpInstance.availabilityEstimate)
 						);
 						availabilityEstimatesShow.show();
 					}
 
 					if (cpInstance.stockQuantity) {
-						stockQuantities.setHTML(cpInstance.stockQuantity);
+						stockQuantities.setHTML(
+							Liferay.Util.escape(cpInstance.stockQuantity)
+						);
 						stockQuantitiesShow.show();
 					}
 
 					if (cpInstance.sampleFile) {
-						sampleFiles.setHTML(cpInstance.sampleFile);
+						sampleFiles.setHTML(
+							Liferay.Util.escape(cpInstance.sampleFile)
+						);
 						sampleFilesShow.show();
 					}
 

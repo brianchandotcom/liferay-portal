@@ -176,7 +176,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 			<c:choose>
 				<c:when test="<%= cpSku != null %>">
-					<div class="availability-estimate mt-1"><%= cpContentHelper.getAvailabilityEstimateLabel(request) %></div>
+					<div class="availability-estimate mt-1"><%= HtmlUtil.escape(cpContentHelper.getAvailabilityEstimateLabel(request)) %></div>
 				</c:when>
 				<c:otherwise>
 					<div class="availability-estimate mt-1" data-text-cp-instance-availability-estimate></div>

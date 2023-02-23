@@ -1,18 +1,23 @@
 @component-name = "portal-solutions"
 definition {
+
 	property custom.properties = "feature.flag.LPS-165493=true";
 	property osgi.modules.includes = "site-initializer-raylife-ap";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife AP";
+
 	var testSiteName = "Raylife AP";
 	var testSiteURL = "raylife-ap";
+
 	setUp {
 		task ("Set up instance and sign in") {
 			TestCase.setUpPortalInstance();
+
 			User.firstLoginPG();
 		}
+
 		task ("Create a new Raylife AP Site") {
 			Site.openSitesAdmin();
 
@@ -24,7 +29,9 @@ definition {
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		RaylifeAP.tearDownCP();
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -33,95 +40,94 @@ definition {
 		}
 	}
 
-    @description = "Verify if the user can swicth between the cards."
+	@description = "Verify if the user can swicth between the cards."
 	@priority = 3
 	test IfCanSwitchBetweenCards {
 		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#IfCanSwitchBetweenCards";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
-		task("Given the modal for new application is open"){
+
+		task ("Given the modal for new application is open") {
 			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 
 			Click(
-				locator1="Button#ANY",
-				key_text="Application");
+				key_text = "Application",
+				locator1 = "Button#ANY");
 		}
 
-		task("Then Assert if the user can switch between the cards"){
-              
-			RaylifeApApplication.modalOption(option="Business");  
+		task ("Then Assert if the user can switch between the cards") {
+			RaylifeApApplication.modalOption(option = "Business");
 
 			AssertElementPresent(
-				locator1="RaylifeApplicationModal#MODAL_INSURANCE",
-				key_text="Business");
+				key_text = "Business",
+				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
 
-			RaylifeApApplication.modalOption(option="Personal");  
+			RaylifeApApplication.modalOption(option = "Personal");
 
 			AssertElementPresent(
-				locator1="RaylifeApplicationModal#MODAL_INSURANCE",
-				key_text="Personal");
+				key_text = "Personal",
+				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
 
 			Click(
-				locator1="Button#ANY",
-				key_text="Next");
+				key_text = "Next",
+				locator1 = "Button#ANY");
 
-			RaylifeApApplication.modalOption(option="Auto");
+			RaylifeApApplication.modalOption(option = "Auto");
 
 			AssertElementPresent(
-				locator1="RaylifeApplicationModal#MODAL_INSURANCE",
-				key_text="Auto");        
+				key_text = "Auto",
+				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
 		}
-    }
+	}
 
-    @description = "Verify if when the user selects a card, go to next page and click on 'Previous' button the card still selected (active)."
+	@description = "Verify if when the user selects a card, go to next page and click on 'Previous' button the card still selected (active)."
 	@priority = 4
 	test IfCardStillSelectedWhenUserGoToPreviousPage {
-		
-	property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#IfCardStillSelectedWhenUserGoToPreviousPage";
+		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#IfCardStillSelectedWhenUserGoToPreviousPage";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-        task ("Given the New Application modal is open") {
+		task ("Given the New Application modal is open") {
 			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+
 			RaylifeApApplication.modalFlow(
-				insurance="Personal",
-				button="Previous");
+				button = "Previous",
+				insurance = "Personal");
 		}
 
-		task("Then Assert that the Insurance options is still active after click in 'previous' button") {
+		task ("Then Assert that the Insurance options is still active after click in 'previous' button") {
 			AssertElementNotPresent(
-				locator1="RaylifeApplicationModal#MODAL_INSURANCE",
-				key_text="Business");
+				key_text = "Business",
+				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
 
 			AssertElementPresent(
-				locator1="RaylifeApplicationModal#MODAL_INSURANCE",
-				key_text="Personal");
+				key_text = "Personal",
+				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
 		}
-    }
+	}
 
-    @description = "Verify if the 'New Applications' button from the side-bar option 'Applications', works."
+	@description = "Verify if the 'New Applications' button from the side-bar option 'Applications', works."
 	@priority = 5
 	test IfNewApplicationsFromSideBarWorks {
 		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#IfNewApplicationsFromSideBarWorks";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		task("Given the modal new application is open by side-bar option"){
+		task ("Given the modal new application is open by side-bar option") {
 			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
 			Click(
-				locator1="Button#ANY",
-				key_text="New Applications");
+				key_text = "New Applications",
+				locator1 = "Button#ANY");
 		}
 
-		task("Then Assert that the modal is open"){
-
-		AssertElementPresent(
-			locator1="RaylifeApplicationModal#MODAL_DESCRIPTION",
-			key_text="What type of insurance does this customer need?");
+		task ("Then Assert that the modal is open") {
+			AssertElementPresent(
+				key_text = "What type of insurance does this customer need?",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
 		}
+	}
 
-    }
 }

@@ -1,36 +1,39 @@
-definition{
-    macro modalFlow{
-             Click(
-				locator1="Button#ANY",
-				key_text="Application");
-                
-             Click(
-				locator1="RaylifeApplicationModal#MODAL_OPTION",
-				key_text="${insurance}");
+definition {
+
+	macro modalFlow {
+		Click(
+			key_text = "Application",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_text = ${insurance},
+			locator1 = "RaylifeApplicationModal#MODAL_OPTION");
+
+		Click(
+			key_text = "Next",
+			locator1 = "Button#ANY");
+
+		if (isSet(button)) {
+			Click(
+				key_text = ${button},
+				locator1 = "Button#ANY");
+		}
+
+		if (isSet(product)) {
+			Click(
+				key_text = ${product},
+				locator1 = "RaylifeApplicationModal#MODAL_OPTION");
 
 			Click(
-				locator1="Button#ANY",
-				key_text="Next");
-			
-		if (isSet(button)) {
-            Click(
-				locator1="Button#ANY",
-				key_text="${button}");
-        }
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+	}
 
-        if (isSet(product)) {
-            Click(
-				locator1="RaylifeApplicationModal#MODAL_OPTION",
-				key_text="${product}");
+	macro modalOption {
+		Click(
+			key_text = ${option},
+			locator1 = "RaylifeApplicationModal#MODAL_OPTION");
+	}
 
-            Click(
-				locator1="Button#ANY",
-				key_text="Next");
-        }
-    }
-    macro modalOption {
-        Click(
-				locator1="RaylifeApplicationModal#MODAL_OPTION",
-				key_text="${option}");
-    }
 }

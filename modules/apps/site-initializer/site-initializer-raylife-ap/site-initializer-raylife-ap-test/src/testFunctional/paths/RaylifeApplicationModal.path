@@ -12,19 +12,19 @@
 <tbody>
 
 <tr>
-    <td>MODAL_OPTION</td>
-    <td>//div[contains(@class,'modal-body')]//section//*[contains(.,'${key_text}')]</td>
-    <td></td>
+	<td>MODAL_OPTION</td>
+	<td>//div[contains(@class,'modal-body')]//section//*[contains(.,'${key_text}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>MODAL_DESCRIPTION</td>
-    <td>//div[contains(@class,'modal-body')]//div[contains(.,'${key_text}')]</td>
-    <td></td>
+	<td>MODAL_DESCRIPTION</td>
+	<td>//div[contains(@class,'modal-body')]//div[contains(.,'${key_text}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>MODAL_INSURANCE</td>
-    <td>//div[contains(@class,'application-card') and contains(@class,'active')]//*[contains(.,'${key_text}')]</td>
-    <td></td>
+	<td>MODAL_INSURANCE</td>
+	<td>//div[contains(@class,'application-card') and contains(@class,'active')]//*[contains(.,'${key_text}')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

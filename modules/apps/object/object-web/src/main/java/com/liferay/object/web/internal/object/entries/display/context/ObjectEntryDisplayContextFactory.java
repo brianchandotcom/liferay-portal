@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectEntryDisplayContextFactory {
 
 	public ObjectEntryDisplayContext create(
-		HttpServletRequest httpServletRequest, boolean readOnly) {
+		HttpServletRequest httpServletRequest) {
 
 		return new ObjectEntryDisplayContextImpl(
 			_ddmFormRenderer, httpServletRequest, _itemSelector,
@@ -47,7 +47,7 @@ public class ObjectEntryDisplayContextFactory {
 			_objectEntryLocalService, _objectEntryService,
 			_objectFieldBusinessTypeRegistry, _objectFieldLocalService,
 			_objectLayoutLocalService, _objectRelationshipLocalService,
-			_objectScopeProviderRegistry, readOnly);
+			_objectScopeProviderRegistry);
 	}
 
 	@Reference

@@ -138,8 +138,7 @@ public class ObjectEntryDisplayContextImpl
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		ObjectScopeProviderRegistry objectScopeProviderRegistry,
-		boolean readOnly) {
+		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
 		_ddmFormRenderer = ddmFormRenderer;
 		_itemSelector = itemSelector;
@@ -152,7 +151,8 @@ public class ObjectEntryDisplayContextImpl
 		_objectLayoutLocalService = objectLayoutLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
-		_readOnly = readOnly;
+
+		_readOnly = (Boolean)httpServletRequest.getAttribute("readOnly");
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(

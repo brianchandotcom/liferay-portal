@@ -43,7 +43,7 @@ const DonutChart = ({
 
 	return (
 		<ClayIconProvider>
-			<div className="align-items-center d-flex donut-chart-container flex-wrap justify-content-center">
+			<div className="align-items-center d-flex donut-chart-container flex-grow-1 flex-wrap justify-content-center">
 				<ClayChart
 					data={chartData}
 					donut={{

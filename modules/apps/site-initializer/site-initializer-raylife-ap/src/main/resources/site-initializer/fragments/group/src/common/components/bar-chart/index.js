@@ -23,7 +23,7 @@ const BarChart = ({
 	colors,
 	dataColumns,
 	format = false,
-	height = 200,
+	height = 100,
 	labelColumns,
 	labelRef,
 	showLegend = false,
@@ -33,7 +33,7 @@ const BarChart = ({
 	width = 300,
 }) => {
 	return (
-		<div className="align-items-center bar-chart d-flex justify-content-between mb-3 mt-2">
+		<div className="align-items-center bar-chart d-flex justify-content-between mt-2">
 			{titleTotal && (
 				<div className="bar-chart-title px-4">
 					<h6 className="mb-0 text-neutral-6">Total</h6>
@@ -81,7 +81,7 @@ const BarChart = ({
 							},
 						},
 						position: {
-							y: -10,
+							y: -1,
 						},
 					},
 					type: 'bar',

@@ -1,5 +1,6 @@
+.skeleton-container,
 .applications-status-container {
-	min-height: 267px;
+	min-height: 341px;
 }
 
 .applications-status-container .applications-status-title::after {

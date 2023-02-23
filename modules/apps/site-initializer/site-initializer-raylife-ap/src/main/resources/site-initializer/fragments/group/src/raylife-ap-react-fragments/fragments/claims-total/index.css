@@ -1,5 +1,6 @@
+.skeleton-container,
 .claims-total-container {
-	min-height: 257px;
+	min-height: 341px;
 }
 
 .claims-total-container .claims-total-title::after {

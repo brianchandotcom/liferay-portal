@@ -1,3 +1,8 @@
+.skeleton-container-whats-new,
+.dashboard-whats-new-container {
+	min-height: 322px;
+}
+
 .dashboard-whats-new-container
 	.dashboard-whats-new-header
 	.dashboard-whats-new-title::after {

@@ -1,3 +1,8 @@
+.skeleton-container,
+.total-premium-due-container {
+	min-height: 341px;
+}
+
 .total-premium-due-container .total-premium-due-header::after {
 	background-color: var(--primary);
 	content: '';

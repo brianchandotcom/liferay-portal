@@ -1,5 +1,6 @@
+.skeleton-container,
 .applications-products-container {
-	min-height: 267px;
+	min-height: 341px;
 }
 
 .applications-products-container .applications-products-title::after {

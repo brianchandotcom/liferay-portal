@@ -1,5 +1,6 @@
+.skeleton-container,
 .claims-settled-container {
-	min-height: 257px;
+	min-height: 341px;
 }
 
 .claims-settled-container .claims-settled-header .claims-settled-title::after {

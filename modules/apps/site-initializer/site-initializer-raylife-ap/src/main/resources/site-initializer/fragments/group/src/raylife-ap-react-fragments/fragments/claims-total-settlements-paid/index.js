@@ -629,7 +629,7 @@ export default function () {
 
 			{!chartData.columns.length && (
 				<div className="align-items-center d-flex flex-grow-1 justify-content-center">
-					<span>No Data Applications</span>
+					<span>No Data</span>
 				</div>
 			)}
 		</div>

@@ -1,5 +1,6 @@
+.skeleton-container,
 .policies-total-active-container {
-	min-height: 257px;
+	min-height: 341px;
 }
 
 .policies-total-active-container .policies-total-active-title::after {

@@ -1,3 +1,8 @@
+.skeleton-container-active-claims,
+.active-claims-container {
+	min-height: 648px;
+}
+
 .active-claims-container .active-claims-title::after {
 	background-color: var(--primary);
 	content: '';
@@ -11,4 +16,3 @@
 .active-claims-container .btn-active-claims-title .lexicon-icon {
 	font-size: 10px;
 }
-

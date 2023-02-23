@@ -1,3 +1,8 @@
+.skeleton-container-tasks,
+.dashboard-tasks-container {
+	min-height: 548px;
+}
+
 .dashboard-tasks-container .dashboard-tasks-header {
 	margin-bottom: 30px;
 }

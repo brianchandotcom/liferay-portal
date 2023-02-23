@@ -34,7 +34,7 @@ const LineChart = ({
 }) => {
 	return (
 		<ClayIconProvider>
-			<div className="align-items-center d-flex flex-wrap justify-content-center line-chart-container mt-3 py-1">
+			<div className="align-items-center d-flex flex-grow-1 flex-wrap justify-content-center line-chart-container mt-3 py-1">
 				{chartData && (
 					<ClayChart
 						axis={{

@@ -106,6 +106,7 @@ export default function () {
 				<BarChart
 					colors={colors}
 					dataColumns={dataColumns}
+					height={200}
 					labelColumns={labelColumns}
 					titleTotal={titleTotal}
 					totalSum={totalSum}

@@ -100,7 +100,7 @@ const BaseRoleType = ({
 			}
 
 			roles[roleType].push({
-				roleKey: item.key,
+				roleKey: item.externalReferenceCode,
 				roleName: item.name,
 				roleType,
 			});

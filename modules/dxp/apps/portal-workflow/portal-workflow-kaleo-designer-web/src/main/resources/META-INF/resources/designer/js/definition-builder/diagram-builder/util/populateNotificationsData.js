@@ -63,8 +63,8 @@ const populateNotificationsData = (
 								].roleKey.forEach((key) => {
 									const role = items.find(
 										(item) =>
-											item.key === key ||
-											item.displayName === key
+											item.externalReferenceCode ===
+												key || item.displayName === key
 									);
 
 									if (

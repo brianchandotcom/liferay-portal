@@ -124,7 +124,8 @@ const populateAssignmentsData = (
 						taskNode.data.assignments.roleKey.forEach((key) => {
 							const role = items.find(
 								(item) =>
-									item.key === key || item.displayName === key
+									item.externalReferenceCode === key ||
+									item.displayName === key
 							);
 
 							if (!taskNode.data.assignments.roleName) {

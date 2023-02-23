@@ -568,7 +568,7 @@ public class ObjectActionLocalServiceImpl
 			}
 
 			if ((objectDefinition == null) || !objectDefinition.isActive() ||
-				!objectDefinition.isApproved() || objectDefinition.isSystem()) {
+				!objectDefinition.isApproved()) {
 
 				errorMessageKeys.put("objectDefinitionId", "invalid");
 			}

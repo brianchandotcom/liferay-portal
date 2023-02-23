@@ -208,4 +208,65 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-170206. The page designer can show characters count of Textarea fragment."
+	@priority = 3
+	test ShowCharactersCount {
+		task ("Given a pages designer has a Textarea fragment inside a mapped Form Container") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+		}
+
+		task ("When the page designer enables the Show Characters Count of Textarea fragment") {
+			PageEditor.editInput(
+				fragmentName = "Textarea",
+				showCharactersCount = "true");
+		}
+
+		task ("Then the page designer sees the characters count shown at the bottom of Textarea fragment") {
+			PageEditor.viewInputStyle(
+				charactersCount = ": 0 / 65000",
+				type = "textarea");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer navigates to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer sees the characters count shown at the bottom of Textarea fragment") {
+			PageEditor.viewInputStyle(
+				charactersCount = ": 0 / 65000",
+				type = "textarea");
+		}
+
+		task ("When the page designer type text in Textarea fragment") {
+			FormFields.editTextArea(
+				fieldName = "comments",
+				fieldValue = "Liferay");
+		}
+
+		task ("Then the page designer sees the characters count shown at the bottom of Textarea fragment") {
+			PageEditor.viewInputStyle(
+				charactersCount = ": 7 / 65000",
+				type = "textarea");
+		}
+	}
+
 }

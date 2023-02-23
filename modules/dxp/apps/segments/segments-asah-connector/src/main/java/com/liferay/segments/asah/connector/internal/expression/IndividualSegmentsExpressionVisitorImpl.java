@@ -62,6 +62,26 @@ public class IndividualSegmentsExpressionVisitorImpl
 	}
 
 	@Override
+	public Criteria visitNotExpression(
+		@NotNull IndividualSegmentsExpressionParser.NotExpressionContext
+			notExpressionContext) {
+
+		Criteria criteria = visitChildren(
+			notExpressionContext.booleanUnaryExpression());
+
+		Criteria.Criterion criterion = criteria.getCriterion(_KEY);
+
+		Criteria resultCriteria = new Criteria();
+
+		resultCriteria.addCriterion(
+			_KEY, Criteria.Type.parse(criterion.getTypeValue()),
+			"not (" + criterion.getFilterString() + ")",
+			Criteria.Conjunction.parse(criterion.getConjunction()));
+
+		return resultCriteria;
+	}
+
+	@Override
 	public Criteria visitOrExpression(
 		@NotNull IndividualSegmentsExpressionParser.OrExpressionContext
 			orExpressionContext) {
@@ -91,7 +111,7 @@ public class IndividualSegmentsExpressionVisitorImpl
 		Criteria criteria = new Criteria();
 
 		criteria.addCriterion(
-			"event", Criteria.Type.ANALYTICS,
+			_KEY, Criteria.Type.ANALYTICS,
 			filterByCountExpressionContext.getText(), Criteria.Conjunction.AND);
 
 		return criteria;
@@ -115,5 +135,7 @@ public class IndividualSegmentsExpressionVisitorImpl
 	protected Criteria defaultResult() {
 		return null;
 	}
+
+	private static final String _KEY = "event";
 
 }

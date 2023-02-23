@@ -16,12 +16,10 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Method;
-
-import java.util.Collection;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -65,16 +63,9 @@ public class DDMFormFactoryHelperTest {
 	}
 
 	protected String[] getNames() {
-		Collection<Method> ddmFormFieldMethods =
-			_ddmFormFactoryHelper.getDDMFormFieldMethods();
-
-		Stream<Method> stream = ddmFormFieldMethods.stream();
-
-		return stream.map(
-			ddmFormFieldMethod -> ddmFormFieldMethod.getName()
-		).toArray(
-			String[]::new
-		);
+		return TransformUtil.transformToArray(
+			_ddmFormFactoryHelper.getDDMFormFieldMethods(), Method::getName,
+			String.class);
 	}
 
 	private DDMFormFactoryHelper _ddmFormFactoryHelper;

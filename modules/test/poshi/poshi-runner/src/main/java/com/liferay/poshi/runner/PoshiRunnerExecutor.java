@@ -981,11 +981,6 @@ public class PoshiRunnerExecutor {
 		LiferaySeleniumMethod liferaySeleniumMethod =
 			PoshiContext.getLiferaySeleniumMethod(selenium);
 
-		if (liferaySeleniumMethod == null) {
-			throw new RuntimeException(
-				"Nonexistent Selenium method: " + selenium);
-		}
-
 		List<String> arguments = new ArrayList<>();
 		List<Class<?>> parameterClasses = new ArrayList<>();
 

@@ -180,7 +180,8 @@ public class ObjectEntryAssetRenderer
 			ObjectWebKeys.OBJECT_DEFINITION, _objectDefinition);
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			_objectEntryDisplayContextFactory.create(httpServletRequest, true));
+			_objectEntryDisplayContextFactory.create(httpServletRequest));
+		httpServletRequest.setAttribute("readOnly", Boolean.TRUE);
 
 		return super.include(httpServletRequest, httpServletResponse, template);
 	}

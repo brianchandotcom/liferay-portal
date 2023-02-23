@@ -436,6 +436,34 @@ const filterSchema = {
 			baseFilters.team,
 		] as RendererFields[],
 	},
+	caseRequirements: {
+		fields: [
+			{
+				label: i18n.translate('key'),
+				name: 'requiremenToRequirementsCases/key',
+				operator: 'contains',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('link'),
+				name: 'requiremenToRequirementsCases/linkURL',
+				operator: 'contains',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('jira-components'),
+				name: 'requiremenToRequirementsCases/components',
+				operator: 'contains',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('summary'),
+				name: 'requiremenToRequirementsCases/summary',
+				operator: 'contains',
+				type: 'text',
+			},
+		] as RendererFields[],
+	},
 	cases: {
 		fields: [
 			overrides(baseFilters.priority, {

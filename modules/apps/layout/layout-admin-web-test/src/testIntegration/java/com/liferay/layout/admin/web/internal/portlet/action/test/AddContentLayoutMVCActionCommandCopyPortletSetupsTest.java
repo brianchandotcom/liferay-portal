@@ -79,7 +79,7 @@ public class AddContentLayoutMVCActionCommandCopyPortletSetupsTest {
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
-		_addEmbeddedPortlet();
+		_addEmbeddedPortlet(_company);
 	}
 
 	@Test
@@ -101,8 +101,8 @@ public class AddContentLayoutMVCActionCommandCopyPortletSetupsTest {
 			portletPreferences.toString(), 1, portletPreferences.size());
 	}
 
-	private void _addEmbeddedPortlet() throws Exception {
-		long companyId = _company.getCompanyId();
+	private void _addEmbeddedPortlet(Company company) throws Exception {
+		long companyId = company.getCompanyId();
 
 		_layoutPrototype = LayoutTestUtil.addLayoutPrototype(
 			RandomTestUtil.randomString());

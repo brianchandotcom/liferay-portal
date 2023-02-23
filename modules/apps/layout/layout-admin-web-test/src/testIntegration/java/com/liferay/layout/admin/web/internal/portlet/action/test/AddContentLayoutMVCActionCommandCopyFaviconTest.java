@@ -94,7 +94,7 @@ public class AddContentLayoutMVCActionCommandCopyFaviconTest {
 
 		_expectedBytes = _getExpectedBytes();
 
-		FileEntry fileEntry = _addFileEntry(_expectedBytes);
+		FileEntry fileEntry = _addFileEntry(_expectedBytes, _group);
 
 		layout.setFaviconFileEntryId(fileEntry.getFileEntryId());
 
@@ -117,13 +117,14 @@ public class AddContentLayoutMVCActionCommandCopyFaviconTest {
 			_expectedBytes, _getBytes(draftLayout.getFaviconURL()));
 	}
 
-	private FileEntry _addFileEntry(byte[] bytes) throws Exception {
+	private FileEntry _addFileEntry(byte[] bytes, Group group)
+		throws Exception {
+
 		return _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG, bytes, null,
-			null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			null, ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	private byte[] _getBytes(String favicon) throws Exception {

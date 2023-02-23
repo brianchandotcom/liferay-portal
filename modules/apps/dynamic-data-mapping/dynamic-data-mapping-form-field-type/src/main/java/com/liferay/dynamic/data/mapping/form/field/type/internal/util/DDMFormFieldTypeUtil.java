@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.util;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 /**
  * @author Marcela Cunha
@@ -79,16 +79,14 @@ public class DDMFormFieldTypeUtil {
 	public static String[] getPropertyValues(
 		DDMFormField ddmFormField, Locale locale, String propertyName) {
 
-		return Stream.of(
-			(Object[])ddmFormField.getProperty(propertyName)
-		).map(
-			LocalizedValue.class::cast
-		).map(
-			localizedValue -> GetterUtil.getString(
-				localizedValue.getString(locale))
-		).toArray(
-			String[]::new
-		);
+		return TransformUtil.transform(
+			(Object[])ddmFormField.getProperty(propertyName),
+			object -> {
+				LocalizedValue localizedValue = (LocalizedValue)object;
+
+				return GetterUtil.getString(localizedValue.getString(locale));
+			},
+			String.class);
 	}
 
 	public static String getValue(String valueString) {

@@ -14,7 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.facet;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.HashMap;
@@ -22,6 +24,10 @@ import java.util.Map;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.BucketOrder;
+import org.elasticsearch.search.aggregations.bucket.terms.IncludeExclude;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,8 +59,7 @@ public class CompositeFacetProcessor
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(class.name=*)(!(class.name=DEFAULT)))"
+		policyOption = ReferencePolicyOption.GREEDY, target = "(class.name=*)"
 	)
 	protected void setFacetProcessor(
 		FacetProcessor<SearchRequestBuilder> facetProcessor,
@@ -74,11 +79,47 @@ public class CompositeFacetProcessor
 		_facetProcessors.remove(className);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MANDATORY,
-		target = "(class.name=DEFAULT)"
-	)
-	protected FacetProcessor<SearchRequestBuilder> defaultFacetProcessor;
+	protected FacetProcessor<SearchRequestBuilder> defaultFacetProcessor =
+		new FacetProcessor<SearchRequestBuilder>() {
+
+			@Override
+			public AggregationBuilder processFacet(Facet facet) {
+				TermsAggregationBuilder termsAggregationBuilder =
+					AggregationBuilders.terms(
+						FacetUtil.getAggregationName(facet));
+
+				termsAggregationBuilder.field(facet.getFieldName());
+
+				FacetConfiguration facetConfiguration =
+					facet.getFacetConfiguration();
+
+				JSONObject dataJSONObject = facetConfiguration.getData();
+
+				String include = dataJSONObject.getString("include", null);
+
+				if (include != null) {
+					termsAggregationBuilder.includeExclude(
+						new IncludeExclude(include, null));
+				}
+
+				int minDocCount = dataJSONObject.getInt("frequencyThreshold");
+
+				if (minDocCount > 0) {
+					termsAggregationBuilder.minDocCount(minDocCount);
+				}
+
+				termsAggregationBuilder.order(BucketOrder.count(false));
+
+				int size = dataJSONObject.getInt("maxTerms");
+
+				if (size > 0) {
+					termsAggregationBuilder.size(size);
+				}
+
+				return termsAggregationBuilder;
+			}
+
+		};
 
 	private final Map<String, FacetProcessor<SearchRequestBuilder>>
 		_facetProcessors = new HashMap<>();

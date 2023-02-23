@@ -3145,6 +3145,21 @@ definition {
 
 			PageEditor.waitForAutoSave();
 		}
+
+		if (${showCharactersCount} == "false") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Show Characters Count",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PageEditor.waitForAutoSave();
+		}
+		else if (${showCharactersCount} == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Characters Count",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PageEditor.waitForAutoSave();
+		}
 	}
 
 	macro editKBArticleNavigationMaxNestingLevel {
@@ -5585,6 +5600,14 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	macro viewInputStyle {
 		if (!(isSet(position))) {
 			var position = 1;
+		}
+
+		if (isSet(charactersCount)) {
+			AssertTextEquals(
+				index = ${position},
+				locator1 = "Fragment#INPUT_LENGTH_INFO",
+				type = ${type},
+				value1 = ${charactersCount});
 		}
 
 		if (${showLabel} == "true") {

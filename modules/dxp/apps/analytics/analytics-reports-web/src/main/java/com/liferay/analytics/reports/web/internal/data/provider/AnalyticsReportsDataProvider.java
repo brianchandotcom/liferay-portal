@@ -82,20 +82,21 @@ public class AnalyticsReportsDataProvider {
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
-			Map<String, Long> acquisitionChannels = _objectMapper.readValue(
-				response,
-				typeFactory.constructMapType(
-					Map.class, typeFactory.constructType(String.class),
-					typeFactory.constructType(Long.class)));
+			Map<String, Long> acquisitionChannelValues =
+				_objectMapper.readValue(
+					response,
+					typeFactory.constructMapType(
+						Map.class, typeFactory.constructType(String.class),
+						typeFactory.constructType(Long.class)));
 
-			Collection<Long> values = acquisitionChannels.values();
+			Collection<Long> values = acquisitionChannelValues.values();
 
 			Stream<Long> valuesStream = values.stream();
 
 			Double total = Double.valueOf(valuesStream.reduce(0L, Long::sum));
 
 			Set<Map.Entry<String, Long>> entries =
-				acquisitionChannels.entrySet();
+				acquisitionChannelValues.entrySet();
 
 			Stream<Map.Entry<String, Long>> entriesStream = entries.stream();
 

@@ -1,9 +1,9 @@
 @component-name = "portal-commerce"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
@@ -148,6 +148,321 @@ definition {
 		AssertElementNotPresent(
 			key_value = "U-Joint",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+	}
+
+	@description = "COMMERCE-10881 | As a Buyer user, Commerce Facet Widgets work without the Category Facet widget deployed on the page"
+	@ignore = "true"
+	@priority = 3
+	test CanFacetWidgetsWorkWithoutCategoryFacet {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And Category Facet Widget is removed from Minium Catalog page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceAcceleratorsInitializer.removePortlet(portletName = "Category Facet");
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the user is able to filter the products using the Specification Facet Widget") {
+			Check.checkToggleSwitch(
+				key_fieldName = "1 Year Unlimited Mileage Warranty",
+				locator1 = "FormFields#CHECKBOX");
+
+			AnnouncementsPortlet.configurePaginationCP(itemsPerPage = 40);
+
+			AssertElementPresent(
+				key_productCount = 31,
+				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
+
+			for (var productName : list "ABS Sensor,Brake Fluid,Hoses,Torque Converters") {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			AssertElementNotPresent(
+				key_value = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+
+		task ("And the user is able to filter the products using the Price Range Facet Widget") {
+			Check.checkToggleSwitch(
+				key_fieldName = "$ 100.00 - $ 199.99",
+				locator1 = "FormFields#CHECKBOX");
+
+			AssertElementPresent(
+				key_productCount = 4,
+				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
+
+			for (var productName : list "Ball Joints,Catalytic Converters,Engine Mount,Hoses") {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			for (var productName : list "ABS Sensor,Brake Fluid,Torque Converters,U-Joint") {
+				AssertElementNotPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+		}
+
+		task ("And the user is able to filter the products using the Option Facet Widget") {
+			Check.checkToggleSwitch(
+				key_fieldName = 48,
+				locator1 = "FormFields#CHECKBOX");
+
+			AssertElementPresent(
+				key_productCount = 1,
+				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
+
+			AssertElementPresent(
+				key_productName = "Hoses",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+			for (var productName : list "Ball Joints,Catalytic Converters,Engine Mount") {
+				AssertElementNotPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+		}
+	}
+
+	@description = "COMMERCE-10879 | As a Buyer user, I want to be able to filter products on a page using only the Option Facet widget"
+	@priority = 3
+	test CanUseOptionFacetWidgetOnNewPage {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a new Catalog page is created") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceConfiguration.setUpCatalogPage(
+				facets = "Option",
+				pageName = "Test Catalog");
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And navigates to the new page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Test Catalog");
+		}
+
+		task ("Then the user is able to filter the products using the Option Facet widget") {
+			Check.checkToggleSwitch(
+				key_fieldName = 48,
+				locator1 = "FormFields#CHECKBOX");
+
+			for (var productName : list "Hoses,Brake Fluid") {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			AssertElementNotPresent(
+				key_value = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+	}
+
+	@description = "COMMERCE-10880 | As a Buyer user, I want to be able to filter products on a page using only the Price Range Facet widget"
+	@priority = 3
+	test CanUsePriceRangeFacetWidgetOnNewPage {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a new Catalog page is created") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceConfiguration.setUpCatalogPage(
+				facets = "Price Range",
+				pageName = "Test Catalog");
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And navigates to the new page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Test Catalog");
+		}
+
+		task ("Then the user is able to filter the products using the Price Range Facet widget") {
+			Check.checkToggleSwitch(
+				key_fieldName = "$ 500.00 - $ 999.99",
+				locator1 = "FormFields#CHECKBOX");
+
+			for (var productName : list "Cams,Timing Belt") {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			AssertElementNotPresent(
+				key_value = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			Type(
+				key_name = "Minimum",
+				locator1 = "FormFields#TEXT_FIELD_PRICE_RANGE",
+				value1 = "10.00");
+
+			Type(
+				key_name = "Maximum",
+				locator1 = "FormFields#TEXT_FIELD_PRICE_RANGE",
+				value1 = "15.00");
+
+			Click(
+				key_text = "Go",
+				locator1 = "Button#ANY");
+
+			for (var productName : list "Piston,Transmission Cooler Line Assembly") {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			AssertElementNotPresent(
+				key_value = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+	}
+
+	@description = "COMMERCE-10878 | As a Buyer user, I want to be able to filter products on a page using only the Specification Facet widget"
+	@priority = 3
+	test CanUseSpecificationFacetWidgetOnNewPage {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a new Catalog page is created") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceConfiguration.setUpCatalogPage(
+				facets = "Specification",
+				pageName = "Test Catalog");
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And navigates to the new page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Test Catalog");
+		}
+
+		task ("Then the user is able to filter the products using the Specification Facet widget") {
+			Check.checkToggleSwitch(
+				key_fieldName = "3 Year Unlimited Mileage Warranty",
+				locator1 = "FormFields#CHECKBOX");
+
+			for (var productName : list "Hub Bearing Assembly - Rear,Master Cylinder") {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			AssertElementNotPresent(
+				key_value = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			Check.checkToggleSwitch(
+				key_fieldName = "Ceramic",
+				locator1 = "FormFields#CHECKBOX");
+
+			AssertElementPresent(
+				key_productName = "Premium Brake Pads",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+			AssertElementNotPresent(
+				key_value = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
 	}
 
 }

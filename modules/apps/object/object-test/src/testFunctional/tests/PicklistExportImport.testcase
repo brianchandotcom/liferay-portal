@@ -125,9 +125,47 @@ definition {
 	@description = "LPS-175645 - It's possible to add an object entry with a picklist field as state of a picklist previously imported "
 	@priority = 4
 	test CanAddEntryWithStateOfPicklistImported {
+		task ("Given a picklist imported and an object created") {
+			Picklist.gotoPicklists();
 
-		// TODO pending implementation
+			Picklist.importPicklist(
+				picklistFileName = "simple_picklist",
+				picklistName = "ImportedPicklist175681");
 
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175681",
+				objectName = "CustomObject175681",
+				pluralLabelName = "Custom Objects 175681");
+		}
+
+		task ("When a picklist field is marked as state") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175681");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "ImportedPicklist175681",
+				fieldType = "Picklist",
+				itemName = "Picklist Item 1",
+				maskAsState = "true");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175681");
+		}
+
+		task ("Then the user can add an object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175681");
+
+			LexiconEntry.gotoAdd();
+
+			Button.clickSave();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175681");
+
+			ObjectPortlet.viewEntry(entry = "Picklist Item 1");
+		}
 	}
 
 	@description = "LPS-175645 - It's possible to add an object entry of a picklist with a translation of a previously picklist imported "

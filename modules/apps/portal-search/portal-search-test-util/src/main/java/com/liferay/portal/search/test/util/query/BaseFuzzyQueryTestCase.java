@@ -46,7 +46,7 @@ public abstract class BaseFuzzyQueryTestCase extends BaseIndexingTestCase {
 	protected void addDocuments(String... values) {
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
-			Arrays.asList(values));
+			values);
 	}
 
 	protected void assertSearch(String value, List<String> expectedValues) {

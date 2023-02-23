@@ -46,8 +46,7 @@ public abstract class BaseAssetTagNamesQueryPreFilterContributorTestCase
 
 	protected void addDocuments(String... values) throws Exception {
 		addDocuments(
-			value -> DocumentCreationHelpers.singleText(FIELD, value),
-			Arrays.asList(values));
+			value -> DocumentCreationHelpers.singleText(FIELD, value), values);
 	}
 
 	protected void assertSearch(String queryString, List<String> expectedValues)

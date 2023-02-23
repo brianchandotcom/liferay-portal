@@ -47,10 +47,9 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(fieldName, value),
-			Arrays.asList(
-				"alpha", "alpha beta", "alpha beta alpha",
-				"alpha beta gamma alpha eta theta alpha zeta eta alpha iota",
-				"alpha beta gamma delta epsilon zeta eta theta iota alpha"));
+			"alpha", "alpha beta", "alpha beta alpha",
+			"alpha beta gamma alpha eta theta alpha zeta eta alpha iota",
+			"alpha beta gamma delta epsilon zeta eta theta iota alpha");
 
 		Query query = queries.string(fieldName.concat(":alpha"));
 

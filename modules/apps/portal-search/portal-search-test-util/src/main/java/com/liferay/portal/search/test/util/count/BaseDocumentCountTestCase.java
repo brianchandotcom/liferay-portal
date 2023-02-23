@@ -35,7 +35,7 @@ public abstract class BaseDocumentCountTestCase extends BaseDocumentTestCase {
 
 		addDocuments(
 			screenName -> document -> populate(document, screenName),
-			getScreenNamesStream());
+			SCREEN_NAMES);
 	}
 
 	@Test

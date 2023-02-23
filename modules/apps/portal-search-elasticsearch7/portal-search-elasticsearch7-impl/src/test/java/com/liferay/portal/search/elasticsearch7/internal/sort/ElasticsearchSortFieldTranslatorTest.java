@@ -42,7 +42,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Date;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -79,7 +78,7 @@ public class ElasticsearchSortFieldTranslatorTest
 
 		addDocuments(
 			value -> DocumentCreationHelpers.singleKeyword(fieldName, value),
-			Stream.of("beta", "alpha beta", "beta gamma"));
+			"beta", "alpha beta", "beta gamma");
 
 		FieldSort fieldSort = _sorts.field(fieldName, SortOrder.DESC);
 
@@ -110,7 +109,7 @@ public class ElasticsearchSortFieldTranslatorTest
 
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(fieldName, value),
-			Stream.of("delta", "alpha delta", "delta gamma"));
+			"delta", "alpha delta", "delta gamma");
 
 		FieldSort fieldSortMissing = _sorts.field(fieldName + "_String");
 
@@ -161,7 +160,7 @@ public class ElasticsearchSortFieldTranslatorTest
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(
 				fieldNameForScoreSort, value),
-			Stream.of("beta", "alpha beta", "beta gamma", "gamma"));
+			"beta", "alpha beta", "beta gamma", "gamma");
 
 		ScoreSort scoreSort = _sorts.score();
 

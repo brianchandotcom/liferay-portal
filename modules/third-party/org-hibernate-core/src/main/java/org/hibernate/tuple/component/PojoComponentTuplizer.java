@@ -43,15 +43,6 @@ public class PojoComponentTuplizer extends AbstractComponentTuplizer {
 	public PojoComponentTuplizer(Component component) {
 		super( component );
 
-		String[] getterNames = new String[propertySpan];
-		String[] setterNames = new String[propertySpan];
-		Class[] propTypes = new Class[propertySpan];
-		for ( int i = 0; i < propertySpan; i++ ) {
-			getterNames[i] = getters[i].getMethodName();
-			setterNames[i] = setters[i].getMethodName();
-			propTypes[i] = getters[i].getReturnType();
-		}
-
 		final String parentPropertyName = component.getParentProperty();
 		if ( parentPropertyName == null ) {
 			parentSetter = null;
@@ -70,6 +61,15 @@ public class PojoComponentTuplizer extends AbstractComponentTuplizer {
 			optimizer = null;
 		}
 		else {
+			String[] getterNames = new String[propertySpan];
+			String[] setterNames = new String[propertySpan];
+			Class[] propTypes = new Class[propertySpan];
+			for ( int i = 0; i < propertySpan; i++ ) {
+				getterNames[i] = getters[i].getMethodName();
+				setterNames[i] = setters[i].getMethodName();
+				propTypes[i] = getters[i].getReturnType();
+			}
+
 			final BytecodeProvider bytecodeProvider = component.getServiceRegistry().getService( BytecodeProvider.class );
 			optimizer = bytecodeProvider.getReflectionOptimizer(
 					componentClass, getterNames, setterNames, propTypes
@@ -173,3 +173,4 @@ public class PojoComponentTuplizer extends AbstractComponentTuplizer {
 		}
 	}
 }
+/* @generated */

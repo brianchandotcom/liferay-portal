@@ -633,6 +633,10 @@ public class AttributeFactory {
 	}
 
 	public static Attribute.PersistentAttributeType determineSingularAssociationAttributeType(Member member) {
+		if (member == null) {
+			return Attribute.PersistentAttributeType.MANY_TO_ONE;
+		}
+
 		if ( Field.class.isInstance( member ) ) {
 			return ( (Field) member ).getAnnotation( OneToOne.class ) != null
 					? Attribute.PersistentAttributeType.ONE_TO_ONE
@@ -1117,3 +1121,4 @@ public class AttributeFactory {
 		}
 	};
 }
+/* @generated */

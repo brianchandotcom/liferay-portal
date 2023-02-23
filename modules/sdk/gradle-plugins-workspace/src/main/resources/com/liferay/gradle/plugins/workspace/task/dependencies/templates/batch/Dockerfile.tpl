@@ -1,4 +1,4 @@
-# Needs LPS-176097 for official image
+# TODO: LPS-176097
 
 FROM liferay/batch:latest
 

@@ -72,7 +72,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		_dockerFile = _addTaskOutputFile("Dockerfile");
 		_lcpJsonFile = _addTaskOutputFile("LCP.json");
 		_pluginPackagePropertiesFile = _addTaskOutputFile(
-			_PLUGIN_PACKAGE_PROPERTIES_FILE_NAME);
+			_PLUGIN_PACKAGE_PROPERTIES_PATH);
 	}
 
 	public void addClientExtension(ClientExtension clientExtension) {
@@ -89,8 +89,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	public void createClientExtensionConfig() {
 		Properties pluginPackageProperties = _getPluginPackageProperties();
 
-		String classificationGrouping =
-			_validateClientExtensionClassificationGroupings(_clientExtensions);
+		String classificationGrouping = _validateAndGetClassificationGrouping(
+			_clientExtensions);
 
 		Map<String, Object> jsonMap = new HashMap<>();
 
@@ -366,21 +366,20 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		}
 	}
 
-	private String _validateClientExtensionClassificationGroupings(
+	private String _validateAndGetClassificationGrouping(
 		Set<ClientExtension> clientExtensions) {
 
-		Set<String> classificationsFound = new HashSet<>();
+		Set<String> classifications = new HashSet<>();
 
 		clientExtensions.forEach(
-			clientExtension -> classificationsFound.add(
+			clientExtension -> classifications.add(
 				clientExtension.classification));
 
-		// This order is relevant
-
-		if (_groupConfiguration.containsAll(classificationsFound)) {
+		if (_groupConfiguration.containsAll(classifications)) {
 			return "configuration";
 		}
-		else if (_groupBatch.containsAll(classificationsFound)) {
+
+		if (_groupBatch.containsAll(classifications)) {
 			Stream<ClientExtension> stream = clientExtensions.stream();
 
 			List<ClientExtension> batches = stream.filter(
@@ -404,17 +403,19 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 			return "batch";
 		}
-		else if (_groupService.containsAll(classificationsFound)) {
+
+		if (_groupService.containsAll(classifications)) {
 			return "service";
 		}
-		else if (_groupStatic.containsAll(classificationsFound)) {
+
+		if (_groupStatic.containsAll(classifications)) {
 			return "static";
 		}
-		else if (!classificationsFound.isEmpty()) {
+
+		if (!classifications.isEmpty()) {
 			throw new GradleException(
 				StringBundler.concat(
-					"The combination of client extensions in ",
-					classificationsFound,
+					"The combination of client extensions in ", classifications,
 					" cannot be grouped in a single project. The following ",
 					"groupings are allowed: ", _groupBatch, _groupService,
 					_groupStatic));
@@ -426,7 +427,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	private static final String _CLIENT_EXTENSION_CONFIG_FILE_NAME =
 		".client-extension-config.json";
 
-	private static final String _PLUGIN_PACKAGE_PROPERTIES_FILE_NAME =
+	private static final String _PLUGIN_PACKAGE_PROPERTIES_PATH =
 		"WEB-INF/liferay-plugin-package.properties";
 
 	private static final Set<String> _groupBatch = Sets.newHashSet(

@@ -1,3 +1,3 @@
-# Needs LPS-176095 for getting official image
+# TODO: LPS-176095
 
 FROM liferay/noop

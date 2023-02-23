@@ -144,7 +144,9 @@ public class
 	}
 
 	@Test
-	public void testGetRelatedItemsInfoPageNoLatestAsset() throws Exception {
+	public void testGetRelatedItemsInfoPageLatestVersionInDraftStatus()
+		throws Exception {
+
 		ServiceContext serviceContext = _getServiceContext();
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);

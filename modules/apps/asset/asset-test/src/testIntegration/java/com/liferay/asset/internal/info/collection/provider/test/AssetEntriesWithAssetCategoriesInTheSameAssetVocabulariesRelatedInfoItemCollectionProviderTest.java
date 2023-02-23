@@ -191,7 +191,7 @@ public class
 	}
 
 	@Test
-	public void testGetCollectionInfoPageWithSameAssetCategoryNoLatestAsset()
+	public void testGetCollectionInfoPageWithSameAssetCategoryLatestVersionInDraftStatus()
 		throws Exception {
 
 		ServiceContext serviceContext =

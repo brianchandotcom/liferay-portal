@@ -131,7 +131,7 @@ public class OptionValueResourceImpl
 			pagination, totalItems);
 	}
 
-	@NestedField(parentClass = Option.class, value = "values")
+	@NestedField(parentClass = Option.class, value = "optionValues")
 	@Override
 	public Page<OptionValue> getOptionIdOptionValuesPage(
 			Long id, String search, Pagination pagination, Sort[] sorts)

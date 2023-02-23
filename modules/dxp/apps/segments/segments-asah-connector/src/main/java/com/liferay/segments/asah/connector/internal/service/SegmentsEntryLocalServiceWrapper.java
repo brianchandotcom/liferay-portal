@@ -66,7 +66,7 @@ public class SegmentsEntryLocalServiceWrapper
 
 		try {
 			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-171194")) &&
+					PropsUtil.get("feature.flag.LPS-172194")) &&
 				_analyticsSettingsManager.isAnalyticsEnabled(
 					segmentsEntry.getCompanyId()) &&
 				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND.equals(

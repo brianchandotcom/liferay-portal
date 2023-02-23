@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,11 +47,11 @@ public class GeolocationDDMFormFieldValueRequestParameterRetriever
 				getJSONObject(_log, parameterValue));
 		}
 
-		return Optional.ofNullable(
-			parameterValue
-		).orElse(
-			defaultDDMFormFieldParameterValue
-		);
+		if (parameterValue != null) {
+			return parameterValue;
+		}
+
+		return defaultDDMFormFieldParameterValue;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -275,6 +275,15 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static ObjectDefinition enableAccountEntryRestricted(
+			long objectDefinitionId,
+			com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		return getService().enableAccountEntryRestricted(
+			objectDefinitionId, objectRelationship);
+	}
+
 	public static ObjectDefinition fetchObjectDefinition(
 		long objectDefinitionId) {
 

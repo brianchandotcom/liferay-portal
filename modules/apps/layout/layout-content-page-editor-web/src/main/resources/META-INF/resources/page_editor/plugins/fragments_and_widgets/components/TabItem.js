@@ -15,11 +15,10 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
-import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
@@ -131,6 +130,8 @@ const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 		type: LIST_ITEM_TYPES.listItem,
 	});
 
+	const [isActive, setIsActive] = useState(false);
+
 	return (
 		<li
 			className={classNames(
@@ -139,6 +140,7 @@ const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 					disabled,
 					'ml-3 page-editor__fragments-widgets__tab-portlet-item':
 						item.data.portletItemId,
+					'page-editor__fragments-widgets__tab-list-item--active': isActive,
 				}
 			)}
 			ref={setElement}
@@ -156,13 +158,18 @@ const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 				</div>
 
 				{!disabled && (
-					<AddButton isNavigationTarget={isTarget} item={item} />
+					<AddButton
+						isNavigationTarget={isTarget}
+						item={item}
+						setItemActive={setIsActive}
+					/>
 				)}
 
 				<HighlightButton
 					isNavigationTarget={isTarget}
 					item={item}
 					onToggleHighlighted={onToggleHighlighted}
+					setItemActive={setIsActive}
 				/>
 			</div>
 		</li>
@@ -181,11 +188,16 @@ const CardItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 		type: LIST_ITEM_TYPES.listItem,
 	});
 
+	const [isActive, setIsActive] = useState(false);
+
 	return (
 		<li
 			className={classNames(
 				'page-editor__fragments-widgets__tab-card-item',
-				{disabled}
+				{
+					disabled,
+					'page-editor__fragments-widgets__tab-list-item--active': isActive,
+				}
 			)}
 			ref={setElement}
 			role="menuitem"
@@ -235,6 +247,7 @@ const CardItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 								<AddButton
 									isNavigationTarget={isTarget}
 									item={item}
+									setItemActive={setIsActive}
 								/>
 							)}
 
@@ -242,6 +255,7 @@ const CardItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 								isNavigationTarget={isTarget}
 								item={item}
 								onToggleHighlighted={onToggleHighlighted}
+								setItemActive={setIsActive}
 							/>
 						</ClayCard.Row>
 					</ClayCard.Body>
@@ -258,15 +272,32 @@ CardItem.propTypes = {
 	onToggleHighlighted: PropTypes.func.isRequired,
 };
 
-const HighlightButton = ({isNavigationTarget, item, onToggleHighlighted}) => {
+const HighlightButton = ({
+	isNavigationTarget,
+	item,
+	onToggleHighlighted,
+	setItemActive,
+}) => {
 	if (item.data.portletItemId) {
 		return null;
 	}
 
 	const {highlighted} = item;
+
 	const title = highlighted
 		? sub(Liferay.Language.get('unmark-x-as-favorite'), item.label)
 		: sub(Liferay.Language.get('mark-x-as-favorite'), item.label);
+
+	const onFocus = (event) => {
+		const addButton = event.target.previousSibling;
+		const sidebarResizer = document.querySelector(
+			'.page-editor__sidebar__resizer'
+		);
+
+		if ([addButton, sidebarResizer].includes(event.relatedTarget)) {
+			setItemActive(true);
+		}
+	};
 
 	return (
 		<ClayButtonWithIcon
@@ -277,7 +308,9 @@ const HighlightButton = ({isNavigationTarget, item, onToggleHighlighted}) => {
 				{highlighted}
 			)}
 			displayType="secondary"
+			onBlur={() => setItemActive(false)}
 			onClick={onToggleHighlighted}
+			onFocus={onFocus}
 			symbol={highlighted ? 'star' : 'star-o'}
 			tabIndex={isNavigationTarget ? 0 : -1}
 			title={title}
@@ -289,15 +322,12 @@ HighlightButton.propTypes = {
 	isNavigationTarget: PropTypes.bool.isRequired,
 	item: ITEM_PROPTYPES_SHAPE.isRequired,
 	onToggleHighlighted: PropTypes.func.isRequired,
+	setItemActive: PropTypes.func.isRequired,
 };
 
-const AddButton = ({isNavigationTarget, item}) => {
+const AddButton = ({isNavigationTarget, item, setItemActive}) => {
 	const setMovementSource = useSetMovementSource();
 	const disableMovement = useDisableKeyboardMovement();
-
-	const buttonRef = useRef(null);
-
-	useEventListener('blur', () => disableMovement(), false, buttonRef.current);
 
 	return (
 		<ClayButtonWithIcon
@@ -305,6 +335,10 @@ const AddButton = ({isNavigationTarget, item}) => {
 			borderless
 			className="mr-2 my-0 page-editor__fragments-widgets__tab__add-button"
 			displayType="secondary"
+			onBlur={() => {
+				setItemActive(false);
+				disableMovement();
+			}}
 			onClick={() =>
 				setMovementSource({
 					...item.data,
@@ -315,7 +349,7 @@ const AddButton = ({isNavigationTarget, item}) => {
 					type: item.type,
 				})
 			}
-			ref={buttonRef}
+			onFocus={() => setItemActive(true)}
 			symbol="plus"
 			tabIndex={isNavigationTarget ? 0 : -1}
 			title={sub(Liferay.Language.get('add-x'), item.label)}
@@ -326,4 +360,5 @@ const AddButton = ({isNavigationTarget, item}) => {
 AddButton.propTypes = {
 	isNavigationTarget: PropTypes.bool.isRequired,
 	item: PropTypes.object.isRequired,
+	setItemActive: PropTypes.func.isRequired,
 };

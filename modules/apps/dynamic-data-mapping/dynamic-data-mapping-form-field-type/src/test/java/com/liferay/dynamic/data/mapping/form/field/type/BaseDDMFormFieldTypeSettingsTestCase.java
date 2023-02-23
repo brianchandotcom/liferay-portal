@@ -37,7 +37,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -180,9 +179,7 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 			ReflectionTestUtil.invoke(
 				actualDDMFormLayoutRelatedObject, methodName, null);
 
-		Stream<Object> stream = actualDDMFormLayoutRelatedObjects.stream();
-
-		stream.forEachOrdered(
+		actualDDMFormLayoutRelatedObjects.forEach(
 			function.apply(expectedDDMFormLayoutRelatedObjects));
 
 		Assert.assertEquals(

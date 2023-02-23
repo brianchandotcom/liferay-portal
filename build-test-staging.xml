@@ -3,6 +3,9 @@
 <project basedir="." default="test" name="portal-test-staging-mysql" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<propertycopy from="custom.database.zip.url[${env.CI_TEST_SUITE}]" name="custom.database.zip.url" silent="true" />
+	<propertycopy from="custom.database.name[${env.CI_TEST_SUITE}]" name="custom.database.name" silent="true" />
+
 	<target name="rebuild-staging-database">
 		<mirrors-get
 			dest="${liferay.home}"
@@ -13,14 +16,6 @@
 			dest="${liferay.home}"
 			src="${liferay.home}/${custom.database.name}.zip"
 		/>
-
-		<!--<copy
-			todir="${liferay.home}"
-		>
-			<fileset
-				dir="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${custom.database.file.name}"
-			/>
-		</copy>-->
 
 		<get-database-property property.name="database.docker.image" />
 

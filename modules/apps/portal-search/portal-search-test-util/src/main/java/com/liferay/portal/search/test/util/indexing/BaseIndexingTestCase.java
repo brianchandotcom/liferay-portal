@@ -72,7 +72,6 @@ import com.liferay.portal.search.test.util.document.DocumentTranslator;
 import java.io.Serializable;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -176,8 +175,7 @@ public abstract class BaseIndexingTestCase {
 	}
 
 	protected void addDocuments(
-		Function<String, DocumentCreationHelper> function,
-		Collection<String> values) {
+		Function<String, DocumentCreationHelper> function, String... values) {
 
 		for (String value : values) {
 			addDocument(function.apply(value));

@@ -26,10 +26,9 @@ import java.sql.ResultSet;
 /**
  * @author Jorge García Jiménez
  */
-public class CleanObjectEntriesWithNonExistentGroupIdUpgradeProcess
-	extends UpgradeProcess {
+public class ObjectEntryUpgradeProcess extends UpgradeProcess {
 
-	public CleanObjectEntriesWithNonExistentGroupIdUpgradeProcess(
+	public ObjectEntryUpgradeProcess(
 		ObjectEntryLocalService objectEntryLocalService) {
 
 		_objectEntryLocalService = objectEntryLocalService;
@@ -60,7 +59,7 @@ public class CleanObjectEntriesWithNonExistentGroupIdUpgradeProcess
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CleanObjectEntriesWithNonExistentGroupIdUpgradeProcess.class);
+		ObjectEntryUpgradeProcess.class);
 
 	private final ObjectEntryLocalService _objectEntryLocalService;
 

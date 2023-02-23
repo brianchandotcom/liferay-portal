@@ -3651,9 +3651,9 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		AssertTextEquals(
+		AssertElementPresent(
 			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
-			value1 = "English (United States)");
+			selected = "English (United States)");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Type of a Field before the Object is published"
@@ -6320,9 +6320,9 @@ definition {
 
 		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
 
-		AssertTextEquals(
+		AssertElementPresent(
 			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
-			value1 = "English (United States)");
+			selected = "English (United States)");
 	}
 
 	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Object Admin of the Main Instance and vice versa"

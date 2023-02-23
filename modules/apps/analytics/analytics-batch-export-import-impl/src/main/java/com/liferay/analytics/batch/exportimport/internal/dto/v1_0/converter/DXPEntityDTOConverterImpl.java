@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.rest.internal.dto.v1_0.converter;
+package com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;

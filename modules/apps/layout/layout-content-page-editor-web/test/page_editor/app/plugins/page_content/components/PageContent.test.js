@@ -12,8 +12,7 @@
  * details.
  */
 
-import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -132,7 +131,7 @@ describe('PageContent', () => {
 		];
 		renderPageContent(contents[1]);
 
-		userEvent.click(screen.queryByText('open-actions-menu'));
+		fireEvent.click(screen.getByTitle('open-actions-menu'));
 
 		shownActions.forEach((action) => {
 			expect(screen.queryByText(action)).toBeInTheDocument();
@@ -143,8 +142,8 @@ describe('PageContent', () => {
 	it('shows all items to be added when the Add Item action is clicked', () => {
 		renderPageContent(contents[1]);
 
-		userEvent.click(screen.queryByText('open-actions-menu'));
-		userEvent.click(screen.queryByText('add-items'));
+		fireEvent.click(screen.getByTitle('open-actions-menu'));
+		fireEvent.click(screen.queryByText('add-items'));
 
 		expect(
 			screen.queryByText('Basic Web Content to be added')
@@ -154,8 +153,8 @@ describe('PageContent', () => {
 	it('open image editor modal when the Edit Image action is clicked', () => {
 		const {baseElement} = renderPageContent(contents[2]);
 
-		userEvent.click(screen.queryByText('open-actions-menu'));
-		userEvent.click(screen.queryByText('edit-image'));
+		fireEvent.click(screen.getByTitle('open-actions-menu'));
+		fireEvent.click(screen.getByText('edit-image'));
 
 		expect(
 			baseElement.querySelector('.image-editor-modal')
@@ -172,7 +171,7 @@ describe('PageContent', () => {
 		const selectItem = useSelectItem();
 		renderPageContent(inlineText);
 
-		userEvent.click(screen.getByLabelText('edit-inline-text-x'));
+		fireEvent.click(screen.getByLabelText('edit-inline-text-x'));
 
 		expect(selectItem).toHaveBeenCalledWith('11113-element-text', {
 			itemType: 'editable',

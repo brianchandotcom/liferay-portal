@@ -22,6 +22,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
@@ -569,6 +570,7 @@ export default function ChangeTrackingChangesView({
 		? true
 		: !!showHideableFromURL;
 
+	const [allChecked, setAllChecked] = useState(false);
 	const [ascendingState, setAscendingState] = useState(
 		orderByTypeFromURL !== ORDER_BY_TYPE_DESC
 	);
@@ -581,12 +583,12 @@ export default function ChangeTrackingChangesView({
 	const [dropdownActive, setDropdownActive] = useState(false);
 	const [entrySearchTerms, setEntrySearchTerms] = useState(keywordsFromURL);
 	const [filterSearchTerms, setFilterSearchTerms] = useState('');
+	const [loading, setLoading] = useState(false);
 	const [menu, setMenu] = useState(MENU_ROOT);
 	const [resultsKeywords, setResultsKeywords] = useState(keywordsFromURL);
 	const [searchMobile, setSearchMobile] = useState(false);
-	const [showComments, setShowComments] = useState(false);
-	const [allChecked, setAllChecked] = useState(false);
 	const [selectedChanges, setSelectedChanges] = useState([]);
+	const [showComments, setShowComments] = useState(false);
 
 	const getFilters = useCallback(
 		(changeTypes, sites, types, users) => {
@@ -1940,6 +1942,12 @@ export default function ChangeTrackingChangesView({
 			parents: renderState.parents,
 			showHideable,
 		});
+
+		if (!showHideableFromURL) {
+			setLoading(true);
+
+			window.location.reload();
+		}
 	};
 
 	const renderExpiredBanner = () => {
@@ -3056,7 +3064,7 @@ export default function ChangeTrackingChangesView({
 							: {}
 					}
 				>
-					{renderMainContent()}
+					{!loading ? renderMainContent() : <ClayLoadingIndicator />}
 				</div>
 			</div>
 		</>

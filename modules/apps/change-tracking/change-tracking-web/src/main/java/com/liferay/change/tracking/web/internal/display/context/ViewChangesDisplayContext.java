@@ -240,6 +240,9 @@ public class ViewChangesDisplayContext {
 			}
 		}
 
+		boolean showHideable = ParamUtil.getBoolean(
+			_renderRequest, "showHideable");
+
 		Map<Long, String> typeNameCacheMap = new HashMap<>();
 
 		for (Map.Entry<Long, Set<Long>> entry :
@@ -247,7 +250,7 @@ public class ViewChangesDisplayContext {
 
 			_populateEntryValues(
 				modelInfoMap, entry.getKey(), entry.getValue(),
-				typeNameCacheMap);
+				typeNameCacheMap, showHideable);
 		}
 
 		if (ctClosure != null) {
@@ -670,8 +673,7 @@ public class ViewChangesDisplayContext {
 				).buildString();
 			}
 		).put(
-			"showHideableFromURL",
-			ParamUtil.getBoolean(_renderRequest, "showHideable")
+			"showHideableFromURL", showHideable
 		).put(
 			"siteNames",
 			() -> {
@@ -1060,7 +1062,8 @@ public class ViewChangesDisplayContext {
 
 	private <T extends BaseModel<T>> void _populateEntryValues(
 			Map<ModelInfoKey, ModelInfo> modelInfoMap, long modelClassNameId,
-			Set<Long> classPKs, Map<Long, String> typeNameCacheMap)
+			Set<Long> classPKs, Map<Long, String> typeNameCacheMap,
+			boolean showHideable)
 		throws Exception {
 
 		Map<Serializable, T> baseModelMap = null;
@@ -1107,10 +1110,15 @@ public class ViewChangesDisplayContext {
 					continue;
 				}
 
+				boolean hideable = _ctDisplayRendererRegistry.isHideable(
+					model, modelClassNameId);
+
+				if (hideable && !showHideable) {
+					return;
+				}
+
 				modelInfo._jsonObject = JSONUtil.put(
-					"hideable",
-					_ctDisplayRendererRegistry.isHideable(
-						model, modelClassNameId)
+					"hideable", hideable
 				).put(
 					"modelClassNameId", modelClassNameId
 				).put(
@@ -1196,6 +1204,13 @@ public class ViewChangesDisplayContext {
 					continue;
 				}
 
+				boolean hideable = _ctDisplayRendererRegistry.isHideable(
+					model, modelClassNameId);
+
+				if (hideable && !showHideable) {
+					return;
+				}
+
 				Map<String, Object> modelAttributes =
 					model.getModelAttributes();
 
@@ -1208,9 +1223,7 @@ public class ViewChangesDisplayContext {
 				).put(
 					"ctEntryId", ctEntry.getCtEntryId()
 				).put(
-					"hideable",
-					_ctDisplayRendererRegistry.isHideable(
-						model, modelClassNameId)
+					"hideable", hideable
 				).put(
 					"modelClassNameId", ctEntry.getModelClassNameId()
 				).put(

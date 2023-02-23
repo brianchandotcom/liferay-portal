@@ -17,15 +17,16 @@ package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 import com.liferay.analytics.settings.rest.dto.v1_0.CommerceChannel;
 import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
-import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.CommerceChannelDTOConverter;
 import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.CommerceChannelDTOConverterContext;
 import com.liferay.analytics.settings.rest.internal.util.SortUtil;
 import com.liferay.analytics.settings.rest.resource.v1_0.CommerceChannelResource;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -105,8 +106,10 @@ public class CommerceChannelResourceImpl
 
 	private long[] _classNameIds;
 
-	@Reference
-	private CommerceChannelDTOConverter _commerceChannelDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.CommerceChannelDTOConverter)"
+	)
+	private DTOConverter<Group, CommerceChannel> _commerceChannelDTOConverter;
 
 	@Reference
 	private GroupService _groupService;

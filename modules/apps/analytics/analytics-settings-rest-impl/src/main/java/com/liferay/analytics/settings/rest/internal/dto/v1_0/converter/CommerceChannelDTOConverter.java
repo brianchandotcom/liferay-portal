@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.portal.kernel.model.Group",
-	service = {CommerceChannelDTOConverter.class, DTOConverter.class}
+	service = DTOConverter.class
 )
 public class CommerceChannelDTOConverter
 	implements DTOConverter<Group, CommerceChannel> {

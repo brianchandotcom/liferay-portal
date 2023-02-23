@@ -175,24 +175,12 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 	}
 
 	protected String toString(Organization organization) {
-		Map<String, Function<Organization, Object>> map = new LinkedHashMap<>(
-			organization.getAttributeGetterFunctions());
+		Map<String, Object> modelAttributes = organization.getModelAttributes();
 
-		map.remove("createDate");
-		map.remove("modifiedDate");
+		modelAttributes.remove("createDate");
+		modelAttributes.remove("modifiedDate");
 
-		Map<String, String> organizationAttributesMap = new HashMap<>();
-
-		for (Map.Entry<String, Function<Organization, Object>> entry :
-				map.entrySet()) {
-
-			Function<Organization, Object> function = entry.getValue();
-
-			organizationAttributesMap.put(
-				entry.getKey(), String.valueOf(function.apply(organization)));
-		}
-
-		return String.valueOf(organizationAttributesMap);
+		return String.valueOf(modelAttributes);
 	}
 
 	protected List<String> toStringList(List<Organization> organizations) {

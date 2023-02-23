@@ -33,7 +33,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -190,11 +189,9 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 			expectedDDMFormLayoutRelatedObjects.toString(), 0,
 			expectedDDMFormLayoutRelatedObjects.size());
 
-		Optional.ofNullable(
-			runnable
-		).ifPresent(
-			Runnable::run
-		);
+		if (runnable != null) {
+			runnable.run();
+		}
 	}
 
 	private Function<List<Object>, Consumer<Object>>

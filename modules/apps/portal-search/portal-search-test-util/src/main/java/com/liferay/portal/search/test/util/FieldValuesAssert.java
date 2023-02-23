@@ -264,14 +264,13 @@ public class FieldValuesAssert {
 	private static <T> Map<String, String> _toStringValuesMap(
 		Map<String, T> map, Function<T, String> function) {
 
-		Map<String, String> stringValuesMap = new HashMap<>();
+		Map<String, String> stringValues = new HashMap<>();
 
 		for (Map.Entry<String, T> entry : map.entrySet()) {
-			stringValuesMap.put(
-				entry.getKey(), function.apply(entry.getValue()));
+			stringValues.put(entry.getKey(), function.apply(entry.getValue()));
 		}
 
-		return stringValuesMap;
+		return stringValues;
 	}
 
 }

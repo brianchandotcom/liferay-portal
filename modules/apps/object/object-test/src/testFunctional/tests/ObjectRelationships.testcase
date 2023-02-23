@@ -1972,6 +1972,10 @@ definition {
 		}
 
 		task ("Then all related entries to the entry must be displayed on the relationship tab") {
+			WaitForVisible(
+				key_entry = "Entry B",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+
 			CreateObject.assertRelatedObject(relatedObject = "Entry B");
 		}
 	}

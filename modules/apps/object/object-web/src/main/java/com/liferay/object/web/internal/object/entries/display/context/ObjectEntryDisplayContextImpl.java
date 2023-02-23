@@ -42,12 +42,14 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectWebKeys;
+import com.liferay.object.display.context.ObjectEntryDisplayContext;
 import com.liferay.object.exception.NoSuchObjectLayoutException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectLayoutBox;
@@ -57,12 +59,12 @@ import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
-import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectEntryServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -124,13 +126,15 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Marco Leo
  */
-public class ObjectEntryDisplayContext {
+public class ObjectEntryDisplayContextImpl
+	implements ObjectEntryDisplayContext {
 
-	public ObjectEntryDisplayContext(
+	public ObjectEntryDisplayContextImpl(
 		DDMFormRenderer ddmFormRenderer, HttpServletRequest httpServletRequest,
 		ItemSelector itemSelector,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
+		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryService objectEntryService,
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -143,6 +147,7 @@ public class ObjectEntryDisplayContext {
 		_itemSelector = itemSelector;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
+		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryService = objectEntryService;
 		_objectFieldBusinessTypeRegistry = objectFieldBusinessTypeRegistry;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -156,7 +161,8 @@ public class ObjectEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public ObjectDefinition getObjectDefinition() {
+	@Override
+	public ObjectDefinition getObjectDefinition1() {
 		HttpServletRequest httpServletRequest =
 			_objectRequestHelper.getRequest();
 
@@ -164,6 +170,7 @@ public class ObjectEntryDisplayContext {
 			ObjectWebKeys.OBJECT_DEFINITION);
 	}
 
+	@Override
 	public ObjectDefinition getObjectDefinition2() throws PortalException {
 		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
 
@@ -175,45 +182,14 @@ public class ObjectEntryDisplayContext {
 			objectRelationship.getObjectDefinitionId2());
 	}
 
+	@Override
 	public ObjectEntry getObjectEntry() throws PortalException {
-		if (_objectEntry != null) {
-			return _objectEntry;
-		}
-
-		String externalReferenceCode = ParamUtil.getString(
-			_objectRequestHelper.getRequest(), "externalReferenceCode");
-
-		if (_readOnly && Validator.isNull(externalReferenceCode)) {
-			HttpServletRequest httpServletRequest =
-				_objectRequestHelper.getRequest();
-
-			externalReferenceCode = (String)httpServletRequest.getAttribute(
-				ObjectWebKeys.EXTERNAL_REFERENCE_CODE);
-		}
-
-		ObjectDefinition objectDefinition = getObjectDefinition();
-
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				objectDefinition.getStorageType());
-
-		try {
-			_objectEntry = objectEntryManager.getObjectEntry(
-				_getDTOConverterContext(), externalReferenceCode,
-				_objectRequestHelper.getCompanyId(), objectDefinition,
-				String.valueOf(_getGroupId()));
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
-
-		return _objectEntry;
+		return _toObjectEntry(_getObjectEntryDTO());
 	}
 
+	@Override
 	public ObjectLayout getObjectLayout() throws PortalException {
-		ObjectDefinition objectDefinition = getObjectDefinition();
+		ObjectDefinition objectDefinition = getObjectDefinition1();
 
 		try {
 			return _objectLayoutLocalService.getDefaultObjectLayout(
@@ -228,10 +204,11 @@ public class ObjectEntryDisplayContext {
 		}
 	}
 
+	@Override
 	public ObjectLayoutBox getObjectLayoutBox(String type)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition = getObjectDefinition();
+		ObjectDefinition objectDefinition = getObjectDefinition1();
 
 		if (!StringUtil.equals(
 				objectDefinition.getStorageType(),
@@ -257,6 +234,7 @@ public class ObjectEntryDisplayContext {
 		return null;
 	}
 
+	@Override
 	public ObjectLayoutTab getObjectLayoutTab() throws PortalException {
 		ObjectLayout objectLayout = getObjectLayout();
 
@@ -284,6 +262,15 @@ public class ObjectEntryDisplayContext {
 		return optional.orElseGet(() -> objectLayoutTabs.get(0));
 	}
 
+	@Override
+	public ObjectRelationship getObjectRelationship() throws PortalException {
+		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
+
+		return _objectRelationshipLocalService.getObjectRelationship(
+			objectLayoutTab.getObjectRelationshipId());
+	}
+
+	@Override
 	public String getObjectRelationshipERCObjectFieldName() {
 		HttpServletRequest httpServletRequest =
 			_objectRequestHelper.getRequest();
@@ -293,6 +280,7 @@ public class ObjectEntryDisplayContext {
 				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME);
 	}
 
+	@Override
 	public String getParentObjectEntryId() {
 		HttpServletRequest httpServletRequest =
 			_objectRequestHelper.getRequest();
@@ -300,8 +288,9 @@ public class ObjectEntryDisplayContext {
 		return httpServletRequest.getParameter("parentObjectEntryERC");
 	}
 
+	@Override
 	public CreationMenu getRelatedModelCreationMenu(
-			ObjectDefinition objectDefinition2)
+			ObjectRelationship objectRelationship)
 		throws PortalException {
 
 		if (_readOnly || isDefaultUser()) {
@@ -310,17 +299,11 @@ public class ObjectEntryDisplayContext {
 
 		CreationMenu creationMenu = new CreationMenu();
 
-		ObjectDefinition objectDefinition1 = getObjectDefinition();
+		ObjectDefinition objectDefinition1 = getObjectDefinition1();
 
-		Map<String, String> relationshipContextParams =
-			getRelationshipContextParams();
-
-		long objectRelationshipId = GetterUtil.getLong(
-			relationshipContextParams.get("objectRelationshipId"));
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.getObjectRelationship(
-				objectRelationshipId);
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -404,7 +387,9 @@ public class ObjectEntryDisplayContext {
 		return creationMenu;
 	}
 
-	public String getRelatedObjectEntryItemSelectorURL()
+	@Override
+	public String getRelatedObjectEntryItemSelectorURL(
+			ObjectRelationship objectRelationship)
 		throws PortalException {
 
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
@@ -420,12 +405,6 @@ public class ObjectEntryDisplayContext {
 		infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.<ItemSelectorReturnType>singletonList(
 				new InfoItemItemSelectorReturnType()));
-
-		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.getObjectRelationship(
-				objectLayoutTab.getObjectRelationshipId());
 
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -456,7 +435,7 @@ public class ObjectEntryDisplayContext {
 			() -> {
 				ObjectEntry objectEntry = getObjectEntry();
 
-				return GetterUtil.getLong(objectEntry.getId());
+				return GetterUtil.getLong(objectEntry.getObjectEntryId());
 			}
 		).setParameter(
 			"objectRelationshipId", objectRelationship.getObjectRelationshipId()
@@ -465,6 +444,7 @@ public class ObjectEntryDisplayContext {
 		).buildString();
 	}
 
+	@Override
 	public Map<String, String> getRelationshipContextParams()
 		throws PortalException {
 
@@ -483,6 +463,7 @@ public class ObjectEntryDisplayContext {
 		).build();
 	}
 
+	@Override
 	public boolean isDefaultUser() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -496,13 +477,15 @@ public class ObjectEntryDisplayContext {
 		return user.isDefaultUser();
 	}
 
+	@Override
 	public boolean isReadOnly() {
 		if (_readOnly) {
 			return true;
 		}
 
 		try {
-			ObjectEntry objectEntry = getObjectEntry();
+			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+				_getObjectEntryDTO();
 
 			if (objectEntry == null) {
 				return false;
@@ -510,7 +493,7 @@ public class ObjectEntryDisplayContext {
 
 			return !ObjectDefinitionResourcePermissionUtil.
 				hasModelResourcePermission(
-					getObjectDefinition(), objectEntry, _objectEntryService,
+					getObjectDefinition1(), objectEntry, _objectEntryService,
 					ActionKeys.UPDATE);
 		}
 		catch (PortalException portalException) {
@@ -522,6 +505,7 @@ public class ObjectEntryDisplayContext {
 		return false;
 	}
 
+	@Override
 	public boolean isShowObjectEntryForm() throws PortalException {
 		if ((getObjectEntry() == null) || (getObjectLayoutTab() == null)) {
 			return true;
@@ -535,6 +519,7 @@ public class ObjectEntryDisplayContext {
 				ObjectWebKeys.REGULAR_OBJECT_LAYOUT_TAB));
 	}
 
+	@Override
 	public String renderDDMForm(PageContext pageContext)
 		throws PortalException {
 
@@ -547,7 +532,8 @@ public class ObjectEntryDisplayContext {
 
 		ddmFormRenderingContext.setContainerId("editObjectEntry");
 
-		ObjectEntry objectEntry = getObjectEntry();
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			_getObjectEntryDTO();
 
 		if (objectEntry != null) {
 			ddmFormRenderingContext.addProperty(
@@ -642,7 +628,8 @@ public class ObjectEntryDisplayContext {
 			_objectRequestHelper.getRequest());
 		objectFieldRenderingContext.setLocale(_objectRequestHelper.getLocale());
 
-		ObjectEntry objectEntry = getObjectEntry();
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			_getObjectEntryDTO();
 
 		if (objectEntry != null) {
 			objectFieldRenderingContext.setExternalReferenceCode(
@@ -665,12 +652,13 @@ public class ObjectEntryDisplayContext {
 
 		ddmForm.addAvailableLocale(_objectRequestHelper.getLocale());
 
-		ObjectDefinition objectDefinition = getObjectDefinition();
+		ObjectDefinition objectDefinition = getObjectDefinition1();
 
 		boolean readOnly = _readOnly;
 
 		if (!readOnly) {
-			ObjectEntry objectEntry = getObjectEntry();
+			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+				_getObjectEntryDTO();
 
 			if (objectEntry != null) {
 				readOnly =
@@ -780,7 +768,7 @@ public class ObjectEntryDisplayContext {
 			ObjectEntry objectEntry = getObjectEntry();
 
 			if (objectEntry != null) {
-				ObjectDefinition objectDefinition = getObjectDefinition();
+				ObjectDefinition objectDefinition = getObjectDefinition1();
 
 				ddmFormField.setProperty(
 					"objectDefinitionExternalReferenceCode",
@@ -880,7 +868,8 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private DDMFormValues _getDDMFormValues(
-		DDMForm ddmForm, ObjectEntry objectEntry) {
+		DDMForm ddmForm,
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
 
 		Map<String, Object> values = objectEntry.getProperties();
 
@@ -945,7 +934,7 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private long _getGroupId() {
-		ObjectDefinition objectDefinition = getObjectDefinition();
+		ObjectDefinition objectDefinition = getObjectDefinition1();
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -1030,6 +1019,45 @@ public class ObjectEntryDisplayContext {
 
 				return ddmFormFieldValue;
 			});
+	}
+
+	private com.liferay.object.rest.dto.v1_0.ObjectEntry _getObjectEntryDTO()
+		throws PortalException {
+
+		if (_objectEntry != null) {
+			return _objectEntry;
+		}
+
+		String externalReferenceCode = ParamUtil.getString(
+			_objectRequestHelper.getRequest(), "externalReferenceCode");
+
+		if (_readOnly && Validator.isNull(externalReferenceCode)) {
+			HttpServletRequest httpServletRequest =
+				_objectRequestHelper.getRequest();
+
+			externalReferenceCode = (String)httpServletRequest.getAttribute(
+				ObjectWebKeys.EXTERNAL_REFERENCE_CODE);
+		}
+
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerRegistry.getObjectEntryManager(
+				objectDefinition.getStorageType());
+
+		try {
+			_objectEntry = objectEntryManager.getObjectEntry(
+				_getDTOConverterContext(), externalReferenceCode,
+				_objectRequestHelper.getCompanyId(), objectDefinition,
+				String.valueOf(_getGroupId()));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+
+		return _objectEntry;
 	}
 
 	private String _getRows(ObjectLayoutBox objectLayoutBox) {
@@ -1188,13 +1216,35 @@ public class ObjectEntryDisplayContext {
 		}
 	}
 
+	private ObjectEntry _toObjectEntry(
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
+
+		if (objectEntry == null) {
+			return null;
+		}
+
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
+		ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.createObjectEntry(0L);
+
+		serviceBuilderObjectEntry.setExternalReferenceCode(
+			objectEntry.getExternalReferenceCode());
+		serviceBuilderObjectEntry.setObjectEntryId(objectEntry.getId());
+		serviceBuilderObjectEntry.setObjectDefinitionId(
+			objectDefinition.getObjectDefinitionId());
+
+		return serviceBuilderObjectEntry;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryDisplayContext.class);
+		ObjectEntryDisplayContextImpl.class);
 
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final ItemSelector _itemSelector;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
-	private ObjectEntry _objectEntry;
+	private com.liferay.object.rest.dto.v1_0.ObjectEntry _objectEntry;
+	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldBusinessTypeRegistry

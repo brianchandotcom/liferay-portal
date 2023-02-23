@@ -14,7 +14,7 @@
 
 package com.liferay.batch.engine.internal.writer;
 
-import com.liferay.batch.engine.internal.installer.BatchEngineFileInstaller;
+import com.liferay.batch.engine.internal.file.install.BatchEngineFileInstaller;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

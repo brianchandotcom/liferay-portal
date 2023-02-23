@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -764,6 +765,27 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 					_accountEntry.getAccountEntryId(), user.getUserId()));
 		}
+	}
+
+	@Override
+	@Test
+	public void testPostProfileImage() throws Exception {
+		UserAccount postUserAccount = userAccountResource.postUserAccount(
+			randomUserAccount());
+
+		Assert.assertNull(postUserAccount.getImage());
+
+		userAccountResource.postProfileImage(
+			postUserAccount.getId(), postUserAccount,
+			Collections.singletonMap(
+				"image",
+				FileUtil.createTempFile(
+					FileUtil.getBytes(getClass(), "/images/liferay.png"))));
+
+		postUserAccount = userAccountResource.getUserAccount(
+			postUserAccount.getId());
+
+		Assert.assertNotNull(postUserAccount.getImage());
 	}
 
 	@Override

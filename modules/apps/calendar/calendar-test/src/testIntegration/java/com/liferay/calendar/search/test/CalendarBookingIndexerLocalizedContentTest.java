@@ -29,9 +29,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -91,32 +89,17 @@ public class CalendarBookingIndexerLocalizedContentTest
 			"title_ja_JP", japaneseName
 		).build();
 
-		String word1 = "新規";
-		String word2 = "作成";
-		String prefix1 = "新";
-		String prefix2 = "作";
-
-		List<String> keywords = new ArrayList<>(
-			Arrays.asList(word1, word2, prefix1, prefix2));
-
-		for (String keyword : keywords) {
+		for (String keyword : Arrays.asList("新規", "作成", "新", "作")) {
 			assertFieldValues("title", LocaleUtil.JAPAN, titleMap, keyword);
 		}
 	}
 
 	@Test
 	public void testJapaneseTitleFullWordOnly() throws Exception {
-		String full = "新規作成";
-		String partial1 = "新大阪";
-		String partial2 = "作戦大成功";
-
 		String description = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 
-		List<String> titles = new ArrayList<>(
-			Arrays.asList(full, partial1, partial2));
-
-		for (String title : titles) {
+		for (String title : Arrays.asList("新規作成", "新大阪", "作戦大成功")) {
 			addCalendarBooking(
 				new LocalizedValuesMap() {
 					{
@@ -141,12 +124,7 @@ public class CalendarBookingIndexerLocalizedContentTest
 			"title_ja_JP", "新規作成"
 		).build();
 
-		String word1 = "新規";
-		String word2 = "作成";
-
-		List<String> keywords = new ArrayList<>(Arrays.asList(word1, word2));
-
-		for (String keyword : keywords) {
+		for (String keyword : Arrays.asList("新規", "作成")) {
 			assertFieldValues("title", LocaleUtil.JAPAN, titleMap, keyword);
 		}
 	}

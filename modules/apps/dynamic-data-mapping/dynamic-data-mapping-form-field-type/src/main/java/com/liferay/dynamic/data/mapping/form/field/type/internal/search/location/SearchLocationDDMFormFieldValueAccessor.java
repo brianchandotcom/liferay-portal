@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,29 +71,31 @@ public class SearchLocationDDMFormFieldValueAccessor
 
 		String placeValue = jsonObject.getString("place");
 
+		if (Validator.isNull(placeValue.trim())) {
+			return true;
+		}
+
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
 		LocalizedValue visibleFields = (LocalizedValue)ddmFormField.getProperty(
 			"visibleFields");
 
-		return Validator.isNull(placeValue.trim()) ||
-			   !Stream.of(
-				   StringUtil.split(
-					   StringUtil.removeChars(
-						   GetterUtil.getString(
-							   visibleFields.getString(locale)),
-						   CharPool.CLOSE_BRACKET, CharPool.OPEN_BRACKET,
-						   CharPool.QUOTE))
-			   ).map(
-				   String::trim
-			   ).allMatch(
-				   visibleField -> {
-					String visibleFieldValue = jsonObject.getString(
-						visibleField);
+		for (String visibleField :
+				StringUtil.split(
+					StringUtil.removeChars(
+						GetterUtil.getString(visibleFields.getString(locale)),
+						CharPool.CLOSE_BRACKET, CharPool.OPEN_BRACKET,
+						CharPool.QUOTE))) {
 
-					return Validator.isNotNull(visibleFieldValue.trim());
-				   }
-			   );
+			String visibleFieldValue = jsonObject.getString(
+				visibleField.trim());
+
+			if (Validator.isNull(visibleFieldValue.trim())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private JSONObject _getJSONObject(String value) {

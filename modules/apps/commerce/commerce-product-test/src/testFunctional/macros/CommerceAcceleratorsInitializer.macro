@@ -278,6 +278,18 @@ definition {
 			accountUserName = ${emailAddress});
 	}
 
+	macro removePortlet {
+		var key_portletName = ${portletName};
+
+		MouseOver.waitForMenuToggleJSMouseOver(locator1 = "Portlet#SPECIFIC_PORTLET_SECTION");
+
+		Click(locator1 = "Portlet#SPECIFIC_ELLIPSIS_ICON");
+
+		MenuItem.clickNoError(menuItem = "Remove");
+
+		AssertConfirm(value1 = "Are you sure you want to remove this component?");
+	}
+
 	macro reviewOrder {
 		if (IsElementPresent(key_orderAuthor = ${orderAuthor}, locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON")) {
 			Click(

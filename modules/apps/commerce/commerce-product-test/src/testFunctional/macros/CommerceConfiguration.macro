@@ -253,4 +253,54 @@ definition {
 		}
 	}
 
+	@description = "Create a Content Page to be used as Catalog page"
+	macro setUpCatalogPage {
+		var leftColumnWidgets = "Search Bar,Search Options";
+		var rightColumnWidgets = "Sort,Search Results";
+
+		ContentPages.addPage(pageName = ${pageName});
+
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Grid");
+
+		PageEditor.editLayoutGrid(
+			columnCount = 2,
+			panel = "General");
+
+		PageEditor.clickConfigurableField(fragmentName = "Grid");
+
+		DragAndDrop.dragAndDrop(
+			key_position = 2,
+			locator1 = "PageEditor#GRID_COLUMN_RESIZER",
+			value1 = "-100,0");
+
+		if (isSet(facets)) {
+			for (var facetName : list ${facets}) {
+				var leftColumnWidgets = "${leftColumnWidgets},${facetName} Facet";
+			}
+		}
+
+		for (var widgetName : list ${leftColumnWidgets}) {
+			PageEditor.addElementToColumn(
+				columnNumber = 1,
+				navTab = "Widgets",
+				portletName = ${widgetName});
+		}
+
+		for (var widgetName : list ${rightColumnWidgets}) {
+			PageEditor.addElementToColumn(
+				columnNumber = 2,
+				navTab = "Widgets",
+				portletName = ${widgetName},
+				position = 1);
+		}
+
+		SearchPortlets.configureSearchBarWidget(searchScope = "Everything");
+
+		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
+
+		PageEditor.publish();
+	}
+
 }

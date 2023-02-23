@@ -30,14 +30,12 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -84,26 +82,27 @@ public class FrequentPatternCommerceMLRecommendationManagerTest {
 
 		long[] antecedentIds = ArrayUtil.toLongArray(antecedentIdList);
 
-		Stream<FrequentPatternCommerceMLRecommendation>
-			frequentPatternCommerceMLRecommendationStream =
-				_frequentPatternCommerceMLRecommendations.stream();
+		List<FrequentPatternCommerceMLRecommendation>
+			expectedFrequentPatternCommerceMLRecommendations = ListUtil.filter(
+				_frequentPatternCommerceMLRecommendations,
+				recommendation ->
+					_filterFrequentPatternCommerceMLRecommendation(
+						recommendation, antecedentIds));
+
+		expectedFrequentPatternCommerceMLRecommendations.sort(
+			new FrequentPatternCommerceMLRecommendationComparator(
+				antecedentIds));
 
 		Map<Long, FrequentPatternCommerceMLRecommendation>
 			expectedFrequentPatternCommerceMLRecommendationsMap =
-				frequentPatternCommerceMLRecommendationStream.filter(
-					recommendation ->
-						_filterFrequentPatternCommerceMLRecommendation(
-							recommendation, antecedentIds)
-				).sorted(
-					new FrequentPatternCommerceMLRecommendationComparator(
-						antecedentIds)
-				).collect(
-					Collectors.toMap(
-						FrequentPatternCommerceMLRecommendation::
-							getRecommendedEntryClassPK,
-						Function.identity(), (item1, item2) -> item1,
-						LinkedHashMap::new)
-				);
+				new LinkedHashMap<>();
+
+		for (FrequentPatternCommerceMLRecommendation recommendation :
+				expectedFrequentPatternCommerceMLRecommendations) {
+
+			expectedFrequentPatternCommerceMLRecommendationsMap.putIfAbsent(
+				recommendation.getRecommendedEntryClassPK(), recommendation);
+		}
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -126,13 +125,13 @@ public class FrequentPatternCommerceMLRecommendationManagerTest {
 			frequentPatternCommerceMLRecommendations = new ArrayList<>();
 
 		for (int i = 0; i < _PRODUCT_COUNT; i++) {
-			Set<Long> antecedentIds = Stream.generate(
-				RandomTestUtil::randomLong
-			).limit(
-				RandomTestUtil.randomInt(1, _MAX_ANTECEDENT_COUNT)
-			).collect(
-				Collectors.toSet()
-			);
+			Set<Long> antecedentIds = new HashSet<>();
+
+			for (int j = 0;
+				 j < RandomTestUtil.randomInt(1, _MAX_ANTECEDENT_COUNT); j++) {
+
+				antecedentIds.add(RandomTestUtil.randomLong());
+			}
 
 			for (int j = 0; j < _RECOMMENDATION_COUNT; j++) {
 				float score = 1.0F - (j / 10.0F);

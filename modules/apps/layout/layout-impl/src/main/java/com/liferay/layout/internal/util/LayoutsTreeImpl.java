@@ -79,7 +79,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return _getLayoutTreeNodesJSONArray(
+		return _getLayoutsJSONArray(
 			false, expandedLayoutIds, groupId, httpServletRequest,
 			includeActions, incomplete, loadMore, parentLayoutId, privateLayout,
 			themeDisplay, treeId);
@@ -141,7 +141,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return null;
 	}
 
-	private JSONArray _getLayoutTreeNodesJSONArray(
+	private JSONArray _getLayoutsJSONArray(
 			boolean childLayout, long[] expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			boolean incomplete, boolean loadMore, long parentLayoutId,
@@ -155,7 +155,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			return _jsonFactory.createJSONArray();
 		}
 
-		JSONArray layoutTreeNodesJSONArray = _jsonFactory.createJSONArray();
+		JSONArray layoutsJSONArray = _jsonFactory.createJSONArray();
 
 		List<Layout> ancestorLayouts = _getAncestorLayouts(httpServletRequest);
 
@@ -171,9 +171,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		int index = 0;
 
-		for (Layout layoutTreeNode : layouts) {
+		for (Layout layout : layouts) {
 			if (index == 1) {
-				secondLayout = layoutTreeNode;
+				secondLayout = layout;
 
 				break;
 			}
@@ -182,8 +182,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		}
 
 		for (Layout layout : layouts) {
-			int childLayoutTreeNodesCount = 0;
-			JSONArray childLayoutTreeNodesJSONArray = null;
+			int childLayoutsCount = 0;
+			JSONArray childLayoutsJSONArray = null;
 
 			if (_isExpandableLayout(
 					ancestorLayouts, expandedLayoutIds, layout)) {
@@ -191,32 +191,28 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				if (layout instanceof VirtualLayout) {
 					VirtualLayout virtualLayout = (VirtualLayout)layout;
 
-					childLayoutTreeNodesJSONArray =
-						_getLayoutTreeNodesJSONArray(
-							true, expandedLayoutIds,
-							virtualLayout.getSourceGroupId(),
-							httpServletRequest, includeActions, incomplete,
-							loadMore, virtualLayout.getLayoutId(),
-							virtualLayout.isPrivateLayout(), themeDisplay,
-							treeId);
+					childLayoutsJSONArray = _getLayoutsJSONArray(
+						true, expandedLayoutIds,
+						virtualLayout.getSourceGroupId(), httpServletRequest,
+						includeActions, incomplete, loadMore,
+						virtualLayout.getLayoutId(),
+						virtualLayout.isPrivateLayout(), themeDisplay, treeId);
 				}
 				else {
-					childLayoutTreeNodesJSONArray =
-						_getLayoutTreeNodesJSONArray(
-							true, expandedLayoutIds, groupId,
-							httpServletRequest, includeActions, incomplete,
-							loadMore, layout.getLayoutId(),
-							layout.isPrivateLayout(), themeDisplay, treeId);
+					childLayoutsJSONArray = _getLayoutsJSONArray(
+						true, expandedLayoutIds, groupId, httpServletRequest,
+						includeActions, incomplete, loadMore,
+						layout.getLayoutId(), layout.isPrivateLayout(),
+						themeDisplay, treeId);
 				}
 
-				childLayoutTreeNodesCount =
-					childLayoutTreeNodesJSONArray.length();
+				childLayoutsCount = childLayoutsJSONArray.length();
 			}
 			else {
-				childLayoutTreeNodesCount = _layoutService.getLayoutsCount(
+				childLayoutsCount = _layoutService.getLayoutsCount(
 					groupId, privateLayout, layout.getLayoutId());
 
-				childLayoutTreeNodesJSONArray = _jsonFactory.createJSONArray();
+				childLayoutsJSONArray = _jsonFactory.createJSONArray();
 			}
 
 			if (includeActions) {
@@ -233,18 +229,18 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				}
 			}
 
-			layoutTreeNodesJSONArray.put(
+			layoutsJSONArray.put(
 				_toJSONObject(
-					afterDeleteSelectedLayout, childLayoutTreeNodesCount,
-					childLayoutTreeNodesJSONArray, httpServletRequest,
-					includeActions, layout, themeDisplay));
+					afterDeleteSelectedLayout, childLayoutsCount,
+					childLayoutsJSONArray, httpServletRequest, includeActions,
+					layout, themeDisplay));
 
 			if (includeActions) {
 				afterDeleteSelectedLayout = layout;
 			}
 		}
 
-		return layoutTreeNodesJSONArray;
+		return layoutsJSONArray;
 	}
 
 	private int _getLoadedLayoutsCount(
@@ -362,8 +358,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private JSONObject _toJSONObject(
-			Layout afterDeleteSelectedLayout, long childLayoutTreeNodesCount,
-			JSONArray childLayoutTreeNodesJSONArray,
+			Layout afterDeleteSelectedLayout, long childLayoutsCount,
+			JSONArray childLayoutsJSONArray,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			Layout layout, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -392,8 +388,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		).put(
 			"children",
 			() -> {
-				if (childLayoutTreeNodesJSONArray.length() > 0) {
-					return childLayoutTreeNodesJSONArray;
+				if (childLayoutsJSONArray.length() > 0) {
+					return childLayoutsJSONArray;
 				}
 
 				return null;
@@ -435,9 +431,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		).put(
 			"paginated",
 			() -> {
-				if (childLayoutTreeNodesCount !=
-						childLayoutTreeNodesJSONArray.length()) {
-
+				if (childLayoutsCount != childLayoutsJSONArray.length()) {
 					return true;
 				}
 

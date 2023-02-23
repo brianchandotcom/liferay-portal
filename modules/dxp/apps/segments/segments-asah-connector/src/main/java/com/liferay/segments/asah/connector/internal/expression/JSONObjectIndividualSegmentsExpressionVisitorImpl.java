@@ -83,6 +83,19 @@ public class JSONObjectIndividualSegmentsExpressionVisitorImpl
 	}
 
 	@Override
+	public JSONObject visitNotExpression(
+		@NotNull IndividualSegmentsExpressionParser.NotExpressionContext
+			notExpressionContext) {
+
+		JSONObject jsonObject = (JSONObject)visitChildren(
+			notExpressionContext.booleanUnaryExpression());
+
+		jsonObject.put("operatorNot", "true");
+
+		return jsonObject;
+	}
+
+	@Override
 	public JSONObject visitOrExpression(
 		@NotNull IndividualSegmentsExpressionParser.OrExpressionContext
 			orExpressionContext) {

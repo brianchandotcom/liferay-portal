@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -45,7 +46,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -198,19 +198,18 @@ public class GetTrafficSourcesMVCResourceCommand
 		List<TrafficChannel> trafficChannels = _getTrafficChannels(
 			analyticsReportsDataProvider, canonicalURL, companyId, timeRange);
 
-		Stream<TrafficChannel> stream = trafficChannels.stream();
-
 		Comparator<TrafficChannel> comparator = Comparator.comparing(
 			TrafficChannel::getTrafficShare);
 
-		return JSONUtil.putAll(
-			stream.sorted(
-				comparator.reversed()
-			).map(
-				trafficChannel -> trafficChannel.toJSONObject(
-					liferayPortletRequest, liferayPortletResponse,
-					resourceBundle)
-			).toArray());
+		trafficChannels = ListUtil.copy(trafficChannels);
+
+		trafficChannels.sort(comparator.reversed());
+
+		return JSONUtil.toJSONArray(
+			trafficChannels,
+			trafficChannel -> trafficChannel.toJSONObject(
+				liferayPortletRequest, liferayPortletResponse, resourceBundle),
+			_log);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

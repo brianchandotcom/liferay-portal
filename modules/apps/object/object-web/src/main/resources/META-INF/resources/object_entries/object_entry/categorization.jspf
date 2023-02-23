@@ -21,7 +21,7 @@ ObjectLayoutBox categorizationObjectLayoutBox = objectEntryDisplayContext.getObj
 <c:if test="<%= objectDefinition.isEnableCategorization() && (categorizationObjectLayoutBox != null) %>">
 
 	<%
-	long classPK = (objectEntry == null) ? 0 : objectEntry.getId();
+	long classPK = (objectEntry == null) ? 0 : objectEntry.getObjectEntryId();
 	%>
 
 	<div class="lfr-form-content" id="<portlet:namespace />categorization">

@@ -478,7 +478,37 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinition));
 		}
 	}
+	@Override
+	public ObjectDefinition enableAccountEntryRestricted(
+		long objectDefinitionId, ObjectRelationship objectRelationship)
+		throws PortalException {
 
+		ObjectDefinition objectDefinition1 = getObjectDefinition(
+			objectRelationship.getObjectDefinitionId1());
+
+		if (!Objects.equals(objectDefinition1.getShortName(), "AccountEntry")) {
+			throw new ObjectDefinitionAccountEntryRestrictedException(
+				"It is only possible to restrict custom object definitions " +
+				"with account entry");
+		}
+
+		ObjectDefinition objectDefinition2 = getObjectDefinition(
+			objectDefinitionId);
+
+		if (objectDefinition2.isAccountEntryRestricted()) {
+			return objectDefinition2;
+		}
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		objectDefinition2.setAccountEntryRestrictedObjectFieldId(
+			objectField.getObjectFieldId());
+
+		objectDefinition2.setAccountEntryRestricted(true);
+
+		return objectDefinitionPersistence.update(objectDefinition2);
+	}
 	@Override
 	public ObjectDefinition fetchObjectDefinition(long companyId, String name) {
 		return objectDefinitionPersistence.fetchByC_N(companyId, name);

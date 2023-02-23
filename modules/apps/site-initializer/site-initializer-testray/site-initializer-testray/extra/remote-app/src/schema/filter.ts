@@ -397,10 +397,10 @@ const filterSchema = {
 	},
 	buildTeams: {
 		fields: [
-			baseFilters.priority,
-			baseFilters.caseType,
-			overrides(baseFilters.team, {type: 'multiselect'}),
-			baseFilters.run,
+			overrides(baseFilters.priority, {disabled: true, type: 'select'}),
+			overrides(baseFilters.caseType, {disabled: true, type: 'select'}),
+			overrides(baseFilters.team, {name: 'id', type: 'multiselect'}),
+			overrides(baseFilters.run, {disabled: true}),
 		] as RendererFields[],
 	},
 	buildTemplates: {

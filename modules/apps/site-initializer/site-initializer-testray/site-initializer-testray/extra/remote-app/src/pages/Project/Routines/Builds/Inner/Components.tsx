@@ -38,7 +38,7 @@ const Components = () => (
 					{
 						key: 'name',
 						size: 'md',
-						value: i18n.translate('team'),
+						value: i18n.translate('component'),
 					},
 					{
 						clickable: true,

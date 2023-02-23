@@ -182,7 +182,7 @@ const baseFilters: Filter = {
 	run: {
 		label: i18n.translate('run'),
 		name: 'run',
-		resource: '/runs?fields=number',
+		resource: '/runs?fields=id,number',
 		transformData(item) {
 			return dataToOptions(transformData<TestrayRun>(item), (run) => ({
 				label: run?.number?.toString().padStart(2, '0'),
@@ -227,14 +227,27 @@ const filterSchema = {
 	buildComponents: {
 		fields: [
 			overrides(baseFilters.priority, {
+				name: 'componentToCases/priority',
+				removeQuoteMark: true,
 				type: 'select',
 			}),
 			overrides(baseFilters.caseType, {
+				name: 'componentToCases/caseTypeId',
 			}),
 			overrides(baseFilters.team, {
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.run, {
+				name: 'componentToCaseResult/r_runToCaseResult_c_runId',
+				transformData(item) {
+					return dataToOptions(
+						transformData<TestrayRun>(item),
+						(run) => ({
+							label: run?.number?.toString().padStart(2, '0'),
+							value: run?.id,
+						})
+					);
+				},
 			}),
 		] as RendererFields[],
 	},

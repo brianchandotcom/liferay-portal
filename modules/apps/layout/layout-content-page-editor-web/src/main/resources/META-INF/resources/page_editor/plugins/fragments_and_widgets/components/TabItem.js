@@ -127,7 +127,7 @@ TabItem.propTypes = {
 };
 
 const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
-	const {isActive, setElement} = useKeyboardNavigation({
+	const {isTarget, setElement} = useKeyboardNavigation({
 		type: LIST_ITEM_TYPES.listItem,
 	});
 
@@ -143,7 +143,7 @@ const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 			)}
 			ref={setElement}
 			role="menuitem"
-			tabIndex={isActive ? 0 : -1}
+			tabIndex={isTarget ? 0 : -1}
 		>
 			<div
 				className="align-items-center d-flex h-100 justify-content-between w-100"
@@ -155,11 +155,13 @@ const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 					<div className="text-truncate title">{item.label}</div>
 				</div>
 
-				{!disabled && <AddButton item={item} itemIsActive={isActive} />}
+				{!disabled && (
+					<AddButton isNavigationTarget={isTarget} item={item} />
+				)}
 
 				<HighlightButton
+					isNavigationTarget={isTarget}
 					item={item}
-					itemIsActive={isActive}
 					onToggleHighlighted={onToggleHighlighted}
 				/>
 			</div>
@@ -175,7 +177,7 @@ ListItem.propTypes = {
 };
 
 const CardItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
-	const {isActive, setElement} = useKeyboardNavigation({
+	const {isTarget, setElement} = useKeyboardNavigation({
 		type: LIST_ITEM_TYPES.listItem,
 	});
 
@@ -187,7 +189,7 @@ const CardItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 			)}
 			ref={setElement}
 			role="menuitem"
-			tabIndex={isActive ? 0 : -1}
+			tabIndex={isTarget ? 0 : -1}
 		>
 			<div ref={handlerRef}>
 				<ClayCard
@@ -231,14 +233,14 @@ const CardItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 
 							{!disabled && (
 								<AddButton
+									isNavigationTarget={isTarget}
 									item={item}
-									itemIsActive={isActive}
 								/>
 							)}
 
 							<HighlightButton
+								isNavigationTarget={isTarget}
 								item={item}
-								itemIsActive={isActive}
 								onToggleHighlighted={onToggleHighlighted}
 							/>
 						</ClayCard.Row>
@@ -256,7 +258,7 @@ CardItem.propTypes = {
 	onToggleHighlighted: PropTypes.func.isRequired,
 };
 
-const HighlightButton = ({item, itemIsActive, onToggleHighlighted}) => {
+const HighlightButton = ({isNavigationTarget, item, onToggleHighlighted}) => {
 	if (item.data.portletItemId) {
 		return null;
 	}
@@ -277,19 +279,19 @@ const HighlightButton = ({item, itemIsActive, onToggleHighlighted}) => {
 			displayType="secondary"
 			onClick={onToggleHighlighted}
 			symbol={highlighted ? 'star' : 'star-o'}
-			tabIndex={itemIsActive ? 0 : -1}
+			tabIndex={isNavigationTarget ? 0 : -1}
 			title={title}
 		/>
 	);
 };
 
 HighlightButton.propTypes = {
+	isNavigationTarget: PropTypes.bool.isRequired,
 	item: ITEM_PROPTYPES_SHAPE.isRequired,
-	itemIsActive: PropTypes.bool.isRequired,
 	onToggleHighlighted: PropTypes.func.isRequired,
 };
 
-const AddButton = ({item, itemIsActive}) => {
+const AddButton = ({isNavigationTarget, item}) => {
 	const setMovementSource = useSetMovementSource();
 	const disableMovement = useDisableKeyboardMovement();
 
@@ -315,13 +317,13 @@ const AddButton = ({item, itemIsActive}) => {
 			}
 			ref={buttonRef}
 			symbol="plus"
-			tabIndex={itemIsActive ? 0 : -1}
+			tabIndex={isNavigationTarget ? 0 : -1}
 			title={sub(Liferay.Language.get('add-x'), item.label)}
 		/>
 	);
 };
 
 AddButton.propTypes = {
+	isNavigationTarget: PropTypes.bool.isRequired,
 	item: PropTypes.object.isRequired,
-	itemIsActive: PropTypes.bool.isRequired,
 };

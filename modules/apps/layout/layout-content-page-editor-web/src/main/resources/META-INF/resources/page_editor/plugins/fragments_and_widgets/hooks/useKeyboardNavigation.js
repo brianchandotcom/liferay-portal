@@ -32,7 +32,7 @@ const ALLOWED_KEYCODES = [
 
 export default function useKeyboardNavigation({handleOpen, type}) {
 	const [element, setElement] = useState(null);
-	const [isActive, setIsActive] = useState(false);
+	const [isTarget, setIsTarget] = useState(false);
 
 	useEffect(() => {
 		const list = element?.closest('[role="menubar"]');
@@ -40,7 +40,7 @@ export default function useKeyboardNavigation({handleOpen, type}) {
 
 		const isFirstChild = listItem === list?.firstChild;
 
-		setIsActive(isFirstChild);
+		setIsTarget(isFirstChild);
 	}, [element]);
 
 	useEventListener(
@@ -63,7 +63,7 @@ export default function useKeyboardNavigation({handleOpen, type}) {
 		element
 	);
 
-	useEventListener('focus', () => setIsActive(true), true, element);
+	useEventListener('focus', () => setIsTarget(true), true, element);
 
 	useEventListener(
 		'blur',
@@ -73,14 +73,14 @@ export default function useKeyboardNavigation({handleOpen, type}) {
 			const nextActiveElement = event.relatedTarget;
 
 			if (list.contains(nextActiveElement)) {
-				setIsActive(false);
+				setIsTarget(false);
 			}
 		},
 		true,
 		element
 	);
 
-	return {isActive, setElement};
+	return {isTarget, setElement};
 }
 
 function onHeaderKeyDown(element, keyCode, handleOpen) {

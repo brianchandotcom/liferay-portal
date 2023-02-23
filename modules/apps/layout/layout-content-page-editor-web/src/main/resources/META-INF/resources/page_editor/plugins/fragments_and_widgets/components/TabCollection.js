@@ -115,7 +115,7 @@ function TabCollectionCollapse({children, open, setOpen, title}) {
 		setOpen(nextOpen);
 	};
 
-	const {isActive, setElement} = useKeyboardNavigation({
+	const {isTarget, setElement} = useKeyboardNavigation({
 		handleOpen,
 		type: LIST_ITEM_TYPES.header,
 	});
@@ -140,7 +140,7 @@ function TabCollectionCollapse({children, open, setOpen, title}) {
 				onClick={() => setOpen(!open)}
 				ref={setElement}
 				role="menuitem"
-				tabIndex={isActive ? 0 : -1}
+				tabIndex={isTarget ? 0 : -1}
 				type="button"
 			>
 				<span className="c-inner text-truncate" tabIndex={-1}>

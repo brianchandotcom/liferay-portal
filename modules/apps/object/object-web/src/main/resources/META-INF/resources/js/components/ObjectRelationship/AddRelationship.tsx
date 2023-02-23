@@ -58,8 +58,10 @@ function ModalAddObjectRelationship({
 			onClose();
 			window.location.reload();
 		}
-		catch ({message}) {
-			setError(message as string);
+		catch (error: unknown) {
+			const {message} = error as Error;
+
+			setError(message);
 		}
 	};
 

@@ -226,8 +226,10 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				),
 			});
 		}
-		catch ({message}) {
-			openToast({message: message as string, type: 'danger'});
+		catch (error: unknown) {
+			const {message} = error as Error;
+
+			openToast({message, type: 'danger'});
 		}
 	};
 

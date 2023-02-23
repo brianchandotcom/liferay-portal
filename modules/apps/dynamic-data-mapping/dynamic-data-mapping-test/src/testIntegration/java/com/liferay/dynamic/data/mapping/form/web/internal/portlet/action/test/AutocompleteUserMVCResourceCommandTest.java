@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -40,7 +41,6 @@ import java.io.ByteArrayOutputStream;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 
@@ -179,14 +179,10 @@ public class AutocompleteUserMVCResourceCommandTest {
 		return themeDisplay;
 	}
 
-	private long _getUsersCount() {
-		List<User> users = UserLocalServiceUtil.getUsers(0, 20);
-
-		Stream<User> stream = users.stream();
-
-		return stream.filter(
-			user -> !user.isDefaultUser()
-		).count();
+	private int _getUsersCount() {
+		return ListUtil.count(
+			UserLocalServiceUtil.getUsers(0, 20),
+			user -> !user.isDefaultUser());
 	}
 
 	private JSONArray _getUsersJSONArray(

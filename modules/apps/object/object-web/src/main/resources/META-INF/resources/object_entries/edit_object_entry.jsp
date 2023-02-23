@@ -27,7 +27,7 @@ ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab()
 <c:if test="<%= (objectEntryDisplayContext.getObjectEntry() != null) && (objectLayoutTab != null) %>">
 
 	<%
-	ObjectDefinition objectDefinition = objectEntryDisplayContext.getObjectDefinition();
+	ObjectDefinition objectDefinition = objectEntryDisplayContext.getObjectDefinition1();
 	%>
 
 	<liferay-frontend:screen-navigation

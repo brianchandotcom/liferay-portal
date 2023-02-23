@@ -35,14 +35,14 @@ portletDisplay.setURLBack(backURL);
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ASSIGN %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="objectRelationshipId" type="hidden" value="<%= objectLayoutTab.getObjectRelationshipId() %>" />
-	<aui:input name="objectEntryId" type="hidden" value="<%= (objectEntry == null) ? 0 : objectEntry.getId() %>" />
+	<aui:input name="objectEntryId" type="hidden" value="<%= (objectEntry == null) ? 0 : objectEntry.getObjectEntryId() %>" />
 	<aui:input name="objectRelationshipPrimaryKey2" type="hidden" value="" />
 
 	<c:choose>
 		<c:when test="<%= objectDefinition2.isSystem() %>">
 			<frontend-data-set:classic-display
 				contextParams="<%= objectEntryDisplayContext.getRelationshipContextParams() %>"
-				creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu(objectDefinition2) %>"
+				creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu(objectEntryDisplayContext.getObjectRelationship()) %>"
 				dataProviderKey="<%= ObjectEntriesFDSNames.SYSTEM_RELATED_MODELS %>"
 				formName="fm"
 				id="<%= ObjectEntriesFDSNames.SYSTEM_RELATED_MODELS %>"
@@ -52,7 +52,7 @@ portletDisplay.setURLBack(backURL);
 		<c:otherwise>
 			<frontend-data-set:classic-display
 				contextParams="<%= objectEntryDisplayContext.getRelationshipContextParams() %>"
-				creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu(objectDefinition2) %>"
+				creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu(objectEntryDisplayContext.getObjectRelationship()) %>"
 				dataProviderKey="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"
 				formName="fm"
 				id="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"
@@ -89,7 +89,7 @@ portletDisplay.setURLBack(backURL);
 					selectEventName: '<portlet:namespace />selectRelatedModalEntry',
 					title: '<liferay-ui:message key="select" />',
 					url:
-						'<%= objectEntryDisplayContext.getRelatedObjectEntryItemSelectorURL() %>',
+						'<%= objectEntryDisplayContext.getRelatedObjectEntryItemSelectorURL(objectEntryDisplayContext.getObjectRelationship()) %>',
 				});
 			}
 		);

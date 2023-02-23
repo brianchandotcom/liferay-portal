@@ -1382,14 +1382,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		kbArticle = kbArticlePersistence.update(kbArticle);
 
-		if (status != WorkflowConstants.STATUS_APPROVED) {
-			if (status == WorkflowConstants.STATUS_EXPIRED) {
-				_notify(
-					SetUtil.fromArray(
-						_NOTIFICATION_RECEIVER_OWNER,
-						_NOTIFICATION_RECEIVER_SUBSCRIBER),
-					userId, kbArticle, Constants.EXPIRE, serviceContext);
-			}
+		if ((status != WorkflowConstants.STATUS_APPROVED) &&
+			(status != WorkflowConstants.STATUS_EXPIRED)) {
 
 			return kbArticle;
 		}
@@ -1474,9 +1468,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Subscriptions
 
-		_notify(
-			Collections.singleton(_NOTIFICATION_RECEIVER_SUBSCRIBER), userId,
-			kbArticle, action, serviceContext);
+		Set<String> receivers = SetUtil.fromArray(
+			_NOTIFICATION_RECEIVER_SUBSCRIBER);
+
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			action = Constants.EXPIRE;
+			receivers.add(_NOTIFICATION_RECEIVER_OWNER);
+		}
+
+		_notify(receivers, userId, kbArticle, action, serviceContext);
 
 		return kbArticle;
 	}

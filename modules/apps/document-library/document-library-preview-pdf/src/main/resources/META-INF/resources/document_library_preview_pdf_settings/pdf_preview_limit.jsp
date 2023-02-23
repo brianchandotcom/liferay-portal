@@ -25,12 +25,7 @@ PDFPreviewConfigurationDisplayContext pdfPreviewConfigurationDisplayContext = (P
 		<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>" message="there-was-an-unknown-error" />
 
 		<liferay-ui:error exception="<%= PDFPreviewException.class %>">
-
-			<%
-			PDFPreviewException pdfPreviewException = (PDFPreviewException)errorException;
-			%>
-
-			<liferay-ui:message arguments="<%= pdfPreviewException.getMaxNumberOfPages() %>" key="please-enter-a-maximum-number-of-pages-no-larger-than-x" translateArguments="<%= false %>" />
+			<liferay-ui:message key="maximum-number-of-pages-limit-is-not-valid" />
 		</liferay-ui:error>
 
 		<clay:sheet-header>
@@ -49,6 +44,8 @@ PDFPreviewConfigurationDisplayContext pdfPreviewConfigurationDisplayContext = (P
 						"maxLimitSize", pdfPreviewConfigurationDisplayContext.getMaxLimitSize()
 					).put(
 						"namespace", liferayPortletResponse.getNamespace()
+					).put(
+						"scopeLabel", pdfPreviewConfigurationDisplayContext.getSuperiorScopeLabel()
 					).put(
 						"value", pdfPreviewConfigurationDisplayContext.getMaxNumberOfPages()
 					).build()

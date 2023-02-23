@@ -13,10 +13,11 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const PdfPreviewLimit = ({maxLimitSize, namespace, value}) => {
+const PdfPreviewLimit = ({maxLimitSize, namespace, scopeLabel, value}) => {
 	const [error, setError] = useState(false);
 	const [inputValue, setInputValue] = useState(value);
 
@@ -54,8 +55,12 @@ const PdfPreviewLimit = ({maxLimitSize, namespace, value}) => {
 							<ClayForm.FeedbackIndicator symbol="info-circle" />
 
 							<span>
-								{Liferay.Language.get(
-									'this-limit-is-higher-than-system-settings-limit'
+								{sub(
+									Liferay.Language.get(
+										'this-limit-is-higher-than-x-limit-enter-maximum-number-of-pages-x'
+									),
+									scopeLabel,
+									maxLimitSize
 								)}
 							</span>
 						</ClayForm.FeedbackItem>
@@ -69,6 +74,7 @@ const PdfPreviewLimit = ({maxLimitSize, namespace, value}) => {
 PdfPreviewLimit.propTypes = {
 	maxLimitSize: PropTypes.number,
 	namespace: PropTypes.string.isRequired,
+	scopeLabel: PropTypes.string,
 	value: PropTypes.number,
 };
 

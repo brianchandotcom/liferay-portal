@@ -15,7 +15,10 @@
 package com.liferay.document.library.preview.pdf.internal.portlet.action;
 
 import com.liferay.document.library.preview.pdf.internal.configuration.admin.service.PDFPreviewManagedServiceFactory;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -62,6 +65,21 @@ public class PDFPreviewConfigurationDisplayContext {
 	public int getMaxNumberOfPages() throws PortalException {
 		return _pdfPreviewManagedServiceFactory.getMaxNumberOfPages(
 			_scope, _scopePK);
+	}
+
+	public String getSuperiorScopeLabel() {
+		if (_scope.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			return LanguageUtil.get(_httpServletRequest, "system-settings");
+		}
+		else if (_scope.equals(
+					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
+
+			return LanguageUtil.get(_httpServletRequest, "instance-settings");
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

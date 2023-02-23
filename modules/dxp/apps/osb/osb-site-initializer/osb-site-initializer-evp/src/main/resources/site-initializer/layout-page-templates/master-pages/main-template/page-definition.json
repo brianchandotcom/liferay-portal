@@ -75,6 +75,15 @@
 								"paddingBottom": "2",
 								"paddingTop": "2"
 							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingBottom": "2",
+										"paddingRight": "3"
+									},
+									"id": "landscapeMobile"
+								}
+							],
 							"indexed": true,
 							"layout": {
 								"align": "Center",
@@ -128,6 +137,15 @@
 													}
 												}
 											}
+										}
+									],
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"maxWidth": "55px",
+												"width": "55px"
+											},
+											"id": "landscapeMobile"
 										}
 									],
 									"indexed": true
@@ -187,9 +205,28 @@
 													"fragmentFields": [
 													],
 													"fragmentStyle": {
-														"paddingRight": "1",
-														"textAlign": ""
+														"paddingRight": "1"
 													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginTop": "3"
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"width": "90px"
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"paddingRight": "2"
+															},
+															"id": "tablet"
+														}
+													],
 													"indexed": true,
 													"widgetInstances": [
 														{
@@ -204,11 +241,27 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "login-button"
+														"key": "login-button",
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 													},
 													"fragmentFields": [
+													],
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginTop": "2",
+																"paddingTop": "0"
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"paddingRight": "1"
+															},
+															"id": "tablet"
+														}
 													],
 													"indexed": true
 												},
@@ -336,12 +389,13 @@
 										{
 											"id": "landscapeMobile",
 											"rowViewportDefinition": {
-												"modulesPerRow": 1
+												"modulesPerRow": 3
 											}
 										},
 										{
 											"id": "portraitMobile",
 											"rowViewportDefinition": {
+												"verticalAlignment": "middle"
 											}
 										},
 										{
@@ -358,7 +412,7 @@
 											"columnViewports": [
 												{
 													"columnViewportDefinition": {
-														"size": 12
+														"size": 4
 													},
 													"id": "landscapeMobile"
 												},
@@ -440,7 +494,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h6"
+																"textType": "h6",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -458,8 +513,7 @@
 															],
 															"fragmentStyle": {
 																"fontFamily": "fontFamilySansSerif",
-																"fontWeight": "fontWeightBold",
-																"textAlign": ""
+																"fontWeight": "fontWeightBold"
 															},
 															"indexed": true
 														},
@@ -476,7 +530,7 @@
 											"columnViewports": [
 												{
 													"columnViewportDefinition": {
-														"size": 12
+														"size": 4
 													},
 													"id": "landscapeMobile"
 												},
@@ -546,7 +600,6 @@
 															],
 															"fragmentStyle": {
 																"height": "56",
-																"textAlign": "",
 																"width": "70"
 															},
 															"indexed": true
@@ -564,7 +617,7 @@
 											"columnViewports": [
 												{
 													"columnViewportDefinition": {
-														"size": 12
+														"size": 4
 													},
 													"id": "landscapeMobile"
 												},
@@ -674,7 +727,8 @@
 										"key": "DIALECT-dialect-text"
 									},
 									"fragmentConfig": {
-										"textType": "h6"
+										"textType": "h6",
+										"truncateText": false
 									},
 									"fragmentFields": [
 										{

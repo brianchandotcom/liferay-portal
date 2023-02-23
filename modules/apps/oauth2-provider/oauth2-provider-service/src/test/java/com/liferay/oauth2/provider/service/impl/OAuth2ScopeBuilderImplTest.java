@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -233,24 +232,12 @@ public class OAuth2ScopeBuilderImplTest {
 			simpeEntryScopeAliases2.toString(), simpeEntryScopeAliases1.size(),
 			simpeEntryScopeAliases2.size());
 
-		boolean equal = true;
-
 		for (Map.Entry<Map.Entry<String, String>, Set<String>> entry :
 				simpeEntryScopeAliases1.entrySet()) {
 
-			if (Objects.equals(
-					simpeEntryScopeAliases2.get(entry.getKey()),
-					entry.getValue())) {
-
-				continue;
-			}
-
-			equal = false;
-
-			break;
+			Assert.assertEquals(
+				entry.getValue(), simpeEntryScopeAliases2.get(entry.getKey()));
 		}
-
-		Assert.assertTrue(equal);
 
 		// Test separate calls result in each scope mapping to a different scope
 		// alias

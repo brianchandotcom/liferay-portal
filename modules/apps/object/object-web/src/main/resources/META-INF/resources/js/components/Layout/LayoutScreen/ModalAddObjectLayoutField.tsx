@@ -174,15 +174,17 @@ export default function ModalAddObjectLayoutField({
 										: Liferay.Language.get('optional')}
 								</ClayLabel>
 
-								{(readOnlyField.value === 'true' ||
-									readOnlyField.value === 'conditional') && (
-									<ClayLabel
-										className="label-inside-custom-select"
-										displayType="secondary"
-									>
-										{Liferay.Language.get('read-only')}
-									</ClayLabel>
-								)}
+								{Liferay.FeatureFlags['LPS-159913'] &&
+									(readOnlyField.value === 'true' ||
+										readOnlyField.value ===
+											'conditional') && (
+										<ClayLabel
+											className="label-inside-custom-select"
+											displayType="secondary"
+										>
+											{Liferay.Language.get('read-only')}
+										</ClayLabel>
+									)}
 							</>
 						}
 						creationLanguageId={
@@ -200,9 +202,11 @@ export default function ModalAddObjectLayoutField({
 								(fieldSetting) =>
 									fieldSetting.name === 'readOnly'
 							);
+
 							if (readOnlySetting) {
 								setReadOnlyField(readOnlySetting);
 							}
+
 							setSelectedObjectField(item);
 							setValues({objectFieldName: item.name});
 						}}
@@ -228,18 +232,24 @@ export default function ModalAddObjectLayoutField({
 											: Liferay.Language.get('optional')}
 									</ClayLabel>
 
-									{objectFieldSettings?.find(
-										(fieldSetting: ObjectFieldSetting) =>
-											fieldSetting.value === 'true' ||
-											fieldSetting.value === 'conditional'
-									) && (
-										<ClayLabel
-											className="label-inside-custom-select"
-											displayType="secondary"
-										>
-											{Liferay.Language.get('read-only')}
-										</ClayLabel>
-									)}
+									{Liferay.FeatureFlags['LPS-159913'] &&
+										objectFieldSettings?.find(
+											(
+												fieldSetting: ObjectFieldSetting
+											) =>
+												fieldSetting.value === 'true' ||
+												fieldSetting.value ===
+													'conditional'
+										) && (
+											<ClayLabel
+												className="label-inside-custom-select"
+												displayType="secondary"
+											>
+												{Liferay.Language.get(
+													'read-only'
+												)}
+											</ClayLabel>
+										)}
 								</div>
 							</div>
 						)}

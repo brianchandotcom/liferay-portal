@@ -118,7 +118,7 @@ public class FilterContextProviderTest {
 	private ContextProvider<Filter> _contextProvider;
 
 	@Inject(
-		filter = "component.name=com.liferay.portal.vulcan.internal.jaxrs.feature.VulcanFeature"
+		filter = "component.name=com.liferay.portal.vulcan.internal.jaxrs.feature.VulcanFilterFeature"
 	)
 	private Feature _feature;
 

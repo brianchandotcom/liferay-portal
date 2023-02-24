@@ -190,9 +190,18 @@ public class LiferayPropertyAccessor implements PropertyAccessStrategy {
 						attributeSetterBiConsumers = null;
 
 					try {
+						ClassLoader classLoader = modelClass.getClassLoader();
+
+						String modelClassName = modelClass.getName();
+
+						Class<?> attributeGetterFunctionsHolderClass =
+							classLoader.loadClass(
+								modelClassName.concat(
+									"$AttributeGetterFunctionsHolder"));
+
 						Field attributeGetterFunctionsField =
-							modelClass.getDeclaredField(
-								"_attributeGetterFunctions");
+							attributeGetterFunctionsHolderClass.
+								getDeclaredField("_attributeGetterFunctions");
 
 						attributeGetterFunctionsField.setAccessible(true);
 
@@ -200,9 +209,14 @@ public class LiferayPropertyAccessor implements PropertyAccessStrategy {
 							(Map<String, Function<Object, Object>>)
 								attributeGetterFunctionsField.get(null);
 
+						Class<?> attributeSetterBiConsumersHolderClass =
+							classLoader.loadClass(
+								modelClassName.concat(
+									"$AttributeSetterBiConsumersHolder"));
+
 						Field attributeSetterBiConsumersField =
-							modelClass.getDeclaredField(
-								"_attributeSetterBiConsumers");
+							attributeSetterBiConsumersHolderClass.
+								getDeclaredField("_attributeSetterBiConsumers");
 
 						attributeSetterBiConsumersField.setAccessible(true);
 

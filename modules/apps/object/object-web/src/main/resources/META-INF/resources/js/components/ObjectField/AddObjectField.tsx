@@ -134,34 +134,35 @@ function ModalAddObjectField({
 						objectName={objectName}
 						setValues={setValues}
 					>
-						{showEnableTranslationToggle && (
-							<div className="lfr-objects-add-object-field-enable-translations-toggle">
-								<ClayToggle
-									label={Liferay.Language.get(
-										'enable-entry-translations'
-									)}
-									onToggle={() =>
-										setValues({
-											enableLocalization: !values.enableLocalization,
-										})
-									}
-									toggled={values.enableLocalization}
-								/>
-
-								<ClayTooltipProvider>
-									<span
-										title={Liferay.Language.get(
-											'users-will-be-able-to-add-translations-for-the-entries-of-this-field'
+						{Liferay.FeatureFlags['LPS-146755'] &&
+							showEnableTranslationToggle && (
+								<div className="lfr-objects-add-object-field-enable-translations-toggle">
+									<ClayToggle
+										label={Liferay.Language.get(
+											'enable-entry-translations'
 										)}
-									>
-										<ClayIcon
-											className="lfr-objects-add-object-field-enable-translations-toggle-icon"
-											symbol="question-circle-full"
-										/>
-									</span>
-								</ClayTooltipProvider>
-							</div>
-						)}
+										onToggle={() =>
+											setValues({
+												enableLocalization: !values.enableLocalization,
+											})
+										}
+										toggled={values.enableLocalization}
+									/>
+
+									<ClayTooltipProvider>
+										<span
+											title={Liferay.Language.get(
+												'users-will-be-able-to-add-translations-for-the-entries-of-this-field'
+											)}
+										>
+											<ClayIcon
+												className="lfr-objects-add-object-field-enable-translations-toggle-icon"
+												symbol="question-circle-full"
+											/>
+										</span>
+									</ClayTooltipProvider>
+								</div>
+							)}
 					</ObjectFieldFormBase>
 				</ClayModal.Body>
 

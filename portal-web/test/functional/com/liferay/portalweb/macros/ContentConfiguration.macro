@@ -11,6 +11,8 @@ definition {
 	}
 
 	macro checkPageName {
+		TestUtils.maximizeWindow();
+
 		ContentConfiguration.uncheckPages();
 
 		for (var pageName : list ${checkPageName}) {

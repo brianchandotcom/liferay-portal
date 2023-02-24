@@ -264,6 +264,10 @@ public class ObjectDefinitionResourceTest
 			});
 		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+			objectDefinition.setModifiable((Boolean)null);
+		}
+
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
 			objectDefinition.setStorageType(StringPool.BLANK);
 		}

@@ -516,7 +516,9 @@ public abstract class BaseObjectEntryResourceImpl
 			ObjectEntry objectEntry)
 		throws Exception {
 
-		ObjectEntry existingObjectEntry = getByExternalReferenceCode(scopeKey);
+		ObjectEntry existingObjectEntry =
+			getScopeScopeKeyByExternalReferenceCode(
+				scopeKey, externalReferenceCode);
 
 		if (objectEntry.getActions() != null) {
 			existingObjectEntry.setActions(objectEntry.getActions());
@@ -545,7 +547,8 @@ public abstract class BaseObjectEntryResourceImpl
 
 		preparePatch(objectEntry, existingObjectEntry);
 
-		return putByExternalReferenceCode(scopeKey, existingObjectEntry);
+		return putScopeScopeKeyByExternalReferenceCode(
+			scopeKey, externalReferenceCode, existingObjectEntry);
 	}
 
 	@io.swagger.v3.oas.annotations.Parameters(

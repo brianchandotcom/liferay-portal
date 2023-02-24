@@ -64,7 +64,7 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 		Class<?> clazz = getClass();
 
 		Trigger trigger = _triggerFactory.createTrigger(
-			clazz.getName(), clazz.getName(), new Date(), null, "0 0 0 * * ?");
+			clazz.getName(), clazz.getName(), null, null, "0 0 0 * * ?");
 
 		_schedulerEntryImpl = new SchedulerEntryImpl(clazz.getName(), trigger);
 

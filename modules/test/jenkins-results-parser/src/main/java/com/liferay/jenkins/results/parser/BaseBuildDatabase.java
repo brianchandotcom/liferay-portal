@@ -180,7 +180,13 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	public boolean hasJob(String key) {
 		JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
 
-		return jobsJSONObject.has(key);
+		JSONObject jobJSONObject = jobsJSONObject.getJSONObject(key);
+
+		if (jobsJSONObject.has(key) && !jobJSONObject.isEmpty()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -307,17 +307,35 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			sb.setStringAt(")", sb.index() - 1);
 		}
 		else {
+			sb.append("(");
 			sb.append(tableName);
 			sb.append(".");
 			sb.append(primaryKeyName);
 			sb.append(" in (");
 
+			int i = 0;
+			int batchSize = 1000;
+
 			for (CTEntry ctEntry : ctEntries) {
+				if (i == batchSize) {
+					sb.setStringAt(")", sb.index() - 1);
+					sb.append(" or ");
+					sb.append(tableName);
+					sb.append(".");
+					sb.append(primaryKeyName);
+					sb.append(" in (");
+
+					i = 0;
+				}
+
 				sb.append(ctEntry.getModelClassPK());
 				sb.append(", ");
+
+				i++;
 			}
 
 			sb.setStringAt(")", sb.index() - 1);
+			sb.append(")");
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -350,15 +368,31 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		sb.append(" where ctCollectionId = ");
 		sb.append(ctCollectionId);
 		sb.append(" and ");
+		sb.append("(");
 		sb.append(primaryKeyName);
 		sb.append(" in (");
 
+		int i = 0;
+		int batchSize = 1000;
+
 		for (Serializable serializable : ctEntries.keySet()) {
+			if (i == batchSize) {
+				sb.setStringAt(")", sb.index() - 1);
+				sb.append(" or ");
+				sb.append(primaryKeyName);
+				sb.append(" in (");
+
+				i = 0;
+			}
+
 			sb.append(serializable);
 			sb.append(", ");
+
+			i++;
 		}
 
 		sb.setStringAt(")", sb.index() - 1);
+		sb.append(")");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sb.toString());

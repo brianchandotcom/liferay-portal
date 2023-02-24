@@ -189,11 +189,7 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 					" has client ID ", oAuth2Application.getClientId()));
 		}
 
-		Class<?> clazz = getClass();
-
-		return oAuth2ApplicationLocalService.updateIcon(
-			oAuth2Application.getOAuth2ApplicationId(),
-			clazz.getResourceAsStream("dependencies/logo.png"));
+		return oAuth2Application;
 	}
 
 	private User _getServiceUser(

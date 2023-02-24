@@ -182,11 +182,7 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 					" has client ID ", oAuth2Application.getClientId()));
 		}
 
-		Class<?> clazz = getClass();
-
-		return oAuth2ApplicationLocalService.updateIcon(
-			oAuth2Application.getOAuth2ApplicationId(),
-			clazz.getResourceAsStream("dependencies/logo.png"));
+		return oAuth2Application;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -263,11 +263,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ROLES_REGULAR_ROLES_REMOVE_ROLE</td>
-	<td>//tr[contains(.,'${key_regularRoleName}')]//span[contains(@class,' lfr-portal-tooltip')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ROLES_REGULAR_ROLES_TABLE_TITLE</td>
 	<td>//tr[contains(.,'${key_regularRoleName}')]/td[1]</td>
 	<td></td>

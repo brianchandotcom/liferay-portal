@@ -18,6 +18,7 @@ import com.liferay.analytics.settings.rest.dto.v1_0.Channel;
 import com.liferay.analytics.settings.rest.dto.v1_0.DataSource;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -55,7 +56,12 @@ public class ChannelDTOConverter
 					channelDTOConverterContext.isCommerceSyncEnabled(
 						String.valueOf(analyticsChannel.getId()));
 				dataSources = TransformUtil.transform(
-					analyticsChannel.getAnalyticsDataSources(),
+					ArrayUtil.filter(
+						analyticsChannel.getAnalyticsDataSources(),
+						analyticsDataSource ->
+							channelDTOConverterContext.
+								isLocalAnalyticsDataSource(
+									analyticsDataSource.getId())),
 					analyticsDataSource -> _dataSourceDTOConverter.toDTO(
 						analyticsDataSource),
 					DataSource.class);

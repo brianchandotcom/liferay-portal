@@ -29,6 +29,7 @@ Import-Package:\
 	\
 	!com.sun.net.httpserver,\
 	\
+	!io.micrometer.context.*,\
 	!io.micrometer.core.instrument,\
 	!io.micrometer.core.instrument.binder.jvm,\
 	!io.micrometer.core.instrument.composite,\
@@ -85,6 +86,7 @@ Import-Package:\
 	!org.bouncycastle.openssl.jcajce,\
 	!org.bouncycastle.operator,\
 	!org.bouncycastle.operator.jcajce,\
+	!org.bouncycastle.pkcs.*,\
 	\
 	!org.conscrypt,\
 	\
@@ -126,4 +128,4 @@ Import-Package:\
 	!zipkin2.internal.gson.internal.bind,\
 	\
 	*
--fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/11/";is:=warning
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=warning

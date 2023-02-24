@@ -158,28 +158,21 @@ const TestFlow = () => {
 						},
 						{
 							key: 'users',
-							render: (users: UserAccount[]) => {
-								try {
-									return (
-										<Avatar.Group
-											assignedUsers={users.map(
-												({image, name}) => ({
-													name,
-													url: image,
-												})
-											)}
-											groupSize={3}
-										/>
-									);
-								}
-								catch {
-									return '';
-								}
-							},
-							value: i18n.translate('assigned'),
+							render: (users: UserAccount[]) => (
+								<Avatar.Group
+									assignedUsers={users.map(
+										({image, name}) => ({
+											name,
+											url: image,
+										})
+									)}
+									groupSize={3}
+								/>
+							),
+							value: i18n.translate('assigned-users'),
 						},
 					],
-					navigateTo: (item) => `/testflow/${item.id}`,
+					navigateTo: (task) => `/testflow/${task.id}`,
 					rowWrap: true,
 				}}
 				transformData={(response) =>

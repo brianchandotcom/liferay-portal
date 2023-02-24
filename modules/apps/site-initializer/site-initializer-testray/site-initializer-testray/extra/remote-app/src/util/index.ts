@@ -23,7 +23,8 @@ export function getUniqueList(items: number[]) {
 export function safeJSONParse(value: string, defaultValue: any = null) {
 	try {
 		return JSON.parse(value);
-	} catch (error) {
+	}
+	catch (error) {
 		return defaultValue;
 	}
 }

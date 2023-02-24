@@ -50,7 +50,6 @@ export default {
 	'assign-to-me-and-x': 'Assign to Me and {0}',
 	'assign-user-groups': 'Assign User Groups',
 	'assign-users': 'Assign Users',
-	'assigned': 'Assigned',
 	'assigned-users': 'Assigned Users',
 	'assignee': 'Assignee',
 	'associated-requirements': 'Associated Requirements',

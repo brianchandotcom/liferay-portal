@@ -196,7 +196,8 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			);
 
 			return {mbMessage, mbThreadId};
-		} catch {
+		}
+		catch {
 			return {};
 		}
 	}

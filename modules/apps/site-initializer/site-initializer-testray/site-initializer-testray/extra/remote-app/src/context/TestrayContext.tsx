@@ -148,6 +148,7 @@ const TestrayContextProvider: React.FC<{
 			givenName: user?.givenName,
 			id: user?.id,
 			image: user.image,
+			name: user.name,
 			roleBriefs: user?.roleBriefs,
 			userGroupBriefs: user?.userGroupBriefs,
 			uuid: user?.uuid,

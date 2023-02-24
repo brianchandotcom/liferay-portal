@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -190,9 +189,6 @@ public class LayoutPageTemplateEntryItemSelectorView
 			).put(
 				"previewURL",
 				() -> {
-					Layout layout = _layoutLocalService.getLayout(
-						_layoutPageTemplateEntry.getPlid());
-
 					if (_layoutPageTemplateEntry.getType() ==
 							LayoutPageTemplateEntryTypeConstants.
 								TYPE_DISPLAY_PAGE) {
@@ -217,7 +213,10 @@ public class LayoutPageTemplateEntryItemSelectorView
 					}
 
 					String layoutURL = HttpComponentsUtil.addParameter(
-						PortalUtil.getLayoutFullURL(layout, _themeDisplay),
+						PortalUtil.getLayoutFullURL(
+							_layoutLocalService.getLayout(
+								_layoutPageTemplateEntry.getPlid()),
+							_themeDisplay),
 						"p_l_mode", Constants.PREVIEW);
 
 					return HttpComponentsUtil.addParameter(

@@ -175,6 +175,14 @@ public abstract class BaseIndexingTestCase {
 	}
 
 	protected void addDocuments(
+		Function<Double, DocumentCreationHelper> function, double... values) {
+
+		for (double value : values) {
+			addDocument(function.apply(value));
+		}
+	}
+
+	protected void addDocuments(
 		Function<String, DocumentCreationHelper> function, String... values) {
 
 		for (String value : values) {

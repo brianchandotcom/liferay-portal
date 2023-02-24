@@ -14,11 +14,15 @@
 
 export function onActionDropdownItemClick<T>({
 	action,
+	event,
 	itemData,
 }: {
 	action: FDSAction;
+	event: Event;
 	itemData: T;
 }) {
+	event.preventDefault();
+
 	if (action.target === 'event') {
 		Liferay.fire(action.id, {itemData});
 	}

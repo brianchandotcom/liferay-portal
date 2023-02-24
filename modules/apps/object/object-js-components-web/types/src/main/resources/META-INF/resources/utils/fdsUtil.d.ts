@@ -14,9 +14,11 @@
 
 export declare function onActionDropdownItemClick<T>({
 	action,
+	event,
 	itemData,
 }: {
 	action: FDSAction;
+	event: Event;
 	itemData: T;
 }): void;
 interface FDSAction {

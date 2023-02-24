@@ -1,0 +1,43 @@
+{
+	"accountEntryRestricted": false,
+	"label": {
+		"en_US": "Test Object Definition 3"
+	},
+	"name": "TestObjectDefinition3",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Field 1"
+			},
+			"name": "field1",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Field 2"
+			},
+			"name": "field2",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Field 3"
+			},
+			"name": "field3",
+			"required": false
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Test Object Definitions 3"
+	},
+	"scope": "company"
+}

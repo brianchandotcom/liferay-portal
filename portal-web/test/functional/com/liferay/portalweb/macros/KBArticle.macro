@@ -171,6 +171,12 @@ definition {
 				vocabularyName = ${vocabularyName});
 		}
 
+		if (${configureReviewDate} == "true") {
+			KBArticle.setReviewDate(
+				increaseMinutes = ${increaseMinutes},
+				uncheckNeverReview = ${uncheckNeverReview});
+		}
+
 		if (${enableExpirationDate} == "true") {
 			Panel.expandPanel(panel = "Expiration Date");
 

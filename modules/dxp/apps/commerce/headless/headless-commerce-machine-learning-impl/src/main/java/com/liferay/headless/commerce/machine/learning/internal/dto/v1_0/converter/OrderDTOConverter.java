@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.convert
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -104,7 +105,9 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
-	@Reference
-	private OrderItemDTOConverter _orderItemDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.OrderItemDTOConverter)"
+	)
+	private DTOConverter<CommerceOrderItem, OrderItem> _orderItemDTOConverter;
 
 }

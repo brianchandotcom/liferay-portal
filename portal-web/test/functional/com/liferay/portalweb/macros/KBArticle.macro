@@ -1138,6 +1138,17 @@ definition {
 		}
 	}
 
+	macro updateCheckInterval {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_configurationScreenKey=knowledge-base-service");
+
+		Type(
+			key_text = "Check Interval",
+			locator1 = "TextInput#ANY",
+			value1 = ${fieldValue});
+
+		SystemSettings.saveConfiguration();
+	}
+
 	macro viewActionsDetailsToolbar {
 		AssertVisible(
 			key_text = "pencil",

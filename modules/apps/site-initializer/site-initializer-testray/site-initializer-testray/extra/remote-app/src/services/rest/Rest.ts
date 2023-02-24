@@ -140,7 +140,9 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		let searchParams = Rest.getPageParameter(options);
 
 		if (searchParams) {
-			searchParams = `?${searchParams}`;
+			const operator = this.resource.includes('?') ? '&' : '?';
+
+			searchParams = `${operator}${searchParams}`;
 		}
 
 		return this.fetcher(`${this.resource}${searchParams}`);

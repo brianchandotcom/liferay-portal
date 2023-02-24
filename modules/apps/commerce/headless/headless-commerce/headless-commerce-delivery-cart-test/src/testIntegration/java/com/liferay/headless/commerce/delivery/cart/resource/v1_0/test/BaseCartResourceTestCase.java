@@ -425,7 +425,7 @@ public abstract class BaseCartResourceTestCase {
 			testGetChannelCartsPage_getIrrelevantChannelId();
 
 		Page<Cart> page = cartResource.getChannelCartsPage(
-			accountId, channelId, Pagination.of(1, 10));
+			accountId, channelId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -435,7 +435,8 @@ public abstract class BaseCartResourceTestCase {
 				randomIrrelevantCart());
 
 			page = cartResource.getChannelCartsPage(
-				irrelevantAccountId, irrelevantChannelId, Pagination.of(1, 2));
+				irrelevantAccountId, irrelevantChannelId, null,
+				Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -454,7 +455,7 @@ public abstract class BaseCartResourceTestCase {
 			accountId, channelId, randomCart());
 
 		page = cartResource.getChannelCartsPage(
-			accountId, channelId, Pagination.of(1, 10));
+			accountId, channelId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -493,14 +494,14 @@ public abstract class BaseCartResourceTestCase {
 			accountId, channelId, randomCart());
 
 		Page<Cart> page1 = cartResource.getChannelCartsPage(
-			accountId, channelId, Pagination.of(1, 2));
+			accountId, channelId, null, Pagination.of(1, 2));
 
 		List<Cart> carts1 = (List<Cart>)page1.getItems();
 
 		Assert.assertEquals(carts1.toString(), 2, carts1.size());
 
 		Page<Cart> page2 = cartResource.getChannelCartsPage(
-			accountId, channelId, Pagination.of(2, 2));
+			accountId, channelId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -509,7 +510,7 @@ public abstract class BaseCartResourceTestCase {
 		Assert.assertEquals(carts2.toString(), 1, carts2.size());
 
 		Page<Cart> page3 = cartResource.getChannelCartsPage(
-			accountId, channelId, Pagination.of(1, 3));
+			accountId, channelId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(cart1, cart2, cart3), (List<Cart>)page3.getItems());

@@ -1096,6 +1096,36 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro setReviewDate {
+		Panel.expandPanel(panel = "Expiration Date");
+
+		if (isSet(uncheckNeverReview)) {
+			AssertChecked(
+				checkboxName = "Never Review",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Uncheck(
+				checkboxName = "Never Review",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		var reviewDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
+
+		echo("## * reviewDate: ${reviewDate}");
+
+		var reviewDateTime = DateUtil.getDateOffsetByMinutes(${increaseMinutes}, "hh:mm a");
+
+		echo("## * reviewDateTime: ${reviewDateTime}");
+
+		Type(
+			locator1 = "TextInput#REVIEW_DATE",
+			value1 = ${reviewDate});
+
+		Type(
+			locator1 = "TextInput#REVIEW_DATE_TIME",
+			value1 = ${reviewDateTime});
+	}
+
 	macro subscribeCP {
 		if (isSet(subscribeActionToolbar)) {
 			Click(

@@ -19,12 +19,15 @@ import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
 
 import {
+	HAS_OPERATORS,
 	PROPERTY_TYPES,
+	SUPPORTED_EVENT_OPERATORS,
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
 } from '../../utils/constants.es';
 import {
 	createNewGroup,
+	getSupportedOperatorsFromEvent,
 	getSupportedOperatorsFromType,
 } from '../../utils/utils.es';
 import BooleanInput from '../inputs/BooleanInput.es';
@@ -78,6 +81,15 @@ class CriteriaRowEditable extends Component {
 		});
 	};
 
+	_handleHasNotChange = (propertyName) => (event) => {
+		const {criterion, onChange} = this.props;
+
+		onChange({
+			...criterion,
+			[propertyName]: event.target.value,
+		});
+	};
+
 	/**
 	 * Updates the criteria with a criterion value change. The param 'value'
 	 * will only be an array when selecting multiple entities (see
@@ -105,9 +117,103 @@ class CriteriaRowEditable extends Component {
 		}
 	};
 
+	_renderEditableEventProperty = ({
+		criterion,
+		error,
+		propertyLabel,
+		renderEmptyValuesErrors,
+		selectedProperty,
+		value,
+	}) => {
+		const disabledInput = !!error;
+
+		const notOperators = getSupportedOperatorsFromEvent(
+			SUPPORTED_EVENT_OPERATORS,
+			SUPPORTED_PROPERTY_TYPES,
+			'NOT'
+		);
+
+		const notOperatorKey = criterion.operatorNot
+			? HAS_OPERATORS.NOT_HAS
+			: HAS_OPERATORS.HAS;
+
+		const integerOperators = getSupportedOperatorsFromEvent(
+			SUPPORTED_EVENT_OPERATORS,
+			SUPPORTED_PROPERTY_TYPES,
+			'INTEGER'
+		);
+
+		const integerOperatorLabel = integerOperators.find(
+			(operator) => operator.name === criterion.operatorName
+		)?.name;
+
+		return (
+			<div className="ml-2" style={{flexGrow: 1}}>
+				<div className="align-items-center d-flex mb-2">
+					<span className="mr-1 text-dark">
+						{Liferay.Language.get('user')}
+					</span>
+
+					<ClaySelectWithOption
+						aria-label={`${propertyLabel}: ${Liferay.Language.get(
+							'select-has-operator-option'
+						)}`}
+						className="criterion-input form-control operator-input"
+						disabled={disabledInput}
+						onChange={this._handleInputChange('operatorName')}
+						options={notOperators.map(({label, name}) => ({
+							label,
+							value: name,
+						}))}
+						value={notOperatorKey}
+					/>
+
+					<span className="criterion-string">
+						<b>{propertyLabel}</b>
+					</span>
+
+					<SelectEntityInput
+						disabled={disabledInput}
+						displayValue={criterion.assetId}
+						onChange={this._handleTypedInputChange}
+						propertyLabel={propertyLabel}
+						renderEmptyValueErrors={renderEmptyValuesErrors}
+						selectEntity={selectedProperty.selectEntity}
+					/>
+				</div>
+
+				<div className="align-items-center d-flex">
+					<ClaySelectWithOption
+						aria-label={`${propertyLabel}: ${Liferay.Language.get(
+							'select-count-operator-option'
+						)}`}
+						className="criterion-input form-control operator-input"
+						disabled={disabledInput}
+						onChange={this._handleInputChange('operatorName')}
+						options={integerOperators.map(({label, name}) => ({
+							label,
+							value: name,
+						}))}
+						value={integerOperatorLabel}
+					/>
+
+					<IntegerInput
+						className="criterion-input form-control"
+						data-testid="integer-number"
+						disabled={disabledInput}
+						onChange={this._handleTypedInputChange}
+						type="number"
+						value={value}
+					/>
+				</div>
+			</div>
+		);
+	};
+
 	_renderEditableProperty = ({
 		error,
 		propertyLabel,
+		propertyType,
 		selectedOperator,
 		selectedProperty,
 		value,
@@ -115,8 +221,6 @@ class CriteriaRowEditable extends Component {
 		const disabledInput = !!error;
 
 		const renderEmptyValuesErrors = this.props.renderEmptyValuesErrors;
-
-		const propertyType = selectedProperty ? selectedProperty.type : '';
 
 		const filteredSupportedOperators = getSupportedOperatorsFromType(
 			SUPPORTED_OPERATORS,
@@ -199,6 +303,7 @@ class CriteriaRowEditable extends Component {
 			connectDragSource,
 			criterion,
 			error,
+			renderEmptyValuesErrors,
 			selectedOperator,
 			selectedProperty,
 		} = this.props;
@@ -206,6 +311,8 @@ class CriteriaRowEditable extends Component {
 		const value = criterion.value;
 
 		const propertyLabel = selectedProperty ? selectedProperty.label : '';
+
+		const propertyType = selectedProperty ? selectedProperty.type : '';
 
 		return (
 			<div className="edit-container">
@@ -215,13 +322,25 @@ class CriteriaRowEditable extends Component {
 					</div>
 				)}
 
-				{this._renderEditableProperty({
-					error,
-					propertyLabel,
-					selectedOperator,
-					selectedProperty,
-					value,
-				})}
+				{selectedProperty.type === PROPERTY_TYPES.EVENT
+					? this._renderEditableEventProperty({
+							criterion,
+							error,
+							propertyLabel,
+							propertyType,
+							renderEmptyValuesErrors,
+							selectedOperator,
+							selectedProperty,
+							value,
+					  })
+					: this._renderEditableProperty({
+							error,
+							propertyLabel,
+							propertyType,
+							selectedOperator,
+							selectedProperty,
+							value,
+					  })}
 
 				{error ? (
 					<ClayButton

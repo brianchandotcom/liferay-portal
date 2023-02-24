@@ -280,10 +280,12 @@ export default function EditObjectDetails({
 						values={values}
 					/>
 
-					<TranslationsContainer
-						setValues={setValues}
-						values={values}
-					/>
+					{Liferay.FeatureFlags['LPS-146755'] && (
+						<TranslationsContainer
+							setValues={setValues}
+							values={values}
+						/>
+					)}
 				</Sheet>
 			</div>
 		</>

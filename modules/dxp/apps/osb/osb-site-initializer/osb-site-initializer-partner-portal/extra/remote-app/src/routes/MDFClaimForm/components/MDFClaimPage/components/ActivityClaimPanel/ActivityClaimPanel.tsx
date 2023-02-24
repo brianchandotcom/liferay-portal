@@ -73,6 +73,9 @@ const ActivityClaimPanel = ({
 			[activityIndex, setFieldValue]
 		)
 	);
+	const displayActivityClaimCheckbox =
+		activity.activityStatus?.key !== Status.EXPIRED.key &&
+		!activity.claimed;
 
 	return (
 		<>
@@ -91,7 +94,7 @@ const ActivityClaimPanel = ({
 						}
 					}}
 				>
-					{activity.activityStatus?.key !== Status.EXPIRED.key && (
+					{displayActivityClaimCheckbox && (
 						<PRMFormik.Field
 							component={PRMForm.Checkbox}
 							name={`activities[${activityIndex}].selected`}

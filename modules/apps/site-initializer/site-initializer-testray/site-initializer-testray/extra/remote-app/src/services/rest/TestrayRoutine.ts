@@ -17,6 +17,7 @@ import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {SearchBuilder} from '../../util/search';
 import Rest from './Rest';
+import {testrayBuildImpl} from './TestrayBuild';
 import {APIResponse, TestrayRoutine} from './types';
 
 type RoutineFormType = typeof yupSchema.routine.__outputType & {
@@ -31,6 +32,14 @@ class TestrayRoutineImpl extends Rest<RoutineFormType, TestrayRoutine> {
 				id: routine.id,
 				name: routine.name,
 				r_routineToProjects_c_projectId: routine.projectId,
+			}),
+			nestedFields: 'routineToBuilds',
+			transformData: (testrayRoutine) => ({
+				...testrayRoutine,
+				builds:
+					testrayBuildImpl.transformData(
+						testrayRoutine.routineToBuilds
+					) ?? [],
 			}),
 			uri: 'routines',
 		});

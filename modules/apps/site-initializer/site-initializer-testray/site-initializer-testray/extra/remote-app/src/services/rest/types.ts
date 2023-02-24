@@ -130,6 +130,7 @@ export type TestrayCaseResult = {
 	attachments: string;
 	build?: TestrayBuild;
 	case?: TestrayCase;
+	caseResultToCaseResultsIssues: TestrayCaseResultIssue[];
 	closedDate: string;
 	comment: string;
 	component?: TestrayComponent;
@@ -138,7 +139,7 @@ export type TestrayCaseResult = {
 	dueStatus: PickList;
 	errors: string;
 	id: number;
-	issues: string;
+	issues: TestrayCaseResultIssue[];
 	key: string;
 	mbMessageId: number;
 	mbThreadId: number;
@@ -384,9 +385,11 @@ export type TestrayFactorCategory = {
 };
 
 export type TestrayRoutine = {
+	builds: TestrayBuild[];
 	dateCreated: string;
 	id: number;
 	name: string;
+	routineToBuilds: TestrayBuild[];
 };
 
 export type TestrayFactor = {

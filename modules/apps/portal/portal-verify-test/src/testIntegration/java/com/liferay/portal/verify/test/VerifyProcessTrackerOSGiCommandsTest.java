@@ -84,7 +84,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable1 = _executeInitialUpgradeProcess();
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(true, true)) {
 
-			Assert.assertTrue(_verifyProcessRun);
+			_checkResult(true);
 		}
 	}
 
@@ -95,14 +95,14 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				true, true)) {
 
-			Assert.assertTrue(_verifyProcessRun);
+			_checkResult(true);
 		}
 	}
 
 	@Test
 	public void testRegisterInitialDeploymentAndRunOnPortalUpgradeVerifyProcessDuringInitialDeployment() {
 		try (SafeCloseable safeCloseable = _registerVerifyProcess(true, true)) {
-			Assert.assertTrue(_verifyProcessRun);
+			_checkResult(true);
 		}
 	}
 
@@ -112,7 +112,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				true, false)) {
 
-			Assert.assertTrue(_verifyProcessRun);
+			_checkResult(true);
 		}
 	}
 
@@ -122,7 +122,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				true, false)) {
 
-			Assert.assertTrue(_verifyProcessRun);
+			_checkResult(true);
 		}
 	}
 
@@ -133,7 +133,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				true, false)) {
 
-			Assert.assertTrue(_verifyProcessRun);
+			_checkResult(true);
 		}
 	}
 
@@ -142,7 +142,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable = _registerVerifyProcess(
 				true, false)) {
 
-			Assert.assertTrue(_verifyProcessRun);
+			_checkResult(true);
 		}
 	}
 
@@ -152,7 +152,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				true, false)) {
 
-			Assert.assertFalse(_verifyProcessRun);
+			_checkResult(false);
 		}
 	}
 
@@ -162,7 +162,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, true)) {
 
-			Assert.assertFalse(_verifyProcessRun);
+			_checkResult(false);
 		}
 	}
 
@@ -173,7 +173,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, true)) {
 
-			Assert.assertTrue(_verifyProcessRun);
+			_checkResult(true);
 		}
 	}
 
@@ -182,7 +182,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable = _registerVerifyProcess(
 				false, true)) {
 
-			Assert.assertFalse(_verifyProcessRun);
+			_checkResult(false);
 		}
 	}
 
@@ -192,7 +192,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, true)) {
 
-			Assert.assertTrue(_verifyProcessRun);
+			_checkResult(true);
 		}
 	}
 
@@ -202,7 +202,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, false)) {
 
-			Assert.assertFalse(_verifyProcessRun);
+			_checkResult(false);
 		}
 	}
 
@@ -213,7 +213,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, false)) {
 
-			Assert.assertTrue(_verifyProcessRun);
+			_checkResult(true);
 		}
 	}
 
@@ -222,7 +222,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		try (SafeCloseable safeCloseable = _registerVerifyProcess(
 				false, false)) {
 
-			Assert.assertFalse(_verifyProcessRun);
+			_checkResult(false);
 		}
 	}
 
@@ -232,8 +232,20 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(
 				false, false)) {
 
-			Assert.assertFalse(_verifyProcessRun);
+			_checkResult(false);
 		}
+	}
+
+	private void _checkResult(boolean verifyProcessRun) {
+		Release release = _releaseLocalService.fetchRelease(_symbolicName);
+
+		if (!verifyProcessRun) {
+			Assert.assertNull(release);
+
+			return;
+		}
+
+		Assert.assertTrue(release.getVerified());
 	}
 
 	private SafeCloseable _executeInitialUpgradeProcess() {

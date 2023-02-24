@@ -992,28 +992,20 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			}
 
 			try {
-				String fragmentJSON = StringUtil.read(
-					zipFile.getInputStream(zipEntry));
-
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
-					fragmentJSON);
+					StringUtil.read(zipFile.getInputStream(zipEntry)));
 
 				String path = name.substring(
 					0, name.lastIndexOf(StringPool.SLASH) + 1);
 
-				for (String resourcePath :
-						new String[] {
-							path + "fragment.json",
-							path + jsonObject.getString("configuration"),
-							path + jsonObject.getString("cssPath"),
-							path + jsonObject.getString("htmlPath"),
-							path + jsonObject.getString("icon"),
-							path + jsonObject.getString("jsPath"),
-							path + jsonObject.getString("thumbnailPath")
-						}) {
-
-					excludePaths.add(resourcePath);
-				}
+				Collections.addAll(
+					excludePaths, path + "fragment.json",
+					path + jsonObject.getString("configuration"),
+					path + jsonObject.getString("cssPath"),
+					path + jsonObject.getString("htmlPath"),
+					path + jsonObject.getString("icon"),
+					path + jsonObject.getString("jsPath"),
+					path + jsonObject.getString("thumbnailPath"));
 			}
 			catch (Exception exception) {
 				_log.error(

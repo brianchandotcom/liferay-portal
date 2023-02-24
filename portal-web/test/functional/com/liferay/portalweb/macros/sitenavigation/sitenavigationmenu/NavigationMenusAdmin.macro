@@ -73,7 +73,7 @@ definition {
 	macro addItem {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "Button#PLUS");
+		Button.clickAdd();
 
 		MenuItem.click(menuItem = ${item});
 
@@ -102,9 +102,7 @@ definition {
 		}
 
 		if (${item} == "Web Content Article") {
-			Click(
-				key_listEntry = ${assetTitle},
-				locator1 = "LexiconList#LIST_ENTRY_TITLE");
+			LexiconCard.clickCard(card = ${assetTitle});
 		}
 
 		if (${item} == "Blogs Entry") {

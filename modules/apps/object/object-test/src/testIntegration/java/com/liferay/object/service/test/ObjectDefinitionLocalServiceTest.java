@@ -898,16 +898,24 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinitionVersionException.getMessage());
 		}
 
-		// Database table, resources, and status
+		// ClassName , database table, resources, and status
+
+		String className = "Test";
 
 		objectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), "Test", null,
+				TestPropsValues.getUserId(), className, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				Collections.<ObjectField>emptyList());
+
+		// ClassName
+
+		Assert.assertEquals(
+			className + StringPool.POUND + TestPropsValues.getCompanyId(),
+			objectDefinition.getClassName());
 
 		_objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(), 0,

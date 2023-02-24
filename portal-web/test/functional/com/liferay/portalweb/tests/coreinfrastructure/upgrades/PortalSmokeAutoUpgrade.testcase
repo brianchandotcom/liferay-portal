@@ -86,13 +86,13 @@ definition {
 
 		Upgrade.viewUpgrade();
 
-		task ("Check the upgrade report is not present") {
+		task ("Check the upgrade report is not present without property upgrade.database.auto.run=true") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 			var reportFileExists = FileUtil.exists("${liferayHome}/reports/upgrade_report.info");
 
 			if (${reportFileExists} == "true") {
-				fail("Upgrade report found in ${liferayHome}/reports");
+				fail("Unexpected upgrade report found in ${liferayHome}/reports.");
 			}
 		}
 	}

@@ -122,9 +122,6 @@ public class BatchEngineFileInstaller implements FileInstaller {
 		catch (Exception exception) {
 			throw new AutoDeployException(exception);
 		}
-		finally {
-			file.delete();
-		}
 
 		return null;
 	}

@@ -110,8 +110,6 @@ public class FragmentFileInstaller implements FileInstaller {
 			_log.error(exception);
 		}
 		finally {
-			file.delete();
-
 			PermissionThreadLocal.setPermissionChecker(
 				currentPermissionChecker);
 			PrincipalThreadLocal.setName(currentName);

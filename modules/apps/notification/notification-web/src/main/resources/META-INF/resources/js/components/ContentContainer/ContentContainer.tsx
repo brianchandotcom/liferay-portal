@@ -167,7 +167,9 @@ export default function ContentContainer({
 				objectDefinitions={objectDefinitions}
 			/>
 
-			<GeneralTerms baseResourceURL={baseResourceURL} />
+			{Liferay.FeatureFlags['LPS-171625'] && (
+				<GeneralTerms baseResourceURL={baseResourceURL} />
+			)}
 
 			{values.type === 'email' && (
 				<Attachments setValues={setValues} values={values} />

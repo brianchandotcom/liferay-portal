@@ -149,36 +149,6 @@ definition {
 			locator1 = "ClientExtension#TABLE_ENTRY_URL_REMOTE_TABLE");
 	}
 
-	@description = "This is a test for COMMERCE-6301. AddVirtualProduct"
-	@priority = 3
-	test AddVirtualProduct {
-		property portal.acceptance = "false";
-
-		// TODO Review
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Master",
-			productName = "Virtual Book",
-			productType = "Virtual");
-
-		Alert.viewSuccessMessage();
-
-		Click(locator1 = "Icon#BACK");
-
-		AssertElementPresent(
-			key_productName = "Virtual Book",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
-
-		AssertElementPresent(
-			key_productName = "Virtual Book",
-			key_value = "Virtual",
-			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_CONTENT");
-	}
-
 	@description = "This is a test for COMMERCE-6020. AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic"
 	@priority = 5
 	test AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic {
@@ -388,6 +358,56 @@ definition {
 			}
 
 			AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6301. AddVirtualProduct"
+	@priority = 3
+	test CanAddVirtualProductAndCheckNoShippingOverride {
+		property portal.acceptance = "false";
+
+		// TODO Review
+
+		task ("Given a new virtual product is added") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Virtual Book",
+				productType = "Virtual");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the new product is successful created") {
+			Click(locator1 = "Icon#BACK");
+
+			AssertElementPresent(
+				key_productName = "Virtual Book",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+
+			AssertElementPresent(
+				key_productName = "Virtual Book",
+				key_value = "Virtual",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_CONTENT");
+		}
+
+		task ("When the details page is open") {
+			CommerceNavigator.gotoEntry(entryName = "Virtual Book");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			Click(
+				key_entryName = "default",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
+
+		task ("Then the Shipping Override is not shown") {
+			AssertElementNotPresent(
+				key_cardName = "Shipping Override",
+				locator1 = "CommerceEntry#PRODUCT_DETAIL_CARD_HEADER");
 		}
 	}
 

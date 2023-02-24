@@ -40,6 +40,10 @@ public interface StagingGroupHelper {
 
 	public Group fetchRemoteLiveGroup(long groupId);
 
+	public Group getStagedPortletGroup(Group group, String portletId);
+
+	public long getStagedPortletGroupId(long groupId, String portletId);
+
 	public boolean isLiveGroup(Group group);
 
 	public boolean isLiveGroup(long groupId);

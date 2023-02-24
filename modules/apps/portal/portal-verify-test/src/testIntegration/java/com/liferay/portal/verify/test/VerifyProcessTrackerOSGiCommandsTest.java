@@ -80,6 +80,43 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 	}
 
 	@Test
+	public void testRegisterInitialDeploymentAndRunOnPortalUpgradeVerifyProcessAfterInitialDeploymentUpgradeProcess() {
+		try (SafeCloseable safeCloseable1 = _executeInitialUpgradeProcess();
+			SafeCloseable safeCloseable2 = _registerVerifyProcess(true, true)) {
+
+			Assert.assertTrue(_verifyProcessRun);
+		}
+	}
+
+	@Test
+	public void testRegisterInitialDeploymentAndRunOnPortalUpgradeVerifyProcessAfterModuleUpgrade() {
+		_simulateUpgradeProcessExecution();
+
+		try (SafeCloseable safeCloseable2 = _registerVerifyProcess(
+				true, true)) {
+
+			Assert.assertTrue(_verifyProcessRun);
+		}
+	}
+
+	@Test
+	public void testRegisterInitialDeploymentAndRunOnPortalUpgradeVerifyProcessDuringInitialDeployment() {
+		try (SafeCloseable safeCloseable = _registerVerifyProcess(true, true)) {
+			Assert.assertTrue(_verifyProcessRun);
+		}
+	}
+
+	@Test
+	public void testRegisterInitialDeploymentAndRunOnPortalUpgradeVerifyProcessDuringPortalUpgrade() {
+		try (SafeCloseable safeCloseable1 = _upgradePortal();
+			SafeCloseable safeCloseable2 = _registerVerifyProcess(
+				true, false)) {
+
+			Assert.assertTrue(_verifyProcessRun);
+		}
+	}
+
+	@Test
 	public void testRegisterInitialDeploymentVerifyProcessAfterInitialDeploymentUpgradeProcess() {
 		try (SafeCloseable safeCloseable1 = _executeInitialUpgradeProcess();
 			SafeCloseable safeCloseable2 = _registerVerifyProcess(

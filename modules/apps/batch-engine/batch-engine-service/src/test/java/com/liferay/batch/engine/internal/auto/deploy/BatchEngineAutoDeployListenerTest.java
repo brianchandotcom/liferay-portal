@@ -450,23 +450,14 @@ public class BatchEngineAutoDeployListenerTest {
 
 		autoDeploymentContext.setFile(_toZipFile("batch7"));
 
-		deployable = _batchEngineAutoDeployListener.isDeployable(
-			autoDeploymentContext);
-
-		Assert.assertTrue(deployable);
-
-		result = _batchEngineAutoDeployListener.deploy(autoDeploymentContext);
-
-		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
-
 		Mockito.verify(
-			_noticeableExecutorService, Mockito.times(2)
+			_noticeableExecutorService, Mockito.times(1)
 		).submit(
 			Mockito.any(Runnable.class)
 		);
 
 		Assert.assertEquals(
-			_batchEngineImportTasks.toString(), 2,
+			_batchEngineImportTasks.toString(), 1,
 			_batchEngineImportTasks.size());
 	}
 

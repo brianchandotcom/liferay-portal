@@ -16,6 +16,7 @@ package com.liferay.segments.asah.connector.internal.service;
 
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -23,10 +24,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
@@ -66,8 +65,7 @@ public class SegmentsEntryLocalServiceWrapper
 			segmentsEntryId);
 
 		try {
-			if (!GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-172194")) ||
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-172194") ||
 				!_analyticsSettingsManager.isAnalyticsEnabled(
 					segmentsEntry.getCompanyId()) ||
 				!SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND.equals(

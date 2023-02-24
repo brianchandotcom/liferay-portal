@@ -14,16 +14,10 @@
 
 /// <reference types="react" />
 
-interface DefinitionOfTermsProps {
+interface GeneralTermsProps {
 	baseResourceURL: string;
-	objectDefinitions: ObjectDefinition[];
 }
-export interface Item {
-	name: string;
-	term: string;
-}
-export declare function DefinitionOfTerms({
+export declare function GeneralTerms({
 	baseResourceURL,
-	objectDefinitions,
-}: DefinitionOfTermsProps): JSX.Element;
+}: GeneralTermsProps): JSX.Element;
 export {};

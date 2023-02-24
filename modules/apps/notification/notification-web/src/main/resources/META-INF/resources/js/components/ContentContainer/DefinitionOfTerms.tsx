@@ -19,6 +19,7 @@ import {
 	filterArrayByQuery,
 	getLocalizableLabel,
 	onActionDropdownItemClick,
+	openToast,
 } from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -28,7 +29,7 @@ interface DefinitionOfTermsProps {
 	objectDefinitions: ObjectDefinition[];
 }
 
-interface Item {
+export interface Item {
 	name: string;
 	term: string;
 }
@@ -61,13 +62,18 @@ export function DefinitionOfTerms({
 			}).toString()
 		);
 
-		const responseJSON: [] = await response.json();
+		const responseJSON = (await response.json()) as Item[];
 
 		setEntityFields(responseJSON);
 	};
 
 	const copyObjectFieldTerm = ({itemData}: {itemData: Item}) => {
 		navigator.clipboard.writeText(itemData.term);
+
+		openToast({
+			message: Liferay.Language.get('term-copied-successfully'),
+			type: 'success',
+		});
 	};
 
 	useEffect(() => {

@@ -25,7 +25,6 @@ import com.liferay.portal.search.test.util.mappings.NestedDDMFieldArrayUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -59,12 +58,10 @@ public abstract class BaseNestedFieldsSortTestCase
 	}
 
 	protected void assertSort(String fieldName) {
-		Stream.of(
-			"C", "B", "A"
-		).forEach(
-			value -> addDocumentWithOneDDMField(
-				fieldName, "ddmFieldValueKeyword", value)
-		);
+		addDocuments(
+			value -> DocumentCreationHelpers.oneDDMField(
+				fieldName, "ddmFieldValueKeyword", value),
+			"C", "B", "A");
 
 		FieldSort fieldSort = sorts.field("ddmFieldArray.ddmFieldValueKeyword");
 

@@ -485,7 +485,8 @@ public class EditStyleBookEntryDisplayContext {
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
 				String getPagePreviewURL =
-					_themeDisplay.getPathMain() + "/portal/get_page_preview";
+					_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
+						"/portal/get_page_preview";
 
 				getPagePreviewURL = HttpComponentsUtil.addParameter(
 					getPagePreviewURL, "segmentsExperienceId",

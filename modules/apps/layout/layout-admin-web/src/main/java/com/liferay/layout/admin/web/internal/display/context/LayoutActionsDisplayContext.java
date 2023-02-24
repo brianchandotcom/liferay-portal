@@ -254,7 +254,8 @@ public class LayoutActionsDisplayContext {
 
 	private String _getPreviewLayoutURL(Layout layout) {
 		String getPagePreviewURL =
-			_themeDisplay.getPathMain() + "/portal/get_page_preview";
+			_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
+				"/portal/get_page_preview";
 
 		getPagePreviewURL = HttpComponentsUtil.addParameter(
 			getPagePreviewURL, "p_l_mode", Constants.PREVIEW);

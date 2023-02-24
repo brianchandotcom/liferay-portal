@@ -269,7 +269,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-170206. The user should see alert message when the characters count exceeds the max of Long Text field."
+	@description = "This is a test for LPS-170206 and LPS-173849. The user should see alert message when the characters count exceeds the max of Long Text field."
 	@priority = 3
 	test ViewAlertMessageWhenCharactersCountExceedMaximum {
 		task ("Given a pages designer has a Textarea fragment inside a mapped Form Container") {

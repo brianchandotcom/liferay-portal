@@ -1,0 +1,120 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.modules.includes = "frontend-data-set-sample-web";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Dataset";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-174054: Display a list of headless resources in new FDS View modal"
+	@priority = 5
+	test CanDisplayHeadlessDeliveryAPIResources {
+		property custom.properties = "feature.flag.LPS-164563=true";
+
+		task ("Given access Datasets admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Datasets");
+		}
+
+		task ("When go to add Datasets") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then displays list of headless resources") {
+			FrontendDataSetAdmin.searchProvider(
+				dropdownLabel = "Choose an Option",
+				key_provider = "Liferay Headless Delivery");
+
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "BlogPosting");
+
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "SitePage");
+
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "Language");
+
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "WikiNode");
+		}
+	}
+
+	@description = "LPS-175205: Display matched result in new FDS View modal"
+	@priority = 3
+	test CanReturnAMatchedResult {
+		property custom.properties = "feature.flag.LPS-164563=true";
+
+		task ("Given access Datasets admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Datasets");
+		}
+
+		task ("When go to add Datasets") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And When search for a known uniquely named headless provider") {
+			FrontendDataSetAdmin.searchProvider(
+				dropdownLabel = "Choose an Option",
+				key_provider = "DispatchTrigger");
+		}
+
+		task ("Then the suggested list is updated to have only 1 result for the search, and Then the suggested list contains the uniquely named headless provider") {
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "DispatchTrigger");
+		}
+	}
+
+	@description = "LPS-175206: Display no matched result in new FDS View modal"
+	@priority = 4
+	test CanReturnNoMatchedResults {
+		property custom.properties = "feature.flag.LPS-164563=true";
+
+		task ("Given access Datasets admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Datasets");
+		}
+
+		task ("When go to add Datasets") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And When search for a phrase that doesn't match available headless providers") {
+			FrontendDataSetAdmin.searchProvider(
+				dropdownLabel = "Choose an Option",
+				key_provider = "apple");
+		}
+
+		task ("Then suggested list contains 0 results") {
+			AssertElementNotPresent(locator1 = "FrontendDataSet#EMPTY_DROPDOWN");
+		}
+	}
+
+}

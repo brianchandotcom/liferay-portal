@@ -1685,7 +1685,7 @@ public class TestrayImporter {
 		return "Liferay CI";
 	}
 
-	private String _replaceEnvVars(String string, boolean testrayImport) {
+	private String _replaceEnvVars(String string, boolean truncate) {
 		string = _replaceEnvVarsControllerBuild(string);
 		string = _replaceEnvVarsPluginsBranchInformationBuild(string);
 		string = _replaceEnvVarsPluginsTopLevelBuild(string);
@@ -1704,7 +1704,7 @@ public class TestrayImporter {
 			string = _replaceEnvVarsSubrepository(string);
 		}
 
-		if (testrayImport && !JenkinsResultsParserUtil.isNullOrEmpty(string) &&
+		if (truncate && !JenkinsResultsParserUtil.isNullOrEmpty(string) &&
 			(string.length() > 150)) {
 
 			string = string.substring(string.length() - 150);

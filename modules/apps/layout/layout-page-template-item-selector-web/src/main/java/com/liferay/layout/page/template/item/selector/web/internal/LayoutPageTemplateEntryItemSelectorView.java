@@ -208,6 +208,9 @@ public class LayoutPageTemplateEntryItemSelectorView
 								_segmentsExperienceLocalService.
 									fetchDefaultSegmentsExperienceId(
 										_layoutPageTemplateEntry.getPlid())));
+						getPagePreviewURL = HttpComponentsUtil.addParameter(
+							getPagePreviewURL, "selPlid",
+							String.valueOf(_layoutPageTemplateEntry.getPlid()));
 
 						return HttpComponentsUtil.addParameter(
 							getPagePreviewURL, "p_l_mode", Constants.PREVIEW);

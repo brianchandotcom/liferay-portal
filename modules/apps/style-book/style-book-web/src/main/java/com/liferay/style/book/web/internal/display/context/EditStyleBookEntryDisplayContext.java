@@ -494,6 +494,9 @@ public class EditStyleBookEntryDisplayContext {
 						SegmentsExperienceLocalServiceUtil.
 							fetchDefaultSegmentsExperienceId(
 								layoutPageTemplateEntry.getPlid())));
+				getPagePreviewURL = HttpComponentsUtil.addParameter(
+					getPagePreviewURL, "selPlid",
+					String.valueOf(layoutPageTemplateEntry.getPlid()));
 
 				getPagePreviewURL = HttpComponentsUtil.addParameter(
 					getPagePreviewURL, "p_l_mode", Constants.PREVIEW);

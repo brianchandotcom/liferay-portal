@@ -14,15 +14,19 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
+import ClayForm, {ClayToggle} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {API, Input} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {toCamelCase} from '../../utils/string';
 import ObjectFieldFormBase from './ObjectFieldFormBase';
 import {useObjectFieldForm} from './useObjectFieldForm';
+
+import './AddObjectField.scss';
 
 interface IModal extends IProps {
 	observer: Observer;
@@ -91,6 +95,11 @@ function ModalAddObjectField({
 		onSubmit,
 	});
 
+	const showEnableTranslationToggle =
+		values.businessType === 'LongText' ||
+		values.businessType === 'RichText' ||
+		values.businessType === 'Text';
+
 	return (
 		<ClayModal observer={observer}>
 			<ClayForm onSubmit={handleSubmit}>
@@ -124,7 +133,36 @@ function ModalAddObjectField({
 						objectFieldTypes={objectFieldTypes}
 						objectName={objectName}
 						setValues={setValues}
-					/>
+					>
+						{showEnableTranslationToggle && (
+							<div className="lfr-objects-add-object-field-enable-translations-toggle">
+								<ClayToggle
+									label={Liferay.Language.get(
+										'enable-entry-translations'
+									)}
+									onToggle={() =>
+										setValues({
+											enableLocalization: !values.enableLocalization,
+										})
+									}
+									toggled={values.enableLocalization}
+								/>
+
+								<ClayTooltipProvider>
+									<span
+										title={Liferay.Language.get(
+											'users-will-be-able-to-add-translations-for-the-entries-of-this-field'
+										)}
+									>
+										<ClayIcon
+											className="lfr-objects-add-object-field-enable-translations-toggle-icon"
+											symbol="question-circle-full"
+										/>
+									</span>
+								</ClayTooltipProvider>
+							</div>
+						)}
+					</ObjectFieldFormBase>
 				</ClayModal.Body>
 
 				<ClayModal.Footer

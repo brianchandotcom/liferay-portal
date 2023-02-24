@@ -14,6 +14,7 @@
 
 /// <reference types="react" />
 
+import './AddObjectField.scss';
 interface IProps {
 	apiURL: string;
 	objectDefinitionExternalReferenceCode: string;

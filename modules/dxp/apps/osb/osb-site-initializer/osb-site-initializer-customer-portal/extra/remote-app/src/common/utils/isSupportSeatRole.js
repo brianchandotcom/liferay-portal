@@ -10,9 +10,5 @@
  */
 
 export default function isSupportSeatRole(name) {
-	return (
-		name === 'Administrator' ||
-		name === 'Partner Manager' ||
-		name === 'Requester'
-	);
+	return name === 'Administrator' || name === 'Requester';
 }

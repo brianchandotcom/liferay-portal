@@ -1504,10 +1504,20 @@ definition {
 		}
 
 		if (isSet(dmDocumentTypeEdit)) {
+			WaitForEditable(
+				key_text = "Title",
+				locator1 = "TextInput#ANY");
+
 			Select(
-				key_selectFieldLabel = "Document Type",
-				locator1 = "Select#ANY",
+				key_fieldLabel = "Document Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${dmDocumentTypeEdit});
+
+			if (${dmDocumentTypeEdit} == "Google Drive Shortcut") {
+				WaitForVisible(
+					key_text = "EMBEDDABLE_URL",
+					locator1 = "TextInput#ANY");
+			}
 		}
 	}
 

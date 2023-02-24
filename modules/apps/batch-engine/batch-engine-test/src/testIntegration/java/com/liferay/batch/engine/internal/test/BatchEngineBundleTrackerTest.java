@@ -17,10 +17,14 @@ package com.liferay.batch.engine.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
+import com.liferay.batch.engine.zip.BatchEngineZipUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -61,14 +65,14 @@ public class BatchEngineBundleTrackerTest {
 
 	@Test
 	public void testBatchEngineBundles() throws Exception {
-		_testBatchEngineBundle("dependencies/batch1.jar", 1);
-		_testBatchEngineBundle("dependencies/batch2.jar", 0);
-		_testBatchEngineBundle("dependencies/batch3.jar", 2);
-		_testBatchEngineBundle("dependencies/batch4.jar", 3);
-		_testBatchEngineBundle("dependencies/batch5.jar", 1);
-		_testBatchEngineBundle("dependencies/batch6.jar", 2);
-		_testBatchEngineBundle("dependencies/batch7.jar", 1);
-		_testBatchEngineBundle("dependencies/batch8.jar", 3);
+		_testBatchEngineBundle("dependencies/batch1", 1);
+		_testBatchEngineBundle("dependencies/batch2", 0);
+		_testBatchEngineBundle("dependencies/batch3", 2);
+		_testBatchEngineBundle("dependencies/batch4", 3);
+		_testBatchEngineBundle("dependencies/batch5", 1);
+		_testBatchEngineBundle("dependencies/batch6", 2);
+		_testBatchEngineBundle("dependencies/batch7", 1);
+		_testBatchEngineBundle("dependencies/batch8", 3);
 	}
 
 	private void _testBatchEngineBundle(
@@ -99,9 +103,11 @@ public class BatchEngineBundleTrackerTest {
 
 		String bundleSymbolicName = RandomTestUtil.randomString();
 
+		File zipFile = BatchEngineZipUtil.toJarFile(
+			BatchEngineBundleTrackerTest.class, batchFile);
+
 		Bundle bundle = _bundleContext.installBundle(
-			bundleSymbolicName,
-			BatchEngineBundleTrackerTest.class.getResourceAsStream(batchFile));
+			bundleSymbolicName, new FileInputStream(zipFile));
 
 		try {
 			bundle.start();

@@ -44,14 +44,16 @@ definition {
 			Navigator.openSpecificURL(url = "${portalURL}/manage");
 		}
 
-		task ("Then: Assert the Not Found message displays") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND",
-				value1 = "The requested resource could not be found.");
+		task ("Then: Assert the 404 Utility Page with Page Not Found message displays") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = 404);
 
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found");
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Page Not Found");
 		}
 	}
 

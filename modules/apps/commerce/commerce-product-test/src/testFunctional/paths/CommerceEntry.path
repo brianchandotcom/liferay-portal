@@ -1019,6 +1019,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAIL_CARD_HEADER</td>
+	<td>//div[contains(@class,'card d-flex')]//h4[contains(.,'${key_cardName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_FULL_DESCRIPTION</td>
 	<td>//div/label[@class='control-label' and contains(.,'${key_customFieldName}')]/..//p</td>
 	<td></td>

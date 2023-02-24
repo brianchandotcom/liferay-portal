@@ -12,14 +12,16 @@
  * details.
  */
 
-package com.liferay.fragment.internal.installer;
+package com.liferay.fragment.internal.deploy.auto;
 
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -49,8 +51,6 @@ import com.liferay.staging.StagingGroupHelper;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URL;
-
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
@@ -63,11 +63,46 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = FileInstaller.class)
-public class FragmentFileInstaller implements FileInstaller {
+@Component(service = AutoDeployListener.class)
+public class FragmentAutoDeployListener implements AutoDeployListener {
 
 	@Override
-	public boolean canTransformURL(File file) {
+	public int deploy(AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException {
+
+		PermissionChecker currentPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String currentName = PrincipalThreadLocal.getName();
+		ServiceContext currentServiceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		try {
+			_deploy(autoDeploymentContext.getFile());
+		}
+		catch (AutoDeployException autoDeployException) {
+			_log.error(autoDeployException);
+
+			throw autoDeployException;
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				currentPermissionChecker);
+			PrincipalThreadLocal.setName(currentName);
+			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
+		}
+
+		return AutoDeployer.CODE_DEFAULT;
+	}
+
+	@Override
+	public boolean isDeployable(AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException {
+
+		File file = autoDeploymentContext.getFile();
+
 		String fileName = file.getName();
 
 		if (!StringUtil.endsWith(fileName, ".zip")) {
@@ -88,39 +123,6 @@ public class FragmentFileInstaller implements FileInstaller {
 		}
 
 		return false;
-	}
-
-	@Override
-	public URL transformURL(File file) throws AutoDeployException {
-		PermissionChecker currentPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String currentName = PrincipalThreadLocal.getName();
-		ServiceContext currentServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		try {
-			_deploy(file);
-		}
-		catch (AutoDeployException autoDeployException) {
-			_log.error(autoDeployException);
-
-			throw autoDeployException;
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				currentPermissionChecker);
-			PrincipalThreadLocal.setName(currentName);
-			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
-		}
-
-		return null;
-	}
-
-	@Override
-	public void uninstall(File file) {
 	}
 
 	private void _deploy(File file) throws Exception {
@@ -286,7 +288,7 @@ public class FragmentFileInstaller implements FileInstaller {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentFileInstaller.class);
+		FragmentAutoDeployListener.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

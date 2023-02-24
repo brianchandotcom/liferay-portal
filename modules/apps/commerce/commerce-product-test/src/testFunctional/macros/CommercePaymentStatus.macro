@@ -1,0 +1,26 @@
+definition {
+
+	macro assertPaymentStatus {
+		AssertElementPresent(
+			key_filterOption = ${statusValue},
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+	}
+
+	macro editPaymentStatus {
+		Click(
+			key_index = "Edit",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Select(
+			key_fieldLabel = "Payment Status",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = ${statusValue});
+
+		Button.click(button = "Submit");
+	}
+
+}

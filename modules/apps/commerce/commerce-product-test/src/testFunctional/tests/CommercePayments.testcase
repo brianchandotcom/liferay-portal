@@ -21,113 +21,106 @@ definition {
 
 		// TODO Review
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
+		task ("Given a minium site with a buyer user ") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+			PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+			ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Account");
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Account");
 
-		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
-			accountName = "Test Account",
-			emailAddress = "buyer@liferay.com",
-			role = "Buyer",
-			userFirstName = "Buyer",
-			userLastName = "User",
-			userScreenName = "buyeruser");
+			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+				accountName = "Test Account",
+				emailAddress = "buyer@liferay.com",
+				role = "Buyer",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-		MenuItem.click(menuItem = "Account Users");
+			MenuItem.click(menuItem = "Account Users");
 
-		CommerceLogin.editPasswordCP(
-			newPassword = "ttest",
-			requirePasswordReset = "true",
-			userScreenName = "buyeruser");
+			CommerceLogin.editPasswordCP(
+				newPassword = "ttest",
+				requirePasswordReset = "true",
+				userScreenName = "buyeruser");
 
-		User.logoutPG();
+			User.logoutPG();
+		}
 
-		CommerceLogin.miniumLogin(
-			newPassword = "test",
-			password = "ttest",
-			urlAppend = "web/minium",
-			userEmailAddress = "buyer@liferay.com");
+		task ("and the buyer places an order ") {
+			CommerceLogin.miniumLogin(
+				newPassword = "test",
+				password = "ttest",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
 
-		FrontStore.addInitializerProductToCart(
-			productName = "U-Joint",
-			productQuantity = 1);
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
 
-		Refresh();
+			Refresh();
 
-		CommerceCheckout.gotoCheckout();
+			CommerceCheckout.gotoCheckout();
 
-		CommerceCheckout.initializersCheckout(
-			newAddressAddress = "Test Address",
-			newAddressCity = "Test City",
-			newAddressCountry = "United States",
-			newAddressName = "Address Name",
-			newAddressZipCode = "Test Zip Code",
-			productName = "U-Joint",
-			productQuantity = 1,
-			productUnitPrice = 24,
-			shippingMethod = "Standard");
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
 
-		User.logoutPG();
+			User.logoutPG();
+		}
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "test@liferay.com");
+		task ("When the order status is changed from Pending to Cancelled") {
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
 
-		WaitForElementPresent(
-			key_orderStatus = "Pending",
-			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+			WaitForElementPresent(
+				key_orderStatus = "Pending",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
 
-		ClickNoError(
-			key_orderStatus = "Pending",
-			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+			ClickNoError(
+				key_orderStatus = "Pending",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
 
-		CommerceEntry.clickNoError(menuItem = "View");
+			CommerceEntry.clickNoError(menuItem = "View");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Payments");
+			CommerceEntry.gotoMenuTab(menuTab = "Payments");
 
-		Click(
-			key_index = "Edit",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+			CommercePaymentStatus.editPaymentStatus(statusValue = "Canceled");
+		}
 
-		SelectFrameTop();
+		task ("Then the payment should be cancelled") {
+			Refresh();
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		Select(
-			key_fieldLabel = "Payment Status",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "Canceled");
-
-		Button.click(button = "Submit");
-
-		Refresh();
-
-		AssertElementPresent(
-			key_filterOption = "Canceled",
-			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+			CommercePaymentStatus.assertPaymentStatus(statusValue = "Canceled");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-6218. MoneyOrder Payment Method lifecycle"

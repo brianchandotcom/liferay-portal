@@ -41,9 +41,7 @@ definition {
 		}
 
 		task ("Then a vocabulary is created with the custom ERC in response body") {
-			var actualExternalReferenceCode = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
-				element = "$..externalReferenceCode",
-				responseToParse = ${response});
+			var actualExternalReferenceCode = JSONPathUtil.getErcValue(response = ${response});
 
 			TestUtils.assertEquals(
 				actual = ${actualExternalReferenceCode},
@@ -65,9 +63,7 @@ definition {
 		}
 
 		task ("Then a vocabulary is created with a generated ERC in response body") {
-			var actualExternalReferenceCode = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
-				element = "$..externalReferenceCode",
-				responseToParse = ${response});
+			var actualExternalReferenceCode = JSONPathUtil.getErcValue(response = ${response});
 
 			TestUtils.assertEquals(
 				actual = ${actualExternalReferenceCode},

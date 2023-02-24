@@ -445,7 +445,7 @@ definition {
 		if (!(isSet(structuredContentId))) {
 			Variables.assertDefined(parameterList = "${responseToParse},${versionvalue}");
 
-			var structuredContentId = JSONUtil.getWithJSONPath(${responseToParse}, "$.['id']");
+			var structuredContentId = JSONPathUtil.getIdValue(response = ${responseToParse});
 		}
 		else {
 			Variables.assertDefined(parameterList = ${structuredContentId});
@@ -632,12 +632,6 @@ definition {
 			filtervalue = ${filtervalue});
 
 		return ${response};
-	}
-
-	macro getItemsDetail {
-		var itemsDetail = JSONUtil.getWithJSONPath(${responseToParse}, "$.items");
-
-		return ${itemsDetail};
 	}
 
 	macro getStructuredContentIdByTitle {

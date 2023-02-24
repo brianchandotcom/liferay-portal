@@ -104,7 +104,7 @@ definition {
 		}
 
 		task ("Then I can see no one entry correctly related in GET request response with the relationshipName=foundationsOfUsers") {
-			var response = ObjectDefinitionAPI.getObjectEntryRelation(
+			var response = ObjectDefinitionAPI.getObjectEntryRelationship(
 				en_US_plural_label = "foundations",
 				objectId = ${staticObjectEntryId1},
 				relationshipName = "foundationsOfUsers");
@@ -142,7 +142,7 @@ definition {
 		}
 
 		task ("Then I can see only one entry correctly related in GET request response") {
-			var response = ObjectDefinitionAPI.getObjectEntryRelation(
+			var response = ObjectDefinitionAPI.getObjectEntryRelationship(
 				en_US_plural_label = "secondFoundations",
 				objectId = ${staticObjectEntryId3},
 				relationshipName = "secondFoundationOfUsers");
@@ -177,7 +177,7 @@ definition {
 		}
 
 		task ("Then I can see no one entry correctly related in GET request response with the relationshipName=secondFoundationOfUsers") {
-			var response = ObjectDefinitionAPI.getObjectEntryRelation(
+			var response = ObjectDefinitionAPI.getObjectEntryRelationship(
 				en_US_plural_label = "secondFoundations",
 				objectId = ${staticObjectEntryId3},
 				relationshipName = "secondFoundationOfUsers");

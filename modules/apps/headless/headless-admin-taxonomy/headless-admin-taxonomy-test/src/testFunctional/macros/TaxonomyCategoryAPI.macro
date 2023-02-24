@@ -74,14 +74,6 @@ definition {
 		return ${response};
 	}
 
-	macro getElementOfCreatedCategory {
-		Variables.assertDefined(parameterList = "${responseToParse},${element}");
-
-		var elementValue = JSONUtil.getWithJSONPath(${responseToParse}, ${element});
-
-		return ${elementValue};
-	}
-
 	macro getTaxonomyCategory {
 		var getTaxonomyCategoryDetails = TaxonomyCategoryAPI._getTaxonomyCategory(taxonomyCategoryId = ${taxonomyCategoryId});
 

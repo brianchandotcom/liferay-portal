@@ -54,7 +54,7 @@ definition {
 		}
 
 		task ("Then in a response I receive a body with title field values only") {
-			var actualValue = HeadlessWebcontentAPI.getItemsDetail(responseToParse = ${response});
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items");
 
 			TestUtils.assertEquals(
 				actual = ${actualValue},
@@ -186,7 +186,7 @@ definition {
 		}
 
 		task ("Then in a response I receive a id values only") {
-			var actualValue = HeadlessWebcontentAPI.getItemsDetail(responseToParse = ${response});
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items");
 
 			TestUtils.assertEquals(
 				actual = ${actualValue},

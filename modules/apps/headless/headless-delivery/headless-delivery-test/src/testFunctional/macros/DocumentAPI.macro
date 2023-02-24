@@ -236,7 +236,7 @@ definition {
 			externalReferenceCode = ${externalReferenceCode},
 			filePath = ${filePath});
 
-		var documentId = JSONUtil.getWithJSONPath(${response}, "$.['id']");
+		var documentId = JSONPathUtil.getIdValue(response = ${response});
 
 		return ${documentId};
 	}

@@ -64,7 +64,7 @@ definition {
 		}
 
 		task ("When I retrieve the structured content by version with GET request and structuredContentId") {
-			var structuredContentId = JSONUtil.getWithJSONPath(${response}, "$.id");
+			var structuredContentId = JSONPathUtil.getIdValue(response = ${response});
 
 			var response = HeadlessWebcontentAPI.versionStructureContent(
 				structuredContentId = ${structuredContentId},
@@ -98,7 +98,7 @@ definition {
 		}
 
 		task ("When I retrieve the structured content version with GET request and structuredContentId") {
-			var structuredContentId = JSONUtil.getWithJSONPath(${response}, "$.id");
+			var structuredContentId = JSONPathUtil.getIdValue(response = ${response});
 
 			var response = HeadlessWebcontentAPI.versionStructureContent(structuredContentId = ${structuredContentId});
 		}
@@ -123,7 +123,7 @@ definition {
 				assetLibraryId = ${assetLibraryId},
 				name = "Second Folder");
 
-			var idOfSecondStructuredContentFolder = JSONUtil.getWithJSONPath(${response}, "$.id");
+			var idOfSecondStructuredContentFolder = JSONPathUtil.getIdValue(response = ${response});
 		}
 
 		task ("And Given a structured content is created in a folder with POST request") {
@@ -150,7 +150,7 @@ definition {
 		}
 
 		task ("When I retrieve the structured content version with GET request and structuredContentId") {
-			var structuredContentId = JSONUtil.getWithJSONPath(${response}, "$.id");
+			var structuredContentId = JSONPathUtil.getIdValue(response = ${response});
 
 			var response = HeadlessWebcontentAPI.versionStructureContent(structuredContentId = ${structuredContentId});
 		}

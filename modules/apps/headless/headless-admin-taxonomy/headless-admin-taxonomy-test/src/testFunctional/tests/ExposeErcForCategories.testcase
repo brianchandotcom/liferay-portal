@@ -31,18 +31,14 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given a TaxonomyCategory with custom external reference code") {
-			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
-				element = "$.id",
-				responseToParse = ${responseOfCreated});
+			var taxonomyVocabularyId = JSONPathUtil.getIdValue(response = ${responseOfCreated});
 
 			var responseOfCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
 				externalReferenceCode = "erc",
 				name = "Category Name",
 				taxonomyVocabularyId = ${taxonomyVocabularyId});
 
-			var siteId = TaxonomyCategoryAPI.getElementOfCreatedCategory(
-				element = "$.siteId",
-				responseToParse = ${responseOfCategory});
+			var siteId = JSONUtil.getWithJSONPath(${responseOfCategory}, "$.siteId");
 		}
 
 		task ("When using a DELETE request deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode with custom erc") {
@@ -69,9 +65,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given a TaxonomyCategory with custom external reference code") {
-			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
-				element = "$.id",
-				responseToParse = ${responseOfCreated});
+			var taxonomyVocabularyId = JSONPathUtil.getIdValue(response = ${responseOfCreated});
 
 			var responseOfCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
 				externalReferenceCode = "erc",
@@ -86,10 +80,8 @@ definition {
 		}
 
 		task ("Then I can receive the correct id in the response") {
-			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.id");
-			var taxonomyCategoryId = TaxonomyCategoryAPI.getElementOfCreatedCategory(
-				element = "$.id",
-				responseToParse = ${responseOfCategory});
+			var actualValue = JSONPathUtil.getIdValue(response = ${response});
+			var taxonomyCategoryId = JSONPathUtil.getIdValue(response = ${responseOfCategory});
 
 			TestUtils.assertEquals(
 				actual = ${actualValue},
@@ -102,9 +94,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given a TaxonomyCategory with custom external reference code") {
-			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
-				element = "$.id",
-				responseToParse = ${responseOfCreated});
+			var taxonomyVocabularyId = JSONPathUtil.getIdValue(response = ${responseOfCreated});
 
 			var responseOfCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
 				externalReferenceCode = "erc",
@@ -113,15 +103,13 @@ definition {
 		}
 
 		task ("When with GET request getTaxonomyCategory") {
-			var taxonomyCategoryId = TaxonomyCategoryAPI.getElementOfCreatedCategory(
-				element = "$.id",
-				responseToParse = ${responseOfCategory});
+			var taxonomyCategoryId = JSONPathUtil.getIdValue(response = ${responseOfCategory});
 
 			var response = TaxonomyCategoryAPI.getTaxonomyCategory(taxonomyCategoryId = ${taxonomyCategoryId});
 		}
 
 		task ("Then I can receive the correct custom external reference code value in the response") {
-			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
+			var actualValue = JSONPathUtil.getErcValue(response = ${response});
 
 			TestUtils.assertEquals(
 				actual = ${actualValue},
@@ -134,9 +122,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given a TaxonomyCategory with custom external reference code") {
-			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
-				element = "$.id",
-				responseToParse = ${responseOfCreated});
+			var taxonomyVocabularyId = JSONPathUtil.getIdValue(response = ${responseOfCreated});
 
 			var responseOfCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
 				externalReferenceCode = "erc",
@@ -151,9 +137,7 @@ definition {
 		}
 
 		task ("Then I can receive the error message in the response") {
-			var siteId = TaxonomyCategoryAPI.getElementOfCreatedCategory(
-				element = "$.siteId",
-				responseToParse = ${responseOfCategory});
+			var siteId = JSONUtil.getWithJSONPath(${responseOfCategory}, "$.siteId");
 			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.title");
 
 			TestUtils.assertEquals(
@@ -167,9 +151,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given a TaxonomyCategory with custom external reference code") {
-			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
-				element = "$.id",
-				responseToParse = ${responseOfCreated});
+			var taxonomyVocabularyId = JSONPathUtil.getIdValue(response = ${responseOfCreated});
 
 			TaxonomyCategoryAPI.createTaxonomyCategory(
 				externalReferenceCode = "erc",

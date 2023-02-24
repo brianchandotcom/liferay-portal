@@ -100,7 +100,7 @@ definition {
 		}
 
 		task ("When with curl I request getKeyword with restrictFields equal all fields except id field") {
-			var keywordId = JSONUtil.getWithJSONPath(${responseFromCreate}, "$.id");
+			var keywordId = JSONPathUtil.getIdValue(response = ${responseFromCreate});
 
 			var response = TaxonomyVocabularyAPI.getAssetLibraryKeywordsWithDifferentParameters(
 				keywordId = ${keywordId},
@@ -138,9 +138,7 @@ definition {
 				parameter = "restrictFields",
 				parameterValue = "actions,assetLibraryKey,assetTypes,availableLanguages,creator,dateCreated,dateModified,description,externalReferenceCode,id,numberOfTaxonomyCategories");
 
-			var taxonomyVocabularyName = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
-				element = "$..name",
-				responseToParse = ${response});
+			var taxonomyVocabularyName = JSONUtil.getWithJSONPath(${response}, "$.name");
 		}
 
 		task ("Then in a response I receive a with name field values only") {
@@ -165,7 +163,7 @@ definition {
 		}
 
 		task ("When with curl I request getKeyword with fields=name") {
-			var keywordId = JSONUtil.getWithJSONPath(${responseFromCreate}, "$.id");
+			var keywordId = JSONPathUtil.getIdValue(response = ${responseFromCreate});
 
 			var response = TaxonomyVocabularyAPI.getAssetLibraryKeywordsWithDifferentParameters(
 				keywordId = ${keywordId},

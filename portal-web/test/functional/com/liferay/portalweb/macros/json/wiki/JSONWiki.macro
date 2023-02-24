@@ -83,7 +83,7 @@ definition {
 
 		var response = JSONWikiAPI._getWikiPageById(wikiPageId = ${wikiPageId});
 
-		var wikiPageExternalReferenceCode = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
+		var wikiPageExternalReferenceCode = JSONPathUtil.getErcValue(response = ${response});
 
 		return ${wikiPageExternalReferenceCode};
 	}

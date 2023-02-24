@@ -150,7 +150,7 @@ definition {
 			createStrategy = ${createStrategy},
 			numberOfCommentsToCreate = ${numberOfCommentsToCreate});
 
-		var importTaskId = JSONUtil.getWithJSONPath(${response}, "$.id");
+		var importTaskId = JSONPathUtil.getIdValue(response = ${response});
 
 		return ${importTaskId};
 	}

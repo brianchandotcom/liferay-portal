@@ -222,9 +222,9 @@ definition {
 			fieldValue = ${fieldValue},
 			givenName = ${givenName});
 
+		var userAccountId = JSONPathUtil.getIdValue(response = ${response});
 		static var staticResponse = ${response};
-
-		static var staticUserAccountId = JSONUtil.getWithJSONPath(${staticResponse}, "$.id");
+		static var staticUserAccountId = ${userAccountId};
 
 		return ${staticResponse};
 
@@ -242,8 +242,10 @@ definition {
 			emailAddress = ${emailAddress2},
 			familyName = ${familyName2},
 			givenName = ${givenName2});
-		static var staticUserAccountId1 = JSONUtil.getWithJSONPath(${response1}, "$.id");
-		static var staticUserAccountId2 = JSONUtil.getWithJSONPath(${response2}, "$.id");
+		var userAccountId1 = JSONPathUtil.getIdValue(response = ${response1});
+		var userAccountId2 = JSONPathUtil.getIdValue(response = ${response2});
+		static var staticUserAccountId1 = ${userAccountId1};
+		static var staticUserAccountId2 = ${userAccountId2};
 
 		return ${staticUserAccountId1};
 

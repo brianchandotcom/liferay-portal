@@ -77,7 +77,7 @@ definition {
 		var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 			element = "$.id",
 			responseToParse = ${response});
-		var actualStructuredContentFolderId = JSONUtil.getWithJSONPath(${responseToParse}, "$.id");
+		var actualStructuredContentFolderId = JSONPathUtil.getIdValue(response = ${response});
 
 		TestUtils.assertEquals(
 			actual = ${actualStructuredContentFolderId},
@@ -353,7 +353,7 @@ definition {
 			viewableBy = ${viewableBy});
 
 		if (isSet(setUpGlobalFolderId)) {
-			var folderId = JSONUtil.getWithJSONPath(${response}, "$.id");
+			var folderId = JSONPathUtil.getIdValue(response = ${response});
 
 			static var staticStructuredContentFolderId = ${folderId};
 

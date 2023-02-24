@@ -1,0 +1,19 @@
+definition {
+
+	macro getErcValue {
+		Variables.assertDefined(parameterList = ${response});
+
+		var propertyValue = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
+
+		return ${propertyValue};
+	}
+
+	macro getIdValue {
+		Variables.assertDefined(parameterList = ${response});
+
+		var propertyValue = JSONUtil.getWithJSONPath(${response}, "$.id");
+
+		return ${propertyValue};
+	}
+
+}

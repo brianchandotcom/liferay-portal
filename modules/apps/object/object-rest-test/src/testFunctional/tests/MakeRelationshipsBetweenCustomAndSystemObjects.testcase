@@ -150,7 +150,7 @@ definition {
 		}
 
 		task ("Then GET /o/c/universities/{universityId}/universitiesAccounts returns an empty Page") {
-			var response = ObjectDefinitionAPI.getObjectEntryRelation(
+			var response = ObjectDefinitionAPI.getObjectEntryRelationship(
 				en_US_plural_label = "universities",
 				objectId = ${staticUniversityId},
 				relationshipName = "universitiesAccounts");

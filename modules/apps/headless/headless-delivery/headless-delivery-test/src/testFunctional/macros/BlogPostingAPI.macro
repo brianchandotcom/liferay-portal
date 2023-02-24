@@ -382,7 +382,7 @@ definition {
 			articleBody = ${articleBody},
 			headline = ${headline});
 
-		var blogPostingId = JSONUtil.getWithJSONPath(${response}, "$.['id']");
+		var blogPostingId = JSONPathUtil.getIdValue(response = ${response});
 
 		return ${blogPostingId};
 	}
@@ -398,7 +398,7 @@ definition {
 			numberOfBlogPostings = ${numberOfBlogPostings},
 			testCase = ${testCase});
 
-		var importTaskId = JSONUtil.getWithJSONPath(${response}, "$.id");
+		var importTaskId = JSONPathUtil.getIdValue(response = ${response});
 
 		return ${importTaskId};
 	}
@@ -414,7 +414,7 @@ definition {
 			testCase = ${testCase},
 			updateStrategy = ${updateStrategy});
 
-		var importTaskId = JSONUtil.getWithJSONPath(${response}, "$.id");
+		var importTaskId = JSONPathUtil.getIdValue(response = ${response});
 
 		return ${importTaskId};
 	}
@@ -426,7 +426,7 @@ definition {
 			bodyParameterValue = ${bodyParameterValue},
 			updateStrategy = ${updateStrategy});
 
-		var importTaskId = JSONUtil.getWithJSONPath(${response}, "$.id");
+		var importTaskId = JSONPathUtil.getIdValue(response = ${response});
 
 		return ${importTaskId};
 	}

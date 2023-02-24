@@ -211,7 +211,7 @@ definition {
 		}
 
 		task ("When I call universities GET endpoint with {universityId}/universitySubjects") {
-			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelation(
+			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelationship(
 				en_US_plural_label = "universities",
 				objectId = ${universityId},
 				relationshipName = "universitiesSubjects");
@@ -755,7 +755,7 @@ definition {
 		}
 
 		task ("When I call universities GET endpoint with {universityId}/universitySubjects") {
-			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelation(
+			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelationship(
 				en_US_plural_label = "universities",
 				objectId = ${universityId},
 				relationshipName = "universitiesSubjects");
@@ -840,7 +840,7 @@ definition {
 		}
 
 		task ("When I call subjects GET endpoint with {subjectId}/subjectStudents") {
-			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelation(
+			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelationship(
 				en_US_plural_label = "subjects",
 				objectId = ${subjectId},
 				relationshipName = "subjectsStudents");
@@ -891,7 +891,7 @@ definition {
 		}
 
 		task ("When I call universities GET endpoint with {universityId}/universitySubjects") {
-			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelation(
+			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelationship(
 				en_US_plural_label = "subjects",
 				objectId = ${subjectId},
 				relationshipName = "universitiesSubjects");
@@ -1156,7 +1156,7 @@ definition {
 		}
 
 		task ("When I call universities GET endpoint with {universityId}/universitySubjects") {
-			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelation(
+			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelationship(
 				en_US_plural_label = "universities",
 				objectId = ${universityId},
 				relationshipName = "universitiesSubjects");

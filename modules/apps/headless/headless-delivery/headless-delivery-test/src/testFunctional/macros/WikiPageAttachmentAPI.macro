@@ -132,16 +132,16 @@ definition {
 			wikiPageContent = "Wiki Page Content",
 			wikiPageName = "Wiki Page Title");
 
-		var wikiPageId = JSONUtil.getWithJSONPath(${wikiPage}, "$.id");
-		var wikiPageErc = JSONUtil.getWithJSONPath(${wikiPage}, "$.externalReferenceCode");
+		var wikiPageId = JSONPathUtil.getIdValue(response = ${wikiPage});
+		var wikiPageErc = JSONPathUtil.getErcValue(response = ${wikiPage});
 		var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 		var wikiPageAttachment = WikiPageAttachmentAPI.createWikiPageAttachment(
 			filePath = ${filePath},
 			wikiPageId = ${wikiPageId});
 
-		var wikiPageAttachmentErc = JSONUtil.getWithJSONPath(${wikiPageAttachment}, "$.externalReferenceCode");
-		var wikiPageAttachmentId = JSONUtil.getWithJSONPath(${wikiPageAttachment}, "$.id");
+		var wikiPageAttachmentErc = JSONPathUtil.getErcValue(response = ${wikiPageAttachment});
+		var wikiPageAttachmentId = JSONPathUtil.getIdValue(response = ${wikiPageAttachment});
 		static var staticWikiPageId = ${wikiPageId};
 		static var staticWikiPageErc = ${wikiPageErc};
 		static var staticWikiPageAttachmentId = ${wikiPageAttachmentId};

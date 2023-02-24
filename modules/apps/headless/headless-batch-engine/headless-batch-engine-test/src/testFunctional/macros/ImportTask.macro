@@ -50,7 +50,7 @@ definition {
 	macro getIdOfUpdateSitePageBatchEngineImportTask {
 		var response = ImportTask._updateSitePage();
 
-		var importTaskId = JSONUtil.getWithJSONPath(${response}, "$.id");
+		var importTaskId = JSONPathUtil.getIdValue(response = ${response});
 
 		return ${importTaskId};
 	}

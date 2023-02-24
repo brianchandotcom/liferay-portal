@@ -86,8 +86,6 @@ definition {
 				objectDefinitionId = ${staticObjectId},
 				relationshipName = "usersSecondFoundations");
 
-			echo(${response});
-
 			UserAccountAPI.relateObjectEntries(
 				customObjectId = ${staticObjectEntryId3},
 				relationshipName = "usersSecondFoundations",

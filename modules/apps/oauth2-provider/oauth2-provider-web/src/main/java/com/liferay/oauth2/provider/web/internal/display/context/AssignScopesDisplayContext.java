@@ -29,13 +29,11 @@ import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
 import com.liferay.oauth2.provider.web.internal.AssignableScopes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -205,18 +203,13 @@ public class AssignScopesDisplayContext
 		String applicationName, AssignableScopes assignableScopes,
 		String delimiter) {
 
-		Set<String> applicationScopeDescription = new TreeSet<>(
-			assignableScopes.getApplicationScopeDescription(
-				_companyId, applicationName));
-
-		List<String> scopesList = TransformUtil.transform(
-			applicationScopeDescription, HtmlUtil::escape);
-
-		if (ListUtil.isEmpty(scopesList)) {
-			return StringPool.BLANK;
-		}
-
-		return StringUtil.merge(scopesList, delimiter);
+		return StringUtil.merge(
+			TransformUtil.transform(
+				new TreeSet<>(
+					assignableScopes.getApplicationScopeDescription(
+						_companyId, applicationName)),
+				HtmlUtil::escape),
+			delimiter);
 	}
 
 	public Map<AssignableScopes, Relations> getAssignableScopesRelations(

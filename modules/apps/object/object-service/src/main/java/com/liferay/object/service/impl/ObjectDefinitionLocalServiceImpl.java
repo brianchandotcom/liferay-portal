@@ -478,9 +478,10 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinition));
 		}
 	}
+
 	@Override
 	public ObjectDefinition enableAccountEntryRestricted(
-		long objectDefinitionId, ObjectRelationship objectRelationship)
+			long objectDefinitionId, ObjectRelationship objectRelationship)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition1 = getObjectDefinition(
@@ -489,7 +490,7 @@ public class ObjectDefinitionLocalServiceImpl
 		if (!Objects.equals(objectDefinition1.getShortName(), "AccountEntry")) {
 			throw new ObjectDefinitionAccountEntryRestrictedException(
 				"It is only possible to restrict custom object definitions " +
-				"with account entry");
+					"with account entry");
 		}
 
 		ObjectDefinition objectDefinition2 = getObjectDefinition(
@@ -509,6 +510,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		return objectDefinitionPersistence.update(objectDefinition2);
 	}
+
 	@Override
 	public ObjectDefinition fetchObjectDefinition(long companyId, String name) {
 		return objectDefinitionPersistence.fetchByC_N(companyId, name);

@@ -1185,7 +1185,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (existingObjectDefinition == null) {
 				if (GetterUtil.getBoolean(
-					objectDefinition.getAccountEntryRestricted())) {
+						objectDefinition.getAccountEntryRestricted())) {
 
 					accountEntryRestrictedObjectDefinitions.put(
 						objectDefinition.getName(), objectDefinition);
@@ -1256,19 +1256,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
 
 		for (Map.Entry<String, ObjectDefinition> entry :
-			accountEntryRestrictedObjectDefinitions.entrySet()) {
+				accountEntryRestrictedObjectDefinitions.entrySet()) {
 
 			com.liferay.object.model.ObjectDefinition
 				localServiceObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_" + entry.getKey());
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						serviceContext.getCompanyId(), "C_" + entry.getKey());
 
 			com.liferay.object.model.ObjectRelationship objectRelationship =
 				_objectRelationshipLocalService.
 					getObjectRelationshipByObjectDefinitionId(
 						localServiceObjectDefinition.getObjectDefinitionId(),
 						"accountEntryTo" +
-						localServiceObjectDefinition.getShortName());
+							localServiceObjectDefinition.getShortName());
 
 			_objectDefinitionLocalService.enableAccountEntryRestricted(
 				localServiceObjectDefinition.getObjectDefinitionId(),

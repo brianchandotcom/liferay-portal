@@ -266,6 +266,10 @@ definition {
 	}
 
 	macro deleteItem {
+		MouseOver.mouseOverNotVisible(
+			key_itemName = ${itemName},
+			locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
+
 		Click(
 			key_itemName = ${itemName},
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");

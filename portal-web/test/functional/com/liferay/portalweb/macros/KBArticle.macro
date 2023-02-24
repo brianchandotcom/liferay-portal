@@ -174,12 +174,17 @@ definition {
 		if (${enableExpirationDate} == "true") {
 			Panel.expandPanel(panel = "Expiration Date");
 
+			AssertChecked(
+				checkboxName = "Never Expire",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
 			Uncheck(
 				checkboxName = "Never Expire",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
 			if (isSet(notificationDate)) {
 				var expirationDate = DateUtil.getDateOffsetByDays(${notificationDate}, "MM/dd/yyyy");
+				var expirationDateFormatted = DateUtil.getFormattedDate("+0", "MMMM dd, yyyy");
 
 				echo("## * expirationDate: ${expirationDate}");
 
@@ -236,6 +241,18 @@ definition {
 		}
 		else {
 			Alert.viewSuccessMessage();
+		}
+
+		if (${enableExpirationDate} == "true") {
+			var expirationTime = StringUtil.add("${expirationDateFormatted} ", ${expirationDateTime}, "");
+
+			MouseOver(
+				locator1 = "KnowledgeBase#ARTICLE_TABLE_EXPIRATION_TIME",
+				value1 = ${expirationTime});
+
+			AssertVisible(
+				locator1 = "KnowledgeBase#ARTICLE_TABLE_EXPIRATION_TIME",
+				value1 = ${expirationTime});
 		}
 	}
 
@@ -517,9 +534,11 @@ definition {
 			}
 		}
 
-		AssertTextEquals(
-			locator1 = "Message#INFO",
-			value1 = "A new version is created automatically if this content is modified.");
+		if (!(isSet(enableExpirationDate))) {
+			AssertTextEquals(
+				locator1 = "Message#INFO",
+				value1 = "A new version is created automatically if this content is modified.");
+		}
 
 		AssertElementPresent(locator1 = "TextInput#TITLE");
 
@@ -577,6 +596,30 @@ definition {
 					depotName = ${depotName},
 					navTab = ${navTab},
 					videoShortcutTitle = ${videoShortcutTitle});
+			}
+		}
+
+		if (${enableExpirationDate} == "true") {
+			Panel.expandPanel(panel = "Expiration Date");
+
+			if (isSet(notificationDate)) {
+				var expirationDate = DateUtil.getDateOffsetByDays(${notificationDate}, "MM/dd/yyyy");
+
+				echo("## * expirationDate: ${expirationDate}");
+
+				Type(
+					locator1 = "TextInput#EXPIRATION_DATE",
+					value1 = ${expirationDate});
+			}
+
+			if (isSet(extendedMinutes)) {
+				var expirationDateTime = DateUtil.getDateOffsetByMinutes(${extendedMinutes}, "hh:mm a");
+
+				echo("## * expirationDateTime: ${expirationDateTime}");
+
+				Type(
+					locator1 = "TextInput#EXPIRATION_DATE_TIME",
+					value1 = ${expirationDateTime});
 			}
 		}
 
@@ -1509,6 +1552,12 @@ definition {
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#ARTICLE_TABLE_EXPIRATION_STATUS",
 			value1 = ${kbExpirationStatus});
+
+		if (isSet(expirationTime)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "There are no suggestions.");
+		}
 	}
 
 	macro viewFieldRequiredAsterisk {

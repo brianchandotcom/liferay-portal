@@ -230,7 +230,9 @@ export default function PageContent({
 					</span>
 
 					{subtype && (
-						<span className="text-secondary">{subtype}</span>
+						<span className="text-break text-secondary">
+							{subtype}
+						</span>
 					)}
 				</ClayLayout.ContentCol>
 

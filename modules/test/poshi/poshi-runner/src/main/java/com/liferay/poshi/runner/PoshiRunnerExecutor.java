@@ -762,7 +762,7 @@ public class PoshiRunnerExecutor {
 
 		if (commandElement == null) {
 			throw new RuntimeException(
-				"Nonexistent Macro command: " + namespacedClassCommandName);
+				"Nonexistent macro command: " + namespacedClassCommandName);
 		}
 
 		parseElement(commandElement);

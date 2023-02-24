@@ -673,13 +673,13 @@ public class PoshiValidation {
 			String seleniumAttributeValue = poshiElement.attributeValue(
 				"selenium");
 
-			LiferaySeleniumMethod liferaySelenium =
+			LiferaySeleniumMethod liferaySeleniumMethod =
 				PoshiContext.getLiferaySeleniumMethod(seleniumAttributeValue);
 
-			if (liferaySelenium == null) {
+			if (liferaySeleniumMethod == null) {
 				_exceptions.add(
 					new PoshiElementException(
-						poshiElement, "Nonexistent selenium method"));
+						poshiElement, "Nonexistent Selenium method"));
 			}
 
 			validateDeprecatedFunction(poshiElement, seleniumAttributeValue);

@@ -34,14 +34,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface NotificationQueueConfiguration {
 
 	@Meta.AD(
-		deflt = "15",
-		description = "notification-queue-check-interval-description",
-		min = "1", name = "notification-queue-entry-check-interval",
-		required = false, type = Meta.Type.Integer
-	)
-	public int checkInterval();
-
-	@Meta.AD(
 		deflt = "43200",
 		description = "notification-queue-delete-interval-description",
 		min = "1", name = "notification-queue-entry-delete-interval",

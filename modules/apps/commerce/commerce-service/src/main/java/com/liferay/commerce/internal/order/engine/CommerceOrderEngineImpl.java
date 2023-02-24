@@ -525,6 +525,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 	private void _sendOrderStatusMessage(
 		CommerceOrder commerceOrder, int orderStatus) {
 
+		CommerceOrder originalCommerceOrder =
+			commerceOrder.cloneWithOriginalValues();
+
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				if ((orderStatus ==
@@ -564,6 +567,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 							commerceOrder.getUserId())
 					).put(
 						"orderStatus", commerceOrder.getOrderStatus()
+					).put(
+						"originalCommerceOrder",
+						originalCommerceOrder.getModelAttributes()
 					));
 
 				MessageBusUtil.sendMessage(

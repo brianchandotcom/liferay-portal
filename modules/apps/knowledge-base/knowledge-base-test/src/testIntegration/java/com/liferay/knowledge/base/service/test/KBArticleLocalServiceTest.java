@@ -15,6 +15,8 @@
 package com.liferay.knowledge.base.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
@@ -828,6 +830,32 @@ public class KBArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testExpireKBArticleUpdateAssetEntry() throws Exception {
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, null, null, _serviceContext);
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+
+		Assert.assertNull(assetEntry.getExpirationDate());
+
+		kbArticle = _kbArticleLocalService.expireKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(), _serviceContext);
+
+		assetEntry = _assetEntryLocalService.getEntry(
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+
+		Assert.assertEquals(
+			kbArticle.getExpirationDate(), assetEntry.getExpirationDate());
+	}
+
+	@Test
 	public void testGetAllDescendantKBArticles() throws Exception {
 		KBArticle parentKBArticle = _kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), _kbFolderClassNameId,
@@ -1290,6 +1318,9 @@ public class KBArticleLocalServiceTest {
 
 	private static final Pattern _targetBlankPattern = Pattern.compile(
 		".*target=\"_blank\".*");
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

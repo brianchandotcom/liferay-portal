@@ -41,7 +41,7 @@ export default function usePreviewURL() {
 
 		const setParameters = (parameters) => {
 			Object.entries(parameters).forEach(([key, value]) => {
-				url.searchParams.set(`${config.portletNamespace}${key}`, value);
+				url.searchParams.set(key, value);
 			});
 		};
 

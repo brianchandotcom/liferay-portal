@@ -994,7 +994,7 @@ definition {
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
-		CreateObject.saveObject();
+		Click(locator1 = "Button#SAVE");
 
 		SelectFrame(locator1 = "Message#ERROR");
 

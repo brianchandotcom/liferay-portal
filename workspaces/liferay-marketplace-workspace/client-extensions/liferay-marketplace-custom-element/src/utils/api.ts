@@ -15,7 +15,7 @@ export function createApp({
 }) {
 	return fetch('/o/headless-commerce-admin-catalog/v1.0/products', {
 		body: JSON.stringify({
-			active: true,
+			active: false,
 			catalogId,
 			description: {en_US: appDescription},
 			name: {en_US: appName},

@@ -169,4 +169,35 @@ public class JSONObjectIndividualSegmentsExpressionVisitorImplTest {
 		Assert.assertEquals("gt", dayJSONObject.get("operatorName"));
 	}
 
+	@Test
+	public void testAcceptSimpleFilterByCountWithNotOperator() {
+		String filter = IndividualSegmentsExpressionUtil.getFilterByCount(
+			IndividualSegmentsExpressionUtil.getFilter(
+				"Page#pageViewed#545188693724480037", "gt", "2023-02-07"),
+			"ge", 1);
+
+		IndividualSegmentsExpressionParser individualSegmentsExpressionParser =
+			new IndividualSegmentsExpressionParser(
+				new CommonTokenStream(
+					new IndividualSegmentsExpressionLexer(
+						new ANTLRInputStream("not " + filter))));
+
+		IndividualSegmentsExpressionParser.ExpressionContext expressionContext =
+			individualSegmentsExpressionParser.expression();
+
+		JSONObject jsonObject = (JSONObject)expressionContext.accept(
+			new JSONObjectIndividualSegmentsExpressionVisitorImpl());
+
+		Assert.assertEquals(1, jsonObject.getInt("value"));
+		Assert.assertEquals(545188693724480037L, jsonObject.getLong("assetId"));
+		Assert.assertEquals("ge", jsonObject.getString("operatorName"));
+		Assert.assertEquals("true", jsonObject.getString("operatorNot"));
+		Assert.assertEquals("pageViewed", jsonObject.get("propertyName"));
+
+		JSONObject dayJSONObject = jsonObject.getJSONObject("day");
+
+		Assert.assertEquals("2023-02-07", dayJSONObject.get("value"));
+		Assert.assertEquals("gt", dayJSONObject.get("operatorName"));
+	}
+
 }

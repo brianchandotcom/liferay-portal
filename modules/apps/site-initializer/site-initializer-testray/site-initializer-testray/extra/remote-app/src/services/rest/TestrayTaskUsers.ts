@@ -104,23 +104,27 @@ class TestrayTaskUsersImpl extends Rest<TaskToUser, TestrayTaskUser> {
 			);
 		}
 
-		response = await this.getAll({
-			fields: 'id',
-			filter: SearchBuilder.eq('taskId', taskId),
-			pageSize: 100,
-		});
+		const [testrayTasksResponse, testrayTask] = await Promise.all([
+			this.getAll({
+				fields: 'id',
+				filter: SearchBuilder.eq('taskId', taskId),
+				pageSize: 100,
+			}),
+			testrayTaskImpl.getOne(taskId),
+		]);
 
-		response = this.transformDataFromList(
-			response as APIResponse<TestrayTaskUser>
+		const {items: testrayTasks} = this.transformDataFromList(
+			testrayTasksResponse as APIResponse<TestrayTaskUser>
 		);
 
 		await testrayTaskImpl.update(taskId, {
 			assignedUsers: JSON.stringify(
-				response?.items.map(({user}) => ({
+				testrayTasks.map(({user}) => ({
 					id: user?.id,
 					name: user?.givenName,
 				}))
 			),
+			dueStatus: testrayTask?.dueStatus.key,
 		});
 	}
 }

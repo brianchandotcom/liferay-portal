@@ -26,6 +26,7 @@ import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
 import {AccountRestrictionContainer} from './AccountRestrictionContainer';
+import {TranslationsContainer} from './TranslationsContainer';
 
 export type KeyValuePair = {
 	key: string;
@@ -275,6 +276,11 @@ export default function EditObjectDetails({
 							hasUpdateObjectDefinitionPermission
 						}
 						isApproved={isApproved}
+						setValues={setValues}
+						values={values}
+					/>
+
+					<TranslationsContainer
 						setValues={setValues}
 						values={values}
 					/>

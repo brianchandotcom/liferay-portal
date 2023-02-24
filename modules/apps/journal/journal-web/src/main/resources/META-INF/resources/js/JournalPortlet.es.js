@@ -77,13 +77,8 @@ export default function _JournalPortlet({
 	const editingDefaultValues = classNameId && classNameId !== '0';
 
 	if (editingDefaultValues) {
-		const getInput = (inputName) => {
-			const input = document.getElementById(`${namespace}${inputName}`);
-
-			if (input && !displayDate) {
-				input.value = '';
-			}
-		};
+		const getInput = (inputName) =>
+			document.getElementById(`${namespace}${inputName}`);
 
 		const resetInput = (inputName) => {
 			const input = getInput(inputName);

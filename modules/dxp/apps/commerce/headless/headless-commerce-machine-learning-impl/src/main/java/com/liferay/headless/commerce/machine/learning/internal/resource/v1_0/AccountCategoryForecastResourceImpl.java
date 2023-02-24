@@ -18,11 +18,11 @@ import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLFor
 import com.liferay.commerce.machine.learning.forecast.AssetCategoryCommerceMLForecastManager;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountCategoryForecast;
 import com.liferay.headless.commerce.machine.learning.internal.constants.CommerceMLForecastConstants;
-import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.AccountCategoryForecastDTOConverter;
 import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.CommerceMLForecastCompositeResourcePrimaryKey;
 import com.liferay.headless.commerce.machine.learning.internal.helper.v1_0.CommerceAccountPermissionHelper;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountCategoryForecastResource;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -151,9 +151,12 @@ public class AccountCategoryForecastResourceImpl
 					historyLength, forecastLength));
 	}
 
-	@Reference
-	private AccountCategoryForecastDTOConverter
-		_accountCategoryForecastDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.AccountCategoryForecastDTOConverter)"
+	)
+	private DTOConverter
+		<AssetCategoryCommerceMLForecast, AccountCategoryForecast>
+			_accountCategoryForecastDTOConverter;
 
 	@Reference
 	private AssetCategoryCommerceMLForecastManager

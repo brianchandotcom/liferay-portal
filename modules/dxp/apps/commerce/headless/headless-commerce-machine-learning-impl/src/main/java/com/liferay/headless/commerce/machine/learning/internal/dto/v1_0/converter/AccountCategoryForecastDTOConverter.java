@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.commerce.machine.learning.forecast.model.AssetCategoryCommerceMLForecast",
-	service = {AccountCategoryForecastDTOConverter.class, DTOConverter.class}
+	service = DTOConverter.class
 )
 public class AccountCategoryForecastDTOConverter
 	implements DTOConverter

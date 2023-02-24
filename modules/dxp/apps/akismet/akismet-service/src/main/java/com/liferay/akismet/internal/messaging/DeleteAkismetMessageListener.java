@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
@@ -45,8 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.akismet.internal.configuration.AkismetServiceConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
-	property = "cron.expression=0 0 0 * * ?", service = {}
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class DeleteAkismetMessageListener extends BaseMessageListener {
 
@@ -55,13 +53,10 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
 			AkismetServiceConfiguration.class, properties);
 
-		String cronExpression = GetterUtil.getString(
-			properties.get("cron.expression"), _DEFAULT_CRON_EXPRESSION);
-
 		String className = getClass().getName();
 
 		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, new Date(), null, cronExpression);
+			className, className, new Date(), null, "0 0 0 * * ?");
 
 		_schedulerEntryImpl = new SchedulerEntryImpl(
 			getClass().getName(), trigger);
@@ -100,8 +95,6 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 		_akismetEntryLocalService.deleteAkismetEntry(
 			new Date(System.currentTimeMillis() - (reportableTime * Time.DAY)));
 	}
-
-	private static final String _DEFAULT_CRON_EXPRESSION = "0 0 0 * * ?";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteAkismetMessageListener.class);

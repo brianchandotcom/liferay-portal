@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -53,8 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.akismet.internal.configuration.AkismetServiceConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
-	property = "cron.expression=0 0 0 * * ?", service = {}
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class DeleteMBMessagesListener extends BaseMessageListener {
 
@@ -63,13 +61,10 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
 			AkismetServiceConfiguration.class, properties);
 
-		String cronExpression = GetterUtil.getString(
-			properties.get("cron.expression"), _DEFAULT_CRON_EXPRESSION);
-
 		Class<?> clazz = getClass();
 
 		Trigger trigger = _triggerFactory.createTrigger(
-			clazz.getName(), clazz.getName(), new Date(), null, cronExpression);
+			clazz.getName(), clazz.getName(), new Date(), null, "0 0 0 * * ?");
 
 		_schedulerEntryImpl = new SchedulerEntryImpl(clazz.getName(), trigger);
 
@@ -134,8 +129,6 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 			}
 		}
 	}
-
-	private static final String _DEFAULT_CRON_EXPRESSION = "0 0 0 * * ?";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteMBMessagesListener.class);

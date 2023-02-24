@@ -40,12 +40,12 @@ import org.osgi.service.component.annotations.Reference;
 		"dispatcher=REQUEST",
 		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
 		"servlet-context-name=",
-		"servlet-filter-name=SSO SAML SP Session Termination Filter",
+		"servlet-filter-name=SP Session Termination SAML Portal Filter",
 		"url-pattern=/*"
 	},
 	service = Filter.class
 )
-public class SamlSpSessionTerminationFilter extends BaseSamlPortalFilter {
+public class SpSessionTerminationSamlPortalFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public void init(FilterConfig filterConfig) {
@@ -97,7 +97,7 @@ public class SamlSpSessionTerminationFilter extends BaseSamlPortalFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SamlSpSessionTerminationFilter.class);
+		SpSessionTerminationSamlPortalFilter.class);
 
 	@Reference
 	private Portal _portal;

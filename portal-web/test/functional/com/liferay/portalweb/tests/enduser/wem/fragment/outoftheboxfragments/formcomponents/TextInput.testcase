@@ -305,12 +305,12 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-149725. The pages designer cannot type more than 280 characters in the text input field."
+	@description = "This is a test for LPS-149725 and LPS-173849. The pages designer should see alert message when the characters count exceeds text field."
 	@priority = 4
-	test CannotType281CharactersInTextInputField {
-		var actualText = "The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters";
+	test ViewAlertMessageWhenCharactersCountExceedMaximum {
+		property custom.properties = "feature.flag.LPS-161631=true";
+
 		var inputText = "The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characterss";
-		var modifiedText = "The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters";
 
 		task ("Given a pages designer has a Text Input fragment within published content page") {
 			JSONLayout.addPublicLayout(
@@ -350,22 +350,23 @@ definition {
 				type = "text-input");
 		}
 
-		task ("When the pages designer types 280 characters in the Input Fragment") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+		task ("When the pages designer removes one character from Text Input") {
+			Click(
+				key_text = "Region",
+				locator1 = "TextInput#ANY");
 
-			Type.sendKeys(
+			KeyPress(
 				key_text = "Region",
 				locator1 = "TextInput#ANY",
-				value1 = ${actualText});
+				value1 = "\BACK_SPACE");
 		}
 
-		task ("Then the pages designer can see 280 characters in Text Input field") {
-			AssertTextEquals(
-				key_text = "Region",
-				locator1 = "TextInput#ANY",
-				value1 = ${actualText});
+		task ("Then the pages designer cannot see the alert message") {
+			AssertTextNotEquals.assertNotPartialText(
+				index = 1,
+				locator1 = "Fragment#INPUT_LENGTH_INFO",
+				type = "text-input",
+				value1 = "Maximum Number of Characters Exceeded");
 		}
 	}
 

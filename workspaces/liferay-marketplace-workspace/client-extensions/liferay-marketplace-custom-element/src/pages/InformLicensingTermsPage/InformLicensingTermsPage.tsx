@@ -117,6 +117,7 @@ export function InformLicensingTermsPage({
 							createAppLicensePrice({
 								appProductId,
 								body: {
+									neverExpire: true,
 									price: 0,
 									sku: 'default',
 								},
@@ -127,6 +128,7 @@ export function InformLicensingTermsPage({
 							createAppLicensePrice({
 								appProductId,
 								body: {
+									neverExpire: true,
 									price: 0,
 									sku: 'trial',
 								},

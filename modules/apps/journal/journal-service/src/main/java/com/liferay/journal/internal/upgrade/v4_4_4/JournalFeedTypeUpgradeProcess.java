@@ -100,29 +100,29 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			classNameId, id);
 
-		if (assetEntry == null) {
-			long userId = resultSet.getLong("userId");
-			Date createDate = resultSet.getDate("createDate");
+		if (assetEntry != null) {
+			return;
+		}
 
-			if (_userLocalService.fetchUser(userId) == null) {
-				userId = defaultUserId;
-			}
+		long userId = resultSet.getLong("userId");
+		Date createDate = resultSet.getDate("createDate");
 
-			assetEntry = _assetEntryLocalService.updateEntry(
-				userId, resultSet.getLong("groupId"),
-				resultSet.getDate("createDate"),
-				resultSet.getDate("modifiedDate"), JournalFeed.class.getName(),
-				id, resultSet.getString("uuid_"), 0, new long[0], new String[0],
-				true, true, null, null, createDate, null,
-				ContentTypes.TEXT_PLAIN, resultSet.getString("name"),
-				resultSet.getString("description"), null, null, null, 0, 0,
-				0.0);
+		if (_userLocalService.fetchUser(userId) == null) {
+			userId = defaultUserId;
+		}
 
-			if (assetCategoryId > 0) {
-				_assetEntryAssetCategoryRelLocalService.
-					addAssetEntryAssetCategoryRel(
-						assetEntry.getEntryId(), assetCategoryId);
-			}
+		assetEntry = _assetEntryLocalService.updateEntry(
+			userId, resultSet.getLong("groupId"),
+			resultSet.getDate("createDate"), resultSet.getDate("modifiedDate"),
+			JournalFeed.class.getName(), id, resultSet.getString("uuid_"), 0,
+			new long[0], new String[0], true, true, null, null, createDate,
+			null, ContentTypes.TEXT_PLAIN, resultSet.getString("name"),
+			resultSet.getString("description"), null, null, null, 0, 0, 0.0);
+
+		if (assetCategoryId > 0) {
+			_assetEntryAssetCategoryRelLocalService.
+				addAssetEntryAssetCategoryRel(
+					assetEntry.getEntryId(), assetCategoryId);
 		}
 	}
 

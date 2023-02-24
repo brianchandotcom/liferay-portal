@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.store.s3.portal.profile;
+package com.liferay.portal.store.s3.component.enabler;
 
-import com.liferay.portal.profile.BaseDSModulePortalProfile;
-import com.liferay.portal.profile.PortalProfile;
+import com.liferay.document.library.kernel.store.Store;
+import com.liferay.osgi.util.ComponentUtil;
 import com.liferay.portal.store.s3.S3Store;
 import com.liferay.portal.store.s3.messaging.AbortedMultipartUploadCleanerMessageListener;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -31,30 +27,19 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Hai Yu
  */
-@Component(service = PortalProfile.class)
-public class ModulePortalProfile extends BaseDSModulePortalProfile {
+@Component(service = {})
+public class ComponentEnabler {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		List<String> supportedPortalProfileNames = null;
-
 		String storeClassName = PropsValues.DL_STORE_IMPL;
 
 		if (storeClassName.equals(S3Store.class.getName())) {
-			supportedPortalProfileNames = new ArrayList<>();
-
-			supportedPortalProfileNames.add(
-				PortalProfile.PORTAL_PROFILE_NAME_CE);
-			supportedPortalProfileNames.add(
-				PortalProfile.PORTAL_PROFILE_NAME_DXP);
+			ComponentUtil.enableComponents(
+				Store.class, "(store.type=com.liferay.portal.store.s3.S3Store)",
+				componentContext,
+				AbortedMultipartUploadCleanerMessageListener.class);
 		}
-		else {
-			supportedPortalProfileNames = Collections.emptyList();
-		}
-
-		init(
-			componentContext, supportedPortalProfileNames,
-			AbortedMultipartUploadCleanerMessageListener.class.getName());
 	}
 
 }

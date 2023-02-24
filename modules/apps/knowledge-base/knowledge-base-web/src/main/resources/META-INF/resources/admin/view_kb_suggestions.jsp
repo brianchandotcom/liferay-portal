@@ -61,35 +61,33 @@ request.setAttribute("view_kb_suggestions.jsp-resultRowSplitter", kbCommentResul
 request.setAttribute("view_kb_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
 %>
 
-		<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
 
-		<div class="knowledge-base-admin-content">
+<div class="knowledge-base-admin-content">
+	<clay:management-toolbar
+		actionDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getActionDropdownItems() %>"
+		clearResultsURL="<%= kbSuggestionListManagementToolbarDisplayContext.getClearResultsURL() %>"
+		disabled="<%= kbSuggestionListManagementToolbarDisplayContext.isDisabled() %>"
+		filterDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+		filterLabelItems="<%= kbSuggestionListManagementToolbarDisplayContext.getFilterLabelItems() %>"
+		itemsTotal="<%= kbSuggestionListManagementToolbarDisplayContext.getTotal() %>"
+		propsTransformer="admin/js/SuggestionsManagementToolbarPropsTransformer"
+		searchContainerId="kbComments"
+		selectable="<%= true %>"
+		showSearch="<%= false %>"
+		sortingOrder="<%= kbSuggestionListManagementToolbarDisplayContext.getOrderByType() %>"
+		sortingURL="<%= String.valueOf(kbSuggestionListManagementToolbarDisplayContext.getSortingURL()) %>"
+	/>
 
-<clay:management-toolbar
-	actionDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= kbSuggestionListManagementToolbarDisplayContext.getClearResultsURL() %>"
-	disabled="<%= kbSuggestionListManagementToolbarDisplayContext.isDisabled() %>"
-	filterDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	filterLabelItems="<%= kbSuggestionListManagementToolbarDisplayContext.getFilterLabelItems() %>"
-	itemsTotal="<%= kbSuggestionListManagementToolbarDisplayContext.getTotal() %>"
-	propsTransformer="admin/js/SuggestionsManagementToolbarPropsTransformer"
-	searchContainerId="kbComments"
-	selectable="<%= true %>"
-	showSearch="<%= false %>"
-	sortingOrder="<%= kbSuggestionListManagementToolbarDisplayContext.getOrderByType() %>"
-	sortingURL="<%= String.valueOf(kbSuggestionListManagementToolbarDisplayContext.getSortingURL()) %>"
-/>
+	<clay:container-fluid>
+		<liferay-ui:success key="suggestionDeleted" message="suggestion-was-deleted-successfully" />
 
-<clay:container-fluid>
-	<liferay-ui:success key="suggestionDeleted" message="suggestion-was-deleted-successfully" />
+		<liferay-ui:success key="suggestionsDeleted" message="suggestions-were-deleted-successfully" />
 
-	<liferay-ui:success key="suggestionsDeleted" message="suggestions-were-deleted-successfully" />
+		<liferay-ui:success key="suggestionStatusUpdated" message="suggestion-status-was-updated-successfully" />
 
-	<liferay-ui:success key="suggestionStatusUpdated" message="suggestion-status-was-updated-successfully" />
+		<liferay-ui:success key="suggestionSaved" message="suggestion-was-saved-successfully" />
 
-	<liferay-ui:success key="suggestionSaved" message="suggestion-was-saved-successfully" />
-
-	<liferay-util:include page="/admin/common/view_kb_suggestions_by_status.jsp" servletContext="<%= application %>" />
-</clay:container-fluid>
-
-	</div>
+		<liferay-util:include page="/admin/common/view_kb_suggestions_by_status.jsp" servletContext="<%= application %>" />
+	</clay:container-fluid>
+</div>

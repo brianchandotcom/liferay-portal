@@ -16,8 +16,8 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-		<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
 
-		<div class="knowledge-base-admin-content">
-			<liferay-util:include page="/admin/common/view_kb_article.jsp" servletContext="<%= application %>" />
-		</div>
+<div class="knowledge-base-admin-content">
+	<liferay-util:include page="/admin/common/view_kb_article.jsp" servletContext="<%= application %>" />
+</div>

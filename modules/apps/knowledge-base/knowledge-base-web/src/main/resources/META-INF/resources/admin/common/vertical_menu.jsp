@@ -20,22 +20,22 @@
 KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNavigationDisplayContext(request, renderRequest, renderResponse);
 %>
 
-	<div class="knowledge-base-vertical-bar <%= kbAdminNavigationDisplayContext.isProductMenuOpen() ? StringPool.BLANK : "expanded" %>" id="<portlet:namespace />verticalBarId">
-		<liferay-portlet:actionURL name="/knowledge_base/move_kb_object" var="moveKBObjectURL" />
+<div class="knowledge-base-vertical-bar <%= kbAdminNavigationDisplayContext.isProductMenuOpen() ? StringPool.BLANK : "expanded" %>" id="<portlet:namespace />verticalBarId">
+	<liferay-portlet:actionURL name="/knowledge_base/move_kb_object" var="moveKBObjectURL" />
 
-		<react:component
-			componentId="verticalBarId"
-			module="admin/js/components/VerticalBar"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"items", kbAdminNavigationDisplayContext.getVerticalNavigationJSONObjects()
-				).put(
-					"moveKBObjectURL", moveKBObjectURL
-				).put(
-					"parentContainerId", liferayPortletResponse.getNamespace() + "verticalBarId"
-				).put(
-					"productMenuOpen", kbAdminNavigationDisplayContext.isProductMenuOpen()
-				).build()
-			%>'
-		/>
-	</div>
+	<react:component
+		componentId="verticalBarId"
+		module="admin/js/components/VerticalBar"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"items", kbAdminNavigationDisplayContext.getVerticalNavigationJSONObjects()
+			).put(
+				"moveKBObjectURL", moveKBObjectURL
+			).put(
+				"parentContainerId", liferayPortletResponse.getNamespace() + "verticalBarId"
+			).put(
+				"productMenuOpen", kbAdminNavigationDisplayContext.isProductMenuOpen()
+			).build()
+		%>'
+	/>
+</div>

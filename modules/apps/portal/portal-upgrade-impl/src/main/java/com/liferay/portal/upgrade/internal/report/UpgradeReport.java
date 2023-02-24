@@ -287,17 +287,17 @@ public class UpgradeReport {
 	}
 
 	private String _getLogEventsInfo(String type) {
-		List<Map.Entry<String, Map<String, Integer>>> entrys =
+		List<Map.Entry<String, Map<String, Integer>>> entries =
 			new ArrayList<>();
 
 		if (type.equals("errors")) {
-			entrys.addAll(_errorMessages.entrySet());
+			entries.addAll(_errorMessages.entrySet());
 		}
 		else {
-			entrys.addAll(_warningMessages.entrySet());
+			entries.addAll(_warningMessages.entrySet());
 		}
 
-		if (entrys.isEmpty()) {
+		if (entries.isEmpty()) {
 			return StringBundler.concat("No ", type, " thrown during upgrade");
 		}
 
@@ -306,24 +306,13 @@ public class UpgradeReport {
 		sb.append(StringUtil.upperCaseFirstLetter(type));
 		sb.append(" thrown during upgrade process\n");
 
-		ListUtil.sort(
-			entrys,
-			Collections.reverseOrder(
-				Map.Entry.comparingByValue(
-					new Comparator<Map<String, Integer>>() {
+		for (Map.Entry<String, Map<String, Integer>> entry :
+				ListUtil.sort(
+					entries,
+					Collections.reverseOrder(
+						Map.Entry.comparingByValue(
+							Comparator.comparingInt(Map::size))))) {
 
-						@Override
-						public int compare(
-							Map<String, Integer> object1,
-							Map<String, Integer> object2) {
-
-							return Integer.compare(
-								object1.size(), object2.size());
-						}
-
-					})));
-
-		for (Map.Entry<String, Map<String, Integer>> entry : entrys) {
 			sb.append("Class name: ");
 			sb.append(entry.getKey());
 			sb.append(StringPool.NEW_LINE);

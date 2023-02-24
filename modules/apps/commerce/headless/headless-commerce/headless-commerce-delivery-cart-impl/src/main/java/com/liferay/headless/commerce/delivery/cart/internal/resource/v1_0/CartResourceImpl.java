@@ -172,7 +172,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Override
 	public Page<Cart> getChannelCartsPage(
-			Long accountId, Long channelId, Pagination pagination)
+			Long accountId, Long channelId, String search,
+			Pagination pagination)
 		throws Exception {
 
 		CommerceChannel commerceChannel =
@@ -180,13 +181,13 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		List<CommerceOrder> commerceOrders =
 			_commerceOrderService.getPendingCommerceOrders(
-				commerceChannel.getGroupId(), accountId, null,
+				commerceChannel.getGroupId(), accountId, search,
 				pagination.getStartPosition(), pagination.getEndPosition());
 
 		return Page.of(
 			_toCarts(commerceOrders), pagination,
 			_commerceOrderService.getPendingCommerceOrdersCount(
-				commerceChannel.getGroupId(), accountId, null));
+				commerceChannel.getGroupId(), accountId, search));
 	}
 
 	@Override

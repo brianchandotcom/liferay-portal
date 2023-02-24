@@ -28,9 +28,7 @@ const statusReport = {
 };
 
 const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
-	const hideSLAStatus =
-		!koroneikiAccount.hasSLAGoldPlatinum ||
-		koroneikiAccount.status === 'Expired';
+	const hideSLAStatus = !koroneikiAccount.slaCurrent;
 
 	const SLAStatus = () => {
 		if (loading) {

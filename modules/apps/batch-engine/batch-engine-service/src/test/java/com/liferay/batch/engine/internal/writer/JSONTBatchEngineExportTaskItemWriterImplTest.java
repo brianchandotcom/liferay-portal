@@ -14,7 +14,7 @@
 
 package com.liferay.batch.engine.internal.writer;
 
-import com.liferay.batch.engine.internal.installer.BatchEngineFileInstaller;
+import com.liferay.batch.engine.internal.auto.deploy.BatchEngineAutoDeployListener;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -69,7 +69,7 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 	}
 
 	private String _getExpectedContent(
-		BatchEngineFileInstaller.BatchEngineImportConfiguration
+		BatchEngineAutoDeployListener.BatchEngineImportConfiguration
 			batchEngineImportConfiguration,
 		List<String> fieldNames, List<Item> items) {
 
@@ -116,9 +116,10 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		BatchEngineFileInstaller.BatchEngineImportConfiguration
+		BatchEngineAutoDeployListener.BatchEngineImportConfiguration
 			batchEngineImportConfiguration =
-				new BatchEngineFileInstaller.BatchEngineImportConfiguration();
+				new BatchEngineAutoDeployListener.
+					BatchEngineImportConfiguration();
 
 		batchEngineImportConfiguration.setClassName(Item.class.getName());
 		batchEngineImportConfiguration.setVersion("v1.0");

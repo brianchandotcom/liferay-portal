@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.installer;
+package com.liferay.batch.engine.internal.auto.deploy;
 
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
@@ -21,6 +21,8 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -71,7 +73,7 @@ import org.mockito.stubbing.Answer;
 /**
  * @author Raymond Augé
  */
-public class BatchEngineFileInstallerTest {
+public class BatchEngineAutoDeployListenerTest {
 
 	@ClassRule
 	@Rule
@@ -93,7 +95,7 @@ public class BatchEngineFileInstallerTest {
 		MockitoAnnotations.openMocks(this);
 
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineFileInstaller, "_batchEngineImportTaskExecutor",
+			_batchEngineAutoDeployListener, "_batchEngineImportTaskExecutor",
 			new BatchEngineImportTaskExecutor() {
 
 				@Override
@@ -105,18 +107,20 @@ public class BatchEngineFileInstallerTest {
 
 			});
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineFileInstaller, "_batchEngineImportTaskLocalService",
+			_batchEngineAutoDeployListener,
+			"_batchEngineImportTaskLocalService",
 			_batchEngineImportTaskLocalService);
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineFileInstaller, "_companyLocalService",
+			_batchEngineAutoDeployListener, "_companyLocalService",
 			_companyLocalService);
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineFileInstaller, "_file", FileImpl.getInstance());
+			_batchEngineAutoDeployListener, "_file", FileImpl.getInstance());
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineFileInstaller, "_portalExecutorManager",
+			_batchEngineAutoDeployListener, "_portalExecutorManager",
 			_portalExecutorManager);
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineFileInstaller, "_userLocalService", _userLocalService);
+			_batchEngineAutoDeployListener, "_userLocalService",
+			_userLocalService);
 
 		Mockito.when(
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
@@ -229,11 +233,20 @@ public class BatchEngineFileInstallerTest {
 
 	@Test
 	public void testAdvancedWithMultiData() throws Exception {
-		File file = _toZipFile("batch6");
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
 
-		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
+		autoDeploymentContext.setFile(_toZipFile("batch6"));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		boolean deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertTrue(deployable);
+
+		int result = _batchEngineAutoDeployListener.deploy(
+			autoDeploymentContext);
+
+		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(2)
@@ -248,11 +261,20 @@ public class BatchEngineFileInstallerTest {
 
 	@Test
 	public void testAdvancedWithSingleData() throws Exception {
-		File file = _toZipFile("batch5");
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
 
-		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
+		autoDeploymentContext.setFile(_toZipFile("batch5"));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		boolean deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertTrue(deployable);
+
+		int result = _batchEngineAutoDeployListener.deploy(
+			autoDeploymentContext);
+
+		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(1)
@@ -267,11 +289,17 @@ public class BatchEngineFileInstallerTest {
 
 	@Test
 	public void testWithEmptyZip() throws Exception {
-		File file = _toZipFile("batch0");
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
 
-		Assert.assertFalse(_batchEngineFileInstaller.canTransformURL(file));
+		autoDeploymentContext.setFile(_toZipFile("batch0"));
 
-		_batchEngineFileInstaller.transformURL(file);
+		boolean deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertFalse(deployable);
+
+		_batchEngineAutoDeployListener.deploy(autoDeploymentContext);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(0)
@@ -284,11 +312,20 @@ public class BatchEngineFileInstallerTest {
 
 	@Test
 	public void testWithHierarchy() throws Exception {
-		File file = _toZipFile("batch4");
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
 
-		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
+		autoDeploymentContext.setFile(_toZipFile("batch4"));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		boolean deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertTrue(deployable);
+
+		int result = _batchEngineAutoDeployListener.deploy(
+			autoDeploymentContext);
+
+		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(3)
@@ -303,11 +340,17 @@ public class BatchEngineFileInstallerTest {
 
 	@Test
 	public void testWithMissingData() throws Exception {
-		File file = _toZipFile("batch2");
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
 
-		Assert.assertFalse(_batchEngineFileInstaller.canTransformURL(file));
+		autoDeploymentContext.setFile(_toZipFile("batch2"));
 
-		_batchEngineFileInstaller.transformURL(file);
+		boolean deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertFalse(deployable);
+
+		_batchEngineAutoDeployListener.deploy(autoDeploymentContext);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(0)
@@ -320,11 +363,20 @@ public class BatchEngineFileInstallerTest {
 
 	@Test
 	public void testWithMultiData() throws Exception {
-		File file = _toZipFile("batch3");
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
 
-		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
+		autoDeploymentContext.setFile(_toZipFile("batch3"));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		boolean deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertTrue(deployable);
+
+		int result = _batchEngineAutoDeployListener.deploy(
+			autoDeploymentContext);
+
+		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(2)
@@ -339,11 +391,20 @@ public class BatchEngineFileInstallerTest {
 
 	@Test
 	public void testWithMultipleDataAndInvalidZIPEntries() throws Exception {
-		File file = _toZipFile("batch8");
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
 
-		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
+		autoDeploymentContext.setFile(_toZipFile("batch8"));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		boolean deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertTrue(deployable);
+
+		int result = _batchEngineAutoDeployListener.deploy(
+			autoDeploymentContext);
+
+		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(3)
@@ -358,11 +419,20 @@ public class BatchEngineFileInstallerTest {
 
 	@Test
 	public void testWithSingleData() throws Exception {
-		File file = _toZipFile("batch1");
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
 
-		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
+		autoDeploymentContext.setFile(_toZipFile("batch1"));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		boolean deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertTrue(deployable);
+
+		int result = _batchEngineAutoDeployListener.deploy(
+			autoDeploymentContext);
+
+		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(1)
@@ -376,11 +446,18 @@ public class BatchEngineFileInstallerTest {
 
 		// Without "companyId" and "userId" in batch-engine.json
 
-		file = _toZipFile("batch7");
+		autoDeploymentContext = new AutoDeploymentContext();
 
-		Assert.assertTrue(_batchEngineFileInstaller.canTransformURL(file));
+		autoDeploymentContext.setFile(_toZipFile("batch7"));
 
-		Assert.assertNull(_batchEngineFileInstaller.transformURL(file));
+		deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertTrue(deployable);
+
+		result = _batchEngineAutoDeployListener.deploy(autoDeploymentContext);
+
+		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(2)
@@ -394,7 +471,7 @@ public class BatchEngineFileInstallerTest {
 	}
 
 	private File _toZipFile(String fileName) throws Exception {
-		URL url = BatchEngineFileInstallerTest.class.getResource(fileName);
+		URL url = BatchEngineAutoDeployListenerTest.class.getResource(fileName);
 
 		if (url == null) {
 			File file = new File(RandomTestUtil.randomString(20) + ".zip");
@@ -468,8 +545,8 @@ public class BatchEngineFileInstallerTest {
 		return zipFile;
 	}
 
-	private final BatchEngineFileInstaller _batchEngineFileInstaller =
-		new BatchEngineFileInstaller();
+	private final BatchEngineAutoDeployListener _batchEngineAutoDeployListener =
+		new BatchEngineAutoDeployListener();
 
 	@Mock
 	private BatchEngineImportTaskLocalService

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -58,7 +59,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -121,33 +121,11 @@ public class UpgradeReport {
 
 		_persistenceManager = persistenceManager;
 
-		Date date = _getDate();
-		Map<String, TableCounts> databaseTablesInfo = _getDatabaseTableCounts();
-		Map<String, Integer> upgradeProcesses =
-			_getLongestRunningUpgradeProcesses();
-		String releaseManagerOSGiInfo =
-			(releaseManagerOSGiCommands == null) ? StringPool.BLANK :
-				releaseManagerOSGiCommands.check();
-
-		_sortedErrorMessages = _getSortedLogEvents("errors");
-		_sortedWarningMessages = _getSortedLogEvents("warnings");
-
-		_setPortalVersionsInfo();
-		_setDatabaseInfo();
-		_setRootDir();
+		Map<String, Object> reportData = _getReportData(
+			releaseManagerOSGiCommands);
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
-			_setDateInfoLogContext(date);
-			_setUpgradeTimeInfoLogContext();
-			_setPortalVersionsInfoLogContext();
-			_setDialectInfoLogContext();
-			_setPropertiesInfoLogContext();
-			_setDLStorageInfoLogContext();
-			_setDatabaseTablesInfoLogContext(databaseTablesInfo);
-			_setUpgradeProcessesInfoLogContext(upgradeProcesses);
-			_setLogEventsInfoLogContext("errors");
-			_setLogEventsInfoLogContext("warnings");
-			_setReleaseManagerOSGiInfoLogContext(releaseManagerOSGiInfo);
+			_setReportLogContext(reportData);
 		}
 
 		File reportFile = null;
@@ -158,19 +136,7 @@ public class UpgradeReport {
 			FileUtil.write(
 				reportFile,
 				StringUtil.merge(
-					new String[] {
-						_getDateInfoUpgradeReport(date),
-						_getUpgradeTimeInfoUpgradeReport(),
-						_getPortalVersionsInfoUpgradeReport(),
-						_getDialectInfoUpgradeReport(),
-						_getPropertiesInfoUpgradeReport(),
-						_getDLStorageInfoUpgradeReport(),
-						_getDatabaseTablesInfoUpgradeReport(databaseTablesInfo),
-						_getUpgradeProcessesInfoUpgradeReport(upgradeProcesses),
-						_getLogEventsInfoUpgradeReport("errors"),
-						_getLogEventsInfoUpgradeReport("warnings"),
-						releaseManagerOSGiInfo
-					},
+					new String[] {_printUpgradeReport(reportData)},
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
 
 			if (_log.isInfoEnabled()) {
@@ -213,7 +179,7 @@ public class UpgradeReport {
 		return 0;
 	}
 
-	private Map<String, TableCounts> _getDatabaseTableCounts() {
+	private List<TableCounts> _getDatabaseTableCounts() {
 		Map<String, Integer> finalTableCounts = _getTableCounts();
 
 		if ((_initialTableCounts == null) || (finalTableCounts == null)) {
@@ -225,7 +191,7 @@ public class UpgradeReport {
 		tableNames.addAll(_initialTableCounts.keySet());
 		tableNames.addAll(finalTableCounts.keySet());
 
-		Map<String, TableCounts> tableCounts = new LinkedHashMap<>();
+		List<TableCounts> tableCounts = new ArrayList<>();
 
 		ListUtil.distinct(
 			tableNames,
@@ -256,76 +222,48 @@ public class UpgradeReport {
 				(finalCount >= 0) ? String.valueOf(finalCount) :
 					StringPool.DASH;
 
-			tableCounts.put(tableName, new TableCounts(initialRows, finalRows));
+			tableCounts.add(new TableCounts(tableName, initialRows, finalRows));
 		}
 
 		return tableCounts;
 	}
 
-	private String _getDatabaseTablesInfoUpgradeReport(
-		Map<String, TableCounts> tableCounts) {
-
-		if (tableCounts == null) {
-			return "Unable to get database tables size";
-		}
-
-		StringBundler sb = new StringBundler(tableCounts.size() + 3);
-
-		String format = "%-30s %20s %20s\n";
-
-		sb.append("Tables in database sorted by initial number of rows:\n");
-		sb.append(
-			String.format(
-				format, "Table name", "Rows (initial)", "Rows (final)"));
-		sb.append(String.format(format, _UNDERLINE, _UNDERLINE, _UNDERLINE));
-
-		for (Map.Entry<String, TableCounts> entry : tableCounts.entrySet()) {
-			String tableName = entry.getKey();
-			TableCounts tableCount = entry.getValue();
-
-			sb.append(
-				String.format(
-					format, tableName, tableCount.getInitialCount(),
-					tableCount.getFinalCount()));
-		}
-
-		return sb.toString();
-	}
-
-	private Date _getDate() {
+	private String _getDate() {
 		Calendar calendar = Calendar.getInstance();
 
-		return calendar.getTime();
-	}
+		Date date = calendar.getTime();
 
-	private String _getDateInfoUpgradeReport(Date date) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 			"EEE, MMM dd, yyyy hh:mm:ss z");
 
 		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-		return String.format("Date: %s\n", simpleDateFormat.format(date));
+		return simpleDateFormat.format(date);
 	}
 
-	private String _getDialectInfoUpgradeReport() {
-		return StringBundler.concat(
-			"Using ", _dbType, " version ", _dbVersion, StringPool.NEW_LINE);
+	private String _getDialectInfo() {
+		DB db = DBManagerUtil.getDB();
+
+		String dbType = String.valueOf(db.getDBType());
+
+		String dbVersion =
+			db.getMajorVersion() + StringPool.PERIOD + db.getMinorVersion();
+
+		return dbType + StringPool.SPACE + dbVersion;
 	}
 
-	private String _getDLStorageInfoUpgradeReport() {
+	private String _getDLStorageInfoNew() {
 		if (!StringUtil.endsWith(
 				PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
 
-			return "Check your external repository to know the document " +
-				"library storage size";
+			return "Check externally";
 		}
 
 		if (_rootDir == null) {
-			return "Unable to determine the document library storage size " +
-				"because the property \"rootDir\" was not set\n";
+			return "Unable to determine. \"rootDir\" was not set";
 		}
 
-		return "The document library storage size is " + _getDLStorageSize();
+		return _getDLStorageSize();
 	}
 
 	private String _getDLStorageSize() {
@@ -359,59 +297,12 @@ public class UpgradeReport {
 		return _LOG_CONTEXT_PREFIX + section;
 	}
 
-	private String _getLogEventsInfoUpgradeReport(String type) {
-		Map<String, Map<String, Integer>> sortedEvents = null;
-
-		if (type.equals("errors")) {
-			sortedEvents = _sortedErrorMessages;
-		}
-		else {
-			sortedEvents = _sortedWarningMessages;
-		}
-
-		Set<Map.Entry<String, Map<String, Integer>>> entrySet =
-			sortedEvents.entrySet();
-
-		if (entrySet.isEmpty()) {
-			return StringBundler.concat("No ", type, " thrown during upgrade");
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringUtil.upperCaseFirstLetter(type));
-		sb.append(" thrown during upgrade process\n");
-
-		for (Map.Entry<String, Map<String, Integer>> entry :
-				sortedEvents.entrySet()) {
-
-			sb.append("Class name: ");
-			sb.append(entry.getKey());
-			sb.append(StringPool.NEW_LINE);
-
-			for (Map.Entry<String, Integer> valueEntry :
-					_sort(entry.getValue())) {
-
-				sb.append(StringPool.TAB);
-				sb.append(valueEntry.getValue());
-				sb.append(" occurrences of the following ");
-				sb.append(type);
-				sb.append(": ");
-				sb.append(valueEntry.getKey());
-				sb.append(StringPool.NEW_LINE);
-			}
-
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		return sb.toString();
-	}
-
-	private Map<String, Integer> _getLongestRunningUpgradeProcesses() {
+	private List<RunningProcess> _getLongestRunningUpgradeProcessesList() {
 		List<String> messages = _eventMessages.get(
 			UpgradeProcess.class.getName());
 
 		if (ListUtil.isEmpty(messages)) {
-			return new HashMap<>();
+			return new ArrayList<>();
 		}
 
 		Map<String, Integer> map = new HashMap<>();
@@ -436,12 +327,15 @@ public class UpgradeReport {
 				GetterUtil.getInteger(message.substring(startIndex, endIndex)));
 		}
 
-		Map<String, Integer> reducedMap = new LinkedHashMap<>();
+		ArrayList<RunningProcess> reducedMap = new ArrayList<>();
 
 		int count = 0;
 
 		for (Map.Entry<String, Integer> entry : _sort(map)) {
-			reducedMap.put(entry.getKey(), entry.getValue());
+			String key = entry.getKey();
+			int value = entry.getValue();
+
+			reducedMap.add(new RunningProcess(key, String.valueOf(value)));
 
 			count++;
 
@@ -453,82 +347,119 @@ public class UpgradeReport {
 		return reducedMap;
 	}
 
-	private String _getPortalVersionsInfoUpgradeReport() {
-		return StringBundler.concat(
-			_getReleaseInfo(
-				_initialBuildNumber, _initialSchemaVersion, "initial"),
-			StringPool.NEW_LINE,
-			_getReleaseInfo(_finalBuildNumber, _finalSchemaVersion, "final"),
-			StringPool.NEW_LINE,
-			_getReleaseInfo(
-				_expectedBuildNumber, _expectedSchemaVersion, "expected"));
+	private Map<String, String> _getPortalVersionInfo() {
+		return LinkedHashMapBuilder.put(
+			"initial.build.number",
+			(_initialBuildNumber != 0) ? String.valueOf(_initialBuildNumber) :
+				"Unable to determine"
+		).put(
+			"initial.schema.version",
+			(_initialSchemaVersion != null) ? _initialSchemaVersion :
+				"Unable to determine"
+		).put(
+			"final.build.number",
+			() -> {
+				int finalBuildNumber = _getBuildNumber();
+
+				if (finalBuildNumber != 0) {
+					return String.valueOf(finalBuildNumber);
+				}
+
+				return "Unable to determine";
+			}
+		).put(
+			"final.schema.version",
+			() -> {
+				String finalSchemaVersion = _getSchemaVersion();
+
+				if (finalSchemaVersion != null) {
+					return finalSchemaVersion;
+				}
+
+				return "Unable to determine";
+			}
+		).put(
+			"expected.build.number",
+			() -> {
+				int expectedBuildNumber = ReleaseInfo.getBuildNumber();
+
+				if (expectedBuildNumber != 0) {
+					return String.valueOf(expectedBuildNumber);
+				}
+
+				return "Unable to determine";
+			}
+		).put(
+			"expected.schema.version",
+			() -> {
+				String expectedSchemaVersion = String.valueOf(
+					PortalUpgradeProcess.getLatestSchemaVersion());
+
+				if (expectedSchemaVersion != null) {
+					return expectedSchemaVersion;
+				}
+
+				return "Unable to determine";
+			}
+		).build();
 	}
 
-	private String _getPropertiesInfoUpgradeReport() {
-		StringBuffer sb = new StringBuffer(12);
+	private Map<String, String> _getPropertiesInfo() {
+		_setRootDir();
 
-		sb.append("liferay.home=" + PropsValues.LIFERAY_HOME);
-		sb.append("\nlocales=" + Arrays.toString(PropsValues.LOCALES));
-		sb.append(
-			"\nlocales.enabled=" +
-				Arrays.toString(PropsValues.LOCALES_ENABLED));
-		sb.append(StringPool.NEW_LINE);
-
-		sb.append(
-			PropsKeys.DL_STORE_IMPL + StringPool.EQUAL +
-				PropsValues.DL_STORE_IMPL);
-
-		sb.append(StringPool.NEW_LINE);
-
-		if (StringUtil.equals(
-				PropsValues.DL_STORE_IMPL,
-				"com.liferay.portal.store.file.system." +
-					"AdvancedFileSystemStore") &&
-			(_rootDir == null)) {
-
-			sb.append("The configuration \"rootDir\" is required. ");
-			sb.append("Configure it in ");
-			sb.append(_CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE);
-			sb.append(".config");
-		}
-
-		if (_rootDir != null) {
-			sb.append("rootDir=" + _rootDir);
-		}
-
-		return sb.toString();
+		return LinkedHashMapBuilder.put(
+			"liferay.home", PropsValues.LIFERAY_HOME
+		).put(
+			"locales", Arrays.toString(PropsValues.LOCALES)
+		).put(
+			"locales.enabled", Arrays.toString(PropsValues.LOCALES_ENABLED)
+		).put(
+			PropsKeys.DL_STORE_IMPL, PropsValues.DL_STORE_IMPL
+		).put(
+			"rootDir", (_rootDir != null) ? _rootDir : "Undefined"
+		).build();
 	}
 
-	private String _getReleaseInfo(
-		int buildNumber, String schemaVersion, String type) {
+	private Map<String, Object> _getReportData(
+		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
 
-		StringBuffer sb = new StringBuffer();
+		return LinkedHashMapBuilder.<String, Object>put(
+			"execution.date", _getDate()
+		).put(
+			"execution.time", _getUpgradeExecutionTime()
+		).put(
+			"portal", _getPortalVersionInfo()
+		).put(
+			"using.database", _getDialectInfo()
+		).put(
+			"properties", _getPropertiesInfo()
+		).put(
+			"document.library.storage.size", _getDLStorageInfoNew()
+		).put(
+			"tables.initial.final.rows", _getDatabaseTableCounts()
+		).put(
+			"longest.running.upgrade.processes",
+			_getLongestRunningUpgradeProcessesList()
+		).put(
+			"errors", _getSortedLogEvents("errors")
+		).put(
+			"warnings", _getSortedLogEvents("warnings")
+		).put(
+			"release.osgi.info",
+			() -> {
+				if (releaseManagerOSGiCommands == null) {
+					return "Not possible to check upgrades status";
+				}
 
-		if (buildNumber != 0) {
-			sb.append(StringUtil.upperCaseFirstLetter(type));
-			sb.append(" portal build number: ");
-			sb.append(buildNumber);
-		}
-		else {
-			sb.append("Unable to determine ");
-			sb.append(type);
-			sb.append(" portal build number");
-		}
+				String check = releaseManagerOSGiCommands.check();
 
-		sb.append(StringPool.NEW_LINE);
+				if (check.isEmpty()) {
+					return "There are no pending upgrades";
+				}
 
-		if (schemaVersion != null) {
-			sb.append(StringUtil.upperCaseFirstLetter(type));
-			sb.append(" portal schema version: ");
-			sb.append(schemaVersion);
-		}
-		else {
-			sb.append("Unable to determine ");
-			sb.append(type);
-			sb.append(" portal schema version");
-		}
-
-		return sb.toString();
+				return check;
+			}
+		).build();
 	}
 
 	private File _getReportFile() {
@@ -602,7 +533,7 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private Map<String, Map<String, Integer>> _getSortedLogEvents(String type) {
+	private List<EventMessage> _getSortedLogEvents(String type) {
 		List<Map.Entry<String, Map<String, Integer>>> entries =
 			new ArrayList<>();
 
@@ -626,7 +557,23 @@ public class UpgradeReport {
 			sortedEvents.put(entry.getKey(), entry.getValue());
 		}
 
-		return sortedEvents;
+		List<EventMessage> list = new ArrayList<>();
+
+		for (Map.Entry<String, Map<String, Integer>> entry :
+				sortedEvents.entrySet()) {
+
+			EventMessage event = new EventMessage(entry.getKey());
+
+			list.add(event);
+
+			Map<String, Integer> value = entry.getValue();
+
+			for (Map.Entry<String, Integer> innerEvent : value.entrySet()) {
+				event.addEvent(innerEvent.getKey(), innerEvent.getValue());
+			}
+		}
+
+		return list;
 	}
 
 	private Map<String, Integer> _getTableCounts() {
@@ -675,251 +622,108 @@ public class UpgradeReport {
 		}
 	}
 
-	private String _getUpgradeProcessesInfoUpgradeReport(
-		Map<String, Integer> upgradeProcesses) {
+	private String _getUpgradeExecutionTime() {
+		return String.format(
+			"%s seconds", DBUpgrader.getUpgradeTime() / Time.SECOND);
+	}
 
-		if (upgradeProcesses.isEmpty()) {
-			return "No upgrade processes registered";
-		}
+	private String _getUpgradeReportHeaderFromKey(String key) {
+		return "Upgrade " + StringUtil.replace(key, '.', ' ');
+	}
 
+	private String _getUpgradeReportSimpleValueLine(String key, Object value) {
+		return StringBundler.concat(
+			_getUpgradeReportHeaderFromKey(key), StringPool.COLON,
+			StringPool.SPACE, value.toString());
+	}
+
+	private String _printContextMap(String key, Map<?, ?> map) {
 		StringBundler sb = new StringBundler();
 
-		sb.append("Top ");
-		sb.append(_UPGRADE_PROCESSES_COUNT);
-		sb.append(" longest running upgrade processes:\n");
+		for (Map.Entry<?, ?> entry : map.entrySet()) {
+			Object innerKey = entry.getKey();
 
-		for (Map.Entry<String, Integer> entry : upgradeProcesses.entrySet()) {
-			sb.append(StringPool.TAB);
-			sb.append(entry.getKey());
-			sb.append(" took ");
-			sb.append(entry.getValue());
-			sb.append(" ms to complete\n");
+			sb.append(
+				_getUpgradeReportSimpleValueLine(
+					key + StringPool.PERIOD + innerKey, entry.getValue()));
+
+			sb.append(StringPool.NEW_LINE);
 		}
 
 		return sb.toString();
 	}
 
-	private String _getUpgradeTimeInfoUpgradeReport() {
-		return String.format(
-			"Upgrade completed in %s seconds",
-			DBUpgrader.getUpgradeTime() / Time.SECOND);
-	}
-
-	private void _setDatabaseInfo() {
-		DB db = DBManagerUtil.getDB();
-
-		_dbType = String.valueOf(db.getDBType());
-
-		_dbVersion =
-			db.getMajorVersion() + StringPool.PERIOD + db.getMinorVersion();
-	}
-
-	private void _setDatabaseTablesInfoLogContext(
-		Map<String, TableCounts> tableCounts) {
-
-		if (tableCounts == null) {
-			ThreadContext.put(
-				_getLogContextSectionKey("databaseTables"),
-				"Unable to get database tables size");
-
-			return;
-		}
-
-		StringBundler sb = new StringBundler(tableCounts.size() + 2);
-
-		sb.append(StringPool.OPEN_BRACKET);
-
-		int count = 0;
-
-		for (Map.Entry<String, TableCounts> tableCount :
-				tableCounts.entrySet()) {
-
-			TableCounts currentTableCounts = tableCount.getValue();
-
-			sb.append(tableCount.getKey());
-			sb.append(StringPool.COLON);
-			sb.append(currentTableCounts.getInitialCount());
-			sb.append(StringPool.COLON);
-			sb.append(currentTableCounts.getFinalCount());
-
-			count++;
-
-			if (count < tableCounts.size()) {
-				sb.append(StringPool.COMMA);
-				sb.append(StringPool.SPACE);
-			}
-		}
-
-		sb.append(StringPool.CLOSE_BRACKET);
-
-		ThreadContext.put(
-			_getLogContextSectionKey("databaseTables"), sb.toString());
-	}
-
-	private void _setDateInfoLogContext(Date date) {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"EEE, MMM dd, yyyy hh:mm:ss z");
-
-		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-		ThreadContext.put(
-			_getLogContextSectionKey("date"), simpleDateFormat.format(date));
-	}
-
-	private void _setDialectInfoLogContext() {
-		ThreadContext.put(
-			_getLogContextSectionKey("dialect"),
-			_dbType + StringPool.SPACE + _dbVersion);
-	}
-
-	private void _setDLStorageInfoLogContext() {
-		if (!StringUtil.endsWith(
-				PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
-
-			ThreadContext.put(
-				_getLogContextSectionKey("dlstorage"), "Check externally");
-		}
-
-		if (_rootDir == null) {
-			ThreadContext.put(
-				_getLogContextSectionKey("dlstorage"),
-				"Unable to determine. \"rootDir\" was not set");
-		}
-
-		String size = _getDLStorageSize();
-
-		ThreadContext.put(_getLogContextSectionKey("dlstorage"), size);
-	}
-
-	private void _setLogEventsInfoLogContext(String type) {
-		Map<String, Map<String, Integer>> sortedEvents;
-
-		if (type.equals("errors")) {
-			sortedEvents = _sortedErrorMessages;
-		}
-		else {
-			sortedEvents = _sortedWarningMessages;
-		}
-
-		Set<Map.Entry<String, Map<String, Integer>>> entrySet =
-			sortedEvents.entrySet();
-
-		if (entrySet.isEmpty()) {
-			ThreadContext.put(
-				_getLogContextSectionKey(type + "LogEvents"),
-				"No " + type + " thrown during upgrade");
-
-			return;
-		}
+	private String _printUpgradeReport(Map<String, Object> reportData) {
+		_logContext = false;
 
 		StringBundler sb = new StringBundler();
 
-		sb.append(StringPool.OPEN_BRACKET);
+		for (Map.Entry<String, Object> entry : reportData.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
 
-		int count = 0;
+			if (value instanceof Map<?, ?>) {
+				sb.append(_printContextMap(key, (Map<?, ?>)value));
+			}
+			else if (value instanceof List<?>) {
+				sb.append(_getUpgradeReportHeaderFromKey(key));
 
-		for (Map.Entry<String, Map<String, Integer>> entry :
-				sortedEvents.entrySet()) {
+				List<Object> elements = (List<Object>)value;
 
-			sb.append(entry.getKey());
-			sb.append(StringPool.COLON);
-			sb.append(StringPool.OPEN_BRACKET);
+				if (elements.isEmpty()) {
+					sb.append(": Nothing registered");
+					sb.append(StringPool.NEW_LINE);
+				}
+				else {
+					sb.append(StringPool.NEW_LINE);
+					sb.append(
+						"-------------------------------------------------");
+					sb.append(StringPool.NEW_LINE);
 
-			int subcount = 0;
-
-			Map<String, Integer> value = entry.getValue();
-
-			for (Map.Entry<String, Integer> valueEntry : _sort(value)) {
-				sb.append(valueEntry.getValue());
-				sb.append(StringPool.COLON);
-				sb.append(valueEntry.getKey());
-
-				subcount++;
-
-				if (subcount < value.size()) {
-					sb.append(StringPool.COMMA);
+					for (Object object : (List<Object>)value) {
+						sb.append(object.toString());
+						sb.append(StringPool.NEW_LINE);
+					}
 				}
 			}
+			else {
+				sb.append(_getUpgradeReportSimpleValueLine(key, value));
+				sb.append(StringPool.NEW_LINE);
+			}
 
-			sb.append(StringPool.CLOSE_BRACKET);
+			sb.append(StringPool.NEW_LINE);
+		}
 
-			count++;
+		return sb.toString();
+	}
 
-			if (count < sortedEvents.size()) {
-				sb.append(StringPool.COMMA);
+	private void _setContextMap(String key, Map<?, ?> map) {
+		for (Map.Entry<?, ?> entry : map.entrySet()) {
+			Object innerKey = entry.getKey();
+			String value = String.valueOf(entry.getValue());
+
+			ThreadContext.put(
+				key + StringPool.PERIOD + innerKey.toString(), value);
+		}
+	}
+
+	private void _setReportLogContext(Map<String, Object> reportData) {
+		_logContext = true;
+
+		for (Map.Entry<String, Object> entry : reportData.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+
+			if (value instanceof Map<?, ?>) {
+				_setContextMap(_getLogContextSectionKey(key), (Map<?, ?>)value);
+			}
+			else {
+				ThreadContext.put(
+					_getLogContextSectionKey(key), value.toString());
 			}
 		}
 
-		sb.append(StringPool.CLOSE_BRACKET);
-
-		ThreadContext.put(
-			_getLogContextSectionKey(type + "LogEvents"), sb.toString());
-	}
-
-	private void _setPortalVersionsInfo() {
-		_finalBuildNumber = _getBuildNumber();
-		_finalSchemaVersion = _getSchemaVersion();
-		_expectedBuildNumber = ReleaseInfo.getBuildNumber();
-		_expectedSchemaVersion = String.valueOf(
-			PortalUpgradeProcess.getLatestSchemaVersion());
-	}
-
-	private void _setPortalVersionsInfoLogContext() {
-		ThreadContext.put(
-			_getLogContextSectionKey("initialPortalBuildNumber"),
-			(_initialBuildNumber != 0) ? String.valueOf(_initialBuildNumber) :
-				"Unable to determine");
-		ThreadContext.put(
-			_getLogContextSectionKey("initialPortalSchemaVersion"),
-			(_initialSchemaVersion != null) ? _initialSchemaVersion :
-				"Unable to determine");
-		ThreadContext.put(
-			_getLogContextSectionKey("finalPortalBuildNumber"),
-			(_finalBuildNumber != 0) ? String.valueOf(_finalBuildNumber) :
-				"Unable to determine");
-		ThreadContext.put(
-			_getLogContextSectionKey("finalPortalSchemaVersion"),
-			(_finalSchemaVersion != null) ? _finalSchemaVersion :
-				"Unable to determine");
-		ThreadContext.put(
-			_getLogContextSectionKey("expectedPortalBuildNumber"),
-			(_expectedBuildNumber != 0) ? String.valueOf(_expectedBuildNumber) :
-				"Unable to determine");
-
-		ThreadContext.put(
-			_getLogContextSectionKey("expectedPortalSchemaVersion"),
-			(_expectedSchemaVersion != null) ? _expectedSchemaVersion :
-				"Unable to determine");
-	}
-
-	private void _setPropertiesInfoLogContext() {
-		ThreadContext.put(
-			_getLogContextSectionKey("properties.liferay.home"),
-			PropsValues.LIFERAY_HOME);
-
-		ThreadContext.put(
-			_getLogContextSectionKey("properties.locales"),
-			Arrays.toString(PropsValues.LOCALES));
-
-		ThreadContext.put(
-			_getLogContextSectionKey("properties.locales.enabled"),
-			Arrays.toString(PropsValues.LOCALES_ENABLED));
-
-		ThreadContext.put(
-			_getLogContextSectionKey("properties." + PropsKeys.DL_STORE_IMPL),
-			PropsValues.DL_STORE_IMPL);
-
-		ThreadContext.put(
-			_getLogContextSectionKey("rootDir"),
-			(_rootDir != null) ? _rootDir : "Undefined");
-	}
-
-	private void _setReleaseManagerOSGiInfoLogContext(
-		String releaseManagerOSGiInfo) {
-
-		ThreadContext.put(
-			_getLogContextSectionKey("releasemanagerOSGi"),
-			releaseManagerOSGiInfo);
+		_logContext = false;
 	}
 
 	private void _setRootDir() {
@@ -941,50 +745,6 @@ public class UpgradeReport {
 				_rootDir = PropsValues.LIFERAY_HOME + "/data/document_library";
 			}
 		}
-	}
-
-	private void _setUpgradeProcessesInfoLogContext(
-		Map<String, Integer> upgradeProcesses) {
-
-		if (upgradeProcesses.isEmpty()) {
-			ThreadContext.put(
-				_getLogContextSectionKey("longestUpgradeProcesses"),
-				"No upgrade processes registered");
-
-			return;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringPool.OPEN_BRACKET);
-
-		int size = upgradeProcesses.size();
-
-		for (Map.Entry<String, Integer> entry : upgradeProcesses.entrySet()) {
-			sb.append(entry.getKey());
-			sb.append(StringPool.COLON);
-			sb.append(entry.getValue());
-			sb.append(" ms");
-
-			size--;
-
-			if (size > 0) {
-				sb.append(StringPool.COMMA);
-				sb.append(StringPool.SPACE);
-			}
-		}
-
-		sb.append(StringPool.CLOSE_BRACKET);
-
-		ThreadContext.put(
-			_getLogContextSectionKey("longestUpgradeProcesses"), sb.toString());
-	}
-
-	private void _setUpgradeTimeInfoLogContext() {
-		ThreadContext.put(
-			_getLogContextSectionKey("time"),
-			String.format(
-				"%s seconds", DBUpgrader.getUpgradeTime() / Time.SECOND));
 	}
 
 	private List<Map.Entry<String, Integer>> _sort(Map<String, Integer> map) {
@@ -1009,49 +769,133 @@ public class UpgradeReport {
 
 	private static final String _LOG_CONTEXT_PREFIX = "upgrade.report.";
 
-	private static final String _UNDERLINE = "--------------";
-
 	private static final int _UPGRADE_PROCESSES_COUNT = 20;
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
-	private String _dbType;
-	private String _dbVersion;
+	private static boolean _logContext;
+
 	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private final Map<String, ArrayList<String>> _eventMessages =
 		new ConcurrentHashMap<>();
-	private int _expectedBuildNumber;
-	private String _expectedSchemaVersion;
-	private int _finalBuildNumber;
-	private String _finalSchemaVersion;
 	private final int _initialBuildNumber;
 	private final String _initialSchemaVersion;
 	private final Map<String, Integer> _initialTableCounts;
 	private PersistenceManager _persistenceManager;
 	private String _rootDir;
-	private Map<String, Map<String, Integer>> _sortedErrorMessages;
-	private Map<String, Map<String, Integer>> _sortedWarningMessages;
 	private final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 
+	private static class EventMessage {
+
+		public EventMessage(String clazz) {
+			_clazz = clazz;
+		}
+
+		public void addEvent(String message, int coincidences) {
+			_counts.add(new Counts(message, coincidences));
+		}
+
+		@Override
+		public String toString() {
+			if (_logContext) {
+				return _clazz + StringPool.COLON + _counts.toString();
+			}
+
+			StringBundler sb = new StringBundler();
+
+			sb.append("Class name: ");
+			sb.append(_clazz);
+			sb.append(StringPool.NEW_LINE);
+
+			for (Counts counter : _counts) {
+				sb.append(StringPool.TAB);
+				sb.append(counter.toString());
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			return sb.toString();
+		}
+
+		private final String _clazz;
+		private final List<Counts> _counts = new ArrayList<>();
+
+		private class Counts {
+
+			public Counts(String message, int coincidences) {
+				_message = message;
+				_coincidences = coincidences;
+			}
+
+			@Override
+			public String toString() {
+				if (_logContext) {
+					return _coincidences + StringPool.COLON + _message;
+				}
+
+				return StringBundler.concat(
+					_coincidences, " occurrences of the following event: ",
+					_message);
+			}
+
+			private final int _coincidences;
+			private final String _message;
+
+		}
+
+	}
+
+	private class RunningProcess {
+
+		public RunningProcess(String process, String time) {
+			_process = process;
+			_time = time;
+		}
+
+		@Override
+		public String toString() {
+			if (_logContext) {
+				return StringBundler.concat(
+					_process, StringPool.COLON, _time, " ms");
+			}
+
+			return StringBundler.concat(
+				StringPool.TAB, _process, " took ", _time, " ms to complete");
+		}
+
+		private final String _process;
+		private final String _time;
+
+	}
+
 	private class TableCounts {
 
-		public TableCounts(String initialCount, String finalCount) {
+		public TableCounts(
+			String tableName, String initialCount, String finalCount) {
+
+			_tableName = tableName;
 			_initialCount = initialCount;
 			_finalCount = finalCount;
 		}
 
-		public String getFinalCount() {
-			return _finalCount;
-		}
+		@Override
+		public String toString() {
+			if (_logContext) {
+				return StringBundler.concat(
+					_tableName, StringPool.COLON, _initialCount,
+					StringPool.COLON, _finalCount);
+			}
 
-		public String getInitialCount() {
-			return _initialCount;
+			String format = "%-30s %20s %20s";
+
+			return String.format(
+				format, _tableName, _initialCount, _finalCount);
 		}
 
 		private final String _finalCount;
 		private final String _initialCount;
+		private final String _tableName;
 
 	}
 

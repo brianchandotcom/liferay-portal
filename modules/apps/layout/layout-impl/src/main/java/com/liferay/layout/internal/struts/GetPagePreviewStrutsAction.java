@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	property = "path=/layout/get_page_preview", service = StrutsAction.class
+	property = "path=/portal/get_page_preview", service = StrutsAction.class
 )
 public class GetPagePreviewStrutsAction implements StrutsAction {
 

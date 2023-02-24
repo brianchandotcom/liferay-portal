@@ -812,6 +812,103 @@ definition {
 			locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_TABLE_ARTICLE_STATUS");
 	}
 
+	@description = "This test ensures that the owner of the kb article receives a notification once the review date is reached."
+	@priority = 5
+	test CanReviewArticleWhenReviewDateIsReached {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property test.name.skip.portal.instance = "kbArticle#CanReviewArticleWhenReviewDateIsReached";
+
+		KBArticle.updateCheckInterval(fieldValue = 2);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			configureReviewDate = "true",
+			increaseMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			uncheckNeverReview = "true");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 20000);
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = 1);
+
+		Notifications.gotoNotifications();
+
+		AssertTextEquals(
+			locator1 = "Notifications#NOTIFICATIONS_TITLE",
+			value1 = "A knowledge base article needs review.");
+
+		Notifications.navigateToContent(contentBody = "Knowledge Base Article Title");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseArticle#TITLE",
+			value1 = "Knowledge Base Article Title");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseArticle#CONTENT",
+			value1 = "Knowledge Base Article Content");
+	}
+
+	@description = "This test ensures that the owner of the kb article receives a notification once the review date is reached."
+	@priority = 5
+	test CanReviewArticleWhenReviewDateIsUpdated {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property test.name.skip.portal.instance = "kbArticle#CanReviewArticleWhenReviewDateIsUpdated";
+
+		KBArticle.updateCheckInterval(fieldValue = 2);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			configureReviewDate = "true",
+			increaseMinutes = 10,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			uncheckNeverReview = "true");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
+
+		KBArticle.setReviewDate(increaseMinutes = 1);
+
+		PortletEntry.publish();
+
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 20000);
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = 1);
+
+		Notifications.gotoNotifications();
+
+		AssertTextEquals(
+			locator1 = "Notifications#NOTIFICATIONS_TITLE",
+			value1 = "A knowledge base article needs review.");
+
+		Notifications.navigateToContent(contentBody = "Knowledge Base Article Title");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseArticle#TITLE",
+			value1 = "Knowledge Base Article Title");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseArticle#CONTENT",
+			value1 = "Knowledge Base Article Content");
+	}
+
 	@priority = 4
 	@refactordone
 	test CanSaveEditedArticleAsDraft {

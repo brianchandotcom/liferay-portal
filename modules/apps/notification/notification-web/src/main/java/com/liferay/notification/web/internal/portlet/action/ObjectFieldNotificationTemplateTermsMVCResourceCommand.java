@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -74,7 +75,9 @@ public class ObjectFieldNotificationTemplateTermsMVCResourceCommand
 		Map<String, String> termValues = new LinkedHashMap<>();
 
 		for (ObjectField objectField : objectFields) {
-			if (StringUtil.equals(objectField.getName(), "creator")) {
+			if (StringUtil.equals(objectField.getName(), "creator") &&
+				FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
+
 				termValues.putAll(_creatorTermValues);
 			}
 			else {

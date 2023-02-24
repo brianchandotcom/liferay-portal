@@ -24,6 +24,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsActionsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -76,7 +77,8 @@ public class EditObjectActionMVCRenderCommand implements MVCRenderCommand {
 					_notificationTemplateLocalService,
 					_objectActionExecutorRegistry, _objectActionTriggerRegistry,
 					_objectDefinitionLocalService,
-					_objectDefinitionModelResourcePermission));
+					_objectDefinitionModelResourcePermission,
+					_systemObjectDefinitionMetadataRegistry));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
@@ -114,5 +116,9 @@ public class EditObjectActionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 }

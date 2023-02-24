@@ -15,6 +15,8 @@
 package com.liferay.object.internal.action.trigger.messaging;
 
 import com.liferay.object.action.engine.ObjectActionEngine;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
@@ -37,9 +39,12 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) {
+		long companyId = GetterUtil.getLong(message.get("companyId"));
+
 		_objectActionEngine.executeObjectActions(
-			_className, GetterUtil.getLong(message.get("companyId")),
-			_objectActionTriggerKey, (JSONObject)message.getPayload(),
+			StringBundler.concat(_className, StringPool.POUND, companyId),
+			companyId, _objectActionTriggerKey,
+			(JSONObject)message.getPayload(),
 			GetterUtil.getLong(message.get("principalName")));
 	}
 

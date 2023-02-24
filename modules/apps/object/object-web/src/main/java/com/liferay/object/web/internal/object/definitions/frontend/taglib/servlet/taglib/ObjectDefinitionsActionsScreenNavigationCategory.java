@@ -21,6 +21,7 @@ import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsActionsDisplayContext;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -93,7 +94,8 @@ public class ObjectDefinitionsActionsScreenNavigationCategory
 				_notificationTemplateLocalService,
 				_objectActionExecutorRegistry, _objectActionTriggerRegistry,
 				_objectDefinitionLocalService,
-				_objectDefinitionModelResourcePermission));
+				_objectDefinitionModelResourcePermission,
+				_systemObjectDefinitionMetadataRegistry));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
@@ -121,5 +123,9 @@ public class ObjectDefinitionsActionsScreenNavigationCategory
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+
+	@Reference
+	private SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 }

@@ -27,6 +27,8 @@ import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -60,7 +62,9 @@ public class ObjectDefinitionsActionsDisplayContext
 		ObjectActionTriggerRegistry objectActionTriggerRegistry,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ModelResourcePermission<ObjectDefinition>
-			objectDefinitionModelResourcePermission) {
+			objectDefinitionModelResourcePermission,
+		SystemObjectDefinitionMetadataRegistry
+			systemObjectDefinitionMetadataRegistry) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
@@ -69,6 +73,8 @@ public class ObjectDefinitionsActionsDisplayContext
 		_objectActionExecutorRegistry = objectActionExecutorRegistry;
 		_objectActionTriggerRegistry = objectActionTriggerRegistry;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_systemObjectDefinitionMetadataRegistry =
+			systemObjectDefinitionMetadataRegistry;
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
@@ -189,9 +195,20 @@ public class ObjectDefinitionsActionsDisplayContext
 
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
+		String className = objectDefinition.getClassName();
+
+		if (objectDefinition.isSystem()) {
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+				_systemObjectDefinitionMetadataRegistry.
+					getSystemObjectDefinitionMetadata(
+						objectDefinition.getName());
+
+			className = systemObjectDefinitionMetadata.getModelClassName();
+		}
+
 		for (ObjectActionTrigger objectActionTrigger :
 				_objectActionTriggerRegistry.getObjectActionTriggers(
-					objectDefinition.getClassName())) {
+					className)) {
 
 			if (Objects.equals(
 					objectActionTrigger.getKey(),
@@ -280,5 +297,7 @@ public class ObjectDefinitionsActionsDisplayContext
 	private final ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 	private final ObjectActionTriggerRegistry _objectActionTriggerRegistry;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 }

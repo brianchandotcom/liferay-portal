@@ -62,6 +62,12 @@
 	Liferay.Util.toggleBoxes(
 		'<portlet:namespace />enablePublications',
 		'<portlet:namespace />sandboxOnly',
-		'<portlet:namespace />unapprovedChanges'
+		<%= publicationsConfigurationDisplayContext.isPublicationsEnabled() ? false : null %>
+	);
+
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />enablePublications',
+		'<portlet:namespace />unapprovedChanges',
+		<%= publicationsConfigurationDisplayContext.isPublicationsEnabled() ? false: null %>
 	);
 </aui:script>

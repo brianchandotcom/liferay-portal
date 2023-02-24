@@ -165,13 +165,6 @@ function ManagementToolbar({
 						/>
 					)}
 
-					{!showDesignImprovementsFF && showInfoButton && (
-						<InfoPanelControl
-							infoPanelId={infoPanelId}
-							onInfoButtonClick={onInfoButtonClick}
-						/>
-					)}
-
 					{active ? (
 						<>
 							<ActionControls
@@ -267,7 +260,7 @@ function ManagementToolbar({
 						</>
 					)}
 
-					{showDesignImprovementsFF && showInfoButton && (
+					{showInfoButton && (
 						<InfoPanelControl
 							infoPanelId={infoPanelId}
 							onInfoButtonClick={onInfoButtonClick}

@@ -49,17 +49,6 @@
 			"name": "statusUpdateDate",
 			"required": false,
 			"type": "Date"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Assigned Users"
-			},
-			"name": "assignedUsers",
-			"required": false,
-			"type": "String"
 		}
 	],
 	"pluralLabel": {

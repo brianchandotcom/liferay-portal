@@ -98,7 +98,8 @@ const Subtasks = () => {
 									value: testraySubtask.user ? (
 										<Avatar
 											displayName
-											name={`${testraySubtask.user?.givenName} ${testraySubtask?.user?.additionalName}`}
+											name={testraySubtask.user?.name}
+											url={testraySubtask.user?.image}
 										/>
 									) : (
 										<AssignToMe

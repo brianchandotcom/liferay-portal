@@ -220,7 +220,8 @@ const CaseResult = () => {
 									value: caseResult?.user ? (
 										<Avatar
 											displayName
-											name={`${caseResult.user.givenName} ${caseResult.user.additionalName}`}
+											name={caseResult.user.name}
+											url={caseResult.user.image}
 										/>
 									) : (
 										<AssignToMe

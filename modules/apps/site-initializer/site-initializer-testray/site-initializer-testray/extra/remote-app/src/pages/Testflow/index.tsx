@@ -21,7 +21,12 @@ import StatusBadge from '../../components/StatusBadge';
 import {StatusBadgeType} from '../../components/StatusBadge/StatusBadge';
 import {useHeader} from '../../hooks';
 import i18n from '../../i18n';
-import {PickList, TestrayTask, testrayTaskImpl} from '../../services/rest';
+import {
+	PickList,
+	TestrayTask,
+	UserAccount,
+	testrayTaskImpl,
+} from '../../services/rest';
 import {StatusesProgressScore, chartClassNames} from '../../util/constants';
 import {getTimeFromNow} from '../../util/date';
 import {getPercentLabel} from '../../util/graph.util';
@@ -152,13 +157,16 @@ const TestFlow = () => {
 							value: i18n.translate('progress'),
 						},
 						{
-							key: 'assignedUsers',
-							render: (assignedUsers) => {
+							key: 'users',
+							render: (users: UserAccount[]) => {
 								try {
 									return (
 										<Avatar.Group
-											assignedUsers={JSON.parse(
-												assignedUsers
+											assignedUsers={users.map(
+												({image, name}) => ({
+													name,
+													url: image,
+												})
 											)}
 											groupSize={3}
 										/>

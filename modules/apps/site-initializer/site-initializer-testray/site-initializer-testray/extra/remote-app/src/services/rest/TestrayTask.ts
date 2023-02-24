@@ -23,7 +23,7 @@ import Rest from './Rest';
 import {testrayDispatchTriggerImpl} from './TestrayDispatchTrigger';
 import {testrayTaskCaseTypesImpl} from './TestrayTaskCaseTypes';
 import {testrayTaskUsersImpl} from './TestrayTaskUsers';
-import {APIResponse, TestrayTask} from './types';
+import {APIResponse, TestrayTask, UserAccount} from './types';
 
 type TaskForm = typeof yupSchema.task.__outputType & {
 	assignedUsers: string;
@@ -54,7 +54,8 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 				r_buildToTasks_c_buildId,
 				taskToTasksCaseTypes,
 			}),
-			nestedFields: 'build.project,build.routine,taskToTasksCaseTypes',
+			nestedFields:
+				'build.project,build.routine,taskToTasksCaseTypes,taskToTasksUsers,r_userToTasksUsers_userId',
 			transformData: (testrayTask) => ({
 				...testrayTask,
 				build: testrayTask.r_buildToTasks_c_build
@@ -70,6 +71,15 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 								testrayTask.r_buildToTasks_c_build
 									.r_routineToBuilds_c_routine,
 					  }
+					: undefined,
+				users: testrayTask.taskToTasksUsers
+					? testrayTask.taskToTasksUsers.map(
+							({
+								r_userToTasksUsers_user,
+							}: {
+								r_userToTasksUsers_user: UserAccount;
+							}) => r_userToTasksUsers_user
+					  )
 					: undefined,
 			}),
 			uri: 'tasks',

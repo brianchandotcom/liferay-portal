@@ -62,6 +62,7 @@ export type UserAccount = {
 	givenName: string;
 	id: number;
 	image: string;
+	name: string;
 	roleBriefs: Role[];
 	userGroupBriefs: UserGroup[];
 	uuid: number;
@@ -329,6 +330,7 @@ export type TestrayTask = {
 	subtaskScore: string;
 	subtaskScoreCompleted: string;
 	subtaskScoreSelfIncomplete: string;
+	taskToTasksUsers: any;
 };
 
 export type TestrayTaskCaseTypes = {

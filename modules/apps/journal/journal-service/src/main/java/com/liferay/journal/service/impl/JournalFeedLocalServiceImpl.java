@@ -133,7 +133,7 @@ public class JournalFeedLocalServiceImpl
 
 		// Asset
 
-		updateAsset(
+		_updateAssetEntry(
 			userId, feed, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds(),
@@ -321,25 +321,6 @@ public class JournalFeedLocalServiceImpl
 	}
 
 	@Override
-	public void updateAsset(
-			long userId, JournalFeed feed, long[] assetCategoryIds,
-			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
-		throws PortalException {
-
-		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
-			userId, feed.getGroupId(), feed.getCreateDate(),
-			feed.getModifiedDate(), JournalFeed.class.getName(), feed.getId(),
-			feed.getUuid(), 0, assetCategoryIds, assetTagNames, true, true,
-			null, null, feed.getCreateDate(), null, ContentTypes.TEXT_PLAIN,
-			feed.getName(), feed.getDescription(), null, null, null, 0, 0,
-			priority);
-
-		_assetLinkLocalService.updateLinks(
-			userId, assetEntry.getEntryId(), assetLinkEntryIds,
-			AssetLinkConstants.TYPE_RELATED);
-	}
-
-	@Override
 	public JournalFeed updateFeed(
 			long groupId, String feedId, String name, String description,
 			String ddmStructureKey, String ddmTemplateKey,
@@ -384,7 +365,7 @@ public class JournalFeedLocalServiceImpl
 
 		// Asset
 
-		updateAsset(
+		_updateAssetEntry(
 			serviceContext.getUserId(), feed,
 			serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
@@ -438,6 +419,24 @@ public class JournalFeedLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private void _updateAssetEntry(
+			long userId, JournalFeed feed, long[] assetCategoryIds,
+			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
+		throws PortalException {
+
+		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
+			userId, feed.getGroupId(), feed.getCreateDate(),
+			feed.getModifiedDate(), JournalFeed.class.getName(), feed.getId(),
+			feed.getUuid(), 0, assetCategoryIds, assetTagNames, true, true,
+			null, null, feed.getCreateDate(), null, ContentTypes.TEXT_PLAIN,
+			feed.getName(), feed.getDescription(), null, null, null, 0, 0,
+			priority);
+
+		_assetLinkLocalService.updateLinks(
+			userId, assetEntry.getEntryId(), assetLinkEntryIds,
+			AssetLinkConstants.TYPE_RELATED);
 	}
 
 	private void _validate(

@@ -20,6 +20,8 @@ import com.liferay.portal.store.s3.S3Store;
 import com.liferay.portal.store.s3.messaging.AbortedMultipartUploadCleanerMessageListener;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Objects;
+
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -32,11 +34,11 @@ public class ComponentEnabler {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		String storeClassName = PropsValues.DL_STORE_IMPL;
+		if (Objects.equals(
+				PropsValues.DL_STORE_IMPL, S3Store.class.getName())) {
 
-		if (storeClassName.equals(S3Store.class.getName())) {
 			ComponentUtil.enableComponents(
-				Store.class, "(store.type=com.liferay.portal.store.s3.S3Store)",
+				Store.class, "(store.type=" + PropsValues.DL_STORE_IMPL + ")",
 				componentContext,
 				AbortedMultipartUploadCleanerMessageListener.class);
 		}

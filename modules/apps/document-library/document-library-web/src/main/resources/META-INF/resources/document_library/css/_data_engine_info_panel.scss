@@ -1,0 +1,18 @@
+@import 'atlas-variables';
+
+.dm-sidebar {
+	h2 {
+		font-size: 1.25rem;
+		line-height: 1.25;
+		margin-bottom: 0;
+	}
+
+	&_content-description {
+		color: $gray-600;
+		font-size: 12px;
+	}
+
+	.sidebar-section {
+		justify-content: space-between;
+	}
+}

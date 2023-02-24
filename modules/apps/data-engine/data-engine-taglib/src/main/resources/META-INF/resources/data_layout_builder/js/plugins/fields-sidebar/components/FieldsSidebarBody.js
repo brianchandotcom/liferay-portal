@@ -19,13 +19,22 @@ import FieldSetList from '../../../components/field-sets/FieldSetList';
 import FieldTypeList from '../../../components/field-types/FieldTypeList.es';
 import Sidebar from '../../../components/sidebar/Sidebar.es';
 
-export default function FieldsSidebarBody({keywords, setKeywords}) {
+export default function FieldsSidebarBody({
+	keywords,
+	searchClicked,
+	setKeywords,
+}) {
 	const {allowFieldSets, tabs = []} = useConfig();
 
 	const sidebarTabs = [
 		{
 			label: Liferay.Language.get('fields'),
-			render: () => <FieldTypeList keywords={keywords} />,
+			render: () => (
+				<FieldTypeList
+					keywords={keywords}
+					searchClicked={searchClicked}
+				/>
+			),
 		},
 	];
 

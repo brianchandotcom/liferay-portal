@@ -107,11 +107,29 @@ export default function MultiPanelSidebar({
 		}
 	}, [onChange, open]);
 
-	const handlePanelClick = ({sidebarPanelId}) =>
+	const getMessage = (label) => {
+		return Liferay.Language.get('panel') + label;
+	};
+
+	const handlePanelClick = ({sidebarPanelId}) => {
+		const builder = document.querySelector('.ddm-form-builder');
+		const sidebar = document.querySelector('.multi-panel-sidebar-content');
+		const closeButtonPressed =
+			builder.classList.contains('ddm-form-builder--sidebar-open') !==
+			open;
+
+		if (closeButtonPressed) {
+			builder.classList.toggle('ddm-form-builder--sidebar-open');
+			sidebar.classList.toggle('multi-panel-sidebar-content-open');
+		}
+
+		const newOpen = closeButtonPressed ? open : !open;
+
 		onChange({
-			sidebarOpen: sidebarPanelId !== currentPanelId || !open,
+			sidebarOpen: sidebarPanelId !== currentPanelId || newOpen,
 			sidebarPanelId,
 		});
+	};
 
 	const handleKeyDown = (event) => {
 		if (event.keyCode === 38) {
@@ -214,6 +232,7 @@ export default function MultiPanelSidebar({
 											</a>
 										) : (
 											<ClayButtonWithIcon
+												aria-label={getMessage(label)}
 												aria-pressed={active}
 												className={btnClasses}
 												data-tooltip-align="left"

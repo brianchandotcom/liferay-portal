@@ -78,6 +78,7 @@ const FieldTypeList = ({
 	keywords,
 	onClick,
 	onDelete,
+	searchClicked,
 	showEmptyState = true,
 }) => {
 	const {fieldTypes} = useConfig();
@@ -101,7 +102,7 @@ const FieldTypeList = ({
 	);
 
 	if (screenReaderSearchResult) {
-		if (keywords !== '') {
+		if (keywords !== '' && searchClicked) {
 			if (filteredFieldTypes.length) {
 				screenReaderSearchResult.innerText = sub(
 					Liferay.Language.get(
@@ -126,11 +127,14 @@ const FieldTypeList = ({
 				);
 			}
 		}
-		else {
+		else if (searchClicked) {
 			screenReaderSearchResult.innerText = sub(
 				Liferay.Language.get('search-field-is-empty'),
 				[filteredFieldTypes.length, keywords]
 			);
+		}
+		else {
+			screenReaderSearchResult.innerText = '';
 		}
 	}
 

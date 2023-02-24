@@ -193,11 +193,13 @@ export function FormBuilder() {
 						<MultiPanelSidebar
 							createPlugin={({
 								panel,
+								setSidebarState,
 								sidebarOpen,
 								sidebarPanelId,
 							}) => ({
 								dispatch,
 								panel,
+								setSidebarState,
 								sidebarOpen,
 								sidebarPanelId,
 							})}

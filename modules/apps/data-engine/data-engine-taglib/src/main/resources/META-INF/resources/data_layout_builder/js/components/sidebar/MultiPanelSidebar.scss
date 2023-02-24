@@ -125,11 +125,13 @@ $zIndexContent: 0;
 		right: $multiPanelSidebarButtonWidth;
 		transform: translateX(100%);
 		transition: transform ease $defaultTransitionDuration;
+		visibility: hidden;
 		width: $multiPanelSidebarContentWidth;
 		z-index: $zIndexContent;
 
 		&-open {
 			transform: translateX(0);
+			visibility: visible;
 		}
 	}
 

@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import React, {useEffect, useRef, useState} from 'react';
 
 const SearchInput = React.forwardRef(
-	({onChange = () => {}, searchText = ''}, ref) => {
+	({onChange = () => {}, setSearchClicked, searchText = ''}, ref) => {
 		const [value, setValue] = useState(searchText);
 		const fallbackRef = useRef(null);
 		const searchInputRef = ref ? ref : fallbackRef;
@@ -53,10 +53,12 @@ const SearchInput = React.forwardRef(
 					<ClayInput
 						aria-label={Liferay.Language.get('search')}
 						className="input-group-inset input-group-inset-after"
+						onBlur={() => setSearchClicked(false)}
 						onChange={({target: {value}}) => {
 							setValue(value);
 							onChange(value);
 						}}
+						onFocus={() => setSearchClicked(true)}
 						placeholder={`${Liferay.Language.get('search')}...`}
 						ref={searchInputRef}
 						type="text"

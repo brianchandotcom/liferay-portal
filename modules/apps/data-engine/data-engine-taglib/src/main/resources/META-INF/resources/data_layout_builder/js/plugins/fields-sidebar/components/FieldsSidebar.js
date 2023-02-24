@@ -32,6 +32,7 @@ export function FieldsSidebar({title}) {
 
 const FieldListSidebar = ({title}) => {
 	const [searchTerm, setSearchTerm] = useState('');
+	const [searchClicked, setSearchClicked] = useState(null);
 
 	return (
 		<Sidebar>
@@ -48,6 +49,7 @@ const FieldListSidebar = ({title}) => {
 					<Sidebar.SearchInput
 						onSearch={(keywords) => setSearchTerm(keywords)}
 						searchText={searchTerm}
+						setSearchClicked={setSearchClicked}
 					/>
 				</ClayForm>
 			</Sidebar.Header>
@@ -55,7 +57,9 @@ const FieldListSidebar = ({title}) => {
 			<Sidebar.Body>
 				<FieldsSidebarBody
 					keywords={searchTerm}
+					searchClicked={searchClicked}
 					setKeywords={setSearchTerm}
+					setSearchClicked={setSearchClicked}
 				/>
 			</Sidebar.Body>
 		</Sidebar>

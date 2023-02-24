@@ -2,9 +2,7 @@ Bundle-Name: Liferay Portal Store Azure
 Bundle-SymbolicName: com.liferay.portal.store.azure
 Bundle-Version: 5.0.4
 Import-Package:\
-	!com.aayushatharva.brotli4j,\
-	!com.aayushatharva.brotli4j.decoder,\
-	!com.aayushatharva.brotli4j.encoder,\
+	!com.aayushatharva.brotli4j.*,\
 	\
 	!com.conversantmedia.util.concurrent,\
 	\
@@ -13,28 +11,20 @@ Import-Package:\
 	!com.github.luben.zstd,\
 	\
 	!com.google.crypto.tink.subtle,\
-	!com.google.protobuf,\
-	!com.google.protobuf.nano,\
+	!com.google.protobuf.*,\
 	\
 	!com.jcraft.jzlib,\
 	\
-	!com.lmax.disruptor,\
-	!com.lmax.disruptor.dsl,\
+	!com.lmax.disruptor.*,\
 	\
-	!com.ning.compress,\
-	!com.ning.compress.lzf,\
-	!com.ning.compress.lzf.util,\
+	!com.ning.compress.*,\
 	\
 	!com.oracle.svm.core.annotate,\
 	\
 	!com.sun.net.httpserver,\
 	\
 	!io.micrometer.context.*,\
-	!io.micrometer.core.instrument,\
-	!io.micrometer.core.instrument.binder.jvm,\
-	!io.micrometer.core.instrument.composite,\
-	!io.micrometer.core.instrument.noop,\
-	!io.micrometer.core.instrument.search,\
+	!io.micrometer.core.instrument.*,\
 	\
 	!io.netty.handler.codec.haproxy,\
 	!io.netty.incubator.channel.uring,\
@@ -45,20 +35,15 @@ Import-Package:\
 	\
 	!kotlin.collections,\
 	\
-	!kotlin.jvm,\
-	!kotlin.jvm.functions,\
-	!kotlin.jvm.internal,\
-	!kotlin.jvm.internal.markers,\
+	!kotlin.jvm.*,\
 	\
 	!kotlin.reflect,\
 	\
 	!kotlin.sequences,\
 	\
-	!lzma.sdk,\
-	!lzma.sdk.lzma,\
+	!lzma.sdk.*,\
 	\
-	!net.jpountz.lz4,\
-	!net.jpountz.xxhash,\
+	!net.jpountz.*,\
 	\
 	!net.shibboleth.utilities.java.support.xml,\
 	\
@@ -66,34 +51,15 @@ Import-Package:\
 	!org.apache.commons.compress.utils,\
 	!org.apache.commons.csv,\
 	!org.apache.kafka.clients.producer,\
-	!org.apache.logging.log4j,\
-	!org.apache.logging.log4j.message,\
-	!org.apache.logging.log4j.spi,\
+	!org.apache.logging.log4j.*,\
 	\
-	!org.bouncycastle.asn1,\
-	!org.bouncycastle.asn1.pkcs,\
-	!org.bouncycastle.asn1.x500,\
-	!org.bouncycastle.asn1.x509,\
-	!org.bouncycastle.cert,\
-	!org.bouncycastle.cert.jcajce,\
-	!org.bouncycastle.crypto,\
-	!org.bouncycastle.crypto.engines,\
-	!org.bouncycastle.crypto.modes,\
-	!org.bouncycastle.crypto.params,\
-	!org.bouncycastle.jcajce.provider,\
-	!org.bouncycastle.jce.provider,\
-	!org.bouncycastle.openssl,\
-	!org.bouncycastle.openssl.jcajce,\
-	!org.bouncycastle.operator,\
-	!org.bouncycastle.operator.jcajce,\
-	!org.bouncycastle.pkcs.*,\
+	!org.bouncycastle.*,\
 	\
 	!org.conscrypt,\
 	\
 	!org.cryptomator.siv,\
 	\
-	!org.eclipse.jetty.alpn,\
-	!org.eclipse.jetty.npn,\
+	!org.eclipse.jetty.*,\
 	\
 	!org.fusesource.jansi,\
 	\
@@ -103,25 +69,13 @@ Import-Package:\
 	\
 	!org.joda.time,\
 	\
-	!org.opensaml.core.config,\
-	!org.opensaml.core.xml,\
-	!org.opensaml.core.xml.config,\
-	!org.opensaml.core.xml.io,\
-	!org.opensaml.core.xml.schema,\
-	!org.opensaml.core.xml.schema.impl,\
-	!org.opensaml.saml.saml2.core,\
-	!org.opensaml.saml.security.impl,\
-	!org.opensaml.security.credential,\
-	!org.opensaml.xmlsec.signature,\
-	!org.opensaml.xmlsec.signature.support,\
+	!org.opensaml.*,\
 	\
-	!org.slf4j.ext,\
-	!org.slf4j.impl,\
+	!org.slf4j.*,\
 	\
 	!org.zeromq,\
 	\
-	!reactor.blockhound,\
-	!reactor.blockhound.integration,\
+	!reactor.blockhound.*,\
 	\
 	!sun.security.x509,\
 	\

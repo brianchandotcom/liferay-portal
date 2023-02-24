@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.file.install;
+package com.liferay.batch.engine.internal.installer;
 
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.model.BatchEngineImportTask;

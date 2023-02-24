@@ -15,7 +15,7 @@
 package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
-import com.liferay.batch.engine.internal.file.install.BatchEngineFileInstaller;
+import com.liferay.batch.engine.internal.installer.BatchEngineFileInstaller;
 
 import java.io.OutputStream;
 import java.io.Serializable;

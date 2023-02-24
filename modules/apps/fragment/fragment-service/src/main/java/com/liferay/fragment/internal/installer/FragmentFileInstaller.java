@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.internal.file.install;
+package com.liferay.fragment.internal.installer;
 
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.layout.importer.LayoutsImporter;

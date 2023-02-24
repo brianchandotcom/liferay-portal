@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.file.install;
+package com.liferay.batch.engine.internal.installer;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.io.IOException;
 
@@ -125,6 +126,9 @@ public class BlogsEntryItemSelectorView
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 	private class BlogsEntryItemDescriptor
 		implements ItemSelectorViewDescriptor.ItemDescriptor {
@@ -287,10 +291,6 @@ public class BlogsEntryItemSelectorView
 
 		@Override
 		public SearchContainer<BlogsEntry> getSearchContainer() {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			SearchContainer<BlogsEntry> entriesSearchContainer =
 				new SearchContainer<>(
 					(PortletRequest)_httpServletRequest.getAttribute(
@@ -304,13 +304,13 @@ public class BlogsEntryItemSelectorView
 			entriesSearchContainer.setOrderByType(getOrderByType());
 			entriesSearchContainer.setResultsAndTotal(
 				() -> _blogsEntryService.getGroupEntries(
-					themeDisplay.getScopeGroupId(),
+					_getStagingAwareGroupId(),
 					WorkflowConstants.STATUS_APPROVED,
 					entriesSearchContainer.getStart(),
 					entriesSearchContainer.getEnd(),
 					entriesSearchContainer.getOrderByComparator()),
 				_blogsEntryService.getGroupEntriesCount(
-					themeDisplay.getScopeGroupId(),
+					_getStagingAwareGroupId(),
 					WorkflowConstants.STATUS_APPROVED));
 
 			return entriesSearchContainer;
@@ -321,6 +321,22 @@ public class BlogsEntryItemSelectorView
 			return _infoItemItemSelectorCriterion.isMultiSelection();
 		}
 
+		private long _getStagingAwareGroupId() {
+			if (_groupId != null) {
+				return _groupId;
+			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_groupId = _stagingGroupHelper.getStagedPortletGroupId(
+				themeDisplay.getScopeGroupId(), BlogsPortletKeys.BLOGS);
+
+			return _groupId;
+		}
+
+		private Long _groupId;
 		private HttpServletRequest _httpServletRequest;
 		private final InfoItemItemSelectorCriterion
 			_infoItemItemSelectorCriterion;

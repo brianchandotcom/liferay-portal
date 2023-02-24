@@ -1,0 +1,8 @@
+{
+	"callbackURL": null,
+	"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+	"companyId": 90003,
+	"parameters": null,
+	"userId": 23456,
+	"version": "v1.0"
+}

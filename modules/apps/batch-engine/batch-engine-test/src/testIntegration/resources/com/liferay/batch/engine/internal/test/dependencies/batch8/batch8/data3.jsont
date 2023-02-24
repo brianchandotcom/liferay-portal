@@ -1,0 +1,62 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.user.dto.v1_0.Account",
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"description": "G03 Account 003 - We Test guest in Zip Files",
+			"externalReferenceCode": "ERC-G03-A003",
+			"name": "G0-03 Name",
+			"type": "guest"
+		},
+		{
+			"description": "G04 Account 004 - We Test guest in Zip Files",
+			"externalReferenceCode": "ERC-G04-A004",
+			"name": "G0-04 Name",
+			"type": "guest"
+		},
+		{
+			"description": "G05 Account 005 - We Test guest in Zip Files",
+			"externalReferenceCode": "ERC-G05-A005",
+			"name": "G0-05 Name",
+			"type": "guest"
+		},
+		{
+			"description": "G06 Account 006 - We Test guest in Zip Files",
+			"externalReferenceCode": "ERC-G06-A006",
+			"name": "G0-06 Name",
+			"type": "guest"
+		},
+		{
+			"description": "G01 Account 001 - We Test guest in Zip Files",
+			"externalReferenceCode": "ERC-G01-A001",
+			"name": "G0-01 Name",
+			"type": "guest"
+		},
+		{
+			"description": "G02 Account 002 - We Test guest in Zip Files",
+			"externalReferenceCode": "ERC-G02-A002",
+			"name": "G0-02 Name",
+			"type": "guest"
+		},
+		{
+			"description": "G07 Account 007 - We Test guest in Zip Files",
+			"externalReferenceCode": "ERC-G07-A007",
+			"name": "G0-07 Name",
+			"type": "guest"
+		},
+		{
+			"description": "G08 Account 008 - We Test guest in Zip Files",
+			"externalReferenceCode": "ERC-G08-A008",
+			"name": "G0-08 Name",
+			"type": "guest"
+		},
+		{
+			"description": "G09 Account 009 - We Test guest in Zip Files",
+			"externalReferenceCode": "ERC-G09-A009",
+			"name": "G0-09 Name",
+			"type": "guest"
+		}
+	]
+}

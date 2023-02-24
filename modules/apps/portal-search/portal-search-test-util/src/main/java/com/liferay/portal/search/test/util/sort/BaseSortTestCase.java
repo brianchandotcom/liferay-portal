@@ -87,15 +87,6 @@ public abstract class BaseSortTestCase extends BaseIndexingTestCase {
 			"[alpha, charlie]", query);
 	}
 
-	protected void addDocuments(
-			Function<Double, DocumentCreationHelper> function, double... values)
-		throws Exception {
-
-		for (double value : values) {
-			addDocument(function.apply(value));
-		}
-	}
-
 	protected void assertOrder(
 		Sort[] sorts, String fieldName, String expected) {
 

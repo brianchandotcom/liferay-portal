@@ -197,8 +197,7 @@ definition {
 
 		GoogleDrive.gotoDrive(
 			userEmailAddress = PropsUtil.get("email.address.4"),
-			userPassword = PropsUtil.get("email.password.4"),
-			windowTitle = "New Google Drive Shortcut - ${siteName}");
+			userPassword = PropsUtil.get("email.password.4"));
 
 		GoogleDrive.selectDocument(
 			googleDocName = "liferay2.xls",

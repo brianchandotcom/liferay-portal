@@ -15,6 +15,7 @@
 package com.liferay.portal.configuration.persistence.internal.upgrade.registry;
 
 import com.liferay.portal.configuration.persistence.internal.upgrade.v1_0_0.UpgradeConfigurationPid;
+import com.liferay.portal.configuration.persistence.internal.upgrade.v1_0_0.UpgradeConfigurationRemoveK8SConfigs;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,6 +32,9 @@ public class ConfigurationPersistenceUpgradeStepRegistrator
 		registry.registerInitialization();
 
 		registry.register("0.0.1", "1.0.0", new UpgradeConfigurationPid());
+
+		registry.register(
+			"1.0.0", "1.0.1", new UpgradeConfigurationRemoveK8SConfigs());
 	}
 
 }

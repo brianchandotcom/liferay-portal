@@ -76,7 +76,18 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			_releaseLocalService.deleteRelease(release);
 		}
 
+		_forceFailure = false;
+
 		_verifyProcessRun = false;
+	}
+
+	@Test
+	public void testRegisterFailedVerifyProcess() {
+		_forceFailure = true;
+
+		try (SafeCloseable safeCloseable = _registerVerifyProcess(true, true)) {
+			_checkResult(true);
+		}
 	}
 
 	@Test
@@ -245,7 +256,12 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 			return;
 		}
 
-		Assert.assertTrue(release.getVerified());
+		if (_forceFailure) {
+			Assert.assertFalse(release.getVerified());
+		}
+		else {
+			Assert.assertTrue(release.getVerified());
+		}
 	}
 
 	private SafeCloseable _executeInitialUpgradeProcess() {
@@ -311,6 +327,8 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 	@Inject
 	private CounterLocalService _counterLocalService;
 
+	private boolean _forceFailure;
+
 	@Inject
 	private ReleaseLocalService _releaseLocalService;
 
@@ -325,6 +343,10 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		@Override
 		protected void doVerify() throws Exception {
 			_verifyProcessRun = true;
+
+			if (_forceFailure) {
+				throw new Exception();
+			}
 		}
 
 	}

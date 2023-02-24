@@ -104,7 +104,7 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			() -> {
 				List<AssetCategory> assetCategories = _getAssetCategories();
 
-				if (assetCategories == null) {
+				if (assetCategories.isEmpty()) {
 					return new ArrayList<>();
 				}
 

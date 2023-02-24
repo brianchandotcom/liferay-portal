@@ -352,35 +352,6 @@ definition {
 			value1 = "Add Word Doc Title ${num}.docx");
 	}
 
-	@description = "This test covers LPS-102478. It ensures that an Office 365 document automatically checks in after the lock is expired."
-	@priority = 4
-	test AutoCheckinDocumentAfterLockExpiration {
-		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=1000";
-		property test.name.skip.portal.instance = "OneDrive#AutoCheckinDocumentAfterLockExpiration";
-
-		var num = MathUtil.randomNumber(10);
-
-		OneDrive.deleteDocument(dmDocumentTitle = "Auto Checkin Word Doc Title ${num}");
-
-		Navigator.openURL();
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
-
-		OneDrive.AddDocument(
-			dmDocumentTitle = "Auto Checkin Word Doc Title ${num}",
-			dmDocumentTypeName = "Word");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Refresh();
-
-		AssertElementNotPresent(
-			key_dmDocumentTitle = "Auto Checkin Word Doc Title ${num}",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
-	}
-
 	@description = "This test ensures that a Word Document is autotagged once checked in."
 	@priority = 4
 	test AutoTagWordDocument {
@@ -587,6 +558,35 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.deletePG(dmDocumentTitle = "Delete Word Doc Title ${num}");
+	}
+
+	@description = "This test covers LPS-102478. It ensures that an Office 365 document is deleted automatically after the lock is expired."
+	@priority = 4
+	test DocumentIsDeletedAfterLockExpiration {
+		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=1000";
+		property test.name.skip.portal.instance = "OneDrive#DocumentIsDeletedAfterLockExpiration";
+
+		var num = MathUtil.randomNumber(10);
+
+		OneDrive.deleteDocument(dmDocumentTitle = "Auto Checkin Word Doc Title ${num}");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Auto Checkin Word Doc Title ${num}",
+			dmDocumentTypeName = "Word");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Refresh();
+
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "Auto Checkin Word Doc Title ${num}",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
 	}
 
 	@description = "This test ensures that an Excel sheet title can be changed via the OneDrive editor."

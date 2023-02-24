@@ -2578,8 +2578,8 @@ definition {
 		var key_regularRoleName = ${regularRoleName};
 
 		Click(
-			locator1 = "UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_REMOVE_ROLE",
-			value1 = ${regularRoleName});
+			key_entryName = ${regularRoleName},
+			locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
 
 		PortletEntry.save();
 

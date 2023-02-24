@@ -220,16 +220,15 @@ public class SegmentsExperimentServiceImpl
 
 		Map<Long, Double> segmentsExperienceIdSplitMap = new HashMap<>();
 
-		for (Map.Entry<String, Double> segmentsExperienceKeySplit :
+		for (Map.Entry<String, Double> entry :
 				segmentsExperienceKeySplitMap.entrySet()) {
 
 			segmentsExperienceIdSplitMap.put(
 				_getSegmentsExperienceId(
-					segmentsExperiment.getGroupId(),
-					segmentsExperienceKeySplit.getKey(),
+					segmentsExperiment.getGroupId(), entry.getKey(),
 					segmentsExperiment.getClassNameId(),
 					segmentsExperiment.getClassPK()),
-				segmentsExperienceKeySplit.getValue());
+				entry.getValue());
 		}
 
 		return segmentsExperimentLocalService.runSegmentsExperiment(

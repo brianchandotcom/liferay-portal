@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.installer;
+package com.liferay.batch.engine.internal.auto.deploy;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.installer;
+package com.liferay.batch.engine.internal.auto.deploy;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

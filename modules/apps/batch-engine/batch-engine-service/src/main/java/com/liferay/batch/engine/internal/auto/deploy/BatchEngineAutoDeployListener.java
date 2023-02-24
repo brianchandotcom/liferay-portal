@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.installer;
+package com.liferay.batch.engine.internal.auto.deploy;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,8 +26,10 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,8 +45,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-
-import java.net.URL;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -63,11 +63,37 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ivica Cardic
  */
-@Component(service = FileInstaller.class)
-public class BatchEngineFileInstaller implements FileInstaller {
+@Component(service = AutoDeployListener.class)
+public class BatchEngineAutoDeployListener implements AutoDeployListener {
 
 	@Override
-	public boolean canTransformURL(File file) {
+	public int deploy(AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException {
+
+		try (ZipFile zipFile = new ZipFile(autoDeploymentContext.getFile())) {
+			_deploy(zipFile);
+		}
+		catch (Exception exception) {
+			throw new AutoDeployException(exception);
+		}
+
+		return AutoDeployer.CODE_DEFAULT;
+	}
+
+	public boolean isBatchEngineTechnical(String zipEntryName) {
+		if (zipEntryName.endsWith("jsont")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isDeployable(AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException {
+
+		File file = autoDeploymentContext.getFile();
+
 		String fileName = file.getName();
 
 		if (!StringUtil.endsWith(fileName, ".zip")) {
@@ -98,36 +124,10 @@ public class BatchEngineFileInstaller implements FileInstaller {
 			}
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(new AutoDeployException(exception));
-			}
-		}
-
-		return false;
-	}
-
-	public boolean isBatchEngineTechnical(String zipEntryName) {
-		if (zipEntryName.endsWith("jsont")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public URL transformURL(File file) throws AutoDeployException {
-		try (ZipFile zipFile = new ZipFile(file)) {
-			_deploy(zipFile);
-		}
-		catch (Exception exception) {
 			throw new AutoDeployException(exception);
 		}
 
-		return null;
-	}
-
-	@Override
-	public void uninstall(File file) {
+		return false;
 	}
 
 	public static final class BatchEngineImportConfiguration {
@@ -400,7 +400,7 @@ public class BatchEngineFileInstaller implements FileInstaller {
 
 		ExecutorService executorService =
 			_portalExecutorManager.getPortalExecutor(
-				BatchEngineFileInstaller.class.getName());
+				BatchEngineAutoDeployListener.class.getName());
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
@@ -429,7 +429,7 @@ public class BatchEngineFileInstaller implements FileInstaller {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BatchEngineFileInstaller.class);
+		BatchEngineAutoDeployListener.class);
 
 	@Reference
 	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;

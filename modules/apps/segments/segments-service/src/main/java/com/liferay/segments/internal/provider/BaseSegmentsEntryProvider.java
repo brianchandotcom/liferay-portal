@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -142,17 +141,21 @@ public abstract class BaseSegmentsEntryProvider
 		}
 
 		return TransformUtil.transformToLongArray(
-			ListUtil.filter(
-				segmentsEntries,
-				segmentsEntry ->
-					(ArrayUtil.isEmpty(filterSegmentsEntryIds) ||
-					 ArrayUtil.contains(
+			segmentsEntries,
+			segmentsEntry -> {
+				if ((!ArrayUtil.isEmpty(filterSegmentsEntryIds) &&
+					 !ArrayUtil.contains(
 						 filterSegmentsEntryIds,
-						 segmentsEntry.getSegmentsEntryId())) &&
-					isMember(
+						 segmentsEntry.getSegmentsEntryId())) ||
+					!isMember(
 						className, classPK, context, segmentsEntry,
-						segmentsEntryIds)),
-			SegmentsEntry::getSegmentsEntryId);
+						segmentsEntryIds)) {
+
+					return null;
+				}
+
+				return segmentsEntry.getSegmentsEntryId();
+			});
 	}
 
 	protected Criteria.Conjunction getConjunction(

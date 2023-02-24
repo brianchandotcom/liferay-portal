@@ -20,14 +20,23 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Gustavo Lima
@@ -55,15 +64,46 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 		Map<String, Object> termValues = (Map<String, Object>)object;
 
-		if (termName.contains("_CREATOR")) {
-			if (context.equals(Context.RECIPIENT)) {
-				return String.valueOf(termValues.get("creator"));
-			}
+		User user = null;
 
-			User user = _userLocalService.getUser(
+		String prefix = StringUtil.toUpperCase(
+			_objectDefinition.getShortName());
+
+		Set<String> creatorTermNames = Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				"[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]",
+				"[%" + prefix + "_AUTHOR_FIRST_NAME%]",
+				"[%" + prefix + "_AUTHOR_ID%]",
+				"[%" + prefix + "_AUTHOR_LAST_NAME%]",
+				"[%" + prefix + "_AUTHOR_MIDDLE_NAME%]",
+				"[%" + prefix + "_AUTHOR_PREFIX%]",
+				"[%" + prefix + "_AUTHOR_SUFFIX%]"));
+
+		if (creatorTermNames.contains(termName)) {
+			user = _userLocalService.getUser(
 				GetterUtil.getLong(termValues.get("creator")));
 
-			return user.getFullName(true, true);
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
+				if (context.equals(Context.RECIPIENT)) {
+					return String.valueOf(termValues.get("creator"));
+				}
+
+				return user.getFullName(true, true);
+			}
+		}
+
+		if (_currentUserTermName.contains(termName)) {
+			user = _userLocalService.getUser(
+				GetterUtil.getLong(termValues.get("currentUserId")));
+		}
+
+		if (user != null) {
+			Map<String, String> userTermValuesMap = _getUserTermValuesMap(user);
+
+			return userTermValuesMap.get(
+				StringUtil.removeSubstring(
+					StringUtil.extractLast(termName, StringPool.UNDERLINE),
+					"%]"));
 		}
 
 		Map<String, Long> objectFieldIds =
@@ -103,6 +143,64 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 		return objectFieldIds;
 	}
+
+	private String _getListTypeName(boolean prefix, User user)
+		throws PortalException {
+
+		Contact contact = user.fetchContact();
+
+		if (contact == null) {
+			return StringPool.BLANK;
+		}
+
+		if (prefix) {
+			if (Validator.isNull(contact.getPrefixListTypeId())) {
+				return StringPool.BLANK;
+			}
+
+			ListType listType = ListTypeServiceUtil.getListType(
+				contact.getPrefixListTypeId());
+
+			return listType.getName();
+		}
+
+		if (Validator.isNull(contact.getSuffixListTypeId())) {
+			return StringPool.BLANK;
+		}
+
+		ListType listType = ListTypeServiceUtil.getListType(
+			contact.getSuffixListTypeId());
+
+		return listType.getName();
+	}
+
+	private Map<String, String> _getUserTermValuesMap(User user)
+		throws PortalException {
+
+		return HashMapBuilder.put(
+			"EMAIL_ADDRESS", user.getEmailAddress()
+		).put(
+			"FIRST_NAME", user.getFirstName()
+		).put(
+			"ID", String.valueOf(user.getUserId())
+		).put(
+			"LAST_NAME", user.getLastName()
+		).put(
+			"MIDDLE_NAME", user.getMiddleName()
+		).put(
+			"PREFIX", _getListTypeName(true, user)
+		).put(
+			"SUFFIX", _getListTypeName(false, user)
+		).build();
+	}
+
+	private static final Set<String> _currentUserTermName =
+		Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				"[%CURRENT_USER_EMAIL_ADDRESS%]", "[%CURRENT_USER_FIRST_NAME%]",
+				"[%CURRENT_USER_ID%]", "[%CURRENT_USER_LAST_NAME%]",
+				"[%CURRENT_USER_MIDDLE_NAME%]", "[%CURRENT_USER_PREFIX%]",
+				"[%CURRENT_USER_SUFFIX%]"));
 
 	private final ObjectDefinition _objectDefinition;
 	private final DCLSingleton<Map<String, Long>> _objectFieldIdsDCLSingleton =

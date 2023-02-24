@@ -16,19 +16,8 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<c:choose>
-	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-156421") %>'>
 		<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
 
 		<div class="knowledge-base-admin-content">
 			<liferay-util:include page="/admin/common/view_kb_article.jsp" servletContext="<%= application %>" />
 		</div>
-	</c:when>
-	<c:otherwise>
-		<c:if test="<%= redirect.equals(currentURL) %>">
-			<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
-		</c:if>
-
-		<liferay-util:include page="/admin/common/view_kb_article.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>

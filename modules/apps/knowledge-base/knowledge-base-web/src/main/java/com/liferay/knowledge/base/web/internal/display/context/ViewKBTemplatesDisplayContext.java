@@ -28,7 +28,6 @@ import com.liferay.knowledge.base.web.internal.util.KBDropdownItemsProvider;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -201,9 +200,7 @@ public class ViewKBTemplatesDisplayContext {
 	public boolean hasKBTemplates() throws PortalException {
 		SearchContainer<KBTemplate> searchContainer = getSearchContainer();
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-156421") ||
-			searchContainer.hasResults() || searchContainer.isSearch()) {
-
+		if (searchContainer.hasResults() || searchContainer.isSearch()) {
 			return true;
 		}
 

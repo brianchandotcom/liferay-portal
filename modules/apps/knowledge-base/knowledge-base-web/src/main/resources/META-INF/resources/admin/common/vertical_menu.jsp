@@ -20,7 +20,6 @@
 KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNavigationDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-156421") %>'>
 	<div class="knowledge-base-vertical-bar <%= kbAdminNavigationDisplayContext.isProductMenuOpen() ? StringPool.BLANK : "expanded" %>" id="<portlet:namespace />verticalBarId">
 		<liferay-portlet:actionURL name="/knowledge_base/move_kb_object" var="moveKBObjectURL" />
 
@@ -40,4 +39,3 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 			%>'
 		/>
 	</div>
-</c:if>

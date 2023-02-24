@@ -16,7 +16,6 @@ package com.liferay.knowledge.base.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -79,9 +77,6 @@ public class KBAdminNavigationDisplayContext {
 
 		_kbArticleURLHelper = new KBArticleURLHelper(
 			renderRequest, renderResponse);
-		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
-			(PortletRequest)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST));
 		_liferayPortletResponse = LiferayPortletUtil.getLiferayPortletResponse(
 			renderResponse);
 		_selectedItemAncestorIds = _getSelectedItemAncestorIds();
@@ -89,7 +84,10 @@ public class KBAdminNavigationDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_kbDropdownItemsProvider = new KBDropdownItemsProvider(
-			_liferayPortletRequest, _liferayPortletResponse);
+			PortalUtil.getLiferayPortletRequest(
+				(PortletRequest)_httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST)),
+			_liferayPortletResponse);
 	}
 
 	public List<NavigationItem> getInfoPanelNavigationItems() {
@@ -101,85 +99,6 @@ public class KBAdminNavigationDisplayContext {
 			).setLabel(
 				LanguageUtil.get(_httpServletRequest, "details")
 			).build());
-	}
-
-	public List<NavigationItem> getNavigationItems() throws PortalException {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		String mvcPath = ParamUtil.getString(_httpServletRequest, "mvcPath");
-		String mvcRenderCommandName = ParamUtil.getString(
-			_httpServletRequest, "mvcRenderCommandName");
-
-		return NavigationItemListBuilder.add(
-			() -> PortletPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), _themeDisplay.getPlid(),
-				portletDisplay.getId(), KBActionKeys.VIEW),
-			NavigationItemBuilder.setActive(
-				() -> {
-					if (!mvcPath.equals("/admin/view_kb_suggestions.jsp") &&
-						!mvcRenderCommandName.equals(
-							"/knowledge_base/view_kb_templates")) {
-
-						return true;
-					}
-
-					return false;
-				}
-			).setHref(
-				PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/knowledge_base/view"
-				).buildString()
-			).setLabel(
-				LanguageUtil.get(_httpServletRequest, "articles")
-			).build()
-		).add(
-			() -> AdminPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(),
-				KBActionKeys.VIEW_KB_TEMPLATES),
-			NavigationItemBuilder.setActive(
-				() -> {
-					if (mvcRenderCommandName.equals(
-							"/knowledge_base/view_kb_templates")) {
-
-						return true;
-					}
-
-					return false;
-				}
-			).setHref(
-				PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/knowledge_base/view_kb_templates"
-				).buildString()
-			).setLabel(
-				LanguageUtil.get(_httpServletRequest, "templates")
-			).build()
-		).add(
-			() -> AdminPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), KBActionKeys.VIEW_SUGGESTIONS),
-			NavigationItemBuilder.setActive(
-				() -> {
-					if (mvcPath.equals("/admin/view_kb_suggestions.jsp")) {
-						return true;
-					}
-
-					return false;
-				}
-			).setHref(
-				PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setMVCPath(
-					"/admin/view_kb_suggestions.jsp"
-				).buildString()
-			).setLabel(
-				LanguageUtil.get(_httpServletRequest, "suggestions")
-			).build()
-		).build();
 	}
 
 	public List<JSONObject> getVerticalNavigationJSONObjects()
@@ -603,7 +522,6 @@ public class KBAdminNavigationDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final KBArticleURLHelper _kbArticleURLHelper;
 	private final KBDropdownItemsProvider _kbDropdownItemsProvider;
-	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final List<Long> _selectedItemAncestorIds;
 	private final ThemeDisplay _themeDisplay;

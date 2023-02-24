@@ -23,7 +23,6 @@ import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -85,7 +84,7 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 				KBArticleConstants.getClassName());
 
 			if (resourceClassNameId == kbArticleClassNameId) {
-				if (!_isDragAndDrop(dragAndDrop)) {
+				if (!dragAndDrop) {
 					double priority = ParamUtil.getDouble(
 						actionRequest, "priority");
 
@@ -112,7 +111,7 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 			else {
-				if (!_isDragAndDrop(dragAndDrop)) {
+				if (!dragAndDrop) {
 					_kbFolderService.moveKBFolder(
 						resourcePrimKey, parentResourcePrimKey);
 				}
@@ -139,7 +138,7 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			if (_isDragAndDrop(dragAndDrop)) {
+			if (dragAndDrop) {
 				hideDefaultSuccessMessage(actionRequest);
 
 				JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
@@ -149,7 +148,7 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (PortalException portalException) {
-			if (!_isDragAndDrop(dragAndDrop)) {
+			if (!dragAndDrop) {
 				throw portalException;
 			}
 
@@ -224,14 +223,6 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 
 		return _getNearestPriority(
 			nextKBArticle.getPriority(), previousKBArticle.getPriority());
-	}
-
-	private boolean _isDragAndDrop(boolean dragAndDrop) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-156421")) {
-			return dragAndDrop;
-		}
-
-		return false;
 	}
 
 	@Reference

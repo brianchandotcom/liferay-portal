@@ -26,16 +26,9 @@ long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey",
 KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest, renderResponse, portletConfig);
 %>
 
-<c:choose>
-	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-156421") %>'>
 		<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
 
 		<div class="knowledge-base-admin-content">
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>
 
 <clay:management-toolbar
 	actionDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
@@ -124,7 +117,7 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 			%>
 
 			<c:choose>
-				<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-156421") || kbAdminManagementToolbarDisplayContextSearchContainer.hasResults() || kbAdminManagementToolbarDisplayContext.isSearch() %>'>
+				<c:when test='<%= kbAdminManagementToolbarDisplayContextSearchContainer.hasResults() || kbAdminManagementToolbarDisplayContext.isSearch() %>'>
 
 				<c:choose>
 						<c:when test='<%= Objects.equals(kbAdminManagementToolbarDisplayContext.getDisplayStyle(), "descriptive") %>'>
@@ -148,6 +141,4 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 	</clay:container-fluid>
 </div>
 
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-156421") %>'>
 	</div>
-</c:if>

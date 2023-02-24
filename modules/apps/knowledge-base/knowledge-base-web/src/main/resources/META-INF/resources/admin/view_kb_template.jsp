@@ -16,16 +16,9 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<c:choose>
-	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-156421") %>'>
 		<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
 
 		<div class="knowledge-base-admin-content">
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>
 
 <%
 String backURL = ParamUtil.getString(request, "backURL");
@@ -99,6 +92,4 @@ if (portletTitleBasedNavigation) {
 	</div>
 </div>
 
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-156421") %>'>
 	</div>
-</c:if>

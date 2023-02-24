@@ -1305,9 +1305,10 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = 404);
 		}
 	}
 

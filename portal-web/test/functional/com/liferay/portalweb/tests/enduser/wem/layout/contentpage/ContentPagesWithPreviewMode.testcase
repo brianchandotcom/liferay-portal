@@ -59,9 +59,10 @@ definition {
 		}
 
 		task ("Then the guest should see not found") {
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = 404);
 		}
 	}
 

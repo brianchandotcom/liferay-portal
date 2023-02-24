@@ -56,7 +56,7 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 		String className = getClass().getName();
 
 		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, new Date(), null, "0 0 0 * * ?");
+			className, className, null, null, "0 0 0 * * ?");
 
 		_schedulerEntryImpl = new SchedulerEntryImpl(
 			getClass().getName(), trigger);

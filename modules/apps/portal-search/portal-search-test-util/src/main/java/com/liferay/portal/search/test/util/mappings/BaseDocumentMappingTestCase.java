@@ -17,6 +17,7 @@ package com.liferay.portal.search.test.util.mappings;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -24,7 +25,6 @@ import com.liferay.portal.search.test.util.document.BaseDocumentTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,15 +46,10 @@ public abstract class BaseDocumentMappingTestCase extends BaseDocumentTestCase {
 
 	@Test
 	public void testFirstNamesSearchResults() throws Exception {
-		Stream<String> stream = getScreenNamesStream();
-
-		stream.forEach(
-			screenName -> {
-				String firstName = screenName.replaceFirst(
-					"user", StringPool.BLANK);
-
-				assertMappings(firstName);
-			});
+		for (String screenName : SCREEN_NAMES) {
+			assertMappings(
+				StringUtil.replaceFirst(screenName, "user", StringPool.BLANK));
+		}
 	}
 
 	@Test

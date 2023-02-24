@@ -64,18 +64,6 @@ public class CTSettingsConfigurationHelper {
 		return ctSettingsConfiguration.unapprovedChangesAllowed();
 	}
 
-	public void save(long companyId, boolean enabled, boolean sandboxEnabled)
-		throws PortalException {
-
-		_configurationProvider.saveCompanyConfiguration(
-			CTSettingsConfiguration.class, companyId,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"enabled", enabled
-			).put(
-				"sandboxEnabled", sandboxEnabled
-			).build());
-	}
-
 	public void save(
 			long companyId, boolean enabled, boolean sandboxEnabled,
 			boolean unapprovedChangesAllowed)

@@ -49,7 +49,7 @@ public class PublicationsEnabledUpgradeProcess extends UpgradeProcess {
 					))) {
 
 			_ctSettingsConfigurationHelper.save(
-				ctPreferences.getCompanyId(), true, false);
+				ctPreferences.getCompanyId(), true, false, false);
 
 			_ctPreferencesLocalService.deleteCTPreferences(ctPreferences);
 		}

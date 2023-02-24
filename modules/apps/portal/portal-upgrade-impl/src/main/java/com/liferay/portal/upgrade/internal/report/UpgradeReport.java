@@ -608,23 +608,10 @@ public class UpgradeReport {
 	}
 
 	private List<Map.Entry<String, Integer>> _sort(Map<String, Integer> map) {
-		List<Map.Entry<String, Integer>> entries = new ArrayList<>(
-			map.entrySet());
-
-		ListUtil.sort(
-			entries,
+		return ListUtil.sort(
+			new ArrayList<>(map.entrySet()),
 			Collections.reverseOrder(
-				Map.Entry.comparingByValue(
-					new Comparator<Integer>() {
-
-						@Override
-						public int compare(Integer object1, Integer object2) {
-							return Integer.compare(object1, object2);
-						}
-
-					})));
-
-		return entries;
+				Map.Entry.comparingByValue(Integer::compare)));
 	}
 
 	private static final String _CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE =

@@ -45,12 +45,11 @@ public class EditJournalFeedDisplayContext {
 		throws Exception {
 
 		_httpServletRequest = httpServletRequest;
+		_journalFeed = journalFeed;
+		_liferayPortletResponse = liferayPortletResponse;
 
 		_itemSelector = (ItemSelector)_httpServletRequest.getAttribute(
 			ItemSelector.class.getName());
-
-		_journalFeed = journalFeed;
-		_liferayPortletResponse = liferayPortletResponse;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

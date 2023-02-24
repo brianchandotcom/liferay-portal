@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -162,8 +163,11 @@ public class ProductDTOConverter
 	@Reference
 	private CPTypeRegistry _cpTypeRegistry;
 
-	@Reference
-	private ProductOptionDTOConverter _productOptionDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.ProductOptionDTOConverter)"
+	)
+	private DTOConverter<CPDefinitionOptionRel, ProductOption>
+		_productOptionDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.ProductSpecificationDTOConverter)"

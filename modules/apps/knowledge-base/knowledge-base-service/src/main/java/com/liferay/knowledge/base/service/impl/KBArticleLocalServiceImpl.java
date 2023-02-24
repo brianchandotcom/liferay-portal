@@ -1221,6 +1221,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				kbArticle.getCompanyId(),
 				_classNameLocalService.getClassNameId(KBArticle.class),
 				kbArticle.getPrimaryKey(), (int)oldKBArticle.getViewCount());
+
+			// Indexer
+
+			Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
+				KBArticle.class);
+
+			indexer.delete(oldKBArticle);
 		}
 		else {
 			kbArticle = oldKBArticle;
@@ -1266,6 +1273,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		_addKBArticleAttachments(userId, kbArticle, selectedFileNames);
 
 		_removeKBArticleAttachments(removeFileEntryIds);
+
+		// indexer
+
+		_indexKBArticle(kbArticle);
 
 		// Workflow
 
@@ -1397,7 +1408,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			oldKBArticle.setModifiedDate(oldKBArticle.getModifiedDate());
 			oldKBArticle.setMain(false);
 
-			kbArticlePersistence.update(oldKBArticle);
+			oldKBArticle = kbArticlePersistence.update(oldKBArticle);
+
+			// Indexer
+
+			Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
+				KBArticle.class);
+
+			indexer.delete(oldKBArticle);
 
 			action = Constants.UPDATE;
 		}

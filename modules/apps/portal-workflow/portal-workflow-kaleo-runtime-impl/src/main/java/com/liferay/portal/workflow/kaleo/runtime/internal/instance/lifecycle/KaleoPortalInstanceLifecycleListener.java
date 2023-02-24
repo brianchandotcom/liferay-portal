@@ -37,6 +37,11 @@ public class KaleoPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_portalKaleoManager.deployKaleoDefaults(company.getCompanyId());
 	}

@@ -33,6 +33,11 @@ public class PortalInstanceLifecycleListenerImpl
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		try {
 			_commerceAccountGroupLocalService.checkGuestCommerceAccountGroup(

@@ -52,6 +52,11 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_addAssetVocabulary(
 			company, PropsValues.ASSET_VOCABULARY_DEFAULT,

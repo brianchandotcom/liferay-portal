@@ -59,6 +59,11 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		Group group = _groupLocalService.getGroup(
 			company.getCompanyId(), GroupConstants.GUEST);

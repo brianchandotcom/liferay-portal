@@ -31,6 +31,11 @@ public class PortalInstanceLifecycleListenerImpl
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstancePreunregistered(Company company)
 		throws Exception {
 

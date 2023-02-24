@@ -96,6 +96,11 @@ public class AssetTagSAPEntryActivator {
 	private class AssetTagPortalInstanceLifecycleListener
 		extends BasePortalInstanceLifecycleListener {
 
+		@Override
+		public boolean isPersistent() {
+			return true;
+		}
+
 		public void portalInstanceRegistered(Company company) throws Exception {
 			try {
 				_addSAPEntry(company.getCompanyId());

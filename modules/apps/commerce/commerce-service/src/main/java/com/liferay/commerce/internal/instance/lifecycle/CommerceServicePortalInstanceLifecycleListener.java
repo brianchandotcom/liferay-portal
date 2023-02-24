@@ -58,6 +58,11 @@ public class CommerceServicePortalInstanceLifecycleListener
 	}
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public Set<String> map(String scope) {
 		return Collections.singleton(scope);
 	}

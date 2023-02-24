@@ -61,6 +61,11 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			themeDisplay.getPathFriendlyURLPublic(), "/forms/shared/-/form/");
 	}
 
+	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
 	public boolean isSharedLayout(ThemeDisplay themeDisplay) {
 		Layout layout = themeDisplay.getLayout();
 

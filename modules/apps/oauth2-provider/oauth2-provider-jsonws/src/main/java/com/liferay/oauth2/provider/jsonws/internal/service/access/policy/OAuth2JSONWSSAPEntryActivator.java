@@ -125,6 +125,11 @@ public class OAuth2JSONWSSAPEntryActivator {
 	private class PolicyPortalInstanceLifecycleListener
 		extends BasePortalInstanceLifecycleListener {
 
+		@Override
+		public boolean isPersistent() {
+			return true;
+		}
+
 		public void portalInstanceRegistered(Company company) throws Exception {
 			try {
 				addSAPEntries(company.getCompanyId());

@@ -36,6 +36,11 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		Layout layout = searchLayoutFactory.createSearchLayoutPrototype(
 			company);

@@ -39,6 +39,11 @@ public class DLFileEntryTypePermissionPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		Role role = _roleLocalService.fetchRole(
 			company.getCompanyId(), RoleConstants.POWER_USER);

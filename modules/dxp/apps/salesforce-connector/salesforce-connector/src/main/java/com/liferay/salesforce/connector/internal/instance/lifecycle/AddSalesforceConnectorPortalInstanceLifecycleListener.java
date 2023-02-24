@@ -45,6 +45,11 @@ public class AddSalesforceConnectorPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_addDispatchTrigger(
 			company, "etl-salesforce-account-connector-0.4.zip");

@@ -37,6 +37,11 @@ public class LayoutSEOEntryDDMStructureInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 

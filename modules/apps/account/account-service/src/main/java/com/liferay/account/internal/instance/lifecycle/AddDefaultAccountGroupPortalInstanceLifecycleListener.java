@@ -30,6 +30,11 @@ public class AddDefaultAccountGroupPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_accountGroupLocalService.checkGuestAccountGroup(
 			company.getCompanyId());

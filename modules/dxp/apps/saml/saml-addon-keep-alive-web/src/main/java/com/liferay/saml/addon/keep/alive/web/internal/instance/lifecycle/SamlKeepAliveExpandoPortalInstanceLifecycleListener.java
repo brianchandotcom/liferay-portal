@@ -41,6 +41,11 @@ public class SamlKeepAliveExpandoPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener implements Clusterable {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_addExpandoColumn(company.getCompanyId(), SamlIdpSpConnection.class);
 		_addExpandoColumn(company.getCompanyId(), SamlSpIdpConnection.class);

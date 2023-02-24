@@ -48,6 +48,11 @@ public class
 		extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_accountRoleLocalService.checkCompanyAccountRoles(
 			company.getCompanyId());

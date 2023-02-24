@@ -100,6 +100,11 @@ public class CalendarSAPEntryActivator {
 	private class CalendarPortalInstanceLifecycleListener
 		extends BasePortalInstanceLifecycleListener {
 
+		@Override
+		public boolean isPersistent() {
+			return true;
+		}
+
 		public void portalInstanceRegistered(Company company) throws Exception {
 			try {
 				_addSAPEntry(company.getCompanyId());

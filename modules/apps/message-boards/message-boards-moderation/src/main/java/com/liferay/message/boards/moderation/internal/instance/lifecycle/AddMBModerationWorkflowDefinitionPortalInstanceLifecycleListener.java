@@ -43,6 +43,11 @@ public class AddMBModerationWorkflowDefinitionPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		int workflowDefinitionsCount =
 			_workflowDefinitionManager.getWorkflowDefinitionsCount(

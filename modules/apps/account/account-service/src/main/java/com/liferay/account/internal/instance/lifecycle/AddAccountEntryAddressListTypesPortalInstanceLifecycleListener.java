@@ -32,6 +32,11 @@ public class AddAccountEntryAddressListTypesPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public boolean isPersistent() {
+		return true;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		if (!_hasListType(
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING,

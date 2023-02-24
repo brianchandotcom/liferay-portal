@@ -29,6 +29,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 		method="post"
 		name="fm"
 		onSubmit="event.preventDefault();"
+		validateOnBlur="<%= false %>"
 	>
 		<liferay-frontend:edit-form-body>
 			<aui:input label="name" name="name" placeholder='<%= LanguageUtil.get(request, "add-page-name") %>' required="<%= true %>" />

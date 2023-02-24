@@ -250,129 +250,148 @@ public class AssetListEntryAssetEntryRelModelImpl
 	public Map<String, Function<AssetListEntryAssetEntryRel, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<AssetListEntryAssetEntryRel, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<AssetListEntryAssetEntryRel, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<AssetListEntryAssetEntryRel, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<AssetListEntryAssetEntryRel, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<AssetListEntryAssetEntryRel, Object>>();
-		Map<String, BiConsumer<AssetListEntryAssetEntryRel, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<AssetListEntryAssetEntryRel, ?>>();
+		private static final Map
+			<String, Function<AssetListEntryAssetEntryRel, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", AssetListEntryAssetEntryRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
-				AssetListEntryAssetEntryRel::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", AssetListEntryAssetEntryRel::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
-				AssetListEntryAssetEntryRel::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"uuid", AssetListEntryAssetEntryRel::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<AssetListEntryAssetEntryRel, String>)
-				AssetListEntryAssetEntryRel::setUuid);
-		attributeGetterFunctions.put(
-			"assetListEntryAssetEntryRelId",
-			AssetListEntryAssetEntryRel::getAssetListEntryAssetEntryRelId);
-		attributeSetterBiConsumers.put(
-			"assetListEntryAssetEntryRelId",
-			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
-				AssetListEntryAssetEntryRel::setAssetListEntryAssetEntryRelId);
-		attributeGetterFunctions.put(
-			"groupId", AssetListEntryAssetEntryRel::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
-				AssetListEntryAssetEntryRel::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", AssetListEntryAssetEntryRel::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
-				AssetListEntryAssetEntryRel::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", AssetListEntryAssetEntryRel::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
-				AssetListEntryAssetEntryRel::setUserId);
-		attributeGetterFunctions.put(
-			"userName", AssetListEntryAssetEntryRel::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<AssetListEntryAssetEntryRel, String>)
-				AssetListEntryAssetEntryRel::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", AssetListEntryAssetEntryRel::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<AssetListEntryAssetEntryRel, Date>)
-				AssetListEntryAssetEntryRel::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", AssetListEntryAssetEntryRel::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<AssetListEntryAssetEntryRel, Date>)
-				AssetListEntryAssetEntryRel::setModifiedDate);
-		attributeGetterFunctions.put(
-			"assetListEntryId",
-			AssetListEntryAssetEntryRel::getAssetListEntryId);
-		attributeSetterBiConsumers.put(
-			"assetListEntryId",
-			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
-				AssetListEntryAssetEntryRel::setAssetListEntryId);
-		attributeGetterFunctions.put(
-			"assetEntryId", AssetListEntryAssetEntryRel::getAssetEntryId);
-		attributeSetterBiConsumers.put(
-			"assetEntryId",
-			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
-				AssetListEntryAssetEntryRel::setAssetEntryId);
-		attributeGetterFunctions.put(
-			"segmentsEntryId", AssetListEntryAssetEntryRel::getSegmentsEntryId);
-		attributeSetterBiConsumers.put(
-			"segmentsEntryId",
-			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
-				AssetListEntryAssetEntryRel::setSegmentsEntryId);
-		attributeGetterFunctions.put(
-			"position", AssetListEntryAssetEntryRel::getPosition);
-		attributeSetterBiConsumers.put(
-			"position",
-			(BiConsumer<AssetListEntryAssetEntryRel, Integer>)
-				AssetListEntryAssetEntryRel::setPosition);
-		attributeGetterFunctions.put(
-			"lastPublishDate", AssetListEntryAssetEntryRel::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<AssetListEntryAssetEntryRel, Date>)
-				AssetListEntryAssetEntryRel::setLastPublishDate);
+		static {
+			Map<String, Function<AssetListEntryAssetEntryRel, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<AssetListEntryAssetEntryRel, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", AssetListEntryAssetEntryRel::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId",
+				AssetListEntryAssetEntryRel::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"uuid", AssetListEntryAssetEntryRel::getUuid);
+			attributeGetterFunctions.put(
+				"assetListEntryAssetEntryRelId",
+				AssetListEntryAssetEntryRel::getAssetListEntryAssetEntryRelId);
+			attributeGetterFunctions.put(
+				"groupId", AssetListEntryAssetEntryRel::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", AssetListEntryAssetEntryRel::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", AssetListEntryAssetEntryRel::getUserId);
+			attributeGetterFunctions.put(
+				"userName", AssetListEntryAssetEntryRel::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", AssetListEntryAssetEntryRel::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", AssetListEntryAssetEntryRel::getModifiedDate);
+			attributeGetterFunctions.put(
+				"assetListEntryId",
+				AssetListEntryAssetEntryRel::getAssetListEntryId);
+			attributeGetterFunctions.put(
+				"assetEntryId", AssetListEntryAssetEntryRel::getAssetEntryId);
+			attributeGetterFunctions.put(
+				"segmentsEntryId",
+				AssetListEntryAssetEntryRel::getSegmentsEntryId);
+			attributeGetterFunctions.put(
+				"position", AssetListEntryAssetEntryRel::getPosition);
+			attributeGetterFunctions.put(
+				"lastPublishDate",
+				AssetListEntryAssetEntryRel::getLastPublishDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<AssetListEntryAssetEntryRel, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<AssetListEntryAssetEntryRel, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<AssetListEntryAssetEntryRel, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<AssetListEntryAssetEntryRel, Long>)
+					AssetListEntryAssetEntryRel::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<AssetListEntryAssetEntryRel, Long>)
+					AssetListEntryAssetEntryRel::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<AssetListEntryAssetEntryRel, String>)
+					AssetListEntryAssetEntryRel::setUuid);
+			attributeSetterBiConsumers.put(
+				"assetListEntryAssetEntryRelId",
+				(BiConsumer<AssetListEntryAssetEntryRel, Long>)
+					AssetListEntryAssetEntryRel::
+						setAssetListEntryAssetEntryRelId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<AssetListEntryAssetEntryRel, Long>)
+					AssetListEntryAssetEntryRel::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<AssetListEntryAssetEntryRel, Long>)
+					AssetListEntryAssetEntryRel::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<AssetListEntryAssetEntryRel, Long>)
+					AssetListEntryAssetEntryRel::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<AssetListEntryAssetEntryRel, String>)
+					AssetListEntryAssetEntryRel::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<AssetListEntryAssetEntryRel, Date>)
+					AssetListEntryAssetEntryRel::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<AssetListEntryAssetEntryRel, Date>)
+					AssetListEntryAssetEntryRel::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"assetListEntryId",
+				(BiConsumer<AssetListEntryAssetEntryRel, Long>)
+					AssetListEntryAssetEntryRel::setAssetListEntryId);
+			attributeSetterBiConsumers.put(
+				"assetEntryId",
+				(BiConsumer<AssetListEntryAssetEntryRel, Long>)
+					AssetListEntryAssetEntryRel::setAssetEntryId);
+			attributeSetterBiConsumers.put(
+				"segmentsEntryId",
+				(BiConsumer<AssetListEntryAssetEntryRel, Long>)
+					AssetListEntryAssetEntryRel::setSegmentsEntryId);
+			attributeSetterBiConsumers.put(
+				"position",
+				(BiConsumer<AssetListEntryAssetEntryRel, Integer>)
+					AssetListEntryAssetEntryRel::setPosition);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<AssetListEntryAssetEntryRel, Date>)
+					AssetListEntryAssetEntryRel::setLastPublishDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -1045,7 +1064,8 @@ public class AssetListEntryAssetEntryRelModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<AssetListEntryAssetEntryRel, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

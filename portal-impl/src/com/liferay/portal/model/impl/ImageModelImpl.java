@@ -210,60 +210,76 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	public Map<String, Function<Image, Object>> getAttributeGetterFunctions() {
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<Image, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Image, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Image, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<Image, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Image, Object>>();
-		Map<String, BiConsumer<Image, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Image, ?>>();
+		private static final Map<String, Function<Image, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", Image::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion", (BiConsumer<Image, Long>)Image::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", Image::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<Image, Long>)Image::setCtCollectionId);
-		attributeGetterFunctions.put("imageId", Image::getImageId);
-		attributeSetterBiConsumers.put(
-			"imageId", (BiConsumer<Image, Long>)Image::setImageId);
-		attributeGetterFunctions.put("companyId", Image::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<Image, Long>)Image::setCompanyId);
-		attributeGetterFunctions.put("modifiedDate", Image::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate", (BiConsumer<Image, Date>)Image::setModifiedDate);
-		attributeGetterFunctions.put("type", Image::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<Image, String>)Image::setType);
-		attributeGetterFunctions.put("height", Image::getHeight);
-		attributeSetterBiConsumers.put(
-			"height", (BiConsumer<Image, Integer>)Image::setHeight);
-		attributeGetterFunctions.put("width", Image::getWidth);
-		attributeSetterBiConsumers.put(
-			"width", (BiConsumer<Image, Integer>)Image::setWidth);
-		attributeGetterFunctions.put("size", Image::getSize);
-		attributeSetterBiConsumers.put(
-			"size", (BiConsumer<Image, Integer>)Image::setSize);
+		static {
+			Map<String, Function<Image, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<Image, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put("mvccVersion", Image::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", Image::getCtCollectionId);
+			attributeGetterFunctions.put("imageId", Image::getImageId);
+			attributeGetterFunctions.put("companyId", Image::getCompanyId);
+			attributeGetterFunctions.put(
+				"modifiedDate", Image::getModifiedDate);
+			attributeGetterFunctions.put("type", Image::getType);
+			attributeGetterFunctions.put("height", Image::getHeight);
+			attributeGetterFunctions.put("width", Image::getWidth);
+			attributeGetterFunctions.put("size", Image::getSize);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<Image, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<Image, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<Image, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion", (BiConsumer<Image, Long>)Image::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<Image, Long>)Image::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"imageId", (BiConsumer<Image, Long>)Image::setImageId);
+			attributeSetterBiConsumers.put(
+				"companyId", (BiConsumer<Image, Long>)Image::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<Image, Date>)Image::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"type", (BiConsumer<Image, String>)Image::setType);
+			attributeSetterBiConsumers.put(
+				"height", (BiConsumer<Image, Integer>)Image::setHeight);
+			attributeSetterBiConsumers.put(
+				"width", (BiConsumer<Image, Integer>)Image::setWidth);
+			attributeSetterBiConsumers.put(
+				"size", (BiConsumer<Image, Integer>)Image::setSize);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -697,8 +713,9 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<Image, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<Image, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

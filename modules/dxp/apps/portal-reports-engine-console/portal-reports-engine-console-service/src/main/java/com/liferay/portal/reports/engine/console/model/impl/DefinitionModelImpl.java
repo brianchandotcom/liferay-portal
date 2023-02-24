@@ -241,86 +241,106 @@ public class DefinitionModelImpl
 	public Map<String, Function<Definition, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<Definition, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Definition, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Definition, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<Definition, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Definition, Object>>();
-		Map<String, BiConsumer<Definition, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Definition, ?>>();
+		private static final Map<String, Function<Definition, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("uuid", Definition::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<Definition, String>)Definition::setUuid);
-		attributeGetterFunctions.put(
-			"definitionId", Definition::getDefinitionId);
-		attributeSetterBiConsumers.put(
-			"definitionId",
-			(BiConsumer<Definition, Long>)Definition::setDefinitionId);
-		attributeGetterFunctions.put("groupId", Definition::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<Definition, Long>)Definition::setGroupId);
-		attributeGetterFunctions.put("companyId", Definition::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<Definition, Long>)Definition::setCompanyId);
-		attributeGetterFunctions.put("userId", Definition::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Definition, Long>)Definition::setUserId);
-		attributeGetterFunctions.put("userName", Definition::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<Definition, String>)Definition::setUserName);
-		attributeGetterFunctions.put("createDate", Definition::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<Definition, Date>)Definition::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", Definition::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<Definition, Date>)Definition::setModifiedDate);
-		attributeGetterFunctions.put("name", Definition::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<Definition, String>)Definition::setName);
-		attributeGetterFunctions.put("description", Definition::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<Definition, String>)Definition::setDescription);
-		attributeGetterFunctions.put("sourceId", Definition::getSourceId);
-		attributeSetterBiConsumers.put(
-			"sourceId", (BiConsumer<Definition, Long>)Definition::setSourceId);
-		attributeGetterFunctions.put("reportName", Definition::getReportName);
-		attributeSetterBiConsumers.put(
-			"reportName",
-			(BiConsumer<Definition, String>)Definition::setReportName);
-		attributeGetterFunctions.put(
-			"reportParameters", Definition::getReportParameters);
-		attributeSetterBiConsumers.put(
-			"reportParameters",
-			(BiConsumer<Definition, String>)Definition::setReportParameters);
-		attributeGetterFunctions.put(
-			"lastPublishDate", Definition::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<Definition, Date>)Definition::setLastPublishDate);
+		static {
+			Map<String, Function<Definition, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<Definition, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put("uuid", Definition::getUuid);
+			attributeGetterFunctions.put(
+				"definitionId", Definition::getDefinitionId);
+			attributeGetterFunctions.put("groupId", Definition::getGroupId);
+			attributeGetterFunctions.put("companyId", Definition::getCompanyId);
+			attributeGetterFunctions.put("userId", Definition::getUserId);
+			attributeGetterFunctions.put("userName", Definition::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", Definition::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", Definition::getModifiedDate);
+			attributeGetterFunctions.put("name", Definition::getName);
+			attributeGetterFunctions.put(
+				"description", Definition::getDescription);
+			attributeGetterFunctions.put("sourceId", Definition::getSourceId);
+			attributeGetterFunctions.put(
+				"reportName", Definition::getReportName);
+			attributeGetterFunctions.put(
+				"reportParameters", Definition::getReportParameters);
+			attributeGetterFunctions.put(
+				"lastPublishDate", Definition::getLastPublishDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<Definition, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<Definition, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<Definition, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<Definition, String>)Definition::setUuid);
+			attributeSetterBiConsumers.put(
+				"definitionId",
+				(BiConsumer<Definition, Long>)Definition::setDefinitionId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<Definition, Long>)Definition::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<Definition, Long>)Definition::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<Definition, Long>)Definition::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<Definition, String>)Definition::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<Definition, Date>)Definition::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<Definition, Date>)Definition::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name", (BiConsumer<Definition, String>)Definition::setName);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<Definition, String>)Definition::setDescription);
+			attributeSetterBiConsumers.put(
+				"sourceId",
+				(BiConsumer<Definition, Long>)Definition::setSourceId);
+			attributeSetterBiConsumers.put(
+				"reportName",
+				(BiConsumer<Definition, String>)Definition::setReportName);
+			attributeSetterBiConsumers.put(
+				"reportParameters",
+				(BiConsumer<Definition, String>)
+					Definition::setReportParameters);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<Definition, Date>)Definition::setLastPublishDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1233,8 +1253,9 @@ public class DefinitionModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<Definition, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<Definition, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

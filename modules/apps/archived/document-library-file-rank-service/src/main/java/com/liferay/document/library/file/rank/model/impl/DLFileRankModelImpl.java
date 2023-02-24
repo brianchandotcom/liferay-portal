@@ -233,60 +233,80 @@ public class DLFileRankModelImpl
 	public Map<String, Function<DLFileRank, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<DLFileRank, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DLFileRank, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DLFileRank, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<DLFileRank, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<DLFileRank, Object>>();
-		Map<String, BiConsumer<DLFileRank, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<DLFileRank, ?>>();
+		private static final Map<String, Function<DLFileRank, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", DLFileRank::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<DLFileRank, Long>)DLFileRank::setMvccVersion);
-		attributeGetterFunctions.put("fileRankId", DLFileRank::getFileRankId);
-		attributeSetterBiConsumers.put(
-			"fileRankId",
-			(BiConsumer<DLFileRank, Long>)DLFileRank::setFileRankId);
-		attributeGetterFunctions.put("groupId", DLFileRank::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<DLFileRank, Long>)DLFileRank::setGroupId);
-		attributeGetterFunctions.put("companyId", DLFileRank::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DLFileRank, Long>)DLFileRank::setCompanyId);
-		attributeGetterFunctions.put("userId", DLFileRank::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<DLFileRank, Long>)DLFileRank::setUserId);
-		attributeGetterFunctions.put("createDate", DLFileRank::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<DLFileRank, Date>)DLFileRank::setCreateDate);
-		attributeGetterFunctions.put("fileEntryId", DLFileRank::getFileEntryId);
-		attributeSetterBiConsumers.put(
-			"fileEntryId",
-			(BiConsumer<DLFileRank, Long>)DLFileRank::setFileEntryId);
-		attributeGetterFunctions.put("active", DLFileRank::getActive);
-		attributeSetterBiConsumers.put(
-			"active", (BiConsumer<DLFileRank, Boolean>)DLFileRank::setActive);
+		static {
+			Map<String, Function<DLFileRank, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<DLFileRank, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", DLFileRank::getMvccVersion);
+			attributeGetterFunctions.put(
+				"fileRankId", DLFileRank::getFileRankId);
+			attributeGetterFunctions.put("groupId", DLFileRank::getGroupId);
+			attributeGetterFunctions.put("companyId", DLFileRank::getCompanyId);
+			attributeGetterFunctions.put("userId", DLFileRank::getUserId);
+			attributeGetterFunctions.put(
+				"createDate", DLFileRank::getCreateDate);
+			attributeGetterFunctions.put(
+				"fileEntryId", DLFileRank::getFileEntryId);
+			attributeGetterFunctions.put("active", DLFileRank::getActive);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<DLFileRank, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<DLFileRank, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<DLFileRank, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<DLFileRank, Long>)DLFileRank::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"fileRankId",
+				(BiConsumer<DLFileRank, Long>)DLFileRank::setFileRankId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<DLFileRank, Long>)DLFileRank::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<DLFileRank, Long>)DLFileRank::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<DLFileRank, Long>)DLFileRank::setUserId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<DLFileRank, Date>)DLFileRank::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"fileEntryId",
+				(BiConsumer<DLFileRank, Long>)DLFileRank::setFileEntryId);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<DLFileRank, Boolean>)DLFileRank::setActive);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -729,8 +749,9 @@ public class DLFileRankModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<DLFileRank, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<DLFileRank, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

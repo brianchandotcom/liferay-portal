@@ -271,128 +271,154 @@ public class CPMeasurementUnitModelImpl
 	public Map<String, Function<CPMeasurementUnit, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CPMeasurementUnit, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CPMeasurementUnit, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CPMeasurementUnit, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CPMeasurementUnit, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CPMeasurementUnit, Object>>();
-		Map<String, BiConsumer<CPMeasurementUnit, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<CPMeasurementUnit, ?>>();
+		private static final Map<String, Function<CPMeasurementUnit, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPMeasurementUnit::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPMeasurementUnit, Long>)
-				CPMeasurementUnit::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CPMeasurementUnit::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CPMeasurementUnit, Long>)
-				CPMeasurementUnit::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", CPMeasurementUnit::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CPMeasurementUnit, String>)CPMeasurementUnit::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			CPMeasurementUnit::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CPMeasurementUnit, String>)
-				CPMeasurementUnit::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"CPMeasurementUnitId", CPMeasurementUnit::getCPMeasurementUnitId);
-		attributeSetterBiConsumers.put(
-			"CPMeasurementUnitId",
-			(BiConsumer<CPMeasurementUnit, Long>)
-				CPMeasurementUnit::setCPMeasurementUnitId);
-		attributeGetterFunctions.put("groupId", CPMeasurementUnit::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<CPMeasurementUnit, Long>)CPMeasurementUnit::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", CPMeasurementUnit::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CPMeasurementUnit, Long>)
-				CPMeasurementUnit::setCompanyId);
-		attributeGetterFunctions.put("userId", CPMeasurementUnit::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CPMeasurementUnit, Long>)CPMeasurementUnit::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CPMeasurementUnit::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CPMeasurementUnit, String>)
-				CPMeasurementUnit::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CPMeasurementUnit::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CPMeasurementUnit, Date>)
-				CPMeasurementUnit::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CPMeasurementUnit::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CPMeasurementUnit, Date>)
-				CPMeasurementUnit::setModifiedDate);
-		attributeGetterFunctions.put("name", CPMeasurementUnit::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CPMeasurementUnit, String>)CPMeasurementUnit::setName);
-		attributeGetterFunctions.put("key", CPMeasurementUnit::getKey);
-		attributeSetterBiConsumers.put(
-			"key",
-			(BiConsumer<CPMeasurementUnit, String>)CPMeasurementUnit::setKey);
-		attributeGetterFunctions.put("rate", CPMeasurementUnit::getRate);
-		attributeSetterBiConsumers.put(
-			"rate",
-			(BiConsumer<CPMeasurementUnit, Double>)CPMeasurementUnit::setRate);
-		attributeGetterFunctions.put("primary", CPMeasurementUnit::getPrimary);
-		attributeSetterBiConsumers.put(
-			"primary",
-			(BiConsumer<CPMeasurementUnit, Boolean>)
-				CPMeasurementUnit::setPrimary);
-		attributeGetterFunctions.put(
-			"priority", CPMeasurementUnit::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<CPMeasurementUnit, Double>)
-				CPMeasurementUnit::setPriority);
-		attributeGetterFunctions.put("type", CPMeasurementUnit::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<CPMeasurementUnit, Integer>)CPMeasurementUnit::setType);
-		attributeGetterFunctions.put(
-			"lastPublishDate", CPMeasurementUnit::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<CPMeasurementUnit, Date>)
-				CPMeasurementUnit::setLastPublishDate);
+		static {
+			Map<String, Function<CPMeasurementUnit, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CPMeasurementUnit, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CPMeasurementUnit::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CPMeasurementUnit::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", CPMeasurementUnit::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CPMeasurementUnit::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"CPMeasurementUnitId",
+				CPMeasurementUnit::getCPMeasurementUnitId);
+			attributeGetterFunctions.put(
+				"groupId", CPMeasurementUnit::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", CPMeasurementUnit::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CPMeasurementUnit::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CPMeasurementUnit::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CPMeasurementUnit::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CPMeasurementUnit::getModifiedDate);
+			attributeGetterFunctions.put("name", CPMeasurementUnit::getName);
+			attributeGetterFunctions.put("key", CPMeasurementUnit::getKey);
+			attributeGetterFunctions.put("rate", CPMeasurementUnit::getRate);
+			attributeGetterFunctions.put(
+				"primary", CPMeasurementUnit::getPrimary);
+			attributeGetterFunctions.put(
+				"priority", CPMeasurementUnit::getPriority);
+			attributeGetterFunctions.put("type", CPMeasurementUnit::getType);
+			attributeGetterFunctions.put(
+				"lastPublishDate", CPMeasurementUnit::getLastPublishDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CPMeasurementUnit, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CPMeasurementUnit, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CPMeasurementUnit, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CPMeasurementUnit, Long>)
+					CPMeasurementUnit::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CPMeasurementUnit, Long>)
+					CPMeasurementUnit::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CPMeasurementUnit, String>)
+					CPMeasurementUnit::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CPMeasurementUnit, String>)
+					CPMeasurementUnit::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"CPMeasurementUnitId",
+				(BiConsumer<CPMeasurementUnit, Long>)
+					CPMeasurementUnit::setCPMeasurementUnitId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<CPMeasurementUnit, Long>)
+					CPMeasurementUnit::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CPMeasurementUnit, Long>)
+					CPMeasurementUnit::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CPMeasurementUnit, Long>)
+					CPMeasurementUnit::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CPMeasurementUnit, String>)
+					CPMeasurementUnit::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CPMeasurementUnit, Date>)
+					CPMeasurementUnit::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CPMeasurementUnit, Date>)
+					CPMeasurementUnit::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CPMeasurementUnit, String>)
+					CPMeasurementUnit::setName);
+			attributeSetterBiConsumers.put(
+				"key",
+				(BiConsumer<CPMeasurementUnit, String>)
+					CPMeasurementUnit::setKey);
+			attributeSetterBiConsumers.put(
+				"rate",
+				(BiConsumer<CPMeasurementUnit, Double>)
+					CPMeasurementUnit::setRate);
+			attributeSetterBiConsumers.put(
+				"primary",
+				(BiConsumer<CPMeasurementUnit, Boolean>)
+					CPMeasurementUnit::setPrimary);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<CPMeasurementUnit, Double>)
+					CPMeasurementUnit::setPriority);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CPMeasurementUnit, Integer>)
+					CPMeasurementUnit::setType);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<CPMeasurementUnit, Date>)
+					CPMeasurementUnit::setLastPublishDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1330,7 +1356,8 @@ public class CPMeasurementUnitModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CPMeasurementUnit, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

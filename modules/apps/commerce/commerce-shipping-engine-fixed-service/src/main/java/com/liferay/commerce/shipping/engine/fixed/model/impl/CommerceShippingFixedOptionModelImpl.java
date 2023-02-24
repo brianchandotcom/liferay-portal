@@ -246,123 +246,139 @@ public class CommerceShippingFixedOptionModelImpl
 	public Map<String, Function<CommerceShippingFixedOption, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceShippingFixedOption, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<CommerceShippingFixedOption, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<CommerceShippingFixedOption, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceShippingFixedOption, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceShippingFixedOption, Object>>();
-		Map<String, BiConsumer<CommerceShippingFixedOption, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CommerceShippingFixedOption, ?>>();
+		private static final Map
+			<String, Function<CommerceShippingFixedOption, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceShippingFixedOption::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceShippingFixedOption, Long>)
-				CommerceShippingFixedOption::setMvccVersion);
-		attributeGetterFunctions.put(
-			"commerceShippingFixedOptionId",
-			CommerceShippingFixedOption::getCommerceShippingFixedOptionId);
-		attributeSetterBiConsumers.put(
-			"commerceShippingFixedOptionId",
-			(BiConsumer<CommerceShippingFixedOption, Long>)
-				CommerceShippingFixedOption::setCommerceShippingFixedOptionId);
-		attributeGetterFunctions.put(
-			"groupId", CommerceShippingFixedOption::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<CommerceShippingFixedOption, Long>)
-				CommerceShippingFixedOption::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceShippingFixedOption::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceShippingFixedOption, Long>)
-				CommerceShippingFixedOption::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CommerceShippingFixedOption::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceShippingFixedOption, Long>)
-				CommerceShippingFixedOption::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceShippingFixedOption::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceShippingFixedOption, String>)
-				CommerceShippingFixedOption::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceShippingFixedOption::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceShippingFixedOption, Date>)
-				CommerceShippingFixedOption::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceShippingFixedOption::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceShippingFixedOption, Date>)
-				CommerceShippingFixedOption::setModifiedDate);
-		attributeGetterFunctions.put(
-			"commerceShippingMethodId",
-			CommerceShippingFixedOption::getCommerceShippingMethodId);
-		attributeSetterBiConsumers.put(
-			"commerceShippingMethodId",
-			(BiConsumer<CommerceShippingFixedOption, Long>)
-				CommerceShippingFixedOption::setCommerceShippingMethodId);
-		attributeGetterFunctions.put(
-			"amount", CommerceShippingFixedOption::getAmount);
-		attributeSetterBiConsumers.put(
-			"amount",
-			(BiConsumer<CommerceShippingFixedOption, BigDecimal>)
-				CommerceShippingFixedOption::setAmount);
-		attributeGetterFunctions.put(
-			"description", CommerceShippingFixedOption::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<CommerceShippingFixedOption, String>)
-				CommerceShippingFixedOption::setDescription);
-		attributeGetterFunctions.put(
-			"key", CommerceShippingFixedOption::getKey);
-		attributeSetterBiConsumers.put(
-			"key",
-			(BiConsumer<CommerceShippingFixedOption, String>)
-				CommerceShippingFixedOption::setKey);
-		attributeGetterFunctions.put(
-			"name", CommerceShippingFixedOption::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CommerceShippingFixedOption, String>)
-				CommerceShippingFixedOption::setName);
-		attributeGetterFunctions.put(
-			"priority", CommerceShippingFixedOption::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<CommerceShippingFixedOption, Double>)
-				CommerceShippingFixedOption::setPriority);
+		static {
+			Map<String, Function<CommerceShippingFixedOption, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<CommerceShippingFixedOption, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceShippingFixedOption::getMvccVersion);
+			attributeGetterFunctions.put(
+				"commerceShippingFixedOptionId",
+				CommerceShippingFixedOption::getCommerceShippingFixedOptionId);
+			attributeGetterFunctions.put(
+				"groupId", CommerceShippingFixedOption::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceShippingFixedOption::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceShippingFixedOption::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceShippingFixedOption::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceShippingFixedOption::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceShippingFixedOption::getModifiedDate);
+			attributeGetterFunctions.put(
+				"commerceShippingMethodId",
+				CommerceShippingFixedOption::getCommerceShippingMethodId);
+			attributeGetterFunctions.put(
+				"amount", CommerceShippingFixedOption::getAmount);
+			attributeGetterFunctions.put(
+				"description", CommerceShippingFixedOption::getDescription);
+			attributeGetterFunctions.put(
+				"key", CommerceShippingFixedOption::getKey);
+			attributeGetterFunctions.put(
+				"name", CommerceShippingFixedOption::getName);
+			attributeGetterFunctions.put(
+				"priority", CommerceShippingFixedOption::getPriority);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceShippingFixedOption, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceShippingFixedOption, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommerceShippingFixedOption, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceShippingFixedOption, Long>)
+					CommerceShippingFixedOption::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"commerceShippingFixedOptionId",
+				(BiConsumer<CommerceShippingFixedOption, Long>)
+					CommerceShippingFixedOption::
+						setCommerceShippingFixedOptionId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<CommerceShippingFixedOption, Long>)
+					CommerceShippingFixedOption::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceShippingFixedOption, Long>)
+					CommerceShippingFixedOption::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceShippingFixedOption, Long>)
+					CommerceShippingFixedOption::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceShippingFixedOption, String>)
+					CommerceShippingFixedOption::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceShippingFixedOption, Date>)
+					CommerceShippingFixedOption::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceShippingFixedOption, Date>)
+					CommerceShippingFixedOption::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"commerceShippingMethodId",
+				(BiConsumer<CommerceShippingFixedOption, Long>)
+					CommerceShippingFixedOption::setCommerceShippingMethodId);
+			attributeSetterBiConsumers.put(
+				"amount",
+				(BiConsumer<CommerceShippingFixedOption, BigDecimal>)
+					CommerceShippingFixedOption::setAmount);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<CommerceShippingFixedOption, String>)
+					CommerceShippingFixedOption::setDescription);
+			attributeSetterBiConsumers.put(
+				"key",
+				(BiConsumer<CommerceShippingFixedOption, String>)
+					CommerceShippingFixedOption::setKey);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CommerceShippingFixedOption, String>)
+					CommerceShippingFixedOption::setName);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<CommerceShippingFixedOption, Double>)
+					CommerceShippingFixedOption::setPriority);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1271,7 +1287,8 @@ public class CommerceShippingFixedOptionModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceShippingFixedOption, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

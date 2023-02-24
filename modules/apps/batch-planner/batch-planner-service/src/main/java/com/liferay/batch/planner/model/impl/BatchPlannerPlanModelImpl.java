@@ -251,124 +251,151 @@ public class BatchPlannerPlanModelImpl
 	public Map<String, Function<BatchPlannerPlan, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<BatchPlannerPlan, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<BatchPlannerPlan, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<BatchPlannerPlan, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<BatchPlannerPlan, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<BatchPlannerPlan, Object>>();
-		Map<String, BiConsumer<BatchPlannerPlan, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<BatchPlannerPlan, ?>>();
+		private static final Map<String, Function<BatchPlannerPlan, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", BatchPlannerPlan::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<BatchPlannerPlan, Long>)
-				BatchPlannerPlan::setMvccVersion);
-		attributeGetterFunctions.put(
-			"batchPlannerPlanId", BatchPlannerPlan::getBatchPlannerPlanId);
-		attributeSetterBiConsumers.put(
-			"batchPlannerPlanId",
-			(BiConsumer<BatchPlannerPlan, Long>)
-				BatchPlannerPlan::setBatchPlannerPlanId);
-		attributeGetterFunctions.put(
-			"companyId", BatchPlannerPlan::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<BatchPlannerPlan, Long>)BatchPlannerPlan::setCompanyId);
-		attributeGetterFunctions.put("userId", BatchPlannerPlan::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<BatchPlannerPlan, Long>)BatchPlannerPlan::setUserId);
-		attributeGetterFunctions.put("userName", BatchPlannerPlan::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<BatchPlannerPlan, String>)
-				BatchPlannerPlan::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", BatchPlannerPlan::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<BatchPlannerPlan, Date>)
-				BatchPlannerPlan::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", BatchPlannerPlan::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<BatchPlannerPlan, Date>)
-				BatchPlannerPlan::setModifiedDate);
-		attributeGetterFunctions.put("active", BatchPlannerPlan::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<BatchPlannerPlan, Boolean>)BatchPlannerPlan::setActive);
-		attributeGetterFunctions.put("export", BatchPlannerPlan::getExport);
-		attributeSetterBiConsumers.put(
-			"export",
-			(BiConsumer<BatchPlannerPlan, Boolean>)BatchPlannerPlan::setExport);
-		attributeGetterFunctions.put(
-			"externalType", BatchPlannerPlan::getExternalType);
-		attributeSetterBiConsumers.put(
-			"externalType",
-			(BiConsumer<BatchPlannerPlan, String>)
-				BatchPlannerPlan::setExternalType);
-		attributeGetterFunctions.put(
-			"externalURL", BatchPlannerPlan::getExternalURL);
-		attributeSetterBiConsumers.put(
-			"externalURL",
-			(BiConsumer<BatchPlannerPlan, String>)
-				BatchPlannerPlan::setExternalURL);
-		attributeGetterFunctions.put(
-			"internalClassName", BatchPlannerPlan::getInternalClassName);
-		attributeSetterBiConsumers.put(
-			"internalClassName",
-			(BiConsumer<BatchPlannerPlan, String>)
-				BatchPlannerPlan::setInternalClassName);
-		attributeGetterFunctions.put("name", BatchPlannerPlan::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<BatchPlannerPlan, String>)BatchPlannerPlan::setName);
-		attributeGetterFunctions.put("size", BatchPlannerPlan::getSize);
-		attributeSetterBiConsumers.put(
-			"size",
-			(BiConsumer<BatchPlannerPlan, Integer>)BatchPlannerPlan::setSize);
-		attributeGetterFunctions.put(
-			"taskItemDelegateName", BatchPlannerPlan::getTaskItemDelegateName);
-		attributeSetterBiConsumers.put(
-			"taskItemDelegateName",
-			(BiConsumer<BatchPlannerPlan, String>)
-				BatchPlannerPlan::setTaskItemDelegateName);
-		attributeGetterFunctions.put("total", BatchPlannerPlan::getTotal);
-		attributeSetterBiConsumers.put(
-			"total",
-			(BiConsumer<BatchPlannerPlan, Integer>)BatchPlannerPlan::setTotal);
-		attributeGetterFunctions.put("template", BatchPlannerPlan::getTemplate);
-		attributeSetterBiConsumers.put(
-			"template",
-			(BiConsumer<BatchPlannerPlan, Boolean>)
-				BatchPlannerPlan::setTemplate);
-		attributeGetterFunctions.put("status", BatchPlannerPlan::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<BatchPlannerPlan, Integer>)BatchPlannerPlan::setStatus);
+		static {
+			Map<String, Function<BatchPlannerPlan, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<BatchPlannerPlan, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", BatchPlannerPlan::getMvccVersion);
+			attributeGetterFunctions.put(
+				"batchPlannerPlanId", BatchPlannerPlan::getBatchPlannerPlanId);
+			attributeGetterFunctions.put(
+				"companyId", BatchPlannerPlan::getCompanyId);
+			attributeGetterFunctions.put("userId", BatchPlannerPlan::getUserId);
+			attributeGetterFunctions.put(
+				"userName", BatchPlannerPlan::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", BatchPlannerPlan::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", BatchPlannerPlan::getModifiedDate);
+			attributeGetterFunctions.put("active", BatchPlannerPlan::getActive);
+			attributeGetterFunctions.put("export", BatchPlannerPlan::getExport);
+			attributeGetterFunctions.put(
+				"externalType", BatchPlannerPlan::getExternalType);
+			attributeGetterFunctions.put(
+				"externalURL", BatchPlannerPlan::getExternalURL);
+			attributeGetterFunctions.put(
+				"internalClassName", BatchPlannerPlan::getInternalClassName);
+			attributeGetterFunctions.put("name", BatchPlannerPlan::getName);
+			attributeGetterFunctions.put("size", BatchPlannerPlan::getSize);
+			attributeGetterFunctions.put(
+				"taskItemDelegateName",
+				BatchPlannerPlan::getTaskItemDelegateName);
+			attributeGetterFunctions.put("total", BatchPlannerPlan::getTotal);
+			attributeGetterFunctions.put(
+				"template", BatchPlannerPlan::getTemplate);
+			attributeGetterFunctions.put("status", BatchPlannerPlan::getStatus);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<BatchPlannerPlan, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<BatchPlannerPlan, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<BatchPlannerPlan, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<BatchPlannerPlan, Long>)
+					BatchPlannerPlan::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"batchPlannerPlanId",
+				(BiConsumer<BatchPlannerPlan, Long>)
+					BatchPlannerPlan::setBatchPlannerPlanId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<BatchPlannerPlan, Long>)
+					BatchPlannerPlan::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<BatchPlannerPlan, Long>)
+					BatchPlannerPlan::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<BatchPlannerPlan, String>)
+					BatchPlannerPlan::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<BatchPlannerPlan, Date>)
+					BatchPlannerPlan::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<BatchPlannerPlan, Date>)
+					BatchPlannerPlan::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<BatchPlannerPlan, Boolean>)
+					BatchPlannerPlan::setActive);
+			attributeSetterBiConsumers.put(
+				"export",
+				(BiConsumer<BatchPlannerPlan, Boolean>)
+					BatchPlannerPlan::setExport);
+			attributeSetterBiConsumers.put(
+				"externalType",
+				(BiConsumer<BatchPlannerPlan, String>)
+					BatchPlannerPlan::setExternalType);
+			attributeSetterBiConsumers.put(
+				"externalURL",
+				(BiConsumer<BatchPlannerPlan, String>)
+					BatchPlannerPlan::setExternalURL);
+			attributeSetterBiConsumers.put(
+				"internalClassName",
+				(BiConsumer<BatchPlannerPlan, String>)
+					BatchPlannerPlan::setInternalClassName);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<BatchPlannerPlan, String>)
+					BatchPlannerPlan::setName);
+			attributeSetterBiConsumers.put(
+				"size",
+				(BiConsumer<BatchPlannerPlan, Integer>)
+					BatchPlannerPlan::setSize);
+			attributeSetterBiConsumers.put(
+				"taskItemDelegateName",
+				(BiConsumer<BatchPlannerPlan, String>)
+					BatchPlannerPlan::setTaskItemDelegateName);
+			attributeSetterBiConsumers.put(
+				"total",
+				(BiConsumer<BatchPlannerPlan, Integer>)
+					BatchPlannerPlan::setTotal);
+			attributeSetterBiConsumers.put(
+				"template",
+				(BiConsumer<BatchPlannerPlan, Boolean>)
+					BatchPlannerPlan::setTemplate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<BatchPlannerPlan, Integer>)
+					BatchPlannerPlan::setStatus);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1134,7 +1161,8 @@ public class BatchPlannerPlanModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<BatchPlannerPlan, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

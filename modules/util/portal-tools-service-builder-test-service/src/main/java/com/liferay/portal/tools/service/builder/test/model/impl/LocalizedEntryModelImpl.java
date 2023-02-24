@@ -204,43 +204,60 @@ public class LocalizedEntryModelImpl
 	public Map<String, Function<LocalizedEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<LocalizedEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<LocalizedEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<LocalizedEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<LocalizedEntry, Object>>();
-		Map<String, BiConsumer<LocalizedEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<LocalizedEntry, ?>>();
+		private static final Map<String, Function<LocalizedEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"defaultLanguageId", LocalizedEntry::getDefaultLanguageId);
-		attributeSetterBiConsumers.put(
-			"defaultLanguageId",
-			(BiConsumer<LocalizedEntry, String>)
-				LocalizedEntry::setDefaultLanguageId);
-		attributeGetterFunctions.put(
-			"localizedEntryId", LocalizedEntry::getLocalizedEntryId);
-		attributeSetterBiConsumers.put(
-			"localizedEntryId",
-			(BiConsumer<LocalizedEntry, Long>)
-				LocalizedEntry::setLocalizedEntryId);
+		static {
+			Map<String, Function<LocalizedEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<LocalizedEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"defaultLanguageId", LocalizedEntry::getDefaultLanguageId);
+			attributeGetterFunctions.put(
+				"localizedEntryId", LocalizedEntry::getLocalizedEntryId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<LocalizedEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<LocalizedEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<LocalizedEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"defaultLanguageId",
+				(BiConsumer<LocalizedEntry, String>)
+					LocalizedEntry::setDefaultLanguageId);
+			attributeSetterBiConsumers.put(
+				"localizedEntryId",
+				(BiConsumer<LocalizedEntry, Long>)
+					LocalizedEntry::setLocalizedEntryId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -652,7 +669,8 @@ public class LocalizedEntryModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<LocalizedEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

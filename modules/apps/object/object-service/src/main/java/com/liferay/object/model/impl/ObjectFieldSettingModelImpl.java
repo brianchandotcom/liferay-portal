@@ -235,97 +235,113 @@ public class ObjectFieldSettingModelImpl
 	public Map<String, Function<ObjectFieldSetting, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectFieldSetting, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectFieldSetting, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectFieldSetting, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectFieldSetting, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<ObjectFieldSetting, Object>>();
-		Map<String, BiConsumer<ObjectFieldSetting, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<ObjectFieldSetting, ?>>();
+		private static final Map<String, Function<ObjectFieldSetting, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectFieldSetting::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectFieldSetting, Long>)
-				ObjectFieldSetting::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectFieldSetting::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<ObjectFieldSetting, String>)
-				ObjectFieldSetting::setUuid);
-		attributeGetterFunctions.put(
-			"objectFieldSettingId",
-			ObjectFieldSetting::getObjectFieldSettingId);
-		attributeSetterBiConsumers.put(
-			"objectFieldSettingId",
-			(BiConsumer<ObjectFieldSetting, Long>)
-				ObjectFieldSetting::setObjectFieldSettingId);
-		attributeGetterFunctions.put(
-			"companyId", ObjectFieldSetting::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectFieldSetting, Long>)
-				ObjectFieldSetting::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectFieldSetting::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<ObjectFieldSetting, Long>)
-				ObjectFieldSetting::setUserId);
-		attributeGetterFunctions.put(
-			"userName", ObjectFieldSetting::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectFieldSetting, String>)
-				ObjectFieldSetting::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", ObjectFieldSetting::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectFieldSetting, Date>)
-				ObjectFieldSetting::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectFieldSetting::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectFieldSetting, Date>)
-				ObjectFieldSetting::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectFieldId", ObjectFieldSetting::getObjectFieldId);
-		attributeSetterBiConsumers.put(
-			"objectFieldId",
-			(BiConsumer<ObjectFieldSetting, Long>)
-				ObjectFieldSetting::setObjectFieldId);
-		attributeGetterFunctions.put("name", ObjectFieldSetting::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<ObjectFieldSetting, String>)
-				ObjectFieldSetting::setName);
-		attributeGetterFunctions.put("value", ObjectFieldSetting::getValue);
-		attributeSetterBiConsumers.put(
-			"value",
-			(BiConsumer<ObjectFieldSetting, String>)
-				ObjectFieldSetting::setValue);
+		static {
+			Map<String, Function<ObjectFieldSetting, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ObjectFieldSetting, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectFieldSetting::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectFieldSetting::getUuid);
+			attributeGetterFunctions.put(
+				"objectFieldSettingId",
+				ObjectFieldSetting::getObjectFieldSettingId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectFieldSetting::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", ObjectFieldSetting::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ObjectFieldSetting::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectFieldSetting::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectFieldSetting::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectFieldId", ObjectFieldSetting::getObjectFieldId);
+			attributeGetterFunctions.put("name", ObjectFieldSetting::getName);
+			attributeGetterFunctions.put("value", ObjectFieldSetting::getValue);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ObjectFieldSetting, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectFieldSetting, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<ObjectFieldSetting, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectFieldSetting, Long>)
+					ObjectFieldSetting::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ObjectFieldSetting, String>)
+					ObjectFieldSetting::setUuid);
+			attributeSetterBiConsumers.put(
+				"objectFieldSettingId",
+				(BiConsumer<ObjectFieldSetting, Long>)
+					ObjectFieldSetting::setObjectFieldSettingId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectFieldSetting, Long>)
+					ObjectFieldSetting::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectFieldSetting, Long>)
+					ObjectFieldSetting::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectFieldSetting, String>)
+					ObjectFieldSetting::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectFieldSetting, Date>)
+					ObjectFieldSetting::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectFieldSetting, Date>)
+					ObjectFieldSetting::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectFieldId",
+				(BiConsumer<ObjectFieldSetting, Long>)
+					ObjectFieldSetting::setObjectFieldId);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<ObjectFieldSetting, String>)
+					ObjectFieldSetting::setName);
+			attributeSetterBiConsumers.put(
+				"value",
+				(BiConsumer<ObjectFieldSetting, String>)
+					ObjectFieldSetting::setValue);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -889,7 +905,8 @@ public class ObjectFieldSettingModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<ObjectFieldSetting, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -224,101 +224,117 @@ public class CommerceInventoryAuditModelImpl
 	public Map<String, Function<CommerceInventoryAudit, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceInventoryAudit, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CommerceInventoryAudit, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CommerceInventoryAudit, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceInventoryAudit, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceInventoryAudit, Object>>();
-		Map<String, BiConsumer<CommerceInventoryAudit, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CommerceInventoryAudit, ?>>();
+		private static final Map
+			<String, Function<CommerceInventoryAudit, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceInventoryAudit::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceInventoryAudit, Long>)
-				CommerceInventoryAudit::setMvccVersion);
-		attributeGetterFunctions.put(
-			"commerceInventoryAuditId",
-			CommerceInventoryAudit::getCommerceInventoryAuditId);
-		attributeSetterBiConsumers.put(
-			"commerceInventoryAuditId",
-			(BiConsumer<CommerceInventoryAudit, Long>)
-				CommerceInventoryAudit::setCommerceInventoryAuditId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceInventoryAudit::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceInventoryAudit, Long>)
-				CommerceInventoryAudit::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CommerceInventoryAudit::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceInventoryAudit, Long>)
-				CommerceInventoryAudit::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceInventoryAudit::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceInventoryAudit, String>)
-				CommerceInventoryAudit::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceInventoryAudit::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceInventoryAudit, Date>)
-				CommerceInventoryAudit::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceInventoryAudit::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceInventoryAudit, Date>)
-				CommerceInventoryAudit::setModifiedDate);
-		attributeGetterFunctions.put("sku", CommerceInventoryAudit::getSku);
-		attributeSetterBiConsumers.put(
-			"sku",
-			(BiConsumer<CommerceInventoryAudit, String>)
-				CommerceInventoryAudit::setSku);
-		attributeGetterFunctions.put(
-			"logType", CommerceInventoryAudit::getLogType);
-		attributeSetterBiConsumers.put(
-			"logType",
-			(BiConsumer<CommerceInventoryAudit, String>)
-				CommerceInventoryAudit::setLogType);
-		attributeGetterFunctions.put(
-			"logTypeSettings", CommerceInventoryAudit::getLogTypeSettings);
-		attributeSetterBiConsumers.put(
-			"logTypeSettings",
-			(BiConsumer<CommerceInventoryAudit, String>)
-				CommerceInventoryAudit::setLogTypeSettings);
-		attributeGetterFunctions.put(
-			"quantity", CommerceInventoryAudit::getQuantity);
-		attributeSetterBiConsumers.put(
-			"quantity",
-			(BiConsumer<CommerceInventoryAudit, Integer>)
-				CommerceInventoryAudit::setQuantity);
+		static {
+			Map<String, Function<CommerceInventoryAudit, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CommerceInventoryAudit, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceInventoryAudit::getMvccVersion);
+			attributeGetterFunctions.put(
+				"commerceInventoryAuditId",
+				CommerceInventoryAudit::getCommerceInventoryAuditId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceInventoryAudit::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceInventoryAudit::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceInventoryAudit::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceInventoryAudit::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceInventoryAudit::getModifiedDate);
+			attributeGetterFunctions.put("sku", CommerceInventoryAudit::getSku);
+			attributeGetterFunctions.put(
+				"logType", CommerceInventoryAudit::getLogType);
+			attributeGetterFunctions.put(
+				"logTypeSettings", CommerceInventoryAudit::getLogTypeSettings);
+			attributeGetterFunctions.put(
+				"quantity", CommerceInventoryAudit::getQuantity);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceInventoryAudit, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceInventoryAudit, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommerceInventoryAudit, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceInventoryAudit, Long>)
+					CommerceInventoryAudit::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"commerceInventoryAuditId",
+				(BiConsumer<CommerceInventoryAudit, Long>)
+					CommerceInventoryAudit::setCommerceInventoryAuditId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceInventoryAudit, Long>)
+					CommerceInventoryAudit::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceInventoryAudit, Long>)
+					CommerceInventoryAudit::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceInventoryAudit, String>)
+					CommerceInventoryAudit::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceInventoryAudit, Date>)
+					CommerceInventoryAudit::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceInventoryAudit, Date>)
+					CommerceInventoryAudit::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"sku",
+				(BiConsumer<CommerceInventoryAudit, String>)
+					CommerceInventoryAudit::setSku);
+			attributeSetterBiConsumers.put(
+				"logType",
+				(BiConsumer<CommerceInventoryAudit, String>)
+					CommerceInventoryAudit::setLogType);
+			attributeSetterBiConsumers.put(
+				"logTypeSettings",
+				(BiConsumer<CommerceInventoryAudit, String>)
+					CommerceInventoryAudit::setLogTypeSettings);
+			attributeSetterBiConsumers.put(
+				"quantity",
+				(BiConsumer<CommerceInventoryAudit, Integer>)
+					CommerceInventoryAudit::setQuantity);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -881,7 +897,8 @@ public class CommerceInventoryAuditModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceInventoryAudit, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

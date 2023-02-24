@@ -210,65 +210,81 @@ public class AttachmentModelImpl
 	public Map<String, Function<Attachment, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<Attachment, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Attachment, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Attachment, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<Attachment, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Attachment, Object>>();
-		Map<String, BiConsumer<Attachment, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Attachment, ?>>();
+		private static final Map<String, Function<Attachment, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"attachmentId", Attachment::getAttachmentId);
-		attributeSetterBiConsumers.put(
-			"attachmentId",
-			(BiConsumer<Attachment, Long>)Attachment::setAttachmentId);
-		attributeGetterFunctions.put("companyId", Attachment::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<Attachment, Long>)Attachment::setCompanyId);
-		attributeGetterFunctions.put("userId", Attachment::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Attachment, Long>)Attachment::setUserId);
-		attributeGetterFunctions.put("accountId", Attachment::getAccountId);
-		attributeSetterBiConsumers.put(
-			"accountId",
-			(BiConsumer<Attachment, Long>)Attachment::setAccountId);
-		attributeGetterFunctions.put("folderId", Attachment::getFolderId);
-		attributeSetterBiConsumers.put(
-			"folderId", (BiConsumer<Attachment, Long>)Attachment::setFolderId);
-		attributeGetterFunctions.put("messageId", Attachment::getMessageId);
-		attributeSetterBiConsumers.put(
-			"messageId",
-			(BiConsumer<Attachment, Long>)Attachment::setMessageId);
-		attributeGetterFunctions.put("contentPath", Attachment::getContentPath);
-		attributeSetterBiConsumers.put(
-			"contentPath",
-			(BiConsumer<Attachment, String>)Attachment::setContentPath);
-		attributeGetterFunctions.put("fileName", Attachment::getFileName);
-		attributeSetterBiConsumers.put(
-			"fileName",
-			(BiConsumer<Attachment, String>)Attachment::setFileName);
-		attributeGetterFunctions.put("size", Attachment::getSize);
-		attributeSetterBiConsumers.put(
-			"size", (BiConsumer<Attachment, Long>)Attachment::setSize);
+		static {
+			Map<String, Function<Attachment, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<Attachment, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"attachmentId", Attachment::getAttachmentId);
+			attributeGetterFunctions.put("companyId", Attachment::getCompanyId);
+			attributeGetterFunctions.put("userId", Attachment::getUserId);
+			attributeGetterFunctions.put("accountId", Attachment::getAccountId);
+			attributeGetterFunctions.put("folderId", Attachment::getFolderId);
+			attributeGetterFunctions.put("messageId", Attachment::getMessageId);
+			attributeGetterFunctions.put(
+				"contentPath", Attachment::getContentPath);
+			attributeGetterFunctions.put("fileName", Attachment::getFileName);
+			attributeGetterFunctions.put("size", Attachment::getSize);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<Attachment, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<Attachment, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<Attachment, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"attachmentId",
+				(BiConsumer<Attachment, Long>)Attachment::setAttachmentId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<Attachment, Long>)Attachment::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<Attachment, Long>)Attachment::setUserId);
+			attributeSetterBiConsumers.put(
+				"accountId",
+				(BiConsumer<Attachment, Long>)Attachment::setAccountId);
+			attributeSetterBiConsumers.put(
+				"folderId",
+				(BiConsumer<Attachment, Long>)Attachment::setFolderId);
+			attributeSetterBiConsumers.put(
+				"messageId",
+				(BiConsumer<Attachment, Long>)Attachment::setMessageId);
+			attributeSetterBiConsumers.put(
+				"contentPath",
+				(BiConsumer<Attachment, String>)Attachment::setContentPath);
+			attributeSetterBiConsumers.put(
+				"fileName",
+				(BiConsumer<Attachment, String>)Attachment::setFileName);
+			attributeSetterBiConsumers.put(
+				"size", (BiConsumer<Attachment, Long>)Attachment::setSize);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -703,8 +719,9 @@ public class AttachmentModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<Attachment, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<Attachment, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

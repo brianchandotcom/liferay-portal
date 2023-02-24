@@ -231,67 +231,83 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public Map<String, Function<Lock, Object>> getAttributeGetterFunctions() {
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<Lock, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Lock, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Lock, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<Lock, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Lock, Object>>();
-		Map<String, BiConsumer<Lock, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Lock, ?>>();
+		private static final Map<String, Function<Lock, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", Lock::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion", (BiConsumer<Lock, Long>)Lock::setMvccVersion);
-		attributeGetterFunctions.put("uuid", Lock::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<Lock, String>)Lock::setUuid);
-		attributeGetterFunctions.put("lockId", Lock::getLockId);
-		attributeSetterBiConsumers.put(
-			"lockId", (BiConsumer<Lock, Long>)Lock::setLockId);
-		attributeGetterFunctions.put("companyId", Lock::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<Lock, Long>)Lock::setCompanyId);
-		attributeGetterFunctions.put("userId", Lock::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Lock, Long>)Lock::setUserId);
-		attributeGetterFunctions.put("userName", Lock::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<Lock, String>)Lock::setUserName);
-		attributeGetterFunctions.put("createDate", Lock::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<Lock, Date>)Lock::setCreateDate);
-		attributeGetterFunctions.put("className", Lock::getClassName);
-		attributeSetterBiConsumers.put(
-			"className", (BiConsumer<Lock, String>)Lock::setClassName);
-		attributeGetterFunctions.put("key", Lock::getKey);
-		attributeSetterBiConsumers.put(
-			"key", (BiConsumer<Lock, String>)Lock::setKey);
-		attributeGetterFunctions.put("owner", Lock::getOwner);
-		attributeSetterBiConsumers.put(
-			"owner", (BiConsumer<Lock, String>)Lock::setOwner);
-		attributeGetterFunctions.put("inheritable", Lock::getInheritable);
-		attributeSetterBiConsumers.put(
-			"inheritable", (BiConsumer<Lock, Boolean>)Lock::setInheritable);
-		attributeGetterFunctions.put("expirationDate", Lock::getExpirationDate);
-		attributeSetterBiConsumers.put(
-			"expirationDate", (BiConsumer<Lock, Date>)Lock::setExpirationDate);
+		static {
+			Map<String, Function<Lock, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<Lock, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put("mvccVersion", Lock::getMvccVersion);
+			attributeGetterFunctions.put("uuid", Lock::getUuid);
+			attributeGetterFunctions.put("lockId", Lock::getLockId);
+			attributeGetterFunctions.put("companyId", Lock::getCompanyId);
+			attributeGetterFunctions.put("userId", Lock::getUserId);
+			attributeGetterFunctions.put("userName", Lock::getUserName);
+			attributeGetterFunctions.put("createDate", Lock::getCreateDate);
+			attributeGetterFunctions.put("className", Lock::getClassName);
+			attributeGetterFunctions.put("key", Lock::getKey);
+			attributeGetterFunctions.put("owner", Lock::getOwner);
+			attributeGetterFunctions.put("inheritable", Lock::getInheritable);
+			attributeGetterFunctions.put(
+				"expirationDate", Lock::getExpirationDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<Lock, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<Lock, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<Lock, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion", (BiConsumer<Lock, Long>)Lock::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<Lock, String>)Lock::setUuid);
+			attributeSetterBiConsumers.put(
+				"lockId", (BiConsumer<Lock, Long>)Lock::setLockId);
+			attributeSetterBiConsumers.put(
+				"companyId", (BiConsumer<Lock, Long>)Lock::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<Lock, Long>)Lock::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName", (BiConsumer<Lock, String>)Lock::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate", (BiConsumer<Lock, Date>)Lock::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"className", (BiConsumer<Lock, String>)Lock::setClassName);
+			attributeSetterBiConsumers.put(
+				"key", (BiConsumer<Lock, String>)Lock::setKey);
+			attributeSetterBiConsumers.put(
+				"owner", (BiConsumer<Lock, String>)Lock::setOwner);
+			attributeSetterBiConsumers.put(
+				"inheritable", (BiConsumer<Lock, Boolean>)Lock::setInheritable);
+			attributeSetterBiConsumers.put(
+				"expirationDate",
+				(BiConsumer<Lock, Date>)Lock::setExpirationDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -866,8 +882,9 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<Lock, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<Lock, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

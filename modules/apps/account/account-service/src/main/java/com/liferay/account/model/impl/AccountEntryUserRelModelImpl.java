@@ -215,65 +215,81 @@ public class AccountEntryUserRelModelImpl
 	public Map<String, Function<AccountEntryUserRel, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<AccountEntryUserRel, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<AccountEntryUserRel, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<AccountEntryUserRel, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<AccountEntryUserRel, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<AccountEntryUserRel, Object>>();
-		Map<String, BiConsumer<AccountEntryUserRel, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<AccountEntryUserRel, ?>>();
+		private static final Map<String, Function<AccountEntryUserRel, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", AccountEntryUserRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<AccountEntryUserRel, Long>)
-				AccountEntryUserRel::setMvccVersion);
-		attributeGetterFunctions.put(
-			"accountEntryUserRelId",
-			AccountEntryUserRel::getAccountEntryUserRelId);
-		attributeSetterBiConsumers.put(
-			"accountEntryUserRelId",
-			(BiConsumer<AccountEntryUserRel, Long>)
-				AccountEntryUserRel::setAccountEntryUserRelId);
-		attributeGetterFunctions.put(
-			"companyId", AccountEntryUserRel::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<AccountEntryUserRel, Long>)
-				AccountEntryUserRel::setCompanyId);
-		attributeGetterFunctions.put(
-			"accountEntryId", AccountEntryUserRel::getAccountEntryId);
-		attributeSetterBiConsumers.put(
-			"accountEntryId",
-			(BiConsumer<AccountEntryUserRel, Long>)
-				AccountEntryUserRel::setAccountEntryId);
-		attributeGetterFunctions.put(
-			"accountUserId", AccountEntryUserRel::getAccountUserId);
-		attributeSetterBiConsumers.put(
-			"accountUserId",
-			(BiConsumer<AccountEntryUserRel, Long>)
-				AccountEntryUserRel::setAccountUserId);
+		static {
+			Map<String, Function<AccountEntryUserRel, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<AccountEntryUserRel, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", AccountEntryUserRel::getMvccVersion);
+			attributeGetterFunctions.put(
+				"accountEntryUserRelId",
+				AccountEntryUserRel::getAccountEntryUserRelId);
+			attributeGetterFunctions.put(
+				"companyId", AccountEntryUserRel::getCompanyId);
+			attributeGetterFunctions.put(
+				"accountEntryId", AccountEntryUserRel::getAccountEntryId);
+			attributeGetterFunctions.put(
+				"accountUserId", AccountEntryUserRel::getAccountUserId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<AccountEntryUserRel, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<AccountEntryUserRel, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<AccountEntryUserRel, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<AccountEntryUserRel, Long>)
+					AccountEntryUserRel::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"accountEntryUserRelId",
+				(BiConsumer<AccountEntryUserRel, Long>)
+					AccountEntryUserRel::setAccountEntryUserRelId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<AccountEntryUserRel, Long>)
+					AccountEntryUserRel::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"accountEntryId",
+				(BiConsumer<AccountEntryUserRel, Long>)
+					AccountEntryUserRel::setAccountEntryId);
+			attributeSetterBiConsumers.put(
+				"accountUserId",
+				(BiConsumer<AccountEntryUserRel, Long>)
+					AccountEntryUserRel::setAccountUserId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -629,7 +645,8 @@ public class AccountEntryUserRelModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<AccountEntryUserRel, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

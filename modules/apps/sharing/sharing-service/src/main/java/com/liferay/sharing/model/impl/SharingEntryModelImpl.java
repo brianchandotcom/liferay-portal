@@ -265,89 +265,113 @@ public class SharingEntryModelImpl
 	public Map<String, Function<SharingEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<SharingEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SharingEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SharingEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<SharingEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SharingEntry, Object>>();
-		Map<String, BiConsumer<SharingEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SharingEntry, ?>>();
+		private static final Map<String, Function<SharingEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("uuid", SharingEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<SharingEntry, String>)SharingEntry::setUuid);
-		attributeGetterFunctions.put(
-			"sharingEntryId", SharingEntry::getSharingEntryId);
-		attributeSetterBiConsumers.put(
-			"sharingEntryId",
-			(BiConsumer<SharingEntry, Long>)SharingEntry::setSharingEntryId);
-		attributeGetterFunctions.put("groupId", SharingEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<SharingEntry, Long>)SharingEntry::setGroupId);
-		attributeGetterFunctions.put("companyId", SharingEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SharingEntry, Long>)SharingEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", SharingEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<SharingEntry, Long>)SharingEntry::setUserId);
-		attributeGetterFunctions.put("userName", SharingEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<SharingEntry, String>)SharingEntry::setUserName);
-		attributeGetterFunctions.put("createDate", SharingEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<SharingEntry, Date>)SharingEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", SharingEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<SharingEntry, Date>)SharingEntry::setModifiedDate);
-		attributeGetterFunctions.put("toUserId", SharingEntry::getToUserId);
-		attributeSetterBiConsumers.put(
-			"toUserId",
-			(BiConsumer<SharingEntry, Long>)SharingEntry::setToUserId);
-		attributeGetterFunctions.put(
-			"classNameId", SharingEntry::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<SharingEntry, Long>)SharingEntry::setClassNameId);
-		attributeGetterFunctions.put("classPK", SharingEntry::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<SharingEntry, Long>)SharingEntry::setClassPK);
-		attributeGetterFunctions.put("shareable", SharingEntry::getShareable);
-		attributeSetterBiConsumers.put(
-			"shareable",
-			(BiConsumer<SharingEntry, Boolean>)SharingEntry::setShareable);
-		attributeGetterFunctions.put("actionIds", SharingEntry::getActionIds);
-		attributeSetterBiConsumers.put(
-			"actionIds",
-			(BiConsumer<SharingEntry, Long>)SharingEntry::setActionIds);
-		attributeGetterFunctions.put(
-			"expirationDate", SharingEntry::getExpirationDate);
-		attributeSetterBiConsumers.put(
-			"expirationDate",
-			(BiConsumer<SharingEntry, Date>)SharingEntry::setExpirationDate);
+		static {
+			Map<String, Function<SharingEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<SharingEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put("uuid", SharingEntry::getUuid);
+			attributeGetterFunctions.put(
+				"sharingEntryId", SharingEntry::getSharingEntryId);
+			attributeGetterFunctions.put("groupId", SharingEntry::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", SharingEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", SharingEntry::getUserId);
+			attributeGetterFunctions.put("userName", SharingEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", SharingEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", SharingEntry::getModifiedDate);
+			attributeGetterFunctions.put("toUserId", SharingEntry::getToUserId);
+			attributeGetterFunctions.put(
+				"classNameId", SharingEntry::getClassNameId);
+			attributeGetterFunctions.put("classPK", SharingEntry::getClassPK);
+			attributeGetterFunctions.put(
+				"shareable", SharingEntry::getShareable);
+			attributeGetterFunctions.put(
+				"actionIds", SharingEntry::getActionIds);
+			attributeGetterFunctions.put(
+				"expirationDate", SharingEntry::getExpirationDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<SharingEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<SharingEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<SharingEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<SharingEntry, String>)SharingEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"sharingEntryId",
+				(BiConsumer<SharingEntry, Long>)
+					SharingEntry::setSharingEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<SharingEntry, Long>)SharingEntry::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<SharingEntry, Long>)SharingEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<SharingEntry, Long>)SharingEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<SharingEntry, String>)SharingEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<SharingEntry, Date>)SharingEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<SharingEntry, Date>)SharingEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"toUserId",
+				(BiConsumer<SharingEntry, Long>)SharingEntry::setToUserId);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<SharingEntry, Long>)SharingEntry::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<SharingEntry, Long>)SharingEntry::setClassPK);
+			attributeSetterBiConsumers.put(
+				"shareable",
+				(BiConsumer<SharingEntry, Boolean>)SharingEntry::setShareable);
+			attributeSetterBiConsumers.put(
+				"actionIds",
+				(BiConsumer<SharingEntry, Long>)SharingEntry::setActionIds);
+			attributeSetterBiConsumers.put(
+				"expirationDate",
+				(BiConsumer<SharingEntry, Date>)
+					SharingEntry::setExpirationDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1041,8 +1065,9 @@ public class SharingEntryModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<SharingEntry, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<SharingEntry, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

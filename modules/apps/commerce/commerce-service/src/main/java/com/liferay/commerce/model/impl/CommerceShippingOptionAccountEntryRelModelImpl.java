@@ -238,119 +238,138 @@ public class CommerceShippingOptionAccountEntryRelModelImpl
 	public Map<String, Function<CommerceShippingOptionAccountEntryRel, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map
 		<String, BiConsumer<CommerceShippingOptionAccountEntryRel, Object>>
 			getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<CommerceShippingOptionAccountEntryRel, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<CommerceShippingOptionAccountEntryRel, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceShippingOptionAccountEntryRel, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String,
-					 Function<CommerceShippingOptionAccountEntryRel, Object>>();
-		Map<String, BiConsumer<CommerceShippingOptionAccountEntryRel, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String,
-					 BiConsumer<CommerceShippingOptionAccountEntryRel, ?>>();
+		private static final Map
+			<String, Function<CommerceShippingOptionAccountEntryRel, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion",
-			CommerceShippingOptionAccountEntryRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
-				CommerceShippingOptionAccountEntryRel::setMvccVersion);
-		attributeGetterFunctions.put(
-			"CommerceShippingOptionAccountEntryRelId",
-			CommerceShippingOptionAccountEntryRel::
-				getCommerceShippingOptionAccountEntryRelId);
-		attributeSetterBiConsumers.put(
-			"CommerceShippingOptionAccountEntryRelId",
-			(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
-				CommerceShippingOptionAccountEntryRel::
-					setCommerceShippingOptionAccountEntryRelId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceShippingOptionAccountEntryRel::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
-				CommerceShippingOptionAccountEntryRel::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CommerceShippingOptionAccountEntryRel::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
-				CommerceShippingOptionAccountEntryRel::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceShippingOptionAccountEntryRel::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceShippingOptionAccountEntryRel, String>)
-				CommerceShippingOptionAccountEntryRel::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceShippingOptionAccountEntryRel::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceShippingOptionAccountEntryRel, Date>)
-				CommerceShippingOptionAccountEntryRel::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate",
-			CommerceShippingOptionAccountEntryRel::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceShippingOptionAccountEntryRel, Date>)
-				CommerceShippingOptionAccountEntryRel::setModifiedDate);
-		attributeGetterFunctions.put(
-			"accountEntryId",
-			CommerceShippingOptionAccountEntryRel::getAccountEntryId);
-		attributeSetterBiConsumers.put(
-			"accountEntryId",
-			(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
-				CommerceShippingOptionAccountEntryRel::setAccountEntryId);
-		attributeGetterFunctions.put(
-			"commerceChannelId",
-			CommerceShippingOptionAccountEntryRel::getCommerceChannelId);
-		attributeSetterBiConsumers.put(
-			"commerceChannelId",
-			(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
-				CommerceShippingOptionAccountEntryRel::setCommerceChannelId);
-		attributeGetterFunctions.put(
-			"commerceShippingMethodKey",
-			CommerceShippingOptionAccountEntryRel::
-				getCommerceShippingMethodKey);
-		attributeSetterBiConsumers.put(
-			"commerceShippingMethodKey",
-			(BiConsumer<CommerceShippingOptionAccountEntryRel, String>)
-				CommerceShippingOptionAccountEntryRel::
-					setCommerceShippingMethodKey);
-		attributeGetterFunctions.put(
-			"commerceShippingOptionKey",
-			CommerceShippingOptionAccountEntryRel::
-				getCommerceShippingOptionKey);
-		attributeSetterBiConsumers.put(
-			"commerceShippingOptionKey",
-			(BiConsumer<CommerceShippingOptionAccountEntryRel, String>)
-				CommerceShippingOptionAccountEntryRel::
-					setCommerceShippingOptionKey);
+		static {
+			Map<String, Function<CommerceShippingOptionAccountEntryRel, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function
+							 <CommerceShippingOptionAccountEntryRel, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion",
+				CommerceShippingOptionAccountEntryRel::getMvccVersion);
+			attributeGetterFunctions.put(
+				"CommerceShippingOptionAccountEntryRelId",
+				CommerceShippingOptionAccountEntryRel::
+					getCommerceShippingOptionAccountEntryRelId);
+			attributeGetterFunctions.put(
+				"companyId",
+				CommerceShippingOptionAccountEntryRel::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceShippingOptionAccountEntryRel::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceShippingOptionAccountEntryRel::getUserName);
+			attributeGetterFunctions.put(
+				"createDate",
+				CommerceShippingOptionAccountEntryRel::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate",
+				CommerceShippingOptionAccountEntryRel::getModifiedDate);
+			attributeGetterFunctions.put(
+				"accountEntryId",
+				CommerceShippingOptionAccountEntryRel::getAccountEntryId);
+			attributeGetterFunctions.put(
+				"commerceChannelId",
+				CommerceShippingOptionAccountEntryRel::getCommerceChannelId);
+			attributeGetterFunctions.put(
+				"commerceShippingMethodKey",
+				CommerceShippingOptionAccountEntryRel::
+					getCommerceShippingMethodKey);
+			attributeGetterFunctions.put(
+				"commerceShippingOptionKey",
+				CommerceShippingOptionAccountEntryRel::
+					getCommerceShippingOptionKey);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceShippingOptionAccountEntryRel, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceShippingOptionAccountEntryRel, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String,
+						 BiConsumer
+							 <CommerceShippingOptionAccountEntryRel, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
+					CommerceShippingOptionAccountEntryRel::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"CommerceShippingOptionAccountEntryRelId",
+				(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
+					CommerceShippingOptionAccountEntryRel::
+						setCommerceShippingOptionAccountEntryRelId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
+					CommerceShippingOptionAccountEntryRel::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
+					CommerceShippingOptionAccountEntryRel::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceShippingOptionAccountEntryRel, String>)
+					CommerceShippingOptionAccountEntryRel::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceShippingOptionAccountEntryRel, Date>)
+					CommerceShippingOptionAccountEntryRel::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceShippingOptionAccountEntryRel, Date>)
+					CommerceShippingOptionAccountEntryRel::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"accountEntryId",
+				(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
+					CommerceShippingOptionAccountEntryRel::setAccountEntryId);
+			attributeSetterBiConsumers.put(
+				"commerceChannelId",
+				(BiConsumer<CommerceShippingOptionAccountEntryRel, Long>)
+					CommerceShippingOptionAccountEntryRel::
+						setCommerceChannelId);
+			attributeSetterBiConsumers.put(
+				"commerceShippingMethodKey",
+				(BiConsumer<CommerceShippingOptionAccountEntryRel, String>)
+					CommerceShippingOptionAccountEntryRel::
+						setCommerceShippingMethodKey);
+			attributeSetterBiConsumers.put(
+				"commerceShippingOptionKey",
+				(BiConsumer<CommerceShippingOptionAccountEntryRel, String>)
+					CommerceShippingOptionAccountEntryRel::
+						setCommerceShippingOptionKey);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -947,7 +966,8 @@ public class CommerceShippingOptionAccountEntryRelModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceShippingOptionAccountEntryRel, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

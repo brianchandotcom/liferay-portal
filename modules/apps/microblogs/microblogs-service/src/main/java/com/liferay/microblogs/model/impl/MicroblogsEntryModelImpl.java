@@ -254,95 +254,117 @@ public class MicroblogsEntryModelImpl
 	public Map<String, Function<MicroblogsEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<MicroblogsEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<MicroblogsEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<MicroblogsEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<MicroblogsEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<MicroblogsEntry, Object>>();
-		Map<String, BiConsumer<MicroblogsEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<MicroblogsEntry, ?>>();
+		private static final Map<String, Function<MicroblogsEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"microblogsEntryId", MicroblogsEntry::getMicroblogsEntryId);
-		attributeSetterBiConsumers.put(
-			"microblogsEntryId",
-			(BiConsumer<MicroblogsEntry, Long>)
-				MicroblogsEntry::setMicroblogsEntryId);
-		attributeGetterFunctions.put(
-			"companyId", MicroblogsEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<MicroblogsEntry, Long>)MicroblogsEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", MicroblogsEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<MicroblogsEntry, Long>)MicroblogsEntry::setUserId);
-		attributeGetterFunctions.put("userName", MicroblogsEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<MicroblogsEntry, String>)MicroblogsEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", MicroblogsEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<MicroblogsEntry, Date>)MicroblogsEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", MicroblogsEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<MicroblogsEntry, Date>)
-				MicroblogsEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"creatorClassNameId", MicroblogsEntry::getCreatorClassNameId);
-		attributeSetterBiConsumers.put(
-			"creatorClassNameId",
-			(BiConsumer<MicroblogsEntry, Long>)
-				MicroblogsEntry::setCreatorClassNameId);
-		attributeGetterFunctions.put(
-			"creatorClassPK", MicroblogsEntry::getCreatorClassPK);
-		attributeSetterBiConsumers.put(
-			"creatorClassPK",
-			(BiConsumer<MicroblogsEntry, Long>)
-				MicroblogsEntry::setCreatorClassPK);
-		attributeGetterFunctions.put("content", MicroblogsEntry::getContent);
-		attributeSetterBiConsumers.put(
-			"content",
-			(BiConsumer<MicroblogsEntry, String>)MicroblogsEntry::setContent);
-		attributeGetterFunctions.put("type", MicroblogsEntry::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<MicroblogsEntry, Integer>)MicroblogsEntry::setType);
-		attributeGetterFunctions.put(
-			"parentMicroblogsEntryId",
-			MicroblogsEntry::getParentMicroblogsEntryId);
-		attributeSetterBiConsumers.put(
-			"parentMicroblogsEntryId",
-			(BiConsumer<MicroblogsEntry, Long>)
-				MicroblogsEntry::setParentMicroblogsEntryId);
-		attributeGetterFunctions.put(
-			"socialRelationType", MicroblogsEntry::getSocialRelationType);
-		attributeSetterBiConsumers.put(
-			"socialRelationType",
-			(BiConsumer<MicroblogsEntry, Integer>)
-				MicroblogsEntry::setSocialRelationType);
+		static {
+			Map<String, Function<MicroblogsEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<MicroblogsEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"microblogsEntryId", MicroblogsEntry::getMicroblogsEntryId);
+			attributeGetterFunctions.put(
+				"companyId", MicroblogsEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", MicroblogsEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", MicroblogsEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", MicroblogsEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", MicroblogsEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"creatorClassNameId", MicroblogsEntry::getCreatorClassNameId);
+			attributeGetterFunctions.put(
+				"creatorClassPK", MicroblogsEntry::getCreatorClassPK);
+			attributeGetterFunctions.put(
+				"content", MicroblogsEntry::getContent);
+			attributeGetterFunctions.put("type", MicroblogsEntry::getType);
+			attributeGetterFunctions.put(
+				"parentMicroblogsEntryId",
+				MicroblogsEntry::getParentMicroblogsEntryId);
+			attributeGetterFunctions.put(
+				"socialRelationType", MicroblogsEntry::getSocialRelationType);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<MicroblogsEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<MicroblogsEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<MicroblogsEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"microblogsEntryId",
+				(BiConsumer<MicroblogsEntry, Long>)
+					MicroblogsEntry::setMicroblogsEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<MicroblogsEntry, Long>)
+					MicroblogsEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<MicroblogsEntry, Long>)MicroblogsEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<MicroblogsEntry, String>)
+					MicroblogsEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<MicroblogsEntry, Date>)
+					MicroblogsEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<MicroblogsEntry, Date>)
+					MicroblogsEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"creatorClassNameId",
+				(BiConsumer<MicroblogsEntry, Long>)
+					MicroblogsEntry::setCreatorClassNameId);
+			attributeSetterBiConsumers.put(
+				"creatorClassPK",
+				(BiConsumer<MicroblogsEntry, Long>)
+					MicroblogsEntry::setCreatorClassPK);
+			attributeSetterBiConsumers.put(
+				"content",
+				(BiConsumer<MicroblogsEntry, String>)
+					MicroblogsEntry::setContent);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<MicroblogsEntry, Integer>)MicroblogsEntry::setType);
+			attributeSetterBiConsumers.put(
+				"parentMicroblogsEntryId",
+				(BiConsumer<MicroblogsEntry, Long>)
+					MicroblogsEntry::setParentMicroblogsEntryId);
+			attributeSetterBiConsumers.put(
+				"socialRelationType",
+				(BiConsumer<MicroblogsEntry, Integer>)
+					MicroblogsEntry::setSocialRelationType);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -947,7 +969,8 @@ public class MicroblogsEntryModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<MicroblogsEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

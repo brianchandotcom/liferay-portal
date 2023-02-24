@@ -229,106 +229,124 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	public Map<String, Function<CommercePricingClassCPDefinitionRel, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommercePricingClassCPDefinitionRel, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<CommercePricingClassCPDefinitionRel, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<CommercePricingClassCPDefinitionRel, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommercePricingClassCPDefinitionRel, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String,
-					 Function<CommercePricingClassCPDefinitionRel, Object>>();
-		Map<String, BiConsumer<CommercePricingClassCPDefinitionRel, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String,
-					 BiConsumer<CommercePricingClassCPDefinitionRel, ?>>();
+		private static final Map
+			<String, Function<CommercePricingClassCPDefinitionRel, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommercePricingClassCPDefinitionRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
-				CommercePricingClassCPDefinitionRel::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId",
-			CommercePricingClassCPDefinitionRel::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
-				CommercePricingClassCPDefinitionRel::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"CommercePricingClassCPDefinitionRelId",
-			CommercePricingClassCPDefinitionRel::
-				getCommercePricingClassCPDefinitionRelId);
-		attributeSetterBiConsumers.put(
-			"CommercePricingClassCPDefinitionRelId",
-			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+		static {
+			Map<String, Function<CommercePricingClassCPDefinitionRel, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function
+							 <CommercePricingClassCPDefinitionRel, Object>>();
+
+			attributeGetterFunctions.put(
+				"mvccVersion",
+				CommercePricingClassCPDefinitionRel::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId",
+				CommercePricingClassCPDefinitionRel::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"CommercePricingClassCPDefinitionRelId",
 				CommercePricingClassCPDefinitionRel::
-					setCommercePricingClassCPDefinitionRelId);
-		attributeGetterFunctions.put(
-			"companyId", CommercePricingClassCPDefinitionRel::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
-				CommercePricingClassCPDefinitionRel::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CommercePricingClassCPDefinitionRel::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
-				CommercePricingClassCPDefinitionRel::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommercePricingClassCPDefinitionRel::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommercePricingClassCPDefinitionRel, String>)
-				CommercePricingClassCPDefinitionRel::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommercePricingClassCPDefinitionRel::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommercePricingClassCPDefinitionRel, Date>)
-				CommercePricingClassCPDefinitionRel::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate",
-			CommercePricingClassCPDefinitionRel::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommercePricingClassCPDefinitionRel, Date>)
-				CommercePricingClassCPDefinitionRel::setModifiedDate);
-		attributeGetterFunctions.put(
-			"commercePricingClassId",
-			CommercePricingClassCPDefinitionRel::getCommercePricingClassId);
-		attributeSetterBiConsumers.put(
-			"commercePricingClassId",
-			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
-				CommercePricingClassCPDefinitionRel::setCommercePricingClassId);
-		attributeGetterFunctions.put(
-			"CPDefinitionId",
-			CommercePricingClassCPDefinitionRel::getCPDefinitionId);
-		attributeSetterBiConsumers.put(
-			"CPDefinitionId",
-			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
-				CommercePricingClassCPDefinitionRel::setCPDefinitionId);
+					getCommercePricingClassCPDefinitionRelId);
+			attributeGetterFunctions.put(
+				"companyId", CommercePricingClassCPDefinitionRel::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommercePricingClassCPDefinitionRel::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommercePricingClassCPDefinitionRel::getUserName);
+			attributeGetterFunctions.put(
+				"createDate",
+				CommercePricingClassCPDefinitionRel::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate",
+				CommercePricingClassCPDefinitionRel::getModifiedDate);
+			attributeGetterFunctions.put(
+				"commercePricingClassId",
+				CommercePricingClassCPDefinitionRel::getCommercePricingClassId);
+			attributeGetterFunctions.put(
+				"CPDefinitionId",
+				CommercePricingClassCPDefinitionRel::getCPDefinitionId);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommercePricingClassCPDefinitionRel, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommercePricingClassCPDefinitionRel, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String,
+						 BiConsumer<CommercePricingClassCPDefinitionRel, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+					CommercePricingClassCPDefinitionRel::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+					CommercePricingClassCPDefinitionRel::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"CommercePricingClassCPDefinitionRelId",
+				(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+					CommercePricingClassCPDefinitionRel::
+						setCommercePricingClassCPDefinitionRelId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+					CommercePricingClassCPDefinitionRel::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+					CommercePricingClassCPDefinitionRel::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommercePricingClassCPDefinitionRel, String>)
+					CommercePricingClassCPDefinitionRel::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommercePricingClassCPDefinitionRel, Date>)
+					CommercePricingClassCPDefinitionRel::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommercePricingClassCPDefinitionRel, Date>)
+					CommercePricingClassCPDefinitionRel::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"commercePricingClassId",
+				(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+					CommercePricingClassCPDefinitionRel::
+						setCommercePricingClassId);
+			attributeSetterBiConsumers.put(
+				"CPDefinitionId",
+				(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
+					CommercePricingClassCPDefinitionRel::setCPDefinitionId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -860,7 +878,8 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommercePricingClassCPDefinitionRel, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

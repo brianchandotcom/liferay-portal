@@ -235,106 +235,122 @@ public class CommerceAvailabilityEstimateModelImpl
 	public Map<String, Function<CommerceAvailabilityEstimate, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceAvailabilityEstimate, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<CommerceAvailabilityEstimate, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<CommerceAvailabilityEstimate, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceAvailabilityEstimate, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceAvailabilityEstimate, Object>>();
-		Map<String, BiConsumer<CommerceAvailabilityEstimate, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CommerceAvailabilityEstimate, ?>>();
+		private static final Map
+			<String, Function<CommerceAvailabilityEstimate, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceAvailabilityEstimate::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceAvailabilityEstimate, Long>)
-				CommerceAvailabilityEstimate::setMvccVersion);
-		attributeGetterFunctions.put(
-			"uuid", CommerceAvailabilityEstimate::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CommerceAvailabilityEstimate, String>)
-				CommerceAvailabilityEstimate::setUuid);
-		attributeGetterFunctions.put(
-			"commerceAvailabilityEstimateId",
-			CommerceAvailabilityEstimate::getCommerceAvailabilityEstimateId);
-		attributeSetterBiConsumers.put(
-			"commerceAvailabilityEstimateId",
-			(BiConsumer<CommerceAvailabilityEstimate, Long>)
+		static {
+			Map<String, Function<CommerceAvailabilityEstimate, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<CommerceAvailabilityEstimate, Object>>();
+
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceAvailabilityEstimate::getMvccVersion);
+			attributeGetterFunctions.put(
+				"uuid", CommerceAvailabilityEstimate::getUuid);
+			attributeGetterFunctions.put(
+				"commerceAvailabilityEstimateId",
 				CommerceAvailabilityEstimate::
-					setCommerceAvailabilityEstimateId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceAvailabilityEstimate::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceAvailabilityEstimate, Long>)
-				CommerceAvailabilityEstimate::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CommerceAvailabilityEstimate::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceAvailabilityEstimate, Long>)
-				CommerceAvailabilityEstimate::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceAvailabilityEstimate::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceAvailabilityEstimate, String>)
-				CommerceAvailabilityEstimate::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceAvailabilityEstimate::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceAvailabilityEstimate, Date>)
-				CommerceAvailabilityEstimate::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceAvailabilityEstimate::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceAvailabilityEstimate, Date>)
-				CommerceAvailabilityEstimate::setModifiedDate);
-		attributeGetterFunctions.put(
-			"title", CommerceAvailabilityEstimate::getTitle);
-		attributeSetterBiConsumers.put(
-			"title",
-			(BiConsumer<CommerceAvailabilityEstimate, String>)
-				CommerceAvailabilityEstimate::setTitle);
-		attributeGetterFunctions.put(
-			"priority", CommerceAvailabilityEstimate::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<CommerceAvailabilityEstimate, Double>)
-				CommerceAvailabilityEstimate::setPriority);
-		attributeGetterFunctions.put(
-			"lastPublishDate",
-			CommerceAvailabilityEstimate::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<CommerceAvailabilityEstimate, Date>)
-				CommerceAvailabilityEstimate::setLastPublishDate);
+					getCommerceAvailabilityEstimateId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceAvailabilityEstimate::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceAvailabilityEstimate::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceAvailabilityEstimate::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceAvailabilityEstimate::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceAvailabilityEstimate::getModifiedDate);
+			attributeGetterFunctions.put(
+				"title", CommerceAvailabilityEstimate::getTitle);
+			attributeGetterFunctions.put(
+				"priority", CommerceAvailabilityEstimate::getPriority);
+			attributeGetterFunctions.put(
+				"lastPublishDate",
+				CommerceAvailabilityEstimate::getLastPublishDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceAvailabilityEstimate, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceAvailabilityEstimate, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommerceAvailabilityEstimate, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceAvailabilityEstimate, Long>)
+					CommerceAvailabilityEstimate::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CommerceAvailabilityEstimate, String>)
+					CommerceAvailabilityEstimate::setUuid);
+			attributeSetterBiConsumers.put(
+				"commerceAvailabilityEstimateId",
+				(BiConsumer<CommerceAvailabilityEstimate, Long>)
+					CommerceAvailabilityEstimate::
+						setCommerceAvailabilityEstimateId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceAvailabilityEstimate, Long>)
+					CommerceAvailabilityEstimate::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceAvailabilityEstimate, Long>)
+					CommerceAvailabilityEstimate::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceAvailabilityEstimate, String>)
+					CommerceAvailabilityEstimate::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceAvailabilityEstimate, Date>)
+					CommerceAvailabilityEstimate::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceAvailabilityEstimate, Date>)
+					CommerceAvailabilityEstimate::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"title",
+				(BiConsumer<CommerceAvailabilityEstimate, String>)
+					CommerceAvailabilityEstimate::setTitle);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<CommerceAvailabilityEstimate, Double>)
+					CommerceAvailabilityEstimate::setPriority);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<CommerceAvailabilityEstimate, Date>)
+					CommerceAvailabilityEstimate::setLastPublishDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1055,7 +1071,8 @@ public class CommerceAvailabilityEstimateModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceAvailabilityEstimate, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

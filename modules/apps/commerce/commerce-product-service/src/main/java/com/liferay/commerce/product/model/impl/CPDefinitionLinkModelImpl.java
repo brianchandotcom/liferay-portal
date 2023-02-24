@@ -252,106 +252,130 @@ public class CPDefinitionLinkModelImpl
 	public Map<String, Function<CPDefinitionLink, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CPDefinitionLink, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CPDefinitionLink, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CPDefinitionLink, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CPDefinitionLink, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<CPDefinitionLink, Object>>();
-		Map<String, BiConsumer<CPDefinitionLink, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<CPDefinitionLink, ?>>();
+		private static final Map<String, Function<CPDefinitionLink, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPDefinitionLink::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPDefinitionLink, Long>)
-				CPDefinitionLink::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CPDefinitionLink::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CPDefinitionLink, Long>)
-				CPDefinitionLink::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", CPDefinitionLink::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CPDefinitionLink, String>)CPDefinitionLink::setUuid);
-		attributeGetterFunctions.put(
-			"CPDefinitionLinkId", CPDefinitionLink::getCPDefinitionLinkId);
-		attributeSetterBiConsumers.put(
-			"CPDefinitionLinkId",
-			(BiConsumer<CPDefinitionLink, Long>)
-				CPDefinitionLink::setCPDefinitionLinkId);
-		attributeGetterFunctions.put("groupId", CPDefinitionLink::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<CPDefinitionLink, Long>)CPDefinitionLink::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", CPDefinitionLink::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CPDefinitionLink, Long>)CPDefinitionLink::setCompanyId);
-		attributeGetterFunctions.put("userId", CPDefinitionLink::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CPDefinitionLink, Long>)CPDefinitionLink::setUserId);
-		attributeGetterFunctions.put("userName", CPDefinitionLink::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CPDefinitionLink, String>)
-				CPDefinitionLink::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CPDefinitionLink::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CPDefinitionLink, Date>)
-				CPDefinitionLink::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CPDefinitionLink::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CPDefinitionLink, Date>)
-				CPDefinitionLink::setModifiedDate);
-		attributeGetterFunctions.put(
-			"CPDefinitionId", CPDefinitionLink::getCPDefinitionId);
-		attributeSetterBiConsumers.put(
-			"CPDefinitionId",
-			(BiConsumer<CPDefinitionLink, Long>)
-				CPDefinitionLink::setCPDefinitionId);
-		attributeGetterFunctions.put(
-			"CProductId", CPDefinitionLink::getCProductId);
-		attributeSetterBiConsumers.put(
-			"CProductId",
-			(BiConsumer<CPDefinitionLink, Long>)
-				CPDefinitionLink::setCProductId);
-		attributeGetterFunctions.put("priority", CPDefinitionLink::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<CPDefinitionLink, Double>)
-				CPDefinitionLink::setPriority);
-		attributeGetterFunctions.put("type", CPDefinitionLink::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<CPDefinitionLink, String>)CPDefinitionLink::setType);
+		static {
+			Map<String, Function<CPDefinitionLink, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CPDefinitionLink, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CPDefinitionLink::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CPDefinitionLink::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", CPDefinitionLink::getUuid);
+			attributeGetterFunctions.put(
+				"CPDefinitionLinkId", CPDefinitionLink::getCPDefinitionLinkId);
+			attributeGetterFunctions.put(
+				"groupId", CPDefinitionLink::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", CPDefinitionLink::getCompanyId);
+			attributeGetterFunctions.put("userId", CPDefinitionLink::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CPDefinitionLink::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CPDefinitionLink::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CPDefinitionLink::getModifiedDate);
+			attributeGetterFunctions.put(
+				"CPDefinitionId", CPDefinitionLink::getCPDefinitionId);
+			attributeGetterFunctions.put(
+				"CProductId", CPDefinitionLink::getCProductId);
+			attributeGetterFunctions.put(
+				"priority", CPDefinitionLink::getPriority);
+			attributeGetterFunctions.put("type", CPDefinitionLink::getType);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CPDefinitionLink, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CPDefinitionLink, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CPDefinitionLink, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CPDefinitionLink, Long>)
+					CPDefinitionLink::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CPDefinitionLink, Long>)
+					CPDefinitionLink::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CPDefinitionLink, String>)
+					CPDefinitionLink::setUuid);
+			attributeSetterBiConsumers.put(
+				"CPDefinitionLinkId",
+				(BiConsumer<CPDefinitionLink, Long>)
+					CPDefinitionLink::setCPDefinitionLinkId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<CPDefinitionLink, Long>)
+					CPDefinitionLink::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CPDefinitionLink, Long>)
+					CPDefinitionLink::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CPDefinitionLink, Long>)
+					CPDefinitionLink::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CPDefinitionLink, String>)
+					CPDefinitionLink::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CPDefinitionLink, Date>)
+					CPDefinitionLink::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CPDefinitionLink, Date>)
+					CPDefinitionLink::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"CPDefinitionId",
+				(BiConsumer<CPDefinitionLink, Long>)
+					CPDefinitionLink::setCPDefinitionId);
+			attributeSetterBiConsumers.put(
+				"CProductId",
+				(BiConsumer<CPDefinitionLink, Long>)
+					CPDefinitionLink::setCProductId);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<CPDefinitionLink, Double>)
+					CPDefinitionLink::setPriority);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CPDefinitionLink, String>)
+					CPDefinitionLink::setType);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -998,7 +1022,8 @@ public class CPDefinitionLinkModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CPDefinitionLink, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

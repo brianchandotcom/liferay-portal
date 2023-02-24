@@ -238,81 +238,99 @@ public class LVEntryLocalizationModelImpl
 	public Map<String, Function<LVEntryLocalization, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<LVEntryLocalization, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<LVEntryLocalization, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<LVEntryLocalization, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<LVEntryLocalization, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<LVEntryLocalization, Object>>();
-		Map<String, BiConsumer<LVEntryLocalization, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<LVEntryLocalization, ?>>();
+		private static final Map<String, Function<LVEntryLocalization, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", LVEntryLocalization::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<LVEntryLocalization, Long>)
-				LVEntryLocalization::setMvccVersion);
-		attributeGetterFunctions.put("headId", LVEntryLocalization::getHeadId);
-		attributeSetterBiConsumers.put(
-			"headId",
-			(BiConsumer<LVEntryLocalization, Long>)
-				LVEntryLocalization::setHeadId);
-		attributeGetterFunctions.put(
-			"lvEntryLocalizationId",
-			LVEntryLocalization::getLvEntryLocalizationId);
-		attributeSetterBiConsumers.put(
-			"lvEntryLocalizationId",
-			(BiConsumer<LVEntryLocalization, Long>)
-				LVEntryLocalization::setLvEntryLocalizationId);
-		attributeGetterFunctions.put(
-			"companyId", LVEntryLocalization::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<LVEntryLocalization, Long>)
-				LVEntryLocalization::setCompanyId);
-		attributeGetterFunctions.put(
-			"lvEntryId", LVEntryLocalization::getLvEntryId);
-		attributeSetterBiConsumers.put(
-			"lvEntryId",
-			(BiConsumer<LVEntryLocalization, Long>)
-				LVEntryLocalization::setLvEntryId);
-		attributeGetterFunctions.put(
-			"languageId", LVEntryLocalization::getLanguageId);
-		attributeSetterBiConsumers.put(
-			"languageId",
-			(BiConsumer<LVEntryLocalization, String>)
-				LVEntryLocalization::setLanguageId);
-		attributeGetterFunctions.put("title", LVEntryLocalization::getTitle);
-		attributeSetterBiConsumers.put(
-			"title",
-			(BiConsumer<LVEntryLocalization, String>)
-				LVEntryLocalization::setTitle);
-		attributeGetterFunctions.put(
-			"content", LVEntryLocalization::getContent);
-		attributeSetterBiConsumers.put(
-			"content",
-			(BiConsumer<LVEntryLocalization, String>)
-				LVEntryLocalization::setContent);
+		static {
+			Map<String, Function<LVEntryLocalization, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<LVEntryLocalization, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", LVEntryLocalization::getMvccVersion);
+			attributeGetterFunctions.put(
+				"headId", LVEntryLocalization::getHeadId);
+			attributeGetterFunctions.put(
+				"lvEntryLocalizationId",
+				LVEntryLocalization::getLvEntryLocalizationId);
+			attributeGetterFunctions.put(
+				"companyId", LVEntryLocalization::getCompanyId);
+			attributeGetterFunctions.put(
+				"lvEntryId", LVEntryLocalization::getLvEntryId);
+			attributeGetterFunctions.put(
+				"languageId", LVEntryLocalization::getLanguageId);
+			attributeGetterFunctions.put(
+				"title", LVEntryLocalization::getTitle);
+			attributeGetterFunctions.put(
+				"content", LVEntryLocalization::getContent);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<LVEntryLocalization, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<LVEntryLocalization, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<LVEntryLocalization, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<LVEntryLocalization, Long>)
+					LVEntryLocalization::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"headId",
+				(BiConsumer<LVEntryLocalization, Long>)
+					LVEntryLocalization::setHeadId);
+			attributeSetterBiConsumers.put(
+				"lvEntryLocalizationId",
+				(BiConsumer<LVEntryLocalization, Long>)
+					LVEntryLocalization::setLvEntryLocalizationId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<LVEntryLocalization, Long>)
+					LVEntryLocalization::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"lvEntryId",
+				(BiConsumer<LVEntryLocalization, Long>)
+					LVEntryLocalization::setLvEntryId);
+			attributeSetterBiConsumers.put(
+				"languageId",
+				(BiConsumer<LVEntryLocalization, String>)
+					LVEntryLocalization::setLanguageId);
+			attributeSetterBiConsumers.put(
+				"title",
+				(BiConsumer<LVEntryLocalization, String>)
+					LVEntryLocalization::setTitle);
+			attributeSetterBiConsumers.put(
+				"content",
+				(BiConsumer<LVEntryLocalization, String>)
+					LVEntryLocalization::setContent);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -800,7 +818,8 @@ public class LVEntryLocalizationModelImpl
 		}
 
 		Function<LVEntryLocalization, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

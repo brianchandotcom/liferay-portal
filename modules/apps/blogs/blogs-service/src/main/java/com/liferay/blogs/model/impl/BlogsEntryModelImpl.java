@@ -293,167 +293,197 @@ public class BlogsEntryModelImpl
 	public Map<String, Function<BlogsEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<BlogsEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<BlogsEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<BlogsEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<BlogsEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<BlogsEntry, Object>>();
-		Map<String, BiConsumer<BlogsEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<BlogsEntry, ?>>();
+		private static final Map<String, Function<BlogsEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", BlogsEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", BlogsEntry::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", BlogsEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<BlogsEntry, String>)BlogsEntry::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", BlogsEntry::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<BlogsEntry, String>)
-				BlogsEntry::setExternalReferenceCode);
-		attributeGetterFunctions.put("entryId", BlogsEntry::getEntryId);
-		attributeSetterBiConsumers.put(
-			"entryId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setEntryId);
-		attributeGetterFunctions.put("groupId", BlogsEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setGroupId);
-		attributeGetterFunctions.put("companyId", BlogsEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", BlogsEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setUserId);
-		attributeGetterFunctions.put("userName", BlogsEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setUserName);
-		attributeGetterFunctions.put("createDate", BlogsEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<BlogsEntry, Date>)BlogsEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", BlogsEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<BlogsEntry, Date>)BlogsEntry::setModifiedDate);
-		attributeGetterFunctions.put("title", BlogsEntry::getTitle);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<BlogsEntry, String>)BlogsEntry::setTitle);
-		attributeGetterFunctions.put("subtitle", BlogsEntry::getSubtitle);
-		attributeSetterBiConsumers.put(
-			"subtitle",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setSubtitle);
-		attributeGetterFunctions.put("urlTitle", BlogsEntry::getUrlTitle);
-		attributeSetterBiConsumers.put(
-			"urlTitle",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setUrlTitle);
-		attributeGetterFunctions.put("description", BlogsEntry::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setDescription);
-		attributeGetterFunctions.put("content", BlogsEntry::getContent);
-		attributeSetterBiConsumers.put(
-			"content", (BiConsumer<BlogsEntry, String>)BlogsEntry::setContent);
-		attributeGetterFunctions.put("displayDate", BlogsEntry::getDisplayDate);
-		attributeSetterBiConsumers.put(
-			"displayDate",
-			(BiConsumer<BlogsEntry, Date>)BlogsEntry::setDisplayDate);
-		attributeGetterFunctions.put(
-			"allowPingbacks", BlogsEntry::getAllowPingbacks);
-		attributeSetterBiConsumers.put(
-			"allowPingbacks",
-			(BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setAllowPingbacks);
-		attributeGetterFunctions.put(
-			"allowTrackbacks", BlogsEntry::getAllowTrackbacks);
-		attributeSetterBiConsumers.put(
-			"allowTrackbacks",
-			(BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setAllowTrackbacks);
-		attributeGetterFunctions.put("trackbacks", BlogsEntry::getTrackbacks);
-		attributeSetterBiConsumers.put(
-			"trackbacks",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setTrackbacks);
-		attributeGetterFunctions.put(
-			"coverImageCaption", BlogsEntry::getCoverImageCaption);
-		attributeSetterBiConsumers.put(
-			"coverImageCaption",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setCoverImageCaption);
-		attributeGetterFunctions.put(
-			"coverImageFileEntryId", BlogsEntry::getCoverImageFileEntryId);
-		attributeSetterBiConsumers.put(
-			"coverImageFileEntryId",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setCoverImageFileEntryId);
-		attributeGetterFunctions.put(
-			"coverImageURL", BlogsEntry::getCoverImageURL);
-		attributeSetterBiConsumers.put(
-			"coverImageURL",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setCoverImageURL);
-		attributeGetterFunctions.put("smallImage", BlogsEntry::getSmallImage);
-		attributeSetterBiConsumers.put(
-			"smallImage",
-			(BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setSmallImage);
-		attributeGetterFunctions.put(
-			"smallImageFileEntryId", BlogsEntry::getSmallImageFileEntryId);
-		attributeSetterBiConsumers.put(
-			"smallImageFileEntryId",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setSmallImageFileEntryId);
-		attributeGetterFunctions.put(
-			"smallImageId", BlogsEntry::getSmallImageId);
-		attributeSetterBiConsumers.put(
-			"smallImageId",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setSmallImageId);
-		attributeGetterFunctions.put(
-			"smallImageURL", BlogsEntry::getSmallImageURL);
-		attributeSetterBiConsumers.put(
-			"smallImageURL",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setSmallImageURL);
-		attributeGetterFunctions.put(
-			"lastPublishDate", BlogsEntry::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<BlogsEntry, Date>)BlogsEntry::setLastPublishDate);
-		attributeGetterFunctions.put("status", BlogsEntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<BlogsEntry, Integer>)BlogsEntry::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", BlogsEntry::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", BlogsEntry::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<BlogsEntry, String>)BlogsEntry::setStatusByUserName);
-		attributeGetterFunctions.put("statusDate", BlogsEntry::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<BlogsEntry, Date>)BlogsEntry::setStatusDate);
+		static {
+			Map<String, Function<BlogsEntry, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<BlogsEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", BlogsEntry::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", BlogsEntry::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", BlogsEntry::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode", BlogsEntry::getExternalReferenceCode);
+			attributeGetterFunctions.put("entryId", BlogsEntry::getEntryId);
+			attributeGetterFunctions.put("groupId", BlogsEntry::getGroupId);
+			attributeGetterFunctions.put("companyId", BlogsEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", BlogsEntry::getUserId);
+			attributeGetterFunctions.put("userName", BlogsEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", BlogsEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", BlogsEntry::getModifiedDate);
+			attributeGetterFunctions.put("title", BlogsEntry::getTitle);
+			attributeGetterFunctions.put("subtitle", BlogsEntry::getSubtitle);
+			attributeGetterFunctions.put("urlTitle", BlogsEntry::getUrlTitle);
+			attributeGetterFunctions.put(
+				"description", BlogsEntry::getDescription);
+			attributeGetterFunctions.put("content", BlogsEntry::getContent);
+			attributeGetterFunctions.put(
+				"displayDate", BlogsEntry::getDisplayDate);
+			attributeGetterFunctions.put(
+				"allowPingbacks", BlogsEntry::getAllowPingbacks);
+			attributeGetterFunctions.put(
+				"allowTrackbacks", BlogsEntry::getAllowTrackbacks);
+			attributeGetterFunctions.put(
+				"trackbacks", BlogsEntry::getTrackbacks);
+			attributeGetterFunctions.put(
+				"coverImageCaption", BlogsEntry::getCoverImageCaption);
+			attributeGetterFunctions.put(
+				"coverImageFileEntryId", BlogsEntry::getCoverImageFileEntryId);
+			attributeGetterFunctions.put(
+				"coverImageURL", BlogsEntry::getCoverImageURL);
+			attributeGetterFunctions.put(
+				"smallImage", BlogsEntry::getSmallImage);
+			attributeGetterFunctions.put(
+				"smallImageFileEntryId", BlogsEntry::getSmallImageFileEntryId);
+			attributeGetterFunctions.put(
+				"smallImageId", BlogsEntry::getSmallImageId);
+			attributeGetterFunctions.put(
+				"smallImageURL", BlogsEntry::getSmallImageURL);
+			attributeGetterFunctions.put(
+				"lastPublishDate", BlogsEntry::getLastPublishDate);
+			attributeGetterFunctions.put("status", BlogsEntry::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", BlogsEntry::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", BlogsEntry::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", BlogsEntry::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<BlogsEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<BlogsEntry, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<BlogsEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<BlogsEntry, Long>)BlogsEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<BlogsEntry, Long>)BlogsEntry::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<BlogsEntry, String>)BlogsEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<BlogsEntry, String>)
+					BlogsEntry::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"entryId",
+				(BiConsumer<BlogsEntry, Long>)BlogsEntry::setEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<BlogsEntry, Long>)BlogsEntry::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<BlogsEntry, Long>)BlogsEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<BlogsEntry, String>)BlogsEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<BlogsEntry, Date>)BlogsEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<BlogsEntry, Date>)BlogsEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"title", (BiConsumer<BlogsEntry, String>)BlogsEntry::setTitle);
+			attributeSetterBiConsumers.put(
+				"subtitle",
+				(BiConsumer<BlogsEntry, String>)BlogsEntry::setSubtitle);
+			attributeSetterBiConsumers.put(
+				"urlTitle",
+				(BiConsumer<BlogsEntry, String>)BlogsEntry::setUrlTitle);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<BlogsEntry, String>)BlogsEntry::setDescription);
+			attributeSetterBiConsumers.put(
+				"content",
+				(BiConsumer<BlogsEntry, String>)BlogsEntry::setContent);
+			attributeSetterBiConsumers.put(
+				"displayDate",
+				(BiConsumer<BlogsEntry, Date>)BlogsEntry::setDisplayDate);
+			attributeSetterBiConsumers.put(
+				"allowPingbacks",
+				(BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setAllowPingbacks);
+			attributeSetterBiConsumers.put(
+				"allowTrackbacks",
+				(BiConsumer<BlogsEntry, Boolean>)
+					BlogsEntry::setAllowTrackbacks);
+			attributeSetterBiConsumers.put(
+				"trackbacks",
+				(BiConsumer<BlogsEntry, String>)BlogsEntry::setTrackbacks);
+			attributeSetterBiConsumers.put(
+				"coverImageCaption",
+				(BiConsumer<BlogsEntry, String>)
+					BlogsEntry::setCoverImageCaption);
+			attributeSetterBiConsumers.put(
+				"coverImageFileEntryId",
+				(BiConsumer<BlogsEntry, Long>)
+					BlogsEntry::setCoverImageFileEntryId);
+			attributeSetterBiConsumers.put(
+				"coverImageURL",
+				(BiConsumer<BlogsEntry, String>)BlogsEntry::setCoverImageURL);
+			attributeSetterBiConsumers.put(
+				"smallImage",
+				(BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setSmallImage);
+			attributeSetterBiConsumers.put(
+				"smallImageFileEntryId",
+				(BiConsumer<BlogsEntry, Long>)
+					BlogsEntry::setSmallImageFileEntryId);
+			attributeSetterBiConsumers.put(
+				"smallImageId",
+				(BiConsumer<BlogsEntry, Long>)BlogsEntry::setSmallImageId);
+			attributeSetterBiConsumers.put(
+				"smallImageURL",
+				(BiConsumer<BlogsEntry, String>)BlogsEntry::setSmallImageURL);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<BlogsEntry, Date>)BlogsEntry::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<BlogsEntry, Integer>)BlogsEntry::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<BlogsEntry, Long>)BlogsEntry::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<BlogsEntry, String>)
+					BlogsEntry::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<BlogsEntry, Date>)BlogsEntry::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1753,8 +1783,9 @@ public class BlogsEntryModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<BlogsEntry, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<BlogsEntry, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -238,106 +238,124 @@ public class ObjectViewFilterColumnModelImpl
 	public Map<String, Function<ObjectViewFilterColumn, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectViewFilterColumn, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectViewFilterColumn, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectViewFilterColumn, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectViewFilterColumn, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<ObjectViewFilterColumn, Object>>();
-		Map<String, BiConsumer<ObjectViewFilterColumn, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<ObjectViewFilterColumn, ?>>();
+		private static final Map
+			<String, Function<ObjectViewFilterColumn, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectViewFilterColumn::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectViewFilterColumn, Long>)
-				ObjectViewFilterColumn::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectViewFilterColumn::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<ObjectViewFilterColumn, String>)
-				ObjectViewFilterColumn::setUuid);
-		attributeGetterFunctions.put(
-			"objectViewFilterColumnId",
-			ObjectViewFilterColumn::getObjectViewFilterColumnId);
-		attributeSetterBiConsumers.put(
-			"objectViewFilterColumnId",
-			(BiConsumer<ObjectViewFilterColumn, Long>)
-				ObjectViewFilterColumn::setObjectViewFilterColumnId);
-		attributeGetterFunctions.put(
-			"companyId", ObjectViewFilterColumn::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectViewFilterColumn, Long>)
-				ObjectViewFilterColumn::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", ObjectViewFilterColumn::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<ObjectViewFilterColumn, Long>)
-				ObjectViewFilterColumn::setUserId);
-		attributeGetterFunctions.put(
-			"userName", ObjectViewFilterColumn::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectViewFilterColumn, String>)
-				ObjectViewFilterColumn::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", ObjectViewFilterColumn::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectViewFilterColumn, Date>)
-				ObjectViewFilterColumn::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectViewFilterColumn::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectViewFilterColumn, Date>)
-				ObjectViewFilterColumn::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectViewId", ObjectViewFilterColumn::getObjectViewId);
-		attributeSetterBiConsumers.put(
-			"objectViewId",
-			(BiConsumer<ObjectViewFilterColumn, Long>)
-				ObjectViewFilterColumn::setObjectViewId);
-		attributeGetterFunctions.put(
-			"filterType", ObjectViewFilterColumn::getFilterType);
-		attributeSetterBiConsumers.put(
-			"filterType",
-			(BiConsumer<ObjectViewFilterColumn, String>)
-				ObjectViewFilterColumn::setFilterType);
-		attributeGetterFunctions.put("json", ObjectViewFilterColumn::getJSON);
-		attributeSetterBiConsumers.put(
-			"json",
-			(BiConsumer<ObjectViewFilterColumn, String>)
-				ObjectViewFilterColumn::setJSON);
-		attributeGetterFunctions.put(
-			"objectFieldName", ObjectViewFilterColumn::getObjectFieldName);
-		attributeSetterBiConsumers.put(
-			"objectFieldName",
-			(BiConsumer<ObjectViewFilterColumn, String>)
-				ObjectViewFilterColumn::setObjectFieldName);
+		static {
+			Map<String, Function<ObjectViewFilterColumn, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ObjectViewFilterColumn, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectViewFilterColumn::getMvccVersion);
+			attributeGetterFunctions.put(
+				"uuid", ObjectViewFilterColumn::getUuid);
+			attributeGetterFunctions.put(
+				"objectViewFilterColumnId",
+				ObjectViewFilterColumn::getObjectViewFilterColumnId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectViewFilterColumn::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", ObjectViewFilterColumn::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ObjectViewFilterColumn::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectViewFilterColumn::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectViewFilterColumn::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectViewId", ObjectViewFilterColumn::getObjectViewId);
+			attributeGetterFunctions.put(
+				"filterType", ObjectViewFilterColumn::getFilterType);
+			attributeGetterFunctions.put(
+				"json", ObjectViewFilterColumn::getJSON);
+			attributeGetterFunctions.put(
+				"objectFieldName", ObjectViewFilterColumn::getObjectFieldName);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<ObjectViewFilterColumn, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectViewFilterColumn, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<ObjectViewFilterColumn, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectViewFilterColumn, Long>)
+					ObjectViewFilterColumn::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ObjectViewFilterColumn, String>)
+					ObjectViewFilterColumn::setUuid);
+			attributeSetterBiConsumers.put(
+				"objectViewFilterColumnId",
+				(BiConsumer<ObjectViewFilterColumn, Long>)
+					ObjectViewFilterColumn::setObjectViewFilterColumnId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectViewFilterColumn, Long>)
+					ObjectViewFilterColumn::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectViewFilterColumn, Long>)
+					ObjectViewFilterColumn::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectViewFilterColumn, String>)
+					ObjectViewFilterColumn::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectViewFilterColumn, Date>)
+					ObjectViewFilterColumn::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectViewFilterColumn, Date>)
+					ObjectViewFilterColumn::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectViewId",
+				(BiConsumer<ObjectViewFilterColumn, Long>)
+					ObjectViewFilterColumn::setObjectViewId);
+			attributeSetterBiConsumers.put(
+				"filterType",
+				(BiConsumer<ObjectViewFilterColumn, String>)
+					ObjectViewFilterColumn::setFilterType);
+			attributeSetterBiConsumers.put(
+				"json",
+				(BiConsumer<ObjectViewFilterColumn, String>)
+					ObjectViewFilterColumn::setJSON);
+			attributeSetterBiConsumers.put(
+				"objectFieldName",
+				(BiConsumer<ObjectViewFilterColumn, String>)
+					ObjectViewFilterColumn::setObjectFieldName);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -935,7 +953,8 @@ public class ObjectViewFilterColumnModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<ObjectViewFilterColumn, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

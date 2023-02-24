@@ -276,136 +276,163 @@ public class DispatchTriggerModelImpl
 	public Map<String, Function<DispatchTrigger, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<DispatchTrigger, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DispatchTrigger, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DispatchTrigger, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<DispatchTrigger, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<DispatchTrigger, Object>>();
-		Map<String, BiConsumer<DispatchTrigger, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<DispatchTrigger, ?>>();
+		private static final Map<String, Function<DispatchTrigger, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", DispatchTrigger::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<DispatchTrigger, Long>)DispatchTrigger::setMvccVersion);
-		attributeGetterFunctions.put("uuid", DispatchTrigger::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<DispatchTrigger, String>)DispatchTrigger::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", DispatchTrigger::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<DispatchTrigger, String>)
-				DispatchTrigger::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"dispatchTriggerId", DispatchTrigger::getDispatchTriggerId);
-		attributeSetterBiConsumers.put(
-			"dispatchTriggerId",
-			(BiConsumer<DispatchTrigger, Long>)
-				DispatchTrigger::setDispatchTriggerId);
-		attributeGetterFunctions.put(
-			"companyId", DispatchTrigger::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DispatchTrigger, Long>)DispatchTrigger::setCompanyId);
-		attributeGetterFunctions.put("userId", DispatchTrigger::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<DispatchTrigger, Long>)DispatchTrigger::setUserId);
-		attributeGetterFunctions.put("userName", DispatchTrigger::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<DispatchTrigger, String>)DispatchTrigger::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", DispatchTrigger::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<DispatchTrigger, Date>)DispatchTrigger::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", DispatchTrigger::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<DispatchTrigger, Date>)
-				DispatchTrigger::setModifiedDate);
-		attributeGetterFunctions.put("active", DispatchTrigger::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<DispatchTrigger, Boolean>)DispatchTrigger::setActive);
-		attributeGetterFunctions.put(
-			"cronExpression", DispatchTrigger::getCronExpression);
-		attributeSetterBiConsumers.put(
-			"cronExpression",
-			(BiConsumer<DispatchTrigger, String>)
-				DispatchTrigger::setCronExpression);
-		attributeGetterFunctions.put(
-			"dispatchTaskClusterMode",
-			DispatchTrigger::getDispatchTaskClusterMode);
-		attributeSetterBiConsumers.put(
-			"dispatchTaskClusterMode",
-			(BiConsumer<DispatchTrigger, Integer>)
-				DispatchTrigger::setDispatchTaskClusterMode);
-		attributeGetterFunctions.put(
-			"dispatchTaskExecutorType",
-			DispatchTrigger::getDispatchTaskExecutorType);
-		attributeSetterBiConsumers.put(
-			"dispatchTaskExecutorType",
-			(BiConsumer<DispatchTrigger, String>)
-				DispatchTrigger::setDispatchTaskExecutorType);
-		attributeGetterFunctions.put(
-			"dispatchTaskSettings", DispatchTrigger::getDispatchTaskSettings);
-		attributeSetterBiConsumers.put(
-			"dispatchTaskSettings",
-			(BiConsumer<DispatchTrigger, String>)
-				DispatchTrigger::setDispatchTaskSettings);
-		attributeGetterFunctions.put("endDate", DispatchTrigger::getEndDate);
-		attributeSetterBiConsumers.put(
-			"endDate",
-			(BiConsumer<DispatchTrigger, Date>)DispatchTrigger::setEndDate);
-		attributeGetterFunctions.put("name", DispatchTrigger::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<DispatchTrigger, String>)DispatchTrigger::setName);
-		attributeGetterFunctions.put(
-			"overlapAllowed", DispatchTrigger::getOverlapAllowed);
-		attributeSetterBiConsumers.put(
-			"overlapAllowed",
-			(BiConsumer<DispatchTrigger, Boolean>)
-				DispatchTrigger::setOverlapAllowed);
-		attributeGetterFunctions.put(
-			"startDate", DispatchTrigger::getStartDate);
-		attributeSetterBiConsumers.put(
-			"startDate",
-			(BiConsumer<DispatchTrigger, Date>)DispatchTrigger::setStartDate);
-		attributeGetterFunctions.put("system", DispatchTrigger::getSystem);
-		attributeSetterBiConsumers.put(
-			"system",
-			(BiConsumer<DispatchTrigger, Boolean>)DispatchTrigger::setSystem);
-		attributeGetterFunctions.put(
-			"timeZoneId", DispatchTrigger::getTimeZoneId);
-		attributeSetterBiConsumers.put(
-			"timeZoneId",
-			(BiConsumer<DispatchTrigger, String>)
-				DispatchTrigger::setTimeZoneId);
+		static {
+			Map<String, Function<DispatchTrigger, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<DispatchTrigger, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", DispatchTrigger::getMvccVersion);
+			attributeGetterFunctions.put("uuid", DispatchTrigger::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				DispatchTrigger::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"dispatchTriggerId", DispatchTrigger::getDispatchTriggerId);
+			attributeGetterFunctions.put(
+				"companyId", DispatchTrigger::getCompanyId);
+			attributeGetterFunctions.put("userId", DispatchTrigger::getUserId);
+			attributeGetterFunctions.put(
+				"userName", DispatchTrigger::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", DispatchTrigger::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", DispatchTrigger::getModifiedDate);
+			attributeGetterFunctions.put("active", DispatchTrigger::getActive);
+			attributeGetterFunctions.put(
+				"cronExpression", DispatchTrigger::getCronExpression);
+			attributeGetterFunctions.put(
+				"dispatchTaskClusterMode",
+				DispatchTrigger::getDispatchTaskClusterMode);
+			attributeGetterFunctions.put(
+				"dispatchTaskExecutorType",
+				DispatchTrigger::getDispatchTaskExecutorType);
+			attributeGetterFunctions.put(
+				"dispatchTaskSettings",
+				DispatchTrigger::getDispatchTaskSettings);
+			attributeGetterFunctions.put(
+				"endDate", DispatchTrigger::getEndDate);
+			attributeGetterFunctions.put("name", DispatchTrigger::getName);
+			attributeGetterFunctions.put(
+				"overlapAllowed", DispatchTrigger::getOverlapAllowed);
+			attributeGetterFunctions.put(
+				"startDate", DispatchTrigger::getStartDate);
+			attributeGetterFunctions.put("system", DispatchTrigger::getSystem);
+			attributeGetterFunctions.put(
+				"timeZoneId", DispatchTrigger::getTimeZoneId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<DispatchTrigger, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<DispatchTrigger, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<DispatchTrigger, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<DispatchTrigger, Long>)
+					DispatchTrigger::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<DispatchTrigger, String>)DispatchTrigger::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<DispatchTrigger, String>)
+					DispatchTrigger::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"dispatchTriggerId",
+				(BiConsumer<DispatchTrigger, Long>)
+					DispatchTrigger::setDispatchTriggerId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<DispatchTrigger, Long>)
+					DispatchTrigger::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<DispatchTrigger, Long>)DispatchTrigger::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<DispatchTrigger, String>)
+					DispatchTrigger::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<DispatchTrigger, Date>)
+					DispatchTrigger::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<DispatchTrigger, Date>)
+					DispatchTrigger::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<DispatchTrigger, Boolean>)
+					DispatchTrigger::setActive);
+			attributeSetterBiConsumers.put(
+				"cronExpression",
+				(BiConsumer<DispatchTrigger, String>)
+					DispatchTrigger::setCronExpression);
+			attributeSetterBiConsumers.put(
+				"dispatchTaskClusterMode",
+				(BiConsumer<DispatchTrigger, Integer>)
+					DispatchTrigger::setDispatchTaskClusterMode);
+			attributeSetterBiConsumers.put(
+				"dispatchTaskExecutorType",
+				(BiConsumer<DispatchTrigger, String>)
+					DispatchTrigger::setDispatchTaskExecutorType);
+			attributeSetterBiConsumers.put(
+				"dispatchTaskSettings",
+				(BiConsumer<DispatchTrigger, String>)
+					DispatchTrigger::setDispatchTaskSettings);
+			attributeSetterBiConsumers.put(
+				"endDate",
+				(BiConsumer<DispatchTrigger, Date>)DispatchTrigger::setEndDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<DispatchTrigger, String>)DispatchTrigger::setName);
+			attributeSetterBiConsumers.put(
+				"overlapAllowed",
+				(BiConsumer<DispatchTrigger, Boolean>)
+					DispatchTrigger::setOverlapAllowed);
+			attributeSetterBiConsumers.put(
+				"startDate",
+				(BiConsumer<DispatchTrigger, Date>)
+					DispatchTrigger::setStartDate);
+			attributeSetterBiConsumers.put(
+				"system",
+				(BiConsumer<DispatchTrigger, Boolean>)
+					DispatchTrigger::setSystem);
+			attributeSetterBiConsumers.put(
+				"timeZoneId",
+				(BiConsumer<DispatchTrigger, String>)
+					DispatchTrigger::setTimeZoneId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1293,7 +1320,8 @@ public class DispatchTriggerModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<DispatchTrigger, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

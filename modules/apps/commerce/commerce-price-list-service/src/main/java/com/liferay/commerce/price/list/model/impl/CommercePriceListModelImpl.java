@@ -303,175 +303,200 @@ public class CommercePriceListModelImpl
 	public Map<String, Function<CommercePriceList, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommercePriceList, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CommercePriceList, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CommercePriceList, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommercePriceList, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommercePriceList, Object>>();
-		Map<String, BiConsumer<CommercePriceList, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<CommercePriceList, ?>>();
+		private static final Map<String, Function<CommercePriceList, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommercePriceList::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommercePriceList, Long>)
-				CommercePriceList::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CommercePriceList::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CommercePriceList, Long>)
-				CommercePriceList::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", CommercePriceList::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CommercePriceList, String>)CommercePriceList::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			CommercePriceList::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CommercePriceList, String>)
-				CommercePriceList::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"commercePriceListId", CommercePriceList::getCommercePriceListId);
-		attributeSetterBiConsumers.put(
-			"commercePriceListId",
-			(BiConsumer<CommercePriceList, Long>)
-				CommercePriceList::setCommercePriceListId);
-		attributeGetterFunctions.put("groupId", CommercePriceList::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<CommercePriceList, Long>)CommercePriceList::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", CommercePriceList::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommercePriceList, Long>)
-				CommercePriceList::setCompanyId);
-		attributeGetterFunctions.put("userId", CommercePriceList::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommercePriceList, Long>)CommercePriceList::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommercePriceList::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommercePriceList, String>)
-				CommercePriceList::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommercePriceList::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommercePriceList, Date>)
-				CommercePriceList::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommercePriceList::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommercePriceList, Date>)
-				CommercePriceList::setModifiedDate);
-		attributeGetterFunctions.put(
-			"commerceCurrencyId", CommercePriceList::getCommerceCurrencyId);
-		attributeSetterBiConsumers.put(
-			"commerceCurrencyId",
-			(BiConsumer<CommercePriceList, Long>)
-				CommercePriceList::setCommerceCurrencyId);
-		attributeGetterFunctions.put(
-			"parentCommercePriceListId",
-			CommercePriceList::getParentCommercePriceListId);
-		attributeSetterBiConsumers.put(
-			"parentCommercePriceListId",
-			(BiConsumer<CommercePriceList, Long>)
-				CommercePriceList::setParentCommercePriceListId);
-		attributeGetterFunctions.put(
-			"catalogBasePriceList", CommercePriceList::getCatalogBasePriceList);
-		attributeSetterBiConsumers.put(
-			"catalogBasePriceList",
-			(BiConsumer<CommercePriceList, Boolean>)
-				CommercePriceList::setCatalogBasePriceList);
-		attributeGetterFunctions.put(
-			"netPrice", CommercePriceList::getNetPrice);
-		attributeSetterBiConsumers.put(
-			"netPrice",
-			(BiConsumer<CommercePriceList, Boolean>)
-				CommercePriceList::setNetPrice);
-		attributeGetterFunctions.put("type", CommercePriceList::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<CommercePriceList, String>)CommercePriceList::setType);
-		attributeGetterFunctions.put("name", CommercePriceList::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CommercePriceList, String>)CommercePriceList::setName);
-		attributeGetterFunctions.put(
-			"priority", CommercePriceList::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<CommercePriceList, Double>)
-				CommercePriceList::setPriority);
-		attributeGetterFunctions.put(
-			"displayDate", CommercePriceList::getDisplayDate);
-		attributeSetterBiConsumers.put(
-			"displayDate",
-			(BiConsumer<CommercePriceList, Date>)
-				CommercePriceList::setDisplayDate);
-		attributeGetterFunctions.put(
-			"expirationDate", CommercePriceList::getExpirationDate);
-		attributeSetterBiConsumers.put(
-			"expirationDate",
-			(BiConsumer<CommercePriceList, Date>)
-				CommercePriceList::setExpirationDate);
-		attributeGetterFunctions.put(
-			"lastPublishDate", CommercePriceList::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<CommercePriceList, Date>)
-				CommercePriceList::setLastPublishDate);
-		attributeGetterFunctions.put("status", CommercePriceList::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<CommercePriceList, Integer>)
-				CommercePriceList::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", CommercePriceList::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<CommercePriceList, Long>)
-				CommercePriceList::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", CommercePriceList::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<CommercePriceList, String>)
-				CommercePriceList::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", CommercePriceList::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<CommercePriceList, Date>)
-				CommercePriceList::setStatusDate);
+		static {
+			Map<String, Function<CommercePriceList, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CommercePriceList, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CommercePriceList::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CommercePriceList::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", CommercePriceList::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CommercePriceList::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"commercePriceListId",
+				CommercePriceList::getCommercePriceListId);
+			attributeGetterFunctions.put(
+				"groupId", CommercePriceList::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", CommercePriceList::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommercePriceList::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommercePriceList::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommercePriceList::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommercePriceList::getModifiedDate);
+			attributeGetterFunctions.put(
+				"commerceCurrencyId", CommercePriceList::getCommerceCurrencyId);
+			attributeGetterFunctions.put(
+				"parentCommercePriceListId",
+				CommercePriceList::getParentCommercePriceListId);
+			attributeGetterFunctions.put(
+				"catalogBasePriceList",
+				CommercePriceList::getCatalogBasePriceList);
+			attributeGetterFunctions.put(
+				"netPrice", CommercePriceList::getNetPrice);
+			attributeGetterFunctions.put("type", CommercePriceList::getType);
+			attributeGetterFunctions.put("name", CommercePriceList::getName);
+			attributeGetterFunctions.put(
+				"priority", CommercePriceList::getPriority);
+			attributeGetterFunctions.put(
+				"displayDate", CommercePriceList::getDisplayDate);
+			attributeGetterFunctions.put(
+				"expirationDate", CommercePriceList::getExpirationDate);
+			attributeGetterFunctions.put(
+				"lastPublishDate", CommercePriceList::getLastPublishDate);
+			attributeGetterFunctions.put(
+				"status", CommercePriceList::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", CommercePriceList::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", CommercePriceList::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", CommercePriceList::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CommercePriceList, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommercePriceList, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommercePriceList, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommercePriceList, Long>)
+					CommercePriceList::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CommercePriceList, Long>)
+					CommercePriceList::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CommercePriceList, String>)
+					CommercePriceList::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CommercePriceList, String>)
+					CommercePriceList::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"commercePriceListId",
+				(BiConsumer<CommercePriceList, Long>)
+					CommercePriceList::setCommercePriceListId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<CommercePriceList, Long>)
+					CommercePriceList::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommercePriceList, Long>)
+					CommercePriceList::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommercePriceList, Long>)
+					CommercePriceList::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommercePriceList, String>)
+					CommercePriceList::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommercePriceList, Date>)
+					CommercePriceList::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommercePriceList, Date>)
+					CommercePriceList::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"commerceCurrencyId",
+				(BiConsumer<CommercePriceList, Long>)
+					CommercePriceList::setCommerceCurrencyId);
+			attributeSetterBiConsumers.put(
+				"parentCommercePriceListId",
+				(BiConsumer<CommercePriceList, Long>)
+					CommercePriceList::setParentCommercePriceListId);
+			attributeSetterBiConsumers.put(
+				"catalogBasePriceList",
+				(BiConsumer<CommercePriceList, Boolean>)
+					CommercePriceList::setCatalogBasePriceList);
+			attributeSetterBiConsumers.put(
+				"netPrice",
+				(BiConsumer<CommercePriceList, Boolean>)
+					CommercePriceList::setNetPrice);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CommercePriceList, String>)
+					CommercePriceList::setType);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CommercePriceList, String>)
+					CommercePriceList::setName);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<CommercePriceList, Double>)
+					CommercePriceList::setPriority);
+			attributeSetterBiConsumers.put(
+				"displayDate",
+				(BiConsumer<CommercePriceList, Date>)
+					CommercePriceList::setDisplayDate);
+			attributeSetterBiConsumers.put(
+				"expirationDate",
+				(BiConsumer<CommercePriceList, Date>)
+					CommercePriceList::setExpirationDate);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<CommercePriceList, Date>)
+					CommercePriceList::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<CommercePriceList, Integer>)
+					CommercePriceList::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<CommercePriceList, Long>)
+					CommercePriceList::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<CommercePriceList, String>)
+					CommercePriceList::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<CommercePriceList, Date>)
+					CommercePriceList::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1590,7 +1615,8 @@ public class CommercePriceListModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommercePriceList, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

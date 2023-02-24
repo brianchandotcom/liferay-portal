@@ -253,131 +253,149 @@ public class NotificationQueueEntryModelImpl
 	public Map<String, Function<NotificationQueueEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<NotificationQueueEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<NotificationQueueEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<NotificationQueueEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<NotificationQueueEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<NotificationQueueEntry, Object>>();
-		Map<String, BiConsumer<NotificationQueueEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<NotificationQueueEntry, ?>>();
+		private static final Map
+			<String, Function<NotificationQueueEntry, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", NotificationQueueEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<NotificationQueueEntry, Long>)
-				NotificationQueueEntry::setMvccVersion);
-		attributeGetterFunctions.put(
-			"notificationQueueEntryId",
-			NotificationQueueEntry::getNotificationQueueEntryId);
-		attributeSetterBiConsumers.put(
-			"notificationQueueEntryId",
-			(BiConsumer<NotificationQueueEntry, Long>)
-				NotificationQueueEntry::setNotificationQueueEntryId);
-		attributeGetterFunctions.put(
-			"companyId", NotificationQueueEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<NotificationQueueEntry, Long>)
-				NotificationQueueEntry::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", NotificationQueueEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<NotificationQueueEntry, Long>)
-				NotificationQueueEntry::setUserId);
-		attributeGetterFunctions.put(
-			"userName", NotificationQueueEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<NotificationQueueEntry, String>)
-				NotificationQueueEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", NotificationQueueEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<NotificationQueueEntry, Date>)
-				NotificationQueueEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", NotificationQueueEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<NotificationQueueEntry, Date>)
-				NotificationQueueEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"notificationTemplateId",
-			NotificationQueueEntry::getNotificationTemplateId);
-		attributeSetterBiConsumers.put(
-			"notificationTemplateId",
-			(BiConsumer<NotificationQueueEntry, Long>)
-				NotificationQueueEntry::setNotificationTemplateId);
-		attributeGetterFunctions.put("body", NotificationQueueEntry::getBody);
-		attributeSetterBiConsumers.put(
-			"body",
-			(BiConsumer<NotificationQueueEntry, String>)
-				NotificationQueueEntry::setBody);
-		attributeGetterFunctions.put(
-			"classNameId", NotificationQueueEntry::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<NotificationQueueEntry, Long>)
-				NotificationQueueEntry::setClassNameId);
-		attributeGetterFunctions.put(
-			"classPK", NotificationQueueEntry::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<NotificationQueueEntry, Long>)
-				NotificationQueueEntry::setClassPK);
-		attributeGetterFunctions.put(
-			"priority", NotificationQueueEntry::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<NotificationQueueEntry, Double>)
-				NotificationQueueEntry::setPriority);
-		attributeGetterFunctions.put(
-			"sentDate", NotificationQueueEntry::getSentDate);
-		attributeSetterBiConsumers.put(
-			"sentDate",
-			(BiConsumer<NotificationQueueEntry, Date>)
-				NotificationQueueEntry::setSentDate);
-		attributeGetterFunctions.put(
-			"subject", NotificationQueueEntry::getSubject);
-		attributeSetterBiConsumers.put(
-			"subject",
-			(BiConsumer<NotificationQueueEntry, String>)
-				NotificationQueueEntry::setSubject);
-		attributeGetterFunctions.put("type", NotificationQueueEntry::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<NotificationQueueEntry, String>)
-				NotificationQueueEntry::setType);
-		attributeGetterFunctions.put(
-			"status", NotificationQueueEntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<NotificationQueueEntry, Integer>)
-				NotificationQueueEntry::setStatus);
+		static {
+			Map<String, Function<NotificationQueueEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<NotificationQueueEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", NotificationQueueEntry::getMvccVersion);
+			attributeGetterFunctions.put(
+				"notificationQueueEntryId",
+				NotificationQueueEntry::getNotificationQueueEntryId);
+			attributeGetterFunctions.put(
+				"companyId", NotificationQueueEntry::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", NotificationQueueEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", NotificationQueueEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", NotificationQueueEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", NotificationQueueEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"notificationTemplateId",
+				NotificationQueueEntry::getNotificationTemplateId);
+			attributeGetterFunctions.put(
+				"body", NotificationQueueEntry::getBody);
+			attributeGetterFunctions.put(
+				"classNameId", NotificationQueueEntry::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", NotificationQueueEntry::getClassPK);
+			attributeGetterFunctions.put(
+				"priority", NotificationQueueEntry::getPriority);
+			attributeGetterFunctions.put(
+				"sentDate", NotificationQueueEntry::getSentDate);
+			attributeGetterFunctions.put(
+				"subject", NotificationQueueEntry::getSubject);
+			attributeGetterFunctions.put(
+				"type", NotificationQueueEntry::getType);
+			attributeGetterFunctions.put(
+				"status", NotificationQueueEntry::getStatus);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<NotificationQueueEntry, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<NotificationQueueEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<NotificationQueueEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<NotificationQueueEntry, Long>)
+					NotificationQueueEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"notificationQueueEntryId",
+				(BiConsumer<NotificationQueueEntry, Long>)
+					NotificationQueueEntry::setNotificationQueueEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<NotificationQueueEntry, Long>)
+					NotificationQueueEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<NotificationQueueEntry, Long>)
+					NotificationQueueEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<NotificationQueueEntry, String>)
+					NotificationQueueEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<NotificationQueueEntry, Date>)
+					NotificationQueueEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<NotificationQueueEntry, Date>)
+					NotificationQueueEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"notificationTemplateId",
+				(BiConsumer<NotificationQueueEntry, Long>)
+					NotificationQueueEntry::setNotificationTemplateId);
+			attributeSetterBiConsumers.put(
+				"body",
+				(BiConsumer<NotificationQueueEntry, String>)
+					NotificationQueueEntry::setBody);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<NotificationQueueEntry, Long>)
+					NotificationQueueEntry::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<NotificationQueueEntry, Long>)
+					NotificationQueueEntry::setClassPK);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<NotificationQueueEntry, Double>)
+					NotificationQueueEntry::setPriority);
+			attributeSetterBiConsumers.put(
+				"sentDate",
+				(BiConsumer<NotificationQueueEntry, Date>)
+					NotificationQueueEntry::setSentDate);
+			attributeSetterBiConsumers.put(
+				"subject",
+				(BiConsumer<NotificationQueueEntry, String>)
+					NotificationQueueEntry::setSubject);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<NotificationQueueEntry, String>)
+					NotificationQueueEntry::setType);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<NotificationQueueEntry, Integer>)
+					NotificationQueueEntry::setStatus);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1092,7 +1110,8 @@ public class NotificationQueueEntryModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<NotificationQueueEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

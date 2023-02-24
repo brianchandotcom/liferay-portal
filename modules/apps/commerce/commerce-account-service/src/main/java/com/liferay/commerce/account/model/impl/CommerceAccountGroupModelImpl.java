@@ -235,93 +235,110 @@ public class CommerceAccountGroupModelImpl
 	public Map<String, Function<CommerceAccountGroup, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceAccountGroup, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CommerceAccountGroup, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CommerceAccountGroup, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceAccountGroup, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceAccountGroup, Object>>();
-		Map<String, BiConsumer<CommerceAccountGroup, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CommerceAccountGroup, ?>>();
+		private static final Map<String, Function<CommerceAccountGroup, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			CommerceAccountGroup::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CommerceAccountGroup, String>)
-				CommerceAccountGroup::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"commerceAccountGroupId",
-			CommerceAccountGroup::getCommerceAccountGroupId);
-		attributeSetterBiConsumers.put(
-			"commerceAccountGroupId",
-			(BiConsumer<CommerceAccountGroup, Long>)
-				CommerceAccountGroup::setCommerceAccountGroupId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceAccountGroup::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceAccountGroup, Long>)
-				CommerceAccountGroup::setCompanyId);
-		attributeGetterFunctions.put("userId", CommerceAccountGroup::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceAccountGroup, Long>)
-				CommerceAccountGroup::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceAccountGroup::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceAccountGroup, String>)
-				CommerceAccountGroup::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceAccountGroup::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceAccountGroup, Date>)
-				CommerceAccountGroup::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceAccountGroup::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceAccountGroup, Date>)
-				CommerceAccountGroup::setModifiedDate);
-		attributeGetterFunctions.put("name", CommerceAccountGroup::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CommerceAccountGroup, String>)
-				CommerceAccountGroup::setName);
-		attributeGetterFunctions.put("type", CommerceAccountGroup::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<CommerceAccountGroup, Integer>)
-				CommerceAccountGroup::setType);
-		attributeGetterFunctions.put("system", CommerceAccountGroup::getSystem);
-		attributeSetterBiConsumers.put(
-			"system",
-			(BiConsumer<CommerceAccountGroup, Boolean>)
-				CommerceAccountGroup::setSystem);
+		static {
+			Map<String, Function<CommerceAccountGroup, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CommerceAccountGroup, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CommerceAccountGroup::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"commerceAccountGroupId",
+				CommerceAccountGroup::getCommerceAccountGroupId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceAccountGroup::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceAccountGroup::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceAccountGroup::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceAccountGroup::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceAccountGroup::getModifiedDate);
+			attributeGetterFunctions.put("name", CommerceAccountGroup::getName);
+			attributeGetterFunctions.put("type", CommerceAccountGroup::getType);
+			attributeGetterFunctions.put(
+				"system", CommerceAccountGroup::getSystem);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceAccountGroup, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceAccountGroup, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommerceAccountGroup, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CommerceAccountGroup, String>)
+					CommerceAccountGroup::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"commerceAccountGroupId",
+				(BiConsumer<CommerceAccountGroup, Long>)
+					CommerceAccountGroup::setCommerceAccountGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceAccountGroup, Long>)
+					CommerceAccountGroup::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceAccountGroup, Long>)
+					CommerceAccountGroup::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceAccountGroup, String>)
+					CommerceAccountGroup::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceAccountGroup, Date>)
+					CommerceAccountGroup::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceAccountGroup, Date>)
+					CommerceAccountGroup::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CommerceAccountGroup, String>)
+					CommerceAccountGroup::setName);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CommerceAccountGroup, Integer>)
+					CommerceAccountGroup::setType);
+			attributeSetterBiConsumers.put(
+				"system",
+				(BiConsumer<CommerceAccountGroup, Boolean>)
+					CommerceAccountGroup::setSystem);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -870,7 +887,8 @@ public class CommerceAccountGroupModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceAccountGroup, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

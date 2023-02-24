@@ -274,188 +274,206 @@ public class CPDefinitionVirtualSettingModelImpl
 	public Map<String, Function<CPDefinitionVirtualSetting, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CPDefinitionVirtualSetting, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<CPDefinitionVirtualSetting, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<CPDefinitionVirtualSetting, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CPDefinitionVirtualSetting, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CPDefinitionVirtualSetting, Object>>();
-		Map<String, BiConsumer<CPDefinitionVirtualSetting, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CPDefinitionVirtualSetting, ?>>();
+		private static final Map
+			<String, Function<CPDefinitionVirtualSetting, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPDefinitionVirtualSetting::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
-				CPDefinitionVirtualSetting::setMvccVersion);
-		attributeGetterFunctions.put(
-			"uuid", CPDefinitionVirtualSetting::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CPDefinitionVirtualSetting, String>)
-				CPDefinitionVirtualSetting::setUuid);
-		attributeGetterFunctions.put(
-			"CPDefinitionVirtualSettingId",
-			CPDefinitionVirtualSetting::getCPDefinitionVirtualSettingId);
-		attributeSetterBiConsumers.put(
-			"CPDefinitionVirtualSettingId",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
-				CPDefinitionVirtualSetting::setCPDefinitionVirtualSettingId);
-		attributeGetterFunctions.put(
-			"groupId", CPDefinitionVirtualSetting::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
-				CPDefinitionVirtualSetting::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", CPDefinitionVirtualSetting::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
-				CPDefinitionVirtualSetting::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CPDefinitionVirtualSetting::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
-				CPDefinitionVirtualSetting::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CPDefinitionVirtualSetting::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CPDefinitionVirtualSetting, String>)
-				CPDefinitionVirtualSetting::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CPDefinitionVirtualSetting::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CPDefinitionVirtualSetting, Date>)
-				CPDefinitionVirtualSetting::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CPDefinitionVirtualSetting::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CPDefinitionVirtualSetting, Date>)
-				CPDefinitionVirtualSetting::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId", CPDefinitionVirtualSetting::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
-				CPDefinitionVirtualSetting::setClassNameId);
-		attributeGetterFunctions.put(
-			"classPK", CPDefinitionVirtualSetting::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
-				CPDefinitionVirtualSetting::setClassPK);
-		attributeGetterFunctions.put(
-			"fileEntryId", CPDefinitionVirtualSetting::getFileEntryId);
-		attributeSetterBiConsumers.put(
-			"fileEntryId",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
-				CPDefinitionVirtualSetting::setFileEntryId);
-		attributeGetterFunctions.put("url", CPDefinitionVirtualSetting::getUrl);
-		attributeSetterBiConsumers.put(
-			"url",
-			(BiConsumer<CPDefinitionVirtualSetting, String>)
-				CPDefinitionVirtualSetting::setUrl);
-		attributeGetterFunctions.put(
-			"activationStatus",
-			CPDefinitionVirtualSetting::getActivationStatus);
-		attributeSetterBiConsumers.put(
-			"activationStatus",
-			(BiConsumer<CPDefinitionVirtualSetting, Integer>)
-				CPDefinitionVirtualSetting::setActivationStatus);
-		attributeGetterFunctions.put(
-			"duration", CPDefinitionVirtualSetting::getDuration);
-		attributeSetterBiConsumers.put(
-			"duration",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
-				CPDefinitionVirtualSetting::setDuration);
-		attributeGetterFunctions.put(
-			"maxUsages", CPDefinitionVirtualSetting::getMaxUsages);
-		attributeSetterBiConsumers.put(
-			"maxUsages",
-			(BiConsumer<CPDefinitionVirtualSetting, Integer>)
-				CPDefinitionVirtualSetting::setMaxUsages);
-		attributeGetterFunctions.put(
-			"useSample", CPDefinitionVirtualSetting::getUseSample);
-		attributeSetterBiConsumers.put(
-			"useSample",
-			(BiConsumer<CPDefinitionVirtualSetting, Boolean>)
-				CPDefinitionVirtualSetting::setUseSample);
-		attributeGetterFunctions.put(
-			"sampleFileEntryId",
-			CPDefinitionVirtualSetting::getSampleFileEntryId);
-		attributeSetterBiConsumers.put(
-			"sampleFileEntryId",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
-				CPDefinitionVirtualSetting::setSampleFileEntryId);
-		attributeGetterFunctions.put(
-			"sampleUrl", CPDefinitionVirtualSetting::getSampleUrl);
-		attributeSetterBiConsumers.put(
-			"sampleUrl",
-			(BiConsumer<CPDefinitionVirtualSetting, String>)
-				CPDefinitionVirtualSetting::setSampleUrl);
-		attributeGetterFunctions.put(
-			"termsOfUseRequired",
-			CPDefinitionVirtualSetting::getTermsOfUseRequired);
-		attributeSetterBiConsumers.put(
-			"termsOfUseRequired",
-			(BiConsumer<CPDefinitionVirtualSetting, Boolean>)
-				CPDefinitionVirtualSetting::setTermsOfUseRequired);
-		attributeGetterFunctions.put(
-			"termsOfUseContent",
-			CPDefinitionVirtualSetting::getTermsOfUseContent);
-		attributeSetterBiConsumers.put(
-			"termsOfUseContent",
-			(BiConsumer<CPDefinitionVirtualSetting, String>)
-				CPDefinitionVirtualSetting::setTermsOfUseContent);
-		attributeGetterFunctions.put(
-			"termsOfUseJournalArticleResourcePrimKey",
-			CPDefinitionVirtualSetting::
-				getTermsOfUseJournalArticleResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"termsOfUseJournalArticleResourcePrimKey",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
+		static {
+			Map<String, Function<CPDefinitionVirtualSetting, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<CPDefinitionVirtualSetting, Object>>();
+
+			attributeGetterFunctions.put(
+				"mvccVersion", CPDefinitionVirtualSetting::getMvccVersion);
+			attributeGetterFunctions.put(
+				"uuid", CPDefinitionVirtualSetting::getUuid);
+			attributeGetterFunctions.put(
+				"CPDefinitionVirtualSettingId",
+				CPDefinitionVirtualSetting::getCPDefinitionVirtualSettingId);
+			attributeGetterFunctions.put(
+				"groupId", CPDefinitionVirtualSetting::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", CPDefinitionVirtualSetting::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CPDefinitionVirtualSetting::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CPDefinitionVirtualSetting::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CPDefinitionVirtualSetting::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CPDefinitionVirtualSetting::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId", CPDefinitionVirtualSetting::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", CPDefinitionVirtualSetting::getClassPK);
+			attributeGetterFunctions.put(
+				"fileEntryId", CPDefinitionVirtualSetting::getFileEntryId);
+			attributeGetterFunctions.put(
+				"url", CPDefinitionVirtualSetting::getUrl);
+			attributeGetterFunctions.put(
+				"activationStatus",
+				CPDefinitionVirtualSetting::getActivationStatus);
+			attributeGetterFunctions.put(
+				"duration", CPDefinitionVirtualSetting::getDuration);
+			attributeGetterFunctions.put(
+				"maxUsages", CPDefinitionVirtualSetting::getMaxUsages);
+			attributeGetterFunctions.put(
+				"useSample", CPDefinitionVirtualSetting::getUseSample);
+			attributeGetterFunctions.put(
+				"sampleFileEntryId",
+				CPDefinitionVirtualSetting::getSampleFileEntryId);
+			attributeGetterFunctions.put(
+				"sampleUrl", CPDefinitionVirtualSetting::getSampleUrl);
+			attributeGetterFunctions.put(
+				"termsOfUseRequired",
+				CPDefinitionVirtualSetting::getTermsOfUseRequired);
+			attributeGetterFunctions.put(
+				"termsOfUseContent",
+				CPDefinitionVirtualSetting::getTermsOfUseContent);
+			attributeGetterFunctions.put(
+				"termsOfUseJournalArticleResourcePrimKey",
 				CPDefinitionVirtualSetting::
-					setTermsOfUseJournalArticleResourcePrimKey);
-		attributeGetterFunctions.put(
-			"override", CPDefinitionVirtualSetting::getOverride);
-		attributeSetterBiConsumers.put(
-			"override",
-			(BiConsumer<CPDefinitionVirtualSetting, Boolean>)
-				CPDefinitionVirtualSetting::setOverride);
-		attributeGetterFunctions.put(
-			"lastPublishDate", CPDefinitionVirtualSetting::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<CPDefinitionVirtualSetting, Date>)
-				CPDefinitionVirtualSetting::setLastPublishDate);
+					getTermsOfUseJournalArticleResourcePrimKey);
+			attributeGetterFunctions.put(
+				"override", CPDefinitionVirtualSetting::getOverride);
+			attributeGetterFunctions.put(
+				"lastPublishDate",
+				CPDefinitionVirtualSetting::getLastPublishDate);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CPDefinitionVirtualSetting, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CPDefinitionVirtualSetting, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CPDefinitionVirtualSetting, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CPDefinitionVirtualSetting, Long>)
+					CPDefinitionVirtualSetting::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CPDefinitionVirtualSetting, String>)
+					CPDefinitionVirtualSetting::setUuid);
+			attributeSetterBiConsumers.put(
+				"CPDefinitionVirtualSettingId",
+				(BiConsumer<CPDefinitionVirtualSetting, Long>)
+					CPDefinitionVirtualSetting::
+						setCPDefinitionVirtualSettingId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<CPDefinitionVirtualSetting, Long>)
+					CPDefinitionVirtualSetting::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CPDefinitionVirtualSetting, Long>)
+					CPDefinitionVirtualSetting::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CPDefinitionVirtualSetting, Long>)
+					CPDefinitionVirtualSetting::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CPDefinitionVirtualSetting, String>)
+					CPDefinitionVirtualSetting::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CPDefinitionVirtualSetting, Date>)
+					CPDefinitionVirtualSetting::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CPDefinitionVirtualSetting, Date>)
+					CPDefinitionVirtualSetting::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<CPDefinitionVirtualSetting, Long>)
+					CPDefinitionVirtualSetting::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<CPDefinitionVirtualSetting, Long>)
+					CPDefinitionVirtualSetting::setClassPK);
+			attributeSetterBiConsumers.put(
+				"fileEntryId",
+				(BiConsumer<CPDefinitionVirtualSetting, Long>)
+					CPDefinitionVirtualSetting::setFileEntryId);
+			attributeSetterBiConsumers.put(
+				"url",
+				(BiConsumer<CPDefinitionVirtualSetting, String>)
+					CPDefinitionVirtualSetting::setUrl);
+			attributeSetterBiConsumers.put(
+				"activationStatus",
+				(BiConsumer<CPDefinitionVirtualSetting, Integer>)
+					CPDefinitionVirtualSetting::setActivationStatus);
+			attributeSetterBiConsumers.put(
+				"duration",
+				(BiConsumer<CPDefinitionVirtualSetting, Long>)
+					CPDefinitionVirtualSetting::setDuration);
+			attributeSetterBiConsumers.put(
+				"maxUsages",
+				(BiConsumer<CPDefinitionVirtualSetting, Integer>)
+					CPDefinitionVirtualSetting::setMaxUsages);
+			attributeSetterBiConsumers.put(
+				"useSample",
+				(BiConsumer<CPDefinitionVirtualSetting, Boolean>)
+					CPDefinitionVirtualSetting::setUseSample);
+			attributeSetterBiConsumers.put(
+				"sampleFileEntryId",
+				(BiConsumer<CPDefinitionVirtualSetting, Long>)
+					CPDefinitionVirtualSetting::setSampleFileEntryId);
+			attributeSetterBiConsumers.put(
+				"sampleUrl",
+				(BiConsumer<CPDefinitionVirtualSetting, String>)
+					CPDefinitionVirtualSetting::setSampleUrl);
+			attributeSetterBiConsumers.put(
+				"termsOfUseRequired",
+				(BiConsumer<CPDefinitionVirtualSetting, Boolean>)
+					CPDefinitionVirtualSetting::setTermsOfUseRequired);
+			attributeSetterBiConsumers.put(
+				"termsOfUseContent",
+				(BiConsumer<CPDefinitionVirtualSetting, String>)
+					CPDefinitionVirtualSetting::setTermsOfUseContent);
+			attributeSetterBiConsumers.put(
+				"termsOfUseJournalArticleResourcePrimKey",
+				(BiConsumer<CPDefinitionVirtualSetting, Long>)
+					CPDefinitionVirtualSetting::
+						setTermsOfUseJournalArticleResourcePrimKey);
+			attributeSetterBiConsumers.put(
+				"override",
+				(BiConsumer<CPDefinitionVirtualSetting, Boolean>)
+					CPDefinitionVirtualSetting::setOverride);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<CPDefinitionVirtualSetting, Date>)
+					CPDefinitionVirtualSetting::setLastPublishDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1568,7 +1586,8 @@ public class CPDefinitionVirtualSettingModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CPDefinitionVirtualSetting, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

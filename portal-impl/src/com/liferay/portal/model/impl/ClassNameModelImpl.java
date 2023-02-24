@@ -210,42 +210,58 @@ public class ClassNameModelImpl
 	public Map<String, Function<ClassName, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ClassName, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ClassName, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ClassName, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ClassName, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<ClassName, Object>>();
-		Map<String, BiConsumer<ClassName, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<ClassName, ?>>();
+		private static final Map<String, Function<ClassName, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", ClassName::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ClassName, Long>)ClassName::setMvccVersion);
-		attributeGetterFunctions.put("classNameId", ClassName::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<ClassName, Long>)ClassName::setClassNameId);
-		attributeGetterFunctions.put("value", ClassName::getValue);
-		attributeSetterBiConsumers.put(
-			"value", (BiConsumer<ClassName, String>)ClassName::setValue);
+		static {
+			Map<String, Function<ClassName, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<ClassName, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ClassName::getMvccVersion);
+			attributeGetterFunctions.put(
+				"classNameId", ClassName::getClassNameId);
+			attributeGetterFunctions.put("value", ClassName::getValue);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ClassName, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ClassName, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<ClassName, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ClassName, Long>)ClassName::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<ClassName, Long>)ClassName::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"value", (BiConsumer<ClassName, String>)ClassName::setValue);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -554,8 +570,9 @@ public class ClassNameModelImpl
 	private String _value;
 
 	public <T> T getColumnValue(String columnName) {
-		Function<ClassName, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<ClassName, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

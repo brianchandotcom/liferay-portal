@@ -257,126 +257,144 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	public Map<String, Function<CommerceInventoryReplenishmentItem, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceInventoryReplenishmentItem, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<CommerceInventoryReplenishmentItem, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<CommerceInventoryReplenishmentItem, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceInventoryReplenishmentItem, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String,
-					 Function<CommerceInventoryReplenishmentItem, Object>>();
-		Map<String, BiConsumer<CommerceInventoryReplenishmentItem, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String,
-					 BiConsumer<CommerceInventoryReplenishmentItem, ?>>();
+		private static final Map
+			<String, Function<CommerceInventoryReplenishmentItem, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceInventoryReplenishmentItem::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
-				CommerceInventoryReplenishmentItem::setMvccVersion);
-		attributeGetterFunctions.put(
-			"uuid", CommerceInventoryReplenishmentItem::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CommerceInventoryReplenishmentItem, String>)
-				CommerceInventoryReplenishmentItem::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			CommerceInventoryReplenishmentItem::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CommerceInventoryReplenishmentItem, String>)
-				CommerceInventoryReplenishmentItem::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"commerceInventoryReplenishmentItemId",
-			CommerceInventoryReplenishmentItem::
-				getCommerceInventoryReplenishmentItemId);
-		attributeSetterBiConsumers.put(
-			"commerceInventoryReplenishmentItemId",
-			(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+		static {
+			Map<String, Function<CommerceInventoryReplenishmentItem, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function
+							 <CommerceInventoryReplenishmentItem, Object>>();
+
+			attributeGetterFunctions.put(
+				"mvccVersion",
+				CommerceInventoryReplenishmentItem::getMvccVersion);
+			attributeGetterFunctions.put(
+				"uuid", CommerceInventoryReplenishmentItem::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CommerceInventoryReplenishmentItem::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"commerceInventoryReplenishmentItemId",
 				CommerceInventoryReplenishmentItem::
-					setCommerceInventoryReplenishmentItemId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceInventoryReplenishmentItem::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
-				CommerceInventoryReplenishmentItem::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CommerceInventoryReplenishmentItem::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
-				CommerceInventoryReplenishmentItem::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceInventoryReplenishmentItem::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceInventoryReplenishmentItem, String>)
-				CommerceInventoryReplenishmentItem::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceInventoryReplenishmentItem::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceInventoryReplenishmentItem, Date>)
-				CommerceInventoryReplenishmentItem::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate",
-			CommerceInventoryReplenishmentItem::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceInventoryReplenishmentItem, Date>)
-				CommerceInventoryReplenishmentItem::setModifiedDate);
-		attributeGetterFunctions.put(
-			"commerceInventoryWarehouseId",
-			CommerceInventoryReplenishmentItem::
-				getCommerceInventoryWarehouseId);
-		attributeSetterBiConsumers.put(
-			"commerceInventoryWarehouseId",
-			(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+					getCommerceInventoryReplenishmentItemId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceInventoryReplenishmentItem::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceInventoryReplenishmentItem::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceInventoryReplenishmentItem::getUserName);
+			attributeGetterFunctions.put(
+				"createDate",
+				CommerceInventoryReplenishmentItem::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate",
+				CommerceInventoryReplenishmentItem::getModifiedDate);
+			attributeGetterFunctions.put(
+				"commerceInventoryWarehouseId",
 				CommerceInventoryReplenishmentItem::
-					setCommerceInventoryWarehouseId);
-		attributeGetterFunctions.put(
-			"sku", CommerceInventoryReplenishmentItem::getSku);
-		attributeSetterBiConsumers.put(
-			"sku",
-			(BiConsumer<CommerceInventoryReplenishmentItem, String>)
-				CommerceInventoryReplenishmentItem::setSku);
-		attributeGetterFunctions.put(
-			"availabilityDate",
-			CommerceInventoryReplenishmentItem::getAvailabilityDate);
-		attributeSetterBiConsumers.put(
-			"availabilityDate",
-			(BiConsumer<CommerceInventoryReplenishmentItem, Date>)
-				CommerceInventoryReplenishmentItem::setAvailabilityDate);
-		attributeGetterFunctions.put(
-			"quantity", CommerceInventoryReplenishmentItem::getQuantity);
-		attributeSetterBiConsumers.put(
-			"quantity",
-			(BiConsumer<CommerceInventoryReplenishmentItem, Integer>)
-				CommerceInventoryReplenishmentItem::setQuantity);
+					getCommerceInventoryWarehouseId);
+			attributeGetterFunctions.put(
+				"sku", CommerceInventoryReplenishmentItem::getSku);
+			attributeGetterFunctions.put(
+				"availabilityDate",
+				CommerceInventoryReplenishmentItem::getAvailabilityDate);
+			attributeGetterFunctions.put(
+				"quantity", CommerceInventoryReplenishmentItem::getQuantity);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceInventoryReplenishmentItem, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceInventoryReplenishmentItem, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String,
+						 BiConsumer<CommerceInventoryReplenishmentItem, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+					CommerceInventoryReplenishmentItem::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CommerceInventoryReplenishmentItem, String>)
+					CommerceInventoryReplenishmentItem::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CommerceInventoryReplenishmentItem, String>)
+					CommerceInventoryReplenishmentItem::
+						setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"commerceInventoryReplenishmentItemId",
+				(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+					CommerceInventoryReplenishmentItem::
+						setCommerceInventoryReplenishmentItemId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+					CommerceInventoryReplenishmentItem::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+					CommerceInventoryReplenishmentItem::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceInventoryReplenishmentItem, String>)
+					CommerceInventoryReplenishmentItem::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceInventoryReplenishmentItem, Date>)
+					CommerceInventoryReplenishmentItem::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceInventoryReplenishmentItem, Date>)
+					CommerceInventoryReplenishmentItem::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"commerceInventoryWarehouseId",
+				(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
+					CommerceInventoryReplenishmentItem::
+						setCommerceInventoryWarehouseId);
+			attributeSetterBiConsumers.put(
+				"sku",
+				(BiConsumer<CommerceInventoryReplenishmentItem, String>)
+					CommerceInventoryReplenishmentItem::setSku);
+			attributeSetterBiConsumers.put(
+				"availabilityDate",
+				(BiConsumer<CommerceInventoryReplenishmentItem, Date>)
+					CommerceInventoryReplenishmentItem::setAvailabilityDate);
+			attributeSetterBiConsumers.put(
+				"quantity",
+				(BiConsumer<CommerceInventoryReplenishmentItem, Integer>)
+					CommerceInventoryReplenishmentItem::setQuantity);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1053,7 +1071,8 @@ public class CommerceInventoryReplenishmentItemModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceInventoryReplenishmentItem, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

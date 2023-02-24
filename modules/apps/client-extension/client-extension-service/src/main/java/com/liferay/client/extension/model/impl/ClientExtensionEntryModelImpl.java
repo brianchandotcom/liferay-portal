@@ -259,152 +259,169 @@ public class ClientExtensionEntryModelImpl
 	public Map<String, Function<ClientExtensionEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ClientExtensionEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ClientExtensionEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ClientExtensionEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ClientExtensionEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<ClientExtensionEntry, Object>>();
-		Map<String, BiConsumer<ClientExtensionEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<ClientExtensionEntry, ?>>();
+		private static final Map<String, Function<ClientExtensionEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ClientExtensionEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ClientExtensionEntry, Long>)
-				ClientExtensionEntry::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", ClientExtensionEntry::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<ClientExtensionEntry, Long>)
-				ClientExtensionEntry::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", ClientExtensionEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			ClientExtensionEntry::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"clientExtensionEntryId",
-			ClientExtensionEntry::getClientExtensionEntryId);
-		attributeSetterBiConsumers.put(
-			"clientExtensionEntryId",
-			(BiConsumer<ClientExtensionEntry, Long>)
-				ClientExtensionEntry::setClientExtensionEntryId);
-		attributeGetterFunctions.put(
-			"companyId", ClientExtensionEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ClientExtensionEntry, Long>)
-				ClientExtensionEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", ClientExtensionEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<ClientExtensionEntry, Long>)
-				ClientExtensionEntry::setUserId);
-		attributeGetterFunctions.put(
-			"userName", ClientExtensionEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", ClientExtensionEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ClientExtensionEntry, Date>)
-				ClientExtensionEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ClientExtensionEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ClientExtensionEntry, Date>)
-				ClientExtensionEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"description", ClientExtensionEntry::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setDescription);
-		attributeGetterFunctions.put("name", ClientExtensionEntry::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setName);
-		attributeGetterFunctions.put(
-			"properties", ClientExtensionEntry::getProperties);
-		attributeSetterBiConsumers.put(
-			"properties",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setProperties);
-		attributeGetterFunctions.put(
-			"sourceCodeURL", ClientExtensionEntry::getSourceCodeURL);
-		attributeSetterBiConsumers.put(
-			"sourceCodeURL",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setSourceCodeURL);
-		attributeGetterFunctions.put("type", ClientExtensionEntry::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setType);
-		attributeGetterFunctions.put(
-			"typeSettings", ClientExtensionEntry::getTypeSettings);
-		attributeSetterBiConsumers.put(
-			"typeSettings",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setTypeSettings);
-		attributeGetterFunctions.put("status", ClientExtensionEntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<ClientExtensionEntry, Integer>)
-				ClientExtensionEntry::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", ClientExtensionEntry::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<ClientExtensionEntry, Long>)
-				ClientExtensionEntry::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", ClientExtensionEntry::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", ClientExtensionEntry::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<ClientExtensionEntry, Date>)
-				ClientExtensionEntry::setStatusDate);
+		static {
+			Map<String, Function<ClientExtensionEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ClientExtensionEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ClientExtensionEntry::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", ClientExtensionEntry::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", ClientExtensionEntry::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				ClientExtensionEntry::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"clientExtensionEntryId",
+				ClientExtensionEntry::getClientExtensionEntryId);
+			attributeGetterFunctions.put(
+				"companyId", ClientExtensionEntry::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", ClientExtensionEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ClientExtensionEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ClientExtensionEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ClientExtensionEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"description", ClientExtensionEntry::getDescription);
+			attributeGetterFunctions.put("name", ClientExtensionEntry::getName);
+			attributeGetterFunctions.put(
+				"properties", ClientExtensionEntry::getProperties);
+			attributeGetterFunctions.put(
+				"sourceCodeURL", ClientExtensionEntry::getSourceCodeURL);
+			attributeGetterFunctions.put("type", ClientExtensionEntry::getType);
+			attributeGetterFunctions.put(
+				"typeSettings", ClientExtensionEntry::getTypeSettings);
+			attributeGetterFunctions.put(
+				"status", ClientExtensionEntry::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", ClientExtensionEntry::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", ClientExtensionEntry::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", ClientExtensionEntry::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<ClientExtensionEntry, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ClientExtensionEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<ClientExtensionEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ClientExtensionEntry, Long>)
+					ClientExtensionEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<ClientExtensionEntry, Long>)
+					ClientExtensionEntry::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ClientExtensionEntry, String>)
+					ClientExtensionEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<ClientExtensionEntry, String>)
+					ClientExtensionEntry::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"clientExtensionEntryId",
+				(BiConsumer<ClientExtensionEntry, Long>)
+					ClientExtensionEntry::setClientExtensionEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ClientExtensionEntry, Long>)
+					ClientExtensionEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ClientExtensionEntry, Long>)
+					ClientExtensionEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ClientExtensionEntry, String>)
+					ClientExtensionEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ClientExtensionEntry, Date>)
+					ClientExtensionEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ClientExtensionEntry, Date>)
+					ClientExtensionEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<ClientExtensionEntry, String>)
+					ClientExtensionEntry::setDescription);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<ClientExtensionEntry, String>)
+					ClientExtensionEntry::setName);
+			attributeSetterBiConsumers.put(
+				"properties",
+				(BiConsumer<ClientExtensionEntry, String>)
+					ClientExtensionEntry::setProperties);
+			attributeSetterBiConsumers.put(
+				"sourceCodeURL",
+				(BiConsumer<ClientExtensionEntry, String>)
+					ClientExtensionEntry::setSourceCodeURL);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<ClientExtensionEntry, String>)
+					ClientExtensionEntry::setType);
+			attributeSetterBiConsumers.put(
+				"typeSettings",
+				(BiConsumer<ClientExtensionEntry, String>)
+					ClientExtensionEntry::setTypeSettings);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<ClientExtensionEntry, Integer>)
+					ClientExtensionEntry::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<ClientExtensionEntry, Long>)
+					ClientExtensionEntry::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<ClientExtensionEntry, String>)
+					ClientExtensionEntry::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<ClientExtensionEntry, Date>)
+					ClientExtensionEntry::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1522,7 +1539,8 @@ public class ClientExtensionEntryModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<ClientExtensionEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -240,80 +240,98 @@ public class DDMContentModelImpl
 	public Map<String, Function<DDMContent, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<DDMContent, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DDMContent, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DDMContent, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<DDMContent, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<DDMContent, Object>>();
-		Map<String, BiConsumer<DDMContent, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<DDMContent, ?>>();
+		private static final Map<String, Function<DDMContent, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", DDMContent::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<DDMContent, Long>)DDMContent::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", DDMContent::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<DDMContent, Long>)DDMContent::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", DDMContent::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<DDMContent, String>)DDMContent::setUuid);
-		attributeGetterFunctions.put("contentId", DDMContent::getContentId);
-		attributeSetterBiConsumers.put(
-			"contentId",
-			(BiConsumer<DDMContent, Long>)DDMContent::setContentId);
-		attributeGetterFunctions.put("groupId", DDMContent::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<DDMContent, Long>)DDMContent::setGroupId);
-		attributeGetterFunctions.put("companyId", DDMContent::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DDMContent, Long>)DDMContent::setCompanyId);
-		attributeGetterFunctions.put("userId", DDMContent::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<DDMContent, Long>)DDMContent::setUserId);
-		attributeGetterFunctions.put("userName", DDMContent::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<DDMContent, String>)DDMContent::setUserName);
-		attributeGetterFunctions.put("createDate", DDMContent::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<DDMContent, Date>)DDMContent::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", DDMContent::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<DDMContent, Date>)DDMContent::setModifiedDate);
-		attributeGetterFunctions.put("name", DDMContent::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<DDMContent, String>)DDMContent::setName);
-		attributeGetterFunctions.put("description", DDMContent::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<DDMContent, String>)DDMContent::setDescription);
-		attributeGetterFunctions.put("data", DDMContent::getData);
-		attributeSetterBiConsumers.put(
-			"data", (BiConsumer<DDMContent, String>)DDMContent::setData);
+		static {
+			Map<String, Function<DDMContent, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<DDMContent, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", DDMContent::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", DDMContent::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", DDMContent::getUuid);
+			attributeGetterFunctions.put("contentId", DDMContent::getContentId);
+			attributeGetterFunctions.put("groupId", DDMContent::getGroupId);
+			attributeGetterFunctions.put("companyId", DDMContent::getCompanyId);
+			attributeGetterFunctions.put("userId", DDMContent::getUserId);
+			attributeGetterFunctions.put("userName", DDMContent::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", DDMContent::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", DDMContent::getModifiedDate);
+			attributeGetterFunctions.put("name", DDMContent::getName);
+			attributeGetterFunctions.put(
+				"description", DDMContent::getDescription);
+			attributeGetterFunctions.put("data", DDMContent::getData);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<DDMContent, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<DDMContent, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<DDMContent, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<DDMContent, Long>)DDMContent::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<DDMContent, Long>)DDMContent::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<DDMContent, String>)DDMContent::setUuid);
+			attributeSetterBiConsumers.put(
+				"contentId",
+				(BiConsumer<DDMContent, Long>)DDMContent::setContentId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<DDMContent, Long>)DDMContent::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<DDMContent, Long>)DDMContent::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<DDMContent, Long>)DDMContent::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<DDMContent, String>)DDMContent::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<DDMContent, Date>)DDMContent::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<DDMContent, Date>)DDMContent::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name", (BiConsumer<DDMContent, String>)DDMContent::setName);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<DDMContent, String>)DDMContent::setDescription);
+			attributeSetterBiConsumers.put(
+				"data", (BiConsumer<DDMContent, String>)DDMContent::setData);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -1059,8 +1077,9 @@ public class DDMContentModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<DDMContent, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<DDMContent, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

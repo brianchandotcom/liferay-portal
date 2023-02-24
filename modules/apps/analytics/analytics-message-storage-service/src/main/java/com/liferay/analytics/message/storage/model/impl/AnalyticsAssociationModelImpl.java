@@ -233,96 +233,113 @@ public class AnalyticsAssociationModelImpl
 	public Map<String, Function<AnalyticsAssociation, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<AnalyticsAssociation, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<AnalyticsAssociation, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<AnalyticsAssociation, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<AnalyticsAssociation, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<AnalyticsAssociation, Object>>();
-		Map<String, BiConsumer<AnalyticsAssociation, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<AnalyticsAssociation, ?>>();
+		private static final Map<String, Function<AnalyticsAssociation, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", AnalyticsAssociation::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<AnalyticsAssociation, Long>)
-				AnalyticsAssociation::setMvccVersion);
-		attributeGetterFunctions.put(
-			"analyticsAssociationId",
-			AnalyticsAssociation::getAnalyticsAssociationId);
-		attributeSetterBiConsumers.put(
-			"analyticsAssociationId",
-			(BiConsumer<AnalyticsAssociation, Long>)
-				AnalyticsAssociation::setAnalyticsAssociationId);
-		attributeGetterFunctions.put(
-			"companyId", AnalyticsAssociation::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<AnalyticsAssociation, Long>)
-				AnalyticsAssociation::setCompanyId);
-		attributeGetterFunctions.put(
-			"createDate", AnalyticsAssociation::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<AnalyticsAssociation, Date>)
-				AnalyticsAssociation::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", AnalyticsAssociation::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<AnalyticsAssociation, Date>)
-				AnalyticsAssociation::setModifiedDate);
-		attributeGetterFunctions.put("userId", AnalyticsAssociation::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<AnalyticsAssociation, Long>)
-				AnalyticsAssociation::setUserId);
-		attributeGetterFunctions.put(
-			"associationClassName",
-			AnalyticsAssociation::getAssociationClassName);
-		attributeSetterBiConsumers.put(
-			"associationClassName",
-			(BiConsumer<AnalyticsAssociation, String>)
-				AnalyticsAssociation::setAssociationClassName);
-		attributeGetterFunctions.put(
-			"associationClassPK", AnalyticsAssociation::getAssociationClassPK);
-		attributeSetterBiConsumers.put(
-			"associationClassPK",
-			(BiConsumer<AnalyticsAssociation, Long>)
-				AnalyticsAssociation::setAssociationClassPK);
-		attributeGetterFunctions.put(
-			"className", AnalyticsAssociation::getClassName);
-		attributeSetterBiConsumers.put(
-			"className",
-			(BiConsumer<AnalyticsAssociation, String>)
-				AnalyticsAssociation::setClassName);
-		attributeGetterFunctions.put(
-			"classPK", AnalyticsAssociation::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<AnalyticsAssociation, Long>)
-				AnalyticsAssociation::setClassPK);
+		static {
+			Map<String, Function<AnalyticsAssociation, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<AnalyticsAssociation, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", AnalyticsAssociation::getMvccVersion);
+			attributeGetterFunctions.put(
+				"analyticsAssociationId",
+				AnalyticsAssociation::getAnalyticsAssociationId);
+			attributeGetterFunctions.put(
+				"companyId", AnalyticsAssociation::getCompanyId);
+			attributeGetterFunctions.put(
+				"createDate", AnalyticsAssociation::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", AnalyticsAssociation::getModifiedDate);
+			attributeGetterFunctions.put(
+				"userId", AnalyticsAssociation::getUserId);
+			attributeGetterFunctions.put(
+				"associationClassName",
+				AnalyticsAssociation::getAssociationClassName);
+			attributeGetterFunctions.put(
+				"associationClassPK",
+				AnalyticsAssociation::getAssociationClassPK);
+			attributeGetterFunctions.put(
+				"className", AnalyticsAssociation::getClassName);
+			attributeGetterFunctions.put(
+				"classPK", AnalyticsAssociation::getClassPK);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<AnalyticsAssociation, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<AnalyticsAssociation, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<AnalyticsAssociation, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<AnalyticsAssociation, Long>)
+					AnalyticsAssociation::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"analyticsAssociationId",
+				(BiConsumer<AnalyticsAssociation, Long>)
+					AnalyticsAssociation::setAnalyticsAssociationId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<AnalyticsAssociation, Long>)
+					AnalyticsAssociation::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<AnalyticsAssociation, Date>)
+					AnalyticsAssociation::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<AnalyticsAssociation, Date>)
+					AnalyticsAssociation::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<AnalyticsAssociation, Long>)
+					AnalyticsAssociation::setUserId);
+			attributeSetterBiConsumers.put(
+				"associationClassName",
+				(BiConsumer<AnalyticsAssociation, String>)
+					AnalyticsAssociation::setAssociationClassName);
+			attributeSetterBiConsumers.put(
+				"associationClassPK",
+				(BiConsumer<AnalyticsAssociation, Long>)
+					AnalyticsAssociation::setAssociationClassPK);
+			attributeSetterBiConsumers.put(
+				"className",
+				(BiConsumer<AnalyticsAssociation, String>)
+					AnalyticsAssociation::setClassName);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<AnalyticsAssociation, Long>)
+					AnalyticsAssociation::setClassPK);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -844,7 +861,8 @@ public class AnalyticsAssociationModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<AnalyticsAssociation, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

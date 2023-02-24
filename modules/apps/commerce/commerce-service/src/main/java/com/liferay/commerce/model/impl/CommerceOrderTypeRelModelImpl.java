@@ -254,108 +254,124 @@ public class CommerceOrderTypeRelModelImpl
 	public Map<String, Function<CommerceOrderTypeRel, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceOrderTypeRel, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CommerceOrderTypeRel, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CommerceOrderTypeRel, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceOrderTypeRel, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceOrderTypeRel, Object>>();
-		Map<String, BiConsumer<CommerceOrderTypeRel, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CommerceOrderTypeRel, ?>>();
+		private static final Map<String, Function<CommerceOrderTypeRel, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceOrderTypeRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceOrderTypeRel, Long>)
-				CommerceOrderTypeRel::setMvccVersion);
-		attributeGetterFunctions.put("uuid", CommerceOrderTypeRel::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CommerceOrderTypeRel, String>)
-				CommerceOrderTypeRel::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			CommerceOrderTypeRel::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CommerceOrderTypeRel, String>)
-				CommerceOrderTypeRel::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"commerceOrderTypeRelId",
-			CommerceOrderTypeRel::getCommerceOrderTypeRelId);
-		attributeSetterBiConsumers.put(
-			"commerceOrderTypeRelId",
-			(BiConsumer<CommerceOrderTypeRel, Long>)
-				CommerceOrderTypeRel::setCommerceOrderTypeRelId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceOrderTypeRel::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceOrderTypeRel, Long>)
-				CommerceOrderTypeRel::setCompanyId);
-		attributeGetterFunctions.put("userId", CommerceOrderTypeRel::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceOrderTypeRel, Long>)
-				CommerceOrderTypeRel::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceOrderTypeRel::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceOrderTypeRel, String>)
-				CommerceOrderTypeRel::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceOrderTypeRel::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceOrderTypeRel, Date>)
-				CommerceOrderTypeRel::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceOrderTypeRel::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceOrderTypeRel, Date>)
-				CommerceOrderTypeRel::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId", CommerceOrderTypeRel::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<CommerceOrderTypeRel, Long>)
-				CommerceOrderTypeRel::setClassNameId);
-		attributeGetterFunctions.put(
-			"classPK", CommerceOrderTypeRel::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<CommerceOrderTypeRel, Long>)
-				CommerceOrderTypeRel::setClassPK);
-		attributeGetterFunctions.put(
-			"commerceOrderTypeId",
-			CommerceOrderTypeRel::getCommerceOrderTypeId);
-		attributeSetterBiConsumers.put(
-			"commerceOrderTypeId",
-			(BiConsumer<CommerceOrderTypeRel, Long>)
-				CommerceOrderTypeRel::setCommerceOrderTypeId);
+		static {
+			Map<String, Function<CommerceOrderTypeRel, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CommerceOrderTypeRel, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceOrderTypeRel::getMvccVersion);
+			attributeGetterFunctions.put("uuid", CommerceOrderTypeRel::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CommerceOrderTypeRel::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"commerceOrderTypeRelId",
+				CommerceOrderTypeRel::getCommerceOrderTypeRelId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceOrderTypeRel::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceOrderTypeRel::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceOrderTypeRel::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceOrderTypeRel::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceOrderTypeRel::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId", CommerceOrderTypeRel::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", CommerceOrderTypeRel::getClassPK);
+			attributeGetterFunctions.put(
+				"commerceOrderTypeId",
+				CommerceOrderTypeRel::getCommerceOrderTypeId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceOrderTypeRel, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceOrderTypeRel, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommerceOrderTypeRel, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceOrderTypeRel, Long>)
+					CommerceOrderTypeRel::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CommerceOrderTypeRel, String>)
+					CommerceOrderTypeRel::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CommerceOrderTypeRel, String>)
+					CommerceOrderTypeRel::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"commerceOrderTypeRelId",
+				(BiConsumer<CommerceOrderTypeRel, Long>)
+					CommerceOrderTypeRel::setCommerceOrderTypeRelId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceOrderTypeRel, Long>)
+					CommerceOrderTypeRel::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceOrderTypeRel, Long>)
+					CommerceOrderTypeRel::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceOrderTypeRel, String>)
+					CommerceOrderTypeRel::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceOrderTypeRel, Date>)
+					CommerceOrderTypeRel::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceOrderTypeRel, Date>)
+					CommerceOrderTypeRel::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<CommerceOrderTypeRel, Long>)
+					CommerceOrderTypeRel::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<CommerceOrderTypeRel, Long>)
+					CommerceOrderTypeRel::setClassPK);
+			attributeSetterBiConsumers.put(
+				"commerceOrderTypeId",
+				(BiConsumer<CommerceOrderTypeRel, Long>)
+					CommerceOrderTypeRel::setCommerceOrderTypeId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -990,7 +1006,8 @@ public class CommerceOrderTypeRelModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceOrderTypeRel, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

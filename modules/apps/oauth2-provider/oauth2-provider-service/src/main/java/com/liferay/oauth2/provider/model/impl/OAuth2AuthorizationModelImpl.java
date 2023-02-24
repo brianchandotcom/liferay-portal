@@ -275,150 +275,170 @@ public class OAuth2AuthorizationModelImpl
 	public Map<String, Function<OAuth2Authorization, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<OAuth2Authorization, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<OAuth2Authorization, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<OAuth2Authorization, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<OAuth2Authorization, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<OAuth2Authorization, Object>>();
-		Map<String, BiConsumer<OAuth2Authorization, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<OAuth2Authorization, ?>>();
+		private static final Map<String, Function<OAuth2Authorization, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"oAuth2AuthorizationId",
-			OAuth2Authorization::getOAuth2AuthorizationId);
-		attributeSetterBiConsumers.put(
-			"oAuth2AuthorizationId",
-			(BiConsumer<OAuth2Authorization, Long>)
-				OAuth2Authorization::setOAuth2AuthorizationId);
-		attributeGetterFunctions.put(
-			"companyId", OAuth2Authorization::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<OAuth2Authorization, Long>)
-				OAuth2Authorization::setCompanyId);
-		attributeGetterFunctions.put("userId", OAuth2Authorization::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<OAuth2Authorization, Long>)
-				OAuth2Authorization::setUserId);
-		attributeGetterFunctions.put(
-			"userName", OAuth2Authorization::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<OAuth2Authorization, String>)
-				OAuth2Authorization::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", OAuth2Authorization::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<OAuth2Authorization, Date>)
-				OAuth2Authorization::setCreateDate);
-		attributeGetterFunctions.put(
-			"oAuth2ApplicationId", OAuth2Authorization::getOAuth2ApplicationId);
-		attributeSetterBiConsumers.put(
-			"oAuth2ApplicationId",
-			(BiConsumer<OAuth2Authorization, Long>)
-				OAuth2Authorization::setOAuth2ApplicationId);
-		attributeGetterFunctions.put(
-			"oAuth2ApplicationScopeAliasesId",
-			OAuth2Authorization::getOAuth2ApplicationScopeAliasesId);
-		attributeSetterBiConsumers.put(
-			"oAuth2ApplicationScopeAliasesId",
-			(BiConsumer<OAuth2Authorization, Long>)
-				OAuth2Authorization::setOAuth2ApplicationScopeAliasesId);
-		attributeGetterFunctions.put(
-			"accessTokenContent", OAuth2Authorization::getAccessTokenContent);
-		attributeSetterBiConsumers.put(
-			"accessTokenContent",
-			(BiConsumer<OAuth2Authorization, String>)
-				OAuth2Authorization::setAccessTokenContent);
-		attributeGetterFunctions.put(
-			"accessTokenContentHash",
-			OAuth2Authorization::getAccessTokenContentHash);
-		attributeSetterBiConsumers.put(
-			"accessTokenContentHash",
-			(BiConsumer<OAuth2Authorization, Long>)
-				OAuth2Authorization::setAccessTokenContentHash);
-		attributeGetterFunctions.put(
-			"accessTokenCreateDate",
-			OAuth2Authorization::getAccessTokenCreateDate);
-		attributeSetterBiConsumers.put(
-			"accessTokenCreateDate",
-			(BiConsumer<OAuth2Authorization, Date>)
-				OAuth2Authorization::setAccessTokenCreateDate);
-		attributeGetterFunctions.put(
-			"accessTokenExpirationDate",
-			OAuth2Authorization::getAccessTokenExpirationDate);
-		attributeSetterBiConsumers.put(
-			"accessTokenExpirationDate",
-			(BiConsumer<OAuth2Authorization, Date>)
-				OAuth2Authorization::setAccessTokenExpirationDate);
-		attributeGetterFunctions.put(
-			"remoteHostInfo", OAuth2Authorization::getRemoteHostInfo);
-		attributeSetterBiConsumers.put(
-			"remoteHostInfo",
-			(BiConsumer<OAuth2Authorization, String>)
-				OAuth2Authorization::setRemoteHostInfo);
-		attributeGetterFunctions.put(
-			"remoteIPInfo", OAuth2Authorization::getRemoteIPInfo);
-		attributeSetterBiConsumers.put(
-			"remoteIPInfo",
-			(BiConsumer<OAuth2Authorization, String>)
-				OAuth2Authorization::setRemoteIPInfo);
-		attributeGetterFunctions.put(
-			"refreshTokenContent", OAuth2Authorization::getRefreshTokenContent);
-		attributeSetterBiConsumers.put(
-			"refreshTokenContent",
-			(BiConsumer<OAuth2Authorization, String>)
-				OAuth2Authorization::setRefreshTokenContent);
-		attributeGetterFunctions.put(
-			"refreshTokenContentHash",
-			OAuth2Authorization::getRefreshTokenContentHash);
-		attributeSetterBiConsumers.put(
-			"refreshTokenContentHash",
-			(BiConsumer<OAuth2Authorization, Long>)
-				OAuth2Authorization::setRefreshTokenContentHash);
-		attributeGetterFunctions.put(
-			"refreshTokenCreateDate",
-			OAuth2Authorization::getRefreshTokenCreateDate);
-		attributeSetterBiConsumers.put(
-			"refreshTokenCreateDate",
-			(BiConsumer<OAuth2Authorization, Date>)
-				OAuth2Authorization::setRefreshTokenCreateDate);
-		attributeGetterFunctions.put(
-			"refreshTokenExpirationDate",
-			OAuth2Authorization::getRefreshTokenExpirationDate);
-		attributeSetterBiConsumers.put(
-			"refreshTokenExpirationDate",
-			(BiConsumer<OAuth2Authorization, Date>)
-				OAuth2Authorization::setRefreshTokenExpirationDate);
-		attributeGetterFunctions.put(
-			"rememberDeviceContent",
-			OAuth2Authorization::getRememberDeviceContent);
-		attributeSetterBiConsumers.put(
-			"rememberDeviceContent",
-			(BiConsumer<OAuth2Authorization, String>)
-				OAuth2Authorization::setRememberDeviceContent);
+		static {
+			Map<String, Function<OAuth2Authorization, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<OAuth2Authorization, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"oAuth2AuthorizationId",
+				OAuth2Authorization::getOAuth2AuthorizationId);
+			attributeGetterFunctions.put(
+				"companyId", OAuth2Authorization::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", OAuth2Authorization::getUserId);
+			attributeGetterFunctions.put(
+				"userName", OAuth2Authorization::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", OAuth2Authorization::getCreateDate);
+			attributeGetterFunctions.put(
+				"oAuth2ApplicationId",
+				OAuth2Authorization::getOAuth2ApplicationId);
+			attributeGetterFunctions.put(
+				"oAuth2ApplicationScopeAliasesId",
+				OAuth2Authorization::getOAuth2ApplicationScopeAliasesId);
+			attributeGetterFunctions.put(
+				"accessTokenContent",
+				OAuth2Authorization::getAccessTokenContent);
+			attributeGetterFunctions.put(
+				"accessTokenContentHash",
+				OAuth2Authorization::getAccessTokenContentHash);
+			attributeGetterFunctions.put(
+				"accessTokenCreateDate",
+				OAuth2Authorization::getAccessTokenCreateDate);
+			attributeGetterFunctions.put(
+				"accessTokenExpirationDate",
+				OAuth2Authorization::getAccessTokenExpirationDate);
+			attributeGetterFunctions.put(
+				"remoteHostInfo", OAuth2Authorization::getRemoteHostInfo);
+			attributeGetterFunctions.put(
+				"remoteIPInfo", OAuth2Authorization::getRemoteIPInfo);
+			attributeGetterFunctions.put(
+				"refreshTokenContent",
+				OAuth2Authorization::getRefreshTokenContent);
+			attributeGetterFunctions.put(
+				"refreshTokenContentHash",
+				OAuth2Authorization::getRefreshTokenContentHash);
+			attributeGetterFunctions.put(
+				"refreshTokenCreateDate",
+				OAuth2Authorization::getRefreshTokenCreateDate);
+			attributeGetterFunctions.put(
+				"refreshTokenExpirationDate",
+				OAuth2Authorization::getRefreshTokenExpirationDate);
+			attributeGetterFunctions.put(
+				"rememberDeviceContent",
+				OAuth2Authorization::getRememberDeviceContent);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<OAuth2Authorization, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<OAuth2Authorization, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<OAuth2Authorization, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"oAuth2AuthorizationId",
+				(BiConsumer<OAuth2Authorization, Long>)
+					OAuth2Authorization::setOAuth2AuthorizationId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<OAuth2Authorization, Long>)
+					OAuth2Authorization::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<OAuth2Authorization, Long>)
+					OAuth2Authorization::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<OAuth2Authorization, String>)
+					OAuth2Authorization::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<OAuth2Authorization, Date>)
+					OAuth2Authorization::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"oAuth2ApplicationId",
+				(BiConsumer<OAuth2Authorization, Long>)
+					OAuth2Authorization::setOAuth2ApplicationId);
+			attributeSetterBiConsumers.put(
+				"oAuth2ApplicationScopeAliasesId",
+				(BiConsumer<OAuth2Authorization, Long>)
+					OAuth2Authorization::setOAuth2ApplicationScopeAliasesId);
+			attributeSetterBiConsumers.put(
+				"accessTokenContent",
+				(BiConsumer<OAuth2Authorization, String>)
+					OAuth2Authorization::setAccessTokenContent);
+			attributeSetterBiConsumers.put(
+				"accessTokenContentHash",
+				(BiConsumer<OAuth2Authorization, Long>)
+					OAuth2Authorization::setAccessTokenContentHash);
+			attributeSetterBiConsumers.put(
+				"accessTokenCreateDate",
+				(BiConsumer<OAuth2Authorization, Date>)
+					OAuth2Authorization::setAccessTokenCreateDate);
+			attributeSetterBiConsumers.put(
+				"accessTokenExpirationDate",
+				(BiConsumer<OAuth2Authorization, Date>)
+					OAuth2Authorization::setAccessTokenExpirationDate);
+			attributeSetterBiConsumers.put(
+				"remoteHostInfo",
+				(BiConsumer<OAuth2Authorization, String>)
+					OAuth2Authorization::setRemoteHostInfo);
+			attributeSetterBiConsumers.put(
+				"remoteIPInfo",
+				(BiConsumer<OAuth2Authorization, String>)
+					OAuth2Authorization::setRemoteIPInfo);
+			attributeSetterBiConsumers.put(
+				"refreshTokenContent",
+				(BiConsumer<OAuth2Authorization, String>)
+					OAuth2Authorization::setRefreshTokenContent);
+			attributeSetterBiConsumers.put(
+				"refreshTokenContentHash",
+				(BiConsumer<OAuth2Authorization, Long>)
+					OAuth2Authorization::setRefreshTokenContentHash);
+			attributeSetterBiConsumers.put(
+				"refreshTokenCreateDate",
+				(BiConsumer<OAuth2Authorization, Date>)
+					OAuth2Authorization::setRefreshTokenCreateDate);
+			attributeSetterBiConsumers.put(
+				"refreshTokenExpirationDate",
+				(BiConsumer<OAuth2Authorization, Date>)
+					OAuth2Authorization::setRefreshTokenExpirationDate);
+			attributeSetterBiConsumers.put(
+				"rememberDeviceContent",
+				(BiConsumer<OAuth2Authorization, String>)
+					OAuth2Authorization::setRememberDeviceContent);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -1206,7 +1226,8 @@ public class OAuth2AuthorizationModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<OAuth2Authorization, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

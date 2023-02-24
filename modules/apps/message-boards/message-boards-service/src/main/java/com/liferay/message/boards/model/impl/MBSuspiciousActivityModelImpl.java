@@ -254,117 +254,134 @@ public class MBSuspiciousActivityModelImpl
 	public Map<String, Function<MBSuspiciousActivity, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<MBSuspiciousActivity, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<MBSuspiciousActivity, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<MBSuspiciousActivity, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<MBSuspiciousActivity, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<MBSuspiciousActivity, Object>>();
-		Map<String, BiConsumer<MBSuspiciousActivity, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<MBSuspiciousActivity, ?>>();
+		private static final Map<String, Function<MBSuspiciousActivity, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", MBSuspiciousActivity::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<MBSuspiciousActivity, Long>)
-				MBSuspiciousActivity::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", MBSuspiciousActivity::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<MBSuspiciousActivity, Long>)
-				MBSuspiciousActivity::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", MBSuspiciousActivity::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<MBSuspiciousActivity, String>)
-				MBSuspiciousActivity::setUuid);
-		attributeGetterFunctions.put(
-			"suspiciousActivityId",
-			MBSuspiciousActivity::getSuspiciousActivityId);
-		attributeSetterBiConsumers.put(
-			"suspiciousActivityId",
-			(BiConsumer<MBSuspiciousActivity, Long>)
-				MBSuspiciousActivity::setSuspiciousActivityId);
-		attributeGetterFunctions.put(
-			"groupId", MBSuspiciousActivity::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<MBSuspiciousActivity, Long>)
-				MBSuspiciousActivity::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", MBSuspiciousActivity::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<MBSuspiciousActivity, Long>)
-				MBSuspiciousActivity::setCompanyId);
-		attributeGetterFunctions.put("userId", MBSuspiciousActivity::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<MBSuspiciousActivity, Long>)
-				MBSuspiciousActivity::setUserId);
-		attributeGetterFunctions.put(
-			"userName", MBSuspiciousActivity::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<MBSuspiciousActivity, String>)
-				MBSuspiciousActivity::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", MBSuspiciousActivity::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<MBSuspiciousActivity, Date>)
-				MBSuspiciousActivity::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", MBSuspiciousActivity::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<MBSuspiciousActivity, Date>)
-				MBSuspiciousActivity::setModifiedDate);
-		attributeGetterFunctions.put(
-			"messageId", MBSuspiciousActivity::getMessageId);
-		attributeSetterBiConsumers.put(
-			"messageId",
-			(BiConsumer<MBSuspiciousActivity, Long>)
-				MBSuspiciousActivity::setMessageId);
-		attributeGetterFunctions.put(
-			"threadId", MBSuspiciousActivity::getThreadId);
-		attributeSetterBiConsumers.put(
-			"threadId",
-			(BiConsumer<MBSuspiciousActivity, Long>)
-				MBSuspiciousActivity::setThreadId);
-		attributeGetterFunctions.put("reason", MBSuspiciousActivity::getReason);
-		attributeSetterBiConsumers.put(
-			"reason",
-			(BiConsumer<MBSuspiciousActivity, String>)
-				MBSuspiciousActivity::setReason);
-		attributeGetterFunctions.put(
-			"validated", MBSuspiciousActivity::getValidated);
-		attributeSetterBiConsumers.put(
-			"validated",
-			(BiConsumer<MBSuspiciousActivity, Boolean>)
-				MBSuspiciousActivity::setValidated);
+		static {
+			Map<String, Function<MBSuspiciousActivity, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<MBSuspiciousActivity, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", MBSuspiciousActivity::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", MBSuspiciousActivity::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", MBSuspiciousActivity::getUuid);
+			attributeGetterFunctions.put(
+				"suspiciousActivityId",
+				MBSuspiciousActivity::getSuspiciousActivityId);
+			attributeGetterFunctions.put(
+				"groupId", MBSuspiciousActivity::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", MBSuspiciousActivity::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", MBSuspiciousActivity::getUserId);
+			attributeGetterFunctions.put(
+				"userName", MBSuspiciousActivity::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", MBSuspiciousActivity::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", MBSuspiciousActivity::getModifiedDate);
+			attributeGetterFunctions.put(
+				"messageId", MBSuspiciousActivity::getMessageId);
+			attributeGetterFunctions.put(
+				"threadId", MBSuspiciousActivity::getThreadId);
+			attributeGetterFunctions.put(
+				"reason", MBSuspiciousActivity::getReason);
+			attributeGetterFunctions.put(
+				"validated", MBSuspiciousActivity::getValidated);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<MBSuspiciousActivity, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<MBSuspiciousActivity, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<MBSuspiciousActivity, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<MBSuspiciousActivity, Long>)
+					MBSuspiciousActivity::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<MBSuspiciousActivity, Long>)
+					MBSuspiciousActivity::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<MBSuspiciousActivity, String>)
+					MBSuspiciousActivity::setUuid);
+			attributeSetterBiConsumers.put(
+				"suspiciousActivityId",
+				(BiConsumer<MBSuspiciousActivity, Long>)
+					MBSuspiciousActivity::setSuspiciousActivityId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<MBSuspiciousActivity, Long>)
+					MBSuspiciousActivity::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<MBSuspiciousActivity, Long>)
+					MBSuspiciousActivity::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<MBSuspiciousActivity, Long>)
+					MBSuspiciousActivity::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<MBSuspiciousActivity, String>)
+					MBSuspiciousActivity::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<MBSuspiciousActivity, Date>)
+					MBSuspiciousActivity::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<MBSuspiciousActivity, Date>)
+					MBSuspiciousActivity::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"messageId",
+				(BiConsumer<MBSuspiciousActivity, Long>)
+					MBSuspiciousActivity::setMessageId);
+			attributeSetterBiConsumers.put(
+				"threadId",
+				(BiConsumer<MBSuspiciousActivity, Long>)
+					MBSuspiciousActivity::setThreadId);
+			attributeSetterBiConsumers.put(
+				"reason",
+				(BiConsumer<MBSuspiciousActivity, String>)
+					MBSuspiciousActivity::setReason);
+			attributeSetterBiConsumers.put(
+				"validated",
+				(BiConsumer<MBSuspiciousActivity, Boolean>)
+					MBSuspiciousActivity::setValidated);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1042,7 +1059,8 @@ public class MBSuspiciousActivityModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<MBSuspiciousActivity, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -250,98 +250,123 @@ public class CPOptionModelImpl
 	public Map<String, Function<CPOption, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CPOption, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CPOption, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CPOption, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CPOption, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<CPOption, Object>>();
-		Map<String, BiConsumer<CPOption, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<CPOption, ?>>();
+		private static final Map<String, Function<CPOption, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", CPOption::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPOption, Long>)CPOption::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CPOption::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CPOption, Long>)CPOption::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", CPOption::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<CPOption, String>)CPOption::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", CPOption::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CPOption, String>)CPOption::setExternalReferenceCode);
-		attributeGetterFunctions.put("CPOptionId", CPOption::getCPOptionId);
-		attributeSetterBiConsumers.put(
-			"CPOptionId", (BiConsumer<CPOption, Long>)CPOption::setCPOptionId);
-		attributeGetterFunctions.put("companyId", CPOption::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<CPOption, Long>)CPOption::setCompanyId);
-		attributeGetterFunctions.put("userId", CPOption::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<CPOption, Long>)CPOption::setUserId);
-		attributeGetterFunctions.put("userName", CPOption::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<CPOption, String>)CPOption::setUserName);
-		attributeGetterFunctions.put("createDate", CPOption::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<CPOption, Date>)CPOption::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", CPOption::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CPOption, Date>)CPOption::setModifiedDate);
-		attributeGetterFunctions.put("name", CPOption::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<CPOption, String>)CPOption::setName);
-		attributeGetterFunctions.put("description", CPOption::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<CPOption, String>)CPOption::setDescription);
-		attributeGetterFunctions.put(
-			"DDMFormFieldTypeName", CPOption::getDDMFormFieldTypeName);
-		attributeSetterBiConsumers.put(
-			"DDMFormFieldTypeName",
-			(BiConsumer<CPOption, String>)CPOption::setDDMFormFieldTypeName);
-		attributeGetterFunctions.put("facetable", CPOption::getFacetable);
-		attributeSetterBiConsumers.put(
-			"facetable", (BiConsumer<CPOption, Boolean>)CPOption::setFacetable);
-		attributeGetterFunctions.put("required", CPOption::getRequired);
-		attributeSetterBiConsumers.put(
-			"required", (BiConsumer<CPOption, Boolean>)CPOption::setRequired);
-		attributeGetterFunctions.put(
-			"skuContributor", CPOption::getSkuContributor);
-		attributeSetterBiConsumers.put(
-			"skuContributor",
-			(BiConsumer<CPOption, Boolean>)CPOption::setSkuContributor);
-		attributeGetterFunctions.put("key", CPOption::getKey);
-		attributeSetterBiConsumers.put(
-			"key", (BiConsumer<CPOption, String>)CPOption::setKey);
-		attributeGetterFunctions.put(
-			"lastPublishDate", CPOption::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<CPOption, Date>)CPOption::setLastPublishDate);
+		static {
+			Map<String, Function<CPOption, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<CPOption, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CPOption::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CPOption::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", CPOption::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode", CPOption::getExternalReferenceCode);
+			attributeGetterFunctions.put("CPOptionId", CPOption::getCPOptionId);
+			attributeGetterFunctions.put("companyId", CPOption::getCompanyId);
+			attributeGetterFunctions.put("userId", CPOption::getUserId);
+			attributeGetterFunctions.put("userName", CPOption::getUserName);
+			attributeGetterFunctions.put("createDate", CPOption::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CPOption::getModifiedDate);
+			attributeGetterFunctions.put("name", CPOption::getName);
+			attributeGetterFunctions.put(
+				"description", CPOption::getDescription);
+			attributeGetterFunctions.put(
+				"DDMFormFieldTypeName", CPOption::getDDMFormFieldTypeName);
+			attributeGetterFunctions.put("facetable", CPOption::getFacetable);
+			attributeGetterFunctions.put("required", CPOption::getRequired);
+			attributeGetterFunctions.put(
+				"skuContributor", CPOption::getSkuContributor);
+			attributeGetterFunctions.put("key", CPOption::getKey);
+			attributeGetterFunctions.put(
+				"lastPublishDate", CPOption::getLastPublishDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CPOption, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CPOption, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<CPOption, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CPOption, Long>)CPOption::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CPOption, Long>)CPOption::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<CPOption, String>)CPOption::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CPOption, String>)
+					CPOption::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"CPOptionId",
+				(BiConsumer<CPOption, Long>)CPOption::setCPOptionId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CPOption, Long>)CPOption::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<CPOption, Long>)CPOption::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CPOption, String>)CPOption::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CPOption, Date>)CPOption::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CPOption, Date>)CPOption::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name", (BiConsumer<CPOption, String>)CPOption::setName);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<CPOption, String>)CPOption::setDescription);
+			attributeSetterBiConsumers.put(
+				"DDMFormFieldTypeName",
+				(BiConsumer<CPOption, String>)
+					CPOption::setDDMFormFieldTypeName);
+			attributeSetterBiConsumers.put(
+				"facetable",
+				(BiConsumer<CPOption, Boolean>)CPOption::setFacetable);
+			attributeSetterBiConsumers.put(
+				"required",
+				(BiConsumer<CPOption, Boolean>)CPOption::setRequired);
+			attributeSetterBiConsumers.put(
+				"skuContributor",
+				(BiConsumer<CPOption, Boolean>)CPOption::setSkuContributor);
+			attributeSetterBiConsumers.put(
+				"key", (BiConsumer<CPOption, String>)CPOption::setKey);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<CPOption, Date>)CPOption::setLastPublishDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1379,8 +1404,9 @@ public class CPOptionModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<CPOption, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<CPOption, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -242,76 +242,97 @@ public class LayoutBranchModelImpl
 	public Map<String, Function<LayoutBranch, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<LayoutBranch, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<LayoutBranch, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<LayoutBranch, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<LayoutBranch, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<LayoutBranch, Object>>();
-		Map<String, BiConsumer<LayoutBranch, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<LayoutBranch, ?>>();
+		private static final Map<String, Function<LayoutBranch, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", LayoutBranch::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<LayoutBranch, Long>)LayoutBranch::setMvccVersion);
-		attributeGetterFunctions.put(
-			"layoutBranchId", LayoutBranch::getLayoutBranchId);
-		attributeSetterBiConsumers.put(
-			"layoutBranchId",
-			(BiConsumer<LayoutBranch, Long>)LayoutBranch::setLayoutBranchId);
-		attributeGetterFunctions.put("groupId", LayoutBranch::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<LayoutBranch, Long>)LayoutBranch::setGroupId);
-		attributeGetterFunctions.put("companyId", LayoutBranch::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<LayoutBranch, Long>)LayoutBranch::setCompanyId);
-		attributeGetterFunctions.put("userId", LayoutBranch::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<LayoutBranch, Long>)LayoutBranch::setUserId);
-		attributeGetterFunctions.put("userName", LayoutBranch::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<LayoutBranch, String>)LayoutBranch::setUserName);
-		attributeGetterFunctions.put(
-			"layoutSetBranchId", LayoutBranch::getLayoutSetBranchId);
-		attributeSetterBiConsumers.put(
-			"layoutSetBranchId",
-			(BiConsumer<LayoutBranch, Long>)LayoutBranch::setLayoutSetBranchId);
-		attributeGetterFunctions.put("plid", LayoutBranch::getPlid);
-		attributeSetterBiConsumers.put(
-			"plid", (BiConsumer<LayoutBranch, Long>)LayoutBranch::setPlid);
-		attributeGetterFunctions.put("name", LayoutBranch::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<LayoutBranch, String>)LayoutBranch::setName);
-		attributeGetterFunctions.put(
-			"description", LayoutBranch::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<LayoutBranch, String>)LayoutBranch::setDescription);
-		attributeGetterFunctions.put("master", LayoutBranch::getMaster);
-		attributeSetterBiConsumers.put(
-			"master",
-			(BiConsumer<LayoutBranch, Boolean>)LayoutBranch::setMaster);
+		static {
+			Map<String, Function<LayoutBranch, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<LayoutBranch, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", LayoutBranch::getMvccVersion);
+			attributeGetterFunctions.put(
+				"layoutBranchId", LayoutBranch::getLayoutBranchId);
+			attributeGetterFunctions.put("groupId", LayoutBranch::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", LayoutBranch::getCompanyId);
+			attributeGetterFunctions.put("userId", LayoutBranch::getUserId);
+			attributeGetterFunctions.put("userName", LayoutBranch::getUserName);
+			attributeGetterFunctions.put(
+				"layoutSetBranchId", LayoutBranch::getLayoutSetBranchId);
+			attributeGetterFunctions.put("plid", LayoutBranch::getPlid);
+			attributeGetterFunctions.put("name", LayoutBranch::getName);
+			attributeGetterFunctions.put(
+				"description", LayoutBranch::getDescription);
+			attributeGetterFunctions.put("master", LayoutBranch::getMaster);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<LayoutBranch, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<LayoutBranch, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<LayoutBranch, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<LayoutBranch, Long>)LayoutBranch::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"layoutBranchId",
+				(BiConsumer<LayoutBranch, Long>)
+					LayoutBranch::setLayoutBranchId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<LayoutBranch, Long>)LayoutBranch::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<LayoutBranch, Long>)LayoutBranch::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<LayoutBranch, Long>)LayoutBranch::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<LayoutBranch, String>)LayoutBranch::setUserName);
+			attributeSetterBiConsumers.put(
+				"layoutSetBranchId",
+				(BiConsumer<LayoutBranch, Long>)
+					LayoutBranch::setLayoutSetBranchId);
+			attributeSetterBiConsumers.put(
+				"plid", (BiConsumer<LayoutBranch, Long>)LayoutBranch::setPlid);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<LayoutBranch, String>)LayoutBranch::setName);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<LayoutBranch, String>)LayoutBranch::setDescription);
+			attributeSetterBiConsumers.put(
+				"master",
+				(BiConsumer<LayoutBranch, Boolean>)LayoutBranch::setMaster);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -840,8 +861,9 @@ public class LayoutBranchModelImpl
 	private boolean _master;
 
 	public <T> T getColumnValue(String columnName) {
-		Function<LayoutBranch, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<LayoutBranch, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

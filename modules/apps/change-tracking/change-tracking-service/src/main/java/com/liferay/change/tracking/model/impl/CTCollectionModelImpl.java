@@ -230,83 +230,107 @@ public class CTCollectionModelImpl
 	public Map<String, Function<CTCollection, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CTCollection, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CTCollection, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CTCollection, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CTCollection, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<CTCollection, Object>>();
-		Map<String, BiConsumer<CTCollection, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<CTCollection, ?>>();
+		private static final Map<String, Function<CTCollection, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CTCollection::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CTCollection, Long>)CTCollection::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CTCollection::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CTCollection, Long>)CTCollection::setCtCollectionId);
-		attributeGetterFunctions.put("companyId", CTCollection::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CTCollection, Long>)CTCollection::setCompanyId);
-		attributeGetterFunctions.put("userId", CTCollection::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<CTCollection, Long>)CTCollection::setUserId);
-		attributeGetterFunctions.put("createDate", CTCollection::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CTCollection, Date>)CTCollection::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CTCollection::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CTCollection, Date>)CTCollection::setModifiedDate);
-		attributeGetterFunctions.put(
-			"schemaVersionId", CTCollection::getSchemaVersionId);
-		attributeSetterBiConsumers.put(
-			"schemaVersionId",
-			(BiConsumer<CTCollection, Long>)CTCollection::setSchemaVersionId);
-		attributeGetterFunctions.put("name", CTCollection::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<CTCollection, String>)CTCollection::setName);
-		attributeGetterFunctions.put(
-			"description", CTCollection::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<CTCollection, String>)CTCollection::setDescription);
-		attributeGetterFunctions.put("status", CTCollection::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<CTCollection, Integer>)CTCollection::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", CTCollection::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<CTCollection, Long>)CTCollection::setStatusByUserId);
-		attributeGetterFunctions.put("statusDate", CTCollection::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<CTCollection, Date>)CTCollection::setStatusDate);
+		static {
+			Map<String, Function<CTCollection, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<CTCollection, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CTCollection::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CTCollection::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"companyId", CTCollection::getCompanyId);
+			attributeGetterFunctions.put("userId", CTCollection::getUserId);
+			attributeGetterFunctions.put(
+				"createDate", CTCollection::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CTCollection::getModifiedDate);
+			attributeGetterFunctions.put(
+				"schemaVersionId", CTCollection::getSchemaVersionId);
+			attributeGetterFunctions.put("name", CTCollection::getName);
+			attributeGetterFunctions.put(
+				"description", CTCollection::getDescription);
+			attributeGetterFunctions.put("status", CTCollection::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", CTCollection::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusDate", CTCollection::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CTCollection, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CTCollection, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<CTCollection, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CTCollection, Long>)CTCollection::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CTCollection, Long>)
+					CTCollection::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CTCollection, Long>)CTCollection::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CTCollection, Long>)CTCollection::setUserId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CTCollection, Date>)CTCollection::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CTCollection, Date>)CTCollection::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"schemaVersionId",
+				(BiConsumer<CTCollection, Long>)
+					CTCollection::setSchemaVersionId);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CTCollection, String>)CTCollection::setName);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<CTCollection, String>)CTCollection::setDescription);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<CTCollection, Integer>)CTCollection::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<CTCollection, Long>)
+					CTCollection::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<CTCollection, Date>)CTCollection::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -877,8 +901,9 @@ public class CTCollectionModelImpl
 	private Date _statusDate;
 
 	public <T> T getColumnValue(String columnName) {
-		Function<CTCollection, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<CTCollection, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

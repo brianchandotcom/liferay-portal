@@ -250,118 +250,144 @@ public class SXPBlueprintModelImpl
 	public Map<String, Function<SXPBlueprint, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<SXPBlueprint, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SXPBlueprint, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SXPBlueprint, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<SXPBlueprint, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SXPBlueprint, Object>>();
-		Map<String, BiConsumer<SXPBlueprint, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SXPBlueprint, ?>>();
+		private static final Map<String, Function<SXPBlueprint, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", SXPBlueprint::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<SXPBlueprint, Long>)SXPBlueprint::setMvccVersion);
-		attributeGetterFunctions.put("uuid", SXPBlueprint::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<SXPBlueprint, String>)SXPBlueprint::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", SXPBlueprint::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<SXPBlueprint, String>)
-				SXPBlueprint::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"sxpBlueprintId", SXPBlueprint::getSXPBlueprintId);
-		attributeSetterBiConsumers.put(
-			"sxpBlueprintId",
-			(BiConsumer<SXPBlueprint, Long>)SXPBlueprint::setSXPBlueprintId);
-		attributeGetterFunctions.put("companyId", SXPBlueprint::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SXPBlueprint, Long>)SXPBlueprint::setCompanyId);
-		attributeGetterFunctions.put("userId", SXPBlueprint::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<SXPBlueprint, Long>)SXPBlueprint::setUserId);
-		attributeGetterFunctions.put("userName", SXPBlueprint::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setUserName);
-		attributeGetterFunctions.put("createDate", SXPBlueprint::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<SXPBlueprint, Date>)SXPBlueprint::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", SXPBlueprint::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<SXPBlueprint, Date>)SXPBlueprint::setModifiedDate);
-		attributeGetterFunctions.put(
-			"configurationJSON", SXPBlueprint::getConfigurationJSON);
-		attributeSetterBiConsumers.put(
-			"configurationJSON",
-			(BiConsumer<SXPBlueprint, String>)
-				SXPBlueprint::setConfigurationJSON);
-		attributeGetterFunctions.put(
-			"description", SXPBlueprint::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setDescription);
-		attributeGetterFunctions.put(
-			"elementInstancesJSON", SXPBlueprint::getElementInstancesJSON);
-		attributeSetterBiConsumers.put(
-			"elementInstancesJSON",
-			(BiConsumer<SXPBlueprint, String>)
-				SXPBlueprint::setElementInstancesJSON);
-		attributeGetterFunctions.put(
-			"schemaVersion", SXPBlueprint::getSchemaVersion);
-		attributeSetterBiConsumers.put(
-			"schemaVersion",
-			(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setSchemaVersion);
-		attributeGetterFunctions.put("title", SXPBlueprint::getTitle);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<SXPBlueprint, String>)SXPBlueprint::setTitle);
-		attributeGetterFunctions.put("version", SXPBlueprint::getVersion);
-		attributeSetterBiConsumers.put(
-			"version",
-			(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setVersion);
-		attributeGetterFunctions.put("status", SXPBlueprint::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<SXPBlueprint, Integer>)SXPBlueprint::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", SXPBlueprint::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<SXPBlueprint, Long>)SXPBlueprint::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", SXPBlueprint::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<SXPBlueprint, String>)
-				SXPBlueprint::setStatusByUserName);
-		attributeGetterFunctions.put("statusDate", SXPBlueprint::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<SXPBlueprint, Date>)SXPBlueprint::setStatusDate);
+		static {
+			Map<String, Function<SXPBlueprint, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<SXPBlueprint, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", SXPBlueprint::getMvccVersion);
+			attributeGetterFunctions.put("uuid", SXPBlueprint::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				SXPBlueprint::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"sxpBlueprintId", SXPBlueprint::getSXPBlueprintId);
+			attributeGetterFunctions.put(
+				"companyId", SXPBlueprint::getCompanyId);
+			attributeGetterFunctions.put("userId", SXPBlueprint::getUserId);
+			attributeGetterFunctions.put("userName", SXPBlueprint::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", SXPBlueprint::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", SXPBlueprint::getModifiedDate);
+			attributeGetterFunctions.put(
+				"configurationJSON", SXPBlueprint::getConfigurationJSON);
+			attributeGetterFunctions.put(
+				"description", SXPBlueprint::getDescription);
+			attributeGetterFunctions.put(
+				"elementInstancesJSON", SXPBlueprint::getElementInstancesJSON);
+			attributeGetterFunctions.put(
+				"schemaVersion", SXPBlueprint::getSchemaVersion);
+			attributeGetterFunctions.put("title", SXPBlueprint::getTitle);
+			attributeGetterFunctions.put("version", SXPBlueprint::getVersion);
+			attributeGetterFunctions.put("status", SXPBlueprint::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", SXPBlueprint::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", SXPBlueprint::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", SXPBlueprint::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<SXPBlueprint, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<SXPBlueprint, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<SXPBlueprint, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<SXPBlueprint, Long>)SXPBlueprint::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<SXPBlueprint, String>)
+					SXPBlueprint::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"sxpBlueprintId",
+				(BiConsumer<SXPBlueprint, Long>)
+					SXPBlueprint::setSXPBlueprintId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<SXPBlueprint, Long>)SXPBlueprint::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<SXPBlueprint, Long>)SXPBlueprint::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<SXPBlueprint, Date>)SXPBlueprint::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<SXPBlueprint, Date>)SXPBlueprint::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"configurationJSON",
+				(BiConsumer<SXPBlueprint, String>)
+					SXPBlueprint::setConfigurationJSON);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setDescription);
+			attributeSetterBiConsumers.put(
+				"elementInstancesJSON",
+				(BiConsumer<SXPBlueprint, String>)
+					SXPBlueprint::setElementInstancesJSON);
+			attributeSetterBiConsumers.put(
+				"schemaVersion",
+				(BiConsumer<SXPBlueprint, String>)
+					SXPBlueprint::setSchemaVersion);
+			attributeSetterBiConsumers.put(
+				"title",
+				(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setTitle);
+			attributeSetterBiConsumers.put(
+				"version",
+				(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setVersion);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<SXPBlueprint, Integer>)SXPBlueprint::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<SXPBlueprint, Long>)
+					SXPBlueprint::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<SXPBlueprint, String>)
+					SXPBlueprint::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<SXPBlueprint, Date>)SXPBlueprint::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1531,8 +1557,9 @@ public class SXPBlueprintModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<SXPBlueprint, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<SXPBlueprint, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

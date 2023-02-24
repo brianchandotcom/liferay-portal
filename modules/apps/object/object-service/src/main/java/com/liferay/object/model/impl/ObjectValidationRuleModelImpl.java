@@ -249,114 +249,134 @@ public class ObjectValidationRuleModelImpl
 	public Map<String, Function<ObjectValidationRule, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectValidationRule, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectValidationRule, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectValidationRule, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectValidationRule, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<ObjectValidationRule, Object>>();
-		Map<String, BiConsumer<ObjectValidationRule, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<ObjectValidationRule, ?>>();
+		private static final Map<String, Function<ObjectValidationRule, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectValidationRule::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectValidationRule, Long>)
-				ObjectValidationRule::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectValidationRule::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<ObjectValidationRule, String>)
-				ObjectValidationRule::setUuid);
-		attributeGetterFunctions.put(
-			"objectValidationRuleId",
-			ObjectValidationRule::getObjectValidationRuleId);
-		attributeSetterBiConsumers.put(
-			"objectValidationRuleId",
-			(BiConsumer<ObjectValidationRule, Long>)
-				ObjectValidationRule::setObjectValidationRuleId);
-		attributeGetterFunctions.put(
-			"companyId", ObjectValidationRule::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectValidationRule, Long>)
-				ObjectValidationRule::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectValidationRule::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<ObjectValidationRule, Long>)
-				ObjectValidationRule::setUserId);
-		attributeGetterFunctions.put(
-			"userName", ObjectValidationRule::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectValidationRule, String>)
-				ObjectValidationRule::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", ObjectValidationRule::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectValidationRule, Date>)
-				ObjectValidationRule::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectValidationRule::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectValidationRule, Date>)
-				ObjectValidationRule::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectDefinitionId", ObjectValidationRule::getObjectDefinitionId);
-		attributeSetterBiConsumers.put(
-			"objectDefinitionId",
-			(BiConsumer<ObjectValidationRule, Long>)
-				ObjectValidationRule::setObjectDefinitionId);
-		attributeGetterFunctions.put("active", ObjectValidationRule::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<ObjectValidationRule, Boolean>)
-				ObjectValidationRule::setActive);
-		attributeGetterFunctions.put("engine", ObjectValidationRule::getEngine);
-		attributeSetterBiConsumers.put(
-			"engine",
-			(BiConsumer<ObjectValidationRule, String>)
-				ObjectValidationRule::setEngine);
-		attributeGetterFunctions.put(
-			"errorLabel", ObjectValidationRule::getErrorLabel);
-		attributeSetterBiConsumers.put(
-			"errorLabel",
-			(BiConsumer<ObjectValidationRule, String>)
-				ObjectValidationRule::setErrorLabel);
-		attributeGetterFunctions.put("name", ObjectValidationRule::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<ObjectValidationRule, String>)
-				ObjectValidationRule::setName);
-		attributeGetterFunctions.put("script", ObjectValidationRule::getScript);
-		attributeSetterBiConsumers.put(
-			"script",
-			(BiConsumer<ObjectValidationRule, String>)
-				ObjectValidationRule::setScript);
+		static {
+			Map<String, Function<ObjectValidationRule, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ObjectValidationRule, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectValidationRule::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectValidationRule::getUuid);
+			attributeGetterFunctions.put(
+				"objectValidationRuleId",
+				ObjectValidationRule::getObjectValidationRuleId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectValidationRule::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", ObjectValidationRule::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ObjectValidationRule::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectValidationRule::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectValidationRule::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectDefinitionId",
+				ObjectValidationRule::getObjectDefinitionId);
+			attributeGetterFunctions.put(
+				"active", ObjectValidationRule::getActive);
+			attributeGetterFunctions.put(
+				"engine", ObjectValidationRule::getEngine);
+			attributeGetterFunctions.put(
+				"errorLabel", ObjectValidationRule::getErrorLabel);
+			attributeGetterFunctions.put("name", ObjectValidationRule::getName);
+			attributeGetterFunctions.put(
+				"script", ObjectValidationRule::getScript);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<ObjectValidationRule, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectValidationRule, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<ObjectValidationRule, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectValidationRule, Long>)
+					ObjectValidationRule::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ObjectValidationRule, String>)
+					ObjectValidationRule::setUuid);
+			attributeSetterBiConsumers.put(
+				"objectValidationRuleId",
+				(BiConsumer<ObjectValidationRule, Long>)
+					ObjectValidationRule::setObjectValidationRuleId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectValidationRule, Long>)
+					ObjectValidationRule::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectValidationRule, Long>)
+					ObjectValidationRule::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectValidationRule, String>)
+					ObjectValidationRule::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectValidationRule, Date>)
+					ObjectValidationRule::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectValidationRule, Date>)
+					ObjectValidationRule::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectDefinitionId",
+				(BiConsumer<ObjectValidationRule, Long>)
+					ObjectValidationRule::setObjectDefinitionId);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<ObjectValidationRule, Boolean>)
+					ObjectValidationRule::setActive);
+			attributeSetterBiConsumers.put(
+				"engine",
+				(BiConsumer<ObjectValidationRule, String>)
+					ObjectValidationRule::setEngine);
+			attributeSetterBiConsumers.put(
+				"errorLabel",
+				(BiConsumer<ObjectValidationRule, String>)
+					ObjectValidationRule::setErrorLabel);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<ObjectValidationRule, String>)
+					ObjectValidationRule::setName);
+			attributeSetterBiConsumers.put(
+				"script",
+				(BiConsumer<ObjectValidationRule, String>)
+					ObjectValidationRule::setScript);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1294,7 +1314,8 @@ public class ObjectValidationRuleModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<ObjectValidationRule, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

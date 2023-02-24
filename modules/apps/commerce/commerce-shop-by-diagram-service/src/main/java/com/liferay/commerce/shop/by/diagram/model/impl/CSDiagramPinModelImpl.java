@@ -217,83 +217,107 @@ public class CSDiagramPinModelImpl
 	public Map<String, Function<CSDiagramPin, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CSDiagramPin, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CSDiagramPin, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CSDiagramPin, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CSDiagramPin, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<CSDiagramPin, Object>>();
-		Map<String, BiConsumer<CSDiagramPin, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<CSDiagramPin, ?>>();
+		private static final Map<String, Function<CSDiagramPin, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CSDiagramPin::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CSDiagramPin, Long>)CSDiagramPin::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CSDiagramPin::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CSDiagramPin, Long>)CSDiagramPin::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"CSDiagramPinId", CSDiagramPin::getCSDiagramPinId);
-		attributeSetterBiConsumers.put(
-			"CSDiagramPinId",
-			(BiConsumer<CSDiagramPin, Long>)CSDiagramPin::setCSDiagramPinId);
-		attributeGetterFunctions.put("companyId", CSDiagramPin::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CSDiagramPin, Long>)CSDiagramPin::setCompanyId);
-		attributeGetterFunctions.put("userId", CSDiagramPin::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<CSDiagramPin, Long>)CSDiagramPin::setUserId);
-		attributeGetterFunctions.put("userName", CSDiagramPin::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CSDiagramPin, String>)CSDiagramPin::setUserName);
-		attributeGetterFunctions.put("createDate", CSDiagramPin::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CSDiagramPin, Date>)CSDiagramPin::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CSDiagramPin::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CSDiagramPin, Date>)CSDiagramPin::setModifiedDate);
-		attributeGetterFunctions.put(
-			"CPDefinitionId", CSDiagramPin::getCPDefinitionId);
-		attributeSetterBiConsumers.put(
-			"CPDefinitionId",
-			(BiConsumer<CSDiagramPin, Long>)CSDiagramPin::setCPDefinitionId);
-		attributeGetterFunctions.put("positionX", CSDiagramPin::getPositionX);
-		attributeSetterBiConsumers.put(
-			"positionX",
-			(BiConsumer<CSDiagramPin, Double>)CSDiagramPin::setPositionX);
-		attributeGetterFunctions.put("positionY", CSDiagramPin::getPositionY);
-		attributeSetterBiConsumers.put(
-			"positionY",
-			(BiConsumer<CSDiagramPin, Double>)CSDiagramPin::setPositionY);
-		attributeGetterFunctions.put("sequence", CSDiagramPin::getSequence);
-		attributeSetterBiConsumers.put(
-			"sequence",
-			(BiConsumer<CSDiagramPin, String>)CSDiagramPin::setSequence);
+		static {
+			Map<String, Function<CSDiagramPin, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<CSDiagramPin, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CSDiagramPin::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CSDiagramPin::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"CSDiagramPinId", CSDiagramPin::getCSDiagramPinId);
+			attributeGetterFunctions.put(
+				"companyId", CSDiagramPin::getCompanyId);
+			attributeGetterFunctions.put("userId", CSDiagramPin::getUserId);
+			attributeGetterFunctions.put("userName", CSDiagramPin::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CSDiagramPin::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CSDiagramPin::getModifiedDate);
+			attributeGetterFunctions.put(
+				"CPDefinitionId", CSDiagramPin::getCPDefinitionId);
+			attributeGetterFunctions.put(
+				"positionX", CSDiagramPin::getPositionX);
+			attributeGetterFunctions.put(
+				"positionY", CSDiagramPin::getPositionY);
+			attributeGetterFunctions.put("sequence", CSDiagramPin::getSequence);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CSDiagramPin, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CSDiagramPin, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<CSDiagramPin, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CSDiagramPin, Long>)CSDiagramPin::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CSDiagramPin, Long>)
+					CSDiagramPin::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"CSDiagramPinId",
+				(BiConsumer<CSDiagramPin, Long>)
+					CSDiagramPin::setCSDiagramPinId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CSDiagramPin, Long>)CSDiagramPin::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CSDiagramPin, Long>)CSDiagramPin::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CSDiagramPin, String>)CSDiagramPin::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CSDiagramPin, Date>)CSDiagramPin::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CSDiagramPin, Date>)CSDiagramPin::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"CPDefinitionId",
+				(BiConsumer<CSDiagramPin, Long>)
+					CSDiagramPin::setCPDefinitionId);
+			attributeSetterBiConsumers.put(
+				"positionX",
+				(BiConsumer<CSDiagramPin, Double>)CSDiagramPin::setPositionX);
+			attributeSetterBiConsumers.put(
+				"positionY",
+				(BiConsumer<CSDiagramPin, Double>)CSDiagramPin::setPositionY);
+			attributeSetterBiConsumers.put(
+				"sequence",
+				(BiConsumer<CSDiagramPin, String>)CSDiagramPin::setSequence);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -821,8 +845,9 @@ public class CSDiagramPinModelImpl
 	private String _sequence;
 
 	public <T> T getColumnValue(String columnName) {
-		Function<CSDiagramPin, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<CSDiagramPin, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

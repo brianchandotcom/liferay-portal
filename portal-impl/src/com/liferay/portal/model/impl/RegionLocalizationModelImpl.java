@@ -218,70 +218,85 @@ public class RegionLocalizationModelImpl
 	public Map<String, Function<RegionLocalization, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<RegionLocalization, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<RegionLocalization, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<RegionLocalization, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<RegionLocalization, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<RegionLocalization, Object>>();
-		Map<String, BiConsumer<RegionLocalization, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<RegionLocalization, ?>>();
+		private static final Map<String, Function<RegionLocalization, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", RegionLocalization::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<RegionLocalization, Long>)
-				RegionLocalization::setMvccVersion);
-		attributeGetterFunctions.put(
-			"regionLocalizationId",
-			RegionLocalization::getRegionLocalizationId);
-		attributeSetterBiConsumers.put(
-			"regionLocalizationId",
-			(BiConsumer<RegionLocalization, Long>)
-				RegionLocalization::setRegionLocalizationId);
-		attributeGetterFunctions.put(
-			"companyId", RegionLocalization::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<RegionLocalization, Long>)
-				RegionLocalization::setCompanyId);
-		attributeGetterFunctions.put(
-			"regionId", RegionLocalization::getRegionId);
-		attributeSetterBiConsumers.put(
-			"regionId",
-			(BiConsumer<RegionLocalization, Long>)
-				RegionLocalization::setRegionId);
-		attributeGetterFunctions.put(
-			"languageId", RegionLocalization::getLanguageId);
-		attributeSetterBiConsumers.put(
-			"languageId",
-			(BiConsumer<RegionLocalization, String>)
-				RegionLocalization::setLanguageId);
-		attributeGetterFunctions.put("title", RegionLocalization::getTitle);
-		attributeSetterBiConsumers.put(
-			"title",
-			(BiConsumer<RegionLocalization, String>)
-				RegionLocalization::setTitle);
+		static {
+			Map<String, Function<RegionLocalization, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<RegionLocalization, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", RegionLocalization::getMvccVersion);
+			attributeGetterFunctions.put(
+				"regionLocalizationId",
+				RegionLocalization::getRegionLocalizationId);
+			attributeGetterFunctions.put(
+				"companyId", RegionLocalization::getCompanyId);
+			attributeGetterFunctions.put(
+				"regionId", RegionLocalization::getRegionId);
+			attributeGetterFunctions.put(
+				"languageId", RegionLocalization::getLanguageId);
+			attributeGetterFunctions.put("title", RegionLocalization::getTitle);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<RegionLocalization, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<RegionLocalization, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<RegionLocalization, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<RegionLocalization, Long>)
+					RegionLocalization::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"regionLocalizationId",
+				(BiConsumer<RegionLocalization, Long>)
+					RegionLocalization::setRegionLocalizationId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<RegionLocalization, Long>)
+					RegionLocalization::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"regionId",
+				(BiConsumer<RegionLocalization, Long>)
+					RegionLocalization::setRegionId);
+			attributeSetterBiConsumers.put(
+				"languageId",
+				(BiConsumer<RegionLocalization, String>)
+					RegionLocalization::setLanguageId);
+			attributeSetterBiConsumers.put(
+				"title",
+				(BiConsumer<RegionLocalization, String>)
+					RegionLocalization::setTitle);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -657,7 +672,8 @@ public class RegionLocalizationModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<RegionLocalization, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

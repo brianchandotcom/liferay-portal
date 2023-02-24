@@ -235,106 +235,129 @@ public class CSDiagramSettingModelImpl
 	public Map<String, Function<CSDiagramSetting, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CSDiagramSetting, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CSDiagramSetting, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CSDiagramSetting, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CSDiagramSetting, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<CSDiagramSetting, Object>>();
-		Map<String, BiConsumer<CSDiagramSetting, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<CSDiagramSetting, ?>>();
+		private static final Map<String, Function<CSDiagramSetting, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CSDiagramSetting::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CSDiagramSetting, Long>)
-				CSDiagramSetting::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CSDiagramSetting::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CSDiagramSetting, Long>)
-				CSDiagramSetting::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", CSDiagramSetting::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CSDiagramSetting, String>)CSDiagramSetting::setUuid);
-		attributeGetterFunctions.put(
-			"CSDiagramSettingId", CSDiagramSetting::getCSDiagramSettingId);
-		attributeSetterBiConsumers.put(
-			"CSDiagramSettingId",
-			(BiConsumer<CSDiagramSetting, Long>)
-				CSDiagramSetting::setCSDiagramSettingId);
-		attributeGetterFunctions.put(
-			"companyId", CSDiagramSetting::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CSDiagramSetting, Long>)CSDiagramSetting::setCompanyId);
-		attributeGetterFunctions.put("userId", CSDiagramSetting::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CSDiagramSetting, Long>)CSDiagramSetting::setUserId);
-		attributeGetterFunctions.put("userName", CSDiagramSetting::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CSDiagramSetting, String>)
-				CSDiagramSetting::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CSDiagramSetting::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CSDiagramSetting, Date>)
-				CSDiagramSetting::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CSDiagramSetting::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CSDiagramSetting, Date>)
-				CSDiagramSetting::setModifiedDate);
-		attributeGetterFunctions.put(
-			"CPAttachmentFileEntryId",
-			CSDiagramSetting::getCPAttachmentFileEntryId);
-		attributeSetterBiConsumers.put(
-			"CPAttachmentFileEntryId",
-			(BiConsumer<CSDiagramSetting, Long>)
-				CSDiagramSetting::setCPAttachmentFileEntryId);
-		attributeGetterFunctions.put(
-			"CPDefinitionId", CSDiagramSetting::getCPDefinitionId);
-		attributeSetterBiConsumers.put(
-			"CPDefinitionId",
-			(BiConsumer<CSDiagramSetting, Long>)
-				CSDiagramSetting::setCPDefinitionId);
-		attributeGetterFunctions.put("color", CSDiagramSetting::getColor);
-		attributeSetterBiConsumers.put(
-			"color",
-			(BiConsumer<CSDiagramSetting, String>)CSDiagramSetting::setColor);
-		attributeGetterFunctions.put("radius", CSDiagramSetting::getRadius);
-		attributeSetterBiConsumers.put(
-			"radius",
-			(BiConsumer<CSDiagramSetting, Double>)CSDiagramSetting::setRadius);
-		attributeGetterFunctions.put("type", CSDiagramSetting::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<CSDiagramSetting, String>)CSDiagramSetting::setType);
+		static {
+			Map<String, Function<CSDiagramSetting, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CSDiagramSetting, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CSDiagramSetting::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CSDiagramSetting::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", CSDiagramSetting::getUuid);
+			attributeGetterFunctions.put(
+				"CSDiagramSettingId", CSDiagramSetting::getCSDiagramSettingId);
+			attributeGetterFunctions.put(
+				"companyId", CSDiagramSetting::getCompanyId);
+			attributeGetterFunctions.put("userId", CSDiagramSetting::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CSDiagramSetting::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CSDiagramSetting::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CSDiagramSetting::getModifiedDate);
+			attributeGetterFunctions.put(
+				"CPAttachmentFileEntryId",
+				CSDiagramSetting::getCPAttachmentFileEntryId);
+			attributeGetterFunctions.put(
+				"CPDefinitionId", CSDiagramSetting::getCPDefinitionId);
+			attributeGetterFunctions.put("color", CSDiagramSetting::getColor);
+			attributeGetterFunctions.put("radius", CSDiagramSetting::getRadius);
+			attributeGetterFunctions.put("type", CSDiagramSetting::getType);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CSDiagramSetting, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CSDiagramSetting, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CSDiagramSetting, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CSDiagramSetting, Long>)
+					CSDiagramSetting::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CSDiagramSetting, Long>)
+					CSDiagramSetting::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CSDiagramSetting, String>)
+					CSDiagramSetting::setUuid);
+			attributeSetterBiConsumers.put(
+				"CSDiagramSettingId",
+				(BiConsumer<CSDiagramSetting, Long>)
+					CSDiagramSetting::setCSDiagramSettingId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CSDiagramSetting, Long>)
+					CSDiagramSetting::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CSDiagramSetting, Long>)
+					CSDiagramSetting::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CSDiagramSetting, String>)
+					CSDiagramSetting::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CSDiagramSetting, Date>)
+					CSDiagramSetting::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CSDiagramSetting, Date>)
+					CSDiagramSetting::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"CPAttachmentFileEntryId",
+				(BiConsumer<CSDiagramSetting, Long>)
+					CSDiagramSetting::setCPAttachmentFileEntryId);
+			attributeSetterBiConsumers.put(
+				"CPDefinitionId",
+				(BiConsumer<CSDiagramSetting, Long>)
+					CSDiagramSetting::setCPDefinitionId);
+			attributeSetterBiConsumers.put(
+				"color",
+				(BiConsumer<CSDiagramSetting, String>)
+					CSDiagramSetting::setColor);
+			attributeSetterBiConsumers.put(
+				"radius",
+				(BiConsumer<CSDiagramSetting, Double>)
+					CSDiagramSetting::setRadius);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CSDiagramSetting, String>)
+					CSDiagramSetting::setType);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -960,7 +983,8 @@ public class CSDiagramSettingModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CSDiagramSetting, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

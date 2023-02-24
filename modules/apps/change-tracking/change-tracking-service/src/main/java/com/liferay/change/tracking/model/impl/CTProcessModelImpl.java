@@ -223,62 +223,80 @@ public class CTProcessModelImpl
 	public Map<String, Function<CTProcess, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CTProcess, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CTProcess, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CTProcess, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CTProcess, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<CTProcess, Object>>();
-		Map<String, BiConsumer<CTProcess, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<CTProcess, ?>>();
+		private static final Map<String, Function<CTProcess, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", CTProcess::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CTProcess, Long>)CTProcess::setMvccVersion);
-		attributeGetterFunctions.put("ctProcessId", CTProcess::getCtProcessId);
-		attributeSetterBiConsumers.put(
-			"ctProcessId",
-			(BiConsumer<CTProcess, Long>)CTProcess::setCtProcessId);
-		attributeGetterFunctions.put("companyId", CTProcess::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<CTProcess, Long>)CTProcess::setCompanyId);
-		attributeGetterFunctions.put("userId", CTProcess::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<CTProcess, Long>)CTProcess::setUserId);
-		attributeGetterFunctions.put("createDate", CTProcess::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CTProcess, Date>)CTProcess::setCreateDate);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CTProcess::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CTProcess, Long>)CTProcess::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"backgroundTaskId", CTProcess::getBackgroundTaskId);
-		attributeSetterBiConsumers.put(
-			"backgroundTaskId",
-			(BiConsumer<CTProcess, Long>)CTProcess::setBackgroundTaskId);
-		attributeGetterFunctions.put("type", CTProcess::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<CTProcess, Integer>)CTProcess::setType);
+		static {
+			Map<String, Function<CTProcess, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<CTProcess, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CTProcess::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctProcessId", CTProcess::getCtProcessId);
+			attributeGetterFunctions.put("companyId", CTProcess::getCompanyId);
+			attributeGetterFunctions.put("userId", CTProcess::getUserId);
+			attributeGetterFunctions.put(
+				"createDate", CTProcess::getCreateDate);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CTProcess::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"backgroundTaskId", CTProcess::getBackgroundTaskId);
+			attributeGetterFunctions.put("type", CTProcess::getType);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CTProcess, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CTProcess, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<CTProcess, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CTProcess, Long>)CTProcess::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctProcessId",
+				(BiConsumer<CTProcess, Long>)CTProcess::setCtProcessId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CTProcess, Long>)CTProcess::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<CTProcess, Long>)CTProcess::setUserId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CTProcess, Date>)CTProcess::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CTProcess, Long>)CTProcess::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"backgroundTaskId",
+				(BiConsumer<CTProcess, Long>)CTProcess::setBackgroundTaskId);
+			attributeSetterBiConsumers.put(
+				"type", (BiConsumer<CTProcess, Integer>)CTProcess::setType);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -706,8 +724,9 @@ public class CTProcessModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<CTProcess, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<CTProcess, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

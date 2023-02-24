@@ -215,80 +215,98 @@ public class AssetEntryAssetCategoryRelModelImpl
 	public Map<String, Function<AssetEntryAssetCategoryRel, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<AssetEntryAssetCategoryRel, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<AssetEntryAssetCategoryRel, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<AssetEntryAssetCategoryRel, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<AssetEntryAssetCategoryRel, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<AssetEntryAssetCategoryRel, Object>>();
-		Map<String, BiConsumer<AssetEntryAssetCategoryRel, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<AssetEntryAssetCategoryRel, ?>>();
+		private static final Map
+			<String, Function<AssetEntryAssetCategoryRel, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", AssetEntryAssetCategoryRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<AssetEntryAssetCategoryRel, Long>)
-				AssetEntryAssetCategoryRel::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", AssetEntryAssetCategoryRel::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<AssetEntryAssetCategoryRel, Long>)
-				AssetEntryAssetCategoryRel::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"assetEntryAssetCategoryRelId",
-			AssetEntryAssetCategoryRel::getAssetEntryAssetCategoryRelId);
-		attributeSetterBiConsumers.put(
-			"assetEntryAssetCategoryRelId",
-			(BiConsumer<AssetEntryAssetCategoryRel, Long>)
-				AssetEntryAssetCategoryRel::setAssetEntryAssetCategoryRelId);
-		attributeGetterFunctions.put(
-			"companyId", AssetEntryAssetCategoryRel::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<AssetEntryAssetCategoryRel, Long>)
-				AssetEntryAssetCategoryRel::setCompanyId);
-		attributeGetterFunctions.put(
-			"assetEntryId", AssetEntryAssetCategoryRel::getAssetEntryId);
-		attributeSetterBiConsumers.put(
-			"assetEntryId",
-			(BiConsumer<AssetEntryAssetCategoryRel, Long>)
-				AssetEntryAssetCategoryRel::setAssetEntryId);
-		attributeGetterFunctions.put(
-			"assetCategoryId", AssetEntryAssetCategoryRel::getAssetCategoryId);
-		attributeSetterBiConsumers.put(
-			"assetCategoryId",
-			(BiConsumer<AssetEntryAssetCategoryRel, Long>)
-				AssetEntryAssetCategoryRel::setAssetCategoryId);
-		attributeGetterFunctions.put(
-			"priority", AssetEntryAssetCategoryRel::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<AssetEntryAssetCategoryRel, Integer>)
-				AssetEntryAssetCategoryRel::setPriority);
+		static {
+			Map<String, Function<AssetEntryAssetCategoryRel, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<AssetEntryAssetCategoryRel, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", AssetEntryAssetCategoryRel::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId",
+				AssetEntryAssetCategoryRel::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"assetEntryAssetCategoryRelId",
+				AssetEntryAssetCategoryRel::getAssetEntryAssetCategoryRelId);
+			attributeGetterFunctions.put(
+				"companyId", AssetEntryAssetCategoryRel::getCompanyId);
+			attributeGetterFunctions.put(
+				"assetEntryId", AssetEntryAssetCategoryRel::getAssetEntryId);
+			attributeGetterFunctions.put(
+				"assetCategoryId",
+				AssetEntryAssetCategoryRel::getAssetCategoryId);
+			attributeGetterFunctions.put(
+				"priority", AssetEntryAssetCategoryRel::getPriority);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<AssetEntryAssetCategoryRel, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<AssetEntryAssetCategoryRel, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<AssetEntryAssetCategoryRel, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<AssetEntryAssetCategoryRel, Long>)
+					AssetEntryAssetCategoryRel::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<AssetEntryAssetCategoryRel, Long>)
+					AssetEntryAssetCategoryRel::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"assetEntryAssetCategoryRelId",
+				(BiConsumer<AssetEntryAssetCategoryRel, Long>)
+					AssetEntryAssetCategoryRel::
+						setAssetEntryAssetCategoryRelId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<AssetEntryAssetCategoryRel, Long>)
+					AssetEntryAssetCategoryRel::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"assetEntryId",
+				(BiConsumer<AssetEntryAssetCategoryRel, Long>)
+					AssetEntryAssetCategoryRel::setAssetEntryId);
+			attributeSetterBiConsumers.put(
+				"assetCategoryId",
+				(BiConsumer<AssetEntryAssetCategoryRel, Long>)
+					AssetEntryAssetCategoryRel::setAssetCategoryId);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<AssetEntryAssetCategoryRel, Integer>)
+					AssetEntryAssetCategoryRel::setPriority);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -672,7 +690,8 @@ public class AssetEntryAssetCategoryRelModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<AssetEntryAssetCategoryRel, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

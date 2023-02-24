@@ -226,66 +226,83 @@ public class DepotEntryModelImpl
 	public Map<String, Function<DepotEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<DepotEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DepotEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DepotEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<DepotEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<DepotEntry, Object>>();
-		Map<String, BiConsumer<DepotEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<DepotEntry, ?>>();
+		private static final Map<String, Function<DepotEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", DepotEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<DepotEntry, Long>)DepotEntry::setMvccVersion);
-		attributeGetterFunctions.put("uuid", DepotEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<DepotEntry, String>)DepotEntry::setUuid);
-		attributeGetterFunctions.put(
-			"depotEntryId", DepotEntry::getDepotEntryId);
-		attributeSetterBiConsumers.put(
-			"depotEntryId",
-			(BiConsumer<DepotEntry, Long>)DepotEntry::setDepotEntryId);
-		attributeGetterFunctions.put("groupId", DepotEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<DepotEntry, Long>)DepotEntry::setGroupId);
-		attributeGetterFunctions.put("companyId", DepotEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DepotEntry, Long>)DepotEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", DepotEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<DepotEntry, Long>)DepotEntry::setUserId);
-		attributeGetterFunctions.put("userName", DepotEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<DepotEntry, String>)DepotEntry::setUserName);
-		attributeGetterFunctions.put("createDate", DepotEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<DepotEntry, Date>)DepotEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", DepotEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<DepotEntry, Date>)DepotEntry::setModifiedDate);
+		static {
+			Map<String, Function<DepotEntry, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<DepotEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", DepotEntry::getMvccVersion);
+			attributeGetterFunctions.put("uuid", DepotEntry::getUuid);
+			attributeGetterFunctions.put(
+				"depotEntryId", DepotEntry::getDepotEntryId);
+			attributeGetterFunctions.put("groupId", DepotEntry::getGroupId);
+			attributeGetterFunctions.put("companyId", DepotEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", DepotEntry::getUserId);
+			attributeGetterFunctions.put("userName", DepotEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", DepotEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", DepotEntry::getModifiedDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<DepotEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<DepotEntry, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<DepotEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<DepotEntry, Long>)DepotEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<DepotEntry, String>)DepotEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"depotEntryId",
+				(BiConsumer<DepotEntry, Long>)DepotEntry::setDepotEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<DepotEntry, Long>)DepotEntry::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<DepotEntry, Long>)DepotEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<DepotEntry, Long>)DepotEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<DepotEntry, String>)DepotEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<DepotEntry, Date>)DepotEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<DepotEntry, Date>)DepotEntry::setModifiedDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -775,8 +792,9 @@ public class DepotEntryModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<DepotEntry, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<DepotEntry, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

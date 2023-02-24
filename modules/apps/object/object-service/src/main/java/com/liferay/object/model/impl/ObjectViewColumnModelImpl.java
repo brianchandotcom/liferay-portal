@@ -244,96 +244,118 @@ public class ObjectViewColumnModelImpl
 	public Map<String, Function<ObjectViewColumn, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectViewColumn, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectViewColumn, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectViewColumn, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectViewColumn, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<ObjectViewColumn, Object>>();
-		Map<String, BiConsumer<ObjectViewColumn, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<ObjectViewColumn, ?>>();
+		private static final Map<String, Function<ObjectViewColumn, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectViewColumn::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectViewColumn, Long>)
-				ObjectViewColumn::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectViewColumn::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<ObjectViewColumn, String>)ObjectViewColumn::setUuid);
-		attributeGetterFunctions.put(
-			"objectViewColumnId", ObjectViewColumn::getObjectViewColumnId);
-		attributeSetterBiConsumers.put(
-			"objectViewColumnId",
-			(BiConsumer<ObjectViewColumn, Long>)
-				ObjectViewColumn::setObjectViewColumnId);
-		attributeGetterFunctions.put(
-			"companyId", ObjectViewColumn::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectViewColumn, Long>)ObjectViewColumn::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectViewColumn::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<ObjectViewColumn, Long>)ObjectViewColumn::setUserId);
-		attributeGetterFunctions.put("userName", ObjectViewColumn::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectViewColumn, String>)
-				ObjectViewColumn::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", ObjectViewColumn::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectViewColumn, Date>)
-				ObjectViewColumn::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectViewColumn::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectViewColumn, Date>)
-				ObjectViewColumn::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectViewId", ObjectViewColumn::getObjectViewId);
-		attributeSetterBiConsumers.put(
-			"objectViewId",
-			(BiConsumer<ObjectViewColumn, Long>)
-				ObjectViewColumn::setObjectViewId);
-		attributeGetterFunctions.put("label", ObjectViewColumn::getLabel);
-		attributeSetterBiConsumers.put(
-			"label",
-			(BiConsumer<ObjectViewColumn, String>)ObjectViewColumn::setLabel);
-		attributeGetterFunctions.put(
-			"objectFieldName", ObjectViewColumn::getObjectFieldName);
-		attributeSetterBiConsumers.put(
-			"objectFieldName",
-			(BiConsumer<ObjectViewColumn, String>)
-				ObjectViewColumn::setObjectFieldName);
-		attributeGetterFunctions.put("priority", ObjectViewColumn::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<ObjectViewColumn, Integer>)
-				ObjectViewColumn::setPriority);
+		static {
+			Map<String, Function<ObjectViewColumn, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ObjectViewColumn, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectViewColumn::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectViewColumn::getUuid);
+			attributeGetterFunctions.put(
+				"objectViewColumnId", ObjectViewColumn::getObjectViewColumnId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectViewColumn::getCompanyId);
+			attributeGetterFunctions.put("userId", ObjectViewColumn::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ObjectViewColumn::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectViewColumn::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectViewColumn::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectViewId", ObjectViewColumn::getObjectViewId);
+			attributeGetterFunctions.put("label", ObjectViewColumn::getLabel);
+			attributeGetterFunctions.put(
+				"objectFieldName", ObjectViewColumn::getObjectFieldName);
+			attributeGetterFunctions.put(
+				"priority", ObjectViewColumn::getPriority);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ObjectViewColumn, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectViewColumn, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<ObjectViewColumn, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectViewColumn, Long>)
+					ObjectViewColumn::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ObjectViewColumn, String>)
+					ObjectViewColumn::setUuid);
+			attributeSetterBiConsumers.put(
+				"objectViewColumnId",
+				(BiConsumer<ObjectViewColumn, Long>)
+					ObjectViewColumn::setObjectViewColumnId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectViewColumn, Long>)
+					ObjectViewColumn::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectViewColumn, Long>)
+					ObjectViewColumn::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectViewColumn, String>)
+					ObjectViewColumn::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectViewColumn, Date>)
+					ObjectViewColumn::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectViewColumn, Date>)
+					ObjectViewColumn::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectViewId",
+				(BiConsumer<ObjectViewColumn, Long>)
+					ObjectViewColumn::setObjectViewId);
+			attributeSetterBiConsumers.put(
+				"label",
+				(BiConsumer<ObjectViewColumn, String>)
+					ObjectViewColumn::setLabel);
+			attributeSetterBiConsumers.put(
+				"objectFieldName",
+				(BiConsumer<ObjectViewColumn, String>)
+					ObjectViewColumn::setObjectFieldName);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<ObjectViewColumn, Integer>)
+					ObjectViewColumn::setPriority);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1080,7 +1102,8 @@ public class ObjectViewColumnModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<ObjectViewColumn, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -227,62 +227,83 @@ public class PluginSettingModelImpl
 	public Map<String, Function<PluginSetting, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<PluginSetting, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<PluginSetting, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<PluginSetting, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<PluginSetting, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<PluginSetting, Object>>();
-		Map<String, BiConsumer<PluginSetting, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<PluginSetting, ?>>();
+		private static final Map<String, Function<PluginSetting, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", PluginSetting::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<PluginSetting, Long>)PluginSetting::setMvccVersion);
-		attributeGetterFunctions.put(
-			"pluginSettingId", PluginSetting::getPluginSettingId);
-		attributeSetterBiConsumers.put(
-			"pluginSettingId",
-			(BiConsumer<PluginSetting, Long>)PluginSetting::setPluginSettingId);
-		attributeGetterFunctions.put("companyId", PluginSetting::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<PluginSetting, Long>)PluginSetting::setCompanyId);
-		attributeGetterFunctions.put("pluginId", PluginSetting::getPluginId);
-		attributeSetterBiConsumers.put(
-			"pluginId",
-			(BiConsumer<PluginSetting, String>)PluginSetting::setPluginId);
-		attributeGetterFunctions.put(
-			"pluginType", PluginSetting::getPluginType);
-		attributeSetterBiConsumers.put(
-			"pluginType",
-			(BiConsumer<PluginSetting, String>)PluginSetting::setPluginType);
-		attributeGetterFunctions.put("roles", PluginSetting::getRoles);
-		attributeSetterBiConsumers.put(
-			"roles",
-			(BiConsumer<PluginSetting, String>)PluginSetting::setRoles);
-		attributeGetterFunctions.put("active", PluginSetting::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<PluginSetting, Boolean>)PluginSetting::setActive);
+		static {
+			Map<String, Function<PluginSetting, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<PluginSetting, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", PluginSetting::getMvccVersion);
+			attributeGetterFunctions.put(
+				"pluginSettingId", PluginSetting::getPluginSettingId);
+			attributeGetterFunctions.put(
+				"companyId", PluginSetting::getCompanyId);
+			attributeGetterFunctions.put(
+				"pluginId", PluginSetting::getPluginId);
+			attributeGetterFunctions.put(
+				"pluginType", PluginSetting::getPluginType);
+			attributeGetterFunctions.put("roles", PluginSetting::getRoles);
+			attributeGetterFunctions.put("active", PluginSetting::getActive);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<PluginSetting, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<PluginSetting, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<PluginSetting, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<PluginSetting, Long>)PluginSetting::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"pluginSettingId",
+				(BiConsumer<PluginSetting, Long>)
+					PluginSetting::setPluginSettingId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<PluginSetting, Long>)PluginSetting::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"pluginId",
+				(BiConsumer<PluginSetting, String>)PluginSetting::setPluginId);
+			attributeSetterBiConsumers.put(
+				"pluginType",
+				(BiConsumer<PluginSetting, String>)
+					PluginSetting::setPluginType);
+			attributeSetterBiConsumers.put(
+				"roles",
+				(BiConsumer<PluginSetting, String>)PluginSetting::setRoles);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<PluginSetting, Boolean>)PluginSetting::setActive);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -707,7 +728,8 @@ public class PluginSettingModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<PluginSetting, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

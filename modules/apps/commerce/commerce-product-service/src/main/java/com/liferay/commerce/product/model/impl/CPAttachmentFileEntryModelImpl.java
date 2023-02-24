@@ -313,195 +313,215 @@ public class CPAttachmentFileEntryModelImpl
 	public Map<String, Function<CPAttachmentFileEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CPAttachmentFileEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CPAttachmentFileEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CPAttachmentFileEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CPAttachmentFileEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CPAttachmentFileEntry, Object>>();
-		Map<String, BiConsumer<CPAttachmentFileEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CPAttachmentFileEntry, ?>>();
+		private static final Map
+			<String, Function<CPAttachmentFileEntry, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPAttachmentFileEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPAttachmentFileEntry, Long>)
-				CPAttachmentFileEntry::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CPAttachmentFileEntry::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CPAttachmentFileEntry, Long>)
-				CPAttachmentFileEntry::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", CPAttachmentFileEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CPAttachmentFileEntry, String>)
-				CPAttachmentFileEntry::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			CPAttachmentFileEntry::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CPAttachmentFileEntry, String>)
-				CPAttachmentFileEntry::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"CPAttachmentFileEntryId",
-			CPAttachmentFileEntry::getCPAttachmentFileEntryId);
-		attributeSetterBiConsumers.put(
-			"CPAttachmentFileEntryId",
-			(BiConsumer<CPAttachmentFileEntry, Long>)
-				CPAttachmentFileEntry::setCPAttachmentFileEntryId);
-		attributeGetterFunctions.put(
-			"groupId", CPAttachmentFileEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<CPAttachmentFileEntry, Long>)
-				CPAttachmentFileEntry::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", CPAttachmentFileEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CPAttachmentFileEntry, Long>)
-				CPAttachmentFileEntry::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CPAttachmentFileEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CPAttachmentFileEntry, Long>)
-				CPAttachmentFileEntry::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CPAttachmentFileEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CPAttachmentFileEntry, String>)
-				CPAttachmentFileEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CPAttachmentFileEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CPAttachmentFileEntry, Date>)
-				CPAttachmentFileEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CPAttachmentFileEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CPAttachmentFileEntry, Date>)
-				CPAttachmentFileEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId", CPAttachmentFileEntry::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<CPAttachmentFileEntry, Long>)
-				CPAttachmentFileEntry::setClassNameId);
-		attributeGetterFunctions.put(
-			"classPK", CPAttachmentFileEntry::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<CPAttachmentFileEntry, Long>)
-				CPAttachmentFileEntry::setClassPK);
-		attributeGetterFunctions.put(
-			"fileEntryId", CPAttachmentFileEntry::getFileEntryId);
-		attributeSetterBiConsumers.put(
-			"fileEntryId",
-			(BiConsumer<CPAttachmentFileEntry, Long>)
-				CPAttachmentFileEntry::setFileEntryId);
-		attributeGetterFunctions.put(
-			"cdnEnabled", CPAttachmentFileEntry::getCDNEnabled);
-		attributeSetterBiConsumers.put(
-			"cdnEnabled",
-			(BiConsumer<CPAttachmentFileEntry, Boolean>)
-				CPAttachmentFileEntry::setCDNEnabled);
-		attributeGetterFunctions.put(
-			"cdnURL", CPAttachmentFileEntry::getCDNURL);
-		attributeSetterBiConsumers.put(
-			"cdnURL",
-			(BiConsumer<CPAttachmentFileEntry, String>)
-				CPAttachmentFileEntry::setCDNURL);
-		attributeGetterFunctions.put(
-			"displayDate", CPAttachmentFileEntry::getDisplayDate);
-		attributeSetterBiConsumers.put(
-			"displayDate",
-			(BiConsumer<CPAttachmentFileEntry, Date>)
-				CPAttachmentFileEntry::setDisplayDate);
-		attributeGetterFunctions.put(
-			"expirationDate", CPAttachmentFileEntry::getExpirationDate);
-		attributeSetterBiConsumers.put(
-			"expirationDate",
-			(BiConsumer<CPAttachmentFileEntry, Date>)
-				CPAttachmentFileEntry::setExpirationDate);
-		attributeGetterFunctions.put("title", CPAttachmentFileEntry::getTitle);
-		attributeSetterBiConsumers.put(
-			"title",
-			(BiConsumer<CPAttachmentFileEntry, String>)
-				CPAttachmentFileEntry::setTitle);
-		attributeGetterFunctions.put("json", CPAttachmentFileEntry::getJson);
-		attributeSetterBiConsumers.put(
-			"json",
-			(BiConsumer<CPAttachmentFileEntry, String>)
-				CPAttachmentFileEntry::setJson);
-		attributeGetterFunctions.put(
-			"priority", CPAttachmentFileEntry::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<CPAttachmentFileEntry, Double>)
-				CPAttachmentFileEntry::setPriority);
-		attributeGetterFunctions.put("type", CPAttachmentFileEntry::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<CPAttachmentFileEntry, Integer>)
-				CPAttachmentFileEntry::setType);
-		attributeGetterFunctions.put(
-			"lastPublishDate", CPAttachmentFileEntry::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<CPAttachmentFileEntry, Date>)
-				CPAttachmentFileEntry::setLastPublishDate);
-		attributeGetterFunctions.put(
-			"status", CPAttachmentFileEntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<CPAttachmentFileEntry, Integer>)
-				CPAttachmentFileEntry::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", CPAttachmentFileEntry::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<CPAttachmentFileEntry, Long>)
-				CPAttachmentFileEntry::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", CPAttachmentFileEntry::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<CPAttachmentFileEntry, String>)
-				CPAttachmentFileEntry::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", CPAttachmentFileEntry::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<CPAttachmentFileEntry, Date>)
-				CPAttachmentFileEntry::setStatusDate);
+		static {
+			Map<String, Function<CPAttachmentFileEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CPAttachmentFileEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CPAttachmentFileEntry::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CPAttachmentFileEntry::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"uuid", CPAttachmentFileEntry::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CPAttachmentFileEntry::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"CPAttachmentFileEntryId",
+				CPAttachmentFileEntry::getCPAttachmentFileEntryId);
+			attributeGetterFunctions.put(
+				"groupId", CPAttachmentFileEntry::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", CPAttachmentFileEntry::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CPAttachmentFileEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CPAttachmentFileEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CPAttachmentFileEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CPAttachmentFileEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId", CPAttachmentFileEntry::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", CPAttachmentFileEntry::getClassPK);
+			attributeGetterFunctions.put(
+				"fileEntryId", CPAttachmentFileEntry::getFileEntryId);
+			attributeGetterFunctions.put(
+				"cdnEnabled", CPAttachmentFileEntry::getCDNEnabled);
+			attributeGetterFunctions.put(
+				"cdnURL", CPAttachmentFileEntry::getCDNURL);
+			attributeGetterFunctions.put(
+				"displayDate", CPAttachmentFileEntry::getDisplayDate);
+			attributeGetterFunctions.put(
+				"expirationDate", CPAttachmentFileEntry::getExpirationDate);
+			attributeGetterFunctions.put(
+				"title", CPAttachmentFileEntry::getTitle);
+			attributeGetterFunctions.put(
+				"json", CPAttachmentFileEntry::getJson);
+			attributeGetterFunctions.put(
+				"priority", CPAttachmentFileEntry::getPriority);
+			attributeGetterFunctions.put(
+				"type", CPAttachmentFileEntry::getType);
+			attributeGetterFunctions.put(
+				"lastPublishDate", CPAttachmentFileEntry::getLastPublishDate);
+			attributeGetterFunctions.put(
+				"status", CPAttachmentFileEntry::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", CPAttachmentFileEntry::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", CPAttachmentFileEntry::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", CPAttachmentFileEntry::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CPAttachmentFileEntry, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CPAttachmentFileEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CPAttachmentFileEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CPAttachmentFileEntry, Long>)
+					CPAttachmentFileEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CPAttachmentFileEntry, Long>)
+					CPAttachmentFileEntry::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CPAttachmentFileEntry, String>)
+					CPAttachmentFileEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CPAttachmentFileEntry, String>)
+					CPAttachmentFileEntry::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"CPAttachmentFileEntryId",
+				(BiConsumer<CPAttachmentFileEntry, Long>)
+					CPAttachmentFileEntry::setCPAttachmentFileEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<CPAttachmentFileEntry, Long>)
+					CPAttachmentFileEntry::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CPAttachmentFileEntry, Long>)
+					CPAttachmentFileEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CPAttachmentFileEntry, Long>)
+					CPAttachmentFileEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CPAttachmentFileEntry, String>)
+					CPAttachmentFileEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CPAttachmentFileEntry, Date>)
+					CPAttachmentFileEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CPAttachmentFileEntry, Date>)
+					CPAttachmentFileEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<CPAttachmentFileEntry, Long>)
+					CPAttachmentFileEntry::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<CPAttachmentFileEntry, Long>)
+					CPAttachmentFileEntry::setClassPK);
+			attributeSetterBiConsumers.put(
+				"fileEntryId",
+				(BiConsumer<CPAttachmentFileEntry, Long>)
+					CPAttachmentFileEntry::setFileEntryId);
+			attributeSetterBiConsumers.put(
+				"cdnEnabled",
+				(BiConsumer<CPAttachmentFileEntry, Boolean>)
+					CPAttachmentFileEntry::setCDNEnabled);
+			attributeSetterBiConsumers.put(
+				"cdnURL",
+				(BiConsumer<CPAttachmentFileEntry, String>)
+					CPAttachmentFileEntry::setCDNURL);
+			attributeSetterBiConsumers.put(
+				"displayDate",
+				(BiConsumer<CPAttachmentFileEntry, Date>)
+					CPAttachmentFileEntry::setDisplayDate);
+			attributeSetterBiConsumers.put(
+				"expirationDate",
+				(BiConsumer<CPAttachmentFileEntry, Date>)
+					CPAttachmentFileEntry::setExpirationDate);
+			attributeSetterBiConsumers.put(
+				"title",
+				(BiConsumer<CPAttachmentFileEntry, String>)
+					CPAttachmentFileEntry::setTitle);
+			attributeSetterBiConsumers.put(
+				"json",
+				(BiConsumer<CPAttachmentFileEntry, String>)
+					CPAttachmentFileEntry::setJson);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<CPAttachmentFileEntry, Double>)
+					CPAttachmentFileEntry::setPriority);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CPAttachmentFileEntry, Integer>)
+					CPAttachmentFileEntry::setType);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<CPAttachmentFileEntry, Date>)
+					CPAttachmentFileEntry::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<CPAttachmentFileEntry, Integer>)
+					CPAttachmentFileEntry::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<CPAttachmentFileEntry, Long>)
+					CPAttachmentFileEntry::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<CPAttachmentFileEntry, String>)
+					CPAttachmentFileEntry::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<CPAttachmentFileEntry, Date>)
+					CPAttachmentFileEntry::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1835,7 +1855,8 @@ public class CPAttachmentFileEntryModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CPAttachmentFileEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

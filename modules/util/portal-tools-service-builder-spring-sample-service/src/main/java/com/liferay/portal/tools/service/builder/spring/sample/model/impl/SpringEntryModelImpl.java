@@ -217,52 +217,69 @@ public class SpringEntryModelImpl
 	public Map<String, Function<SpringEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<SpringEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SpringEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SpringEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<SpringEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SpringEntry, Object>>();
-		Map<String, BiConsumer<SpringEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SpringEntry, ?>>();
+		private static final Map<String, Function<SpringEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", SpringEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<SpringEntry, Long>)SpringEntry::setMvccVersion);
-		attributeGetterFunctions.put("uuid", SpringEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<SpringEntry, String>)SpringEntry::setUuid);
-		attributeGetterFunctions.put(
-			"springEntryId", SpringEntry::getSpringEntryId);
-		attributeSetterBiConsumers.put(
-			"springEntryId",
-			(BiConsumer<SpringEntry, Long>)SpringEntry::setSpringEntryId);
-		attributeGetterFunctions.put("companyId", SpringEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SpringEntry, Long>)SpringEntry::setCompanyId);
-		attributeGetterFunctions.put("createDate", SpringEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<SpringEntry, Date>)SpringEntry::setCreateDate);
+		static {
+			Map<String, Function<SpringEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<SpringEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", SpringEntry::getMvccVersion);
+			attributeGetterFunctions.put("uuid", SpringEntry::getUuid);
+			attributeGetterFunctions.put(
+				"springEntryId", SpringEntry::getSpringEntryId);
+			attributeGetterFunctions.put(
+				"companyId", SpringEntry::getCompanyId);
+			attributeGetterFunctions.put(
+				"createDate", SpringEntry::getCreateDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<SpringEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<SpringEntry, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<SpringEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<SpringEntry, Long>)SpringEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<SpringEntry, String>)SpringEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"springEntryId",
+				(BiConsumer<SpringEntry, Long>)SpringEntry::setSpringEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<SpringEntry, Long>)SpringEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<SpringEntry, Date>)SpringEntry::setCreateDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -608,8 +625,9 @@ public class SpringEntryModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<SpringEntry, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<SpringEntry, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

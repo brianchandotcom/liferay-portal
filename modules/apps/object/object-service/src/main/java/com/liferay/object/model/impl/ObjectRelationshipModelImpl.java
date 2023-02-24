@@ -285,138 +285,157 @@ public class ObjectRelationshipModelImpl
 	public Map<String, Function<ObjectRelationship, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectRelationship, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectRelationship, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectRelationship, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectRelationship, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<ObjectRelationship, Object>>();
-		Map<String, BiConsumer<ObjectRelationship, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<ObjectRelationship, ?>>();
+		private static final Map<String, Function<ObjectRelationship, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectRelationship::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectRelationship, Long>)
-				ObjectRelationship::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectRelationship::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<ObjectRelationship, String>)
-				ObjectRelationship::setUuid);
-		attributeGetterFunctions.put(
-			"objectRelationshipId",
-			ObjectRelationship::getObjectRelationshipId);
-		attributeSetterBiConsumers.put(
-			"objectRelationshipId",
-			(BiConsumer<ObjectRelationship, Long>)
-				ObjectRelationship::setObjectRelationshipId);
-		attributeGetterFunctions.put(
-			"companyId", ObjectRelationship::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectRelationship, Long>)
-				ObjectRelationship::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectRelationship::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<ObjectRelationship, Long>)
-				ObjectRelationship::setUserId);
-		attributeGetterFunctions.put(
-			"userName", ObjectRelationship::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectRelationship, String>)
-				ObjectRelationship::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", ObjectRelationship::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectRelationship, Date>)
-				ObjectRelationship::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectRelationship::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectRelationship, Date>)
-				ObjectRelationship::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectDefinitionId1", ObjectRelationship::getObjectDefinitionId1);
-		attributeSetterBiConsumers.put(
-			"objectDefinitionId1",
-			(BiConsumer<ObjectRelationship, Long>)
-				ObjectRelationship::setObjectDefinitionId1);
-		attributeGetterFunctions.put(
-			"objectDefinitionId2", ObjectRelationship::getObjectDefinitionId2);
-		attributeSetterBiConsumers.put(
-			"objectDefinitionId2",
-			(BiConsumer<ObjectRelationship, Long>)
-				ObjectRelationship::setObjectDefinitionId2);
-		attributeGetterFunctions.put(
-			"objectFieldId2", ObjectRelationship::getObjectFieldId2);
-		attributeSetterBiConsumers.put(
-			"objectFieldId2",
-			(BiConsumer<ObjectRelationship, Long>)
-				ObjectRelationship::setObjectFieldId2);
-		attributeGetterFunctions.put(
-			"parameterObjectFieldId",
-			ObjectRelationship::getParameterObjectFieldId);
-		attributeSetterBiConsumers.put(
-			"parameterObjectFieldId",
-			(BiConsumer<ObjectRelationship, Long>)
-				ObjectRelationship::setParameterObjectFieldId);
-		attributeGetterFunctions.put(
-			"deletionType", ObjectRelationship::getDeletionType);
-		attributeSetterBiConsumers.put(
-			"deletionType",
-			(BiConsumer<ObjectRelationship, String>)
-				ObjectRelationship::setDeletionType);
-		attributeGetterFunctions.put(
-			"dbTableName", ObjectRelationship::getDBTableName);
-		attributeSetterBiConsumers.put(
-			"dbTableName",
-			(BiConsumer<ObjectRelationship, String>)
-				ObjectRelationship::setDBTableName);
-		attributeGetterFunctions.put("label", ObjectRelationship::getLabel);
-		attributeSetterBiConsumers.put(
-			"label",
-			(BiConsumer<ObjectRelationship, String>)
-				ObjectRelationship::setLabel);
-		attributeGetterFunctions.put("name", ObjectRelationship::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<ObjectRelationship, String>)
-				ObjectRelationship::setName);
-		attributeGetterFunctions.put("reverse", ObjectRelationship::getReverse);
-		attributeSetterBiConsumers.put(
-			"reverse",
-			(BiConsumer<ObjectRelationship, Boolean>)
-				ObjectRelationship::setReverse);
-		attributeGetterFunctions.put("type", ObjectRelationship::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<ObjectRelationship, String>)
-				ObjectRelationship::setType);
+		static {
+			Map<String, Function<ObjectRelationship, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ObjectRelationship, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectRelationship::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectRelationship::getUuid);
+			attributeGetterFunctions.put(
+				"objectRelationshipId",
+				ObjectRelationship::getObjectRelationshipId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectRelationship::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", ObjectRelationship::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ObjectRelationship::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectRelationship::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectRelationship::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectDefinitionId1",
+				ObjectRelationship::getObjectDefinitionId1);
+			attributeGetterFunctions.put(
+				"objectDefinitionId2",
+				ObjectRelationship::getObjectDefinitionId2);
+			attributeGetterFunctions.put(
+				"objectFieldId2", ObjectRelationship::getObjectFieldId2);
+			attributeGetterFunctions.put(
+				"parameterObjectFieldId",
+				ObjectRelationship::getParameterObjectFieldId);
+			attributeGetterFunctions.put(
+				"deletionType", ObjectRelationship::getDeletionType);
+			attributeGetterFunctions.put(
+				"dbTableName", ObjectRelationship::getDBTableName);
+			attributeGetterFunctions.put("label", ObjectRelationship::getLabel);
+			attributeGetterFunctions.put("name", ObjectRelationship::getName);
+			attributeGetterFunctions.put(
+				"reverse", ObjectRelationship::getReverse);
+			attributeGetterFunctions.put("type", ObjectRelationship::getType);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ObjectRelationship, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectRelationship, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<ObjectRelationship, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectRelationship, Long>)
+					ObjectRelationship::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ObjectRelationship, String>)
+					ObjectRelationship::setUuid);
+			attributeSetterBiConsumers.put(
+				"objectRelationshipId",
+				(BiConsumer<ObjectRelationship, Long>)
+					ObjectRelationship::setObjectRelationshipId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectRelationship, Long>)
+					ObjectRelationship::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectRelationship, Long>)
+					ObjectRelationship::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectRelationship, String>)
+					ObjectRelationship::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectRelationship, Date>)
+					ObjectRelationship::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectRelationship, Date>)
+					ObjectRelationship::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectDefinitionId1",
+				(BiConsumer<ObjectRelationship, Long>)
+					ObjectRelationship::setObjectDefinitionId1);
+			attributeSetterBiConsumers.put(
+				"objectDefinitionId2",
+				(BiConsumer<ObjectRelationship, Long>)
+					ObjectRelationship::setObjectDefinitionId2);
+			attributeSetterBiConsumers.put(
+				"objectFieldId2",
+				(BiConsumer<ObjectRelationship, Long>)
+					ObjectRelationship::setObjectFieldId2);
+			attributeSetterBiConsumers.put(
+				"parameterObjectFieldId",
+				(BiConsumer<ObjectRelationship, Long>)
+					ObjectRelationship::setParameterObjectFieldId);
+			attributeSetterBiConsumers.put(
+				"deletionType",
+				(BiConsumer<ObjectRelationship, String>)
+					ObjectRelationship::setDeletionType);
+			attributeSetterBiConsumers.put(
+				"dbTableName",
+				(BiConsumer<ObjectRelationship, String>)
+					ObjectRelationship::setDBTableName);
+			attributeSetterBiConsumers.put(
+				"label",
+				(BiConsumer<ObjectRelationship, String>)
+					ObjectRelationship::setLabel);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<ObjectRelationship, String>)
+					ObjectRelationship::setName);
+			attributeSetterBiConsumers.put(
+				"reverse",
+				(BiConsumer<ObjectRelationship, Boolean>)
+					ObjectRelationship::setReverse);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<ObjectRelationship, String>)
+					ObjectRelationship::setType);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1385,7 +1404,8 @@ public class ObjectRelationshipModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<ObjectRelationship, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

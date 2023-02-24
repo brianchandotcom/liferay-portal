@@ -277,147 +277,169 @@ public class CommerceOrderTypeModelImpl
 	public Map<String, Function<CommerceOrderType, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceOrderType, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CommerceOrderType, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CommerceOrderType, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceOrderType, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceOrderType, Object>>();
-		Map<String, BiConsumer<CommerceOrderType, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<CommerceOrderType, ?>>();
+		private static final Map<String, Function<CommerceOrderType, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceOrderType::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceOrderType, Long>)
-				CommerceOrderType::setMvccVersion);
-		attributeGetterFunctions.put("uuid", CommerceOrderType::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CommerceOrderType, String>)CommerceOrderType::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			CommerceOrderType::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CommerceOrderType, String>)
-				CommerceOrderType::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"commerceOrderTypeId", CommerceOrderType::getCommerceOrderTypeId);
-		attributeSetterBiConsumers.put(
-			"commerceOrderTypeId",
-			(BiConsumer<CommerceOrderType, Long>)
-				CommerceOrderType::setCommerceOrderTypeId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceOrderType::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceOrderType, Long>)
-				CommerceOrderType::setCompanyId);
-		attributeGetterFunctions.put("userId", CommerceOrderType::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceOrderType, Long>)CommerceOrderType::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceOrderType::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceOrderType, String>)
-				CommerceOrderType::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceOrderType::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceOrderType, Date>)
-				CommerceOrderType::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceOrderType::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceOrderType, Date>)
-				CommerceOrderType::setModifiedDate);
-		attributeGetterFunctions.put("name", CommerceOrderType::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CommerceOrderType, String>)CommerceOrderType::setName);
-		attributeGetterFunctions.put(
-			"description", CommerceOrderType::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<CommerceOrderType, String>)
-				CommerceOrderType::setDescription);
-		attributeGetterFunctions.put("active", CommerceOrderType::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<CommerceOrderType, Boolean>)
-				CommerceOrderType::setActive);
-		attributeGetterFunctions.put(
-			"displayDate", CommerceOrderType::getDisplayDate);
-		attributeSetterBiConsumers.put(
-			"displayDate",
-			(BiConsumer<CommerceOrderType, Date>)
-				CommerceOrderType::setDisplayDate);
-		attributeGetterFunctions.put(
-			"displayOrder", CommerceOrderType::getDisplayOrder);
-		attributeSetterBiConsumers.put(
-			"displayOrder",
-			(BiConsumer<CommerceOrderType, Integer>)
-				CommerceOrderType::setDisplayOrder);
-		attributeGetterFunctions.put(
-			"expirationDate", CommerceOrderType::getExpirationDate);
-		attributeSetterBiConsumers.put(
-			"expirationDate",
-			(BiConsumer<CommerceOrderType, Date>)
-				CommerceOrderType::setExpirationDate);
-		attributeGetterFunctions.put(
-			"lastPublishDate", CommerceOrderType::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<CommerceOrderType, Date>)
-				CommerceOrderType::setLastPublishDate);
-		attributeGetterFunctions.put("status", CommerceOrderType::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<CommerceOrderType, Integer>)
-				CommerceOrderType::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", CommerceOrderType::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<CommerceOrderType, Long>)
-				CommerceOrderType::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", CommerceOrderType::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<CommerceOrderType, String>)
-				CommerceOrderType::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", CommerceOrderType::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<CommerceOrderType, Date>)
-				CommerceOrderType::setStatusDate);
+		static {
+			Map<String, Function<CommerceOrderType, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CommerceOrderType, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceOrderType::getMvccVersion);
+			attributeGetterFunctions.put("uuid", CommerceOrderType::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CommerceOrderType::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"commerceOrderTypeId",
+				CommerceOrderType::getCommerceOrderTypeId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceOrderType::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceOrderType::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceOrderType::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceOrderType::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceOrderType::getModifiedDate);
+			attributeGetterFunctions.put("name", CommerceOrderType::getName);
+			attributeGetterFunctions.put(
+				"description", CommerceOrderType::getDescription);
+			attributeGetterFunctions.put(
+				"active", CommerceOrderType::getActive);
+			attributeGetterFunctions.put(
+				"displayDate", CommerceOrderType::getDisplayDate);
+			attributeGetterFunctions.put(
+				"displayOrder", CommerceOrderType::getDisplayOrder);
+			attributeGetterFunctions.put(
+				"expirationDate", CommerceOrderType::getExpirationDate);
+			attributeGetterFunctions.put(
+				"lastPublishDate", CommerceOrderType::getLastPublishDate);
+			attributeGetterFunctions.put(
+				"status", CommerceOrderType::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", CommerceOrderType::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", CommerceOrderType::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", CommerceOrderType::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CommerceOrderType, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceOrderType, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommerceOrderType, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceOrderType, Long>)
+					CommerceOrderType::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CommerceOrderType, String>)
+					CommerceOrderType::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CommerceOrderType, String>)
+					CommerceOrderType::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"commerceOrderTypeId",
+				(BiConsumer<CommerceOrderType, Long>)
+					CommerceOrderType::setCommerceOrderTypeId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceOrderType, Long>)
+					CommerceOrderType::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceOrderType, Long>)
+					CommerceOrderType::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceOrderType, String>)
+					CommerceOrderType::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceOrderType, Date>)
+					CommerceOrderType::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceOrderType, Date>)
+					CommerceOrderType::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CommerceOrderType, String>)
+					CommerceOrderType::setName);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<CommerceOrderType, String>)
+					CommerceOrderType::setDescription);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<CommerceOrderType, Boolean>)
+					CommerceOrderType::setActive);
+			attributeSetterBiConsumers.put(
+				"displayDate",
+				(BiConsumer<CommerceOrderType, Date>)
+					CommerceOrderType::setDisplayDate);
+			attributeSetterBiConsumers.put(
+				"displayOrder",
+				(BiConsumer<CommerceOrderType, Integer>)
+					CommerceOrderType::setDisplayOrder);
+			attributeSetterBiConsumers.put(
+				"expirationDate",
+				(BiConsumer<CommerceOrderType, Date>)
+					CommerceOrderType::setExpirationDate);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<CommerceOrderType, Date>)
+					CommerceOrderType::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<CommerceOrderType, Integer>)
+					CommerceOrderType::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<CommerceOrderType, Long>)
+					CommerceOrderType::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<CommerceOrderType, String>)
+					CommerceOrderType::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<CommerceOrderType, Date>)
+					CommerceOrderType::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1636,7 +1658,8 @@ public class CommerceOrderTypeModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceOrderType, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

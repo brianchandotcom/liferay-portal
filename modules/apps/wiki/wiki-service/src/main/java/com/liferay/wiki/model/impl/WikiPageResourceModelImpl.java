@@ -230,72 +230,94 @@ public class WikiPageResourceModelImpl
 	public Map<String, Function<WikiPageResource, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<WikiPageResource, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<WikiPageResource, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<WikiPageResource, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<WikiPageResource, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<WikiPageResource, Object>>();
-		Map<String, BiConsumer<WikiPageResource, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<WikiPageResource, ?>>();
+		private static final Map<String, Function<WikiPageResource, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", WikiPageResource::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<WikiPageResource, Long>)
-				WikiPageResource::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", WikiPageResource::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<WikiPageResource, Long>)
-				WikiPageResource::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", WikiPageResource::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<WikiPageResource, String>)WikiPageResource::setUuid);
-		attributeGetterFunctions.put(
-			"resourcePrimKey", WikiPageResource::getResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"resourcePrimKey",
-			(BiConsumer<WikiPageResource, Long>)
-				WikiPageResource::setResourcePrimKey);
-		attributeGetterFunctions.put("groupId", WikiPageResource::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<WikiPageResource, Long>)WikiPageResource::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", WikiPageResource::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<WikiPageResource, Long>)WikiPageResource::setCompanyId);
-		attributeGetterFunctions.put("nodeId", WikiPageResource::getNodeId);
-		attributeSetterBiConsumers.put(
-			"nodeId",
-			(BiConsumer<WikiPageResource, Long>)WikiPageResource::setNodeId);
-		attributeGetterFunctions.put("title", WikiPageResource::getTitle);
-		attributeSetterBiConsumers.put(
-			"title",
-			(BiConsumer<WikiPageResource, String>)WikiPageResource::setTitle);
+		static {
+			Map<String, Function<WikiPageResource, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<WikiPageResource, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", WikiPageResource::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", WikiPageResource::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", WikiPageResource::getUuid);
+			attributeGetterFunctions.put(
+				"resourcePrimKey", WikiPageResource::getResourcePrimKey);
+			attributeGetterFunctions.put(
+				"groupId", WikiPageResource::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", WikiPageResource::getCompanyId);
+			attributeGetterFunctions.put("nodeId", WikiPageResource::getNodeId);
+			attributeGetterFunctions.put("title", WikiPageResource::getTitle);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<WikiPageResource, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<WikiPageResource, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<WikiPageResource, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<WikiPageResource, Long>)
+					WikiPageResource::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<WikiPageResource, Long>)
+					WikiPageResource::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<WikiPageResource, String>)
+					WikiPageResource::setUuid);
+			attributeSetterBiConsumers.put(
+				"resourcePrimKey",
+				(BiConsumer<WikiPageResource, Long>)
+					WikiPageResource::setResourcePrimKey);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<WikiPageResource, Long>)
+					WikiPageResource::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<WikiPageResource, Long>)
+					WikiPageResource::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"nodeId",
+				(BiConsumer<WikiPageResource, Long>)
+					WikiPageResource::setNodeId);
+			attributeSetterBiConsumers.put(
+				"title",
+				(BiConsumer<WikiPageResource, String>)
+					WikiPageResource::setTitle);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -735,7 +757,8 @@ public class WikiPageResourceModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<WikiPageResource, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

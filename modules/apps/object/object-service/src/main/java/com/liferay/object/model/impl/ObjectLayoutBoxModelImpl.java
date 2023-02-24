@@ -239,95 +239,118 @@ public class ObjectLayoutBoxModelImpl
 	public Map<String, Function<ObjectLayoutBox, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectLayoutBox, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectLayoutBox, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectLayoutBox, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectLayoutBox, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<ObjectLayoutBox, Object>>();
-		Map<String, BiConsumer<ObjectLayoutBox, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<ObjectLayoutBox, ?>>();
+		private static final Map<String, Function<ObjectLayoutBox, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectLayoutBox::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectLayoutBox, Long>)ObjectLayoutBox::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectLayoutBox::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<ObjectLayoutBox, String>)ObjectLayoutBox::setUuid);
-		attributeGetterFunctions.put(
-			"objectLayoutBoxId", ObjectLayoutBox::getObjectLayoutBoxId);
-		attributeSetterBiConsumers.put(
-			"objectLayoutBoxId",
-			(BiConsumer<ObjectLayoutBox, Long>)
-				ObjectLayoutBox::setObjectLayoutBoxId);
-		attributeGetterFunctions.put(
-			"companyId", ObjectLayoutBox::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectLayoutBox, Long>)ObjectLayoutBox::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectLayoutBox::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<ObjectLayoutBox, Long>)ObjectLayoutBox::setUserId);
-		attributeGetterFunctions.put("userName", ObjectLayoutBox::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectLayoutBox, String>)ObjectLayoutBox::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", ObjectLayoutBox::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectLayoutBox, Date>)ObjectLayoutBox::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectLayoutBox::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectLayoutBox, Date>)
-				ObjectLayoutBox::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectLayoutTabId", ObjectLayoutBox::getObjectLayoutTabId);
-		attributeSetterBiConsumers.put(
-			"objectLayoutTabId",
-			(BiConsumer<ObjectLayoutBox, Long>)
-				ObjectLayoutBox::setObjectLayoutTabId);
-		attributeGetterFunctions.put(
-			"collapsable", ObjectLayoutBox::getCollapsable);
-		attributeSetterBiConsumers.put(
-			"collapsable",
-			(BiConsumer<ObjectLayoutBox, Boolean>)
-				ObjectLayoutBox::setCollapsable);
-		attributeGetterFunctions.put("name", ObjectLayoutBox::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<ObjectLayoutBox, String>)ObjectLayoutBox::setName);
-		attributeGetterFunctions.put("priority", ObjectLayoutBox::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<ObjectLayoutBox, Integer>)ObjectLayoutBox::setPriority);
-		attributeGetterFunctions.put("type", ObjectLayoutBox::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<ObjectLayoutBox, String>)ObjectLayoutBox::setType);
+		static {
+			Map<String, Function<ObjectLayoutBox, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ObjectLayoutBox, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectLayoutBox::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectLayoutBox::getUuid);
+			attributeGetterFunctions.put(
+				"objectLayoutBoxId", ObjectLayoutBox::getObjectLayoutBoxId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectLayoutBox::getCompanyId);
+			attributeGetterFunctions.put("userId", ObjectLayoutBox::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ObjectLayoutBox::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectLayoutBox::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectLayoutBox::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectLayoutTabId", ObjectLayoutBox::getObjectLayoutTabId);
+			attributeGetterFunctions.put(
+				"collapsable", ObjectLayoutBox::getCollapsable);
+			attributeGetterFunctions.put("name", ObjectLayoutBox::getName);
+			attributeGetterFunctions.put(
+				"priority", ObjectLayoutBox::getPriority);
+			attributeGetterFunctions.put("type", ObjectLayoutBox::getType);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ObjectLayoutBox, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectLayoutBox, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<ObjectLayoutBox, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectLayoutBox, Long>)
+					ObjectLayoutBox::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ObjectLayoutBox, String>)ObjectLayoutBox::setUuid);
+			attributeSetterBiConsumers.put(
+				"objectLayoutBoxId",
+				(BiConsumer<ObjectLayoutBox, Long>)
+					ObjectLayoutBox::setObjectLayoutBoxId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectLayoutBox, Long>)
+					ObjectLayoutBox::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectLayoutBox, Long>)ObjectLayoutBox::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectLayoutBox, String>)
+					ObjectLayoutBox::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectLayoutBox, Date>)
+					ObjectLayoutBox::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectLayoutBox, Date>)
+					ObjectLayoutBox::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectLayoutTabId",
+				(BiConsumer<ObjectLayoutBox, Long>)
+					ObjectLayoutBox::setObjectLayoutTabId);
+			attributeSetterBiConsumers.put(
+				"collapsable",
+				(BiConsumer<ObjectLayoutBox, Boolean>)
+					ObjectLayoutBox::setCollapsable);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<ObjectLayoutBox, String>)ObjectLayoutBox::setName);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<ObjectLayoutBox, Integer>)
+					ObjectLayoutBox::setPriority);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<ObjectLayoutBox, String>)ObjectLayoutBox::setType);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -1075,7 +1098,8 @@ public class ObjectLayoutBoxModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<ObjectLayoutBox, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

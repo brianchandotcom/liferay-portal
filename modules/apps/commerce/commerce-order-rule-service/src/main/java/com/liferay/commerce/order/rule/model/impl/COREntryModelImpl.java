@@ -276,112 +276,138 @@ public class COREntryModelImpl
 	public Map<String, Function<COREntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<COREntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<COREntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<COREntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<COREntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<COREntry, Object>>();
-		Map<String, BiConsumer<COREntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<COREntry, ?>>();
+		private static final Map<String, Function<COREntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", COREntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<COREntry, Long>)COREntry::setMvccVersion);
-		attributeGetterFunctions.put("uuid", COREntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<COREntry, String>)COREntry::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", COREntry::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<COREntry, String>)COREntry::setExternalReferenceCode);
-		attributeGetterFunctions.put("COREntryId", COREntry::getCOREntryId);
-		attributeSetterBiConsumers.put(
-			"COREntryId", (BiConsumer<COREntry, Long>)COREntry::setCOREntryId);
-		attributeGetterFunctions.put("companyId", COREntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<COREntry, Long>)COREntry::setCompanyId);
-		attributeGetterFunctions.put("userId", COREntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<COREntry, Long>)COREntry::setUserId);
-		attributeGetterFunctions.put("userName", COREntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<COREntry, String>)COREntry::setUserName);
-		attributeGetterFunctions.put("createDate", COREntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<COREntry, Date>)COREntry::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", COREntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<COREntry, Date>)COREntry::setModifiedDate);
-		attributeGetterFunctions.put("active", COREntry::getActive);
-		attributeSetterBiConsumers.put(
-			"active", (BiConsumer<COREntry, Boolean>)COREntry::setActive);
-		attributeGetterFunctions.put("description", COREntry::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<COREntry, String>)COREntry::setDescription);
-		attributeGetterFunctions.put("displayDate", COREntry::getDisplayDate);
-		attributeSetterBiConsumers.put(
-			"displayDate",
-			(BiConsumer<COREntry, Date>)COREntry::setDisplayDate);
-		attributeGetterFunctions.put(
-			"expirationDate", COREntry::getExpirationDate);
-		attributeSetterBiConsumers.put(
-			"expirationDate",
-			(BiConsumer<COREntry, Date>)COREntry::setExpirationDate);
-		attributeGetterFunctions.put("name", COREntry::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<COREntry, String>)COREntry::setName);
-		attributeGetterFunctions.put("priority", COREntry::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority", (BiConsumer<COREntry, Integer>)COREntry::setPriority);
-		attributeGetterFunctions.put("type", COREntry::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<COREntry, String>)COREntry::setType);
-		attributeGetterFunctions.put("typeSettings", COREntry::getTypeSettings);
-		attributeSetterBiConsumers.put(
-			"typeSettings",
-			(BiConsumer<COREntry, String>)COREntry::setTypeSettings);
-		attributeGetterFunctions.put(
-			"lastPublishDate", COREntry::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<COREntry, Date>)COREntry::setLastPublishDate);
-		attributeGetterFunctions.put("status", COREntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<COREntry, Integer>)COREntry::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", COREntry::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<COREntry, Long>)COREntry::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", COREntry::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<COREntry, String>)COREntry::setStatusByUserName);
-		attributeGetterFunctions.put("statusDate", COREntry::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate", (BiConsumer<COREntry, Date>)COREntry::setStatusDate);
+		static {
+			Map<String, Function<COREntry, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<COREntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", COREntry::getMvccVersion);
+			attributeGetterFunctions.put("uuid", COREntry::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode", COREntry::getExternalReferenceCode);
+			attributeGetterFunctions.put("COREntryId", COREntry::getCOREntryId);
+			attributeGetterFunctions.put("companyId", COREntry::getCompanyId);
+			attributeGetterFunctions.put("userId", COREntry::getUserId);
+			attributeGetterFunctions.put("userName", COREntry::getUserName);
+			attributeGetterFunctions.put("createDate", COREntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", COREntry::getModifiedDate);
+			attributeGetterFunctions.put("active", COREntry::getActive);
+			attributeGetterFunctions.put(
+				"description", COREntry::getDescription);
+			attributeGetterFunctions.put(
+				"displayDate", COREntry::getDisplayDate);
+			attributeGetterFunctions.put(
+				"expirationDate", COREntry::getExpirationDate);
+			attributeGetterFunctions.put("name", COREntry::getName);
+			attributeGetterFunctions.put("priority", COREntry::getPriority);
+			attributeGetterFunctions.put("type", COREntry::getType);
+			attributeGetterFunctions.put(
+				"typeSettings", COREntry::getTypeSettings);
+			attributeGetterFunctions.put(
+				"lastPublishDate", COREntry::getLastPublishDate);
+			attributeGetterFunctions.put("status", COREntry::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", COREntry::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", COREntry::getStatusByUserName);
+			attributeGetterFunctions.put("statusDate", COREntry::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<COREntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<COREntry, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<COREntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<COREntry, Long>)COREntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<COREntry, String>)COREntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<COREntry, String>)
+					COREntry::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"COREntryId",
+				(BiConsumer<COREntry, Long>)COREntry::setCOREntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<COREntry, Long>)COREntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<COREntry, Long>)COREntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<COREntry, String>)COREntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<COREntry, Date>)COREntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<COREntry, Date>)COREntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"active", (BiConsumer<COREntry, Boolean>)COREntry::setActive);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<COREntry, String>)COREntry::setDescription);
+			attributeSetterBiConsumers.put(
+				"displayDate",
+				(BiConsumer<COREntry, Date>)COREntry::setDisplayDate);
+			attributeSetterBiConsumers.put(
+				"expirationDate",
+				(BiConsumer<COREntry, Date>)COREntry::setExpirationDate);
+			attributeSetterBiConsumers.put(
+				"name", (BiConsumer<COREntry, String>)COREntry::setName);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<COREntry, Integer>)COREntry::setPriority);
+			attributeSetterBiConsumers.put(
+				"type", (BiConsumer<COREntry, String>)COREntry::setType);
+			attributeSetterBiConsumers.put(
+				"typeSettings",
+				(BiConsumer<COREntry, String>)COREntry::setTypeSettings);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<COREntry, Date>)COREntry::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status", (BiConsumer<COREntry, Integer>)COREntry::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<COREntry, Long>)COREntry::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<COREntry, String>)COREntry::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<COREntry, Date>)COREntry::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1394,8 +1420,9 @@ public class COREntryModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<COREntry, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<COREntry, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

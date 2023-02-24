@@ -224,50 +224,68 @@ public class VersionedEntryModelImpl
 	public Map<String, Function<VersionedEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<VersionedEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<VersionedEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<VersionedEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<VersionedEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<VersionedEntry, Object>>();
-		Map<String, BiConsumer<VersionedEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<VersionedEntry, ?>>();
+		private static final Map<String, Function<VersionedEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", VersionedEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<VersionedEntry, Long>)VersionedEntry::setMvccVersion);
-		attributeGetterFunctions.put("headId", VersionedEntry::getHeadId);
-		attributeSetterBiConsumers.put(
-			"headId",
-			(BiConsumer<VersionedEntry, Long>)VersionedEntry::setHeadId);
-		attributeGetterFunctions.put(
-			"versionedEntryId", VersionedEntry::getVersionedEntryId);
-		attributeSetterBiConsumers.put(
-			"versionedEntryId",
-			(BiConsumer<VersionedEntry, Long>)
-				VersionedEntry::setVersionedEntryId);
-		attributeGetterFunctions.put("groupId", VersionedEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<VersionedEntry, Long>)VersionedEntry::setGroupId);
+		static {
+			Map<String, Function<VersionedEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<VersionedEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", VersionedEntry::getMvccVersion);
+			attributeGetterFunctions.put("headId", VersionedEntry::getHeadId);
+			attributeGetterFunctions.put(
+				"versionedEntryId", VersionedEntry::getVersionedEntryId);
+			attributeGetterFunctions.put("groupId", VersionedEntry::getGroupId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<VersionedEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<VersionedEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<VersionedEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<VersionedEntry, Long>)
+					VersionedEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"headId",
+				(BiConsumer<VersionedEntry, Long>)VersionedEntry::setHeadId);
+			attributeSetterBiConsumers.put(
+				"versionedEntryId",
+				(BiConsumer<VersionedEntry, Long>)
+					VersionedEntry::setVersionedEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<VersionedEntry, Long>)VersionedEntry::setGroupId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -622,7 +640,8 @@ public class VersionedEntryModelImpl
 		}
 
 		Function<VersionedEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -216,49 +216,66 @@ public class PortletModelImpl
 	public Map<String, Function<Portlet, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<Portlet, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Portlet, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Portlet, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<Portlet, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Portlet, Object>>();
-		Map<String, BiConsumer<Portlet, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Portlet, ?>>();
+		private static final Map<String, Function<Portlet, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", Portlet::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion", (BiConsumer<Portlet, Long>)Portlet::setMvccVersion);
-		attributeGetterFunctions.put("id", Portlet::getId);
-		attributeSetterBiConsumers.put(
-			"id", (BiConsumer<Portlet, Long>)Portlet::setId);
-		attributeGetterFunctions.put("companyId", Portlet::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<Portlet, Long>)Portlet::setCompanyId);
-		attributeGetterFunctions.put("portletId", Portlet::getPortletId);
-		attributeSetterBiConsumers.put(
-			"portletId", (BiConsumer<Portlet, String>)Portlet::setPortletId);
-		attributeGetterFunctions.put("roles", Portlet::getRoles);
-		attributeSetterBiConsumers.put(
-			"roles", (BiConsumer<Portlet, String>)Portlet::setRoles);
-		attributeGetterFunctions.put("active", Portlet::getActive);
-		attributeSetterBiConsumers.put(
-			"active", (BiConsumer<Portlet, Boolean>)Portlet::setActive);
+		static {
+			Map<String, Function<Portlet, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<Portlet, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", Portlet::getMvccVersion);
+			attributeGetterFunctions.put("id", Portlet::getId);
+			attributeGetterFunctions.put("companyId", Portlet::getCompanyId);
+			attributeGetterFunctions.put("portletId", Portlet::getPortletId);
+			attributeGetterFunctions.put("roles", Portlet::getRoles);
+			attributeGetterFunctions.put("active", Portlet::getActive);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<Portlet, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<Portlet, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<Portlet, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<Portlet, Long>)Portlet::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"id", (BiConsumer<Portlet, Long>)Portlet::setId);
+			attributeSetterBiConsumers.put(
+				"companyId", (BiConsumer<Portlet, Long>)Portlet::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"portletId",
+				(BiConsumer<Portlet, String>)Portlet::setPortletId);
+			attributeSetterBiConsumers.put(
+				"roles", (BiConsumer<Portlet, String>)Portlet::setRoles);
+			attributeSetterBiConsumers.put(
+				"active", (BiConsumer<Portlet, Boolean>)Portlet::setActive);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -637,8 +654,9 @@ public class PortletModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<Portlet, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<Portlet, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

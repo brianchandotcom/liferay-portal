@@ -232,74 +232,93 @@ public class ObjectStateModelImpl
 	public Map<String, Function<ObjectState, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectState, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectState, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectState, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectState, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<ObjectState, Object>>();
-		Map<String, BiConsumer<ObjectState, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<ObjectState, ?>>();
+		private static final Map<String, Function<ObjectState, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectState::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectState, Long>)ObjectState::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectState::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<ObjectState, String>)ObjectState::setUuid);
-		attributeGetterFunctions.put(
-			"objectStateId", ObjectState::getObjectStateId);
-		attributeSetterBiConsumers.put(
-			"objectStateId",
-			(BiConsumer<ObjectState, Long>)ObjectState::setObjectStateId);
-		attributeGetterFunctions.put("companyId", ObjectState::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectState, Long>)ObjectState::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectState::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<ObjectState, Long>)ObjectState::setUserId);
-		attributeGetterFunctions.put("userName", ObjectState::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectState, String>)ObjectState::setUserName);
-		attributeGetterFunctions.put("createDate", ObjectState::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectState, Date>)ObjectState::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectState::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectState, Date>)ObjectState::setModifiedDate);
-		attributeGetterFunctions.put(
-			"listTypeEntryId", ObjectState::getListTypeEntryId);
-		attributeSetterBiConsumers.put(
-			"listTypeEntryId",
-			(BiConsumer<ObjectState, Long>)ObjectState::setListTypeEntryId);
-		attributeGetterFunctions.put(
-			"objectStateFlowId", ObjectState::getObjectStateFlowId);
-		attributeSetterBiConsumers.put(
-			"objectStateFlowId",
-			(BiConsumer<ObjectState, Long>)ObjectState::setObjectStateFlowId);
+		static {
+			Map<String, Function<ObjectState, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<ObjectState, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectState::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectState::getUuid);
+			attributeGetterFunctions.put(
+				"objectStateId", ObjectState::getObjectStateId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectState::getCompanyId);
+			attributeGetterFunctions.put("userId", ObjectState::getUserId);
+			attributeGetterFunctions.put("userName", ObjectState::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectState::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectState::getModifiedDate);
+			attributeGetterFunctions.put(
+				"listTypeEntryId", ObjectState::getListTypeEntryId);
+			attributeGetterFunctions.put(
+				"objectStateFlowId", ObjectState::getObjectStateFlowId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ObjectState, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectState, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<ObjectState, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectState, Long>)ObjectState::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<ObjectState, String>)ObjectState::setUuid);
+			attributeSetterBiConsumers.put(
+				"objectStateId",
+				(BiConsumer<ObjectState, Long>)ObjectState::setObjectStateId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectState, Long>)ObjectState::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectState, Long>)ObjectState::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectState, String>)ObjectState::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectState, Date>)ObjectState::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectState, Date>)ObjectState::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"listTypeEntryId",
+				(BiConsumer<ObjectState, Long>)ObjectState::setListTypeEntryId);
+			attributeSetterBiConsumers.put(
+				"objectStateFlowId",
+				(BiConsumer<ObjectState, Long>)
+					ObjectState::setObjectStateFlowId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -813,8 +832,9 @@ public class ObjectStateModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<ObjectState, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<ObjectState, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -216,65 +216,84 @@ public class CTCommentModelImpl
 	public Map<String, Function<CTComment, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CTComment, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CTComment, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CTComment, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CTComment, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<CTComment, Object>>();
-		Map<String, BiConsumer<CTComment, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<CTComment, ?>>();
+		private static final Map<String, Function<CTComment, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", CTComment::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CTComment, Long>)CTComment::setMvccVersion);
-		attributeGetterFunctions.put("ctCommentId", CTComment::getCtCommentId);
-		attributeSetterBiConsumers.put(
-			"ctCommentId",
-			(BiConsumer<CTComment, Long>)CTComment::setCtCommentId);
-		attributeGetterFunctions.put("companyId", CTComment::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<CTComment, Long>)CTComment::setCompanyId);
-		attributeGetterFunctions.put("userId", CTComment::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<CTComment, Long>)CTComment::setUserId);
-		attributeGetterFunctions.put("createDate", CTComment::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CTComment, Date>)CTComment::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CTComment::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CTComment, Date>)CTComment::setModifiedDate);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CTComment::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CTComment, Long>)CTComment::setCtCollectionId);
-		attributeGetterFunctions.put("ctEntryId", CTComment::getCtEntryId);
-		attributeSetterBiConsumers.put(
-			"ctEntryId", (BiConsumer<CTComment, Long>)CTComment::setCtEntryId);
-		attributeGetterFunctions.put("value", CTComment::getValue);
-		attributeSetterBiConsumers.put(
-			"value", (BiConsumer<CTComment, String>)CTComment::setValue);
+		static {
+			Map<String, Function<CTComment, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<CTComment, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CTComment::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCommentId", CTComment::getCtCommentId);
+			attributeGetterFunctions.put("companyId", CTComment::getCompanyId);
+			attributeGetterFunctions.put("userId", CTComment::getUserId);
+			attributeGetterFunctions.put(
+				"createDate", CTComment::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CTComment::getModifiedDate);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CTComment::getCtCollectionId);
+			attributeGetterFunctions.put("ctEntryId", CTComment::getCtEntryId);
+			attributeGetterFunctions.put("value", CTComment::getValue);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CTComment, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CTComment, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<CTComment, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CTComment, Long>)CTComment::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCommentId",
+				(BiConsumer<CTComment, Long>)CTComment::setCtCommentId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CTComment, Long>)CTComment::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<CTComment, Long>)CTComment::setUserId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CTComment, Date>)CTComment::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CTComment, Date>)CTComment::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CTComment, Long>)CTComment::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"ctEntryId",
+				(BiConsumer<CTComment, Long>)CTComment::setCtEntryId);
+			attributeSetterBiConsumers.put(
+				"value", (BiConsumer<CTComment, String>)CTComment::setValue);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -737,8 +756,9 @@ public class CTCommentModelImpl
 	private String _value;
 
 	public <T> T getColumnValue(String columnName) {
-		Function<CTComment, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<CTComment, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -298,139 +298,165 @@ public class ObjectFieldModelImpl
 	public Map<String, Function<ObjectField, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectField, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectField, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectField, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectField, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<ObjectField, Object>>();
-		Map<String, BiConsumer<ObjectField, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<ObjectField, ?>>();
+		private static final Map<String, Function<ObjectField, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectField::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectField, Long>)ObjectField::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectField::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<ObjectField, String>)ObjectField::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", ObjectField::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<ObjectField, String>)
-				ObjectField::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"objectFieldId", ObjectField::getObjectFieldId);
-		attributeSetterBiConsumers.put(
-			"objectFieldId",
-			(BiConsumer<ObjectField, Long>)ObjectField::setObjectFieldId);
-		attributeGetterFunctions.put("companyId", ObjectField::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectField, Long>)ObjectField::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectField::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<ObjectField, Long>)ObjectField::setUserId);
-		attributeGetterFunctions.put("userName", ObjectField::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectField, String>)ObjectField::setUserName);
-		attributeGetterFunctions.put("createDate", ObjectField::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectField, Date>)ObjectField::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectField::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectField, Date>)ObjectField::setModifiedDate);
-		attributeGetterFunctions.put(
-			"listTypeDefinitionId", ObjectField::getListTypeDefinitionId);
-		attributeSetterBiConsumers.put(
-			"listTypeDefinitionId",
-			(BiConsumer<ObjectField, Long>)
-				ObjectField::setListTypeDefinitionId);
-		attributeGetterFunctions.put(
-			"objectDefinitionId", ObjectField::getObjectDefinitionId);
-		attributeSetterBiConsumers.put(
-			"objectDefinitionId",
-			(BiConsumer<ObjectField, Long>)ObjectField::setObjectDefinitionId);
-		attributeGetterFunctions.put(
-			"businessType", ObjectField::getBusinessType);
-		attributeSetterBiConsumers.put(
-			"businessType",
-			(BiConsumer<ObjectField, String>)ObjectField::setBusinessType);
-		attributeGetterFunctions.put(
-			"dbColumnName", ObjectField::getDBColumnName);
-		attributeSetterBiConsumers.put(
-			"dbColumnName",
-			(BiConsumer<ObjectField, String>)ObjectField::setDBColumnName);
-		attributeGetterFunctions.put(
-			"dbTableName", ObjectField::getDBTableName);
-		attributeSetterBiConsumers.put(
-			"dbTableName",
-			(BiConsumer<ObjectField, String>)ObjectField::setDBTableName);
-		attributeGetterFunctions.put("dbType", ObjectField::getDBType);
-		attributeSetterBiConsumers.put(
-			"dbType", (BiConsumer<ObjectField, String>)ObjectField::setDBType);
-		attributeGetterFunctions.put(
-			"defaultValue", ObjectField::getDefaultValue);
-		attributeSetterBiConsumers.put(
-			"defaultValue",
-			(BiConsumer<ObjectField, String>)ObjectField::setDefaultValue);
-		attributeGetterFunctions.put("indexed", ObjectField::getIndexed);
-		attributeSetterBiConsumers.put(
-			"indexed",
-			(BiConsumer<ObjectField, Boolean>)ObjectField::setIndexed);
-		attributeGetterFunctions.put(
-			"indexedAsKeyword", ObjectField::getIndexedAsKeyword);
-		attributeSetterBiConsumers.put(
-			"indexedAsKeyword",
-			(BiConsumer<ObjectField, Boolean>)ObjectField::setIndexedAsKeyword);
-		attributeGetterFunctions.put(
-			"indexedLanguageId", ObjectField::getIndexedLanguageId);
-		attributeSetterBiConsumers.put(
-			"indexedLanguageId",
-			(BiConsumer<ObjectField, String>)ObjectField::setIndexedLanguageId);
-		attributeGetterFunctions.put("label", ObjectField::getLabel);
-		attributeSetterBiConsumers.put(
-			"label", (BiConsumer<ObjectField, String>)ObjectField::setLabel);
-		attributeGetterFunctions.put("name", ObjectField::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<ObjectField, String>)ObjectField::setName);
-		attributeGetterFunctions.put(
-			"relationshipType", ObjectField::getRelationshipType);
-		attributeSetterBiConsumers.put(
-			"relationshipType",
-			(BiConsumer<ObjectField, String>)ObjectField::setRelationshipType);
-		attributeGetterFunctions.put("required", ObjectField::getRequired);
-		attributeSetterBiConsumers.put(
-			"required",
-			(BiConsumer<ObjectField, Boolean>)ObjectField::setRequired);
-		attributeGetterFunctions.put("state", ObjectField::getState);
-		attributeSetterBiConsumers.put(
-			"state", (BiConsumer<ObjectField, Boolean>)ObjectField::setState);
-		attributeGetterFunctions.put("system", ObjectField::getSystem);
-		attributeSetterBiConsumers.put(
-			"system", (BiConsumer<ObjectField, Boolean>)ObjectField::setSystem);
+		static {
+			Map<String, Function<ObjectField, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<ObjectField, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectField::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectField::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode", ObjectField::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"objectFieldId", ObjectField::getObjectFieldId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectField::getCompanyId);
+			attributeGetterFunctions.put("userId", ObjectField::getUserId);
+			attributeGetterFunctions.put("userName", ObjectField::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectField::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectField::getModifiedDate);
+			attributeGetterFunctions.put(
+				"listTypeDefinitionId", ObjectField::getListTypeDefinitionId);
+			attributeGetterFunctions.put(
+				"objectDefinitionId", ObjectField::getObjectDefinitionId);
+			attributeGetterFunctions.put(
+				"businessType", ObjectField::getBusinessType);
+			attributeGetterFunctions.put(
+				"dbColumnName", ObjectField::getDBColumnName);
+			attributeGetterFunctions.put(
+				"dbTableName", ObjectField::getDBTableName);
+			attributeGetterFunctions.put("dbType", ObjectField::getDBType);
+			attributeGetterFunctions.put(
+				"defaultValue", ObjectField::getDefaultValue);
+			attributeGetterFunctions.put("indexed", ObjectField::getIndexed);
+			attributeGetterFunctions.put(
+				"indexedAsKeyword", ObjectField::getIndexedAsKeyword);
+			attributeGetterFunctions.put(
+				"indexedLanguageId", ObjectField::getIndexedLanguageId);
+			attributeGetterFunctions.put("label", ObjectField::getLabel);
+			attributeGetterFunctions.put("name", ObjectField::getName);
+			attributeGetterFunctions.put(
+				"relationshipType", ObjectField::getRelationshipType);
+			attributeGetterFunctions.put("required", ObjectField::getRequired);
+			attributeGetterFunctions.put("state", ObjectField::getState);
+			attributeGetterFunctions.put("system", ObjectField::getSystem);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ObjectField, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectField, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<ObjectField, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectField, Long>)ObjectField::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<ObjectField, String>)ObjectField::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<ObjectField, String>)
+					ObjectField::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"objectFieldId",
+				(BiConsumer<ObjectField, Long>)ObjectField::setObjectFieldId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectField, Long>)ObjectField::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectField, Long>)ObjectField::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectField, String>)ObjectField::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectField, Date>)ObjectField::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectField, Date>)ObjectField::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"listTypeDefinitionId",
+				(BiConsumer<ObjectField, Long>)
+					ObjectField::setListTypeDefinitionId);
+			attributeSetterBiConsumers.put(
+				"objectDefinitionId",
+				(BiConsumer<ObjectField, Long>)
+					ObjectField::setObjectDefinitionId);
+			attributeSetterBiConsumers.put(
+				"businessType",
+				(BiConsumer<ObjectField, String>)ObjectField::setBusinessType);
+			attributeSetterBiConsumers.put(
+				"dbColumnName",
+				(BiConsumer<ObjectField, String>)ObjectField::setDBColumnName);
+			attributeSetterBiConsumers.put(
+				"dbTableName",
+				(BiConsumer<ObjectField, String>)ObjectField::setDBTableName);
+			attributeSetterBiConsumers.put(
+				"dbType",
+				(BiConsumer<ObjectField, String>)ObjectField::setDBType);
+			attributeSetterBiConsumers.put(
+				"defaultValue",
+				(BiConsumer<ObjectField, String>)ObjectField::setDefaultValue);
+			attributeSetterBiConsumers.put(
+				"indexed",
+				(BiConsumer<ObjectField, Boolean>)ObjectField::setIndexed);
+			attributeSetterBiConsumers.put(
+				"indexedAsKeyword",
+				(BiConsumer<ObjectField, Boolean>)
+					ObjectField::setIndexedAsKeyword);
+			attributeSetterBiConsumers.put(
+				"indexedLanguageId",
+				(BiConsumer<ObjectField, String>)
+					ObjectField::setIndexedLanguageId);
+			attributeSetterBiConsumers.put(
+				"label",
+				(BiConsumer<ObjectField, String>)ObjectField::setLabel);
+			attributeSetterBiConsumers.put(
+				"name", (BiConsumer<ObjectField, String>)ObjectField::setName);
+			attributeSetterBiConsumers.put(
+				"relationshipType",
+				(BiConsumer<ObjectField, String>)
+					ObjectField::setRelationshipType);
+			attributeSetterBiConsumers.put(
+				"required",
+				(BiConsumer<ObjectField, Boolean>)ObjectField::setRequired);
+			attributeSetterBiConsumers.put(
+				"state",
+				(BiConsumer<ObjectField, Boolean>)ObjectField::setState);
+			attributeSetterBiConsumers.put(
+				"system",
+				(BiConsumer<ObjectField, Boolean>)ObjectField::setSystem);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1631,8 +1657,9 @@ public class ObjectFieldModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<ObjectField, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<ObjectField, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

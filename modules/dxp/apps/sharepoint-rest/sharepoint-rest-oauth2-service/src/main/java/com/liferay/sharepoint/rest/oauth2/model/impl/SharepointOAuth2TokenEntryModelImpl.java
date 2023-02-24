@@ -221,93 +221,110 @@ public class SharepointOAuth2TokenEntryModelImpl
 	public Map<String, Function<SharepointOAuth2TokenEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<SharepointOAuth2TokenEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<SharepointOAuth2TokenEntry, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<SharepointOAuth2TokenEntry, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<SharepointOAuth2TokenEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<SharepointOAuth2TokenEntry, Object>>();
-		Map<String, BiConsumer<SharepointOAuth2TokenEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<SharepointOAuth2TokenEntry, ?>>();
+		private static final Map
+			<String, Function<SharepointOAuth2TokenEntry, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"sharepointOAuth2TokenEntryId",
-			SharepointOAuth2TokenEntry::getSharepointOAuth2TokenEntryId);
-		attributeSetterBiConsumers.put(
-			"sharepointOAuth2TokenEntryId",
-			(BiConsumer<SharepointOAuth2TokenEntry, Long>)
-				SharepointOAuth2TokenEntry::setSharepointOAuth2TokenEntryId);
-		attributeGetterFunctions.put(
-			"companyId", SharepointOAuth2TokenEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SharepointOAuth2TokenEntry, Long>)
-				SharepointOAuth2TokenEntry::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", SharepointOAuth2TokenEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<SharepointOAuth2TokenEntry, Long>)
-				SharepointOAuth2TokenEntry::setUserId);
-		attributeGetterFunctions.put(
-			"userName", SharepointOAuth2TokenEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<SharepointOAuth2TokenEntry, String>)
-				SharepointOAuth2TokenEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", SharepointOAuth2TokenEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<SharepointOAuth2TokenEntry, Date>)
-				SharepointOAuth2TokenEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"accessToken", SharepointOAuth2TokenEntry::getAccessToken);
-		attributeSetterBiConsumers.put(
-			"accessToken",
-			(BiConsumer<SharepointOAuth2TokenEntry, String>)
-				SharepointOAuth2TokenEntry::setAccessToken);
-		attributeGetterFunctions.put(
-			"configurationPid",
-			SharepointOAuth2TokenEntry::getConfigurationPid);
-		attributeSetterBiConsumers.put(
-			"configurationPid",
-			(BiConsumer<SharepointOAuth2TokenEntry, String>)
-				SharepointOAuth2TokenEntry::setConfigurationPid);
-		attributeGetterFunctions.put(
-			"expirationDate", SharepointOAuth2TokenEntry::getExpirationDate);
-		attributeSetterBiConsumers.put(
-			"expirationDate",
-			(BiConsumer<SharepointOAuth2TokenEntry, Date>)
-				SharepointOAuth2TokenEntry::setExpirationDate);
-		attributeGetterFunctions.put(
-			"refreshToken", SharepointOAuth2TokenEntry::getRefreshToken);
-		attributeSetterBiConsumers.put(
-			"refreshToken",
-			(BiConsumer<SharepointOAuth2TokenEntry, String>)
-				SharepointOAuth2TokenEntry::setRefreshToken);
+		static {
+			Map<String, Function<SharepointOAuth2TokenEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<SharepointOAuth2TokenEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"sharepointOAuth2TokenEntryId",
+				SharepointOAuth2TokenEntry::getSharepointOAuth2TokenEntryId);
+			attributeGetterFunctions.put(
+				"companyId", SharepointOAuth2TokenEntry::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", SharepointOAuth2TokenEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", SharepointOAuth2TokenEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", SharepointOAuth2TokenEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"accessToken", SharepointOAuth2TokenEntry::getAccessToken);
+			attributeGetterFunctions.put(
+				"configurationPid",
+				SharepointOAuth2TokenEntry::getConfigurationPid);
+			attributeGetterFunctions.put(
+				"expirationDate",
+				SharepointOAuth2TokenEntry::getExpirationDate);
+			attributeGetterFunctions.put(
+				"refreshToken", SharepointOAuth2TokenEntry::getRefreshToken);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<SharepointOAuth2TokenEntry, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<SharepointOAuth2TokenEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<SharepointOAuth2TokenEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"sharepointOAuth2TokenEntryId",
+				(BiConsumer<SharepointOAuth2TokenEntry, Long>)
+					SharepointOAuth2TokenEntry::
+						setSharepointOAuth2TokenEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<SharepointOAuth2TokenEntry, Long>)
+					SharepointOAuth2TokenEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<SharepointOAuth2TokenEntry, Long>)
+					SharepointOAuth2TokenEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<SharepointOAuth2TokenEntry, String>)
+					SharepointOAuth2TokenEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<SharepointOAuth2TokenEntry, Date>)
+					SharepointOAuth2TokenEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"accessToken",
+				(BiConsumer<SharepointOAuth2TokenEntry, String>)
+					SharepointOAuth2TokenEntry::setAccessToken);
+			attributeSetterBiConsumers.put(
+				"configurationPid",
+				(BiConsumer<SharepointOAuth2TokenEntry, String>)
+					SharepointOAuth2TokenEntry::setConfigurationPid);
+			attributeSetterBiConsumers.put(
+				"expirationDate",
+				(BiConsumer<SharepointOAuth2TokenEntry, Date>)
+					SharepointOAuth2TokenEntry::setExpirationDate);
+			attributeSetterBiConsumers.put(
+				"refreshToken",
+				(BiConsumer<SharepointOAuth2TokenEntry, String>)
+					SharepointOAuth2TokenEntry::setRefreshToken);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -807,7 +824,8 @@ public class SharepointOAuth2TokenEntryModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<SharepointOAuth2TokenEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

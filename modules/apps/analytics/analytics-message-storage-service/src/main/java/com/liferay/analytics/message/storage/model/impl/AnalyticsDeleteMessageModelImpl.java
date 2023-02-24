@@ -219,84 +219,100 @@ public class AnalyticsDeleteMessageModelImpl
 	public Map<String, Function<AnalyticsDeleteMessage, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<AnalyticsDeleteMessage, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<AnalyticsDeleteMessage, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<AnalyticsDeleteMessage, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<AnalyticsDeleteMessage, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<AnalyticsDeleteMessage, Object>>();
-		Map<String, BiConsumer<AnalyticsDeleteMessage, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<AnalyticsDeleteMessage, ?>>();
+		private static final Map
+			<String, Function<AnalyticsDeleteMessage, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", AnalyticsDeleteMessage::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<AnalyticsDeleteMessage, Long>)
-				AnalyticsDeleteMessage::setMvccVersion);
-		attributeGetterFunctions.put(
-			"analyticsDeleteMessageId",
-			AnalyticsDeleteMessage::getAnalyticsDeleteMessageId);
-		attributeSetterBiConsumers.put(
-			"analyticsDeleteMessageId",
-			(BiConsumer<AnalyticsDeleteMessage, Long>)
-				AnalyticsDeleteMessage::setAnalyticsDeleteMessageId);
-		attributeGetterFunctions.put(
-			"companyId", AnalyticsDeleteMessage::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<AnalyticsDeleteMessage, Long>)
-				AnalyticsDeleteMessage::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", AnalyticsDeleteMessage::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<AnalyticsDeleteMessage, Long>)
-				AnalyticsDeleteMessage::setUserId);
-		attributeGetterFunctions.put(
-			"createDate", AnalyticsDeleteMessage::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<AnalyticsDeleteMessage, Date>)
-				AnalyticsDeleteMessage::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", AnalyticsDeleteMessage::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<AnalyticsDeleteMessage, Date>)
-				AnalyticsDeleteMessage::setModifiedDate);
-		attributeGetterFunctions.put(
-			"className", AnalyticsDeleteMessage::getClassName);
-		attributeSetterBiConsumers.put(
-			"className",
-			(BiConsumer<AnalyticsDeleteMessage, String>)
-				AnalyticsDeleteMessage::setClassName);
-		attributeGetterFunctions.put(
-			"classPK", AnalyticsDeleteMessage::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<AnalyticsDeleteMessage, Long>)
-				AnalyticsDeleteMessage::setClassPK);
+		static {
+			Map<String, Function<AnalyticsDeleteMessage, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<AnalyticsDeleteMessage, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", AnalyticsDeleteMessage::getMvccVersion);
+			attributeGetterFunctions.put(
+				"analyticsDeleteMessageId",
+				AnalyticsDeleteMessage::getAnalyticsDeleteMessageId);
+			attributeGetterFunctions.put(
+				"companyId", AnalyticsDeleteMessage::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", AnalyticsDeleteMessage::getUserId);
+			attributeGetterFunctions.put(
+				"createDate", AnalyticsDeleteMessage::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", AnalyticsDeleteMessage::getModifiedDate);
+			attributeGetterFunctions.put(
+				"className", AnalyticsDeleteMessage::getClassName);
+			attributeGetterFunctions.put(
+				"classPK", AnalyticsDeleteMessage::getClassPK);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<AnalyticsDeleteMessage, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<AnalyticsDeleteMessage, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<AnalyticsDeleteMessage, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<AnalyticsDeleteMessage, Long>)
+					AnalyticsDeleteMessage::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"analyticsDeleteMessageId",
+				(BiConsumer<AnalyticsDeleteMessage, Long>)
+					AnalyticsDeleteMessage::setAnalyticsDeleteMessageId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<AnalyticsDeleteMessage, Long>)
+					AnalyticsDeleteMessage::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<AnalyticsDeleteMessage, Long>)
+					AnalyticsDeleteMessage::setUserId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<AnalyticsDeleteMessage, Date>)
+					AnalyticsDeleteMessage::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<AnalyticsDeleteMessage, Date>)
+					AnalyticsDeleteMessage::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"className",
+				(BiConsumer<AnalyticsDeleteMessage, String>)
+					AnalyticsDeleteMessage::setClassName);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<AnalyticsDeleteMessage, Long>)
+					AnalyticsDeleteMessage::setClassPK);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -742,7 +758,8 @@ public class AnalyticsDeleteMessageModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<AnalyticsDeleteMessage, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

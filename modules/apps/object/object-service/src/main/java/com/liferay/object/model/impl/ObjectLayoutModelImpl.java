@@ -243,79 +243,101 @@ public class ObjectLayoutModelImpl
 	public Map<String, Function<ObjectLayout, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectLayout, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectLayout, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectLayout, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectLayout, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<ObjectLayout, Object>>();
-		Map<String, BiConsumer<ObjectLayout, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<ObjectLayout, ?>>();
+		private static final Map<String, Function<ObjectLayout, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectLayout::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectLayout, Long>)ObjectLayout::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectLayout::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<ObjectLayout, String>)ObjectLayout::setUuid);
-		attributeGetterFunctions.put(
-			"objectLayoutId", ObjectLayout::getObjectLayoutId);
-		attributeSetterBiConsumers.put(
-			"objectLayoutId",
-			(BiConsumer<ObjectLayout, Long>)ObjectLayout::setObjectLayoutId);
-		attributeGetterFunctions.put("companyId", ObjectLayout::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectLayout, Long>)ObjectLayout::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectLayout::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<ObjectLayout, Long>)ObjectLayout::setUserId);
-		attributeGetterFunctions.put("userName", ObjectLayout::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectLayout, String>)ObjectLayout::setUserName);
-		attributeGetterFunctions.put("createDate", ObjectLayout::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectLayout, Date>)ObjectLayout::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectLayout::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectLayout, Date>)ObjectLayout::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectDefinitionId", ObjectLayout::getObjectDefinitionId);
-		attributeSetterBiConsumers.put(
-			"objectDefinitionId",
-			(BiConsumer<ObjectLayout, Long>)
-				ObjectLayout::setObjectDefinitionId);
-		attributeGetterFunctions.put(
-			"defaultObjectLayout", ObjectLayout::getDefaultObjectLayout);
-		attributeSetterBiConsumers.put(
-			"defaultObjectLayout",
-			(BiConsumer<ObjectLayout, Boolean>)
-				ObjectLayout::setDefaultObjectLayout);
-		attributeGetterFunctions.put("name", ObjectLayout::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<ObjectLayout, String>)ObjectLayout::setName);
+		static {
+			Map<String, Function<ObjectLayout, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<ObjectLayout, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectLayout::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectLayout::getUuid);
+			attributeGetterFunctions.put(
+				"objectLayoutId", ObjectLayout::getObjectLayoutId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectLayout::getCompanyId);
+			attributeGetterFunctions.put("userId", ObjectLayout::getUserId);
+			attributeGetterFunctions.put("userName", ObjectLayout::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectLayout::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectLayout::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectDefinitionId", ObjectLayout::getObjectDefinitionId);
+			attributeGetterFunctions.put(
+				"defaultObjectLayout", ObjectLayout::getDefaultObjectLayout);
+			attributeGetterFunctions.put("name", ObjectLayout::getName);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ObjectLayout, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectLayout, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<ObjectLayout, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectLayout, Long>)ObjectLayout::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ObjectLayout, String>)ObjectLayout::setUuid);
+			attributeSetterBiConsumers.put(
+				"objectLayoutId",
+				(BiConsumer<ObjectLayout, Long>)
+					ObjectLayout::setObjectLayoutId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectLayout, Long>)ObjectLayout::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectLayout, Long>)ObjectLayout::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectLayout, String>)ObjectLayout::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectLayout, Date>)ObjectLayout::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectLayout, Date>)ObjectLayout::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectDefinitionId",
+				(BiConsumer<ObjectLayout, Long>)
+					ObjectLayout::setObjectDefinitionId);
+			attributeSetterBiConsumers.put(
+				"defaultObjectLayout",
+				(BiConsumer<ObjectLayout, Boolean>)
+					ObjectLayout::setDefaultObjectLayout);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<ObjectLayout, String>)ObjectLayout::setName);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1030,8 +1052,9 @@ public class ObjectLayoutModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<ObjectLayout, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<ObjectLayout, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

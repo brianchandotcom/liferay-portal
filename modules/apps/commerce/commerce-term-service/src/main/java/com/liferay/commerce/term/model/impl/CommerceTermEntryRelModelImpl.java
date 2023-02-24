@@ -231,96 +231,112 @@ public class CommerceTermEntryRelModelImpl
 	public Map<String, Function<CommerceTermEntryRel, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceTermEntryRel, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CommerceTermEntryRel, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CommerceTermEntryRel, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceTermEntryRel, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceTermEntryRel, Object>>();
-		Map<String, BiConsumer<CommerceTermEntryRel, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CommerceTermEntryRel, ?>>();
+		private static final Map<String, Function<CommerceTermEntryRel, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceTermEntryRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceTermEntryRel, Long>)
-				CommerceTermEntryRel::setMvccVersion);
-		attributeGetterFunctions.put(
-			"commerceTermEntryRelId",
-			CommerceTermEntryRel::getCommerceTermEntryRelId);
-		attributeSetterBiConsumers.put(
-			"commerceTermEntryRelId",
-			(BiConsumer<CommerceTermEntryRel, Long>)
-				CommerceTermEntryRel::setCommerceTermEntryRelId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceTermEntryRel::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceTermEntryRel, Long>)
-				CommerceTermEntryRel::setCompanyId);
-		attributeGetterFunctions.put("userId", CommerceTermEntryRel::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceTermEntryRel, Long>)
-				CommerceTermEntryRel::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceTermEntryRel::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceTermEntryRel, String>)
-				CommerceTermEntryRel::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceTermEntryRel::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceTermEntryRel, Date>)
-				CommerceTermEntryRel::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceTermEntryRel::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceTermEntryRel, Date>)
-				CommerceTermEntryRel::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId", CommerceTermEntryRel::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<CommerceTermEntryRel, Long>)
-				CommerceTermEntryRel::setClassNameId);
-		attributeGetterFunctions.put(
-			"classPK", CommerceTermEntryRel::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<CommerceTermEntryRel, Long>)
-				CommerceTermEntryRel::setClassPK);
-		attributeGetterFunctions.put(
-			"commerceTermEntryId",
-			CommerceTermEntryRel::getCommerceTermEntryId);
-		attributeSetterBiConsumers.put(
-			"commerceTermEntryId",
-			(BiConsumer<CommerceTermEntryRel, Long>)
-				CommerceTermEntryRel::setCommerceTermEntryId);
+		static {
+			Map<String, Function<CommerceTermEntryRel, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CommerceTermEntryRel, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceTermEntryRel::getMvccVersion);
+			attributeGetterFunctions.put(
+				"commerceTermEntryRelId",
+				CommerceTermEntryRel::getCommerceTermEntryRelId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceTermEntryRel::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceTermEntryRel::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceTermEntryRel::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceTermEntryRel::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceTermEntryRel::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId", CommerceTermEntryRel::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", CommerceTermEntryRel::getClassPK);
+			attributeGetterFunctions.put(
+				"commerceTermEntryId",
+				CommerceTermEntryRel::getCommerceTermEntryId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceTermEntryRel, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceTermEntryRel, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommerceTermEntryRel, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceTermEntryRel, Long>)
+					CommerceTermEntryRel::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"commerceTermEntryRelId",
+				(BiConsumer<CommerceTermEntryRel, Long>)
+					CommerceTermEntryRel::setCommerceTermEntryRelId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceTermEntryRel, Long>)
+					CommerceTermEntryRel::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceTermEntryRel, Long>)
+					CommerceTermEntryRel::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceTermEntryRel, String>)
+					CommerceTermEntryRel::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceTermEntryRel, Date>)
+					CommerceTermEntryRel::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceTermEntryRel, Date>)
+					CommerceTermEntryRel::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<CommerceTermEntryRel, Long>)
+					CommerceTermEntryRel::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<CommerceTermEntryRel, Long>)
+					CommerceTermEntryRel::setClassPK);
+			attributeSetterBiConsumers.put(
+				"commerceTermEntryId",
+				(BiConsumer<CommerceTermEntryRel, Long>)
+					CommerceTermEntryRel::setCommerceTermEntryId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -849,7 +865,8 @@ public class CommerceTermEntryRelModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CommerceTermEntryRel, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

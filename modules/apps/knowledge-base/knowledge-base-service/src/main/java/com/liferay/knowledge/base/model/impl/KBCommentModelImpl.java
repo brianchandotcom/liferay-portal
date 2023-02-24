@@ -261,85 +261,107 @@ public class KBCommentModelImpl
 	public Map<String, Function<KBComment, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<KBComment, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<KBComment, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<KBComment, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<KBComment, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<KBComment, Object>>();
-		Map<String, BiConsumer<KBComment, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<KBComment, ?>>();
+		private static final Map<String, Function<KBComment, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", KBComment::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<KBComment, Long>)KBComment::setMvccVersion);
-		attributeGetterFunctions.put("uuid", KBComment::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<KBComment, String>)KBComment::setUuid);
-		attributeGetterFunctions.put("kbCommentId", KBComment::getKbCommentId);
-		attributeSetterBiConsumers.put(
-			"kbCommentId",
-			(BiConsumer<KBComment, Long>)KBComment::setKbCommentId);
-		attributeGetterFunctions.put("groupId", KBComment::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<KBComment, Long>)KBComment::setGroupId);
-		attributeGetterFunctions.put("companyId", KBComment::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<KBComment, Long>)KBComment::setCompanyId);
-		attributeGetterFunctions.put("userId", KBComment::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<KBComment, Long>)KBComment::setUserId);
-		attributeGetterFunctions.put("userName", KBComment::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<KBComment, String>)KBComment::setUserName);
-		attributeGetterFunctions.put("createDate", KBComment::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<KBComment, Date>)KBComment::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", KBComment::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<KBComment, Date>)KBComment::setModifiedDate);
-		attributeGetterFunctions.put("classNameId", KBComment::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<KBComment, Long>)KBComment::setClassNameId);
-		attributeGetterFunctions.put("classPK", KBComment::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK", (BiConsumer<KBComment, Long>)KBComment::setClassPK);
-		attributeGetterFunctions.put("content", KBComment::getContent);
-		attributeSetterBiConsumers.put(
-			"content", (BiConsumer<KBComment, String>)KBComment::setContent);
-		attributeGetterFunctions.put("userRating", KBComment::getUserRating);
-		attributeSetterBiConsumers.put(
-			"userRating",
-			(BiConsumer<KBComment, Integer>)KBComment::setUserRating);
-		attributeGetterFunctions.put(
-			"lastPublishDate", KBComment::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<KBComment, Date>)KBComment::setLastPublishDate);
-		attributeGetterFunctions.put("status", KBComment::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<KBComment, Integer>)KBComment::setStatus);
+		static {
+			Map<String, Function<KBComment, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<KBComment, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", KBComment::getMvccVersion);
+			attributeGetterFunctions.put("uuid", KBComment::getUuid);
+			attributeGetterFunctions.put(
+				"kbCommentId", KBComment::getKbCommentId);
+			attributeGetterFunctions.put("groupId", KBComment::getGroupId);
+			attributeGetterFunctions.put("companyId", KBComment::getCompanyId);
+			attributeGetterFunctions.put("userId", KBComment::getUserId);
+			attributeGetterFunctions.put("userName", KBComment::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", KBComment::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", KBComment::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId", KBComment::getClassNameId);
+			attributeGetterFunctions.put("classPK", KBComment::getClassPK);
+			attributeGetterFunctions.put("content", KBComment::getContent);
+			attributeGetterFunctions.put(
+				"userRating", KBComment::getUserRating);
+			attributeGetterFunctions.put(
+				"lastPublishDate", KBComment::getLastPublishDate);
+			attributeGetterFunctions.put("status", KBComment::getStatus);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<KBComment, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<KBComment, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<KBComment, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<KBComment, Long>)KBComment::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<KBComment, String>)KBComment::setUuid);
+			attributeSetterBiConsumers.put(
+				"kbCommentId",
+				(BiConsumer<KBComment, Long>)KBComment::setKbCommentId);
+			attributeSetterBiConsumers.put(
+				"groupId", (BiConsumer<KBComment, Long>)KBComment::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<KBComment, Long>)KBComment::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<KBComment, Long>)KBComment::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<KBComment, String>)KBComment::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<KBComment, Date>)KBComment::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<KBComment, Date>)KBComment::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<KBComment, Long>)KBComment::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK", (BiConsumer<KBComment, Long>)KBComment::setClassPK);
+			attributeSetterBiConsumers.put(
+				"content",
+				(BiConsumer<KBComment, String>)KBComment::setContent);
+			attributeSetterBiConsumers.put(
+				"userRating",
+				(BiConsumer<KBComment, Integer>)KBComment::setUserRating);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<KBComment, Date>)KBComment::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status", (BiConsumer<KBComment, Integer>)KBComment::setStatus);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1031,8 +1053,9 @@ public class KBCommentModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<KBComment, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<KBComment, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

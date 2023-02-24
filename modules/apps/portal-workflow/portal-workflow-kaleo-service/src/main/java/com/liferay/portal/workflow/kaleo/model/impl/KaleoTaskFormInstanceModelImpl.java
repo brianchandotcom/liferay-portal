@@ -262,159 +262,177 @@ public class KaleoTaskFormInstanceModelImpl
 	public Map<String, Function<KaleoTaskFormInstance, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<KaleoTaskFormInstance, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<KaleoTaskFormInstance, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<KaleoTaskFormInstance, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<KaleoTaskFormInstance, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<KaleoTaskFormInstance, Object>>();
-		Map<String, BiConsumer<KaleoTaskFormInstance, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<KaleoTaskFormInstance, ?>>();
+		private static final Map
+			<String, Function<KaleoTaskFormInstance, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", KaleoTaskFormInstance::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", KaleoTaskFormInstance::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"kaleoTaskFormInstanceId",
-			KaleoTaskFormInstance::getKaleoTaskFormInstanceId);
-		attributeSetterBiConsumers.put(
-			"kaleoTaskFormInstanceId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setKaleoTaskFormInstanceId);
-		attributeGetterFunctions.put(
-			"groupId", KaleoTaskFormInstance::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", KaleoTaskFormInstance::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", KaleoTaskFormInstance::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setUserId);
-		attributeGetterFunctions.put(
-			"userName", KaleoTaskFormInstance::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<KaleoTaskFormInstance, String>)
-				KaleoTaskFormInstance::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", KaleoTaskFormInstance::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<KaleoTaskFormInstance, Date>)
-				KaleoTaskFormInstance::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", KaleoTaskFormInstance::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<KaleoTaskFormInstance, Date>)
-				KaleoTaskFormInstance::setModifiedDate);
-		attributeGetterFunctions.put(
-			"kaleoDefinitionId", KaleoTaskFormInstance::getKaleoDefinitionId);
-		attributeSetterBiConsumers.put(
-			"kaleoDefinitionId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setKaleoDefinitionId);
-		attributeGetterFunctions.put(
-			"kaleoDefinitionVersionId",
-			KaleoTaskFormInstance::getKaleoDefinitionVersionId);
-		attributeSetterBiConsumers.put(
-			"kaleoDefinitionVersionId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setKaleoDefinitionVersionId);
-		attributeGetterFunctions.put(
-			"kaleoInstanceId", KaleoTaskFormInstance::getKaleoInstanceId);
-		attributeSetterBiConsumers.put(
-			"kaleoInstanceId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setKaleoInstanceId);
-		attributeGetterFunctions.put(
-			"kaleoTaskId", KaleoTaskFormInstance::getKaleoTaskId);
-		attributeSetterBiConsumers.put(
-			"kaleoTaskId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setKaleoTaskId);
-		attributeGetterFunctions.put(
-			"kaleoTaskInstanceTokenId",
-			KaleoTaskFormInstance::getKaleoTaskInstanceTokenId);
-		attributeSetterBiConsumers.put(
-			"kaleoTaskInstanceTokenId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setKaleoTaskInstanceTokenId);
-		attributeGetterFunctions.put(
-			"kaleoTaskFormId", KaleoTaskFormInstance::getKaleoTaskFormId);
-		attributeSetterBiConsumers.put(
-			"kaleoTaskFormId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setKaleoTaskFormId);
-		attributeGetterFunctions.put(
-			"formValues", KaleoTaskFormInstance::getFormValues);
-		attributeSetterBiConsumers.put(
-			"formValues",
-			(BiConsumer<KaleoTaskFormInstance, String>)
-				KaleoTaskFormInstance::setFormValues);
-		attributeGetterFunctions.put(
-			"formValueEntryGroupId",
-			KaleoTaskFormInstance::getFormValueEntryGroupId);
-		attributeSetterBiConsumers.put(
-			"formValueEntryGroupId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setFormValueEntryGroupId);
-		attributeGetterFunctions.put(
-			"formValueEntryId", KaleoTaskFormInstance::getFormValueEntryId);
-		attributeSetterBiConsumers.put(
-			"formValueEntryId",
-			(BiConsumer<KaleoTaskFormInstance, Long>)
-				KaleoTaskFormInstance::setFormValueEntryId);
-		attributeGetterFunctions.put(
-			"formValueEntryUuid", KaleoTaskFormInstance::getFormValueEntryUuid);
-		attributeSetterBiConsumers.put(
-			"formValueEntryUuid",
-			(BiConsumer<KaleoTaskFormInstance, String>)
-				KaleoTaskFormInstance::setFormValueEntryUuid);
-		attributeGetterFunctions.put(
-			"metadata", KaleoTaskFormInstance::getMetadata);
-		attributeSetterBiConsumers.put(
-			"metadata",
-			(BiConsumer<KaleoTaskFormInstance, String>)
-				KaleoTaskFormInstance::setMetadata);
+		static {
+			Map<String, Function<KaleoTaskFormInstance, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<KaleoTaskFormInstance, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", KaleoTaskFormInstance::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", KaleoTaskFormInstance::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"kaleoTaskFormInstanceId",
+				KaleoTaskFormInstance::getKaleoTaskFormInstanceId);
+			attributeGetterFunctions.put(
+				"groupId", KaleoTaskFormInstance::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", KaleoTaskFormInstance::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", KaleoTaskFormInstance::getUserId);
+			attributeGetterFunctions.put(
+				"userName", KaleoTaskFormInstance::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", KaleoTaskFormInstance::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", KaleoTaskFormInstance::getModifiedDate);
+			attributeGetterFunctions.put(
+				"kaleoDefinitionId",
+				KaleoTaskFormInstance::getKaleoDefinitionId);
+			attributeGetterFunctions.put(
+				"kaleoDefinitionVersionId",
+				KaleoTaskFormInstance::getKaleoDefinitionVersionId);
+			attributeGetterFunctions.put(
+				"kaleoInstanceId", KaleoTaskFormInstance::getKaleoInstanceId);
+			attributeGetterFunctions.put(
+				"kaleoTaskId", KaleoTaskFormInstance::getKaleoTaskId);
+			attributeGetterFunctions.put(
+				"kaleoTaskInstanceTokenId",
+				KaleoTaskFormInstance::getKaleoTaskInstanceTokenId);
+			attributeGetterFunctions.put(
+				"kaleoTaskFormId", KaleoTaskFormInstance::getKaleoTaskFormId);
+			attributeGetterFunctions.put(
+				"formValues", KaleoTaskFormInstance::getFormValues);
+			attributeGetterFunctions.put(
+				"formValueEntryGroupId",
+				KaleoTaskFormInstance::getFormValueEntryGroupId);
+			attributeGetterFunctions.put(
+				"formValueEntryId", KaleoTaskFormInstance::getFormValueEntryId);
+			attributeGetterFunctions.put(
+				"formValueEntryUuid",
+				KaleoTaskFormInstance::getFormValueEntryUuid);
+			attributeGetterFunctions.put(
+				"metadata", KaleoTaskFormInstance::getMetadata);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<KaleoTaskFormInstance, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<KaleoTaskFormInstance, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<KaleoTaskFormInstance, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"kaleoTaskFormInstanceId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setKaleoTaskFormInstanceId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<KaleoTaskFormInstance, String>)
+					KaleoTaskFormInstance::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<KaleoTaskFormInstance, Date>)
+					KaleoTaskFormInstance::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<KaleoTaskFormInstance, Date>)
+					KaleoTaskFormInstance::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"kaleoDefinitionId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setKaleoDefinitionId);
+			attributeSetterBiConsumers.put(
+				"kaleoDefinitionVersionId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setKaleoDefinitionVersionId);
+			attributeSetterBiConsumers.put(
+				"kaleoInstanceId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setKaleoInstanceId);
+			attributeSetterBiConsumers.put(
+				"kaleoTaskId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setKaleoTaskId);
+			attributeSetterBiConsumers.put(
+				"kaleoTaskInstanceTokenId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setKaleoTaskInstanceTokenId);
+			attributeSetterBiConsumers.put(
+				"kaleoTaskFormId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setKaleoTaskFormId);
+			attributeSetterBiConsumers.put(
+				"formValues",
+				(BiConsumer<KaleoTaskFormInstance, String>)
+					KaleoTaskFormInstance::setFormValues);
+			attributeSetterBiConsumers.put(
+				"formValueEntryGroupId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setFormValueEntryGroupId);
+			attributeSetterBiConsumers.put(
+				"formValueEntryId",
+				(BiConsumer<KaleoTaskFormInstance, Long>)
+					KaleoTaskFormInstance::setFormValueEntryId);
+			attributeSetterBiConsumers.put(
+				"formValueEntryUuid",
+				(BiConsumer<KaleoTaskFormInstance, String>)
+					KaleoTaskFormInstance::setFormValueEntryUuid);
+			attributeSetterBiConsumers.put(
+				"metadata",
+				(BiConsumer<KaleoTaskFormInstance, String>)
+					KaleoTaskFormInstance::setMetadata);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -1197,7 +1215,8 @@ public class KaleoTaskFormInstanceModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<KaleoTaskFormInstance, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

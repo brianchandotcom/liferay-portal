@@ -311,120 +311,143 @@ public class AddressModelImpl
 	public Map<String, Function<Address, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<Address, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Address, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Address, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<Address, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Address, Object>>();
-		Map<String, BiConsumer<Address, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Address, ?>>();
+		private static final Map<String, Function<Address, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", Address::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion", (BiConsumer<Address, Long>)Address::setMvccVersion);
-		attributeGetterFunctions.put("uuid", Address::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<Address, String>)Address::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", Address::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<Address, String>)Address::setExternalReferenceCode);
-		attributeGetterFunctions.put("addressId", Address::getAddressId);
-		attributeSetterBiConsumers.put(
-			"addressId", (BiConsumer<Address, Long>)Address::setAddressId);
-		attributeGetterFunctions.put("companyId", Address::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<Address, Long>)Address::setCompanyId);
-		attributeGetterFunctions.put("userId", Address::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Address, Long>)Address::setUserId);
-		attributeGetterFunctions.put("userName", Address::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<Address, String>)Address::setUserName);
-		attributeGetterFunctions.put("createDate", Address::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<Address, Date>)Address::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", Address::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<Address, Date>)Address::setModifiedDate);
-		attributeGetterFunctions.put("classNameId", Address::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId", (BiConsumer<Address, Long>)Address::setClassNameId);
-		attributeGetterFunctions.put("classPK", Address::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK", (BiConsumer<Address, Long>)Address::setClassPK);
-		attributeGetterFunctions.put("countryId", Address::getCountryId);
-		attributeSetterBiConsumers.put(
-			"countryId", (BiConsumer<Address, Long>)Address::setCountryId);
-		attributeGetterFunctions.put("listTypeId", Address::getListTypeId);
-		attributeSetterBiConsumers.put(
-			"listTypeId", (BiConsumer<Address, Long>)Address::setListTypeId);
-		attributeGetterFunctions.put("regionId", Address::getRegionId);
-		attributeSetterBiConsumers.put(
-			"regionId", (BiConsumer<Address, Long>)Address::setRegionId);
-		attributeGetterFunctions.put("city", Address::getCity);
-		attributeSetterBiConsumers.put(
-			"city", (BiConsumer<Address, String>)Address::setCity);
-		attributeGetterFunctions.put("description", Address::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<Address, String>)Address::setDescription);
-		attributeGetterFunctions.put("latitude", Address::getLatitude);
-		attributeSetterBiConsumers.put(
-			"latitude", (BiConsumer<Address, Double>)Address::setLatitude);
-		attributeGetterFunctions.put("longitude", Address::getLongitude);
-		attributeSetterBiConsumers.put(
-			"longitude", (BiConsumer<Address, Double>)Address::setLongitude);
-		attributeGetterFunctions.put("mailing", Address::getMailing);
-		attributeSetterBiConsumers.put(
-			"mailing", (BiConsumer<Address, Boolean>)Address::setMailing);
-		attributeGetterFunctions.put("name", Address::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<Address, String>)Address::setName);
-		attributeGetterFunctions.put("primary", Address::getPrimary);
-		attributeSetterBiConsumers.put(
-			"primary", (BiConsumer<Address, Boolean>)Address::setPrimary);
-		attributeGetterFunctions.put("street1", Address::getStreet1);
-		attributeSetterBiConsumers.put(
-			"street1", (BiConsumer<Address, String>)Address::setStreet1);
-		attributeGetterFunctions.put("street2", Address::getStreet2);
-		attributeSetterBiConsumers.put(
-			"street2", (BiConsumer<Address, String>)Address::setStreet2);
-		attributeGetterFunctions.put("street3", Address::getStreet3);
-		attributeSetterBiConsumers.put(
-			"street3", (BiConsumer<Address, String>)Address::setStreet3);
-		attributeGetterFunctions.put(
-			"validationDate", Address::getValidationDate);
-		attributeSetterBiConsumers.put(
-			"validationDate",
-			(BiConsumer<Address, Date>)Address::setValidationDate);
-		attributeGetterFunctions.put(
-			"validationStatus", Address::getValidationStatus);
-		attributeSetterBiConsumers.put(
-			"validationStatus",
-			(BiConsumer<Address, Integer>)Address::setValidationStatus);
-		attributeGetterFunctions.put("zip", Address::getZip);
-		attributeSetterBiConsumers.put(
-			"zip", (BiConsumer<Address, String>)Address::setZip);
+		static {
+			Map<String, Function<Address, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<Address, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", Address::getMvccVersion);
+			attributeGetterFunctions.put("uuid", Address::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode", Address::getExternalReferenceCode);
+			attributeGetterFunctions.put("addressId", Address::getAddressId);
+			attributeGetterFunctions.put("companyId", Address::getCompanyId);
+			attributeGetterFunctions.put("userId", Address::getUserId);
+			attributeGetterFunctions.put("userName", Address::getUserName);
+			attributeGetterFunctions.put("createDate", Address::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", Address::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId", Address::getClassNameId);
+			attributeGetterFunctions.put("classPK", Address::getClassPK);
+			attributeGetterFunctions.put("countryId", Address::getCountryId);
+			attributeGetterFunctions.put("listTypeId", Address::getListTypeId);
+			attributeGetterFunctions.put("regionId", Address::getRegionId);
+			attributeGetterFunctions.put("city", Address::getCity);
+			attributeGetterFunctions.put(
+				"description", Address::getDescription);
+			attributeGetterFunctions.put("latitude", Address::getLatitude);
+			attributeGetterFunctions.put("longitude", Address::getLongitude);
+			attributeGetterFunctions.put("mailing", Address::getMailing);
+			attributeGetterFunctions.put("name", Address::getName);
+			attributeGetterFunctions.put("primary", Address::getPrimary);
+			attributeGetterFunctions.put("street1", Address::getStreet1);
+			attributeGetterFunctions.put("street2", Address::getStreet2);
+			attributeGetterFunctions.put("street3", Address::getStreet3);
+			attributeGetterFunctions.put(
+				"validationDate", Address::getValidationDate);
+			attributeGetterFunctions.put(
+				"validationStatus", Address::getValidationStatus);
+			attributeGetterFunctions.put("zip", Address::getZip);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<Address, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<Address, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<Address, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<Address, Long>)Address::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<Address, String>)Address::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<Address, String>)Address::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"addressId", (BiConsumer<Address, Long>)Address::setAddressId);
+			attributeSetterBiConsumers.put(
+				"companyId", (BiConsumer<Address, Long>)Address::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<Address, Long>)Address::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName", (BiConsumer<Address, String>)Address::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<Address, Date>)Address::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<Address, Date>)Address::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<Address, Long>)Address::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK", (BiConsumer<Address, Long>)Address::setClassPK);
+			attributeSetterBiConsumers.put(
+				"countryId", (BiConsumer<Address, Long>)Address::setCountryId);
+			attributeSetterBiConsumers.put(
+				"listTypeId",
+				(BiConsumer<Address, Long>)Address::setListTypeId);
+			attributeSetterBiConsumers.put(
+				"regionId", (BiConsumer<Address, Long>)Address::setRegionId);
+			attributeSetterBiConsumers.put(
+				"city", (BiConsumer<Address, String>)Address::setCity);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<Address, String>)Address::setDescription);
+			attributeSetterBiConsumers.put(
+				"latitude", (BiConsumer<Address, Double>)Address::setLatitude);
+			attributeSetterBiConsumers.put(
+				"longitude",
+				(BiConsumer<Address, Double>)Address::setLongitude);
+			attributeSetterBiConsumers.put(
+				"mailing", (BiConsumer<Address, Boolean>)Address::setMailing);
+			attributeSetterBiConsumers.put(
+				"name", (BiConsumer<Address, String>)Address::setName);
+			attributeSetterBiConsumers.put(
+				"primary", (BiConsumer<Address, Boolean>)Address::setPrimary);
+			attributeSetterBiConsumers.put(
+				"street1", (BiConsumer<Address, String>)Address::setStreet1);
+			attributeSetterBiConsumers.put(
+				"street2", (BiConsumer<Address, String>)Address::setStreet2);
+			attributeSetterBiConsumers.put(
+				"street3", (BiConsumer<Address, String>)Address::setStreet3);
+			attributeSetterBiConsumers.put(
+				"validationDate",
+				(BiConsumer<Address, Date>)Address::setValidationDate);
+			attributeSetterBiConsumers.put(
+				"validationStatus",
+				(BiConsumer<Address, Integer>)Address::setValidationStatus);
+			attributeSetterBiConsumers.put(
+				"zip", (BiConsumer<Address, String>)Address::setZip);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1490,8 +1513,9 @@ public class AddressModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<Address, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<Address, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

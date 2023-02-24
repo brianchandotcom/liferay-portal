@@ -250,87 +250,111 @@ public class AccountGroupModelImpl
 	public Map<String, Function<AccountGroup, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<AccountGroup, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<AccountGroup, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<AccountGroup, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<AccountGroup, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<AccountGroup, Object>>();
-		Map<String, BiConsumer<AccountGroup, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<AccountGroup, ?>>();
+		private static final Map<String, Function<AccountGroup, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", AccountGroup::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<AccountGroup, Long>)AccountGroup::setMvccVersion);
-		attributeGetterFunctions.put("uuid", AccountGroup::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<AccountGroup, String>)AccountGroup::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", AccountGroup::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<AccountGroup, String>)
-				AccountGroup::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"accountGroupId", AccountGroup::getAccountGroupId);
-		attributeSetterBiConsumers.put(
-			"accountGroupId",
-			(BiConsumer<AccountGroup, Long>)AccountGroup::setAccountGroupId);
-		attributeGetterFunctions.put("companyId", AccountGroup::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<AccountGroup, Long>)AccountGroup::setCompanyId);
-		attributeGetterFunctions.put("userId", AccountGroup::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<AccountGroup, Long>)AccountGroup::setUserId);
-		attributeGetterFunctions.put("userName", AccountGroup::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<AccountGroup, String>)AccountGroup::setUserName);
-		attributeGetterFunctions.put("createDate", AccountGroup::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<AccountGroup, Date>)AccountGroup::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", AccountGroup::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<AccountGroup, Date>)AccountGroup::setModifiedDate);
-		attributeGetterFunctions.put(
-			"defaultAccountGroup", AccountGroup::getDefaultAccountGroup);
-		attributeSetterBiConsumers.put(
-			"defaultAccountGroup",
-			(BiConsumer<AccountGroup, Boolean>)
-				AccountGroup::setDefaultAccountGroup);
-		attributeGetterFunctions.put(
-			"description", AccountGroup::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<AccountGroup, String>)AccountGroup::setDescription);
-		attributeGetterFunctions.put("name", AccountGroup::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<AccountGroup, String>)AccountGroup::setName);
-		attributeGetterFunctions.put("type", AccountGroup::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<AccountGroup, String>)AccountGroup::setType);
+		static {
+			Map<String, Function<AccountGroup, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<AccountGroup, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", AccountGroup::getMvccVersion);
+			attributeGetterFunctions.put("uuid", AccountGroup::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				AccountGroup::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"accountGroupId", AccountGroup::getAccountGroupId);
+			attributeGetterFunctions.put(
+				"companyId", AccountGroup::getCompanyId);
+			attributeGetterFunctions.put("userId", AccountGroup::getUserId);
+			attributeGetterFunctions.put("userName", AccountGroup::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", AccountGroup::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", AccountGroup::getModifiedDate);
+			attributeGetterFunctions.put(
+				"defaultAccountGroup", AccountGroup::getDefaultAccountGroup);
+			attributeGetterFunctions.put(
+				"description", AccountGroup::getDescription);
+			attributeGetterFunctions.put("name", AccountGroup::getName);
+			attributeGetterFunctions.put("type", AccountGroup::getType);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<AccountGroup, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<AccountGroup, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<AccountGroup, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<AccountGroup, Long>)AccountGroup::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<AccountGroup, String>)AccountGroup::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<AccountGroup, String>)
+					AccountGroup::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"accountGroupId",
+				(BiConsumer<AccountGroup, Long>)
+					AccountGroup::setAccountGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<AccountGroup, Long>)AccountGroup::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<AccountGroup, Long>)AccountGroup::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<AccountGroup, String>)AccountGroup::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<AccountGroup, Date>)AccountGroup::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<AccountGroup, Date>)AccountGroup::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"defaultAccountGroup",
+				(BiConsumer<AccountGroup, Boolean>)
+					AccountGroup::setDefaultAccountGroup);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<AccountGroup, String>)AccountGroup::setDescription);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<AccountGroup, String>)AccountGroup::setName);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<AccountGroup, String>)AccountGroup::setType);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -996,8 +1020,9 @@ public class AccountGroupModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<AccountGroup, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<AccountGroup, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

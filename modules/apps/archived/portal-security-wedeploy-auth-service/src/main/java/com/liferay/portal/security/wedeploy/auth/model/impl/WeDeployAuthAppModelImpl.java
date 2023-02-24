@@ -226,82 +226,104 @@ public class WeDeployAuthAppModelImpl
 	public Map<String, Function<WeDeployAuthApp, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<WeDeployAuthApp, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<WeDeployAuthApp, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<WeDeployAuthApp, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<WeDeployAuthApp, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<WeDeployAuthApp, Object>>();
-		Map<String, BiConsumer<WeDeployAuthApp, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<WeDeployAuthApp, ?>>();
+		private static final Map<String, Function<WeDeployAuthApp, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"weDeployAuthAppId", WeDeployAuthApp::getWeDeployAuthAppId);
-		attributeSetterBiConsumers.put(
-			"weDeployAuthAppId",
-			(BiConsumer<WeDeployAuthApp, Long>)
-				WeDeployAuthApp::setWeDeployAuthAppId);
-		attributeGetterFunctions.put(
-			"companyId", WeDeployAuthApp::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<WeDeployAuthApp, Long>)WeDeployAuthApp::setCompanyId);
-		attributeGetterFunctions.put("userId", WeDeployAuthApp::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<WeDeployAuthApp, Long>)WeDeployAuthApp::setUserId);
-		attributeGetterFunctions.put("userName", WeDeployAuthApp::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<WeDeployAuthApp, String>)WeDeployAuthApp::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", WeDeployAuthApp::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<WeDeployAuthApp, Date>)WeDeployAuthApp::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", WeDeployAuthApp::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<WeDeployAuthApp, Date>)
-				WeDeployAuthApp::setModifiedDate);
-		attributeGetterFunctions.put("name", WeDeployAuthApp::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<WeDeployAuthApp, String>)WeDeployAuthApp::setName);
-		attributeGetterFunctions.put(
-			"redirectURI", WeDeployAuthApp::getRedirectURI);
-		attributeSetterBiConsumers.put(
-			"redirectURI",
-			(BiConsumer<WeDeployAuthApp, String>)
-				WeDeployAuthApp::setRedirectURI);
-		attributeGetterFunctions.put("clientId", WeDeployAuthApp::getClientId);
-		attributeSetterBiConsumers.put(
-			"clientId",
-			(BiConsumer<WeDeployAuthApp, String>)WeDeployAuthApp::setClientId);
-		attributeGetterFunctions.put(
-			"clientSecret", WeDeployAuthApp::getClientSecret);
-		attributeSetterBiConsumers.put(
-			"clientSecret",
-			(BiConsumer<WeDeployAuthApp, String>)
-				WeDeployAuthApp::setClientSecret);
+		static {
+			Map<String, Function<WeDeployAuthApp, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<WeDeployAuthApp, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"weDeployAuthAppId", WeDeployAuthApp::getWeDeployAuthAppId);
+			attributeGetterFunctions.put(
+				"companyId", WeDeployAuthApp::getCompanyId);
+			attributeGetterFunctions.put("userId", WeDeployAuthApp::getUserId);
+			attributeGetterFunctions.put(
+				"userName", WeDeployAuthApp::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", WeDeployAuthApp::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", WeDeployAuthApp::getModifiedDate);
+			attributeGetterFunctions.put("name", WeDeployAuthApp::getName);
+			attributeGetterFunctions.put(
+				"redirectURI", WeDeployAuthApp::getRedirectURI);
+			attributeGetterFunctions.put(
+				"clientId", WeDeployAuthApp::getClientId);
+			attributeGetterFunctions.put(
+				"clientSecret", WeDeployAuthApp::getClientSecret);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<WeDeployAuthApp, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<WeDeployAuthApp, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<WeDeployAuthApp, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"weDeployAuthAppId",
+				(BiConsumer<WeDeployAuthApp, Long>)
+					WeDeployAuthApp::setWeDeployAuthAppId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<WeDeployAuthApp, Long>)
+					WeDeployAuthApp::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<WeDeployAuthApp, Long>)WeDeployAuthApp::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<WeDeployAuthApp, String>)
+					WeDeployAuthApp::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<WeDeployAuthApp, Date>)
+					WeDeployAuthApp::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<WeDeployAuthApp, Date>)
+					WeDeployAuthApp::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<WeDeployAuthApp, String>)WeDeployAuthApp::setName);
+			attributeSetterBiConsumers.put(
+				"redirectURI",
+				(BiConsumer<WeDeployAuthApp, String>)
+					WeDeployAuthApp::setRedirectURI);
+			attributeSetterBiConsumers.put(
+				"clientId",
+				(BiConsumer<WeDeployAuthApp, String>)
+					WeDeployAuthApp::setClientId);
+			attributeSetterBiConsumers.put(
+				"clientSecret",
+				(BiConsumer<WeDeployAuthApp, String>)
+					WeDeployAuthApp::setClientSecret);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -841,7 +863,8 @@ public class WeDeployAuthAppModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<WeDeployAuthApp, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

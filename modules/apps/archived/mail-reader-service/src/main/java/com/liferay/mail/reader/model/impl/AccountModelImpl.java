@@ -233,133 +233,157 @@ public class AccountModelImpl
 	public Map<String, Function<Account, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<Account, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Account, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Account, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<Account, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Account, Object>>();
-		Map<String, BiConsumer<Account, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Account, ?>>();
+		private static final Map<String, Function<Account, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("accountId", Account::getAccountId);
-		attributeSetterBiConsumers.put(
-			"accountId", (BiConsumer<Account, Long>)Account::setAccountId);
-		attributeGetterFunctions.put("companyId", Account::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<Account, Long>)Account::setCompanyId);
-		attributeGetterFunctions.put("userId", Account::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Account, Long>)Account::setUserId);
-		attributeGetterFunctions.put("userName", Account::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<Account, String>)Account::setUserName);
-		attributeGetterFunctions.put("createDate", Account::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<Account, Date>)Account::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", Account::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<Account, Date>)Account::setModifiedDate);
-		attributeGetterFunctions.put("address", Account::getAddress);
-		attributeSetterBiConsumers.put(
-			"address", (BiConsumer<Account, String>)Account::setAddress);
-		attributeGetterFunctions.put("personalName", Account::getPersonalName);
-		attributeSetterBiConsumers.put(
-			"personalName",
-			(BiConsumer<Account, String>)Account::setPersonalName);
-		attributeGetterFunctions.put("protocol", Account::getProtocol);
-		attributeSetterBiConsumers.put(
-			"protocol", (BiConsumer<Account, String>)Account::setProtocol);
-		attributeGetterFunctions.put(
-			"incomingHostName", Account::getIncomingHostName);
-		attributeSetterBiConsumers.put(
-			"incomingHostName",
-			(BiConsumer<Account, String>)Account::setIncomingHostName);
-		attributeGetterFunctions.put("incomingPort", Account::getIncomingPort);
-		attributeSetterBiConsumers.put(
-			"incomingPort",
-			(BiConsumer<Account, Integer>)Account::setIncomingPort);
-		attributeGetterFunctions.put(
-			"incomingSecure", Account::getIncomingSecure);
-		attributeSetterBiConsumers.put(
-			"incomingSecure",
-			(BiConsumer<Account, Boolean>)Account::setIncomingSecure);
-		attributeGetterFunctions.put(
-			"outgoingHostName", Account::getOutgoingHostName);
-		attributeSetterBiConsumers.put(
-			"outgoingHostName",
-			(BiConsumer<Account, String>)Account::setOutgoingHostName);
-		attributeGetterFunctions.put("outgoingPort", Account::getOutgoingPort);
-		attributeSetterBiConsumers.put(
-			"outgoingPort",
-			(BiConsumer<Account, Integer>)Account::setOutgoingPort);
-		attributeGetterFunctions.put(
-			"outgoingSecure", Account::getOutgoingSecure);
-		attributeSetterBiConsumers.put(
-			"outgoingSecure",
-			(BiConsumer<Account, Boolean>)Account::setOutgoingSecure);
-		attributeGetterFunctions.put("login", Account::getLogin);
-		attributeSetterBiConsumers.put(
-			"login", (BiConsumer<Account, String>)Account::setLogin);
-		attributeGetterFunctions.put("password", Account::getPassword);
-		attributeSetterBiConsumers.put(
-			"password", (BiConsumer<Account, String>)Account::setPassword);
-		attributeGetterFunctions.put("savePassword", Account::getSavePassword);
-		attributeSetterBiConsumers.put(
-			"savePassword",
-			(BiConsumer<Account, Boolean>)Account::setSavePassword);
-		attributeGetterFunctions.put("signature", Account::getSignature);
-		attributeSetterBiConsumers.put(
-			"signature", (BiConsumer<Account, String>)Account::setSignature);
-		attributeGetterFunctions.put("useSignature", Account::getUseSignature);
-		attributeSetterBiConsumers.put(
-			"useSignature",
-			(BiConsumer<Account, Boolean>)Account::setUseSignature);
-		attributeGetterFunctions.put("folderPrefix", Account::getFolderPrefix);
-		attributeSetterBiConsumers.put(
-			"folderPrefix",
-			(BiConsumer<Account, String>)Account::setFolderPrefix);
-		attributeGetterFunctions.put(
-			"inboxFolderId", Account::getInboxFolderId);
-		attributeSetterBiConsumers.put(
-			"inboxFolderId",
-			(BiConsumer<Account, Long>)Account::setInboxFolderId);
-		attributeGetterFunctions.put(
-			"draftFolderId", Account::getDraftFolderId);
-		attributeSetterBiConsumers.put(
-			"draftFolderId",
-			(BiConsumer<Account, Long>)Account::setDraftFolderId);
-		attributeGetterFunctions.put("sentFolderId", Account::getSentFolderId);
-		attributeSetterBiConsumers.put(
-			"sentFolderId",
-			(BiConsumer<Account, Long>)Account::setSentFolderId);
-		attributeGetterFunctions.put(
-			"trashFolderId", Account::getTrashFolderId);
-		attributeSetterBiConsumers.put(
-			"trashFolderId",
-			(BiConsumer<Account, Long>)Account::setTrashFolderId);
-		attributeGetterFunctions.put(
-			"defaultSender", Account::getDefaultSender);
-		attributeSetterBiConsumers.put(
-			"defaultSender",
-			(BiConsumer<Account, Boolean>)Account::setDefaultSender);
+		static {
+			Map<String, Function<Account, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<Account, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put("accountId", Account::getAccountId);
+			attributeGetterFunctions.put("companyId", Account::getCompanyId);
+			attributeGetterFunctions.put("userId", Account::getUserId);
+			attributeGetterFunctions.put("userName", Account::getUserName);
+			attributeGetterFunctions.put("createDate", Account::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", Account::getModifiedDate);
+			attributeGetterFunctions.put("address", Account::getAddress);
+			attributeGetterFunctions.put(
+				"personalName", Account::getPersonalName);
+			attributeGetterFunctions.put("protocol", Account::getProtocol);
+			attributeGetterFunctions.put(
+				"incomingHostName", Account::getIncomingHostName);
+			attributeGetterFunctions.put(
+				"incomingPort", Account::getIncomingPort);
+			attributeGetterFunctions.put(
+				"incomingSecure", Account::getIncomingSecure);
+			attributeGetterFunctions.put(
+				"outgoingHostName", Account::getOutgoingHostName);
+			attributeGetterFunctions.put(
+				"outgoingPort", Account::getOutgoingPort);
+			attributeGetterFunctions.put(
+				"outgoingSecure", Account::getOutgoingSecure);
+			attributeGetterFunctions.put("login", Account::getLogin);
+			attributeGetterFunctions.put("password", Account::getPassword);
+			attributeGetterFunctions.put(
+				"savePassword", Account::getSavePassword);
+			attributeGetterFunctions.put("signature", Account::getSignature);
+			attributeGetterFunctions.put(
+				"useSignature", Account::getUseSignature);
+			attributeGetterFunctions.put(
+				"folderPrefix", Account::getFolderPrefix);
+			attributeGetterFunctions.put(
+				"inboxFolderId", Account::getInboxFolderId);
+			attributeGetterFunctions.put(
+				"draftFolderId", Account::getDraftFolderId);
+			attributeGetterFunctions.put(
+				"sentFolderId", Account::getSentFolderId);
+			attributeGetterFunctions.put(
+				"trashFolderId", Account::getTrashFolderId);
+			attributeGetterFunctions.put(
+				"defaultSender", Account::getDefaultSender);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<Account, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<Account, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<Account, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"accountId", (BiConsumer<Account, Long>)Account::setAccountId);
+			attributeSetterBiConsumers.put(
+				"companyId", (BiConsumer<Account, Long>)Account::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<Account, Long>)Account::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName", (BiConsumer<Account, String>)Account::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<Account, Date>)Account::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<Account, Date>)Account::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"address", (BiConsumer<Account, String>)Account::setAddress);
+			attributeSetterBiConsumers.put(
+				"personalName",
+				(BiConsumer<Account, String>)Account::setPersonalName);
+			attributeSetterBiConsumers.put(
+				"protocol", (BiConsumer<Account, String>)Account::setProtocol);
+			attributeSetterBiConsumers.put(
+				"incomingHostName",
+				(BiConsumer<Account, String>)Account::setIncomingHostName);
+			attributeSetterBiConsumers.put(
+				"incomingPort",
+				(BiConsumer<Account, Integer>)Account::setIncomingPort);
+			attributeSetterBiConsumers.put(
+				"incomingSecure",
+				(BiConsumer<Account, Boolean>)Account::setIncomingSecure);
+			attributeSetterBiConsumers.put(
+				"outgoingHostName",
+				(BiConsumer<Account, String>)Account::setOutgoingHostName);
+			attributeSetterBiConsumers.put(
+				"outgoingPort",
+				(BiConsumer<Account, Integer>)Account::setOutgoingPort);
+			attributeSetterBiConsumers.put(
+				"outgoingSecure",
+				(BiConsumer<Account, Boolean>)Account::setOutgoingSecure);
+			attributeSetterBiConsumers.put(
+				"login", (BiConsumer<Account, String>)Account::setLogin);
+			attributeSetterBiConsumers.put(
+				"password", (BiConsumer<Account, String>)Account::setPassword);
+			attributeSetterBiConsumers.put(
+				"savePassword",
+				(BiConsumer<Account, Boolean>)Account::setSavePassword);
+			attributeSetterBiConsumers.put(
+				"signature",
+				(BiConsumer<Account, String>)Account::setSignature);
+			attributeSetterBiConsumers.put(
+				"useSignature",
+				(BiConsumer<Account, Boolean>)Account::setUseSignature);
+			attributeSetterBiConsumers.put(
+				"folderPrefix",
+				(BiConsumer<Account, String>)Account::setFolderPrefix);
+			attributeSetterBiConsumers.put(
+				"inboxFolderId",
+				(BiConsumer<Account, Long>)Account::setInboxFolderId);
+			attributeSetterBiConsumers.put(
+				"draftFolderId",
+				(BiConsumer<Account, Long>)Account::setDraftFolderId);
+			attributeSetterBiConsumers.put(
+				"sentFolderId",
+				(BiConsumer<Account, Long>)Account::setSentFolderId);
+			attributeSetterBiConsumers.put(
+				"trashFolderId",
+				(BiConsumer<Account, Long>)Account::setTrashFolderId);
+			attributeSetterBiConsumers.put(
+				"defaultSender",
+				(BiConsumer<Account, Boolean>)Account::setDefaultSender);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -1275,8 +1299,9 @@ public class AccountModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<Account, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<Account, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

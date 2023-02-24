@@ -221,82 +221,98 @@ public class CommerceAccountOrganizationRelModelImpl
 	public Map<String, Function<CommerceAccountOrganizationRel, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceAccountOrganizationRel, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<CommerceAccountOrganizationRel, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<CommerceAccountOrganizationRel, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceAccountOrganizationRel, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String,
-					 Function<CommerceAccountOrganizationRel, Object>>();
-		Map<String, BiConsumer<CommerceAccountOrganizationRel, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CommerceAccountOrganizationRel, ?>>();
+		private static final Map
+			<String, Function<CommerceAccountOrganizationRel, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"commerceAccountId",
-			CommerceAccountOrganizationRel::getCommerceAccountId);
-		attributeSetterBiConsumers.put(
-			"commerceAccountId",
-			(BiConsumer<CommerceAccountOrganizationRel, Long>)
-				CommerceAccountOrganizationRel::setCommerceAccountId);
-		attributeGetterFunctions.put(
-			"organizationId",
-			CommerceAccountOrganizationRel::getOrganizationId);
-		attributeSetterBiConsumers.put(
-			"organizationId",
-			(BiConsumer<CommerceAccountOrganizationRel, Long>)
-				CommerceAccountOrganizationRel::setOrganizationId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceAccountOrganizationRel::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceAccountOrganizationRel, Long>)
-				CommerceAccountOrganizationRel::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CommerceAccountOrganizationRel::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceAccountOrganizationRel, Long>)
-				CommerceAccountOrganizationRel::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceAccountOrganizationRel::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceAccountOrganizationRel, String>)
-				CommerceAccountOrganizationRel::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceAccountOrganizationRel::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceAccountOrganizationRel, Date>)
-				CommerceAccountOrganizationRel::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceAccountOrganizationRel::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceAccountOrganizationRel, Date>)
-				CommerceAccountOrganizationRel::setModifiedDate);
+		static {
+			Map<String, Function<CommerceAccountOrganizationRel, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<CommerceAccountOrganizationRel, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"commerceAccountId",
+				CommerceAccountOrganizationRel::getCommerceAccountId);
+			attributeGetterFunctions.put(
+				"organizationId",
+				CommerceAccountOrganizationRel::getOrganizationId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceAccountOrganizationRel::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceAccountOrganizationRel::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceAccountOrganizationRel::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceAccountOrganizationRel::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate",
+				CommerceAccountOrganizationRel::getModifiedDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceAccountOrganizationRel, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceAccountOrganizationRel, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String,
+						 BiConsumer<CommerceAccountOrganizationRel, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"commerceAccountId",
+				(BiConsumer<CommerceAccountOrganizationRel, Long>)
+					CommerceAccountOrganizationRel::setCommerceAccountId);
+			attributeSetterBiConsumers.put(
+				"organizationId",
+				(BiConsumer<CommerceAccountOrganizationRel, Long>)
+					CommerceAccountOrganizationRel::setOrganizationId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceAccountOrganizationRel, Long>)
+					CommerceAccountOrganizationRel::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceAccountOrganizationRel, Long>)
+					CommerceAccountOrganizationRel::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceAccountOrganizationRel, String>)
+					CommerceAccountOrganizationRel::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceAccountOrganizationRel, Date>)
+					CommerceAccountOrganizationRel::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceAccountOrganizationRel, Date>)
+					CommerceAccountOrganizationRel::setModifiedDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -736,7 +752,8 @@ public class CommerceAccountOrganizationRelModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CommerceAccountOrganizationRel, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

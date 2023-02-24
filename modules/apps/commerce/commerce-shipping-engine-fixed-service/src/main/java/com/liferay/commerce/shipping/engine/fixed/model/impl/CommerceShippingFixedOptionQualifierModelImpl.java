@@ -236,108 +236,125 @@ public class CommerceShippingFixedOptionQualifierModelImpl
 	public Map<String, Function<CommerceShippingFixedOptionQualifier, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceShippingFixedOptionQualifier, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<CommerceShippingFixedOptionQualifier, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<CommerceShippingFixedOptionQualifier, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceShippingFixedOptionQualifier, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String,
-					 Function<CommerceShippingFixedOptionQualifier, Object>>();
-		Map<String, BiConsumer<CommerceShippingFixedOptionQualifier, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String,
-					 BiConsumer<CommerceShippingFixedOptionQualifier, ?>>();
+		private static final Map
+			<String, Function<CommerceShippingFixedOptionQualifier, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion",
-			CommerceShippingFixedOptionQualifier::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
-				CommerceShippingFixedOptionQualifier::setMvccVersion);
-		attributeGetterFunctions.put(
-			"commerceShippingFixedOptionQualifierId",
-			CommerceShippingFixedOptionQualifier::
-				getCommerceShippingFixedOptionQualifierId);
-		attributeSetterBiConsumers.put(
-			"commerceShippingFixedOptionQualifierId",
-			(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
+		static {
+			Map<String, Function<CommerceShippingFixedOptionQualifier, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function
+							 <CommerceShippingFixedOptionQualifier, Object>>();
+
+			attributeGetterFunctions.put(
+				"mvccVersion",
+				CommerceShippingFixedOptionQualifier::getMvccVersion);
+			attributeGetterFunctions.put(
+				"commerceShippingFixedOptionQualifierId",
 				CommerceShippingFixedOptionQualifier::
-					setCommerceShippingFixedOptionQualifierId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceShippingFixedOptionQualifier::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
-				CommerceShippingFixedOptionQualifier::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CommerceShippingFixedOptionQualifier::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
-				CommerceShippingFixedOptionQualifier::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceShippingFixedOptionQualifier::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceShippingFixedOptionQualifier, String>)
-				CommerceShippingFixedOptionQualifier::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceShippingFixedOptionQualifier::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceShippingFixedOptionQualifier, Date>)
-				CommerceShippingFixedOptionQualifier::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate",
-			CommerceShippingFixedOptionQualifier::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceShippingFixedOptionQualifier, Date>)
-				CommerceShippingFixedOptionQualifier::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId",
-			CommerceShippingFixedOptionQualifier::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
-				CommerceShippingFixedOptionQualifier::setClassNameId);
-		attributeGetterFunctions.put(
-			"classPK", CommerceShippingFixedOptionQualifier::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
-				CommerceShippingFixedOptionQualifier::setClassPK);
-		attributeGetterFunctions.put(
-			"commerceShippingFixedOptionId",
-			CommerceShippingFixedOptionQualifier::
-				getCommerceShippingFixedOptionId);
-		attributeSetterBiConsumers.put(
-			"commerceShippingFixedOptionId",
-			(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
+					getCommerceShippingFixedOptionQualifierId);
+			attributeGetterFunctions.put(
+				"companyId",
+				CommerceShippingFixedOptionQualifier::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceShippingFixedOptionQualifier::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceShippingFixedOptionQualifier::getUserName);
+			attributeGetterFunctions.put(
+				"createDate",
+				CommerceShippingFixedOptionQualifier::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate",
+				CommerceShippingFixedOptionQualifier::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId",
+				CommerceShippingFixedOptionQualifier::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", CommerceShippingFixedOptionQualifier::getClassPK);
+			attributeGetterFunctions.put(
+				"commerceShippingFixedOptionId",
 				CommerceShippingFixedOptionQualifier::
-					setCommerceShippingFixedOptionId);
+					getCommerceShippingFixedOptionId);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceShippingFixedOptionQualifier, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceShippingFixedOptionQualifier, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String,
+						 BiConsumer<CommerceShippingFixedOptionQualifier, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
+					CommerceShippingFixedOptionQualifier::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"commerceShippingFixedOptionQualifierId",
+				(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
+					CommerceShippingFixedOptionQualifier::
+						setCommerceShippingFixedOptionQualifierId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
+					CommerceShippingFixedOptionQualifier::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
+					CommerceShippingFixedOptionQualifier::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceShippingFixedOptionQualifier, String>)
+					CommerceShippingFixedOptionQualifier::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceShippingFixedOptionQualifier, Date>)
+					CommerceShippingFixedOptionQualifier::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceShippingFixedOptionQualifier, Date>)
+					CommerceShippingFixedOptionQualifier::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
+					CommerceShippingFixedOptionQualifier::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
+					CommerceShippingFixedOptionQualifier::setClassPK);
+			attributeSetterBiConsumers.put(
+				"commerceShippingFixedOptionId",
+				(BiConsumer<CommerceShippingFixedOptionQualifier, Long>)
+					CommerceShippingFixedOptionQualifier::
+						setCommerceShippingFixedOptionId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -901,7 +918,8 @@ public class CommerceShippingFixedOptionQualifierModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceShippingFixedOptionQualifier, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

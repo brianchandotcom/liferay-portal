@@ -313,129 +313,152 @@ public class WikiPageModelImpl
 	public Map<String, Function<WikiPage, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<WikiPage, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<WikiPage, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<WikiPage, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<WikiPage, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<WikiPage, Object>>();
-		Map<String, BiConsumer<WikiPage, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<WikiPage, ?>>();
+		private static final Map<String, Function<WikiPage, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", WikiPage::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<WikiPage, Long>)WikiPage::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", WikiPage::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<WikiPage, Long>)WikiPage::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", WikiPage::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<WikiPage, String>)WikiPage::setUuid);
-		attributeGetterFunctions.put("pageId", WikiPage::getPageId);
-		attributeSetterBiConsumers.put(
-			"pageId", (BiConsumer<WikiPage, Long>)WikiPage::setPageId);
-		attributeGetterFunctions.put(
-			"resourcePrimKey", WikiPage::getResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"resourcePrimKey",
-			(BiConsumer<WikiPage, Long>)WikiPage::setResourcePrimKey);
-		attributeGetterFunctions.put("groupId", WikiPage::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<WikiPage, Long>)WikiPage::setGroupId);
-		attributeGetterFunctions.put("companyId", WikiPage::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<WikiPage, Long>)WikiPage::setCompanyId);
-		attributeGetterFunctions.put("userId", WikiPage::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<WikiPage, Long>)WikiPage::setUserId);
-		attributeGetterFunctions.put("userName", WikiPage::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<WikiPage, String>)WikiPage::setUserName);
-		attributeGetterFunctions.put("createDate", WikiPage::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<WikiPage, Date>)WikiPage::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", WikiPage::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<WikiPage, Date>)WikiPage::setModifiedDate);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", WikiPage::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<WikiPage, String>)WikiPage::setExternalReferenceCode);
-		attributeGetterFunctions.put("nodeId", WikiPage::getNodeId);
-		attributeSetterBiConsumers.put(
-			"nodeId", (BiConsumer<WikiPage, Long>)WikiPage::setNodeId);
-		attributeGetterFunctions.put("title", WikiPage::getTitle);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<WikiPage, String>)WikiPage::setTitle);
-		attributeGetterFunctions.put("version", WikiPage::getVersion);
-		attributeSetterBiConsumers.put(
-			"version", (BiConsumer<WikiPage, Double>)WikiPage::setVersion);
-		attributeGetterFunctions.put("minorEdit", WikiPage::getMinorEdit);
-		attributeSetterBiConsumers.put(
-			"minorEdit", (BiConsumer<WikiPage, Boolean>)WikiPage::setMinorEdit);
-		attributeGetterFunctions.put("content", WikiPage::getContent);
-		attributeSetterBiConsumers.put(
-			"content", (BiConsumer<WikiPage, String>)WikiPage::setContent);
-		attributeGetterFunctions.put("summary", WikiPage::getSummary);
-		attributeSetterBiConsumers.put(
-			"summary", (BiConsumer<WikiPage, String>)WikiPage::setSummary);
-		attributeGetterFunctions.put("format", WikiPage::getFormat);
-		attributeSetterBiConsumers.put(
-			"format", (BiConsumer<WikiPage, String>)WikiPage::setFormat);
-		attributeGetterFunctions.put("head", WikiPage::getHead);
-		attributeSetterBiConsumers.put(
-			"head", (BiConsumer<WikiPage, Boolean>)WikiPage::setHead);
-		attributeGetterFunctions.put("parentTitle", WikiPage::getParentTitle);
-		attributeSetterBiConsumers.put(
-			"parentTitle",
-			(BiConsumer<WikiPage, String>)WikiPage::setParentTitle);
-		attributeGetterFunctions.put(
-			"redirectTitle", WikiPage::getRedirectTitle);
-		attributeSetterBiConsumers.put(
-			"redirectTitle",
-			(BiConsumer<WikiPage, String>)WikiPage::setRedirectTitle);
-		attributeGetterFunctions.put(
-			"lastPublishDate", WikiPage::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<WikiPage, Date>)WikiPage::setLastPublishDate);
-		attributeGetterFunctions.put("status", WikiPage::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<WikiPage, Integer>)WikiPage::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", WikiPage::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<WikiPage, Long>)WikiPage::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", WikiPage::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<WikiPage, String>)WikiPage::setStatusByUserName);
-		attributeGetterFunctions.put("statusDate", WikiPage::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate", (BiConsumer<WikiPage, Date>)WikiPage::setStatusDate);
+		static {
+			Map<String, Function<WikiPage, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<WikiPage, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", WikiPage::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", WikiPage::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", WikiPage::getUuid);
+			attributeGetterFunctions.put("pageId", WikiPage::getPageId);
+			attributeGetterFunctions.put(
+				"resourcePrimKey", WikiPage::getResourcePrimKey);
+			attributeGetterFunctions.put("groupId", WikiPage::getGroupId);
+			attributeGetterFunctions.put("companyId", WikiPage::getCompanyId);
+			attributeGetterFunctions.put("userId", WikiPage::getUserId);
+			attributeGetterFunctions.put("userName", WikiPage::getUserName);
+			attributeGetterFunctions.put("createDate", WikiPage::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", WikiPage::getModifiedDate);
+			attributeGetterFunctions.put(
+				"externalReferenceCode", WikiPage::getExternalReferenceCode);
+			attributeGetterFunctions.put("nodeId", WikiPage::getNodeId);
+			attributeGetterFunctions.put("title", WikiPage::getTitle);
+			attributeGetterFunctions.put("version", WikiPage::getVersion);
+			attributeGetterFunctions.put("minorEdit", WikiPage::getMinorEdit);
+			attributeGetterFunctions.put("content", WikiPage::getContent);
+			attributeGetterFunctions.put("summary", WikiPage::getSummary);
+			attributeGetterFunctions.put("format", WikiPage::getFormat);
+			attributeGetterFunctions.put("head", WikiPage::getHead);
+			attributeGetterFunctions.put(
+				"parentTitle", WikiPage::getParentTitle);
+			attributeGetterFunctions.put(
+				"redirectTitle", WikiPage::getRedirectTitle);
+			attributeGetterFunctions.put(
+				"lastPublishDate", WikiPage::getLastPublishDate);
+			attributeGetterFunctions.put("status", WikiPage::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", WikiPage::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", WikiPage::getStatusByUserName);
+			attributeGetterFunctions.put("statusDate", WikiPage::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<WikiPage, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<WikiPage, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<WikiPage, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<WikiPage, Long>)WikiPage::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<WikiPage, Long>)WikiPage::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<WikiPage, String>)WikiPage::setUuid);
+			attributeSetterBiConsumers.put(
+				"pageId", (BiConsumer<WikiPage, Long>)WikiPage::setPageId);
+			attributeSetterBiConsumers.put(
+				"resourcePrimKey",
+				(BiConsumer<WikiPage, Long>)WikiPage::setResourcePrimKey);
+			attributeSetterBiConsumers.put(
+				"groupId", (BiConsumer<WikiPage, Long>)WikiPage::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<WikiPage, Long>)WikiPage::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<WikiPage, Long>)WikiPage::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<WikiPage, String>)WikiPage::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<WikiPage, Date>)WikiPage::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<WikiPage, Date>)WikiPage::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<WikiPage, String>)
+					WikiPage::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"nodeId", (BiConsumer<WikiPage, Long>)WikiPage::setNodeId);
+			attributeSetterBiConsumers.put(
+				"title", (BiConsumer<WikiPage, String>)WikiPage::setTitle);
+			attributeSetterBiConsumers.put(
+				"version", (BiConsumer<WikiPage, Double>)WikiPage::setVersion);
+			attributeSetterBiConsumers.put(
+				"minorEdit",
+				(BiConsumer<WikiPage, Boolean>)WikiPage::setMinorEdit);
+			attributeSetterBiConsumers.put(
+				"content", (BiConsumer<WikiPage, String>)WikiPage::setContent);
+			attributeSetterBiConsumers.put(
+				"summary", (BiConsumer<WikiPage, String>)WikiPage::setSummary);
+			attributeSetterBiConsumers.put(
+				"format", (BiConsumer<WikiPage, String>)WikiPage::setFormat);
+			attributeSetterBiConsumers.put(
+				"head", (BiConsumer<WikiPage, Boolean>)WikiPage::setHead);
+			attributeSetterBiConsumers.put(
+				"parentTitle",
+				(BiConsumer<WikiPage, String>)WikiPage::setParentTitle);
+			attributeSetterBiConsumers.put(
+				"redirectTitle",
+				(BiConsumer<WikiPage, String>)WikiPage::setRedirectTitle);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<WikiPage, Date>)WikiPage::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status", (BiConsumer<WikiPage, Integer>)WikiPage::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<WikiPage, Long>)WikiPage::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<WikiPage, String>)WikiPage::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<WikiPage, Date>)WikiPage::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1681,8 +1704,9 @@ public class WikiPageModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<WikiPage, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<WikiPage, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

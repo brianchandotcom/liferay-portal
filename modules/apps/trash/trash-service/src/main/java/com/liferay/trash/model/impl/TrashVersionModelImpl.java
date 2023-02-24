@@ -222,71 +222,91 @@ public class TrashVersionModelImpl
 	public Map<String, Function<TrashVersion, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<TrashVersion, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<TrashVersion, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<TrashVersion, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<TrashVersion, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<TrashVersion, Object>>();
-		Map<String, BiConsumer<TrashVersion, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<TrashVersion, ?>>();
+		private static final Map<String, Function<TrashVersion, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", TrashVersion::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<TrashVersion, Long>)TrashVersion::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", TrashVersion::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<TrashVersion, Long>)TrashVersion::setCtCollectionId);
-		attributeGetterFunctions.put("versionId", TrashVersion::getVersionId);
-		attributeSetterBiConsumers.put(
-			"versionId",
-			(BiConsumer<TrashVersion, Long>)TrashVersion::setVersionId);
-		attributeGetterFunctions.put("companyId", TrashVersion::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<TrashVersion, Long>)TrashVersion::setCompanyId);
-		attributeGetterFunctions.put("entryId", TrashVersion::getEntryId);
-		attributeSetterBiConsumers.put(
-			"entryId",
-			(BiConsumer<TrashVersion, Long>)TrashVersion::setEntryId);
-		attributeGetterFunctions.put(
-			"classNameId", TrashVersion::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<TrashVersion, Long>)TrashVersion::setClassNameId);
-		attributeGetterFunctions.put("classPK", TrashVersion::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<TrashVersion, Long>)TrashVersion::setClassPK);
-		attributeGetterFunctions.put(
-			"typeSettings", TrashVersion::getTypeSettings);
-		attributeSetterBiConsumers.put(
-			"typeSettings",
-			(BiConsumer<TrashVersion, String>)TrashVersion::setTypeSettings);
-		attributeGetterFunctions.put("status", TrashVersion::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<TrashVersion, Integer>)TrashVersion::setStatus);
+		static {
+			Map<String, Function<TrashVersion, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<TrashVersion, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", TrashVersion::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", TrashVersion::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"versionId", TrashVersion::getVersionId);
+			attributeGetterFunctions.put(
+				"companyId", TrashVersion::getCompanyId);
+			attributeGetterFunctions.put("entryId", TrashVersion::getEntryId);
+			attributeGetterFunctions.put(
+				"classNameId", TrashVersion::getClassNameId);
+			attributeGetterFunctions.put("classPK", TrashVersion::getClassPK);
+			attributeGetterFunctions.put(
+				"typeSettings", TrashVersion::getTypeSettings);
+			attributeGetterFunctions.put("status", TrashVersion::getStatus);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<TrashVersion, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<TrashVersion, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<TrashVersion, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<TrashVersion, Long>)TrashVersion::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<TrashVersion, Long>)
+					TrashVersion::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"versionId",
+				(BiConsumer<TrashVersion, Long>)TrashVersion::setVersionId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<TrashVersion, Long>)TrashVersion::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"entryId",
+				(BiConsumer<TrashVersion, Long>)TrashVersion::setEntryId);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<TrashVersion, Long>)TrashVersion::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<TrashVersion, Long>)TrashVersion::setClassPK);
+			attributeSetterBiConsumers.put(
+				"typeSettings",
+				(BiConsumer<TrashVersion, String>)
+					TrashVersion::setTypeSettings);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<TrashVersion, Integer>)TrashVersion::setStatus);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -733,8 +753,9 @@ public class TrashVersionModelImpl
 	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
-		Function<TrashVersion, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<TrashVersion, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

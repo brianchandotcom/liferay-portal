@@ -214,82 +214,98 @@ public class CTCollectionTemplateModelImpl
 	public Map<String, Function<CTCollectionTemplate, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CTCollectionTemplate, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CTCollectionTemplate, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CTCollectionTemplate, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CTCollectionTemplate, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CTCollectionTemplate, Object>>();
-		Map<String, BiConsumer<CTCollectionTemplate, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CTCollectionTemplate, ?>>();
+		private static final Map<String, Function<CTCollectionTemplate, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CTCollectionTemplate::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CTCollectionTemplate, Long>)
-				CTCollectionTemplate::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionTemplateId",
-			CTCollectionTemplate::getCtCollectionTemplateId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionTemplateId",
-			(BiConsumer<CTCollectionTemplate, Long>)
-				CTCollectionTemplate::setCtCollectionTemplateId);
-		attributeGetterFunctions.put(
-			"companyId", CTCollectionTemplate::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CTCollectionTemplate, Long>)
-				CTCollectionTemplate::setCompanyId);
-		attributeGetterFunctions.put("userId", CTCollectionTemplate::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CTCollectionTemplate, Long>)
-				CTCollectionTemplate::setUserId);
-		attributeGetterFunctions.put(
-			"createDate", CTCollectionTemplate::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CTCollectionTemplate, Date>)
-				CTCollectionTemplate::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CTCollectionTemplate::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CTCollectionTemplate, Date>)
-				CTCollectionTemplate::setModifiedDate);
-		attributeGetterFunctions.put("name", CTCollectionTemplate::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CTCollectionTemplate, String>)
-				CTCollectionTemplate::setName);
-		attributeGetterFunctions.put(
-			"description", CTCollectionTemplate::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<CTCollectionTemplate, String>)
-				CTCollectionTemplate::setDescription);
+		static {
+			Map<String, Function<CTCollectionTemplate, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CTCollectionTemplate, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CTCollectionTemplate::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionTemplateId",
+				CTCollectionTemplate::getCtCollectionTemplateId);
+			attributeGetterFunctions.put(
+				"companyId", CTCollectionTemplate::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CTCollectionTemplate::getUserId);
+			attributeGetterFunctions.put(
+				"createDate", CTCollectionTemplate::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CTCollectionTemplate::getModifiedDate);
+			attributeGetterFunctions.put("name", CTCollectionTemplate::getName);
+			attributeGetterFunctions.put(
+				"description", CTCollectionTemplate::getDescription);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CTCollectionTemplate, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CTCollectionTemplate, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CTCollectionTemplate, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CTCollectionTemplate, Long>)
+					CTCollectionTemplate::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionTemplateId",
+				(BiConsumer<CTCollectionTemplate, Long>)
+					CTCollectionTemplate::setCtCollectionTemplateId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CTCollectionTemplate, Long>)
+					CTCollectionTemplate::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CTCollectionTemplate, Long>)
+					CTCollectionTemplate::setUserId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CTCollectionTemplate, Date>)
+					CTCollectionTemplate::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CTCollectionTemplate, Date>)
+					CTCollectionTemplate::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CTCollectionTemplate, String>)
+					CTCollectionTemplate::setName);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<CTCollectionTemplate, String>)
+					CTCollectionTemplate::setDescription);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -744,7 +760,8 @@ public class CTCollectionTemplateModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CTCollectionTemplate, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -226,76 +226,93 @@ public class JournalArticleResourceModelImpl
 	public Map<String, Function<JournalArticleResource, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<JournalArticleResource, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<JournalArticleResource, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<JournalArticleResource, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<JournalArticleResource, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<JournalArticleResource, Object>>();
-		Map<String, BiConsumer<JournalArticleResource, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<JournalArticleResource, ?>>();
+		private static final Map
+			<String, Function<JournalArticleResource, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", JournalArticleResource::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<JournalArticleResource, Long>)
-				JournalArticleResource::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", JournalArticleResource::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<JournalArticleResource, Long>)
-				JournalArticleResource::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", JournalArticleResource::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<JournalArticleResource, String>)
-				JournalArticleResource::setUuid);
-		attributeGetterFunctions.put(
-			"resourcePrimKey", JournalArticleResource::getResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"resourcePrimKey",
-			(BiConsumer<JournalArticleResource, Long>)
-				JournalArticleResource::setResourcePrimKey);
-		attributeGetterFunctions.put(
-			"groupId", JournalArticleResource::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<JournalArticleResource, Long>)
-				JournalArticleResource::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", JournalArticleResource::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<JournalArticleResource, Long>)
-				JournalArticleResource::setCompanyId);
-		attributeGetterFunctions.put(
-			"articleId", JournalArticleResource::getArticleId);
-		attributeSetterBiConsumers.put(
-			"articleId",
-			(BiConsumer<JournalArticleResource, String>)
-				JournalArticleResource::setArticleId);
+		static {
+			Map<String, Function<JournalArticleResource, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<JournalArticleResource, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", JournalArticleResource::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", JournalArticleResource::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"uuid", JournalArticleResource::getUuid);
+			attributeGetterFunctions.put(
+				"resourcePrimKey", JournalArticleResource::getResourcePrimKey);
+			attributeGetterFunctions.put(
+				"groupId", JournalArticleResource::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", JournalArticleResource::getCompanyId);
+			attributeGetterFunctions.put(
+				"articleId", JournalArticleResource::getArticleId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<JournalArticleResource, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<JournalArticleResource, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<JournalArticleResource, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<JournalArticleResource, Long>)
+					JournalArticleResource::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<JournalArticleResource, Long>)
+					JournalArticleResource::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<JournalArticleResource, String>)
+					JournalArticleResource::setUuid);
+			attributeSetterBiConsumers.put(
+				"resourcePrimKey",
+				(BiConsumer<JournalArticleResource, Long>)
+					JournalArticleResource::setResourcePrimKey);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<JournalArticleResource, Long>)
+					JournalArticleResource::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<JournalArticleResource, Long>)
+					JournalArticleResource::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"articleId",
+				(BiConsumer<JournalArticleResource, String>)
+					JournalArticleResource::setArticleId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -710,7 +727,8 @@ public class JournalArticleResourceModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<JournalArticleResource, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

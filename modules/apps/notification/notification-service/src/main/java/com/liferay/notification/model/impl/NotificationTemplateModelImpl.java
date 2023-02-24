@@ -248,134 +248,151 @@ public class NotificationTemplateModelImpl
 	public Map<String, Function<NotificationTemplate, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<NotificationTemplate, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<NotificationTemplate, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<NotificationTemplate, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<NotificationTemplate, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<NotificationTemplate, Object>>();
-		Map<String, BiConsumer<NotificationTemplate, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<NotificationTemplate, ?>>();
+		private static final Map<String, Function<NotificationTemplate, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", NotificationTemplate::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<NotificationTemplate, Long>)
-				NotificationTemplate::setMvccVersion);
-		attributeGetterFunctions.put("uuid", NotificationTemplate::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<NotificationTemplate, String>)
-				NotificationTemplate::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			NotificationTemplate::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<NotificationTemplate, String>)
-				NotificationTemplate::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"notificationTemplateId",
-			NotificationTemplate::getNotificationTemplateId);
-		attributeSetterBiConsumers.put(
-			"notificationTemplateId",
-			(BiConsumer<NotificationTemplate, Long>)
-				NotificationTemplate::setNotificationTemplateId);
-		attributeGetterFunctions.put(
-			"companyId", NotificationTemplate::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<NotificationTemplate, Long>)
-				NotificationTemplate::setCompanyId);
-		attributeGetterFunctions.put("userId", NotificationTemplate::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<NotificationTemplate, Long>)
-				NotificationTemplate::setUserId);
-		attributeGetterFunctions.put(
-			"userName", NotificationTemplate::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<NotificationTemplate, String>)
-				NotificationTemplate::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", NotificationTemplate::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<NotificationTemplate, Date>)
-				NotificationTemplate::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", NotificationTemplate::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<NotificationTemplate, Date>)
-				NotificationTemplate::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectDefinitionId", NotificationTemplate::getObjectDefinitionId);
-		attributeSetterBiConsumers.put(
-			"objectDefinitionId",
-			(BiConsumer<NotificationTemplate, Long>)
-				NotificationTemplate::setObjectDefinitionId);
-		attributeGetterFunctions.put("body", NotificationTemplate::getBody);
-		attributeSetterBiConsumers.put(
-			"body",
-			(BiConsumer<NotificationTemplate, String>)
-				NotificationTemplate::setBody);
-		attributeGetterFunctions.put(
-			"description", NotificationTemplate::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<NotificationTemplate, String>)
-				NotificationTemplate::setDescription);
-		attributeGetterFunctions.put(
-			"editorType", NotificationTemplate::getEditorType);
-		attributeSetterBiConsumers.put(
-			"editorType",
-			(BiConsumer<NotificationTemplate, String>)
-				NotificationTemplate::setEditorType);
-		attributeGetterFunctions.put("name", NotificationTemplate::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<NotificationTemplate, String>)
-				NotificationTemplate::setName);
-		attributeGetterFunctions.put(
-			"recipientType", NotificationTemplate::getRecipientType);
-		attributeSetterBiConsumers.put(
-			"recipientType",
-			(BiConsumer<NotificationTemplate, String>)
-				NotificationTemplate::setRecipientType);
-		attributeGetterFunctions.put(
-			"subject", NotificationTemplate::getSubject);
-		attributeSetterBiConsumers.put(
-			"subject",
-			(BiConsumer<NotificationTemplate, String>)
-				NotificationTemplate::setSubject);
-		attributeGetterFunctions.put("type", NotificationTemplate::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<NotificationTemplate, String>)
-				NotificationTemplate::setType);
+		static {
+			Map<String, Function<NotificationTemplate, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<NotificationTemplate, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", NotificationTemplate::getMvccVersion);
+			attributeGetterFunctions.put("uuid", NotificationTemplate::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				NotificationTemplate::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"notificationTemplateId",
+				NotificationTemplate::getNotificationTemplateId);
+			attributeGetterFunctions.put(
+				"companyId", NotificationTemplate::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", NotificationTemplate::getUserId);
+			attributeGetterFunctions.put(
+				"userName", NotificationTemplate::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", NotificationTemplate::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", NotificationTemplate::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectDefinitionId",
+				NotificationTemplate::getObjectDefinitionId);
+			attributeGetterFunctions.put("body", NotificationTemplate::getBody);
+			attributeGetterFunctions.put(
+				"description", NotificationTemplate::getDescription);
+			attributeGetterFunctions.put(
+				"editorType", NotificationTemplate::getEditorType);
+			attributeGetterFunctions.put("name", NotificationTemplate::getName);
+			attributeGetterFunctions.put(
+				"recipientType", NotificationTemplate::getRecipientType);
+			attributeGetterFunctions.put(
+				"subject", NotificationTemplate::getSubject);
+			attributeGetterFunctions.put("type", NotificationTemplate::getType);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<NotificationTemplate, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<NotificationTemplate, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<NotificationTemplate, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<NotificationTemplate, Long>)
+					NotificationTemplate::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<NotificationTemplate, String>)
+					NotificationTemplate::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<NotificationTemplate, String>)
+					NotificationTemplate::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"notificationTemplateId",
+				(BiConsumer<NotificationTemplate, Long>)
+					NotificationTemplate::setNotificationTemplateId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<NotificationTemplate, Long>)
+					NotificationTemplate::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<NotificationTemplate, Long>)
+					NotificationTemplate::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<NotificationTemplate, String>)
+					NotificationTemplate::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<NotificationTemplate, Date>)
+					NotificationTemplate::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<NotificationTemplate, Date>)
+					NotificationTemplate::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectDefinitionId",
+				(BiConsumer<NotificationTemplate, Long>)
+					NotificationTemplate::setObjectDefinitionId);
+			attributeSetterBiConsumers.put(
+				"body",
+				(BiConsumer<NotificationTemplate, String>)
+					NotificationTemplate::setBody);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<NotificationTemplate, String>)
+					NotificationTemplate::setDescription);
+			attributeSetterBiConsumers.put(
+				"editorType",
+				(BiConsumer<NotificationTemplate, String>)
+					NotificationTemplate::setEditorType);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<NotificationTemplate, String>)
+					NotificationTemplate::setName);
+			attributeSetterBiConsumers.put(
+				"recipientType",
+				(BiConsumer<NotificationTemplate, String>)
+					NotificationTemplate::setRecipientType);
+			attributeSetterBiConsumers.put(
+				"subject",
+				(BiConsumer<NotificationTemplate, String>)
+					NotificationTemplate::setSubject);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<NotificationTemplate, String>)
+					NotificationTemplate::setType);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1515,7 +1532,8 @@ public class NotificationTemplateModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<NotificationTemplate, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

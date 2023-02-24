@@ -233,101 +233,132 @@ public class CSDiagramEntryModelImpl
 	public Map<String, Function<CSDiagramEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CSDiagramEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CSDiagramEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CSDiagramEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CSDiagramEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<CSDiagramEntry, Object>>();
-		Map<String, BiConsumer<CSDiagramEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<CSDiagramEntry, ?>>();
+		private static final Map<String, Function<CSDiagramEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CSDiagramEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CSDiagramEntry, Long>)CSDiagramEntry::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CSDiagramEntry::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CSDiagramEntry, Long>)
-				CSDiagramEntry::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"CSDiagramEntryId", CSDiagramEntry::getCSDiagramEntryId);
-		attributeSetterBiConsumers.put(
-			"CSDiagramEntryId",
-			(BiConsumer<CSDiagramEntry, Long>)
-				CSDiagramEntry::setCSDiagramEntryId);
-		attributeGetterFunctions.put("companyId", CSDiagramEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CSDiagramEntry, Long>)CSDiagramEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", CSDiagramEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CSDiagramEntry, Long>)CSDiagramEntry::setUserId);
-		attributeGetterFunctions.put("userName", CSDiagramEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CSDiagramEntry, String>)CSDiagramEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CSDiagramEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CSDiagramEntry, Date>)CSDiagramEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CSDiagramEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CSDiagramEntry, Date>)CSDiagramEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"CPDefinitionId", CSDiagramEntry::getCPDefinitionId);
-		attributeSetterBiConsumers.put(
-			"CPDefinitionId",
-			(BiConsumer<CSDiagramEntry, Long>)
-				CSDiagramEntry::setCPDefinitionId);
-		attributeGetterFunctions.put(
-			"CPInstanceId", CSDiagramEntry::getCPInstanceId);
-		attributeSetterBiConsumers.put(
-			"CPInstanceId",
-			(BiConsumer<CSDiagramEntry, Long>)CSDiagramEntry::setCPInstanceId);
-		attributeGetterFunctions.put(
-			"CProductId", CSDiagramEntry::getCProductId);
-		attributeSetterBiConsumers.put(
-			"CProductId",
-			(BiConsumer<CSDiagramEntry, Long>)CSDiagramEntry::setCProductId);
-		attributeGetterFunctions.put("diagram", CSDiagramEntry::getDiagram);
-		attributeSetterBiConsumers.put(
-			"diagram",
-			(BiConsumer<CSDiagramEntry, Boolean>)CSDiagramEntry::setDiagram);
-		attributeGetterFunctions.put("quantity", CSDiagramEntry::getQuantity);
-		attributeSetterBiConsumers.put(
-			"quantity",
-			(BiConsumer<CSDiagramEntry, Integer>)CSDiagramEntry::setQuantity);
-		attributeGetterFunctions.put("sequence", CSDiagramEntry::getSequence);
-		attributeSetterBiConsumers.put(
-			"sequence",
-			(BiConsumer<CSDiagramEntry, String>)CSDiagramEntry::setSequence);
-		attributeGetterFunctions.put("sku", CSDiagramEntry::getSku);
-		attributeSetterBiConsumers.put(
-			"sku", (BiConsumer<CSDiagramEntry, String>)CSDiagramEntry::setSku);
+		static {
+			Map<String, Function<CSDiagramEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CSDiagramEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CSDiagramEntry::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CSDiagramEntry::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"CSDiagramEntryId", CSDiagramEntry::getCSDiagramEntryId);
+			attributeGetterFunctions.put(
+				"companyId", CSDiagramEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", CSDiagramEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CSDiagramEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CSDiagramEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CSDiagramEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"CPDefinitionId", CSDiagramEntry::getCPDefinitionId);
+			attributeGetterFunctions.put(
+				"CPInstanceId", CSDiagramEntry::getCPInstanceId);
+			attributeGetterFunctions.put(
+				"CProductId", CSDiagramEntry::getCProductId);
+			attributeGetterFunctions.put("diagram", CSDiagramEntry::getDiagram);
+			attributeGetterFunctions.put(
+				"quantity", CSDiagramEntry::getQuantity);
+			attributeGetterFunctions.put(
+				"sequence", CSDiagramEntry::getSequence);
+			attributeGetterFunctions.put("sku", CSDiagramEntry::getSku);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CSDiagramEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CSDiagramEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<CSDiagramEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CSDiagramEntry, Long>)
+					CSDiagramEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CSDiagramEntry, Long>)
+					CSDiagramEntry::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"CSDiagramEntryId",
+				(BiConsumer<CSDiagramEntry, Long>)
+					CSDiagramEntry::setCSDiagramEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CSDiagramEntry, Long>)CSDiagramEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CSDiagramEntry, Long>)CSDiagramEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CSDiagramEntry, String>)
+					CSDiagramEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CSDiagramEntry, Date>)
+					CSDiagramEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CSDiagramEntry, Date>)
+					CSDiagramEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"CPDefinitionId",
+				(BiConsumer<CSDiagramEntry, Long>)
+					CSDiagramEntry::setCPDefinitionId);
+			attributeSetterBiConsumers.put(
+				"CPInstanceId",
+				(BiConsumer<CSDiagramEntry, Long>)
+					CSDiagramEntry::setCPInstanceId);
+			attributeSetterBiConsumers.put(
+				"CProductId",
+				(BiConsumer<CSDiagramEntry, Long>)
+					CSDiagramEntry::setCProductId);
+			attributeSetterBiConsumers.put(
+				"diagram",
+				(BiConsumer<CSDiagramEntry, Boolean>)
+					CSDiagramEntry::setDiagram);
+			attributeSetterBiConsumers.put(
+				"quantity",
+				(BiConsumer<CSDiagramEntry, Integer>)
+					CSDiagramEntry::setQuantity);
+			attributeSetterBiConsumers.put(
+				"sequence",
+				(BiConsumer<CSDiagramEntry, String>)
+					CSDiagramEntry::setSequence);
+			attributeSetterBiConsumers.put(
+				"sku",
+				(BiConsumer<CSDiagramEntry, String>)CSDiagramEntry::setSku);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -965,7 +996,8 @@ public class CSDiagramEntryModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CSDiagramEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -255,151 +255,176 @@ public class CommerceAccountModelImpl
 	public Map<String, Function<CommerceAccount, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceAccount, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CommerceAccount, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CommerceAccount, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceAccount, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<CommerceAccount, Object>>();
-		Map<String, BiConsumer<CommerceAccount, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<CommerceAccount, ?>>();
+		private static final Map<String, Function<CommerceAccount, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"externalReferenceCode", CommerceAccount::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CommerceAccount, String>)
-				CommerceAccount::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"commerceAccountId", CommerceAccount::getCommerceAccountId);
-		attributeSetterBiConsumers.put(
-			"commerceAccountId",
-			(BiConsumer<CommerceAccount, Long>)
-				CommerceAccount::setCommerceAccountId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceAccount::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceAccount, Long>)CommerceAccount::setCompanyId);
-		attributeGetterFunctions.put("userId", CommerceAccount::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceAccount, Long>)CommerceAccount::setUserId);
-		attributeGetterFunctions.put("userName", CommerceAccount::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceAccount, String>)CommerceAccount::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceAccount::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceAccount, Date>)CommerceAccount::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceAccount::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceAccount, Date>)
-				CommerceAccount::setModifiedDate);
-		attributeGetterFunctions.put(
-			"parentCommerceAccountId",
-			CommerceAccount::getParentCommerceAccountId);
-		attributeSetterBiConsumers.put(
-			"parentCommerceAccountId",
-			(BiConsumer<CommerceAccount, Long>)
-				CommerceAccount::setParentCommerceAccountId);
-		attributeGetterFunctions.put("name", CommerceAccount::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CommerceAccount, String>)CommerceAccount::setName);
-		attributeGetterFunctions.put("logoId", CommerceAccount::getLogoId);
-		attributeSetterBiConsumers.put(
-			"logoId",
-			(BiConsumer<CommerceAccount, Long>)CommerceAccount::setLogoId);
-		attributeGetterFunctions.put("email", CommerceAccount::getEmail);
-		attributeSetterBiConsumers.put(
-			"email",
-			(BiConsumer<CommerceAccount, String>)CommerceAccount::setEmail);
-		attributeGetterFunctions.put("taxId", CommerceAccount::getTaxId);
-		attributeSetterBiConsumers.put(
-			"taxId",
-			(BiConsumer<CommerceAccount, String>)CommerceAccount::setTaxId);
-		attributeGetterFunctions.put("type", CommerceAccount::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<CommerceAccount, Integer>)CommerceAccount::setType);
-		attributeGetterFunctions.put("active", CommerceAccount::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<CommerceAccount, Boolean>)CommerceAccount::setActive);
-		attributeGetterFunctions.put(
-			"displayDate", CommerceAccount::getDisplayDate);
-		attributeSetterBiConsumers.put(
-			"displayDate",
-			(BiConsumer<CommerceAccount, Date>)CommerceAccount::setDisplayDate);
-		attributeGetterFunctions.put(
-			"defaultBillingAddressId",
-			CommerceAccount::getDefaultBillingAddressId);
-		attributeSetterBiConsumers.put(
-			"defaultBillingAddressId",
-			(BiConsumer<CommerceAccount, Long>)
-				CommerceAccount::setDefaultBillingAddressId);
-		attributeGetterFunctions.put(
-			"defaultShippingAddressId",
-			CommerceAccount::getDefaultShippingAddressId);
-		attributeSetterBiConsumers.put(
-			"defaultShippingAddressId",
-			(BiConsumer<CommerceAccount, Long>)
-				CommerceAccount::setDefaultShippingAddressId);
-		attributeGetterFunctions.put(
-			"expirationDate", CommerceAccount::getExpirationDate);
-		attributeSetterBiConsumers.put(
-			"expirationDate",
-			(BiConsumer<CommerceAccount, Date>)
-				CommerceAccount::setExpirationDate);
-		attributeGetterFunctions.put(
-			"lastPublishDate", CommerceAccount::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<CommerceAccount, Date>)
-				CommerceAccount::setLastPublishDate);
-		attributeGetterFunctions.put("status", CommerceAccount::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<CommerceAccount, Integer>)CommerceAccount::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", CommerceAccount::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<CommerceAccount, Long>)
-				CommerceAccount::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", CommerceAccount::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<CommerceAccount, String>)
-				CommerceAccount::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", CommerceAccount::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<CommerceAccount, Date>)CommerceAccount::setStatusDate);
+		static {
+			Map<String, Function<CommerceAccount, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CommerceAccount, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CommerceAccount::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"commerceAccountId", CommerceAccount::getCommerceAccountId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceAccount::getCompanyId);
+			attributeGetterFunctions.put("userId", CommerceAccount::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceAccount::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceAccount::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceAccount::getModifiedDate);
+			attributeGetterFunctions.put(
+				"parentCommerceAccountId",
+				CommerceAccount::getParentCommerceAccountId);
+			attributeGetterFunctions.put("name", CommerceAccount::getName);
+			attributeGetterFunctions.put("logoId", CommerceAccount::getLogoId);
+			attributeGetterFunctions.put("email", CommerceAccount::getEmail);
+			attributeGetterFunctions.put("taxId", CommerceAccount::getTaxId);
+			attributeGetterFunctions.put("type", CommerceAccount::getType);
+			attributeGetterFunctions.put("active", CommerceAccount::getActive);
+			attributeGetterFunctions.put(
+				"displayDate", CommerceAccount::getDisplayDate);
+			attributeGetterFunctions.put(
+				"defaultBillingAddressId",
+				CommerceAccount::getDefaultBillingAddressId);
+			attributeGetterFunctions.put(
+				"defaultShippingAddressId",
+				CommerceAccount::getDefaultShippingAddressId);
+			attributeGetterFunctions.put(
+				"expirationDate", CommerceAccount::getExpirationDate);
+			attributeGetterFunctions.put(
+				"lastPublishDate", CommerceAccount::getLastPublishDate);
+			attributeGetterFunctions.put("status", CommerceAccount::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", CommerceAccount::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", CommerceAccount::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", CommerceAccount::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CommerceAccount, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceAccount, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<CommerceAccount, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CommerceAccount, String>)
+					CommerceAccount::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"commerceAccountId",
+				(BiConsumer<CommerceAccount, Long>)
+					CommerceAccount::setCommerceAccountId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceAccount, Long>)
+					CommerceAccount::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceAccount, Long>)CommerceAccount::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceAccount, String>)
+					CommerceAccount::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceAccount, Date>)
+					CommerceAccount::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceAccount, Date>)
+					CommerceAccount::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"parentCommerceAccountId",
+				(BiConsumer<CommerceAccount, Long>)
+					CommerceAccount::setParentCommerceAccountId);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CommerceAccount, String>)CommerceAccount::setName);
+			attributeSetterBiConsumers.put(
+				"logoId",
+				(BiConsumer<CommerceAccount, Long>)CommerceAccount::setLogoId);
+			attributeSetterBiConsumers.put(
+				"email",
+				(BiConsumer<CommerceAccount, String>)CommerceAccount::setEmail);
+			attributeSetterBiConsumers.put(
+				"taxId",
+				(BiConsumer<CommerceAccount, String>)CommerceAccount::setTaxId);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CommerceAccount, Integer>)CommerceAccount::setType);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<CommerceAccount, Boolean>)
+					CommerceAccount::setActive);
+			attributeSetterBiConsumers.put(
+				"displayDate",
+				(BiConsumer<CommerceAccount, Date>)
+					CommerceAccount::setDisplayDate);
+			attributeSetterBiConsumers.put(
+				"defaultBillingAddressId",
+				(BiConsumer<CommerceAccount, Long>)
+					CommerceAccount::setDefaultBillingAddressId);
+			attributeSetterBiConsumers.put(
+				"defaultShippingAddressId",
+				(BiConsumer<CommerceAccount, Long>)
+					CommerceAccount::setDefaultShippingAddressId);
+			attributeSetterBiConsumers.put(
+				"expirationDate",
+				(BiConsumer<CommerceAccount, Date>)
+					CommerceAccount::setExpirationDate);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<CommerceAccount, Date>)
+					CommerceAccount::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<CommerceAccount, Integer>)
+					CommerceAccount::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<CommerceAccount, Long>)
+					CommerceAccount::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<CommerceAccount, String>)
+					CommerceAccount::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<CommerceAccount, Date>)
+					CommerceAccount::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1376,7 +1401,8 @@ public class CommerceAccountModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceAccount, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

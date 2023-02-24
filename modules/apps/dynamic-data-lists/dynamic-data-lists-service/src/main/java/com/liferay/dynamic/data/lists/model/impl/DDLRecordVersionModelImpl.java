@@ -257,129 +257,155 @@ public class DDLRecordVersionModelImpl
 	public Map<String, Function<DDLRecordVersion, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<DDLRecordVersion, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DDLRecordVersion, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DDLRecordVersion, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<DDLRecordVersion, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<DDLRecordVersion, Object>>();
-		Map<String, BiConsumer<DDLRecordVersion, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<DDLRecordVersion, ?>>();
+		private static final Map<String, Function<DDLRecordVersion, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", DDLRecordVersion::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<DDLRecordVersion, Long>)
-				DDLRecordVersion::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", DDLRecordVersion::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<DDLRecordVersion, Long>)
-				DDLRecordVersion::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"recordVersionId", DDLRecordVersion::getRecordVersionId);
-		attributeSetterBiConsumers.put(
-			"recordVersionId",
-			(BiConsumer<DDLRecordVersion, Long>)
-				DDLRecordVersion::setRecordVersionId);
-		attributeGetterFunctions.put("groupId", DDLRecordVersion::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", DDLRecordVersion::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setCompanyId);
-		attributeGetterFunctions.put("userId", DDLRecordVersion::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setUserId);
-		attributeGetterFunctions.put("userName", DDLRecordVersion::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<DDLRecordVersion, String>)
-				DDLRecordVersion::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", DDLRecordVersion::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<DDLRecordVersion, Date>)
-				DDLRecordVersion::setCreateDate);
-		attributeGetterFunctions.put(
-			"DDMStorageId", DDLRecordVersion::getDDMStorageId);
-		attributeSetterBiConsumers.put(
-			"DDMStorageId",
-			(BiConsumer<DDLRecordVersion, Long>)
-				DDLRecordVersion::setDDMStorageId);
-		attributeGetterFunctions.put(
-			"recordSetId", DDLRecordVersion::getRecordSetId);
-		attributeSetterBiConsumers.put(
-			"recordSetId",
-			(BiConsumer<DDLRecordVersion, Long>)
-				DDLRecordVersion::setRecordSetId);
-		attributeGetterFunctions.put(
-			"recordSetVersion", DDLRecordVersion::getRecordSetVersion);
-		attributeSetterBiConsumers.put(
-			"recordSetVersion",
-			(BiConsumer<DDLRecordVersion, String>)
-				DDLRecordVersion::setRecordSetVersion);
-		attributeGetterFunctions.put("recordId", DDLRecordVersion::getRecordId);
-		attributeSetterBiConsumers.put(
-			"recordId",
-			(BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setRecordId);
-		attributeGetterFunctions.put("version", DDLRecordVersion::getVersion);
-		attributeSetterBiConsumers.put(
-			"version",
-			(BiConsumer<DDLRecordVersion, String>)DDLRecordVersion::setVersion);
-		attributeGetterFunctions.put(
-			"displayIndex", DDLRecordVersion::getDisplayIndex);
-		attributeSetterBiConsumers.put(
-			"displayIndex",
-			(BiConsumer<DDLRecordVersion, Integer>)
-				DDLRecordVersion::setDisplayIndex);
-		attributeGetterFunctions.put("status", DDLRecordVersion::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<DDLRecordVersion, Integer>)DDLRecordVersion::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", DDLRecordVersion::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<DDLRecordVersion, Long>)
-				DDLRecordVersion::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", DDLRecordVersion::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<DDLRecordVersion, String>)
-				DDLRecordVersion::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", DDLRecordVersion::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<DDLRecordVersion, Date>)
-				DDLRecordVersion::setStatusDate);
+		static {
+			Map<String, Function<DDLRecordVersion, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<DDLRecordVersion, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", DDLRecordVersion::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", DDLRecordVersion::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"recordVersionId", DDLRecordVersion::getRecordVersionId);
+			attributeGetterFunctions.put(
+				"groupId", DDLRecordVersion::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", DDLRecordVersion::getCompanyId);
+			attributeGetterFunctions.put("userId", DDLRecordVersion::getUserId);
+			attributeGetterFunctions.put(
+				"userName", DDLRecordVersion::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", DDLRecordVersion::getCreateDate);
+			attributeGetterFunctions.put(
+				"DDMStorageId", DDLRecordVersion::getDDMStorageId);
+			attributeGetterFunctions.put(
+				"recordSetId", DDLRecordVersion::getRecordSetId);
+			attributeGetterFunctions.put(
+				"recordSetVersion", DDLRecordVersion::getRecordSetVersion);
+			attributeGetterFunctions.put(
+				"recordId", DDLRecordVersion::getRecordId);
+			attributeGetterFunctions.put(
+				"version", DDLRecordVersion::getVersion);
+			attributeGetterFunctions.put(
+				"displayIndex", DDLRecordVersion::getDisplayIndex);
+			attributeGetterFunctions.put("status", DDLRecordVersion::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", DDLRecordVersion::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", DDLRecordVersion::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", DDLRecordVersion::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<DDLRecordVersion, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<DDLRecordVersion, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<DDLRecordVersion, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<DDLRecordVersion, Long>)
+					DDLRecordVersion::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<DDLRecordVersion, Long>)
+					DDLRecordVersion::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"recordVersionId",
+				(BiConsumer<DDLRecordVersion, Long>)
+					DDLRecordVersion::setRecordVersionId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<DDLRecordVersion, Long>)
+					DDLRecordVersion::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<DDLRecordVersion, Long>)
+					DDLRecordVersion::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<DDLRecordVersion, Long>)
+					DDLRecordVersion::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<DDLRecordVersion, String>)
+					DDLRecordVersion::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<DDLRecordVersion, Date>)
+					DDLRecordVersion::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"DDMStorageId",
+				(BiConsumer<DDLRecordVersion, Long>)
+					DDLRecordVersion::setDDMStorageId);
+			attributeSetterBiConsumers.put(
+				"recordSetId",
+				(BiConsumer<DDLRecordVersion, Long>)
+					DDLRecordVersion::setRecordSetId);
+			attributeSetterBiConsumers.put(
+				"recordSetVersion",
+				(BiConsumer<DDLRecordVersion, String>)
+					DDLRecordVersion::setRecordSetVersion);
+			attributeSetterBiConsumers.put(
+				"recordId",
+				(BiConsumer<DDLRecordVersion, Long>)
+					DDLRecordVersion::setRecordId);
+			attributeSetterBiConsumers.put(
+				"version",
+				(BiConsumer<DDLRecordVersion, String>)
+					DDLRecordVersion::setVersion);
+			attributeSetterBiConsumers.put(
+				"displayIndex",
+				(BiConsumer<DDLRecordVersion, Integer>)
+					DDLRecordVersion::setDisplayIndex);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<DDLRecordVersion, Integer>)
+					DDLRecordVersion::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<DDLRecordVersion, Long>)
+					DDLRecordVersion::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<DDLRecordVersion, String>)
+					DDLRecordVersion::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<DDLRecordVersion, Date>)
+					DDLRecordVersion::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1194,7 +1220,8 @@ public class DDLRecordVersionModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<DDLRecordVersion, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

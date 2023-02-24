@@ -231,77 +231,95 @@ public class KBTemplateModelImpl
 	public Map<String, Function<KBTemplate, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<KBTemplate, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<KBTemplate, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<KBTemplate, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<KBTemplate, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<KBTemplate, Object>>();
-		Map<String, BiConsumer<KBTemplate, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<KBTemplate, ?>>();
+		private static final Map<String, Function<KBTemplate, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", KBTemplate::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<KBTemplate, Long>)KBTemplate::setMvccVersion);
-		attributeGetterFunctions.put("uuid", KBTemplate::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<KBTemplate, String>)KBTemplate::setUuid);
-		attributeGetterFunctions.put(
-			"kbTemplateId", KBTemplate::getKbTemplateId);
-		attributeSetterBiConsumers.put(
-			"kbTemplateId",
-			(BiConsumer<KBTemplate, Long>)KBTemplate::setKbTemplateId);
-		attributeGetterFunctions.put("groupId", KBTemplate::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<KBTemplate, Long>)KBTemplate::setGroupId);
-		attributeGetterFunctions.put("companyId", KBTemplate::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<KBTemplate, Long>)KBTemplate::setCompanyId);
-		attributeGetterFunctions.put("userId", KBTemplate::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<KBTemplate, Long>)KBTemplate::setUserId);
-		attributeGetterFunctions.put("userName", KBTemplate::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<KBTemplate, String>)KBTemplate::setUserName);
-		attributeGetterFunctions.put("createDate", KBTemplate::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<KBTemplate, Date>)KBTemplate::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", KBTemplate::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<KBTemplate, Date>)KBTemplate::setModifiedDate);
-		attributeGetterFunctions.put("title", KBTemplate::getTitle);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<KBTemplate, String>)KBTemplate::setTitle);
-		attributeGetterFunctions.put("content", KBTemplate::getContent);
-		attributeSetterBiConsumers.put(
-			"content", (BiConsumer<KBTemplate, String>)KBTemplate::setContent);
-		attributeGetterFunctions.put(
-			"lastPublishDate", KBTemplate::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<KBTemplate, Date>)KBTemplate::setLastPublishDate);
+		static {
+			Map<String, Function<KBTemplate, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<KBTemplate, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", KBTemplate::getMvccVersion);
+			attributeGetterFunctions.put("uuid", KBTemplate::getUuid);
+			attributeGetterFunctions.put(
+				"kbTemplateId", KBTemplate::getKbTemplateId);
+			attributeGetterFunctions.put("groupId", KBTemplate::getGroupId);
+			attributeGetterFunctions.put("companyId", KBTemplate::getCompanyId);
+			attributeGetterFunctions.put("userId", KBTemplate::getUserId);
+			attributeGetterFunctions.put("userName", KBTemplate::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", KBTemplate::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", KBTemplate::getModifiedDate);
+			attributeGetterFunctions.put("title", KBTemplate::getTitle);
+			attributeGetterFunctions.put("content", KBTemplate::getContent);
+			attributeGetterFunctions.put(
+				"lastPublishDate", KBTemplate::getLastPublishDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<KBTemplate, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<KBTemplate, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<KBTemplate, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<KBTemplate, Long>)KBTemplate::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<KBTemplate, String>)KBTemplate::setUuid);
+			attributeSetterBiConsumers.put(
+				"kbTemplateId",
+				(BiConsumer<KBTemplate, Long>)KBTemplate::setKbTemplateId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<KBTemplate, Long>)KBTemplate::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<KBTemplate, Long>)KBTemplate::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<KBTemplate, Long>)KBTemplate::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<KBTemplate, String>)KBTemplate::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<KBTemplate, Date>)KBTemplate::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<KBTemplate, Date>)KBTemplate::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"title", (BiConsumer<KBTemplate, String>)KBTemplate::setTitle);
+			attributeSetterBiConsumers.put(
+				"content",
+				(BiConsumer<KBTemplate, String>)KBTemplate::setContent);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<KBTemplate, Date>)KBTemplate::setLastPublishDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -883,8 +901,9 @@ public class KBTemplateModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<KBTemplate, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<KBTemplate, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

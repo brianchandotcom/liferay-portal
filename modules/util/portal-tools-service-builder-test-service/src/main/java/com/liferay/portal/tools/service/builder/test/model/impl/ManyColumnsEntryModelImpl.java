@@ -287,359 +287,439 @@ public class ManyColumnsEntryModelImpl
 	public Map<String, Function<ManyColumnsEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ManyColumnsEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ManyColumnsEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ManyColumnsEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ManyColumnsEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<ManyColumnsEntry, Object>>();
-		Map<String, BiConsumer<ManyColumnsEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<ManyColumnsEntry, ?>>();
+		private static final Map<String, Function<ManyColumnsEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"manyColumnsEntryId", ManyColumnsEntry::getManyColumnsEntryId);
-		attributeSetterBiConsumers.put(
-			"manyColumnsEntryId",
-			(BiConsumer<ManyColumnsEntry, Long>)
-				ManyColumnsEntry::setManyColumnsEntryId);
-		attributeGetterFunctions.put("column1", ManyColumnsEntry::getColumn1);
-		attributeSetterBiConsumers.put(
-			"column1",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn1);
-		attributeGetterFunctions.put("column2", ManyColumnsEntry::getColumn2);
-		attributeSetterBiConsumers.put(
-			"column2",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn2);
-		attributeGetterFunctions.put("column3", ManyColumnsEntry::getColumn3);
-		attributeSetterBiConsumers.put(
-			"column3",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn3);
-		attributeGetterFunctions.put("column4", ManyColumnsEntry::getColumn4);
-		attributeSetterBiConsumers.put(
-			"column4",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn4);
-		attributeGetterFunctions.put("column5", ManyColumnsEntry::getColumn5);
-		attributeSetterBiConsumers.put(
-			"column5",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn5);
-		attributeGetterFunctions.put("column6", ManyColumnsEntry::getColumn6);
-		attributeSetterBiConsumers.put(
-			"column6",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn6);
-		attributeGetterFunctions.put("column7", ManyColumnsEntry::getColumn7);
-		attributeSetterBiConsumers.put(
-			"column7",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn7);
-		attributeGetterFunctions.put("column8", ManyColumnsEntry::getColumn8);
-		attributeSetterBiConsumers.put(
-			"column8",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn8);
-		attributeGetterFunctions.put("column9", ManyColumnsEntry::getColumn9);
-		attributeSetterBiConsumers.put(
-			"column9",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn9);
-		attributeGetterFunctions.put("column10", ManyColumnsEntry::getColumn10);
-		attributeSetterBiConsumers.put(
-			"column10",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn10);
-		attributeGetterFunctions.put("column11", ManyColumnsEntry::getColumn11);
-		attributeSetterBiConsumers.put(
-			"column11",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn11);
-		attributeGetterFunctions.put("column12", ManyColumnsEntry::getColumn12);
-		attributeSetterBiConsumers.put(
-			"column12",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn12);
-		attributeGetterFunctions.put("column13", ManyColumnsEntry::getColumn13);
-		attributeSetterBiConsumers.put(
-			"column13",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn13);
-		attributeGetterFunctions.put("column14", ManyColumnsEntry::getColumn14);
-		attributeSetterBiConsumers.put(
-			"column14",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn14);
-		attributeGetterFunctions.put("column15", ManyColumnsEntry::getColumn15);
-		attributeSetterBiConsumers.put(
-			"column15",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn15);
-		attributeGetterFunctions.put("column16", ManyColumnsEntry::getColumn16);
-		attributeSetterBiConsumers.put(
-			"column16",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn16);
-		attributeGetterFunctions.put("column17", ManyColumnsEntry::getColumn17);
-		attributeSetterBiConsumers.put(
-			"column17",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn17);
-		attributeGetterFunctions.put("column18", ManyColumnsEntry::getColumn18);
-		attributeSetterBiConsumers.put(
-			"column18",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn18);
-		attributeGetterFunctions.put("column19", ManyColumnsEntry::getColumn19);
-		attributeSetterBiConsumers.put(
-			"column19",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn19);
-		attributeGetterFunctions.put("column20", ManyColumnsEntry::getColumn20);
-		attributeSetterBiConsumers.put(
-			"column20",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn20);
-		attributeGetterFunctions.put("column21", ManyColumnsEntry::getColumn21);
-		attributeSetterBiConsumers.put(
-			"column21",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn21);
-		attributeGetterFunctions.put("column22", ManyColumnsEntry::getColumn22);
-		attributeSetterBiConsumers.put(
-			"column22",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn22);
-		attributeGetterFunctions.put("column23", ManyColumnsEntry::getColumn23);
-		attributeSetterBiConsumers.put(
-			"column23",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn23);
-		attributeGetterFunctions.put("column24", ManyColumnsEntry::getColumn24);
-		attributeSetterBiConsumers.put(
-			"column24",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn24);
-		attributeGetterFunctions.put("column25", ManyColumnsEntry::getColumn25);
-		attributeSetterBiConsumers.put(
-			"column25",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn25);
-		attributeGetterFunctions.put("column26", ManyColumnsEntry::getColumn26);
-		attributeSetterBiConsumers.put(
-			"column26",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn26);
-		attributeGetterFunctions.put("column27", ManyColumnsEntry::getColumn27);
-		attributeSetterBiConsumers.put(
-			"column27",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn27);
-		attributeGetterFunctions.put("column28", ManyColumnsEntry::getColumn28);
-		attributeSetterBiConsumers.put(
-			"column28",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn28);
-		attributeGetterFunctions.put("column29", ManyColumnsEntry::getColumn29);
-		attributeSetterBiConsumers.put(
-			"column29",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn29);
-		attributeGetterFunctions.put("column30", ManyColumnsEntry::getColumn30);
-		attributeSetterBiConsumers.put(
-			"column30",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn30);
-		attributeGetterFunctions.put("column31", ManyColumnsEntry::getColumn31);
-		attributeSetterBiConsumers.put(
-			"column31",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn31);
-		attributeGetterFunctions.put("column32", ManyColumnsEntry::getColumn32);
-		attributeSetterBiConsumers.put(
-			"column32",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn32);
-		attributeGetterFunctions.put("column33", ManyColumnsEntry::getColumn33);
-		attributeSetterBiConsumers.put(
-			"column33",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn33);
-		attributeGetterFunctions.put("column34", ManyColumnsEntry::getColumn34);
-		attributeSetterBiConsumers.put(
-			"column34",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn34);
-		attributeGetterFunctions.put("column35", ManyColumnsEntry::getColumn35);
-		attributeSetterBiConsumers.put(
-			"column35",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn35);
-		attributeGetterFunctions.put("column36", ManyColumnsEntry::getColumn36);
-		attributeSetterBiConsumers.put(
-			"column36",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn36);
-		attributeGetterFunctions.put("column37", ManyColumnsEntry::getColumn37);
-		attributeSetterBiConsumers.put(
-			"column37",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn37);
-		attributeGetterFunctions.put("column38", ManyColumnsEntry::getColumn38);
-		attributeSetterBiConsumers.put(
-			"column38",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn38);
-		attributeGetterFunctions.put("column39", ManyColumnsEntry::getColumn39);
-		attributeSetterBiConsumers.put(
-			"column39",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn39);
-		attributeGetterFunctions.put("column40", ManyColumnsEntry::getColumn40);
-		attributeSetterBiConsumers.put(
-			"column40",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn40);
-		attributeGetterFunctions.put("column41", ManyColumnsEntry::getColumn41);
-		attributeSetterBiConsumers.put(
-			"column41",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn41);
-		attributeGetterFunctions.put("column42", ManyColumnsEntry::getColumn42);
-		attributeSetterBiConsumers.put(
-			"column42",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn42);
-		attributeGetterFunctions.put("column43", ManyColumnsEntry::getColumn43);
-		attributeSetterBiConsumers.put(
-			"column43",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn43);
-		attributeGetterFunctions.put("column44", ManyColumnsEntry::getColumn44);
-		attributeSetterBiConsumers.put(
-			"column44",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn44);
-		attributeGetterFunctions.put("column45", ManyColumnsEntry::getColumn45);
-		attributeSetterBiConsumers.put(
-			"column45",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn45);
-		attributeGetterFunctions.put("column46", ManyColumnsEntry::getColumn46);
-		attributeSetterBiConsumers.put(
-			"column46",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn46);
-		attributeGetterFunctions.put("column47", ManyColumnsEntry::getColumn47);
-		attributeSetterBiConsumers.put(
-			"column47",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn47);
-		attributeGetterFunctions.put("column48", ManyColumnsEntry::getColumn48);
-		attributeSetterBiConsumers.put(
-			"column48",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn48);
-		attributeGetterFunctions.put("column49", ManyColumnsEntry::getColumn49);
-		attributeSetterBiConsumers.put(
-			"column49",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn49);
-		attributeGetterFunctions.put("column50", ManyColumnsEntry::getColumn50);
-		attributeSetterBiConsumers.put(
-			"column50",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn50);
-		attributeGetterFunctions.put("column51", ManyColumnsEntry::getColumn51);
-		attributeSetterBiConsumers.put(
-			"column51",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn51);
-		attributeGetterFunctions.put("column52", ManyColumnsEntry::getColumn52);
-		attributeSetterBiConsumers.put(
-			"column52",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn52);
-		attributeGetterFunctions.put("column53", ManyColumnsEntry::getColumn53);
-		attributeSetterBiConsumers.put(
-			"column53",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn53);
-		attributeGetterFunctions.put("column54", ManyColumnsEntry::getColumn54);
-		attributeSetterBiConsumers.put(
-			"column54",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn54);
-		attributeGetterFunctions.put("column55", ManyColumnsEntry::getColumn55);
-		attributeSetterBiConsumers.put(
-			"column55",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn55);
-		attributeGetterFunctions.put("column56", ManyColumnsEntry::getColumn56);
-		attributeSetterBiConsumers.put(
-			"column56",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn56);
-		attributeGetterFunctions.put("column57", ManyColumnsEntry::getColumn57);
-		attributeSetterBiConsumers.put(
-			"column57",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn57);
-		attributeGetterFunctions.put("column58", ManyColumnsEntry::getColumn58);
-		attributeSetterBiConsumers.put(
-			"column58",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn58);
-		attributeGetterFunctions.put("column59", ManyColumnsEntry::getColumn59);
-		attributeSetterBiConsumers.put(
-			"column59",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn59);
-		attributeGetterFunctions.put("column60", ManyColumnsEntry::getColumn60);
-		attributeSetterBiConsumers.put(
-			"column60",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn60);
-		attributeGetterFunctions.put("column61", ManyColumnsEntry::getColumn61);
-		attributeSetterBiConsumers.put(
-			"column61",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn61);
-		attributeGetterFunctions.put("column62", ManyColumnsEntry::getColumn62);
-		attributeSetterBiConsumers.put(
-			"column62",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn62);
-		attributeGetterFunctions.put("column63", ManyColumnsEntry::getColumn63);
-		attributeSetterBiConsumers.put(
-			"column63",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn63);
-		attributeGetterFunctions.put("column64", ManyColumnsEntry::getColumn64);
-		attributeSetterBiConsumers.put(
-			"column64",
-			(BiConsumer<ManyColumnsEntry, Integer>)
-				ManyColumnsEntry::setColumn64);
+		static {
+			Map<String, Function<ManyColumnsEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ManyColumnsEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"manyColumnsEntryId", ManyColumnsEntry::getManyColumnsEntryId);
+			attributeGetterFunctions.put(
+				"column1", ManyColumnsEntry::getColumn1);
+			attributeGetterFunctions.put(
+				"column2", ManyColumnsEntry::getColumn2);
+			attributeGetterFunctions.put(
+				"column3", ManyColumnsEntry::getColumn3);
+			attributeGetterFunctions.put(
+				"column4", ManyColumnsEntry::getColumn4);
+			attributeGetterFunctions.put(
+				"column5", ManyColumnsEntry::getColumn5);
+			attributeGetterFunctions.put(
+				"column6", ManyColumnsEntry::getColumn6);
+			attributeGetterFunctions.put(
+				"column7", ManyColumnsEntry::getColumn7);
+			attributeGetterFunctions.put(
+				"column8", ManyColumnsEntry::getColumn8);
+			attributeGetterFunctions.put(
+				"column9", ManyColumnsEntry::getColumn9);
+			attributeGetterFunctions.put(
+				"column10", ManyColumnsEntry::getColumn10);
+			attributeGetterFunctions.put(
+				"column11", ManyColumnsEntry::getColumn11);
+			attributeGetterFunctions.put(
+				"column12", ManyColumnsEntry::getColumn12);
+			attributeGetterFunctions.put(
+				"column13", ManyColumnsEntry::getColumn13);
+			attributeGetterFunctions.put(
+				"column14", ManyColumnsEntry::getColumn14);
+			attributeGetterFunctions.put(
+				"column15", ManyColumnsEntry::getColumn15);
+			attributeGetterFunctions.put(
+				"column16", ManyColumnsEntry::getColumn16);
+			attributeGetterFunctions.put(
+				"column17", ManyColumnsEntry::getColumn17);
+			attributeGetterFunctions.put(
+				"column18", ManyColumnsEntry::getColumn18);
+			attributeGetterFunctions.put(
+				"column19", ManyColumnsEntry::getColumn19);
+			attributeGetterFunctions.put(
+				"column20", ManyColumnsEntry::getColumn20);
+			attributeGetterFunctions.put(
+				"column21", ManyColumnsEntry::getColumn21);
+			attributeGetterFunctions.put(
+				"column22", ManyColumnsEntry::getColumn22);
+			attributeGetterFunctions.put(
+				"column23", ManyColumnsEntry::getColumn23);
+			attributeGetterFunctions.put(
+				"column24", ManyColumnsEntry::getColumn24);
+			attributeGetterFunctions.put(
+				"column25", ManyColumnsEntry::getColumn25);
+			attributeGetterFunctions.put(
+				"column26", ManyColumnsEntry::getColumn26);
+			attributeGetterFunctions.put(
+				"column27", ManyColumnsEntry::getColumn27);
+			attributeGetterFunctions.put(
+				"column28", ManyColumnsEntry::getColumn28);
+			attributeGetterFunctions.put(
+				"column29", ManyColumnsEntry::getColumn29);
+			attributeGetterFunctions.put(
+				"column30", ManyColumnsEntry::getColumn30);
+			attributeGetterFunctions.put(
+				"column31", ManyColumnsEntry::getColumn31);
+			attributeGetterFunctions.put(
+				"column32", ManyColumnsEntry::getColumn32);
+			attributeGetterFunctions.put(
+				"column33", ManyColumnsEntry::getColumn33);
+			attributeGetterFunctions.put(
+				"column34", ManyColumnsEntry::getColumn34);
+			attributeGetterFunctions.put(
+				"column35", ManyColumnsEntry::getColumn35);
+			attributeGetterFunctions.put(
+				"column36", ManyColumnsEntry::getColumn36);
+			attributeGetterFunctions.put(
+				"column37", ManyColumnsEntry::getColumn37);
+			attributeGetterFunctions.put(
+				"column38", ManyColumnsEntry::getColumn38);
+			attributeGetterFunctions.put(
+				"column39", ManyColumnsEntry::getColumn39);
+			attributeGetterFunctions.put(
+				"column40", ManyColumnsEntry::getColumn40);
+			attributeGetterFunctions.put(
+				"column41", ManyColumnsEntry::getColumn41);
+			attributeGetterFunctions.put(
+				"column42", ManyColumnsEntry::getColumn42);
+			attributeGetterFunctions.put(
+				"column43", ManyColumnsEntry::getColumn43);
+			attributeGetterFunctions.put(
+				"column44", ManyColumnsEntry::getColumn44);
+			attributeGetterFunctions.put(
+				"column45", ManyColumnsEntry::getColumn45);
+			attributeGetterFunctions.put(
+				"column46", ManyColumnsEntry::getColumn46);
+			attributeGetterFunctions.put(
+				"column47", ManyColumnsEntry::getColumn47);
+			attributeGetterFunctions.put(
+				"column48", ManyColumnsEntry::getColumn48);
+			attributeGetterFunctions.put(
+				"column49", ManyColumnsEntry::getColumn49);
+			attributeGetterFunctions.put(
+				"column50", ManyColumnsEntry::getColumn50);
+			attributeGetterFunctions.put(
+				"column51", ManyColumnsEntry::getColumn51);
+			attributeGetterFunctions.put(
+				"column52", ManyColumnsEntry::getColumn52);
+			attributeGetterFunctions.put(
+				"column53", ManyColumnsEntry::getColumn53);
+			attributeGetterFunctions.put(
+				"column54", ManyColumnsEntry::getColumn54);
+			attributeGetterFunctions.put(
+				"column55", ManyColumnsEntry::getColumn55);
+			attributeGetterFunctions.put(
+				"column56", ManyColumnsEntry::getColumn56);
+			attributeGetterFunctions.put(
+				"column57", ManyColumnsEntry::getColumn57);
+			attributeGetterFunctions.put(
+				"column58", ManyColumnsEntry::getColumn58);
+			attributeGetterFunctions.put(
+				"column59", ManyColumnsEntry::getColumn59);
+			attributeGetterFunctions.put(
+				"column60", ManyColumnsEntry::getColumn60);
+			attributeGetterFunctions.put(
+				"column61", ManyColumnsEntry::getColumn61);
+			attributeGetterFunctions.put(
+				"column62", ManyColumnsEntry::getColumn62);
+			attributeGetterFunctions.put(
+				"column63", ManyColumnsEntry::getColumn63);
+			attributeGetterFunctions.put(
+				"column64", ManyColumnsEntry::getColumn64);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ManyColumnsEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ManyColumnsEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<ManyColumnsEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"manyColumnsEntryId",
+				(BiConsumer<ManyColumnsEntry, Long>)
+					ManyColumnsEntry::setManyColumnsEntryId);
+			attributeSetterBiConsumers.put(
+				"column1",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn1);
+			attributeSetterBiConsumers.put(
+				"column2",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn2);
+			attributeSetterBiConsumers.put(
+				"column3",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn3);
+			attributeSetterBiConsumers.put(
+				"column4",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn4);
+			attributeSetterBiConsumers.put(
+				"column5",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn5);
+			attributeSetterBiConsumers.put(
+				"column6",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn6);
+			attributeSetterBiConsumers.put(
+				"column7",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn7);
+			attributeSetterBiConsumers.put(
+				"column8",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn8);
+			attributeSetterBiConsumers.put(
+				"column9",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn9);
+			attributeSetterBiConsumers.put(
+				"column10",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn10);
+			attributeSetterBiConsumers.put(
+				"column11",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn11);
+			attributeSetterBiConsumers.put(
+				"column12",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn12);
+			attributeSetterBiConsumers.put(
+				"column13",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn13);
+			attributeSetterBiConsumers.put(
+				"column14",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn14);
+			attributeSetterBiConsumers.put(
+				"column15",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn15);
+			attributeSetterBiConsumers.put(
+				"column16",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn16);
+			attributeSetterBiConsumers.put(
+				"column17",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn17);
+			attributeSetterBiConsumers.put(
+				"column18",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn18);
+			attributeSetterBiConsumers.put(
+				"column19",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn19);
+			attributeSetterBiConsumers.put(
+				"column20",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn20);
+			attributeSetterBiConsumers.put(
+				"column21",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn21);
+			attributeSetterBiConsumers.put(
+				"column22",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn22);
+			attributeSetterBiConsumers.put(
+				"column23",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn23);
+			attributeSetterBiConsumers.put(
+				"column24",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn24);
+			attributeSetterBiConsumers.put(
+				"column25",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn25);
+			attributeSetterBiConsumers.put(
+				"column26",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn26);
+			attributeSetterBiConsumers.put(
+				"column27",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn27);
+			attributeSetterBiConsumers.put(
+				"column28",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn28);
+			attributeSetterBiConsumers.put(
+				"column29",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn29);
+			attributeSetterBiConsumers.put(
+				"column30",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn30);
+			attributeSetterBiConsumers.put(
+				"column31",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn31);
+			attributeSetterBiConsumers.put(
+				"column32",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn32);
+			attributeSetterBiConsumers.put(
+				"column33",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn33);
+			attributeSetterBiConsumers.put(
+				"column34",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn34);
+			attributeSetterBiConsumers.put(
+				"column35",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn35);
+			attributeSetterBiConsumers.put(
+				"column36",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn36);
+			attributeSetterBiConsumers.put(
+				"column37",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn37);
+			attributeSetterBiConsumers.put(
+				"column38",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn38);
+			attributeSetterBiConsumers.put(
+				"column39",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn39);
+			attributeSetterBiConsumers.put(
+				"column40",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn40);
+			attributeSetterBiConsumers.put(
+				"column41",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn41);
+			attributeSetterBiConsumers.put(
+				"column42",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn42);
+			attributeSetterBiConsumers.put(
+				"column43",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn43);
+			attributeSetterBiConsumers.put(
+				"column44",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn44);
+			attributeSetterBiConsumers.put(
+				"column45",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn45);
+			attributeSetterBiConsumers.put(
+				"column46",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn46);
+			attributeSetterBiConsumers.put(
+				"column47",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn47);
+			attributeSetterBiConsumers.put(
+				"column48",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn48);
+			attributeSetterBiConsumers.put(
+				"column49",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn49);
+			attributeSetterBiConsumers.put(
+				"column50",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn50);
+			attributeSetterBiConsumers.put(
+				"column51",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn51);
+			attributeSetterBiConsumers.put(
+				"column52",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn52);
+			attributeSetterBiConsumers.put(
+				"column53",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn53);
+			attributeSetterBiConsumers.put(
+				"column54",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn54);
+			attributeSetterBiConsumers.put(
+				"column55",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn55);
+			attributeSetterBiConsumers.put(
+				"column56",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn56);
+			attributeSetterBiConsumers.put(
+				"column57",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn57);
+			attributeSetterBiConsumers.put(
+				"column58",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn58);
+			attributeSetterBiConsumers.put(
+				"column59",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn59);
+			attributeSetterBiConsumers.put(
+				"column60",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn60);
+			attributeSetterBiConsumers.put(
+				"column61",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn61);
+			attributeSetterBiConsumers.put(
+				"column62",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn62);
+			attributeSetterBiConsumers.put(
+				"column63",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn63);
+			attributeSetterBiConsumers.put(
+				"column64",
+				(BiConsumer<ManyColumnsEntry, Integer>)
+					ManyColumnsEntry::setColumn64);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -2123,7 +2203,8 @@ public class ManyColumnsEntryModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<ManyColumnsEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

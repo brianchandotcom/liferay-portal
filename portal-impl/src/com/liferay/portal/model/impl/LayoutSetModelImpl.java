@@ -252,99 +252,119 @@ public class LayoutSetModelImpl
 	public Map<String, Function<LayoutSet, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<LayoutSet, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<LayoutSet, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<LayoutSet, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<LayoutSet, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<LayoutSet, Object>>();
-		Map<String, BiConsumer<LayoutSet, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<LayoutSet, ?>>();
+		private static final Map<String, Function<LayoutSet, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", LayoutSet::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<LayoutSet, Long>)LayoutSet::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", LayoutSet::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<LayoutSet, Long>)LayoutSet::setCtCollectionId);
-		attributeGetterFunctions.put("layoutSetId", LayoutSet::getLayoutSetId);
-		attributeSetterBiConsumers.put(
-			"layoutSetId",
-			(BiConsumer<LayoutSet, Long>)LayoutSet::setLayoutSetId);
-		attributeGetterFunctions.put("groupId", LayoutSet::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<LayoutSet, Long>)LayoutSet::setGroupId);
-		attributeGetterFunctions.put("companyId", LayoutSet::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<LayoutSet, Long>)LayoutSet::setCompanyId);
-		attributeGetterFunctions.put("createDate", LayoutSet::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<LayoutSet, Date>)LayoutSet::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", LayoutSet::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<LayoutSet, Date>)LayoutSet::setModifiedDate);
-		attributeGetterFunctions.put(
-			"privateLayout", LayoutSet::getPrivateLayout);
-		attributeSetterBiConsumers.put(
-			"privateLayout",
-			(BiConsumer<LayoutSet, Boolean>)LayoutSet::setPrivateLayout);
-		attributeGetterFunctions.put("logoId", LayoutSet::getLogoId);
-		attributeSetterBiConsumers.put(
-			"logoId", (BiConsumer<LayoutSet, Long>)LayoutSet::setLogoId);
-		attributeGetterFunctions.put("themeId", LayoutSet::getThemeId);
-		attributeSetterBiConsumers.put(
-			"themeId", (BiConsumer<LayoutSet, String>)LayoutSet::setThemeId);
-		attributeGetterFunctions.put(
-			"colorSchemeId", LayoutSet::getColorSchemeId);
-		attributeSetterBiConsumers.put(
-			"colorSchemeId",
-			(BiConsumer<LayoutSet, String>)LayoutSet::setColorSchemeId);
-		attributeGetterFunctions.put(
-			"faviconFileEntryId", LayoutSet::getFaviconFileEntryId);
-		attributeSetterBiConsumers.put(
-			"faviconFileEntryId",
-			(BiConsumer<LayoutSet, Long>)LayoutSet::setFaviconFileEntryId);
-		attributeGetterFunctions.put("css", LayoutSet::getCss);
-		attributeSetterBiConsumers.put(
-			"css", (BiConsumer<LayoutSet, String>)LayoutSet::setCss);
-		attributeGetterFunctions.put("settings", LayoutSet::getSettings);
-		attributeSetterBiConsumers.put(
-			"settings", (BiConsumer<LayoutSet, String>)LayoutSet::setSettings);
-		attributeGetterFunctions.put(
-			"layoutSetPrototypeUuid", LayoutSet::getLayoutSetPrototypeUuid);
-		attributeSetterBiConsumers.put(
-			"layoutSetPrototypeUuid",
-			(BiConsumer<LayoutSet, String>)
-				LayoutSet::setLayoutSetPrototypeUuid);
-		attributeGetterFunctions.put(
-			"layoutSetPrototypeLinkEnabled",
-			LayoutSet::getLayoutSetPrototypeLinkEnabled);
-		attributeSetterBiConsumers.put(
-			"layoutSetPrototypeLinkEnabled",
-			(BiConsumer<LayoutSet, Boolean>)
-				LayoutSet::setLayoutSetPrototypeLinkEnabled);
+		static {
+			Map<String, Function<LayoutSet, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<LayoutSet, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", LayoutSet::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", LayoutSet::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"layoutSetId", LayoutSet::getLayoutSetId);
+			attributeGetterFunctions.put("groupId", LayoutSet::getGroupId);
+			attributeGetterFunctions.put("companyId", LayoutSet::getCompanyId);
+			attributeGetterFunctions.put(
+				"createDate", LayoutSet::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", LayoutSet::getModifiedDate);
+			attributeGetterFunctions.put(
+				"privateLayout", LayoutSet::getPrivateLayout);
+			attributeGetterFunctions.put("logoId", LayoutSet::getLogoId);
+			attributeGetterFunctions.put("themeId", LayoutSet::getThemeId);
+			attributeGetterFunctions.put(
+				"colorSchemeId", LayoutSet::getColorSchemeId);
+			attributeGetterFunctions.put(
+				"faviconFileEntryId", LayoutSet::getFaviconFileEntryId);
+			attributeGetterFunctions.put("css", LayoutSet::getCss);
+			attributeGetterFunctions.put("settings", LayoutSet::getSettings);
+			attributeGetterFunctions.put(
+				"layoutSetPrototypeUuid", LayoutSet::getLayoutSetPrototypeUuid);
+			attributeGetterFunctions.put(
+				"layoutSetPrototypeLinkEnabled",
+				LayoutSet::getLayoutSetPrototypeLinkEnabled);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<LayoutSet, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<LayoutSet, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<LayoutSet, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<LayoutSet, Long>)LayoutSet::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<LayoutSet, Long>)LayoutSet::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"layoutSetId",
+				(BiConsumer<LayoutSet, Long>)LayoutSet::setLayoutSetId);
+			attributeSetterBiConsumers.put(
+				"groupId", (BiConsumer<LayoutSet, Long>)LayoutSet::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<LayoutSet, Long>)LayoutSet::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<LayoutSet, Date>)LayoutSet::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<LayoutSet, Date>)LayoutSet::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"privateLayout",
+				(BiConsumer<LayoutSet, Boolean>)LayoutSet::setPrivateLayout);
+			attributeSetterBiConsumers.put(
+				"logoId", (BiConsumer<LayoutSet, Long>)LayoutSet::setLogoId);
+			attributeSetterBiConsumers.put(
+				"themeId",
+				(BiConsumer<LayoutSet, String>)LayoutSet::setThemeId);
+			attributeSetterBiConsumers.put(
+				"colorSchemeId",
+				(BiConsumer<LayoutSet, String>)LayoutSet::setColorSchemeId);
+			attributeSetterBiConsumers.put(
+				"faviconFileEntryId",
+				(BiConsumer<LayoutSet, Long>)LayoutSet::setFaviconFileEntryId);
+			attributeSetterBiConsumers.put(
+				"css", (BiConsumer<LayoutSet, String>)LayoutSet::setCss);
+			attributeSetterBiConsumers.put(
+				"settings",
+				(BiConsumer<LayoutSet, String>)LayoutSet::setSettings);
+			attributeSetterBiConsumers.put(
+				"layoutSetPrototypeUuid",
+				(BiConsumer<LayoutSet, String>)
+					LayoutSet::setLayoutSetPrototypeUuid);
+			attributeSetterBiConsumers.put(
+				"layoutSetPrototypeLinkEnabled",
+				(BiConsumer<LayoutSet, Boolean>)
+					LayoutSet::setLayoutSetPrototypeLinkEnabled);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1061,8 +1081,9 @@ public class LayoutSetModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<LayoutSet, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<LayoutSet, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

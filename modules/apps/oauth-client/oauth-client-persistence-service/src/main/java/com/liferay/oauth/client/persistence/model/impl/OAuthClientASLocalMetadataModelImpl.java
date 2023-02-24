@@ -230,93 +230,109 @@ public class OAuthClientASLocalMetadataModelImpl
 	public Map<String, Function<OAuthClientASLocalMetadata, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<OAuthClientASLocalMetadata, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<OAuthClientASLocalMetadata, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<OAuthClientASLocalMetadata, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<OAuthClientASLocalMetadata, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<OAuthClientASLocalMetadata, Object>>();
-		Map<String, BiConsumer<OAuthClientASLocalMetadata, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<OAuthClientASLocalMetadata, ?>>();
+		private static final Map
+			<String, Function<OAuthClientASLocalMetadata, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", OAuthClientASLocalMetadata::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<OAuthClientASLocalMetadata, Long>)
-				OAuthClientASLocalMetadata::setMvccVersion);
-		attributeGetterFunctions.put(
-			"oAuthClientASLocalMetadataId",
-			OAuthClientASLocalMetadata::getOAuthClientASLocalMetadataId);
-		attributeSetterBiConsumers.put(
-			"oAuthClientASLocalMetadataId",
-			(BiConsumer<OAuthClientASLocalMetadata, Long>)
-				OAuthClientASLocalMetadata::setOAuthClientASLocalMetadataId);
-		attributeGetterFunctions.put(
-			"companyId", OAuthClientASLocalMetadata::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<OAuthClientASLocalMetadata, Long>)
-				OAuthClientASLocalMetadata::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", OAuthClientASLocalMetadata::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<OAuthClientASLocalMetadata, Long>)
-				OAuthClientASLocalMetadata::setUserId);
-		attributeGetterFunctions.put(
-			"userName", OAuthClientASLocalMetadata::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<OAuthClientASLocalMetadata, String>)
-				OAuthClientASLocalMetadata::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", OAuthClientASLocalMetadata::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<OAuthClientASLocalMetadata, Date>)
-				OAuthClientASLocalMetadata::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", OAuthClientASLocalMetadata::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<OAuthClientASLocalMetadata, Date>)
-				OAuthClientASLocalMetadata::setModifiedDate);
-		attributeGetterFunctions.put(
-			"localWellKnownURI",
-			OAuthClientASLocalMetadata::getLocalWellKnownURI);
-		attributeSetterBiConsumers.put(
-			"localWellKnownURI",
-			(BiConsumer<OAuthClientASLocalMetadata, String>)
-				OAuthClientASLocalMetadata::setLocalWellKnownURI);
-		attributeGetterFunctions.put(
-			"metadataJSON", OAuthClientASLocalMetadata::getMetadataJSON);
-		attributeSetterBiConsumers.put(
-			"metadataJSON",
-			(BiConsumer<OAuthClientASLocalMetadata, String>)
-				OAuthClientASLocalMetadata::setMetadataJSON);
+		static {
+			Map<String, Function<OAuthClientASLocalMetadata, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<OAuthClientASLocalMetadata, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", OAuthClientASLocalMetadata::getMvccVersion);
+			attributeGetterFunctions.put(
+				"oAuthClientASLocalMetadataId",
+				OAuthClientASLocalMetadata::getOAuthClientASLocalMetadataId);
+			attributeGetterFunctions.put(
+				"companyId", OAuthClientASLocalMetadata::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", OAuthClientASLocalMetadata::getUserId);
+			attributeGetterFunctions.put(
+				"userName", OAuthClientASLocalMetadata::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", OAuthClientASLocalMetadata::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", OAuthClientASLocalMetadata::getModifiedDate);
+			attributeGetterFunctions.put(
+				"localWellKnownURI",
+				OAuthClientASLocalMetadata::getLocalWellKnownURI);
+			attributeGetterFunctions.put(
+				"metadataJSON", OAuthClientASLocalMetadata::getMetadataJSON);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<OAuthClientASLocalMetadata, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<OAuthClientASLocalMetadata, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<OAuthClientASLocalMetadata, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<OAuthClientASLocalMetadata, Long>)
+					OAuthClientASLocalMetadata::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"oAuthClientASLocalMetadataId",
+				(BiConsumer<OAuthClientASLocalMetadata, Long>)
+					OAuthClientASLocalMetadata::
+						setOAuthClientASLocalMetadataId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<OAuthClientASLocalMetadata, Long>)
+					OAuthClientASLocalMetadata::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<OAuthClientASLocalMetadata, Long>)
+					OAuthClientASLocalMetadata::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<OAuthClientASLocalMetadata, String>)
+					OAuthClientASLocalMetadata::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<OAuthClientASLocalMetadata, Date>)
+					OAuthClientASLocalMetadata::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<OAuthClientASLocalMetadata, Date>)
+					OAuthClientASLocalMetadata::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"localWellKnownURI",
+				(BiConsumer<OAuthClientASLocalMetadata, String>)
+					OAuthClientASLocalMetadata::setLocalWellKnownURI);
+			attributeSetterBiConsumers.put(
+				"metadataJSON",
+				(BiConsumer<OAuthClientASLocalMetadata, String>)
+					OAuthClientASLocalMetadata::setMetadataJSON);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -832,7 +848,8 @@ public class OAuthClientASLocalMetadataModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<OAuthClientASLocalMetadata, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

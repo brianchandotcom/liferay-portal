@@ -232,100 +232,118 @@ public class CommerceInventoryWarehouseRelModelImpl
 	public Map<String, Function<CommerceInventoryWarehouseRel, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceInventoryWarehouseRel, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<CommerceInventoryWarehouseRel, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<CommerceInventoryWarehouseRel, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceInventoryWarehouseRel, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceInventoryWarehouseRel, Object>>();
-		Map<String, BiConsumer<CommerceInventoryWarehouseRel, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CommerceInventoryWarehouseRel, ?>>();
+		private static final Map
+			<String, Function<CommerceInventoryWarehouseRel, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceInventoryWarehouseRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceInventoryWarehouseRel, Long>)
-				CommerceInventoryWarehouseRel::setMvccVersion);
-		attributeGetterFunctions.put(
-			"commerceInventoryWarehouseRelId",
-			CommerceInventoryWarehouseRel::getCommerceInventoryWarehouseRelId);
-		attributeSetterBiConsumers.put(
-			"commerceInventoryWarehouseRelId",
-			(BiConsumer<CommerceInventoryWarehouseRel, Long>)
+		static {
+			Map<String, Function<CommerceInventoryWarehouseRel, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<CommerceInventoryWarehouseRel, Object>>();
+
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceInventoryWarehouseRel::getMvccVersion);
+			attributeGetterFunctions.put(
+				"commerceInventoryWarehouseRelId",
 				CommerceInventoryWarehouseRel::
-					setCommerceInventoryWarehouseRelId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceInventoryWarehouseRel::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceInventoryWarehouseRel, Long>)
-				CommerceInventoryWarehouseRel::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CommerceInventoryWarehouseRel::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceInventoryWarehouseRel, Long>)
-				CommerceInventoryWarehouseRel::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceInventoryWarehouseRel::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceInventoryWarehouseRel, String>)
-				CommerceInventoryWarehouseRel::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceInventoryWarehouseRel::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceInventoryWarehouseRel, Date>)
-				CommerceInventoryWarehouseRel::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceInventoryWarehouseRel::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceInventoryWarehouseRel, Date>)
-				CommerceInventoryWarehouseRel::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId", CommerceInventoryWarehouseRel::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<CommerceInventoryWarehouseRel, Long>)
-				CommerceInventoryWarehouseRel::setClassNameId);
-		attributeGetterFunctions.put(
-			"classPK", CommerceInventoryWarehouseRel::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<CommerceInventoryWarehouseRel, Long>)
-				CommerceInventoryWarehouseRel::setClassPK);
-		attributeGetterFunctions.put(
-			"commerceInventoryWarehouseId",
-			CommerceInventoryWarehouseRel::getCommerceInventoryWarehouseId);
-		attributeSetterBiConsumers.put(
-			"commerceInventoryWarehouseId",
-			(BiConsumer<CommerceInventoryWarehouseRel, Long>)
-				CommerceInventoryWarehouseRel::setCommerceInventoryWarehouseId);
+					getCommerceInventoryWarehouseRelId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceInventoryWarehouseRel::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceInventoryWarehouseRel::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceInventoryWarehouseRel::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceInventoryWarehouseRel::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceInventoryWarehouseRel::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId", CommerceInventoryWarehouseRel::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", CommerceInventoryWarehouseRel::getClassPK);
+			attributeGetterFunctions.put(
+				"commerceInventoryWarehouseId",
+				CommerceInventoryWarehouseRel::getCommerceInventoryWarehouseId);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceInventoryWarehouseRel, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceInventoryWarehouseRel, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String,
+						 BiConsumer<CommerceInventoryWarehouseRel, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceInventoryWarehouseRel, Long>)
+					CommerceInventoryWarehouseRel::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"commerceInventoryWarehouseRelId",
+				(BiConsumer<CommerceInventoryWarehouseRel, Long>)
+					CommerceInventoryWarehouseRel::
+						setCommerceInventoryWarehouseRelId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceInventoryWarehouseRel, Long>)
+					CommerceInventoryWarehouseRel::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceInventoryWarehouseRel, Long>)
+					CommerceInventoryWarehouseRel::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceInventoryWarehouseRel, String>)
+					CommerceInventoryWarehouseRel::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceInventoryWarehouseRel, Date>)
+					CommerceInventoryWarehouseRel::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceInventoryWarehouseRel, Date>)
+					CommerceInventoryWarehouseRel::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<CommerceInventoryWarehouseRel, Long>)
+					CommerceInventoryWarehouseRel::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<CommerceInventoryWarehouseRel, Long>)
+					CommerceInventoryWarehouseRel::setClassPK);
+			attributeSetterBiConsumers.put(
+				"commerceInventoryWarehouseId",
+				(BiConsumer<CommerceInventoryWarehouseRel, Long>)
+					CommerceInventoryWarehouseRel::
+						setCommerceInventoryWarehouseId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -868,7 +886,8 @@ public class CommerceInventoryWarehouseRelModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceInventoryWarehouseRel, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

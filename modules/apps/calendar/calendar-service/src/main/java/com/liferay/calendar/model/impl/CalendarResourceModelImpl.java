@@ -264,125 +264,152 @@ public class CalendarResourceModelImpl
 	public Map<String, Function<CalendarResource, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CalendarResource, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CalendarResource, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CalendarResource, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CalendarResource, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<CalendarResource, Object>>();
-		Map<String, BiConsumer<CalendarResource, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<CalendarResource, ?>>();
+		private static final Map<String, Function<CalendarResource, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CalendarResource::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CalendarResource, Long>)
-				CalendarResource::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CalendarResource::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CalendarResource, Long>)
-				CalendarResource::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", CalendarResource::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CalendarResource, String>)CalendarResource::setUuid);
-		attributeGetterFunctions.put(
-			"calendarResourceId", CalendarResource::getCalendarResourceId);
-		attributeSetterBiConsumers.put(
-			"calendarResourceId",
-			(BiConsumer<CalendarResource, Long>)
-				CalendarResource::setCalendarResourceId);
-		attributeGetterFunctions.put("groupId", CalendarResource::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<CalendarResource, Long>)CalendarResource::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", CalendarResource::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CalendarResource, Long>)CalendarResource::setCompanyId);
-		attributeGetterFunctions.put("userId", CalendarResource::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CalendarResource, Long>)CalendarResource::setUserId);
-		attributeGetterFunctions.put("userName", CalendarResource::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CalendarResource, String>)
-				CalendarResource::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CalendarResource::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CalendarResource, Date>)
-				CalendarResource::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CalendarResource::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CalendarResource, Date>)
-				CalendarResource::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId", CalendarResource::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<CalendarResource, Long>)
-				CalendarResource::setClassNameId);
-		attributeGetterFunctions.put("classPK", CalendarResource::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<CalendarResource, Long>)CalendarResource::setClassPK);
-		attributeGetterFunctions.put(
-			"classUuid", CalendarResource::getClassUuid);
-		attributeSetterBiConsumers.put(
-			"classUuid",
-			(BiConsumer<CalendarResource, String>)
-				CalendarResource::setClassUuid);
-		attributeGetterFunctions.put("code", CalendarResource::getCode);
-		attributeSetterBiConsumers.put(
-			"code",
-			(BiConsumer<CalendarResource, String>)CalendarResource::setCode);
-		attributeGetterFunctions.put("name", CalendarResource::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CalendarResource, String>)CalendarResource::setName);
-		attributeGetterFunctions.put(
-			"description", CalendarResource::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<CalendarResource, String>)
-				CalendarResource::setDescription);
-		attributeGetterFunctions.put("active", CalendarResource::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<CalendarResource, Boolean>)CalendarResource::setActive);
-		attributeGetterFunctions.put(
-			"lastPublishDate", CalendarResource::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<CalendarResource, Date>)
-				CalendarResource::setLastPublishDate);
+		static {
+			Map<String, Function<CalendarResource, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CalendarResource, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CalendarResource::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CalendarResource::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", CalendarResource::getUuid);
+			attributeGetterFunctions.put(
+				"calendarResourceId", CalendarResource::getCalendarResourceId);
+			attributeGetterFunctions.put(
+				"groupId", CalendarResource::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", CalendarResource::getCompanyId);
+			attributeGetterFunctions.put("userId", CalendarResource::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CalendarResource::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CalendarResource::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CalendarResource::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId", CalendarResource::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", CalendarResource::getClassPK);
+			attributeGetterFunctions.put(
+				"classUuid", CalendarResource::getClassUuid);
+			attributeGetterFunctions.put("code", CalendarResource::getCode);
+			attributeGetterFunctions.put("name", CalendarResource::getName);
+			attributeGetterFunctions.put(
+				"description", CalendarResource::getDescription);
+			attributeGetterFunctions.put("active", CalendarResource::getActive);
+			attributeGetterFunctions.put(
+				"lastPublishDate", CalendarResource::getLastPublishDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CalendarResource, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CalendarResource, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CalendarResource, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CalendarResource, Long>)
+					CalendarResource::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CalendarResource, Long>)
+					CalendarResource::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CalendarResource, String>)
+					CalendarResource::setUuid);
+			attributeSetterBiConsumers.put(
+				"calendarResourceId",
+				(BiConsumer<CalendarResource, Long>)
+					CalendarResource::setCalendarResourceId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<CalendarResource, Long>)
+					CalendarResource::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CalendarResource, Long>)
+					CalendarResource::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CalendarResource, Long>)
+					CalendarResource::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CalendarResource, String>)
+					CalendarResource::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CalendarResource, Date>)
+					CalendarResource::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CalendarResource, Date>)
+					CalendarResource::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<CalendarResource, Long>)
+					CalendarResource::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<CalendarResource, Long>)
+					CalendarResource::setClassPK);
+			attributeSetterBiConsumers.put(
+				"classUuid",
+				(BiConsumer<CalendarResource, String>)
+					CalendarResource::setClassUuid);
+			attributeSetterBiConsumers.put(
+				"code",
+				(BiConsumer<CalendarResource, String>)
+					CalendarResource::setCode);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CalendarResource, String>)
+					CalendarResource::setName);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<CalendarResource, String>)
+					CalendarResource::setDescription);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<CalendarResource, Boolean>)
+					CalendarResource::setActive);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<CalendarResource, Date>)
+					CalendarResource::setLastPublishDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1451,7 +1478,8 @@ public class CalendarResourceModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CalendarResource, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

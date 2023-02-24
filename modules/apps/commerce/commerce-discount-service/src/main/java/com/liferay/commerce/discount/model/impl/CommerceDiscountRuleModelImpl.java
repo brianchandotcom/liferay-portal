@@ -219,99 +219,116 @@ public class CommerceDiscountRuleModelImpl
 	public Map<String, Function<CommerceDiscountRule, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceDiscountRule, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CommerceDiscountRule, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CommerceDiscountRule, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceDiscountRule, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceDiscountRule, Object>>();
-		Map<String, BiConsumer<CommerceDiscountRule, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CommerceDiscountRule, ?>>();
+		private static final Map<String, Function<CommerceDiscountRule, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceDiscountRule::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceDiscountRule, Long>)
-				CommerceDiscountRule::setMvccVersion);
-		attributeGetterFunctions.put(
-			"commerceDiscountRuleId",
-			CommerceDiscountRule::getCommerceDiscountRuleId);
-		attributeSetterBiConsumers.put(
-			"commerceDiscountRuleId",
-			(BiConsumer<CommerceDiscountRule, Long>)
-				CommerceDiscountRule::setCommerceDiscountRuleId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceDiscountRule::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceDiscountRule, Long>)
-				CommerceDiscountRule::setCompanyId);
-		attributeGetterFunctions.put("userId", CommerceDiscountRule::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceDiscountRule, Long>)
-				CommerceDiscountRule::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceDiscountRule::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceDiscountRule, String>)
-				CommerceDiscountRule::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceDiscountRule::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceDiscountRule, Date>)
-				CommerceDiscountRule::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceDiscountRule::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceDiscountRule, Date>)
-				CommerceDiscountRule::setModifiedDate);
-		attributeGetterFunctions.put("name", CommerceDiscountRule::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CommerceDiscountRule, String>)
-				CommerceDiscountRule::setName);
-		attributeGetterFunctions.put(
-			"commerceDiscountId", CommerceDiscountRule::getCommerceDiscountId);
-		attributeSetterBiConsumers.put(
-			"commerceDiscountId",
-			(BiConsumer<CommerceDiscountRule, Long>)
-				CommerceDiscountRule::setCommerceDiscountId);
-		attributeGetterFunctions.put("type", CommerceDiscountRule::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<CommerceDiscountRule, String>)
-				CommerceDiscountRule::setType);
-		attributeGetterFunctions.put(
-			"typeSettings", CommerceDiscountRule::getTypeSettings);
-		attributeSetterBiConsumers.put(
-			"typeSettings",
-			(BiConsumer<CommerceDiscountRule, String>)
-				CommerceDiscountRule::setTypeSettings);
+		static {
+			Map<String, Function<CommerceDiscountRule, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CommerceDiscountRule, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceDiscountRule::getMvccVersion);
+			attributeGetterFunctions.put(
+				"commerceDiscountRuleId",
+				CommerceDiscountRule::getCommerceDiscountRuleId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceDiscountRule::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceDiscountRule::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceDiscountRule::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceDiscountRule::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceDiscountRule::getModifiedDate);
+			attributeGetterFunctions.put("name", CommerceDiscountRule::getName);
+			attributeGetterFunctions.put(
+				"commerceDiscountId",
+				CommerceDiscountRule::getCommerceDiscountId);
+			attributeGetterFunctions.put("type", CommerceDiscountRule::getType);
+			attributeGetterFunctions.put(
+				"typeSettings", CommerceDiscountRule::getTypeSettings);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceDiscountRule, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceDiscountRule, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommerceDiscountRule, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceDiscountRule, Long>)
+					CommerceDiscountRule::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"commerceDiscountRuleId",
+				(BiConsumer<CommerceDiscountRule, Long>)
+					CommerceDiscountRule::setCommerceDiscountRuleId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceDiscountRule, Long>)
+					CommerceDiscountRule::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceDiscountRule, Long>)
+					CommerceDiscountRule::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceDiscountRule, String>)
+					CommerceDiscountRule::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceDiscountRule, Date>)
+					CommerceDiscountRule::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceDiscountRule, Date>)
+					CommerceDiscountRule::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CommerceDiscountRule, String>)
+					CommerceDiscountRule::setName);
+			attributeSetterBiConsumers.put(
+				"commerceDiscountId",
+				(BiConsumer<CommerceDiscountRule, Long>)
+					CommerceDiscountRule::setCommerceDiscountId);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CommerceDiscountRule, String>)
+					CommerceDiscountRule::setType);
+			attributeSetterBiConsumers.put(
+				"typeSettings",
+				(BiConsumer<CommerceDiscountRule, String>)
+					CommerceDiscountRule::setTypeSettings);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -856,7 +873,8 @@ public class CommerceDiscountRuleModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceDiscountRule, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

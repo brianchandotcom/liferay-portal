@@ -226,85 +226,108 @@ public class HtmlPreviewEntryModelImpl
 	public Map<String, Function<HtmlPreviewEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<HtmlPreviewEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<HtmlPreviewEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<HtmlPreviewEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<HtmlPreviewEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<HtmlPreviewEntry, Object>>();
-		Map<String, BiConsumer<HtmlPreviewEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<HtmlPreviewEntry, ?>>();
+		private static final Map<String, Function<HtmlPreviewEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"htmlPreviewEntryId", HtmlPreviewEntry::getHtmlPreviewEntryId);
-		attributeSetterBiConsumers.put(
-			"htmlPreviewEntryId",
-			(BiConsumer<HtmlPreviewEntry, Long>)
-				HtmlPreviewEntry::setHtmlPreviewEntryId);
-		attributeGetterFunctions.put("groupId", HtmlPreviewEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", HtmlPreviewEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", HtmlPreviewEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setUserId);
-		attributeGetterFunctions.put("userName", HtmlPreviewEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<HtmlPreviewEntry, String>)
-				HtmlPreviewEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", HtmlPreviewEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<HtmlPreviewEntry, Date>)
-				HtmlPreviewEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", HtmlPreviewEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<HtmlPreviewEntry, Date>)
-				HtmlPreviewEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId", HtmlPreviewEntry::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<HtmlPreviewEntry, Long>)
-				HtmlPreviewEntry::setClassNameId);
-		attributeGetterFunctions.put("classPK", HtmlPreviewEntry::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setClassPK);
-		attributeGetterFunctions.put(
-			"fileEntryId", HtmlPreviewEntry::getFileEntryId);
-		attributeSetterBiConsumers.put(
-			"fileEntryId",
-			(BiConsumer<HtmlPreviewEntry, Long>)
-				HtmlPreviewEntry::setFileEntryId);
+		static {
+			Map<String, Function<HtmlPreviewEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<HtmlPreviewEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"htmlPreviewEntryId", HtmlPreviewEntry::getHtmlPreviewEntryId);
+			attributeGetterFunctions.put(
+				"groupId", HtmlPreviewEntry::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", HtmlPreviewEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", HtmlPreviewEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", HtmlPreviewEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", HtmlPreviewEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", HtmlPreviewEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId", HtmlPreviewEntry::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", HtmlPreviewEntry::getClassPK);
+			attributeGetterFunctions.put(
+				"fileEntryId", HtmlPreviewEntry::getFileEntryId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<HtmlPreviewEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<HtmlPreviewEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<HtmlPreviewEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"htmlPreviewEntryId",
+				(BiConsumer<HtmlPreviewEntry, Long>)
+					HtmlPreviewEntry::setHtmlPreviewEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<HtmlPreviewEntry, Long>)
+					HtmlPreviewEntry::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<HtmlPreviewEntry, Long>)
+					HtmlPreviewEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<HtmlPreviewEntry, Long>)
+					HtmlPreviewEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<HtmlPreviewEntry, String>)
+					HtmlPreviewEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<HtmlPreviewEntry, Date>)
+					HtmlPreviewEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<HtmlPreviewEntry, Date>)
+					HtmlPreviewEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<HtmlPreviewEntry, Long>)
+					HtmlPreviewEntry::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<HtmlPreviewEntry, Long>)
+					HtmlPreviewEntry::setClassPK);
+			attributeSetterBiConsumers.put(
+				"fileEntryId",
+				(BiConsumer<HtmlPreviewEntry, Long>)
+					HtmlPreviewEntry::setFileEntryId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -812,7 +835,8 @@ public class HtmlPreviewEntryModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<HtmlPreviewEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

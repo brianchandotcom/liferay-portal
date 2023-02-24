@@ -229,66 +229,87 @@ public class CTPreferencesModelImpl
 	public Map<String, Function<CTPreferences, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CTPreferences, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CTPreferences, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CTPreferences, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CTPreferences, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<CTPreferences, Object>>();
-		Map<String, BiConsumer<CTPreferences, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<CTPreferences, ?>>();
+		private static final Map<String, Function<CTPreferences, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CTPreferences::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CTPreferences, Long>)CTPreferences::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctPreferencesId", CTPreferences::getCtPreferencesId);
-		attributeSetterBiConsumers.put(
-			"ctPreferencesId",
-			(BiConsumer<CTPreferences, Long>)CTPreferences::setCtPreferencesId);
-		attributeGetterFunctions.put("companyId", CTPreferences::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CTPreferences, Long>)CTPreferences::setCompanyId);
-		attributeGetterFunctions.put("userId", CTPreferences::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CTPreferences, Long>)CTPreferences::setUserId);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CTPreferences::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CTPreferences, Long>)CTPreferences::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"previousCtCollectionId", CTPreferences::getPreviousCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"previousCtCollectionId",
-			(BiConsumer<CTPreferences, Long>)
-				CTPreferences::setPreviousCtCollectionId);
-		attributeGetterFunctions.put(
-			"confirmationEnabled", CTPreferences::getConfirmationEnabled);
-		attributeSetterBiConsumers.put(
-			"confirmationEnabled",
-			(BiConsumer<CTPreferences, Boolean>)
-				CTPreferences::setConfirmationEnabled);
+		static {
+			Map<String, Function<CTPreferences, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CTPreferences, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CTPreferences::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctPreferencesId", CTPreferences::getCtPreferencesId);
+			attributeGetterFunctions.put(
+				"companyId", CTPreferences::getCompanyId);
+			attributeGetterFunctions.put("userId", CTPreferences::getUserId);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CTPreferences::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"previousCtCollectionId",
+				CTPreferences::getPreviousCtCollectionId);
+			attributeGetterFunctions.put(
+				"confirmationEnabled", CTPreferences::getConfirmationEnabled);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CTPreferences, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CTPreferences, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<CTPreferences, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CTPreferences, Long>)CTPreferences::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctPreferencesId",
+				(BiConsumer<CTPreferences, Long>)
+					CTPreferences::setCtPreferencesId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CTPreferences, Long>)CTPreferences::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CTPreferences, Long>)CTPreferences::setUserId);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CTPreferences, Long>)
+					CTPreferences::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"previousCtCollectionId",
+				(BiConsumer<CTPreferences, Long>)
+					CTPreferences::setPreviousCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"confirmationEnabled",
+				(BiConsumer<CTPreferences, Boolean>)
+					CTPreferences::setConfirmationEnabled);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -707,7 +728,8 @@ public class CTPreferencesModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CTPreferences, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

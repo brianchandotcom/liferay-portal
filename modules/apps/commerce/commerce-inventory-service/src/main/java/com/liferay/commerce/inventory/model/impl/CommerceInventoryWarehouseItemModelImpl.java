@@ -249,123 +249,140 @@ public class CommerceInventoryWarehouseItemModelImpl
 	public Map<String, Function<CommerceInventoryWarehouseItem, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceInventoryWarehouseItem, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<CommerceInventoryWarehouseItem, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<CommerceInventoryWarehouseItem, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceInventoryWarehouseItem, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String,
-					 Function<CommerceInventoryWarehouseItem, Object>>();
-		Map<String, BiConsumer<CommerceInventoryWarehouseItem, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CommerceInventoryWarehouseItem, ?>>();
+		private static final Map
+			<String, Function<CommerceInventoryWarehouseItem, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceInventoryWarehouseItem::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceInventoryWarehouseItem, Long>)
-				CommerceInventoryWarehouseItem::setMvccVersion);
-		attributeGetterFunctions.put(
-			"uuid", CommerceInventoryWarehouseItem::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CommerceInventoryWarehouseItem, String>)
-				CommerceInventoryWarehouseItem::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			CommerceInventoryWarehouseItem::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CommerceInventoryWarehouseItem, String>)
-				CommerceInventoryWarehouseItem::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"commerceInventoryWarehouseItemId",
-			CommerceInventoryWarehouseItem::
-				getCommerceInventoryWarehouseItemId);
-		attributeSetterBiConsumers.put(
-			"commerceInventoryWarehouseItemId",
-			(BiConsumer<CommerceInventoryWarehouseItem, Long>)
+		static {
+			Map<String, Function<CommerceInventoryWarehouseItem, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<CommerceInventoryWarehouseItem, Object>>();
+
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceInventoryWarehouseItem::getMvccVersion);
+			attributeGetterFunctions.put(
+				"uuid", CommerceInventoryWarehouseItem::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CommerceInventoryWarehouseItem::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"commerceInventoryWarehouseItemId",
 				CommerceInventoryWarehouseItem::
-					setCommerceInventoryWarehouseItemId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceInventoryWarehouseItem::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceInventoryWarehouseItem, Long>)
-				CommerceInventoryWarehouseItem::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CommerceInventoryWarehouseItem::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceInventoryWarehouseItem, Long>)
-				CommerceInventoryWarehouseItem::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceInventoryWarehouseItem::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceInventoryWarehouseItem, String>)
-				CommerceInventoryWarehouseItem::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceInventoryWarehouseItem::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceInventoryWarehouseItem, Date>)
-				CommerceInventoryWarehouseItem::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceInventoryWarehouseItem::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceInventoryWarehouseItem, Date>)
-				CommerceInventoryWarehouseItem::setModifiedDate);
-		attributeGetterFunctions.put(
-			"commerceInventoryWarehouseId",
-			CommerceInventoryWarehouseItem::getCommerceInventoryWarehouseId);
-		attributeSetterBiConsumers.put(
-			"commerceInventoryWarehouseId",
-			(BiConsumer<CommerceInventoryWarehouseItem, Long>)
+					getCommerceInventoryWarehouseItemId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceInventoryWarehouseItem::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceInventoryWarehouseItem::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceInventoryWarehouseItem::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceInventoryWarehouseItem::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate",
+				CommerceInventoryWarehouseItem::getModifiedDate);
+			attributeGetterFunctions.put(
+				"commerceInventoryWarehouseId",
 				CommerceInventoryWarehouseItem::
-					setCommerceInventoryWarehouseId);
-		attributeGetterFunctions.put(
-			"sku", CommerceInventoryWarehouseItem::getSku);
-		attributeSetterBiConsumers.put(
-			"sku",
-			(BiConsumer<CommerceInventoryWarehouseItem, String>)
-				CommerceInventoryWarehouseItem::setSku);
-		attributeGetterFunctions.put(
-			"quantity", CommerceInventoryWarehouseItem::getQuantity);
-		attributeSetterBiConsumers.put(
-			"quantity",
-			(BiConsumer<CommerceInventoryWarehouseItem, Integer>)
-				CommerceInventoryWarehouseItem::setQuantity);
-		attributeGetterFunctions.put(
-			"reservedQuantity",
-			CommerceInventoryWarehouseItem::getReservedQuantity);
-		attributeSetterBiConsumers.put(
-			"reservedQuantity",
-			(BiConsumer<CommerceInventoryWarehouseItem, Integer>)
-				CommerceInventoryWarehouseItem::setReservedQuantity);
+					getCommerceInventoryWarehouseId);
+			attributeGetterFunctions.put(
+				"sku", CommerceInventoryWarehouseItem::getSku);
+			attributeGetterFunctions.put(
+				"quantity", CommerceInventoryWarehouseItem::getQuantity);
+			attributeGetterFunctions.put(
+				"reservedQuantity",
+				CommerceInventoryWarehouseItem::getReservedQuantity);
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceInventoryWarehouseItem, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceInventoryWarehouseItem, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String,
+						 BiConsumer<CommerceInventoryWarehouseItem, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceInventoryWarehouseItem, Long>)
+					CommerceInventoryWarehouseItem::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CommerceInventoryWarehouseItem, String>)
+					CommerceInventoryWarehouseItem::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CommerceInventoryWarehouseItem, String>)
+					CommerceInventoryWarehouseItem::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"commerceInventoryWarehouseItemId",
+				(BiConsumer<CommerceInventoryWarehouseItem, Long>)
+					CommerceInventoryWarehouseItem::
+						setCommerceInventoryWarehouseItemId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceInventoryWarehouseItem, Long>)
+					CommerceInventoryWarehouseItem::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceInventoryWarehouseItem, Long>)
+					CommerceInventoryWarehouseItem::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceInventoryWarehouseItem, String>)
+					CommerceInventoryWarehouseItem::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceInventoryWarehouseItem, Date>)
+					CommerceInventoryWarehouseItem::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceInventoryWarehouseItem, Date>)
+					CommerceInventoryWarehouseItem::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"commerceInventoryWarehouseId",
+				(BiConsumer<CommerceInventoryWarehouseItem, Long>)
+					CommerceInventoryWarehouseItem::
+						setCommerceInventoryWarehouseId);
+			attributeSetterBiConsumers.put(
+				"sku",
+				(BiConsumer<CommerceInventoryWarehouseItem, String>)
+					CommerceInventoryWarehouseItem::setSku);
+			attributeSetterBiConsumers.put(
+				"quantity",
+				(BiConsumer<CommerceInventoryWarehouseItem, Integer>)
+					CommerceInventoryWarehouseItem::setQuantity);
+			attributeSetterBiConsumers.put(
+				"reservedQuantity",
+				(BiConsumer<CommerceInventoryWarehouseItem, Integer>)
+					CommerceInventoryWarehouseItem::setReservedQuantity);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1017,7 +1034,8 @@ public class CommerceInventoryWarehouseItemModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceInventoryWarehouseItem, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

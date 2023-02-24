@@ -267,187 +267,208 @@ public class OAuth2ApplicationModelImpl
 	public Map<String, Function<OAuth2Application, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<OAuth2Application, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<OAuth2Application, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<OAuth2Application, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<OAuth2Application, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<OAuth2Application, Object>>();
-		Map<String, BiConsumer<OAuth2Application, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<OAuth2Application, ?>>();
+		private static final Map<String, Function<OAuth2Application, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("uuid", OAuth2Application::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<OAuth2Application, String>)OAuth2Application::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			OAuth2Application::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"oAuth2ApplicationId", OAuth2Application::getOAuth2ApplicationId);
-		attributeSetterBiConsumers.put(
-			"oAuth2ApplicationId",
-			(BiConsumer<OAuth2Application, Long>)
-				OAuth2Application::setOAuth2ApplicationId);
-		attributeGetterFunctions.put(
-			"companyId", OAuth2Application::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<OAuth2Application, Long>)
-				OAuth2Application::setCompanyId);
-		attributeGetterFunctions.put("userId", OAuth2Application::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<OAuth2Application, Long>)OAuth2Application::setUserId);
-		attributeGetterFunctions.put(
-			"userName", OAuth2Application::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", OAuth2Application::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<OAuth2Application, Date>)
-				OAuth2Application::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", OAuth2Application::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<OAuth2Application, Date>)
-				OAuth2Application::setModifiedDate);
-		attributeGetterFunctions.put(
-			"oAuth2ApplicationScopeAliasesId",
-			OAuth2Application::getOAuth2ApplicationScopeAliasesId);
-		attributeSetterBiConsumers.put(
-			"oAuth2ApplicationScopeAliasesId",
-			(BiConsumer<OAuth2Application, Long>)
-				OAuth2Application::setOAuth2ApplicationScopeAliasesId);
-		attributeGetterFunctions.put(
-			"allowedGrantTypes", OAuth2Application::getAllowedGrantTypes);
-		attributeSetterBiConsumers.put(
-			"allowedGrantTypes",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setAllowedGrantTypes);
-		attributeGetterFunctions.put(
-			"clientAuthenticationMethod",
-			OAuth2Application::getClientAuthenticationMethod);
-		attributeSetterBiConsumers.put(
-			"clientAuthenticationMethod",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setClientAuthenticationMethod);
-		attributeGetterFunctions.put(
-			"clientCredentialUserId",
-			OAuth2Application::getClientCredentialUserId);
-		attributeSetterBiConsumers.put(
-			"clientCredentialUserId",
-			(BiConsumer<OAuth2Application, Long>)
-				OAuth2Application::setClientCredentialUserId);
-		attributeGetterFunctions.put(
-			"clientCredentialUserName",
-			OAuth2Application::getClientCredentialUserName);
-		attributeSetterBiConsumers.put(
-			"clientCredentialUserName",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setClientCredentialUserName);
-		attributeGetterFunctions.put(
-			"clientId", OAuth2Application::getClientId);
-		attributeSetterBiConsumers.put(
-			"clientId",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setClientId);
-		attributeGetterFunctions.put(
-			"clientProfile", OAuth2Application::getClientProfile);
-		attributeSetterBiConsumers.put(
-			"clientProfile",
-			(BiConsumer<OAuth2Application, Integer>)
-				OAuth2Application::setClientProfile);
-		attributeGetterFunctions.put(
-			"clientSecret", OAuth2Application::getClientSecret);
-		attributeSetterBiConsumers.put(
-			"clientSecret",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setClientSecret);
-		attributeGetterFunctions.put(
-			"description", OAuth2Application::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setDescription);
-		attributeGetterFunctions.put(
-			"features", OAuth2Application::getFeatures);
-		attributeSetterBiConsumers.put(
-			"features",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setFeatures);
-		attributeGetterFunctions.put(
-			"homePageURL", OAuth2Application::getHomePageURL);
-		attributeSetterBiConsumers.put(
-			"homePageURL",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setHomePageURL);
-		attributeGetterFunctions.put(
-			"iconFileEntryId", OAuth2Application::getIconFileEntryId);
-		attributeSetterBiConsumers.put(
-			"iconFileEntryId",
-			(BiConsumer<OAuth2Application, Long>)
-				OAuth2Application::setIconFileEntryId);
-		attributeGetterFunctions.put("jwks", OAuth2Application::getJwks);
-		attributeSetterBiConsumers.put(
-			"jwks",
-			(BiConsumer<OAuth2Application, String>)OAuth2Application::setJwks);
-		attributeGetterFunctions.put("name", OAuth2Application::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<OAuth2Application, String>)OAuth2Application::setName);
-		attributeGetterFunctions.put(
-			"privacyPolicyURL", OAuth2Application::getPrivacyPolicyURL);
-		attributeSetterBiConsumers.put(
-			"privacyPolicyURL",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setPrivacyPolicyURL);
-		attributeGetterFunctions.put(
-			"redirectURIs", OAuth2Application::getRedirectURIs);
-		attributeSetterBiConsumers.put(
-			"redirectURIs",
-			(BiConsumer<OAuth2Application, String>)
-				OAuth2Application::setRedirectURIs);
-		attributeGetterFunctions.put(
-			"rememberDevice", OAuth2Application::getRememberDevice);
-		attributeSetterBiConsumers.put(
-			"rememberDevice",
-			(BiConsumer<OAuth2Application, Boolean>)
-				OAuth2Application::setRememberDevice);
-		attributeGetterFunctions.put(
-			"trustedApplication", OAuth2Application::getTrustedApplication);
-		attributeSetterBiConsumers.put(
-			"trustedApplication",
-			(BiConsumer<OAuth2Application, Boolean>)
-				OAuth2Application::setTrustedApplication);
+		static {
+			Map<String, Function<OAuth2Application, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<OAuth2Application, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put("uuid", OAuth2Application::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				OAuth2Application::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"oAuth2ApplicationId",
+				OAuth2Application::getOAuth2ApplicationId);
+			attributeGetterFunctions.put(
+				"companyId", OAuth2Application::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", OAuth2Application::getUserId);
+			attributeGetterFunctions.put(
+				"userName", OAuth2Application::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", OAuth2Application::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", OAuth2Application::getModifiedDate);
+			attributeGetterFunctions.put(
+				"oAuth2ApplicationScopeAliasesId",
+				OAuth2Application::getOAuth2ApplicationScopeAliasesId);
+			attributeGetterFunctions.put(
+				"allowedGrantTypes", OAuth2Application::getAllowedGrantTypes);
+			attributeGetterFunctions.put(
+				"clientAuthenticationMethod",
+				OAuth2Application::getClientAuthenticationMethod);
+			attributeGetterFunctions.put(
+				"clientCredentialUserId",
+				OAuth2Application::getClientCredentialUserId);
+			attributeGetterFunctions.put(
+				"clientCredentialUserName",
+				OAuth2Application::getClientCredentialUserName);
+			attributeGetterFunctions.put(
+				"clientId", OAuth2Application::getClientId);
+			attributeGetterFunctions.put(
+				"clientProfile", OAuth2Application::getClientProfile);
+			attributeGetterFunctions.put(
+				"clientSecret", OAuth2Application::getClientSecret);
+			attributeGetterFunctions.put(
+				"description", OAuth2Application::getDescription);
+			attributeGetterFunctions.put(
+				"features", OAuth2Application::getFeatures);
+			attributeGetterFunctions.put(
+				"homePageURL", OAuth2Application::getHomePageURL);
+			attributeGetterFunctions.put(
+				"iconFileEntryId", OAuth2Application::getIconFileEntryId);
+			attributeGetterFunctions.put("jwks", OAuth2Application::getJwks);
+			attributeGetterFunctions.put("name", OAuth2Application::getName);
+			attributeGetterFunctions.put(
+				"privacyPolicyURL", OAuth2Application::getPrivacyPolicyURL);
+			attributeGetterFunctions.put(
+				"redirectURIs", OAuth2Application::getRedirectURIs);
+			attributeGetterFunctions.put(
+				"rememberDevice", OAuth2Application::getRememberDevice);
+			attributeGetterFunctions.put(
+				"trustedApplication", OAuth2Application::getTrustedApplication);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<OAuth2Application, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<OAuth2Application, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<OAuth2Application, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"oAuth2ApplicationId",
+				(BiConsumer<OAuth2Application, Long>)
+					OAuth2Application::setOAuth2ApplicationId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<OAuth2Application, Long>)
+					OAuth2Application::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<OAuth2Application, Long>)
+					OAuth2Application::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<OAuth2Application, Date>)
+					OAuth2Application::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<OAuth2Application, Date>)
+					OAuth2Application::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"oAuth2ApplicationScopeAliasesId",
+				(BiConsumer<OAuth2Application, Long>)
+					OAuth2Application::setOAuth2ApplicationScopeAliasesId);
+			attributeSetterBiConsumers.put(
+				"allowedGrantTypes",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setAllowedGrantTypes);
+			attributeSetterBiConsumers.put(
+				"clientAuthenticationMethod",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setClientAuthenticationMethod);
+			attributeSetterBiConsumers.put(
+				"clientCredentialUserId",
+				(BiConsumer<OAuth2Application, Long>)
+					OAuth2Application::setClientCredentialUserId);
+			attributeSetterBiConsumers.put(
+				"clientCredentialUserName",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setClientCredentialUserName);
+			attributeSetterBiConsumers.put(
+				"clientId",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setClientId);
+			attributeSetterBiConsumers.put(
+				"clientProfile",
+				(BiConsumer<OAuth2Application, Integer>)
+					OAuth2Application::setClientProfile);
+			attributeSetterBiConsumers.put(
+				"clientSecret",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setClientSecret);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setDescription);
+			attributeSetterBiConsumers.put(
+				"features",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setFeatures);
+			attributeSetterBiConsumers.put(
+				"homePageURL",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setHomePageURL);
+			attributeSetterBiConsumers.put(
+				"iconFileEntryId",
+				(BiConsumer<OAuth2Application, Long>)
+					OAuth2Application::setIconFileEntryId);
+			attributeSetterBiConsumers.put(
+				"jwks",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setJwks);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setName);
+			attributeSetterBiConsumers.put(
+				"privacyPolicyURL",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setPrivacyPolicyURL);
+			attributeSetterBiConsumers.put(
+				"redirectURIs",
+				(BiConsumer<OAuth2Application, String>)
+					OAuth2Application::setRedirectURIs);
+			attributeSetterBiConsumers.put(
+				"rememberDevice",
+				(BiConsumer<OAuth2Application, Boolean>)
+					OAuth2Application::setRememberDevice);
+			attributeSetterBiConsumers.put(
+				"trustedApplication",
+				(BiConsumer<OAuth2Application, Boolean>)
+					OAuth2Application::setTrustedApplication);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1518,7 +1539,8 @@ public class OAuth2ApplicationModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<OAuth2Application, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

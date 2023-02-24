@@ -249,96 +249,117 @@ public class CompanyModelImpl
 	public Map<String, Function<Company, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<Company, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Company, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Company, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<Company, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Company, Object>>();
-		Map<String, BiConsumer<Company, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Company, ?>>();
+		private static final Map<String, Function<Company, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", Company::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion", (BiConsumer<Company, Long>)Company::setMvccVersion);
-		attributeGetterFunctions.put("companyId", Company::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<Company, Long>)Company::setCompanyId);
-		attributeGetterFunctions.put("userId", Company::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Company, Long>)Company::setUserId);
-		attributeGetterFunctions.put("userName", Company::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<Company, String>)Company::setUserName);
-		attributeGetterFunctions.put("createDate", Company::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<Company, Date>)Company::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", Company::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<Company, Date>)Company::setModifiedDate);
-		attributeGetterFunctions.put("webId", Company::getWebId);
-		attributeSetterBiConsumers.put(
-			"webId", (BiConsumer<Company, String>)Company::setWebId);
-		attributeGetterFunctions.put("mx", Company::getMx);
-		attributeSetterBiConsumers.put(
-			"mx", (BiConsumer<Company, String>)Company::setMx);
-		attributeGetterFunctions.put("homeURL", Company::getHomeURL);
-		attributeSetterBiConsumers.put(
-			"homeURL", (BiConsumer<Company, String>)Company::setHomeURL);
-		attributeGetterFunctions.put("logoId", Company::getLogoId);
-		attributeSetterBiConsumers.put(
-			"logoId", (BiConsumer<Company, Long>)Company::setLogoId);
-		attributeGetterFunctions.put("maxUsers", Company::getMaxUsers);
-		attributeSetterBiConsumers.put(
-			"maxUsers", (BiConsumer<Company, Integer>)Company::setMaxUsers);
-		attributeGetterFunctions.put("active", Company::getActive);
-		attributeSetterBiConsumers.put(
-			"active", (BiConsumer<Company, Boolean>)Company::setActive);
-		attributeGetterFunctions.put("name", Company::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<Company, String>)Company::setName);
-		attributeGetterFunctions.put("legalName", Company::getLegalName);
-		attributeSetterBiConsumers.put(
-			"legalName", (BiConsumer<Company, String>)Company::setLegalName);
-		attributeGetterFunctions.put("legalId", Company::getLegalId);
-		attributeSetterBiConsumers.put(
-			"legalId", (BiConsumer<Company, String>)Company::setLegalId);
-		attributeGetterFunctions.put("legalType", Company::getLegalType);
-		attributeSetterBiConsumers.put(
-			"legalType", (BiConsumer<Company, String>)Company::setLegalType);
-		attributeGetterFunctions.put("sicCode", Company::getSicCode);
-		attributeSetterBiConsumers.put(
-			"sicCode", (BiConsumer<Company, String>)Company::setSicCode);
-		attributeGetterFunctions.put("tickerSymbol", Company::getTickerSymbol);
-		attributeSetterBiConsumers.put(
-			"tickerSymbol",
-			(BiConsumer<Company, String>)Company::setTickerSymbol);
-		attributeGetterFunctions.put("industry", Company::getIndustry);
-		attributeSetterBiConsumers.put(
-			"industry", (BiConsumer<Company, String>)Company::setIndustry);
-		attributeGetterFunctions.put("type", Company::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<Company, String>)Company::setType);
-		attributeGetterFunctions.put("size", Company::getSize);
-		attributeSetterBiConsumers.put(
-			"size", (BiConsumer<Company, String>)Company::setSize);
+		static {
+			Map<String, Function<Company, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<Company, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", Company::getMvccVersion);
+			attributeGetterFunctions.put("companyId", Company::getCompanyId);
+			attributeGetterFunctions.put("userId", Company::getUserId);
+			attributeGetterFunctions.put("userName", Company::getUserName);
+			attributeGetterFunctions.put("createDate", Company::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", Company::getModifiedDate);
+			attributeGetterFunctions.put("webId", Company::getWebId);
+			attributeGetterFunctions.put("mx", Company::getMx);
+			attributeGetterFunctions.put("homeURL", Company::getHomeURL);
+			attributeGetterFunctions.put("logoId", Company::getLogoId);
+			attributeGetterFunctions.put("maxUsers", Company::getMaxUsers);
+			attributeGetterFunctions.put("active", Company::getActive);
+			attributeGetterFunctions.put("name", Company::getName);
+			attributeGetterFunctions.put("legalName", Company::getLegalName);
+			attributeGetterFunctions.put("legalId", Company::getLegalId);
+			attributeGetterFunctions.put("legalType", Company::getLegalType);
+			attributeGetterFunctions.put("sicCode", Company::getSicCode);
+			attributeGetterFunctions.put(
+				"tickerSymbol", Company::getTickerSymbol);
+			attributeGetterFunctions.put("industry", Company::getIndustry);
+			attributeGetterFunctions.put("type", Company::getType);
+			attributeGetterFunctions.put("size", Company::getSize);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<Company, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<Company, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<Company, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<Company, Long>)Company::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"companyId", (BiConsumer<Company, Long>)Company::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<Company, Long>)Company::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName", (BiConsumer<Company, String>)Company::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<Company, Date>)Company::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<Company, Date>)Company::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"webId", (BiConsumer<Company, String>)Company::setWebId);
+			attributeSetterBiConsumers.put(
+				"mx", (BiConsumer<Company, String>)Company::setMx);
+			attributeSetterBiConsumers.put(
+				"homeURL", (BiConsumer<Company, String>)Company::setHomeURL);
+			attributeSetterBiConsumers.put(
+				"logoId", (BiConsumer<Company, Long>)Company::setLogoId);
+			attributeSetterBiConsumers.put(
+				"maxUsers", (BiConsumer<Company, Integer>)Company::setMaxUsers);
+			attributeSetterBiConsumers.put(
+				"active", (BiConsumer<Company, Boolean>)Company::setActive);
+			attributeSetterBiConsumers.put(
+				"name", (BiConsumer<Company, String>)Company::setName);
+			attributeSetterBiConsumers.put(
+				"legalName",
+				(BiConsumer<Company, String>)Company::setLegalName);
+			attributeSetterBiConsumers.put(
+				"legalId", (BiConsumer<Company, String>)Company::setLegalId);
+			attributeSetterBiConsumers.put(
+				"legalType",
+				(BiConsumer<Company, String>)Company::setLegalType);
+			attributeSetterBiConsumers.put(
+				"sicCode", (BiConsumer<Company, String>)Company::setSicCode);
+			attributeSetterBiConsumers.put(
+				"tickerSymbol",
+				(BiConsumer<Company, String>)Company::setTickerSymbol);
+			attributeSetterBiConsumers.put(
+				"industry", (BiConsumer<Company, String>)Company::setIndustry);
+			attributeSetterBiConsumers.put(
+				"type", (BiConsumer<Company, String>)Company::setType);
+			attributeSetterBiConsumers.put(
+				"size", (BiConsumer<Company, String>)Company::setSize);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1219,8 +1240,9 @@ public class CompanyModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<Company, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<Company, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

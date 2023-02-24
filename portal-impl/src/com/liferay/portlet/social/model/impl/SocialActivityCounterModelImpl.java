@@ -266,124 +266,142 @@ public class SocialActivityCounterModelImpl
 	public Map<String, Function<SocialActivityCounter, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<SocialActivityCounter, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SocialActivityCounter, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SocialActivityCounter, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<SocialActivityCounter, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<SocialActivityCounter, Object>>();
-		Map<String, BiConsumer<SocialActivityCounter, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<SocialActivityCounter, ?>>();
+		private static final Map
+			<String, Function<SocialActivityCounter, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", SocialActivityCounter::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<SocialActivityCounter, Long>)
-				SocialActivityCounter::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", SocialActivityCounter::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<SocialActivityCounter, Long>)
-				SocialActivityCounter::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"activityCounterId", SocialActivityCounter::getActivityCounterId);
-		attributeSetterBiConsumers.put(
-			"activityCounterId",
-			(BiConsumer<SocialActivityCounter, Long>)
-				SocialActivityCounter::setActivityCounterId);
-		attributeGetterFunctions.put(
-			"groupId", SocialActivityCounter::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<SocialActivityCounter, Long>)
-				SocialActivityCounter::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", SocialActivityCounter::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SocialActivityCounter, Long>)
-				SocialActivityCounter::setCompanyId);
-		attributeGetterFunctions.put(
-			"classNameId", SocialActivityCounter::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<SocialActivityCounter, Long>)
-				SocialActivityCounter::setClassNameId);
-		attributeGetterFunctions.put(
-			"classPK", SocialActivityCounter::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<SocialActivityCounter, Long>)
-				SocialActivityCounter::setClassPK);
-		attributeGetterFunctions.put("name", SocialActivityCounter::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<SocialActivityCounter, String>)
-				SocialActivityCounter::setName);
-		attributeGetterFunctions.put(
-			"ownerType", SocialActivityCounter::getOwnerType);
-		attributeSetterBiConsumers.put(
-			"ownerType",
-			(BiConsumer<SocialActivityCounter, Integer>)
-				SocialActivityCounter::setOwnerType);
-		attributeGetterFunctions.put(
-			"currentValue", SocialActivityCounter::getCurrentValue);
-		attributeSetterBiConsumers.put(
-			"currentValue",
-			(BiConsumer<SocialActivityCounter, Integer>)
-				SocialActivityCounter::setCurrentValue);
-		attributeGetterFunctions.put(
-			"totalValue", SocialActivityCounter::getTotalValue);
-		attributeSetterBiConsumers.put(
-			"totalValue",
-			(BiConsumer<SocialActivityCounter, Integer>)
-				SocialActivityCounter::setTotalValue);
-		attributeGetterFunctions.put(
-			"graceValue", SocialActivityCounter::getGraceValue);
-		attributeSetterBiConsumers.put(
-			"graceValue",
-			(BiConsumer<SocialActivityCounter, Integer>)
-				SocialActivityCounter::setGraceValue);
-		attributeGetterFunctions.put(
-			"startPeriod", SocialActivityCounter::getStartPeriod);
-		attributeSetterBiConsumers.put(
-			"startPeriod",
-			(BiConsumer<SocialActivityCounter, Integer>)
-				SocialActivityCounter::setStartPeriod);
-		attributeGetterFunctions.put(
-			"endPeriod", SocialActivityCounter::getEndPeriod);
-		attributeSetterBiConsumers.put(
-			"endPeriod",
-			(BiConsumer<SocialActivityCounter, Integer>)
-				SocialActivityCounter::setEndPeriod);
-		attributeGetterFunctions.put(
-			"active", SocialActivityCounter::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<SocialActivityCounter, Boolean>)
-				SocialActivityCounter::setActive);
+		static {
+			Map<String, Function<SocialActivityCounter, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<SocialActivityCounter, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", SocialActivityCounter::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", SocialActivityCounter::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"activityCounterId",
+				SocialActivityCounter::getActivityCounterId);
+			attributeGetterFunctions.put(
+				"groupId", SocialActivityCounter::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", SocialActivityCounter::getCompanyId);
+			attributeGetterFunctions.put(
+				"classNameId", SocialActivityCounter::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", SocialActivityCounter::getClassPK);
+			attributeGetterFunctions.put(
+				"name", SocialActivityCounter::getName);
+			attributeGetterFunctions.put(
+				"ownerType", SocialActivityCounter::getOwnerType);
+			attributeGetterFunctions.put(
+				"currentValue", SocialActivityCounter::getCurrentValue);
+			attributeGetterFunctions.put(
+				"totalValue", SocialActivityCounter::getTotalValue);
+			attributeGetterFunctions.put(
+				"graceValue", SocialActivityCounter::getGraceValue);
+			attributeGetterFunctions.put(
+				"startPeriod", SocialActivityCounter::getStartPeriod);
+			attributeGetterFunctions.put(
+				"endPeriod", SocialActivityCounter::getEndPeriod);
+			attributeGetterFunctions.put(
+				"active", SocialActivityCounter::getActive);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<SocialActivityCounter, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<SocialActivityCounter, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<SocialActivityCounter, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<SocialActivityCounter, Long>)
+					SocialActivityCounter::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<SocialActivityCounter, Long>)
+					SocialActivityCounter::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"activityCounterId",
+				(BiConsumer<SocialActivityCounter, Long>)
+					SocialActivityCounter::setActivityCounterId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<SocialActivityCounter, Long>)
+					SocialActivityCounter::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<SocialActivityCounter, Long>)
+					SocialActivityCounter::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<SocialActivityCounter, Long>)
+					SocialActivityCounter::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<SocialActivityCounter, Long>)
+					SocialActivityCounter::setClassPK);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<SocialActivityCounter, String>)
+					SocialActivityCounter::setName);
+			attributeSetterBiConsumers.put(
+				"ownerType",
+				(BiConsumer<SocialActivityCounter, Integer>)
+					SocialActivityCounter::setOwnerType);
+			attributeSetterBiConsumers.put(
+				"currentValue",
+				(BiConsumer<SocialActivityCounter, Integer>)
+					SocialActivityCounter::setCurrentValue);
+			attributeSetterBiConsumers.put(
+				"totalValue",
+				(BiConsumer<SocialActivityCounter, Integer>)
+					SocialActivityCounter::setTotalValue);
+			attributeSetterBiConsumers.put(
+				"graceValue",
+				(BiConsumer<SocialActivityCounter, Integer>)
+					SocialActivityCounter::setGraceValue);
+			attributeSetterBiConsumers.put(
+				"startPeriod",
+				(BiConsumer<SocialActivityCounter, Integer>)
+					SocialActivityCounter::setStartPeriod);
+			attributeSetterBiConsumers.put(
+				"endPeriod",
+				(BiConsumer<SocialActivityCounter, Integer>)
+					SocialActivityCounter::setEndPeriod);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<SocialActivityCounter, Boolean>)
+					SocialActivityCounter::setActive);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -1003,7 +1021,8 @@ public class SocialActivityCounterModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<SocialActivityCounter, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

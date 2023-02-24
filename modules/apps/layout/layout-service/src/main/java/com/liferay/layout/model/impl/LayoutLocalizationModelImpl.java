@@ -239,102 +239,120 @@ public class LayoutLocalizationModelImpl
 	public Map<String, Function<LayoutLocalization, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<LayoutLocalization, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<LayoutLocalization, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<LayoutLocalization, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<LayoutLocalization, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<LayoutLocalization, Object>>();
-		Map<String, BiConsumer<LayoutLocalization, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<LayoutLocalization, ?>>();
+		private static final Map<String, Function<LayoutLocalization, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", LayoutLocalization::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<LayoutLocalization, Long>)
-				LayoutLocalization::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", LayoutLocalization::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<LayoutLocalization, Long>)
-				LayoutLocalization::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", LayoutLocalization::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<LayoutLocalization, String>)
-				LayoutLocalization::setUuid);
-		attributeGetterFunctions.put(
-			"layoutLocalizationId",
-			LayoutLocalization::getLayoutLocalizationId);
-		attributeSetterBiConsumers.put(
-			"layoutLocalizationId",
-			(BiConsumer<LayoutLocalization, Long>)
-				LayoutLocalization::setLayoutLocalizationId);
-		attributeGetterFunctions.put("groupId", LayoutLocalization::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<LayoutLocalization, Long>)
-				LayoutLocalization::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", LayoutLocalization::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<LayoutLocalization, Long>)
-				LayoutLocalization::setCompanyId);
-		attributeGetterFunctions.put(
-			"createDate", LayoutLocalization::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<LayoutLocalization, Date>)
-				LayoutLocalization::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", LayoutLocalization::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<LayoutLocalization, Date>)
-				LayoutLocalization::setModifiedDate);
-		attributeGetterFunctions.put("content", LayoutLocalization::getContent);
-		attributeSetterBiConsumers.put(
-			"content",
-			(BiConsumer<LayoutLocalization, String>)
-				LayoutLocalization::setContent);
-		attributeGetterFunctions.put(
-			"languageId", LayoutLocalization::getLanguageId);
-		attributeSetterBiConsumers.put(
-			"languageId",
-			(BiConsumer<LayoutLocalization, String>)
-				LayoutLocalization::setLanguageId);
-		attributeGetterFunctions.put("plid", LayoutLocalization::getPlid);
-		attributeSetterBiConsumers.put(
-			"plid",
-			(BiConsumer<LayoutLocalization, Long>)LayoutLocalization::setPlid);
-		attributeGetterFunctions.put(
-			"lastPublishDate", LayoutLocalization::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<LayoutLocalization, Date>)
-				LayoutLocalization::setLastPublishDate);
+		static {
+			Map<String, Function<LayoutLocalization, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<LayoutLocalization, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", LayoutLocalization::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", LayoutLocalization::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", LayoutLocalization::getUuid);
+			attributeGetterFunctions.put(
+				"layoutLocalizationId",
+				LayoutLocalization::getLayoutLocalizationId);
+			attributeGetterFunctions.put(
+				"groupId", LayoutLocalization::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", LayoutLocalization::getCompanyId);
+			attributeGetterFunctions.put(
+				"createDate", LayoutLocalization::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", LayoutLocalization::getModifiedDate);
+			attributeGetterFunctions.put(
+				"content", LayoutLocalization::getContent);
+			attributeGetterFunctions.put(
+				"languageId", LayoutLocalization::getLanguageId);
+			attributeGetterFunctions.put("plid", LayoutLocalization::getPlid);
+			attributeGetterFunctions.put(
+				"lastPublishDate", LayoutLocalization::getLastPublishDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<LayoutLocalization, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<LayoutLocalization, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<LayoutLocalization, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<LayoutLocalization, Long>)
+					LayoutLocalization::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<LayoutLocalization, Long>)
+					LayoutLocalization::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<LayoutLocalization, String>)
+					LayoutLocalization::setUuid);
+			attributeSetterBiConsumers.put(
+				"layoutLocalizationId",
+				(BiConsumer<LayoutLocalization, Long>)
+					LayoutLocalization::setLayoutLocalizationId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<LayoutLocalization, Long>)
+					LayoutLocalization::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<LayoutLocalization, Long>)
+					LayoutLocalization::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<LayoutLocalization, Date>)
+					LayoutLocalization::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<LayoutLocalization, Date>)
+					LayoutLocalization::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"content",
+				(BiConsumer<LayoutLocalization, String>)
+					LayoutLocalization::setContent);
+			attributeSetterBiConsumers.put(
+				"languageId",
+				(BiConsumer<LayoutLocalization, String>)
+					LayoutLocalization::setLanguageId);
+			attributeSetterBiConsumers.put(
+				"plid",
+				(BiConsumer<LayoutLocalization, Long>)
+					LayoutLocalization::setPlid);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<LayoutLocalization, Date>)
+					LayoutLocalization::setLastPublishDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -907,7 +925,8 @@ public class LayoutLocalizationModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<LayoutLocalization, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

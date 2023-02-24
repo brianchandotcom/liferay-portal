@@ -215,61 +215,80 @@ public class PLOEntryModelImpl
 	public Map<String, Function<PLOEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<PLOEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<PLOEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<PLOEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<PLOEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<PLOEntry, Object>>();
-		Map<String, BiConsumer<PLOEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<PLOEntry, ?>>();
+		private static final Map<String, Function<PLOEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", PLOEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<PLOEntry, Long>)PLOEntry::setMvccVersion);
-		attributeGetterFunctions.put("ploEntryId", PLOEntry::getPloEntryId);
-		attributeSetterBiConsumers.put(
-			"ploEntryId", (BiConsumer<PLOEntry, Long>)PLOEntry::setPloEntryId);
-		attributeGetterFunctions.put("companyId", PLOEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<PLOEntry, Long>)PLOEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", PLOEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<PLOEntry, Long>)PLOEntry::setUserId);
-		attributeGetterFunctions.put("createDate", PLOEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<PLOEntry, Date>)PLOEntry::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", PLOEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<PLOEntry, Date>)PLOEntry::setModifiedDate);
-		attributeGetterFunctions.put("key", PLOEntry::getKey);
-		attributeSetterBiConsumers.put(
-			"key", (BiConsumer<PLOEntry, String>)PLOEntry::setKey);
-		attributeGetterFunctions.put("languageId", PLOEntry::getLanguageId);
-		attributeSetterBiConsumers.put(
-			"languageId",
-			(BiConsumer<PLOEntry, String>)PLOEntry::setLanguageId);
-		attributeGetterFunctions.put("value", PLOEntry::getValue);
-		attributeSetterBiConsumers.put(
-			"value", (BiConsumer<PLOEntry, String>)PLOEntry::setValue);
+		static {
+			Map<String, Function<PLOEntry, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<PLOEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", PLOEntry::getMvccVersion);
+			attributeGetterFunctions.put("ploEntryId", PLOEntry::getPloEntryId);
+			attributeGetterFunctions.put("companyId", PLOEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", PLOEntry::getUserId);
+			attributeGetterFunctions.put("createDate", PLOEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", PLOEntry::getModifiedDate);
+			attributeGetterFunctions.put("key", PLOEntry::getKey);
+			attributeGetterFunctions.put("languageId", PLOEntry::getLanguageId);
+			attributeGetterFunctions.put("value", PLOEntry::getValue);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<PLOEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<PLOEntry, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<PLOEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<PLOEntry, Long>)PLOEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ploEntryId",
+				(BiConsumer<PLOEntry, Long>)PLOEntry::setPloEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<PLOEntry, Long>)PLOEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<PLOEntry, Long>)PLOEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<PLOEntry, Date>)PLOEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<PLOEntry, Date>)PLOEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"key", (BiConsumer<PLOEntry, String>)PLOEntry::setKey);
+			attributeSetterBiConsumers.put(
+				"languageId",
+				(BiConsumer<PLOEntry, String>)PLOEntry::setLanguageId);
+			attributeSetterBiConsumers.put(
+				"value", (BiConsumer<PLOEntry, String>)PLOEntry::setValue);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -762,8 +781,9 @@ public class PLOEntryModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<PLOEntry, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<PLOEntry, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

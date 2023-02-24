@@ -237,106 +237,122 @@ public class ObjectViewSortColumnModelImpl
 	public Map<String, Function<ObjectViewSortColumn, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectViewSortColumn, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectViewSortColumn, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectViewSortColumn, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectViewSortColumn, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<ObjectViewSortColumn, Object>>();
-		Map<String, BiConsumer<ObjectViewSortColumn, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<ObjectViewSortColumn, ?>>();
+		private static final Map<String, Function<ObjectViewSortColumn, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectViewSortColumn::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectViewSortColumn, Long>)
-				ObjectViewSortColumn::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectViewSortColumn::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<ObjectViewSortColumn, String>)
-				ObjectViewSortColumn::setUuid);
-		attributeGetterFunctions.put(
-			"objectViewSortColumnId",
-			ObjectViewSortColumn::getObjectViewSortColumnId);
-		attributeSetterBiConsumers.put(
-			"objectViewSortColumnId",
-			(BiConsumer<ObjectViewSortColumn, Long>)
-				ObjectViewSortColumn::setObjectViewSortColumnId);
-		attributeGetterFunctions.put(
-			"companyId", ObjectViewSortColumn::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectViewSortColumn, Long>)
-				ObjectViewSortColumn::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectViewSortColumn::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<ObjectViewSortColumn, Long>)
-				ObjectViewSortColumn::setUserId);
-		attributeGetterFunctions.put(
-			"userName", ObjectViewSortColumn::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectViewSortColumn, String>)
-				ObjectViewSortColumn::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", ObjectViewSortColumn::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectViewSortColumn, Date>)
-				ObjectViewSortColumn::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectViewSortColumn::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectViewSortColumn, Date>)
-				ObjectViewSortColumn::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectViewId", ObjectViewSortColumn::getObjectViewId);
-		attributeSetterBiConsumers.put(
-			"objectViewId",
-			(BiConsumer<ObjectViewSortColumn, Long>)
-				ObjectViewSortColumn::setObjectViewId);
-		attributeGetterFunctions.put(
-			"objectFieldName", ObjectViewSortColumn::getObjectFieldName);
-		attributeSetterBiConsumers.put(
-			"objectFieldName",
-			(BiConsumer<ObjectViewSortColumn, String>)
-				ObjectViewSortColumn::setObjectFieldName);
-		attributeGetterFunctions.put(
-			"priority", ObjectViewSortColumn::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<ObjectViewSortColumn, Integer>)
-				ObjectViewSortColumn::setPriority);
-		attributeGetterFunctions.put(
-			"sortOrder", ObjectViewSortColumn::getSortOrder);
-		attributeSetterBiConsumers.put(
-			"sortOrder",
-			(BiConsumer<ObjectViewSortColumn, String>)
-				ObjectViewSortColumn::setSortOrder);
+		static {
+			Map<String, Function<ObjectViewSortColumn, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ObjectViewSortColumn, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectViewSortColumn::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectViewSortColumn::getUuid);
+			attributeGetterFunctions.put(
+				"objectViewSortColumnId",
+				ObjectViewSortColumn::getObjectViewSortColumnId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectViewSortColumn::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", ObjectViewSortColumn::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ObjectViewSortColumn::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectViewSortColumn::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectViewSortColumn::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectViewId", ObjectViewSortColumn::getObjectViewId);
+			attributeGetterFunctions.put(
+				"objectFieldName", ObjectViewSortColumn::getObjectFieldName);
+			attributeGetterFunctions.put(
+				"priority", ObjectViewSortColumn::getPriority);
+			attributeGetterFunctions.put(
+				"sortOrder", ObjectViewSortColumn::getSortOrder);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<ObjectViewSortColumn, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectViewSortColumn, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<ObjectViewSortColumn, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectViewSortColumn, Long>)
+					ObjectViewSortColumn::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ObjectViewSortColumn, String>)
+					ObjectViewSortColumn::setUuid);
+			attributeSetterBiConsumers.put(
+				"objectViewSortColumnId",
+				(BiConsumer<ObjectViewSortColumn, Long>)
+					ObjectViewSortColumn::setObjectViewSortColumnId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectViewSortColumn, Long>)
+					ObjectViewSortColumn::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectViewSortColumn, Long>)
+					ObjectViewSortColumn::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectViewSortColumn, String>)
+					ObjectViewSortColumn::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectViewSortColumn, Date>)
+					ObjectViewSortColumn::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectViewSortColumn, Date>)
+					ObjectViewSortColumn::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectViewId",
+				(BiConsumer<ObjectViewSortColumn, Long>)
+					ObjectViewSortColumn::setObjectViewId);
+			attributeSetterBiConsumers.put(
+				"objectFieldName",
+				(BiConsumer<ObjectViewSortColumn, String>)
+					ObjectViewSortColumn::setObjectFieldName);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<ObjectViewSortColumn, Integer>)
+					ObjectViewSortColumn::setPriority);
+			attributeSetterBiConsumers.put(
+				"sortOrder",
+				(BiConsumer<ObjectViewSortColumn, String>)
+					ObjectViewSortColumn::setSortOrder);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -922,7 +938,8 @@ public class ObjectViewSortColumnModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<ObjectViewSortColumn, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

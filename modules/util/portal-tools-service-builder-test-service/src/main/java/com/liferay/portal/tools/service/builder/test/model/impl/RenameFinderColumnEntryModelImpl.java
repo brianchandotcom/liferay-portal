@@ -211,55 +211,70 @@ public class RenameFinderColumnEntryModelImpl
 	public Map<String, Function<RenameFinderColumnEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<RenameFinderColumnEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<RenameFinderColumnEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<RenameFinderColumnEntry, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<RenameFinderColumnEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<RenameFinderColumnEntry, Object>>();
-		Map<String, BiConsumer<RenameFinderColumnEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<RenameFinderColumnEntry, ?>>();
+		private static final Map
+			<String, Function<RenameFinderColumnEntry, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"renameFinderColumnEntryId",
-			RenameFinderColumnEntry::getRenameFinderColumnEntryId);
-		attributeSetterBiConsumers.put(
-			"renameFinderColumnEntryId",
-			(BiConsumer<RenameFinderColumnEntry, Long>)
-				RenameFinderColumnEntry::setRenameFinderColumnEntryId);
-		attributeGetterFunctions.put(
-			"groupId", RenameFinderColumnEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<RenameFinderColumnEntry, Long>)
-				RenameFinderColumnEntry::setGroupId);
-		attributeGetterFunctions.put(
-			"columnToRename", RenameFinderColumnEntry::getColumnToRename);
-		attributeSetterBiConsumers.put(
-			"columnToRename",
-			(BiConsumer<RenameFinderColumnEntry, String>)
-				RenameFinderColumnEntry::setColumnToRename);
+		static {
+			Map<String, Function<RenameFinderColumnEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<RenameFinderColumnEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"renameFinderColumnEntryId",
+				RenameFinderColumnEntry::getRenameFinderColumnEntryId);
+			attributeGetterFunctions.put(
+				"groupId", RenameFinderColumnEntry::getGroupId);
+			attributeGetterFunctions.put(
+				"columnToRename", RenameFinderColumnEntry::getColumnToRename);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<RenameFinderColumnEntry, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<RenameFinderColumnEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<RenameFinderColumnEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"renameFinderColumnEntryId",
+				(BiConsumer<RenameFinderColumnEntry, Long>)
+					RenameFinderColumnEntry::setRenameFinderColumnEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<RenameFinderColumnEntry, Long>)
+					RenameFinderColumnEntry::setGroupId);
+			attributeSetterBiConsumers.put(
+				"columnToRename",
+				(BiConsumer<RenameFinderColumnEntry, String>)
+					RenameFinderColumnEntry::setColumnToRename);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -556,7 +571,8 @@ public class RenameFinderColumnEntryModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<RenameFinderColumnEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

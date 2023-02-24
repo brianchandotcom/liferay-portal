@@ -219,72 +219,88 @@ public class DepotAppCustomizationModelImpl
 	public Map<String, Function<DepotAppCustomization, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<DepotAppCustomization, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DepotAppCustomization, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DepotAppCustomization, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<DepotAppCustomization, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<DepotAppCustomization, Object>>();
-		Map<String, BiConsumer<DepotAppCustomization, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<DepotAppCustomization, ?>>();
+		private static final Map
+			<String, Function<DepotAppCustomization, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", DepotAppCustomization::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<DepotAppCustomization, Long>)
-				DepotAppCustomization::setMvccVersion);
-		attributeGetterFunctions.put(
-			"depotAppCustomizationId",
-			DepotAppCustomization::getDepotAppCustomizationId);
-		attributeSetterBiConsumers.put(
-			"depotAppCustomizationId",
-			(BiConsumer<DepotAppCustomization, Long>)
-				DepotAppCustomization::setDepotAppCustomizationId);
-		attributeGetterFunctions.put(
-			"companyId", DepotAppCustomization::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DepotAppCustomization, Long>)
-				DepotAppCustomization::setCompanyId);
-		attributeGetterFunctions.put(
-			"depotEntryId", DepotAppCustomization::getDepotEntryId);
-		attributeSetterBiConsumers.put(
-			"depotEntryId",
-			(BiConsumer<DepotAppCustomization, Long>)
-				DepotAppCustomization::setDepotEntryId);
-		attributeGetterFunctions.put(
-			"enabled", DepotAppCustomization::getEnabled);
-		attributeSetterBiConsumers.put(
-			"enabled",
-			(BiConsumer<DepotAppCustomization, Boolean>)
-				DepotAppCustomization::setEnabled);
-		attributeGetterFunctions.put(
-			"portletId", DepotAppCustomization::getPortletId);
-		attributeSetterBiConsumers.put(
-			"portletId",
-			(BiConsumer<DepotAppCustomization, String>)
-				DepotAppCustomization::setPortletId);
+		static {
+			Map<String, Function<DepotAppCustomization, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<DepotAppCustomization, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", DepotAppCustomization::getMvccVersion);
+			attributeGetterFunctions.put(
+				"depotAppCustomizationId",
+				DepotAppCustomization::getDepotAppCustomizationId);
+			attributeGetterFunctions.put(
+				"companyId", DepotAppCustomization::getCompanyId);
+			attributeGetterFunctions.put(
+				"depotEntryId", DepotAppCustomization::getDepotEntryId);
+			attributeGetterFunctions.put(
+				"enabled", DepotAppCustomization::getEnabled);
+			attributeGetterFunctions.put(
+				"portletId", DepotAppCustomization::getPortletId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<DepotAppCustomization, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<DepotAppCustomization, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<DepotAppCustomization, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<DepotAppCustomization, Long>)
+					DepotAppCustomization::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"depotAppCustomizationId",
+				(BiConsumer<DepotAppCustomization, Long>)
+					DepotAppCustomization::setDepotAppCustomizationId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<DepotAppCustomization, Long>)
+					DepotAppCustomization::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"depotEntryId",
+				(BiConsumer<DepotAppCustomization, Long>)
+					DepotAppCustomization::setDepotEntryId);
+			attributeSetterBiConsumers.put(
+				"enabled",
+				(BiConsumer<DepotAppCustomization, Boolean>)
+					DepotAppCustomization::setEnabled);
+			attributeSetterBiConsumers.put(
+				"portletId",
+				(BiConsumer<DepotAppCustomization, String>)
+					DepotAppCustomization::setPortletId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -665,7 +681,8 @@ public class DepotAppCustomizationModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<DepotAppCustomization, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

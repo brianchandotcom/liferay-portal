@@ -262,121 +262,152 @@ public class BookmarksEntryModelImpl
 	public Map<String, Function<BookmarksEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<BookmarksEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<BookmarksEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<BookmarksEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<BookmarksEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<BookmarksEntry, Object>>();
-		Map<String, BiConsumer<BookmarksEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<BookmarksEntry, ?>>();
+		private static final Map<String, Function<BookmarksEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", BookmarksEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setMvccVersion);
-		attributeGetterFunctions.put("uuid", BookmarksEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<BookmarksEntry, String>)BookmarksEntry::setUuid);
-		attributeGetterFunctions.put("entryId", BookmarksEntry::getEntryId);
-		attributeSetterBiConsumers.put(
-			"entryId",
-			(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setEntryId);
-		attributeGetterFunctions.put("groupId", BookmarksEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setGroupId);
-		attributeGetterFunctions.put("companyId", BookmarksEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", BookmarksEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setUserId);
-		attributeGetterFunctions.put("userName", BookmarksEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<BookmarksEntry, String>)BookmarksEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", BookmarksEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<BookmarksEntry, Date>)BookmarksEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", BookmarksEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<BookmarksEntry, Date>)BookmarksEntry::setModifiedDate);
-		attributeGetterFunctions.put("folderId", BookmarksEntry::getFolderId);
-		attributeSetterBiConsumers.put(
-			"folderId",
-			(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setFolderId);
-		attributeGetterFunctions.put("treePath", BookmarksEntry::getTreePath);
-		attributeSetterBiConsumers.put(
-			"treePath",
-			(BiConsumer<BookmarksEntry, String>)BookmarksEntry::setTreePath);
-		attributeGetterFunctions.put("name", BookmarksEntry::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<BookmarksEntry, String>)BookmarksEntry::setName);
-		attributeGetterFunctions.put("url", BookmarksEntry::getUrl);
-		attributeSetterBiConsumers.put(
-			"url", (BiConsumer<BookmarksEntry, String>)BookmarksEntry::setUrl);
-		attributeGetterFunctions.put(
-			"description", BookmarksEntry::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<BookmarksEntry, String>)BookmarksEntry::setDescription);
-		attributeGetterFunctions.put("priority", BookmarksEntry::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<BookmarksEntry, Integer>)BookmarksEntry::setPriority);
-		attributeGetterFunctions.put(
-			"lastPublishDate", BookmarksEntry::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<BookmarksEntry, Date>)
-				BookmarksEntry::setLastPublishDate);
-		attributeGetterFunctions.put("status", BookmarksEntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<BookmarksEntry, Integer>)BookmarksEntry::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", BookmarksEntry::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<BookmarksEntry, Long>)
-				BookmarksEntry::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", BookmarksEntry::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<BookmarksEntry, String>)
-				BookmarksEntry::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", BookmarksEntry::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<BookmarksEntry, Date>)BookmarksEntry::setStatusDate);
+		static {
+			Map<String, Function<BookmarksEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<BookmarksEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", BookmarksEntry::getMvccVersion);
+			attributeGetterFunctions.put("uuid", BookmarksEntry::getUuid);
+			attributeGetterFunctions.put("entryId", BookmarksEntry::getEntryId);
+			attributeGetterFunctions.put("groupId", BookmarksEntry::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", BookmarksEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", BookmarksEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", BookmarksEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", BookmarksEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", BookmarksEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"folderId", BookmarksEntry::getFolderId);
+			attributeGetterFunctions.put(
+				"treePath", BookmarksEntry::getTreePath);
+			attributeGetterFunctions.put("name", BookmarksEntry::getName);
+			attributeGetterFunctions.put("url", BookmarksEntry::getUrl);
+			attributeGetterFunctions.put(
+				"description", BookmarksEntry::getDescription);
+			attributeGetterFunctions.put(
+				"priority", BookmarksEntry::getPriority);
+			attributeGetterFunctions.put(
+				"lastPublishDate", BookmarksEntry::getLastPublishDate);
+			attributeGetterFunctions.put("status", BookmarksEntry::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", BookmarksEntry::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", BookmarksEntry::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", BookmarksEntry::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<BookmarksEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<BookmarksEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<BookmarksEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<BookmarksEntry, Long>)
+					BookmarksEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<BookmarksEntry, String>)BookmarksEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"entryId",
+				(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<BookmarksEntry, String>)
+					BookmarksEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<BookmarksEntry, Date>)
+					BookmarksEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<BookmarksEntry, Date>)
+					BookmarksEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"folderId",
+				(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setFolderId);
+			attributeSetterBiConsumers.put(
+				"treePath",
+				(BiConsumer<BookmarksEntry, String>)
+					BookmarksEntry::setTreePath);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<BookmarksEntry, String>)BookmarksEntry::setName);
+			attributeSetterBiConsumers.put(
+				"url",
+				(BiConsumer<BookmarksEntry, String>)BookmarksEntry::setUrl);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<BookmarksEntry, String>)
+					BookmarksEntry::setDescription);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<BookmarksEntry, Integer>)
+					BookmarksEntry::setPriority);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<BookmarksEntry, Date>)
+					BookmarksEntry::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<BookmarksEntry, Integer>)BookmarksEntry::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<BookmarksEntry, Long>)
+					BookmarksEntry::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<BookmarksEntry, String>)
+					BookmarksEntry::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<BookmarksEntry, Date>)
+					BookmarksEntry::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1322,7 +1353,8 @@ public class BookmarksEntryModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<BookmarksEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

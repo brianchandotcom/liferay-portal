@@ -244,73 +244,93 @@ public class SAPEntryModelImpl
 	public Map<String, Function<SAPEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<SAPEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SAPEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SAPEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<SAPEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SAPEntry, Object>>();
-		Map<String, BiConsumer<SAPEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SAPEntry, ?>>();
+		private static final Map<String, Function<SAPEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("uuid", SAPEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<SAPEntry, String>)SAPEntry::setUuid);
-		attributeGetterFunctions.put("sapEntryId", SAPEntry::getSapEntryId);
-		attributeSetterBiConsumers.put(
-			"sapEntryId", (BiConsumer<SAPEntry, Long>)SAPEntry::setSapEntryId);
-		attributeGetterFunctions.put("companyId", SAPEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<SAPEntry, Long>)SAPEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", SAPEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<SAPEntry, Long>)SAPEntry::setUserId);
-		attributeGetterFunctions.put("userName", SAPEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<SAPEntry, String>)SAPEntry::setUserName);
-		attributeGetterFunctions.put("createDate", SAPEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<SAPEntry, Date>)SAPEntry::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", SAPEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<SAPEntry, Date>)SAPEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"allowedServiceSignatures", SAPEntry::getAllowedServiceSignatures);
-		attributeSetterBiConsumers.put(
-			"allowedServiceSignatures",
-			(BiConsumer<SAPEntry, String>)
-				SAPEntry::setAllowedServiceSignatures);
-		attributeGetterFunctions.put(
-			"defaultSAPEntry", SAPEntry::getDefaultSAPEntry);
-		attributeSetterBiConsumers.put(
-			"defaultSAPEntry",
-			(BiConsumer<SAPEntry, Boolean>)SAPEntry::setDefaultSAPEntry);
-		attributeGetterFunctions.put("enabled", SAPEntry::getEnabled);
-		attributeSetterBiConsumers.put(
-			"enabled", (BiConsumer<SAPEntry, Boolean>)SAPEntry::setEnabled);
-		attributeGetterFunctions.put("name", SAPEntry::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<SAPEntry, String>)SAPEntry::setName);
-		attributeGetterFunctions.put("title", SAPEntry::getTitle);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<SAPEntry, String>)SAPEntry::setTitle);
+		static {
+			Map<String, Function<SAPEntry, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<SAPEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put("uuid", SAPEntry::getUuid);
+			attributeGetterFunctions.put("sapEntryId", SAPEntry::getSapEntryId);
+			attributeGetterFunctions.put("companyId", SAPEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", SAPEntry::getUserId);
+			attributeGetterFunctions.put("userName", SAPEntry::getUserName);
+			attributeGetterFunctions.put("createDate", SAPEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", SAPEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"allowedServiceSignatures",
+				SAPEntry::getAllowedServiceSignatures);
+			attributeGetterFunctions.put(
+				"defaultSAPEntry", SAPEntry::getDefaultSAPEntry);
+			attributeGetterFunctions.put("enabled", SAPEntry::getEnabled);
+			attributeGetterFunctions.put("name", SAPEntry::getName);
+			attributeGetterFunctions.put("title", SAPEntry::getTitle);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<SAPEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<SAPEntry, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<SAPEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<SAPEntry, String>)SAPEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"sapEntryId",
+				(BiConsumer<SAPEntry, Long>)SAPEntry::setSapEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<SAPEntry, Long>)SAPEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<SAPEntry, Long>)SAPEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<SAPEntry, String>)SAPEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<SAPEntry, Date>)SAPEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<SAPEntry, Date>)SAPEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"allowedServiceSignatures",
+				(BiConsumer<SAPEntry, String>)
+					SAPEntry::setAllowedServiceSignatures);
+			attributeSetterBiConsumers.put(
+				"defaultSAPEntry",
+				(BiConsumer<SAPEntry, Boolean>)SAPEntry::setDefaultSAPEntry);
+			attributeSetterBiConsumers.put(
+				"enabled", (BiConsumer<SAPEntry, Boolean>)SAPEntry::setEnabled);
+			attributeSetterBiConsumers.put(
+				"name", (BiConsumer<SAPEntry, String>)SAPEntry::setName);
+			attributeSetterBiConsumers.put(
+				"title", (BiConsumer<SAPEntry, String>)SAPEntry::setTitle);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1077,8 +1097,9 @@ public class SAPEntryModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<SAPEntry, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<SAPEntry, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -295,158 +295,193 @@ public class FragmentEntryModelImpl
 	public Map<String, Function<FragmentEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<FragmentEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<FragmentEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<FragmentEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<FragmentEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<FragmentEntry, Object>>();
-		Map<String, BiConsumer<FragmentEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<FragmentEntry, ?>>();
+		private static final Map<String, Function<FragmentEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", FragmentEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<FragmentEntry, Long>)FragmentEntry::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", FragmentEntry::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<FragmentEntry, Long>)FragmentEntry::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", FragmentEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<FragmentEntry, String>)FragmentEntry::setUuid);
-		attributeGetterFunctions.put("headId", FragmentEntry::getHeadId);
-		attributeSetterBiConsumers.put(
-			"headId",
-			(BiConsumer<FragmentEntry, Long>)FragmentEntry::setHeadId);
-		attributeGetterFunctions.put(
-			"fragmentEntryId", FragmentEntry::getFragmentEntryId);
-		attributeSetterBiConsumers.put(
-			"fragmentEntryId",
-			(BiConsumer<FragmentEntry, Long>)FragmentEntry::setFragmentEntryId);
-		attributeGetterFunctions.put("groupId", FragmentEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<FragmentEntry, Long>)FragmentEntry::setGroupId);
-		attributeGetterFunctions.put("companyId", FragmentEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<FragmentEntry, Long>)FragmentEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", FragmentEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<FragmentEntry, Long>)FragmentEntry::setUserId);
-		attributeGetterFunctions.put("userName", FragmentEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<FragmentEntry, String>)FragmentEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", FragmentEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<FragmentEntry, Date>)FragmentEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", FragmentEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<FragmentEntry, Date>)FragmentEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"fragmentCollectionId", FragmentEntry::getFragmentCollectionId);
-		attributeSetterBiConsumers.put(
-			"fragmentCollectionId",
-			(BiConsumer<FragmentEntry, Long>)
-				FragmentEntry::setFragmentCollectionId);
-		attributeGetterFunctions.put(
-			"fragmentEntryKey", FragmentEntry::getFragmentEntryKey);
-		attributeSetterBiConsumers.put(
-			"fragmentEntryKey",
-			(BiConsumer<FragmentEntry, String>)
-				FragmentEntry::setFragmentEntryKey);
-		attributeGetterFunctions.put("name", FragmentEntry::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<FragmentEntry, String>)FragmentEntry::setName);
-		attributeGetterFunctions.put("css", FragmentEntry::getCss);
-		attributeSetterBiConsumers.put(
-			"css", (BiConsumer<FragmentEntry, String>)FragmentEntry::setCss);
-		attributeGetterFunctions.put("html", FragmentEntry::getHtml);
-		attributeSetterBiConsumers.put(
-			"html", (BiConsumer<FragmentEntry, String>)FragmentEntry::setHtml);
-		attributeGetterFunctions.put("js", FragmentEntry::getJs);
-		attributeSetterBiConsumers.put(
-			"js", (BiConsumer<FragmentEntry, String>)FragmentEntry::setJs);
-		attributeGetterFunctions.put("cacheable", FragmentEntry::getCacheable);
-		attributeSetterBiConsumers.put(
-			"cacheable",
-			(BiConsumer<FragmentEntry, Boolean>)FragmentEntry::setCacheable);
-		attributeGetterFunctions.put(
-			"configuration", FragmentEntry::getConfiguration);
-		attributeSetterBiConsumers.put(
-			"configuration",
-			(BiConsumer<FragmentEntry, String>)FragmentEntry::setConfiguration);
-		attributeGetterFunctions.put("icon", FragmentEntry::getIcon);
-		attributeSetterBiConsumers.put(
-			"icon", (BiConsumer<FragmentEntry, String>)FragmentEntry::setIcon);
-		attributeGetterFunctions.put(
-			"previewFileEntryId", FragmentEntry::getPreviewFileEntryId);
-		attributeSetterBiConsumers.put(
-			"previewFileEntryId",
-			(BiConsumer<FragmentEntry, Long>)
-				FragmentEntry::setPreviewFileEntryId);
-		attributeGetterFunctions.put("readOnly", FragmentEntry::getReadOnly);
-		attributeSetterBiConsumers.put(
-			"readOnly",
-			(BiConsumer<FragmentEntry, Boolean>)FragmentEntry::setReadOnly);
-		attributeGetterFunctions.put("type", FragmentEntry::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<FragmentEntry, Integer>)FragmentEntry::setType);
-		attributeGetterFunctions.put(
-			"typeOptions", FragmentEntry::getTypeOptions);
-		attributeSetterBiConsumers.put(
-			"typeOptions",
-			(BiConsumer<FragmentEntry, String>)FragmentEntry::setTypeOptions);
-		attributeGetterFunctions.put(
-			"lastPublishDate", FragmentEntry::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<FragmentEntry, Date>)FragmentEntry::setLastPublishDate);
-		attributeGetterFunctions.put("status", FragmentEntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<FragmentEntry, Integer>)FragmentEntry::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", FragmentEntry::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<FragmentEntry, Long>)FragmentEntry::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", FragmentEntry::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<FragmentEntry, String>)
-				FragmentEntry::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", FragmentEntry::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<FragmentEntry, Date>)FragmentEntry::setStatusDate);
+		static {
+			Map<String, Function<FragmentEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<FragmentEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", FragmentEntry::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", FragmentEntry::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", FragmentEntry::getUuid);
+			attributeGetterFunctions.put("headId", FragmentEntry::getHeadId);
+			attributeGetterFunctions.put(
+				"fragmentEntryId", FragmentEntry::getFragmentEntryId);
+			attributeGetterFunctions.put("groupId", FragmentEntry::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", FragmentEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", FragmentEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", FragmentEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", FragmentEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", FragmentEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"fragmentCollectionId", FragmentEntry::getFragmentCollectionId);
+			attributeGetterFunctions.put(
+				"fragmentEntryKey", FragmentEntry::getFragmentEntryKey);
+			attributeGetterFunctions.put("name", FragmentEntry::getName);
+			attributeGetterFunctions.put("css", FragmentEntry::getCss);
+			attributeGetterFunctions.put("html", FragmentEntry::getHtml);
+			attributeGetterFunctions.put("js", FragmentEntry::getJs);
+			attributeGetterFunctions.put(
+				"cacheable", FragmentEntry::getCacheable);
+			attributeGetterFunctions.put(
+				"configuration", FragmentEntry::getConfiguration);
+			attributeGetterFunctions.put("icon", FragmentEntry::getIcon);
+			attributeGetterFunctions.put(
+				"previewFileEntryId", FragmentEntry::getPreviewFileEntryId);
+			attributeGetterFunctions.put(
+				"readOnly", FragmentEntry::getReadOnly);
+			attributeGetterFunctions.put("type", FragmentEntry::getType);
+			attributeGetterFunctions.put(
+				"typeOptions", FragmentEntry::getTypeOptions);
+			attributeGetterFunctions.put(
+				"lastPublishDate", FragmentEntry::getLastPublishDate);
+			attributeGetterFunctions.put("status", FragmentEntry::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", FragmentEntry::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", FragmentEntry::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", FragmentEntry::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<FragmentEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<FragmentEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<FragmentEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<FragmentEntry, Long>)FragmentEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<FragmentEntry, Long>)
+					FragmentEntry::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<FragmentEntry, String>)FragmentEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"headId",
+				(BiConsumer<FragmentEntry, Long>)FragmentEntry::setHeadId);
+			attributeSetterBiConsumers.put(
+				"fragmentEntryId",
+				(BiConsumer<FragmentEntry, Long>)
+					FragmentEntry::setFragmentEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<FragmentEntry, Long>)FragmentEntry::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<FragmentEntry, Long>)FragmentEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<FragmentEntry, Long>)FragmentEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<FragmentEntry, String>)FragmentEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<FragmentEntry, Date>)FragmentEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<FragmentEntry, Date>)
+					FragmentEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"fragmentCollectionId",
+				(BiConsumer<FragmentEntry, Long>)
+					FragmentEntry::setFragmentCollectionId);
+			attributeSetterBiConsumers.put(
+				"fragmentEntryKey",
+				(BiConsumer<FragmentEntry, String>)
+					FragmentEntry::setFragmentEntryKey);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<FragmentEntry, String>)FragmentEntry::setName);
+			attributeSetterBiConsumers.put(
+				"css",
+				(BiConsumer<FragmentEntry, String>)FragmentEntry::setCss);
+			attributeSetterBiConsumers.put(
+				"html",
+				(BiConsumer<FragmentEntry, String>)FragmentEntry::setHtml);
+			attributeSetterBiConsumers.put(
+				"js", (BiConsumer<FragmentEntry, String>)FragmentEntry::setJs);
+			attributeSetterBiConsumers.put(
+				"cacheable",
+				(BiConsumer<FragmentEntry, Boolean>)
+					FragmentEntry::setCacheable);
+			attributeSetterBiConsumers.put(
+				"configuration",
+				(BiConsumer<FragmentEntry, String>)
+					FragmentEntry::setConfiguration);
+			attributeSetterBiConsumers.put(
+				"icon",
+				(BiConsumer<FragmentEntry, String>)FragmentEntry::setIcon);
+			attributeSetterBiConsumers.put(
+				"previewFileEntryId",
+				(BiConsumer<FragmentEntry, Long>)
+					FragmentEntry::setPreviewFileEntryId);
+			attributeSetterBiConsumers.put(
+				"readOnly",
+				(BiConsumer<FragmentEntry, Boolean>)FragmentEntry::setReadOnly);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<FragmentEntry, Integer>)FragmentEntry::setType);
+			attributeSetterBiConsumers.put(
+				"typeOptions",
+				(BiConsumer<FragmentEntry, String>)
+					FragmentEntry::setTypeOptions);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<FragmentEntry, Date>)
+					FragmentEntry::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<FragmentEntry, Integer>)FragmentEntry::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<FragmentEntry, Long>)
+					FragmentEntry::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<FragmentEntry, String>)
+					FragmentEntry::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<FragmentEntry, Date>)FragmentEntry::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -1706,7 +1741,8 @@ public class FragmentEntryModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<FragmentEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

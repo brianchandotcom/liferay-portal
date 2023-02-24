@@ -218,70 +218,90 @@ public class ReleaseModelImpl
 	public Map<String, Function<Release, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<Release, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Release, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Release, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<Release, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Release, Object>>();
-		Map<String, BiConsumer<Release, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Release, ?>>();
+		private static final Map<String, Function<Release, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", Release::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion", (BiConsumer<Release, Long>)Release::setMvccVersion);
-		attributeGetterFunctions.put("releaseId", Release::getReleaseId);
-		attributeSetterBiConsumers.put(
-			"releaseId", (BiConsumer<Release, Long>)Release::setReleaseId);
-		attributeGetterFunctions.put("createDate", Release::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<Release, Date>)Release::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", Release::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<Release, Date>)Release::setModifiedDate);
-		attributeGetterFunctions.put(
-			"servletContextName", Release::getServletContextName);
-		attributeSetterBiConsumers.put(
-			"servletContextName",
-			(BiConsumer<Release, String>)Release::setServletContextName);
-		attributeGetterFunctions.put(
-			"schemaVersion", Release::getSchemaVersion);
-		attributeSetterBiConsumers.put(
-			"schemaVersion",
-			(BiConsumer<Release, String>)Release::setSchemaVersion);
-		attributeGetterFunctions.put("buildNumber", Release::getBuildNumber);
-		attributeSetterBiConsumers.put(
-			"buildNumber",
-			(BiConsumer<Release, Integer>)Release::setBuildNumber);
-		attributeGetterFunctions.put("buildDate", Release::getBuildDate);
-		attributeSetterBiConsumers.put(
-			"buildDate", (BiConsumer<Release, Date>)Release::setBuildDate);
-		attributeGetterFunctions.put("verified", Release::getVerified);
-		attributeSetterBiConsumers.put(
-			"verified", (BiConsumer<Release, Boolean>)Release::setVerified);
-		attributeGetterFunctions.put("state", Release::getState);
-		attributeSetterBiConsumers.put(
-			"state", (BiConsumer<Release, Integer>)Release::setState);
-		attributeGetterFunctions.put("testString", Release::getTestString);
-		attributeSetterBiConsumers.put(
-			"testString", (BiConsumer<Release, String>)Release::setTestString);
+		static {
+			Map<String, Function<Release, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<Release, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", Release::getMvccVersion);
+			attributeGetterFunctions.put("releaseId", Release::getReleaseId);
+			attributeGetterFunctions.put("createDate", Release::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", Release::getModifiedDate);
+			attributeGetterFunctions.put(
+				"servletContextName", Release::getServletContextName);
+			attributeGetterFunctions.put(
+				"schemaVersion", Release::getSchemaVersion);
+			attributeGetterFunctions.put(
+				"buildNumber", Release::getBuildNumber);
+			attributeGetterFunctions.put("buildDate", Release::getBuildDate);
+			attributeGetterFunctions.put("verified", Release::getVerified);
+			attributeGetterFunctions.put("state", Release::getState);
+			attributeGetterFunctions.put("testString", Release::getTestString);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<Release, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<Release, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<Release, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<Release, Long>)Release::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"releaseId", (BiConsumer<Release, Long>)Release::setReleaseId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<Release, Date>)Release::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<Release, Date>)Release::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"servletContextName",
+				(BiConsumer<Release, String>)Release::setServletContextName);
+			attributeSetterBiConsumers.put(
+				"schemaVersion",
+				(BiConsumer<Release, String>)Release::setSchemaVersion);
+			attributeSetterBiConsumers.put(
+				"buildNumber",
+				(BiConsumer<Release, Integer>)Release::setBuildNumber);
+			attributeSetterBiConsumers.put(
+				"buildDate", (BiConsumer<Release, Date>)Release::setBuildDate);
+			attributeSetterBiConsumers.put(
+				"verified", (BiConsumer<Release, Boolean>)Release::setVerified);
+			attributeSetterBiConsumers.put(
+				"state", (BiConsumer<Release, Integer>)Release::setState);
+			attributeSetterBiConsumers.put(
+				"testString",
+				(BiConsumer<Release, String>)Release::setTestString);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -788,8 +808,9 @@ public class ReleaseModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<Release, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<Release, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

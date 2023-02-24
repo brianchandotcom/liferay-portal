@@ -224,73 +224,93 @@ public class AkismetEntryModelImpl
 	public Map<String, Function<AkismetEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<AkismetEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<AkismetEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<AkismetEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<AkismetEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<AkismetEntry, Object>>();
-		Map<String, BiConsumer<AkismetEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<AkismetEntry, ?>>();
+		private static final Map<String, Function<AkismetEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"akismetEntryId", AkismetEntry::getAkismetEntryId);
-		attributeSetterBiConsumers.put(
-			"akismetEntryId",
-			(BiConsumer<AkismetEntry, Long>)AkismetEntry::setAkismetEntryId);
-		attributeGetterFunctions.put(
-			"modifiedDate", AkismetEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<AkismetEntry, Date>)AkismetEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId", AkismetEntry::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<AkismetEntry, Long>)AkismetEntry::setClassNameId);
-		attributeGetterFunctions.put("classPK", AkismetEntry::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<AkismetEntry, Long>)AkismetEntry::setClassPK);
-		attributeGetterFunctions.put("type", AkismetEntry::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<AkismetEntry, String>)AkismetEntry::setType);
-		attributeGetterFunctions.put("permalink", AkismetEntry::getPermalink);
-		attributeSetterBiConsumers.put(
-			"permalink",
-			(BiConsumer<AkismetEntry, String>)AkismetEntry::setPermalink);
-		attributeGetterFunctions.put("referrer", AkismetEntry::getReferrer);
-		attributeSetterBiConsumers.put(
-			"referrer",
-			(BiConsumer<AkismetEntry, String>)AkismetEntry::setReferrer);
-		attributeGetterFunctions.put("userAgent", AkismetEntry::getUserAgent);
-		attributeSetterBiConsumers.put(
-			"userAgent",
-			(BiConsumer<AkismetEntry, String>)AkismetEntry::setUserAgent);
-		attributeGetterFunctions.put("userIP", AkismetEntry::getUserIP);
-		attributeSetterBiConsumers.put(
-			"userIP",
-			(BiConsumer<AkismetEntry, String>)AkismetEntry::setUserIP);
-		attributeGetterFunctions.put("userURL", AkismetEntry::getUserURL);
-		attributeSetterBiConsumers.put(
-			"userURL",
-			(BiConsumer<AkismetEntry, String>)AkismetEntry::setUserURL);
+		static {
+			Map<String, Function<AkismetEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<AkismetEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"akismetEntryId", AkismetEntry::getAkismetEntryId);
+			attributeGetterFunctions.put(
+				"modifiedDate", AkismetEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId", AkismetEntry::getClassNameId);
+			attributeGetterFunctions.put("classPK", AkismetEntry::getClassPK);
+			attributeGetterFunctions.put("type", AkismetEntry::getType);
+			attributeGetterFunctions.put(
+				"permalink", AkismetEntry::getPermalink);
+			attributeGetterFunctions.put("referrer", AkismetEntry::getReferrer);
+			attributeGetterFunctions.put(
+				"userAgent", AkismetEntry::getUserAgent);
+			attributeGetterFunctions.put("userIP", AkismetEntry::getUserIP);
+			attributeGetterFunctions.put("userURL", AkismetEntry::getUserURL);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<AkismetEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<AkismetEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<AkismetEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"akismetEntryId",
+				(BiConsumer<AkismetEntry, Long>)
+					AkismetEntry::setAkismetEntryId);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<AkismetEntry, Date>)AkismetEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<AkismetEntry, Long>)AkismetEntry::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<AkismetEntry, Long>)AkismetEntry::setClassPK);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<AkismetEntry, String>)AkismetEntry::setType);
+			attributeSetterBiConsumers.put(
+				"permalink",
+				(BiConsumer<AkismetEntry, String>)AkismetEntry::setPermalink);
+			attributeSetterBiConsumers.put(
+				"referrer",
+				(BiConsumer<AkismetEntry, String>)AkismetEntry::setReferrer);
+			attributeSetterBiConsumers.put(
+				"userAgent",
+				(BiConsumer<AkismetEntry, String>)AkismetEntry::setUserAgent);
+			attributeSetterBiConsumers.put(
+				"userIP",
+				(BiConsumer<AkismetEntry, String>)AkismetEntry::setUserIP);
+			attributeSetterBiConsumers.put(
+				"userURL",
+				(BiConsumer<AkismetEntry, String>)AkismetEntry::setUserURL);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -829,8 +849,9 @@ public class AkismetEntryModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<AkismetEntry, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<AkismetEntry, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

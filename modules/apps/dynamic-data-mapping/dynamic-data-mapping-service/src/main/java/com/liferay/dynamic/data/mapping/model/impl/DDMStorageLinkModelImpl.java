@@ -234,75 +234,97 @@ public class DDMStorageLinkModelImpl
 	public Map<String, Function<DDMStorageLink, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<DDMStorageLink, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DDMStorageLink, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DDMStorageLink, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<DDMStorageLink, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<DDMStorageLink, Object>>();
-		Map<String, BiConsumer<DDMStorageLink, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<DDMStorageLink, ?>>();
+		private static final Map<String, Function<DDMStorageLink, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", DDMStorageLink::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<DDMStorageLink, Long>)DDMStorageLink::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", DDMStorageLink::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<DDMStorageLink, Long>)
-				DDMStorageLink::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", DDMStorageLink::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<DDMStorageLink, String>)DDMStorageLink::setUuid);
-		attributeGetterFunctions.put(
-			"storageLinkId", DDMStorageLink::getStorageLinkId);
-		attributeSetterBiConsumers.put(
-			"storageLinkId",
-			(BiConsumer<DDMStorageLink, Long>)DDMStorageLink::setStorageLinkId);
-		attributeGetterFunctions.put("companyId", DDMStorageLink::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DDMStorageLink, Long>)DDMStorageLink::setCompanyId);
-		attributeGetterFunctions.put(
-			"classNameId", DDMStorageLink::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<DDMStorageLink, Long>)DDMStorageLink::setClassNameId);
-		attributeGetterFunctions.put("classPK", DDMStorageLink::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<DDMStorageLink, Long>)DDMStorageLink::setClassPK);
-		attributeGetterFunctions.put(
-			"structureId", DDMStorageLink::getStructureId);
-		attributeSetterBiConsumers.put(
-			"structureId",
-			(BiConsumer<DDMStorageLink, Long>)DDMStorageLink::setStructureId);
-		attributeGetterFunctions.put(
-			"structureVersionId", DDMStorageLink::getStructureVersionId);
-		attributeSetterBiConsumers.put(
-			"structureVersionId",
-			(BiConsumer<DDMStorageLink, Long>)
-				DDMStorageLink::setStructureVersionId);
+		static {
+			Map<String, Function<DDMStorageLink, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<DDMStorageLink, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", DDMStorageLink::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", DDMStorageLink::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", DDMStorageLink::getUuid);
+			attributeGetterFunctions.put(
+				"storageLinkId", DDMStorageLink::getStorageLinkId);
+			attributeGetterFunctions.put(
+				"companyId", DDMStorageLink::getCompanyId);
+			attributeGetterFunctions.put(
+				"classNameId", DDMStorageLink::getClassNameId);
+			attributeGetterFunctions.put("classPK", DDMStorageLink::getClassPK);
+			attributeGetterFunctions.put(
+				"structureId", DDMStorageLink::getStructureId);
+			attributeGetterFunctions.put(
+				"structureVersionId", DDMStorageLink::getStructureVersionId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<DDMStorageLink, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<DDMStorageLink, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<DDMStorageLink, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<DDMStorageLink, Long>)
+					DDMStorageLink::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<DDMStorageLink, Long>)
+					DDMStorageLink::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<DDMStorageLink, String>)DDMStorageLink::setUuid);
+			attributeSetterBiConsumers.put(
+				"storageLinkId",
+				(BiConsumer<DDMStorageLink, Long>)
+					DDMStorageLink::setStorageLinkId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<DDMStorageLink, Long>)DDMStorageLink::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<DDMStorageLink, Long>)
+					DDMStorageLink::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<DDMStorageLink, Long>)DDMStorageLink::setClassPK);
+			attributeSetterBiConsumers.put(
+				"structureId",
+				(BiConsumer<DDMStorageLink, Long>)
+					DDMStorageLink::setStructureId);
+			attributeSetterBiConsumers.put(
+				"structureVersionId",
+				(BiConsumer<DDMStorageLink, Long>)
+					DDMStorageLink::setStructureVersionId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -772,7 +794,8 @@ public class DDMStorageLinkModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<DDMStorageLink, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

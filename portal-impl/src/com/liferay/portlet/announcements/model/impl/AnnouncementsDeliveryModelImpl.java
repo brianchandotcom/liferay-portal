@@ -234,80 +234,98 @@ public class AnnouncementsDeliveryModelImpl
 	public Map<String, Function<AnnouncementsDelivery, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<AnnouncementsDelivery, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<AnnouncementsDelivery, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<AnnouncementsDelivery, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<AnnouncementsDelivery, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<AnnouncementsDelivery, Object>>();
-		Map<String, BiConsumer<AnnouncementsDelivery, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<AnnouncementsDelivery, ?>>();
+		private static final Map
+			<String, Function<AnnouncementsDelivery, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", AnnouncementsDelivery::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<AnnouncementsDelivery, Long>)
-				AnnouncementsDelivery::setMvccVersion);
-		attributeGetterFunctions.put(
-			"deliveryId", AnnouncementsDelivery::getDeliveryId);
-		attributeSetterBiConsumers.put(
-			"deliveryId",
-			(BiConsumer<AnnouncementsDelivery, Long>)
-				AnnouncementsDelivery::setDeliveryId);
-		attributeGetterFunctions.put(
-			"companyId", AnnouncementsDelivery::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<AnnouncementsDelivery, Long>)
-				AnnouncementsDelivery::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", AnnouncementsDelivery::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<AnnouncementsDelivery, Long>)
-				AnnouncementsDelivery::setUserId);
-		attributeGetterFunctions.put("type", AnnouncementsDelivery::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<AnnouncementsDelivery, String>)
-				AnnouncementsDelivery::setType);
-		attributeGetterFunctions.put("email", AnnouncementsDelivery::getEmail);
-		attributeSetterBiConsumers.put(
-			"email",
-			(BiConsumer<AnnouncementsDelivery, Boolean>)
-				AnnouncementsDelivery::setEmail);
-		attributeGetterFunctions.put("sms", AnnouncementsDelivery::getSms);
-		attributeSetterBiConsumers.put(
-			"sms",
-			(BiConsumer<AnnouncementsDelivery, Boolean>)
-				AnnouncementsDelivery::setSms);
-		attributeGetterFunctions.put(
-			"website", AnnouncementsDelivery::getWebsite);
-		attributeSetterBiConsumers.put(
-			"website",
-			(BiConsumer<AnnouncementsDelivery, Boolean>)
-				AnnouncementsDelivery::setWebsite);
+		static {
+			Map<String, Function<AnnouncementsDelivery, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<AnnouncementsDelivery, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", AnnouncementsDelivery::getMvccVersion);
+			attributeGetterFunctions.put(
+				"deliveryId", AnnouncementsDelivery::getDeliveryId);
+			attributeGetterFunctions.put(
+				"companyId", AnnouncementsDelivery::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", AnnouncementsDelivery::getUserId);
+			attributeGetterFunctions.put(
+				"type", AnnouncementsDelivery::getType);
+			attributeGetterFunctions.put(
+				"email", AnnouncementsDelivery::getEmail);
+			attributeGetterFunctions.put("sms", AnnouncementsDelivery::getSms);
+			attributeGetterFunctions.put(
+				"website", AnnouncementsDelivery::getWebsite);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<AnnouncementsDelivery, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<AnnouncementsDelivery, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<AnnouncementsDelivery, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<AnnouncementsDelivery, Long>)
+					AnnouncementsDelivery::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"deliveryId",
+				(BiConsumer<AnnouncementsDelivery, Long>)
+					AnnouncementsDelivery::setDeliveryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<AnnouncementsDelivery, Long>)
+					AnnouncementsDelivery::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<AnnouncementsDelivery, Long>)
+					AnnouncementsDelivery::setUserId);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<AnnouncementsDelivery, String>)
+					AnnouncementsDelivery::setType);
+			attributeSetterBiConsumers.put(
+				"email",
+				(BiConsumer<AnnouncementsDelivery, Boolean>)
+					AnnouncementsDelivery::setEmail);
+			attributeSetterBiConsumers.put(
+				"sms",
+				(BiConsumer<AnnouncementsDelivery, Boolean>)
+					AnnouncementsDelivery::setSms);
+			attributeSetterBiConsumers.put(
+				"website",
+				(BiConsumer<AnnouncementsDelivery, Boolean>)
+					AnnouncementsDelivery::setWebsite);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -764,7 +782,8 @@ public class AnnouncementsDeliveryModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<AnnouncementsDelivery, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

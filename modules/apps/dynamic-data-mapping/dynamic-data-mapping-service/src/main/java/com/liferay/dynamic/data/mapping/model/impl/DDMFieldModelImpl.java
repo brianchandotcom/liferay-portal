@@ -234,76 +234,97 @@ public class DDMFieldModelImpl
 	public Map<String, Function<DDMField, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<DDMField, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DDMField, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DDMField, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<DDMField, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<DDMField, Object>>();
-		Map<String, BiConsumer<DDMField, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<DDMField, ?>>();
+		private static final Map<String, Function<DDMField, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", DDMField::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<DDMField, Long>)DDMField::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", DDMField::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<DDMField, Long>)DDMField::setCtCollectionId);
-		attributeGetterFunctions.put("fieldId", DDMField::getFieldId);
-		attributeSetterBiConsumers.put(
-			"fieldId", (BiConsumer<DDMField, Long>)DDMField::setFieldId);
-		attributeGetterFunctions.put("companyId", DDMField::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<DDMField, Long>)DDMField::setCompanyId);
-		attributeGetterFunctions.put(
-			"parentFieldId", DDMField::getParentFieldId);
-		attributeSetterBiConsumers.put(
-			"parentFieldId",
-			(BiConsumer<DDMField, Long>)DDMField::setParentFieldId);
-		attributeGetterFunctions.put("storageId", DDMField::getStorageId);
-		attributeSetterBiConsumers.put(
-			"storageId", (BiConsumer<DDMField, Long>)DDMField::setStorageId);
-		attributeGetterFunctions.put(
-			"structureVersionId", DDMField::getStructureVersionId);
-		attributeSetterBiConsumers.put(
-			"structureVersionId",
-			(BiConsumer<DDMField, Long>)DDMField::setStructureVersionId);
-		attributeGetterFunctions.put("fieldName", DDMField::getFieldName);
-		attributeSetterBiConsumers.put(
-			"fieldName", (BiConsumer<DDMField, String>)DDMField::setFieldName);
-		attributeGetterFunctions.put("fieldType", DDMField::getFieldType);
-		attributeSetterBiConsumers.put(
-			"fieldType", (BiConsumer<DDMField, String>)DDMField::setFieldType);
-		attributeGetterFunctions.put("instanceId", DDMField::getInstanceId);
-		attributeSetterBiConsumers.put(
-			"instanceId",
-			(BiConsumer<DDMField, String>)DDMField::setInstanceId);
-		attributeGetterFunctions.put("localizable", DDMField::getLocalizable);
-		attributeSetterBiConsumers.put(
-			"localizable",
-			(BiConsumer<DDMField, Boolean>)DDMField::setLocalizable);
-		attributeGetterFunctions.put("priority", DDMField::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority", (BiConsumer<DDMField, Integer>)DDMField::setPriority);
+		static {
+			Map<String, Function<DDMField, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<DDMField, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", DDMField::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", DDMField::getCtCollectionId);
+			attributeGetterFunctions.put("fieldId", DDMField::getFieldId);
+			attributeGetterFunctions.put("companyId", DDMField::getCompanyId);
+			attributeGetterFunctions.put(
+				"parentFieldId", DDMField::getParentFieldId);
+			attributeGetterFunctions.put("storageId", DDMField::getStorageId);
+			attributeGetterFunctions.put(
+				"structureVersionId", DDMField::getStructureVersionId);
+			attributeGetterFunctions.put("fieldName", DDMField::getFieldName);
+			attributeGetterFunctions.put("fieldType", DDMField::getFieldType);
+			attributeGetterFunctions.put("instanceId", DDMField::getInstanceId);
+			attributeGetterFunctions.put(
+				"localizable", DDMField::getLocalizable);
+			attributeGetterFunctions.put("priority", DDMField::getPriority);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<DDMField, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<DDMField, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<DDMField, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<DDMField, Long>)DDMField::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<DDMField, Long>)DDMField::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"fieldId", (BiConsumer<DDMField, Long>)DDMField::setFieldId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<DDMField, Long>)DDMField::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"parentFieldId",
+				(BiConsumer<DDMField, Long>)DDMField::setParentFieldId);
+			attributeSetterBiConsumers.put(
+				"storageId",
+				(BiConsumer<DDMField, Long>)DDMField::setStorageId);
+			attributeSetterBiConsumers.put(
+				"structureVersionId",
+				(BiConsumer<DDMField, Long>)DDMField::setStructureVersionId);
+			attributeSetterBiConsumers.put(
+				"fieldName",
+				(BiConsumer<DDMField, String>)DDMField::setFieldName);
+			attributeSetterBiConsumers.put(
+				"fieldType",
+				(BiConsumer<DDMField, String>)DDMField::setFieldType);
+			attributeSetterBiConsumers.put(
+				"instanceId",
+				(BiConsumer<DDMField, String>)DDMField::setInstanceId);
+			attributeSetterBiConsumers.put(
+				"localizable",
+				(BiConsumer<DDMField, Boolean>)DDMField::setLocalizable);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<DDMField, Integer>)DDMField::setPriority);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -841,8 +862,9 @@ public class DDMFieldModelImpl
 	private int _priority;
 
 	public <T> T getColumnValue(String columnName) {
-		Function<DDMField, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<DDMField, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

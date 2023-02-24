@@ -224,72 +224,92 @@ public class CTEntryModelImpl
 	public Map<String, Function<CTEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CTEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CTEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CTEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CTEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<CTEntry, Object>>();
-		Map<String, BiConsumer<CTEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<CTEntry, ?>>();
+		private static final Map<String, Function<CTEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", CTEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion", (BiConsumer<CTEntry, Long>)CTEntry::setMvccVersion);
-		attributeGetterFunctions.put("ctEntryId", CTEntry::getCtEntryId);
-		attributeSetterBiConsumers.put(
-			"ctEntryId", (BiConsumer<CTEntry, Long>)CTEntry::setCtEntryId);
-		attributeGetterFunctions.put("companyId", CTEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<CTEntry, Long>)CTEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", CTEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<CTEntry, Long>)CTEntry::setUserId);
-		attributeGetterFunctions.put("createDate", CTEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<CTEntry, Date>)CTEntry::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", CTEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CTEntry, Date>)CTEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CTEntry::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CTEntry, Long>)CTEntry::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"modelClassNameId", CTEntry::getModelClassNameId);
-		attributeSetterBiConsumers.put(
-			"modelClassNameId",
-			(BiConsumer<CTEntry, Long>)CTEntry::setModelClassNameId);
-		attributeGetterFunctions.put("modelClassPK", CTEntry::getModelClassPK);
-		attributeSetterBiConsumers.put(
-			"modelClassPK",
-			(BiConsumer<CTEntry, Long>)CTEntry::setModelClassPK);
-		attributeGetterFunctions.put(
-			"modelMvccVersion", CTEntry::getModelMvccVersion);
-		attributeSetterBiConsumers.put(
-			"modelMvccVersion",
-			(BiConsumer<CTEntry, Long>)CTEntry::setModelMvccVersion);
-		attributeGetterFunctions.put("changeType", CTEntry::getChangeType);
-		attributeSetterBiConsumers.put(
-			"changeType", (BiConsumer<CTEntry, Integer>)CTEntry::setChangeType);
+		static {
+			Map<String, Function<CTEntry, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<CTEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CTEntry::getMvccVersion);
+			attributeGetterFunctions.put("ctEntryId", CTEntry::getCtEntryId);
+			attributeGetterFunctions.put("companyId", CTEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", CTEntry::getUserId);
+			attributeGetterFunctions.put("createDate", CTEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CTEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CTEntry::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"modelClassNameId", CTEntry::getModelClassNameId);
+			attributeGetterFunctions.put(
+				"modelClassPK", CTEntry::getModelClassPK);
+			attributeGetterFunctions.put(
+				"modelMvccVersion", CTEntry::getModelMvccVersion);
+			attributeGetterFunctions.put("changeType", CTEntry::getChangeType);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CTEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CTEntry, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<CTEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CTEntry, Long>)CTEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctEntryId", (BiConsumer<CTEntry, Long>)CTEntry::setCtEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId", (BiConsumer<CTEntry, Long>)CTEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<CTEntry, Long>)CTEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CTEntry, Date>)CTEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CTEntry, Date>)CTEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CTEntry, Long>)CTEntry::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"modelClassNameId",
+				(BiConsumer<CTEntry, Long>)CTEntry::setModelClassNameId);
+			attributeSetterBiConsumers.put(
+				"modelClassPK",
+				(BiConsumer<CTEntry, Long>)CTEntry::setModelClassPK);
+			attributeSetterBiConsumers.put(
+				"modelMvccVersion",
+				(BiConsumer<CTEntry, Long>)CTEntry::setModelMvccVersion);
+			attributeSetterBiConsumers.put(
+				"changeType",
+				(BiConsumer<CTEntry, Integer>)CTEntry::setChangeType);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -784,8 +804,9 @@ public class CTEntryModelImpl
 	private int _changeType;
 
 	public <T> T getColumnValue(String columnName) {
-		Function<CTEntry, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<CTEntry, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

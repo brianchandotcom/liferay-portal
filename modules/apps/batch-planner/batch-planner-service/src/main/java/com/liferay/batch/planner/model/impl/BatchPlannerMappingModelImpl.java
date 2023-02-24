@@ -235,111 +235,130 @@ public class BatchPlannerMappingModelImpl
 	public Map<String, Function<BatchPlannerMapping, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<BatchPlannerMapping, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<BatchPlannerMapping, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<BatchPlannerMapping, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<BatchPlannerMapping, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<BatchPlannerMapping, Object>>();
-		Map<String, BiConsumer<BatchPlannerMapping, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<BatchPlannerMapping, ?>>();
+		private static final Map<String, Function<BatchPlannerMapping, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", BatchPlannerMapping::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<BatchPlannerMapping, Long>)
-				BatchPlannerMapping::setMvccVersion);
-		attributeGetterFunctions.put(
-			"batchPlannerMappingId",
-			BatchPlannerMapping::getBatchPlannerMappingId);
-		attributeSetterBiConsumers.put(
-			"batchPlannerMappingId",
-			(BiConsumer<BatchPlannerMapping, Long>)
-				BatchPlannerMapping::setBatchPlannerMappingId);
-		attributeGetterFunctions.put(
-			"companyId", BatchPlannerMapping::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<BatchPlannerMapping, Long>)
-				BatchPlannerMapping::setCompanyId);
-		attributeGetterFunctions.put("userId", BatchPlannerMapping::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<BatchPlannerMapping, Long>)
-				BatchPlannerMapping::setUserId);
-		attributeGetterFunctions.put(
-			"userName", BatchPlannerMapping::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<BatchPlannerMapping, String>)
-				BatchPlannerMapping::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", BatchPlannerMapping::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<BatchPlannerMapping, Date>)
-				BatchPlannerMapping::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", BatchPlannerMapping::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<BatchPlannerMapping, Date>)
-				BatchPlannerMapping::setModifiedDate);
-		attributeGetterFunctions.put(
-			"batchPlannerPlanId", BatchPlannerMapping::getBatchPlannerPlanId);
-		attributeSetterBiConsumers.put(
-			"batchPlannerPlanId",
-			(BiConsumer<BatchPlannerMapping, Long>)
-				BatchPlannerMapping::setBatchPlannerPlanId);
-		attributeGetterFunctions.put(
-			"externalFieldName", BatchPlannerMapping::getExternalFieldName);
-		attributeSetterBiConsumers.put(
-			"externalFieldName",
-			(BiConsumer<BatchPlannerMapping, String>)
-				BatchPlannerMapping::setExternalFieldName);
-		attributeGetterFunctions.put(
-			"externalFieldType", BatchPlannerMapping::getExternalFieldType);
-		attributeSetterBiConsumers.put(
-			"externalFieldType",
-			(BiConsumer<BatchPlannerMapping, String>)
-				BatchPlannerMapping::setExternalFieldType);
-		attributeGetterFunctions.put(
-			"internalFieldName", BatchPlannerMapping::getInternalFieldName);
-		attributeSetterBiConsumers.put(
-			"internalFieldName",
-			(BiConsumer<BatchPlannerMapping, String>)
-				BatchPlannerMapping::setInternalFieldName);
-		attributeGetterFunctions.put(
-			"internalFieldType", BatchPlannerMapping::getInternalFieldType);
-		attributeSetterBiConsumers.put(
-			"internalFieldType",
-			(BiConsumer<BatchPlannerMapping, String>)
-				BatchPlannerMapping::setInternalFieldType);
-		attributeGetterFunctions.put("script", BatchPlannerMapping::getScript);
-		attributeSetterBiConsumers.put(
-			"script",
-			(BiConsumer<BatchPlannerMapping, String>)
-				BatchPlannerMapping::setScript);
+		static {
+			Map<String, Function<BatchPlannerMapping, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<BatchPlannerMapping, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", BatchPlannerMapping::getMvccVersion);
+			attributeGetterFunctions.put(
+				"batchPlannerMappingId",
+				BatchPlannerMapping::getBatchPlannerMappingId);
+			attributeGetterFunctions.put(
+				"companyId", BatchPlannerMapping::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", BatchPlannerMapping::getUserId);
+			attributeGetterFunctions.put(
+				"userName", BatchPlannerMapping::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", BatchPlannerMapping::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", BatchPlannerMapping::getModifiedDate);
+			attributeGetterFunctions.put(
+				"batchPlannerPlanId",
+				BatchPlannerMapping::getBatchPlannerPlanId);
+			attributeGetterFunctions.put(
+				"externalFieldName", BatchPlannerMapping::getExternalFieldName);
+			attributeGetterFunctions.put(
+				"externalFieldType", BatchPlannerMapping::getExternalFieldType);
+			attributeGetterFunctions.put(
+				"internalFieldName", BatchPlannerMapping::getInternalFieldName);
+			attributeGetterFunctions.put(
+				"internalFieldType", BatchPlannerMapping::getInternalFieldType);
+			attributeGetterFunctions.put(
+				"script", BatchPlannerMapping::getScript);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<BatchPlannerMapping, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<BatchPlannerMapping, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<BatchPlannerMapping, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<BatchPlannerMapping, Long>)
+					BatchPlannerMapping::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"batchPlannerMappingId",
+				(BiConsumer<BatchPlannerMapping, Long>)
+					BatchPlannerMapping::setBatchPlannerMappingId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<BatchPlannerMapping, Long>)
+					BatchPlannerMapping::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<BatchPlannerMapping, Long>)
+					BatchPlannerMapping::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<BatchPlannerMapping, String>)
+					BatchPlannerMapping::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<BatchPlannerMapping, Date>)
+					BatchPlannerMapping::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<BatchPlannerMapping, Date>)
+					BatchPlannerMapping::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"batchPlannerPlanId",
+				(BiConsumer<BatchPlannerMapping, Long>)
+					BatchPlannerMapping::setBatchPlannerPlanId);
+			attributeSetterBiConsumers.put(
+				"externalFieldName",
+				(BiConsumer<BatchPlannerMapping, String>)
+					BatchPlannerMapping::setExternalFieldName);
+			attributeSetterBiConsumers.put(
+				"externalFieldType",
+				(BiConsumer<BatchPlannerMapping, String>)
+					BatchPlannerMapping::setExternalFieldType);
+			attributeSetterBiConsumers.put(
+				"internalFieldName",
+				(BiConsumer<BatchPlannerMapping, String>)
+					BatchPlannerMapping::setInternalFieldName);
+			attributeSetterBiConsumers.put(
+				"internalFieldType",
+				(BiConsumer<BatchPlannerMapping, String>)
+					BatchPlannerMapping::setInternalFieldType);
+			attributeSetterBiConsumers.put(
+				"script",
+				(BiConsumer<BatchPlannerMapping, String>)
+					BatchPlannerMapping::setScript);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -970,7 +989,8 @@ public class BatchPlannerMappingModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<BatchPlannerMapping, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

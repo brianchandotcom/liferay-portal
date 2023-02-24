@@ -268,172 +268,189 @@ public class CommerceInventoryWarehouseModelImpl
 	public Map<String, Function<CommerceInventoryWarehouse, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceInventoryWarehouse, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String, Function<CommerceInventoryWarehouse, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String, BiConsumer<CommerceInventoryWarehouse, Object>>
-			_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceInventoryWarehouse, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceInventoryWarehouse, Object>>();
-		Map<String, BiConsumer<CommerceInventoryWarehouse, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CommerceInventoryWarehouse, ?>>();
+		private static final Map
+			<String, Function<CommerceInventoryWarehouse, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceInventoryWarehouse::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceInventoryWarehouse, Long>)
-				CommerceInventoryWarehouse::setMvccVersion);
-		attributeGetterFunctions.put(
-			"uuid", CommerceInventoryWarehouse::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			CommerceInventoryWarehouse::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"commerceInventoryWarehouseId",
-			CommerceInventoryWarehouse::getCommerceInventoryWarehouseId);
-		attributeSetterBiConsumers.put(
-			"commerceInventoryWarehouseId",
-			(BiConsumer<CommerceInventoryWarehouse, Long>)
-				CommerceInventoryWarehouse::setCommerceInventoryWarehouseId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceInventoryWarehouse::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceInventoryWarehouse, Long>)
-				CommerceInventoryWarehouse::setCompanyId);
-		attributeGetterFunctions.put(
-			"userId", CommerceInventoryWarehouse::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceInventoryWarehouse, Long>)
-				CommerceInventoryWarehouse::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceInventoryWarehouse::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceInventoryWarehouse::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceInventoryWarehouse, Date>)
-				CommerceInventoryWarehouse::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceInventoryWarehouse::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceInventoryWarehouse, Date>)
-				CommerceInventoryWarehouse::setModifiedDate);
-		attributeGetterFunctions.put(
-			"name", CommerceInventoryWarehouse::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setName);
-		attributeGetterFunctions.put(
-			"description", CommerceInventoryWarehouse::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setDescription);
-		attributeGetterFunctions.put(
-			"active", CommerceInventoryWarehouse::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<CommerceInventoryWarehouse, Boolean>)
-				CommerceInventoryWarehouse::setActive);
-		attributeGetterFunctions.put(
-			"street1", CommerceInventoryWarehouse::getStreet1);
-		attributeSetterBiConsumers.put(
-			"street1",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setStreet1);
-		attributeGetterFunctions.put(
-			"street2", CommerceInventoryWarehouse::getStreet2);
-		attributeSetterBiConsumers.put(
-			"street2",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setStreet2);
-		attributeGetterFunctions.put(
-			"street3", CommerceInventoryWarehouse::getStreet3);
-		attributeSetterBiConsumers.put(
-			"street3",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setStreet3);
-		attributeGetterFunctions.put(
-			"city", CommerceInventoryWarehouse::getCity);
-		attributeSetterBiConsumers.put(
-			"city",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setCity);
-		attributeGetterFunctions.put("zip", CommerceInventoryWarehouse::getZip);
-		attributeSetterBiConsumers.put(
-			"zip",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setZip);
-		attributeGetterFunctions.put(
-			"commerceRegionCode",
-			CommerceInventoryWarehouse::getCommerceRegionCode);
-		attributeSetterBiConsumers.put(
-			"commerceRegionCode",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setCommerceRegionCode);
-		attributeGetterFunctions.put(
-			"countryTwoLettersISOCode",
-			CommerceInventoryWarehouse::getCountryTwoLettersISOCode);
-		attributeSetterBiConsumers.put(
-			"countryTwoLettersISOCode",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setCountryTwoLettersISOCode);
-		attributeGetterFunctions.put(
-			"latitude", CommerceInventoryWarehouse::getLatitude);
-		attributeSetterBiConsumers.put(
-			"latitude",
-			(BiConsumer<CommerceInventoryWarehouse, Double>)
-				CommerceInventoryWarehouse::setLatitude);
-		attributeGetterFunctions.put(
-			"longitude", CommerceInventoryWarehouse::getLongitude);
-		attributeSetterBiConsumers.put(
-			"longitude",
-			(BiConsumer<CommerceInventoryWarehouse, Double>)
-				CommerceInventoryWarehouse::setLongitude);
-		attributeGetterFunctions.put(
-			"type", CommerceInventoryWarehouse::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<CommerceInventoryWarehouse, String>)
-				CommerceInventoryWarehouse::setType);
+		static {
+			Map<String, Function<CommerceInventoryWarehouse, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String,
+						 Function<CommerceInventoryWarehouse, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceInventoryWarehouse::getMvccVersion);
+			attributeGetterFunctions.put(
+				"uuid", CommerceInventoryWarehouse::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CommerceInventoryWarehouse::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"commerceInventoryWarehouseId",
+				CommerceInventoryWarehouse::getCommerceInventoryWarehouseId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceInventoryWarehouse::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceInventoryWarehouse::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceInventoryWarehouse::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceInventoryWarehouse::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceInventoryWarehouse::getModifiedDate);
+			attributeGetterFunctions.put(
+				"name", CommerceInventoryWarehouse::getName);
+			attributeGetterFunctions.put(
+				"description", CommerceInventoryWarehouse::getDescription);
+			attributeGetterFunctions.put(
+				"active", CommerceInventoryWarehouse::getActive);
+			attributeGetterFunctions.put(
+				"street1", CommerceInventoryWarehouse::getStreet1);
+			attributeGetterFunctions.put(
+				"street2", CommerceInventoryWarehouse::getStreet2);
+			attributeGetterFunctions.put(
+				"street3", CommerceInventoryWarehouse::getStreet3);
+			attributeGetterFunctions.put(
+				"city", CommerceInventoryWarehouse::getCity);
+			attributeGetterFunctions.put(
+				"zip", CommerceInventoryWarehouse::getZip);
+			attributeGetterFunctions.put(
+				"commerceRegionCode",
+				CommerceInventoryWarehouse::getCommerceRegionCode);
+			attributeGetterFunctions.put(
+				"countryTwoLettersISOCode",
+				CommerceInventoryWarehouse::getCountryTwoLettersISOCode);
+			attributeGetterFunctions.put(
+				"latitude", CommerceInventoryWarehouse::getLatitude);
+			attributeGetterFunctions.put(
+				"longitude", CommerceInventoryWarehouse::getLongitude);
+			attributeGetterFunctions.put(
+				"type", CommerceInventoryWarehouse::getType);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CommerceInventoryWarehouse, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceInventoryWarehouse, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommerceInventoryWarehouse, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceInventoryWarehouse, Long>)
+					CommerceInventoryWarehouse::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"commerceInventoryWarehouseId",
+				(BiConsumer<CommerceInventoryWarehouse, Long>)
+					CommerceInventoryWarehouse::
+						setCommerceInventoryWarehouseId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceInventoryWarehouse, Long>)
+					CommerceInventoryWarehouse::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceInventoryWarehouse, Long>)
+					CommerceInventoryWarehouse::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceInventoryWarehouse, Date>)
+					CommerceInventoryWarehouse::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceInventoryWarehouse, Date>)
+					CommerceInventoryWarehouse::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setName);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setDescription);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<CommerceInventoryWarehouse, Boolean>)
+					CommerceInventoryWarehouse::setActive);
+			attributeSetterBiConsumers.put(
+				"street1",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setStreet1);
+			attributeSetterBiConsumers.put(
+				"street2",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setStreet2);
+			attributeSetterBiConsumers.put(
+				"street3",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setStreet3);
+			attributeSetterBiConsumers.put(
+				"city",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setCity);
+			attributeSetterBiConsumers.put(
+				"zip",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setZip);
+			attributeSetterBiConsumers.put(
+				"commerceRegionCode",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setCommerceRegionCode);
+			attributeSetterBiConsumers.put(
+				"countryTwoLettersISOCode",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setCountryTwoLettersISOCode);
+			attributeSetterBiConsumers.put(
+				"latitude",
+				(BiConsumer<CommerceInventoryWarehouse, Double>)
+					CommerceInventoryWarehouse::setLatitude);
+			attributeSetterBiConsumers.put(
+				"longitude",
+				(BiConsumer<CommerceInventoryWarehouse, Double>)
+					CommerceInventoryWarehouse::setLongitude);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CommerceInventoryWarehouse, String>)
+					CommerceInventoryWarehouse::setType);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1646,7 +1663,8 @@ public class CommerceInventoryWarehouseModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceInventoryWarehouse, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

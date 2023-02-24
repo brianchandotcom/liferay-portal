@@ -276,127 +276,156 @@ public class DLFileShortcutModelImpl
 	public Map<String, Function<DLFileShortcut, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<DLFileShortcut, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DLFileShortcut, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DLFileShortcut, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<DLFileShortcut, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<DLFileShortcut, Object>>();
-		Map<String, BiConsumer<DLFileShortcut, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<DLFileShortcut, ?>>();
+		private static final Map<String, Function<DLFileShortcut, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", DLFileShortcut::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", DLFileShortcut::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<DLFileShortcut, Long>)
-				DLFileShortcut::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", DLFileShortcut::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<DLFileShortcut, String>)DLFileShortcut::setUuid);
-		attributeGetterFunctions.put(
-			"fileShortcutId", DLFileShortcut::getFileShortcutId);
-		attributeSetterBiConsumers.put(
-			"fileShortcutId",
-			(BiConsumer<DLFileShortcut, Long>)
-				DLFileShortcut::setFileShortcutId);
-		attributeGetterFunctions.put("groupId", DLFileShortcut::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setGroupId);
-		attributeGetterFunctions.put("companyId", DLFileShortcut::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setCompanyId);
-		attributeGetterFunctions.put("userId", DLFileShortcut::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setUserId);
-		attributeGetterFunctions.put("userName", DLFileShortcut::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<DLFileShortcut, String>)DLFileShortcut::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", DLFileShortcut::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<DLFileShortcut, Date>)DLFileShortcut::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", DLFileShortcut::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<DLFileShortcut, Date>)DLFileShortcut::setModifiedDate);
-		attributeGetterFunctions.put(
-			"repositoryId", DLFileShortcut::getRepositoryId);
-		attributeSetterBiConsumers.put(
-			"repositoryId",
-			(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setRepositoryId);
-		attributeGetterFunctions.put("folderId", DLFileShortcut::getFolderId);
-		attributeSetterBiConsumers.put(
-			"folderId",
-			(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setFolderId);
-		attributeGetterFunctions.put(
-			"toFileEntryId", DLFileShortcut::getToFileEntryId);
-		attributeSetterBiConsumers.put(
-			"toFileEntryId",
-			(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setToFileEntryId);
-		attributeGetterFunctions.put("treePath", DLFileShortcut::getTreePath);
-		attributeSetterBiConsumers.put(
-			"treePath",
-			(BiConsumer<DLFileShortcut, String>)DLFileShortcut::setTreePath);
-		attributeGetterFunctions.put("active", DLFileShortcut::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<DLFileShortcut, Boolean>)DLFileShortcut::setActive);
-		attributeGetterFunctions.put(
-			"lastPublishDate", DLFileShortcut::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<DLFileShortcut, Date>)
-				DLFileShortcut::setLastPublishDate);
-		attributeGetterFunctions.put("status", DLFileShortcut::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<DLFileShortcut, Integer>)DLFileShortcut::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", DLFileShortcut::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<DLFileShortcut, Long>)
-				DLFileShortcut::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", DLFileShortcut::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<DLFileShortcut, String>)
-				DLFileShortcut::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", DLFileShortcut::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<DLFileShortcut, Date>)DLFileShortcut::setStatusDate);
+		static {
+			Map<String, Function<DLFileShortcut, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<DLFileShortcut, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", DLFileShortcut::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", DLFileShortcut::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", DLFileShortcut::getUuid);
+			attributeGetterFunctions.put(
+				"fileShortcutId", DLFileShortcut::getFileShortcutId);
+			attributeGetterFunctions.put("groupId", DLFileShortcut::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", DLFileShortcut::getCompanyId);
+			attributeGetterFunctions.put("userId", DLFileShortcut::getUserId);
+			attributeGetterFunctions.put(
+				"userName", DLFileShortcut::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", DLFileShortcut::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", DLFileShortcut::getModifiedDate);
+			attributeGetterFunctions.put(
+				"repositoryId", DLFileShortcut::getRepositoryId);
+			attributeGetterFunctions.put(
+				"folderId", DLFileShortcut::getFolderId);
+			attributeGetterFunctions.put(
+				"toFileEntryId", DLFileShortcut::getToFileEntryId);
+			attributeGetterFunctions.put(
+				"treePath", DLFileShortcut::getTreePath);
+			attributeGetterFunctions.put("active", DLFileShortcut::getActive);
+			attributeGetterFunctions.put(
+				"lastPublishDate", DLFileShortcut::getLastPublishDate);
+			attributeGetterFunctions.put("status", DLFileShortcut::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", DLFileShortcut::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", DLFileShortcut::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", DLFileShortcut::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<DLFileShortcut, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<DLFileShortcut, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<DLFileShortcut, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<DLFileShortcut, Long>)
+					DLFileShortcut::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<DLFileShortcut, Long>)
+					DLFileShortcut::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<DLFileShortcut, String>)DLFileShortcut::setUuid);
+			attributeSetterBiConsumers.put(
+				"fileShortcutId",
+				(BiConsumer<DLFileShortcut, Long>)
+					DLFileShortcut::setFileShortcutId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<DLFileShortcut, String>)
+					DLFileShortcut::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<DLFileShortcut, Date>)
+					DLFileShortcut::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<DLFileShortcut, Date>)
+					DLFileShortcut::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"repositoryId",
+				(BiConsumer<DLFileShortcut, Long>)
+					DLFileShortcut::setRepositoryId);
+			attributeSetterBiConsumers.put(
+				"folderId",
+				(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setFolderId);
+			attributeSetterBiConsumers.put(
+				"toFileEntryId",
+				(BiConsumer<DLFileShortcut, Long>)
+					DLFileShortcut::setToFileEntryId);
+			attributeSetterBiConsumers.put(
+				"treePath",
+				(BiConsumer<DLFileShortcut, String>)
+					DLFileShortcut::setTreePath);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<DLFileShortcut, Boolean>)DLFileShortcut::setActive);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<DLFileShortcut, Date>)
+					DLFileShortcut::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<DLFileShortcut, Integer>)DLFileShortcut::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<DLFileShortcut, Long>)
+					DLFileShortcut::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<DLFileShortcut, String>)
+					DLFileShortcut::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<DLFileShortcut, Date>)
+					DLFileShortcut::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1316,7 +1345,8 @@ public class DLFileShortcutModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<DLFileShortcut, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

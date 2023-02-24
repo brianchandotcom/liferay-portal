@@ -216,52 +216,68 @@ public class RedundantIndexEntryModelImpl
 	public Map<String, Function<RedundantIndexEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<RedundantIndexEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<RedundantIndexEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<RedundantIndexEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<RedundantIndexEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<RedundantIndexEntry, Object>>();
-		Map<String, BiConsumer<RedundantIndexEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<RedundantIndexEntry, ?>>();
+		private static final Map<String, Function<RedundantIndexEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"redundantIndexEntryId",
-			RedundantIndexEntry::getRedundantIndexEntryId);
-		attributeSetterBiConsumers.put(
-			"redundantIndexEntryId",
-			(BiConsumer<RedundantIndexEntry, Long>)
-				RedundantIndexEntry::setRedundantIndexEntryId);
-		attributeGetterFunctions.put(
-			"companyId", RedundantIndexEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<RedundantIndexEntry, Long>)
-				RedundantIndexEntry::setCompanyId);
-		attributeGetterFunctions.put("name", RedundantIndexEntry::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<RedundantIndexEntry, String>)
-				RedundantIndexEntry::setName);
+		static {
+			Map<String, Function<RedundantIndexEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<RedundantIndexEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"redundantIndexEntryId",
+				RedundantIndexEntry::getRedundantIndexEntryId);
+			attributeGetterFunctions.put(
+				"companyId", RedundantIndexEntry::getCompanyId);
+			attributeGetterFunctions.put("name", RedundantIndexEntry::getName);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<RedundantIndexEntry, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<RedundantIndexEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<RedundantIndexEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"redundantIndexEntryId",
+				(BiConsumer<RedundantIndexEntry, Long>)
+					RedundantIndexEntry::setRedundantIndexEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<RedundantIndexEntry, Long>)
+					RedundantIndexEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<RedundantIndexEntry, String>)
+					RedundantIndexEntry::setName);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -566,7 +582,8 @@ public class RedundantIndexEntryModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<RedundantIndexEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -237,93 +237,109 @@ public class ListTypeDefinitionModelImpl
 	public Map<String, Function<ListTypeDefinition, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ListTypeDefinition, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ListTypeDefinition, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ListTypeDefinition, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ListTypeDefinition, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<ListTypeDefinition, Object>>();
-		Map<String, BiConsumer<ListTypeDefinition, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<ListTypeDefinition, ?>>();
+		private static final Map<String, Function<ListTypeDefinition, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ListTypeDefinition::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ListTypeDefinition, Long>)
-				ListTypeDefinition::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ListTypeDefinition::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<ListTypeDefinition, String>)
-				ListTypeDefinition::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			ListTypeDefinition::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<ListTypeDefinition, String>)
-				ListTypeDefinition::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"listTypeDefinitionId",
-			ListTypeDefinition::getListTypeDefinitionId);
-		attributeSetterBiConsumers.put(
-			"listTypeDefinitionId",
-			(BiConsumer<ListTypeDefinition, Long>)
-				ListTypeDefinition::setListTypeDefinitionId);
-		attributeGetterFunctions.put(
-			"companyId", ListTypeDefinition::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ListTypeDefinition, Long>)
-				ListTypeDefinition::setCompanyId);
-		attributeGetterFunctions.put("userId", ListTypeDefinition::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<ListTypeDefinition, Long>)
-				ListTypeDefinition::setUserId);
-		attributeGetterFunctions.put(
-			"userName", ListTypeDefinition::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ListTypeDefinition, String>)
-				ListTypeDefinition::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", ListTypeDefinition::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ListTypeDefinition, Date>)
-				ListTypeDefinition::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ListTypeDefinition::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ListTypeDefinition, Date>)
-				ListTypeDefinition::setModifiedDate);
-		attributeGetterFunctions.put("name", ListTypeDefinition::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<ListTypeDefinition, String>)
-				ListTypeDefinition::setName);
+		static {
+			Map<String, Function<ListTypeDefinition, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ListTypeDefinition, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ListTypeDefinition::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ListTypeDefinition::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				ListTypeDefinition::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"listTypeDefinitionId",
+				ListTypeDefinition::getListTypeDefinitionId);
+			attributeGetterFunctions.put(
+				"companyId", ListTypeDefinition::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", ListTypeDefinition::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ListTypeDefinition::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ListTypeDefinition::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ListTypeDefinition::getModifiedDate);
+			attributeGetterFunctions.put("name", ListTypeDefinition::getName);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ListTypeDefinition, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ListTypeDefinition, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<ListTypeDefinition, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ListTypeDefinition, Long>)
+					ListTypeDefinition::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ListTypeDefinition, String>)
+					ListTypeDefinition::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<ListTypeDefinition, String>)
+					ListTypeDefinition::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"listTypeDefinitionId",
+				(BiConsumer<ListTypeDefinition, Long>)
+					ListTypeDefinition::setListTypeDefinitionId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ListTypeDefinition, Long>)
+					ListTypeDefinition::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ListTypeDefinition, Long>)
+					ListTypeDefinition::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ListTypeDefinition, String>)
+					ListTypeDefinition::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ListTypeDefinition, Date>)
+					ListTypeDefinition::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ListTypeDefinition, Date>)
+					ListTypeDefinition::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<ListTypeDefinition, String>)
+					ListTypeDefinition::setName);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1026,7 +1042,8 @@ public class ListTypeDefinitionModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<ListTypeDefinition, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

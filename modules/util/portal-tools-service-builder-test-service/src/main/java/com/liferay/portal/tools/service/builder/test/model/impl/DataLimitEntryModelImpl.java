@@ -209,59 +209,81 @@ public class DataLimitEntryModelImpl
 	public Map<String, Function<DataLimitEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<DataLimitEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DataLimitEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DataLimitEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<DataLimitEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<DataLimitEntry, Object>>();
-		Map<String, BiConsumer<DataLimitEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<DataLimitEntry, ?>>();
+		private static final Map<String, Function<DataLimitEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"dataLimitEntryId", DataLimitEntry::getDataLimitEntryId);
-		attributeSetterBiConsumers.put(
-			"dataLimitEntryId",
-			(BiConsumer<DataLimitEntry, Long>)
-				DataLimitEntry::setDataLimitEntryId);
-		attributeGetterFunctions.put("companyId", DataLimitEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<DataLimitEntry, Long>)DataLimitEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", DataLimitEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<DataLimitEntry, Long>)DataLimitEntry::setUserId);
-		attributeGetterFunctions.put("userName", DataLimitEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<DataLimitEntry, String>)DataLimitEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", DataLimitEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<DataLimitEntry, Date>)DataLimitEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", DataLimitEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<DataLimitEntry, Date>)DataLimitEntry::setModifiedDate);
+		static {
+			Map<String, Function<DataLimitEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<DataLimitEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"dataLimitEntryId", DataLimitEntry::getDataLimitEntryId);
+			attributeGetterFunctions.put(
+				"companyId", DataLimitEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", DataLimitEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", DataLimitEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", DataLimitEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", DataLimitEntry::getModifiedDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<DataLimitEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<DataLimitEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<DataLimitEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"dataLimitEntryId",
+				(BiConsumer<DataLimitEntry, Long>)
+					DataLimitEntry::setDataLimitEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<DataLimitEntry, Long>)DataLimitEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<DataLimitEntry, Long>)DataLimitEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<DataLimitEntry, String>)
+					DataLimitEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<DataLimitEntry, Date>)
+					DataLimitEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<DataLimitEntry, Date>)
+					DataLimitEntry::setModifiedDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -640,7 +662,8 @@ public class DataLimitEntryModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<DataLimitEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -239,105 +239,127 @@ public class CommerceTaxMethodModelImpl
 	public Map<String, Function<CommerceTaxMethod, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceTaxMethod, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CommerceTaxMethod, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CommerceTaxMethod, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceTaxMethod, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceTaxMethod, Object>>();
-		Map<String, BiConsumer<CommerceTaxMethod, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<CommerceTaxMethod, ?>>();
+		private static final Map<String, Function<CommerceTaxMethod, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceTaxMethod::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceTaxMethod, Long>)
-				CommerceTaxMethod::setMvccVersion);
-		attributeGetterFunctions.put(
-			"commerceTaxMethodId", CommerceTaxMethod::getCommerceTaxMethodId);
-		attributeSetterBiConsumers.put(
-			"commerceTaxMethodId",
-			(BiConsumer<CommerceTaxMethod, Long>)
-				CommerceTaxMethod::setCommerceTaxMethodId);
-		attributeGetterFunctions.put("groupId", CommerceTaxMethod::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<CommerceTaxMethod, Long>)CommerceTaxMethod::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceTaxMethod::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceTaxMethod, Long>)
-				CommerceTaxMethod::setCompanyId);
-		attributeGetterFunctions.put("userId", CommerceTaxMethod::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceTaxMethod, Long>)CommerceTaxMethod::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceTaxMethod::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceTaxMethod, String>)
-				CommerceTaxMethod::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceTaxMethod::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceTaxMethod, Date>)
-				CommerceTaxMethod::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceTaxMethod::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceTaxMethod, Date>)
-				CommerceTaxMethod::setModifiedDate);
-		attributeGetterFunctions.put("name", CommerceTaxMethod::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CommerceTaxMethod, String>)CommerceTaxMethod::setName);
-		attributeGetterFunctions.put(
-			"description", CommerceTaxMethod::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<CommerceTaxMethod, String>)
-				CommerceTaxMethod::setDescription);
-		attributeGetterFunctions.put(
-			"engineKey", CommerceTaxMethod::getEngineKey);
-		attributeSetterBiConsumers.put(
-			"engineKey",
-			(BiConsumer<CommerceTaxMethod, String>)
-				CommerceTaxMethod::setEngineKey);
-		attributeGetterFunctions.put(
-			"percentage", CommerceTaxMethod::getPercentage);
-		attributeSetterBiConsumers.put(
-			"percentage",
-			(BiConsumer<CommerceTaxMethod, Boolean>)
-				CommerceTaxMethod::setPercentage);
-		attributeGetterFunctions.put("active", CommerceTaxMethod::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<CommerceTaxMethod, Boolean>)
-				CommerceTaxMethod::setActive);
+		static {
+			Map<String, Function<CommerceTaxMethod, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CommerceTaxMethod, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceTaxMethod::getMvccVersion);
+			attributeGetterFunctions.put(
+				"commerceTaxMethodId",
+				CommerceTaxMethod::getCommerceTaxMethodId);
+			attributeGetterFunctions.put(
+				"groupId", CommerceTaxMethod::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceTaxMethod::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceTaxMethod::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceTaxMethod::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceTaxMethod::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceTaxMethod::getModifiedDate);
+			attributeGetterFunctions.put("name", CommerceTaxMethod::getName);
+			attributeGetterFunctions.put(
+				"description", CommerceTaxMethod::getDescription);
+			attributeGetterFunctions.put(
+				"engineKey", CommerceTaxMethod::getEngineKey);
+			attributeGetterFunctions.put(
+				"percentage", CommerceTaxMethod::getPercentage);
+			attributeGetterFunctions.put(
+				"active", CommerceTaxMethod::getActive);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CommerceTaxMethod, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceTaxMethod, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommerceTaxMethod, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceTaxMethod, Long>)
+					CommerceTaxMethod::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"commerceTaxMethodId",
+				(BiConsumer<CommerceTaxMethod, Long>)
+					CommerceTaxMethod::setCommerceTaxMethodId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<CommerceTaxMethod, Long>)
+					CommerceTaxMethod::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceTaxMethod, Long>)
+					CommerceTaxMethod::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceTaxMethod, Long>)
+					CommerceTaxMethod::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceTaxMethod, String>)
+					CommerceTaxMethod::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceTaxMethod, Date>)
+					CommerceTaxMethod::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceTaxMethod, Date>)
+					CommerceTaxMethod::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CommerceTaxMethod, String>)
+					CommerceTaxMethod::setName);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<CommerceTaxMethod, String>)
+					CommerceTaxMethod::setDescription);
+			attributeSetterBiConsumers.put(
+				"engineKey",
+				(BiConsumer<CommerceTaxMethod, String>)
+					CommerceTaxMethod::setEngineKey);
+			attributeSetterBiConsumers.put(
+				"percentage",
+				(BiConsumer<CommerceTaxMethod, Boolean>)
+					CommerceTaxMethod::setPercentage);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<CommerceTaxMethod, Boolean>)
+					CommerceTaxMethod::setActive);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1218,7 +1240,8 @@ public class CommerceTaxMethodModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceTaxMethod, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

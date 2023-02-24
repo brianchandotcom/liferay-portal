@@ -238,81 +238,102 @@ public class TrashEntryModelImpl
 	public Map<String, Function<TrashEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<TrashEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<TrashEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<TrashEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<TrashEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<TrashEntry, Object>>();
-		Map<String, BiConsumer<TrashEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<TrashEntry, ?>>();
+		private static final Map<String, Function<TrashEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", TrashEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<TrashEntry, Long>)TrashEntry::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", TrashEntry::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<TrashEntry, Long>)TrashEntry::setCtCollectionId);
-		attributeGetterFunctions.put("entryId", TrashEntry::getEntryId);
-		attributeSetterBiConsumers.put(
-			"entryId", (BiConsumer<TrashEntry, Long>)TrashEntry::setEntryId);
-		attributeGetterFunctions.put("groupId", TrashEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<TrashEntry, Long>)TrashEntry::setGroupId);
-		attributeGetterFunctions.put("companyId", TrashEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<TrashEntry, Long>)TrashEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", TrashEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<TrashEntry, Long>)TrashEntry::setUserId);
-		attributeGetterFunctions.put("userName", TrashEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<TrashEntry, String>)TrashEntry::setUserName);
-		attributeGetterFunctions.put("createDate", TrashEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<TrashEntry, Date>)TrashEntry::setCreateDate);
-		attributeGetterFunctions.put("classNameId", TrashEntry::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<TrashEntry, Long>)TrashEntry::setClassNameId);
-		attributeGetterFunctions.put("classPK", TrashEntry::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK", (BiConsumer<TrashEntry, Long>)TrashEntry::setClassPK);
-		attributeGetterFunctions.put(
-			"systemEventSetKey", TrashEntry::getSystemEventSetKey);
-		attributeSetterBiConsumers.put(
-			"systemEventSetKey",
-			(BiConsumer<TrashEntry, Long>)TrashEntry::setSystemEventSetKey);
-		attributeGetterFunctions.put(
-			"typeSettings", TrashEntry::getTypeSettings);
-		attributeSetterBiConsumers.put(
-			"typeSettings",
-			(BiConsumer<TrashEntry, String>)TrashEntry::setTypeSettings);
-		attributeGetterFunctions.put("status", TrashEntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<TrashEntry, Integer>)TrashEntry::setStatus);
+		static {
+			Map<String, Function<TrashEntry, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<TrashEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", TrashEntry::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", TrashEntry::getCtCollectionId);
+			attributeGetterFunctions.put("entryId", TrashEntry::getEntryId);
+			attributeGetterFunctions.put("groupId", TrashEntry::getGroupId);
+			attributeGetterFunctions.put("companyId", TrashEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", TrashEntry::getUserId);
+			attributeGetterFunctions.put("userName", TrashEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", TrashEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"classNameId", TrashEntry::getClassNameId);
+			attributeGetterFunctions.put("classPK", TrashEntry::getClassPK);
+			attributeGetterFunctions.put(
+				"systemEventSetKey", TrashEntry::getSystemEventSetKey);
+			attributeGetterFunctions.put(
+				"typeSettings", TrashEntry::getTypeSettings);
+			attributeGetterFunctions.put("status", TrashEntry::getStatus);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<TrashEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<TrashEntry, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<TrashEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<TrashEntry, Long>)TrashEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<TrashEntry, Long>)TrashEntry::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"entryId",
+				(BiConsumer<TrashEntry, Long>)TrashEntry::setEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<TrashEntry, Long>)TrashEntry::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<TrashEntry, Long>)TrashEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<TrashEntry, Long>)TrashEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<TrashEntry, String>)TrashEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<TrashEntry, Date>)TrashEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<TrashEntry, Long>)TrashEntry::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<TrashEntry, Long>)TrashEntry::setClassPK);
+			attributeSetterBiConsumers.put(
+				"systemEventSetKey",
+				(BiConsumer<TrashEntry, Long>)TrashEntry::setSystemEventSetKey);
+			attributeSetterBiConsumers.put(
+				"typeSettings",
+				(BiConsumer<TrashEntry, String>)TrashEntry::setTypeSettings);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<TrashEntry, Integer>)TrashEntry::setStatus);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -900,8 +921,9 @@ public class TrashEntryModelImpl
 	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
-		Function<TrashEntry, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<TrashEntry, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

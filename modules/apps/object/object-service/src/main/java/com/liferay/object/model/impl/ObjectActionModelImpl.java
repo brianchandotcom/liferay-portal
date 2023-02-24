@@ -275,123 +275,150 @@ public class ObjectActionModelImpl
 	public Map<String, Function<ObjectAction, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectAction, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectAction, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectAction, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectAction, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<ObjectAction, Object>>();
-		Map<String, BiConsumer<ObjectAction, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<ObjectAction, ?>>();
+		private static final Map<String, Function<ObjectAction, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectAction::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectAction, Long>)ObjectAction::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectAction::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<ObjectAction, String>)ObjectAction::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", ObjectAction::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<ObjectAction, String>)
-				ObjectAction::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"objectActionId", ObjectAction::getObjectActionId);
-		attributeSetterBiConsumers.put(
-			"objectActionId",
-			(BiConsumer<ObjectAction, Long>)ObjectAction::setObjectActionId);
-		attributeGetterFunctions.put("companyId", ObjectAction::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectAction, Long>)ObjectAction::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectAction::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<ObjectAction, Long>)ObjectAction::setUserId);
-		attributeGetterFunctions.put("userName", ObjectAction::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectAction, String>)ObjectAction::setUserName);
-		attributeGetterFunctions.put("createDate", ObjectAction::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectAction, Date>)ObjectAction::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectAction::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectAction, Date>)ObjectAction::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectDefinitionId", ObjectAction::getObjectDefinitionId);
-		attributeSetterBiConsumers.put(
-			"objectDefinitionId",
-			(BiConsumer<ObjectAction, Long>)
-				ObjectAction::setObjectDefinitionId);
-		attributeGetterFunctions.put("active", ObjectAction::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<ObjectAction, Boolean>)ObjectAction::setActive);
-		attributeGetterFunctions.put(
-			"conditionExpression", ObjectAction::getConditionExpression);
-		attributeSetterBiConsumers.put(
-			"conditionExpression",
-			(BiConsumer<ObjectAction, String>)
-				ObjectAction::setConditionExpression);
-		attributeGetterFunctions.put(
-			"description", ObjectAction::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<ObjectAction, String>)ObjectAction::setDescription);
-		attributeGetterFunctions.put(
-			"errorMessage", ObjectAction::getErrorMessage);
-		attributeSetterBiConsumers.put(
-			"errorMessage",
-			(BiConsumer<ObjectAction, String>)ObjectAction::setErrorMessage);
-		attributeGetterFunctions.put("label", ObjectAction::getLabel);
-		attributeSetterBiConsumers.put(
-			"label", (BiConsumer<ObjectAction, String>)ObjectAction::setLabel);
-		attributeGetterFunctions.put("name", ObjectAction::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<ObjectAction, String>)ObjectAction::setName);
-		attributeGetterFunctions.put(
-			"objectActionExecutorKey",
-			ObjectAction::getObjectActionExecutorKey);
-		attributeSetterBiConsumers.put(
-			"objectActionExecutorKey",
-			(BiConsumer<ObjectAction, String>)
-				ObjectAction::setObjectActionExecutorKey);
-		attributeGetterFunctions.put(
-			"objectActionTriggerKey", ObjectAction::getObjectActionTriggerKey);
-		attributeSetterBiConsumers.put(
-			"objectActionTriggerKey",
-			(BiConsumer<ObjectAction, String>)
-				ObjectAction::setObjectActionTriggerKey);
-		attributeGetterFunctions.put("parameters", ObjectAction::getParameters);
-		attributeSetterBiConsumers.put(
-			"parameters",
-			(BiConsumer<ObjectAction, String>)ObjectAction::setParameters);
-		attributeGetterFunctions.put("status", ObjectAction::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<ObjectAction, Integer>)ObjectAction::setStatus);
+		static {
+			Map<String, Function<ObjectAction, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<ObjectAction, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectAction::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectAction::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				ObjectAction::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"objectActionId", ObjectAction::getObjectActionId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectAction::getCompanyId);
+			attributeGetterFunctions.put("userId", ObjectAction::getUserId);
+			attributeGetterFunctions.put("userName", ObjectAction::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectAction::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectAction::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectDefinitionId", ObjectAction::getObjectDefinitionId);
+			attributeGetterFunctions.put("active", ObjectAction::getActive);
+			attributeGetterFunctions.put(
+				"conditionExpression", ObjectAction::getConditionExpression);
+			attributeGetterFunctions.put(
+				"description", ObjectAction::getDescription);
+			attributeGetterFunctions.put(
+				"errorMessage", ObjectAction::getErrorMessage);
+			attributeGetterFunctions.put("label", ObjectAction::getLabel);
+			attributeGetterFunctions.put("name", ObjectAction::getName);
+			attributeGetterFunctions.put(
+				"objectActionExecutorKey",
+				ObjectAction::getObjectActionExecutorKey);
+			attributeGetterFunctions.put(
+				"objectActionTriggerKey",
+				ObjectAction::getObjectActionTriggerKey);
+			attributeGetterFunctions.put(
+				"parameters", ObjectAction::getParameters);
+			attributeGetterFunctions.put("status", ObjectAction::getStatus);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ObjectAction, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectAction, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<ObjectAction, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectAction, Long>)ObjectAction::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ObjectAction, String>)ObjectAction::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<ObjectAction, String>)
+					ObjectAction::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"objectActionId",
+				(BiConsumer<ObjectAction, Long>)
+					ObjectAction::setObjectActionId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectAction, Long>)ObjectAction::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectAction, Long>)ObjectAction::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectAction, String>)ObjectAction::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectAction, Date>)ObjectAction::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectAction, Date>)ObjectAction::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectDefinitionId",
+				(BiConsumer<ObjectAction, Long>)
+					ObjectAction::setObjectDefinitionId);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<ObjectAction, Boolean>)ObjectAction::setActive);
+			attributeSetterBiConsumers.put(
+				"conditionExpression",
+				(BiConsumer<ObjectAction, String>)
+					ObjectAction::setConditionExpression);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<ObjectAction, String>)ObjectAction::setDescription);
+			attributeSetterBiConsumers.put(
+				"errorMessage",
+				(BiConsumer<ObjectAction, String>)
+					ObjectAction::setErrorMessage);
+			attributeSetterBiConsumers.put(
+				"label",
+				(BiConsumer<ObjectAction, String>)ObjectAction::setLabel);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<ObjectAction, String>)ObjectAction::setName);
+			attributeSetterBiConsumers.put(
+				"objectActionExecutorKey",
+				(BiConsumer<ObjectAction, String>)
+					ObjectAction::setObjectActionExecutorKey);
+			attributeSetterBiConsumers.put(
+				"objectActionTriggerKey",
+				(BiConsumer<ObjectAction, String>)
+					ObjectAction::setObjectActionTriggerKey);
+			attributeSetterBiConsumers.put(
+				"parameters",
+				(BiConsumer<ObjectAction, String>)ObjectAction::setParameters);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<ObjectAction, Integer>)ObjectAction::setStatus);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1541,8 +1568,9 @@ public class ObjectActionModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<ObjectAction, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<ObjectAction, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

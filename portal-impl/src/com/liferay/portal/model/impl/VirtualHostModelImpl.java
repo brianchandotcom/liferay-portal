@@ -232,69 +232,86 @@ public class VirtualHostModelImpl
 	public Map<String, Function<VirtualHost, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<VirtualHost, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<VirtualHost, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<VirtualHost, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<VirtualHost, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<VirtualHost, Object>>();
-		Map<String, BiConsumer<VirtualHost, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<VirtualHost, ?>>();
+		private static final Map<String, Function<VirtualHost, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", VirtualHost::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<VirtualHost, Long>)VirtualHost::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", VirtualHost::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<VirtualHost, Long>)VirtualHost::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"virtualHostId", VirtualHost::getVirtualHostId);
-		attributeSetterBiConsumers.put(
-			"virtualHostId",
-			(BiConsumer<VirtualHost, Long>)VirtualHost::setVirtualHostId);
-		attributeGetterFunctions.put("companyId", VirtualHost::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<VirtualHost, Long>)VirtualHost::setCompanyId);
-		attributeGetterFunctions.put(
-			"layoutSetId", VirtualHost::getLayoutSetId);
-		attributeSetterBiConsumers.put(
-			"layoutSetId",
-			(BiConsumer<VirtualHost, Long>)VirtualHost::setLayoutSetId);
-		attributeGetterFunctions.put("hostname", VirtualHost::getHostname);
-		attributeSetterBiConsumers.put(
-			"hostname",
-			(BiConsumer<VirtualHost, String>)VirtualHost::setHostname);
-		attributeGetterFunctions.put(
-			"defaultVirtualHost", VirtualHost::getDefaultVirtualHost);
-		attributeSetterBiConsumers.put(
-			"defaultVirtualHost",
-			(BiConsumer<VirtualHost, Boolean>)
-				VirtualHost::setDefaultVirtualHost);
-		attributeGetterFunctions.put("languageId", VirtualHost::getLanguageId);
-		attributeSetterBiConsumers.put(
-			"languageId",
-			(BiConsumer<VirtualHost, String>)VirtualHost::setLanguageId);
+		static {
+			Map<String, Function<VirtualHost, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<VirtualHost, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", VirtualHost::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", VirtualHost::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"virtualHostId", VirtualHost::getVirtualHostId);
+			attributeGetterFunctions.put(
+				"companyId", VirtualHost::getCompanyId);
+			attributeGetterFunctions.put(
+				"layoutSetId", VirtualHost::getLayoutSetId);
+			attributeGetterFunctions.put("hostname", VirtualHost::getHostname);
+			attributeGetterFunctions.put(
+				"defaultVirtualHost", VirtualHost::getDefaultVirtualHost);
+			attributeGetterFunctions.put(
+				"languageId", VirtualHost::getLanguageId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<VirtualHost, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<VirtualHost, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<VirtualHost, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<VirtualHost, Long>)VirtualHost::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<VirtualHost, Long>)VirtualHost::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"virtualHostId",
+				(BiConsumer<VirtualHost, Long>)VirtualHost::setVirtualHostId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<VirtualHost, Long>)VirtualHost::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"layoutSetId",
+				(BiConsumer<VirtualHost, Long>)VirtualHost::setLayoutSetId);
+			attributeSetterBiConsumers.put(
+				"hostname",
+				(BiConsumer<VirtualHost, String>)VirtualHost::setHostname);
+			attributeSetterBiConsumers.put(
+				"defaultVirtualHost",
+				(BiConsumer<VirtualHost, Boolean>)
+					VirtualHost::setDefaultVirtualHost);
+			attributeSetterBiConsumers.put(
+				"languageId",
+				(BiConsumer<VirtualHost, String>)VirtualHost::setLanguageId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -736,8 +753,9 @@ public class VirtualHostModelImpl
 	private String _languageId;
 
 	public <T> T getColumnValue(String columnName) {
-		Function<VirtualHost, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<VirtualHost, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

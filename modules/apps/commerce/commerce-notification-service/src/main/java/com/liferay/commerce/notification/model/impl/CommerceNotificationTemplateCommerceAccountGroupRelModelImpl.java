@@ -243,7 +243,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		 Function<CommerceNotificationTemplateCommerceAccountGroupRel, Object>>
 			getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map
@@ -252,140 +252,161 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 			 <CommerceNotificationTemplateCommerceAccountGroupRel, Object>>
 				getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map
-		<String,
-		 Function<CommerceNotificationTemplateCommerceAccountGroupRel, Object>>
-			_attributeGetterFunctions;
-	private static final Map
-		<String,
-		 BiConsumer
-			 <CommerceNotificationTemplateCommerceAccountGroupRel, Object>>
-				_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map
+		private static final Map
 			<String,
 			 Function
 				 <CommerceNotificationTemplateCommerceAccountGroupRel, Object>>
-					attributeGetterFunctions =
+					_attributeGetterFunctions;
+
+		static {
+			Map
+				<String,
+				 Function
+					 <CommerceNotificationTemplateCommerceAccountGroupRel,
+					  Object>> attributeGetterFunctions =
 						new LinkedHashMap
 							<String,
 							 Function
 								 <CommerceNotificationTemplateCommerceAccountGroupRel,
 								  Object>>();
-		Map
+
+			attributeGetterFunctions.put(
+				"mvccVersion",
+				CommerceNotificationTemplateCommerceAccountGroupRel::
+					getMvccVersion);
+			attributeGetterFunctions.put(
+				"commerceNotificationTemplateCommerceAccountGroupRelId",
+				CommerceNotificationTemplateCommerceAccountGroupRel::
+					getCommerceNotificationTemplateCommerceAccountGroupRelId);
+			attributeGetterFunctions.put(
+				"groupId",
+				CommerceNotificationTemplateCommerceAccountGroupRel::
+					getGroupId);
+			attributeGetterFunctions.put(
+				"companyId",
+				CommerceNotificationTemplateCommerceAccountGroupRel::
+					getCompanyId);
+			attributeGetterFunctions.put(
+				"userId",
+				CommerceNotificationTemplateCommerceAccountGroupRel::getUserId);
+			attributeGetterFunctions.put(
+				"userName",
+				CommerceNotificationTemplateCommerceAccountGroupRel::
+					getUserName);
+			attributeGetterFunctions.put(
+				"createDate",
+				CommerceNotificationTemplateCommerceAccountGroupRel::
+					getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate",
+				CommerceNotificationTemplateCommerceAccountGroupRel::
+					getModifiedDate);
+			attributeGetterFunctions.put(
+				"commerceNotificationTemplateId",
+				CommerceNotificationTemplateCommerceAccountGroupRel::
+					getCommerceNotificationTemplateId);
+			attributeGetterFunctions.put(
+				"commerceAccountGroupId",
+				CommerceNotificationTemplateCommerceAccountGroupRel::
+					getCommerceAccountGroupId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
 			<String,
-			 BiConsumer<CommerceNotificationTemplateCommerceAccountGroupRel, ?>>
-				attributeSetterBiConsumers =
-					new LinkedHashMap
-						<String,
-						 BiConsumer
-							 <CommerceNotificationTemplateCommerceAccountGroupRel,
-							  ?>>();
+			 BiConsumer
+				 <CommerceNotificationTemplateCommerceAccountGroupRel, Object>>
+					_attributeSetterBiConsumers;
 
-		attributeGetterFunctions.put(
-			"mvccVersion",
-			CommerceNotificationTemplateCommerceAccountGroupRel::
-				getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
-					CommerceNotificationTemplateCommerceAccountGroupRel::
-						setMvccVersion);
-		attributeGetterFunctions.put(
-			"commerceNotificationTemplateCommerceAccountGroupRelId",
-			CommerceNotificationTemplateCommerceAccountGroupRel::
-				getCommerceNotificationTemplateCommerceAccountGroupRelId);
-		attributeSetterBiConsumers.put(
-			"commerceNotificationTemplateCommerceAccountGroupRelId",
-			(BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
-					CommerceNotificationTemplateCommerceAccountGroupRel::
-						setCommerceNotificationTemplateCommerceAccountGroupRelId);
-		attributeGetterFunctions.put(
-			"groupId",
-			CommerceNotificationTemplateCommerceAccountGroupRel::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
-					CommerceNotificationTemplateCommerceAccountGroupRel::
-						setGroupId);
-		attributeGetterFunctions.put(
-			"companyId",
-			CommerceNotificationTemplateCommerceAccountGroupRel::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
-					CommerceNotificationTemplateCommerceAccountGroupRel::
-						setCompanyId);
-		attributeGetterFunctions.put(
-			"userId",
-			CommerceNotificationTemplateCommerceAccountGroupRel::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
-					CommerceNotificationTemplateCommerceAccountGroupRel::
-						setUserId);
-		attributeGetterFunctions.put(
-			"userName",
-			CommerceNotificationTemplateCommerceAccountGroupRel::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel, String>)
-					CommerceNotificationTemplateCommerceAccountGroupRel::
-						setUserName);
-		attributeGetterFunctions.put(
-			"createDate",
-			CommerceNotificationTemplateCommerceAccountGroupRel::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel, Date>)
-					CommerceNotificationTemplateCommerceAccountGroupRel::
-						setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate",
-			CommerceNotificationTemplateCommerceAccountGroupRel::
-				getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel, Date>)
-					CommerceNotificationTemplateCommerceAccountGroupRel::
-						setModifiedDate);
-		attributeGetterFunctions.put(
-			"commerceNotificationTemplateId",
-			CommerceNotificationTemplateCommerceAccountGroupRel::
-				getCommerceNotificationTemplateId);
-		attributeSetterBiConsumers.put(
-			"commerceNotificationTemplateId",
-			(BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
-					CommerceNotificationTemplateCommerceAccountGroupRel::
-						setCommerceNotificationTemplateId);
-		attributeGetterFunctions.put(
-			"commerceAccountGroupId",
-			CommerceNotificationTemplateCommerceAccountGroupRel::
-				getCommerceAccountGroupId);
-		attributeSetterBiConsumers.put(
-			"commerceAccountGroupId",
-			(BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
-					CommerceNotificationTemplateCommerceAccountGroupRel::
-						setCommerceAccountGroupId);
+		static {
+			Map
+				<String,
+				 BiConsumer
+					 <CommerceNotificationTemplateCommerceAccountGroupRel, ?>>
+						attributeSetterBiConsumers =
+							new LinkedHashMap
+								<String,
+								 BiConsumer
+									 <CommerceNotificationTemplateCommerceAccountGroupRel,
+									  ?>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer
+					<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+						CommerceNotificationTemplateCommerceAccountGroupRel::
+							setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"commerceNotificationTemplateCommerceAccountGroupRelId",
+				(BiConsumer
+					<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+						CommerceNotificationTemplateCommerceAccountGroupRel::
+							setCommerceNotificationTemplateCommerceAccountGroupRelId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer
+					<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+						CommerceNotificationTemplateCommerceAccountGroupRel::
+							setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer
+					<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+						CommerceNotificationTemplateCommerceAccountGroupRel::
+							setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer
+					<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+						CommerceNotificationTemplateCommerceAccountGroupRel::
+							setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer
+					<CommerceNotificationTemplateCommerceAccountGroupRel,
+					 String>)
+						 CommerceNotificationTemplateCommerceAccountGroupRel::
+							 setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer
+					<CommerceNotificationTemplateCommerceAccountGroupRel, Date>)
+						CommerceNotificationTemplateCommerceAccountGroupRel::
+							setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer
+					<CommerceNotificationTemplateCommerceAccountGroupRel, Date>)
+						CommerceNotificationTemplateCommerceAccountGroupRel::
+							setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"commerceNotificationTemplateId",
+				(BiConsumer
+					<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+						CommerceNotificationTemplateCommerceAccountGroupRel::
+							setCommerceNotificationTemplateId);
+			attributeSetterBiConsumers.put(
+				"commerceAccountGroupId",
+				(BiConsumer
+					<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
+						CommerceNotificationTemplateCommerceAccountGroupRel::
+							setCommerceAccountGroupId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -955,7 +976,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceNotificationTemplateCommerceAccountGroupRel, Object>
-			function = _attributeGetterFunctions.get(columnName);
+			function =
+				AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+					columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

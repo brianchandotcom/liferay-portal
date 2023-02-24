@@ -256,98 +256,117 @@ public class SocialActivityLimitModelImpl
 	public Map<String, Function<SocialActivityLimit, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<SocialActivityLimit, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SocialActivityLimit, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SocialActivityLimit, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<SocialActivityLimit, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<SocialActivityLimit, Object>>();
-		Map<String, BiConsumer<SocialActivityLimit, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<SocialActivityLimit, ?>>();
+		private static final Map<String, Function<SocialActivityLimit, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", SocialActivityLimit::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<SocialActivityLimit, Long>)
-				SocialActivityLimit::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", SocialActivityLimit::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<SocialActivityLimit, Long>)
-				SocialActivityLimit::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"activityLimitId", SocialActivityLimit::getActivityLimitId);
-		attributeSetterBiConsumers.put(
-			"activityLimitId",
-			(BiConsumer<SocialActivityLimit, Long>)
-				SocialActivityLimit::setActivityLimitId);
-		attributeGetterFunctions.put(
-			"groupId", SocialActivityLimit::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<SocialActivityLimit, Long>)
-				SocialActivityLimit::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", SocialActivityLimit::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SocialActivityLimit, Long>)
-				SocialActivityLimit::setCompanyId);
-		attributeGetterFunctions.put("userId", SocialActivityLimit::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<SocialActivityLimit, Long>)
-				SocialActivityLimit::setUserId);
-		attributeGetterFunctions.put(
-			"classNameId", SocialActivityLimit::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<SocialActivityLimit, Long>)
-				SocialActivityLimit::setClassNameId);
-		attributeGetterFunctions.put(
-			"classPK", SocialActivityLimit::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<SocialActivityLimit, Long>)
-				SocialActivityLimit::setClassPK);
-		attributeGetterFunctions.put(
-			"activityType", SocialActivityLimit::getActivityType);
-		attributeSetterBiConsumers.put(
-			"activityType",
-			(BiConsumer<SocialActivityLimit, Integer>)
-				SocialActivityLimit::setActivityType);
-		attributeGetterFunctions.put(
-			"activityCounterName", SocialActivityLimit::getActivityCounterName);
-		attributeSetterBiConsumers.put(
-			"activityCounterName",
-			(BiConsumer<SocialActivityLimit, String>)
-				SocialActivityLimit::setActivityCounterName);
-		attributeGetterFunctions.put("value", SocialActivityLimit::getValue);
-		attributeSetterBiConsumers.put(
-			"value",
-			(BiConsumer<SocialActivityLimit, String>)
-				SocialActivityLimit::setValue);
+		static {
+			Map<String, Function<SocialActivityLimit, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<SocialActivityLimit, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", SocialActivityLimit::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", SocialActivityLimit::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"activityLimitId", SocialActivityLimit::getActivityLimitId);
+			attributeGetterFunctions.put(
+				"groupId", SocialActivityLimit::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", SocialActivityLimit::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", SocialActivityLimit::getUserId);
+			attributeGetterFunctions.put(
+				"classNameId", SocialActivityLimit::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", SocialActivityLimit::getClassPK);
+			attributeGetterFunctions.put(
+				"activityType", SocialActivityLimit::getActivityType);
+			attributeGetterFunctions.put(
+				"activityCounterName",
+				SocialActivityLimit::getActivityCounterName);
+			attributeGetterFunctions.put(
+				"value", SocialActivityLimit::getValue);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<SocialActivityLimit, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<SocialActivityLimit, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<SocialActivityLimit, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<SocialActivityLimit, Long>)
+					SocialActivityLimit::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<SocialActivityLimit, Long>)
+					SocialActivityLimit::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"activityLimitId",
+				(BiConsumer<SocialActivityLimit, Long>)
+					SocialActivityLimit::setActivityLimitId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<SocialActivityLimit, Long>)
+					SocialActivityLimit::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<SocialActivityLimit, Long>)
+					SocialActivityLimit::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<SocialActivityLimit, Long>)
+					SocialActivityLimit::setUserId);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<SocialActivityLimit, Long>)
+					SocialActivityLimit::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<SocialActivityLimit, Long>)
+					SocialActivityLimit::setClassPK);
+			attributeSetterBiConsumers.put(
+				"activityType",
+				(BiConsumer<SocialActivityLimit, Integer>)
+					SocialActivityLimit::setActivityType);
+			attributeSetterBiConsumers.put(
+				"activityCounterName",
+				(BiConsumer<SocialActivityLimit, String>)
+					SocialActivityLimit::setActivityCounterName);
+			attributeSetterBiConsumers.put(
+				"value",
+				(BiConsumer<SocialActivityLimit, String>)
+					SocialActivityLimit::setValue);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -899,7 +918,8 @@ public class SocialActivityLimitModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<SocialActivityLimit, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

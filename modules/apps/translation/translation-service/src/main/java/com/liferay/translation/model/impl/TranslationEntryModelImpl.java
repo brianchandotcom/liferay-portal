@@ -262,133 +262,160 @@ public class TranslationEntryModelImpl
 	public Map<String, Function<TranslationEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<TranslationEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<TranslationEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<TranslationEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<TranslationEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<TranslationEntry, Object>>();
-		Map<String, BiConsumer<TranslationEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<TranslationEntry, ?>>();
+		private static final Map<String, Function<TranslationEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", TranslationEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<TranslationEntry, Long>)
-				TranslationEntry::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", TranslationEntry::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<TranslationEntry, Long>)
-				TranslationEntry::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", TranslationEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<TranslationEntry, String>)TranslationEntry::setUuid);
-		attributeGetterFunctions.put(
-			"translationEntryId", TranslationEntry::getTranslationEntryId);
-		attributeSetterBiConsumers.put(
-			"translationEntryId",
-			(BiConsumer<TranslationEntry, Long>)
-				TranslationEntry::setTranslationEntryId);
-		attributeGetterFunctions.put("groupId", TranslationEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<TranslationEntry, Long>)TranslationEntry::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", TranslationEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<TranslationEntry, Long>)TranslationEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", TranslationEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<TranslationEntry, Long>)TranslationEntry::setUserId);
-		attributeGetterFunctions.put("userName", TranslationEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<TranslationEntry, String>)
-				TranslationEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", TranslationEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<TranslationEntry, Date>)
-				TranslationEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", TranslationEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<TranslationEntry, Date>)
-				TranslationEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"classNameId", TranslationEntry::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId",
-			(BiConsumer<TranslationEntry, Long>)
-				TranslationEntry::setClassNameId);
-		attributeGetterFunctions.put("classPK", TranslationEntry::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK",
-			(BiConsumer<TranslationEntry, Long>)TranslationEntry::setClassPK);
-		attributeGetterFunctions.put("content", TranslationEntry::getContent);
-		attributeSetterBiConsumers.put(
-			"content",
-			(BiConsumer<TranslationEntry, String>)TranslationEntry::setContent);
-		attributeGetterFunctions.put(
-			"contentType", TranslationEntry::getContentType);
-		attributeSetterBiConsumers.put(
-			"contentType",
-			(BiConsumer<TranslationEntry, String>)
-				TranslationEntry::setContentType);
-		attributeGetterFunctions.put(
-			"languageId", TranslationEntry::getLanguageId);
-		attributeSetterBiConsumers.put(
-			"languageId",
-			(BiConsumer<TranslationEntry, String>)
-				TranslationEntry::setLanguageId);
-		attributeGetterFunctions.put("status", TranslationEntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<TranslationEntry, Integer>)TranslationEntry::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", TranslationEntry::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<TranslationEntry, Long>)
-				TranslationEntry::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", TranslationEntry::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<TranslationEntry, String>)
-				TranslationEntry::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", TranslationEntry::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<TranslationEntry, Date>)
-				TranslationEntry::setStatusDate);
+		static {
+			Map<String, Function<TranslationEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<TranslationEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", TranslationEntry::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", TranslationEntry::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", TranslationEntry::getUuid);
+			attributeGetterFunctions.put(
+				"translationEntryId", TranslationEntry::getTranslationEntryId);
+			attributeGetterFunctions.put(
+				"groupId", TranslationEntry::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", TranslationEntry::getCompanyId);
+			attributeGetterFunctions.put("userId", TranslationEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", TranslationEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", TranslationEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", TranslationEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"classNameId", TranslationEntry::getClassNameId);
+			attributeGetterFunctions.put(
+				"classPK", TranslationEntry::getClassPK);
+			attributeGetterFunctions.put(
+				"content", TranslationEntry::getContent);
+			attributeGetterFunctions.put(
+				"contentType", TranslationEntry::getContentType);
+			attributeGetterFunctions.put(
+				"languageId", TranslationEntry::getLanguageId);
+			attributeGetterFunctions.put("status", TranslationEntry::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", TranslationEntry::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", TranslationEntry::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", TranslationEntry::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<TranslationEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<TranslationEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<TranslationEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<TranslationEntry, Long>)
+					TranslationEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<TranslationEntry, Long>)
+					TranslationEntry::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<TranslationEntry, String>)
+					TranslationEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"translationEntryId",
+				(BiConsumer<TranslationEntry, Long>)
+					TranslationEntry::setTranslationEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<TranslationEntry, Long>)
+					TranslationEntry::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<TranslationEntry, Long>)
+					TranslationEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<TranslationEntry, Long>)
+					TranslationEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<TranslationEntry, String>)
+					TranslationEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<TranslationEntry, Date>)
+					TranslationEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<TranslationEntry, Date>)
+					TranslationEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId",
+				(BiConsumer<TranslationEntry, Long>)
+					TranslationEntry::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK",
+				(BiConsumer<TranslationEntry, Long>)
+					TranslationEntry::setClassPK);
+			attributeSetterBiConsumers.put(
+				"content",
+				(BiConsumer<TranslationEntry, String>)
+					TranslationEntry::setContent);
+			attributeSetterBiConsumers.put(
+				"contentType",
+				(BiConsumer<TranslationEntry, String>)
+					TranslationEntry::setContentType);
+			attributeSetterBiConsumers.put(
+				"languageId",
+				(BiConsumer<TranslationEntry, String>)
+					TranslationEntry::setLanguageId);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<TranslationEntry, Integer>)
+					TranslationEntry::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<TranslationEntry, Long>)
+					TranslationEntry::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<TranslationEntry, String>)
+					TranslationEntry::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<TranslationEntry, Date>)
+					TranslationEntry::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1290,7 +1317,8 @@ public class TranslationEntryModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<TranslationEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

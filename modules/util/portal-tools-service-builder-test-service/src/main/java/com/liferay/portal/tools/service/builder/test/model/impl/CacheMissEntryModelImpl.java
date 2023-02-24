@@ -202,48 +202,66 @@ public class CacheMissEntryModelImpl
 	public Map<String, Function<CacheMissEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CacheMissEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CacheMissEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CacheMissEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CacheMissEntry, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<CacheMissEntry, Object>>();
-		Map<String, BiConsumer<CacheMissEntry, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<CacheMissEntry, ?>>();
+		private static final Map<String, Function<CacheMissEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CacheMissEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CacheMissEntry, Long>)CacheMissEntry::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CacheMissEntry::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CacheMissEntry, Long>)
-				CacheMissEntry::setCtCollectionId);
-		attributeGetterFunctions.put(
-			"cacheMissEntryId", CacheMissEntry::getCacheMissEntryId);
-		attributeSetterBiConsumers.put(
-			"cacheMissEntryId",
-			(BiConsumer<CacheMissEntry, Long>)
-				CacheMissEntry::setCacheMissEntryId);
+		static {
+			Map<String, Function<CacheMissEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CacheMissEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CacheMissEntry::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CacheMissEntry::getCtCollectionId);
+			attributeGetterFunctions.put(
+				"cacheMissEntryId", CacheMissEntry::getCacheMissEntryId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CacheMissEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CacheMissEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<CacheMissEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CacheMissEntry, Long>)
+					CacheMissEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CacheMissEntry, Long>)
+					CacheMissEntry::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"cacheMissEntryId",
+				(BiConsumer<CacheMissEntry, Long>)
+					CacheMissEntry::setCacheMissEntryId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -512,7 +530,8 @@ public class CacheMissEntryModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CacheMissEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

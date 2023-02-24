@@ -254,73 +254,89 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	}
 
 	public Map<String, Function<Phone, Object>> getAttributeGetterFunctions() {
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<Phone, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Phone, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Phone, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<Phone, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Phone, Object>>();
-		Map<String, BiConsumer<Phone, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Phone, ?>>();
+		private static final Map<String, Function<Phone, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("mvccVersion", Phone::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion", (BiConsumer<Phone, Long>)Phone::setMvccVersion);
-		attributeGetterFunctions.put("uuid", Phone::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<Phone, String>)Phone::setUuid);
-		attributeGetterFunctions.put("phoneId", Phone::getPhoneId);
-		attributeSetterBiConsumers.put(
-			"phoneId", (BiConsumer<Phone, Long>)Phone::setPhoneId);
-		attributeGetterFunctions.put("companyId", Phone::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId", (BiConsumer<Phone, Long>)Phone::setCompanyId);
-		attributeGetterFunctions.put("userId", Phone::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Phone, Long>)Phone::setUserId);
-		attributeGetterFunctions.put("userName", Phone::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName", (BiConsumer<Phone, String>)Phone::setUserName);
-		attributeGetterFunctions.put("createDate", Phone::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<Phone, Date>)Phone::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", Phone::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate", (BiConsumer<Phone, Date>)Phone::setModifiedDate);
-		attributeGetterFunctions.put("classNameId", Phone::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId", (BiConsumer<Phone, Long>)Phone::setClassNameId);
-		attributeGetterFunctions.put("classPK", Phone::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK", (BiConsumer<Phone, Long>)Phone::setClassPK);
-		attributeGetterFunctions.put("number", Phone::getNumber);
-		attributeSetterBiConsumers.put(
-			"number", (BiConsumer<Phone, String>)Phone::setNumber);
-		attributeGetterFunctions.put("extension", Phone::getExtension);
-		attributeSetterBiConsumers.put(
-			"extension", (BiConsumer<Phone, String>)Phone::setExtension);
-		attributeGetterFunctions.put("listTypeId", Phone::getListTypeId);
-		attributeSetterBiConsumers.put(
-			"listTypeId", (BiConsumer<Phone, Long>)Phone::setListTypeId);
-		attributeGetterFunctions.put("primary", Phone::getPrimary);
-		attributeSetterBiConsumers.put(
-			"primary", (BiConsumer<Phone, Boolean>)Phone::setPrimary);
+		static {
+			Map<String, Function<Phone, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<Phone, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put("mvccVersion", Phone::getMvccVersion);
+			attributeGetterFunctions.put("uuid", Phone::getUuid);
+			attributeGetterFunctions.put("phoneId", Phone::getPhoneId);
+			attributeGetterFunctions.put("companyId", Phone::getCompanyId);
+			attributeGetterFunctions.put("userId", Phone::getUserId);
+			attributeGetterFunctions.put("userName", Phone::getUserName);
+			attributeGetterFunctions.put("createDate", Phone::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", Phone::getModifiedDate);
+			attributeGetterFunctions.put("classNameId", Phone::getClassNameId);
+			attributeGetterFunctions.put("classPK", Phone::getClassPK);
+			attributeGetterFunctions.put("number", Phone::getNumber);
+			attributeGetterFunctions.put("extension", Phone::getExtension);
+			attributeGetterFunctions.put("listTypeId", Phone::getListTypeId);
+			attributeGetterFunctions.put("primary", Phone::getPrimary);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<Phone, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<Phone, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<Phone, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion", (BiConsumer<Phone, Long>)Phone::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<Phone, String>)Phone::setUuid);
+			attributeSetterBiConsumers.put(
+				"phoneId", (BiConsumer<Phone, Long>)Phone::setPhoneId);
+			attributeSetterBiConsumers.put(
+				"companyId", (BiConsumer<Phone, Long>)Phone::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<Phone, Long>)Phone::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName", (BiConsumer<Phone, String>)Phone::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate", (BiConsumer<Phone, Date>)Phone::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<Phone, Date>)Phone::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"classNameId", (BiConsumer<Phone, Long>)Phone::setClassNameId);
+			attributeSetterBiConsumers.put(
+				"classPK", (BiConsumer<Phone, Long>)Phone::setClassPK);
+			attributeSetterBiConsumers.put(
+				"number", (BiConsumer<Phone, String>)Phone::setNumber);
+			attributeSetterBiConsumers.put(
+				"extension", (BiConsumer<Phone, String>)Phone::setExtension);
+			attributeSetterBiConsumers.put(
+				"listTypeId", (BiConsumer<Phone, Long>)Phone::setListTypeId);
+			attributeSetterBiConsumers.put(
+				"primary", (BiConsumer<Phone, Boolean>)Phone::setPrimary);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -984,8 +1000,9 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<Phone, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<Phone, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

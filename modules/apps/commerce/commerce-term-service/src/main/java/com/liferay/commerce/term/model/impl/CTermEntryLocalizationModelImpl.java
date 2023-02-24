@@ -214,78 +214,95 @@ public class CTermEntryLocalizationModelImpl
 	public Map<String, Function<CTermEntryLocalization, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CTermEntryLocalization, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CTermEntryLocalization, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CTermEntryLocalization, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CTermEntryLocalization, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CTermEntryLocalization, Object>>();
-		Map<String, BiConsumer<CTermEntryLocalization, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<CTermEntryLocalization, ?>>();
+		private static final Map
+			<String, Function<CTermEntryLocalization, Object>>
+				_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CTermEntryLocalization::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CTermEntryLocalization, Long>)
-				CTermEntryLocalization::setMvccVersion);
-		attributeGetterFunctions.put(
-			"cTermEntryLocalizationId",
-			CTermEntryLocalization::getCTermEntryLocalizationId);
-		attributeSetterBiConsumers.put(
-			"cTermEntryLocalizationId",
-			(BiConsumer<CTermEntryLocalization, Long>)
-				CTermEntryLocalization::setCTermEntryLocalizationId);
-		attributeGetterFunctions.put(
-			"companyId", CTermEntryLocalization::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CTermEntryLocalization, Long>)
-				CTermEntryLocalization::setCompanyId);
-		attributeGetterFunctions.put(
-			"commerceTermEntryId",
-			CTermEntryLocalization::getCommerceTermEntryId);
-		attributeSetterBiConsumers.put(
-			"commerceTermEntryId",
-			(BiConsumer<CTermEntryLocalization, Long>)
-				CTermEntryLocalization::setCommerceTermEntryId);
-		attributeGetterFunctions.put(
-			"languageId", CTermEntryLocalization::getLanguageId);
-		attributeSetterBiConsumers.put(
-			"languageId",
-			(BiConsumer<CTermEntryLocalization, String>)
-				CTermEntryLocalization::setLanguageId);
-		attributeGetterFunctions.put(
-			"description", CTermEntryLocalization::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<CTermEntryLocalization, String>)
-				CTermEntryLocalization::setDescription);
-		attributeGetterFunctions.put("label", CTermEntryLocalization::getLabel);
-		attributeSetterBiConsumers.put(
-			"label",
-			(BiConsumer<CTermEntryLocalization, String>)
-				CTermEntryLocalization::setLabel);
+		static {
+			Map<String, Function<CTermEntryLocalization, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CTermEntryLocalization, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CTermEntryLocalization::getMvccVersion);
+			attributeGetterFunctions.put(
+				"cTermEntryLocalizationId",
+				CTermEntryLocalization::getCTermEntryLocalizationId);
+			attributeGetterFunctions.put(
+				"companyId", CTermEntryLocalization::getCompanyId);
+			attributeGetterFunctions.put(
+				"commerceTermEntryId",
+				CTermEntryLocalization::getCommerceTermEntryId);
+			attributeGetterFunctions.put(
+				"languageId", CTermEntryLocalization::getLanguageId);
+			attributeGetterFunctions.put(
+				"description", CTermEntryLocalization::getDescription);
+			attributeGetterFunctions.put(
+				"label", CTermEntryLocalization::getLabel);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<CTermEntryLocalization, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CTermEntryLocalization, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CTermEntryLocalization, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CTermEntryLocalization, Long>)
+					CTermEntryLocalization::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"cTermEntryLocalizationId",
+				(BiConsumer<CTermEntryLocalization, Long>)
+					CTermEntryLocalization::setCTermEntryLocalizationId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CTermEntryLocalization, Long>)
+					CTermEntryLocalization::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"commerceTermEntryId",
+				(BiConsumer<CTermEntryLocalization, Long>)
+					CTermEntryLocalization::setCommerceTermEntryId);
+			attributeSetterBiConsumers.put(
+				"languageId",
+				(BiConsumer<CTermEntryLocalization, String>)
+					CTermEntryLocalization::setLanguageId);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<CTermEntryLocalization, String>)
+					CTermEntryLocalization::setDescription);
+			attributeSetterBiConsumers.put(
+				"label",
+				(BiConsumer<CTermEntryLocalization, String>)
+					CTermEntryLocalization::setLabel);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -695,7 +712,8 @@ public class CTermEntryLocalizationModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CTermEntryLocalization, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

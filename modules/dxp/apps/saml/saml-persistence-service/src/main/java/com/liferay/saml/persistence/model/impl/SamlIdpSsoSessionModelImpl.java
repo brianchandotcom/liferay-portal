@@ -213,74 +213,93 @@ public class SamlIdpSsoSessionModelImpl
 	public Map<String, Function<SamlIdpSsoSession, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<SamlIdpSsoSession, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SamlIdpSsoSession, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SamlIdpSsoSession, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<SamlIdpSsoSession, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<SamlIdpSsoSession, Object>>();
-		Map<String, BiConsumer<SamlIdpSsoSession, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<SamlIdpSsoSession, ?>>();
+		private static final Map<String, Function<SamlIdpSsoSession, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"samlIdpSsoSessionId", SamlIdpSsoSession::getSamlIdpSsoSessionId);
-		attributeSetterBiConsumers.put(
-			"samlIdpSsoSessionId",
-			(BiConsumer<SamlIdpSsoSession, Long>)
-				SamlIdpSsoSession::setSamlIdpSsoSessionId);
-		attributeGetterFunctions.put(
-			"companyId", SamlIdpSsoSession::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SamlIdpSsoSession, Long>)
-				SamlIdpSsoSession::setCompanyId);
-		attributeGetterFunctions.put("userId", SamlIdpSsoSession::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<SamlIdpSsoSession, Long>)SamlIdpSsoSession::setUserId);
-		attributeGetterFunctions.put(
-			"userName", SamlIdpSsoSession::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<SamlIdpSsoSession, String>)
-				SamlIdpSsoSession::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", SamlIdpSsoSession::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<SamlIdpSsoSession, Date>)
-				SamlIdpSsoSession::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", SamlIdpSsoSession::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<SamlIdpSsoSession, Date>)
-				SamlIdpSsoSession::setModifiedDate);
-		attributeGetterFunctions.put(
-			"samlIdpSsoSessionKey", SamlIdpSsoSession::getSamlIdpSsoSessionKey);
-		attributeSetterBiConsumers.put(
-			"samlIdpSsoSessionKey",
-			(BiConsumer<SamlIdpSsoSession, String>)
-				SamlIdpSsoSession::setSamlIdpSsoSessionKey);
+		static {
+			Map<String, Function<SamlIdpSsoSession, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<SamlIdpSsoSession, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"samlIdpSsoSessionId",
+				SamlIdpSsoSession::getSamlIdpSsoSessionId);
+			attributeGetterFunctions.put(
+				"companyId", SamlIdpSsoSession::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", SamlIdpSsoSession::getUserId);
+			attributeGetterFunctions.put(
+				"userName", SamlIdpSsoSession::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", SamlIdpSsoSession::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", SamlIdpSsoSession::getModifiedDate);
+			attributeGetterFunctions.put(
+				"samlIdpSsoSessionKey",
+				SamlIdpSsoSession::getSamlIdpSsoSessionKey);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<SamlIdpSsoSession, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<SamlIdpSsoSession, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<SamlIdpSsoSession, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"samlIdpSsoSessionId",
+				(BiConsumer<SamlIdpSsoSession, Long>)
+					SamlIdpSsoSession::setSamlIdpSsoSessionId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<SamlIdpSsoSession, Long>)
+					SamlIdpSsoSession::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<SamlIdpSsoSession, Long>)
+					SamlIdpSsoSession::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<SamlIdpSsoSession, String>)
+					SamlIdpSsoSession::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<SamlIdpSsoSession, Date>)
+					SamlIdpSsoSession::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<SamlIdpSsoSession, Date>)
+					SamlIdpSsoSession::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"samlIdpSsoSessionKey",
+				(BiConsumer<SamlIdpSsoSession, String>)
+					SamlIdpSsoSession::setSamlIdpSsoSessionKey);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -717,7 +736,8 @@ public class SamlIdpSsoSessionModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<SamlIdpSsoSession, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

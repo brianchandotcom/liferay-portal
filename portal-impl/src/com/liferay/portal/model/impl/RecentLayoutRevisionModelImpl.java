@@ -243,82 +243,99 @@ public class RecentLayoutRevisionModelImpl
 	public Map<String, Function<RecentLayoutRevision, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<RecentLayoutRevision, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<RecentLayoutRevision, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<RecentLayoutRevision, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<RecentLayoutRevision, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<RecentLayoutRevision, Object>>();
-		Map<String, BiConsumer<RecentLayoutRevision, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<RecentLayoutRevision, ?>>();
+		private static final Map<String, Function<RecentLayoutRevision, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", RecentLayoutRevision::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<RecentLayoutRevision, Long>)
-				RecentLayoutRevision::setMvccVersion);
-		attributeGetterFunctions.put(
-			"recentLayoutRevisionId",
-			RecentLayoutRevision::getRecentLayoutRevisionId);
-		attributeSetterBiConsumers.put(
-			"recentLayoutRevisionId",
-			(BiConsumer<RecentLayoutRevision, Long>)
-				RecentLayoutRevision::setRecentLayoutRevisionId);
-		attributeGetterFunctions.put(
-			"groupId", RecentLayoutRevision::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<RecentLayoutRevision, Long>)
-				RecentLayoutRevision::setGroupId);
-		attributeGetterFunctions.put(
-			"companyId", RecentLayoutRevision::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<RecentLayoutRevision, Long>)
-				RecentLayoutRevision::setCompanyId);
-		attributeGetterFunctions.put("userId", RecentLayoutRevision::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<RecentLayoutRevision, Long>)
-				RecentLayoutRevision::setUserId);
-		attributeGetterFunctions.put(
-			"layoutRevisionId", RecentLayoutRevision::getLayoutRevisionId);
-		attributeSetterBiConsumers.put(
-			"layoutRevisionId",
-			(BiConsumer<RecentLayoutRevision, Long>)
-				RecentLayoutRevision::setLayoutRevisionId);
-		attributeGetterFunctions.put(
-			"layoutSetBranchId", RecentLayoutRevision::getLayoutSetBranchId);
-		attributeSetterBiConsumers.put(
-			"layoutSetBranchId",
-			(BiConsumer<RecentLayoutRevision, Long>)
-				RecentLayoutRevision::setLayoutSetBranchId);
-		attributeGetterFunctions.put("plid", RecentLayoutRevision::getPlid);
-		attributeSetterBiConsumers.put(
-			"plid",
-			(BiConsumer<RecentLayoutRevision, Long>)
-				RecentLayoutRevision::setPlid);
+		static {
+			Map<String, Function<RecentLayoutRevision, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<RecentLayoutRevision, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", RecentLayoutRevision::getMvccVersion);
+			attributeGetterFunctions.put(
+				"recentLayoutRevisionId",
+				RecentLayoutRevision::getRecentLayoutRevisionId);
+			attributeGetterFunctions.put(
+				"groupId", RecentLayoutRevision::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", RecentLayoutRevision::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", RecentLayoutRevision::getUserId);
+			attributeGetterFunctions.put(
+				"layoutRevisionId", RecentLayoutRevision::getLayoutRevisionId);
+			attributeGetterFunctions.put(
+				"layoutSetBranchId",
+				RecentLayoutRevision::getLayoutSetBranchId);
+			attributeGetterFunctions.put("plid", RecentLayoutRevision::getPlid);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map
+			<String, BiConsumer<RecentLayoutRevision, Object>>
+				_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<RecentLayoutRevision, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<RecentLayoutRevision, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<RecentLayoutRevision, Long>)
+					RecentLayoutRevision::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"recentLayoutRevisionId",
+				(BiConsumer<RecentLayoutRevision, Long>)
+					RecentLayoutRevision::setRecentLayoutRevisionId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<RecentLayoutRevision, Long>)
+					RecentLayoutRevision::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<RecentLayoutRevision, Long>)
+					RecentLayoutRevision::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<RecentLayoutRevision, Long>)
+					RecentLayoutRevision::setUserId);
+			attributeSetterBiConsumers.put(
+				"layoutRevisionId",
+				(BiConsumer<RecentLayoutRevision, Long>)
+					RecentLayoutRevision::setLayoutRevisionId);
+			attributeSetterBiConsumers.put(
+				"layoutSetBranchId",
+				(BiConsumer<RecentLayoutRevision, Long>)
+					RecentLayoutRevision::setLayoutSetBranchId);
+			attributeSetterBiConsumers.put(
+				"plid",
+				(BiConsumer<RecentLayoutRevision, Long>)
+					RecentLayoutRevision::setPlid);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -758,7 +775,8 @@ public class RecentLayoutRevisionModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<RecentLayoutRevision, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

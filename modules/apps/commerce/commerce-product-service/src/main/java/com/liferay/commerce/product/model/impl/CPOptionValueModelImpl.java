@@ -262,97 +262,125 @@ public class CPOptionValueModelImpl
 	public Map<String, Function<CPOptionValue, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CPOptionValue, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CPOptionValue, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CPOptionValue, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CPOptionValue, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<CPOptionValue, Object>>();
-		Map<String, BiConsumer<CPOptionValue, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<CPOptionValue, ?>>();
+		private static final Map<String, Function<CPOptionValue, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPOptionValue::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPOptionValue, Long>)CPOptionValue::setMvccVersion);
-		attributeGetterFunctions.put(
-			"ctCollectionId", CPOptionValue::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<CPOptionValue, Long>)CPOptionValue::setCtCollectionId);
-		attributeGetterFunctions.put("uuid", CPOptionValue::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<CPOptionValue, String>)CPOptionValue::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", CPOptionValue::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CPOptionValue, String>)
-				CPOptionValue::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"CPOptionValueId", CPOptionValue::getCPOptionValueId);
-		attributeSetterBiConsumers.put(
-			"CPOptionValueId",
-			(BiConsumer<CPOptionValue, Long>)CPOptionValue::setCPOptionValueId);
-		attributeGetterFunctions.put("companyId", CPOptionValue::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CPOptionValue, Long>)CPOptionValue::setCompanyId);
-		attributeGetterFunctions.put("userId", CPOptionValue::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CPOptionValue, Long>)CPOptionValue::setUserId);
-		attributeGetterFunctions.put("userName", CPOptionValue::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CPOptionValue, String>)CPOptionValue::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CPOptionValue::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CPOptionValue, Date>)CPOptionValue::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CPOptionValue::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CPOptionValue, Date>)CPOptionValue::setModifiedDate);
-		attributeGetterFunctions.put(
-			"CPOptionId", CPOptionValue::getCPOptionId);
-		attributeSetterBiConsumers.put(
-			"CPOptionId",
-			(BiConsumer<CPOptionValue, Long>)CPOptionValue::setCPOptionId);
-		attributeGetterFunctions.put("name", CPOptionValue::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<CPOptionValue, String>)CPOptionValue::setName);
-		attributeGetterFunctions.put("priority", CPOptionValue::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<CPOptionValue, Double>)CPOptionValue::setPriority);
-		attributeGetterFunctions.put("key", CPOptionValue::getKey);
-		attributeSetterBiConsumers.put(
-			"key", (BiConsumer<CPOptionValue, String>)CPOptionValue::setKey);
-		attributeGetterFunctions.put(
-			"lastPublishDate", CPOptionValue::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<CPOptionValue, Date>)CPOptionValue::setLastPublishDate);
+		static {
+			Map<String, Function<CPOptionValue, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CPOptionValue, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CPOptionValue::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", CPOptionValue::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", CPOptionValue::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CPOptionValue::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"CPOptionValueId", CPOptionValue::getCPOptionValueId);
+			attributeGetterFunctions.put(
+				"companyId", CPOptionValue::getCompanyId);
+			attributeGetterFunctions.put("userId", CPOptionValue::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CPOptionValue::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CPOptionValue::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CPOptionValue::getModifiedDate);
+			attributeGetterFunctions.put(
+				"CPOptionId", CPOptionValue::getCPOptionId);
+			attributeGetterFunctions.put("name", CPOptionValue::getName);
+			attributeGetterFunctions.put(
+				"priority", CPOptionValue::getPriority);
+			attributeGetterFunctions.put("key", CPOptionValue::getKey);
+			attributeGetterFunctions.put(
+				"lastPublishDate", CPOptionValue::getLastPublishDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CPOptionValue, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CPOptionValue, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<CPOptionValue, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CPOptionValue, Long>)CPOptionValue::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<CPOptionValue, Long>)
+					CPOptionValue::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CPOptionValue, String>)CPOptionValue::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CPOptionValue, String>)
+					CPOptionValue::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"CPOptionValueId",
+				(BiConsumer<CPOptionValue, Long>)
+					CPOptionValue::setCPOptionValueId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CPOptionValue, Long>)CPOptionValue::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CPOptionValue, Long>)CPOptionValue::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CPOptionValue, String>)CPOptionValue::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CPOptionValue, Date>)CPOptionValue::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CPOptionValue, Date>)
+					CPOptionValue::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"CPOptionId",
+				(BiConsumer<CPOptionValue, Long>)CPOptionValue::setCPOptionId);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CPOptionValue, String>)CPOptionValue::setName);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<CPOptionValue, Double>)CPOptionValue::setPriority);
+			attributeSetterBiConsumers.put(
+				"key",
+				(BiConsumer<CPOptionValue, String>)CPOptionValue::setKey);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<CPOptionValue, Date>)
+					CPOptionValue::setLastPublishDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1199,7 +1227,8 @@ public class CPOptionValueModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CPOptionValue, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

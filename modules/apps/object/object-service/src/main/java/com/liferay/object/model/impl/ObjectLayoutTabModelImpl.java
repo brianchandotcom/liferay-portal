@@ -245,91 +245,115 @@ public class ObjectLayoutTabModelImpl
 	public Map<String, Function<ObjectLayoutTab, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectLayoutTab, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectLayoutTab, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectLayoutTab, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectLayoutTab, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<ObjectLayoutTab, Object>>();
-		Map<String, BiConsumer<ObjectLayoutTab, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<ObjectLayoutTab, ?>>();
+		private static final Map<String, Function<ObjectLayoutTab, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectLayoutTab::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectLayoutTab, Long>)ObjectLayoutTab::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectLayoutTab::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<ObjectLayoutTab, String>)ObjectLayoutTab::setUuid);
-		attributeGetterFunctions.put(
-			"objectLayoutTabId", ObjectLayoutTab::getObjectLayoutTabId);
-		attributeSetterBiConsumers.put(
-			"objectLayoutTabId",
-			(BiConsumer<ObjectLayoutTab, Long>)
-				ObjectLayoutTab::setObjectLayoutTabId);
-		attributeGetterFunctions.put(
-			"companyId", ObjectLayoutTab::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectLayoutTab, Long>)ObjectLayoutTab::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectLayoutTab::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<ObjectLayoutTab, Long>)ObjectLayoutTab::setUserId);
-		attributeGetterFunctions.put("userName", ObjectLayoutTab::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectLayoutTab, String>)ObjectLayoutTab::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", ObjectLayoutTab::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectLayoutTab, Date>)ObjectLayoutTab::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectLayoutTab::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectLayoutTab, Date>)
-				ObjectLayoutTab::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectLayoutId", ObjectLayoutTab::getObjectLayoutId);
-		attributeSetterBiConsumers.put(
-			"objectLayoutId",
-			(BiConsumer<ObjectLayoutTab, Long>)
-				ObjectLayoutTab::setObjectLayoutId);
-		attributeGetterFunctions.put(
-			"objectRelationshipId", ObjectLayoutTab::getObjectRelationshipId);
-		attributeSetterBiConsumers.put(
-			"objectRelationshipId",
-			(BiConsumer<ObjectLayoutTab, Long>)
-				ObjectLayoutTab::setObjectRelationshipId);
-		attributeGetterFunctions.put("name", ObjectLayoutTab::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<ObjectLayoutTab, String>)ObjectLayoutTab::setName);
-		attributeGetterFunctions.put("priority", ObjectLayoutTab::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<ObjectLayoutTab, Integer>)ObjectLayoutTab::setPriority);
+		static {
+			Map<String, Function<ObjectLayoutTab, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<ObjectLayoutTab, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectLayoutTab::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectLayoutTab::getUuid);
+			attributeGetterFunctions.put(
+				"objectLayoutTabId", ObjectLayoutTab::getObjectLayoutTabId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectLayoutTab::getCompanyId);
+			attributeGetterFunctions.put("userId", ObjectLayoutTab::getUserId);
+			attributeGetterFunctions.put(
+				"userName", ObjectLayoutTab::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectLayoutTab::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectLayoutTab::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectLayoutId", ObjectLayoutTab::getObjectLayoutId);
+			attributeGetterFunctions.put(
+				"objectRelationshipId",
+				ObjectLayoutTab::getObjectRelationshipId);
+			attributeGetterFunctions.put("name", ObjectLayoutTab::getName);
+			attributeGetterFunctions.put(
+				"priority", ObjectLayoutTab::getPriority);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ObjectLayoutTab, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectLayoutTab, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<ObjectLayoutTab, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectLayoutTab, Long>)
+					ObjectLayoutTab::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ObjectLayoutTab, String>)ObjectLayoutTab::setUuid);
+			attributeSetterBiConsumers.put(
+				"objectLayoutTabId",
+				(BiConsumer<ObjectLayoutTab, Long>)
+					ObjectLayoutTab::setObjectLayoutTabId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectLayoutTab, Long>)
+					ObjectLayoutTab::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectLayoutTab, Long>)ObjectLayoutTab::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectLayoutTab, String>)
+					ObjectLayoutTab::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectLayoutTab, Date>)
+					ObjectLayoutTab::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectLayoutTab, Date>)
+					ObjectLayoutTab::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectLayoutId",
+				(BiConsumer<ObjectLayoutTab, Long>)
+					ObjectLayoutTab::setObjectLayoutId);
+			attributeSetterBiConsumers.put(
+				"objectRelationshipId",
+				(BiConsumer<ObjectLayoutTab, Long>)
+					ObjectLayoutTab::setObjectRelationshipId);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<ObjectLayoutTab, String>)ObjectLayoutTab::setName);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<ObjectLayoutTab, Integer>)
+					ObjectLayoutTab::setPriority);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -1064,7 +1088,8 @@ public class ObjectLayoutTabModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<ObjectLayoutTab, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

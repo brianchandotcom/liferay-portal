@@ -229,80 +229,103 @@ public class ObjectFilterModelImpl
 	public Map<String, Function<ObjectFilter, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ObjectFilter, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ObjectFilter, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ObjectFilter, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<ObjectFilter, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<ObjectFilter, Object>>();
-		Map<String, BiConsumer<ObjectFilter, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<ObjectFilter, ?>>();
+		private static final Map<String, Function<ObjectFilter, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", ObjectFilter::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<ObjectFilter, Long>)ObjectFilter::setMvccVersion);
-		attributeGetterFunctions.put("uuid", ObjectFilter::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<ObjectFilter, String>)ObjectFilter::setUuid);
-		attributeGetterFunctions.put(
-			"objectFilterId", ObjectFilter::getObjectFilterId);
-		attributeSetterBiConsumers.put(
-			"objectFilterId",
-			(BiConsumer<ObjectFilter, Long>)ObjectFilter::setObjectFilterId);
-		attributeGetterFunctions.put("companyId", ObjectFilter::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<ObjectFilter, Long>)ObjectFilter::setCompanyId);
-		attributeGetterFunctions.put("userId", ObjectFilter::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<ObjectFilter, Long>)ObjectFilter::setUserId);
-		attributeGetterFunctions.put("userName", ObjectFilter::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<ObjectFilter, String>)ObjectFilter::setUserName);
-		attributeGetterFunctions.put("createDate", ObjectFilter::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<ObjectFilter, Date>)ObjectFilter::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", ObjectFilter::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<ObjectFilter, Date>)ObjectFilter::setModifiedDate);
-		attributeGetterFunctions.put(
-			"objectFieldId", ObjectFilter::getObjectFieldId);
-		attributeSetterBiConsumers.put(
-			"objectFieldId",
-			(BiConsumer<ObjectFilter, Long>)ObjectFilter::setObjectFieldId);
-		attributeGetterFunctions.put("filterBy", ObjectFilter::getFilterBy);
-		attributeSetterBiConsumers.put(
-			"filterBy",
-			(BiConsumer<ObjectFilter, String>)ObjectFilter::setFilterBy);
-		attributeGetterFunctions.put("filterType", ObjectFilter::getFilterType);
-		attributeSetterBiConsumers.put(
-			"filterType",
-			(BiConsumer<ObjectFilter, String>)ObjectFilter::setFilterType);
-		attributeGetterFunctions.put("json", ObjectFilter::getJSON);
-		attributeSetterBiConsumers.put(
-			"json", (BiConsumer<ObjectFilter, String>)ObjectFilter::setJSON);
+		static {
+			Map<String, Function<ObjectFilter, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap<String, Function<ObjectFilter, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", ObjectFilter::getMvccVersion);
+			attributeGetterFunctions.put("uuid", ObjectFilter::getUuid);
+			attributeGetterFunctions.put(
+				"objectFilterId", ObjectFilter::getObjectFilterId);
+			attributeGetterFunctions.put(
+				"companyId", ObjectFilter::getCompanyId);
+			attributeGetterFunctions.put("userId", ObjectFilter::getUserId);
+			attributeGetterFunctions.put("userName", ObjectFilter::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", ObjectFilter::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", ObjectFilter::getModifiedDate);
+			attributeGetterFunctions.put(
+				"objectFieldId", ObjectFilter::getObjectFieldId);
+			attributeGetterFunctions.put("filterBy", ObjectFilter::getFilterBy);
+			attributeGetterFunctions.put(
+				"filterType", ObjectFilter::getFilterType);
+			attributeGetterFunctions.put("json", ObjectFilter::getJSON);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<ObjectFilter, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<ObjectFilter, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<ObjectFilter, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ObjectFilter, Long>)ObjectFilter::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<ObjectFilter, String>)ObjectFilter::setUuid);
+			attributeSetterBiConsumers.put(
+				"objectFilterId",
+				(BiConsumer<ObjectFilter, Long>)
+					ObjectFilter::setObjectFilterId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ObjectFilter, Long>)ObjectFilter::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<ObjectFilter, Long>)ObjectFilter::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<ObjectFilter, String>)ObjectFilter::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<ObjectFilter, Date>)ObjectFilter::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<ObjectFilter, Date>)ObjectFilter::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"objectFieldId",
+				(BiConsumer<ObjectFilter, Long>)ObjectFilter::setObjectFieldId);
+			attributeSetterBiConsumers.put(
+				"filterBy",
+				(BiConsumer<ObjectFilter, String>)ObjectFilter::setFilterBy);
+			attributeSetterBiConsumers.put(
+				"filterType",
+				(BiConsumer<ObjectFilter, String>)ObjectFilter::setFilterType);
+			attributeSetterBiConsumers.put(
+				"json",
+				(BiConsumer<ObjectFilter, String>)ObjectFilter::setJSON);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -878,8 +901,9 @@ public class ObjectFilterModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<ObjectFilter, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<ObjectFilter, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

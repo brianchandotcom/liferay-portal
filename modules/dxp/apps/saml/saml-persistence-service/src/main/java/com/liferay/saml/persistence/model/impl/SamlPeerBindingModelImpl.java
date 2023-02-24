@@ -241,99 +241,121 @@ public class SamlPeerBindingModelImpl
 	public Map<String, Function<SamlPeerBinding, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<SamlPeerBinding, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SamlPeerBinding, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SamlPeerBinding, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<SamlPeerBinding, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<SamlPeerBinding, Object>>();
-		Map<String, BiConsumer<SamlPeerBinding, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SamlPeerBinding, ?>>();
+		private static final Map<String, Function<SamlPeerBinding, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"samlPeerBindingId", SamlPeerBinding::getSamlPeerBindingId);
-		attributeSetterBiConsumers.put(
-			"samlPeerBindingId",
-			(BiConsumer<SamlPeerBinding, Long>)
-				SamlPeerBinding::setSamlPeerBindingId);
-		attributeGetterFunctions.put(
-			"companyId", SamlPeerBinding::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<SamlPeerBinding, Long>)SamlPeerBinding::setCompanyId);
-		attributeGetterFunctions.put(
-			"createDate", SamlPeerBinding::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<SamlPeerBinding, Date>)SamlPeerBinding::setCreateDate);
-		attributeGetterFunctions.put("userId", SamlPeerBinding::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<SamlPeerBinding, Long>)SamlPeerBinding::setUserId);
-		attributeGetterFunctions.put("userName", SamlPeerBinding::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<SamlPeerBinding, String>)SamlPeerBinding::setUserName);
-		attributeGetterFunctions.put("deleted", SamlPeerBinding::getDeleted);
-		attributeSetterBiConsumers.put(
-			"deleted",
-			(BiConsumer<SamlPeerBinding, Boolean>)SamlPeerBinding::setDeleted);
-		attributeGetterFunctions.put(
-			"samlNameIdFormat", SamlPeerBinding::getSamlNameIdFormat);
-		attributeSetterBiConsumers.put(
-			"samlNameIdFormat",
-			(BiConsumer<SamlPeerBinding, String>)
-				SamlPeerBinding::setSamlNameIdFormat);
-		attributeGetterFunctions.put(
-			"samlNameIdNameQualifier",
-			SamlPeerBinding::getSamlNameIdNameQualifier);
-		attributeSetterBiConsumers.put(
-			"samlNameIdNameQualifier",
-			(BiConsumer<SamlPeerBinding, String>)
-				SamlPeerBinding::setSamlNameIdNameQualifier);
-		attributeGetterFunctions.put(
-			"samlNameIdSpNameQualifier",
-			SamlPeerBinding::getSamlNameIdSpNameQualifier);
-		attributeSetterBiConsumers.put(
-			"samlNameIdSpNameQualifier",
-			(BiConsumer<SamlPeerBinding, String>)
-				SamlPeerBinding::setSamlNameIdSpNameQualifier);
-		attributeGetterFunctions.put(
-			"samlNameIdSpProvidedId",
-			SamlPeerBinding::getSamlNameIdSpProvidedId);
-		attributeSetterBiConsumers.put(
-			"samlNameIdSpProvidedId",
-			(BiConsumer<SamlPeerBinding, String>)
-				SamlPeerBinding::setSamlNameIdSpProvidedId);
-		attributeGetterFunctions.put(
-			"samlNameIdValue", SamlPeerBinding::getSamlNameIdValue);
-		attributeSetterBiConsumers.put(
-			"samlNameIdValue",
-			(BiConsumer<SamlPeerBinding, String>)
-				SamlPeerBinding::setSamlNameIdValue);
-		attributeGetterFunctions.put(
-			"samlPeerEntityId", SamlPeerBinding::getSamlPeerEntityId);
-		attributeSetterBiConsumers.put(
-			"samlPeerEntityId",
-			(BiConsumer<SamlPeerBinding, String>)
-				SamlPeerBinding::setSamlPeerEntityId);
+		static {
+			Map<String, Function<SamlPeerBinding, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<SamlPeerBinding, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"samlPeerBindingId", SamlPeerBinding::getSamlPeerBindingId);
+			attributeGetterFunctions.put(
+				"companyId", SamlPeerBinding::getCompanyId);
+			attributeGetterFunctions.put(
+				"createDate", SamlPeerBinding::getCreateDate);
+			attributeGetterFunctions.put("userId", SamlPeerBinding::getUserId);
+			attributeGetterFunctions.put(
+				"userName", SamlPeerBinding::getUserName);
+			attributeGetterFunctions.put(
+				"deleted", SamlPeerBinding::getDeleted);
+			attributeGetterFunctions.put(
+				"samlNameIdFormat", SamlPeerBinding::getSamlNameIdFormat);
+			attributeGetterFunctions.put(
+				"samlNameIdNameQualifier",
+				SamlPeerBinding::getSamlNameIdNameQualifier);
+			attributeGetterFunctions.put(
+				"samlNameIdSpNameQualifier",
+				SamlPeerBinding::getSamlNameIdSpNameQualifier);
+			attributeGetterFunctions.put(
+				"samlNameIdSpProvidedId",
+				SamlPeerBinding::getSamlNameIdSpProvidedId);
+			attributeGetterFunctions.put(
+				"samlNameIdValue", SamlPeerBinding::getSamlNameIdValue);
+			attributeGetterFunctions.put(
+				"samlPeerEntityId", SamlPeerBinding::getSamlPeerEntityId);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<SamlPeerBinding, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<SamlPeerBinding, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<SamlPeerBinding, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"samlPeerBindingId",
+				(BiConsumer<SamlPeerBinding, Long>)
+					SamlPeerBinding::setSamlPeerBindingId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<SamlPeerBinding, Long>)
+					SamlPeerBinding::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<SamlPeerBinding, Date>)
+					SamlPeerBinding::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<SamlPeerBinding, Long>)SamlPeerBinding::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<SamlPeerBinding, String>)
+					SamlPeerBinding::setUserName);
+			attributeSetterBiConsumers.put(
+				"deleted",
+				(BiConsumer<SamlPeerBinding, Boolean>)
+					SamlPeerBinding::setDeleted);
+			attributeSetterBiConsumers.put(
+				"samlNameIdFormat",
+				(BiConsumer<SamlPeerBinding, String>)
+					SamlPeerBinding::setSamlNameIdFormat);
+			attributeSetterBiConsumers.put(
+				"samlNameIdNameQualifier",
+				(BiConsumer<SamlPeerBinding, String>)
+					SamlPeerBinding::setSamlNameIdNameQualifier);
+			attributeSetterBiConsumers.put(
+				"samlNameIdSpNameQualifier",
+				(BiConsumer<SamlPeerBinding, String>)
+					SamlPeerBinding::setSamlNameIdSpNameQualifier);
+			attributeSetterBiConsumers.put(
+				"samlNameIdSpProvidedId",
+				(BiConsumer<SamlPeerBinding, String>)
+					SamlPeerBinding::setSamlNameIdSpProvidedId);
+			attributeSetterBiConsumers.put(
+				"samlNameIdValue",
+				(BiConsumer<SamlPeerBinding, String>)
+					SamlPeerBinding::setSamlNameIdValue);
+			attributeSetterBiConsumers.put(
+				"samlPeerEntityId",
+				(BiConsumer<SamlPeerBinding, String>)
+					SamlPeerBinding::setSamlPeerEntityId);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -949,7 +971,8 @@ public class SamlPeerBindingModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<SamlPeerBinding, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

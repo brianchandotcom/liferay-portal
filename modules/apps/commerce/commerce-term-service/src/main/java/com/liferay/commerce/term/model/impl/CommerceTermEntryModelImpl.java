@@ -287,157 +287,180 @@ public class CommerceTermEntryModelImpl
 	public Map<String, Function<CommerceTermEntry, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CommerceTermEntry, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<CommerceTermEntry, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<CommerceTermEntry, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<CommerceTermEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<CommerceTermEntry, Object>>();
-		Map<String, BiConsumer<CommerceTermEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<CommerceTermEntry, ?>>();
+		private static final Map<String, Function<CommerceTermEntry, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceTermEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceTermEntry, Long>)
-				CommerceTermEntry::setMvccVersion);
-		attributeGetterFunctions.put("uuid", CommerceTermEntry::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid",
-			(BiConsumer<CommerceTermEntry, String>)CommerceTermEntry::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			CommerceTermEntry::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<CommerceTermEntry, String>)
-				CommerceTermEntry::setExternalReferenceCode);
-		attributeGetterFunctions.put(
-			"defaultLanguageId", CommerceTermEntry::getDefaultLanguageId);
-		attributeSetterBiConsumers.put(
-			"defaultLanguageId",
-			(BiConsumer<CommerceTermEntry, String>)
-				CommerceTermEntry::setDefaultLanguageId);
-		attributeGetterFunctions.put(
-			"commerceTermEntryId", CommerceTermEntry::getCommerceTermEntryId);
-		attributeSetterBiConsumers.put(
-			"commerceTermEntryId",
-			(BiConsumer<CommerceTermEntry, Long>)
-				CommerceTermEntry::setCommerceTermEntryId);
-		attributeGetterFunctions.put(
-			"companyId", CommerceTermEntry::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<CommerceTermEntry, Long>)
-				CommerceTermEntry::setCompanyId);
-		attributeGetterFunctions.put("userId", CommerceTermEntry::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<CommerceTermEntry, Long>)CommerceTermEntry::setUserId);
-		attributeGetterFunctions.put(
-			"userName", CommerceTermEntry::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CommerceTermEntry, String>)
-				CommerceTermEntry::setUserName);
-		attributeGetterFunctions.put(
-			"createDate", CommerceTermEntry::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<CommerceTermEntry, Date>)
-				CommerceTermEntry::setCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", CommerceTermEntry::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<CommerceTermEntry, Date>)
-				CommerceTermEntry::setModifiedDate);
-		attributeGetterFunctions.put("active", CommerceTermEntry::getActive);
-		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<CommerceTermEntry, Boolean>)
-				CommerceTermEntry::setActive);
-		attributeGetterFunctions.put(
-			"displayDate", CommerceTermEntry::getDisplayDate);
-		attributeSetterBiConsumers.put(
-			"displayDate",
-			(BiConsumer<CommerceTermEntry, Date>)
-				CommerceTermEntry::setDisplayDate);
-		attributeGetterFunctions.put(
-			"expirationDate", CommerceTermEntry::getExpirationDate);
-		attributeSetterBiConsumers.put(
-			"expirationDate",
-			(BiConsumer<CommerceTermEntry, Date>)
-				CommerceTermEntry::setExpirationDate);
-		attributeGetterFunctions.put("name", CommerceTermEntry::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<CommerceTermEntry, String>)CommerceTermEntry::setName);
-		attributeGetterFunctions.put(
-			"priority", CommerceTermEntry::getPriority);
-		attributeSetterBiConsumers.put(
-			"priority",
-			(BiConsumer<CommerceTermEntry, Double>)
-				CommerceTermEntry::setPriority);
-		attributeGetterFunctions.put("type", CommerceTermEntry::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<CommerceTermEntry, String>)CommerceTermEntry::setType);
-		attributeGetterFunctions.put(
-			"typeSettings", CommerceTermEntry::getTypeSettings);
-		attributeSetterBiConsumers.put(
-			"typeSettings",
-			(BiConsumer<CommerceTermEntry, String>)
-				CommerceTermEntry::setTypeSettings);
-		attributeGetterFunctions.put(
-			"lastPublishDate", CommerceTermEntry::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<CommerceTermEntry, Date>)
-				CommerceTermEntry::setLastPublishDate);
-		attributeGetterFunctions.put("status", CommerceTermEntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status",
-			(BiConsumer<CommerceTermEntry, Integer>)
-				CommerceTermEntry::setStatus);
-		attributeGetterFunctions.put(
-			"statusByUserId", CommerceTermEntry::getStatusByUserId);
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			(BiConsumer<CommerceTermEntry, Long>)
-				CommerceTermEntry::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", CommerceTermEntry::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<CommerceTermEntry, String>)
-				CommerceTermEntry::setStatusByUserName);
-		attributeGetterFunctions.put(
-			"statusDate", CommerceTermEntry::getStatusDate);
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			(BiConsumer<CommerceTermEntry, Date>)
-				CommerceTermEntry::setStatusDate);
+		static {
+			Map<String, Function<CommerceTermEntry, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<CommerceTermEntry, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeGetterFunctions.put(
+				"mvccVersion", CommerceTermEntry::getMvccVersion);
+			attributeGetterFunctions.put("uuid", CommerceTermEntry::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CommerceTermEntry::getExternalReferenceCode);
+			attributeGetterFunctions.put(
+				"defaultLanguageId", CommerceTermEntry::getDefaultLanguageId);
+			attributeGetterFunctions.put(
+				"commerceTermEntryId",
+				CommerceTermEntry::getCommerceTermEntryId);
+			attributeGetterFunctions.put(
+				"companyId", CommerceTermEntry::getCompanyId);
+			attributeGetterFunctions.put(
+				"userId", CommerceTermEntry::getUserId);
+			attributeGetterFunctions.put(
+				"userName", CommerceTermEntry::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", CommerceTermEntry::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", CommerceTermEntry::getModifiedDate);
+			attributeGetterFunctions.put(
+				"active", CommerceTermEntry::getActive);
+			attributeGetterFunctions.put(
+				"displayDate", CommerceTermEntry::getDisplayDate);
+			attributeGetterFunctions.put(
+				"expirationDate", CommerceTermEntry::getExpirationDate);
+			attributeGetterFunctions.put("name", CommerceTermEntry::getName);
+			attributeGetterFunctions.put(
+				"priority", CommerceTermEntry::getPriority);
+			attributeGetterFunctions.put("type", CommerceTermEntry::getType);
+			attributeGetterFunctions.put(
+				"typeSettings", CommerceTermEntry::getTypeSettings);
+			attributeGetterFunctions.put(
+				"lastPublishDate", CommerceTermEntry::getLastPublishDate);
+			attributeGetterFunctions.put(
+				"status", CommerceTermEntry::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", CommerceTermEntry::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", CommerceTermEntry::getStatusByUserName);
+			attributeGetterFunctions.put(
+				"statusDate", CommerceTermEntry::getStatusDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
+	}
+
+	private static class AttributeSetterBiConsumersHolder {
+
+		private static final Map<String, BiConsumer<CommerceTermEntry, Object>>
+			_attributeSetterBiConsumers;
+
+		static {
+			Map<String, BiConsumer<CommerceTermEntry, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap
+						<String, BiConsumer<CommerceTermEntry, ?>>();
+
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<CommerceTermEntry, Long>)
+					CommerceTermEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<CommerceTermEntry, String>)
+					CommerceTermEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CommerceTermEntry, String>)
+					CommerceTermEntry::setExternalReferenceCode);
+			attributeSetterBiConsumers.put(
+				"defaultLanguageId",
+				(BiConsumer<CommerceTermEntry, String>)
+					CommerceTermEntry::setDefaultLanguageId);
+			attributeSetterBiConsumers.put(
+				"commerceTermEntryId",
+				(BiConsumer<CommerceTermEntry, Long>)
+					CommerceTermEntry::setCommerceTermEntryId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<CommerceTermEntry, Long>)
+					CommerceTermEntry::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<CommerceTermEntry, Long>)
+					CommerceTermEntry::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<CommerceTermEntry, String>)
+					CommerceTermEntry::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<CommerceTermEntry, Date>)
+					CommerceTermEntry::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<CommerceTermEntry, Date>)
+					CommerceTermEntry::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"active",
+				(BiConsumer<CommerceTermEntry, Boolean>)
+					CommerceTermEntry::setActive);
+			attributeSetterBiConsumers.put(
+				"displayDate",
+				(BiConsumer<CommerceTermEntry, Date>)
+					CommerceTermEntry::setDisplayDate);
+			attributeSetterBiConsumers.put(
+				"expirationDate",
+				(BiConsumer<CommerceTermEntry, Date>)
+					CommerceTermEntry::setExpirationDate);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CommerceTermEntry, String>)
+					CommerceTermEntry::setName);
+			attributeSetterBiConsumers.put(
+				"priority",
+				(BiConsumer<CommerceTermEntry, Double>)
+					CommerceTermEntry::setPriority);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<CommerceTermEntry, String>)
+					CommerceTermEntry::setType);
+			attributeSetterBiConsumers.put(
+				"typeSettings",
+				(BiConsumer<CommerceTermEntry, String>)
+					CommerceTermEntry::setTypeSettings);
+			attributeSetterBiConsumers.put(
+				"lastPublishDate",
+				(BiConsumer<CommerceTermEntry, Date>)
+					CommerceTermEntry::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status",
+				(BiConsumer<CommerceTermEntry, Integer>)
+					CommerceTermEntry::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<CommerceTermEntry, Long>)
+					CommerceTermEntry::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<CommerceTermEntry, String>)
+					CommerceTermEntry::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate",
+				(BiConsumer<CommerceTermEntry, Date>)
+					CommerceTermEntry::setStatusDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@Override
@@ -1639,7 +1662,8 @@ public class CommerceTermEntryModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<CommerceTermEntry, Object> function =
-			_attributeGetterFunctions.get(columnName);
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

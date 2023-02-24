@@ -69,6 +69,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 					new ChannelDTOConverterContext(
 						analyticsConfiguration.
 							commerceSyncEnabledAnalyticsChannelIds(),
+						analyticsConfiguration.liferayAnalyticsDataSourceId(),
 						analyticsChannel.getId(),
 						contextAcceptLanguage.getPreferredLocale()),
 					analyticsChannel)),
@@ -121,6 +122,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			return _channelDTOConverter.toDTO(
 				new ChannelDTOConverterContext(
 					commerceSyncEnabledAnalyticsChannelIds,
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
 					channel.getChannelId(),
 					contextAcceptLanguage.getPreferredLocale()),
 				_analyticsCloudClient.updateAnalyticsChannel(
@@ -184,7 +186,9 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		return _channelDTOConverter.toDTO(
 			new ChannelDTOConverterContext(
-				commerceSyncEnabledAnalyticsChannelIds, channel.getChannelId(),
+				commerceSyncEnabledAnalyticsChannelIds,
+				analyticsConfiguration.liferayAnalyticsDataSourceId(),
+				channel.getChannelId(),
 				contextAcceptLanguage.getPreferredLocale()),
 			analyticsChannel);
 	}
@@ -198,6 +202,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		return _channelDTOConverter.toDTO(
 			new ChannelDTOConverterContext(
 				analyticsConfiguration.commerceSyncEnabledAnalyticsChannelIds(),
+				analyticsConfiguration.liferayAnalyticsDataSourceId(),
 				channel.getChannelId(),
 				contextAcceptLanguage.getPreferredLocale()),
 			_analyticsCloudClient.addAnalyticsChannel(

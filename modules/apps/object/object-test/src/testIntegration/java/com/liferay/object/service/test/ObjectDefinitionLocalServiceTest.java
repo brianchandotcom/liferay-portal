@@ -434,6 +434,7 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(objectDefinition.isEnableCategorization());
 		Assert.assertFalse(objectDefinition.isEnableComments());
 		Assert.assertFalse(objectDefinition.isEnableObjectEntryHistory());
+		Assert.assertTrue(objectDefinition.isModifiable());
 		Assert.assertEquals(externalReferenceCode, objectDefinition.getName());
 		Assert.assertEquals(
 			externalReferenceCode, objectDefinition.getPluralLabel());
@@ -792,13 +793,13 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinitionNameException.getMessage());
 		}
 
-		// Duplicate name
+		// Modifiable and Duplicate name
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), "Test", null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				false, "Test", null, null,
+				true, "Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				Arrays.asList(
@@ -806,6 +807,8 @@ public class ObjectDefinitionLocalServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		Assert.assertTrue(objectDefinition.isModifiable());
 
 		try {
 			_testAddSystemObjectDefinition("Test");
@@ -931,6 +934,10 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertNull(
 			_messageBus.getDestination(objectDefinition.getDestinationName()));
+
+		// Modifiable
+
+		Assert.assertFalse(objectDefinition.isModifiable());
 
 		// Resources
 

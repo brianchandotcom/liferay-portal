@@ -146,14 +146,14 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 					recordSetId, _CLASS_NAME_RECORD_SET,
 					_CLASS_NAME_FORM_INSTANCE);
 
+				_updateWorkflowDefinitionLink(recordSetId);
+
 				_deleteDDLRecordSet(structureId, recordSetId);
 
 				preparedStatement2.addBatch();
 			}
 
 			preparedStatement2.executeBatch();
-
-			_updateWorkflowDefinitionLink();
 		}
 	}
 
@@ -309,10 +309,12 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _updateWorkflowDefinitionLink() throws Exception {
+	private void _updateWorkflowDefinitionLink(long recordSetId)
+		throws Exception {
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update WorkflowDefinitionLink set classNameId = ? where " +
-					"classNameId = ?")) {
+					"classNameId = ? and classPK = ?")) {
 
 			preparedStatement.setLong(
 				1,
@@ -321,6 +323,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setLong(
 				2,
 				_classNameLocalService.getClassNameId(_CLASS_NAME_RECORD_SET));
+			preparedStatement.setLong(3, recordSetId);
 
 			preparedStatement.execute();
 		}

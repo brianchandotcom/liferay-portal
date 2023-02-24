@@ -1,0 +1,15 @@
+buildscript {
+	repositories {
+		gradlePluginPortal()
+	}
+
+	dependencies {
+		classpath group: "org.jenkins-ci.jpi", name: "org.jenkins-ci.jpi.gradle.plugin", version: "0.48.0-rc.1"
+	}
+}
+
+apply plugin: "org.jenkins-ci.jpi"
+
+jenkinsPlugin {
+	jenkinsVersion = "2.85"
+}

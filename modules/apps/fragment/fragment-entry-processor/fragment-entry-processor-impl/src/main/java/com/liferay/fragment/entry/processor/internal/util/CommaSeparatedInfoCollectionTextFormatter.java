@@ -35,13 +35,13 @@ public class CommaSeparatedInfoCollectionTextFormatter
 			TransformUtil.transform(
 				collection,
 				collectionItem -> {
-					if (collectionItem instanceof Labeled) {
-						Labeled collectionItemLabeled = (Labeled)collectionItem;
-
-						return collectionItemLabeled.getLabel(locale);
+					if (!(collectionItem instanceof Labeled)) {
+						return collectionItem.toString();
 					}
 
-					return collectionItem.toString();
+					Labeled collectionItemLabeled = (Labeled)collectionItem;
+
+					return collectionItemLabeled.getLabel(locale);
 				}),
 			StringPool.COMMA_AND_SPACE);
 	}

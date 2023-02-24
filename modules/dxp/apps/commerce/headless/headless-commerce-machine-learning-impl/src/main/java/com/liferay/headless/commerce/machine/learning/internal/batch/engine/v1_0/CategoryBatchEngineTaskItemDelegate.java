@@ -19,9 +19,9 @@ import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.Category;
-import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.CategoryDTOConverter;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import java.io.Serializable;
 
@@ -58,7 +58,9 @@ public class CategoryBatchEngineTaskItemDelegate
 			pagination, sorts, search);
 	}
 
-	@Reference
-	private CategoryDTOConverter _categoryDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.CategoryDTOConverter)"
+	)
+	private DTOConverter<AssetCategory, Category> _categoryDTOConverter;
 
 }

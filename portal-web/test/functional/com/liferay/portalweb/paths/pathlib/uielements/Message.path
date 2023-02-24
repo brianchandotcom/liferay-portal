@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>ROLE_EMPTY_MUTED_INFO</td>
-	<td>//div[contains(@class,'sheet-subtitle') and contains(.,'${key_roleType}')]//following-sibling::div[contains(@class,'text-muted')]</td>
+	<td>//div[contains(@class,'sheet-subtitle') and contains(.,'${key_roleType}')]//following-sibling::div[contains(@class,'sheet-text')]</td>
 	<td></td>
 </tr>
 <tr>

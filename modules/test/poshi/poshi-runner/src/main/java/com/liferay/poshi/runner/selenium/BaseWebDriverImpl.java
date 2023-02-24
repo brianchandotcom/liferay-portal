@@ -1936,6 +1936,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void maximizeWindow() {
+		WebDriver wrappedWebDriver = getWrappedWebDriver("//body");
+
+		WebDriver.Options options = wrappedWebDriver.manage();
+
+		WebDriver.Window window = options.window();
+
+		window.maximize();
+	}
+
+	@Override
 	public void mouseDown(String locator) {
 		mouseDownAt(locator, null);
 	}

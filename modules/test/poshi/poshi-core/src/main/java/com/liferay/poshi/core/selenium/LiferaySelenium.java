@@ -353,6 +353,8 @@ public interface LiferaySelenium {
 
 	public void makeVisible(String locator);
 
+	public void maximizeWindow();
+
 	public void mouseDown(String locator);
 
 	public void mouseDownAt(String locator, String coordString);

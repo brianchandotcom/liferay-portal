@@ -325,18 +325,22 @@ public abstract class Base${schemaName}ResourceImpl
 			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("patch")) && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "put" + javaMethodSignature.methodName?remove_beginning("patch")) && !javaMethodSignature.operation.requestBody.content?keys?seq_contains("multipart/form-data")>
 				<#assign
 					generatePatchMethods = true
-					firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0]
+					javaMethodParameters = javaMethodSignature.javaMethodParameters[0..javaMethodSignature.javaMethodParameters?size-2]
+					javaMethodParameterName = ""
 				/>
 
 				<#if javaMethodSignature.methodName?contains("ByExternalReferenceCode")>
-					<#if configYAML.forcePredictableOperationId>
-						${javaDataType} existing${schemaName} = getByExternalReferenceCode(${firstJavaMethodParameter.parameterName});
-					<#else>
-						${javaDataType} existing${schemaName} = get${schemaName}ByExternalReferenceCode(${firstJavaMethodParameter.parameterName});
-					</#if>
+					<#assign javaMethodParameterName = javaMethodSignature.methodName?replace("patch", "get") />
 				<#else>
-					${javaDataType} existing${schemaName} = get${schemaName}(${firstJavaMethodParameter.parameterName});
+					<#assign javaMethodParameterName = "get" + schemaName />
 				</#if>
+
+				${javaDataType} existing${schemaName} = ${javaMethodParameterName}(
+					<#list javaMethodParameters as javaMethodParameter>
+						${javaMethodParameter.parameterName}
+						<#sep>, </#sep>
+					</#list>
+				);
 
 				<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
 
@@ -351,14 +355,18 @@ public abstract class Base${schemaName}ResourceImpl
 				preparePatch(${schemaVarName}, existing${schemaName});
 
 				<#if javaMethodSignature.methodName?contains("ByExternalReferenceCode")>
-					<#if configYAML.forcePredictableOperationId>
-						return putByExternalReferenceCode(${firstJavaMethodParameter.parameterName}, existing${schemaName});
-					<#else>
-						return put${schemaName}ByExternalReferenceCode(${firstJavaMethodParameter.parameterName}, existing${schemaName});
-					</#if>
+					<#assign javaMethodParameterName = javaMethodSignature.methodName?replace("patch", "put") />
 				<#else>
-					return put${schemaName}(${firstJavaMethodParameter.parameterName}, existing${schemaName});
+					<#assign javaMethodParameterName = "put" + schemaName />
 				</#if>
+
+				return ${javaMethodParameterName}(
+					<#list javaMethodParameters as javaMethodParameter>
+						${javaMethodParameter.parameterName}
+						<#sep>, </#sep>
+					</#list>
+					, existing${schemaName}
+				);
 			<#else>
 				return new ${javaMethodSignature.returnType}();
 			</#if>

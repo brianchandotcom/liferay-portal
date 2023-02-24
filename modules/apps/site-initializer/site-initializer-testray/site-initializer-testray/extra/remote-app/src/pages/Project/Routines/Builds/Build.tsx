@@ -18,6 +18,7 @@ import {useParams} from 'react-router-dom';
 import Avatar from '../../../../components/Avatar';
 import AssignToMe from '../../../../components/Avatar/AssigneToMe';
 import Code from '../../../../components/Code';
+import JiraLink from '../../../../components/JiraLink';
 import Container from '../../../../components/Layout/Container';
 import ListViewRest from '../../../../components/ListView';
 import StatusBadge from '../../../../components/StatusBadge';
@@ -29,6 +30,7 @@ import i18n from '../../../../i18n';
 import {
 	PickList,
 	TestrayCaseResult,
+	TestrayCaseResultIssue,
 	testrayCaseResultImpl,
 } from '../../../../services/rest';
 import useBuildTestActions from './useBuildTestActions';
@@ -36,6 +38,7 @@ import useBuildTestActions from './useBuildTestActions';
 const Build = () => {
 	const {buildId} = useParams();
 	const {updateItemFromList} = useMutate();
+
 	const {actions, form} = useBuildTestActions();
 	const {
 		compareRuns: {runId},
@@ -185,6 +188,13 @@ const Build = () => {
 						},
 						{
 							key: 'issues',
+							render: (issues: TestrayCaseResultIssue[]) =>
+								issues.map((caseResultIssue, index) => (
+									<JiraLink
+										issue={caseResultIssue}
+										key={index}
+									/>
+								)),
 							value: i18n.translate('issues'),
 						},
 						{

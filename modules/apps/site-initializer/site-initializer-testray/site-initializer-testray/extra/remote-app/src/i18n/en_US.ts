@@ -353,6 +353,7 @@ export default {
 	'suite-name': 'Suite Name',
 	'suites': 'Suites',
 	'summary': 'Summary',
+	'task': 'Task',
 	'task-x': 'Task {0}',
 	'tasks': 'Tasks',
 	'team': 'Team',

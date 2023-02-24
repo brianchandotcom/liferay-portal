@@ -14,58 +14,48 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {useContext} from 'react';
+import {useMemo} from 'react';
 import {Link, useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import Avatar from '../../../../../../components/Avatar';
 import AssignToMe from '../../../../../../components/Avatar/AssigneToMe';
 import Code from '../../../../../../components/Code';
+import JiraLink from '../../../../../../components/JiraLink';
 import Container from '../../../../../../components/Layout/Container';
 import StatusBadge from '../../../../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../../../../components/StatusBadge/StatusBadge';
 import QATable, {Orientation} from '../../../../../../components/Table/QATable';
-import {ApplicationPropertiesContext} from '../../../../../../context/ApplicationPropertiesContext';
 import i18n from '../../../../../../i18n';
 import {
 	MessageBoardMessage,
 	TestrayAttachment,
 	TestrayCaseResult,
-	TestrayCaseResultIssue,
 	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
+import {safeJSONParse} from '../../../../../../util';
 import {getTimeFromNow} from '../../../../../../util/date';
 import CaseResultHeaderActions from './CaseResultHeaderActions';
 
 type OutletContext = {
 	caseResult: TestrayCaseResult;
-	caseResultsIssues: TestrayCaseResultIssue[];
 	mbMessage: MessageBoardMessage;
 	mutateCaseResult: KeyedMutator<TestrayCaseResult>;
 	projectId: string;
 };
 
-const getAttachments = (caseResult: TestrayCaseResult): TestrayAttachment[] => {
-	try {
-		return JSON.parse(caseResult.attachments);
-	}
-	catch (error) {
-		return [];
-	}
-};
-
 const CaseResult = () => {
-	const {jiraBaseURL} = useContext(ApplicationPropertiesContext);
-
 	const {
 		caseResult,
-		caseResultsIssues,
 		mbMessage,
 		mutateCaseResult,
 		projectId,
 	}: OutletContext = useOutletContext();
 
-	const attachments = getAttachments(caseResult);
+	const attachments = useMemo(
+		() => safeJSONParse(caseResult.attachments, []) as TestrayAttachment[],
+		[caseResult.attachments]
+	);
 
 	return (
 		<>
@@ -245,18 +235,12 @@ const CaseResult = () => {
 								{
 									divider: true,
 									title: i18n.translate('issues'),
-									value: caseResultsIssues.map(
-										(
-											caseResultIssue: TestrayCaseResultIssue,
-											index: number
-										) => (
-											<a
-												className="mr-2"
-												href={`${jiraBaseURL}/browse/${caseResultIssue?.issue?.name}`}
+									value: caseResult.issues.map(
+										(caseResultIssue, index) => (
+											<JiraLink
+												issue={caseResultIssue}
 												key={index}
-											>
-												{caseResultIssue?.issue?.name}
-											</a>
+											/>
 										)
 									),
 								},

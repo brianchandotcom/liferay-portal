@@ -20,6 +20,8 @@ import {TestrayIssue} from './types';
 type Issue = typeof yupSchema.issue.__outputType;
 
 class TestrayIssuesImpl extends Rest<Issue, TestrayIssue> {
+	public DELIMITER = '_';
+
 	constructor() {
 		super({
 			adapter: ({id, name}) => ({

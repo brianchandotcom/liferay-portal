@@ -212,7 +212,7 @@ const SubtasksCaseResults = () => {
 						render: (
 							_,
 							testraySubTaskCaseResult: TestraySubTaskCaseResult
-						) => testraySubTaskCaseResult.caseResult?.issues,
+						) => testraySubTaskCaseResult.caseResult?.issues as any,
 						value: i18n.translate('issues'),
 					},
 					{

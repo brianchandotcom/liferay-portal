@@ -54,7 +54,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 				startDate,
 			}),
 			nestedFields:
-				'case.caseType,component.team.name,team,build.productVersion,build.routine,run,user',
+				'case.caseType,component.team.name,team,build.productVersion,build.routine,run,user,caseResultToCaseResultsIssues',
 			transformData: (caseResult) => ({
 				...caseResult,
 				build: caseResult?.r_buildToCaseResult_c_build
@@ -98,6 +98,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 								: undefined,
 					  }
 					: undefined,
+				issues: caseResult.caseResultToCaseResultsIssues ?? [],
 				run: caseResult?.r_runToCaseResult_c_run
 					? {
 							...caseResult?.r_runToCaseResult_c_run,
@@ -155,7 +156,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			await testrayCaseResultsIssuesImpl.createIfNotExist({
 				caseResultId,
 				issueId: testrayIssue?.id,
-				name: `${issue}-${caseResultId}`,
+				name: `${issue}${testrayIssueImpl.DELIMITER}${caseResultId}`,
 			});
 		}
 
@@ -195,8 +196,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			);
 
 			return {mbMessage, mbThreadId};
-		}
-		catch {
+		} catch {
 			return {};
 		}
 	}

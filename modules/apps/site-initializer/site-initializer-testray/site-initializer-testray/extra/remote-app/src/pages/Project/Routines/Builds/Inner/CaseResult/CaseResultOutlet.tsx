@@ -31,8 +31,6 @@ import {
 	liferayMessageBoardImpl,
 	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
-import {testrayCaseResultsIssuesImpl} from '../../../../../../services/rest/TestrayCaseresultsIssues';
-import {SearchBuilder} from '../../../../../../util/search';
 import useCaseResultActions from './useCaseResultActions';
 
 type OutletContext = {
@@ -66,22 +64,6 @@ const CaseResultOutlet = () => {
 			: null
 	);
 
-	const {data, mutate: mutateCaseResultIssues} = useFetch(
-		testrayCaseResultsIssuesImpl.resource,
-		{
-			params: {
-				filter: SearchBuilder.eq(
-					'caseResultId',
-					caseResultId as string
-				),
-			},
-			transformData: (response) =>
-				testrayCaseResultsIssuesImpl.transformDataFromList(response),
-		}
-	);
-
-	const caseResultsIssues = data?.items || [];
-
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultId}`;
 
 	const {setHeaderActions, setHeading, setTabs} = useHeader({
@@ -97,7 +79,7 @@ const CaseResultOutlet = () => {
 	}, [actions, testrayCaseResult, mutateCaseResult, setHeaderActions]);
 
 	useEffect(() => {
-		if (testrayCaseResult) {
+		if (testrayCaseResult?.case?.name) {
 			setHeading([
 				{
 					category: i18n.translate('project').toUpperCase(),
@@ -148,10 +130,8 @@ const CaseResultOutlet = () => {
 			<Outlet
 				context={{
 					caseResult: testrayCaseResult,
-					caseResultsIssues,
 					mbMessage,
 					mutateCaseResult,
-					mutateCaseResultIssues,
 					projectId,
 				}}
 			/>

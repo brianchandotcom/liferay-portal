@@ -41,6 +41,7 @@ import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 
 import javax.portlet.ActionRequest;
@@ -100,6 +101,7 @@ public class ShippingAddressCommerceCheckoutStep
 					_commerceAccountLocalService,
 					CommerceAddressConstants.ADDRESS_TYPE_SHIPPING,
 					_commerceOrderService, _commerceAddressService,
+					_countryLocalService,
 					_commerceOrderModelResourcePermission);
 
 			CommerceOrder commerceOrder =
@@ -224,6 +226,9 @@ public class ShippingAddressCommerceCheckoutStep
 
 	@Reference
 	private CommerceShippingHelper _commerceShippingHelper;
+
+	@Reference
+	private CountryLocalService _countryLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

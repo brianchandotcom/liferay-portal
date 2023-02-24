@@ -54,6 +54,7 @@ page import="com.liferay.commerce.exception.CommerceOrderDefaultBillingAddressEx
 page import="com.liferay.commerce.exception.CommerceOrderGuestCheckoutException" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderPaymentMethodException" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderShippingAddressException" %><%@
+page import="com.liferay.commerce.exception.CommerceOrderShippingAndBillingException" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderShippingMethodException" %><%@
 page import="com.liferay.commerce.model.CommerceAddress" %><%@
 page import="com.liferay.commerce.model.CommerceOrder" %><%@

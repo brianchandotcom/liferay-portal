@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -216,6 +217,7 @@ public class BillingAddressCommerceCheckoutStep
 					_commerceAccountLocalService,
 					CommerceAddressConstants.ADDRESS_TYPE_BILLING,
 					_commerceOrderService, _commerceAddressService,
+					_countryLocalService,
 					_commerceOrderModelResourcePermission);
 
 			addressCommerceCheckoutStepUtil.updateCommerceOrderAddress(
@@ -491,6 +493,9 @@ public class BillingAddressCommerceCheckoutStep
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CountryLocalService _countryLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

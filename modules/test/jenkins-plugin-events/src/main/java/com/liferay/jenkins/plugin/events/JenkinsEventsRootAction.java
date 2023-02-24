@@ -22,10 +22,14 @@ import hudson.model.RootAction;
 
 import java.io.IOException;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 
 import jenkins.model.Jenkins;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.kohsuke.stapler.StaplerRequest;
@@ -42,6 +46,8 @@ public class JenkinsEventsRootAction
 	public JenkinsEventsRootAction() {
 		super(JenkinsEventsRootAction.class);
 
+		jenkinsWebHooks = new LinkedList<>();
+
 		load();
 	}
 
@@ -49,16 +55,39 @@ public class JenkinsEventsRootAction
 			StaplerRequest staplerRequest, StaplerResponse staplerResponse)
 		throws IOException, ServletException {
 
+		jenkinsWebHooks.clear();
+
 		JSONObject jsonObject = new JSONObject(
 			staplerRequest.getParameter("json"));
 
-		webHookURL = jsonObject.getString("webHookURL");
+		Object jenkinsWebHooksObject = jsonObject.get("jenkinsWebHooks");
+
+		if (jenkinsWebHooksObject instanceof JSONArray) {
+			JSONArray webHookJSONArray = (JSONArray)jenkinsWebHooksObject;
+
+			for (int i = 0; i < webHookJSONArray.length(); i++) {
+				JSONObject webHookJSONObject = webHookJSONArray.optJSONObject(
+					i);
+
+				if (webHookJSONObject == null) {
+					continue;
+				}
+
+				jenkinsWebHooks.add(new JenkinsWebHook(webHookJSONObject));
+			}
+		}
+		else if (jenkinsWebHooksObject instanceof JSONObject) {
+			jenkinsWebHooks.add(
+				new JenkinsWebHook((JSONObject)jenkinsWebHooksObject));
+		}
 
 		save();
 
-		Jenkins jenkins = Jenkins.getActiveInstance();
+		Jenkins jenkins = Jenkins.getInstanceOrNull();
 
-		staplerResponse.sendRedirect(jenkins.getRootUrl());
+		if (jenkins != null) {
+			staplerResponse.sendRedirect(jenkins.getRootUrl());
+		}
 	}
 
 	@Override
@@ -81,6 +110,6 @@ public class JenkinsEventsRootAction
 		return "jenkins-events";
 	}
 
-	public String webHookURL;
+	public List<JenkinsWebHook> jenkinsWebHooks;
 
 }

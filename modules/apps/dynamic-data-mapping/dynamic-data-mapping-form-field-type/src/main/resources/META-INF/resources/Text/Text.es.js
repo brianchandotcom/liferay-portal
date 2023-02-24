@@ -249,7 +249,6 @@ const Textarea = ({
 						onFocus={onFocus}
 						placeholder={placeholder}
 						style={disabled ? {resize: 'none'} : null}
-						type="text"
 						value={value}
 					/>
 				</div>

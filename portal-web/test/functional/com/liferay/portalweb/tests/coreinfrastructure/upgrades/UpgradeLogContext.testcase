@@ -42,16 +42,12 @@ definition {
 		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.database.auto.run=true";
 		property log.context.enabled = "false";
 
-		task ("Verify that mark related to upgrades/verifiers in the scope of portal-kernel/impl are not present") {
-			Log.viewLogFileContentNotPresent(logContent = "upgrade.component=portal");
+		task ("Verify that mark related to upgrades/verifiers are not present") {
+			Log.viewLogFileContentNotPresent(logContent = "upgrade.component=");
 		}
 
-		task ("Verify that mark related to the upgrade framework but it is not in the scope of any upgrade nor verify process are not present") {
-			Log.viewLogFileContentNotPresent(logContent = "upgrade.component=framework");
-		}
-
-		task ("Verify that mark related to upgrades/verifiers in the scope of a specific module are not present") {
-			Log.viewLogFileContentNotPresent(logContent = "upgrade.component=com.liferay.portal.workflow.kaleo.service");
+		task ("Verify that no log context is printed") {
+			Log.viewLogFileContentNotPresent(logContent = "{}");
 		}
 	}
 

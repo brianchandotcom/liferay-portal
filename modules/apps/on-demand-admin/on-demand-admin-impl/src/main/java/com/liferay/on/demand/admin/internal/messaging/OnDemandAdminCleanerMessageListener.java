@@ -53,10 +53,8 @@ public class OnDemandAdminCleanerMessageListener extends BaseMessageListener {
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			OnDemandAdminCleanerMessageListener.class.getName(),
-			OnDemandAdminCleanerMessageListener.class.getName(),
-			new Date(
-				System.currentTimeMillis() + (cleanUpInterval * Time.HOUR)),
-			null, cleanUpInterval, TimeUnit.HOUR);
+			OnDemandAdminCleanerMessageListener.class.getName(), null, null,
+			cleanUpInterval, TimeUnit.HOUR);
 
 		_schedulerEngineHelper.register(
 			this,

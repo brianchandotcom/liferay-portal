@@ -470,9 +470,11 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-151402. The user could see error message when submit a form with value exceeding the length of field."
+	@description = "This is a test for LPS-151402 and LPS-173849. The user could see error message when submit a form with value exceeding the customized length of field."
 	@priority = 4
-	test ViewErrorMessageWhenSubmitFormWithValueExceedingTheLengthOfField {
+	test ViewErrorMessageWhenSubmitFormWithValueExceedingTheCustomizedLengthOfField {
+		property custom.properties = "feature.flag.LPS-161631=true";
+
 		task ("Given a user has a content page where a Text Input and Submit Button fragments are inside a Form Container") {
 			task ("Change the Maximum Number of Characters of Region field to 20") {
 				ObjectAdmin.openObjectAdmin();
@@ -513,6 +515,10 @@ definition {
 					contentType = "Purchase Order",
 					panel = "General");
 
+				PageEditor.editInput(
+					fragmentName = "Text Input",
+					showCharactersCount = "true");
+
 				PageEditor.publish();
 			}
 		}
@@ -521,6 +527,10 @@ definition {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
+
+			PageEditor.viewInputStyle(
+				charactersCount = ": 0 / 20",
+				type = "text-input");
 
 			Type(
 				key_text = "Region",
@@ -532,6 +542,33 @@ definition {
 
 		task ("Then the user should see an error message on the top of form") {
 			Alert.viewErrorMessage(errorMessage = "Value exceeds maximum length of 20 for field Region.");
+
+			PageEditor.viewInputStyle(
+				charactersCount = "Maximum Number of Characters Exceeded: 33 / 20",
+				type = "text-input");
+		}
+
+		task ("When the user removes charactors to 20") {
+			Click(
+				key_text = "Region",
+				locator1 = "TextInput#ANY");
+
+			var n = 1;
+
+			while (${n} != 14) {
+				KeyPress(
+					key_text = "Region",
+					locator1 = "TextInput#ANY",
+					value1 = "\BACK_SPACE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Then the page designer cannot see the alert message") {
+			PageEditor.viewInputStyle(
+				charactersCount = ": 20 / 20",
+				type = "text-input");
 		}
 	}
 

@@ -816,6 +816,7 @@ definition {
 	macro deleteObjectViaAPI {
 		JSONObject.deleteObject(
 			objectName = ${objectName},
+			token = ${token},
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword});
 	}

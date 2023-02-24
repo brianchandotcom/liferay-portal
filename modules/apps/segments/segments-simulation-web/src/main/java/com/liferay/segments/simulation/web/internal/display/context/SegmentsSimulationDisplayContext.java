@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -136,25 +135,13 @@ public class SegmentsSimulationDisplayContext {
 			return _groupId;
 		}
 
-		long groupId = _themeDisplay.getScopeGroupId();
-
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (stagingGroupHelper.isStagingGroup(groupId) &&
-			!stagingGroupHelper.isStagedPortlet(
-				groupId, SegmentsPortletKeys.SEGMENTS)) {
+		_groupId = stagingGroupHelper.getStagedPortletGroupId(
+			_themeDisplay.getScopeGroupId(), SegmentsPortletKeys.SEGMENTS);
 
-			Group group = stagingGroupHelper.fetchLiveGroup(groupId);
-
-			if (group != null) {
-				groupId = group.getGroupId();
-			}
-		}
-
-		_groupId = groupId;
-
-		return groupId;
+		return _groupId;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

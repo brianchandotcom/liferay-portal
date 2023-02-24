@@ -28,7 +28,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -173,21 +172,12 @@ public class TemplateInfoItemFieldSetProviderImpl
 		}
 
 		try {
-			long groupId = serviceContext.getScopeGroupId();
-
-			if (!_stagingGroupHelper.isStagedPortlet(
-					groupId, TemplatePortletKeys.TEMPLATE)) {
-
-				Group liveGroup = _stagingGroupHelper.fetchLiveGroup(groupId);
-
-				if (liveGroup != null) {
-					groupId = liveGroup.getGroupId();
-				}
-			}
-
 			return _templateEntryLocalService.getTemplateEntries(
-				groupId, infoItemClassName, infoItemFormVariationKey,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				_stagingGroupHelper.getStagedPortletGroupId(
+					serviceContext.getScopeGroupId(),
+					TemplatePortletKeys.TEMPLATE),
+				infoItemClassName, infoItemFormVariationKey, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

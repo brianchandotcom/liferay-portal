@@ -375,7 +375,9 @@ public class ContentPageLayoutEditorDisplayContext
 
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryService.getSegmentsEntries(
-				_getStagingAwareGroupId(), true);
+				stagingGroupHelper.getStagedPortletGroupId(
+					getGroupId(), SegmentsPortletKeys.SEGMENTS),
+				true);
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
 			availableSegmentsEntries.put(
@@ -638,23 +640,6 @@ public class ContentPageLayoutEditorDisplayContext
 				"label", typeLabel
 			).build()
 		).build();
-	}
-
-	private long _getStagingAwareGroupId() {
-		long groupId = getGroupId();
-
-		if (stagingGroupHelper.isStagingGroup(groupId) &&
-			!stagingGroupHelper.isStagedPortlet(
-				groupId, SegmentsPortletKeys.SEGMENTS)) {
-
-			Group group = stagingGroupHelper.fetchLiveGroup(groupId);
-
-			if (group != null) {
-				groupId = group.getGroupId();
-			}
-		}
-
-		return groupId;
 	}
 
 	private boolean _hasEditSegmentsEntryPermission() throws Exception {

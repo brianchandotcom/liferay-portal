@@ -406,21 +406,11 @@ public class JournalContentDisplayContext {
 	}
 
 	public long getGroupId() {
-		long groupId = _themeDisplay.getScopeGroupId();
-
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (stagingGroupHelper.isLocalStagingGroup(groupId) &&
-			!stagingGroupHelper.isStagedPortlet(
-				groupId, JournalPortletKeys.JOURNAL)) {
-
-			Group scopeGroup = _themeDisplay.getScopeGroup();
-
-			groupId = scopeGroup.getLiveGroupId();
-		}
-
-		return groupId;
+		return stagingGroupHelper.getStagedPortletGroupId(
+			_themeDisplay.getScopeGroupId(), JournalPortletKeys.JOURNAL);
 	}
 
 	public PortletURL getItemSelectorURL() {
@@ -1045,21 +1035,11 @@ public class JournalContentDisplayContext {
 	}
 
 	private Group _getGroup() {
-		Group group = _themeDisplay.getScopeGroup();
-
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (stagingGroupHelper.isLocalStagingGroup(group.getGroupId()) &&
-			!stagingGroupHelper.isStagedPortlet(
-				group.getGroupId(), JournalPortletKeys.JOURNAL)) {
-
-			Group scopeGroup = _themeDisplay.getScopeGroup();
-
-			group = scopeGroup.getLiveGroup();
-		}
-
-		return group;
+		return stagingGroupHelper.getStagedPortletGroup(
+			_themeDisplay.getScopeGroup(), JournalPortletKeys.JOURNAL);
 	}
 
 	private static final boolean _STAGING_LIVE_GROUP_LOCKING_ENABLED =

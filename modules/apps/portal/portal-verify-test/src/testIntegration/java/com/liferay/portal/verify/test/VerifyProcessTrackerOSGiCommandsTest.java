@@ -120,8 +120,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 	@Test
 	public void testRegisterInitialDeploymentAndRunOnPortalUpgradeVerifyProcessDuringPortalUpgrade() {
 		try (SafeCloseable safeCloseable1 = _upgradePortal();
-			SafeCloseable safeCloseable2 = _registerVerifyProcess(
-				true, false)) {
+			SafeCloseable safeCloseable2 = _registerVerifyProcess(true, true)) {
 
 			_checkResult(true);
 		}
@@ -248,13 +247,15 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 	}
 
 	private void _checkResult(boolean verifyProcessRun) {
-		Release release = _releaseLocalService.fetchRelease(_symbolicName);
+		Assert.assertEquals(verifyProcessRun, _verifyProcessRun);
 
 		if (!verifyProcessRun) {
-			Assert.assertNull(release);
-
 			return;
 		}
+
+		Release release = _releaseLocalService.fetchRelease(_symbolicName);
+
+		Assert.assertNotNull(release);
 
 		if (_forceFailure) {
 			Assert.assertFalse(release.getVerified());

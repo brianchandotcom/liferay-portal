@@ -33,20 +33,22 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 		</span>
 	</clay:content-col>
 
-	<clay:content-col
-		containerElement="span"
-	>
-		<span class="heading-end">
-			<liferay-ui:icon
-				id="selectAccountLink"
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message="select"
-				method="get"
-				url="javascript:void(0);"
-			/>
-		</span>
-	</clay:content-col>
+	<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT) %>">
+		<clay:content-col
+			containerElement="span"
+		>
+			<span class="heading-end">
+				<liferay-ui:icon
+					id="selectAccountLink"
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message="select"
+					method="get"
+					url="javascript:void(0);"
+				/>
+			</span>
+		</clay:content-col>
+	</c:if>
 </clay:content-row>
 
 <clay:sheet-section>
@@ -100,11 +102,11 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 				value="<%= accountUserDisplay.getAccountRoleNamesString(accountEntryDisplay.getAccountEntryId(), locale) %>"
 			/>
 
-			<liferay-ui:search-container-column-text>
-				<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.MANAGE_USERS) %>">
+			<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT) && AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.MANAGE_USERS) %>">
+				<liferay-ui:search-container-column-text>
 					<a class="remove-link" data-entityId="<%= accountEntryDisplay.getAccountEntryId() %>" href="javascript:void(0);"><%= removeAccountEntryIcon %></a>
-				</c:if>
-			</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-column-text>
+			</c:if>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
@@ -118,79 +120,81 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 		<portlet:param name="userId" value="<%= String.valueOf(selUser.getUserId()) %>" />
 	</liferay-portlet:renderURL>
 
-	<aui:script use="liferay-search-container">
-		const deleteAccountEntryIdsSet = new Set();
-		const searchContainer = Liferay.SearchContainer.get(
-			'<portlet:namespace />accountEntries'
-		);
+	<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT) %>">
+		<aui:script use="liferay-search-container">
+			const deleteAccountEntryIdsSet = new Set();
+			const searchContainer = Liferay.SearchContainer.get(
+				'<portlet:namespace />accountEntries'
+			);
 
-		function updateData() {
-			document.<portlet:namespace />fm.<portlet:namespace />addAccountEntryIds.value = searchContainer.getData();
-			document.<portlet:namespace />fm.<portlet:namespace />deleteAccountEntryIds.value = Array.from(
-				deleteAccountEntryIdsSet
-			).join(',');
-		}
+			function updateData() {
+				document.<portlet:namespace />fm.<portlet:namespace />addAccountEntryIds.value = searchContainer.getData();
+				document.<portlet:namespace />fm.<portlet:namespace />deleteAccountEntryIds.value = Array.from(
+					deleteAccountEntryIdsSet
+				).join(',');
+			}
 
-		const searchContainerContentBox = searchContainer.get('contentBox');
+			const searchContainerContentBox = searchContainer.get('contentBox');
 
-		searchContainerContentBox.delegate(
-			'click',
-			(event) => {
-				const link = event.currentTarget.getDOMNode();
+			searchContainerContentBox.delegate(
+				'click',
+				(event) => {
+					const link = event.currentTarget.getDOMNode();
 
-				const entityId = link.dataset.entityid;
+					const entityId = link.dataset.entityid;
 
-				const tr = link.closest('tr');
+					const tr = link.closest('tr');
 
-				searchContainer.deleteRow(tr, entityId);
+					searchContainer.deleteRow(tr, entityId);
 
-				deleteAccountEntryIdsSet.add(entityId);
+					deleteAccountEntryIdsSet.add(entityId);
 
-				updateData();
-			},
-			'.remove-link'
-		);
+					updateData();
+				},
+				'.remove-link'
+			);
 
-		const selectAccountLink = document.getElementById(
-			'<portlet:namespace />selectAccountLink'
-		);
+			const selectAccountLink = document.getElementById(
+				'<portlet:namespace />selectAccountLink'
+			);
 
-		if (selectAccountLink) {
-			selectAccountLink.addEventListener('click', (event) => {
-				Liferay.Util.openSelectionModal({
-					id: '<portlet:namespace />selectAccountEntry',
-					multiple: !<%= singleSelect %>,
-					onSelect: function (selectedItems) {
-						if (!Array.isArray(selectedItems)) {
-							selectedItems = [selectedItems];
-						}
+			if (selectAccountLink) {
+				selectAccountLink.addEventListener('click', (event) => {
+					Liferay.Util.openSelectionModal({
+						id: '<portlet:namespace />selectAccountEntry',
+						multiple: !<%= singleSelect %>,
+						onSelect: function (selectedItems) {
+							if (!Array.isArray(selectedItems)) {
+								selectedItems = [selectedItems];
+							}
 
-						for (const selectedItem of selectedItems) {
-							const entityId = selectedItem.entityid;
+							for (const selectedItem of selectedItems) {
+								const entityId = selectedItem.entityid;
 
-							searchContainer.addRow(
-								[
-									selectedItem.entityname,
-									'',
-									'<a class="remove-link" data-entityId="' +
-										entityId +
-										'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeAccountEntryIcon) %></a>',
-								],
-								entityId
-							);
+								searchContainer.addRow(
+									[
+										selectedItem.entityname,
+										'',
+										'<a class="remove-link" data-entityId="' +
+											entityId +
+											'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeAccountEntryIcon) %></a>',
+									],
+									entityId
+								);
 
-							deleteAccountEntryIdsSet.delete(entityId);
-						}
+								deleteAccountEntryIdsSet.delete(entityId);
+							}
 
-						updateData();
-					},
-					selectEventName: '<portlet:namespace />selectAccountEntry',
-					selectedData: searchContainer.getData(true),
-					selectedDataCheckboxesDisabled: true,
-					title: '<liferay-ui:message arguments="account" key="select-x" />',
-					url: '<%= selectAccountEntryURL %>',
+							updateData();
+						},
+						selectEventName: '<portlet:namespace />selectAccountEntry',
+						selectedData: searchContainer.getData(true),
+						selectedDataCheckboxesDisabled: true,
+						title: '<liferay-ui:message arguments="account" key="select-x" />',
+						url: '<%= selectAccountEntryURL %>',
+					});
 				});
-			});
-		}
-	</aui:script>
+			}
+		</aui:script>
+	</c:if>
 </clay:sheet-section>

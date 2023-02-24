@@ -140,7 +140,8 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.security.auth.ScreenNameValidatorFactory" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.taglib.search.ResultRow" %>
+page import="com.liferay.taglib.search.ResultRow" %><%@
+page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %>
 
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.Map" %><%@

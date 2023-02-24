@@ -70,8 +70,16 @@ export function ThenContainer({
 	values,
 }: ThenContainerProps) {
 	const [notificationTemplates, setNotificationTemplates] = useState<
-		CustomItem<number>[]
+		CustomItem<string>[]
 	>([]);
+
+	const notificationTemplateLabel = useMemo(() => {
+		return notificationTemplates.find(
+			({value}) =>
+				value ===
+				values.parameters?.notificationTemplateExternalReferenceCode
+		)?.label;
+	}, [notificationTemplates, values.parameters]);
 
 	const [objectsOptions, setObjectOptions] = useState<ObjectsOptionsList>([]);
 
@@ -89,12 +97,6 @@ export function ThenContainer({
 		return executors;
 	}, [newObjectActionExecutors]);
 
-	const notificationTemplateLabel = useMemo(() => {
-		return notificationTemplates.find(
-			({value}) => value === values.parameters?.notificationTemplateId
-		)?.label;
-	}, [notificationTemplates, values.parameters]);
-
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'notification') {
 			const makeFetch = async () => {
@@ -110,11 +112,13 @@ export function ThenContainer({
 				}
 
 				setNotificationTemplates(
-					notificationArray.map(({id, name, type}) => ({
-						label: name,
-						type,
-						value: id,
-					}))
+					notificationArray.map(
+						({externalReferenceCode, name, type}) => ({
+							label: name,
+							type,
+							value: externalReferenceCode,
+						})
+					)
 				);
 			};
 
@@ -238,14 +242,14 @@ export function ThenContainer({
 				)}
 
 				{values.objectActionExecutorKey === 'notification' && (
-					<SingleSelect<CustomItem<number>>
+					<SingleSelect<CustomItem<string>>
 						className="lfr-object__action-builder-notification-then"
 						error={errors.objectActionExecutorKey}
 						onChange={({value}) => {
 							setValues({
 								parameters: {
 									...values.parameters,
-									notificationTemplateId: value,
+									notificationTemplateExternalReferenceCode: value,
 								},
 							});
 						}}

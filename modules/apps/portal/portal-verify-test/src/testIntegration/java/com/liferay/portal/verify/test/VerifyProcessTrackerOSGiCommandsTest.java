@@ -258,10 +258,10 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		Assert.assertNotNull(release);
 
 		if (_forceFailure) {
-			Assert.assertFalse(release.getVerified());
+			Assert.assertFalse(release.isVerified());
 		}
 		else {
-			Assert.assertTrue(release.getVerified());
+			Assert.assertTrue(release.isVerified());
 		}
 	}
 

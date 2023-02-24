@@ -164,7 +164,12 @@ public class ViewChangesDisplayContext {
 
 		CTClosure ctClosure = null;
 
-		if (_ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+		int ctEntriesCount = _ctEntryLocalService.getCTCollectionCTEntriesCount(
+			_ctCollection.getCtCollectionId());
+
+		if ((_ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
+			(ctEntriesCount <= _ctConfiguration.contextViewLimitCount())) {
+
 			try {
 				ctClosure = _ctClosureFactory.create(
 					_ctCollection.getCtCollectionId());

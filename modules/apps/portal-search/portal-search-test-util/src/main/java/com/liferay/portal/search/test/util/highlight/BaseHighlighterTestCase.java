@@ -31,7 +31,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -83,6 +82,8 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 
 		assertSearch(
 			indexingTestHelper -> {
+				List<String> actualValues = new ArrayList<>();
+
 				SearchSearchRequest searchSearchRequest =
 					new SearchSearchRequest();
 
@@ -100,17 +101,9 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 
 				SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-				List<SearchHit> searchHitsList = searchHits.getSearchHits();
-
-				List<String> actualValues = new ArrayList<>();
-
-				Stream<SearchHit> stream = searchHitsList.stream();
-
-				stream.map(
-					searchHit -> getFragments(fieldName, searchHit)
-				).forEach(
-					actualValues::addAll
-				);
+				for (SearchHit searchHit : searchHits.getSearchHits()) {
+					actualValues.addAll(getFragments(fieldName, searchHit));
+				}
 
 				Collections.sort(actualValues);
 

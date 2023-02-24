@@ -66,9 +66,67 @@ definition {
 	@description = "LPS-175645 - It's possible to add an object entry of a picklist with a translation of a previously picklist imported "
 	@priority = 3
 	test CanAddEntryWithTranslationPicklistImported {
+		task ("Given a picklist imported and an object created with a picklist field") {
+			Picklist.gotoPicklists();
 
-		// TODO pending implementation
+			Picklist.importPicklist(
+				picklistFileName = "simple_picklist",
+				picklistName = "ImportedPicklist175689");
 
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175689",
+				objectName = "CustomObject175689",
+				pluralLabelName = "Custom Objects 175689");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175689");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "ImportedPicklist175689",
+				fieldType = "Picklist");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175689");
+		}
+
+		task ("When add new language for picklist item") {
+			Picklist.gotoPicklists();
+
+			Picklist.gotoPicklistView(picklistName = "ImportedPicklist175689");
+
+			Picklist.optionsPicklistItem(
+				itemKey = "picklistItem1",
+				menuItem = "View");
+
+			Picklist.addLanguageOnPicklistItem(
+				itemName = "Item da lista de seleção 1",
+				newLanguage = "pt_BR");
+
+			PortletEntry.save();
+		}
+
+		task ("And when change the language") {
+			User.openUsersAdmin();
+
+			User.editDisplaySettingsCP(
+				languageName = "português (Brasil)",
+				userScreenName = "test");
+		}
+
+		task ("Then the user can add an object entry with an item translated") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175689");
+
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+				picklistOption = "Item da lista de seleção 1",
+				saveName = "Salvar");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175689");
+
+			ObjectPortlet.viewEntry(entry = "Item da lista de seleção 1");
+		}
 	}
 
 	@description = "LPS-175645 - It's possible to export Picklist (download)"

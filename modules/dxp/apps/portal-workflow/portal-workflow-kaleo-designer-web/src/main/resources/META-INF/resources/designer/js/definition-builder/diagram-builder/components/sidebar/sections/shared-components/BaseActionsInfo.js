@@ -202,6 +202,7 @@ const BaseActionsInfo = ({
 
 					<ClaySelect
 						aria-label="Select"
+						className={!status ? 'select-placeholder' : ''}
 						defaultValue={status}
 						id="update-status"
 						onChange={({target}) => {
@@ -218,6 +219,13 @@ const BaseActionsInfo = ({
 							})
 						}
 					>
+						<ClaySelect.Option
+							hidden
+							key={0}
+							label={Liferay.Language.get('choose-an-option')}
+							value="choose-an-option"
+						/>
+
 						{statuses &&
 							statuses.map((item) => (
 								<ClaySelect.Option

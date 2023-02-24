@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration;
-import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 import com.liferay.portal.security.sso.openid.connect.internal.AuthorizationServerMetadataResolver;
 import com.liferay.portal.security.sso.openid.connect.internal.constants.OpenIdConnectDestinationNames;
@@ -190,7 +189,7 @@ public class OfflineOpenIdConnectSessionManager {
 				TokensRefreshMessageListener.class.getName(),
 				_triggerFactory.createTrigger(
 					TokensRefreshMessageListener.class.getName(),
-					OpenIdConnectConstants.SERVICE_NAME, null, null,
+					TokensRefreshMessageListener.class.getName(), null, null,
 					tokenRefreshScheduledInterval, TimeUnit.SECOND));
 
 			_tokensRefreshMessageListener = new TokensRefreshMessageListener();

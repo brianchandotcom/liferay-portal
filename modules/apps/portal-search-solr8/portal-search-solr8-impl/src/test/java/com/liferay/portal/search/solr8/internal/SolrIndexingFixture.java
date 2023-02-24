@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.solr8.internal;
 
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -31,7 +29,6 @@ import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderF
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.connection.TestSolrClientManager;
 import com.liferay.portal.search.solr8.internal.document.DefaultSolrDocumentFactory;
-import com.liferay.portal.search.solr8.internal.facet.DefaultFacetProcessor;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.query.BooleanQueryTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.query.DisMaxQueryTranslatorImpl;
@@ -109,21 +106,16 @@ public class SolrIndexingFixture implements IndexingFixture {
 
 	@Override
 	public void setUp() throws Exception {
-		if (_facetProcessor == null) {
-			_facetProcessor = createFacetProcessor();
-		}
-
 		SolrClientManager solrClientManager = new TestSolrClientManager(
 			_properties);
 
-		SolrSearchEngineAdapterFixture solrSearchEngineAdapterFixture =
-			createSolrSearchEngineAdapterFixture(
-				solrClientManager, _facetProcessor, _properties);
+		_solrSearchEngineAdapterFixture = createSolrSearchEngineAdapterFixture(
+			solrClientManager, _facetProcessor, _properties);
 
-		solrSearchEngineAdapterFixture.setUp();
+		_solrSearchEngineAdapterFixture.setUp();
 
 		SearchEngineAdapter searchEngineAdapter =
-			solrSearchEngineAdapterFixture.getSearchEngineAdapter();
+			_solrSearchEngineAdapterFixture.getSearchEngineAdapter();
 
 		_indexSearcher = createIndexSearcher(
 			searchEngineAdapter, solrClientManager);
@@ -213,16 +205,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 		);
 
 		return digester;
-	}
-
-	protected FacetProcessor<SolrQuery> createFacetProcessor() {
-		DefaultFacetProcessor defaultFacetProcessor =
-			new DefaultFacetProcessor();
-
-		ReflectionTestUtil.setFieldValue(
-			defaultFacetProcessor, "_jsonFactory", _jsonFactory);
-
-		return defaultFacetProcessor;
 	}
 
 	protected IndexSearcher createIndexSearcher(
@@ -364,9 +346,9 @@ public class SolrIndexingFixture implements IndexingFixture {
 	private FacetProcessor<SolrQuery> _facetProcessor;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private final Localization _localization = new LocalizationImpl();
 	private final Map<String, Object> _properties;
 	private SearchEngineAdapter _searchEngineAdapter;
+	private SolrSearchEngineAdapterFixture _solrSearchEngineAdapterFixture;
 
 }

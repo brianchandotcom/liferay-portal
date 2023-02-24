@@ -95,20 +95,20 @@ public class AnalyticsReportsDataProvider {
 				total += value;
 			}
 
-			Map<String, AcquisitionChannel> acquisitionChannelMap =
+			Map<String, AcquisitionChannel> acquisitionChannels =
 				new HashMap<>();
 
 			for (Map.Entry<String, Long> entry :
 					acquisitionChannelValues.entrySet()) {
 
-				acquisitionChannelMap.put(
+				acquisitionChannels.put(
 					entry.getKey(),
 					new AcquisitionChannel(
 						entry.getKey(), entry.getValue(),
 						(entry.getValue() / total) * 100));
 			}
 
-			return acquisitionChannelMap;
+			return acquisitionChannels;
 		}
 		catch (Exception exception) {
 			throw new PortalException(

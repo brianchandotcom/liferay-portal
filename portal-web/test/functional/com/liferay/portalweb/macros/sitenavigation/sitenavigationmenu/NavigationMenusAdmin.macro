@@ -410,9 +410,7 @@ definition {
 	macro openPreviewMenu {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(
-			key_text = "view",
-			locator1 = "Icon#ANY");
+		Button.click(button = "Preview");
 	}
 
 	macro toggleAutomaticallyAddNewPagesToMenu {

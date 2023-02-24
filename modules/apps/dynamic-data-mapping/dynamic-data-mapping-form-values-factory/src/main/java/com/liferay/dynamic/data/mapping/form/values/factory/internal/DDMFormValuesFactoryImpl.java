@@ -160,9 +160,7 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 					ddmFormFieldParameterNames, fullDDMFormFields);
 			}
 
-			if (!fullDDMFormFields.containsKey(ddmFormField.getName())) {
-				fullDDMFormFields.put(ddmFormField.getName(), ddmFormField);
-			}
+			fullDDMFormFields.put(ddmFormField.getName(), ddmFormField);
 		}
 	}
 

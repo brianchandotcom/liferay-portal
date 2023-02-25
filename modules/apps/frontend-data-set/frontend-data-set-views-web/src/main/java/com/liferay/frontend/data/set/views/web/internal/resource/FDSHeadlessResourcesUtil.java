@@ -14,26 +14,23 @@
 
 package com.liferay.frontend.data.set.views.web.internal.resource;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -43,32 +40,22 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class FDSHeadlessResourcesUtil {
 
 	public static List<FDSHeadlessResource> getFDSHeadlessResources() {
-		Map<ServiceReference<Object>, FDSHeadlessResource> trackedMap =
-			_serviceTracker.getTracked();
-
-		return new ArrayList<>(trackedMap.values());
+		return _serviceTrackerList.toList();
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext)
-		throws InvalidSyntaxException {
-
-		Filter filter = bundleContext.createFilter(
-			"(osgi.jaxrs.resource=true)");
-
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, filter,
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, null, "(osgi.jaxrs.resource=true)",
 			new FDSHeadlessResourceServiceTrackerCustomizer(bundleContext));
-
-		_serviceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
+		_serviceTrackerList.close();
 	}
 
-	private static ServiceTracker<Object, FDSHeadlessResource> _serviceTracker;
+	private static ServiceTrackerList<FDSHeadlessResource> _serviceTrackerList;
 
 	private class FDSHeadlessResourceServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, FDSHeadlessResource> {

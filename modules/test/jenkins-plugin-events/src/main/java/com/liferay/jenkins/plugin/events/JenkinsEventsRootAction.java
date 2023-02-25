@@ -105,6 +105,10 @@ public class JenkinsEventsRootAction
 		return "clipboard.png";
 	}
 
+	public List<JenkinsWebHook> getJenkinsWebHooks() {
+		return jenkinsWebHooks;
+	}
+
 	@Override
 	public String getUrlName() {
 		return "jenkins-events";

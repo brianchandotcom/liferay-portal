@@ -25,6 +25,16 @@
 							<f:entry title="URL">
 								<f:textbox name="url" value="${jenkinsWebHooks.url}" />
 							</f:entry>
+							<f:advanced title="Event Configurations">
+								<f:section title="Build Events">
+									<f:entry title="BUILD_COMPLETED">
+										<f:checkbox name="buildCompleted" value="${jenkinsWebHooks.buildCompleted}" checked="${jenkinsWebHooks.buildCompleted}" />
+									</f:entry>
+									<f:entry title="BUILD_STARTED">
+										<f:checkbox name="buildStarted" value="${jenkinsWebHooks.buildStarted}" checked="${jenkinsWebHooks.buildStarted}" />
+									</f:entry>
+								</f:section>
+							</f:advanced>
 						</f:repeatable>
 					</f:entry>
 					<f:entry>

@@ -19,6 +19,7 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -73,26 +74,27 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement selectPreparedStatement =
-				connection.prepareStatement(
-					"select distinct groupId, resourcePrimKey, " +
-						"companyId, articleId from JournalArticle")) {
-
-			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					long resourcePrimKey = resultSet.getLong("resourcePrimKey");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			processConcurrently(
+				"select distinct groupId, resourcePrimKey, companyId, " +
+					"articleId from JournalArticle",
+				resultSet -> new Object[] {
+					resultSet.getLong("resourcePrimKey"),
+					GetterUtil.getString(resultSet.getString("articleId")),
+					resultSet.getLong("groupId"), resultSet.getLong("companyId")
+				},
+				values -> {
+					long resourcePrimKey = (Long)values[0];
 
 					if (_layoutClassedModelUsageLocalService.
 							hasDefaultLayoutClassedModelUsage(
 								journalArticleClassNameId, resourcePrimKey)) {
 
-						continue;
+						return;
 					}
 
-					String articleId = GetterUtil.getString(
-						resultSet.getString("articleId"));
-					long groupId = resultSet.getLong("groupId");
+					String articleId = (String)values[1];
+					long groupId = (Long)values[2];
 
 					_addJournalContentSearchLayoutClassedModelUsages(
 						articleId, resourcePrimKey, groupId,
@@ -103,10 +105,10 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 						journalArticleClassNameId, resourcePrimKey);
 
 					if (Validator.isNull(assetEntryClassUuid)) {
-						continue;
+						return;
 					}
 
-					long companyId = resultSet.getLong("companyId");
+					long companyId = (Long)values[3];
 
 					_addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
 						assetEntryClassUuid, resourcePrimKey, groupId,
@@ -132,8 +134,9 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 						addDefaultLayoutClassedModelUsage(
 							groupId, journalArticleClassNameId, resourcePrimKey,
 							serviceContext);
-				}
-			}
+				},
+				"Unable to create journal articles layout classed model " +
+					"usages");
 		}
 	}
 
@@ -190,27 +193,29 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			ServiceContext serviceContext)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select privateLayout, layoutId, portletId from " +
-					"JournalContentSearch where groupId = ? and articleId = " +
-						"?")) {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			processConcurrently(
+				StringBundler.concat(
+					"select privateLayout, layoutId, portletId from ",
+					"JournalContentSearch where groupId = ", groupId,
+					" and articleId = '", articleId, StringPool.APOSTROPHE),
+				resultSet -> new Object[] {
+					resultSet.getBoolean("privateLayout"),
+					resultSet.getLong("layoutId"),
+					GetterUtil.getString(resultSet.getString("portletId"))
+				},
+				values -> {
+					boolean privateLayout = (Boolean)values[0];
+					long layoutId = (Long)values[1];
 
-			preparedStatement.setLong(1, groupId);
-			preparedStatement.setString(2, articleId);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
 					Layout layout = _layoutLocalService.fetchLayout(
-						groupId, resultSet.getBoolean("privateLayout"),
-						resultSet.getLong("layoutId"));
+						groupId, privateLayout, layoutId);
 
 					if (layout == null) {
-						continue;
+						return;
 					}
 
-					String portletId = GetterUtil.getString(
-						resultSet.getString("portletId"));
+					String portletId = (String)values[2];
 
 					LayoutClassedModelUsage layoutClassedModelUsage =
 						_layoutClassedModelUsageLocalService.
@@ -219,7 +224,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 								portletClassNameId, layout.getPlid());
 
 					if (layoutClassedModelUsage != null) {
-						continue;
+						return;
 					}
 
 					_layoutClassedModelUsageLocalService.
@@ -227,8 +232,9 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 							groupId, journalArticleClassNameId, classPK,
 							portletId, portletClassNameId, layout.getPlid(),
 							serviceContext);
-				}
-			}
+				},
+				"Unable to create journal content search layout classed " +
+					"model usages");
 		}
 	}
 

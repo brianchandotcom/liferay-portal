@@ -82,10 +82,12 @@ public class FDSHeadlessResourcesUtil {
 				String[] entityClassNameParts = StringUtil.split(
 					entityClassName, StringPool.PERIOD);
 
+				Object object = _bundleContext.getService(serviceReference);
+
 				_fdsHeadlessResourcesMap.put(
 					entityClassName,
 					new FDSHeadlessResource(
-						_getFDSHeadlessResourceBundleLabel(serviceReference),
+						_getFDSHeadlessResourceBundleLabel(object),
 						entityClassName,
 						entityClassNameParts[entityClassNameParts.length - 1],
 						entityClassNameParts[entityClassNameParts.length - 2].
@@ -121,11 +123,7 @@ public class FDSHeadlessResourcesUtil {
 			_bundleContext = bundleContext;
 		}
 
-		private String _getFDSHeadlessResourceBundleLabel(
-			ServiceReference<Object> serviceReference) {
-
-			Object object = _bundleContext.getService(serviceReference);
-
+		private String _getFDSHeadlessResourceBundleLabel(Object object) {
 			Bundle bundle = FrameworkUtil.getBundle(object.getClass());
 
 			Dictionary<String, String> headers = bundle.getHeaders(

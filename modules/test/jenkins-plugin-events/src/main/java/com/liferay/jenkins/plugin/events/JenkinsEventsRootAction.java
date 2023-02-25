@@ -22,7 +22,7 @@ import hudson.model.RootAction;
  * @author Michael Hashimoto
  */
 @Extension
-public class JenkinsEventsConfiguration implements RootAction {
+public class JenkinsEventsRootAction implements RootAction {
 
 	@Override
 	public String getDisplayName() {

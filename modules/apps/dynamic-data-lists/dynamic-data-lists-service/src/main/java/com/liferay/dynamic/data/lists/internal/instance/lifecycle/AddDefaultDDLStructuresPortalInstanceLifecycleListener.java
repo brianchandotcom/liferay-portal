@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.internal.configuration.DDLServiceConfigura
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.osgi.util.configuration.ConfigurationPersistenceUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -33,7 +34,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -45,6 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AddDefaultDDLStructuresPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
+
+	@Override
+	public boolean isPersistent() {
+		return !_changed;
+	}
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
@@ -78,11 +83,15 @@ public class AddDefaultDDLStructuresPortalInstanceLifecycleListener
 	}
 
 	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties) throws Exception {
+		_changed = ConfigurationPersistenceUtil.checkForChangeAndSave(
+			this, properties);
+
 		_ddlServiceConfiguration = ConfigurableUtil.createConfigurable(
 			DDLServiceConfiguration.class, properties);
 	}
+
+	private boolean _changed;
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

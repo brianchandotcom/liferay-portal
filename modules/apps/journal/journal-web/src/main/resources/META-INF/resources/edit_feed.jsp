@@ -102,12 +102,12 @@ if (feed != null) {
 	feedURL.setResourceID("/journal/rss");
 }
 
+EditJournalFeedDisplayContext editJournalFeedDisplayContext = new EditJournalFeedDisplayContext(request, feed, liferayPortletResponse);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") : feed.getName());
-
-EditJournalFeedDisplayContext editJournalFeedDisplayContext = new EditJournalFeedDisplayContext(request, feed, liferayPortletResponse);
 %>
 
 <portlet:actionURL var="editFeedURL">

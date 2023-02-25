@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -44,7 +43,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class FDSHeadlessResourcesUtil {
 
 	public static List<FDSHeadlessResource> getFDSHeadlessResources() {
-		return new ArrayList<>(_fdsHeadlessResourcesMap.values());
+		Map<ServiceReference<Object>, FDSHeadlessResource> trackedMap =
+			_serviceTracker.getTracked();
+
+		return new ArrayList<>(trackedMap.values());
 	}
 
 	@Activate
@@ -66,15 +68,15 @@ public class FDSHeadlessResourcesUtil {
 		_serviceTracker.close();
 	}
 
-	private static final Map<String, FDSHeadlessResource>
-		_fdsHeadlessResourcesMap = new ConcurrentHashMap<>();
-	private static ServiceTracker<Object, Object> _serviceTracker;
+	private static ServiceTracker<Object, FDSHeadlessResource> _serviceTracker;
 
 	private class FDSHeadlessResourceServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, Object> {
+		implements ServiceTrackerCustomizer<Object, FDSHeadlessResource> {
 
 		@Override
-		public Object addingService(ServiceReference<Object> serviceReference) {
+		public FDSHeadlessResource addingService(
+			ServiceReference<Object> serviceReference) {
+
 			String entityClassName = (String)serviceReference.getProperty(
 				"entity.class.name");
 
@@ -84,15 +86,11 @@ public class FDSHeadlessResourcesUtil {
 
 				Object object = _bundleContext.getService(serviceReference);
 
-				_fdsHeadlessResourcesMap.put(
-					entityClassName,
-					new FDSHeadlessResource(
-						_getFDSHeadlessResourceBundleLabel(object),
-						entityClassName,
-						entityClassNameParts[entityClassNameParts.length - 1],
-						entityClassNameParts[entityClassNameParts.length - 2].
-							replaceAll(
-								StringPool.UNDERLINE, StringPool.PERIOD)));
+				return new FDSHeadlessResource(
+					_getFDSHeadlessResourceBundleLabel(object), entityClassName,
+					entityClassNameParts[entityClassNameParts.length - 1],
+					entityClassNameParts[entityClassNameParts.length - 2].
+						replaceAll(StringPool.UNDERLINE, StringPool.PERIOD));
 			}
 
 			return null;
@@ -100,19 +98,14 @@ public class FDSHeadlessResourcesUtil {
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Object> serviceReference, Object object) {
+			ServiceReference<Object> serviceReference,
+			FDSHeadlessResource fdsHeadlessResource) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Object> serviceReference, Object object) {
-
-			String entityClassName = (String)serviceReference.getProperty(
-				"entity.class.name");
-
-			if (entityClassName != null) {
-				_fdsHeadlessResourcesMap.remove(entityClassName);
-			}
+			ServiceReference<Object> serviceReference,
+			FDSHeadlessResource fdsHeadlessResource) {
 
 			_bundleContext.ungetService(serviceReference);
 		}

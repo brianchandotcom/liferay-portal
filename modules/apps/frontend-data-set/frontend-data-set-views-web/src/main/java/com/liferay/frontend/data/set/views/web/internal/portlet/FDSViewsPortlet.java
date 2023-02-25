@@ -17,16 +17,32 @@ package com.liferay.frontend.data.set.views.web.internal.portlet;
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsWebKeys;
 import com.liferay.frontend.data.set.views.web.internal.display.context.FDSViewsDisplayContext;
+import com.liferay.frontend.data.set.views.web.internal.resource.FDSHeadlessResource;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
+
+import java.util.Dictionary;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Marko Cikos
@@ -46,6 +62,18 @@ import org.osgi.service.component.annotations.Component;
 )
 public class FDSViewsPortlet extends MVCPortlet {
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, null, "(osgi.jaxrs.resource=true)",
+			new FDSHeadlessResourceServiceTrackerCustomizer(bundleContext));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -53,9 +81,74 @@ public class FDSViewsPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			FDSViewsWebKeys.FDS_VIEWS_DISPLAY_CONTEXT,
-			new FDSViewsDisplayContext(renderRequest));
+			new FDSViewsDisplayContext(renderRequest, _serviceTrackerList));
 
 		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	private ServiceTrackerList<FDSHeadlessResource> _serviceTrackerList;
+
+	private class FDSHeadlessResourceServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Object, FDSHeadlessResource> {
+
+		@Override
+		public FDSHeadlessResource addingService(
+			ServiceReference<Object> serviceReference) {
+
+			String entityClassName = (String)serviceReference.getProperty(
+				"entity.class.name");
+
+			if (entityClassName != null) {
+				String[] entityClassNameParts = StringUtil.split(
+					entityClassName, StringPool.PERIOD);
+
+				Object object = _bundleContext.getService(serviceReference);
+
+				return new FDSHeadlessResource(
+					_getFDSHeadlessResourceBundleLabel(object), entityClassName,
+					entityClassNameParts[entityClassNameParts.length - 1],
+					entityClassNameParts[entityClassNameParts.length - 2].
+						replaceAll(StringPool.UNDERLINE, StringPool.PERIOD));
+			}
+
+			return null;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Object> serviceReference,
+			FDSHeadlessResource fdsHeadlessResource) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Object> serviceReference,
+			FDSHeadlessResource fdsHeadlessResource) {
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private FDSHeadlessResourceServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
+		}
+
+		private String _getFDSHeadlessResourceBundleLabel(Object object) {
+			Bundle bundle = FrameworkUtil.getBundle(object.getClass());
+
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
+
+			String bundleName = GetterUtil.getString(
+				headers.get(Constants.BUNDLE_NAME));
+
+			return bundleName.substring(
+				0, bundleName.lastIndexOf(StringPool.SPACE));
+		}
+
+		private final BundleContext _bundleContext;
+
 	}
 
 }

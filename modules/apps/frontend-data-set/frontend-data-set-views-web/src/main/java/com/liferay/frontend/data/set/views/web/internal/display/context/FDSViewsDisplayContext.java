@@ -16,7 +16,7 @@ package com.liferay.frontend.data.set.views.web.internal.display.context;
 
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
 import com.liferay.frontend.data.set.views.web.internal.resource.FDSHeadlessResource;
-import com.liferay.frontend.data.set.views.web.internal.resource.FDSHeadlessResourcesUtil;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -33,8 +33,12 @@ import javax.portlet.PortletRequest;
  */
 public class FDSViewsDisplayContext {
 
-	public FDSViewsDisplayContext(PortletRequest portletRequest) {
+	public FDSViewsDisplayContext(
+		PortletRequest portletRequest,
+		ServiceTrackerList<FDSHeadlessResource> serviceTrackerList) {
+
 		_portletRequest = portletRequest;
+		_serviceTrackerList = serviceTrackerList;
 	}
 
 	public String getFDSViewsURL() {
@@ -51,7 +55,7 @@ public class FDSViewsDisplayContext {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<FDSHeadlessResource> fdsHeadlessResources =
-			FDSHeadlessResourcesUtil.getFDSHeadlessResources();
+			_serviceTrackerList.toList();
 
 		fdsHeadlessResources.sort(
 			Comparator.comparing(FDSHeadlessResource::getBundleLabel));
@@ -76,5 +80,6 @@ public class FDSViewsDisplayContext {
 	}
 
 	private final PortletRequest _portletRequest;
+	private final ServiceTrackerList<FDSHeadlessResource> _serviceTrackerList;
 
 }

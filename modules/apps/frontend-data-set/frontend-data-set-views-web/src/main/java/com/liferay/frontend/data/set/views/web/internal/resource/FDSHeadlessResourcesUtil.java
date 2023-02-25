@@ -99,10 +99,6 @@ public class FDSHeadlessResourcesUtil {
 		@Override
 		public void modifiedService(
 			ServiceReference<Object> serviceReference, Object object) {
-
-			removedService(serviceReference, object);
-
-			addingService(serviceReference);
 		}
 
 		@Override

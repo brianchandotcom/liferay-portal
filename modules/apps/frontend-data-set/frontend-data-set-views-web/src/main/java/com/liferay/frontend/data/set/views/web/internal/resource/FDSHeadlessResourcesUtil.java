@@ -95,7 +95,7 @@ public class FDSHeadlessResourcesUtil {
 								StringPool.UNDERLINE, StringPool.PERIOD)));
 			}
 
-			return _bundleContext.getService(serviceReference);
+			return null;
 		}
 
 		@Override

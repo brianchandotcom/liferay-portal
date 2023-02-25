@@ -507,7 +507,6 @@ public class JournalRSSHelper {
 		Map<String, Serializable> attributes = searchContext.getAttributes();
 
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-		attributes.put("head", true);
 
 		if (Validator.isNotNull(feed.getDDMStructureKey())) {
 			attributes.put("ddmStructureKey", feed.getDDMStructureKey());
@@ -516,6 +515,8 @@ public class JournalRSSHelper {
 		if (Validator.isNotNull(feed.getDDMTemplateKey())) {
 			attributes.put("ddmTemplateKey", feed.getDDMTemplateKey());
 		}
+
+		attributes.put("head", true);
 
 		searchContext.setAttributes(attributes);
 

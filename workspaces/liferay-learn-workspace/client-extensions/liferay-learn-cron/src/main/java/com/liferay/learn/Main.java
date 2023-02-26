@@ -1712,9 +1712,8 @@ public class Main {
 
 			File englishFile = new File(fileName);
 
-			String englishText = _processMarkdown(
-				FileUtils.readFileToString(englishFile, StandardCharsets.UTF_8),
-				englishFile);
+			String englishText = FileUtils.readFileToString(
+				englishFile, StandardCharsets.UTF_8);
 
 			String uuid = _getUuid(englishText);
 
@@ -1738,10 +1737,8 @@ public class Main {
 				StringUtil.replace(fileName, "/en/", "/ja/"));
 
 			if (japaneseFile.exists()) {
-				String japaneseText = _processMarkdown(
-					FileUtils.readFileToString(
-						japaneseFile, StandardCharsets.UTF_8),
-					japaneseFile);
+				String japaneseText = FileUtils.readFileToString(
+					japaneseFile, StandardCharsets.UTF_8);
 
 				if (Validator.isNotNull(_getUuid(japaneseText))) {
 					System.out.println(

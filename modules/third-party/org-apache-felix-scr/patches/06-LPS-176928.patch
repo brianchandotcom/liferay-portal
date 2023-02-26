@@ -1,0 +1,210 @@
+diff --git a/org/apache/felix/scr/impl/Activator.java b/org/apache/felix/scr/impl/Activator.java
+index 728c1d31635f..ebc6536896bb 100755
+--- a/org/apache/felix/scr/impl/Activator.java
++++ b/org/apache/felix/scr/impl/Activator.java
+@@ -28,18 +28,23 @@ import java.util.concurrent.locks.ReentrantLock;
+ import org.apache.felix.scr.impl.config.ScrConfigurationImpl;
+ import org.apache.felix.scr.impl.inject.ClassUtils;
+ import org.apache.felix.scr.impl.logger.ScrLogger;
++import org.apache.felix.scr.impl.manager.RegionConfigurationSupport;
+ import org.apache.felix.scr.impl.runtime.ServiceComponentRuntimeImpl;
+ import org.osgi.framework.Bundle;
+ import org.osgi.framework.BundleContext;
+ import org.osgi.framework.Constants;
++import org.osgi.framework.ServiceReference;
+ import org.osgi.framework.ServiceRegistration;
+ import org.osgi.framework.wiring.BundleRevision;
+ import org.osgi.framework.wiring.BundleWire;
+ import org.osgi.framework.wiring.BundleWiring;
+ import org.osgi.namespace.extender.ExtenderNamespace;
++import org.osgi.service.cm.ConfigurationAdmin;
+ import org.osgi.service.component.ComponentConstants;
+ import org.osgi.service.component.runtime.ServiceComponentRuntime;
+ import org.osgi.service.log.LogService;
++import org.osgi.util.tracker.ServiceTracker;
++import org.osgi.util.tracker.ServiceTrackerCustomizer;
+ 
+ /**
+  * This activator is used to cover requirement described in section 112.8.1 @@ -27,14
+@@ -75,6 +80,12 @@ public class Activator extends AbstractExtender
+ 
+     private ComponentCommands m_componentCommands;
+ 
++	private ServiceTracker<ConfigurationAdmin, ConfigurationAdmin> _configAdminTracker;
++
++	private volatile ServiceReference<ConfigurationAdmin> _serviceReference;
++
++	private volatile RegionConfigurationSupport _regionConfigurationSupport;
++
+     public Activator()
+     {
+         m_configuration = new ScrConfigurationImpl( this );
+@@ -96,8 +107,37 @@ public class Activator extends AbstractExtender
+         logger = new ScrLogger(m_configuration, m_context);
+         // set bundle context for PackageAdmin tracker
+         ClassUtils.setBundleContext( context );
+-        // get the configuration
+-        m_configuration.start( m_context ); //this will call restart, which calls super.start.
++
++		_configAdminTracker = new ServiceTracker<>(
++			context, ConfigurationAdmin.class,
++			new ServiceTrackerCustomizer<ConfigurationAdmin, ConfigurationAdmin>() {
++
++				@Override
++				public ConfigurationAdmin addingService(ServiceReference<ConfigurationAdmin> serviceReference) {
++					_serviceReference = serviceReference;
++
++					// get the configuration
++					m_configuration.start( m_context ); //this will call restart, which calls super.start.
++
++					return context.getService(serviceReference);
++				}
++
++				@Override
++				public void modifiedService(ServiceReference<ConfigurationAdmin> serviceReference, ConfigurationAdmin configurationAdmin) {
++				}
++
++				@Override
++				public void removedService(ServiceReference<ConfigurationAdmin> serviceReference, ConfigurationAdmin configurationAdmin) {
++					m_configuration.stop();
++
++					_serviceReference = null;
++
++					context.ungetService(serviceReference);
++				}
++
++			});
++
++		_configAdminTracker.open();
+     }
+ 
+     public void restart(boolean globalExtender)
+@@ -153,6 +193,8 @@ public class Activator extends AbstractExtender
+         m_componentBundles = new HashMap<>();
+         m_componentRegistry = new ComponentRegistry( this.m_configuration, this.logger );
+ 
++		_regionConfigurationSupport = m_componentRegistry.registerRegionConfigurationSupport(_serviceReference);
++
+         final ServiceComponentRuntimeImpl runtime = new ServiceComponentRuntimeImpl( m_globalContext, m_componentRegistry );
+         m_runtime_reg = m_context.registerService( ServiceComponentRuntime.class,
+                 runtime,
+@@ -180,7 +222,8 @@ public class Activator extends AbstractExtender
+     public void stop(BundleContext context) throws Exception
+     {
+         super.stop( context );
+-        m_configuration.stop();
++
++        _configAdminTracker.close();
+     }
+ 
+     /**
+@@ -203,6 +246,9 @@ public class Activator extends AbstractExtender
+             m_runtime_reg.unregister();
+             m_runtime_reg = null;
+         }
++
++		m_componentRegistry.unregisterRegionConfigurationSupport(_regionConfigurationSupport);
++
+         // dispose component registry
+         if ( m_componentRegistry != null )
+         {
+@@ -377,7 +423,7 @@ public class Activator extends AbstractExtender
+         try
+         {
+             BundleComponentActivator ga = new BundleComponentActivator( this.logger, m_componentRegistry, m_componentActor,
+-                context, m_configuration );
++                context, m_configuration, _regionConfigurationSupport);
+             ga.initialEnable();
+ 
+             // replace bundle activator in the map
+@@ -465,4 +511,5 @@ public class Activator extends AbstractExtender
+             }
+         }
+     }
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/apache/felix/scr/impl/BundleComponentActivator.java b/org/apache/felix/scr/impl/BundleComponentActivator.java
+index bea0df3e87a0..67d21c2b2a2d 100755
+--- a/org/apache/felix/scr/impl/BundleComponentActivator.java
++++ b/org/apache/felix/scr/impl/BundleComponentActivator.java
+@@ -34,7 +34,6 @@ import java.util.concurrent.CountDownLatch;
+ import java.util.concurrent.TimeUnit;
+ import java.util.concurrent.atomic.AtomicBoolean;
+ 
+-import org.apache.felix.scr.impl.helper.ConfigAdminTracker;
+ import org.apache.felix.scr.impl.logger.BundleLogger;
+ import org.apache.felix.scr.impl.logger.ComponentLogger;
+ import org.apache.felix.scr.impl.logger.ScrLogger;
+@@ -90,12 +89,12 @@ public class BundleComponentActivator implements ComponentActivator
+     // the configuration
+     private final ScrConfiguration m_configuration;
+ 
+-    private final ConfigAdminTracker configAdminTracker;
+-
+     private final Map<String, ListenerInfo> listenerMap = new HashMap<>();
+ 
+     private final BundleLogger logger;
+ 
++	private final RegionConfigurationSupport _regionConfigurationSupport;
++
+     private static class ListenerInfo implements ServiceListener
+     {
+         private Map<Filter, List<ExtendedServiceListener<ExtendedServiceEvent>>> filterMap = new HashMap<>();
+@@ -245,7 +244,8 @@ public class BundleComponentActivator implements ComponentActivator
+             final ComponentRegistry componentRegistry,
+             final ComponentActorThread componentActor,
+             final BundleContext context,
+-            final ScrConfiguration configuration)
++            final ScrConfiguration configuration,
++			RegionConfigurationSupport regionConfigurationSupport)
+     throws ComponentException
+     {
+         // create a logger on behalf of the bundle
+@@ -258,6 +258,8 @@ public class BundleComponentActivator implements ComponentActivator
+ 
+         m_configuration = configuration;
+ 
++		_regionConfigurationSupport = regionConfigurationSupport;
++
+         logger.log( LogService.LOG_DEBUG, "BundleComponentActivator : Bundle active", null);
+ 
+         // Get the Metadata-Location value from the manifest
+@@ -268,16 +270,11 @@ public class BundleComponentActivator implements ComponentActivator
+         }
+ 
+         initialize( descriptorLocations );
+-        ConfigAdminTracker tracker = null;
++
+         for ( ComponentHolder<?> holder : m_holders )
+         {
+-            if ( !holder.getComponentMetadata().isConfigurationIgnored() )
+-            {
+-                tracker = new ConfigAdminTracker( this );
+-                break;
+-            }
++            _regionConfigurationSupport.configureComponentHolder(holder);
+         }
+-        configAdminTracker = tracker;
+     }
+ 
+     /**
+@@ -521,10 +518,6 @@ public class BundleComponentActivator implements ComponentActivator
+                 }
+ 
+             }
+-            if ( configAdminTracker != null )
+-            {
+-                configAdminTracker.dispose();
+-            }
+ 
+             logger.log( LogService.LOG_DEBUG, "BundleComponentActivator : Bundle STOPPED",
+                 null );
+@@ -777,3 +770,4 @@ public class BundleComponentActivator implements ComponentActivator
+         this.m_componentRegistry.updateChangeCount();
+     }
+ }
++/* @generated */
+\ No newline at end of file

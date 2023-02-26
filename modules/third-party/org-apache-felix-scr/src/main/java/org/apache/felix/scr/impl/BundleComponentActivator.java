@@ -34,7 +34,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.felix.scr.impl.helper.ConfigAdminTracker;
 import org.apache.felix.scr.impl.logger.BundleLogger;
 import org.apache.felix.scr.impl.logger.ComponentLogger;
 import org.apache.felix.scr.impl.logger.ScrLogger;
@@ -90,11 +89,11 @@ public class BundleComponentActivator implements ComponentActivator
     // the configuration
     private final ScrConfiguration m_configuration;
 
-    private final ConfigAdminTracker configAdminTracker;
-
     private final Map<String, ListenerInfo> listenerMap = new HashMap<>();
 
     private final BundleLogger logger;
+
+	private final RegionConfigurationSupport _regionConfigurationSupport;
 
     private static class ListenerInfo implements ServiceListener
     {
@@ -245,7 +244,8 @@ public class BundleComponentActivator implements ComponentActivator
             final ComponentRegistry componentRegistry,
             final ComponentActorThread componentActor,
             final BundleContext context,
-            final ScrConfiguration configuration)
+            final ScrConfiguration configuration,
+			RegionConfigurationSupport regionConfigurationSupport)
     throws ComponentException
     {
         // create a logger on behalf of the bundle
@@ -258,6 +258,8 @@ public class BundleComponentActivator implements ComponentActivator
 
         m_configuration = configuration;
 
+		_regionConfigurationSupport = regionConfigurationSupport;
+
         logger.log( LogService.LOG_DEBUG, "BundleComponentActivator : Bundle active", null);
 
         // Get the Metadata-Location value from the manifest
@@ -268,16 +270,11 @@ public class BundleComponentActivator implements ComponentActivator
         }
 
         initialize( descriptorLocations );
-        ConfigAdminTracker tracker = null;
+
         for ( ComponentHolder<?> holder : m_holders )
         {
-            if ( !holder.getComponentMetadata().isConfigurationIgnored() )
-            {
-                tracker = new ConfigAdminTracker( this );
-                break;
-            }
+            _regionConfigurationSupport.configureComponentHolder(holder);
         }
-        configAdminTracker = tracker;
     }
 
     /**
@@ -520,10 +517,6 @@ public class BundleComponentActivator implements ComponentActivator
                     m_componentRegistry.unregisterComponentHolder( m_bundle, holder.getComponentMetadata().getName() );
                 }
 
-            }
-            if ( configAdminTracker != null )
-            {
-                configAdminTracker.dispose();
             }
 
             logger.log( LogService.LOG_DEBUG, "BundleComponentActivator : Bundle STOPPED",
@@ -777,3 +770,4 @@ public class BundleComponentActivator implements ComponentActivator
         this.m_componentRegistry.updateChangeCount();
     }
 }
+/* @generated */

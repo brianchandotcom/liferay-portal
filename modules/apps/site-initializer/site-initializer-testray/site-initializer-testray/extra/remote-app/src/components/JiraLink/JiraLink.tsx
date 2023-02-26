@@ -12,23 +12,30 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import {useContext} from 'react';
 
 import {ApplicationPropertiesContext} from '../../context/ApplicationPropertiesContext';
+import i18n from '../../i18n';
 import {TestrayCaseResultIssue, testrayIssueImpl} from '../../services/rest';
+import {SearchBuilder} from '../../util/search';
 
 type JiraLinkProps = {
-	issue: TestrayCaseResultIssue;
+	displayViewInJira?: boolean;
+	issue: TestrayCaseResultIssue | TestrayCaseResultIssue[];
 };
 
-const splitTaskName = (name: string) => name.split(testrayIssueImpl.DELIMITER);
+const splitIssueName = (name: string) => name.split(testrayIssueImpl.DELIMITER);
 
-const JiraLink: React.FC<JiraLinkProps> = ({issue}) => {
+const JiraLink: React.FC<JiraLinkProps> = ({
+	displayViewInJira = true,
+	issue,
+}) => {
 	const {jiraBaseURL} = useContext(ApplicationPropertiesContext);
 
-	const [name] = splitTaskName(issue.name);
+	const isArray = Array.isArray(issue);
 
-	return (
+	const Link = ({name}: {name: string}) => (
 		<a
 			className="mr-2"
 			href={`${jiraBaseURL}/browse/${name}`}
@@ -37,8 +44,48 @@ const JiraLink: React.FC<JiraLinkProps> = ({issue}) => {
 			{name}
 		</a>
 	);
+
+	if (isArray) {
+		const issues = issue.map(
+			({name}) => splitIssueName(name).at(0) as string
+		);
+
+		const [firstIssue] = issues;
+
+		return (
+			<div className="d-flex flex-column">
+				{displayViewInJira && (
+					<a
+						href={`${jiraBaseURL}/browse/${firstIssue}?jql=${SearchBuilder.in(
+							'key',
+							issues
+						).replaceAll("'", '')}`}
+						target="_blank"
+					>
+						{i18n.translate('view-in-jira')}
+
+						<ClayIcon
+							className="ml-2"
+							fontSize={12}
+							symbol="shortcut"
+						/>
+					</a>
+				)}
+
+				<div>
+					{issues.map((name, index) => (
+						<Link key={index} name={name} />
+					))}
+				</div>
+			</div>
+		);
+	}
+
+	const [name] = splitIssueName(issue.name);
+
+	return <Link name={name} />;
 };
 
-export {splitTaskName};
+export {splitIssueName};
 
 export default JiraLink;

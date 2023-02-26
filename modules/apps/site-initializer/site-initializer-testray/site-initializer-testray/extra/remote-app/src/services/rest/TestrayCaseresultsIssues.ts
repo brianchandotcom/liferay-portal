@@ -37,16 +37,9 @@ class TestrayCaseResultsIssuesImpl extends Rest<
 			nestedFields: 'caseResults,issue',
 			transformData: (caseResultsIssue) => ({
 				...caseResultsIssue,
-				caseResult: caseResultsIssue?.r_caseResultToCaseResultsIssues_c_caseResult
-					? {
-							...caseResultsIssue.r_caseResultToCaseResultsIssues_c_caseResult,
-					  }
-					: undefined,
-				issue: caseResultsIssue?.r_issueToCaseResultsIssues_c_issue
-					? {
-							...caseResultsIssue.r_issueToCaseResultsIssues_c_issue,
-					  }
-					: undefined,
+				caseResult:
+					caseResultsIssue?.r_caseResultToCaseResultsIssues_c_caseResult,
+				issue: caseResultsIssue?.r_issueToCaseResultsIssues_c_issue,
 			}),
 			uri: 'caseresultsissueses',
 		});

@@ -1130,7 +1130,7 @@ public class Main {
 
 		if (includeFileName.startsWith(File.separator)) {
 			String dirName = markdownFileName.substring(
-				_markdownImportDirName.length());
+				_markdownImportDirName.length() + 1);
 
 			String[] dirNameParts = StringUtil.split(
 				dirName, File.separatorChar);

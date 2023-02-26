@@ -48,10 +48,8 @@ public class OldValueFunctionTest {
 		_oldValueFunction.setDDMExpressionParameterAccessor(
 			ddmExpressionParameterAccessor);
 
-		Assert.assertEquals(
-			"AAA", _oldValueFunction.apply("aaa"));
-		Assert.assertEquals(
-			"BBB", _oldValueFunction.apply("bbb"));
+		Assert.assertEquals("AAA", _oldValueFunction.apply("aaa"));
+		Assert.assertEquals("BBB", _oldValueFunction.apply("bbb"));
 		Assert.assertNull(
 			_oldValueFunction.apply(RandomTestUtil.randomString()));
 	}

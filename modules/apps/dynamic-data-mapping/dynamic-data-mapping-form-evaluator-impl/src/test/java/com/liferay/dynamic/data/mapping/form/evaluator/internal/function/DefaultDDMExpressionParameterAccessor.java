@@ -104,7 +104,7 @@ public class DefaultDDMExpressionParameterAccessor
 	private final Supplier<JSONArray> _getObjectFieldsJSONArraySupplier =
 		JSONFactoryUtil::createJSONArray;
 	private Supplier<Map<String, Object>> _getObjectFieldsOldValuesSupplier =
-		() -> Collections.emptyMap();
+		Collections::emptyMap;
 	private final Supplier<String> _getTimeZoneIdSupplier = () -> "UTC";
 	private Supplier<Long> _getUserIdSupplier = () -> 0L;
 

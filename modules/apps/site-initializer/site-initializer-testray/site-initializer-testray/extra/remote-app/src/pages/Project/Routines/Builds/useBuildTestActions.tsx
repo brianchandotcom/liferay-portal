@@ -21,7 +21,6 @@ import i18n from '../../../../i18n';
 import {Liferay} from '../../../../services/liferay';
 import {
 	TestrayCaseResult,
-	deleteResource,
 	testrayCaseResultImpl,
 } from '../../../../services/rest';
 import {Action} from '../../../../types';
@@ -45,7 +44,7 @@ const useBuildTestActions = () => {
 								},
 							}}
 							tableProps={{
-								onClickRow: (user) => {
+								onClickRow: (user) =>
 									testrayCaseResultImpl
 										.assignTo(caseResult, user.id)
 										.then(() =>
@@ -58,8 +57,7 @@ const useBuildTestActions = () => {
 										)
 										.then(form.onSuccess)
 										.catch(form.onError)
-										.finally(state.onClose);
-								},
+										.finally(state.onClose),
 							}}
 						/>
 					),
@@ -99,8 +97,9 @@ const useBuildTestActions = () => {
 		},
 		{
 			action: ({id}, mutate) =>
-				deleteResource(`/caseresults/${id}`)
-					?.then(() => removeItemFromList(mutate, id))
+				testrayCaseResultImpl
+					.remove(id)
+					.then(() => removeItemFromList(mutate, id))
 					.then(form.onSave)
 					.catch(form.onError),
 			icon: 'trash',

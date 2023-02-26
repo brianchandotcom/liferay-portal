@@ -236,14 +236,16 @@ const CaseResult = () => {
 								{
 									divider: true,
 									title: i18n.translate('issues'),
-									value: caseResult.issues.map(
-										(caseResultIssue, index) => (
-											<JiraLink
-												issue={caseResultIssue}
-												key={index}
-											/>
-										)
-									),
+									value: caseResult.issues.length
+										? caseResult.issues.map(
+												(caseResultIssue, index) => (
+													<JiraLink
+														issue={caseResultIssue}
+														key={index}
+													/>
+												)
+										  )
+										: '-',
 								},
 								{
 									title: i18n.translate('comment'),
@@ -253,21 +255,28 @@ const CaseResult = () => {
 												{mbMessage?.articleBody}
 											</cite>
 
-											<small className="mt-1 text-gray">
+											<div className="align-items-center d-flex justify-center mt-2 text-gray">
 												<Avatar
-													displayName
-													name={`${
+													name={
 														mbMessage.creator?.name
-													} · ${getTimeFromNow(
-														mbMessage.dateCreated
-													)}`}
+													}
 													url={
 														mbMessage.creator?.image
 													}
 												/>
-											</small>
+
+												<span className="ml-2">
+													{`${
+														mbMessage.creator?.name
+													} · ${getTimeFromNow(
+														mbMessage.dateCreated
+													)}`}
+												</span>
+											</div>
 										</div>
-									) : null,
+									) : (
+										i18n.translate('none')
+									),
 								},
 							]}
 							orientation={Orientation.VERTICAL}

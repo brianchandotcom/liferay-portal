@@ -92,7 +92,11 @@ const Avatar: React.FC<AvatarProps> & {Group: React.FC<AvatarGroupProps>} = ({
 					})}
 				>
 					{url ? (
-						<ClaySticker.Image alt={name} src={url} />
+						<ClaySticker.Image
+							alt={name}
+							loading="lazy"
+							src={url}
+						/>
 					) : (
 						getInitials(name)
 					)}
@@ -103,7 +107,7 @@ const Avatar: React.FC<AvatarProps> & {Group: React.FC<AvatarGroupProps>} = ({
 				<span
 					className={classNames(
 						className,
-						'ml-3 testray-avatar-dropdown-text',
+						'ml-2 testray-avatar-dropdown-text',
 						{
 							'testray-avatar-dropdown-text-expanded': expanded,
 						}

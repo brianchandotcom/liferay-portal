@@ -15,9 +15,11 @@
 import ClayChart from '@clayui/charts';
 import {useRef} from 'react';
 
+import JiraLink from '../../../../components/JiraLink';
 import Container from '../../../../components/Layout/Container';
 import QATable from '../../../../components/Table/QATable';
 import useCaseResultGroupBy from '../../../../data/useCaseResultGroupBy';
+import useIssuesFound from '../../../../data/useIssuesFound';
 import i18n from '../../../../i18n';
 import {TestrayBuild, TestrayTask} from '../../../../services/rest';
 import dayjs from '../../../../util/date';
@@ -30,11 +32,11 @@ type BuildOverviewProps = {
 };
 
 const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
+	const totalTestCasesGroup = useCaseResultGroupBy(testrayBuild.id);
+	const issues = useIssuesFound({buildId: testrayBuild.id});
 	const ref = useRef<any>();
 
 	const [testrayTask] = testrayBuild?.tasks as TestrayTask[];
-
-	const totalTestCasesGroup = useCaseResultGroupBy(testrayBuild.id);
 
 	return (
 		<>
@@ -65,7 +67,14 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 							title: i18n.translate('created-by'),
 							value: testrayBuild.creator.name,
 						},
-						{title: i18n.translate('all-issues-found'), value: '-'},
+						{
+							title: i18n.translate('all-issues-found'),
+							value: issues.length ? (
+								<JiraLink issue={issues} />
+							) : (
+								'-'
+							),
+						},
 					]}
 				/>
 

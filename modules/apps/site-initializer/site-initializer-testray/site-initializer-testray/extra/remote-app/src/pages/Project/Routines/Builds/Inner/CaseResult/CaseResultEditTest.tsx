@@ -21,7 +21,7 @@ import {InferType} from 'yup';
 
 import Form from '../../../../../../components/Form';
 import Footer from '../../../../../../components/Form/Footer';
-import {splitTaskName} from '../../../../../../components/JiraLink/JiraLink';
+import {splitIssueName} from '../../../../../../components/JiraLink/JiraLink';
 import Container from '../../../../../../components/Layout/Container';
 import useFormActions from '../../../../../../hooks/useFormActions';
 import i18n from '../../../../../../i18n';
@@ -57,7 +57,7 @@ const CaseResultEditTest = () => {
 
 	const issues = caseResult.issues
 		.map((caseResultIssue: TestrayCaseResultIssue) =>
-			splitTaskName(caseResultIssue.name)
+			splitIssueName(caseResultIssue.name)
 		)
 		.join(', ');
 
@@ -119,8 +119,7 @@ const CaseResultEditTest = () => {
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};

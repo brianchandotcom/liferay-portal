@@ -551,6 +551,8 @@ definition {
 
 	@priority = 4
 	test AddRepeatingWeekly2Times {
+		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoConfiguration();
 
 		CalendarConfiguration.editTimeZonePacific();

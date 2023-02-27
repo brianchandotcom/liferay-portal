@@ -161,7 +161,7 @@ type LayoutPageTemplateEntry = {
 type LayoutPageTemplateEntryList = LayoutPageTemplateEntry[];
 
 interface IPreviewModalContentProps {
-	addLayoutURL: string,
+	addLayoutURL: string;
 	getLayoutPageTemplateEntryListURL: string;
 	initialLayoutPageTemplateEntryId: string;
 	onPreviewOpenChange: (open: boolean) => void;
@@ -264,6 +264,35 @@ function PreviewModalContent({
 
 				<iframe
 					className="align-self-stretch border-0 flex-grow-1"
+					onLoad={() => {
+						const style = {
+							cursor: 'not-allowed',
+							height: '100%',
+							left: '0',
+							position: 'fixed',
+							top: '0',
+							width: '100%',
+							zIndex: '100000',
+						};
+
+						if (iframeRef.current) {
+							const overlay = document.createElement('div');
+
+							const keys = Object.keys(
+								style
+							) as (keyof typeof style)[];
+
+							keys.forEach((key) => {
+								overlay.style[key] = style[key];
+							});
+
+							iframeRef.current.removeAttribute('style');
+							iframeRef.current.contentDocument?.body.append(
+								overlay
+							);
+						}
+					}}
+					ref={iframeRef}
 					src={layoutPageTemplateEntry.previewLayoutURL}
 				/>
 

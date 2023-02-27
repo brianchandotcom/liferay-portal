@@ -102,7 +102,9 @@ definition {
 		}
 
 		if (${item} == "Web Content Article") {
-			LexiconCard.clickCard(card = ${assetTitle});
+			Click(
+				key_listEntry = ${assetTitle},
+				locator1 = "LexiconList#LIST_ENTRY_TITLE");
 		}
 
 		if (${item} == "Blogs Entry") {

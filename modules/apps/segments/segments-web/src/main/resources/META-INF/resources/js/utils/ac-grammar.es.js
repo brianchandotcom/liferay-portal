@@ -18,12 +18,11 @@
  * and formatting the query differently for certain types like collection.
  * @returns An AC grammar query string built from the criteria object.
  */
-function buildEventQueryString(criteria) {
-	const {items} = criteria;
-	const operatorName = items[0]?.operatorName;
-	const value = items[0]?.value;
+function buildEventQueryString({items}) {
+	const [{assetId, operatorName, propertyName, value}] = items;
 
-	let query = `activities.filterByCount(filter='()',operator='${operatorName}',value=${value})`;
+	const filter = `(activityKey eq ''Document#${propertyName}#${assetId}'')`;
+	let query = `activities.filterByCount(filter='${filter}',operator='${operatorName}',value=${value})`;
 
 	query = items[0]?.operatorNot ? `((not ${query}))` : `(${query})`;
 

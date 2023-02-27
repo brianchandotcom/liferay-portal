@@ -15,8 +15,14 @@
 package com.liferay.journal.internal.model.listener;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.util.JournalConverter;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
@@ -28,6 +34,31 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ModelListener.class)
 public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
+
+	@Override
+	public void onAfterUpdate(
+			DDMStructure originalDDMStructure, DDMStructure ddmStructure)
+		throws ModelListenerException {
+
+		try {
+			for (JournalArticle article :
+					_journalArticleLocalService.getArticlesByStructureId(
+						ddmStructure.getGroupId(),
+						ddmStructure.getStructureKey(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null)) {
+
+				_ddmFieldLocalService.updateDDMFormValues(
+					ddmStructure.getStructureId(), article.getId(),
+					_fieldsToDDMFormValuesConverter.convert(
+						ddmStructure,
+						_journalConverter.getDDMFields(
+							ddmStructure, article.getContent())));
+			}
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+	}
 
 	@Override
 	public void onBeforeRemove(DDMStructure ddmStructure)
@@ -44,6 +75,15 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 	}
 
 	@Reference
+	private DDMFieldLocalService _ddmFieldLocalService;
+
+	@Reference
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
+
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private JournalConverter _journalConverter;
 
 }

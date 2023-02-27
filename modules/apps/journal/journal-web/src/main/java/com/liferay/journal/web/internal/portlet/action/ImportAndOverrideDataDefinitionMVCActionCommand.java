@@ -16,15 +16,7 @@ package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.util.JournalConverter;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -65,9 +57,6 @@ public class ImportAndOverrideDataDefinitionMVCActionCommand
 		throws Exception {
 
 		try {
-			long dataDefinitionId = ParamUtil.getLong(
-				actionRequest, "dataDefinitionId");
-
 			DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
 				_dataDefinitionResourceFactory.create();
 
@@ -79,6 +68,9 @@ public class ImportAndOverrideDataDefinitionMVCActionCommand
 					themeDisplay.getUser()
 				).build();
 
+			long dataDefinitionId = ParamUtil.getLong(
+				actionRequest, "dataDefinitionId");
+
 			UploadPortletRequest uploadPortletRequest =
 				_getUploadPortletRequest(actionRequest);
 
@@ -87,23 +79,6 @@ public class ImportAndOverrideDataDefinitionMVCActionCommand
 
 			dataDefinitionResource.putDataDefinition(
 				dataDefinitionId, dataDefinition);
-
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.getDDMStructure(dataDefinitionId);
-
-			for (JournalArticle journalArticle :
-					_journalArticleLocalService.getArticlesByStructureId(
-						ddmStructure.getGroupId(),
-						ddmStructure.getStructureKey(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-				_ddmFieldLocalService.updateDDMFormValues(
-					dataDefinitionId, journalArticle.getId(),
-					_fieldsToDDMFormValuesConverter.convert(
-						ddmStructure,
-						_journalConverter.getDDMFields(
-							ddmStructure, journalArticle.getContent())));
-			}
 
 			SessionMessages.add(
 				actionRequest, "importDataDefinitionSuccessMessage");
@@ -141,21 +116,6 @@ public class ImportAndOverrideDataDefinitionMVCActionCommand
 
 	@Reference
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
-
-	@Reference
-	private DDMFieldLocalService _ddmFieldLocalService;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Reference
-	private JournalConverter _journalConverter;
 
 	@Reference
 	private Portal _portal;

@@ -15,7 +15,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {CONJUNCTIONS} from '../../utils/constants.es';
+import {CONJUNCTIONS} from '../../utils/constants';
 import {initialContributorShape} from '../../utils/types.es';
 
 function ContributorInputs({contributors}) {

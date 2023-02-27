@@ -19,7 +19,7 @@ import {openSelectionModal} from 'frontend-js-web';
 import React from 'react';
 
 import ContributorsBuilder from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/ContributorsBuilder.es';
-import {CONJUNCTIONS} from '../../../../src/main/resources/META-INF/resources/js/utils/constants.es';
+import {CONJUNCTIONS} from '../../../../src/main/resources/META-INF/resources/js/utils/constants';
 
 const initialContributors = [
 	{

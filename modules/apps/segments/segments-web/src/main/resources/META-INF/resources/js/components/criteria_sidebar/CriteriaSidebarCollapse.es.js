@@ -19,7 +19,7 @@ import {parse} from 'date-fns';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {PROPERTY_TYPES} from '../../utils/constants.es';
+import {PROPERTY_TYPES} from '../../utils/constants';
 import {propertyGroupShape} from '../../utils/types.es';
 import {jsDatetoYYYYMMDD} from '../../utils/utils.es';
 import CriteriaSidebarItem from './CriteriaSidebarItem.es';

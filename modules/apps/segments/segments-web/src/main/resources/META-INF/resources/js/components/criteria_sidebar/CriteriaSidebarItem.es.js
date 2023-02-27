@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {DragSource as dragSource} from 'react-dnd';
 
-import {PROPERTY_TYPES} from '../../utils/constants.es';
+import {PROPERTY_TYPES} from '../../utils/constants';
 import {DragTypes} from '../../utils/drag-types.es';
 
 const TYPE_ICON_MAP = {

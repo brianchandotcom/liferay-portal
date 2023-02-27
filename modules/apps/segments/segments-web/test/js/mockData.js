@@ -15,7 +15,7 @@
 import {
 	CONJUNCTIONS,
 	RELATIONAL_OPERATORS,
-} from '../../src/main/resources/META-INF/resources/js/utils/constants.es';
+} from '../../src/main/resources/META-INF/resources/js/utils/constants';
 
 const {AND, OR} = CONJUNCTIONS;
 

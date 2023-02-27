@@ -17,7 +17,7 @@ import {
 	NOT_OPERATORS,
 	PROPERTY_TYPES,
 	RELATIONAL_OPERATORS,
-} from './constants.es';
+} from './constants';
 
 /**
  * Gets the type of the property from the property name.

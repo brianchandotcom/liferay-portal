@@ -17,7 +17,7 @@ import getCN from 'classnames';
 import propTypes from 'prop-types';
 import React from 'react';
 
-import {BOOLEAN_OPTIONS} from '../../utils/constants.es';
+import {BOOLEAN_OPTIONS} from '../../utils/constants';
 
 class BooleanInput extends React.Component {
 	static propTypes = {

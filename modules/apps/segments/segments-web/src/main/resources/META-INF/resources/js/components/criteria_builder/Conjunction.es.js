@@ -19,7 +19,7 @@ import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {SUPPORTED_CONJUNCTIONS} from '../../utils/constants.es';
+import {SUPPORTED_CONJUNCTIONS} from '../../utils/constants';
 
 function Conjunction({className, conjunctionName, editing, onSelect}) {
 	const [active, setActive] = useState(false);

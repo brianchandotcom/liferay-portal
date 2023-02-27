@@ -22,7 +22,7 @@ import {
 	CONJUNCTIONS,
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
-} from '../../utils/constants.es';
+} from '../../utils/constants';
 import {DragTypes} from '../../utils/drag-types.es';
 import {
 	generateGroupId,

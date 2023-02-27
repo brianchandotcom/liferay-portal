@@ -23,7 +23,7 @@ import {
 	SUPPORTED_EVENT_DATE_OPERATORS,
 	SUPPORTED_EVENT_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
-} from '../../utils/constants.es';
+} from '../../utils/constants';
 import {unescapeSingleQuotes} from '../../utils/odata.es';
 import {
 	dateToInternationalHuman,

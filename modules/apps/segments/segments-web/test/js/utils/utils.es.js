@@ -12,7 +12,7 @@
  * details.
  */
 
-import {CONJUNCTIONS} from '../../../src/main/resources/META-INF/resources/js/utils/constants.es';
+import {CONJUNCTIONS} from '../../../src/main/resources/META-INF/resources/js/utils/constants';
 import * as Utils from '../../../src/main/resources/META-INF/resources/js/utils/utils.es';
 import {mockCriteria, mockCriteriaNested} from '../mockData';
 

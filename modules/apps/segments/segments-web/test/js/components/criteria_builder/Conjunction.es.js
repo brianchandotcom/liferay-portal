@@ -17,7 +17,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import Conjunction from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/Conjunction.es';
-import {SUPPORTED_CONJUNCTIONS} from '../../../../src/main/resources/META-INF/resources/js/utils/constants.es';
+import {SUPPORTED_CONJUNCTIONS} from '../../../../src/main/resources/META-INF/resources/js/utils/constants';
 
 describe('Conjunction', () => {
 	afterEach(cleanup);

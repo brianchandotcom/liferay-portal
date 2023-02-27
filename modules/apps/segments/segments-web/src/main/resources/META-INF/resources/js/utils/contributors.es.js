@@ -17,7 +17,7 @@ import {
 	CONJUNCTIONS,
 	PROPERTY_GROUPS,
 	SUPPORTED_CONJUNCTIONS,
-} from './constants.es';
+} from './constants';
 import {buildQueryString} from './odata.es';
 
 /**

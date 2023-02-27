@@ -20,7 +20,7 @@ import {
 	HAS_OPERATORS,
 	SUPPORTED_EVENT_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
-} from '../../utils/constants.es';
+} from '../../utils/constants';
 import {getSupportedOperatorsFromEvent} from '../../utils/utils.es';
 import IntegerInput from './IntegerInput.es';
 import SelectEntityInput from './SelectEntityInput.es';

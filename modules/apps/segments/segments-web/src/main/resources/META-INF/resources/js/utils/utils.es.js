@@ -14,7 +14,7 @@
 
 import {format, isValid, parseISO} from 'date-fns';
 
-import {CONJUNCTIONS} from './constants.es';
+import {CONJUNCTIONS} from './constants';
 
 const GROUP_ID_NAMESPACE = 'group_';
 

@@ -22,14 +22,14 @@ import {
 	PROPERTY_TYPES,
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
-} from '../../utils/constants.es';
+} from '../../utils/constants';
 import {
 	createNewGroup,
 	getSupportedOperatorsFromType,
 } from '../../utils/utils.es';
 import BooleanInput from '../inputs/BooleanInput.es';
 import CollectionInput from '../inputs/CollectionInput.es';
-import DateTimeInput from '../inputs/DateTimeInput.es';
+import DateTimeInput from '../inputs/DateTimeInput';
 import DecimalInput from '../inputs/DecimalInput.es';
 import EventInput from '../inputs/EventInput';
 import IntegerInput from '../inputs/IntegerInput.es';

@@ -21,21 +21,21 @@ import {sub} from 'frontend-js-web';
 export const CONJUNCTIONS = {
 	AND: 'and',
 	OR: 'or',
-};
+} as const;
 
 export const FUNCTIONAL_OPERATORS = {
 	CONTAINS: 'contains',
-};
+} as const;
 
 export const NOT_OPERATORS = {
 	NOT_CONTAINS: 'not-contains',
 	NOT_EQ: 'not-eq',
-};
+} as const;
 
 export const HAS_OPERATORS = {
 	HAS: 'has',
 	NOT_HAS: 'has-not',
-};
+} as const;
 
 export const RELATIONAL_OPERATORS = {
 	EQ: 'eq',
@@ -43,12 +43,12 @@ export const RELATIONAL_OPERATORS = {
 	GT: 'gt',
 	LE: 'le',
 	LT: 'lt',
-};
+} as const;
 
 export const DATE_OPERATORS = {
 	BETWEEN: 'between',
 	EVER: 'ever',
-};
+} as const;
 
 export const SINCE_VALUES = {
 	last7Days: sub(Liferay.Language.get('last-x-days'), 7),
@@ -57,7 +57,7 @@ export const SINCE_VALUES = {
 	last30Days: sub(Liferay.Language.get('last-x-days'), 30),
 	last90Days: sub(Liferay.Language.get('last-x-days'), 90),
 	yesterday: Liferay.Language.get('yesterday'),
-};
+} as const;
 
 /**
  * Constants to match property types in the passed in supportedProperties array.
@@ -73,11 +73,11 @@ export const PROPERTY_TYPES = {
 	ID: 'id',
 	INTEGER: 'integer',
 	STRING: 'string',
-};
+} as const;
 
 export const PROPERTY_GROUPS = {
 	EVENT: 'event',
-};
+} as const;
 
 /**
  * Constants for CriteriaBuilder component.
@@ -118,7 +118,7 @@ export const SUPPORTED_CONJUNCTIONS = [
 		label: Liferay.Language.get('or'),
 		name: OR,
 	},
-];
+] as const;
 
 export const SUPPORTED_OPERATORS = [
 	{
@@ -153,7 +153,7 @@ export const SUPPORTED_OPERATORS = [
 		label: Liferay.Language.get('not-contains'),
 		name: NOT_CONTAINS,
 	},
-];
+] as const;
 
 export const SUPPORTED_EVENT_OPERATORS = [
 	{
@@ -172,7 +172,7 @@ export const SUPPORTED_EVENT_OPERATORS = [
 		label: Liferay.Language.get('has-not'),
 		name: NOT_HAS,
 	},
-];
+] as const;
 
 export const SUPPORTED_EVENT_DATE_OPERATORS = [
 	{
@@ -195,7 +195,7 @@ export const SUPPORTED_EVENT_DATE_OPERATORS = [
 		label: Liferay.Language.get('before'),
 		name: LT,
 	},
-];
+] as const;
 
 export const SUPPORTED_PROPERTY_TYPES = {
 	[BOOLEAN]: [EQ, NOT_EQ],
@@ -219,7 +219,7 @@ export const SUPPORTED_PROPERTY_TYPES = {
 	[ID]: [EQ, NOT_EQ],
 	[INTEGER]: [EQ, GE, GT, LE, LT, NOT_EQ],
 	[STRING]: [EQ, NOT_EQ, CONTAINS, NOT_CONTAINS],
-};
+} as const;
 
 /**
  * Values for criteria row inputs.
@@ -234,4 +234,4 @@ export const BOOLEAN_OPTIONS = [
 		label: Liferay.Language.get('false'),
 		value: 'false',
 	},
-];
+] as const;

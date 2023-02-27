@@ -716,18 +716,18 @@ definition {
 
 		task ("Assert the selected info is shown above the Select button") {
 			AssertTextEquals.assertPartialText(
-				key_text = "Select from List: Value2",
+				key_text = "Select from List: Option 2",
 				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
-				value1 = "Select from List: Value2");
+				value1 = "Select from List: Option 2");
 		}
 
 		task ("Assert the selected info is still shown above the Select button") {
 			PortletEntry.save();
 
 			AssertTextEquals.assertPartialText(
-				key_text = "Select from List: Value2",
+				key_text = "Select from List: Option 2",
 				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
-				value1 = "Select from List: Value2");
+				value1 = "Select from List: Option 2");
 		}
 	}
 

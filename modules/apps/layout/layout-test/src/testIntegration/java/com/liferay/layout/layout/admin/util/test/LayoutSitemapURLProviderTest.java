@@ -15,7 +15,6 @@
 package com.liferay.layout.layout.admin.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -43,6 +42,7 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.util.SitemapURLProvider;
 
 import java.util.HashMap;
 import java.util.List;

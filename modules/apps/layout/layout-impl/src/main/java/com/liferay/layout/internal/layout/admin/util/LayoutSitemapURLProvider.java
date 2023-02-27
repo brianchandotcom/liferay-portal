@@ -15,8 +15,6 @@
 package com.liferay.layout.internal.layout.admin.util;
 
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.layout.admin.kernel.util.Sitemap;
-import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -31,6 +29,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
+import com.liferay.site.util.Sitemap;
+import com.liferay.site.util.SitemapURLProvider;
 
 import java.util.HashSet;
 import java.util.List;

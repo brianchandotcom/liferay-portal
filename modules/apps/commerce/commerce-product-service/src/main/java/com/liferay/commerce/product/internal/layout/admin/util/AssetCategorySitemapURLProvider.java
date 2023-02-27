@@ -23,8 +23,6 @@ import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.layout.admin.kernel.util.Sitemap;
-import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -38,6 +36,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.site.util.Sitemap;
+import com.liferay.site.util.SitemapURLProvider;
 
 import java.util.List;
 

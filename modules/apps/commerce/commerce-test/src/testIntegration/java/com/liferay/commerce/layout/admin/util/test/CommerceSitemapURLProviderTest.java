@@ -36,7 +36,6 @@ import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Company;
@@ -68,6 +67,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.theme.ThemeDisplayFactory;
+import com.liferay.site.util.SitemapURLProvider;
 
 import java.io.InputStream;
 

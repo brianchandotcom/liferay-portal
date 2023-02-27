@@ -15,8 +15,6 @@
 package com.liferay.layout.internal.util;
 
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.layout.admin.kernel.util.Sitemap;
-import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
@@ -46,6 +44,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.site.util.Sitemap;
+import com.liferay.site.util.SitemapURLProvider;
 
 import java.text.DateFormat;
 

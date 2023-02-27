@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.internal.util.ResourceBundleLoaderProvid
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
@@ -62,7 +63,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -332,7 +332,8 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 	}
 
 	private class TemplateHandlerServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<TemplateHandler, TemplateHandler> {
+		implements EagerServiceTrackerCustomizer
+			<TemplateHandler, TemplateHandler> {
 
 		@Override
 		public TemplateHandler addingService(

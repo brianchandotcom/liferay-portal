@@ -19,6 +19,7 @@ import com.liferay.client.extension.internal.upgrade.v3_1_0.util.ClientExtension
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.ReleaseRenamingUpgradeStep;
@@ -113,6 +114,8 @@ public class ClientExtensionUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"ClientExtensionEntryRel", "groupId LONG",
 				"lastPublishDate DATE null"));
+
+		registry.register("3.5.0", "3.5.1", new DummyUpgradeProcess());
 	}
 
 	@Reference

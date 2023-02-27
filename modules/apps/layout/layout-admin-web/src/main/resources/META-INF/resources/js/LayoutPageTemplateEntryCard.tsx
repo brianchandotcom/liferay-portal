@@ -180,7 +180,7 @@ function PreviewModalContent({
 					: previousIndex - 1;
 			}
 
-			return previousIndex + (1 % layoutPageTemplateEntryList.length);
+			return (previousIndex + 1) % layoutPageTemplateEntryList.length;
 		});
 	};
 

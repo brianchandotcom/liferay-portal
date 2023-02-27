@@ -77,8 +77,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
-					"select groupId, resourcePrimKey, articleId from " +
-						"JournalArticle")) {
+					"select distinct groupId, resourcePrimKey, " +
+						"articleId from JournalArticle")) {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {

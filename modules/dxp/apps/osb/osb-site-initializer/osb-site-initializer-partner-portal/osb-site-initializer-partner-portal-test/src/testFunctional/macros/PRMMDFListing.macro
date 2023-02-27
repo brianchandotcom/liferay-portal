@@ -2,10 +2,91 @@ definition {
 
 	@summary = "Verify if the MDF is visible on listing page"
 	macro viewOnList {
+		var key_rowName = ${key_rowNumber};
+
+		if (isSet(mdfID)) {
+			AssertVisible(
+				key_rowNumber = "Request ID",
+				key_rowValue = ${mdfID},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
+
+		if (isSet(mdfStatus)) {
+			AssertVisible(
+				key_rowNumber = "Status",
+				key_rowValue = ${mdfStatus},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
+
+		if (isSet(activityPeriod)) {
+			AssertVisible(
+				key_rowNumber = "Activity Period",
+				key_rowValue = ${activityPeriod},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
+
+		if (isSet(partnerName)) {
 		AssertVisible(
-			key_rowNumber = 6,
+				key_rowNumber = "Partner",
+				key_rowValue = ${partnerName},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
+
+		if (isSet(totalCost)) {
+			AssertVisible(
+				key_rowNumber = "Total Cost",
+				key_rowValue = ${totalCost},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
+
+		if (isSet(campaignName)) {
+			AssertVisible(
+				key_rowNumber = "Name",
 			key_rowValue = ${campaignName},
 			locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
+
+		if (isSet(requestedValue)) {
+			AssertVisible(
+				key_rowNumber = "Requested",
+				key_rowValue = ${requestedValue},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
+
+		if (isSet(amountClaimed)) {
+			AssertVisible(
+				key_rowNumber = "Amount Claimed",
+				key_rowValue = ${amountClaimed},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
+
+		if (isSet(approved)) {
+			AssertVisible(
+				key_rowNumber = "Approved",
+				key_rowValue = ${approved},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
+
+		if (isSet(paidValue)) {
+			AssertVisible(
+				key_rowNumber = "Paid",
+				key_rowValue = ${paidValue},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
+
+		if (isSet(submittedDate)) {
+			AssertVisible(
+				key_rowNumber = "Date Submitted",
+				key_rowValue = ${submittedDate},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
+
+		if (isSet(lastModification)) {
+			AssertVisible(
+				key_rowNumber = "Last Modified",
+				key_rowValue = ${lastModification},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
+		}
 	}
 
 }

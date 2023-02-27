@@ -641,6 +641,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCOUNT_SELECTOR_SPECIFIC_ORDER_ID</td>
+	<td>//a[contains(@href,'commerceOrderId') and contains(text(),'${key_orderID}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_CONTENT</td>
 	<td>//div[@class='portlet-content']</td>
 	<td></td>

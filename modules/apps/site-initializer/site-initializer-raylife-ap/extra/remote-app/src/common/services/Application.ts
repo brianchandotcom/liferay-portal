@@ -128,3 +128,19 @@ export function getApplicationByExternalReferenceCode(
 export function getApplicationsById(id: number) {
 	return axios.get(`${DeliveryAPI}/?filter=id eq '${id}'`);
 }
+
+export function updateRaylifeApplication(
+	externalReferenceCode: string,
+	status: string
+) {
+	const payload = {
+		applicationStatus: {
+			key: status,
+		},
+	};
+
+	return axios.patch(
+		`${DeliveryAPI}/by-external-reference-code/${externalReferenceCode}`,
+		payload
+	);
+}

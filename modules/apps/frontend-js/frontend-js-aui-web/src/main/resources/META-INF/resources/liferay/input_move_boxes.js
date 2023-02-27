@@ -287,10 +287,10 @@ AUI.add(
 
 					instance._toggleReorderToolbars();
 
-					instance._initToggleBtn(contentBox.one('.reorder-down'));
-					instance._initToggleBtn(contentBox.one('.reorder-up'));
 					instance._initToggleBtn(contentBox.one('.move-left'));
 					instance._initToggleBtn(contentBox.one('.move-right'));
+					instance._initToggleBtn(contentBox.one('.reorder-down'));
+					instance._initToggleBtn(contentBox.one('.reorder-up'));
 				},
 				_toggleBtnMove(event) {
 					const instance = this;

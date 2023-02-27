@@ -2839,10 +2839,10 @@ public abstract class BaseUserAccountResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			userAccountResource.postProfileImageHttpResponse(
-				userAccount.getId(), null));
+				userAccount.getId(), null, null));
 
 		assertHttpResponseStatusCode(
-			404, userAccountResource.postProfileImageHttpResponse(0L, null));
+			404, userAccountResource.postProfileImageHttpResponse(0L, null, null));
 	}
 
 	protected UserAccount testPostProfileImage_addUserAccount()

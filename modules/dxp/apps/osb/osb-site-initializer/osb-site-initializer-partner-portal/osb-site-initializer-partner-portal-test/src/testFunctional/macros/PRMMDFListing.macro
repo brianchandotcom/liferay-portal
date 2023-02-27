@@ -26,7 +26,7 @@ definition {
 		}
 
 		if (isSet(partnerName)) {
-		AssertVisible(
+			AssertVisible(
 				key_rowNumber = "Partner",
 				key_rowValue = ${partnerName},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
@@ -42,8 +42,8 @@ definition {
 		if (isSet(campaignName)) {
 			AssertVisible(
 				key_rowNumber = "Name",
-			key_rowValue = ${campaignName},
-			locator1 = "PRMMDFListing#LISTING_TABLE");
+				key_rowValue = ${campaignName},
+				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(requestedValue)) {

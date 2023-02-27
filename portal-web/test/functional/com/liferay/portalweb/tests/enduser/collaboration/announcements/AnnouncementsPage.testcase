@@ -319,9 +319,7 @@ definition {
 				locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE");
 		}
 
-		AssertClick(
-			locator1 = "Pagination#NEXT_LINK",
-			value1 = "Next Page");
+		Click(locator1 = "Pagination#NEXT_LINK");
 
 		for (var viewEntryCount : list "1,2,3") {
 			AnnouncementsEntry.viewPG(

@@ -123,7 +123,7 @@ public class KnowledgeBaseAttachmentResourceTest
 	}
 
 	@Override
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getExpectedActions(
 				Long knowledgeBaseArticleId)
 		throws Exception {

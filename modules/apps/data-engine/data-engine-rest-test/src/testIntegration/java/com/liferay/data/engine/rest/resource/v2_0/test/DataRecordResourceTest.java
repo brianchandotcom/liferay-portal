@@ -657,7 +657,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	}
 
 	@Override
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetDataDefinitionDataRecordsPage_getExpectedActions(
 				Long dataDefinitionId)
 		throws Exception {
@@ -690,7 +690,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	}
 
 	@Override
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetDataRecordCollectionDataRecordsPage_getExpectedActions(
 				Long dataRecordCollectionId)
 		throws Exception {

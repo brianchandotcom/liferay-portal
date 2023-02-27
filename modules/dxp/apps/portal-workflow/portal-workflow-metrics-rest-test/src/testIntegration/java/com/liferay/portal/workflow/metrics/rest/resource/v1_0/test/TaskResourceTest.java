@@ -321,8 +321,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	}
 
 	@Override
-	protected Map<String, Map> testGetProcessTasksPage_getExpectedActions(
-			Long processId)
+	protected Map<String, Map<String, String>>
+			testGetProcessTasksPage_getExpectedActions(Long processId)
 		throws Exception {
 
 		return Collections.emptyMap();

@@ -121,7 +121,7 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 	}
 
 	@Override
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetDataDefinitionDataListViewsPage_getExpectedActions(
 				Long dataDefinitionId)
 		throws Exception {

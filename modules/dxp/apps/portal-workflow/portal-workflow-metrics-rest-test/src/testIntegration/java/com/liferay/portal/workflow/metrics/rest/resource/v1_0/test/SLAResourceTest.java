@@ -166,8 +166,8 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 	}
 
 	@Override
-	protected Map<String, Map> testGetProcessSLAsPage_getExpectedActions(
-			Long processId)
+	protected Map<String, Map<String, String>>
+			testGetProcessSLAsPage_getExpectedActions(Long processId)
 		throws Exception {
 
 		return Collections.emptyMap();

@@ -268,7 +268,7 @@ public class DataRecordCollectionResourceTest
 	}
 
 	@Override
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetDataDefinitionDataRecordCollectionsPage_getExpectedActions(
 				Long dataDefinitionId)
 		throws Exception {

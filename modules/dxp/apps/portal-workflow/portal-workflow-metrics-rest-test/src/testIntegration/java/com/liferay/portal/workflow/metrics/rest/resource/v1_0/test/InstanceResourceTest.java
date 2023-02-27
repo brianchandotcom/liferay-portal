@@ -479,8 +479,8 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	}
 
 	@Override
-	protected Map<String, Map> testGetProcessInstancesPage_getExpectedActions(
-			Long processId)
+	protected Map<String, Map<String, String>>
+			testGetProcessInstancesPage_getExpectedActions(Long processId)
 		throws Exception {
 
 		return Collections.emptyMap();

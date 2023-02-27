@@ -439,7 +439,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	}
 
 	@Override
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetDataDefinitionDataLayoutsPage_getExpectedActions(
 				Long dataDefinitionId)
 		throws Exception {

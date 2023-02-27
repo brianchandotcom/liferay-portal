@@ -255,8 +255,8 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
-	protected Map<String, Map> testGetCountryRegionsPage_getExpectedActions(
-			Long countryId)
+	protected Map<String, Map<String, String>>
+			testGetCountryRegionsPage_getExpectedActions(Long countryId)
 		throws Exception {
 
 		return Collections.emptyMap();

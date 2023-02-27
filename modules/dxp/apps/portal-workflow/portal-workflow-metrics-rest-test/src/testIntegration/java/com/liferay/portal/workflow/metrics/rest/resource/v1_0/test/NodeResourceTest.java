@@ -123,8 +123,8 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 	}
 
 	@Override
-	protected Map<String, Map> testGetProcessNodesPage_getExpectedActions(
-			Long processId)
+	protected Map<String, Map<String, String>>
+			testGetProcessNodesPage_getExpectedActions(Long processId)
 		throws Exception {
 
 		return Collections.emptyMap();

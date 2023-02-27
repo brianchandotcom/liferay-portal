@@ -1085,7 +1085,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	protected Map<String, Map>
+	protected Map<String, Map<String, String>>
 			testGetAccountUserAccountsPage_getExpectedActions(Long accountId)
 		throws Exception {
 

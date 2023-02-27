@@ -85,8 +85,8 @@ public class FormRecordResourceTest extends BaseFormRecordResourceTestCase {
 	}
 
 	@Override
-	protected Map<String, Map> testGetFormFormRecordsPage_getExpectedActions(
-			Long formId)
+	protected Map<String, Map<String, String>>
+			testGetFormFormRecordsPage_getExpectedActions(Long formId)
 		throws Exception {
 
 		return Collections.emptyMap();

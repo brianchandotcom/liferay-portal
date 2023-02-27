@@ -86,7 +86,9 @@ definition {
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		Search.searchCP(searchTerm = "Orange");
+		KBArticle.searchForKB(
+			knowledgeBaseName = "Orange",
+			searchFromCenterPanel = "true");
 
 		KBArticle.viewSearchResultNotPresent(kbArticleTitle = "Blue");
 

@@ -114,6 +114,7 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -262,7 +263,11 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinition.getDBTableName());
 
 		for (ObjectField oldObjectField : oldObjectFields) {
-			if (!_hasObjectField(newObjectFields, oldObjectField)) {
+			if (oldObjectField.isSystem() &&
+				!_defaultSystemObjectFieldNames.contains(
+					oldObjectField.getName()) &&
+				!_hasObjectField(newObjectFields, oldObjectField)) {
+
 				_objectFieldPersistence.remove(oldObjectField);
 			}
 		}
@@ -1690,6 +1695,13 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private final Set<String> _defaultSystemObjectFieldNames =
+		SetUtil.fromArray(
+			new String[] {
+				"creator", "createDate", "externalReferenceCode", "id",
+				"modifiedDate", "status"
+			});
 
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory

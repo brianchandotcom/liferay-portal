@@ -18,6 +18,12 @@ import hudson.model.Build;
 import hudson.model.Computer;
 import hudson.model.Executor;
 import hudson.model.Job;
+import hudson.model.ParameterValue;
+import hudson.model.ParametersAction;
+import hudson.model.Queue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import jenkins.model.Jenkins;
 
@@ -47,12 +53,14 @@ public class JenkinsEventsConfigurationUtil {
 		payloadJSONObject.put("eventTrigger", eventTrigger);
 		payloadJSONObject.put("jenkins", _getJenkinsJSONObject(jenkins));
 		payloadJSONObject.put("job", _getJobJSONObject(_getJob(eventObject)));
+		payloadJSONObject.put(
+			"queueItem", _getQueueItemJSONObject(_getQueueItem(eventObject)));
 
-		JenkinsEventsConfiguration jenkinsEventsConfiguration =
-			jenkins.getDescriptorByType(JenkinsEventsConfiguration.class);
+		JenkinsEventsRootAction jenkinsEventsRootAction =
+			jenkins.getDescriptorByType(JenkinsEventsRootAction.class);
 
 		for (JenkinsWebHook jenkinsWebHook :
-				jenkinsEventsConfiguration.getJenkinsWebHooks()) {
+				jenkinsEventsRootAction.getJenkinsWebHooks()) {
 
 			if (!jenkinsWebHook.containsEventTrigger(eventTrigger)) {
 				continue;
@@ -159,6 +167,68 @@ public class JenkinsEventsConfigurationUtil {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("name", job.getName());
+
+		return jsonObject;
+	}
+
+	private static Queue.Item _getQueueItem(Object eventObject) {
+		if (eventObject instanceof Queue.Item) {
+			return (Queue.Item)eventObject;
+		}
+
+		return null;
+	}
+
+	private static JSONObject _getQueueItemJSONObject(Queue.Item queueItem) {
+		if (queueItem == null) {
+			return null;
+		}
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("id", queueItem.getId());
+
+		if (queueItem instanceof Queue.BuildableItem) {
+			Queue.BuildableItem buildableItem = (Queue.BuildableItem)queueItem;
+
+			jsonObject.put("pending", buildableItem.isPending());
+			jsonObject.put("stuck", buildableItem.isStuck());
+		}
+		else if (queueItem instanceof Queue.LeftItem) {
+			Queue.LeftItem leftItem = (Queue.LeftItem)queueItem;
+
+			jsonObject.put("canceled", leftItem.isCancelled());
+		}
+
+		Map<String, Object> parameters = new HashMap<>();
+
+		for (ParametersAction parametersAction :
+				queueItem.getActions(ParametersAction.class)) {
+
+			for (ParameterValue parameterValue :
+					parametersAction.getParameters()) {
+
+				parameters.put(
+					parameterValue.getName(), parameterValue.getValue());
+			}
+		}
+
+		jsonObject.put("parameters", parameters);
+
+		jsonObject.put("task", _getQueueTaskJSONObject(queueItem.task));
+
+		return jsonObject;
+	}
+
+	private static JSONObject _getQueueTaskJSONObject(Queue.Task queueTask) {
+		if (queueTask == null) {
+			return null;
+		}
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("concurrent", queueTask.isConcurrentBuild());
+		jsonObject.put("name", queueTask.getDisplayName());
 
 		return jsonObject;
 	}

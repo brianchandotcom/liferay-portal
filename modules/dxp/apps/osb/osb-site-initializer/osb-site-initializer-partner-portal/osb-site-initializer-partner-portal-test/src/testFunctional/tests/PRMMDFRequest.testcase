@@ -587,45 +587,31 @@ definition {
 			PRMMarketing.gotoAddNewMDF();
 		}
 
-		task ("And I fill all Goals form with my informations") {
-			PRMMDFRequest.fillGoalsPage(
+		task ("Given that a partner submit a new MDF Request") {
+			PRMMDFRequest.createNewRequest(
 				accountName = "Company Name 1",
-				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
-				campaignDescription = "Campaign Description",
-				campaignName = "Campaign Name",
-				countryName = "Global",
-				goalsOptions = "Lead generation",
-				targetMarketOptions = "Education,Energy",
-				targetRolesOptions = "Administrator");
-
-			Button.click(button = "Continue");
-		}
-
-		task ("And I add a new activity") {
-			PRMMDFRequest.newActivity(
 				activityDescription = "Activity Description",
 				activityName = "Activity Name 1",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+				campaignDescription = "Campaign Description",
+				campaignName = ${campaignName},
+				countryName = "Global",
 				followUpStrategy = "test",
+				goalsOptions = "Lead generation",
 				leadFollowUpList = "Other",
 				leadList = "No",
 				tactic = "Other",
+				targetMarketOptions = "Education,Energy",
 				targetOfLeads = "test",
+				targetRolesOptions = "Administrator",
 				typeOfActivity = "Miscellaneous Marketing");
-
-			Button.click(button = "Continue");
 		}
 
-		task ("When I submit the MDF") {
-			Button.click(button = "Continue");
-
-			Button.click(button = "Submit");
-		}
-
-		task ("Then the MDF is submited and visible on listing page") {
-			WaitForPageLoad();
-
-			PRMMDFListing.viewOnList(campaignName = "Campaign Name");
+		task ("Then the MDF status appears on list") {
+			PRMMDFListing.viewOnList(
+				mdfStatus = "Pending Marketing Review",
+				rowNumber = "Status");
 		}
 	}
 

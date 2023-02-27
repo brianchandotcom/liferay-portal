@@ -24,6 +24,7 @@ import {AttachmentProperties} from './AttachmentProperties';
 import {FormulaContainer} from './FormulaContainer';
 import {MaxLengthProperties} from './MaxLengthProperties';
 import {SearchableContainer} from './SearchableContainer';
+import {TranslationOptionsContainer} from './TranslationOptionsContainer';
 
 interface AggregationFilters {
 	defaultSort?: boolean;
@@ -190,6 +191,14 @@ export function BasicInfo({
 					objectField={values}
 					readOnly={readOnly}
 					setValues={setValues}
+				/>
+			)}
+
+			{Liferay.FeatureFlags['LPS-146755'] && (
+				<TranslationOptionsContainer
+					published={isApproved}
+					setValues={setValues}
+					values={values}
 				/>
 			)}
 

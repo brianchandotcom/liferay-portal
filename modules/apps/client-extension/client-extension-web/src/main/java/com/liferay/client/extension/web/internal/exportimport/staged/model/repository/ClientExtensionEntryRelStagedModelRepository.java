@@ -127,7 +127,13 @@ public class ClientExtensionEntryRelStagedModelRepository
 		throws PortalException {
 
 		return _clientExtensionEntryRelLocalService.
-			updateClientExtensionEntryRel(clientExtensionEntryRel);
+			updateClientExtensionEntryRel(
+				clientExtensionEntryRel.getClientExtensionEntryRelId(),
+				clientExtensionEntryRel.getClassNameId(),
+				clientExtensionEntryRel.getClassPK(),
+				clientExtensionEntryRel.getCETExternalReferenceCode(),
+				clientExtensionEntryRel.getType(),
+				clientExtensionEntryRel.getTypeSettings());
 	}
 
 	@Reference

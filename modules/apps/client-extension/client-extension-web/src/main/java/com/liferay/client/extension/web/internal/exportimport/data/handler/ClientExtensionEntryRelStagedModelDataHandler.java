@@ -76,11 +76,11 @@ public class ClientExtensionEntryRelStagedModelDataHandler
 			return;
 		}
 
-		Map<Long, Long> layoutClassedModelUsageids =
+		Map<Long, Long> clientExtensionEntryRelIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				ClientExtensionEntryRel.class);
 
-		layoutClassedModelUsageids.put(
+		clientExtensionEntryRelIds.put(
 			clientExtensionEntryRelId,
 			existingClientExtensionEntryRel.getClientExtensionEntryRelId());
 	}

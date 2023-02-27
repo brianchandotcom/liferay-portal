@@ -35,12 +35,12 @@ public class MockHttp implements Http {
 		boolean proxyHost,
 		Map<String, UnsafeSupplier<String, Exception>> requests) {
 
-		_cookies = cookies;
-		_nonProxyHost = nonProxyHost;
-		_proxyConfig = proxyConfig;
-		_proxyHost = proxyHost;
-
-		_requests.putAll(requests);
+		if (requests != null) {
+			_requests = Collections.unmodifiableMap(requests);
+		}
+		else {
+			_requests = Collections.emptyMap();
+		}
 	}
 
 	@Override
@@ -173,7 +173,6 @@ public class MockHttp implements Http {
 	private final boolean _nonProxyHost;
 	private final boolean _proxyConfig;
 	private final boolean _proxyHost;
-	private final Map<String, UnsafeSupplier<String, Exception>> _requests =
-		new HashMap<>();
+	private final Map<String, UnsafeSupplier<String, Exception>> _requests;
 
 }

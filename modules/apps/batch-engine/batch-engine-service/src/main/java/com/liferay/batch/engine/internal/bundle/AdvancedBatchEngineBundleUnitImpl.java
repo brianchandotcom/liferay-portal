@@ -14,7 +14,7 @@
 
 package com.liferay.batch.engine.internal.bundle;
 
-import com.liferay.batch.engine.internal.auto.deploy.AdvancedJSONReader;
+import com.liferay.batch.engine.internal.json.AdvancedJSONReader;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.portal.kernel.log.Log;

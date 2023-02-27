@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal.auto.deploy;
 
+import com.liferay.batch.engine.internal.json.AdvancedJSONReader;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -98,7 +99,7 @@ public class AdvancedJSONReaderTest {
 	}
 
 	private File _getFile(String fileName) throws Exception {
-		URL url = BatchEngineAutoDeployListenerTest.class.getResource(fileName);
+		URL url = AdvancedJSONReaderTest.class.getResource(fileName);
 
 		Assert.assertEquals("file", url.getProtocol());
 

@@ -18,7 +18,6 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -51,7 +50,7 @@ public class ObjectEntryMtoMObjectRelationshipElementsParserImpl
 
 	@Override
 	protected ObjectEntry parseOne(Object object) {
-		return ObjectEntryValuesUtil.toObjectEntry((Map<String, Object>)object);
+		return toObjectEntry((Map<String, Object>)object);
 	}
 
 }

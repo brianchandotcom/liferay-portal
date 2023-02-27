@@ -15,6 +15,7 @@
 package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParser;
 
 import java.util.ArrayList;
@@ -59,6 +60,20 @@ public abstract class BaseObjectRelationshipElementsParserImpl<T>
 	}
 
 	protected abstract T parseOne(Object object);
+
+	protected ObjectEntry toObjectEntry(
+		Map<String, Object> nestedObjectEntryProperties) {
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setExternalReferenceCode(
+			(String)nestedObjectEntryProperties.remove(
+				"externalReferenceCode"));
+
+		objectEntry.setProperties(nestedObjectEntryProperties);
+
+		return objectEntry;
+	}
 
 	protected void validateOne(Object object) {
 		if (!(object instanceof Map)) {

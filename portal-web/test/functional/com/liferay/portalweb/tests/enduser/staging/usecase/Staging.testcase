@@ -501,6 +501,7 @@ definition {
 	@description = "This is a use case for LPS-90127."
 	@priority = 3
 	test ConfigureDDMStructureViaAPWhenNotStagedAssets {
+		property test.name.skip.portal.instance = "Staging#ConfigureDDMStructureViaAPWhenNotStagedAssets";
 		property testray.component.name = "Data Engine";
 
 		Navigator.openSiteURL(siteName = "Site Name");
@@ -551,6 +552,8 @@ definition {
 	@description = "This is a use case for LPS-92039 and LPS-92636."
 	@priority = 3
 	test CreateWidgetTemplateWhenNotStagedADT {
+		property test.name.skip.portal.instance = "Staging#CreateWidgetTemplateWhenNotStagedADT";
+
 		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
 
 		AssertVisible(locator1 = "Button#PLUS");
@@ -1221,6 +1224,8 @@ definition {
 	@description = "This is a use case for LPS-96155."
 	@priority = 4
 	test PublishReviewedPageRevision {
+		property test.name.skip.portal.instance = "Staging#PublishReviewedPageRevision";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page 1");
@@ -2811,6 +2816,8 @@ definition {
 	@description = "This is a use case for LPS-97827."
 	@priority = 2
 	test ViewParentPageNameAfterPublishChangesInChildPage {
+		property test.name.skip.portal.instance = "Staging#ViewParentPageNameAfterPublishChangesInChildPage";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Child Page A",
@@ -3020,6 +3027,8 @@ definition {
 	@description = "This is a use case for LPS-82688."
 	@priority = 3
 	test ViewPublishWCWithConfiguredCategoriesFilter {
+		property test.name.skip.portal.instance = "Staging#ViewPublishWCWithConfiguredCategoriesFilter";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page",

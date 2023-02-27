@@ -133,6 +133,7 @@ definition {
 	@priority = 4
 	test AdminCanControlWhenPropagateSiteTemplateChanges {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPSitetemplates#AdminCanControlWhenPropagateSiteTemplateChanges";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -41,9 +40,8 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -60,9 +58,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import org.hamcrest.CoreMatchers;
 
@@ -81,7 +76,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class GetPagePreviewMVCResourceCommandTest {
+public class GetPagePreviewStrutsActionTest {
 
 	@ClassRule
 	@Rule
@@ -229,17 +224,11 @@ public class GetPagePreviewMVCResourceCommandTest {
 
 		_serviceContext.setRequest(mockHttpServletRequest);
 
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "doServeResource",
-			new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
-
 		MockHttpServletResponse mockHttpServletResponse =
-			(MockHttpServletResponse)
-				mockLiferayResourceResponse.getHttpServletResponse();
+			new MockHttpServletResponse();
+
+		_getPagePreviewStrutsAction.execute(
+			mockHttpServletRequest, mockHttpServletResponse);
 
 		String content = mockHttpServletResponse.getContentAsString();
 
@@ -262,6 +251,9 @@ public class GetPagePreviewMVCResourceCommandTest {
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
+	@Inject(filter = "component.name=*.GetPagePreviewStrutsAction")
+	private StrutsAction _getPagePreviewStrutsAction;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -271,11 +263,6 @@ public class GetPagePreviewMVCResourceCommandTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Inject(
-		filter = "mvc.command.name=/layout_content_page_editor/get_page_preview"
-	)
-	private MVCResourceCommand _mvcResourceCommand;
 
 	@Inject
 	private PortletLocalService _portletLocalService;

@@ -16,12 +16,13 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import {fetch} from 'frontend-js-web';
+import {createPortletURL, fetch} from 'frontend-js-web';
 import {
 	KeyboardEvent,
 	MouseEvent,
 	default as React,
 	useEffect,
+	useRef,
 	useState,
 } from 'react';
 
@@ -135,12 +136,14 @@ export default function LayoutPageTemplateEntryCard({
 
 					<ClayModal.Body className="p-0">
 						<PreviewModalContent
+							addLayoutURL={addLayoutURL}
 							getLayoutPageTemplateEntryListURL={
 								getLayoutPageTemplateEntryListURL
 							}
 							initialLayoutPageTemplateEntryId={
 								layoutPageTemplateEntryId
 							}
+							onPreviewOpenChange={onPreviewOpenChange}
 						/>
 					</ClayModal.Body>
 				</ClayModal>
@@ -150,7 +153,6 @@ export default function LayoutPageTemplateEntryCard({
 }
 
 type LayoutPageTemplateEntry = {
-	addLayoutURL: string;
 	layoutPageTemplateEntryId: string;
 	name: string;
 	previewLayoutURL: string;
@@ -159,19 +161,25 @@ type LayoutPageTemplateEntry = {
 type LayoutPageTemplateEntryList = LayoutPageTemplateEntry[];
 
 interface IPreviewModalContentProps {
+	addLayoutURL: string,
 	getLayoutPageTemplateEntryListURL: string;
 	initialLayoutPageTemplateEntryId: string;
+	onPreviewOpenChange: (open: boolean) => void;
 }
 
 function PreviewModalContent({
+	addLayoutURL,
 	getLayoutPageTemplateEntryListURL,
 	initialLayoutPageTemplateEntryId,
+	onPreviewOpenChange,
 }: IPreviewModalContentProps) {
 	const [entryIndex, setEntryIndex] = useState(0);
 	const [
 		layoutPageTemplateEntryList,
 		setLayoutPageTemplateEntryList,
 	] = useState<LayoutPageTemplateEntryList | null>(null);
+
+	const iframeRef = useRef() as React.MutableRefObject<HTMLIFrameElement>;
 
 	const layoutPageTemplateEntry = layoutPageTemplateEntryList
 		? layoutPageTemplateEntryList[entryIndex]
@@ -225,7 +233,22 @@ function PreviewModalContent({
 	return (
 		<div className="bg-dark d-flex flex-column h-100 layout-page-template-entry-preview-modal">
 			<div className="bg-white d-flex justify-content-end p-3">
-				<ClayButton>
+				<ClayButton
+					onClick={() => {
+						onPreviewOpenChange(false);
+
+						Liferay.Util.openModal({
+							disableAutoClose: true,
+							height: '60vh',
+							id: 'addLayoutDialog',
+							size: 'md',
+							title: Liferay.Language.get('add-page'),
+							url: createPortletURL(addLayoutURL, {
+								layoutPageTemplateEntryId: initialLayoutPageTemplateEntryId,
+							}),
+						});
+					}}
+				>
 					{Liferay.Language.get('create-page-from-this-template')}
 				</ClayButton>
 			</div>

@@ -8,7 +8,20 @@
 			</l:tasks>
 		</l:side-panel>
 		<l:main-panel>
-			<h1>Hello World!</h1>
+			<div>
+				<div>
+					<h2>Jenkins Events</h2>
+					<p>The specified events occur, a POST wil be made the specified URLs provided.</p>
+				</div>
+				<f:form method="post" name="jenkinsEventsConfiguration" action="jenkinsEventsConfiguration">
+					<f:entry title="WebHook URL">
+						<f:textbox name="webHookURL" value="${it.webHookURL}" />
+					</f:entry>
+					<f:entry>
+						<f:submit value="Save" />
+					</f:entry>
+				</f:form>
+			</div>
 		</l:main-panel>
 	</l:layout>
 </j:jelly>

@@ -12,26 +12,39 @@
  * details.
  */
 
-package com.liferay.object.admin.rest.internal.dto.v1_0.util;
+package com.liferay.object.admin.rest.internal.dto.v1_0.converter;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.Locale;
-import java.util.Map;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gabriel Albuquerque
  */
-public class ObjectValidationRuleUtil {
+@Component(
+	property = "dto.class.name=com.liferay.object.model.ObjectValidationRule",
+	service = {DTOConverter.class, ObjectValidationRuleDTOConverter.class}
+)
+public class ObjectValidationRuleDTOConverter
+	implements DTOConverter
+		<com.liferay.object.model.ObjectValidationRule, ObjectValidationRule> {
 
-	public static ObjectValidationRule toObjectValidationRule(
-			Map<String, Map<String, String>> actions, Locale locale,
-			ObjectDefinitionLocalService objectDefinitionLocalService,
+	@Override
+	public String getContentType() {
+		return ObjectValidationRule.class.getSimpleName();
+	}
+
+	@Override
+	public ObjectValidationRule toDTO(
+			DTOConverterContext dtoConverterContext,
 			com.liferay.object.model.ObjectValidationRule
 				serviceBuilderObjectValidationRule)
 		throws PortalException {
@@ -41,19 +54,21 @@ public class ObjectValidationRuleUtil {
 		}
 
 		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.getObjectDefinition(
+			_objectDefinitionLocalService.getObjectDefinition(
 				serviceBuilderObjectValidationRule.getObjectDefinitionId());
 
-		ObjectValidationRule objectValidationRule = new ObjectValidationRule() {
+		return new ObjectValidationRule() {
 			{
+				actions = dtoConverterContext.getActions();
 				active = serviceBuilderObjectValidationRule.isActive();
 				dateCreated =
 					serviceBuilderObjectValidationRule.getCreateDate();
 				dateModified =
 					serviceBuilderObjectValidationRule.getModifiedDate();
 				engine = serviceBuilderObjectValidationRule.getEngine();
-				engineLabel = LanguageUtil.get(
-					locale, serviceBuilderObjectValidationRule.getEngine());
+				engineLabel = _language.get(
+					dtoConverterContext.getLocale(),
+					serviceBuilderObjectValidationRule.getEngine());
 				errorLabel = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderObjectValidationRule.getErrorLabelMap());
 				id =
@@ -68,10 +83,12 @@ public class ObjectValidationRuleUtil {
 				script = serviceBuilderObjectValidationRule.getScript();
 			}
 		};
-
-		objectValidationRule.setActions(actions);
-
-		return objectValidationRule;
 	}
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

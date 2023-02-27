@@ -1,0 +1,94 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+
+import com.liferay.gradle.plugins.workspace.docker.DockerFindDanglingImage
+
+task buildImage(type: DockerFindDanglingImage)
+task buildImageOne(type: DockerBuildImage)
+task buildImageTwo(type: DockerBuildImage)
+task checkDanglingImage(type: DockerFindDanglingImage)
+task pruneDanglingImage
+task runGradleTest
+
+String imageId = ""
+
+gradle.liferayWorkspace {
+	product = "portal-7.4-ga8"
+}
+
+buildImage {
+	dependsOn buildImageOne
+
+	doLast {
+		imageId = buildImageOne.getImageId().get()
+	}
+
+	finalizedBy buildImageTwo
+}
+
+buildImageOne {
+	dependsOn "verifyProduct", "createDockerfile"
+	mustRunAfter "verifyProduct"
+
+	doLast {
+		File inputDir = new File(buildDir, "docker")
+
+		String[] inputDirFileNames = inputDir.list()
+
+		assert inputDirFileNames.length == 8
+
+		assert inputDirFileNames.contains("100_liferay_image_setup.sh")
+		assert inputDirFileNames.contains("client-extensions")
+		assert inputDirFileNames.contains("Dockerfile")
+		assert inputDirFileNames.contains("configs")
+		assert inputDirFileNames.contains("deploy")
+		assert inputDirFileNames.contains("patching")
+		assert inputDirFileNames.contains("scripts")
+		assert inputDirFileNames.contains("work")
+	}
+}
+
+buildImageTwo {
+	dependsOn "verifyProduct", "createDockerfile"
+	mustRunAfter "verifyProduct"
+
+	doLast {
+		File inputDir = new File(buildDir, "docker")
+
+		String[] inputDirFileNames = inputDir.list()
+
+		assert inputDirFileNames.length == 8
+
+		assert inputDirFileNames.contains("100_liferay_image_setup.sh")
+		assert inputDirFileNames.contains("client-extensions")
+		assert inputDirFileNames.contains("Dockerfile")
+		assert inputDirFileNames.contains("configs")
+		assert inputDirFileNames.contains("deploy")
+		assert inputDirFileNames.contains("patching")
+		assert inputDirFileNames.contains("scripts")
+		assert inputDirFileNames.contains("work")
+	}
+}
+
+checkDanglingImage {
+	dependsOn pruneDanglingImage
+}
+
+pruneDanglingImage {
+	dependsOn buildImage
+
+	doFirst {
+		assert buildImage.getImages().toString().contains(imageId)
+	}
+
+	finalizedBy pruneDockerImage
+}
+
+runGradleTest {
+	dependsOn checkDanglingImage
+
+	doLast {
+		assert !checkDanglingImage.getImages().toString().contains(imageId)
+	}
+
+	finalizedBy cleanDockerImage
+}

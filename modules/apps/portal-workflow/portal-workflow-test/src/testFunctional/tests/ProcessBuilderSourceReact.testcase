@@ -62,12 +62,32 @@ definition {
 	}
 
 	@description = "Verify that the Workflow is not published without title"
-	@ignore = "Test Stub"
 	@priority = 4
-	test CanNotPublishWithoutTitle {
+	test CannotPublishWithoutTitle {
+		property test.name.skip.portal.instance = "Kaleodesigner#AddNewWorkflowDefinitionViaViewTab";
 
-		// TODO LRQA-74658 CanNotPublishWithoutTitle pending implementation
+		task ("Given a user navigates to Workflow Process Builder") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
 
+			Workflow.addNewDefinition(workflowDefinitionTitle = "");
+		}
+
+		task ("When a user attempts to publish a definition with no name") {
+			Button.clickPublish();
+		}
+
+		task ("Then an error to name workflow before publishing will prevent this action") {
+			Alert.viewErrorMessage(errorMessage = "Please name your workflow before publishing");
+
+			Navigator.gotoBack();
+
+			AssertElementNotPresent(
+				key_workflowResourceValue = "",
+				locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT");
+		}
 	}
 
 	@description = "Verify that, when entering valid content, the Workflow is published"

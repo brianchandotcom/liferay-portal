@@ -65,6 +65,23 @@ definition {
 		WaitForPageLoad();
 	}
 
+	@summary = "Edit total MDF amount field"
+	macro editTotalMDFValue {
+		if (!(isSet(activitiyIndex))) {
+			var activityIndex = 0;
+		}
+
+		Type(
+			key_fieldName = "activities[${activityIndex}].mdfRequestAmount",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = ${newValue});
+
+		KeyPress(
+			key_fieldName = "activities[${activityIndex}].mdfRequestAmount",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = "\TAB");
+	}
+
 	@summary = "Fill the goals page form"
 	macro fillGoalsPage {
 		if (isSet(accountName)) {

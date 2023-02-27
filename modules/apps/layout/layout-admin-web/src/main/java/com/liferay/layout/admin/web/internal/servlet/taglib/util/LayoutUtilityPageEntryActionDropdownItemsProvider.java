@@ -507,6 +507,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownItem.setIcon("shortcut");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "preview"));
+			dropdownItem.setTarget("_blank");
 		};
 	}
 

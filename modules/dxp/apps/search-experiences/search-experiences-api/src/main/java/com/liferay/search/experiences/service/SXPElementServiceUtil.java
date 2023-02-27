@@ -39,15 +39,16 @@ public class SXPElementServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPElementServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static SXPElement addSXPElement(
+			String externalReferenceCode,
 			Map<java.util.Locale, String> descriptionMap,
-			String elementDefinitionJSON, String externalReferenceCode,
-			boolean readOnly, String schemaVersion,
-			Map<java.util.Locale, String> titleMap, int type,
+			String elementDefinitionJSON, boolean readOnly,
+			String schemaVersion, Map<java.util.Locale, String> titleMap,
+			int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSXPElement(
-			descriptionMap, elementDefinitionJSON, externalReferenceCode,
+			externalReferenceCode, descriptionMap, elementDefinitionJSON,
 			readOnly, schemaVersion, titleMap, type, serviceContext);
 	}
 

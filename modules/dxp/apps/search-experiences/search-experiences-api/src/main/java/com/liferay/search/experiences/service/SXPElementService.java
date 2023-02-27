@@ -54,8 +54,8 @@ public interface SXPElementService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPElementServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the sxp element remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SXPElementServiceUtil} if injection and service tracking are not available.
 	 */
 	public SXPElement addSXPElement(
-			Map<Locale, String> descriptionMap, String elementDefinitionJSON,
-			String externalReferenceCode, boolean readOnly,
+			String externalReferenceCode, Map<Locale, String> descriptionMap,
+			String elementDefinitionJSON, boolean readOnly,
 			String schemaVersion, Map<Locale, String> titleMap, int type,
 			ServiceContext serviceContext)
 		throws PortalException;

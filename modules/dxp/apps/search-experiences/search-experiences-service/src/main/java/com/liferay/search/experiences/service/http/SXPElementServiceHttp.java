@@ -51,10 +51,10 @@ import com.liferay.search.experiences.service.SXPElementServiceUtil;
 public class SXPElementServiceHttp {
 
 	public static com.liferay.search.experiences.model.SXPElement addSXPElement(
-			HttpPrincipal httpPrincipal,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String elementDefinitionJSON, String externalReferenceCode,
-			boolean readOnly, String schemaVersion,
+			String elementDefinitionJSON, boolean readOnly,
+			String schemaVersion,
 			java.util.Map<java.util.Locale, String> titleMap, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -65,8 +65,8 @@ public class SXPElementServiceHttp {
 				_addSXPElementParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, descriptionMap, elementDefinitionJSON,
-				externalReferenceCode, readOnly, schemaVersion, titleMap, type,
+				methodKey, externalReferenceCode, descriptionMap,
+				elementDefinitionJSON, readOnly, schemaVersion, titleMap, type,
 				serviceContext);
 
 			Object returnObj = null;
@@ -229,7 +229,7 @@ public class SXPElementServiceHttp {
 
 	private static final Class<?>[] _addSXPElementParameterTypes0 =
 		new Class[] {
-			java.util.Map.class, String.class, String.class, boolean.class,
+			String.class, java.util.Map.class, String.class, boolean.class,
 			String.class, java.util.Map.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

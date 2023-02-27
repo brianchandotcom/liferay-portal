@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,7 +74,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		try (PreparedStatement selectPreparedStatement =
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
 					"select groupId, resourcePrimKey, articleId from " +
 						"JournalArticle")) {
@@ -142,40 +144,44 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		List<PortletPreferences> portletPreferencesList,
 		ServiceContext serviceContext) {
 
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			javax.portlet.PortletPreferences jxPortletPreferences =
-				_portletPreferenceValueLocalService.getPreferences(
-					portletPreferences);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			for (PortletPreferences portletPreferences :
+					portletPreferencesList) {
 
-			String selectionStyle = jxPortletPreferences.getValue(
-				"selectionStyle", "dynamic");
+				javax.portlet.PortletPreferences jxPortletPreferences =
+					_portletPreferenceValueLocalService.getPreferences(
+						portletPreferences);
 
-			if (!StringUtil.equals(selectionStyle, "manual")) {
-				continue;
+				String selectionStyle = jxPortletPreferences.getValue(
+					"selectionStyle", "dynamic");
+
+				if (!StringUtil.equals(selectionStyle, "manual")) {
+					continue;
+				}
+
+				String assetEntryXml = jxPortletPreferences.getValue(
+					"assetEntryXml", StringPool.BLANK);
+
+				if (!assetEntryXml.contains(assetEntryClassUuid)) {
+					continue;
+				}
+
+				LayoutClassedModelUsage layoutClassedModelUsage =
+					_layoutClassedModelUsageLocalService.
+						fetchLayoutClassedModelUsage(
+							journalArticleClassNameId, classPK,
+							portletPreferences.getPortletId(),
+							portletClassNameId, portletPreferences.getPlid());
+
+				if (layoutClassedModelUsage != null) {
+					continue;
+				}
+
+				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+					groupId, journalArticleClassNameId, classPK,
+					portletPreferences.getPortletId(), portletClassNameId,
+					portletPreferences.getPlid(), serviceContext);
 			}
-
-			String assetEntryXml = jxPortletPreferences.getValue(
-				"assetEntryXml", StringPool.BLANK);
-
-			if (!assetEntryXml.contains(assetEntryClassUuid)) {
-				continue;
-			}
-
-			LayoutClassedModelUsage layoutClassedModelUsage =
-				_layoutClassedModelUsageLocalService.
-					fetchLayoutClassedModelUsage(
-						journalArticleClassNameId, classPK,
-						portletPreferences.getPortletId(), portletClassNameId,
-						portletPreferences.getPlid());
-
-			if (layoutClassedModelUsage != null) {
-				continue;
-			}
-
-			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-				groupId, journalArticleClassNameId, classPK,
-				portletPreferences.getPortletId(), portletClassNameId,
-				portletPreferences.getPlid(), serviceContext);
 		}
 	}
 
@@ -185,7 +191,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			ServiceContext serviceContext)
 		throws Exception {
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select privateLayout, layoutId, portletId from " +
 					"JournalContentSearch where groupId = ? and articleId = " +
 						"?")) {

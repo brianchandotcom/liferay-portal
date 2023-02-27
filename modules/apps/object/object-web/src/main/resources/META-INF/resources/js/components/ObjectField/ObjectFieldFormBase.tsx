@@ -71,6 +71,16 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 	[
+		'Aggregation',
+		[
+			{
+				name: 'filters',
+				objectFieldId: 0,
+				value: Array(0),
+			},
+		],
+	],
+	[
 		'Attachment',
 		[
 			{

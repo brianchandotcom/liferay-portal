@@ -114,6 +114,14 @@ public class ClientExtensionEntryRelStagedModelRepository
 	}
 
 	@Override
+	public ClientExtensionEntryRel getStagedModel(long id)
+		throws PortalException {
+
+		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRel(
+			id);
+	}
+
+	@Override
 	public ClientExtensionEntryRel saveStagedModel(
 			ClientExtensionEntryRel clientExtensionEntryRel)
 		throws PortalException {

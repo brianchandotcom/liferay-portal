@@ -50,33 +50,23 @@ definition {
 		task ("Given the modal for new application is open") {
 			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 
-			Click(
-				key_text = "Application",
-				locator1 = "Button#ANY");
+			Button.click(button = "Application");
 		}
 
 		task ("Then Assert if the user can switch between the cards") {
 			RaylifeApApplication.modalOption(option = "Business");
 
-			AssertElementPresent(
-				key_text = "Business",
-				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
+			RaylifeApApplication.assertModalOption(option= "Business");
 
 			RaylifeApApplication.modalOption(option = "Personal");
 
-			AssertElementPresent(
-				key_text = "Personal",
-				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
+			RaylifeApApplication.assertModalOption(option= "Personal");
 
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+			Button.click(button = "Next");
 
 			RaylifeApApplication.modalOption(option = "Auto");
 
-			AssertElementPresent(
-				key_text = "Auto",
-				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
+			RaylifeApApplication.assertModalOption(option= "Auto");
 		}
 	}
 
@@ -96,13 +86,10 @@ definition {
 		}
 
 		task ("Then Assert that the Insurance options is still active after click in 'previous' button") {
-			AssertElementNotPresent(
-				key_text = "Business",
-				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
 
-			AssertElementPresent(
-				key_text = "Personal",
-				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
+			RaylifeApApplication.assertModalOption(
+				option= "Personal",
+				notOption= "Busines");
 		}
 	}
 
@@ -118,9 +105,7 @@ definition {
 
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
-			Click(
-				key_text = "New Applications",
-				locator1 = "Button#ANY");
+			Button.click(button = "New Applications");
 		}
 
 		task ("Then Assert that the modal is open") {

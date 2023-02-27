@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/frontend-js-react-web": "*",
 		"date-fns": "2.29.3",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",

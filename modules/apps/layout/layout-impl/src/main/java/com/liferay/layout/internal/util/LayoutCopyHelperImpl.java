@@ -1002,7 +1002,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					classNameId, targetLayout.getPlid(),
 					clientExtensionEntryRel.getCETExternalReferenceCode(),
 					clientExtensionEntryRel.getType(),
-					clientExtensionEntryRel.getTypeSettings());
+					clientExtensionEntryRel.getTypeSettings(),
+					ServiceContextThreadLocal.getServiceContext());
 			}
 		}
 

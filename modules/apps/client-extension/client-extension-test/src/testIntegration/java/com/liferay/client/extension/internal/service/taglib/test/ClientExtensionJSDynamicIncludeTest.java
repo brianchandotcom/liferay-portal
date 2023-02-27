@@ -183,7 +183,8 @@ public class ClientExtensionJSDynamicIncludeTest {
 			publicLayoutSet.getLayoutSetId(),
 			layoutSetGlobalJSClientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-			typeSettingsUnicodeProperties.toString());
+			typeSettingsUnicodeProperties.toString(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		String masterLayoutGlobalJSURL = _getRandomURL();
 
@@ -204,7 +205,8 @@ public class ClientExtensionJSDynamicIncludeTest {
 			masterLayoutPageTemplateEntry.getPlid(),
 			masterLayoutGlobalJSClientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-			typeSettingsUnicodeProperties.toString());
+			typeSettingsUnicodeProperties.toString(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		String layoutGlobalJSURL = _getRandomURL();
 
@@ -222,7 +224,8 @@ public class ClientExtensionJSDynamicIncludeTest {
 			_portal.getClassNameId(Layout.class), layout.getPlid(),
 			layoutGlobalJSClientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-			typeSettingsUnicodeProperties.toString());
+			typeSettingsUnicodeProperties.toString(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

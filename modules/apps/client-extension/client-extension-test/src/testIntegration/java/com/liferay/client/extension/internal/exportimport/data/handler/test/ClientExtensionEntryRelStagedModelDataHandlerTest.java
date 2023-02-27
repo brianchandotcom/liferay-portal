@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
@@ -88,7 +89,8 @@ public class ClientExtensionEntryRelStagedModelDataHandlerTest
 			TestPropsValues.getUserId(), group.getGroupId(),
 			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
 			RandomTestUtil.randomString(),
-			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	@Override

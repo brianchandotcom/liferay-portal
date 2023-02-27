@@ -90,7 +90,8 @@ public class ClientExtensionTopHeadDynamicIncludeTest {
 			_portal.getClassNameId(LayoutSet.class),
 			publicLayoutSet.getLayoutSetId(),
 			layoutSetGlobalCSSClientExtensionEntry.getExternalReferenceCode(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK);
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		String masterLayoutGlobalCSSURL = _getRandomURL();
 
@@ -111,7 +112,8 @@ public class ClientExtensionTopHeadDynamicIncludeTest {
 			masterLayoutPageTemplateEntry.getPlid(),
 			masterLayoutGlobalCSSClientExtensionEntry.
 				getExternalReferenceCode(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK);
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		String layoutGlobalCSSURL = _getRandomURL();
 
@@ -128,7 +130,8 @@ public class ClientExtensionTopHeadDynamicIncludeTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(Layout.class), layout.getPlid(),
 			layoutGlobalCSSClientExtensionEntry.getExternalReferenceCode(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK);
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

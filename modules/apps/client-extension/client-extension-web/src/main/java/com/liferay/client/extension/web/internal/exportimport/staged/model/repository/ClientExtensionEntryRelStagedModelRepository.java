@@ -57,7 +57,7 @@ public class ClientExtensionEntryRelStagedModelRepository
 			clientExtensionEntryRel.getClassPK(),
 			clientExtensionEntryRel.getCETExternalReferenceCode(),
 			clientExtensionEntryRel.getType(),
-			clientExtensionEntryRel.getTypeSettings());
+			clientExtensionEntryRel.getTypeSettings(), serviceContext);
 	}
 
 	@Override

@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -124,7 +126,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _addClientExtensionEntryRel(
 			String cetExternalReferenceCode, LayoutSet layoutSet, String type,
-			long userId)
+			long userId, ServiceContext serviceContext)
 		throws Exception {
 
 		if (Validator.isNotNull(cetExternalReferenceCode)) {
@@ -143,7 +145,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 					userId, layoutSet.getGroupId(),
 					_portal.getClassNameId(LayoutSet.class),
 					layoutSet.getLayoutSetId(), cetExternalReferenceCode, type,
-					StringPool.BLANK);
+					StringPool.BLANK, serviceContext);
 			}
 		}
 		else {
@@ -165,10 +167,13 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		String themeFaviconCETExternalReferenceCode = ParamUtil.getString(
 			actionRequest, "themeFaviconCETExternalReferenceCode");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		_addClientExtensionEntryRel(
 			themeFaviconCETExternalReferenceCode, layoutSet,
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
-			themeDisplay.getUserId());
+			themeDisplay.getUserId(), serviceContext);
 
 		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
 			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
@@ -184,8 +189,8 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getUserId(), layoutSet.getGroupId(),
 				_portal.getClassNameId(LayoutSet.class),
 				layoutSet.getLayoutSetId(), globalCSSCETExternalReferenceCode,
-				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
-				StringPool.BLANK);
+				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK,
+				serviceContext);
 		}
 
 		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
@@ -215,7 +220,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				_portal.getClassNameId(LayoutSet.class),
 				layoutSet.getLayoutSetId(), typeSettings[0],
 				ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-				typeSettingsUnicodeProperties.toString());
+				typeSettingsUnicodeProperties.toString(), serviceContext);
 		}
 
 		String themeCSSCETExternalReferenceCode = ParamUtil.getString(
@@ -224,7 +229,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		_addClientExtensionEntryRel(
 			themeCSSCETExternalReferenceCode, layoutSet,
 			ClientExtensionEntryConstants.TYPE_THEME_CSS,
-			themeDisplay.getUserId());
+			themeDisplay.getUserId(), serviceContext);
 
 		String themeSpritemapCETExternalReferenceCode = ParamUtil.getString(
 			actionRequest, "themeSpritemapCETExternalReferenceCode");
@@ -232,7 +237,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		_addClientExtensionEntryRel(
 			themeSpritemapCETExternalReferenceCode, layoutSet,
 			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP,
-			themeDisplay.getUserId());
+			themeDisplay.getUserId(), serviceContext);
 	}
 
 	private void _updateLogo(

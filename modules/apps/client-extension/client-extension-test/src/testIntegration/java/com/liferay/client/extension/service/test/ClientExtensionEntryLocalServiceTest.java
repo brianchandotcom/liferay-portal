@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -94,7 +95,8 @@ public class ClientExtensionEntryLocalServiceTest {
 			publicLayoutSet.getLayoutSetId(),
 			clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-			typeSettingsUnicodeProperties.toString());
+			typeSettingsUnicodeProperties.toString(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
 			intialCount + 1,

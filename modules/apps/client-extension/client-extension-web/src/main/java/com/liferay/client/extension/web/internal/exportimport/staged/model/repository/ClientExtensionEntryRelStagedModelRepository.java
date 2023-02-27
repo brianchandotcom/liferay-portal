@@ -43,6 +43,9 @@ public class ClientExtensionEntryRelStagedModelRepository
 			ClientExtensionEntryRel clientExtensionEntryRel)
 		throws PortalException {
 
+		long userId = portletDataContext.getUserId(
+			clientExtensionEntryRel.getUserUuid());
+
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			clientExtensionEntryRel);
 
@@ -51,8 +54,7 @@ public class ClientExtensionEntryRelStagedModelRepository
 		}
 
 		return _clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			clientExtensionEntryRel.getUserId(),
-			clientExtensionEntryRel.getGroupId(),
+			userId, clientExtensionEntryRel.getGroupId(),
 			clientExtensionEntryRel.getClassNameId(),
 			clientExtensionEntryRel.getClassPK(),
 			clientExtensionEntryRel.getCETExternalReferenceCode(),

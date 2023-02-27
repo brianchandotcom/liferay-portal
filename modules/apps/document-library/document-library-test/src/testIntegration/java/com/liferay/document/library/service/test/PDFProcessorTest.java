@@ -20,8 +20,11 @@ import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLProcessor;
+import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -50,6 +53,7 @@ import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
+import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -354,6 +358,85 @@ public class PDFProcessorTest {
 	}
 
 	@Test
+	public void testShouldCreateNewPreviewOnAddWithCorrectNumberOfPages()
+		throws Exception {
+
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
+			null, _serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			FileUtil.getBytes(getClass(), "dependencies/test_2.pdf"), null,
+			null, _serviceContext);
+
+		Assert.assertEquals(
+			2,
+			PDFProcessorUtil.getPreviewFileCount(fileEntry1.getFileVersion()));
+
+		FileEntry fileEntry2 = _dlAppService.addFileEntry(
+			null, _serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
+			_serviceContext);
+
+		Assert.assertEquals(
+			1,
+			PDFProcessorUtil.getPreviewFileCount(fileEntry2.getFileVersion()));
+	}
+
+	@Test
+	public void testShouldCreateNewPreviewOnAddWithCorrectNumberOfPagesConfiguration()
+		throws Exception {
+
+		_withPDFPreviewSystemConfiguration(
+			10,
+			() -> {
+				FileEntry fileEntry = _dlAppService.addFileEntry(
+					null, _serviceContext.getScopeGroupId(),
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					StringUtil.randomString() + ".pdf",
+					ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
+					StringUtil.randomString(), StringUtil.randomString(),
+					StringUtil.randomString(),
+					FileUtil.getBytes(getClass(), "dependencies/test_2.pdf"),
+					null, null, _serviceContext);
+
+				Assert.assertEquals(
+					2,
+					PDFProcessorUtil.getPreviewFileCount(
+						fileEntry.getFileVersion()));
+			});
+	}
+
+	@Test
+	public void testShouldCreateNewPreviewOnAddWithCorrectNumberOfPagesLimitedByConfiguration()
+		throws Exception {
+
+		_withPDFPreviewSystemConfiguration(
+			1,
+			() -> {
+				FileEntry fileEntry = _dlAppService.addFileEntry(
+					null, _serviceContext.getScopeGroupId(),
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					StringUtil.randomString() + ".pdf",
+					ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
+					StringUtil.randomString(), StringUtil.randomString(),
+					StringUtil.randomString(),
+					FileUtil.getBytes(getClass(), "dependencies/test_2.pdf"),
+					null, null, _serviceContext);
+
+				Assert.assertEquals(
+					1,
+					PDFProcessorUtil.getPreviewFileCount(
+						fileEntry.getFileVersion()));
+			});
+	}
+
+	@Test
 	public void testShouldCreateNewPreviewOnCancelCheckOut() throws Exception {
 		AtomicInteger count = registerPDFProcessorMessageListener(
 			EventType.GENERATE_NEW);
@@ -562,6 +645,25 @@ public class PDFProcessorTest {
 
 		public abstract boolean isMatch(Object object);
 
+	}
+
+	private void _withPDFPreviewSystemConfiguration(
+			int maxNumberOfPages, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		Dictionary<String, Object> dictionary =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"maxNumberOfPages", maxNumberOfPages
+			).build();
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.document.library.preview.pdf.internal." +
+						"configuration.PDFPreviewConfiguration",
+					dictionary)) {
+
+			unsafeRunnable.run();
+		}
 	}
 
 	@Inject

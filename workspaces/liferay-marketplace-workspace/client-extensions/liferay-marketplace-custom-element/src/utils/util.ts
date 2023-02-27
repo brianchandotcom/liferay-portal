@@ -1,11 +1,9 @@
 import {getCatalogs} from './api';
 
-export async function getMasterCatalogId() {
+export async function getCatalogId() {
 	const response = await getCatalogs();
 
-	const catalogs = response.items;
-
-	return catalogs.find(({name}: {name: string}) => name === 'Master')?.id;
+	return response.items[0].id;
 }
 
 export async function submitFile(

@@ -93,11 +93,11 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 
 		const hasOpenOrBoundStatus =
 			state.currentStep < 4
-				? CONSTANTS.APPLICATION_STATUS.OPEN
-				: CONSTANTS.APPLICATION_STATUS.BOUND;
+				? CONSTANTS.APPLICATION_STATUS['open'].NAME
+				: CONSTANTS.APPLICATION_STATUS['bound'].NAME;
 
 		const applicationStatus = hasUnderwritingStatus
-			? CONSTANTS.APPLICATION_STATUS.UNDERWRITING
+			? CONSTANTS.APPLICATION_STATUS['underwriting'].NAME
 			: hasOpenOrBoundStatus;
 
 		if (state.currentStep < steps.length - 1) {
@@ -114,7 +114,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		) {
 			createOrUpdateRaylifeApplication(
 				state,
-				CONSTANTS.APPLICATION_STATUS.REJECTED
+				CONSTANTS.APPLICATION_STATUS['rejected'].NAME
 			).then((response) => {
 				const {
 					data: {id},
@@ -176,7 +176,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
 		createOrUpdateRaylifeApplication(
 			state,
-			CONSTANTS.APPLICATION_STATUS.OPEN
+			CONSTANTS.APPLICATION_STATUS['open'].NAME
 		).then((response) => {
 			const {
 				data: {id},
@@ -190,7 +190,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 	const handleExitClick = () => {
 		exitRaylifeApplication(
 			state,
-			CONSTANTS.APPLICATION_STATUS.INCOMPLETE
+			CONSTANTS.APPLICATION_STATUS['incomplete'].NAME
 		).then((response) => {
 			const {
 				data: {id},
@@ -224,11 +224,9 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 
 		if (state.hasFormChanges) {
 			statusMessage = 'Unsaved Changes';
-		}
-		else if (!state.hasFormChanges && !saveChanges) {
+		} else if (!state.hasFormChanges && !saveChanges) {
 			statusMessage = 'No Changes Made';
-		}
-		else if (saveChanges && !state.hasFormChanges) {
+		} else if (saveChanges && !state.hasFormChanges) {
 			statusMessage = 'All Changes Saved';
 		}
 

@@ -24,7 +24,10 @@ import classNames from 'classnames';
 import {useContext, useEffect, useState} from 'react';
 
 import {useLocation} from '../../../../../common/hooks/useLocation';
-import {CONSTANTS} from '../../../../../common/utils/constants';
+import {
+	CONSTANTS,
+	ConstantListType,
+} from '../../../../../common/utils/constants';
 import {
 	ACTIONS,
 	NewApplicationAutoContext,
@@ -613,13 +616,15 @@ const ContactInfo = () => {
 							}}
 							value={form.state}
 						>
-							{CONSTANTS.US_STATES.map((us_state) => (
-								<ClaySelect.Option
-									key={us_state.value}
-									label={us_state.label}
-									value={us_state.label}
-								/>
-							))}
+							{CONSTANTS.US_STATES.map(
+								(us_state: ConstantListType) => (
+									<ClaySelect.Option
+										key={us_state.value}
+										label={us_state.label}
+										value={us_state.label}
+									/>
+								)
+							)}
 						</ClaySelect>
 
 						<label htmlFor="state">

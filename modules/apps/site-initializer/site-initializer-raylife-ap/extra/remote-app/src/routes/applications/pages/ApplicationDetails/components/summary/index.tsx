@@ -18,7 +18,7 @@ const Summary = ({application}: any) => {
 	const {data} = application;
 
 	return (
-		<div className="bg-neutral-0 rounded summary-container">
+		<div className="bg-neutral-0 rounded summary-container w-100">
 			<div className="pt-3 px-5 summary-title">
 				<h5 className="m-0">Summary</h5>
 			</div>
@@ -27,52 +27,44 @@ const Summary = ({application}: any) => {
 
 			<div className="d-flex flex-column pb-5 px-5 summary-content">
 				<div className="d-flex flex-column mb-3">
-					<label>Submitted on</label>
+					<div className="mb-2 text-neutral-7">Submitted on</div>
 
-					<span className="font-weight-bold">
-						{data?.applicationCreateDate}
-					</span>
+					<div>{data?.applicationCreateDate}</div>
 
 					{!data?.applicationCreateDate && <i>No data</i>}
 				</div>
 
 				<div className="d-flex flex-column mb-3">
-					<label>Address</label>
+					<div className="mb-2 text-neutral-7">Address</div>
 
-					<span className="font-weight-bold">
-						{data?.address && data.address}
-					</span>
+					<div>{data?.address && data.address}</div>
 
 					{!data?.address && <i>No data</i>}
 				</div>
 
 				<div className="d-flex flex-column mb-3">
-					<label>Name</label>
+					<div className="mb-2 text-neutral-7">Name</div>
 
-					<span className="font-weight-bold">
+					<div>
 						{data?.firstName &&
 							`${data?.firstName} ${data?.lastName}`}
-					</span>
+					</div>
 
 					{!data?.firstName && <i>No data</i>}
 				</div>
 
 				<div className="d-flex flex-column mb-3">
-					<label>Email</label>
+					<div className="mb-2 text-neutral-7">Email</div>
 
-					<span className="font-weight-bold">
-						{data?.email && data.email}
-					</span>
+					<div>{data?.email && data.email}</div>
 
 					{!data?.email && <i>No data</i>}
 				</div>
 
 				<div className="d-flex flex-column">
-					<label>Phone</label>
+					<div className="mb-2 text-neutral-7">Phone</div>
 
-					<span className="font-weight-bold">
-						{data?.phone && data.phone}
-					</span>
+					<div>{data?.phone && data.phone}</div>
 
 					{!data?.phone && <i>No data</i>}
 				</div>

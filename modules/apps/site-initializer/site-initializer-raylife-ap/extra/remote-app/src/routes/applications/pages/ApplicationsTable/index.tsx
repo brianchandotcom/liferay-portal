@@ -88,16 +88,6 @@ const HEADERS = [
 	},
 ];
 
-const STATUS_EDIT_DISABLED = ['Bound', 'Quoted'];
-
-const STATUS_DELETE_DISABLED = [
-	'Bound',
-	'Quoted',
-	'Rejected',
-	'Reviewed',
-	'Underwriting',
-];
-
 type Application = {
 	applicationCreateDate: Date;
 	applicationNumber: number;
@@ -146,6 +136,23 @@ type itemsPicklists = {
 
 type StateSortType = {
 	[keys: string]: boolean;
+};
+
+const STATUS_EDIT_DISABLED = ['Bound', 'Quoted'];
+
+const STATUS_DELETE_DISABLED = [
+	'Bound',
+	'Quoted',
+	'Rejected',
+	'Reviewed',
+	'Underwriting',
+];
+
+const CLICKBLE_STATUS: TableRowContentType = {
+	Bound: 'Bound',
+	Incomplete: 'Incomplete',
+	Rejected: 'Rejected',
+	Reviewed: 'Reviewed',
 };
 
 const ApplicationsTable = () => {
@@ -454,8 +461,8 @@ const ApplicationsTable = () => {
 		}
 
 		if (
-			((item.clickable && rowContent['name'] === 'Incomplete') ||
-				rowContent['name'] === 'Bound') &&
+			item.clickable &&
+			CLICKBLE_STATUS[rowContent['name']] &&
 			(item.key === 'externalReferenceCode' ||
 				item.key === 'applicationCreateDate')
 		) {
@@ -571,8 +578,7 @@ const ApplicationsTable = () => {
 					);
 				})
 			);
-		}
-		else {
+		} else {
 			setFilterProductCheck(
 				filterProductCheck.filter((productName: string) => {
 					return productName !== `'${currentFilterName}'`;

@@ -78,7 +78,7 @@ if (parentOrganization != null) {
 
 	<clay:content-col>
 		<clay:button
-			aria-label='<%= LanguageUtil.format(request, (parentOrganizations.size() > 0) ? "change-x" : "select-x", "accounts") %>'
+			aria-label='<%= LanguageUtil.format(request, (parentOrganizations.size() > 0) ? "change-x" : "select-x", "parent-organization") %>'
 			cssClass="heading-end modify-link"
 			displayType="secondary"
 			id='<%= liferayPortletResponse.getNamespace() + "selectOrganizationLink" %>'

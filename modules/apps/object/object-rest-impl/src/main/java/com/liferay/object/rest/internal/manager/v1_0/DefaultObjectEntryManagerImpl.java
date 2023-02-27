@@ -700,6 +700,60 @@ public class DefaultObjectEntryManagerImpl
 			uriInfo);
 	}
 
+	private void _addOrUpdateNestedObjectEntries(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			Map<String, ObjectRelationship> objectRelationships,
+			long primaryKey)
+		throws Exception {
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		for (Map.Entry<String, ObjectRelationship> entry :
+				objectRelationships.entrySet()) {
+
+			ObjectRelationship objectRelationship = objectRelationships.get(
+				entry.getKey());
+
+			ObjectDefinition relatedObjectDefinition =
+				_getRelatedObjectDefinition(
+					objectDefinition, objectRelationship);
+
+			if (relatedObjectDefinition.isSystem()) {
+				throw new UnsupportedOperationException(
+					"Unable to create nested object entries with system " +
+						"object definitions");
+			}
+
+			ObjectEntryManager objectEntryManager =
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					relatedObjectDefinition.getStorageType());
+
+			ObjectRelationshipElementsParser objectRelationshipElementsParser =
+				_objectRelationshipElementsParserRegistry.
+					getObjectRelationshipElementsParser(
+						relatedObjectDefinition.getClassName(),
+						objectRelationship.getType());
+
+			List<?> relatedElements = objectRelationshipElementsParser.parse(
+				objectRelationship, properties.get(entry.getKey()));
+
+			for (ObjectEntry nestedObjectEntry :
+					(List<ObjectEntry>)relatedElements) {
+
+				nestedObjectEntry = objectEntryManager.addOrUpdateObjectEntry(
+					objectDefinition.getCompanyId(), dtoConverterContext,
+					nestedObjectEntry.getExternalReferenceCode(),
+					relatedObjectDefinition, nestedObjectEntry,
+					relatedObjectDefinition.getScope());
+
+				_relateNestedObjectEntry(
+					objectDefinition, objectRelationship, primaryKey,
+					nestedObjectEntry.getId());
+			}
+		}
+	}
+
 	private void _checkObjectEntryObjectDefinitionId(
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
@@ -1197,60 +1251,6 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		return values;
-	}
-
-	private void _addOrUpdateNestedObjectEntries(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			Map<String, ObjectRelationship> objectRelationships,
-			long primaryKey)
-		throws Exception {
-
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		for (Map.Entry<String, ObjectRelationship> entry :
-				objectRelationships.entrySet()) {
-
-			ObjectRelationship objectRelationship = objectRelationships.get(
-				entry.getKey());
-
-			ObjectDefinition relatedObjectDefinition =
-				_getRelatedObjectDefinition(
-					objectDefinition, objectRelationship);
-
-			if (relatedObjectDefinition.isSystem()) {
-				throw new UnsupportedOperationException(
-					"Unable to create nested object entries with system " +
-						"object definitions");
-			}
-
-			ObjectEntryManager objectEntryManager =
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					relatedObjectDefinition.getStorageType());
-
-			ObjectRelationshipElementsParser objectRelationshipElementsParser =
-				_objectRelationshipElementsParserRegistry.
-					getObjectRelationshipElementsParser(
-						relatedObjectDefinition.getClassName(),
-						objectRelationship.getType());
-
-			List<?> relatedElements = objectRelationshipElementsParser.parse(
-				objectRelationship, properties.get(entry.getKey()));
-
-			for (ObjectEntry nestedObjectEntry :
-					(List<ObjectEntry>)relatedElements) {
-
-				nestedObjectEntry = objectEntryManager.addOrUpdateObjectEntry(
-					objectDefinition.getCompanyId(), dtoConverterContext,
-					nestedObjectEntry.getExternalReferenceCode(),
-					relatedObjectDefinition, nestedObjectEntry,
-					relatedObjectDefinition.getScope());
-
-				_relateNestedObjectEntry(
-					objectDefinition, objectRelationship, primaryKey,
-					nestedObjectEntry.getId());
-			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -16,8 +16,12 @@ package com.liferay.batch.engine.internal.bundle;
 
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.File;
+import java.io.IOException;
 
 import java.net.URL;
 
@@ -67,6 +71,30 @@ public class BatchEngineBundleTracker {
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
+	}
+
+	private boolean _bundleAlreadyProcessed(Bundle bundle) {
+		File batchMarkerFile = bundle.getDataFile(
+			".liferay-client-extension-batch");
+
+		if ((batchMarkerFile != null) && batchMarkerFile.exists() &&
+			(batchMarkerFile.lastModified() == bundle.getLastModified())) {
+
+			return true;
+		}
+
+		try {
+			if (!batchMarkerFile.exists()) {
+				batchMarkerFile.createNewFile();
+			}
+
+			batchMarkerFile.setLastModified(bundle.getLastModified());
+		}
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
+		}
+
+		return false;
 	}
 
 	private String _getBatchEngineBundleEntryKey(URL url) {
@@ -143,6 +171,10 @@ public class BatchEngineBundleTracker {
 		String batchPath = headers.get("Liferay-Client-Extension-Batch");
 
 		if (batchPath != null) {
+			if (_bundleAlreadyProcessed(bundle)) {
+				return;
+			}
+
 			if (batchPath.isEmpty()) {
 				batchPath = StringPool.PERIOD;
 			}

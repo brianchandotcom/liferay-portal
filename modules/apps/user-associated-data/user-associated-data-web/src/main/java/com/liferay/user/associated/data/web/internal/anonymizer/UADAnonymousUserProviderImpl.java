@@ -21,8 +21,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
@@ -122,7 +120,6 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		String jobTitle = StringPool.BLANK;
 
 		user.setCompanyId(companyId);
-		user.setContactId(_counterLocalService.increment());
 		user.setPassword(randomString);
 		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
@@ -147,27 +144,6 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			StringPool.SLASH + screenName, false, true, null);
 
-		Contact contact = _contactLocalService.createContact(
-			user.getContactId());
-
-		contact.setCompanyId(companyId);
-		contact.setUserId(user.getUserId());
-		contact.setUserName(user.getFullName());
-		contact.setClassName(User.class.getName());
-		contact.setClassPK(user.getUserId());
-		contact.setParentContactId(ContactConstants.DEFAULT_PARENT_CONTACT_ID);
-		contact.setEmailAddress(user.getEmailAddress());
-		contact.setFirstName(firstName);
-		contact.setMiddleName(middleName);
-		contact.setLastName(lastName);
-		contact.setPrefixListTypeId(prefixListTypeId);
-		contact.setSuffixListTypeId(suffixListTypeId);
-		contact.setMale(true);
-		contact.setBirthday(
-			_portal.getDate(birthdayMonth, birthdayDay, birthdayYear));
-		contact.setJobTitle(jobTitle);
-
-		_contactLocalService.addContact(contact);
 
 		return user;
 	}

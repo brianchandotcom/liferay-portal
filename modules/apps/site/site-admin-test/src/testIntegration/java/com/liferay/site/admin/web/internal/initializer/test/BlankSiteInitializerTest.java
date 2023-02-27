@@ -32,9 +32,11 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
@@ -75,6 +77,11 @@ public class BlankSiteInitializerTest {
 
 	@Test
 	public void testInitialize() throws PortalException {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-162765", "true"
+			).build());
+
 		SiteInitializer siteInitializer =
 			_siteInitializerRegistry.getSiteInitializer(
 				"blank-site-initializer");
@@ -120,6 +127,11 @@ public class BlankSiteInitializerTest {
 				draftLayout.getGroupId(), draftLayout.getPlid());
 
 		Assert.assertTrue(ListUtil.isNotEmpty(draftFragmentEntryLinks));
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-162765", "true"
+			).build());
 	}
 
 	@Inject

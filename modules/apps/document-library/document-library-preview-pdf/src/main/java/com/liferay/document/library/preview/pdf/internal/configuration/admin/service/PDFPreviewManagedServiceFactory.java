@@ -79,12 +79,16 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
 
-			Group group = _groupLocalService.getGroup(scopePK);
+			Group group = _groupLocalService.fetchGroup(scopePK);
+
+			int systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
+
+			if (group == null) {
+				return systemMaxNumberOfPages;
+			}
 
 			int companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(
 				group.getCompanyId());
-
-			int systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
 
 			if ((companyMaxNumberOfPages != 0) &&
 				((systemMaxNumberOfPages == 0) ||
@@ -122,12 +126,16 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 
 			int groupMaxNumberOfPages = _getGroupMaxNumberOfPages(scopePK);
 
-			Group group = _groupLocalService.getGroup(scopePK);
+			Group group = _groupLocalService.fetchGroup(scopePK);
+
+			int systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
+
+			if (group == null) {
+				return systemMaxNumberOfPages;
+			}
 
 			int companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(
 				group.getCompanyId());
-
-			int systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
 
 			if ((groupMaxNumberOfPages != 0) &&
 				((systemMaxNumberOfPages == 0) ||

@@ -1501,4 +1501,256 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-146373. New prefixes for email,phone and none options can be used on Display Page Templates."
+	@priority = 3
+	test ViewPrefixesForEmailAndPhoneAndNoneOptions {
+		task ("Given a site created from Welcome site template") {
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Welcome");
+		}
+
+		task ("When adding a web content with email and telephone") {
+			task ("Create a web content structure") {
+				WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+
+				WebContentStructures.addCP(structureName = "Contact Information");
+
+				for (var fieldFieldLabel : list "Name,Email,Phone,Personal Web") {
+					DataEngine.addField(
+						fieldFieldLabel = ${fieldFieldLabel},
+						fieldName = "Text");
+				}
+
+				WebContentStructures.saveCP();
+			}
+
+			task ("Create a Web Content from Contact Information") {
+				NavItem.gotoWebContent();
+
+				WebContentNavigator.gotoAddWithStructureCP(structureName = "Contact Information");
+
+				WebContent.addWithStructureCP(
+					fieldType = "Text",
+					webContentText = "John Smith",
+					webContentTextFieldLabel = "Name",
+					webContentTitle = "Web Content Title");
+
+				WebContent.addWithStructureCP(
+					fieldType = "Text",
+					webContentText = "john.smith@liferay.com",
+					webContentTextFieldLabel = "Email");
+
+				WebContent.addWithStructureCP(
+					fieldType = "Text",
+					webContentText = 1112223333,
+					webContentTextFieldLabel = "Phone");
+
+				WebContent.addWithStructureCP(
+					fieldType = "Text",
+					webContentText = "https://www.liferay.com",
+					webContentTextFieldLabel = "Personal Web");
+
+				PortletEntry.publish();
+			}
+
+			task ("Add a display page") {
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
+
+				DisplayPageTemplatesAdmin.addDisplayPage(
+					contentType = "Web Content Article",
+					displayPageName = "Contact",
+					subType = "Contact Information");
+			}
+
+			task ("Add a Container to page") {
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Contact");
+
+				PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Container");
+			}
+
+			task ("Add a Heading fragment to Container") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Heading",
+					navTab = "Fragments");
+			}
+
+			task ("Map Email field of web content to Heading") {
+				PageEditorMapping.gotoEditableFieldMapping(
+					fragmentName = "Heading",
+					id = "element-text");
+
+				Navigator.gotoNavTab(navTab = "Link");
+
+				Select(
+					key_fieldLabel = "Link",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Mapped URL");
+
+				PageEditor.waitForAutoSave();
+
+				Select(
+					key_fieldLabel = "Source",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Specific Content");
+
+				PageEditorMapping.mapEditableFieldToAsset(
+					entryTitle = "Web Content Title",
+					navItem = "Web Content");
+
+				WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
+				Select(
+					locator1 = "PageEditorEditableLink#FIELD",
+					value1 = "Email");
+
+				Select(
+					key_fieldLabel = "Prefix",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Email");
+
+				PageEditor.waitForAutoSave();
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Prefix",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Email");
+			}
+
+			task ("Add an Image fragment to Container") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Image",
+					navTab = "Fragments",
+					targetElementName = "Heading");
+			}
+
+			task ("Map Phone field of web content to Image") {
+				PageEditorMapping.gotoEditableFieldMapping(
+					fragmentName = "Image",
+					id = "image-square");
+
+				Navigator.gotoNavTab(navTab = "Link");
+
+				Select(
+					key_fieldLabel = "Link",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Mapped URL");
+
+				PageEditor.waitForAutoSave();
+
+				Select(
+					key_fieldLabel = "Source",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Specific Content");
+
+				PageEditorMapping.mapEditableFieldToAsset(
+					entryTitle = "Web Content Title",
+					navItem = "Web Content");
+
+				WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
+				Select(
+					locator1 = "PageEditorEditableLink#FIELD",
+					value1 = "Phone");
+
+				PageEditor.waitForAutoSave();
+
+				Select(
+					key_fieldLabel = "Prefix",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Phone");
+
+				PageEditor.waitForAutoSave();
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Prefix",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Phone");
+			}
+
+			task ("Add a Button fragment to Container") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Button",
+					height = "Tall",
+					navTab = "Fragments",
+					ratio = "9 / 8",
+					targetElementName = "Image");
+			}
+
+			task ("Map Personal Web field of web content to Button") {
+				PageEditorMapping.gotoEditableFieldMapping(
+					fragmentName = "Button",
+					id = "link");
+
+				Navigator.gotoNavTab(navTab = "Link");
+
+				Select(
+					key_fieldLabel = "Link",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Mapped URL");
+
+				PageEditor.waitForAutoSave();
+
+				Select(
+					key_fieldLabel = "Source",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Specific Content");
+
+				PageEditorMapping.mapEditableFieldToAsset(
+					entryTitle = "Web Content Title",
+					navItem = "Web Content");
+
+				WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
+				Select(
+					locator1 = "PageEditorEditableLink#FIELD",
+					value1 = "Personal Web");
+
+				PageEditor.waitForAutoSave();
+			}
+		}
+
+		task ("Then user is able to view email and telephone on display page") {
+			task ("Publish the display page and mark the it as defaultt") {
+				PageEditor.publish();
+
+				DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Contact");
+			}
+
+			task ("Navigate to display page template at view mode") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+				WebContentNavigator.gotoEntryMenuItem(
+					entry = "Web Content Title",
+					menuItem = "View Content");
+			}
+
+			task ("View editable fields' link") {
+				AssertVisible(
+					key_append = "[normalize-space(text())='Heading Example']",
+					key_url = "mailto:john.smith@liferay.com",
+					locator1 = "Fragment#FRAGMENT_LINK");
+
+				AssertVisible(
+					key_append = "/*[contains(@data-lfr-editable-id,'image')]",
+					key_url = "tel:1112223333",
+					locator1 = "Fragment#FRAGMENT_LINK");
+
+				AssertVisible(
+					key_append = "[contains(@class,'btn')]",
+					key_url = "https://www.liferay.com",
+					locator1 = "Fragment#FRAGMENT_LINK");
+			}
+		}
+	}
+
 }

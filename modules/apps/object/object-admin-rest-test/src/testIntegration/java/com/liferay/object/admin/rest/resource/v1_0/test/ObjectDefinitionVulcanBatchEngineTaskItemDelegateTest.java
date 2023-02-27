@@ -166,10 +166,10 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 
 	private ObjectDefinition _createObjectDefinition(String name) {
 		String sanitizedName = name.toLowerCase(LocaleUtil.getDefault());
+		boolean systemObject = RandomTestUtil.randomBoolean();
 
 		return new ObjectDefinition() {
 			{
-				boolean system = RandomTestUtil.randomBoolean();
 				accountEntryRestricted = false;
 				accountEntryRestrictedObjectFieldName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -184,7 +184,7 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 				label = Collections.singletonMap("en_US", "O" + sanitizedName);
 
 				if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
-					modifiable = !system;
+					modifiable = !systemObject;
 				}
 
 				name = "O" + sanitizedName;
@@ -209,7 +209,7 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 					storageType = StringPool.BLANK;
 				}
 
-				this.system = system;
+				system = systemObject;
 				titleObjectFieldName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}

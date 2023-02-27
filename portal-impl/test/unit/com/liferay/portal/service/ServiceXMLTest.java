@@ -71,7 +71,7 @@ public class ServiceXMLTest {
 			});
 	}
 
-	private static void _assertNoTXRequiredElement(File file) throws IOException {
+	private void _assertNoTXRequiredElement(File file) throws IOException {
 		try (FileInputStream fileInputStream = new FileInputStream(file);
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(
@@ -88,7 +88,7 @@ public class ServiceXMLTest {
 		}
 	}
 
-	private static boolean _isServiceXml(Path path) {
+	private boolean _isServiceXml(Path path) {
 		Path fileNamePath = path.getFileName();
 
 		if (Objects.equals(fileNamePath.toString(), "service.xml")) {

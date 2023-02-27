@@ -83,13 +83,13 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		}
 	}
 
-	private void _inactivateAnonymousUSer(User anonymousUser) throws Exception {
+	private void _completeAnonymousUser(User anonymousUser) throws Exception {
 		_userLocalService.updateStatus(
 			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
 			new ServiceContext());
 	}
 
-	private User _addAnonymousUser(long companyId) throws Exception {
+	private User _createAnonymousUser(long companyId) throws Exception {
 		long userId = _counterLocalService.increment();
 
 		User user = _userLocalService.createUser(userId);
@@ -177,7 +177,7 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 			companyId);
 
 		if (configuration == null) {
-			User anonymousUser = _addAnonymousUser(companyId);
+			User anonymousUser = _createAnonymousUser(companyId);
 
 			_configurationProvider.saveCompanyConfiguration(
 				AnonymousUserConfiguration.class, companyId,
@@ -187,7 +187,11 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 					"userId", anonymousUser.getUserId()
 				).build());
 
+<<<<<<< HEAD
 			_updateStatus(anonymousUser);
+=======
+			_completeAnonymousUser(anonymousUser);
+>>>>>>> parent of 82144e5 (LPS-173047 Rename)
 
 			return anonymousUser;
 		}
@@ -205,13 +209,11 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 			return anonymousUser;
 		}
 
-		anonymousUser = _addAnonymousUser(companyId);
+		anonymousUser = _createAnonymousUser(companyId);
 
 		properties.put("userId", anonymousUser.getUserId());
 
 		configuration.update(properties);
-
-		_updateStatus(anonymousUser);
 
 		return anonymousUser;
 	}

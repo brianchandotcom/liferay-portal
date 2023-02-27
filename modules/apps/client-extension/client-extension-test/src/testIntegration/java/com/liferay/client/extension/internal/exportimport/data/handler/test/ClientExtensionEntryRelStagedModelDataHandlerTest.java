@@ -19,11 +19,13 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.layout.set.model.adapter.StagedLayoutSet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,12 +54,35 @@ public class ClientExtensionEntryRelStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
+	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
+			Group group)
+		throws Exception {
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			new HashMap<>();
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, LayoutSet.class,
+			ModelAdapterUtil.adapt(
+				group.getPublicLayoutSet(), LayoutSet.class,
+				StagedLayoutSet.class));
+
+		return dependentStagedModelsMap;
+	}
+
+	@Override
 	protected StagedModel addStagedModel(
 			Group group,
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		LayoutSet layoutSet = group.getPublicLayoutSet();
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			LayoutSet.class.getSimpleName());
+
+		StagedLayoutSet stagedLayoutSet =
+			(StagedLayoutSet)dependentStagedModels.get(0);
+
+		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();
 
 		return _clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 			TestPropsValues.getUserId(), group.getGroupId(),

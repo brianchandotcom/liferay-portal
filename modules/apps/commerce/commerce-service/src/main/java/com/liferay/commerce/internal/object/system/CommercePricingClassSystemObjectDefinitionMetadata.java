@@ -96,7 +96,7 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 			createObjectField(
 				"Integer", "Integer", "number-of-products", "productsCount",
 				false, true),
-			createObjectField("Text", "String", "title", "title", false, true));
+			createObjectField("Text", "String", "title", "title", true, true));
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 
 	@Override
 	public int getVersion() {
-		return 1;
+		return 2;
 	}
 
 	@Reference

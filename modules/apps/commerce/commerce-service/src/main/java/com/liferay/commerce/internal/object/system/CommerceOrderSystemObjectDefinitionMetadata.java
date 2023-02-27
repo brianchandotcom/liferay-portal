@@ -92,6 +92,12 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
+				"LongInteger", "Long", "account-id", "accountId", true, true),
+			createObjectField(
+				"LongInteger", "Long", "channel-id", "channelId", true, true),
+			createObjectField(
+				"Text", "String", "currency-code", "currencyCode", true, true),
+			createObjectField(
 				"Integer", "Integer", "order-status", "orderStatus", true,
 				true),
 			createObjectField(
@@ -121,7 +127,7 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 
 	@Override
 	public int getVersion() {
-		return 1;
+		return 2;
 	}
 
 	@Reference

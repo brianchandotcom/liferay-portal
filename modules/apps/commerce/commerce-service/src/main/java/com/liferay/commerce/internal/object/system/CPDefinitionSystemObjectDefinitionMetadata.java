@@ -91,11 +91,17 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
+				"Boolean", "Boolean", "active", "active", true, true),
+			createObjectField(
+				"LongInteger", "Long", "catalog-id", "catalogId", true, true),
+			createObjectField(
 				"Text", "String", "description", "description", false, true),
-			createObjectField("Text", "String", "name", "name", false, true),
+			createObjectField("Text", "String", "name", "name", true, true),
 			createObjectField(
 				"Text", "CPDefinitionId", "String", "product-id", "productId",
 				false, true),
+			createObjectField(
+				"Text", "String", "product-type", "productType", true, true),
 			createObjectField(
 				"Text", "String", "short-description", "shortDescription",
 				false, true),
@@ -138,7 +144,7 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 
 	@Override
 	public int getVersion() {
-		return 1;
+		return 2;
 	}
 
 	@Reference

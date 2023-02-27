@@ -91,13 +91,19 @@ public class UserSystemObjectDefinitionMetadata
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
 			createObjectField(
+				"Text", "middleName", "String", "middle-name", "additionalName",
+				false, true),
+			createObjectField(
+				"Text", "screenName", "String", "screen-name", "alternateName",
+				true, true),
+			createObjectField(
 				"Text", "String", "email-address", "emailAddress", true, true),
+			createObjectField(
+				"Text", "lastName", "String", "last-name", "familyName", true,
+				true),
 			createObjectField(
 				"Text", "firstName", "String", "first-name", "givenName", true,
 				true),
-			createObjectField(
-				"Text", "middleName", "String", "middle-name", "additionalName",
-				false, true),
 			createObjectField(
 				"Text", "uuid_", "String", "uuid", "uuid", false, true));
 	}
@@ -148,7 +154,7 @@ public class UserSystemObjectDefinitionMetadata
 
 	@Override
 	public int getVersion() {
-		return 1;
+		return 2;
 	}
 
 	@Reference

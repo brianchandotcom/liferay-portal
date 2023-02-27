@@ -65,7 +65,7 @@ public class AsahFaroBackendClient {
 
 			doGet(
 				companyId,
-				"/api/1.0/data-sources/" +
+				"api/1.0/data-sources/" +
 					analyticsConfiguration.liferayAnalyticsDataSourceId());
 
 			return true;

@@ -402,7 +402,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@placeholder='Search for']</td>
+	<td>//div[contains(@class,'sidebar')]//input[@placeholder='Search for']</td>
 	<td></td>
 </tr>
 </tbody>

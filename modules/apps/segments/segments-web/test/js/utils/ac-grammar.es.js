@@ -38,7 +38,7 @@ describe('ac-grammar-util', () => {
 			};
 
 			const testQuery =
-				"(activities.filterByCount(filter='()',operator='ge',value=2))";
+				"(activities.filterByCount(filter='(activityKey eq ''Document#documentDownloaded#603744226255659006'')',operator='ge',value=2))";
 
 			testConversionToQueryString(criterion, testQuery);
 		});
@@ -60,7 +60,7 @@ describe('ac-grammar-util', () => {
 			};
 
 			const testQuery =
-				"((not activities.filterByCount(filter='()',operator='ge',value=2)))";
+				"((not activities.filterByCount(filter='(activityKey eq ''Document#documentDownloaded#603744226255659006'')',operator='ge',value=2)))";
 
 			testConversionToQueryString(criterion, testQuery);
 		});

@@ -470,13 +470,6 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public ObjectDefinition fetchObjectDefinitionByClassName(
-		long companyId, String className) {
-
-		return objectDefinitionPersistence.fetchByC_C(companyId, className);
-	}
-
-	@Override
 	public ObjectDefinition fetchObjectDefinitionByClassName(String className) {
 		return objectDefinitionPersistence.fetchByClassName(className);
 	}

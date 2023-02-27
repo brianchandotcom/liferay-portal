@@ -40,6 +40,7 @@ export default function LayoutPageTemplateEntryCard({
 	getLayoutPageTemplateEntryListURL,
 	layoutPageTemplateEntryId,
 	subtitle,
+	thumbnailURL,
 	title,
 }: IProps) {
 	const {
@@ -82,9 +83,17 @@ export default function LayoutPageTemplateEntryCard({
 				tabIndex={0}
 			>
 				<ClayCard.AspectRatio containerAspectRatio="16/9">
-					<div className="aspect-ratio-item aspect-ratio-item-center-middle card-type-asset-icon">
-						<ClayIcon symbol="page" />
-					</div>
+					{thumbnailURL ? (
+						<img
+							alt="thumbnail"
+							className="aspect-ratio-item-center-middle aspect-ratio-item-fluid"
+							src={thumbnailURL}
+						/>
+					) : (
+						<div className="aspect-ratio-item aspect-ratio-item-center-middle card-type-asset-icon">
+							<ClayIcon symbol="page" />
+						</div>
+					)}
 				</ClayCard.AspectRatio>
 
 				<ClayCard.Body className="text-left">

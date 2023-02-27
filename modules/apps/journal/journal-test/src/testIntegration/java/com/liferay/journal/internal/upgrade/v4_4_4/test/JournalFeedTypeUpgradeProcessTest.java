@@ -95,7 +95,7 @@ public class JournalFeedTypeUpgradeProcessTest {
 	}
 
 	@Test
-	public void testCreateAssetEntryIfNotExists() throws Exception {
+	public void testCreateAssetEntryAssetEntryDoesNotExists() throws Exception {
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			_journalFeedClassNameId, _journalFeed.getId());
 
@@ -117,7 +117,7 @@ public class JournalFeedTypeUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDontCreateAssetEntryIfExists() throws Exception {
+	public void testCreateAssetEntryAssetEntryExists() throws Exception {
 		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
 			_journalFeedClassNameId, _journalFeed.getId());
 

@@ -15,7 +15,6 @@
 package com.liferay.client.extension.web.internal.exportimport.data.handler;
 
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
-import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -55,10 +54,6 @@ public class ClientExtensionEntryRelStagedModelDataHandler
 		Element element = portletDataContext.getExportDataElement(
 			clientExtensionEntryRel);
 
-		element.addAttribute(
-			"client-extension-entry-rel-class-name",
-			_portal.getClassName(clientExtensionEntryRel.getClassNameId()));
-
 		portletDataContext.addClassedModel(
 			element, ExportImportPathUtil.getModelPath(clientExtensionEntryRel),
 			clientExtensionEntryRel);
@@ -96,9 +91,6 @@ public class ClientExtensionEntryRelStagedModelDataHandler
 
 		importedClientExtensionEntryRel.setGroupId(
 			portletDataContext.getScopeGroupId());
-		importedClientExtensionEntryRel.setCompanyId(
-			portletDataContext.getCompanyId());
-
 		importedClientExtensionEntryRel.setClassNameId(
 			_portal.getClassNameId(clientExtensionEntryRel.getClassName()));
 
@@ -106,28 +98,15 @@ public class ClientExtensionEntryRelStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				clientExtensionEntryRel.getClassName());
 
-		long classPK = MapUtil.getLong(
-			classPKs, clientExtensionEntryRel.getClassPK(),
-			clientExtensionEntryRel.getClassPK());
-
-		importedClientExtensionEntryRel.setClassPK(classPK);
-
-		Element element = portletDataContext.getImportDataStagedModelElement(
-			clientExtensionEntryRel);
+		importedClientExtensionEntryRel.setClassPK(
+			MapUtil.getLong(
+				classPKs, clientExtensionEntryRel.getClassPK(),
+				clientExtensionEntryRel.getClassPK()));
 
 		ClientExtensionEntryRel existingClientExtensionEntryRel =
-			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
-				_portal.getClassNameId(
-					element.attributeValue(
-						"client-extension-entry-rel-class-name")),
-				classPK, importedClientExtensionEntryRel.getType());
-
-		if (existingClientExtensionEntryRel == null) {
-			existingClientExtensionEntryRel =
-				_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
-					clientExtensionEntryRel.getUuid(),
-					portletDataContext.getScopeGroupId());
-		}
+			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+				clientExtensionEntryRel.getUuid(),
+				portletDataContext.getScopeGroupId());
 
 		if ((existingClientExtensionEntryRel == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
@@ -137,10 +116,6 @@ public class ClientExtensionEntryRelStagedModelDataHandler
 					portletDataContext, importedClientExtensionEntryRel);
 		}
 		else {
-			importedClientExtensionEntryRel.setMvccVersion(
-				existingClientExtensionEntryRel.getMvccVersion());
-			importedClientExtensionEntryRel.setExternalReferenceCode(
-				existingClientExtensionEntryRel.getExternalReferenceCode());
 			importedClientExtensionEntryRel.setClientExtensionEntryRelId(
 				existingClientExtensionEntryRel.getClientExtensionEntryRelId());
 
@@ -159,10 +134,6 @@ public class ClientExtensionEntryRelStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
-
-	@Reference
-	private ClientExtensionEntryRelLocalService
-		_clientExtensionEntryRelLocalService;
 
 	@Reference
 	private Portal _portal;

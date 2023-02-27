@@ -108,7 +108,7 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			return;
 		}
 
-		HashMap<String, DDMFormField> fullDDMFormFields = new HashMap<>();
+		HashSet<String> fullDDMFormFields = new HashSet<>();
 
 		_checkDDMFormFieldParameterNames(
 			ddmForm.getDDMFormFields(), StringPool.BLANK,
@@ -119,10 +119,10 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		List<DDMFormField> ddmFormFields,
 		String parentDDMFormFieldParameterName,
 		Set<String> ddmFormFieldParameterNames,
-		HashMap<String, DDMFormField> fullDDMFormFields) {
+		HashSet<String> fullDDMFormFields) {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (fullDDMFormFields.containsKey(ddmFormField.getName())) {
+			if (fullDDMFormFields.contains(ddmFormField.getName())) {
 				continue;
 			}
 
@@ -144,8 +144,6 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 				ddmFormFieldParameterNames.add(
 					defaultDDMFormFieldParameterName);
 
-				fullDDMFormFields.put(ddmFormField.getName(), ddmFormField);
-
 				_checkDDMFormFieldParameterNames(
 					ddmFormField.getNestedDDMFormFields(), StringPool.BLANK,
 					ddmFormFieldParameterNames, fullDDMFormFields);
@@ -160,7 +158,7 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 					ddmFormFieldParameterNames, fullDDMFormFields);
 			}
 
-			fullDDMFormFields.put(ddmFormField.getName(), ddmFormField);
+			fullDDMFormFields.add(ddmFormField.getName());
 		}
 	}
 

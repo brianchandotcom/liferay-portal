@@ -100,22 +100,21 @@ function appendXMLActions(
 				);
 			}
 
-			if (isValidValue(script, index)) {
-				buffer.push(XMLUtil.create('script', cdata(script[index])));
+			if (isValidValue(status, index)) {
+				buffer.push(
+					createTagWithEscapedContent('status', status[index])
+				);
 			}
+			else {
+				if (isValidValue(script, index)) {
+					buffer.push(XMLUtil.create('script', cdata(script[index])));
+				}
 
-			if (!status) {
 				buffer.push(
 					createTagWithEscapedContent(
 						'scriptLanguage',
 						scriptLanguage[index] || DEFAULT_LANGUAGE
 					)
-				);
-			}
-
-			if (isValidValue(status, index)) {
-				buffer.push(
-					createTagWithEscapedContent('status', status[index])
 				);
 			}
 

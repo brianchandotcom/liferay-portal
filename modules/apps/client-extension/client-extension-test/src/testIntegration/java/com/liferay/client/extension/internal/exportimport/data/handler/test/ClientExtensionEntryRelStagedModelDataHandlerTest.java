@@ -59,15 +59,11 @@ public class ClientExtensionEntryRelStagedModelDataHandlerTest
 
 		LayoutSet layoutSet = group.getPublicLayoutSet();
 
-		_clientExtensionEntryRel =
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				TestPropsValues.getUserId(), group.getGroupId(),
-				_portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(), RandomTestUtil.randomString(),
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
-				StringPool.BLANK);
-
-		return _clientExtensionEntryRel;
+		return _clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
+			RandomTestUtil.randomString(),
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
 	}
 
 	@Override
@@ -83,8 +79,6 @@ public class ClientExtensionEntryRelStagedModelDataHandlerTest
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return ClientExtensionEntryRel.class;
 	}
-
-	private ClientExtensionEntryRel _clientExtensionEntryRel;
 
 	@Inject
 	private ClientExtensionEntryRelLocalService

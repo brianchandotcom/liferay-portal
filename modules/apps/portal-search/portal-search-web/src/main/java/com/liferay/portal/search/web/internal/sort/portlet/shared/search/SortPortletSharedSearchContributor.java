@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -91,7 +93,13 @@ public class SortPortletSharedSearchContributor
 					fieldValue, locale, sortOrder);
 			}
 			catch (PortalException portalException) {
-				throw new RuntimeException(portalException);
+				if (_log.isWarnEnabled()) {
+					_log.warn(fieldValue + " is not a valid field name.");
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
 			}
 		}
 
@@ -162,6 +170,9 @@ public class SortPortletSharedSearchContributor
 			throw new RuntimeException(portalException);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SortPortletSharedSearchContributor.class);
 
 	@Reference
 	private SortBuilderFactory _sortBuilderFactory;

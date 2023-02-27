@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "EVP Save Button Payment Confirmation",
+	"name": "EVP Request Save Button",
 	"type": "component"
 }

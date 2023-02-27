@@ -1,9 +1,33 @@
 [
 	{
-		"key": "rejected",
-		"name": "Rejected",
+		"key": "awaitingApprovalOnEvp",
+		"name": "Awaiting Approval On Evp",
 		"name_i18n": {
-			"en-US": "Rejected"
+			"en-US": "Awaiting Approval On Evp"
+		},
+		"type": "string"
+	},
+	{
+		"key": "awaitCompanyVerification",
+		"name": "awaitCompanyVerification",
+		"name_i18n": {
+			"en-US": "Await Company Verification"
+		},
+		"type": "string"
+	},
+	{
+		"key": "awaitingFinanceReview",
+		"name": "awaitingFinanceReview",
+		"name_i18n": {
+			"en-US": "Awaiting Finance Review"
+		},
+		"type": "string"
+	},
+	{
+		"key": "awaitingPaymentConfirmation",
+		"name": "awaitingPaymentConfirmation",
+		"name_i18n": {
+			"en-US": "Awaiting Payment Confirmation"
 		},
 		"type": "string"
 	},
@@ -16,34 +40,10 @@
 		"type": "string"
 	},
 	{
-		"key": "pendingFinanceApproval",
-		"name": "Pending Finance Approval",
+		"key": "rejected",
+		"name": "Rejected",
 		"name_i18n": {
-			"en-US": "Pending Finance Approval"
-		},
-		"type": "string"
-	},
-	{
-		"key": "needMoreInfo",
-		"name": "Need More Info",
-		"name_i18n": {
-			"en-US": "Need More Info"
-		},
-		"type": "string"
-	},
-	{
-		"key": "pendingEVPApproval",
-		"name": "Pending EVP Approval",
-		"name_i18n": {
-			"en-US": "Pending EVP Approval"
-		},
-		"type": "string"
-	},
-	{
-		"key": "pendingCompanyApproval",
-		"name": "Pending Company Approval",
-		"name_i18n": {
-			"en-US": "Pending Company Approval"
+			"en-US": "Rejected"
 		},
 		"type": "string"
 	}

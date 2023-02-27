@@ -86,7 +86,7 @@
 					{
 						"definition": {
 							"fragment": {
-								"key": "evp-button-save",
+								"key": "evp-request-save-button",
 								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
@@ -113,6 +113,24 @@
 											}
 										},
 										"pageElements": [
+											{
+												"definition": {
+													"cssClasses": [
+														"request-id"
+													],
+													"fragment": {
+														"key": "INPUTS-select-from-list"
+													},
+													"fragmentConfig": {
+														"inputFieldId": "ObjectField_r_requestId_c_evpRequestId",
+														"inputRequired": false
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
 											{
 												"definition": {
 													"fragment": {

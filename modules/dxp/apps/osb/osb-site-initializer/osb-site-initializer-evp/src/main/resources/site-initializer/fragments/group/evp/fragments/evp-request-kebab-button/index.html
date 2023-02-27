@@ -6,7 +6,7 @@
 [#assign userRoles = permissionChecker.getUserBag().getRoles()/]
 [#assign requestStatus = (restClient.get("/c/evprequests/" + requestId).requestStatus.key)! /]
 
-<div id="evp-kebab-button">
+<div id="evp-request-kebab-button">
 	[@liferay_ui["icon-menu"]
 		direction="left-side"
 		markupView="lexicon"
@@ -21,9 +21,9 @@
 		[#list userRoles as role]
 			[#if approvedRoles?seqContains(role.name)]
 
-				[#if requestStatus != "closed"]
+				[#if requestStatus == "awaitingPaymentConfirmation"]
 					[@liferay_ui["icon"]
-						message="Invoice"
+						message="Pay"
 						url=URL + "/payment-confirmation?id=" + requestId
 					/]
 				[/#if]

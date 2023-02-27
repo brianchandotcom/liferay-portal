@@ -3,7 +3,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
-			"defaultValue": "pendingEVPApproval",
+			"defaultValue": "awaitingPaymentConfirmation",
 			"externalReferenceCode": "EVP-REQUEST-STATUS-DEFAULT",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -25,16 +25,16 @@
 										"key": "closed"
 									},
 									{
-										"key": "pendingFinanceApproval"
+										"key": "awaitingApprovalOnEvp"
 									},
 									{
-										"key": "needMoreInfo"
+										"key": "awaitCompanyVerification"
 									},
 									{
-										"key": "pendingEVPApproval"
+										"key": "awaitingFinanceReview"
 									},
 									{
-										"key": "pendingCompanyApproval"
+										"key": "awaitingPaymentConfirmation"
 									}
 								]
 							},
@@ -45,21 +45,21 @@
 										"key": "rejected"
 									},
 									{
-										"key": "pendingFinanceApproval"
+										"key": "awaitingApprovalOnEvp"
 									},
 									{
-										"key": "needMoreInfo"
+										"key": "awaitCompanyVerification"
 									},
 									{
-										"key": "pendingEVPApproval"
+										"key": "awaitingFinanceReview"
 									},
 									{
-										"key": "pendingCompanyApproval"
+										"key": "awaitingPaymentConfirmation"
 									}
 								]
 							},
 							{
-								"key": "pendingFinanceApproval",
+								"key": "awaitingApprovalOnEvp",
 								"objectStateTransitions": [
 									{
 										"key": "rejected"
@@ -68,18 +68,18 @@
 										"key": "closed"
 									},
 									{
-										"key": "needMoreInfo"
+										"key": "awaitCompanyVerification"
 									},
 									{
-										"key": "pendingEVPApproval"
+										"key": "awaitingFinanceReview"
 									},
 									{
-										"key": "pendingCompanyApproval"
+										"key": "awaitingPaymentConfirmation"
 									}
 								]
 							},
 							{
-								"key": "needMoreInfo",
+								"key": "awaitCompanyVerification",
 								"objectStateTransitions": [
 									{
 										"key": "rejected"
@@ -88,18 +88,18 @@
 										"key": "closed"
 									},
 									{
-										"key": "pendingFinanceApproval"
+										"key": "awaitingApprovalOnEvp"
 									},
 									{
-										"key": "pendingEVPApproval"
+										"key": "awaitingFinanceReview"
 									},
 									{
-										"key": "pendingCompanyApproval"
+										"key": "awaitingPaymentConfirmation"
 									}
 								]
 							},
 							{
-								"key": "pendingEVPApproval",
+								"key": "awaitingFinanceReview",
 								"objectStateTransitions": [
 									{
 										"key": "rejected"
@@ -108,18 +108,18 @@
 										"key": "closed"
 									},
 									{
-										"key": "pendingFinanceApproval"
+										"key": "awaitingApprovalOnEvp"
 									},
 									{
-										"key": "needMoreInfo"
+										"key": "awaitCompanyVerification"
 									},
 									{
-										"key": "pendingCompanyApproval"
+										"key": "awaitingPaymentConfirmation"
 									}
 								]
 							},
 							{
-								"key": "pendingCompanyApproval",
+								"key": "awaitingPaymentConfirmation",
 								"objectStateTransitions": [
 									{
 										"key": "rejected"
@@ -128,13 +128,13 @@
 										"key": "closed"
 									},
 									{
-										"key": "pendingFinanceApproval"
+										"key": "awaitingApprovalOnEvp"
 									},
 									{
-										"key": "needMoreInfo"
+										"key": "awaitCompanyVerification"
 									},
 									{
-										"key": "pendingEVPApproval"
+										"key": "awaitingFinanceReview"
 									}
 								]
 							}

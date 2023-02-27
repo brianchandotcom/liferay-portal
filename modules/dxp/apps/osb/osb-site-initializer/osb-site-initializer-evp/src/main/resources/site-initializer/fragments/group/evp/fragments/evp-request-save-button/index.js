@@ -15,6 +15,21 @@ const queryString = window.location.search;
 const urlParams = queryString.split('=');
 const requestId = urlParams[1];
 const liferayUrl = window.location.origin;
+const requestIdInput = document.querySelector('.request-id div input');
+const requestIdValueField = document.getElementsByName(
+	'r_requestId_c_evpRequestId'
+)[0];
+const selectButton = document.querySelector('.btn-secondary');
+
+requestIdInput.disabled = true;
+
+requestIdInput.style.borderRadius = '8px';
+
+requestIdInput.value = requestId;
+
+requestIdValueField.value = requestId;
+
+selectButton.remove();
 
 const statusResponse = async () => {
 	const payload = {

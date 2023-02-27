@@ -12,7 +12,7 @@
 			"requestBehalf": "displacedDistressed",
 			"requestDescription": "Request Description",
 			"requestPurposes": "disasterRelief",
-			"requestStatus": "pendingEVPApproval",
+			"requestStatus": "awaitingPaymentConfirmation",
 			"requestType": "service",
 			"startDate": "2022-09-29T00:00:00Z",
 			"totalHoursRequested": 11
@@ -29,7 +29,7 @@
 			"requestBehalf": "displacedDistressed",
 			"requestDescription": "Request Description",
 			"requestPurposes": "disasterRelief",
-			"requestStatus": "pendingEVPApproval",
+			"requestStatus": "awaitingPaymentConfirmation",
 			"requestType": "grant",
 			"totalHoursRequested": 0
 		},

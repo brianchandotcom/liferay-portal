@@ -183,6 +183,23 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			_ldapSettings.getUserExpandoMappings(ldapServerId, companyId),
 			_ldapSettings.getUserMappings(ldapServerId, companyId));
 
+		Attributes userLdapAttributes = _attributesTransformer.transformUser(
+			attributes);
+
+		LDAPUser ldapUser = _ldapToPortalConverter.importLDAPUser(
+			ldapImportContext.getCompanyId(), userLdapAttributes,
+			ldapImportContext.getUserMappings(),
+			ldapImportContext.getUserExpandoMappings(),
+			ldapImportContext.getContactMappings(),
+			ldapImportContext.getContactExpandoMappings(), password);
+
+		if (!_safePortalLDAP.hasUser(
+				ldapServerId, companyId, ldapUser.getScreenName(),
+				ldapUser.getEmailAddress())) {
+
+			return null;
+		}
+
 		User user = importUser(
 			ldapImportContext, StringPool.BLANK, attributes, password);
 

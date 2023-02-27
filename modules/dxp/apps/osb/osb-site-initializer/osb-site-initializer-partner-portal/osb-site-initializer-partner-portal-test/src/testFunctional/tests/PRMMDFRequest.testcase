@@ -15,7 +15,7 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Add a new user") {
+		task ("Add a partner user") {
 			JSONUser.addUser(
 				userEmailAddress = "partner@liferay.com",
 				userFirstName = "partner",
@@ -26,6 +26,20 @@ definition {
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "partner@liferay.com");
+		}
+
+		task ("Add a manager user with a Manager role") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Channel General Manager",
+				userEmailAddress = "manager@liferay.com",
+				userFirstName = "manager",
+				userLastName = "manager",
+				userScreenName = "manager manager");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "manager@liferay.com");
 		}
 
 		task ("Add a new account and assign the created user to the account") {

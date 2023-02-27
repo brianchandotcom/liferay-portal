@@ -34,6 +34,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -481,13 +482,27 @@ public class ObjectEntryInfoItemFormProvider
 		).<NoSuchFormVariationException>infoFieldSetEntry(
 			unsafeConsumer -> {
 				if (objectDefinitionId != 0) {
+					ObjectDefinition objectDefinition =
+						_objectDefinitionLocalService.fetchObjectDefinition(
+							objectDefinitionId);
+
+					if (objectDefinition == null) {
+						throw new NoSuchFormVariationException(
+							String.valueOf(objectDefinitionId),
+							new NoSuchObjectDefinitionException());
+					}
+
 					unsafeConsumer.accept(
-						_getObjectDefinitionInfoFieldSet(objectDefinitionId));
+						_getObjectDefinitionInfoFieldSet(
+							ObjectField.class.getSimpleName(),
+							objectDefinition));
 				}
 			}
 		).infoFieldSetEntries(
 			_getAttachmentObjectDefinitionInfoFieldSetEntries(
 				objectDefinitionId)
+		).infoFieldSetEntries(
+			_getObjectRelationshipsInfoFieldSets(objectDefinitionId)
 		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(modelClassName)
 		).infoFieldSetEntry(
@@ -542,25 +557,14 @@ public class ObjectEntryInfoItemFormProvider
 	}
 
 	private InfoFieldSet _getObjectDefinitionInfoFieldSet(
-			long objectDefinitionId)
-		throws NoSuchFormVariationException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectDefinitionId);
-
-		if (objectDefinition == null) {
-			throw new NoSuchFormVariationException(
-				String.valueOf(objectDefinitionId),
-				new NoSuchObjectDefinitionException());
-		}
+		String namespace, ObjectDefinition objectDefinition) {
 
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			unsafeConsumer -> {
 				for (ObjectField objectField :
 						_objectFieldLocalService.getObjectFields(
-							objectDefinitionId, false)) {
+							objectDefinition.getObjectDefinitionId(), false)) {
 
 					if (Validator.isNotNull(
 							objectField.getRelationshipType())) {
@@ -588,7 +592,7 @@ public class ObjectEntryInfoItemFormProvider
 								ObjectFieldDBTypeUtil.getInfoFieldType(
 									objectField)
 							).namespace(
-								ObjectField.class.getSimpleName()
+								namespace
 							).name(
 								objectField.getName()
 							).editable(
@@ -612,6 +616,59 @@ public class ObjectEntryInfoItemFormProvider
 		).name(
 			objectDefinition.getName()
 		).build();
+	}
+
+	private List<InfoFieldSetEntry> _getObjectRelationshipsInfoFieldSets(
+			long objectDefinitionId)
+		throws NoSuchFormVariationException {
+
+		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
+
+		if (objectDefinitionId == 0) {
+			return infoFieldSetEntries;
+		}
+
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.getAllObjectRelationships(
+				objectDefinitionId);
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			if (!Objects.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+				continue;
+			}
+
+			long relatedObjectDefinitionId =
+				objectRelationship.getObjectDefinitionId1();
+
+			ObjectDefinition relatedObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					relatedObjectDefinitionId);
+
+			if (relatedObjectDefinition == null) {
+				_log.error(
+					new NoSuchObjectDefinitionException(
+						String.valueOf(relatedObjectDefinitionId)));
+
+				continue;
+			}
+
+			if (relatedObjectDefinition.isSystem()) {
+				continue;
+			}
+
+			infoFieldSetEntries.add(
+				_getObjectDefinitionInfoFieldSet(
+					StringBundler.concat(
+						ObjectRelationship.class.getSimpleName(),
+						StringPool.POUND,
+						relatedObjectDefinition.getExternalReferenceCode()),
+					relatedObjectDefinition));
+		}
+
+		return infoFieldSetEntries;
 	}
 
 	private List<SelectInfoFieldType.Option> _getOptions(

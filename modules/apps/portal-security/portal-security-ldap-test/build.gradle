@@ -4,10 +4,8 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
-	testIntegrationCompile project(":apps:portal-security:portal-security-export-import-api")
 	testIntegrationCompile project(":apps:portal-security:portal-security-ldap-api")
 	testIntegrationCompile project(":apps:portal:portal-upgrade-test-util")
 	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
-	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

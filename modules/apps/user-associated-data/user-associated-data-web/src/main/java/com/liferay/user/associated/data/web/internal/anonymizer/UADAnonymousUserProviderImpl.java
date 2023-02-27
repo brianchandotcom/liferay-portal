@@ -83,6 +83,12 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		}
 	}
 
+	private void _inactivateAnonymousUSer(User anonymousUser) throws Exception {
+		_userLocalService.updateStatus(
+			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+			new ServiceContext());
+	}
+
 	private User _addAnonymousUser(long companyId) throws Exception {
 		long userId = _counterLocalService.increment();
 
@@ -208,12 +214,6 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		_updateStatus(anonymousUser);
 
 		return anonymousUser;
-	}
-
-	private void _updateStatus(User anonymousUser) throws Exception {
-		_userLocalService.updateStatus(
-			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
-			new ServiceContext());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

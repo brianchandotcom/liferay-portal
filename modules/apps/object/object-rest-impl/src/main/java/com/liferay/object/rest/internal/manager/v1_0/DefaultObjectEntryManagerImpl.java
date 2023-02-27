@@ -829,7 +829,7 @@ public class DefaultObjectEntryManagerImpl
 			ObjectRelationship objectRelationship)
 		throws Exception {
 
-		long relatedObjectDefinitionId;
+		long relatedObjectDefinitionId = 0;
 
 		if (objectRelationship.getObjectDefinitionId1() ==
 				objectDefinition.getObjectDefinitionId()) {
@@ -848,9 +848,9 @@ public class DefaultObjectEntryManagerImpl
 
 		if (!relatedObjectDefinition.isActive()) {
 			throw new BadRequestException(
-				"ObjectDefinition " +
+				"Object definition " +
 					relatedObjectDefinition.getObjectDefinitionId() +
-						" must be activated");
+						" is inactive");
 		}
 
 		return relatedObjectDefinition;
@@ -977,18 +977,14 @@ public class DefaultObjectEntryManagerImpl
 			long relatedPrimaryKey)
 		throws Exception {
 
-		long primaryKey1;
-		long primaryKey2;
+		long primaryKey1 = relatedPrimaryKey;
+		long primaryKey2 = primaryKey;
 
 		if (objectDefinition.getObjectDefinitionId() ==
 				objectRelationship.getObjectDefinitionId1()) {
 
 			primaryKey1 = primaryKey;
 			primaryKey2 = relatedPrimaryKey;
-		}
-		else {
-			primaryKey1 = relatedPrimaryKey;
-			primaryKey2 = primaryKey;
 		}
 
 		_objectRelationshipService.addObjectRelationshipMappingTableValues(
@@ -1224,8 +1220,8 @@ public class DefaultObjectEntryManagerImpl
 
 			if (relatedObjectDefinition.isSystem()) {
 				throw new UnsupportedOperationException(
-					"Unable to create nested object entries with System " +
-						"Objects");
+					"Unable to create nested object entries with system " +
+						"object definitions");
 			}
 
 			ObjectRelationshipElementsParser objectRelationshipElementsParser =

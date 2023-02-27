@@ -69,7 +69,6 @@ public abstract class BaseObjectRelationshipElementsParserImpl<T>
 		objectEntry.setExternalReferenceCode(
 			(String)nestedObjectEntryProperties.remove(
 				"externalReferenceCode"));
-
 		objectEntry.setProperties(nestedObjectEntryProperties);
 
 		return objectEntry;

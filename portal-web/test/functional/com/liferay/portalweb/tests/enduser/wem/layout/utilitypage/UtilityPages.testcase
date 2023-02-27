@@ -582,10 +582,7 @@ definition {
 				pageName = "Non Exist Page",
 				siteName = "Test Site Name");
 
-			ContentPages.viewFragmentText(
-				fragmentName = "heading",
-				id = "element-text",
-				text = "Page Not Found");
+			AssertTextPresent(value1 = "The requested resource could not be found.");
 		}
 	}
 

@@ -2988,6 +2988,8 @@ definition {
 		}
 
 		task ("Verify tree image is available and selectable") {
+			DMNavigator.gotoFolder(dmFolderName = "Provided by Liferay");
+
 			AssertElementPresent(
 				key_dmDocumentTitle = "tree.png",
 				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");

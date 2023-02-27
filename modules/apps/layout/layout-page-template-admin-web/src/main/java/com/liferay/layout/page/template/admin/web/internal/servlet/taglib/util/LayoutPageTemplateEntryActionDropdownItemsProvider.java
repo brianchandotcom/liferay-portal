@@ -108,9 +108,14 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 						() -> hasUpdatePermission,
 						_getEditLayoutPageTemplateEntryActionUnsafeConsumer()
 					).add(
-						() -> LayoutPageTemplateEntryPermission.contains(
-							_themeDisplay.getPermissionChecker(),
-							_layoutPageTemplateEntry, ActionKeys.VIEW),
+						() ->
+							LayoutPageTemplateEntryPermission.contains(
+								_themeDisplay.getPermissionChecker(),
+								_layoutPageTemplateEntry, ActionKeys.VIEW) &&
+							!Objects.equals(
+								_layoutPageTemplateEntry.getType(),
+								LayoutPageTemplateEntryTypeConstants.
+									TYPE_WIDGET_PAGE),
 						_getViewLayoutPageTemplateEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);

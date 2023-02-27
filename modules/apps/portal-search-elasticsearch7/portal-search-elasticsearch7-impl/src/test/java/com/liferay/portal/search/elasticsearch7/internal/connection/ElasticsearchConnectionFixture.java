@@ -17,26 +17,20 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.constants.ConnectionConstants;
-import com.liferay.portal.search.elasticsearch7.internal.settings.BaseSettingsContributor;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.PathUtil;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.Sidecar;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.SidecarManager;
-import com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper;
-import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
 import com.liferay.portal.util.PropsImpl;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.client.RestHighLevelClient;
@@ -71,7 +65,7 @@ public class ElasticsearchConnectionFixture
 			elasticsearchConfigurationWrapper,
 			_createElasticsearchInstancePaths(), new LocalProcessExecutor(),
 			() -> _TMP_PATH.resolve("lib-process-executor"),
-			_getSettingsContributors(), Mockito.mock(SidecarManager.class));
+			Mockito.mock(SidecarManager.class));
 
 		ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =
 			new ElasticsearchConnectionBuilder();
@@ -143,8 +137,6 @@ public class ElasticsearchConnectionFixture
 			ElasticsearchConnectionFixture elasticsearchConnectionFixture =
 				new ElasticsearchConnectionFixture();
 
-			elasticsearchConnectionFixture._discoveryTypeZen =
-				_discoveryTypeZen;
 			elasticsearchConnectionFixture.
 				_elasticsearchConfigurationProperties =
 					createElasticsearchConfigurationProperties(
@@ -159,12 +151,6 @@ public class ElasticsearchConnectionFixture
 			String clusterName) {
 
 			_clusterName = clusterName;
-
-			return this;
-		}
-
-		public Builder discoveryTypeZen(boolean discoveryTypeZen) {
-			_discoveryTypeZen = discoveryTypeZen;
 
 			return this;
 		}
@@ -206,7 +192,6 @@ public class ElasticsearchConnectionFixture
 		}
 
 		private String _clusterName;
-		private Boolean _discoveryTypeZen;
 		private Map<String, Object> _elasticsearchConfigurationProperties =
 			Collections.<String, Object>emptyMap();
 
@@ -235,78 +220,8 @@ public class ElasticsearchConnectionFixture
 		PathUtil.deleteDir(_workPath);
 	}
 
-	private SettingsContributor
-		_getClusterLoggingThresholdSettingsContributor() {
-
-		return new BaseSettingsContributor(0) {
-
-			@Override
-			public void populate(ClientSettingsHelper clientSettingsHelper) {
-				clientSettingsHelper.put(
-					"cluster.service.slow_task_logging_threshold", "600s");
-			}
-
-		};
-	}
-
-	private SettingsContributor _getDiscoveryTypeZenContributor() {
-		if (!GetterUtil.getBoolean(_discoveryTypeZen)) {
-			return null;
-		}
-
-		return new SettingsContributor() {
-
-			@Override
-			public int compareTo(SettingsContributor o) {
-				return 0;
-			}
-
-			@Override
-			public int getPriority() {
-				return 0;
-			}
-
-			@Override
-			public void populate(ClientSettingsHelper clientSettingsHelper) {
-				clientSettingsHelper.put("discovery.type", "zen");
-			}
-
-		};
-	}
-
-	private SettingsContributor _getDiskThresholdSettingsContributor() {
-		return new BaseSettingsContributor(0) {
-
-			@Override
-			public void populate(ClientSettingsHelper clientSettingsHelper) {
-				clientSettingsHelper.put(
-					"cluster.routing.allocation.disk.threshold_enabled",
-					"false");
-			}
-
-		};
-	}
-
-	private List<SettingsContributor> _getSettingsContributors() {
-		List<SettingsContributor> settingsContributors = new ArrayList<>();
-
-		settingsContributors.add(
-			_getClusterLoggingThresholdSettingsContributor());
-		settingsContributors.add(_getDiskThresholdSettingsContributor());
-
-		SettingsContributor settingsContributor =
-			_getDiscoveryTypeZenContributor();
-
-		if (settingsContributor != null) {
-			settingsContributors.add(settingsContributor);
-		}
-
-		return settingsContributors;
-	}
-
 	private static final Path _TMP_PATH = Paths.get("tmp");
 
-	private Boolean _discoveryTypeZen;
 	private Map<String, Object> _elasticsearchConfigurationProperties =
 		Collections.<String, Object>emptyMap();
 	private ElasticsearchConnection _elasticsearchConnection;

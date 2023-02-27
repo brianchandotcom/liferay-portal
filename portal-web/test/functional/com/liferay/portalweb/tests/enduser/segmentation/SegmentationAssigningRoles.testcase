@@ -941,7 +941,7 @@ definition {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "PERMISSIONS",
 				resourceName = "com_liferay_segments_web_internal_portlet_SegmentsPortlet",
-				roleTitle = "UserWithPermissionsCanAccessSegmentsPortlet Role",
+				roleTitle = "UserWithSegmentPermissionsWithoutControlPanelCannotAccess Role",
 				roleType = "regular");
 		}
 

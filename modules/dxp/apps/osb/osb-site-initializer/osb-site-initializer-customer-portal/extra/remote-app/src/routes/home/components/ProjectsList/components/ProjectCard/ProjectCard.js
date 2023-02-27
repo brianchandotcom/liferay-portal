@@ -28,15 +28,11 @@ const statusReport = {
 };
 
 const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
-	const hideSLAStatus = !koroneikiAccount.slaCurrent;
+	const showSLAStatus = Boolean(koroneikiAccount.slaCurrent);
 
 	const SLAStatus = () => {
 		if (loading) {
 			return <Skeleton height={20} width={54} />;
-		}
-
-		if (hideSLAStatus) {
-			return null;
 		}
 
 		return <StatusTag currentStatus={koroneikiAccount.status} />;
@@ -45,10 +41,6 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 	const SLAStatusDate = () => {
 		if (loading) {
 			return <Skeleton className="mt-1" height={20} width={100} />;
-		}
-
-		if (hideSLAStatus) {
-			return null;
 		}
 
 		return (
@@ -127,9 +119,9 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 							'mt-6 pt-3': !compressed,
 						})}
 					>
-						<SLAStatus />
+						{showSLAStatus && <SLAStatus />}
 
-						<SLAStatusDate />
+						{showSLAStatus && <SLAStatusDate />}
 
 						{compressed &&
 							(loading ? (

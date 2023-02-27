@@ -34,7 +34,7 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="AnnouncementsEntry" remote-service="true" uuid="true">
+	<entity local-service="true" name="AnnouncementsEntry" remote-service="true" uad-application-name="Announcement" uad-dir-path="../modules/apps/announcements/announcements-uad/src/main/java" uad-package-path="com.liferay.announcements" uuid="true">
 
 		<!-- PK fields -->
 
@@ -52,8 +52,8 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="title" type="String" />
-		<column name="content" type="String" />
+		<column name="title" type="String" uad-nonanonymizable="true" />
+		<column name="content" type="String" uad-nonanonymizable="true" />
 		<column name="url" type="String" />
 		<column name="type" type="String" />
 		<column name="displayDate" type="Date" />
@@ -97,7 +97,7 @@
 			<finder-column name="alert" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="AnnouncementsFlag" remote-service="true">
+	<entity local-service="true" name="AnnouncementsFlag" remote-service="true" uad-application-name="Announcement" uad-dir-path="../modules/apps/announcements/announcements-uad/src/main/java" uad-package-path="com.liferay.announcements">
 
 		<!-- PK fields -->
 
@@ -106,7 +106,7 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
+		<column name="userId" type="long" uad-anonymize-field-name="userId" />
 		<column name="createDate" type="Date" />
 
 		<!-- Other fields -->

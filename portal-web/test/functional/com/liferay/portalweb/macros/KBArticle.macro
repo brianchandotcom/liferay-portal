@@ -995,15 +995,24 @@ definition {
 	macro searchForKB {
 		var key_knowledgeBaseName = ${knowledgeBaseName};
 
-		Click(locator1 = "KnowledgeBase#SEARCH_FIELD");
+		if (isSet(searchFromCenterPanel)) {
+			Type(
+				locator1 = "TextInput#SITE_SEARCH_KEYWORDS",
+				value1 = ${knowledgeBaseName});
 
-		Type(
-			locator1 = "KnowledgeBase#SEARCH_FIELD",
-			value1 = ${knowledgeBaseName});
+			KeyPress(
+				locator1 = "TextInput#SITE_SEARCH_KEYWORDS",
+				value1 = "\RETURN");
+		}
+		else {
+			Type(
+				locator1 = "KnowledgeBase#SEARCH_FIELD",
+				value1 = ${knowledgeBaseName});
 
-		KeyPress(
-			locator1 = "TextInput#SEARCH",
-			value1 = "\RETURN");
+			KeyPress(
+				locator1 = "KnowledgeBase#SEARCH_FIELD",
+				value1 = "\RETURN");
+		}
 	}
 
 	macro selectAllCP {

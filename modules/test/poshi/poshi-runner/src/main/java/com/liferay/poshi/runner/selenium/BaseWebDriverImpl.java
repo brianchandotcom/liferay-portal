@@ -1937,11 +1937,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void maximizeWindow() {
-		WebDriver wrappedWebDriver = getWrappedWebDriver("//body");
+		Options option = _webDriver.manage();
 
-		WebDriver.Options options = wrappedWebDriver.manage();
-
-		WebDriver.Window window = options.window();
+		Window window = option.window();
 
 		window.maximize();
 	}

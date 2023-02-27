@@ -8,7 +8,7 @@ definition {
 			KBTemplate.openToAddTemplate(siteURLKey = ${siteURLKey});
 		}
 		else {
-			Navigator.gotoNavItem(navItem = "Templates");
+			KBArticle.openPageTreePanel(section = "Templates");
 
 			LexiconEntry.gotoAdd();
 		}
@@ -261,19 +261,12 @@ definition {
 	}
 
 	macro viewNoTemplates {
-		if (isSet(noFeatureFlag)) {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "No templates were found.");
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
+			value1 = "There are no article templates.");
 
-			if (isSet(disabledActionToolbar)) {
-				AssertElementPresent(locator1 = "TextInput#SEARCH_DISABLED");
-			}
-		}
-		else {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
-				value1 = "There are no article templates.");
+		if (isSet(disabledActionToolbar)) {
+			AssertElementPresent(locator1 = "TextInput#SEARCH_DISABLED");
 		}
 	}
 

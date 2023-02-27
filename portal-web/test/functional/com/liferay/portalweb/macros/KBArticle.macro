@@ -1588,31 +1588,24 @@ definition {
 	}
 
 	macro viewDefaultCP {
-		if (isSet(featureFlag)) {
-			if (isSet(defaultHome)) {
-				AssertTextEquals(
-					locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
-					value1 = "Knowledge base is empty.");
-			}
-			else if (isSet(suggestions)) {
-				AssertTextEquals.assertPartialText(
-					locator1 = "Message#EMPTY_INFO",
-					value1 = "There are no suggestions.");
-			}
-			else {
-				AssertTextEquals(
-					locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
-					value1 = "This folder is empty.");
-			}
+		if (isSet(newFolder)) {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
+				value1 = "This folder is empty.");
 		}
-		else {
+		else if (isSet(suggestions)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
-				value1 = "No articles were found.");
+				value1 = "There are no suggestions.");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
+				value1 = "Knowledge base is empty.");
+		}
 
-			if (isSet(disabledActionToolbar)) {
-				AssertElementPresent(locator1 = "TextInput#SEARCH_DISABLED");
-			}
+		if (isSet(disabledActionToolbar)) {
+			AssertElementPresent(locator1 = "TextInput#SEARCH_DISABLED");
 		}
 
 		AssertElementNotPresent(locator1 = "KnowledgeBase#ARTICLE_TABLE_KB_GENERIC");

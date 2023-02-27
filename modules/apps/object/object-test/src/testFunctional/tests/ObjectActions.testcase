@@ -190,6 +190,118 @@ definition {
 			actionLabel = "Action Label");
 	}
 
+	@description = "LPS-175200 - Verify if actions works with oldValue function when trigger is On After Update (Add an Object Entry) using Picklist field."
+	@priority = 5
+	test CanCreateActionAddAnObjectEntryUsingOldValueWithOnAfterUpdateTrigger {
+		property portal.acceptance = "true";
+
+		task ("Given: A Picklist is added via API") {
+			Picklist.addPicklistViaAPI(picklistName = "Status");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "open",
+				itemName = "Open",
+				picklistName = "Status");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "inProgress",
+				itemName = "In Progress",
+				picklistName = "Status");
+		}
+
+		task ("And given: A Object is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175200",
+				objectName = "CustomObject175200",
+				pluralLabelName = "Custom Objects 175200");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Text Field",
+				fieldName = "customTextField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject175200");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175200");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "customPicklistField",
+				fieldPicklist = "Status",
+				fieldType = "Picklist");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175200");
+		}
+
+		task ("And given: An action with oldValue function is created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175200");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				actionName = "CustomAction",
+				active = "true",
+				fieldName = "Custom Text Field",
+				inputExpression = "oldValue('customPicklistField') == 'open'",
+				inputMethod = "true",
+				inputValue = "Object entry added",
+				objectLabel = "Custom Object 175200",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Update");
+		}
+
+		task ("When: The entry is added with picklist value Open") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customTextField",
+				objectName = "CustomObject175200",
+				value = "Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175200");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+			ObjectAdmin.changePicklistFieldEntry(
+				entrySelected = "",
+				newPicklistOption = "Open");
+		}
+
+		task ("And when: The picklist value is edited") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175200");
+
+			ObjectPortlet.viewEntryDetails(entry = "Open");
+
+			ObjectAdmin.changePicklistFieldEntry(
+				entrySelected = "Open",
+				newPicklistOption = "In Progress");
+		}
+
+		task ("Then: The action runs with oldValue function") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175200");
+
+			ObjectPortlet.viewEntry(entry = "Object entry added");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175200");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionLabel = "Custom Action",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-145665 - Verify it's possible to add an object entry with the trigger On Order Status Update"
 	@priority = 4
 	test CanCreateActionAddObjectEntryWithOnOrderStatusUpdate {

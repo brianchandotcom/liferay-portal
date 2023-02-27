@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false,
 	property = "dto.class.name=com.liferay.search.experiences.model.SXPBlueprint",
-	service = {DTOConverter.class, SXPBlueprintDTOConverter.class}
+	service = DTOConverter.class
 )
 public class SXPBlueprintDTOConverter
 	implements DTOConverter

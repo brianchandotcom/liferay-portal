@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -38,7 +39,6 @@ import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
-import com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPBlueprintDTOConverter;
 import com.liferay.search.experiences.rest.internal.odata.entity.v1_0.SXPBlueprintEntityModel;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.util.SearchUtil;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.util.TitleMapUtil;
@@ -319,8 +319,12 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	@Reference
-	private SXPBlueprintDTOConverter _sxpBlueprintDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPBlueprintDTOConverter)"
+	)
+	private DTOConverter
+		<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>
+			_sxpBlueprintDTOConverter;
 
 	@Reference
 	private SXPBlueprintService _sxpBlueprintService;

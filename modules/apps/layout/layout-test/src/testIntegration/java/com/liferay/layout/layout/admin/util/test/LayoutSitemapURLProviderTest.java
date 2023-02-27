@@ -16,7 +16,6 @@ package com.liferay.layout.layout.admin.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
-import com.liferay.layout.admin.kernel.util.SitemapURLProviderRegistryUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -88,15 +87,11 @@ public class LayoutSitemapURLProviderTest {
 	public void testLayoutSitemapURLProviderContentLayoutTypeNoPublished()
 		throws Exception {
 
-		SitemapURLProvider layoutSitemapURLProvider =
-			SitemapURLProviderRegistryUtil.getSitemapURLProvider(
-				Layout.class.getName());
-
 		Element rootElement = _getRootElement();
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		layoutSitemapURLProvider.visitLayout(
+		_layoutSitemapURLProvider.visitLayout(
 			rootElement, layout.getUuid(), _themeDisplay.getLayoutSet(),
 			_themeDisplay);
 
@@ -106,10 +101,6 @@ public class LayoutSitemapURLProviderTest {
 	@Test
 	public void testLayoutSitemapURLProviderContentLayoutTypePublished()
 		throws Exception {
-
-		SitemapURLProvider layoutSitemapURLProvider =
-			SitemapURLProviderRegistryUtil.getSitemapURLProvider(
-				Layout.class.getName());
 
 		Element rootElement = _getRootElement();
 
@@ -133,7 +124,7 @@ public class LayoutSitemapURLProviderTest {
 				_group.getCompanyId(), _group.getGroupId(),
 				TestPropsValues.getUserId()));
 
-		layoutSitemapURLProvider.visitLayout(
+		_layoutSitemapURLProvider.visitLayout(
 			rootElement, layout.getUuid(), _layoutSet, _themeDisplay);
 
 		Assert.assertTrue(rootElement.hasContent());
@@ -162,10 +153,6 @@ public class LayoutSitemapURLProviderTest {
 	public void testLayoutSitemapURLProviderPortletLayoutType()
 		throws Exception {
 
-		SitemapURLProvider layoutSitemapURLProvider =
-			SitemapURLProviderRegistryUtil.getSitemapURLProvider(
-				Layout.class.getName());
-
 		Element rootElement = _getRootElement();
 
 		Set<Locale> availableLocales = SetUtil.fromArray(
@@ -178,7 +165,7 @@ public class LayoutSitemapURLProviderTest {
 			).build(),
 			new HashMap<>());
 
-		layoutSitemapURLProvider.visitLayout(
+		_layoutSitemapURLProvider.visitLayout(
 			rootElement, layout.getUuid(), _layoutSet, _themeDisplay);
 
 		Assert.assertTrue(rootElement.hasContent());
@@ -256,6 +243,12 @@ public class LayoutSitemapURLProviderTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.layout.internal.layout.admin.util.LayoutSitemapURLProvider",
+		type = SitemapURLProvider.class
+	)
+	private SitemapURLProvider _layoutSitemapURLProvider;
 
 	@Inject
 	private Portal _portal;

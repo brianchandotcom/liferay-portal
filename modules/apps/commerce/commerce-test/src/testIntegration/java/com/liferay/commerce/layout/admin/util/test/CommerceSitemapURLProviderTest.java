@@ -37,7 +37,6 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
-import com.liferay.layout.admin.kernel.util.SitemapURLProviderRegistryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Company;
@@ -206,11 +205,7 @@ public class CommerceSitemapURLProviderTest {
 
 		_httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
-		SitemapURLProvider assetCategorySitemapURLProvider =
-			SitemapURLProviderRegistryUtil.getSitemapURLProvider(
-				AssetCategory.class.getName());
-
-		assetCategorySitemapURLProvider.visitLayout(
+		_assetCategorySitemapURLProvider.visitLayout(
 			rootElement, layout.getUuid(), layoutSet, _themeDisplay);
 
 		Assert.assertTrue(rootElement.hasContent());
@@ -276,11 +271,7 @@ public class CommerceSitemapURLProviderTest {
 
 		_httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
-		SitemapURLProvider cpDefinitionSitemapURLProvider =
-			SitemapURLProviderRegistryUtil.getSitemapURLProvider(
-				CPDefinition.class.getName());
-
-		cpDefinitionSitemapURLProvider.visitLayout(
+		_cpDefinitionSitemapURLProvider.visitLayout(
 			rootElement, layout.getUuid(), layoutSet, _themeDisplay);
 
 		Assert.assertTrue(rootElement.hasContent());
@@ -319,10 +310,22 @@ public class CommerceSitemapURLProviderTest {
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
+	@Inject(
+		filter = "component.name=com.liferay.commerce.product.internal.layout.admin.util.AssetCategorySitemapURLProvider",
+		type = SitemapURLProvider.class
+	)
+	private SitemapURLProvider _assetCategorySitemapURLProvider;
+
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private CommerceCurrency _commerceCurrency;
+
+	@Inject(
+		filter = "component.name=com.liferay.commerce.product.internal.layout.admin.util.CPDefinitionSitemapURLProvider",
+		type = SitemapURLProvider.class
+	)
+	private SitemapURLProvider _cpDefinitionSitemapURLProvider;
 
 	@Inject
 	private CPFileImporter _cpFileImporter;

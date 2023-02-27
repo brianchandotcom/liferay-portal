@@ -2500,9 +2500,7 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewExpiredContent(
-			contentBody = "Document_1.txt",
-			user = "Test Test");
+		Notifications.viewExpiredContent(contentBody = "Document_1.txt");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

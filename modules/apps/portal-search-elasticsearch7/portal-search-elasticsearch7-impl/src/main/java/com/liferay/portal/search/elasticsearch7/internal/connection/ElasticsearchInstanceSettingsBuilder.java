@@ -20,14 +20,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
-import com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper;
-import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
 
 import java.net.InetAddress;
 
 import java.nio.file.Path;
 
-import java.util.Collection;
 import java.util.function.Supplier;
 
 import org.elasticsearch.common.settings.Settings;
@@ -129,14 +126,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		return this;
 	}
 
-	public ElasticsearchInstanceSettingsBuilder settingsContributors(
-		Collection<SettingsContributor> settingsContributors) {
-
-		_settingsContributors = settingsContributors;
-
-		return this;
-	}
-
 	public interface LocalBindInetAddressSupplier
 		extends Supplier<InetAddress> {
 	}
@@ -159,8 +148,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		_loadSidecarConfigurations();
 
 		_loadAdditionalConfigurations();
-
-		_loadSettingsContributors();
 	}
 
 	protected void put(String key, boolean value) {
@@ -322,26 +309,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		_disableXpack();
 	}
 
-	private void _loadSettingsContributors() {
-		ClientSettingsHelper clientSettingsHelper = new ClientSettingsHelper() {
-
-			@Override
-			public void put(String setting, String value) {
-				_settingsBuilder.put(setting, value);
-			}
-
-			@Override
-			public void putArray(String setting, String... values) {
-				_settingsBuilder.putList(setting, values);
-			}
-
-		};
-
-		for (SettingsContributor settingsContributor : _settingsContributors) {
-			settingsContributor.populate(clientSettingsHelper);
-		}
-	}
-
 	private void _loadSidecarConfigurations() {
 		put("bootstrap.system_call_filter", false);
 		put("node.store.allow_mmap", false);
@@ -360,6 +327,5 @@ public class ElasticsearchInstanceSettingsBuilder {
 	private String _nodeName;
 	private final SettingsBuilder _settingsBuilder = new SettingsBuilder(
 		Settings.builder());
-	private Collection<SettingsContributor> _settingsContributors;
 
 }

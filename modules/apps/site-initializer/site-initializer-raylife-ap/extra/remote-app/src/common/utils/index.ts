@@ -12,6 +12,6 @@
  * details.
  */
 
-export function setFirstLetterUpperCase(text) {
+export function setFirstLetterUpperCase(text: string) {
 	return text.charAt(0).toUpperCase() + text.slice(1);
 }

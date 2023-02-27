@@ -12,17 +12,26 @@
  * details.
  */
 
-export const CONSTANTS = {
+export type ConstantListType = {[keys: string]: string};
+
+type ConstantsType = {
+	APPLICATION_STATUS: {[keys: string]: {INDEX: number; NAME: string}};
+	DEVICES: ConstantListType;
+	MONTHS_ABREVIATIONS: string[];
+	US_STATES: ConstantListType[];
+};
+
+export const CONSTANTS: ConstantsType = {
 	APPLICATION_STATUS: {
-		APPROVED: 'approved',
-		BOUND: 'bound',
-		INCOMPLETE: 'incomplete',
-		ININVESTIGATION: 'inInvestigation',
-		OPEN: 'open',
-		QUOTED: 'quoted',
-		REJECTED: 'rejected',
-		REVIEWED: 'reviewed',
-		UNDERWRITING: 'underwriting',
+		approved: {INDEX: 8, NAME: 'approved'},
+		bound: {INDEX: 6, NAME: 'bound'},
+		inInvestigation: {INDEX: 7, NAME: 'InInvestigation'},
+		incomplete: {INDEX: 1, NAME: 'incomplete'},
+		open: {INDEX: 0, NAME: 'open'},
+		quoted: {INDEX: 2, NAME: 'quoted'},
+		rejected: {INDEX: 5, NAME: 'rejected'},
+		reviewed: {INDEX: 4, NAME: 'reviewed'},
+		underwriting: {INDEX: 3, NAME: 'underwriting'},
 	},
 
 	DEVICES: {

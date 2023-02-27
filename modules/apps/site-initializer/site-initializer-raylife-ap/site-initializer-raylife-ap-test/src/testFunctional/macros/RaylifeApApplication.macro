@@ -1,44 +1,42 @@
 definition {
 
-	macro assertModalOption {
+	macro assertModalInfos {
+		if (isSet(option)){
 		AssertElementPresent(
 			key_text = ${option},
 			locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
-
+		}
 		if (isSet(notOption)) {
 			AssertElementNotPresent(
 				key_text = ${notOption},
 				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
 		}
+		if (isSet(description)) {
+			AssertElementPresent(
+				key_text = "${description}",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
 	}
 
 	macro modalFlow {
-		Click(
-			key_text = "Application",
-			locator1 = "Button#ANY");
+		Button.click(button = "Application");
 
-		Click(
+		RaylifeApApplication.modalOption(
 			key_text = ${insurance},
 			locator1 = "RaylifeApplicationModal#MODAL_OPTION");
 
-		Click(
-			key_text = "Next",
-			locator1 = "Button#ANY");
+		Button.click(button = "Next");
 
 		if (isSet(button)) {
-			Click(
-				key_text = ${button},
-				locator1 = "Button#ANY");
+			Button.click(button = "${button}");
 		}
 
 		if (isSet(product)) {
-			Click(
+			RaylifeApApplication.modalOption(
 				key_text = ${product},
 				locator1 = "RaylifeApplicationModal#MODAL_OPTION");
 
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+			Button.click(button = "Next");
 		}
 	}
 

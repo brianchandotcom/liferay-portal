@@ -191,7 +191,7 @@ definition {
 	macro viewExpiredContent {
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",
-			value1 = "${user}: document has expired.");
+			value1 = "A Document has expired.");
 
 		AssertTextEquals(
 			key_contentBody = ${contentBody},

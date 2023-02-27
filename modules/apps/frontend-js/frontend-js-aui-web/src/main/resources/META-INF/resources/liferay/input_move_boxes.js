@@ -103,6 +103,14 @@ AUI.add(
 					}
 				},
 
+				_initToggleBtn(button) {
+					const instance = this;
+
+					if (button) {
+						instance._toggleBtnState(button, true);
+					}
+				},
+
 				_moveItem(from, to, sort) {
 					const instance = this;
 
@@ -278,8 +286,12 @@ AUI.add(
 					}
 
 					instance._toggleReorderToolbars();
-				},
 
+					instance._initToggleBtn(contentBox.one('.reorder-down'));
+					instance._initToggleBtn(contentBox.one('.reorder-up'));
+					instance._initToggleBtn(contentBox.one('.move-left'));
+					instance._initToggleBtn(contentBox.one('.move-right'));
+				},
 				_toggleBtnMove(event) {
 					const instance = this;
 
@@ -306,7 +318,6 @@ AUI.add(
 							destinationBoxMaxItems
 					);
 				},
-
 				_toggleBtnSort(changedBox) {
 					const instance = this;
 
@@ -320,22 +331,35 @@ AUI.add(
 
 					if (changedBox && sortBtnDown && sortBtnUp) {
 						const length = changedBox.get('length');
-						const selectedIndex = changedBox.get('selectedIndex');
+
+						const selectedIndexes = changedBox
+							.get('options')
+							.getDOMNodes()
+							.filter((option) => option.selected)
+
+							.map((option) => option.index);
 
 						let btnDisabledDown = false;
 						let btnDisabledUp = false;
 
 						if (changedBox === leftBox) {
-							if (selectedIndex === length - 1) {
-								btnDisabledDown = true;
-							}
-							else if (selectedIndex === 0) {
-								btnDisabledUp = true;
-							}
-							else if (selectedIndex === -1) {
-								btnDisabledDown = true;
-								btnDisabledUp = true;
-							}
+							const noItems = !length;
+
+							const noItemsSelected = !selectedIndexes.length;
+
+							const firstItemSelected = selectedIndexes.includes(
+								0
+							);
+
+							const lastItemSelected = selectedIndexes.includes(
+								length - 1
+							);
+
+							btnDisabledUp =
+								firstItemSelected || noItemsSelected || noItems;
+
+							btnDisabledDown =
+								lastItemSelected || noItemsSelected || noItems;
 						}
 						else if (changedBox === rightBox) {
 							btnDisabledDown = true;

@@ -21,7 +21,7 @@ type ActionDetailProps = {
 };
 
 const ActionDetail = ({children}: ActionDetailProps) => (
-	<div className="action-detail-container bg-neutral-0 d-flex flex-column justify-content-between rounded">
+	<div className="action-detail-container bg-neutral-0 d-flex flex-column justify-content-between rounded w-100">
 		{children}
 	</div>
 );

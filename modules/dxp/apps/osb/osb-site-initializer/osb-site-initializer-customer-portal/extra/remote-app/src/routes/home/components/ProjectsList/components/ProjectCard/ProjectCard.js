@@ -59,6 +59,22 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 		);
 	};
 
+	const SupportRegion = () => {
+		if (loading) {
+			return <Skeleton className="mt-1" height={20} width={120} />;
+		}
+
+		return (
+			<div className="text-align-end text-neutral-5 text-paragraph-sm">
+				{i18n.translate('support-region')}
+
+				<span className="font-weight-bold ml-1">
+					{i18n.translate(getKebabCase(koroneikiAccount.region))}
+				</span>
+			</div>
+		);
+	};
+
 	return (
 		<ClayCard
 			className={classNames(
@@ -123,26 +139,7 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 
 						{showSLAStatus && <SLAStatusDate />}
 
-						{compressed &&
-							(loading ? (
-								<Skeleton
-									className="mt-1"
-									height={20}
-									width={120}
-								/>
-							) : (
-								<div className="text-align-end text-neutral-5 text-paragraph-sm">
-									{i18n.translate('support-region')}
-
-									<span className="font-weight-bold ml-1">
-										{i18n.translate(
-											getKebabCase(
-												koroneikiAccount.region
-											)
-										)}
-									</span>
-								</div>
-							))}
+						{compressed && <SupportRegion />}
 					</div>
 				</ClayCard.Row>
 			</ClayCard.Body>

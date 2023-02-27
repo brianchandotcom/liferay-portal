@@ -498,7 +498,7 @@ definition {
 				text = "Resource Not Found");
 
 			ContentPages.viewFragmentText(
-				fragmentName = "paragragh",
+				fragmentName = "paragraph",
 				id = "element-text",
 				text = "Status Code: 404");
 		}

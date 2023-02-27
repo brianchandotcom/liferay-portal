@@ -14,6 +14,8 @@
 
 package com.liferay.headless.commerce.admin.channel.client.json;
 
+import com.liferay.petra.function.transform.TransformUtil;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -123,13 +124,15 @@ public abstract class BaseJSONParser<T> {
 
 		Object[] objects = (Object[])_readValue();
 
-		return Stream.of(
-			objects
-		).map(
-			object -> parseToDTO((String)object)
-		).toArray(
-			size -> createDTOArray(size)
-		);
+		T[] dtos = createDTOArray(objects.length);
+
+		int index = 0;
+
+		for (Object obj : objects) {
+			dtos[index++] = parseToDTO((String)obj);
+		}
+
+		return dtos;
 	}
 
 	public Map<String, Object> parseToMap(String json) {
@@ -202,33 +205,19 @@ public abstract class BaseJSONParser<T> {
 	}
 
 	protected Date[] toDates(Object[] objects) {
-		return Stream.of(
-			objects
-		).map(
-			object -> toDate((String)object)
-		).toArray(
-			size -> new Date[size]
-		);
+		return TransformUtil.transform(
+			objects, object -> toDate((String)object), Date.class);
 	}
 
 	protected Integer[] toIntegers(Object[] objects) {
-		return Stream.of(
-			objects
-		).map(
-			object -> Integer.valueOf(object.toString())
-		).toArray(
-			size -> new Integer[size]
-		);
+		return TransformUtil.transform(
+			objects, object -> Integer.valueOf(object.toString()),
+			Integer.class);
 	}
 
 	protected Long[] toLongs(Object[] objects) {
-		return Stream.of(
-			objects
-		).map(
-			object -> Long.valueOf(object.toString())
-		).toArray(
-			size -> new Long[size]
-		);
+		return TransformUtil.transform(
+			objects, object -> Long.valueOf(object.toString()), Long.class);
 	}
 
 	protected String toString(Date date) {
@@ -236,13 +225,8 @@ public abstract class BaseJSONParser<T> {
 	}
 
 	protected String[] toStrings(Object[] objects) {
-		return Stream.of(
-			objects
-		).map(
-			String.class::cast
-		).toArray(
-			size -> new String[size]
-		);
+		return TransformUtil.transform(
+			objects, String.class::cast, String.class);
 	}
 
 	private void _assertLastChar(char c) {

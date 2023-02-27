@@ -17,13 +17,13 @@ package com.liferay.object.admin.rest.client.serdes.v1_0;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayoutBox;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.admin.rest.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -215,14 +215,11 @@ public class ObjectLayoutTabSerDes {
 			else if (Objects.equals(jsonParserFieldName, "objectLayoutBoxes")) {
 				if (jsonParserFieldValue != null) {
 					objectLayoutTab.setObjectLayoutBoxes(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ObjectLayoutBoxSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ObjectLayoutBox[size]
-						));
+								String.class.cast(object)),
+							ObjectLayoutBox.class));
 				}
 			}
 			else if (Objects.equals(

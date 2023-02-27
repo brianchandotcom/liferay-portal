@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.client.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.client.dto.v1_0.Rescore;
@@ -24,7 +25,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -215,13 +215,11 @@ public class QueryEntrySerDes {
 			if (Objects.equals(jsonParserFieldName, "clauses")) {
 				if (jsonParserFieldValue != null) {
 					queryEntry.setClauses(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ClauseSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Clause[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ClauseSerDes.toDTO(
+								String.class.cast(object)),
+							Clause.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "condition")) {
@@ -238,25 +236,21 @@ public class QueryEntrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "postFilterClauses")) {
 				if (jsonParserFieldValue != null) {
 					queryEntry.setPostFilterClauses(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ClauseSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Clause[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ClauseSerDes.toDTO(
+								String.class.cast(object)),
+							Clause.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "rescores")) {
 				if (jsonParserFieldValue != null) {
 					queryEntry.setRescores(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> RescoreSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Rescore[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> RescoreSerDes.toDTO(
+								String.class.cast(object)),
+							Rescore.class));
 				}
 			}
 		}

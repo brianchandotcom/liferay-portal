@@ -18,6 +18,7 @@ import com.liferay.headless.admin.workflow.client.dto.v1_0.Node;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,7 +28,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -446,13 +446,11 @@ public class WorkflowDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "nodes")) {
 				if (jsonParserFieldValue != null) {
 					workflowDefinition.setNodes(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> NodeSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Node[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> NodeSerDes.toDTO(
+								String.class.cast(object)),
+							Node.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
@@ -470,13 +468,11 @@ public class WorkflowDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "transitions")) {
 				if (jsonParserFieldValue != null) {
 					workflowDefinition.setTransitions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> TransitionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Transition[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> TransitionSerDes.toDTO(
+								String.class.cast(object)),
+							Transition.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "version")) {

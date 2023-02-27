@@ -18,6 +18,7 @@ import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutPage;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataRule;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,7 +28,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -423,25 +423,21 @@ public class DataLayoutSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dataLayoutPages")) {
 				if (jsonParserFieldValue != null) {
 					dataLayout.setDataLayoutPages(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataLayoutPageSerDes.toDTO((String)object)
-						).toArray(
-							size -> new DataLayoutPage[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> DataLayoutPageSerDes.toDTO(
+								String.class.cast(object)),
+							DataLayoutPage.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dataRules")) {
 				if (jsonParserFieldValue != null) {
 					dataLayout.setDataRules(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataRuleSerDes.toDTO((String)object)
-						).toArray(
-							size -> new DataRule[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> DataRuleSerDes.toDTO(
+								String.class.cast(object)),
+							DataRule.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

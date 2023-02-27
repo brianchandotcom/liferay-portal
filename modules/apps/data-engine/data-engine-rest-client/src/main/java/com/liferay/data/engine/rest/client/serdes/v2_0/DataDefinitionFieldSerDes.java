@@ -16,13 +16,13 @@ package com.liferay.data.engine.rest.client.serdes.v2_0;
 
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -484,14 +484,11 @@ public class DataDefinitionFieldSerDes {
 
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setNestedDataDefinitionFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> DataDefinitionFieldSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new DataDefinitionField[size]
-						));
+								String.class.cast(object)),
+							DataDefinitionField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "readOnly")) {

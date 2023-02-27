@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.Hit;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SearchHits;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
@@ -23,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -158,13 +158,11 @@ public class SearchHitsSerDes {
 			if (Objects.equals(jsonParserFieldName, "hits")) {
 				if (jsonParserFieldValue != null) {
 					searchHits.setHits(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> HitSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Hit[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> HitSerDes.toDTO(
+								String.class.cast(object)),
+							Hit.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "maxScore")) {

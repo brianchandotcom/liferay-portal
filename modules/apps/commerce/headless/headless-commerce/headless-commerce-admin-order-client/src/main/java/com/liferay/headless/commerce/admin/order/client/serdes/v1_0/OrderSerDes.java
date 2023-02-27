@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.admin.order.client.serdes.v1_0;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.math.BigDecimal;
 
@@ -28,7 +29,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -2325,13 +2325,11 @@ public class OrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "orderItems")) {
 				if (jsonParserFieldValue != null) {
 					order.setOrderItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> OrderItemSerDes.toDTO((String)object)
-						).toArray(
-							size -> new OrderItem[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> OrderItemSerDes.toDTO(
+								String.class.cast(object)),
+							OrderItem.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "orderStatus")) {

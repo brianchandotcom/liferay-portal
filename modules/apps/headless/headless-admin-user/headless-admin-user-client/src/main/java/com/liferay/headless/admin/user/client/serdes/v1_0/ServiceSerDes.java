@@ -17,13 +17,13 @@ package com.liferay.headless.admin.user.client.serdes.v1_0;
 import com.liferay.headless.admin.user.client.dto.v1_0.HoursAvailable;
 import com.liferay.headless.admin.user.client.dto.v1_0.Service;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -145,13 +145,11 @@ public class ServiceSerDes {
 			if (Objects.equals(jsonParserFieldName, "hoursAvailable")) {
 				if (jsonParserFieldValue != null) {
 					service.setHoursAvailable(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> HoursAvailableSerDes.toDTO((String)object)
-						).toArray(
-							size -> new HoursAvailable[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> HoursAvailableSerDes.toDTO(
+								String.class.cast(object)),
+							HoursAvailable.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "serviceType")) {

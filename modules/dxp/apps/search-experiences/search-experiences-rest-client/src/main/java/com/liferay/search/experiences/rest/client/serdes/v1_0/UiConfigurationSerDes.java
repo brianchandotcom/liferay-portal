@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.FieldSet;
 import com.liferay.search.experiences.rest.client.dto.v1_0.UiConfiguration;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
@@ -23,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -128,13 +128,11 @@ public class UiConfigurationSerDes {
 			if (Objects.equals(jsonParserFieldName, "fieldSets")) {
 				if (jsonParserFieldValue != null) {
 					uiConfiguration.setFieldSets(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FieldSetSerDes.toDTO((String)object)
-						).toArray(
-							size -> new FieldSet[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> FieldSetSerDes.toDTO(
+								String.class.cast(object)),
+							FieldSet.class));
 				}
 			}
 		}

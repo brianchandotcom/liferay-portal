@@ -23,6 +23,7 @@ import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardMessageSerDes;
 import com.liferay.headless.delivery.client.serdes.v1_0.RatingSerDes;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,8 +31,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -1335,12 +1334,8 @@ public interface MessageBoardMessageResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					permissions
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
+				TransformUtil.transformToList(
+					permissions, value -> String.valueOf(value)
 				).toString(),
 				"application/json");
 
@@ -2628,12 +2623,8 @@ public interface MessageBoardMessageResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					permissions
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
+				TransformUtil.transformToList(
+					permissions, value -> String.valueOf(value)
 				).toString(),
 				"application/json");
 

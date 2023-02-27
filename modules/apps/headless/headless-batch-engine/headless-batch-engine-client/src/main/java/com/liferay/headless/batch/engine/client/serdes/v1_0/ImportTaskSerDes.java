@@ -17,6 +17,7 @@ package com.liferay.headless.batch.engine.client.serdes.v1_0;
 import com.liferay.headless.batch.engine.client.dto.v1_0.FailedItem;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -423,13 +423,11 @@ public class ImportTaskSerDes {
 			else if (Objects.equals(jsonParserFieldName, "failedItems")) {
 				if (jsonParserFieldValue != null) {
 					importTask.setFailedItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FailedItemSerDes.toDTO((String)object)
-						).toArray(
-							size -> new FailedItem[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> FailedItemSerDes.toDTO(
+								String.class.cast(object)),
+							FailedItem.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

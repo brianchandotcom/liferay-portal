@@ -17,13 +17,13 @@ package com.liferay.headless.admin.address.client.serdes.v1_0;
 import com.liferay.headless.admin.address.client.dto.v1_0.Country;
 import com.liferay.headless.admin.address.client.dto.v1_0.Region;
 import com.liferay.headless.admin.address.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -434,13 +434,11 @@ public class CountrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "regions")) {
 				if (jsonParserFieldValue != null) {
 					country.setRegions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> RegionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Region[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> RegionSerDes.toDTO(
+								String.class.cast(object)),
+							Region.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingAllowed")) {

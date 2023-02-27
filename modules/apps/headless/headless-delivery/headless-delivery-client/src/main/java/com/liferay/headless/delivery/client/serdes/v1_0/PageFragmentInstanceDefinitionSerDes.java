@@ -20,13 +20,13 @@ import com.liferay.headless.delivery.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.PageFragmentInstanceDefinition;
 import com.liferay.headless.delivery.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -447,14 +447,11 @@ public class PageFragmentInstanceDefinitionSerDes {
 
 				if (jsonParserFieldValue != null) {
 					pageFragmentInstanceDefinition.setCustomCSSViewports(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> CustomCSSViewportSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new CustomCSSViewport[size]
-						));
+								String.class.cast(object)),
+							CustomCSSViewport.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragment")) {
@@ -473,13 +470,11 @@ public class PageFragmentInstanceDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "fragmentFields")) {
 				if (jsonParserFieldValue != null) {
 					pageFragmentInstanceDefinition.setFragmentFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FragmentFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new FragmentField[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> FragmentFieldSerDes.toDTO(
+								String.class.cast(object)),
+							FragmentField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
@@ -492,14 +487,11 @@ public class PageFragmentInstanceDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "fragmentViewports")) {
 				if (jsonParserFieldValue != null) {
 					pageFragmentInstanceDefinition.setFragmentViewports(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> FragmentViewportSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new FragmentViewport[size]
-						));
+								String.class.cast(object)),
+							FragmentViewport.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "indexed")) {
@@ -517,13 +509,11 @@ public class PageFragmentInstanceDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "widgetInstances")) {
 				if (jsonParserFieldValue != null) {
 					pageFragmentInstanceDefinition.setWidgetInstances(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> WidgetInstanceSerDes.toDTO((String)object)
-						).toArray(
-							size -> new WidgetInstance[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> WidgetInstanceSerDes.toDTO(
+								String.class.cast(object)),
+							WidgetInstance.class));
 				}
 			}
 		}

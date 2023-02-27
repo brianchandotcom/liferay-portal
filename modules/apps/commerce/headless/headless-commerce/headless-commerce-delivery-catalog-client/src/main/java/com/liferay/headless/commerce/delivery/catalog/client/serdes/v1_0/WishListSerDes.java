@@ -17,13 +17,13 @@ package com.liferay.headless.commerce.delivery.catalog.client.serdes.v1_0;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.WishList;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.WishListItem;
 import com.liferay.headless.commerce.delivery.catalog.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -196,13 +196,11 @@ public class WishListSerDes {
 			else if (Objects.equals(jsonParserFieldName, "wishListItems")) {
 				if (jsonParserFieldValue != null) {
 					wishList.setWishListItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> WishListItemSerDes.toDTO((String)object)
-						).toArray(
-							size -> new WishListItem[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> WishListItemSerDes.toDTO(
+								String.class.cast(object)),
+							WishListItem.class));
 				}
 			}
 		}

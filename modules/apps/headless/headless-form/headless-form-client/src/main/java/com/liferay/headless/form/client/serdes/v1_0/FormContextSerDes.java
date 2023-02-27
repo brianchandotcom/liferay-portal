@@ -18,13 +18,13 @@ import com.liferay.headless.form.client.dto.v1_0.FormContext;
 import com.liferay.headless.form.client.dto.v1_0.FormFieldValue;
 import com.liferay.headless.form.client.dto.v1_0.FormPageContext;
 import com.liferay.headless.form.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -214,26 +214,21 @@ public class FormContextSerDes {
 			if (Objects.equals(jsonParserFieldName, "formFieldValues")) {
 				if (jsonParserFieldValue != null) {
 					formContext.setFormFieldValues(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FormFieldValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new FormFieldValue[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> FormFieldValueSerDes.toDTO(
+								String.class.cast(object)),
+							FormFieldValue.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "formPageContexts")) {
 				if (jsonParserFieldValue != null) {
 					formContext.setFormPageContexts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> FormPageContextSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new FormPageContext[size]
-						));
+								String.class.cast(object)),
+							FormPageContext.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "readOnly")) {

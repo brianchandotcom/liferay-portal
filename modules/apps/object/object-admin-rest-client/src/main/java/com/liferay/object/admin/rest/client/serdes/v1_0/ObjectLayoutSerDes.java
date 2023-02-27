@@ -17,6 +17,7 @@ package com.liferay.object.admin.rest.client.serdes.v1_0;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.admin.rest.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -361,14 +361,11 @@ public class ObjectLayoutSerDes {
 			else if (Objects.equals(jsonParserFieldName, "objectLayoutTabs")) {
 				if (jsonParserFieldValue != null) {
 					objectLayout.setObjectLayoutTabs(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ObjectLayoutTabSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ObjectLayoutTab[size]
-						));
+								String.class.cast(object)),
+							ObjectLayoutTab.class));
 				}
 			}
 		}

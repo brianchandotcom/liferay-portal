@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.NodeKey;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.StopNodeKeys;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
@@ -23,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -144,13 +144,11 @@ public class StopNodeKeysSerDes {
 			if (Objects.equals(jsonParserFieldName, "nodeKeys")) {
 				if (jsonParserFieldValue != null) {
 					stopNodeKeys.setNodeKeys(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> NodeKeySerDes.toDTO((String)object)
-						).toArray(
-							size -> new NodeKey[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> NodeKeySerDes.toDTO(
+								String.class.cast(object)),
+							NodeKey.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

@@ -17,13 +17,13 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentType;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -249,13 +249,11 @@ public class DocumentTypeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "contentFields")) {
 				if (jsonParserFieldValue != null) {
 					documentType.setContentFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ContentFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ContentField[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ContentFieldSerDes.toDTO(
+								String.class.cast(object)),
+							ContentField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {

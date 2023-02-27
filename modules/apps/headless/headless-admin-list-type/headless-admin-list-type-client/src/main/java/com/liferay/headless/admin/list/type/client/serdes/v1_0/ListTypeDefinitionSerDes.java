@@ -17,6 +17,7 @@ package com.liferay.headless.admin.list.type.client.serdes.v1_0;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -324,13 +324,11 @@ public class ListTypeDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "listTypeEntries")) {
 				if (jsonParserFieldValue != null) {
 					listTypeDefinition.setListTypeEntries(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ListTypeEntrySerDes.toDTO((String)object)
-						).toArray(
-							size -> new ListTypeEntry[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ListTypeEntrySerDes.toDTO(
+								String.class.cast(object)),
+							ListTypeEntry.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

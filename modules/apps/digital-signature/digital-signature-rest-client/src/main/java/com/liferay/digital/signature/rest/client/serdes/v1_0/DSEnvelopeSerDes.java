@@ -18,6 +18,7 @@ import com.liferay.digital.signature.rest.client.dto.v1_0.DSDocument;
 import com.liferay.digital.signature.rest.client.dto.v1_0.DSEnvelope;
 import com.liferay.digital.signature.rest.client.dto.v1_0.DSRecipient;
 import com.liferay.digital.signature.rest.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,7 +28,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -367,25 +367,21 @@ public class DSEnvelopeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dsDocument")) {
 				if (jsonParserFieldValue != null) {
 					dsEnvelope.setDsDocument(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DSDocumentSerDes.toDTO((String)object)
-						).toArray(
-							size -> new DSDocument[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> DSDocumentSerDes.toDTO(
+								String.class.cast(object)),
+							DSDocument.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dsRecipient")) {
 				if (jsonParserFieldValue != null) {
 					dsEnvelope.setDsRecipient(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DSRecipientSerDes.toDTO((String)object)
-						).toArray(
-							size -> new DSRecipient[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> DSRecipientSerDes.toDTO(
+								String.class.cast(object)),
+							DSRecipient.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "emailBlurb")) {

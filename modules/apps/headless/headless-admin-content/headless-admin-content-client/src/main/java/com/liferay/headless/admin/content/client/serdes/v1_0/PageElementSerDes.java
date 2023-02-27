@@ -16,13 +16,13 @@ package com.liferay.headless.admin.content.client.serdes.v1_0;
 
 import com.liferay.headless.admin.content.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -177,13 +177,11 @@ public class PageElementSerDes {
 			else if (Objects.equals(jsonParserFieldName, "pageElements")) {
 				if (jsonParserFieldValue != null) {
 					pageElement.setPageElements(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PageElementSerDes.toDTO((String)object)
-						).toArray(
-							size -> new PageElement[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> PageElementSerDes.toDTO(
+								String.class.cast(object)),
+							PageElement.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

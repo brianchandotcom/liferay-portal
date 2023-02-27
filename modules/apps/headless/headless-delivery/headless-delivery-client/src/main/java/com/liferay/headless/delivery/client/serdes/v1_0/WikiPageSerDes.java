@@ -19,6 +19,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,7 +29,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -635,13 +635,11 @@ public class WikiPageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					wikiPage.setCustomFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> CustomFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new CustomField[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> CustomFieldSerDes.toDTO(
+								String.class.cast(object)),
+							CustomField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
@@ -713,13 +711,11 @@ public class WikiPageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {
 				if (jsonParserFieldValue != null) {
 					wikiPage.setRelatedContents(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> RelatedContentSerDes.toDTO((String)object)
-						).toArray(
-							size -> new RelatedContent[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> RelatedContentSerDes.toDTO(
+								String.class.cast(object)),
+							RelatedContent.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {
@@ -738,14 +734,11 @@ public class WikiPageSerDes {
 
 				if (jsonParserFieldValue != null) {
 					wikiPage.setTaxonomyCategoryBriefs(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> TaxonomyCategoryBriefSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new TaxonomyCategoryBrief[size]
-						));
+								String.class.cast(object)),
+							TaxonomyCategoryBrief.class));
 				}
 			}
 			else if (Objects.equals(

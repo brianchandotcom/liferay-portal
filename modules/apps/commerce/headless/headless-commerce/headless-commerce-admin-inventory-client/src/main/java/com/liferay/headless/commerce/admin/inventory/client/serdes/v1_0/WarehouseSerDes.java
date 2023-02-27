@@ -17,13 +17,13 @@ package com.liferay.headless.commerce.admin.inventory.client.serdes.v1_0;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.WarehouseItem;
 import com.liferay.headless.commerce.admin.inventory.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -524,13 +524,11 @@ public class WarehouseSerDes {
 			else if (Objects.equals(jsonParserFieldName, "warehouseItems")) {
 				if (jsonParserFieldValue != null) {
 					warehouse.setWarehouseItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> WarehouseItemSerDes.toDTO((String)object)
-						).toArray(
-							size -> new WarehouseItem[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> WarehouseItemSerDes.toDTO(
+								String.class.cast(object)),
+							WarehouseItem.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "zip")) {

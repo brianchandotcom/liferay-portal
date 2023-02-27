@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentStructureField;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -402,14 +402,11 @@ public class ContentStructureSerDes {
 
 				if (jsonParserFieldValue != null) {
 					contentStructure.setContentStructureFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ContentStructureFieldSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ContentStructureField[size]
-						));
+								String.class.cast(object)),
+							ContentStructureField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {

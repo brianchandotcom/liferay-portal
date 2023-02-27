@@ -18,6 +18,7 @@ import com.liferay.headless.commerce.admin.pricing.client.dto.v1_0.PriceEntry;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v1_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v1_0.PriceListAccountGroup;
 import com.liferay.headless.commerce.admin.pricing.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,7 +28,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -441,13 +441,11 @@ public class PriceListSerDes {
 			else if (Objects.equals(jsonParserFieldName, "priceEntries")) {
 				if (jsonParserFieldValue != null) {
 					priceList.setPriceEntries(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PriceEntrySerDes.toDTO((String)object)
-						).toArray(
-							size -> new PriceEntry[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> PriceEntrySerDes.toDTO(
+								String.class.cast(object)),
+							PriceEntry.class));
 				}
 			}
 			else if (Objects.equals(
@@ -455,14 +453,11 @@ public class PriceListSerDes {
 
 				if (jsonParserFieldValue != null) {
 					priceList.setPriceListAccountGroups(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> PriceListAccountGroupSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new PriceListAccountGroup[size]
-						));
+								String.class.cast(object)),
+							PriceListAccountGroup.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {

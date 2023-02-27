@@ -17,6 +17,7 @@ package com.liferay.analytics.settings.rest.client.serdes.v1_0;
 import com.liferay.analytics.settings.rest.client.dto.v1_0.Channel;
 import com.liferay.analytics.settings.rest.client.dto.v1_0.DataSource;
 import com.liferay.analytics.settings.rest.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -234,13 +234,11 @@ public class ChannelSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dataSources")) {
 				if (jsonParserFieldValue != null) {
 					channel.setDataSources(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataSourceSerDes.toDTO((String)object)
-						).toArray(
-							size -> new DataSource[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> DataSourceSerDes.toDTO(
+								String.class.cast(object)),
+							DataSource.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

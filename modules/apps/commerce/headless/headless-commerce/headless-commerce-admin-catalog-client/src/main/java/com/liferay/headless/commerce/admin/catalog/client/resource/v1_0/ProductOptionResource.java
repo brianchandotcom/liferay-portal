@@ -20,14 +20,13 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.problem.Problem;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.ProductOptionSerDes;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -633,12 +632,8 @@ public interface ProductOptionResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					productOptions
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
+				TransformUtil.transformToList(
+					productOptions, value -> String.valueOf(value)
 				).toString(),
 				"application/json");
 
@@ -827,12 +822,8 @@ public interface ProductOptionResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					productOptions
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
+				TransformUtil.transformToList(
+					productOptions, value -> String.valueOf(value)
 				).toString(),
 				"application/json");
 

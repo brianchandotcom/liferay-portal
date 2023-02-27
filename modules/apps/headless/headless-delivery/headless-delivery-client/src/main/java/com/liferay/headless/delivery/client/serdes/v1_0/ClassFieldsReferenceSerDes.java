@@ -17,13 +17,13 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.ClassFieldsReference;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -158,13 +158,11 @@ public class ClassFieldsReferenceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "fields")) {
 				if (jsonParserFieldValue != null) {
 					classFieldsReference.setFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Field[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> FieldSerDes.toDTO(
+								String.class.cast(object)),
+							Field.class));
 				}
 			}
 		}

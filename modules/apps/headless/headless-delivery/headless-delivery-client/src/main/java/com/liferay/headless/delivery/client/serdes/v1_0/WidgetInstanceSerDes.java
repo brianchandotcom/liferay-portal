@@ -17,13 +17,13 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -214,14 +214,11 @@ public class WidgetInstanceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "widgetPermissions")) {
 				if (jsonParserFieldValue != null) {
 					widgetInstance.setWidgetPermissions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> WidgetPermissionSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new WidgetPermission[size]
-						));
+								String.class.cast(object)),
+							WidgetPermission.class));
 				}
 			}
 		}

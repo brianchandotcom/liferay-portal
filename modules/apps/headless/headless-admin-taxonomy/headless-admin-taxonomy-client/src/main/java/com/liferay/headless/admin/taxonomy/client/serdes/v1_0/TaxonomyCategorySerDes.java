@@ -17,6 +17,7 @@ package com.liferay.headless.admin.taxonomy.client.serdes.v1_0;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategoryProperty;
 import com.liferay.headless.admin.taxonomy.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -636,14 +636,11 @@ public class TaxonomyCategorySerDes {
 
 				if (jsonParserFieldValue != null) {
 					taxonomyCategory.setTaxonomyCategoryProperties(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> TaxonomyCategoryPropertySerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new TaxonomyCategoryProperty[size]
-						));
+								String.class.cast(object)),
+							TaxonomyCategoryProperty.class));
 				}
 			}
 			else if (Objects.equals(

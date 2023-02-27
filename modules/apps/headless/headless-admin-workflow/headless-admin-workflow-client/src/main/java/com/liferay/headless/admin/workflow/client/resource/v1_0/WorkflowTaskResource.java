@@ -25,14 +25,13 @@ import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
 import com.liferay.headless.admin.workflow.client.problem.Problem;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowTaskSerDes;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -751,12 +750,8 @@ public interface WorkflowTaskResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					workflowTaskAssignToUsers
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
+				TransformUtil.transformToList(
+					workflowTaskAssignToUsers, value -> String.valueOf(value)
 				).toString(),
 				"application/json");
 
@@ -1298,12 +1293,8 @@ public interface WorkflowTaskResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					changeTransitions
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
+				TransformUtil.transformToList(
+					changeTransitions, value -> String.valueOf(value)
 				).toString(),
 				"application/json");
 
@@ -1483,12 +1474,8 @@ public interface WorkflowTaskResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					workflowTaskAssignToMes
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
+				TransformUtil.transformToList(
+					workflowTaskAssignToMes, value -> String.valueOf(value)
 				).toString(),
 				"application/json");
 

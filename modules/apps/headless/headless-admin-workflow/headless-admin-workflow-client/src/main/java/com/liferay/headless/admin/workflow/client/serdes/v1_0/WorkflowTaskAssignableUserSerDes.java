@@ -17,13 +17,13 @@ package com.liferay.headless.admin.workflow.client.serdes.v1_0;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.Assignee;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskAssignableUser;
 import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -164,13 +164,11 @@ public class WorkflowTaskAssignableUserSerDes {
 			if (Objects.equals(jsonParserFieldName, "assignableUsers")) {
 				if (jsonParserFieldValue != null) {
 					workflowTaskAssignableUser.setAssignableUsers(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> AssigneeSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Assignee[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> AssigneeSerDes.toDTO(
+								String.class.cast(object)),
+							Assignee.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "workflowTaskId")) {

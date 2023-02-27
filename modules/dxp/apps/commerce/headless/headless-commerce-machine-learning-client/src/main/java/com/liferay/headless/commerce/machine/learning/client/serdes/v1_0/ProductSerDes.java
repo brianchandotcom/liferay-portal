@@ -19,6 +19,7 @@ import com.liferay.headless.commerce.machine.learning.client.dto.v1_0.ProductOpt
 import com.liferay.headless.commerce.machine.learning.client.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.machine.learning.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.machine.learning.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,7 +29,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -723,13 +723,11 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "productOptions")) {
 				if (jsonParserFieldValue != null) {
 					product.setProductOptions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ProductOptionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ProductOption[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ProductOptionSerDes.toDTO(
+								String.class.cast(object)),
+							ProductOption.class));
 				}
 			}
 			else if (Objects.equals(
@@ -737,14 +735,11 @@ public class ProductSerDes {
 
 				if (jsonParserFieldValue != null) {
 					product.setProductSpecifications(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ProductSpecificationSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ProductSpecification[size]
-						));
+								String.class.cast(object)),
+							ProductSpecification.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "productType")) {
@@ -755,13 +750,11 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "skus")) {
 				if (jsonParserFieldValue != null) {
 					product.setSkus(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> SkuSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Sku[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> SkuSerDes.toDTO(
+								String.class.cast(object)),
+							Sku.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

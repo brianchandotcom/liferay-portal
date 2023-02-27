@@ -17,6 +17,7 @@ package com.liferay.headless.form.client.serdes.v1_0;
 import com.liferay.headless.form.client.dto.v1_0.FormFieldValue;
 import com.liferay.headless.form.client.dto.v1_0.FormRecord;
 import com.liferay.headless.form.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -304,13 +304,11 @@ public class FormRecordSerDes {
 			else if (Objects.equals(jsonParserFieldName, "formFieldValues")) {
 				if (jsonParserFieldValue != null) {
 					formRecord.setFormFieldValues(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FormFieldValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new FormFieldValue[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> FormFieldValueSerDes.toDTO(
+								String.class.cast(object)),
+							FormFieldValue.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "formId")) {

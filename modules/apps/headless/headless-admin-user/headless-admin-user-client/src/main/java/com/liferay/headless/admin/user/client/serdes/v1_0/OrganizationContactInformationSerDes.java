@@ -20,13 +20,13 @@ import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -257,49 +257,41 @@ public class OrganizationContactInformationSerDes {
 			if (Objects.equals(jsonParserFieldName, "emailAddresses")) {
 				if (jsonParserFieldValue != null) {
 					organizationContactInformation.setEmailAddresses(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> EmailAddressSerDes.toDTO((String)object)
-						).toArray(
-							size -> new EmailAddress[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> EmailAddressSerDes.toDTO(
+								String.class.cast(object)),
+							EmailAddress.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "postalAddresses")) {
 				if (jsonParserFieldValue != null) {
 					organizationContactInformation.setPostalAddresses(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PostalAddressSerDes.toDTO((String)object)
-						).toArray(
-							size -> new PostalAddress[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> PostalAddressSerDes.toDTO(
+								String.class.cast(object)),
+							PostalAddress.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "telephones")) {
 				if (jsonParserFieldValue != null) {
 					organizationContactInformation.setTelephones(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PhoneSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Phone[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> PhoneSerDes.toDTO(
+								String.class.cast(object)),
+							Phone.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "webUrls")) {
 				if (jsonParserFieldValue != null) {
 					organizationContactInformation.setWebUrls(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> WebUrlSerDes.toDTO((String)object)
-						).toArray(
-							size -> new WebUrl[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> WebUrlSerDes.toDTO(
+								String.class.cast(object)),
+							WebUrl.class));
 				}
 			}
 		}

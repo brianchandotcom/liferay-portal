@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.Condition;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
@@ -22,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -253,25 +253,21 @@ public class ConditionSerDes {
 			if (Objects.equals(jsonParserFieldName, "allConditions")) {
 				if (jsonParserFieldValue != null) {
 					condition.setAllConditions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ConditionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Condition[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ConditionSerDes.toDTO(
+								String.class.cast(object)),
+							Condition.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "anyConditions")) {
 				if (jsonParserFieldValue != null) {
 					condition.setAnyConditions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ConditionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Condition[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ConditionSerDes.toDTO(
+								String.class.cast(object)),
+							Condition.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "contains")) {

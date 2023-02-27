@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.rest.client.resource.v1_0;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.search.rest.client.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.rest.client.dto.v1_0.SuggestionsContributorResults;
 import com.liferay.portal.search.rest.client.http.HttpInvoker;
@@ -26,8 +27,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -199,12 +198,9 @@ public interface SuggestionResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					suggestionsContributorConfigurations
-				).map(
+				TransformUtil.transformToList(
+					suggestionsContributorConfigurations,
 					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
 				).toString(),
 				"application/json");
 

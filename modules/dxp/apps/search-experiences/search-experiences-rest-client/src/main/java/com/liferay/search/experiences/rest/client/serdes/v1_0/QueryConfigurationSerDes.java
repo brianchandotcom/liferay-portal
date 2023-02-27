@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.client.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
@@ -23,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -159,13 +159,11 @@ public class QueryConfigurationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "queryEntries")) {
 				if (jsonParserFieldValue != null) {
 					queryConfiguration.setQueryEntries(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> QueryEntrySerDes.toDTO((String)object)
-						).toArray(
-							size -> new QueryEntry[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> QueryEntrySerDes.toDTO(
+								String.class.cast(object)),
+							QueryEntry.class));
 				}
 			}
 		}

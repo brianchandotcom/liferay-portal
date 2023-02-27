@@ -18,13 +18,13 @@ import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionFieldLink;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataListView;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -200,25 +200,21 @@ public class DataDefinitionFieldLinkSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dataLayouts")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionFieldLink.setDataLayouts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataLayoutSerDes.toDTO((String)object)
-						).toArray(
-							size -> new DataLayout[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> DataLayoutSerDes.toDTO(
+								String.class.cast(object)),
+							DataLayout.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dataListViews")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionFieldLink.setDataListViews(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataListViewSerDes.toDTO((String)object)
-						).toArray(
-							size -> new DataListView[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> DataListViewSerDes.toDTO(
+								String.class.cast(object)),
+							DataListView.class));
 				}
 			}
 		}

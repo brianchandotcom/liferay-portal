@@ -19,6 +19,7 @@ import com.liferay.headless.commerce.admin.account.client.dto.v1_0.AccountAddres
 import com.liferay.headless.commerce.admin.account.client.dto.v1_0.AccountMember;
 import com.liferay.headless.commerce.admin.account.client.dto.v1_0.AccountOrganization;
 import com.liferay.headless.commerce.admin.account.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,7 +29,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -498,25 +498,21 @@ public class AccountSerDes {
 			if (Objects.equals(jsonParserFieldName, "accountAddresses")) {
 				if (jsonParserFieldValue != null) {
 					account.setAccountAddresses(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> AccountAddressSerDes.toDTO((String)object)
-						).toArray(
-							size -> new AccountAddress[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> AccountAddressSerDes.toDTO(
+								String.class.cast(object)),
+							AccountAddress.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "accountMembers")) {
 				if (jsonParserFieldValue != null) {
 					account.setAccountMembers(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> AccountMemberSerDes.toDTO((String)object)
-						).toArray(
-							size -> new AccountMember[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> AccountMemberSerDes.toDTO(
+								String.class.cast(object)),
+							AccountMember.class));
 				}
 			}
 			else if (Objects.equals(
@@ -524,14 +520,11 @@ public class AccountSerDes {
 
 				if (jsonParserFieldValue != null) {
 					account.setAccountOrganizations(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> AccountOrganizationSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new AccountOrganization[size]
-						));
+								String.class.cast(object)),
+							AccountOrganization.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "active")) {

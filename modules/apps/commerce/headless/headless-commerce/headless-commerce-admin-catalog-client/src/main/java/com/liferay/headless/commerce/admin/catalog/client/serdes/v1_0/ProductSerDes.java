@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecif
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.RelatedProduct;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -37,7 +38,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -1209,13 +1209,11 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "attachments")) {
 				if (jsonParserFieldValue != null) {
 					product.setAttachments(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> AttachmentSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Attachment[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> AttachmentSerDes.toDTO(
+								String.class.cast(object)),
+							Attachment.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "catalog")) {
@@ -1233,13 +1231,11 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "categories")) {
 				if (jsonParserFieldValue != null) {
 					product.setCategories(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> CategorySerDes.toDTO((String)object)
-						).toArray(
-							size -> new Category[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> CategorySerDes.toDTO(
+								String.class.cast(object)),
+							Category.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "configuration")) {
@@ -1257,13 +1253,11 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					product.setCustomFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> CustomFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new CustomField[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> CustomFieldSerDes.toDTO(
+								String.class.cast(object)),
+							CustomField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "defaultSku")) {
@@ -1317,37 +1311,31 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "images")) {
 				if (jsonParserFieldValue != null) {
 					product.setImages(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> AttachmentSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Attachment[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> AttachmentSerDes.toDTO(
+								String.class.cast(object)),
+							Attachment.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "linkedProducts")) {
 				if (jsonParserFieldValue != null) {
 					product.setLinkedProducts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LinkedProductSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LinkedProduct[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> LinkedProductSerDes.toDTO(
+								String.class.cast(object)),
+							LinkedProduct.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "mappedProducts")) {
 				if (jsonParserFieldValue != null) {
 					product.setMappedProducts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> MappedProductSerDes.toDTO((String)object)
-						).toArray(
-							size -> new MappedProduct[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> MappedProductSerDes.toDTO(
+								String.class.cast(object)),
+							MappedProduct.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "metaDescription")) {
@@ -1388,13 +1376,11 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "pins")) {
 				if (jsonParserFieldValue != null) {
 					product.setPins(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PinSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Pin[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> PinSerDes.toDTO(
+								String.class.cast(object)),
+							Pin.class));
 				}
 			}
 			else if (Objects.equals(
@@ -1410,14 +1396,11 @@ public class ProductSerDes {
 
 				if (jsonParserFieldValue != null) {
 					product.setProductAccountGroups(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ProductAccountGroupSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ProductAccountGroup[size]
-						));
+								String.class.cast(object)),
+							ProductAccountGroup.class));
 				}
 			}
 			else if (Objects.equals(
@@ -1431,13 +1414,11 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "productChannels")) {
 				if (jsonParserFieldValue != null) {
 					product.setProductChannels(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ProductChannelSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ProductChannel[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ProductChannelSerDes.toDTO(
+								String.class.cast(object)),
+							ProductChannel.class));
 				}
 			}
 			else if (Objects.equals(
@@ -1458,13 +1439,11 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "productOptions")) {
 				if (jsonParserFieldValue != null) {
 					product.setProductOptions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ProductOptionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ProductOption[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ProductOptionSerDes.toDTO(
+								String.class.cast(object)),
+							ProductOption.class));
 				}
 			}
 			else if (Objects.equals(
@@ -1472,14 +1451,11 @@ public class ProductSerDes {
 
 				if (jsonParserFieldValue != null) {
 					product.setProductSpecifications(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ProductSpecificationSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ProductSpecification[size]
-						));
+								String.class.cast(object)),
+							ProductSpecification.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "productStatus")) {
@@ -1501,13 +1477,11 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "relatedProducts")) {
 				if (jsonParserFieldValue != null) {
 					product.setRelatedProducts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> RelatedProductSerDes.toDTO((String)object)
-						).toArray(
-							size -> new RelatedProduct[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> RelatedProductSerDes.toDTO(
+								String.class.cast(object)),
+							RelatedProduct.class));
 				}
 			}
 			else if (Objects.equals(
@@ -1533,13 +1507,11 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "skus")) {
 				if (jsonParserFieldValue != null) {
 					product.setSkus(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> SkuSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Sku[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> SkuSerDes.toDTO(
+								String.class.cast(object)),
+							Sku.class));
 				}
 			}
 			else if (Objects.equals(

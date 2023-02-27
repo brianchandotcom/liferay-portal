@@ -19,6 +19,7 @@ import com.liferay.object.admin.rest.client.dto.v1_0.ObjectViewColumn;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectViewFilterColumn;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectViewSortColumn;
 import com.liferay.object.admin.rest.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,7 +29,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -418,14 +418,11 @@ public class ObjectViewSerDes {
 			else if (Objects.equals(jsonParserFieldName, "objectViewColumns")) {
 				if (jsonParserFieldValue != null) {
 					objectView.setObjectViewColumns(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ObjectViewColumnSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ObjectViewColumn[size]
-						));
+								String.class.cast(object)),
+							ObjectViewColumn.class));
 				}
 			}
 			else if (Objects.equals(
@@ -433,14 +430,11 @@ public class ObjectViewSerDes {
 
 				if (jsonParserFieldValue != null) {
 					objectView.setObjectViewFilterColumns(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ObjectViewFilterColumnSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ObjectViewFilterColumn[size]
-						));
+								String.class.cast(object)),
+							ObjectViewFilterColumn.class));
 				}
 			}
 			else if (Objects.equals(
@@ -448,14 +442,11 @@ public class ObjectViewSerDes {
 
 				if (jsonParserFieldValue != null) {
 					objectView.setObjectViewSortColumns(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ObjectViewSortColumnSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ObjectViewSortColumn[size]
-						));
+								String.class.cast(object)),
+							ObjectViewSortColumn.class));
 				}
 			}
 		}

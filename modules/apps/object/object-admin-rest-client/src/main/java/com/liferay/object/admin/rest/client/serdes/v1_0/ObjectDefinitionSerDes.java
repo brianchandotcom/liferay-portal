@@ -22,6 +22,7 @@ import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,7 +32,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -946,37 +946,31 @@ public class ObjectDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "objectActions")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setObjectActions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ObjectActionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ObjectAction[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ObjectActionSerDes.toDTO(
+								String.class.cast(object)),
+							ObjectAction.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "objectFields")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setObjectFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ObjectFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ObjectField[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ObjectFieldSerDes.toDTO(
+								String.class.cast(object)),
+							ObjectField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "objectLayouts")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setObjectLayouts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ObjectLayoutSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ObjectLayout[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ObjectLayoutSerDes.toDTO(
+								String.class.cast(object)),
+							ObjectLayout.class));
 				}
 			}
 			else if (Objects.equals(
@@ -984,14 +978,11 @@ public class ObjectDefinitionSerDes {
 
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setObjectRelationships(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ObjectRelationshipSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ObjectRelationship[size]
-						));
+								String.class.cast(object)),
+							ObjectRelationship.class));
 				}
 			}
 			else if (Objects.equals(
@@ -999,26 +990,21 @@ public class ObjectDefinitionSerDes {
 
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setObjectValidationRules(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ObjectValidationRuleSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ObjectValidationRule[size]
-						));
+								String.class.cast(object)),
+							ObjectValidationRule.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "objectViews")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setObjectViews(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ObjectViewSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ObjectView[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ObjectViewSerDes.toDTO(
+								String.class.cast(object)),
+							ObjectView.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "panelAppOrder")) {

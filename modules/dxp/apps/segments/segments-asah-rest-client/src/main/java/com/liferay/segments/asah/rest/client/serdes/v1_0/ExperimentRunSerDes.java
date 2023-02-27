@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.rest.client.serdes.v1_0;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.segments.asah.rest.client.dto.v1_0.ExperimentRun;
 import com.liferay.segments.asah.rest.client.dto.v1_0.ExperimentVariant;
 import com.liferay.segments.asah.rest.client.json.BaseJSONParser;
@@ -23,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -180,14 +180,11 @@ public class ExperimentRunSerDes {
 
 				if (jsonParserFieldValue != null) {
 					experimentRun.setExperimentVariants(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ExperimentVariantSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ExperimentVariant[size]
-						));
+								String.class.cast(object)),
+							ExperimentVariant.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

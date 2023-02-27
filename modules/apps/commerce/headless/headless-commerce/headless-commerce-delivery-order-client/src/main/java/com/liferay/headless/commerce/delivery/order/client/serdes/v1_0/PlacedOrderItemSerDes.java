@@ -17,13 +17,13 @@ package com.liferay.headless.commerce.delivery.order.client.serdes.v1_0;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderItem;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderItemShipment;
 import com.liferay.headless.commerce.delivery.order.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -587,27 +587,21 @@ public class PlacedOrderItemSerDes {
 
 				if (jsonParserFieldValue != null) {
 					placedOrderItem.setPlacedOrderItemShipments(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> PlacedOrderItemShipmentSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new PlacedOrderItemShipment[size]
-						));
+								String.class.cast(object)),
+							PlacedOrderItemShipment.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "placedOrderItems")) {
 				if (jsonParserFieldValue != null) {
 					placedOrderItem.setPlacedOrderItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> PlacedOrderItemSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new PlacedOrderItem[size]
-						));
+								String.class.cast(object)),
+							PlacedOrderItem.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "price")) {

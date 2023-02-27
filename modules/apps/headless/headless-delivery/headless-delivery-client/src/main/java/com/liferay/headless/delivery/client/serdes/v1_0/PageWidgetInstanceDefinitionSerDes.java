@@ -18,13 +18,13 @@ import com.liferay.headless.delivery.client.dto.v1_0.CustomCSSViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -327,14 +327,11 @@ public class PageWidgetInstanceDefinitionSerDes {
 
 				if (jsonParserFieldValue != null) {
 					pageWidgetInstanceDefinition.setCustomCSSViewports(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> CustomCSSViewportSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new CustomCSSViewport[size]
-						));
+								String.class.cast(object)),
+							CustomCSSViewport.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
@@ -347,14 +344,11 @@ public class PageWidgetInstanceDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "fragmentViewports")) {
 				if (jsonParserFieldValue != null) {
 					pageWidgetInstanceDefinition.setFragmentViewports(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> FragmentViewportSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new FragmentViewport[size]
-						));
+								String.class.cast(object)),
+							FragmentViewport.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

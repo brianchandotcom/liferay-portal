@@ -17,13 +17,13 @@ package com.liferay.data.engine.rest.client.serdes.v2_0;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutColumn;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutRow;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -132,14 +132,11 @@ public class DataLayoutRowSerDes {
 			if (Objects.equals(jsonParserFieldName, "dataLayoutColumns")) {
 				if (jsonParserFieldValue != null) {
 					dataLayoutRow.setDataLayoutColumns(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> DataLayoutColumnSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new DataLayoutColumn[size]
-						));
+								String.class.cast(object)),
+							DataLayoutColumn.class));
 				}
 			}
 		}

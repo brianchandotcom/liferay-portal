@@ -20,14 +20,13 @@ import com.liferay.analytics.settings.rest.client.pagination.Page;
 import com.liferay.analytics.settings.rest.client.pagination.Pagination;
 import com.liferay.analytics.settings.rest.client.problem.Problem;
 import com.liferay.analytics.settings.rest.client.serdes.v1_0.FieldSerDes;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -318,12 +317,8 @@ public interface FieldResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					fields
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
+				TransformUtil.transformToList(
+					fields, value -> String.valueOf(value)
 				).toString(),
 				"application/json");
 
@@ -501,12 +496,8 @@ public interface FieldResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					fields
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
+				TransformUtil.transformToList(
+					fields, value -> String.valueOf(value)
 				).toString(),
 				"application/json");
 
@@ -684,12 +675,8 @@ public interface FieldResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					fields
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
+				TransformUtil.transformToList(
+					fields, value -> String.valueOf(value)
 				).toString(),
 				"application/json");
 
@@ -867,12 +854,8 @@ public interface FieldResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				Stream.of(
-					fields
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
+				TransformUtil.transformToList(
+					fields, value -> String.valueOf(value)
 				).toString(),
 				"application/json");
 

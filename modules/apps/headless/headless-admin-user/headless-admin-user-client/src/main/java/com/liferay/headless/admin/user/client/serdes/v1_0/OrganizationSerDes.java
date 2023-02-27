@@ -20,6 +20,7 @@ import com.liferay.headless.admin.user.client.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.client.dto.v1_0.Service;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,7 +30,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -586,13 +586,11 @@ public class OrganizationSerDes {
 
 				if (jsonParserFieldValue != null) {
 					organization.setChildOrganizations(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> OrganizationSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Organization[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> OrganizationSerDes.toDTO(
+								String.class.cast(object)),
+							Organization.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "comment")) {
@@ -603,13 +601,11 @@ public class OrganizationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					organization.setCustomFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> CustomFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new CustomField[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> CustomFieldSerDes.toDTO(
+								String.class.cast(object)),
+							CustomField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
@@ -684,13 +680,11 @@ public class OrganizationSerDes {
 
 				if (jsonParserFieldValue != null) {
 					organization.setOrganizationAccounts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> AccountSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Account[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> AccountSerDes.toDTO(
+								String.class.cast(object)),
+							Account.class));
 				}
 			}
 			else if (Objects.equals(
@@ -714,25 +708,21 @@ public class OrganizationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "services")) {
 				if (jsonParserFieldValue != null) {
 					organization.setServices(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ServiceSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Service[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ServiceSerDes.toDTO(
+								String.class.cast(object)),
+							Service.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "userAccounts")) {
 				if (jsonParserFieldValue != null) {
 					organization.setUserAccounts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> UserAccountSerDes.toDTO((String)object)
-						).toArray(
-							size -> new UserAccount[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> UserAccountSerDes.toDTO(
+								String.class.cast(object)),
+							UserAccount.class));
 				}
 			}
 		}

@@ -18,6 +18,7 @@ import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.admin.shipment.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,7 +28,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -553,13 +553,11 @@ public class ShipmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					shipment.setCustomFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> CustomFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new CustomField[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> CustomFieldSerDes.toDTO(
+								String.class.cast(object)),
+							CustomField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "expectedDate")) {
@@ -596,13 +594,11 @@ public class ShipmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "shipmentItems")) {
 				if (jsonParserFieldValue != null) {
 					shipment.setShipmentItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ShipmentItemSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ShipmentItem[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ShipmentItemSerDes.toDTO(
+								String.class.cast(object)),
+							ShipmentItem.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingAddress")) {

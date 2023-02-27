@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.search.experiences.rest.client.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
@@ -26,7 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -441,14 +441,11 @@ public class SXPBlueprintSerDes {
 			else if (Objects.equals(jsonParserFieldName, "elementInstances")) {
 				if (jsonParserFieldValue != null) {
 					sxpBlueprint.setElementInstances(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ElementInstanceSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ElementInstance[size]
-						));
+								String.class.cast(object)),
+							ElementInstance.class));
 				}
 			}
 			else if (Objects.equals(

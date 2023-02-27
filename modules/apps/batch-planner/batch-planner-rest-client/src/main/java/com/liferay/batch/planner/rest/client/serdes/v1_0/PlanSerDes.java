@@ -18,13 +18,13 @@ import com.liferay.batch.planner.rest.client.dto.v1_0.Mapping;
 import com.liferay.batch.planner.rest.client.dto.v1_0.Plan;
 import com.liferay.batch.planner.rest.client.dto.v1_0.Policy;
 import com.liferay.batch.planner.rest.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -409,13 +409,11 @@ public class PlanSerDes {
 			else if (Objects.equals(jsonParserFieldName, "mappings")) {
 				if (jsonParserFieldValue != null) {
 					plan.setMappings(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> MappingSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Mapping[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> MappingSerDes.toDTO(
+								String.class.cast(object)),
+							Mapping.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -426,13 +424,11 @@ public class PlanSerDes {
 			else if (Objects.equals(jsonParserFieldName, "policies")) {
 				if (jsonParserFieldValue != null) {
 					plan.setPolicies(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PolicySerDes.toDTO((String)object)
-						).toArray(
-							size -> new Policy[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> PolicySerDes.toDTO(
+								String.class.cast(object)),
+							Policy.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "size")) {

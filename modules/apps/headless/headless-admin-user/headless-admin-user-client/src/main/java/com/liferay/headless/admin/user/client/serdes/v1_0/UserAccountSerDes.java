@@ -22,6 +22,7 @@ import com.liferay.headless.admin.user.client.dto.v1_0.SiteBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroupBrief;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,7 +32,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -796,13 +796,11 @@ public class UserAccountSerDes {
 			if (Objects.equals(jsonParserFieldName, "accountBriefs")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setAccountBriefs(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> AccountBriefSerDes.toDTO((String)object)
-						).toArray(
-							size -> new AccountBrief[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> AccountBriefSerDes.toDTO(
+								String.class.cast(object)),
+							AccountBrief.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "actions")) {
@@ -837,13 +835,11 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setCustomFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> CustomFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new CustomField[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> CustomFieldSerDes.toDTO(
+								String.class.cast(object)),
+							CustomField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dashboardURL")) {
@@ -936,14 +932,11 @@ public class UserAccountSerDes {
 
 				if (jsonParserFieldValue != null) {
 					userAccount.setOrganizationBriefs(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> OrganizationBriefSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new OrganizationBrief[size]
-						));
+								String.class.cast(object)),
+							OrganizationBrief.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "password")) {
@@ -959,25 +952,21 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setRoleBriefs(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> RoleBriefSerDes.toDTO((String)object)
-						).toArray(
-							size -> new RoleBrief[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> RoleBriefSerDes.toDTO(
+								String.class.cast(object)),
+							RoleBrief.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteBriefs")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setSiteBriefs(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> SiteBriefSerDes.toDTO((String)object)
-						).toArray(
-							size -> new SiteBrief[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> SiteBriefSerDes.toDTO(
+								String.class.cast(object)),
+							SiteBrief.class));
 				}
 			}
 			else if (Objects.equals(
@@ -992,13 +981,11 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "userGroupBriefs")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setUserGroupBriefs(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> UserGroupBriefSerDes.toDTO((String)object)
-						).toArray(
-							size -> new UserGroupBrief[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> UserGroupBriefSerDes.toDTO(
+								String.class.cast(object)),
+							UserGroupBrief.class));
 				}
 			}
 		}

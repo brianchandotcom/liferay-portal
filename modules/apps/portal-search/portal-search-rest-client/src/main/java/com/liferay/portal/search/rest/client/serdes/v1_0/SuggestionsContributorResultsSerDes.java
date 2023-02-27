@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.rest.client.serdes.v1_0;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.search.rest.client.dto.v1_0.Suggestion;
 import com.liferay.portal.search.rest.client.dto.v1_0.SuggestionsContributorResults;
 import com.liferay.portal.search.rest.client.json.BaseJSONParser;
@@ -23,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -209,13 +209,11 @@ public class SuggestionsContributorResultsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "suggestions")) {
 				if (jsonParserFieldValue != null) {
 					suggestionsContributorResults.setSuggestions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> SuggestionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Suggestion[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> SuggestionSerDes.toDTO(
+								String.class.cast(object)),
+							Suggestion.class));
 				}
 			}
 		}

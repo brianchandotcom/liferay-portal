@@ -17,13 +17,13 @@ package com.liferay.headless.commerce.admin.channel.client.serdes.v1_0;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.ShippingMethod;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.ShippingOption;
 import com.liferay.headless.commerce.admin.channel.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -275,13 +275,11 @@ public class ShippingMethodSerDes {
 			else if (Objects.equals(jsonParserFieldName, "shippingOptions")) {
 				if (jsonParserFieldValue != null) {
 					shippingMethod.setShippingOptions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ShippingOptionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ShippingOption[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ShippingOptionSerDes.toDTO(
+								String.class.cast(object)),
+							ShippingOption.class));
 				}
 			}
 		}

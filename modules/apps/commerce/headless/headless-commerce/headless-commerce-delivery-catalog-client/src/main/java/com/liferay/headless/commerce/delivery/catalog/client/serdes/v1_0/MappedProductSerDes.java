@@ -18,13 +18,13 @@ import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.MappedProd
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.delivery.catalog.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -612,13 +612,11 @@ public class MappedProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "productOptions")) {
 				if (jsonParserFieldValue != null) {
 					mappedProduct.setProductOptions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ProductOptionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ProductOption[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> ProductOptionSerDes.toDTO(
+								String.class.cast(object)),
+							ProductOption.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "purchasable")) {
@@ -676,13 +674,11 @@ public class MappedProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "skuOptions")) {
 				if (jsonParserFieldValue != null) {
 					mappedProduct.setSkuOptions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> SkuOptionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new SkuOption[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> SkuOptionSerDes.toDTO(
+								String.class.cast(object)),
+							SkuOption.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {

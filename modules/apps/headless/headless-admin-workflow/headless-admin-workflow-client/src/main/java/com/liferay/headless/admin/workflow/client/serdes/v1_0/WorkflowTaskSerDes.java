@@ -17,6 +17,7 @@ package com.liferay.headless.admin.workflow.client.serdes.v1_0;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.Role;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -462,13 +462,11 @@ public class WorkflowTaskSerDes {
 			else if (Objects.equals(jsonParserFieldName, "assigneeRoles")) {
 				if (jsonParserFieldValue != null) {
 					workflowTask.setAssigneeRoles(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> RoleSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Role[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> RoleSerDes.toDTO(
+								String.class.cast(object)),
+							Role.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "completed")) {

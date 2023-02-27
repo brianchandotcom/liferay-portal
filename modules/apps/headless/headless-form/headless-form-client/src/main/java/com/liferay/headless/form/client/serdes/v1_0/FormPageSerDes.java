@@ -17,13 +17,13 @@ package com.liferay.headless.form.client.serdes.v1_0;
 import com.liferay.headless.form.client.dto.v1_0.FormField;
 import com.liferay.headless.form.client.dto.v1_0.FormPage;
 import com.liferay.headless.form.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -217,13 +217,11 @@ public class FormPageSerDes {
 			if (Objects.equals(jsonParserFieldName, "formFields")) {
 				if (jsonParserFieldValue != null) {
 					formPage.setFormFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FormFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new FormField[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> FormFieldSerDes.toDTO(
+								String.class.cast(object)),
+							FormField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "headline")) {

@@ -17,13 +17,13 @@ package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.OptionValue;
 import com.liferay.headless.commerce.admin.catalog.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -395,13 +395,11 @@ public class OptionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "optionValues")) {
 				if (jsonParserFieldValue != null) {
 					option.setOptionValues(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> OptionValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new OptionValue[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> OptionValueSerDes.toDTO(
+								String.class.cast(object)),
+							OptionValue.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {

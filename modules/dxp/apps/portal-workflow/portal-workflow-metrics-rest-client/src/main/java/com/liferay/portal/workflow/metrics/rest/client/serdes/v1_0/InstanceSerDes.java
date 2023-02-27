@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.SLAResult;
@@ -28,7 +29,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -582,13 +582,11 @@ public class InstanceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "assignees")) {
 				if (jsonParserFieldValue != null) {
 					instance.setAssignees(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> AssigneeSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Assignee[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> AssigneeSerDes.toDTO(
+								String.class.cast(object)),
+							Assignee.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "className")) {
@@ -656,13 +654,11 @@ public class InstanceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "slaResults")) {
 				if (jsonParserFieldValue != null) {
 					instance.setSlaResults(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> SLAResultSerDes.toDTO((String)object)
-						).toArray(
-							size -> new SLAResult[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> SLAResultSerDes.toDTO(
+								String.class.cast(object)),
+							SLAResult.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "slaStatus")) {
@@ -681,13 +677,11 @@ public class InstanceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "transitions")) {
 				if (jsonParserFieldValue != null) {
 					instance.setTransitions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> TransitionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Transition[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> TransitionSerDes.toDTO(
+								String.class.cast(object)),
+							Transition.class));
 				}
 			}
 		}

@@ -18,13 +18,13 @@ import com.liferay.headless.delivery.client.dto.v1_0.CollectionViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -517,14 +517,11 @@ public class PageCollectionDefinitionSerDes {
 
 				if (jsonParserFieldValue != null) {
 					pageCollectionDefinition.setCollectionViewports(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> CollectionViewportSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new CollectionViewport[size]
-						));
+								String.class.cast(object)),
+							CollectionViewport.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "displayAllItems")) {
@@ -558,14 +555,11 @@ public class PageCollectionDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "fragmentViewports")) {
 				if (jsonParserFieldValue != null) {
 					pageCollectionDefinition.setFragmentViewports(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> FragmentViewportSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new FragmentViewport[size]
-						));
+								String.class.cast(object)),
+							FragmentViewport.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "layout")) {

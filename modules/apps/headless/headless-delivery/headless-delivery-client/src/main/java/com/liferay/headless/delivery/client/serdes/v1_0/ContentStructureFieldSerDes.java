@@ -17,13 +17,13 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentStructureField;
 import com.liferay.headless.delivery.client.dto.v1_0.Option;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -461,26 +461,21 @@ public class ContentStructureFieldSerDes {
 
 				if (jsonParserFieldValue != null) {
 					contentStructureField.setNestedContentStructureFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
 							object -> ContentStructureFieldSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ContentStructureField[size]
-						));
+								String.class.cast(object)),
+							ContentStructureField.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "options")) {
 				if (jsonParserFieldValue != null) {
 					contentStructureField.setOptions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> OptionSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Option[size]
-						));
+						TransformUtil.transform(
+							(Object[])jsonParserFieldValue,
+							object -> OptionSerDes.toDTO(
+								String.class.cast(object)),
+							Option.class));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "predefinedValue")) {

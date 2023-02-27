@@ -14,6 +14,7 @@
 
 package com.liferay.saml.admin.rest.client.pagination;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.saml.admin.rest.client.aggregation.Facet;
 import com.liferay.saml.admin.rest.client.json.BaseJSONParser;
 
@@ -25,8 +26,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -192,44 +191,16 @@ public class Page<T> {
 			}
 			else if (Objects.equals(jsonParserFieldName, "facets")) {
 				if (jsonParserFieldValue != null) {
-					page.setFacets(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							this::parseToMap
-						).map(
-							facets -> new Facet(
-								(String)facets.get("facetCriteria"),
-								Stream.of(
-									(Object[])facets.get("facetValues")
-								).map(
-									object -> (String)object
-								).map(
-									this::parseToMap
-								).map(
-									facetValues -> new Facet.FacetValue(
-										Integer.valueOf(
-											(String)facetValues.get(
-												"numberOfOccurrences")),
-										(String)facetValues.get("term"))
-								).collect(
-									Collectors.toList()
-								))
-						).collect(
-							Collectors.toList()
-						));
+					page.setFacets(_getFacet(jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "items")) {
 				if (jsonParserFieldValue != null) {
 					page.setItems(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							string -> _toDTOFunction.apply(string)
-						).collect(
-							Collectors.toList()
-						));
+						TransformUtil.transformToList(
+							(Object[])jsonParserFieldValue,
+							object -> _toDTOFunction.apply(
+								String.class.cast(object))));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "lastPage")) {
@@ -258,6 +229,38 @@ public class Page<T> {
 		}
 
 		private final Function<String, T> _toDTOFunction;
+
+		private List<Facet> _getFacet(Object jsonParserFieldValue) {
+			List<Facet> facets = new ArrayList<>();
+
+			for (Object object1 : (Object[])jsonParserFieldValue) {
+				List<Facet.FacetValue> facetValues = new ArrayList<>();
+
+				Map<String, Object> jsonParserFieldValuesMap = this.parseToMap(
+					String.class.cast(object1));
+
+				for (Object object2 :
+						(Object[])jsonParserFieldValuesMap.get("facetValues")) {
+
+					Map<String, Object> facetValueMap = this.parseToMap(
+						(String)object2);
+
+					facetValues.add(
+						new Facet.FacetValue(
+							Integer.valueOf(
+								(String)facetValueMap.get(
+									"numberOfOccurrences")),
+							(String)facetValueMap.get("term")));
+				}
+
+				facets.add(
+					new Facet(
+						(String)jsonParserFieldValuesMap.get("facetCriteria"),
+						facetValues));
+			}
+
+			return facets;
+		}
 
 	}
 

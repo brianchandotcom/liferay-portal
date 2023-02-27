@@ -265,7 +265,7 @@ export default function EditObjectDetails({
 						values={values}
 					/>
 
-					{!values.system && (
+					{values.modifiable && (
 						<AccountRestrictionContainer
 							errors={errors}
 							isApproved={isApproved}

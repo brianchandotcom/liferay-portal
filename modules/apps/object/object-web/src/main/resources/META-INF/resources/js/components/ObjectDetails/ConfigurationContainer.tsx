@@ -40,7 +40,7 @@ export function ConfigurationContainer({
 				<div className="lfr-objects__object-definition-details-configuration">
 					<ClayToggle
 						disabled={
-							values.system ||
+							(!values.modifiable && values.system) ||
 							!hasUpdateObjectDefinitionPermission
 						}
 						label={Liferay.Language.get('show-widget')}
@@ -51,7 +51,7 @@ export function ConfigurationContainer({
 
 					<ClayToggle
 						disabled={
-							values.system ||
+							(!values.modifiable && values.system) ||
 							!hasUpdateObjectDefinitionPermission
 						}
 						label={Liferay.Language.get('enable-categorization')}
@@ -66,7 +66,7 @@ export function ConfigurationContainer({
 
 					<ClayToggle
 						disabled={
-							values.system ||
+							(!values.modifiable && values.system) ||
 							!hasUpdateObjectDefinitionPermission
 						}
 						label={Liferay.Language.get('enable-comments')}
@@ -80,7 +80,9 @@ export function ConfigurationContainer({
 					/>
 
 					<ClayToggle
-						disabled={values.system || isApproved}
+						disabled={
+							(!values.modifiable && values.system) || isApproved
+						}
 						label={Liferay.Language.get('enable-entry-history')}
 						name="enableEntryHistory"
 						onToggle={() =>

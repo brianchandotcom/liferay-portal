@@ -66,7 +66,8 @@ export function ObjectDataContainer({
 
 				<InputLocalized
 					disabled={
-						values.system || !hasUpdateObjectDefinitionPermission
+						(!values.modifiable && values.system) ||
+						!hasUpdateObjectDefinitionPermission
 					}
 					error={errors.label}
 					label={Liferay.Language.get('label')}
@@ -79,7 +80,8 @@ export function ObjectDataContainer({
 
 				<InputLocalized
 					disabled={
-						values.system || !hasUpdateObjectDefinitionPermission
+						(!values.modifiable && values.system) ||
+						!hasUpdateObjectDefinitionPermission
 					}
 					error={errors.pluralLabel}
 					label={Liferay.Language.get('plural-label')}
@@ -100,7 +102,7 @@ export function ObjectDataContainer({
 				<ClayToggle
 					disabled={
 						!isApproved ||
-						values.system ||
+						(!values.modifiable && values.system) ||
 						!hasUpdateObjectDefinitionPermission
 					}
 					label={Liferay.Language.get('active')}

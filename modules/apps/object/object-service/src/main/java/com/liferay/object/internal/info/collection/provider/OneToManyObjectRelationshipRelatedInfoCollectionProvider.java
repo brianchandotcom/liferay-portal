@@ -101,8 +101,7 @@ public class OneToManyObjectRelationshipRelatedInfoCollectionProvider
 		return StringBundler.concat(
 			RelatedInfoItemCollectionProvider.super.getKey(), "_",
 			_objectDefinition.getCompanyId(), "_", _objectDefinition.getName(),
-			"_", _relatedObjectDefinition.getName(), "_",
-			_objectRelationship.getType());
+			"_", _objectRelationship.getName());
 	}
 
 	@Override

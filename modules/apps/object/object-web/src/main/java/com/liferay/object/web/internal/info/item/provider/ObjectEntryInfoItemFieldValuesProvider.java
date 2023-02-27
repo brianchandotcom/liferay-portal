@@ -139,7 +139,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getAttachmentInfoFieldValues(
 		List<ObjectField> objectFields, Map<String, ?> values) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("feature.flag.LPS-176083")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083")) {
 			return Collections.emptyList();
 		}
 

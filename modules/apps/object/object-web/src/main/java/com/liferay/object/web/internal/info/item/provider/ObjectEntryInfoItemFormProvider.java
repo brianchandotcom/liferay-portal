@@ -308,7 +308,7 @@ public class ObjectEntryInfoItemFormProvider
 		_getAttachmentObjectDefinitionInfoFieldSetEntries(
 			long objectDefinitionId) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("feature.flag.LPS-176083")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083")) {
 			return Collections.emptyList();
 		}
 

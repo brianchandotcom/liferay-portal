@@ -28,6 +28,9 @@
 							}
 						}
 					},
+					"fragmentStyle": {
+						"marginBottom": "9"
+					},
 					"indexed": true,
 					"layout": {
 						"widthType": "Fluid"
@@ -125,7 +128,7 @@
 											"en_US": ""
 										},
 										"inputRequired": true,
-										"placeholder": ""
+										"showCharactersCount": false
 									},
 									"fragmentFields": [
 									],
@@ -147,7 +150,7 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_organizationSiteSocialMediaLink",
 										"inputRequired": true,
-										"placeholder": ""
+										"showCharactersCount": false
 									},
 									"fragmentFields": [
 									],
@@ -170,7 +173,8 @@
 							},
 							"fragmentConfig": {
 								"inputFieldId": "ObjectField_smallDescription",
-								"inputRequired": true
+								"inputRequired": true,
+								"showCharactersCount": false
 							},
 							"fragmentFields": [
 							],
@@ -235,7 +239,7 @@
 							"fragmentConfig": {
 								"inputFieldId": "ObjectField_street",
 								"inputRequired": true,
-								"placeholder": ""
+								"showCharactersCount": false
 							},
 							"fragmentFields": [
 							],
@@ -271,7 +275,7 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_city",
 										"inputRequired": true,
-										"placeholder": ""
+										"showCharactersCount": false
 									},
 									"fragmentFields": [
 									],
@@ -291,7 +295,7 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_state",
 										"inputRequired": true,
-										"placeholder": ""
+										"showCharactersCount": false
 									},
 									"fragmentFields": [
 									],
@@ -311,7 +315,7 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_country",
 										"inputRequired": true,
-										"placeholder": ""
+										"showCharactersCount": false
 									},
 									"fragmentFields": [
 									],
@@ -349,7 +353,7 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_zip",
 										"inputRequired": true,
-										"placeholder": ""
+										"showCharactersCount": false
 									},
 									"fragmentFields": [
 									],
@@ -369,7 +373,7 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_taxIdentificationNumber",
 										"inputRequired": true,
-										"placeholder": ""
+										"showCharactersCount": false
 									},
 									"fragmentFields": [
 									],
@@ -438,7 +442,7 @@
 							"fragmentConfig": {
 								"inputFieldId": "ObjectField_contactName",
 								"inputRequired": true,
-								"placeholder": ""
+								"showCharactersCount": false
 							},
 							"fragmentFields": [
 							],
@@ -474,7 +478,7 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_contactEmail",
 										"inputRequired": true,
-										"placeholder": ""
+										"showCharactersCount": false
 									},
 									"fragmentFields": [
 									],
@@ -494,7 +498,7 @@
 									"fragmentConfig": {
 										"inputFieldId": "ObjectField_contactPhone",
 										"inputRequired": true,
-										"placeholder": ""
+										"showCharactersCount": false
 									},
 									"fragmentFields": [
 									],
@@ -561,7 +565,8 @@
 								"key": "INPUTS-text-input"
 							},
 							"fragmentConfig": {
-								"inputFieldId": "ObjectField_bankingInfo"
+								"inputFieldId": "ObjectField_bankingInfo",
+								"showCharactersCount": false
 							},
 							"fragmentFields": [
 							],

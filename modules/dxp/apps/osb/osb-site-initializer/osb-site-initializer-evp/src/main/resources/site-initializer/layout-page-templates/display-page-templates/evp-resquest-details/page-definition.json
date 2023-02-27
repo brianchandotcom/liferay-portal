@@ -4,6 +4,7 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"marginBottom": "8"
 					},
 					"indexed": true,
 					"layout": {
@@ -14,9 +15,6 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentStyle": {
-								"paddingBottom": "3"
-							},
 							"indexed": true,
 							"layout": {
 								"opacity": 100,
@@ -72,14 +70,26 @@
 											}
 										}
 									],
-									"fragmentStyle": {
-									},
 									"indexed": true
 								},
 								"type": "Fragment"
 							}
 						],
 						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-spacer"
+							},
+							"fragmentConfig": {
+								"height": "py-2"
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
 					},
 					{
 						"definition": {
@@ -199,7 +209,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -378,7 +389,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -430,7 +442,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -609,7 +622,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -661,7 +675,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -752,7 +767,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -804,7 +820,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -895,7 +912,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -947,7 +965,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -1126,7 +1145,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -1178,7 +1198,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -1268,7 +1289,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -1320,7 +1342,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -1411,7 +1434,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -1463,7 +1487,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -1642,7 +1667,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -1697,7 +1723,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -1787,7 +1814,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -1839,7 +1867,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h4"
+														"textType": "h4",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{

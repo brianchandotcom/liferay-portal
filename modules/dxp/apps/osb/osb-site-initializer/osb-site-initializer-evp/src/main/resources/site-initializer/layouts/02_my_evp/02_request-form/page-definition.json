@@ -9,6 +9,7 @@
 						}
 					},
 					"fragmentStyle": {
+						"marginBottom": "9",
 						"textColor": "colorNeutral9"
 					},
 					"indexed": true,

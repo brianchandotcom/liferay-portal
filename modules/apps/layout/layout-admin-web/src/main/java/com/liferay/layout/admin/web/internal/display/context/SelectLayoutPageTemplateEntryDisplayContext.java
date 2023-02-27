@@ -148,31 +148,11 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 			"addLayoutURL",
 			_getLayoutPageTemplateEntryAddLayoutURL(layoutPageTemplateEntry)
 		).put(
+			"getLayoutPageTemplateEntryListURL", StringPool.BLANK
+		).put(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
-		).put(
-			"layoutPageTemplateEntryList",
-			() -> {
-				List<Map<String, Object>> layoutPageTemplateEntryList =
-					new ArrayList<>();
-
-				layoutPageTemplateEntryList.add(
-					HashMapBuilder.<String, Object>put(
-						"addLayoutURL",
-						_getLayoutPageTemplateEntryAddLayoutURL(
-							layoutPageTemplateEntry)
-					).put(
-						"layoutPageTemplateEntryId",
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-					).put(
-						"name", layoutPageTemplateEntry.getName()
-					).put(
-						"previewLayoutURL", StringPool.BLANK
-					).build());
-
-				return layoutPageTemplateEntryList;
-			}
 		).put(
 			"subtitle",
 			() -> {

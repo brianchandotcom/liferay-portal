@@ -16,17 +16,19 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import {KeyboardEvent, MouseEvent, default as React, useState} from 'react';
+import {fetch} from 'frontend-js-web';
+import {
+	KeyboardEvent,
+	MouseEvent,
+	default as React,
+	useEffect,
+	useState,
+} from 'react';
 
 interface IProps {
 	addLayoutURL: string;
+	getLayoutPageTemplateEntryListURL: string;
 	layoutPageTemplateEntryId: string;
-	layoutPageTemplateEntryList: Array<{
-		addLayoutURL: string;
-		layoutPageTemplateEntryId: string;
-		name: string;
-		previewLayoutURL: string;
-	}>;
 	portletNamespace: string;
 	subtitle: string;
 	thumbnailURL: string;
@@ -35,8 +37,8 @@ interface IProps {
 
 export default function LayoutPageTemplateEntryCard({
 	addLayoutURL,
+	getLayoutPageTemplateEntryListURL,
 	layoutPageTemplateEntryId,
-	layoutPageTemplateEntryList,
 	subtitle,
 	title,
 }: IProps) {
@@ -124,11 +126,11 @@ export default function LayoutPageTemplateEntryCard({
 
 					<ClayModal.Body className="p-0">
 						<PreviewModalContent
+							getLayoutPageTemplateEntryListURL={
+								getLayoutPageTemplateEntryListURL
+							}
 							initialLayoutPageTemplateEntryId={
 								layoutPageTemplateEntryId
-							}
-							layoutPageTemplateEntryList={
-								layoutPageTemplateEntryList
 							}
 						/>
 					</ClayModal.Body>
@@ -138,30 +140,40 @@ export default function LayoutPageTemplateEntryCard({
 	);
 }
 
+type LayoutPageTemplateEntry = {
+	addLayoutURL: string;
+	layoutPageTemplateEntryId: string;
+	name: string;
+	previewLayoutURL: string;
+};
+
+type LayoutPageTemplateEntryList = LayoutPageTemplateEntry[];
+
 interface IPreviewModalContentProps {
+	getLayoutPageTemplateEntryListURL: string;
 	initialLayoutPageTemplateEntryId: string;
-	layoutPageTemplateEntryList: IProps['layoutPageTemplateEntryList'];
 }
 
 function PreviewModalContent({
+	getLayoutPageTemplateEntryListURL,
 	initialLayoutPageTemplateEntryId,
-	layoutPageTemplateEntryList,
 }: IPreviewModalContentProps) {
-	const [entryIndex, setEntryIndex] = useState(() =>
-		Math.max(
-			0,
-			layoutPageTemplateEntryList.findIndex(
-				(entry) =>
-					entry.layoutPageTemplateEntryId ===
-					initialLayoutPageTemplateEntryId
-			)
-		)
-	);
+	const [entryIndex, setEntryIndex] = useState(0);
+	const [
+		layoutPageTemplateEntryList,
+		setLayoutPageTemplateEntryList,
+	] = useState<LayoutPageTemplateEntryList | null>(null);
 
-	const layoutPageTemplateEntry = layoutPageTemplateEntryList[entryIndex];
+	const layoutPageTemplateEntry = layoutPageTemplateEntryList
+		? layoutPageTemplateEntryList[entryIndex]
+		: null;
 
 	const updateEntryIndex = (direction: 'previous' | 'next') => {
 		setEntryIndex((previousIndex) => {
+			if (!layoutPageTemplateEntryList) {
+				return previousIndex;
+			}
+
 			if (direction === 'previous') {
 				return previousIndex === 0
 					? layoutPageTemplateEntryList.length - 1
@@ -171,6 +183,35 @@ function PreviewModalContent({
 			return previousIndex + (1 % layoutPageTemplateEntryList.length);
 		});
 	};
+
+	useEffect(() => {
+		fetch(getLayoutPageTemplateEntryListURL)
+			.then((response) => response.json())
+			.then(
+				(
+					nextLayoutPageTemplateEntryList: LayoutPageTemplateEntryList
+				) => {
+					setEntryIndex(
+						nextLayoutPageTemplateEntryList.findIndex(
+							(entry) =>
+								entry.layoutPageTemplateEntryId ===
+								initialLayoutPageTemplateEntryId
+						)
+					);
+
+					setLayoutPageTemplateEntryList(
+						nextLayoutPageTemplateEntryList
+					);
+				}
+			)
+			.catch((error) => {
+				console.error(error);
+			});
+	}, [getLayoutPageTemplateEntryListURL, initialLayoutPageTemplateEntryId]);
+
+	if (!layoutPageTemplateEntryList || !layoutPageTemplateEntry) {
+		return null;
+	}
 
 	return (
 		<div className="bg-dark d-flex flex-column h-100 layout-page-template-entry-preview-modal">

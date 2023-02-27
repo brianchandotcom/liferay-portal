@@ -55,13 +55,11 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		String kaleoTaskAssignmentSelectorKey =
-			_getKaleoTaskAssignmentSelectKey(
-				kaleoTaskAssignment.getAssigneeScriptLanguage(),
-				StringUtil.trim(kaleoTaskAssignment.getAssigneeScript()));
-
 		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector =
-			_kaleoTaskAssignmentSelectors.get(kaleoTaskAssignmentSelectorKey);
+			_kaleoTaskAssignmentSelectors.get(
+				_getKaleoTaskAssignmentSelectKey(
+					kaleoTaskAssignment.getAssigneeScriptLanguage(),
+					StringUtil.trim(kaleoTaskAssignment.getAssigneeScript())));
 
 		if (kaleoTaskAssignmentSelector == null) {
 			throw new IllegalArgumentException(

@@ -152,7 +152,8 @@ public class ObjectEntryDisplayContextImpl
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 
-		_readOnly = (Boolean)httpServletRequest.getAttribute("readOnly");
+		_readOnly = (Boolean)httpServletRequest.getAttribute(
+			ObjectWebKeys.READ_ONLY);
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(

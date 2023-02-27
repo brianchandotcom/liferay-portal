@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -56,23 +55,13 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		String assigneeClassName = kaleoTaskAssignment.getAssigneeClassName();
+		String kaleoTaskAssignmentSelectorKey =
+			_getKaleoTaskAssignmentSelectKey(
+				kaleoTaskAssignment.getAssigneeScriptLanguage(),
+				StringUtil.trim(kaleoTaskAssignment.getAssigneeScript()));
 
-		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector = null;
-
-		if (assigneeClassName.equals(ResourceAction.class.getName())) {
-			kaleoTaskAssignmentSelector = _kaleoTaskAssignmentSelectors.get(
-				assigneeClassName);
-		}
-		else {
-			String kaleoTaskAssignmentSelectorKey =
-				_getKaleoTaskAssignmentSelectKey(
-					kaleoTaskAssignment.getAssigneeScriptLanguage(),
-					StringUtil.trim(kaleoTaskAssignment.getAssigneeScript()));
-
-			kaleoTaskAssignmentSelector = _kaleoTaskAssignmentSelectors.get(
-				kaleoTaskAssignmentSelectorKey);
-		}
+		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector =
+			_kaleoTaskAssignmentSelectors.get(kaleoTaskAssignmentSelectorKey);
 
 		if (kaleoTaskAssignmentSelector == null) {
 			throw new IllegalArgumentException(

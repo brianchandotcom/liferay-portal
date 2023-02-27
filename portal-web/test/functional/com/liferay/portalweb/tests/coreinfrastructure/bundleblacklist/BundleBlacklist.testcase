@@ -1,6 +1,7 @@
 @component-name = "portal-bundle-blacklist"
 definition {
 
+	property ci.retries.disabled = "true";
 	property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 	property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"\"]";
 	property portal.release = "true";

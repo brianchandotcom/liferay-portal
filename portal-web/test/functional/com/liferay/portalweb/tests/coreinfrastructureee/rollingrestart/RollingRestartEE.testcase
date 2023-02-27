@@ -2,6 +2,7 @@
 definition {
 
 	property app.server.bundles.size = "1";
+	property ci.retries.disabled = "true";
 	property cluster.enabled = "true";
 	property minimum.slave.ram = "24";
 	property remote.elasticsearch.enabled = "true";

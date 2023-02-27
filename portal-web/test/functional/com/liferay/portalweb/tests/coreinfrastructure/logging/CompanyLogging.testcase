@@ -1,6 +1,7 @@
 @component-name = "portal-logging"
 definition {
 
+	property ci.retries.disabled = "true";
 	property custom.properties = "feature.flag.LPS-170670=true";
 	property database.partition.enabled = "true";
 	property database.types = "mysql";

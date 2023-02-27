@@ -1,6 +1,7 @@
 @component-name = "portal-user-tracker"
 definition {
 
+	property ci.retries.disabled = "true";
 	property custom.properties = "live.users.enabled=true";
 	property portal.release = "true";
 	property portal.upstream = "true";

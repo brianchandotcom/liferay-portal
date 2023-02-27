@@ -1,6 +1,7 @@
 @component-name = "core-infrastructure"
 definition {
 
+	property ci.retries.disabled = "true";
 	property license.required = "true";
 	property portal.release = "false";
 	property portal.upstream = "false";

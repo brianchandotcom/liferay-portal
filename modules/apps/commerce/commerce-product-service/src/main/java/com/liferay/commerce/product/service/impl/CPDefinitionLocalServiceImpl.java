@@ -1793,13 +1793,13 @@ public class CPDefinitionLocalServiceImpl
 			for (Map.Entry<String, List<String>> entry : facetMap.entrySet()) {
 				String fieldName = entry.getKey();
 
+				String[] values = ArrayUtil.toStringArray(entry.getValue());
+
 				if (fieldName.equals("assetCategoryIds")) {
 					searchContext.setAssetCategoryIds(
 						TransformUtil.transformToLongArray(
 							Arrays.asList(values), GetterUtil::getLong));
 				}
-
-				String[] values = ArrayUtil.toStringArray(entry.getValue());
 
 				searchContext.setAttribute(fieldName, StringUtil.merge(values));
 

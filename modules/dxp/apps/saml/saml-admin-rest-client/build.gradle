@@ -1,3 +1,4 @@
 dependencies {
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":dxp:apps:saml:saml-admin-rest-api")
 }

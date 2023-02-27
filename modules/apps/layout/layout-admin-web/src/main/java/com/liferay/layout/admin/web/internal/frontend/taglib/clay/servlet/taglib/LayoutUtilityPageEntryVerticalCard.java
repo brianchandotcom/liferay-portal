@@ -95,7 +95,7 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getIcon() {
-		return "list";
+		return "page";
 	}
 
 	@Override

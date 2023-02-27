@@ -20,6 +20,10 @@ package com.liferay.bookmarks.uad.constants;
  */
 public class BookmarksUADConstants {
 
+	public static final String[] USER_ID_FIELD_NAMES_BOOKMARKS_ENTRY = {
+		"userId", "statusByUserId"
+	};
+
 	public static final String[] USER_ID_FIELD_NAMES_BOOKMARKS_FOLDER = {
 		"userId", "statusByUserId"
 	};

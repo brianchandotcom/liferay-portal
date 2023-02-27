@@ -106,7 +106,7 @@ definition {
 		}
 
 		task ("Then Assert that the modal is open") {
-			RaylifeApApplication.assertModalInfos(description="What type of insurance does this customer need?");
+			RaylifeApApplication.assertModalInfos(description = "What type of insurance does this customer need?");
 		}
 	}
 

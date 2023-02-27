@@ -1,19 +1,21 @@
 definition {
 
 	macro assertModalInfos {
-		if (isSet(option)){
-		AssertElementPresent(
-			key_text = ${option},
-			locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
+		if (isSet(option)) {
+			AssertElementPresent(
+				key_text = ${option},
+				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
 		}
+
 		if (isSet(notOption)) {
 			AssertElementNotPresent(
 				key_text = ${notOption},
 				locator1 = "RaylifeApplicationModal#MODAL_INSURANCE");
 		}
+
 		if (isSet(description)) {
 			AssertElementPresent(
-				key_text = "${description}",
+				key_text = ${description},
 				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
 		}
 	}
@@ -28,7 +30,7 @@ definition {
 		Button.click(button = "Next");
 
 		if (isSet(button)) {
-			Button.click(button = "${button}");
+			Button.click(button = ${button});
 		}
 
 		if (isSet(product)) {

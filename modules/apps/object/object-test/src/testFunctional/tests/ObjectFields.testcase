@@ -2528,7 +2528,7 @@ definition {
 			locator1 = "ObjectField#VIEW_HOME_FOLDER");
 
 		AssertElementPresent(
-			key_card = "tree.png",
+			key_card = "Provided by Liferay",
 			locator1 = "Card#CARD");
 	}
 

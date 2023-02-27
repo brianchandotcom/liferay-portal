@@ -77,24 +77,26 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			Map<Long, Long> resourcePrimKeysMap = new HashMap<>();
 
 			processConcurrently(
-				"select distinct groupId, resourcePrimKey, companyId, " +
-					"articleId from JournalArticle",
+				StringBundler.concat(
+					"select distinct JournalArticle.resourcePrimKey, ",
+					"JournalArticle.groupId, JournalArticle.companyId, ",
+					"JournalArticle.articleId from JournalArticle where not ",
+					"exists (select 1 from LayoutClassedModelUsage where ",
+					"LayoutClassedModelUsage.classPK = ",
+					"JournalArticle.resourcePrimKey and ",
+					"LayoutClassedModelUsage.classNameId = ",
+					journalArticleClassNameId,
+					" and LayoutClassedModelUsage.containerKey is null and ",
+					"LayoutClassedModelUsage.containerType = 0 and ",
+					"LayoutClassedModelUsage.plid = 0 )"),
 				resultSet -> new Object[] {
-					resultSet.getLong("resourcePrimKey"),
 					GetterUtil.getString(resultSet.getString("articleId")),
+					resultSet.getLong("resourcePrimKey"),
 					resultSet.getLong("groupId"), resultSet.getLong("companyId")
 				},
 				values -> {
-					long resourcePrimKey = (Long)values[0];
-
-					if (_layoutClassedModelUsageLocalService.
-							hasDefaultLayoutClassedModelUsage(
-								journalArticleClassNameId, resourcePrimKey)) {
-
-						return;
-					}
-
-					String articleId = (String)values[1];
+					String articleId = (String)values[0];
+					long resourcePrimKey = (Long)values[1];
 					long groupId = (Long)values[2];
 
 					_addJournalContentSearchLayoutClassedModelUsages(

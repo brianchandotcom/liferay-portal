@@ -126,6 +126,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>VIEW_ENTRY_FIELD_BY_INDEX</td>
+		<td>//div[contains(@class,'dnd-td')][${key_index}]//span[contains(text(),'${key_entry}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>VIEW_ENTRY_SELECTED_ON_RELATIONSHIP_FIELD</td>
 		<td>//input[contains(@name,'r_relationship') and contains(@value,'${key_entry}')]</td>
 		<td></td>

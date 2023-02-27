@@ -971,6 +971,82 @@ definition {
 		}
 	}
 
+	@description = "LPS-151676 - Verify that it's possible to edit the relationships of the Custom Object entry (One-to-Many)"
+	@priority = 4
+	test CanEditOneToManyRelationshipOfCustomObjectEntries {
+		task ("Given a Custom Object with a One To Many self relationship and custom title field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 156677",
+				objectName = "CustomObject156677",
+				pluralLabelName = "Custom Objects 156677");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject156677");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject156677",
+				objectName_2 = "CustomObject156677",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			task ("Define custom field as title field on the object") {
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectCustomObject(label = "Custom Object 156677");
+
+				CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+				CreateObject.saveObject();
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156677");
+			}
+		}
+
+		task ("And given entries are added with a relationship for the custom object") {
+			for (var fieldEntry : list "A,B,C") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customObjectField",
+					objectName = "CustomObject156677",
+					value = "Entry ${fieldEntry}");
+			}
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156677");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry B");
+
+			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Entry A");
+
+			CreateObject.assertEntrySelectedOnRelationshipField(entry = "Entry A");
+
+			PortletEntry.save();
+		}
+
+		task ("When a Custom Object entry is edited") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156677");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry B");
+
+			ObjectPortlet.selectRelationshipFieldEntry(
+				entry = "Entry A",
+				newEntry = "Entry C");
+
+			Navigator.gotoBack();
+		}
+
+		task ("Then the Custom Object entry is updated") {
+			AssertElementPresent(
+				key_entry = "Entry C",
+				key_index = 3,
+				locator1 = "CreateObject#VIEW_ENTRY_FIELD_BY_INDEX");
+		}
+	}
+
 	@description = "LPS-155537 - Verify that it's possible to edit a relationship parameter"
 	@priority = 4
 	test CanEditRelationshipParameter {

@@ -134,6 +134,27 @@ public class ClientExtensionEntryRelLocalServiceImpl
 			classNameId, classPK, type);
 	}
 
+	@Override
+	public ClientExtensionEntryRel updateClientExtensionEntryRel(
+			long clientExtensionEntryRelId, long classNameId, long classPK,
+			String cetExternalReferenceCode, String type, String typeSettings)
+		throws PortalException {
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			clientExtensionEntryRelPersistence.findByPrimaryKey(
+				clientExtensionEntryRelId);
+
+		clientExtensionEntryRel.setClassNameId(classNameId);
+		clientExtensionEntryRel.setClassPK(classPK);
+		clientExtensionEntryRel.setCETExternalReferenceCode(
+			cetExternalReferenceCode);
+		clientExtensionEntryRel.setType(type);
+		clientExtensionEntryRel.setTypeSettings(typeSettings);
+
+		return clientExtensionEntryRelPersistence.update(
+			clientExtensionEntryRel);
+	}
+
 	@Reference
 	private UserLocalService _userLocalService;
 

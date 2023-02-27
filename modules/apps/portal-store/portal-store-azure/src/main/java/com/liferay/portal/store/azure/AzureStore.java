@@ -200,6 +200,8 @@ public class AzureStore implements Store {
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
+		List<String> fileNames = new ArrayList<>();
+
 		ListBlobsOptions listBlobsOptions = new ListBlobsOptions();
 
 		listBlobsOptions.setPrefix(
@@ -207,8 +209,6 @@ public class AzureStore implements Store {
 
 		PagedIterable<BlobItem> pagedIterable = _blobContainerClient.listBlobs(
 			listBlobsOptions, null);
-
-		List<String> fileNames = new ArrayList<>();
 
 		pagedIterable.forEach(
 			blobItem -> fileNames.add(
@@ -245,6 +245,8 @@ public class AzureStore implements Store {
 	public String[] getFileVersions(
 		long companyId, long repositoryId, String fileName) {
 
+		List<String> fileVersions = new ArrayList<>();
+
 		ListBlobsOptions listBlobsOptions = new ListBlobsOptions();
 
 		String prefix = _getPrefix(companyId, repositoryId, fileName);
@@ -254,8 +256,6 @@ public class AzureStore implements Store {
 		PagedIterable<BlobItem> pagedIterable =
 			_blobContainerClient.listBlobsByHierarchy(
 				StringPool.SLASH, listBlobsOptions, null);
-
-		List<String> fileVersions = new ArrayList<>();
 
 		pagedIterable.forEach(
 			blobItem -> {

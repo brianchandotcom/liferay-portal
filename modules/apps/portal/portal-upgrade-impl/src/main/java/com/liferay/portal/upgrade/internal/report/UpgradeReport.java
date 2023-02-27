@@ -175,11 +175,6 @@ public class UpgradeReport {
 			return "Unable to get database tables size";
 		}
 
-		List<String> tableNames = new ArrayList<>();
-
-		tableNames.addAll(_initialTableCounts.keySet());
-		tableNames.addAll(finalTableCounts.keySet());
-
 		StringBundler sb = new StringBundler(finalTableCounts.size() + 3);
 
 		String format = "%-30s %20s %20s\n";
@@ -189,6 +184,11 @@ public class UpgradeReport {
 			String.format(
 				format, "Table name", "Rows (initial)", "Rows (final)"));
 		sb.append(String.format(format, _UNDERLINE, _UNDERLINE, _UNDERLINE));
+
+		List<String> tableNames = new ArrayList<>();
+
+		tableNames.addAll(_initialTableCounts.keySet());
+		tableNames.addAll(finalTableCounts.keySet());
 
 		ListUtil.distinct(
 			tableNames,

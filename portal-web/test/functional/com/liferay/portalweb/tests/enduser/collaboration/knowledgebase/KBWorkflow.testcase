@@ -188,7 +188,7 @@ definition {
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.gotoSuggestionsNavigationCP();
+		KBArticle.openPageTreePanel(section = "Suggestions");
 
 		KBArticleSuggestion.gotoSuggestionStatusNew(suggestionCount = 1);
 
@@ -196,7 +196,9 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbSuggestionBody = "Knowledge Base Article Suggestion");
 
-		KBArticle.gotoSuggestionsNavigationCP();
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Suggestions");
 
 		KBArticleSuggestion.viewPG(
 			kbSuggestionBody = "Knowledge Base Article Suggestion",
@@ -207,7 +209,9 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbSuggestionBody = "Knowledge Base Article Suggestion");
 
-		KBArticle.gotoSuggestionsNavigationCP();
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Suggestions");
 
 		KBArticleSuggestion.viewPG(
 			kbSuggestionBody = "Knowledge Base Article Suggestion",
@@ -218,7 +222,7 @@ definition {
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.gotoSuggestionsNavigationCP();
+		KBArticle.openPageTreePanel(section = "Suggestions");
 
 		KBArticleSuggestion.viewNoSuggestions();
 	}

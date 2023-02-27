@@ -83,10 +83,9 @@ public class BatchEngineBundleTrackerTest {
 			String batchFile, int expectedValidUnits)
 		throws Exception {
 
-		CountDownLatch latch = new CountDownLatch(1);
 		AtomicInteger validUnits = new AtomicInteger();
 
-		BatchEngineUnitProcessor batchEngineUnitProcessor =
+		TestBatchEngineUnitProcessor testBatchEngineUnitProcessor =
 			new TestBatchEngineUnitProcessor(
 				units -> {
 					for (BatchEngineUnit batchEngineUnit : units) {
@@ -94,13 +93,11 @@ public class BatchEngineBundleTrackerTest {
 							validUnits.incrementAndGet();
 						}
 					}
-
-					latch.countDown();
 				});
 
 		ServiceRegistration<BatchEngineUnitProcessor> registration =
 			_bundleContext.registerService(
-				BatchEngineUnitProcessor.class, batchEngineUnitProcessor,
+				BatchEngineUnitProcessor.class, testBatchEngineUnitProcessor,
 				HashMapDictionaryBuilder.put(
 					Constants.SERVICE_RANKING, 1000
 				).build());
@@ -115,7 +112,25 @@ public class BatchEngineBundleTrackerTest {
 		try {
 			bundle.start();
 
-			latch.await(10, TimeUnit.SECONDS);
+			CountDownLatch countDownLatch =
+				testBatchEngineUnitProcessor.getCountDownLatch();
+
+			boolean countReached = countDownLatch.await(2, TimeUnit.SECONDS);
+
+			Assert.assertTrue(countReached);
+
+			// Make sure the bundle is only processed on first start
+
+			countDownLatch =
+				testBatchEngineUnitProcessor.resetAndGetCountDownLatch();
+
+			bundle.stop();
+
+			bundle.start();
+
+			countReached = countDownLatch.await(2, TimeUnit.SECONDS);
+
+			Assert.assertFalse(countReached);
 
 			Assert.assertEquals(expectedValidUnits, validUnits.intValue());
 		}
@@ -169,14 +184,27 @@ public class BatchEngineBundleTrackerTest {
 			_consumer = consumer;
 		}
 
+		public CountDownLatch getCountDownLatch() {
+			return _countDownLatch;
+		}
+
 		@Override
 		public void processBatchEngineUnits(
 			Iterable<BatchEngineUnit> batchEngineUnits) {
 
 			_consumer.accept(batchEngineUnits);
+
+			_countDownLatch.countDown();
+		}
+
+		public CountDownLatch resetAndGetCountDownLatch() {
+			_countDownLatch = new CountDownLatch(1);
+
+			return _countDownLatch;
 		}
 
 		private final Consumer<Iterable<BatchEngineUnit>> _consumer;
+		private volatile CountDownLatch _countDownLatch = new CountDownLatch(1);
 
 	}
 

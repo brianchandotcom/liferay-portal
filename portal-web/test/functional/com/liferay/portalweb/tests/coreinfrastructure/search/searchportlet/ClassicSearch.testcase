@@ -455,6 +455,30 @@ definition {
 		ClassicSearch.viewSearchNoPG(searchAssetTitle = "userfn2 userln2");
 	}
 
+	@priority = 3
+	test SearchWebContentWithCategorization {
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary Test");
+
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "category test",
+			vocabularyName = "Vocabulary Test");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = ${categoryId},
+			content = "Web Content Content",
+			groupName = "Guest",
+			title = "web");
+
+		ClassicSearch.search(searchTerm = "web");
+
+		ClassicSearch.viewSearchResultPG(
+			searchAssetTitle = "web",
+			searchAssetType = "Web Content Article");
+	}
+
 	@priority = 4
 	test ViewSearchResultForLongURL {
 		ProductMenu.gotoPortlet(

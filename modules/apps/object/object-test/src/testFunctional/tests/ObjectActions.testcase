@@ -368,6 +368,93 @@ definition {
 		}
 	}
 
+	@description = "LPS-175192 - Verify if actions works with oldValue function when trigger is On After Delete (Notification) using any field."
+	@priority = 5
+	test CanCreateActionNotificationUsingOldValueWithOnAfterDeleteTrigger {
+		task ("Given: A notification template is created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			ObjectNotifications.addNewNotificationTemplate(
+				entryTo = "test@liferay.com",
+				fromAddress = "test@liferay.com",
+				fromName = "Test Test",
+				name = "Email Template",
+				notificationType = "Email",
+				subject = "Subject Test");
+
+			PortletEntry.save();
+		}
+
+		task ("And given: An object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175192",
+				objectName = "CustomObject175192",
+				pluralLabelName = "Custom Objects 175192");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject175192");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175192");
+		}
+
+		task ("And given: A Notification action with the trigger (On After Delete) is created and the oldValue function is used in the condition tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175192");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Notification action when entry is deleted",
+				active = "true",
+				inputExpression = '''oldValue("customField") == "Entry Test"''',
+				notificationName = "Email Template",
+				objectLabel = "Custom Object 175192",
+				thenAction = "Notification",
+				whenAction = "On After Delete");
+		}
+
+		task ("When: An entry is added and then deleted") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175192");
+
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175192");
+
+			ObjectPortlet.deleteEntry(entry = "Entry Test");
+		}
+
+		task ("Then: The action is triggered and the notification is sent") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Queue");
+
+			AssertElementPresent(
+				key_objectName = "CustomObject175192",
+				locator1 = "ObjectNotifications#OBJECT_QUEUE_NAME");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175192");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionLabel = "Notification action when entry is deleted",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-175191 - Verify if actions works with oldValue function when trigger is On After Update (Notification) using any field"
 	@priority = 5
 	test CanCreateActionNotificationUsingOldValueWithOnAfterUpdateTrigger {

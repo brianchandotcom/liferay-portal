@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Portal Spring Extender Implementation
 Bundle-SymbolicName: com.liferay.portal.spring.extender.impl
 Bundle-Version: 4.0.31
+Import-Package:\
+	org.springframework.beans.factory.xml,\
+	\
+	*
 Provide-Capability:\
 	liferay.extender;\
 		liferay.extender="spring.extender";\

@@ -890,10 +890,6 @@ definition {
 			WaitForVisible(locator1 = "KnowledgeBase#PAGE_TREE_SUGGESTIONS");
 
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_SUGGESTIONS");
-
-			if (IsElementNotPresent(key_header = ${section}, locator1 = "KnowledgeBase#PAGE_TREE_PANEL_HEADER")) {
-				Click.javaScriptClick(locator1 = "KnowledgeBase#PAGE_TREE_SUGGESTIONS");
-			}
 		}
 	}
 

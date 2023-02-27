@@ -128,6 +128,7 @@ interface ObjectDefinition {
 	externalReferenceCode: string;
 	id: number;
 	label: LocalizedValue<string>;
+	modifiable: boolean;
 	name: string;
 	objectActions: [];
 	objectFields: ObjectField[];

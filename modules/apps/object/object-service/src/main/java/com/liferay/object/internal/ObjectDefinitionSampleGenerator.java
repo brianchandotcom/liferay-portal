@@ -86,7 +86,7 @@ public class ObjectDefinitionSampleGenerator {
 
 		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				user.getUserId(), false,
+				user.getUserId(), false, false,
 				LocalizedMapUtil.getLocalizedMap("Sample Object Definition"),
 				"SampleObjectDefinition", "100",
 				PanelCategoryKeys.CONTROL_PANEL_SITES,

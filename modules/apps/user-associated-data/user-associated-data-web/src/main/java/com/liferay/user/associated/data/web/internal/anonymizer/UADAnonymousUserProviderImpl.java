@@ -84,8 +84,9 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 	}
 
 	private User _addAnonymousUser(long companyId) throws Exception {
-		User user = _userLocalService.createUser(
-			_counterLocalService.increment());
+		long userId = _counterLocalService.increment();
+
+		User user = _userLocalService.createUser(userId);
 
 		PasswordPolicy passwordPolicy =
 			_passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);

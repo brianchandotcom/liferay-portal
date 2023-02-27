@@ -1239,6 +1239,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"objectValidationRules", additionalAssertFieldName)) {
+
+				if (objectDefinition.getObjectValidationRules() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("objectViews", additionalAssertFieldName)) {
 				if (objectDefinition.getObjectViews() == null) {
 					valid = false;
@@ -1668,6 +1678,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"objectValidationRules", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.getObjectValidationRules(),
+						objectDefinition2.getObjectValidationRules())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("objectViews", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectDefinition1.getObjectViews(),
@@ -2066,6 +2089,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("objectRelationships")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("objectValidationRules")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

@@ -422,6 +422,30 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected ObjectRelationship[] objectRelationships;
 
+	public ObjectValidationRule[] getObjectValidationRules() {
+		return objectValidationRules;
+	}
+
+	public void setObjectValidationRules(
+		ObjectValidationRule[] objectValidationRules) {
+
+		this.objectValidationRules = objectValidationRules;
+	}
+
+	public void setObjectValidationRules(
+		UnsafeSupplier<ObjectValidationRule[], Exception>
+			objectValidationRulesUnsafeSupplier) {
+
+		try {
+			objectValidationRules = objectValidationRulesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ObjectValidationRule[] objectValidationRules;
+
 	public ObjectView[] getObjectViews() {
 		return objectViews;
 	}

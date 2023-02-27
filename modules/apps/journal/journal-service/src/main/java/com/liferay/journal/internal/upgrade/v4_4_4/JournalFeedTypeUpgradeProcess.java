@@ -83,10 +83,10 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (hasColumn("JournalFeed", "type_")) {
-			_upgradeFeedType();
+			_createJournalFeedTypesAndAssetEntries();
 		}
 		else {
-			_upgradeFeedsToAssets();
+			_createJournalFeedAssetEntries();
 		}
 	}
 
@@ -126,101 +126,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private Set<String> _getArticleTypes(long companyId) throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select distinct type_ from JournalFeed where companyId = " +
-					companyId + " and type_ != 'general'");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			Set<String> types = new HashSet<>();
-
-			while (resultSet.next()) {
-				String type = StringUtil.toLowerCase(
-					resultSet.getString("type_"));
-
-				if (Validator.isNotNull(type)) {
-					types.add(type);
-				}
-			}
-
-			return types;
-		}
-	}
-
-	private long _getAssetCategoryId(
-			AssetVocabulary assetVocabulary, String name,
-			ServiceContext serviceContext, long userId)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select categoryId from AssetCategory where name = ? and " +
-					"vocabularyId = ?")) {
-
-			preparedStatement.setString(1, name);
-			preparedStatement.setLong(2, assetVocabulary.getVocabularyId());
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getLong("categoryId");
-				}
-			}
-		}
-
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			userId, assetVocabulary.getGroupId(), name,
-			assetVocabulary.getVocabularyId(), serviceContext);
-
-		return assetCategory.getCategoryId();
-	}
-
-	private AssetVocabulary _updateAssetVocabulary(
-			AssetVocabulary assetVocabulary, long journalFeedClassNameId)
-		throws Exception {
-
-		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
-			new AssetVocabularySettingsHelper(assetVocabulary.getSettings());
-
-		long[] selectedClassNameIds =
-			assetVocabularySettingsHelper.getClassNameIds();
-
-		if (ArrayUtil.contains(selectedClassNameIds, 0) ||
-			ArrayUtil.contains(selectedClassNameIds, journalFeedClassNameId)) {
-
-			return assetVocabulary;
-		}
-
-		long[] requiredClassNameIds =
-			assetVocabularySettingsHelper.getRequiredClassNameIds();
-
-		selectedClassNameIds = ArrayUtil.append(
-			selectedClassNameIds, journalFeedClassNameId);
-
-		boolean[] requireds = new boolean[selectedClassNameIds.length];
-
-		for (int i = 0; i < selectedClassNameIds.length; i++) {
-			if (ArrayUtil.contains(
-					requiredClassNameIds, selectedClassNameIds[i])) {
-
-				requireds[i] = true;
-			}
-			else {
-				requireds[i] = false;
-			}
-		}
-
-		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
-			selectedClassNameIds,
-			ArrayUtil.append(
-				assetVocabularySettingsHelper.getClassTypePKs(), -1),
-			requireds);
-
-		return _assetVocabularyLocalService.updateVocabulary(
-			assetVocabulary.getVocabularyId(), assetVocabulary.getTitleMap(),
-			assetVocabulary.getDescriptionMap(),
-			assetVocabularySettingsHelper.toString());
-	}
-
-	private void _upgradeFeedsToAssets() throws Exception {
+	private void _createJournalFeedAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long classNameId = _portal.getClassNameId(
 				JournalFeed.class.getName());
@@ -249,9 +155,9 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgradeFeedsToAssets(
+	private void _createJournalFeedAssetEntries(
 			long classNameId, long companyId, long defaultUserId,
-			Map<String, Long> journalArticleTypesToAssetCategoryIds)
+			Map<String, Long> journalFeedTypesMap)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -268,10 +174,9 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 					resultSet.getString("type_"));
 
 				if (Validator.isNotNull(type) &&
-					journalArticleTypesToAssetCategoryIds.containsKey(type)) {
+					journalFeedTypesMap.containsKey(type)) {
 
-					assetCategoryId = journalArticleTypesToAssetCategoryIds.get(
-						type);
+					assetCategoryId = journalFeedTypesMap.get(type);
 				}
 
 				_addAssetEntry(
@@ -280,7 +185,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgradeFeedType() throws Exception {
+	private void _createJournalFeedTypesAndAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			Locale localeThreadLocalDefaultLocale =
 				LocaleThreadLocal.getDefaultLocale();
@@ -293,10 +198,10 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 			try {
 				_companyLocalService.forEachCompany(
 					company -> {
-						Set<String> types = _getArticleTypes(
+						Set<String> journalFeedTypes = _getJournalFeedTypes(
 							company.getCompanyId());
 
-						if (SetUtil.isEmpty(types)) {
+						if (SetUtil.isEmpty(journalFeedTypes)) {
 							return;
 						}
 
@@ -349,21 +254,19 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 								assetVocabulary, journalFeedClassNameId);
 						}
 
-						Map<String, Long>
-							journalArticleTypesToAssetCategoryIds =
-								new HashMap<>();
+						Map<String, Long> journalFeedTypesMap = new HashMap<>();
 
-						for (String type : types) {
-							journalArticleTypesToAssetCategoryIds.put(
+						for (String type : journalFeedTypes) {
+							journalFeedTypesMap.put(
 								type,
 								_getAssetCategoryId(
 									assetVocabulary, type, serviceContext,
 									userId));
 						}
 
-						_upgradeFeedsToAssets(
+						_createJournalFeedAssetEntries(
 							journalFeedClassNameId, company.getCompanyId(),
-							userId, journalArticleTypesToAssetCategoryIds);
+							userId, journalFeedTypesMap);
 					});
 			}
 			finally {
@@ -371,6 +274,100 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 					localeThreadLocalDefaultLocale);
 			}
 		}
+	}
+
+	private long _getAssetCategoryId(
+			AssetVocabulary assetVocabulary, String name,
+			ServiceContext serviceContext, long userId)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select categoryId from AssetCategory where name = ? and " +
+					"vocabularyId = ?")) {
+
+			preparedStatement.setString(1, name);
+			preparedStatement.setLong(2, assetVocabulary.getVocabularyId());
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getLong("categoryId");
+				}
+			}
+		}
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			userId, assetVocabulary.getGroupId(), name,
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		return assetCategory.getCategoryId();
+	}
+
+	private Set<String> _getJournalFeedTypes(long companyId) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select distinct type_ from JournalFeed where companyId = " +
+					companyId + " and type_ != 'general'");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Set<String> types = new HashSet<>();
+
+			while (resultSet.next()) {
+				String type = StringUtil.toLowerCase(
+					resultSet.getString("type_"));
+
+				if (Validator.isNotNull(type)) {
+					types.add(type);
+				}
+			}
+
+			return types;
+		}
+	}
+
+	private AssetVocabulary _updateAssetVocabulary(
+			AssetVocabulary assetVocabulary, long journalFeedClassNameId)
+		throws Exception {
+
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper(assetVocabulary.getSettings());
+
+		long[] selectedClassNameIds =
+			assetVocabularySettingsHelper.getClassNameIds();
+
+		if (ArrayUtil.contains(selectedClassNameIds, 0) ||
+			ArrayUtil.contains(selectedClassNameIds, journalFeedClassNameId)) {
+
+			return assetVocabulary;
+		}
+
+		long[] requiredClassNameIds =
+			assetVocabularySettingsHelper.getRequiredClassNameIds();
+
+		selectedClassNameIds = ArrayUtil.append(
+			selectedClassNameIds, journalFeedClassNameId);
+
+		boolean[] requireds = new boolean[selectedClassNameIds.length];
+
+		for (int i = 0; i < selectedClassNameIds.length; i++) {
+			if (ArrayUtil.contains(
+					requiredClassNameIds, selectedClassNameIds[i])) {
+
+				requireds[i] = true;
+			}
+			else {
+				requireds[i] = false;
+			}
+		}
+
+		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
+			selectedClassNameIds,
+			ArrayUtil.append(
+				assetVocabularySettingsHelper.getClassTypePKs(), -1),
+			requireds);
+
+		return _assetVocabularyLocalService.updateVocabulary(
+			assetVocabulary.getVocabularyId(), assetVocabulary.getTitleMap(),
+			assetVocabulary.getDescriptionMap(),
+			assetVocabularySettingsHelper.toString());
 	}
 
 	private final AssetCategoryLocalService _assetCategoryLocalService;

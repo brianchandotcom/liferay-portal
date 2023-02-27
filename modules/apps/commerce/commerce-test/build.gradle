@@ -24,5 +24,6 @@ dependencies {
 	testIntegrationCompile project(":apps:commerce:commerce-tax-api")
 	testIntegrationCompile project(":apps:commerce:commerce-test-util")
 	testIntegrationCompile project(":apps:friendly-url:friendly-url-api")
+	testIntegrationCompile project(":apps:site:site-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

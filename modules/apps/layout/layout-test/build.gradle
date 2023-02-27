@@ -29,6 +29,7 @@ dependencies {
 	testIntegrationCompile project(":apps:ratings:ratings-test-util")
 	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":apps:segments:segments-test-util")
+	testIntegrationCompile project(":apps:site:site-api")
 	testIntegrationCompile project(":apps:users-admin:users-admin-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

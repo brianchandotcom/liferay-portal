@@ -63,8 +63,6 @@ definition {
 
 		Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
 
-		Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
-
 		FDSFilters.closeFilters();
 	}
 

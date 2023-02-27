@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.pop.notifications.internal.MessageListenerWrapper;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,63 +59,59 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(service = {})
+@Component(enabled = false, service = {})
 public class POPNotificationsMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
-			_messageListenerWrappers = ServiceTrackerListFactory.open(
-				bundleContext, MessageListener.class, null,
-				new ServiceTrackerCustomizer
-					<MessageListener, MessageListenerWrapper>() {
+		_messageListenerWrappers = ServiceTrackerListFactory.open(
+			bundleContext, MessageListener.class, null,
+			new ServiceTrackerCustomizer
+				<MessageListener, MessageListenerWrapper>() {
 
-					@Override
-					public MessageListenerWrapper addingService(
-						ServiceReference<MessageListener> serviceReference) {
+				@Override
+				public MessageListenerWrapper addingService(
+					ServiceReference<MessageListener> serviceReference) {
 
-						return new MessageListenerWrapper(
-							bundleContext.getService(serviceReference));
-					}
+					return new MessageListenerWrapper(
+						bundleContext.getService(serviceReference));
+				}
 
-					@Override
-					public void modifiedService(
-						ServiceReference<MessageListener> serviceReference,
-						MessageListenerWrapper messageListenerWrapper) {
-					}
+				@Override
+				public void modifiedService(
+					ServiceReference<MessageListener> serviceReference,
+					MessageListenerWrapper messageListenerWrapper) {
+				}
 
-					@Override
-					public void removedService(
-						ServiceReference<MessageListener> serviceReference,
-						MessageListenerWrapper sessageListenerWrapper) {
+				@Override
+				public void removedService(
+					ServiceReference<MessageListener> serviceReference,
+					MessageListenerWrapper sessageListenerWrapper) {
 
-						bundleContext.ungetService(serviceReference);
-					}
+					bundleContext.ungetService(serviceReference);
+				}
 
-				});
+			});
 
-			Class<?> clazz = getClass();
+		Class<?> clazz = getClass();
 
-			String className = clazz.getName();
+		String className = clazz.getName();
 
-			Trigger trigger = _triggerFactory.createTrigger(
-				className, className, null, null, 1, TimeUnit.MINUTE);
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null, 1, TimeUnit.MINUTE);
 
-			SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-				className, trigger);
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
 
-			_schedulerEngineHelper.register(
-				this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-		}
+		_schedulerEngineHelper.register(
+			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
-			_schedulerEngineHelper.unregister(this);
+		_schedulerEngineHelper.unregister(this);
 
-			_messageListenerWrappers.close();
-		}
+		_messageListenerWrappers.close();
 	}
 
 	@Override

@@ -31,6 +31,7 @@ import com.google.cloud.storage.StorageOptions;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.comparator.VersionNumberComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -49,12 +50,11 @@ import java.io.InputStream;
 
 import java.nio.channels.Channels;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -153,19 +153,15 @@ public class GCSStore implements Store {
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
-		Stream<String> stream = Arrays.stream(
-			_getFilePaths(companyId, repositoryId, dirName));
-
 		String prefix = StringBundler.concat(
 			companyId, StringPool.SLASH, repositoryId, StringPool.SLASH);
 
-		return stream.map(
+		return TransformUtil.transform(
+			_getFilePaths(companyId, repositoryId, dirName),
 			filePath -> filePath.substring(
 				filePath.indexOf(prefix) + prefix.length(),
-				filePath.lastIndexOf(StringPool.SLASH))
-		).toArray(
-			String[]::new
-		);
+				filePath.lastIndexOf(StringPool.SLASH)),
+			String.class);
 	}
 
 	@Override
@@ -192,18 +188,14 @@ public class GCSStore implements Store {
 	public String[] getFileVersions(
 		long companyId, long repositoryId, String fileName) {
 
-		Stream<String> stream = Arrays.stream(
-			_getFilePaths(companyId, repositoryId, fileName));
-
-		return stream.map(
+		return TransformUtil.transform(
+			_getFilePaths(companyId, repositoryId, fileName),
 			path -> {
 				String[] parts = StringUtil.split(path, CharPool.SLASH);
 
 				return parts[parts.length - 1];
-			}
-		).toArray(
-			String[]::new
-		);
+			},
+			String.class);
 	}
 
 	@Override
@@ -279,6 +271,8 @@ public class GCSStore implements Store {
 	private String[] _getFilePaths(
 		long companyId, long repositoryId, String dirName) {
 
+		List<String> filePaths = new ArrayList<>();
+
 		Bucket bucket = _gcsStore.get(_gcsStoreConfiguration.bucketName());
 
 		String path = null;
@@ -296,14 +290,9 @@ public class GCSStore implements Store {
 
 		Iterable<Blob> blobs = blobPage.iterateAll();
 
-		Stream<Blob> blobStream = StreamSupport.stream(
-			blobs.spliterator(), false);
+		blobs.forEach(blob -> filePaths.add(blob.getName()));
 
-		return blobStream.map(
-			BlobInfo::getName
-		).toArray(
-			String[]::new
-		);
+		return filePaths.toArray(new String[0]);
 	}
 
 	private String _getFileVersionKey(

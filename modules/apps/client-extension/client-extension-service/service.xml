@@ -40,7 +40,7 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" external-reference-code="company" local-service="true" name="ClientExtensionEntryRel" remote-service="false" trash-enabled="false" uuid="true">
+	<entity change-tracking-enabled="true" external-reference-code="group" local-service="true" name="ClientExtensionEntryRel" remote-service="false" trash-enabled="false" uuid="true">
 
 		<!-- PK fields -->
 

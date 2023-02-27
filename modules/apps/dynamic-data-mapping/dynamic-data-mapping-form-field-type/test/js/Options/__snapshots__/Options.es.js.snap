@@ -66,6 +66,7 @@ exports[`Options shows the options 1`] = `
               
             </div>
             <button
+              aria-label="remove-x-option"
               class="close close-modal"
               type="button"
             >
@@ -174,6 +175,7 @@ exports[`Options shows the options 1`] = `
               
             </div>
             <button
+              aria-label="remove-x-option"
               class="close close-modal"
               type="button"
             >

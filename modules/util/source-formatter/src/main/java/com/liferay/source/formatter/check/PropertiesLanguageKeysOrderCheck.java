@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 
 import java.util.Map;
@@ -39,31 +37,6 @@ public class PropertiesLanguageKeysOrderCheck extends BaseFileCheck {
 		throws IOException {
 
 		if (!fileName.endsWith("/content/Language.properties")) {
-			return content;
-		}
-
-		int x = absolutePath.lastIndexOf("/");
-
-		File dir = new File(absolutePath.substring(0, x + 1));
-
-		File[] files = dir.listFiles(
-			new FilenameFilter() {
-
-				public boolean accept(File dir, String name) {
-					String s = StringUtil.toLowerCase(name);
-
-					if (!s.startsWith("language_") ||
-						!s.endsWith(".properties")) {
-
-						return false;
-					}
-
-					return true;
-				}
-
-			});
-
-		if (files.length > 1) {
 			return content;
 		}
 

@@ -26,6 +26,7 @@ import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -59,16 +60,18 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Successfully enqueued batch file " +
-							batchEngineUnit.getFileName());
+						StringBundler.concat(
+							"Successfully enqueued batch file ",
+							batchEngineUnit.getFileName(), " ",
+							batchEngineUnit.getDataFileName()));
 				}
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Ignoring invalid batch file " +
-							batchEngineUnit.getFileName(),
-						exception);
+					_log.debug(exception);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn("Batch Engine " + exception.getMessage());
 				}
 			}
 		}
@@ -109,7 +112,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			Validator.isNull(contentType)) {
 
 			throw new IllegalStateException(
-				"Invalid batch engine file " + batchEngineUnit.getFileName());
+				StringBundler.concat(
+					"Invalid batch engine file ", batchEngineUnit.getFileName(),
+					" ", batchEngineUnit.getDataFileName()));
 		}
 
 		ExecutorService executorService =
@@ -136,8 +141,10 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Successfully deployed batch engine file " +
-							batchEngineUnit.getFileName());
+						StringBundler.concat(
+							"Successfully deployed batch engine file ",
+							batchEngineUnit.getFileName(), " ",
+							batchEngineUnit.getDataFileName()));
 				}
 			});
 	}

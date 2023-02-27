@@ -6068,7 +6068,7 @@ definition {
 		task ("Check if extension is present") {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FILTER_TEXT",
-				value1 = "7 Results for");
+				value1 = "8 Results for");
 		}
 	}
 

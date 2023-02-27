@@ -67,7 +67,7 @@ const getURL = (href, parameters) => {
 	const url = new URL(href);
 
 	parameters.forEach(([key, value]) => {
-		url.searchParams.set(`${config.portletNamespace}${key}`, value);
+		url.searchParams.set(key, value);
 	});
 
 	return url.toString();

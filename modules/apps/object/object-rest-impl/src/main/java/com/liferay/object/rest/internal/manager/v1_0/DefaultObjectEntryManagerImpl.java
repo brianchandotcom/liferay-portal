@@ -1224,6 +1224,10 @@ public class DefaultObjectEntryManagerImpl
 						"object definitions");
 			}
 
+			ObjectEntryManager objectEntryManager =
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					relatedObjectDefinition.getStorageType());
+
 			ObjectRelationshipElementsParser objectRelationshipElementsParser =
 				_objectRelationshipElementsParserRegistry.
 					getObjectRelationshipElementsParser(
@@ -1232,10 +1236,6 @@ public class DefaultObjectEntryManagerImpl
 
 			List<?> relatedElements = objectRelationshipElementsParser.parse(
 				objectRelationship, properties.get(entry.getKey()));
-
-			ObjectEntryManager objectEntryManager =
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					relatedObjectDefinition.getStorageType());
 
 			for (ObjectEntry nestedObjectEntry :
 					(List<ObjectEntry>)relatedElements) {

@@ -155,7 +155,7 @@ public class DefaultObjectEntryManagerImpl
 					dtoConverterContext.getUserId()));
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-153117")) {
-			_upsertNestedObjectEntries(
+			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
 				serviceBuilderObjectEntry.getPrimaryKey());
@@ -664,7 +664,7 @@ public class DefaultObjectEntryManagerImpl
 					dtoConverterContext.getUserId()));
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-153117")) {
-			_upsertNestedObjectEntries(
+			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
 				updateObjectEntry.getPrimaryKey());
@@ -1199,7 +1199,7 @@ public class DefaultObjectEntryManagerImpl
 		return values;
 	}
 
-	private void _upsertNestedObjectEntries(
+	private void _addOrUpdateNestedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			Map<String, ObjectRelationship> objectRelationships,

@@ -290,7 +290,11 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 			else {
 				if (!Objects.equals(
-						oldObjectField, newObjectField.getDBType())) {
+						oldObjectField.getDBType(),
+						newObjectField.getDBType()) ||
+					!Objects.equals(
+						oldObjectField.isRequired(),
+						newObjectField.isRequired())) {
 
 					oldObjectField.setBusinessType(
 						newObjectField.getBusinessType());

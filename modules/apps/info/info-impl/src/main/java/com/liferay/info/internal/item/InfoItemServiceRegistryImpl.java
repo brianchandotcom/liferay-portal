@@ -178,7 +178,7 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 
 		return TransformUtil.transform(
 			getInfoItemClassNames(serviceClass),
-			itemClassName -> _getInfoItemClassDetails(itemClassName));
+			this::_getInfoItemClassDetails);
 	}
 
 	@Override

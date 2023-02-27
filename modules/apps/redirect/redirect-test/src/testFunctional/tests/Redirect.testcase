@@ -927,9 +927,10 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/my-url-that-does-not-exist");
 
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found");
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = 404);
 
 		AssertElementNotPresent(
 			key_title = "Welcome to Liferay",

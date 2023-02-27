@@ -21,12 +21,10 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,30 +40,6 @@ public class ClientExtensionEntryRelStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {
 		ClientExtensionEntryRel.class.getName()
 	};
-
-	@Override
-	public void deleteStagedModel(
-			ClientExtensionEntryRel clientExtensionEntryRel)
-		throws PortalException {
-
-		_stagedModelRepository.deleteStagedModel(clientExtensionEntryRel);
-	}
-
-	@Override
-	public void deleteStagedModel(
-			String uuid, long groupId, String className, String extraData)
-		throws PortalException {
-
-		_stagedModelRepository.deleteStagedModel(
-			uuid, groupId, className, extraData);
-	}
-
-	@Override
-	public List<ClientExtensionEntryRel> fetchStagedModelsByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return null;
-	}
 
 	@Override
 	public String[] getClassNames() {

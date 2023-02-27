@@ -19,12 +19,12 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -148,7 +148,22 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 			"addLayoutURL",
 			_getLayoutPageTemplateEntryAddLayoutURL(layoutPageTemplateEntry)
 		).put(
-			"getLayoutPageTemplateEntryListURL", StringPool.BLANK
+			"getLayoutPageTemplateEntryListURL",
+			() -> {
+				LiferayPortletURL getLayoutPageTemplateEntryListURL =
+					(LiferayPortletURL)
+						_liferayPortletResponse.createResourceURL();
+
+				getLayoutPageTemplateEntryListURL.
+					setCopyCurrentRenderParameters(false);
+				getLayoutPageTemplateEntryListURL.setParameter(
+					"layoutPageTemplateCollectionId",
+					String.valueOf(getLayoutPageTemplateCollectionId()));
+				getLayoutPageTemplateEntryListURL.setResourceID(
+					"/layout_admin/get_layout_page_template_entry_list");
+
+				return getLayoutPageTemplateEntryListURL.toString();
+			}
 		).put(
 			"layoutPageTemplateEntryId",
 			String.valueOf(

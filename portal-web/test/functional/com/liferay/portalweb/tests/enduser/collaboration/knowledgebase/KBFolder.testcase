@@ -170,7 +170,7 @@ definition {
 			kbFolderName = "KB Folder 1",
 			pageTreePanel = "true");
 
-		KBArticle.viewDefaultCP(featureFlag = "true");
+		KBArticle.viewDefaultCP(newFolder = "true");
 	}
 
 	@description = "This test ensures that users can add folder via center pane button."
@@ -225,7 +225,7 @@ definition {
 
 		KBArticle.deleteCP();
 
-		KBArticle.viewDefaultCP(featureFlag = "true");
+		KBArticle.viewDefaultCP(newFolder = "true");
 	}
 
 	@priority = 4
@@ -282,9 +282,7 @@ definition {
 			menuItem = "Delete",
 			navigationPane = "true");
 
-		KBArticle.viewDefaultCP(
-			defaultHome = "true",
-			featureFlag = "true");
+		KBArticle.viewDefaultCP();
 	}
 
 	@priority = 4
@@ -487,7 +485,9 @@ definition {
 
 		KBFolder.gotoCP(kbFolderName = "KB Folder");
 
-		KBArticle.viewDefaultCP(disabledActionToolbar = "true");
+		KBArticle.viewDefaultCP(
+			isabledActionToolbar = "true",
+			newFolder = "true");
 
 		JSONKnowledgeBase.addkBArticle(
 			folderName = "KB Folder",

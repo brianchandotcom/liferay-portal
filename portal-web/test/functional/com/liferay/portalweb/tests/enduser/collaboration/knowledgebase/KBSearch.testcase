@@ -68,7 +68,7 @@ definition {
 
 		KBArticle.selectFolderThroughPageTreePanel(kbFolderName = "KB Folder");
 
-		KBArticle.viewDefaultCP(featureFlag = "true");
+		KBArticle.viewDefaultCP(newFolder = "true");
 	}
 
 	@description = "This test checks that an article can be searched for in the admin search bar."

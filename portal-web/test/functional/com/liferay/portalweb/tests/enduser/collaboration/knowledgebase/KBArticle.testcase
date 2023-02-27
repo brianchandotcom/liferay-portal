@@ -310,9 +310,7 @@ definition {
 
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 
-		KBArticle.viewDefaultCP(
-			defaultHome = "true",
-			featureFlag = "true");
+		KBArticle.viewDefaultCP();
 	}
 
 	@description = "This test ensures that users can delete article in the table view."

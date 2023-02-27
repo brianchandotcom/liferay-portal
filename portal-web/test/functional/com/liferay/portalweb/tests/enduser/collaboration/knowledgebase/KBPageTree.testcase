@@ -135,7 +135,7 @@ definition {
 
 		KBArticle.selectFolderThroughPageTreePanel(kbChildFolderName = "KB Child Folder");
 
-		KBArticle.viewDefaultCP(featureFlag = "true");
+		KBArticle.viewDefaultCP(newFolder = "true");
 	}
 
 	@description = "This test ensures that when the product menu is open, the sidebar is collapsed. They can't open at the same time."

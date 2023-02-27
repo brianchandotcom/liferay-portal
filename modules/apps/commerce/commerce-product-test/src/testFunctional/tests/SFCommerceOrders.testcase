@@ -585,6 +585,50 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-7198. I want to be able to search for one pending order using the search bar on the Account Selector"
+	@priority = 5
+	test CanSearchOrderIdInAccountSelector {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+		}
+
+		var orderIds = ListUtil.newList();
+
+		task ("And 2 orders are created") {
+			for (var quantity : list "1,3") {
+				var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
+					accountEntryName = "Commerce Account",
+					orderItems = "MIN55861:${quantity}",
+					orderStatus = 2,
+					paymentMethod = "money-order",
+					paymentStatus = 2);
+
+				ListUtil.add(${orderIds}, ${orderId});
+			}
+
+			var firstOrderId = ListUtil.get(${orderIds}, 0);
+			var secondOrderId = ListUtil.get(${orderIds}, 1);
+		}
+
+		task ("When the Order ID is searched inside the Account Selector") {
+			CommerceOrders.searchOrderIdFromAccountSelectorDropdown(
+				key_searchBarValue = "Search Order",
+				orderId = ${firstOrderId});
+		}
+
+		task ("Then only the searched Order ID will be shown") {
+			AssertElementPresent(
+				key_orderID = ${firstOrderId},
+				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_SPECIFIC_ORDER_ID");
+
+			AssertElementNotPresent(
+				key_orderID = ${secondOrderId},
+				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_SPECIFIC_ORDER_ID");
+		}
+	}
+
 	@description = "This is a use case for COMMERCE-3111. Assert that user can see an open order after deleting the product, and the product is no longer in the order."
 	@priority = 5
 	test CanSeeAPlacedOrderWithDeletedProduct {

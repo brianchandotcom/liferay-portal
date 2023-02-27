@@ -359,51 +359,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				"item.class.name", objectDefinition.getClassName()
 			).build());
 
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.getObjectRelationships(
-				objectDefinition.getObjectDefinitionId());
-
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			try {
-				if (Objects.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
-					!objectRelationship.isReverse()) {
-
-					_bundleContext.registerService(
-						RelatedInfoItemCollectionProvider.class,
-						new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-							objectDefinition, objectRelationship,
-							_objectDefinitionLocalService,
-							_objectEntryLocalService),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"company.id", objectDefinition.getCompanyId()
-						).put(
-							"item.class.name", objectDefinition.getClassName()
-						).build());
-				}
-				else if (Objects.equals(
-							objectRelationship.getType(),
-							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
-
-					_bundleContext.registerService(
-						RelatedInfoItemCollectionProvider.class,
-						new OneToManyObjectRelationshipRelatedInfoCollectionProvider(
-							objectDefinition, objectRelationship,
-							_objectDefinitionLocalService,
-							_objectEntryLocalService),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"company.id", objectDefinition.getCompanyId()
-						).put(
-							"item.class.name", objectDefinition.getClassName()
-						).build());
-				}
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
-		}
-
 		try {
 			for (Locale locale : LanguageUtil.getAvailableLocales()) {
 				String languageId = LocaleUtil.toLanguageId(locale);
@@ -434,6 +389,49 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_objectLayoutTabLocalService.
 				registerObjectLayoutTabScreenNavigationCategories(
 					objectDefinition, objectLayout.getObjectLayoutTabs());
+		}
+
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.getObjectRelationships(
+				objectDefinition.getObjectDefinitionId());
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			try {
+				if (Objects.equals(
+						objectRelationship.getType(),
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
+					!objectRelationship.isReverse()) {
+
+					_bundleContext.registerService(
+						RelatedInfoItemCollectionProvider.class,
+						new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+							objectDefinition, _objectDefinitionLocalService,
+							_objectEntryLocalService, objectRelationship),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"company.id", objectDefinition.getCompanyId()
+						).put(
+							"item.class.name", objectDefinition.getClassName()
+						).build());
+				}
+				else if (Objects.equals(
+							objectRelationship.getType(),
+							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+					_bundleContext.registerService(
+						RelatedInfoItemCollectionProvider.class,
+						new OneToManyObjectRelationshipRelatedInfoCollectionProvider(
+							objectDefinition, _objectDefinitionLocalService,
+							_objectEntryLocalService, objectRelationship),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"company.id", objectDefinition.getCompanyId()
+						).put(
+							"item.class.name", objectDefinition.getClassName()
+						).build());
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
 		}
 
 		return serviceRegistrations;

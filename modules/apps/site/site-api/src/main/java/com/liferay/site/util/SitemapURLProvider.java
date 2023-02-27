@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.kernel.util;
+package com.liferay.site.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSet;

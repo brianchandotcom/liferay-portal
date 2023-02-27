@@ -47,6 +47,7 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -135,7 +136,6 @@ public class IndividualSegmentsCheckerTest {
 			ReflectionTestUtil.setFieldValue(
 				asahFaroBackendClient, "_http",
 				new MockHttp(
-					null, false, false, false,
 					HashMapBuilder.
 						<String, UnsafeSupplier<String, Exception>>put(
 							"/api/1.0/individual-segments",
@@ -267,33 +267,30 @@ public class IndividualSegmentsCheckerTest {
 			ReflectionTestUtil.setFieldValue(
 				asahFaroBackendClient, "_http",
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/individuals",
-							() -> JSONUtil.put(
-								"_embedded",
-								JSONUtil.put(
-									"individuals",
-									JSONUtil.putAll(
-										JSONUtil.put(
-											"individualSegmentIds",
-											JSONUtil.putAll(segmentEntryKey))))
+					Collections.singletonMap(
+						"/api/1.0/individuals",
+						() -> JSONUtil.put(
+							"_embedded",
+							JSONUtil.put(
+								"individuals",
+								JSONUtil.putAll(
+									JSONUtil.put(
+										"individualSegmentIds",
+										JSONUtil.putAll(segmentEntryKey))))
+						).put(
+							"page",
+							JSONUtil.put(
+								"number", 0
 							).put(
-								"page",
-								JSONUtil.put(
-									"number", 0
-								).put(
-									"size", 100
-								).put(
-									"totalElements", 1
-								).put(
-									"totalPages", 1
-								)
+								"size", 100
 							).put(
-								"total", 0
-							).toString()
-						).build()));
+								"totalElements", 1
+							).put(
+								"totalPages", 1
+							)
+						).put(
+							"total", 0
+						).toString())));
 
 			User defaultUser = _userLocalService.getDefaultUser(
 				_company.getCompanyId());

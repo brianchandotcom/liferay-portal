@@ -16,7 +16,6 @@ package com.liferay.segments.asah.connector.internal.messaging.test;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -27,10 +26,11 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.MockHttp;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -110,35 +110,31 @@ public class InterestTermsCheckerTest {
 			ReflectionTestUtil.setFieldValue(
 				asahFaroBackendClient, "_http",
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/interests/terms/" + _user.getUserId(),
-							() -> JSONUtil.put(
-								"_embedded",
-								JSONUtil.put(
-									"interest-topics",
-									JSONUtil.putAll(
-										JSONUtil.put(
-											"terms",
-											JSONUtil.putAll(
-												JSONUtil.put(
-													"keyword", "term1")))))
+					Collections.singletonMap(
+						"/api/1.0/interests/terms/" + _user.getUserId(),
+						() -> JSONUtil.put(
+							"_embedded",
+							JSONUtil.put(
+								"interest-topics",
+								JSONUtil.putAll(
+									JSONUtil.put(
+										"terms",
+										JSONUtil.putAll(
+											JSONUtil.put("keyword", "term1")))))
+						).put(
+							"page",
+							JSONUtil.put(
+								"number", 0
 							).put(
-								"page",
-								JSONUtil.put(
-									"number", 0
-								).put(
-									"size", 100
-								).put(
-									"totalElements", 1
-								).put(
-									"totalPages", 1
-								)
+								"size", 100
 							).put(
-								"total", 0
-							).toString()
-						).build()));
+								"totalElements", 1
+							).put(
+								"totalPages", 1
+							)
+						).put(
+							"total", 0
+						).toString())));
 
 			ReflectionTestUtil.invoke(
 				_interestTermsChecker, "checkInterestTerms",

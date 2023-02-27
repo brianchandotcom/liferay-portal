@@ -17,23 +17,27 @@ package com.liferay.portal.kernel.test.util;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.util.Http;
 
-import javax.servlet.http.Cookie;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.URL;
-import java.util.HashMap;
+
+import java.util.Collections;
 import java.util.Map;
+
+import javax.servlet.http.Cookie;
 
 /**
  * @author Mikel Lorza
  */
 public class MockHttp implements Http {
 
-	public MockHttp(
-		Cookie[] cookies, boolean nonProxyHost, boolean proxyConfig,
-		boolean proxyHost,
-		Map<String, UnsafeSupplier<String, Exception>> requests) {
+	public MockHttp(Map<String, UnsafeSupplier<String, Exception>> requests) {
+		_cookies = null;
+		_nonProxyHost = false;
+		_proxyConfig = false;
+		_proxyHost = false;
 
 		if (requests != null) {
 			_requests = Collections.unmodifiableMap(requests);

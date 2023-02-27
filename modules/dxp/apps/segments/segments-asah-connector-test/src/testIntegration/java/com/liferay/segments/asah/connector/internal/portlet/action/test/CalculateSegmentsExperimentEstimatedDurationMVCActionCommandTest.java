@@ -17,7 +17,6 @@ package com.liferay.segments.asah.connector.internal.portlet.action.test;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -57,6 +55,8 @@ import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
+
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -146,15 +146,13 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommandTest {
 		ReflectionTestUtil.setFieldValue(
 			asahFaroBackendClient, "_http",
 			new MockHttp(
-				null, false, false, false,
-				HashMapBuilder.<String, UnsafeSupplier<String, Exception>>put(
+				Collections.singletonMap(
 					StringUtil.replace(
 						"/api/1.0/experiments/{experimentId}" +
 							"/estimated-days-duration",
 						"{experimentId}",
 						segmentsExperiment.getSegmentsExperimentKey()),
-					() -> String.valueOf(estimatedDuration)
-				).build()));
+					() -> String.valueOf(estimatedDuration))));
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =

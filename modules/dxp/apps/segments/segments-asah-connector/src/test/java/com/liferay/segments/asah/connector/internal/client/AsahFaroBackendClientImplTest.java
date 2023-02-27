@@ -16,14 +16,12 @@ package com.liferay.segments.asah.connector.internal.client;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NestableRuntimeException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.MockHttp;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -36,15 +34,17 @@ import com.liferay.segments.asah.connector.internal.client.model.IndividualSegme
 import com.liferay.segments.asah.connector.internal.client.model.Results;
 import com.liferay.segments.asah.connector.internal.client.model.Topic;
 import com.liferay.segments.asah.connector.internal.client.util.OrderByField;
+
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import java.util.Collections;
-import java.util.List;
+import org.mockito.Mockito;
 
 /**
  * @author Sarai Díaz
@@ -85,14 +85,11 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/experiments",
-							() -> JSONUtil.put(
-								"id", "123456"
-							).toString()
-						).build()));
+					Collections.singletonMap(
+						"/api/1.0/experiments",
+						() -> JSONUtil.put(
+							"id", "123456"
+						).toString())));
 
 		Experiment experiment = asahFaroBackendClient.addExperiment(
 			RandomTestUtil.randomLong(), new Experiment());
@@ -101,9 +98,7 @@ public class AsahFaroBackendClientImplTest {
 	}
 
 	@Test
-	public void testCalculateExperimentEstimatedDaysDuration()
-		throws Exception {
-
+	public void testCalculateExperimentEstimatedDaysDuration() {
 		String days = "14";
 		String experimentId = RandomTestUtil.randomString();
 
@@ -111,14 +106,11 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							StringBundler.concat(
-								"/api/1.0/experiments/", experimentId,
-								"/estimated-days-duration"),
-							() -> days
-						).build()));
+					Collections.singletonMap(
+						StringBundler.concat(
+							"/api/1.0/experiments/", experimentId,
+							"/estimated-days-duration"),
+						() -> days)));
 
 		Assert.assertEquals(
 			Long.valueOf(days),
@@ -137,14 +129,11 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							StringBundler.concat(
-								"/api/1.0/experiments/", experimentId,
-								"/estimated-days-duration"),
-							() -> StringPool.BLANK
-						).build()));
+					Collections.singletonMap(
+						StringBundler.concat(
+							"/api/1.0/experiments/", experimentId,
+							"/estimated-days-duration"),
+						() -> StringPool.BLANK)));
 
 		Assert.assertNull(
 			asahFaroBackendClient.calculateExperimentEstimatedDaysDuration(
@@ -162,14 +151,11 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							StringBundler.concat(
-								"api/1.0/experiments/", experimentId,
-								"/estimated-days-duration"),
-							() -> RandomTestUtil::randomString
-						).build()));
+					Collections.singletonMap(
+						StringBundler.concat(
+							"api/1.0/experiments/", experimentId,
+							"/estimated-days-duration"),
+						RandomTestUtil::randomString)));
 
 		asahFaroBackendClient.calculateExperimentEstimatedDaysDuration(
 			RandomTestUtil.randomLong(), experimentId,
@@ -184,14 +170,11 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/experiments/" + experimentId,
-							() -> JSONUtil.put(
-								"id", "123456"
-							).toString()
-						).build()));
+					Collections.singletonMap(
+						"/api/1.0/experiments/" + experimentId,
+						() -> JSONUtil.put(
+							"id", "123456"
+						).toString())));
 
 		asahFaroBackendClient.deleteExperiment(
 			RandomTestUtil.randomLong(), experimentId);
@@ -203,31 +186,27 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/individuals",
-							() -> JSONUtil.put(
-								"_embedded",
-								JSONUtil.put(
-									"individuals",
-									JSONUtil.putAll(
-										JSONUtil.put("id", "1234567")))
+					Collections.singletonMap(
+						"/api/1.0/individuals",
+						() -> JSONUtil.put(
+							"_embedded",
+							JSONUtil.put(
+								"individuals",
+								JSONUtil.putAll(JSONUtil.put("id", "1234567")))
+						).put(
+							"page",
+							JSONUtil.put(
+								"number", 0
 							).put(
-								"page",
-								JSONUtil.put(
-									"number", 0
-								).put(
-									"size", 100
-								).put(
-									"totalElements", 1
-								).put(
-									"totalPages", 1
-								)
+								"size", 100
 							).put(
-								"total", 0
-							).toString()
-						).build()));
+								"totalElements", 1
+							).put(
+								"totalPages", 1
+							)
+						).put(
+							"total", 0
+						).toString())));
 
 		Individual individual = asahFaroBackendClient.getIndividual(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
@@ -243,41 +222,38 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							StringBundler.concat(
-								"/api/1.0/individual-segments/",
-								individualSegmentId, "/individuals"),
-							() -> JSONUtil.put(
-								"_embedded",
-								JSONUtil.put(
-									"individuals",
-									JSONUtil.putAll(
-										JSONUtil.put(
-											"dataSourceIndividualPKs",
-											JSONUtil.putAll(
-												JSONUtil.put(
-													"dataSourceId", "123456789"
-												).put(
-													"individualPKs",
-													JSONUtil.putAll("userUuid")
-												)))))
+					Collections.singletonMap(
+						StringBundler.concat(
+							"/api/1.0/individual-segments/",
+							individualSegmentId, "/individuals"),
+						() -> JSONUtil.put(
+							"_embedded",
+							JSONUtil.put(
+								"individuals",
+								JSONUtil.putAll(
+									JSONUtil.put(
+										"dataSourceIndividualPKs",
+										JSONUtil.putAll(
+											JSONUtil.put(
+												"dataSourceId", "123456789"
+											).put(
+												"individualPKs",
+												JSONUtil.putAll("userUuid")
+											)))))
+						).put(
+							"page",
+							JSONUtil.put(
+								"number", 0
 							).put(
-								"page",
-								JSONUtil.put(
-									"number", 0
-								).put(
-									"size", 100
-								).put(
-									"totalElements", 1
-								).put(
-									"totalPages", 1
-								)
+								"size", 100
 							).put(
-								"total", 0
-							).toString()
-						).build()));
+								"totalElements", 1
+							).put(
+								"totalPages", 1
+							)
+						).put(
+							"total", 0
+						).toString())));
 
 		Results<Individual> individualResults =
 			asahFaroBackendClient.getIndividualResults(
@@ -314,35 +290,32 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/individual-segments",
-							() -> JSONUtil.put(
-								"_embedded",
-								JSONUtil.put(
-									"individual-segments",
-									JSONUtil.putAll(
-										JSONUtil.put(
-											"id", "1234567"
-										).put(
-											"name", "Test segment"
-										)))
+					Collections.singletonMap(
+						"/api/1.0/individual-segments",
+						() -> JSONUtil.put(
+							"_embedded",
+							JSONUtil.put(
+								"individual-segments",
+								JSONUtil.putAll(
+									JSONUtil.put(
+										"id", "1234567"
+									).put(
+										"name", "Test segment"
+									)))
+						).put(
+							"page",
+							JSONUtil.put(
+								"number", 0
 							).put(
-								"page",
-								JSONUtil.put(
-									"number", 0
-								).put(
-									"size", 100
-								).put(
-									"totalElements", 1
-								).put(
-									"totalPages", 1
-								)
+								"size", 100
 							).put(
-								"total", 0
-							).toString()
-						).build()));
+								"totalElements", 1
+							).put(
+								"totalPages", 1
+							)
+						).put(
+							"total", 0
+						).toString())));
 
 		Results<IndividualSegment> individualSegmentResults =
 			asahFaroBackendClient.getIndividualSegmentResults(
@@ -370,35 +343,31 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/interests/terms/" + userId,
-							() -> JSONUtil.put(
-								"_embedded",
-								JSONUtil.put(
-									"interest-topics",
-									JSONUtil.putAll(
-										JSONUtil.put(
-											"terms",
-											JSONUtil.putAll(
-												JSONUtil.put(
-													"keyword", "term1")))))
+					Collections.singletonMap(
+						"/api/1.0/interests/terms/" + userId,
+						() -> JSONUtil.put(
+							"_embedded",
+							JSONUtil.put(
+								"interest-topics",
+								JSONUtil.putAll(
+									JSONUtil.put(
+										"terms",
+										JSONUtil.putAll(
+											JSONUtil.put("keyword", "term1")))))
+						).put(
+							"page",
+							JSONUtil.put(
+								"number", 0
 							).put(
-								"page",
-								JSONUtil.put(
-									"number", 0
-								).put(
-									"size", 100
-								).put(
-									"totalElements", 1
-								).put(
-									"totalPages", 1
-								)
+								"size", 100
 							).put(
-								"total", 0
-							).toString()
-						).build()));
+								"totalElements", 1
+							).put(
+								"totalPages", 1
+							)
+						).put(
+							"total", 0
+						).toString())));
 
 		Results<Topic> interestTermsResults =
 			asahFaroBackendClient.getInterestTermsResults(
@@ -427,12 +396,9 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/experiments/" + experimentId,
-							() -> StringPool.BLANK
-						).build()));
+					Collections.singletonMap(
+						"/api/1.0/experiments/" + experimentId,
+						() -> StringPool.BLANK)));
 
 		Experiment experiment = new Experiment();
 
@@ -450,14 +416,11 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							StringBundler.concat(
-								"/api/1.0/experiments/", experimentId,
-								"/dxp-variants"),
-							() -> StringPool.BLANK
-						).build()));
+					Collections.singletonMap(
+						StringBundler.concat(
+							"/api/1.0/experiments/", experimentId,
+							"/dxp-variants"),
+						() -> StringPool.BLANK)));
 
 		DXPVariant dxpVariant = new DXPVariant();
 
@@ -480,14 +443,11 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							StringBundler.concat(
-								"/api/1.0/experiments/", experimentId,
-								"/dxp-variants"),
-							() -> StringPool.BLANK
-						).build()));
+					Collections.singletonMap(
+						StringBundler.concat(
+							"/api/1.0/experiments/", experimentId,
+							"/dxp-variants"),
+						() -> StringPool.BLANK)));
 
 		asahFaroBackendClient.updateExperimentDXPVariants(
 			RandomTestUtil.randomLong(), experimentId, null);
@@ -501,12 +461,9 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/experiments/123456/dxp-variants",
-							() -> StringPool.BLANK
-						).build()));
+					Collections.singletonMap(
+						"/api/1.0/experiments/123456/dxp-variants",
+						() -> StringPool.BLANK)));
 
 		DXPVariant dxpVariant = new DXPVariant();
 
@@ -525,12 +482,9 @@ public class AsahFaroBackendClientImplTest {
 			new AsahFaroBackendClientImpl(
 				_analyticsSettingsManager,
 				new MockHttp(
-					null, false, false, false,
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/experiments/123456",
-							() -> StringPool.BLANK
-						).build()));
+					Collections.singletonMap(
+						"/api/1.0/experiments/123456",
+						() -> StringPool.BLANK)));
 
 		asahFaroBackendClient.updateExperiment(
 			RandomTestUtil.randomLong(), new Experiment());

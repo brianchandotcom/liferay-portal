@@ -46,6 +46,8 @@ public class ObjectWebKeys {
 
 	public static final String OBJECT_VIEW = "OBJECT_VIEW";
 
+	public static final String READ_ONLY = "READ_ONLY";
+
 	public static final String REGULAR_OBJECT_LAYOUT_TAB =
 		"REGULAR_OBJECT_LAYOUT_TAB";
 

@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
@@ -80,27 +79,25 @@ public class DDMExpressionFunctionMetadataHelper {
 		for (Map.Entry<String, DDMExpressionFunction> entry :
 				customDDMExpressionFunctions.entrySet()) {
 
+			Method method = null;
+
 			DDMExpressionFunction ddmExpressionFunction = entry.getValue();
 
 			Class<?> clazz = ddmExpressionFunction.getClass();
 
-			Optional<Method> optional = Optional.empty();
+			for (Method curMethod : clazz.getMethods()) {
+				if (Objects.equals(curMethod.getName(), "apply") &&
+					Objects.equals(curMethod.getReturnType(), Boolean.class)) {
 
-			for (Method method : clazz.getMethods()) {
-				if (Objects.equals(method.getName(), "apply") &&
-					Objects.equals(method.getReturnType(), Boolean.class)) {
-
-					optional = Optional.of(method);
+					method = curMethod;
 
 					break;
 				}
 			}
 
-			if (!optional.isPresent()) {
+			if (method == null) {
 				continue;
 			}
-
-			Method method = optional.get();
 
 			int parameterCount = method.getParameterCount();
 

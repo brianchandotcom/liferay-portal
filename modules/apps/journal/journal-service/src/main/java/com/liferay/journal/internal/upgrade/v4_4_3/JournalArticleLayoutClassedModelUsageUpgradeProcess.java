@@ -14,7 +14,6 @@
 
 package com.liferay.journal.internal.upgrade.v4_4_3;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -78,7 +77,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
 					"select distinct groupId, resourcePrimKey, " +
-						"articleId from JournalArticle")) {
+						"companyId, articleId from JournalArticle")) {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -100,30 +99,30 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 						journalArticleClassNameId, portletClassNameId,
 						serviceContext);
 
-					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+					String assetEntryClassUuid = _getAssetEntryClassUuid(
 						journalArticleClassNameId, resourcePrimKey);
 
-					if ((assetEntry == null) ||
-						Validator.isNull(assetEntry.getClassUuid())) {
-
+					if (Validator.isNull(assetEntryClassUuid)) {
 						continue;
 					}
 
+					long companyId = resultSet.getLong("companyId");
+
 					_addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
-						assetEntry.getClassUuid(), resourcePrimKey, groupId,
+						assetEntryClassUuid, resourcePrimKey, groupId,
 						journalArticleClassNameId, portletClassNameId,
 						_portletPreferencesLocalService.getPortletPreferences(
-							assetEntry.getCompanyId(), groupId,
+							companyId, groupId,
 							PortletKeys.PREFS_OWNER_ID_DEFAULT,
 							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 							AssetPublisherPortletKeys.ASSET_PUBLISHER, true),
 						serviceContext);
 
 					_addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
-						assetEntry.getClassUuid(), resourcePrimKey, groupId,
+						assetEntryClassUuid, resourcePrimKey, groupId,
 						journalArticleClassNameId, portletClassNameId,
 						_portletPreferencesLocalService.getPortletPreferences(
-							assetEntry.getCompanyId(), groupId,
+							companyId, groupId,
 							PortletKeys.PREFS_OWNER_ID_DEFAULT,
 							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 							AssetPublisherPortletKeys.ASSET_PUBLISHER, false),
@@ -231,6 +230,26 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 				}
 			}
 		}
+	}
+
+	private String _getAssetEntryClassUuid(long classNameId, long classPK)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select classUuid from AssetEntry where classNameId = ? and " +
+					"classPK = ?")) {
+
+			preparedStatement.setLong(1, classNameId);
+			preparedStatement.setLong(2, classPK);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getString("classUuid");
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

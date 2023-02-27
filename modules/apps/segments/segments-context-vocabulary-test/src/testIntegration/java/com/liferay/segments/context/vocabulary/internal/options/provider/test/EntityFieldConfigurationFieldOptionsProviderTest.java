@@ -66,13 +66,11 @@ public class EntityFieldConfigurationFieldOptionsProviderTest {
 		for (ConfigurationFieldOptionsProvider.Option curOption :
 				_configurationFieldOptionsProvider.getOptions()) {
 
-			if (!Objects.equals(Context.BROWSER, curOption.getValue())) {
-				continue;
+			if (Objects.equals(Context.BROWSER, curOption.getValue())) {
+				option = curOption;
+
+				break;
 			}
-
-			option = curOption;
-
-			break;
 		}
 
 		Assert.assertNotNull(option);

@@ -54,6 +54,29 @@
 										<f:checkbox name="computerTemporarilyOnline" value="${jenkinsWebHooks.computerTemporarilyOnline}" checked="${jenkinsWebHooks.computerTemporarilyOnline}" />
 									</f:entry>
 								</f:section>
+								<f:section title="Queue Events">
+									<f:entry title="QUEUE_ITEM_ENTER_BLOCKED">
+										<f:checkbox name="queueItemEnterBlocked" value="${jenkinsWebHooks.queueItemEnterBlocked}" checked="${jenkinsWebHooks.queueItemEnterBlocked}" />
+									</f:entry>
+									<f:entry title="QUEUE_ITEM_ENTER_BUILDABLE">
+										<f:checkbox name="queueItemEnterBuildable" value="${jenkinsWebHooks.queueItemEnterBuildable}" checked="${jenkinsWebHooks.queueItemEnterBuildable}" />
+									</f:entry>
+									<f:entry title="QUEUE_ITEM_ENTER_WAITING">
+										<f:checkbox name="queueItemEnterWaiting" value="${jenkinsWebHooks.queueItemEnterWaiting}" checked="${jenkinsWebHooks.queueItemEnterWaiting}" />
+									</f:entry>
+									<f:entry title="QUEUE_ITEM_LEAVE_BLOCKED">
+										<f:checkbox name="queueItemLeaveBlocked" value="${jenkinsWebHooks.queueItemLeaveBlocked}" checked="${jenkinsWebHooks.queueItemLeaveBlocked}" />
+									</f:entry>
+									<f:entry title="QUEUE_ITEM_LEAVE_BUILDABLE">
+										<f:checkbox name="queueItemLeaveBuildable" value="${jenkinsWebHooks.queueItemLeaveBuildable}" checked="${jenkinsWebHooks.queueItemLeaveBuildable}" />
+									</f:entry>
+									<f:entry title="QUEUE_ITEM_LEAVE_WAITING">
+										<f:checkbox name="queueItemLeaveWaiting" value="${jenkinsWebHooks.queueItemLeaveWaiting}" checked="${jenkinsWebHooks.queueItemLeaveWaiting}" />
+									</f:entry>
+									<f:entry title="QUEUE_ITEM_LEFT">
+										<f:checkbox name="queueItemLeft" value="${jenkinsWebHooks.queueItemLeft}" checked="${jenkinsWebHooks.queueItemLeft}" />
+									</f:entry>
+								</f:section>
 							</f:advanced>
 						</f:repeatable>
 					</f:entry>

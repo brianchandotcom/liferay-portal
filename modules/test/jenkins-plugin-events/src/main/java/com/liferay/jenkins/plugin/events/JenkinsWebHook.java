@@ -49,6 +49,15 @@ public class JenkinsWebHook {
 			"computerTemporarilyOffline");
 		computerTemporarilyOnline = jsonObject.getBoolean(
 			"computerTemporarilyOnline");
+		queueItemEnterBlocked = jsonObject.getBoolean("queueItemEnterBlocked");
+		queueItemEnterBuildable = jsonObject.getBoolean(
+			"queueItemEnterBuildable");
+		queueItemEnterWaiting = jsonObject.getBoolean("queueItemEnterWaiting");
+		queueItemLeaveBlocked = jsonObject.getBoolean("queueItemLeaveBlocked");
+		queueItemLeaveBuildable = jsonObject.getBoolean(
+			"queueItemLeaveBuildable");
+		queueItemLeaveWaiting = jsonObject.getBoolean("queueItemLeaveWaiting");
+		queueItemLeft = jsonObject.getBoolean("queueItemLeft");
 		url = jsonObject.getString("url");
 
 		_initializeEventTypes();
@@ -155,13 +164,23 @@ public class JenkinsWebHook {
 	public boolean computerOnline;
 	public boolean computerTemporarilyOffline;
 	public boolean computerTemporarilyOnline;
+	public boolean queueItemEnterBlocked;
+	public boolean queueItemEnterBuildable;
+	public boolean queueItemEnterWaiting;
+	public boolean queueItemLeaveBlocked;
+	public boolean queueItemLeaveBuildable;
+	public boolean queueItemLeaveWaiting;
+	public boolean queueItemLeft;
 	public String url;
 
 	public enum EventTrigger {
 
 		BUILD_COMPLETED, BUILD_STARTED, COMPUTER_BUSY, COMPUTER_IDLE,
 		COMPUTER_OFFLINE, COMPUTER_ONLINE, COMPUTER_TEMPORARILY_OFFLINE,
-		COMPUTER_TEMPORARILY_ONLINE
+		COMPUTER_TEMPORARILY_ONLINE, QUEUE_ITEM_ENTER_BLOCKED,
+		QUEUE_ITEM_ENTER_BUILDABLE, QUEUE_ITEM_ENTER_WAITING,
+		QUEUE_ITEM_LEAVE_BLOCKED, QUEUE_ITEM_LEAVE_BUILDABLE,
+		QUEUE_ITEM_LEAVE_WAITING, QUEUE_ITEM_LEFT
 
 	}
 
@@ -212,6 +231,34 @@ public class JenkinsWebHook {
 
 		if (computerTemporarilyOnline) {
 			_eventTriggers.add(EventTrigger.COMPUTER_TEMPORARILY_ONLINE);
+		}
+
+		if (queueItemEnterBlocked) {
+			_eventTriggers.add(EventTrigger.QUEUE_ITEM_ENTER_BLOCKED);
+		}
+
+		if (queueItemEnterBuildable) {
+			_eventTriggers.add(EventTrigger.QUEUE_ITEM_ENTER_BUILDABLE);
+		}
+
+		if (queueItemEnterWaiting) {
+			_eventTriggers.add(EventTrigger.QUEUE_ITEM_ENTER_WAITING);
+		}
+
+		if (queueItemLeaveBlocked) {
+			_eventTriggers.add(EventTrigger.QUEUE_ITEM_LEAVE_BLOCKED);
+		}
+
+		if (queueItemLeaveBuildable) {
+			_eventTriggers.add(EventTrigger.QUEUE_ITEM_LEAVE_BUILDABLE);
+		}
+
+		if (queueItemLeaveWaiting) {
+			_eventTriggers.add(EventTrigger.QUEUE_ITEM_LEAVE_WAITING);
+		}
+
+		if (queueItemLeft) {
+			_eventTriggers.add(EventTrigger.QUEUE_ITEM_LEFT);
 		}
 	}
 

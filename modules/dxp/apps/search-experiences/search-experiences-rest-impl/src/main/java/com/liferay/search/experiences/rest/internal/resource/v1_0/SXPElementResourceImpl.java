@@ -238,12 +238,12 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				sxpElement.getId(), contextAcceptLanguage.getPreferredLocale(),
 				contextUriInfo, contextUser),
 			_sxpElementService.addSXPElement(
+				sxpElement.getExternalReferenceCode(),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpElement.getDescription(),
 					sxpElement.getDescription_i18n()),
-				_getElementDefinitionJSON(sxpElement),
-				sxpElement.getExternalReferenceCode(), false,
+				_getElementDefinitionJSON(sxpElement), false,
 				_getSchemaVersion(),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
@@ -265,8 +265,8 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			_sxpElementService.addSXPElement(
-				sxpElement.getDescriptionMap(),
-				sxpElement.getElementDefinitionJSON(), null, false,
+				null, sxpElement.getDescriptionMap(),
+				sxpElement.getElementDefinitionJSON(), false,
 				sxpElement.getSchemaVersion(),
 				TitleMapUtil.copy(sxpElement.getTitleMap()),
 				sxpElement.getType(),

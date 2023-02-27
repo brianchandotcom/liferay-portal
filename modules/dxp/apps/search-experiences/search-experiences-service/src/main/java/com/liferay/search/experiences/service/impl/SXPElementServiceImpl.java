@@ -47,8 +47,8 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 
 	@Override
 	public SXPElement addSXPElement(
-			Map<Locale, String> descriptionMap, String elementDefinitionJSON,
-			String externalReferenceCode, boolean readOnly,
+			String externalReferenceCode, Map<Locale, String> descriptionMap,
+			String elementDefinitionJSON, boolean readOnly,
 			String schemaVersion, Map<Locale, String> titleMap, int type,
 			ServiceContext serviceContext)
 		throws PortalException {

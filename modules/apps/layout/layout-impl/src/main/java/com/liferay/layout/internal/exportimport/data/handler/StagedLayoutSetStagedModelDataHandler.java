@@ -14,6 +14,8 @@
 
 package com.liferay.layout.internal.exportimport.data.handler;
 
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
@@ -64,6 +66,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ThemeFactory;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -110,6 +113,7 @@ public class StagedLayoutSetStagedModelDataHandler
 			StagedLayoutSet stagedLayoutSet)
 		throws Exception {
 
+		_exportClientExtensionEntryRels(portletDataContext, stagedLayoutSet);
 		_exportLayouts(portletDataContext, stagedLayoutSet);
 		_exportLogo(portletDataContext, stagedLayoutSet);
 		_exportTheme(portletDataContext, stagedLayoutSet);
@@ -223,6 +227,7 @@ public class StagedLayoutSetStagedModelDataHandler
 					portletDataContext, importedStagedLayoutSet);
 		}
 
+		_importClientExtensionEntryRels(portletDataContext, stagedLayoutSet);
 		_importLogo(portletDataContext);
 		_importTheme(portletDataContext, stagedLayoutSet);
 
@@ -391,6 +396,27 @@ public class StagedLayoutSetStagedModelDataHandler
 					}
 				}
 			}
+		}
+	}
+
+	private void _exportClientExtensionEntryRels(
+			PortletDataContext portletDataContext,
+			StagedLayoutSet stagedLayoutSet)
+		throws Exception {
+
+		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();
+
+		List<ClientExtensionEntryRel> clientExtensionEntryRels =
+			_clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
+				_portal.getClassNameId(LayoutSet.class),
+				layoutSet.getLayoutSetId());
+
+		for (ClientExtensionEntryRel clientExtensionEntryRel :
+				clientExtensionEntryRels) {
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, stagedLayoutSet, clientExtensionEntryRel,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 	}
 
@@ -663,6 +689,23 @@ public class StagedLayoutSetStagedModelDataHandler
 		}
 
 		return false;
+	}
+
+	private void _importClientExtensionEntryRels(
+			PortletDataContext portletDataContext,
+			StagedLayoutSet stagedLayoutSet)
+		throws Exception {
+
+		List<Element> clientExtensionEntryRelsElements =
+			portletDataContext.getReferenceDataElements(
+				stagedLayoutSet, ClientExtensionEntryRel.class);
+
+		for (Element clientExtensionEntryRelsElement :
+				clientExtensionEntryRelsElements) {
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, clientExtensionEntryRelsElement);
+		}
 	}
 
 	private void _importFaviconFileEntry(
@@ -1072,6 +1115,10 @@ public class StagedLayoutSetStagedModelDataHandler
 		StagedLayoutSetStagedModelDataHandler.class);
 
 	@Reference
+	private ClientExtensionEntryRelLocalService
+		_clientExtensionEntryRelLocalService;
+
+	@Reference
 	private ColorSchemeFactory _colorSchemeFactory;
 
 	@Reference
@@ -1108,6 +1155,9 @@ public class StagedLayoutSetStagedModelDataHandler
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private Sites _sites;

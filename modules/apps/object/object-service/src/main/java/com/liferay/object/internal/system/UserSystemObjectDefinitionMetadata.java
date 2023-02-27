@@ -14,6 +14,8 @@
 
 package com.liferay.object.internal.system;
 
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +47,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = SystemObjectDefinitionMetadata.class)
 public class UserSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
+
+	@Override
+	public long addBaseModel(User user, Map<String, Object> values)
+		throws Exception {
+
+		UserAccountResource userAccountResource = _getUserAccountResource(user);
+
+		UserAccount userAccount = userAccountResource.postUserAccount(
+			_getUserAccount(values));
+
+		return userAccount.getId();
+	}
 
 	@Override
 	public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
@@ -145,8 +160,16 @@ public class UserSystemObjectDefinitionMetadata
 			variables.put("givenName", variables.get("firstName"));
 		}
 
+		if (variables.containsKey("lastName")) {
+			variables.put("familyName", variables.get("lastName"));
+		}
+
 		if (variables.containsKey("middleName")) {
 			variables.put("additionalName", variables.get("middleName"));
+		}
+
+		if (variables.containsKey("screenName")) {
+			variables.put("alternateName", variables.get("screenName"));
 		}
 
 		return variables;
@@ -156,6 +179,49 @@ public class UserSystemObjectDefinitionMetadata
 	public int getVersion() {
 		return 2;
 	}
+
+	@Override
+	public void updateBaseModel(
+			long primaryKey, User user, Map<String, Object> values)
+		throws Exception {
+
+		UserAccountResource userAccountResource = _getUserAccountResource(user);
+
+		userAccountResource.patchUserAccount(
+			primaryKey, _getUserAccount(values));
+	}
+
+	private UserAccount _getUserAccount(Map<String, Object> values) {
+		return new UserAccount() {
+			{
+				additionalName = GetterUtil.getString(
+					values.get("additionalName"));
+				alternateName = GetterUtil.getString(
+					values.get("alternateName"));
+				emailAddress = GetterUtil.getString(values.get("emailAddress"));
+				externalReferenceCode = GetterUtil.getString(
+					values.get("externalReferenceCode"));
+				familyName = GetterUtil.getString(values.get("familyName"));
+				givenName = GetterUtil.getString(values.get("givenName"));
+			}
+		};
+	}
+
+	private UserAccountResource _getUserAccountResource(User user) {
+		UserAccountResource.Builder builder =
+			_userAccountResourceFactory.create();
+
+		return builder.checkPermissions(
+			false
+		).preferredLocale(
+			user.getLocale()
+		).user(
+			user
+		).build();
+	}
+
+	@Reference
+	private UserAccountResource.Factory _userAccountResourceFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

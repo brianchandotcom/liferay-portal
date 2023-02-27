@@ -18,6 +18,7 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -80,6 +81,23 @@ public abstract class BaseSystemObjectDefinitionMetadata
 		return ObjectFieldUtil.createObjectField(
 			0, businessType, dbColumnName, dbType, false, false, null,
 			_translate(labelKey), name, required, system);
+	}
+
+	protected Map<String, String> getLanguageIdMap(
+		String propertyName, Map<String, Object> values) {
+
+		Object propertyValue = values.get(propertyName);
+
+		if (propertyValue instanceof Map) {
+			return (Map<String, String>)propertyValue;
+		}
+		else if (propertyValue instanceof String) {
+			return LocalizedMapUtil.getLanguageIdMap(
+				LocalizedMapUtil.getLocalizedMap(
+					GetterUtil.getString(propertyValue)));
+		}
+
+		return null;
 	}
 
 	private String _translate(String labelKey) {

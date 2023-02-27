@@ -120,16 +120,16 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
 		user.setLanguageId(LocaleUtil.toLanguageId(locale));
-		user.setComments(
-			StringBundler.concat(
-				"This user is automatically created by the UAD application. ",
-				"Application data anonymized by Personal Data Erasure will be ",
-				"assigned to this user."));
 		user.setFirstName(firstName);
 		user.setMiddleName(middleName);
 		user.setLastName(lastName);
 		user.setJobTitle(jobTitle);
 		user.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+		user.setComments(
+			StringBundler.concat(
+				"This user is automatically created by the UAD application. ",
+				"Application data anonymized by Personal Data Erasure will be ",
+				"assigned to this user."));
 
 		_userLocalService.addUser(user);
 

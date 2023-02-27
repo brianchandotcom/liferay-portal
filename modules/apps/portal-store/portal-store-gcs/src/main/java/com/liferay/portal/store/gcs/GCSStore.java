@@ -271,6 +271,8 @@ public class GCSStore implements Store {
 	private String[] _getFilePaths(
 		long companyId, long repositoryId, String dirName) {
 
+		List<String> filePaths = new ArrayList<>();
+
 		Bucket bucket = _gcsStore.get(_gcsStoreConfiguration.bucketName());
 
 		String path = null;
@@ -287,8 +289,6 @@ public class GCSStore implements Store {
 		Page<Blob> blobPage = bucket.list(Storage.BlobListOption.prefix(path));
 
 		Iterable<Blob> blobs = blobPage.iterateAll();
-
-		List<String> filePaths = new ArrayList<>();
 
 		blobs.forEach(blob -> filePaths.add(blob.getName()));
 

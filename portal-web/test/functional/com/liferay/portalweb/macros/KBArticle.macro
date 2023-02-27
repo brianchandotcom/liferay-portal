@@ -767,12 +767,6 @@ definition {
 			value1 = ${kbDisplayPreviousArticle});
 	}
 
-	macro gotoSuggestionsNavigationCP {
-		AssertClick(
-			locator1 = "KnowledgeBase#ADMIN_TABS_SUGGESTIONS",
-			value1 = "Suggestions");
-	}
-
 	macro gotoViaKBAdminCP {
 		var key_kbArticleTitle = ${kbArticleTitle};
 

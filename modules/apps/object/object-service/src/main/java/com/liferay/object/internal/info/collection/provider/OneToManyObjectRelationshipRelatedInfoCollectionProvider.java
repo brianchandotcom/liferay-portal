@@ -25,11 +25,10 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -118,7 +117,7 @@ public class OneToManyObjectRelationshipRelatedInfoCollectionProvider
 
 	@Override
 	public boolean isAvailable() {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-176083")) ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083") ||
 			(_objectDefinition.getCompanyId() !=
 				CompanyThreadLocal.getCompanyId())) {
 

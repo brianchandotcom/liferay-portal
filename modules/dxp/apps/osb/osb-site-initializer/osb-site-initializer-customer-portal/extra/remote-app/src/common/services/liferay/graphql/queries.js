@@ -410,6 +410,7 @@ export const getKoroneikiAccounts = gql`
 				items {
 					accountKey
 					acWorkspaceGroupId
+					allowSelfProvisioning
 					code
 					dxpVersion
 					externalReferenceCode

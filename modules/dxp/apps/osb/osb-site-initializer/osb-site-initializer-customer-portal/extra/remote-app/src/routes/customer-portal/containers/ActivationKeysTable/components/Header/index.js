@@ -12,7 +12,6 @@
 import ClayAlert from '@clayui/alert';
 import {useCallback, useMemo, useState} from 'react';
 import i18n from '../../../../../../common/I18n';
-
 import {ROLE_TYPES} from '../../../../../../common/utils/constants';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
@@ -110,6 +109,8 @@ const ActivationKeysTableHeader = ({
 		[activationKeysByStatusPaginatedChecked, setActivationKeys]
 	);
 
+	const allowSelfProvisioning = project.allowSelfProvisioning;
+
 	return (
 		<>
 			<div className="bg-neutral-1 d-flex flex-column pb-1 pt-3 px-3 rounded">
@@ -127,22 +128,25 @@ const ActivationKeysTableHeader = ({
 										activationKeysByStatusPaginatedChecked.length,
 									])}
 								</p>
-								{isAdminOrPartnerManager && (
-									<DeactivateButton
-										deactivateKeysStatus={status.deactivate}
-										filterCheckedActivationKeys={
-											filterCheckedActivationKeys
-										}
-										handleDeactivate={handleDeactivate}
-										sessionId={sessionId}
-										setDeactivateKeysStatus={(value) =>
-											setStatus((previousStatus) => ({
-												...previousStatus,
-												deactivate: value,
-											}))
-										}
-									/>
-								)}
+								{isAdminOrPartnerManager &&
+									allowSelfProvisioning && (
+										<DeactivateButton
+											deactivateKeysStatus={
+												status.deactivate
+											}
+											filterCheckedActivationKeys={
+												filterCheckedActivationKeys
+											}
+											handleDeactivate={handleDeactivate}
+											sessionId={sessionId}
+											setDeactivateKeysStatus={(value) =>
+												setStatus((previousStatus) => ({
+													...previousStatus,
+													deactivate: value,
+												}))
+											}
+										/>
+									)}
 							</>
 						)}
 

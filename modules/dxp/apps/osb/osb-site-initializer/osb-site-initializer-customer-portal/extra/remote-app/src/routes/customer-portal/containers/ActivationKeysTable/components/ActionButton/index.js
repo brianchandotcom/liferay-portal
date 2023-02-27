@@ -14,7 +14,6 @@ import {useNavigate} from 'react-router-dom';
 import i18n from '../../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../../common/contexts/AppPropertiesContext';
-import {useGetKoroneikiAccountByExternalReferenceCode} from '../../../../../../common/services/liferay/graphql/koroneiki-accounts';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants';
 import {getFilteredKeysActionsItems} from '../../utils/constants/columns-definitions/getFilteredKeysActionsItems';
 import {getActivationKeyDownload} from '../../utils/getActivationKeyDownload';
@@ -34,15 +33,7 @@ const ActionButton = ({
 	const {provisioningServerAPI} = useAppPropertiesContext();
 	const navigate = useNavigate();
 
-	const externalReferenceCode = project.externalReferenceCode;
-
-	const currentKoronikiAccount = useGetKoroneikiAccountByExternalReferenceCode(
-		externalReferenceCode
-	);
-
-	const allowSelfProvisioning =
-		currentKoronikiAccount.data.koroneikiAccountByExternalReferenceCode
-			.allowSelfProvisioning;
+	const allowSelfProvisioning = project.allowSelfProvisioning;
 
 	const handleAlertStatus = useCallback(
 		(hasSuccessfullyDownloadedKeys) =>

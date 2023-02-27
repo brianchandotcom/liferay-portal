@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -86,7 +87,8 @@ public interface ClientExtensionEntryRelLocalService
 
 	public ClientExtensionEntryRel addClientExtensionEntryRel(
 			long userId, long groupId, long classNameId, long classPK,
-			String cetExternalReferenceCode, String type, String typeSettings)
+			String cetExternalReferenceCode, String type, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -233,7 +235,7 @@ public interface ClientExtensionEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ClientExtensionEntryRel
 		fetchClientExtensionEntryRelByExternalReferenceCode(
-			String externalReferenceCode, long companyId);
+			String externalReferenceCode, long groupId);
 
 	/**
 	 * Returns the client extension entry rel matching the UUID and group.
@@ -264,7 +266,7 @@ public interface ClientExtensionEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ClientExtensionEntryRel
 			getClientExtensionEntryRelByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
+				String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**
@@ -382,6 +384,11 @@ public interface ClientExtensionEntryRelLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ClientExtensionEntryRel updateClientExtensionEntryRel(
 		ClientExtensionEntryRel clientExtensionEntryRel);
+
+	public ClientExtensionEntryRel updateClientExtensionEntryRel(
+			long clientExtensionEntryRelId, long classNameId, long classPK,
+			String cetExternalReferenceCode, String type, String typeSettings)
+		throws PortalException;
 
 	@Override
 	@Transactional(enabled = false)

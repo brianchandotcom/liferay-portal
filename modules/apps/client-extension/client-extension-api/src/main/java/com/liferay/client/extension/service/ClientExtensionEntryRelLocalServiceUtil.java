@@ -63,12 +63,13 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 
 	public static ClientExtensionEntryRel addClientExtensionEntryRel(
 			long userId, long groupId, long classNameId, long classPK,
-			String cetExternalReferenceCode, String type, String typeSettings)
+			String cetExternalReferenceCode, String type, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addClientExtensionEntryRel(
 			userId, groupId, classNameId, classPK, cetExternalReferenceCode,
-			type, typeSettings);
+			type, typeSettings, serviceContext);
 	}
 
 	/**
@@ -260,10 +261,10 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 
 	public static ClientExtensionEntryRel
 		fetchClientExtensionEntryRelByExternalReferenceCode(
-			String externalReferenceCode, long companyId) {
+			String externalReferenceCode, long groupId) {
 
 		return getService().fetchClientExtensionEntryRelByExternalReferenceCode(
-			externalReferenceCode, companyId);
+			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -304,11 +305,11 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 
 	public static ClientExtensionEntryRel
 			getClientExtensionEntryRelByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
+				String externalReferenceCode, long groupId)
 		throws PortalException {
 
 		return getService().getClientExtensionEntryRelByExternalReferenceCode(
-			externalReferenceCode, companyId);
+			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -463,6 +464,16 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 
 		return getService().updateClientExtensionEntryRel(
 			clientExtensionEntryRel);
+	}
+
+	public static ClientExtensionEntryRel updateClientExtensionEntryRel(
+			long clientExtensionEntryRelId, long classNameId, long classPK,
+			String cetExternalReferenceCode, String type, String typeSettings)
+		throws PortalException {
+
+		return getService().updateClientExtensionEntryRel(
+			clientExtensionEntryRelId, classNameId, classPK,
+			cetExternalReferenceCode, type, typeSettings);
 	}
 
 	public static ClientExtensionEntryRelLocalService getService() {

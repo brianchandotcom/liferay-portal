@@ -241,8 +241,8 @@ public class ClientExtensionEntryRelPersistenceTest {
 		ClientExtensionEntryRel newClientExtensionEntryRel =
 			addClientExtensionEntryRel();
 
-		newClientExtensionEntryRel.setCompanyId(
-			clientExtensionEntryRel.getCompanyId());
+		newClientExtensionEntryRel.setGroupId(
+			clientExtensionEntryRel.getGroupId());
 
 		newClientExtensionEntryRel = _persistence.update(
 			newClientExtensionEntryRel);
@@ -312,12 +312,12 @@ public class ClientExtensionEntryRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByERC_C() throws Exception {
-		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
 
-		_persistence.countByERC_C("null", 0L);
+		_persistence.countByERC_G("null", 0L);
 
-		_persistence.countByERC_C((String)null, 0L);
+		_persistence.countByERC_G((String)null, 0L);
 	}
 
 	@Test
@@ -669,10 +669,10 @@ public class ClientExtensionEntryRelPersistenceTest {
 				clientExtensionEntryRel, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
 		Assert.assertEquals(
-			Long.valueOf(clientExtensionEntryRel.getCompanyId()),
+			Long.valueOf(clientExtensionEntryRel.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				clientExtensionEntryRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected ClientExtensionEntryRel addClientExtensionEntryRel()

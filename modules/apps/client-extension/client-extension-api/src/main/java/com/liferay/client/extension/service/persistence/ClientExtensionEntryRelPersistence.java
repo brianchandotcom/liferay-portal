@@ -871,57 +871,57 @@ public interface ClientExtensionEntryRelPersistence
 	public int countByC_C_T(long classNameId, long classPK, String type);
 
 	/**
-	 * Returns the client extension entry rel where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchClientExtensionEntryRelException</code> if it could not be found.
+	 * Returns the client extension entry rel where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchClientExtensionEntryRelException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @return the matching client extension entry rel
 	 * @throws NoSuchClientExtensionEntryRelException if a matching client extension entry rel could not be found
 	 */
-	public ClientExtensionEntryRel findByERC_C(
-			String externalReferenceCode, long companyId)
+	public ClientExtensionEntryRel findByERC_G(
+			String externalReferenceCode, long groupId)
 		throws NoSuchClientExtensionEntryRelException;
 
 	/**
-	 * Returns the client extension entry rel where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the client extension entry rel where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @return the matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
 	 */
-	public ClientExtensionEntryRel fetchByERC_C(
-		String externalReferenceCode, long companyId);
+	public ClientExtensionEntryRel fetchByERC_G(
+		String externalReferenceCode, long groupId);
 
 	/**
-	 * Returns the client extension entry rel where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the client extension entry rel where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
 	 */
-	public ClientExtensionEntryRel fetchByERC_C(
-		String externalReferenceCode, long companyId, boolean useFinderCache);
+	public ClientExtensionEntryRel fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache);
 
 	/**
-	 * Removes the client extension entry rel where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 * Removes the client extension entry rel where externalReferenceCode = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @return the client extension entry rel that was removed
 	 */
-	public ClientExtensionEntryRel removeByERC_C(
-			String externalReferenceCode, long companyId)
+	public ClientExtensionEntryRel removeByERC_G(
+			String externalReferenceCode, long groupId)
 		throws NoSuchClientExtensionEntryRelException;
 
 	/**
-	 * Returns the number of client extension entry rels where externalReferenceCode = &#63; and companyId = &#63;.
+	 * Returns the number of client extension entry rels where externalReferenceCode = &#63; and groupId = &#63;.
 	 *
 	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @return the number of matching client extension entry rels
 	 */
-	public int countByERC_C(String externalReferenceCode, long companyId);
+	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
 	 * Caches the client extension entry rel in the entity cache if it is enabled.

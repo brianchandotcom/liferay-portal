@@ -291,20 +291,20 @@ public abstract class ClientExtensionEntryRelLocalServiceBaseImpl
 	@Override
 	public ClientExtensionEntryRel
 		fetchClientExtensionEntryRelByExternalReferenceCode(
-			String externalReferenceCode, long companyId) {
+			String externalReferenceCode, long groupId) {
 
-		return clientExtensionEntryRelPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
+		return clientExtensionEntryRelPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
 	}
 
 	@Override
 	public ClientExtensionEntryRel
 			getClientExtensionEntryRelByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
+				String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		return clientExtensionEntryRelPersistence.findByERC_C(
-			externalReferenceCode, companyId);
+		return clientExtensionEntryRelPersistence.findByERC_G(
+			externalReferenceCode, groupId);
 	}
 
 	/**

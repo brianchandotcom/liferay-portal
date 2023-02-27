@@ -63,12 +63,13 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	@Override
 	public ClientExtensionEntryRel addClientExtensionEntryRel(
 			long userId, long groupId, long classNameId, long classPK,
-			String cetExternalReferenceCode, String type, String typeSettings)
+			String cetExternalReferenceCode, String type, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 			userId, groupId, classNameId, classPK, cetExternalReferenceCode,
-			type, typeSettings);
+			type, typeSettings, serviceContext);
 	}
 
 	/**
@@ -292,11 +293,11 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	@Override
 	public ClientExtensionEntryRel
 		fetchClientExtensionEntryRelByExternalReferenceCode(
-			String externalReferenceCode, long companyId) {
+			String externalReferenceCode, long groupId) {
 
 		return _clientExtensionEntryRelLocalService.
 			fetchClientExtensionEntryRelByExternalReferenceCode(
-				externalReferenceCode, companyId);
+				externalReferenceCode, groupId);
 	}
 
 	/**
@@ -340,12 +341,12 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 	@Override
 	public ClientExtensionEntryRel
 			getClientExtensionEntryRelByExternalReferenceCode(
-				String externalReferenceCode, long companyId)
+				String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryRelLocalService.
 			getClientExtensionEntryRelByExternalReferenceCode(
-				externalReferenceCode, companyId);
+				externalReferenceCode, groupId);
 	}
 
 	/**
@@ -521,6 +522,18 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 
 		return _clientExtensionEntryRelLocalService.
 			updateClientExtensionEntryRel(clientExtensionEntryRel);
+	}
+
+	@Override
+	public ClientExtensionEntryRel updateClientExtensionEntryRel(
+			long clientExtensionEntryRelId, long classNameId, long classPK,
+			String cetExternalReferenceCode, String type, String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryRelLocalService.
+			updateClientExtensionEntryRel(
+				clientExtensionEntryRelId, classNameId, classPK,
+				cetExternalReferenceCode, type, typeSettings);
 	}
 
 	@Override

@@ -41,6 +41,9 @@ public class JenkinsEventsConfigurationUtil {
 
 		payloadJSONObject.put(
 			"build", _getBuildJSONObject(_getBuild(eventObject)));
+		payloadJSONObject.put(
+			"computer",
+			_getComputerJSONObject(_getComputer(eventObject), eventTrigger));
 		payloadJSONObject.put("eventTrigger", eventTrigger);
 		payloadJSONObject.put("jenkins", _getJenkinsJSONObject(jenkins));
 		payloadJSONObject.put("job", _getJobJSONObject(_getJob(eventObject)));
@@ -77,6 +80,47 @@ public class JenkinsEventsConfigurationUtil {
 		jsonObject.put("duration", build.getDuration());
 		jsonObject.put("number", build.getNumber());
 		jsonObject.put("result", build.getResult());
+
+		return jsonObject;
+	}
+
+	private static Computer _getComputer(Object eventObject) {
+		if (eventObject instanceof Computer) {
+			return (Computer)eventObject;
+		}
+
+		Build build = _getBuild(eventObject);
+
+		if (build != null) {
+			Executor executor = build.getExecutor();
+
+			return executor.getOwner();
+		}
+
+		return null;
+	}
+
+	private static JSONObject _getComputerJSONObject(
+		Computer computer, JenkinsWebHook.EventTrigger eventTrigger) {
+
+		if (computer == null) {
+			return null;
+		}
+
+		JSONObject jsonObject = new JSONObject();
+
+		if (eventTrigger == JenkinsWebHook.EventTrigger.COMPUTER_IDLE) {
+			jsonObject.put("busy", false);
+		}
+		else if (eventTrigger == JenkinsWebHook.EventTrigger.COMPUTER_BUSY) {
+			jsonObject.put("busy", true);
+		}
+		else {
+			jsonObject.put("busy", !computer.isIdle());
+		}
+
+		jsonObject.put("name", computer.getDisplayName());
+		jsonObject.put("online", computer.isOnline());
 
 		return jsonObject;
 	}

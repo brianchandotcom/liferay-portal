@@ -327,6 +327,63 @@ definition {
 				targetRolesOptions = ${targetRolesOptions});
 		}
 	}
+	@description = "This is a test for LPS-169960. Verify that a submited MDF will be displayed on the list"
+	@priority = 5
+	test CanViewMDFStatusOnListing {
+		task ("Given I go to add a new MDF Request and when I fill all the goals") {
+			PRMMarketing.gotoAddNewMDF();
+
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
+				campaignDescription = "Campaign Test Description",
+				campaignName = "Campaign Name",
+				countryName = "Global",
+				goalsOptions = "Thought leadership",
+				targetMarketOptions = "Aerospace & Defense,Energy",
+				targetRolesOptions = "Director/Manager",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+				followUpStrategy = "test",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetAudienceRoles = "C-Level/Executive/VP",
+				targetMarketOptions = "Agriculture,Aerospace & Defense",
+				targetOfLeads = "test",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("Then the MDF status appears on list") {
+			PRMMDFListing.viewOnList(
+				mdfStatus = "Pending Marketing Review",
+				rowNumber = "Status");
+		}
+
+		task ("And when I change the MDF Request status") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFRequest.changeMDFStatus(
+				campaignName = "Campaign Name",
+				key_statusButton = "Approve");
+
+		}
+
+		task ("Then the status of a MDF Request was change on list") {
+			PRMUtils.gotoPRM();
+			
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf-requests",
+				buttonText = "MDF");
+
+			PRMMDFListing.viewOnList(
+				campaignName = "First Campaign",
+				mdfStatus = "Approved");
+		}
+	}
 
 	@description = "This is a test for LPS-172479. Verify that the difference between the start date and end date cannot be higher than six months."
 	@priority = 5

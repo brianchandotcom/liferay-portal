@@ -22,11 +22,13 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectFieldDTOConverter;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectRelationshipDTOConverter;
+import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectValidationRuleDTOConverter;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectViewDTOConverter;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
@@ -36,6 +38,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
@@ -50,6 +53,7 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -276,6 +280,7 @@ public class ObjectDefinitionResourceImpl
 			serviceBuilderObjectDefinition.getObjectDefinitionId(),
 			objectDefinition.getObjectLayouts(),
 			objectDefinition.getObjectRelationships(),
+			objectDefinition.getObjectValidationRules(),
 			objectDefinition.getObjectViews());
 
 		return _toObjectDefinition(serviceBuilderObjectDefinition);
@@ -441,6 +446,14 @@ public class ObjectDefinitionResourceImpl
 				objectDefinitionId);
 		}
 
+		ObjectValidationRule[] objectValidationRules =
+			objectDefinition.getObjectValidationRules();
+
+		if (objectValidationRules != null) {
+			_objectValidationRuleLocalService.deleteObjectValidationRules(
+				objectDefinitionId);
+		}
+
 		ObjectView[] objectViews = objectDefinition.getObjectViews();
 
 		if (objectViews != null) {
@@ -449,7 +462,7 @@ public class ObjectDefinitionResourceImpl
 
 		_addObjectDefinitionResources(
 			objectActions, objectDefinitionId, objectLayouts,
-			objectRelationships, objectViews);
+			objectRelationships, objectValidationRules, objectViews);
 
 		return _toObjectDefinition(serviceBuilderObjectDefinition);
 	}
@@ -495,7 +508,9 @@ public class ObjectDefinitionResourceImpl
 	private void _addObjectDefinitionResources(
 			ObjectAction[] objectActions, long objectDefinitionId,
 			ObjectLayout[] objectLayouts,
-			ObjectRelationship[] objectRelationships, ObjectView[] objectViews)
+			ObjectRelationship[] objectRelationships,
+			ObjectValidationRule[] objectValidationRules,
+			ObjectView[] objectViews)
 		throws Exception {
 
 		if (objectActions != null) {
@@ -539,6 +554,24 @@ public class ObjectDefinitionResourceImpl
 				objectRelationshipResource.
 					postObjectDefinitionObjectRelationship(
 						objectDefinitionId, objectRelationship);
+			}
+		}
+
+		if (objectValidationRules != null) {
+			ObjectValidationRuleResource.Builder builder =
+				_objectValidationRuleResourceFactory.create();
+
+			ObjectValidationRuleResource objectValidationRuleResource =
+				builder.user(
+					contextUser
+				).build();
+
+			for (ObjectValidationRule objectValidationRule :
+					objectValidationRules) {
+
+				objectValidationRuleResource.
+					postObjectDefinitionObjectValidationRule(
+						objectDefinitionId, objectValidationRule);
 			}
 		}
 
@@ -694,6 +727,17 @@ public class ObjectDefinitionResourceImpl
 							null),
 						objectRelationship),
 					ObjectRelationship.class);
+				objectValidationRules = transformToArray(
+					_objectValidationRuleLocalService.getObjectValidationRules(
+						objectDefinition.getObjectDefinitionId()),
+					objectValidationRule ->
+						_objectValidationRuleDTOConverter.toDTO(
+							new DefaultDTOConverterContext(
+								false, null, null, null,
+								contextAcceptLanguage.getPreferredLocale(),
+								null, null),
+							objectValidationRule),
+					ObjectValidationRule.class);
 				objectViews = transformToArray(
 					_objectViewLocalService.getObjectViews(
 						objectDefinition.getObjectDefinitionId()),
@@ -822,6 +866,16 @@ public class ObjectDefinitionResourceImpl
 	@Reference
 	private ObjectRelationshipResource.Factory
 		_objectRelationshipResourceFactory;
+
+	@Reference
+	private ObjectValidationRuleDTOConverter _objectValidationRuleDTOConverter;
+
+	@Reference
+	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
+
+	@Reference
+	private ObjectValidationRuleResource.Factory
+		_objectValidationRuleResourceFactory;
 
 	@Reference
 	private ObjectViewDTOConverter _objectViewDTOConverter;

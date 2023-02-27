@@ -56,17 +56,17 @@ definition {
 		task ("Then Assert if the user can switch between the cards") {
 			RaylifeApApplication.modalOption(option = "Business");
 
-			RaylifeApApplication.assertModalOption(option= "Business");
+			RaylifeApApplication.assertModalOption(option = "Business");
 
 			RaylifeApApplication.modalOption(option = "Personal");
 
-			RaylifeApApplication.assertModalOption(option= "Personal");
+			RaylifeApApplication.assertModalOption(option = "Personal");
 
 			Button.click(button = "Next");
 
 			RaylifeApApplication.modalOption(option = "Auto");
 
-			RaylifeApApplication.assertModalOption(option= "Auto");
+			RaylifeApApplication.assertModalOption(option = "Auto");
 		}
 	}
 
@@ -86,10 +86,9 @@ definition {
 		}
 
 		task ("Then Assert that the Insurance options is still active after click in 'previous' button") {
-
 			RaylifeApApplication.assertModalOption(
-				option= "Personal",
-				notOption= "Busines");
+				notOption = "Busines",
+				option = "Personal");
 		}
 	}
 

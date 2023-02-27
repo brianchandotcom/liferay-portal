@@ -36,6 +36,7 @@ const validateDocument = {
 		message:
 			'Unsupported File Format, upload a valid format *csv *xlsx *xls',
 		types: [
+			'application/vnd.ms-excel',
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 			'text/csv',
 		],

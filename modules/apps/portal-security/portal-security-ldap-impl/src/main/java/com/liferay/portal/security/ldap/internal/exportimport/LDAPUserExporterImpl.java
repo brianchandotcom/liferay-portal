@@ -437,7 +437,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 			String.format(
 				"(&(companyId=%s)(service.factoryPid=%s))", companyId,
 				"com.liferay.user.associated.data.web.internal.configuration." +
-					"AnonymousUserConfiguration.scoped"));
+					"AnonymousUserConfiguration"));
 
 		if (configurations == null) {
 			return null;

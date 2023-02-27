@@ -41,6 +41,14 @@ public class JenkinsWebHook {
 	public JenkinsWebHook(JSONObject jsonObject) {
 		buildCompleted = jsonObject.getBoolean("buildCompleted");
 		buildStarted = jsonObject.getBoolean("buildStarted");
+		computerBusy = jsonObject.getBoolean("computerBusy");
+		computerIdle = jsonObject.getBoolean("computerIdle");
+		computerOffline = jsonObject.getBoolean("computerOffline");
+		computerOnline = jsonObject.getBoolean("computerOnline");
+		computerTemporarilyOffline = jsonObject.getBoolean(
+			"computerTemporarilyOffline");
+		computerTemporarilyOnline = jsonObject.getBoolean(
+			"computerTemporarilyOnline");
 		url = jsonObject.getString("url");
 
 		_initializeEventTypes();
@@ -141,11 +149,19 @@ public class JenkinsWebHook {
 
 	public boolean buildCompleted;
 	public boolean buildStarted;
+	public boolean computerBusy;
+	public boolean computerIdle;
+	public boolean computerOffline;
+	public boolean computerOnline;
+	public boolean computerTemporarilyOffline;
+	public boolean computerTemporarilyOnline;
 	public String url;
 
 	public enum EventTrigger {
 
-		BUILD_COMPLETED, BUILD_STARTED
+		BUILD_COMPLETED, BUILD_STARTED, COMPUTER_BUSY, COMPUTER_IDLE,
+		COMPUTER_OFFLINE, COMPUTER_ONLINE, COMPUTER_TEMPORARILY_OFFLINE,
+		COMPUTER_TEMPORARILY_ONLINE
 
 	}
 
@@ -172,6 +188,30 @@ public class JenkinsWebHook {
 
 		if (buildStarted) {
 			_eventTriggers.add(EventTrigger.BUILD_STARTED);
+		}
+
+		if (computerBusy) {
+			_eventTriggers.add(EventTrigger.COMPUTER_BUSY);
+		}
+
+		if (computerIdle) {
+			_eventTriggers.add(EventTrigger.COMPUTER_IDLE);
+		}
+
+		if (computerOffline) {
+			_eventTriggers.add(EventTrigger.COMPUTER_OFFLINE);
+		}
+
+		if (computerOnline) {
+			_eventTriggers.add(EventTrigger.COMPUTER_ONLINE);
+		}
+
+		if (computerTemporarilyOffline) {
+			_eventTriggers.add(EventTrigger.COMPUTER_TEMPORARILY_OFFLINE);
+		}
+
+		if (computerTemporarilyOnline) {
+			_eventTriggers.add(EventTrigger.COMPUTER_TEMPORARILY_ONLINE);
 		}
 	}
 

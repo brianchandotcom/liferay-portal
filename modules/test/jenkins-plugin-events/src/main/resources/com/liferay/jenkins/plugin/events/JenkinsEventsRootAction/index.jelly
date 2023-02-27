@@ -34,6 +34,26 @@
 										<f:checkbox name="buildStarted" value="${jenkinsWebHooks.buildStarted}" checked="${jenkinsWebHooks.buildStarted}" />
 									</f:entry>
 								</f:section>
+								<f:section title="Computer Events">
+									<f:entry title="COMPUTER_BUSY">
+										<f:checkbox name="computerBusy" value="${jenkinsWebHooks.computerBusy}" checked="${jenkinsWebHooks.computerBusy}" />
+									</f:entry>
+									<f:entry title="COMPUTER_IDLE">
+										<f:checkbox name="computerIdle" value="${jenkinsWebHooks.computerIdle}" checked="${jenkinsWebHooks.computerIdle}" />
+									</f:entry>
+									<f:entry title="COMPUTER_OFFLINE">
+										<f:checkbox name="computerOffline" value="${jenkinsWebHooks.computerOffline}" checked="${jenkinsWebHooks.computerOffline}" />
+									</f:entry>
+									<f:entry title="COMPUTER_ONLINE">
+										<f:checkbox name="computerOnline" value="${jenkinsWebHooks.computerOnline}" checked="${jenkinsWebHooks.computerOnline}" />
+									</f:entry>
+									<f:entry title="COMPUTER_TEMPORARILY_OFFLINE">
+										<f:checkbox name="computerTemporarilyOffline" value="${jenkinsWebHooks.computerTemporarilyOffline}" checked="${jenkinsWebHooks.computerTemporarilyOffline}" />
+									</f:entry>
+									<f:entry title="COMPUTER_TEMPORARILY_ONLINE">
+										<f:checkbox name="computerTemporarilyOnline" value="${jenkinsWebHooks.computerTemporarilyOnline}" checked="${jenkinsWebHooks.computerTemporarilyOnline}" />
+									</f:entry>
+								</f:section>
 							</f:advanced>
 						</f:repeatable>
 					</f:entry>

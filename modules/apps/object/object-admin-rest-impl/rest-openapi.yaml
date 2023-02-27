@@ -109,6 +109,10 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectRelationship"
                     type: array
+                objectValidationRules:
+                    items:
+                        $ref: "#/components/schemas/ObjectValidationRule"
+                    type: array
                 objectViews:
                     items:
                         $ref: "#/components/schemas/ObjectView"

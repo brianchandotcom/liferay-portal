@@ -52,6 +52,8 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 					).setRedirect(
 						currentURL
 					).setParameter(
+						"backTitle", LanguageUtil.format(request, "go-to-x", LanguageUtil.get(request, "add-user"), false)
+					).setParameter(
 						"modelResource", User.class.getName()
 					).buildString()
 				%>'

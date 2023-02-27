@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -96,7 +97,12 @@ public class ExpandoDisplayContext {
 					liferayPortletResponse.createRenderURL(), "mvcPath",
 					"/edit/select_field_type.jsp", "redirect",
 					PortalUtil.getCurrentURL(_httpServletRequest),
-					"modelResource", modelResource);
+					"modelResource", modelResource, "backTitle",
+					LanguageUtil.format(
+						_httpServletRequest, "go-to-x",
+						ResourceActionsUtil.getModelResource(
+							_httpServletRequest, modelResource),
+						false));
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "add-custom-field"));

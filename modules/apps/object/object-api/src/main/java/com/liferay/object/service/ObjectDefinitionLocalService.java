@@ -250,10 +250,6 @@ public interface ObjectDefinitionLocalService
 	public ObjectDefinition fetchObjectDefinition(long companyId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ObjectDefinition fetchObjectDefinitionByClassName(
-		long companyId, String className);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectDefinition fetchObjectDefinitionByClassName(String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -285,13 +285,6 @@ public class ObjectDefinitionLocalServiceUtil {
 	}
 
 	public static ObjectDefinition fetchObjectDefinitionByClassName(
-		long companyId, String className) {
-
-		return getService().fetchObjectDefinitionByClassName(
-			companyId, className);
-	}
-
-	public static ObjectDefinition fetchObjectDefinitionByClassName(
 		String className) {
 
 		return getService().fetchObjectDefinitionByClassName(className);

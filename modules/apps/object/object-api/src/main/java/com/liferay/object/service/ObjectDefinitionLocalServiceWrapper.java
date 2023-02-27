@@ -320,14 +320,6 @@ public class ObjectDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectDefinition
-		fetchObjectDefinitionByClassName(long companyId, String className) {
-
-		return _objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-			companyId, className);
-	}
-
-	@Override
-	public com.liferay.object.model.ObjectDefinition
 		fetchObjectDefinitionByClassName(String className) {
 
 		return _objectDefinitionLocalService.fetchObjectDefinitionByClassName(

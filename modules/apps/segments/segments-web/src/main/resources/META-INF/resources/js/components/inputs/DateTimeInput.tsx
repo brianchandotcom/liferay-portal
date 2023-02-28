@@ -22,12 +22,18 @@ import {PROPERTY_TYPES} from '../../utils/constants';
 const OUTPUT_DATE_FORMAT = 'yyyy-MM-dd';
 const INPUT_DATE_FORMAT = 'yyyy/MM/dd';
 
+interface DateRange {
+	end: string;
+	start: string;
+}
+
 interface Props {
 	disabled?: boolean;
-	onChange: (payload: {type: string; value: string}) => void;
+	onChange: (payload: {type: string; value: DateRange | string}) => void;
 	propertyLabel: string;
 	propertyType: string;
-	value?: string;
+	range?: boolean;
+	value?: DateRange | string;
 }
 
 function DateTimeInput({
@@ -35,43 +41,53 @@ function DateTimeInput({
 	onChange,
 	propertyLabel,
 	propertyType,
+	range,
 	value: initialValue,
 }: Props) {
 	const [expanded, setExpanded] = useState(false);
 
-	const [value, setValue] = useState(() => {
-		let nextValue = initialValue || '';
+	const [value, setValue] = useState<DateRange | string>(() => {
+		const formatInputDate = (dateValue: string | undefined) => {
+			let parsedDateValue = dateValue || new Date().toISOString();
 
-		if (propertyType !== PROPERTY_TYPES.DATE_TIME) {
-			nextValue = parse(
-				nextValue,
-				OUTPUT_DATE_FORMAT,
-				new Date()
-			).toISOString();
+			if (propertyType !== PROPERTY_TYPES.DATE_TIME) {
+				parsedDateValue = parse(
+					parsedDateValue,
+					OUTPUT_DATE_FORMAT,
+					new Date()
+				).toISOString();
+			}
+
+			return format(new Date(parsedDateValue), INPUT_DATE_FORMAT);
+		};
+
+		if (typeof initialValue === 'object') {
+			return {
+				end: formatInputDate(initialValue?.end),
+				start: formatInputDate(initialValue?.start),
+			};
 		}
 
-		return format(new Date(nextValue), INPUT_DATE_FORMAT);
+		return formatInputDate(initialValue);
 	});
 
 	const previousValue = usePrevious(value);
 
 	const saveDateTimeValue = () => {
-		const dateObj = parseISO(value.replace(/\//g, '-'));
+		const getFormattedDate = (_nextValue: string) => {
+			const dateObject = parseISO(_nextValue.replace(/\//g, '-'));
 
-		let dateInput = '';
-		let dateOutput = '';
+			let dateInput = '';
+			let dateOutput = '';
 
-		if (isValid(dateObj)) {
-			dateInput = format(new Date(value), INPUT_DATE_FORMAT);
-			dateOutput = format(new Date(value), OUTPUT_DATE_FORMAT);
-		}
-		else {
-			dateInput = format(new Date(), INPUT_DATE_FORMAT);
-			dateOutput = format(new Date(), OUTPUT_DATE_FORMAT);
-		}
-
-		if (previousValue !== dateInput || !isValid(dateObj)) {
-			setValue(dateInput);
+			if (isValid(dateObject)) {
+				dateInput = format(new Date(_nextValue), INPUT_DATE_FORMAT);
+				dateOutput = format(new Date(_nextValue), OUTPUT_DATE_FORMAT);
+			}
+			else {
+				dateInput = format(new Date(), INPUT_DATE_FORMAT);
+				dateOutput = format(new Date(), OUTPUT_DATE_FORMAT);
+			}
 
 			if (propertyType === PROPERTY_TYPES.DATE_TIME) {
 				dateOutput = parse(
@@ -81,10 +97,60 @@ function DateTimeInput({
 				).toISOString();
 			}
 
-			onChange({
-				type: propertyType,
-				value: dateOutput,
-			});
+			return [dateInput, dateOutput, dateObject] as const;
+		};
+
+		if (typeof value === 'object') {
+			const [
+				endDateInput,
+				endDateOutput,
+				endDateObject,
+			] = getFormattedDate(value.end);
+
+			const [
+				startDateInput,
+				startDateOutput,
+				startDateObject,
+			] = getFormattedDate(value.start);
+
+			if (typeof previousValue === 'object') {
+				if (
+					previousValue.start !== startDateInput ||
+					previousValue.end !== endDateInput ||
+					!isValid(startDateObject) ||
+					!isValid(endDateObject)
+				) {
+					onChange({
+						type: propertyType,
+						value: {end: endDateOutput, start: startDateOutput},
+					});
+				}
+			}
+			else {
+				onChange({
+					type: propertyType,
+					value: {end: endDateOutput, start: startDateOutput},
+				});
+			}
+		}
+		else {
+			const [dateInput, dateOutput, dateObject] = getFormattedDate(value);
+
+			if (previousValue !== dateInput || !isValid(dateObject)) {
+				setValue(dateInput);
+				onChange({type: propertyType, value: dateOutput});
+			}
+		}
+	};
+
+	const onValueChange = (nextValue: string) => {
+		if (range) {
+			const [start, end] = nextValue.split(' - ');
+
+			setValue({end, start});
+		}
+		else {
+			setValue(nextValue);
 		}
 	};
 
@@ -134,9 +200,14 @@ function DateTimeInput({
 					`${Liferay.Language.get('december')}`,
 				]}
 				onBlur={saveDateTimeValue}
-				onChange={setValue}
+				onChange={onValueChange}
 				onExpandedChange={onExpandedChange}
-				value={value}
+				range={range}
+				value={
+					typeof value === 'object'
+						? `${value.start} - ${value.end}`
+						: value
+				}
 				years={{
 					end: new Date().getFullYear(),
 					start: 1900,

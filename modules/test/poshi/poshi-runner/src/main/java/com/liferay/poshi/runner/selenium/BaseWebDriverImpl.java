@@ -50,6 +50,10 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.StringReader;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
@@ -2130,7 +2134,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			targetURL = PropsValues.PORTAL_URL + targetURL;
 		}
 
-		get(targetURL);
+		try {
+			if (_isValidURL(targetURL)) {
+				get(targetURL);
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Invalid URL argument: " + targetURL);
+			}
+		}
+		catch (MalformedURLException | URISyntaxException exception) {
+		}
 	}
 
 	@Override
@@ -4532,6 +4546,21 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		private final String _message;
 
+	}
+
+	private boolean _isValidURL(String targetURL)
+		throws MalformedURLException, URISyntaxException {
+
+		try {
+			URL url = new URL(targetURL);
+
+			url.toURI();
+
+			return true;
+		}
+		catch (MalformedURLException | URISyntaxException exception) {
+			return false;
+		}
 	}
 
 	private static final String _OCULAR_BASELINE_IMAGE_DIR_NAME;

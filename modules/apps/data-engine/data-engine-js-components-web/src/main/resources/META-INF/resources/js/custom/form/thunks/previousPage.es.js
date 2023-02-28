@@ -25,6 +25,7 @@ export default function previousPage({
 	portletNamespace,
 	rules,
 	selectedPage,
+	title,
 	viewMode,
 }) {
 	return (dispatch) => {
@@ -70,8 +71,9 @@ export default function previousPage({
 
 			Liferay.fire('ddmFormPageShow', {
 				formId,
+				formPageTitle: pages[activePageUpdated].title,
 				page: activePageUpdated,
-				title: pages[activePageUpdated].title,
+				title,
 			});
 		});
 	};

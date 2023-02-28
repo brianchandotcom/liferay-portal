@@ -30,6 +30,7 @@ export function useEvaluate(thunk) {
 		objectFields,
 		pages,
 		rules,
+		title,
 	} = useFormState();
 
 	return useCallback(
@@ -42,6 +43,7 @@ export function useEvaluate(thunk) {
 				pages,
 				portletNamespace,
 				rules,
+				title,
 				viewMode,
 				...args,
 			}),
@@ -54,6 +56,7 @@ export function useEvaluate(thunk) {
 			portletNamespace,
 			rules,
 			thunk,
+			title,
 			viewMode,
 		]
 	);

@@ -184,8 +184,9 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 		if (containerRef.current) {
 			Liferay.fire('ddmFormPageShow', {
 				formId: getFormId(getFormNode(containerRef.current)),
+				formPageTitle: pages[activePage].title,
 				page: activePage,
-				title: pages[activePage].title,
+				title,
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

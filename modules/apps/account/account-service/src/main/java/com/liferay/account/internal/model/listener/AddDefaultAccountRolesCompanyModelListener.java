@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.account.internal.instance.lifecycle;
+package com.liferay.account.internal.model.listener;
 
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountRoleLocalService;
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
@@ -39,32 +40,35 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(
-	property = "service.ranking:Integer=200",
-	service = PortalInstanceLifecycleListener.class
-)
-public class AddDefaultAccountRolesPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
+@Component(service = ModelListener.class)
+public class AddDefaultAccountRolesCompanyModelListener
+	extends BaseModelListener<Company> {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
-		_accountRoleLocalService.checkCompanyAccountRoles(
-			company.getCompanyId());
+	public void onAfterCreate(Company company) {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_accountRoleLocalService.checkCompanyAccountRoles(
+					company.getCompanyId());
 
-		_checkResourcePermissions(
-			company.getCompanyId(),
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
-			_accountAdministratorResourceActionsMap,
-			_accountMemberResourceActionsMap);
-		_checkResourcePermissions(
-			company.getCompanyId(),
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
-			_accountManagerResourceActionsMap,
-			_accountMemberResourceActionsMap);
-		_checkResourcePermissions(
-			company.getCompanyId(),
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER,
-			_accountMemberResourceActionsMap);
+				_checkResourcePermissions(
+					company.getCompanyId(),
+					AccountRoleConstants.
+						REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
+					_accountAdministratorResourceActionsMap,
+					_accountMemberResourceActionsMap);
+				_checkResourcePermissions(
+					company.getCompanyId(),
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+					_accountManagerResourceActionsMap,
+					_accountMemberResourceActionsMap);
+				_checkResourcePermissions(
+					company.getCompanyId(),
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER,
+					_accountMemberResourceActionsMap);
+
+				return null;
+			});
 	}
 
 	private void _checkResourcePermissions(

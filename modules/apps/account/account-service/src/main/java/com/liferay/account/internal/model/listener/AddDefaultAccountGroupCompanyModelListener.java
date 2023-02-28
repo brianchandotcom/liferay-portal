@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.account.internal.instance.lifecycle;
+package com.liferay.account.internal.model.listener;
 
 import com.liferay.account.service.AccountGroupLocalService;
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,14 +26,19 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = PortalInstanceLifecycleListener.class)
-public class AddDefaultAccountGroupPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
+@Component(service = ModelListener.class)
+public class AddDefaultAccountGroupCompanyModelListener
+	extends BaseModelListener<Company> {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
-		_accountGroupLocalService.checkGuestAccountGroup(
-			company.getCompanyId());
+	public void onAfterCreate(Company company) {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_accountGroupLocalService.checkGuestAccountGroup(
+					company.getCompanyId());
+
+				return null;
+			});
 	}
 
 	@Reference

@@ -156,8 +156,8 @@ function AssetVocabulariesCategoriesSelector({
 							const item = selectedItems[itemKey];
 							if (!item.unchecked) {
 								acc.push({
-									label: item.value,
-									value: item.categoryId,
+									label: item.title,
+									value: item.classPK,
 								});
 							}
 

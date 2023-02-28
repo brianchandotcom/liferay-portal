@@ -128,7 +128,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		).put(
 			"inheritSelection", _isInheritSelection()
 		).put(
-			"itemSelectorSaveEvent", HtmlUtil.escapeJS(getEventName())
+			"itemSelectedEventName", HtmlUtil.escapeJS(getEventName())
 		).put(
 			"moveCategory", isMoveCategory()
 		).put(

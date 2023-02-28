@@ -14,6 +14,10 @@
 
 package com.liferay.gradle.plugins.workspace.configurator;
 
+import com.bmuschko.gradle.docker.DockerRemoteApiPlugin;
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
+import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,6 +62,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -69,14 +74,17 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.RelativePath;
 import org.gradle.api.initialization.Settings;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.provider.Property;
+import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.bundling.Zip;
+import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
 /**
  * @author Gregory Amerson
@@ -246,6 +254,12 @@ public class ClientExtensionProjectConfigurator
 					"Failed parsing ", _CLIENT_EXTENSION_YAML, " file."),
 				ioException);
 		}
+
+		File dockerFile = project.file("Dockerfile");
+
+		if (dockerFile.exists()) {
+			_addDockerTasks(project, assembleClientExtensionTaskProvider);
+		}
 	}
 
 	@Override
@@ -297,6 +311,70 @@ public class ClientExtensionProjectConfigurator
 
 	protected static final String NAME = "client.extension";
 
+	private void _addDockerTasks(
+		Project project,
+		TaskProvider<Copy> assembleClientExtensionTaskProvider) {
+
+		DockerBuildImage dockerBuildImage = GradleUtil.addTask(
+			project, RootProjectConfigurator.BUILD_DOCKER_IMAGE_TASK_NAME,
+			DockerBuildImage.class);
+
+		dockerBuildImage.dependsOn(assembleClientExtensionTaskProvider);
+
+		DirectoryProperty inputDirectoryProperty =
+			dockerBuildImage.getInputDir();
+
+		assembleClientExtensionTaskProvider.configure(
+			copy -> inputDirectoryProperty.set(copy.getDestinationDir()));
+
+		dockerBuildImage.setDescription(
+			"Builds a child docker image from Liferay base image with all " +
+				"configs deployed.");
+		dockerBuildImage.setGroup(RootProjectConfigurator.DOCKER_GROUP);
+
+		DockerRemoveImage dockerRemoveImage = GradleUtil.addTask(
+			project, RootProjectConfigurator.CLEAN_DOCKER_IMAGE_TASK_NAME,
+			DockerRemoveImage.class);
+
+		dockerRemoveImage.setDescription("Removes the Docker image.");
+		dockerRemoveImage.setGroup(RootProjectConfigurator.DOCKER_GROUP);
+
+		Property<Boolean> forceProperty = dockerRemoveImage.getForce();
+
+		forceProperty.set(true);
+
+		String dockerImageId = _getDockerImageId(project);
+
+		SetProperty<String> setProperty = dockerBuildImage.getImages();
+
+		setProperty.add(dockerImageId);
+
+		Property<String> property = dockerRemoveImage.getImageId();
+
+		property.set(dockerImageId);
+
+		dockerRemoveImage.onError(
+			new Action<Throwable>() {
+
+				@Override
+				public void execute(Throwable throwable) {
+					Logger logger = project.getLogger();
+
+					if (logger.isWarnEnabled()) {
+						logger.warn(
+							"No image with ID '" + _getDockerImageId(project) +
+								"' found.");
+					}
+				}
+
+			});
+
+		Task cleanTask = GradleUtil.getTask(
+			project, LifecycleBasePlugin.CLEAN_TASK_NAME);
+
+		cleanTask.dependsOn(dockerRemoveImage);
+	}
+
 	private TaskProvider<Zip> _baseConfigureClientExtensionProject(
 		Project project, TaskProvider<Copy> assembleClientExtensionTaskProvider,
 		TaskProvider<Zip> buildClientExtensionZipTaskProvider,
@@ -308,6 +386,7 @@ public class ClientExtensionProjectConfigurator
 		}
 
 		GradleUtil.applyPlugin(project, BasePlugin.class);
+		GradleUtil.applyPlugin(project, DockerRemoteApiPlugin.class);
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
 
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
@@ -567,6 +646,18 @@ public class ClientExtensionProjectConfigurator
 		}
 
 		return _clientExtensionProperties;
+	}
+
+	private String _getDockerImageId(Project project) {
+		String propertyName = "imageId";
+
+		if (project.hasProperty(propertyName)) {
+			Object property = project.property(propertyName);
+
+			return property.toString();
+		}
+
+		return project.getName() + ":latest";
 	}
 
 	private File _getZipFile(Project project) {

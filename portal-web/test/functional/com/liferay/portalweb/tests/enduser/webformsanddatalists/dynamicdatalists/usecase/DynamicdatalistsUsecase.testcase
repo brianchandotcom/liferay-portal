@@ -1145,8 +1145,6 @@ definition {
 
 	@priority = 4
 	test AssertGuestCannotEditRecord {
-		property portal.upstream = "quarantine";
-
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP(
@@ -3126,8 +3124,6 @@ definition {
 	@description = "This is a use case for LPS-60155."
 	@priority = 5
 	test ViewRequiredNestedDocumentsAndMediaField {
-		property portal.upstream = "quarantine";
-
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition Name");

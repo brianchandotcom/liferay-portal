@@ -4558,22 +4558,18 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				put("SHIFT", Integer.valueOf(KeyEvent.VK_SHIFT));
 			}
 		};
+
 	private static final Map<String, Keys> _keysMap =
 		new Hashtable<String, Keys>() {
 			{
-				put("ALT", Keys.ALT);
-				put("COMMAND", Keys.COMMAND);
-				put("CONTROL", Keys.CONTROL);
+				for (Keys keys : Keys.class.getEnumConstants()) {
+					_keysMap.put(keys.name(), keys);
+				}
+
 				put("CTRL", Keys.CONTROL);
-				put("END", Keys.END);
-				put("F5", Keys.F5);
-				put("F11", Keys.F11);
-				put("F12", Keys.F12);
-				put("HOME", Keys.HOME);
-				put("SHIFT", Keys.SHIFT);
-				put("TAB", Keys.TAB);
 			}
 		};
+
 	private static final Pattern _tabPattern = Pattern.compile(
 		".*?(\\t).*?", Pattern.DOTALL);
 

@@ -340,7 +340,11 @@ definition {
 				property = "version",
 				value = "1.0");
 
-			Click(locator1 = "Button#DOWNLOAD");
+			DMDocument.expandInfo();
+
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "Button#DOWNLOAD_SIDEBAR",
+				value1 = "Download");
 
 			ACUtils.waitForSendingRequest();
 

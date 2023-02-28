@@ -196,6 +196,7 @@ public class DeleteExpiredBackgroundTasksMessageListener
 	};
 
 	private static final int[] _STATUSES = {
+		BackgroundTaskConstants.STATUS_CANCELLED,
 		BackgroundTaskConstants.STATUS_SUCCESSFUL
 	};
 

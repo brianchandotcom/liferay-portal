@@ -686,6 +686,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_FIELD_VALUE</td>
+	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_entryTitle}']/../../../div[${key_index}][text()='${key_value}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_STATUS</td>
 	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[@class='dnd-td']/span[contains(@class,'label')][contains(.,'${key_entryStatus}')]</td>
 	<td></td>
@@ -888,6 +893,11 @@
 <tr>
 	<td>SIDE_PANEL_IFRAME_TITLE</td>
 	<td>//div[@class='side-panel-iframe-title']//h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_SIDE_PANEL_CLOSE_BUTTON</td>
+	<td>//div[contains(@class,'side-panel-iframe-title')][normalize-space()='${key_frameTitle}']/..//button[contains(@class,'side-panel-iframe-close')]</td>
 	<td></td>
 </tr>
 

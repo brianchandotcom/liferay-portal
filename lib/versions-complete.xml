@@ -8018,7 +8018,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/hibernate-core.jar</file-name>
-				<version>5.6.7.Final</version>
+				<version>5.6.7.LIFERAY-PATCHED-1</version>
 				<project-name>Hibernate</project-name>
 				<project-url>http://www.hibernate.org</project-url>
 				<licenses>

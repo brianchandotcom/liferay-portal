@@ -32,6 +32,9 @@ public class ObjectWebKeys {
 
 	public static final String OBJECT_ENTRY = "OBJECT_ENTRY";
 
+	public static final String OBJECT_ENTRY_DISPLAY_CONTEXT_READ_ONLY =
+		"OBJECT_ENTRY_DISPLAY_CONTEXT_READ_ONLY";
+
 	public static final String OBJECT_ENTRY_VALUES = "OBJECT_ENTRY_VALUES";
 
 	public static final String OBJECT_FIELD = "OBJECT_FIELD";
@@ -45,8 +48,6 @@ public class ObjectWebKeys {
 	public static final String OBJECT_VALIDATION = "OBJECT_VALIDATION";
 
 	public static final String OBJECT_VIEW = "OBJECT_VIEW";
-
-	public static final String OBJECT_ENTRY_DISPLAY_CONTEXT_READ_ONLY = "OBJECT_ENTRY_DISPLAY_CONTEXT_READ_ONLY";
 
 	public static final String REGULAR_OBJECT_LAYOUT_TAB =
 		"REGULAR_OBJECT_LAYOUT_TAB";

@@ -124,10 +124,11 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 					content, globalVariableName, parameterName, start);
 			}
 
-			char preChar = content.charAt(start - 1);
+			char previousChar = content.charAt(start - 1);
 
-			if ((preChar == CharPool.TAB) || (preChar == CharPool.SPACE) ||
-				(preChar == CharPool.OPEN_PARENTHESIS)) {
+			if ((previousChar == CharPool.TAB) ||
+				(previousChar == CharPool.SPACE) ||
+				(previousChar == CharPool.OPEN_PARENTHESIS)) {
 
 				int preOpenParenthesisIndex = start;
 

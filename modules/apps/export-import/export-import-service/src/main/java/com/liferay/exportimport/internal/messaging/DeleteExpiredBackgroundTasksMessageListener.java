@@ -15,6 +15,7 @@
 package com.liferay.exportimport.internal.messaging;
 
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
+import com.liferay.exportimport.configuration.ExportImportSystemConfiguration;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
@@ -25,9 +26,13 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
@@ -47,9 +52,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author To Trinh
+ * @author Ha Tang
  */
 @Component(
-	configurationPid = "com.liferay.exportimport.configuration.ExportImportServiceConfiguration",
+	configurationPid = {
+		"com.liferay.exportimport.configuration.ExportImportServiceConfiguration",
+		"com.liferay.exportimport.configuration.ExportImportSystemConfiguration"
+	},
 	service = {}
 )
 public class DeleteExpiredBackgroundTasksMessageListener
@@ -59,14 +68,17 @@ public class DeleteExpiredBackgroundTasksMessageListener
 	protected void activate(Map<String, Object> properties) {
 		_exportImportServiceConfiguration = ConfigurableUtil.createConfigurable(
 			ExportImportServiceConfiguration.class, properties);
+		_exportImportSystemConfiguration = ConfigurableUtil.createConfigurable(
+			ExportImportSystemConfiguration.class, properties);
 
 		Class<?> clazz = getClass();
 
 		String className = clazz.getName();
 
-		//TODO: replace 2 with _exportImportServiceConfiguration.cleanupJobInterval()
 		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, 2, TimeUnit.DAY);
+			className, className, null, null,
+			_exportImportSystemConfiguration.cleanupJobInterval(),
+			TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -89,6 +101,25 @@ public class DeleteExpiredBackgroundTasksMessageListener
 	private void _deleteExpiredBackGroundTasks(long companyId)
 		throws PortalException {
 
+		ExportImportServiceConfiguration
+			companyExportImportServiceConfiguration =
+				_getExportImportServiceConfiguration(companyId);
+
+		int exportImportEntryExpiryDays =
+			companyExportImportServiceConfiguration.
+				exportImportEntryExpiryDays();
+
+		if (exportImportEntryExpiryDays <= 0) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"exportImportEntryExpiryDays=" +
+						exportImportEntryExpiryDays +
+							": no cleanup on this instance.");
+			}
+
+			return;
+		}
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			_backgroundTaskLocalService.getActionableDynamicQuery();
 
@@ -101,43 +132,73 @@ public class DeleteExpiredBackgroundTasksMessageListener
 					"taskExecutorClassName");
 
 				dynamicQuery.add(
-					taskExecutorClassName.in(_BACKGROUND_TASK_CLASS_NAMES));
+					taskExecutorClassName.in(_BACKGROUND_TASK_EXECUTOR_NAMES));
 
 				Property status = PropertyFactoryUtil.forName("status");
 
 				dynamicQuery.add(status.in(_STATUSES));
 
-				//TODO: replace 2 with _exportImportServiceConfiguration.exportImportCheckInterval()
-				long exportImportCheckInterval = 2 * Time.DAY;
+				long exportImportExpiryTime =
+					exportImportEntryExpiryDays * Time.DAY;
 
 				Date expirationDate = new Date(
-					System.currentTimeMillis() - exportImportCheckInterval);
+					System.currentTimeMillis() - exportImportExpiryTime);
 
 				Property modifiedDate = PropertyFactoryUtil.forName(
 					"modifiedDate");
 
-				dynamicQuery.add(modifiedDate.le(expirationDate));
+				dynamicQuery.add(modifiedDate.lt(expirationDate));
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(
-			backgroundTask -> _backgroundTaskLocalService.deleteBackgroundTask(
-				(BackgroundTask)backgroundTask));
+			(BackgroundTask backgroundTask) -> {
+				try {
+					_backgroundTaskLocalService.deleteBackgroundTask(
+						backgroundTask);
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable delete backgroundTask " +
+								backgroundTask.getBackgroundTaskId(),
+							portalException);
+					}
+				}
+			});
 
-		actionableDynamicQuery.performActions();
+		try {
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
 	}
 
-	private static final String[] _BACKGROUND_TASK_CLASS_NAMES = {
+	private ExportImportServiceConfiguration
+		_getExportImportServiceConfiguration(long companyId) {
+
+		try {
+			return _configurationProvider.getCompanyConfiguration(
+				ExportImportServiceConfiguration.class, companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+
+			return _exportImportServiceConfiguration;
+		}
+	}
+
+	private static final String[] _BACKGROUND_TASK_EXECUTOR_NAMES = {
 		BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR,
-		BackgroundTaskExecutorNames.LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR,
-		BackgroundTaskExecutorNames.PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR,
-		BackgroundTaskExecutorNames.PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR
+		BackgroundTaskExecutorNames.PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR
 	};
 
 	private static final int[] _STATUSES = {
-		BackgroundTaskConstants.STATUS_CANCELLED,
-		BackgroundTaskConstants.STATUS_FAILED,
 		BackgroundTaskConstants.STATUS_SUCCESSFUL
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeleteExpiredBackgroundTasksMessageListener.class);
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
@@ -145,8 +206,13 @@ public class DeleteExpiredBackgroundTasksMessageListener
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	private volatile ExportImportServiceConfiguration
 		_exportImportServiceConfiguration;
+	private volatile ExportImportSystemConfiguration
+		_exportImportSystemConfiguration;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

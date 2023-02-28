@@ -204,7 +204,7 @@ definition {
 				key_filterLabel = "Output",
 				locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
 
-			Click(			
+			Click(
 				key_dropdownItem = ${formulaFieldOption},
 				locator1 = "ObjectField#SELECT_FORMULA_FIELD_OPTION");
 		}

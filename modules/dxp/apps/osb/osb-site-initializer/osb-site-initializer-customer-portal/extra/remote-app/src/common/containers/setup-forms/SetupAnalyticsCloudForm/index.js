@@ -145,7 +145,7 @@ const SetupAnalyticsCloudPage = ({
 						accountKey: project.accountKey,
 						dataCenterLocation: analyticsCloud.dataCenterLocation,
 						ownerEmailAddress: analyticsCloud.ownerEmailAddress,
-						r_accountEntryToDXPCloudEnvironment_accountEntryId:
+						r_accountEntryToAnalyticsCloudWorkspace_accountEntryId:
 							project?.id,
 						workspaceName: analyticsCloud.workspaceName,
 					},
@@ -185,7 +185,7 @@ const SetupAnalyticsCloudPage = ({
 								IncidentReportContactAnalyticsCloud: {
 									analyticsCloudWorkspaceId,
 									emailAddress: email,
-									r_accountEntryToDXPCloudEnvironment_accountEntryId:
+									r_accountEntryToIncidentReportContactAC_accountEntryId:
 										project.id,
 								},
 							},

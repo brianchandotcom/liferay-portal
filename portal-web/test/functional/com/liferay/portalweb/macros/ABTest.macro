@@ -269,6 +269,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro viewDataInAnalyticsCloud {
+		AssertElementPresent(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+
+		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+	}
+
 	macro viewInfoItems {
 		var index = 0;
 

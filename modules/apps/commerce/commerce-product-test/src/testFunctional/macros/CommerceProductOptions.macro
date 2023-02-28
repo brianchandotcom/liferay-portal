@@ -43,6 +43,32 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editOptionValue {
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if (isSet(priceType)) {
+			CommerceOptions.setPriceType(priceType = ${priceType});
+		}
+
+		Click(
+			key_index = ${optionValue},
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		CommerceEntry.selectAutoCompleteField(
+			entryName = ${sku},
+			label = "SKU");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(
+			key_frameTitle = "Edit ${optionValue}",
+			locator1 = "CommerceEntry#SPECIFIC_SIDE_PANEL_CLOSE_BUTTON");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	macro editProductOption {
 		Click(
 			key_index = ${key_option},

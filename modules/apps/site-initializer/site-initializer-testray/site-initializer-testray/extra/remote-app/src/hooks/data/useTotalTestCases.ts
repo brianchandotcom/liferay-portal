@@ -12,8 +12,8 @@
  * details.
  */
 
-import {Statuses, chartColors} from '../util/constants';
-import {getRandomMaximumValue} from '../util/mock';
+import {Statuses, chartColors} from '../../util/constants';
+import {getRandomMaximumValue} from '../../util/mock';
 
 const useTotalTestCases = () => {
 	const donutColumns = [

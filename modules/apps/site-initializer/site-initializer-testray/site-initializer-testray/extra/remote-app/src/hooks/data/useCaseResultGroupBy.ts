@@ -14,11 +14,11 @@
 
 import {useCallback, useMemo} from 'react';
 
-import {useFetch} from '../hooks/useFetch';
-import {APIResponse, FacetAggregation, TestrayBuild} from '../services/rest';
-import {chartColors} from '../util/constants';
-import {SearchBuilder} from '../util/search';
-import {CaseResultStatuses} from '../util/statuses';
+import SearchBuilder from '../../core/SearchBuilder';
+import {APIResponse, FacetAggregation, TestrayBuild} from '../../services/rest';
+import {chartColors} from '../../util/constants';
+import {CaseResultStatuses} from '../../util/statuses';
+import {useFetch} from '../useFetch';
 
 function getStatusesMap(
 	facetAggregation: FacetAggregation | undefined

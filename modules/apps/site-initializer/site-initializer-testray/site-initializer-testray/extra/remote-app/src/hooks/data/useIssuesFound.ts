@@ -14,14 +14,14 @@
 
 import {useMemo} from 'react';
 
-import {useFetch} from '../hooks/useFetch';
+import SearchBuilder from '../../core/SearchBuilder';
 import {
 	APIResponse,
 	TestrayCaseResultIssue,
 	TestrayIssue,
-} from '../services/rest';
-import {testrayCaseResultsIssuesImpl} from '../services/rest/TestrayCaseresultsIssues';
-import {SearchBuilder} from '../util/search';
+} from '../../services/rest';
+import {testrayCaseResultsIssuesImpl} from '../../services/rest/TestrayCaseresultsIssues';
+import {useFetch} from '../useFetch';
 
 type useIssuesFoundProps = {
 	buildId?: number;
@@ -44,7 +44,7 @@ const useIssuesFound = ({buildId, caseId}: useIssuesFoundProps) => {
 				),
 			},
 			swrConfig: {
-				stopFetching: !id,
+				shouldFetch: id,
 			},
 			transformData: (response) =>
 				testrayCaseResultsIssuesImpl.transformDataFromList(response),

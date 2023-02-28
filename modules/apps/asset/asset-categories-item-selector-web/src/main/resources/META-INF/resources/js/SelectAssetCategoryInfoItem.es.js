@@ -12,18 +12,25 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {AssetCategoryTree} from './AssetCategoryTree.es';
 
 function SelectAssetCategory({
+	addCategoryURL,
+	inheritSelection,
 	itemSelectedEventName,
+	moveCategory,
 	multiSelection,
 	namespace,
 	nodes,
+	selectedCategoryIds,
 }) {
 	const [items, setItems] = useState(() => {
 		if (nodes.length === 1 && nodes[0].vocabulary && nodes[0].id !== '0') {
@@ -38,6 +45,14 @@ function SelectAssetCategory({
 
 	return (
 		<div className="select-category">
+			{moveCategory && (
+				<ClayAlert displayType="info" variant="stripe">
+					{Liferay.Language.get(
+						'categories-can-only-be-moved-to-a-vocabulary-or-a-category-with-the-same-visibility'
+					)}
+				</ClayAlert>
+			)}
+
 			<form
 				className="mb-0 px-1 py-3 select-category-filter"
 				onSubmit={(event) => event.preventDefault()}
@@ -60,6 +75,18 @@ function SelectAssetCategory({
 							</div>
 						</div>
 					</div>
+
+					{addCategoryURL && (
+						<ClayButton
+							className="btn-monospaced ml-3 nav-btn nav-btn-monospaced"
+							displayType="primary"
+							onClick={() => {
+								navigate(addCategoryURL);
+							}}
+						>
+							<ClayIcon symbol="plus" />
+						</ClayButton>
+					)}
 				</ClayLayout.ContainerFluid>
 			</form>
 
@@ -92,11 +119,13 @@ function SelectAssetCategory({
 						{items.length ? (
 							<AssetCategoryTree
 								filterQuery={filterQuery}
+								inheritSelection={inheritSelection}
 								itemSelectedEventName={itemSelectedEventName}
 								items={items}
 								multiSelection={multiSelection}
 								onItems={setItems}
 								onSelectedItemsCount={setSelectedItemsCount}
+								selectedCategoryIds={selectedCategoryIds}
 							/>
 						) : (
 							<ClayEmptyState

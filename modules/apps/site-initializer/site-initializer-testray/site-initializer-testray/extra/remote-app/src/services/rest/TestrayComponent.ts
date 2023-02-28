@@ -13,11 +13,11 @@
  */
 
 import TestrayError from '../../TestrayError';
+import Rest from '../../core/Rest';
+import SearchBuilder from '../../core/SearchBuilder';
 import i18n from '../../i18n';
 import {State} from '../../pages/Standalone/Teams/TeamsFormModal';
 import yupSchema from '../../schema/yup';
-import {SearchBuilder} from '../../util/search';
-import Rest from './Rest';
 import {APIResponse, TestrayComponent} from './types';
 
 type Component = typeof yupSchema.component.__outputType;

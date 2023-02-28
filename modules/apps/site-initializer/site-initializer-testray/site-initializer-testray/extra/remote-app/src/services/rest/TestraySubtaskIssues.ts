@@ -12,9 +12,9 @@
  * details.
  */
 
+import Rest from '../../core/Rest';
+import SearchBuilder from '../../core/SearchBuilder';
 import yupSchema from '../../schema/yup';
-import {SearchBuilder} from '../../util/search';
-import Rest from './Rest';
 import {TestraySubTaskIssue} from './types';
 
 type SubtaskIssues = typeof yupSchema.subtaskIssues.__outputType;

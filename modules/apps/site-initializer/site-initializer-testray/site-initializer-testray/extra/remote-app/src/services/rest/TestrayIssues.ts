@@ -12,9 +12,9 @@
  * details.
  */
 
+import Rest from '../../core/Rest';
+import SearchBuilder from '../../core/SearchBuilder';
 import yupSchema from '../../schema/yup';
-import {SearchBuilder} from '../../util/search';
-import Rest from './Rest';
 import {TestrayIssue} from './types';
 
 type Issue = typeof yupSchema.issue.__outputType;

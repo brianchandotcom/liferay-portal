@@ -15,6 +15,9 @@
 import fetcher from '~/services/fetcher';
 import {APIResponse} from '~/services/rest/types';
 
+import Cache from './Cache';
+import SearchBuilder from './SearchBuilder';
+
 type Adapter<T = any> = (data: T) => Partial<T>;
 type TransformData<T = any> = (data: T) => T;
 
@@ -55,6 +58,7 @@ interface RestContructor<
 
 class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 	private batchMinimumThreshold = 10;
+	private cache = Cache.getInstance();
 	private nestedFieldsDepth = 1;
 	protected adapter: Adapter = (data) => data;
 	public fetcher = fetcher;
@@ -120,7 +124,38 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 	public async create(data: YupModel): Promise<ObjectModel> {
 		await this.beforeCreate(data);
 
-		return fetcher.post(`/${this.uri}`, this.adapter(data));
+		const response = await fetcher.post(`/${this.uri}`, this.adapter(data));
+
+		if (response && response.name) {
+			this.cache.set(`${this.uri}/${response.name}`, response);
+		}
+
+		return response;
+	}
+
+	public async createIfNotExist(data: YupModel): Promise<ObjectModel> {
+		const name = (data as any).name as string;
+		const cacheKey = `${this.uri}/${name}`;
+
+		const cachedValue = this.cache.get(cacheKey);
+
+		if (cachedValue) {
+			return cachedValue;
+		}
+
+		const response = await this.getAll({
+			filter: SearchBuilder.eq('name', name),
+		});
+
+		const item = response?.items[0];
+
+		if (item) {
+			this.cache.set(cacheKey, item);
+
+			return item;
+		}
+
+		return this.create(data);
 	}
 
 	public async createBatch(data: YupModel[]): Promise<void> {

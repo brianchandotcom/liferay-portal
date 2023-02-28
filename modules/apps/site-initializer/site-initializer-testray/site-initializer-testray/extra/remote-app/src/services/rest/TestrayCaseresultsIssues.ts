@@ -13,7 +13,6 @@
  */
 
 import Rest from '../../core/Rest';
-import SearchBuilder from '../../core/SearchBuilder';
 import yupSchema from '../../schema/yup';
 import {TestrayCaseResultIssue} from './types';
 
@@ -43,18 +42,6 @@ class TestrayCaseResultsIssuesImpl extends Rest<
 			}),
 			uri: 'caseresultsissueses',
 		});
-	}
-
-	public async createIfNotExist(data: CaseResultsIssues) {
-		const response = await this.getAll({
-			filter: SearchBuilder.eq('name', data.name as string),
-		});
-
-		if ((response?.totalCount ?? 0) > 0) {
-			return response?.items[0];
-		}
-
-		return this.create(data);
 	}
 }
 

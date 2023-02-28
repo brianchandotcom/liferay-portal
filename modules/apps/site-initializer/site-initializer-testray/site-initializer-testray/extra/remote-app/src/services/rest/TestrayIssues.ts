@@ -13,7 +13,6 @@
  */
 
 import Rest from '../../core/Rest';
-import SearchBuilder from '../../core/SearchBuilder';
 import yupSchema from '../../schema/yup';
 import {TestrayIssue} from './types';
 
@@ -24,26 +23,10 @@ class TestrayIssuesImpl extends Rest<Issue, TestrayIssue> {
 
 	constructor() {
 		super({
-			adapter: ({id, name}) => ({
-				id,
+			adapter: ({name}) => ({
 				name,
 			}),
 			uri: 'issues',
-		});
-	}
-
-	public async createIfNotExist(name: string) {
-		const response = await this.getAll({
-			filter: SearchBuilder.eq('name', name),
-		});
-
-		if ((response?.totalCount ?? 0) > 0) {
-			return response?.items[0];
-		}
-
-		return this.create({
-			id: undefined,
-			name,
 		});
 	}
 }

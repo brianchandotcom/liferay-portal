@@ -146,7 +146,9 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 		);
 
 		for (const issue of issues) {
-			const testrayIssue = await testrayIssueImpl.createIfNotExist(issue);
+			const testrayIssue = await testrayIssueImpl.createIfNotExist({
+				name: issue,
+			});
 
 			await testrayCaseResultsIssuesImpl.createIfNotExist({
 				caseResultId,

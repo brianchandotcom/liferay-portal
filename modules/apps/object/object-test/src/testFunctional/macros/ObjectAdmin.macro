@@ -199,6 +199,16 @@ definition {
 			}
 		}
 
+		if (isSet(formulaFieldOption)) {
+			Click(
+				key_filterLabel = "Output",
+				locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
+
+			Click(			
+				key_dropdownItem = ${formulaFieldOption},
+				locator1 = "ObjectField#SELECT_FORMULA_FIELD_OPTION");
+		}
+
 		PortletEntry.save();
 	}
 

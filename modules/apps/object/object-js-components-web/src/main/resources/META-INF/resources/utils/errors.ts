@@ -15,46 +15,32 @@ interface IErrorMessage {
 	[key: string]: string;
 }
 export const ERRORS: IErrorMessage = {
-	'ObjectDefinitionNameException.MustBeLessThan41Characters': Liferay.Language.get(
+	MustBeLessThan41Characters: Liferay.Language.get(
 		'only-41-characters-are-allowed'
 	),
-	'ObjectDefinitionNameException.MustBeginWithUpperCaseLetter': Liferay.Language.get(
-		'the-first-character-of-a-name-must-be-an-upper-case-letter'
+	MustBeLessThan256Characters: Liferay.Language.get(
+		'storage-folder-path-cannot-be-greater-than-255-characters'
 	),
-	'ObjectDefinitionNameException.MustNotBeDuplicate': Liferay.Language.get(
-		'this-name-is-already-in-use-try-another-one'
-	),
-	'ObjectDefinitionNameException.MustNotBeNull': Liferay.Language.get(
-		'name-is-required'
-	),
-	'ObjectDefinitionNameException.MustNotStartWithCAndUnderscoreForSystemObject': Liferay.Language.get(
-		'system-object-definition-names-must-not-start-with-c'
-	),
-	'ObjectDefinitionNameException.MustOnlyContainLettersAndDigits': Liferay.Language.get(
-		'name-must-only-contain-letters-and-digits'
-	),
-	'ObjectDefinitionNameException.MustStartWithCAndUnderscoreForCustomObject': Liferay.Language.get(
-		'custom-object-definition-names-must-start-with-c'
-	),
-	'ObjectFieldNameException.MustBeLessThan41Characters': Liferay.Language.get(
-		'only-41-characters-are-allowed'
-	),
-	'ObjectFieldNameException.MustBeginWithLowerCaseLetter': Liferay.Language.get(
+	MustBeginWithLowerCaseLetter: Liferay.Language.get(
 		'the-first-character-of-a-name-must-be-an-lower-case-letter'
 	),
-	'ObjectFieldNameException.MustNotBeDuplicate': Liferay.Language.get(
+	MustBeginWithUpperCaseLetter: Liferay.Language.get(
+		'the-first-character-of-a-name-must-be-an-upper-case-letter'
+	),
+	MustNotBeDuplicate: Liferay.Language.get(
 		'this-name-is-already-in-use-try-another-one'
 	),
-	'ObjectFieldNameException.MustNotBeNull': Liferay.Language.get(
-		'name-is-required'
-	),
-	'ObjectFieldNameException.MustNotBeReserved': Liferay.Language.get(
+	MustNotBeNull: Liferay.Language.get('name-is-required'),
+	MustNotBeReserved: Liferay.Language.get(
 		'name-reserved-by-the-system-try-another-one'
 	),
-	'ObjectFieldNameException.MustOnlyContainLettersAndDigits': Liferay.Language.get(
+	MustNotStartWithCAndUnderscoreForSystemObject: Liferay.Language.get(
+		'system-object-definition-names-must-not-start-with-c'
+	),
+	MustOnlyContainLettersAndDigits: Liferay.Language.get(
 		'name-must-only-contain-letters-and-digits'
 	),
-	'ObjectFieldSettingValueException.MustBeLessThan256Characters': Liferay.Language.get(
-		'storage-folder-path-cannot-be-greater-than-255-characters'
+	MustStartWithCAndUnderscoreForCustomObject: Liferay.Language.get(
+		'custom-object-definition-names-must-start-with-c'
 	),
 };

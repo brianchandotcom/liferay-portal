@@ -1212,6 +1212,41 @@ definition {
 		}
 	}
 
+	@description = "LPS-162182 - Verify that it is not possible to edit ERC fields in Objects management."
+	@priority = 4
+	test CannotFilterWithERCField {
+		task ("Given a custom object is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162182",
+				objectName = "CustomObject162182",
+				pluralLabelName = "Custom Objects 162182");
+		}
+
+		task ("When the user goes to Views Tab and Creates a new filter") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 162182");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
+
+			Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+		}
+
+		task ("Then the user is unable to filter by ERC") {
+			AssertElementNotPresent(
+				key_picklistOption = "External Reference Code",
+				locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+		}
+	}
+
 	@description = "This is a use case for LPS-156704 - Verify that the user cannot insert an invalid date in an object field."
 	@priority = 2
 	test CannotInsertInvalidDate {

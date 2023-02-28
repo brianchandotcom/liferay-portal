@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>BLOGS_MOVE_TO_RECYCLE_BIN</td>
-	<td>//*[contains(@class, 'icon-trash')]</td>
+	<td>//div[@class='sidebar-header']//*[contains(@class, 'icon-trash')]</td>
 	<td></td>
 </tr>
 <tr>

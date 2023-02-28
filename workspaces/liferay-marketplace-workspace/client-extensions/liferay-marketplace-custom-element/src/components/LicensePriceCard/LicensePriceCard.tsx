@@ -15,7 +15,6 @@ export function LicensePriceCard() {
 			<ClayForm.Group>
 				<div className="license-card-quantity">
 					<FieldBase
-						children={undefined}
 						label="Quantity"
 						required
 						tooltip="Quantity info"
@@ -41,12 +40,7 @@ export function LicensePriceCard() {
 				</div>
 
 				<div className="license-card-price">
-					<FieldBase
-						children={undefined}
-						label="Price"
-						required
-						tooltip="Price info"
-					/>
+					<FieldBase label="Price" required tooltip="Price info" />
 
 					<ClayInput.Group>
 						<ClayInput.GroupItem prepend shrink>
@@ -64,7 +58,11 @@ export function LicensePriceCard() {
 							className="license-card-price-currency-input"
 						>
 							<ClayInput
-								onChange={({target}) =>
+								onChange={({
+									target,
+								}: {
+									target: {value: string};
+								}) =>
 									dispatch({
 										payload: {
 											value: target.value,

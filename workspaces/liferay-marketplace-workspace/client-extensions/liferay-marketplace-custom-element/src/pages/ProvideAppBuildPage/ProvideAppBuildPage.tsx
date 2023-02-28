@@ -18,6 +18,7 @@ import {
 	createAttachment,
 	createProductSpecification,
 	createSpecification,
+	updateProductSpecification,
 } from '../../utils/api';
 import {submitBase64EncodedFile} from '../../utils/util';
 
@@ -101,11 +102,11 @@ export function ProvideAppBuildPage({
 						icon={taskCheckedIcon}
 						onChange={() => {
 							dispatch({
-								payload: {value: 'saas'},
+								payload: {id: appType.id, value: 'saas'},
 								type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
 							});
 						}}
-						selected={appType === 'saas'}
+						selected={appType.value === 'saas'}
 						title="Yes"
 						tooltip="More Info"
 					/>
@@ -115,11 +116,11 @@ export function ProvideAppBuildPage({
 						icon={cancelIcon}
 						onChange={() => {
 							dispatch({
-								payload: {value: 'osgi'},
+								payload: {id: appType.id, value: 'osgi'},
 								type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
 							});
 						}}
-						selected={appType === 'osgi'}
+						selected={appType.value === 'osgi'}
 						title="No"
 						tooltip="More Info"
 					/>
@@ -216,15 +217,31 @@ export function ProvideAppBuildPage({
 							},
 						});
 
-						createProductSpecification({
-							appId,
-							body: {
-								productId: appProductId,
-								specificationId: dataSpecification.id,
-								specificationKey: dataSpecification.key,
-								value: {en_US: appType},
-							},
-						});
+						if (appType.id) {
+							updateProductSpecification({
+								body: {
+									specificationKey: dataSpecification.key,
+									value: {en_US: appType.value},
+								},
+								id: appType.id,
+							});
+						}
+						else {
+							const {id} = await createProductSpecification({
+								body: {
+									productId: appProductId,
+									specificationId: dataSpecification.id,
+									specificationKey: dataSpecification.key,
+									value: {en_US: appType.value},
+								},
+								appId,
+							});
+
+							dispatch({
+								payload: {id, value: appType.value},
+								type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
+							});
+						}
 					};
 
 					submitAppBuildType();

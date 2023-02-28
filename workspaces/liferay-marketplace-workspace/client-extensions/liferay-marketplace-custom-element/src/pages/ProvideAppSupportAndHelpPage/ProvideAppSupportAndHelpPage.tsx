@@ -6,7 +6,11 @@ import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 
 import './ProvideAppSupportAndHelpPage.scss';
-import {createProductSpecification, createSpecification} from '../../utils/api';
+import {
+	createProductSpecification,
+	createSpecification,
+	updateProductSpecification,
+} from '../../utils/api';
 
 interface ProvideAppSupportAndHelpPageProps {
 	onClickBack: () => void;
@@ -30,7 +34,31 @@ export function ProvideAppSupportAndHelpPage({
 		dispatch,
 	] = useAppContext();
 
-	async function submitSupportURLasync(
+	async function saveAndUpdate(
+		productSpecificationId: number,
+		key: string,
+		title: string,
+		value: string,
+		action: TYPES
+	) {
+		const id = await submitSupportURLs(
+			productSpecificationId,
+			key,
+			title,
+			value
+		);
+
+		dispatch({
+			payload: {
+				id,
+				value,
+			},
+			type: action,
+		});
+	}
+
+	async function submitSupportURLs(
+		productSpecificationId: number,
 		key: string,
 		title: string,
 		value: string
@@ -41,17 +69,30 @@ export function ProvideAppSupportAndHelpPage({
 				title: {en_US: title},
 			},
 		});
-		createProductSpecification({
-			appId,
-			body: {
-				productId: appProductId,
-				specificationId: dataSpecification.id,
-				specificationKey: dataSpecification.key,
-				value: {en_US: value},
-			},
-		});
+		if (productSpecificationId) {
+			updateProductSpecification({
+				body: {
+					specificationKey: dataSpecification.key,
+					value: {en_US: value},
+				},
+				id: productSpecificationId,
+			});
 
-		return;
+			return;
+		}
+		else {
+			const {id} = await createProductSpecification({
+				body: {
+					productId: appProductId,
+					specificationId: dataSpecification.id,
+					specificationKey: dataSpecification.key,
+					value: {en_US: value},
+				},
+				appId,
+			});
+
+			return id;
+		}
 	}
 
 	return (
@@ -73,6 +114,7 @@ export function ProvideAppSupportAndHelpPage({
 					onChange={({target}) =>
 						dispatch({
 							payload: {
+								id: supportURL?.id,
 								value: target.value,
 							},
 							type: TYPES.UPDATE_APP_SUPPORT_URL,
@@ -80,7 +122,7 @@ export function ProvideAppSupportAndHelpPage({
 					}
 					placeholder="http:// Enter app name"
 					required
-					value={supportURL}
+					value={supportURL?.value}
 				/>
 
 				<Input
@@ -88,13 +130,14 @@ export function ProvideAppSupportAndHelpPage({
 					onChange={({target}) =>
 						dispatch({
 							payload: {
+								id: publisherWebsiteURL?.id,
 								value: target.value,
 							},
 							type: TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL,
 						})
 					}
 					placeholder="http:// Enter app name"
-					value={publisherWebsiteURL}
+					value={publisherWebsiteURL?.value}
 				/>
 
 				<Input
@@ -102,13 +145,14 @@ export function ProvideAppSupportAndHelpPage({
 					onChange={({target}) =>
 						dispatch({
 							payload: {
+								id: appUsageTermsURL?.id,
 								value: target.value,
 							},
 							type: TYPES.UPDATE_APP_USAGE_TERMS_URL,
 						})
 					}
 					placeholder="http:// Enter app name"
-					value={appUsageTermsURL}
+					value={appUsageTermsURL?.value}
 				/>
 
 				<Input
@@ -116,13 +160,14 @@ export function ProvideAppSupportAndHelpPage({
 					onChange={({target}) =>
 						dispatch({
 							payload: {
+								id: appDocumentationURL?.id,
 								value: target.value,
 							},
 							type: TYPES.UPDATE_APP_DOCUMENTATION_URL,
 						})
 					}
 					placeholder="http:// Enter app name"
-					value={appDocumentationURL}
+					value={appDocumentationURL?.value}
 				/>
 
 				<Input
@@ -130,52 +175,63 @@ export function ProvideAppSupportAndHelpPage({
 					onChange={({target}) =>
 						dispatch({
 							payload: {
+								id: appInstallationGuideURL?.id,
 								value: target.value,
 							},
 							type: TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
 						})
 					}
 					placeholder="http:// Enter app name"
-					value={appInstallationGuideURL}
+					value={appInstallationGuideURL?.value}
 				/>
 			</Section>
 
 			<NewAppPageFooterButtons
-				disableContinueButton={!supportURL}
+				disableContinueButton={!supportURL?.value}
 				onClickBack={() => onClickBack()}
 				onClickContinue={() => {
-					submitSupportURLasync(
+					saveAndUpdate(
+						supportURL?.id,
 						'supportURL',
 						'Support URL',
-						supportURL
+						supportURL?.value,
+						TYPES.UPDATE_APP_SUPPORT_URL
 					);
 
-					if (publisherWebsiteURL) {
-						submitSupportURLasync(
+					if (publisherWebsiteURL?.value) {
+						saveAndUpdate(
+							publisherWebsiteURL?.id,
 							'publisherWebsiteURL',
 							'Publisher Web site URL',
-							publisherWebsiteURL
+							publisherWebsiteURL?.value,
+							TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL
 						);
 					}
-					if (appUsageTermsURL) {
-						submitSupportURLasync(
+					if (appUsageTermsURL?.value) {
+						saveAndUpdate(
+							appUsageTermsURL?.id,
 							'appUsageTermsURL',
 							'App Usage Terms URL',
-							appUsageTermsURL
+							appUsageTermsURL?.value,
+							TYPES.UPDATE_APP_USAGE_TERMS_URL
 						);
 					}
-					if (appDocumentationURL) {
-						submitSupportURLasync(
+					if (appDocumentationURL?.value) {
+						saveAndUpdate(
+							appDocumentationURL?.id,
 							'appDocumentationURL',
 							'App Documentation URL',
-							appDocumentationURL
+							appDocumentationURL?.value,
+							TYPES.UPDATE_APP_DOCUMENTATION_URL
 						);
 					}
-					if (appInstallationGuideURL) {
-						submitSupportURLasync(
+					if (appInstallationGuideURL?.value) {
+						saveAndUpdate(
+							appInstallationGuideURL?.id,
 							'appInstallationGuideURL',
 							'App Installation Guide URL',
-							appInstallationGuideURL
+							appInstallationGuideURL?.value,
+							TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL
 						);
 					}
 					onClickContinue();

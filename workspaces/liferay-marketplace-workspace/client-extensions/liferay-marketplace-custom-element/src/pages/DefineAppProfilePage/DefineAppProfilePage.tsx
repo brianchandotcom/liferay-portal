@@ -10,7 +10,7 @@ import {Section} from '../../components/Section/Section';
 import {UploadLogo} from '../../components/UploadLogo/UploadLogo';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {createApp, createImage} from '../../utils/api';
+import {createApp, createImage, updateApp} from '../../utils/api';
 import {submitBase64EncodedFile} from '../../utils/util';
 
 import './DefineAppProfilePage.scss';
@@ -60,7 +60,7 @@ export function DefineAppProfilePage({
 	onClickBack,
 	onClickContinue,
 }: DefineAppProfilePageProps) {
-	const [{appDescription, appLogo, appName, catalogId}, dispatch] =
+	const [{appDescription, appERC, appLogo, appName, catalogId}, dispatch] =
 		useAppContext();
 
 	const handleLogoUpload = (files: FileList) => {
@@ -183,26 +183,40 @@ export function DefineAppProfilePage({
 				disableContinueButton={!appName || !appDescription}
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
-					const createAppResponse = await createApp({
-						appDescription,
-						appName,
-						catalogId,
-					});
+					let product;
+					let response;
 
-					const product = await createAppResponse.json();
+					if (appERC) {
+						response = await updateApp({
+							appDescription,
+							appERC,
+							appName,
+						});
+					}
+					else {
+						response = await createApp({
+							appDescription,
+							appName,
+							catalogId,
+						});
+					}
 
-					dispatch({
-						payload: {
-							value: {
-								appERC: product.externalReferenceCode,
-								appId: product.id,
-								appProductId: product.productId,
-								appWorkflowStatusInfo:
-									product.workflowStatusInfo,
+					if (!appERC) {
+						product = await response.json();
+
+						dispatch({
+							payload: {
+								value: {
+									appProductId: product.productId,
+									appId: product.id,
+									appERC: product.externalReferenceCode,
+									appWorkflowStatusInfo:
+										product.workflowStatusInfo,
+								},
 							},
-						},
-						type: TYPES.SUBMIT_APP_PROFILE,
-					});
+							type: TYPES.SUBMIT_APP_PROFILE,
+						});
+					}
 
 					if (appLogo) {
 						submitBase64EncodedFile(

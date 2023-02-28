@@ -12,11 +12,13 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -175,6 +177,8 @@ function CustomSizeSelector({
 	);
 	const [width, setWidth] = useState<number>(SIZES.custom.screenSize.width);
 
+	const [alertMessage, setAlertMessage] = useState<string | null>(null);
+
 	useEffect(() => {
 		const resizeObserver = new ResizeObserver(([firstEntry]) => {
 			const preview = firstEntry.target as HTMLElement;
@@ -212,7 +216,7 @@ function CustomSizeSelector({
 								value <= MAX_CUSTOM_SIZE
 							) {
 								setHeight(value);
-						}
+							}
 						}}
 						type="number"
 						value={height}
@@ -236,7 +240,7 @@ function CustomSizeSelector({
 								value <= MAX_CUSTOM_SIZE
 							) {
 								setWidth(value);
-						}
+							}
 						}}
 						type="number"
 						value={width}
@@ -252,11 +256,24 @@ function CustomSizeSelector({
 					if (previewRef.current) {
 						previewRef.current.style.height = `${height}px`;
 						previewRef.current.style.width = `${width}px`;
+
+						setAlertMessage(
+							sub(
+								Liferay.Language.get('custom-size-x-applied'),
+								`${height}x${width}`
+							)
+						);
 					}
 				}}
 			>
 				{Liferay.Language.get('apply-custom-size')}
 			</ClayButton>
+
+			{alertMessage && (
+				<ClayAlert className="mt-3" displayType="info">
+					{alertMessage}
+				</ClayAlert>
+			)}
 		</div>
 	);
 }

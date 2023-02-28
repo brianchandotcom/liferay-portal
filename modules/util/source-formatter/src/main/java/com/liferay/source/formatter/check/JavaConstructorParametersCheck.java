@@ -90,6 +90,12 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 			String matchedGlobalVariableName = matcher1.group();
 
+			if (!StringUtil.equals(
+					matchedGlobalVariableName, globalVariableName)) {
+
+				continue;
+			}
+
 			if (followingCode.startsWith(".")) {
 				String methodName = null;
 
@@ -113,12 +119,6 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 				if (!methodName.startsWith("get")) {
 					break;
-				}
-
-				if (!StringUtil.equals(
-						matchedGlobalVariableName, globalVariableName)) {
-
-					continue;
 				}
 
 				return StringUtil.replaceFirst(

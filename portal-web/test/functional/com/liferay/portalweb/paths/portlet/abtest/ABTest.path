@@ -161,6 +161,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_DATA_ANALYTICS_CLOUD_BUTTON</td>
+	<td>//*[contains(@class,'link-secondary') and text()='View Data in Analytics Cloud']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_INFO_ITEMS</td>
 	<td>xpath=(//label[contains(@class,'form-group-autofit')])[${key_index}]//*[contains(text(),'${key_value}')]</td>
 	<td></td>

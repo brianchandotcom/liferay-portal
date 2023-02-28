@@ -126,9 +126,9 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 			char previousChar = content.charAt(start - 1);
 
-			if ((previousChar != CharPool.TAB) &&
+			if ((previousChar != CharPool.OPEN_PARENTHESIS) &&
 				(previousChar != CharPool.SPACE) &&
-				(previousChar != CharPool.OPEN_PARENTHESIS)) {
+				(previousChar != CharPool.TAB)) {
 
 				continue;
 			}

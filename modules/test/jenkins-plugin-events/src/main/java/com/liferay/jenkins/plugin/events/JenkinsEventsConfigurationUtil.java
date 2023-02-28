@@ -45,16 +45,14 @@ public class JenkinsEventsConfigurationUtil {
 
 		JSONObject payloadJSONObject = new JSONObject();
 
+		payloadJSONObject.put("build", _getBuildJSONObject(eventObject));
 		payloadJSONObject.put(
-			"build", _getBuildJSONObject(_getBuild(eventObject)));
-		payloadJSONObject.put(
-			"computer",
-			_getComputerJSONObject(_getComputer(eventObject), eventTrigger));
+			"computer", _getComputerJSONObject(eventObject, eventTrigger));
 		payloadJSONObject.put("eventTrigger", eventTrigger);
 		payloadJSONObject.put("jenkins", _getJenkinsJSONObject(jenkins));
-		payloadJSONObject.put("job", _getJobJSONObject(_getJob(eventObject)));
+		payloadJSONObject.put("job", _getJobJSONObject(eventObject));
 		payloadJSONObject.put(
-			"queueItem", _getQueueItemJSONObject(_getQueueItem(eventObject)));
+			"queueItem", _getQueueItemJSONObject(eventObject));
 
 		JenkinsEventsRootAction jenkinsEventsRootAction =
 			jenkins.getDescriptorByType(JenkinsEventsRootAction.class);
@@ -78,7 +76,9 @@ public class JenkinsEventsConfigurationUtil {
 		return null;
 	}
 
-	private static JSONObject _getBuildJSONObject(Build build) {
+	private static JSONObject _getBuildJSONObject(Object eventObject) {
+		Build build = _getBuild(eventObject);
+
 		if (build == null) {
 			return null;
 		}
@@ -109,7 +109,9 @@ public class JenkinsEventsConfigurationUtil {
 	}
 
 	private static JSONObject _getComputerJSONObject(
-		Computer computer, JenkinsWebHook.EventTrigger eventTrigger) {
+		Object eventObject, JenkinsWebHook.EventTrigger eventTrigger) {
+
+		Computer computer = _getComputer(eventObject);
 
 		if (computer == null) {
 			return null;
@@ -159,7 +161,9 @@ public class JenkinsEventsConfigurationUtil {
 		return null;
 	}
 
-	private static JSONObject _getJobJSONObject(Job job) {
+	private static JSONObject _getJobJSONObject(Object eventObject) {
+		Job job = _getJob(eventObject);
+
 		if (job == null) {
 			return null;
 		}
@@ -179,7 +183,9 @@ public class JenkinsEventsConfigurationUtil {
 		return null;
 	}
 
-	private static JSONObject _getQueueItemJSONObject(Queue.Item queueItem) {
+	private static JSONObject _getQueueItemJSONObject(Object eventObject) {
+		Queue.Item queueItem = _getQueueItem(eventObject);
+
 		if (queueItem == null) {
 			return null;
 		}

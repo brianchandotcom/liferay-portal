@@ -114,12 +114,28 @@ public class CommerceAddressServiceUtil {
 	}
 
 	public static List<CommerceAddress> getBillingCommerceAddresses(
+			long channelId, String className, long classPK, int start, int end)
+		throws PortalException {
+
+		return getService().getBillingCommerceAddresses(
+			channelId, className, classPK, start, end);
+	}
+
+	public static List<CommerceAddress> getBillingCommerceAddresses(
 			long companyId, String className, long classPK, String keywords,
 			int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws PortalException {
 
 		return getService().getBillingCommerceAddresses(
 			companyId, className, classPK, keywords, start, end, sort);
+	}
+
+	public static List<CommerceAddress> getBillingCommerceAddressesCount(
+			long channelId, String className, long classPK, int start, int end)
+		throws PortalException {
+
+		return getService().getBillingCommerceAddressesCount(
+			channelId, className, classPK, start, end);
 	}
 
 	public static int getBillingCommerceAddressesCount(
@@ -230,12 +246,28 @@ public class CommerceAddressServiceUtil {
 	}
 
 	public static List<CommerceAddress> getShippingCommerceAddresses(
+			long channelId, String className, long classPK, int start, int end)
+		throws PortalException {
+
+		return getService().getShippingCommerceAddresses(
+			channelId, className, classPK, start, end);
+	}
+
+	public static List<CommerceAddress> getShippingCommerceAddresses(
 			long companyId, String className, long classPK, String keywords,
 			int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws PortalException {
 
 		return getService().getShippingCommerceAddresses(
 			companyId, className, classPK, keywords, start, end, sort);
+	}
+
+	public static List<CommerceAddress> getShippingCommerceAddressesCount(
+			long channelId, String className, long classPK, int start, int end)
+		throws PortalException {
+
+		return getService().getShippingCommerceAddressesCount(
+			channelId, className, classPK, start, end);
 	}
 
 	public static int getShippingCommerceAddressesCount(

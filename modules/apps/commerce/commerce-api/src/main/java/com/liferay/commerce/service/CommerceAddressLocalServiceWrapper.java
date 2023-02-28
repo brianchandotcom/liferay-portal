@@ -182,6 +182,16 @@ public class CommerceAddressLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAddress>
+		getBillingCommerceAddresses(
+			long channelId, String className, long classPK, int start,
+			int end) {
+
+		return _commerceAddressLocalService.getBillingCommerceAddresses(
+			channelId, className, classPK, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceAddress>
 			getBillingCommerceAddresses(
 				long companyId, String className, long classPK, String keywords,
 				int start, int end, com.liferay.portal.kernel.search.Sort sort)
@@ -189,6 +199,14 @@ public class CommerceAddressLocalServiceWrapper
 
 		return _commerceAddressLocalService.getBillingCommerceAddresses(
 			companyId, className, classPK, keywords, start, end, sort);
+	}
+
+	@Override
+	public int getBillingCommerceAddressesCount(
+		long channelId, String className, long classPK, int start, int end) {
+
+		return _commerceAddressLocalService.getBillingCommerceAddressesCount(
+			channelId, className, classPK, start, end);
 	}
 
 	@Override
@@ -318,6 +336,16 @@ public class CommerceAddressLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAddress>
+		getShippingCommerceAddresses(
+			long channelId, String className, long classPK, int start,
+			int end) {
+
+		return _commerceAddressLocalService.getShippingCommerceAddresses(
+			channelId, className, classPK, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceAddress>
 			getShippingCommerceAddresses(
 				long companyId, String className, long classPK, String keywords,
 				int start, int end, com.liferay.portal.kernel.search.Sort sort)
@@ -325,6 +353,14 @@ public class CommerceAddressLocalServiceWrapper
 
 		return _commerceAddressLocalService.getShippingCommerceAddresses(
 			companyId, className, classPK, keywords, start, end, sort);
+	}
+
+	@Override
+	public int getShippingCommerceAddressesCount(
+		long channelId, String className, long classPK, int start, int end) {
+
+		return _commerceAddressLocalService.getShippingCommerceAddressesCount(
+			channelId, className, classPK, start, end);
 	}
 
 	@Override

@@ -183,7 +183,7 @@ export function Editor({autocompleteData, initialScript, mode}) {
 		<>
 			<CodeMirrorEditor
 				autocompleteData={autocompleteData}
-				content={script}
+				content={initialScript}
 				inputChannel={inputChannel}
 				mode={mode}
 				onChange={setScript}

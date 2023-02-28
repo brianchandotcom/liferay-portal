@@ -47,7 +47,6 @@ import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/javascript/javascript';
 import {CodeMirrorKeyboardMessage} from '@liferay/layout-content-page-editor-web';
 import CodeMirror from 'codemirror';
-import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -249,7 +248,7 @@ export function CodeMirrorEditor({
 			onChange(editor.getValue());
 		};
 
-		editor.on('change', debounce(handleChange));
+		editor.on('change', handleChange);
 
 		return () => {
 			editor.off('change', handleChange);

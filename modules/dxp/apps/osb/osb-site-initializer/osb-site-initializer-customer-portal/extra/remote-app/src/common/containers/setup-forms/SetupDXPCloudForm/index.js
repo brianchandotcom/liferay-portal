@@ -181,7 +181,7 @@ const SetupDXPCloudPage = ({
 									firstName,
 									githubUsername: github,
 									lastName,
-									r_accountEntryToDXPCloudEnvironment_accountEntryId:
+									r_accountEntryToAdminDXPCloud_accountEntryId:
 										project?.id,
 								},
 							},

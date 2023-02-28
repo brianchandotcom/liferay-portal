@@ -69,6 +69,62 @@ definition {
 	macro editSkuPricing {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
+		CommerceSKUs.setSkuPricing(
+			basePrice = ${basePrice},
+			cost = ${cost},
+			promoPrice = ${promoPrice});
+
+		Button.clickPublish();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
+	}
+
+	macro generateAllSkuCombinations {
+		Click(locator1 = "Button#PLUS");
+
+		Click(
+			key_fieldName = "Generate All SKU Combinations",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+	}
+
+	macro setSkuInventory {
+		if (isSet(italyQuantity)) {
+			Type(
+				key_value1 = 0,
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = ${italyQuantity});
+
+			Click(
+				key_value1 = 0,
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+		}
+
+		if (isSet(northeastQuantity)) {
+			Type(
+				key_value1 = 1,
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = ${northeastQuantity});
+
+			Click(
+				key_value1 = 1,
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+		}
+
+		if (isSet(southwestQuantity)) {
+			Type(
+				key_value1 = 2,
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = ${southwestQuantity});
+
+			Click(
+				key_value1 = 2,
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+		}
+	}
+
+	macro setSkuPricing {
 		if (isSet(basePrice)) {
 			Type(
 				key_text = "Base Price",
@@ -89,12 +145,6 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = ${cost});
 		}
-
-		Button.clickPublish();
-
-		Click(locator1 = "Icon#CLOSE");
-
-		SelectFrame.selectFrameTop();
 	}
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.layout.utility.page.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -34,6 +35,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -47,6 +49,67 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testDefaultLayoutUtilityPageEntryAfterUpdate()
+		throws Exception {
+
+		initExport();
+
+		long userId = TestPropsValues.getUserId();
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, userId, stagingGroup.getGroupId(), 0, 0, false,
+				"Test Entry", LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND,
+				0,
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId(), userId));
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, layoutUtilityPageEntry);
+
+		initImport();
+
+		LayoutUtilityPageEntry exportedLayoutUtilityPageEntry =
+			(LayoutUtilityPageEntry)readExportedStagedModel(
+				layoutUtilityPageEntry);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedLayoutUtilityPageEntry);
+
+		LayoutUtilityPageEntry importedLayoutUtilityPageEntry =
+			(LayoutUtilityPageEntry)getStagedModel(
+				layoutUtilityPageEntry.getUuid(), liveGroup);
+
+		Assert.assertFalse(
+			importedLayoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
+
+		initExport();
+
+		layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				setDefaultLayoutUtilityPageEntry(
+					layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, layoutUtilityPageEntry);
+
+		initImport();
+
+		exportedLayoutUtilityPageEntry =
+			(LayoutUtilityPageEntry)readExportedStagedModel(
+				layoutUtilityPageEntry);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedLayoutUtilityPageEntry);
+
+		importedLayoutUtilityPageEntry = (LayoutUtilityPageEntry)getStagedModel(
+			layoutUtilityPageEntry.getUuid(), liveGroup);
+
+		Assert.assertTrue(
+			importedLayoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
+	}
 
 	@Override
 	protected StagedModel addStagedModel(

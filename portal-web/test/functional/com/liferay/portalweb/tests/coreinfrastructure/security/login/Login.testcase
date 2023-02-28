@@ -69,6 +69,7 @@ definition {
 			User.logoutPG();
 
 			User.loginUserWithFacebookSSOEnabledPG(
+				baseURL = "https://localhost:8443",
 				facebookEmail = ${facebookEmail},
 				facebookPassword = ${facebookPassword},
 				siteName = ${siteName});

@@ -38,15 +38,11 @@ public abstract class BaseFuzzyQueryTestCase extends BaseIndexingTestCase {
 
 	@Test
 	public void testFuzzyQuery() {
-		addDocuments("eclipse", "java", "liferay", "language");
-
-		assertSearch("eclipsee", Arrays.asList("eclipse"));
-	}
-
-	protected void addDocuments(String... values) {
 		addDocuments(
 			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
-			values);
+			"eclipse", "java", "liferay", "language");
+
+		assertSearch("eclipsee", Arrays.asList("eclipse"));
 	}
 
 	protected void assertSearch(String value, List<String> expectedValues) {

@@ -36,7 +36,7 @@ function getItemIcon(item, fragmentEntryLinks, fragments, widgets) {
 		if (fragmentEntryLink.portletId) {
 			const widget = getWidget(widgets, fragmentEntryLink.portletId);
 
-			return widget.instanceable ? 'square-hole-multi' : 'square-hole';
+			return widget?.instanceable ? 'square-hole-multi' : 'square-hole';
 		}
 
 		return fragmentEntries.find(

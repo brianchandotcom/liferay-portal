@@ -14,7 +14,7 @@
 
 import {ClaySelectWithOption} from '@clayui/form';
 import {PropTypes} from 'prop-types';
-import React, {Component} from 'react';
+import React from 'react';
 
 import {
 	HAS_OPERATORS,
@@ -25,118 +25,113 @@ import {getSupportedOperatorsFromEvent} from '../../utils/utils.es';
 import IntegerInput from './IntegerInput.es';
 import SelectEventEntityInput from './SelectEventEntityInput.es';
 
-class EventInput extends Component {
-	static propTypes = {
-		criterion: PropTypes.object.isRequired,
-		error: PropTypes.bool,
-		onChange: PropTypes.func.isRequired,
-		renderEmptyValuesErrors: PropTypes.bool,
-		selectedOperator: PropTypes.object,
-		selectedProperty: PropTypes.object.isRequired,
-	};
+function EventInput({
+	criterion = {},
+	error,
+	onChange,
+	onInputChange,
+	propertyLabel,
+	renderEmptyValuesErrors,
+	selectedProperty,
+	value,
+}) {
+	const disabledInput = !!error;
 
-	static defaultProps = {
-		criterion: {},
-	};
+	const notOperators = getSupportedOperatorsFromEvent(
+		SUPPORTED_EVENT_OPERATORS,
+		SUPPORTED_PROPERTY_TYPES,
+		'NOT'
+	);
 
-	render() {
-		const {
-			criterion,
-			error,
-			onChange,
-			onInputChange,
-			propertyLabel,
-			renderEmptyValuesErrors,
-			selectedProperty,
-			value,
-		} = this.props;
+	const notOperatorKey = criterion.operatorNot
+		? HAS_OPERATORS.NOT_HAS
+		: HAS_OPERATORS.HAS;
 
-		const disabledInput = !!error;
+	const integerOperators = getSupportedOperatorsFromEvent(
+		SUPPORTED_EVENT_OPERATORS,
+		SUPPORTED_PROPERTY_TYPES,
+		'INTEGER'
+	);
 
-		const notOperators = getSupportedOperatorsFromEvent(
-			SUPPORTED_EVENT_OPERATORS,
-			SUPPORTED_PROPERTY_TYPES,
-			'NOT'
-		);
+	const integerOperatorLabel = integerOperators.find(
+		(operator) => operator.name === criterion.operatorName
+	)?.name;
 
-		const notOperatorKey = criterion.operatorNot
-			? HAS_OPERATORS.NOT_HAS
-			: HAS_OPERATORS.HAS;
+	return (
+		<div className="ml-2" style={{flexGrow: 1}}>
+			<div className="align-items-center d-flex mb-2">
+				<span className="mr-1 text-dark">
+					{Liferay.Language.get('user')}
+				</span>
 
-		const integerOperators = getSupportedOperatorsFromEvent(
-			SUPPORTED_EVENT_OPERATORS,
-			SUPPORTED_PROPERTY_TYPES,
-			'INTEGER'
-		);
+				<ClaySelectWithOption
+					aria-label={`${propertyLabel}: ${Liferay.Language.get(
+						'select-has-operator-option'
+					)}`}
+					className="criterion-input form-control operator-input"
+					data-testid="select-has-operator"
+					disabled={disabledInput}
+					onChange={onInputChange('operatorNot')}
+					options={notOperators.map(({label, name}) => ({
+						label,
+						value: name,
+					}))}
+					value={notOperatorKey}
+				/>
 
-		const integerOperatorLabel = integerOperators.find(
-			(operator) => operator.name === criterion.operatorName
-		)?.name;
+				<span className="criterion-string">
+					<b>{propertyLabel}</b>
+				</span>
 
-		return (
-			<div className="ml-2" style={{flexGrow: 1}}>
-				<div className="align-items-center d-flex mb-2">
-					<span className="mr-1 text-dark">
-						{Liferay.Language.get('user')}
-					</span>
-
-					<ClaySelectWithOption
-						aria-label={`${propertyLabel}: ${Liferay.Language.get(
-							'select-has-operator-option'
-						)}`}
-						className="criterion-input form-control operator-input"
-						data-testid="select-has-operator"
-						disabled={disabledInput}
-						onChange={onInputChange('operatorNot')}
-						options={notOperators.map(({label, name}) => ({
-							label,
-							value: name,
-						}))}
-						value={notOperatorKey}
-					/>
-
-					<span className="criterion-string">
-						<b>{propertyLabel}</b>
-					</span>
-
-					<SelectEventEntityInput
-						disabled={disabledInput}
-						displayValue={criterion.assetId}
-						onChange={onChange}
-						propertyLabel={propertyLabel}
-						renderEmptyValueErrors={renderEmptyValuesErrors}
-						selectEntity={selectedProperty.selectEntity}
-					/>
-				</div>
-
-				<div className="align-items-center d-flex">
-					<ClaySelectWithOption
-						aria-label={`${propertyLabel}: ${Liferay.Language.get(
-							'select-count-operator-option'
-						)}`}
-						className="criterion-input form-control operator-input"
-						data-testid="integer-operator"
-						disabled={disabledInput}
-						onChange={onInputChange('operatorName')}
-						options={integerOperators.map(({label, name}) => ({
-							label,
-							value: name,
-						}))}
-						value={integerOperatorLabel}
-					/>
-
-					<IntegerInput
-						className="criterion-input form-control"
-						data-testid="integer-number"
-						disabled={disabledInput}
-						onChange={onChange}
-						type="number"
-						value={value}
-					/>
-				</div>
+				<SelectEventEntityInput
+					disabled={disabledInput}
+					displayValue={criterion.assetId}
+					onChange={onChange}
+					propertyLabel={propertyLabel}
+					renderEmptyValueErrors={renderEmptyValuesErrors}
+					selectEntity={selectedProperty.selectEntity}
+				/>
 			</div>
-		);
-	}
+
+			<div className="align-items-center d-flex">
+				<ClaySelectWithOption
+					aria-label={`${propertyLabel}: ${Liferay.Language.get(
+						'select-count-operator-option'
+					)}`}
+					className="criterion-input form-control operator-input"
+					data-testid="integer-operator"
+					disabled={disabledInput}
+					onChange={onInputChange('operatorName')}
+					options={integerOperators.map(({label, name}) => ({
+						label,
+						value: name,
+					}))}
+					value={integerOperatorLabel}
+				/>
+
+				<IntegerInput
+					className="criterion-input form-control"
+					data-testid="integer-number"
+					disabled={disabledInput}
+					onChange={onChange}
+					type="number"
+					value={value}
+				/>
+
+			</div>
+		</div>
+	);
 }
+
+EventInput.propTypes = {
+	criterion: PropTypes.object.isRequired,
+	error: PropTypes.bool,
+	onChange: PropTypes.func.isRequired,
+	onInputChange: PropTypes.func.isRequired,
+	renderEmptyValuesErrors: PropTypes.bool,
+	selectedOperator: PropTypes.object,
+	selectedProperty: PropTypes.object.isRequired,
+	value: PropTypes.string,
+};
 
 export default EventInput;

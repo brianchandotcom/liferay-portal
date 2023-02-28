@@ -50,7 +50,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Stian Sigvartsen
  */
 @RunWith(Arquillian.class)
-public class BatchEngineImportTest {
+public class BatchEngineImportTaskExecutorTest {
 
 	@ClassRule
 	@Rule

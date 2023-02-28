@@ -186,11 +186,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEPOT_ROLES_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectDepotRoleLink')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEPOT_ROLES_TITLE</td>
 	<td>//tr/td[normalize-space(text())='${key_roleTitle}']</td>
 	<td></td>

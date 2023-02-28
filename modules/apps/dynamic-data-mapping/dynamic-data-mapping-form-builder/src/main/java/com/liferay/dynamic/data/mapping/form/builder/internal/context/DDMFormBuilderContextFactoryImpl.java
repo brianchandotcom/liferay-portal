@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,9 +37,6 @@ public class DDMFormBuilderContextFactoryImpl
 	public DDMFormBuilderContextResponse create(
 		DDMFormBuilderContextRequest ddmFormBuilderContextRequest) {
 
-		String portletNamespace = GetterUtil.getString(
-			ddmFormBuilderContextRequest.getProperty("portletNamespace"));
-
 		DDMFormBuilderContextFactoryHelper ddmFormBuilderContextFactoryHelper =
 			new DDMFormBuilderContextFactoryHelper(
 				ddmFormBuilderContextRequest.getProperty("ddmStructure"),
@@ -50,7 +46,8 @@ public class DDMFormBuilderContextFactoryImpl
 				ddmFormBuilderContextRequest.getHttpServletRequest(),
 				ddmFormBuilderContextRequest.getHttpServletResponse(),
 				_jsonFactory, ddmFormBuilderContextRequest.getLocale(),
-				_npmResolver, portletNamespace,
+				_npmResolver,
+				ddmFormBuilderContextRequest.getProperty("portletNamespace"),
 				ddmFormBuilderContextRequest.getReadOnly());
 
 		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =

@@ -14859,8 +14859,6 @@ mail.send.blacklist=</echo>
 					<format pattern="yyyyMMddkkmmssSSS" property="azure.container.id" />
 				</tstamp>
 
-				<ant antfile="build-test-azure.xml" target="login-azure-cli" />
-
 				<ant antfile="build-test-azure.xml" target="create-azure-container" />
 
 				<prepare-azure-store-configuration />

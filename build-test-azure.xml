@@ -8,7 +8,7 @@
 			<local name="container.list" />
 
 			<exec executable="az" outputproperty="container.list">
-				<arg line="storage container list --account-name blobstoragesmoketest --prefix lfr-qa-poshi-test --auth-mode login" />
+				<arg line="storage container list --account-name blobstoragesmoketest --prefix lfr-qa-poshi-test --connection-string ${azure.connection.string}" />
 			</exec>
 
 			<script language="javascript"><![CDATA[
@@ -45,7 +45,7 @@
 					<echo>Expired Container: @{delete.name}</echo>
 
 					<exec executable="az">
-						<arg line="storage container delete --account-name blobstoragesmoketest --name @{delete.name} --auth-mode login" />
+						<arg line="storage container delete --account-name blobstoragesmoketest --name @{delete.name} --connection-string ${azure.connection.string}" />
 					</exec>
 				</sequential>
 			</for>
@@ -56,7 +56,7 @@
 		<local name="container.blobs" />
 
 		<exec executable="az" outputproperty="container.blobs">
-			<arg line="storage blob list --container-name lfr-qa-poshi-test-${azure.container.id} --account-name blobstoragesmoketest --prefix ${companyId}/${groupId} --output table" />
+			<arg line="storage blob list --container-name lfr-qa-poshi-test-${azure.container.id} --account-name blobstoragesmoketest --prefix ${companyId}/${groupId} --output table --connection-string ${azure.connection.string}" />
 		</exec>
 
 		<echo>${container.blobs}</echo>
@@ -76,7 +76,7 @@
 		<local name="container.blobs" />
 
 		<exec executable="az" outputproperty="container.blobs">
-			<arg line="storage blob list --container-name lfr-qa-poshi-test-${azure.container.id} --account-name blobstoragesmoketest --prefix ${companyId}/${groupId} --output table" />
+			<arg line="storage blob list --container-name lfr-qa-poshi-test-${azure.container.id} --account-name blobstoragesmoketest --prefix ${companyId}/${groupId} --output table --connection-string ${azure.connection.string}" />
 		</exec>
 
 		<echo>${container.blobs}</echo>
@@ -98,7 +98,7 @@
 		<local name="container.create.output" />
 
 		<exec executable="az" outputproperty="container.create.output">
-			<arg line="storage container create -n lfr-qa-poshi-test-${azure.container.id} --public-access container --account-name blobstoragesmoketest" />
+			<arg line="storage container create -n lfr-qa-poshi-test-${azure.container.id} --public-access container --account-name blobstoragesmoketest --connection-string ${azure.connection.string}" />
 		</exec>
 
 		<echo>${container.create.output}</echo>
@@ -106,15 +106,9 @@
 
 	<target name="delete-azure-container">
 		<exec executable="az">
-			<arg line="storage container delete --account-name blobstoragesmoketest --name lfr-qa-poshi-test-${azure.container.id}" />
+			<arg line="storage container delete --account-name blobstoragesmoketest --name lfr-qa-poshi-test-${azure.container.id} --connection-string ${azure.connection.string}" />
 		</exec>
 
 		<delete-azure-containers />
-	</target>
-
-	<target name="login-azure-cli">
-		<exec executable="az">
-			<arg line="login -u ${azure.account.email.address} -p ${azure.account.password}" />
-		</exec>
 	</target>
 </project>

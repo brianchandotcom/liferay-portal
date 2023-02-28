@@ -932,6 +932,30 @@ public class FreeMarkerTool {
 		return true;
 	}
 
+	public boolean isCollection(
+		JavaMethodSignature javaMethodSignaturePathItem,
+		List<JavaMethodSignature> javaMethodSignatures, String schemaNames) {
+
+		PathItem pathItem = javaMethodSignaturePathItem.getPathItem();
+
+		Operation getOperation = pathItem.getGet();
+
+		if (getOperation != null) {
+			return StringUtil.endsWith(getOperation.getOperationId(), "Page");
+		}
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			if (StringUtil.equals(
+					javaMethodSignature.getMethodName(),
+					"get" + schemaNames + "Page")) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean isDTOSchemaProperty(
 		OpenAPIYAML openAPIYAML, String propertyName, Schema schema) {
 

@@ -51,7 +51,7 @@ definition {
 		JSONRole.deleteTestRoles();
 	}
 
-	@description = ""
+	@description = "LPS-136512 Given The Content Performance panel of a document is opened When the user clicks on the times icon ( X ) Then the Content Performance panel is closed"
 	@priority = 3
 	test CloseMetricsPanel {
 		task ("Create a default Display Page Template") {
@@ -93,7 +93,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132509 Given a blog with an associated Display Page Template When the user with permissions clicks on the Metrics button Then the user is led to the metrics panel"
 	@priority = 4
 	test ViewMetricsButtonKebabWhenBlogHasDPT {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -133,7 +133,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-136512 Given A document associated with a Display Page When the user clicks on the option ""View metrics"" in the kebab menu Then the Content Performance panel is displayed"
 	@priority = 4
 	test ViewMetricsButtonKebabWhenDocumentHasDPT {
 		task ("Create a default Display Page Template") {
@@ -294,7 +294,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-136512 Given A document associated with a Display Page When the user clicks on the ""Metrics"" button in the hover action Then the Content Performance panel is displayed"
 	@priority = 4
 	test ViewMetricsButtonWhenDocumentHasDPT {
 		task ("Create a default Display Page Template") {

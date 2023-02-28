@@ -22,7 +22,6 @@ import com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.MeasurementUnit;
-import com.liferay.headless.commerce.admin.site.setting.internal.dto.v1_0.converter.MeasurementUnitDTOConverter;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.MeasurementUnitResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -382,8 +382,11 @@ public class MeasurementUnitResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private MeasurementUnitDTOConverter _measurementUnitDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.site.setting.internal.dto.v1_0.converter.MeasurementUnitDTOConverter)"
+	)
+	private DTOConverter<CPMeasurementUnit, MeasurementUnit>
+		_measurementUnitDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

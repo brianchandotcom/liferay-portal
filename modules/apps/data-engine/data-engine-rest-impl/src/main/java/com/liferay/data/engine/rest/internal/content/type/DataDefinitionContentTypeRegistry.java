@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(service = DataDefinitionContentTypeRegistry.class)
 public class DataDefinitionContentTypeRegistry {
 
-	public Long getClassNameId(String contentType) {
+	public Long getClassNameId(String contentType) throws Exception {
 		Long id = _classNameIds.get(contentType);
 
 		if (id == null) {
@@ -52,7 +52,8 @@ public class DataDefinitionContentTypeRegistry {
 	}
 
 	public DataDefinitionContentType getDataDefinitionContentType(
-		String contentType) {
+			String contentType)
+		throws Exception {
 
 		DataDefinitionContentType dataDefinitionContentType =
 			_dataDefinitionContentTypesByContentType.get(contentType);

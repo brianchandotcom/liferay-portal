@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.resource.exception;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
 import java.util.Set;
@@ -24,7 +25,7 @@ import java.util.regex.Pattern;
 /**
  * @author Leonardo Barros
  */
-public class DataDefinitionValidationException extends RuntimeException {
+public class DataDefinitionValidationException extends PortalException {
 
 	public DataDefinitionValidationException() {
 	}

@@ -76,6 +76,23 @@ public class ObjectDefinitionServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition addSystemObjectDefinition(
+			long userId, boolean enableComments, Map<Locale, String> labelMap,
+			boolean modifiable, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			String scope, List<ObjectField> objectFields)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			ObjectActionKeys.ADD_OBJECT_DEFINITION);
+
+		return objectDefinitionLocalService.addSystemObjectDefinition(
+			userId, enableComments, labelMap, modifiable, name, panelAppOrder,
+			panelCategoryKey, pluralLabelMap, scope, objectFields);
+	}
+
+	@Override
 	public ObjectDefinition deleteObjectDefinition(long objectDefinitionId)
 		throws PortalException {
 

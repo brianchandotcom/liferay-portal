@@ -277,6 +277,19 @@
 	],
 	"objectRelationships": [
 	],
+	"objectValidationRules": [
+		{
+			"active": false,
+			"engine": "groovy",
+			"errorLabel": {
+				"en_US": "ErrorLabel"
+			},
+			"name": {
+				"en_US": "Validation"
+			},
+			"script": "println(\"Groovy\")"
+		}
+	],
 	"objectViews": [
 		{
 			"defaultObjectView": true,

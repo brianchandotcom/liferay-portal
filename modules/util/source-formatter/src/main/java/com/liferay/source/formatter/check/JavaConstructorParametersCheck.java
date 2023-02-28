@@ -130,25 +130,25 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				(previousChar == CharPool.SPACE) ||
 				(previousChar == CharPool.OPEN_PARENTHESIS)) {
 
-				int preOpenParenthesisIndex = start;
+				int previousOpenParenthesisPosition = start;
 
 				while (true) {
-					preOpenParenthesisIndex = content.lastIndexOf(
+					previousOpenParenthesisPosition = content.lastIndexOf(
 						StringPool.OPEN_PARENTHESIS,
-						preOpenParenthesisIndex - 1);
+						previousOpenParenthesisPosition - 1);
 
-					if (preOpenParenthesisIndex == -1) {
+					if (previousOpenParenthesisPosition == -1) {
 						continue outerLoop;
 					}
 
 					if (ToolsUtil.isInsideQuotes(
-							content, preOpenParenthesisIndex)) {
+							content, previousOpenParenthesisPosition)) {
 
 						continue;
 					}
 
 					String methodCall = content.substring(
-						preOpenParenthesisIndex, start);
+						previousOpenParenthesisPosition, start);
 
 					if (ToolsUtil.getLevel(methodCall) == 1) {
 						break;
@@ -160,11 +160,11 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				while (matcher2.find()) {
 					int parenthesisIndex = matcher2.end() - 1;
 
-					if (parenthesisIndex > preOpenParenthesisIndex) {
+					if (parenthesisIndex > previousOpenParenthesisPosition) {
 						break;
 					}
 
-					if (parenthesisIndex != preOpenParenthesisIndex) {
+					if (parenthesisIndex != previousOpenParenthesisPosition) {
 						continue;
 					}
 

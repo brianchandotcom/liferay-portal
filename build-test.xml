@@ -14616,7 +14616,7 @@ mail.send.blacklist=</echo>
 						<replace
 							file="${app.server.dir}/conf/catalina.properties"
 							token="common.loader=&quot;${catalina.home}/webapps/ROOT/WEB-INF/lib/support-tomcat.jar&quot;"
-							value="common.loader=&quot;${catalina.home}/webapps/liferay/WEB-INF/lib/support-tomcat.jar&quot;"
+							value="common.loader=&quot;${catalina.home}/webapps/${portal.context}/WEB-INF/lib/support-tomcat.jar&quot;"
 						/>
 					</then>
 					<else>

@@ -31,8 +31,6 @@ definition {
 	@description = "This test checks that user can access an article in the search results from the side bar."
 	@priority = 4
 	test CanAccessArticleFromSearchResultsInSidebar {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -53,8 +51,6 @@ definition {
 	@description = "This test checks that user can access a folder in the search results from the side bar."
 	@priority = 4
 	test CanAccessFolderFromSearchResultsInSidebar {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",
@@ -98,8 +94,6 @@ definition {
 	@description = "This test checks that matched text from search results in the KB admin screen is highlighted in the search results."
 	@priority = 4
 	test ResultsAppearIfAtLeastThreeCharactersMatchQuery {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KBFolder 1 Description",
@@ -137,8 +131,6 @@ definition {
 	@description = "This test checks that no results appear after a user types two/three letters that don't match a KB article title into the KB admin screen searchbar."
 	@priority = 4
 	test ResultsDoNotAppearInSidebarIfThreeCharactersDontMatchQuery {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder 1 Description",
@@ -294,8 +286,6 @@ definition {
 	@description = "This test ensures that no results are shown after the user clears the search query by clicking the X in the search field."
 	@priority = 4
 	test SidebarReturnsToTreeViewAfterClearingSearchResults {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.searchForKB(knowledgeBaseName = "foo");

@@ -129,8 +129,6 @@ definition {
 	@priority = 3
 	@refactordone
 	test DeleteKBArticleViaKBArticle {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",

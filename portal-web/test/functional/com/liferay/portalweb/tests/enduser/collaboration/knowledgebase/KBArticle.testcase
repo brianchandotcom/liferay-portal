@@ -50,8 +50,6 @@ definition {
 	@e2etest
 	@priority = 5
 	test CanAddArticleViaCenterPaneButton {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 
 		KBArticle.addCP(
@@ -222,8 +220,6 @@ definition {
 	@description = "This test ensures that a user can add a child article for a kb entry from the navigation pane."
 	@priority = 5
 	test CanAddChildArticleFromNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -291,8 +287,6 @@ definition {
 	@description = "This test ensures that a user can delete the kb entry from the navigation pane."
 	@priority = 5
 	test CanDeleteArticleFromNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -360,8 +354,6 @@ definition {
 	@description = "This test ensures that a user can edit the kb entry permissions from the navigation pane."
 	@priority = 5
 	test CanEditArticlePermissionsFromNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -423,8 +415,6 @@ definition {
 	@description = "This test ensures that a user can edit the kb entry from the navigation pane."
 	@priority = 5
 	test CanEditEntryFromNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -478,8 +468,6 @@ definition {
 	@description = "This test ensures that a user can move the kb entry from the navigation pane."
 	@priority = 5
 	test CanMoveArticleFromNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderName = "KB Folder");
@@ -995,8 +983,6 @@ definition {
 	@description = "This test ensures that a user can subscribe to a kb article from the navigation pane."
 	@priority = 5
 	test CanSubscribeToArticleFromNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",

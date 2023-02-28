@@ -93,8 +93,6 @@ definition {
 	@description = "This test ensures that users can subscribe to the KB home folder from the navigation pane."
 	@priority = 5
 	test CanSubscribeToHomeFolderViaNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONUser.addUser(

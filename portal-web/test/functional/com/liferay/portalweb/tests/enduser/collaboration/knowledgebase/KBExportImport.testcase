@@ -26,8 +26,6 @@ definition {
 	@e2etest
 	@priority = 5
 	test CanImportArticleViaCenterPaneButton {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
@@ -48,8 +46,6 @@ definition {
 	@description = "This test ensures that users can import content to a KB folder rom the navigation pane."
 	@priority = 5
 	test CanImportArticleViaNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderName = "KB Folder");
@@ -111,8 +107,6 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test ViewImportedKBArticleWithImagesAsKBAttachments {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(

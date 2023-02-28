@@ -68,7 +68,7 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test ViewSuggestionsWithPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-156421=true";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",

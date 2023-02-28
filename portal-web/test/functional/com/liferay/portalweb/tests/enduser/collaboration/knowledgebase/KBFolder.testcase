@@ -159,7 +159,6 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanAddFolder {
-		property custom.properties = "feature.flag.LPS-156421=true";
 		property portal.acceptance = "true";
 
 		KBFolder.addCP(
@@ -177,8 +176,6 @@ definition {
 	@e2etest
 	@priority = 5
 	test CanAddFolderViaCenterPaneButton {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 
 		KBFolder.addCP(
@@ -196,8 +193,6 @@ definition {
 	@description = "This test checks that all articles in a folder can be deleted via Toolbar."
 	@priority = 3
 	test CanDeleteAllArticlesViaToolbar {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",
@@ -267,8 +262,6 @@ definition {
 	@description = "This test ensures that users can delete a KB folder from the navigation pane."
 	@priority = 5
 	test CanDeleteFolderViaNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderName = "KB Folder");
@@ -332,8 +325,6 @@ definition {
 	@description = "This test ensures that users can manage permissions for a KB folder from the navigation pane."
 	@priority = 5
 	test CanEditFolderPermissionsViaNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page");
@@ -382,8 +373,6 @@ definition {
 	@description = "This test ensures that users can edit a KB folder from the navigation pane."
 	@priority = 5
 	test CanEditFolderViaNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",
@@ -405,8 +394,6 @@ definition {
 	@description = "This test ensures that users can manage permissions for the KB home folder from the navigation pane."
 	@priority = 5
 	test CanEditHomeFolderPermissionsViaNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
@@ -434,8 +421,6 @@ definition {
 	@description = "This test ensures that users can move a KB folder from the navigation pane."
 	@priority = 5
 	test CanMoveFolderViaNavigationPane {
-		property custom.properties = "feature.flag.LPS-156421=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderName = "KB Folder 1");

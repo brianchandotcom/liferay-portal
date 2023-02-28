@@ -19,22 +19,22 @@ import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
-
-import Form from '../../../components/Form';
-import Container from '../../../components/Layout/Container';
-import {useHeader} from '../../../hooks';
-import useFormActions from '../../../hooks/useFormActions';
-import useFormModal from '../../../hooks/useFormModal';
-import i18n from '../../../i18n';
-import yupSchema, {yupResolver} from '../../../schema/yup';
+import Form from '~/components/Form';
+import Container from '~/components/Layout/Container';
+import SearchBuilder from '~/core/SearchBuilder';
+import {useHeader} from '~/hooks';
+import useFormActions from '~/hooks/useFormActions';
+import useFormModal from '~/hooks/useFormModal';
+import i18n from '~/i18n';
+import yupSchema, {yupResolver} from '~/schema/yup';
 import {
 	TestrayCase,
 	TestraySuite,
 	createSuiteCaseBatch,
 	testraySuiteRest,
-} from '../../../services/rest';
-import {getUniqueList} from '../../../util';
-import {SearchBuilder} from '../../../util/search';
+} from '~/services/rest';
+import {getUniqueList} from '~/util';
+
 import {CaseListView} from '../Cases';
 import SuiteSelectCasesModal from './modal';
 

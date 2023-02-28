@@ -18,6 +18,7 @@ import {useForm} from 'react-hook-form';
 import Form from '../../../components/Form';
 import DualListBox, {Boxes} from '../../../components/Form/DualListBox';
 import Modal from '../../../components/Modal';
+import SearchBuilder from '../../../core/SearchBuilder';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {useFetch} from '../../../hooks/useFetch';
 import {FormModalOptions} from '../../../hooks/useFormModal';
@@ -29,7 +30,6 @@ import {
 	testrayComponentImpl,
 	testrayTeamImpl,
 } from '../../../services/rest';
-import {SearchBuilder} from '../../../util/search';
 
 type TeamForm = typeof yupSchema.team.__outputType;
 

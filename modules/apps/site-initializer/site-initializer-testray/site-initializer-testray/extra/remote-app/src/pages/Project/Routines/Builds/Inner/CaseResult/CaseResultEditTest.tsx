@@ -18,22 +18,21 @@ import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import {InferType} from 'yup';
-
-import Form from '../../../../../../components/Form';
-import Footer from '../../../../../../components/Form/Footer';
-import {splitIssueName} from '../../../../../../components/JiraLink/JiraLink';
-import Container from '../../../../../../components/Layout/Container';
-import useFormActions from '../../../../../../hooks/useFormActions';
-import i18n from '../../../../../../i18n';
-import yupSchema from '../../../../../../schema/yup';
-import {Liferay} from '../../../../../../services/liferay';
+import Form from '~/components/Form';
+import Footer from '~/components/Form/Footer';
+import {splitIssueName} from '~/components/JiraLink';
+import Container from '~/components/Layout/Container';
+import useFormActions from '~/hooks/useFormActions';
+import i18n from '~/i18n';
+import yupSchema from '~/schema/yup';
+import {Liferay} from '~/services/liferay';
 import {
 	MessageBoardMessage,
 	TestrayCaseResult,
 	TestrayCaseResultIssue,
 	testrayCaseResultImpl,
-} from '../../../../../../services/rest';
-import {CaseResultStatuses} from '../../../../../../util/statuses';
+} from '~/services/rest';
+import {CaseResultStatuses} from '~/util/statuses';
 
 type CaseResultForm = InferType<typeof yupSchema.caseResult>;
 
@@ -119,8 +118,7 @@ const CaseResultEditTest = () => {
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};

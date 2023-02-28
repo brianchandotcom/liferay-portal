@@ -15,11 +15,11 @@
 import {useMemo} from 'react';
 import useSWR, {SWRConfiguration} from 'swr';
 
-import Rest, {APIParametersOptions} from '../services/rest/Rest';
+import Rest, {APIParametersOptions} from '../core/Rest';
 
 type FetchOptions<Data> = {
 	params?: APIParametersOptions;
-	swrConfig?: SWRConfiguration & {stopFetching?: boolean};
+	swrConfig?: SWRConfiguration & {shouldFetch?: boolean | string | number};
 	transformData?: (data: Data) => Data;
 };
 
@@ -49,8 +49,10 @@ export function useFetch<Data = any, Error = any>(
 ) {
 	const {params, swrConfig, transformData} = fetchParameters ?? {};
 
+	const shouldFetch = swrConfig?.shouldFetch ?? true;
+
 	const {data, error, isValidating, mutate} = useSWR<Data, Error>(
-		() => (swrConfig?.stopFetching ? null : getBaseURL(url, params)),
+		() => (shouldFetch ? getBaseURL(url, params) : null),
 		swrConfig
 	);
 

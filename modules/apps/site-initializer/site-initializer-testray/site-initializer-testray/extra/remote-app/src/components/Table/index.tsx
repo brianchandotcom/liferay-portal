@@ -21,10 +21,10 @@ import {useNavigate} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import {Sort} from '../../context/ListViewContext';
+import Permission from '../../core/Permission';
 import useContextMenu from '../../hooks/useContextMenu';
 import {APIResponse} from '../../services/rest';
 import {Action, SortDirection, SortOption} from '../../types';
-import {Permission} from '../../util/permission';
 import ContextMenu from '../ContextMenu';
 
 type Column<T = any> = {

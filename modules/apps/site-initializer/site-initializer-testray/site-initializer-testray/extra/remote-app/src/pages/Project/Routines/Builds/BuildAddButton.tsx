@@ -20,12 +20,12 @@ import {useNavigate} from 'react-router-dom';
 import Form from '../../../../components/Form';
 import Tooltip from '../../../../components/Tooltip';
 import {Dropdown} from '../../../../context/HeaderContext';
+import SearchBuilder from '../../../../core/SearchBuilder';
 import useDebounce from '../../../../hooks/useDebounce';
 import {useFetch} from '../../../../hooks/useFetch';
 import i18n from '../../../../i18n';
 import {APIResponse, TestrayBuild} from '../../../../services/rest';
 import {testrayBuildImpl} from '../../../../services/rest/TestrayBuild';
-import {SearchBuilder} from '../../../../util/search';
 
 type BuildAddButtonProps = {
 	routineId: string;

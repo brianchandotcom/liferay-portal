@@ -18,6 +18,7 @@ import {useParams} from 'react-router-dom';
 
 import Form from '../../../../../../components/Form';
 import Modal from '../../../../../../components/Modal/index';
+import SearchBuilder from '../../../../../../core/SearchBuilder';
 import {withVisibleContent} from '../../../../../../hoc/withVisibleContent';
 import {useFetch} from '../../../../../../hooks/useFetch';
 import {FormModalOptions} from '../../../../../../hooks/useFormModal';
@@ -32,7 +33,6 @@ import {
 	testrayFactorRest,
 	testrayRunImpl,
 } from '../../../../../../services/rest';
-import {SearchBuilder} from '../../../../../../util/search';
 
 type RunForm = Omit<typeof yupSchema.run.__outputType, 'id'>;
 

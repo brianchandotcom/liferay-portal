@@ -17,11 +17,11 @@ import {useOutletContext, useParams} from 'react-router-dom';
 import JiraLink from '../../../components/JiraLink';
 import Container from '../../../components/Layout/Container';
 import QATable from '../../../components/Table/QATable';
-import useIssuesFound from '../../../data/useIssuesFound';
+import SearchBuilder from '../../../core/SearchBuilder';
+import useIssuesFound from '../../../hooks/data/useIssuesFound';
 import i18n from '../../../i18n';
 import {TestrayCase} from '../../../services/rest';
 import dayjs from '../../../util/date';
-import {SearchBuilder} from '../../../util/search';
 import CaseResultHistory from './CaseResultHistory';
 import useCaseActions from './useCaseActions';
 

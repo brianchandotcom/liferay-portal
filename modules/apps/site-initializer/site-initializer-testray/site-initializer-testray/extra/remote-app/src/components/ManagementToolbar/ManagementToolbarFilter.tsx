@@ -18,10 +18,10 @@ import ClayIcon from '@clayui/icon';
 import {useCallback, useContext, useMemo, useState} from 'react';
 
 import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
+import SearchBuilder from '../../core/SearchBuilder';
 import useFormActions from '../../hooks/useFormActions';
 import i18n from '../../i18n';
 import {FilterSchema} from '../../schema/filter';
-import {SearchBuilder} from '../../util/search';
 import Form from '../Form';
 import {RendererFields} from '../Form/Renderer';
 import {FieldOptions} from '../Form/Renderer/Renderer';

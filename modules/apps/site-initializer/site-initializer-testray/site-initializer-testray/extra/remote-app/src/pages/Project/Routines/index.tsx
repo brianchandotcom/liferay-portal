@@ -17,10 +17,10 @@ import {useParams} from 'react-router-dom';
 import Container from '../../../components/Layout/Container';
 import ListViewRest from '../../../components/ListView';
 import ProgressBar from '../../../components/ProgressBar';
+import SearchBuilder from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
 import {TestrayRoutine, testrayRoutineImpl} from '../../../services/rest';
 import {getTimeFromNow} from '../../../util/date';
-import {SearchBuilder} from '../../../util/search';
 import useRoutineActions from './useRoutineActions';
 
 const Routines = () => {

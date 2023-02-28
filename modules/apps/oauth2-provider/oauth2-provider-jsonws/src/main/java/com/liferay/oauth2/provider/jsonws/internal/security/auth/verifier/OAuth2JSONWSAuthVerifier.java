@@ -15,7 +15,6 @@
 package com.liferay.oauth2.provider.jsonws.internal.security.auth.verifier;
 
 import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
-import com.liferay.oauth2.provider.jsonws.internal.service.access.policy.scope.SAPEntryScope;
 import com.liferay.oauth2.provider.jsonws.internal.service.access.policy.scope.SAPEntryScopeDescriptorFinderRegistrator;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
@@ -141,27 +140,22 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 					return oAuth2ScopeGrant.getScope();
 				});
 
-			List<SAPEntryScope> sapEntryScopes =
-				_sapEntryScopeDescriptorFinderRegistrator.
-					getRegisteredSAPEntryScopes(companyId);
-
-			List<String> serviceAccessPolicyNames = new ArrayList<>(
-				sapEntryScopes.size());
-
-			for (SAPEntryScope sapEntryScope : sapEntryScopes) {
-				if (scopes.contains(sapEntryScope.getScope())) {
-					serviceAccessPolicyNames.add(
-						sapEntryScope.getSAPEntryName());
-				}
-			}
-
 			Map<String, Object> settings = authVerifierResult.getSettings();
 
 			settings.put(
 				BearerTokenProvider.AccessToken.class.getName(), accessToken);
 			settings.put(
 				ServiceAccessPolicy.SERVICE_ACCESS_POLICY_NAMES,
-				serviceAccessPolicyNames);
+				TransformUtil.transform(
+					_sapEntryScopeDescriptorFinderRegistrator.
+						getRegisteredSAPEntryScopes(companyId),
+					sapEntryScope -> {
+						if (!scopes.contains(sapEntryScope.getScope())) {
+							return null;
+						}
+
+						return sapEntryScope.getSAPEntryName();
+					}));
 
 			authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 			authVerifierResult.setUserId(accessToken.getUserId());

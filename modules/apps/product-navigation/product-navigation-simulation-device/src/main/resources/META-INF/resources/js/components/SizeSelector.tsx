@@ -37,6 +37,9 @@ const INITIAL_LIST: Size[] = [
 	SIZES.custom,
 ];
 
+const MAX_CUSTOM_SIZE: number = 9999;
+const MIN_CUSTOM_SIZE: number = 1;
+
 export default function SizeSelector({
 	activeSize,
 	namespace,
@@ -199,9 +202,18 @@ function CustomSizeSelector({
 
 					<ClayInput
 						id={`${namespace}height`}
-						onChange={(event) =>
-							setHeight(Number(event.target.value))
+						max={MAX_CUSTOM_SIZE}
+						min={MIN_CUSTOM_SIZE}
+						onChange={(event) => {
+							const value = Number(event.target.value);
+
+							if (
+								value >= MIN_CUSTOM_SIZE &&
+								value <= MAX_CUSTOM_SIZE
+							) {
+								setHeight(value);
 						}
+						}}
 						type="number"
 						value={height}
 					/>
@@ -214,9 +226,18 @@ function CustomSizeSelector({
 
 					<ClayInput
 						id={`${namespace}width`}
-						onChange={(event) =>
-							setWidth(Number(event.target.value))
+						max={MAX_CUSTOM_SIZE}
+						min={MIN_CUSTOM_SIZE}
+						onChange={(event) => {
+							const value = Number(event.target.value);
+
+							if (
+								value >= MIN_CUSTOM_SIZE &&
+								value <= MAX_CUSTOM_SIZE
+							) {
+								setWidth(value);
 						}
+						}}
 						type="number"
 						value={width}
 					/>

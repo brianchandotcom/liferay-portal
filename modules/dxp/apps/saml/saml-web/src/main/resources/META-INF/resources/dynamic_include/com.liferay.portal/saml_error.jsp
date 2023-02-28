@@ -72,5 +72,6 @@ String samlSubjectScreenName = (String)request.getAttribute(SamlWebKeys.SAML_SUB
 	Liferay.Util.openToast({
 		message: '<%= HtmlUtil.escapeJS(msg) %>',
 		type: 'warning',
+		autoClose: 30000,
 	});
 </aui:script>

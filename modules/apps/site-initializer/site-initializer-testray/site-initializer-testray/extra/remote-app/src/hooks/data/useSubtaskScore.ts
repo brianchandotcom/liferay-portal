@@ -12,14 +12,14 @@
  * details.
  */
 
-import {useFetch} from '../hooks/useFetch';
 import {
 	APIResponse,
 	TestraySubTask,
 	TestrayTask,
 	testraySubTaskImpl,
-} from '../services/rest';
-import {TaskStatuses} from '../util/statuses';
+} from '../../services/rest';
+import {TaskStatuses} from '../../util/statuses';
+import {useFetch} from '../useFetch';
 
 const useSubtaskScore = ({
 	testrayTask,

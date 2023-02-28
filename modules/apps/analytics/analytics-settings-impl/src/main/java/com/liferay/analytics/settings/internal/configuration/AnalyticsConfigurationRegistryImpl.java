@@ -486,6 +486,10 @@ public class AnalyticsConfigurationRegistryImpl
 				entityModelListener.syncAll(companyId);
 			}
 
+			_syncDefaultFields(
+				companyId, analyticsConfiguration.syncedContactFieldNames(),
+				analyticsConfiguration.syncedUserFieldNames());
+
 			_syncUserCustomFields(
 				companyId, analyticsConfiguration.syncedUserFieldNames());
 

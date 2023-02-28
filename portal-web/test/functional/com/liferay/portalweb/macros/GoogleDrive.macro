@@ -7,7 +7,7 @@ definition {
 			locator1 = "Button#SELECT_FILE",
 			value1 = "Select File");
 
-		if (isSet(windowTitle)) {
+		if (isSet(userEmailAddress)) {
 			SelectWindow(locator1 = "GoogleLogin#PAGE_TITLE");
 
 			if (IsElementPresent(locator1 = "GoogleLogin#HEADER")) {
@@ -29,9 +29,9 @@ definition {
 				value1 = ${userPassword});
 
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
-
-			SelectWindow.selectWindowNoSPARefresh(locator1 = "title=${windowTitle}");
 		}
+
+		SelectWindow.selectWindowNoSPARefresh(locator1 = "title=${windowTitle}");
 
 		if (IsElementNotPresent(locator1 = "GoogleDrive#GOOGLE_DRIVE_IFRAME")) {
 			Refresh();

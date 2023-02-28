@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.CountryA3Exception;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,9 +38,7 @@ public class CountryA3ExceptionMapper
 
 	@Override
 	protected Problem getProblem(CountryA3Exception countryA3Exception) {
-		return new Problem(
-			null, Response.Status.BAD_REQUEST, countryA3Exception.getMessage(),
-			CountryA3Exception.class.getSimpleName());
+		return new Problem(countryA3Exception);
 	}
 
 }

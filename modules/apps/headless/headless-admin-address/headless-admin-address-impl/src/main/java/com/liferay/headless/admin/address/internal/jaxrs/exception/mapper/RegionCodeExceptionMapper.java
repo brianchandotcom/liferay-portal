@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.RegionCodeException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,9 +38,7 @@ public class RegionCodeExceptionMapper
 
 	@Override
 	protected Problem getProblem(RegionCodeException regionCodeException) {
-		return new Problem(
-			null, Response.Status.BAD_REQUEST, regionCodeException.getMessage(),
-			RegionCodeException.class.getSimpleName());
+		return new Problem(regionCodeException);
 	}
 
 }

@@ -657,7 +657,9 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			_spiDDMFormRuleConverter);
 	}
 
-	private void _validate(DataLayout dataLayout, DDMStructure ddmStructure) {
+	private void _validate(DataLayout dataLayout, DDMStructure ddmStructure)
+		throws Exception {
+
 		try {
 			_ddmFormLayoutValidator.validate(
 				DataLayoutUtil.toDDMFormLayout(

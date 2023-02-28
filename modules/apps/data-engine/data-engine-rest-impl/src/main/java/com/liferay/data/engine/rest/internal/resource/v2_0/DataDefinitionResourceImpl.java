@@ -1590,8 +1590,10 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	private void _validate(
-		DataDefinition dataDefinition,
-		DataDefinitionContentType dataDefinitionContentType, DDMForm ddmForm) {
+			DataDefinition dataDefinition,
+			DataDefinitionContentType dataDefinitionContentType,
+			DDMForm ddmForm)
+		throws Exception {
 
 		try {
 			Map<String, Object> name = dataDefinition.getName();

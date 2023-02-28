@@ -3059,6 +3059,8 @@ definition {
 
 		Navigator.openURL();
 
+		ProductMenuHelper.openProductMenu();
+
 		ProductMenuHelper.expandCategory(category = "People");
 
 		AssertElementNotPresent(

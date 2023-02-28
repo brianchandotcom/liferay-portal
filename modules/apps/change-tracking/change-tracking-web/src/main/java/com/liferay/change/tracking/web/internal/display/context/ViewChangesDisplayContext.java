@@ -1118,7 +1118,7 @@ public class ViewChangesDisplayContext {
 					model, modelClassNameId);
 
 				if (hideable && !showHideable) {
-					return;
+					continue;
 				}
 
 				modelInfo._jsonObject = JSONUtil.put(
@@ -1212,7 +1212,7 @@ public class ViewChangesDisplayContext {
 					model, modelClassNameId);
 
 				if (hideable && !showHideable) {
-					return;
+					continue;
 				}
 
 				Map<String, Object> modelAttributes =

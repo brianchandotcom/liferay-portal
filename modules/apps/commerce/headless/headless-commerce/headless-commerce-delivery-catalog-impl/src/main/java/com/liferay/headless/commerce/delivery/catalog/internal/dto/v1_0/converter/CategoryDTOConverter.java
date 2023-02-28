@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "dto.class.name=AssetCategory",
-	service = {CategoryDTOConverter.class, DTOConverter.class}
+	property = "dto.class.name=AssetCategory", service = DTOConverter.class
 )
 public class CategoryDTOConverter
 	implements DTOConverter<AssetCategory, Category> {

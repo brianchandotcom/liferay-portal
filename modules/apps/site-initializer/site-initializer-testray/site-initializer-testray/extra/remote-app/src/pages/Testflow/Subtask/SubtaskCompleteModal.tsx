@@ -69,7 +69,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 		.join(', ');
 
 	const {
-		formState: {errors},
+		formState: {errors, isSubmitting},
 		handleSubmit,
 		register,
 		setValue,
@@ -131,6 +131,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 				<Form.Footer
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
+					primaryButtonProps={{loading: isSubmitting}}
 				/>
 			}
 			observer={observer}

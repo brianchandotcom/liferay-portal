@@ -157,7 +157,6 @@ const yupSchema = {
 		number: yup.number(),
 	}),
 	issue: yup.object({
-		id: yup.string().nullable(),
 		name: yup.string(),
 	}),
 	option: yup.object({

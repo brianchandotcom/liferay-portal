@@ -171,7 +171,9 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		});
 
 		for (const issue of issues) {
-			const testrayIssue = await testrayIssueImpl.createIfNotExist(issue);
+			const testrayIssue = await testrayIssueImpl.createIfNotExist({
+				name: issue,
+			});
 
 			await testraySubtaskIssuesImpl.createIfNotExist({
 				issueId: testrayIssue?.id,

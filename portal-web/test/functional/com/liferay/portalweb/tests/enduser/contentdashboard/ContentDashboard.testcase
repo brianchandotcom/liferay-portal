@@ -319,7 +319,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the blog author's avatar and name are shown"
 	@priority = 3
 	test BlogAuthorInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -349,7 +349,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the list of categories assigned to the content will be divided between public and internal vocabularies"
 	@priority = 3
 	test BlogCategoriesInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -417,7 +417,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the Creation date of the blog is shown in the Details section"
 	@priority = 3
 	test BlogCreationDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -447,7 +447,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the Display date of the blog is shown in the Details section"
 	@priority = 3
 	test BlogDisplayDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -477,7 +477,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the ID of the blog is shown in the Details section"
 	@priority = 3
 	test BlogIDDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -505,7 +505,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the Modification date of the blog is shown in the Details section"
 	@priority = 3
 	test BlogModificationDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -535,7 +535,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132509 Given a blog created in site A in the instance, and another one created in the site B When the user goes to the content dashboard Then the user can see both listed"
 	@priority = 5
 	test BlogsFromDifferentSitesAreListed {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -583,7 +583,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132509 Given the Content Dashboard When a blog is listed in the assets list Then the following metadata are shown: Title, Author (Owner), Type, Site or Asset Library, Status, Category 1, Category 2, Modified Date"
 	@priority = 3
 	test BlogsMetadata {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -621,7 +621,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the blog status label is shown"
 	@priority = 3
 	test BlogStatusInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -649,7 +649,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then all the tags assigned to the blog appear as labels in the Tags section"
 	@priority = 3
 	test BlogTagsInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -680,7 +680,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the title of the blog is shown"
 	@priority = 3
 	test BlogTitleInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -708,7 +708,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "Given a Blog When the user opens asset's Info Panel at Content Dashboard Then ""Blogs Entry"" text will be exhibit"
 	@priority = 3
 	test BlogTypeInInfoPanel {
 		task ("Create a blog") {
@@ -733,7 +733,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the blog version labels are shown"
 	@priority = 3
 	test BlogVersionInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -848,7 +848,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-131793 Given the categorization section in Documents and Media Then the OOTB Internal (Topic) and and Public (Audience & Stage) vocabularies are shown"
 	@priority = 3
 	test CategorizationInOOTBTable {
 		task ("Go to Documents and Media and clik on Add Button and File Upload") {
@@ -879,7 +879,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-155288 Given categories filter using treeview component And there is any category's checkbox selected When user clicks 'Clear All' button Then all checkboxes turns deselected"
 	@priority = 4
 	test CheckAllCheckboxesTurnsDeselectedWithClearButtonAtTreeviewComponent {
 		property portal.acceptance = "true";
@@ -956,7 +956,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-155288 Given categories filter using treeview component When user selects any category's checkbox Then a the amount of items selected appears at results bar"
 	@priority = 3
 	test CheckAmountOfCategoriesResultsBarAtTreeviewComponent {
 		property portal.acceptance = "false";
@@ -1019,7 +1019,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-155288 Given user has selected categories checkboxes And clicked 'Select' When returns to 'Select Categories' Then the results bar is present"
 	@priority = 3
 	test CheckCategoriesKeepResultsBarAtTreeviewComponent {
 		property portal.acceptance = "false";
@@ -1062,7 +1062,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-155288 Given categories filter using treeview component When user selects any category's checkbox Then a results bar appears"
 	@priority = 4
 	test CheckCategoriesResultsBarAtTreeviewComponent {
 		property portal.acceptance = "true";
@@ -1109,7 +1109,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-155288 Given categories filter using treeview component When user selects any category's checkbox Then a 'Clear All' button appears at results bar"
 	@priority = 4
 	test CheckClearButtonCategoryResultsBarAtTreeviewComponent {
 		property portal.acceptance = "true";
@@ -1299,7 +1299,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-117341 When there's a label with "..." indicating 'more categories' and the user hovers on it, a tooltip with the rest of categories assigned shows"
 	@priority = 5
 	test CheckForMoreCategories {
 		property portal.acceptance = "true";
@@ -1460,7 +1460,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-152906 Given a Blogs Asset at Content Dashboard When the user accesses the its information panel Then the share button must be present"
 	@ignore = "true"
 	@priority = 4
 	test CheckShareButtonIsPresentForBlogs {
@@ -1486,7 +1486,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-152906 Given the Info panel of the Content Dashboard When the user accesses the Web Content information panel Then share button must not be present for Web Content"
 	@ignore = "true"
 	@priority = 4
 	test CheckShareButtonNotPresentForWebContent {
@@ -1728,7 +1728,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-152604 Given there are nodes selected at treeview When user clicks the 'Clear' button Then 'Clear' button should not appear anymore"
 	@priority = 3
 	@uitest
 	test ClearButtonAtTreeviewComponent {
@@ -1759,7 +1759,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-155288 Given categories filter using treeview component And there is any category's checkbox selected When user clicks 'Clear All' button Then the results bar disappears "
 	@priority = 3
 	test ClearButtonCategoryAtTreeviewComponent {
 		property portal.acceptance = "false";
@@ -2035,7 +2035,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132509 Given a user with NO permissions to edit And a Blog entry that is associated with a Display Page Template When the user clicks on the title link in the content dashboard Then the user should be led to a preview of the Display Page Template, with no editing options"
 	@priority = 4
 	@uitest
 	test ClickTitleBlogDPTWithNoPermissions {
@@ -2121,7 +2121,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132509 Given a user with permissions to edit documents And a Blog entry that is associated with a Display Page Template When the user clicks on the title link in the content dashboard Then the user is led to a preview of the Display Page Template with editing options"
 	@priority = 4
 	@uitest
 	test ClickTitleBlogDPTWithPermissions {
@@ -2164,7 +2164,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132509 Given a user with NO permissions to edit documents And a Blog entry that is not associated with a Display Page Template When the user clicks on the title link in the content dashboard Then the user cannot click on the title"
 	@priority = 4
 	@uitest
 	test ClickTitleBlogNoDPTWithNoPermissions {
@@ -2241,7 +2241,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132509 Given a user with permissions to edit And a Blog entry that is not associated with a Display Page Template When the user clicks on the title link in the content dashboard Then the user is led to the edit mode"
 	@priority = 4
 	@uitest
 	test ClickTitleBlogNoDPTWithPermissions {
@@ -2271,7 +2271,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "Given a user with NO permissions to edit documents When the user clicks on the title link in the content dashboard Then the user cannot click on the title"
 	@priority = 4
 	@uitest
 	test ClickTitleDocumentDPTWithNoPermissions {
@@ -2359,7 +2359,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-119966 Given a user with permissions to edit documents When the user clicks on the title link in the content dashboard then the user is led to the edit mode"
 	@priority = 4
 	@uitest
 	test ClickTitleDocumentDPTWithPermissions {
@@ -2609,7 +2609,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-119966 Given a document created in an Asset Library When the user goes to the content dashboard Then the user can see the document listed"
 	@priority = 5
 	test DocumentFromAssetLibraryIsListed {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
@@ -2646,7 +2646,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-119966 Given a document with and associated Display Page Template When the user with permissions clicks on the view button Then the user is lead to the view mode"
 	@priority = 4
 	test DocumentIconView {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
@@ -2710,7 +2710,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-119966 Given the Content Dashboard When a document is listed in the assets list Then the following metadata are shown: Title, Author (Owner), Subtype, Site or Asset Library, Status, Category 1, Category 2, Modified Date"
 	@priority = 3
 	test DocumentMetadata {
 		task ("Create a category for Audiente and Staged") {
@@ -2745,7 +2745,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-119966 Given a document created in site A in the instance, and another one created in the site B When the user goes to the content dashboard Then the user can see both listed"
 	@priority = 5
 	test DocumentsFromDifferentSitesAreListed {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
@@ -3268,7 +3268,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-151065 Given a Document asset using a New Document Type When the user opens Info Panel at Content Dashboard Then ""Document - "" and structure's name text will be exhibit"
 	@priority = 3
 	test DocumentTypeInInfoPanel {
 		task ("Add a document type") {
@@ -3305,7 +3305,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-119966 Given a document with and associated Display Page Template When the user with permissions clicks on the info panel button Then the user is lead to the info panel"
 	@priority = 4
 	test DocumentViewInfoPanel {
 		property portal.acceptance = "true";
@@ -3385,7 +3385,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132509 Given a blog with an associated Display Page Template When the user with permissions to edit clicks on the Edit button Then the user is led to the edit mode"
 	@priority = 4
 	test EditBlog {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -3416,7 +3416,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-119966 Given a document with and associated Display Page Template When the user with permissions clicks on the edit button Then the user is lead to the edit mode"
 	@priority = 4
 	test EditDocument {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
@@ -3502,7 +3502,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-162827 Given the kebab menu of a web content with just one version When the user clicks on Expire option Then the web content is expired and it changes its status to Expired"
 	@priority = 4
 	test ExpireVersionLabel {
 		property custom.properties = "feature.flag.LPS-162924=true";
@@ -3538,7 +3538,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-124236 Given the Content Dashboard When there are no contents in the list Then the Export XLS button is disabled"
 	@priority = 3
 	test ExportXLSDisabled {
 		task ("Go to Content Dashboard") {
@@ -3556,7 +3556,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-146471 Given The Filter and Order dropdown When the user selects the option Filter by Author: All Then the list of contents displays content from all users featured in the user's content dashboard view, including Blogs"
 	@priority = 5
 	test FilterBlogByAuthorAll {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -3583,7 +3583,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-146471 Given The Filter and Order dropdown When the user selects the option Filter by Author: Me Then the list of contents displays content where the user is the creator, including Blogs"
 	@priority = 5
 	test FilterBlogByAuthorMe {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -3610,7 +3610,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-146471 Given The Filter and Order dropdown When the user selects the option Filter by Author: Author And the user selects one or more authors Then the list of contents displays content where the selected users are the last editors of the approved version, including Blogs"
 	@priority = 5
 	test FilterBlogByAuthorOther {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -3637,7 +3637,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-146471 Given The Filter by... > Category When the user clicks on several categories and clicks Save Then the content list in the Content Dashboard filters accordingly, including Blogs"
 	@priority = 5
 	test FilterBlogByCategory {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -3676,7 +3676,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-146471 Given The Filter by... > Sites and Asset Libraries When the user selects one site or asset library within the modal Then the list of contents that match the site or asset library selected is displayed, including Blogs"
 	@priority = 5
 	test FilterBlogBySite {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -3814,7 +3814,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-146471 Given The Filter by... > Tags When the user clicks on several tags and clicks Save Then the content list in the Content Dashboard filters accordingly, including Blogs"
 	@priority = 5
 	test FilterBlogByTag {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -4657,7 +4657,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-146471 Given The Type filter modal When the user selects the Blogs Entry option Then the subtype selected appears as filter box above the Content table in the Content Dashboard, with the format ""Subtype: [Blogs Entry]"""
 	@priority = 5
 	test FilterBySubtype {
 		property portal.acceptance = "true";
@@ -4716,7 +4716,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-146471 Given The Type filter modal When the user selects the Blogs Entry option Then the subtype selected appears as filter box above the Content table in the Content Dashboard, with the format ""Subtype: [Blogs Entry]"""
 	@priority = 5
 	test FilterBySubtypeBlogsEntry {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -4749,7 +4749,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-146471 Given The Type filter modal When the user selects the Blogs Entry option + any other subtype/s Then the subtype Blogs + other subtypes preselected will be shown as a text with the format ""[number] Subtypes selected"""
 	@priority = 3
 	test FilterBySubtypeBlogsEntryAndWebContent {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -4869,7 +4869,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When the user selects one or more extensions and clicks on ""Select"" button Then the extensions selected appear as filter boxes above the Content table in the Content Dashboard, with the format ""Extension: [extension_name]"""
 	@priority = 5
 	test FilteringExtensionsOnTheDashboard {
 		property portal.acceptance = "true";
@@ -5007,7 +5007,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-134692 Given the info panel of an asset When the user clicks on arrow next to the title of a section not collapsed Then the section will be collapsed"
 	@priority = 3
 	test InfoPanelCollapseSection {
 		task ("Adding vocabulary and category") {
@@ -5050,7 +5050,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-134692 Given the info panel of an asset When the user clicks on arrow next to the title of a section collapsed Then the section will be displayed"
 	@priority = 3
 	test InfoPanelExpandSection {
 		task ("Adding vocabulary and category") {
@@ -5318,7 +5318,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When there are file extensions for the MIME type ""audio"" Then the MIME type ""audio"" appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = 4
 	test MimeTypeAudio {
 		property portal.acceptance = "true";
@@ -5344,7 +5344,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When there are file extensions for the MIME type ""code"" Then the MIME type ""code"" appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = 4
 	test MimeTypeCode {
 		property portal.acceptance = "true";
@@ -5370,7 +5370,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When there are file extensions for the MIME type ""compressed"" Then the MIME type ""compressed"" appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = 4
 	test MimeTypeCompressed {
 		property portal.acceptance = "true";
@@ -5398,7 +5398,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When there are file extensions for the MIME type ""others"" Then the MIME type ""others"" appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = 4
 	test MimeTypeOthers {
 		property portal.acceptance = "true";
@@ -5424,7 +5424,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When there are file extensions for the MIME type ""presentation"" Then the MIME type ""presentation"" appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = 4
 	test MimeTypePresentation {
 		property portal.acceptance = "true";
@@ -5450,7 +5450,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When there are file extensions for the MIME type ""spreadSheet"" Then the MIME type ""spreadSheet"" appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = 4
 	test MimeTypeSpreadsheet {
 		property portal.acceptance = "true";
@@ -5476,7 +5476,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When there are file extensions for the MIME type ""text"" Then the MIME type ""text"" appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = 4
 	test MimeTypeText {
 		property portal.acceptance = "true";
@@ -5502,7 +5502,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When there are file extensions for the MIME type ""vectorial"" Then the MIME type ""vectorial"" appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = 4
 	test MimeTypeVectorial {
 		property portal.acceptance = "true";
@@ -5528,7 +5528,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When there are file extensions for the MIME type ""video"" Then the MIME type ""video"" appears as father and all of the file extensions for it appear as children and available to be selected"
 	@priority = 4
 	test MimeTypeVideo {
 		property portal.acceptance = "true";
@@ -5554,7 +5554,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-131793 Given the categorization section in Documents and Media When the user creates a Global internal vocabulary Then the vocabulary is shown"
 	@priority = 3
 	test NewVocabularyGlobalInOOTBTable {
 		task ("Add a Global Internal Vocabulary") {
@@ -5583,7 +5583,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-131793 Given the categorization section in Documents and Media When the user creates a Site internal vocabulary Then the vocabulary is shown"
 	@priority = 3
 	test NewVocabularyInternalInOOTBTable {
 		task ("Add a Site Internal Vocabulary") {
@@ -5612,7 +5612,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When there are NOT file extensions for any MIME type Then the MIME type does NOT appear listed in the Extension modal"
 	@priority = 3
 	test NoMimeType {
 		task ("Navigate to the content Dashboard and filter by file extension") {
@@ -6032,7 +6032,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When the user selects one or more extensions Then the number of file extensions preselected will be shown as a text with the format '[number] Subtypes selected'"
 	@priority = 3
 	test SelectedExtensionNumbers {
 		task ("Add a text file") {
@@ -6072,7 +6072,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-133354 Given The Extension filter modal When the text input matches to one or more extensions from a MIME type and the user clicks on the MIME type parent Then all the children that appear filtered will be selected"
 	@priority = 3
 	test SelectedParentAndChildExtensions {
 		task ("Add a text file") {
@@ -6432,7 +6432,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-131187 Given the Content Dashboard table When a document is added Then its Type will be shown in the Type column"
 	@priority = 3
 	test TypeColumnForDocument {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
@@ -6458,7 +6458,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-131187 Given the Content Dashboard table When a web content is added Then its Type will be shown in the Type column"
 	@priority = 3
 	test TypeColumnForWebContent {
 		task ("Create WC via JSON") {
@@ -6717,7 +6717,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-161544 Given the Version History page for Web Contents When the user clicks on back Then the Web Content is selected and the Info Panel is open to the Versions tab"
 	@priority = 4
 	test ViewMoreWCVersionsBackButton {
 		property custom.properties = "feature.flag.LPS-162924=true";
@@ -6827,7 +6827,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-151065 Given a Web Content asset using a Web Content Structure When the user opens Info Panel at Content Dashboard Then Web Content Article - and structure's name text will be exhibit"
 	@priority = 3
 	test WebContentStructureTypeInInfoPanel {
 		task ("Create a web content structure") {

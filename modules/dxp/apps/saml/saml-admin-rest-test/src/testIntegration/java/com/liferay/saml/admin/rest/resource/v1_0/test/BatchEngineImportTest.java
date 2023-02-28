@@ -31,6 +31,7 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.saml.runtime.metadata.LocalEntityManager;
 
 import java.nio.charset.Charset;
 
@@ -90,8 +91,11 @@ public class BatchEngineImportTest {
 			BatchEngineTaskExecuteStatus.FAILED.name(),
 			batchEngineImportTask.getExecuteStatus());
 
-		AssertUtil.assertSigningCredentialExceptionMessage(
-			batchEngineImportTask.getErrorMessage());
+		_assertEndsWith(
+			batchEngineImportTask.getErrorMessage(),
+			String.format(
+				SamlProviderResourceTest.CREDENTIAL_EXCEPTION_MESSAGE_FORMAT,
+				LocalEntityManager.CertificateUsage.SIGNING));
 
 		jsonObject.put(
 			"enabled", true
@@ -118,8 +122,11 @@ public class BatchEngineImportTest {
 			BatchEngineTaskExecuteStatus.FAILED.name(),
 			batchEngineImportTask.getExecuteStatus());
 
-		AssertUtil.assertEncryptionCredentialExceptionMessage(
-			batchEngineImportTask.getErrorMessage());
+		_assertEndsWith(
+			batchEngineImportTask.getErrorMessage(),
+			String.format(
+				SamlProviderResourceTest.CREDENTIAL_EXCEPTION_MESSAGE_FORMAT,
+				LocalEntityManager.CertificateUsage.ENCRYPTION));
 
 		spJSONObject.put(
 			"keyStoreEncryptionCredentialPassword", "testSAMLEntityEncryption");
@@ -131,6 +138,12 @@ public class BatchEngineImportTest {
 		Assert.assertEquals(
 			BatchEngineTaskExecuteStatus.COMPLETED.name(),
 			batchEngineImportTask.getExecuteStatus());
+	}
+
+	private void _assertEndsWith(String string, String suffix) {
+		Assert.assertEquals(
+			suffix,
+			string.substring(Math.max(string.length() - suffix.length(), 0)));
 	}
 
 	private BatchEngineImportTask _getBatchEngineImportTask(

@@ -36,6 +36,7 @@ import com.liferay.saml.admin.rest.client.dto.v1_0.SamlProvider;
 import com.liferay.saml.admin.rest.client.dto.v1_0.Sp;
 import com.liferay.saml.admin.rest.client.http.HttpInvoker;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
+import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.util.PortletPropsKeys;
 
 import java.util.Collections;
@@ -56,18 +57,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
  */
 @RunWith(Arquillian.class)
 public class SamlProviderResourceTest extends BaseSamlProviderResourceTestCase {
-
-	public static void assertEncryptionCredentialException(
-		JSONObject jsonObject) {
-
-		AssertUtil.assertEncryptionCredentialExceptionMessage(
-			GetterUtil.getString(jsonObject.get("title")));
-	}
-
-	public static void assertSigningCredentialException(JSONObject jsonObject) {
-		AssertUtil.assertSigningCredentialExceptionMessage(
-			GetterUtil.getString(jsonObject.get("title")));
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -151,9 +140,20 @@ public class SamlProviderResourceTest extends BaseSamlProviderResourceTestCase {
 		return new SamlProvider();
 	}
 
+	protected static final String CREDENTIAL_EXCEPTION_MESSAGE_FORMAT =
+		"Unable to authenticate with the %s certificate. Verify that the " +
+			"SAML KeyStore contains a certificate for the entity ID and that " +
+				"it is protected by the provided key credential password.";
+
 	protected final SamlProviderConfiguration defaultSamlProviderConfiguration =
 		ConfigurableUtil.createConfigurable(
 			SamlProviderConfiguration.class, Collections.emptyMap());
+
+	private void _assertEndsWith(String string, String suffix) {
+		Assert.assertEquals(
+			suffix,
+			string.substring(Math.max(string.length() - suffix.length(), 0)));
+	}
 
 	private SamlProvider
 			_configureSystemSamlProviderDifferentiatedBySslRequired(
@@ -245,7 +245,11 @@ public class SamlProviderResourceTest extends BaseSamlProviderResourceTestCase {
 				}
 			},
 			Response.Status.BAD_REQUEST,
-			SamlProviderResourceTest::assertSigningCredentialException);
+			jsonObject -> _assertEndsWith(
+				GetterUtil.getString(jsonObject.get("title")),
+				String.format(
+					CREDENTIAL_EXCEPTION_MESSAGE_FORMAT,
+					LocalEntityManager.CertificateUsage.SIGNING)));
 
 		_patchAndAssertResponse(
 			new SamlProvider() {
@@ -255,7 +259,11 @@ public class SamlProviderResourceTest extends BaseSamlProviderResourceTestCase {
 				}
 			},
 			Response.Status.BAD_REQUEST,
-			SamlProviderResourceTest::assertSigningCredentialException);
+			jsonObject -> _assertEndsWith(
+				GetterUtil.getString(jsonObject.get("title")),
+				String.format(
+					CREDENTIAL_EXCEPTION_MESSAGE_FORMAT,
+					LocalEntityManager.CertificateUsage.SIGNING)));
 
 		_patchAndAssertResponse(
 			new SamlProvider() {
@@ -270,7 +278,11 @@ public class SamlProviderResourceTest extends BaseSamlProviderResourceTestCase {
 				}
 			},
 			Response.Status.BAD_REQUEST,
-			SamlProviderResourceTest::assertEncryptionCredentialException);
+			jsonObject -> _assertEndsWith(
+				GetterUtil.getString(jsonObject.get("title")),
+				String.format(
+					CREDENTIAL_EXCEPTION_MESSAGE_FORMAT,
+					LocalEntityManager.CertificateUsage.ENCRYPTION)));
 	}
 
 	private void _testPatchSamlProvider_validCredentials() throws Exception {

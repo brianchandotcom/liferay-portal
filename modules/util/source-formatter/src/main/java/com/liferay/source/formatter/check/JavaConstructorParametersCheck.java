@@ -311,8 +311,8 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 			Pattern pattern = Pattern.compile(
 				StringBundler.concat(
-					"\\{\n([\\s\\S]*?)((_|this\\.)", parameterName,
-					") =[ \t\n]+", parameterName, ";"));
+					"\\{\n[\\s\\S]*?((_|this\\.)", parameterName, ") =[ \t\n]+",
+					parameterName, ";"));
 
 			Matcher matcher = pattern.matcher(content);
 
@@ -320,9 +320,9 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			String globalVariableName = matcher.group(2);
+			String globalVariableName = matcher.group(1);
 
-			if (StringUtil.equals(matcher.group(3), "this.")) {
+			if (StringUtil.equals(matcher.group(2), "this.")) {
 				globalVariableName = globalVariableName.substring(5);
 			}
 

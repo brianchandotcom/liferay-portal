@@ -246,6 +246,27 @@ public class ObjectDefinitionResourceImpl
 		_addListTypeDefinition(objectDefinition);
 
 		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition;
+
+		if (GetterUtil.getBoolean(objectDefinition.getSystem())) {
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.addSystemObjectDefinition(
+					contextUser.getUserId(),
+					LocalizedMapUtil.getLocalizedMap(
+						objectDefinition.getLabel()),
+					objectDefinition.getName(),
+					LocalizedMapUtil.getLocalizedMap(
+						objectDefinition.getPluralLabel()),
+					objectDefinition.getScope(),
+					transformToList(
+						objectDefinition.getObjectFields(),
+						objectField -> ObjectFieldUtil.toObjectField(
+							_listTypeDefinitionLocalService, objectField,
+							_objectFieldLocalService,
+							_objectFieldSettingLocalService,
+							_objectFilterLocalService)));
+		}
+		else {
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
@@ -270,6 +291,7 @@ public class ObjectDefinitionResourceImpl
 							_objectFieldLocalService,
 							_objectFieldSettingLocalService,
 							_objectFilterLocalService)));
+		}
 
 		if (!Validator.isBlank(objectDefinition.getExternalReferenceCode())) {
 			serviceBuilderObjectDefinition =

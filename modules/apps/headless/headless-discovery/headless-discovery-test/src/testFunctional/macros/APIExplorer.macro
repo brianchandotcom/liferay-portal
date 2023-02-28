@@ -81,11 +81,14 @@ definition {
 	}
 
 	macro navigateToOpenAPI {
-		Variables.assertDefined(parameterList = "${api},${version}");
-
 		var portalURL = JSONCompany.getPortalURL();
 
-		Navigator.openSpecificURL(url = "${portalURL}/o/api?endpoint=${portalURL}/o/${api}/${version}/openapi.json");
+		if (isSet(api)) {
+			Navigator.openSpecificURL(url = "${portalURL}/o/api?endpoint=${portalURL}/o/${api}/${version}/openapi.json");
+		}
+		else {
+			Navigator.openSpecificURL(url = "${portalURL}/o/api");
+		}
 	}
 
 }

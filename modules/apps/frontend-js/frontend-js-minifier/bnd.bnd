@@ -3,6 +3,8 @@ Bundle-SymbolicName: com.liferay.frontend.js.minifier
 Bundle-Version: 9.0.5
 Import-Package:\
 	!com.google.javascript.refactoring,\
+	!com.google.javascript.jscomp.jarjar.*,\
+	!org.checkerframework.checker.nullness.*,\
 	\
 	!org.apache.tools.ant,\
 	!org.apache.tools.ant.types,\

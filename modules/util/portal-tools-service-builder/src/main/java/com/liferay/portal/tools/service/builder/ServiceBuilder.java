@@ -5911,12 +5911,10 @@ public class ServiceBuilder {
 				return finderColumnName;
 			});
 
-		if (finderColumnNames.size() == 1) {
-			String finderColumnName = finderColumnNames.get(0);
+		if ((finderColumnNames.size() == 1) &&
+			Objects.equals("classNameId", finderColumnNames.get(0))) {
 
-			if (finderColumnName.equals("classNameId")) {
-				return true;
-			}
+			return true;
 		}
 
 		return false;

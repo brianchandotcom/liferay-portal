@@ -20,11 +20,8 @@ package com.liferay.analytics.settings.rest.constants;
 public class FieldPeopleConstants {
 
 	public static final String[] FIELD_CONTACT_DEFAULTS = {
-		"birthday", "classNameId", "classPK", "companyId", "contactId",
-		"createDate", "emailAddress", "employeeNumber", "employeeStatusId",
-		"facebookSn", "firstName", "hoursOfOperation", "jabberSn", "jobTitle",
-		"lastName", "male", "middleName", "modifiedDate", "parentContactId",
-		"skypeSn", "smsSn", "twitterSn", "userName"
+		"birthday", "classPK", "contactId", "createDate", "emailAddress",
+		"firstName", "jobTitle", "lastName", "modifiedDate"
 	};
 
 	public static final String[] FIELD_CONTACT_EXAMPLES = {
@@ -45,8 +42,7 @@ public class FieldPeopleConstants {
 	};
 
 	public static final String[] FIELD_CONTACT_REQUIRED_NAMES = {
-		"classNameId", "classPK", "contactId", "createDate", "emailAddress",
-		"modifiedDate"
+		"classPK", "contactId", "createDate", "emailAddress", "modifiedDate"
 	};
 
 	public static final String[] FIELD_CONTACT_TYPES = {
@@ -57,10 +53,8 @@ public class FieldPeopleConstants {
 	};
 
 	public static final String[] FIELD_USER_DEFAULTS = {
-		"agreedToTermsOfUse", "companyId", "contactId", "createDate",
-		"defaultUser", "emailAddress", "emailAddressVerified", "firstName",
-		"jobTitle", "languageId", "lastName", "middleName", "modifiedDate",
-		"status", "timeZoneId", "userId", "uuid"
+		"createDate", "emailAddress", "firstName", "jobTitle", "lastName",
+		"modifiedDate", "timeZoneId", "userId", "uuid"
 	};
 
 	public static final String[] FIELD_USER_EXAMPLES = {
@@ -81,8 +75,7 @@ public class FieldPeopleConstants {
 	};
 
 	public static final String[] FIELD_USER_REQUIRED_NAMES = {
-		"contactId", "createDate", "emailAddress", "modifiedDate", "userId",
-		"uuid"
+		"createDate", "emailAddress", "modifiedDate", "userId", "uuid"
 	};
 
 	public static final String[] FIELD_USER_TYPES = {

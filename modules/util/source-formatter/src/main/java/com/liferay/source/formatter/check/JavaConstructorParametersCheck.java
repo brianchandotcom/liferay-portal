@@ -88,7 +88,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				break;
 			}
 
-			String group = matcher1.group();
+			String matchedGlobalVariableName = matcher1.group();
 
 			if (followingCode.startsWith(".")) {
 				String methodName = null;
@@ -115,7 +115,9 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 					break;
 				}
 
-				if (!StringUtil.equals(group, globalVariableName)) {
+				if (!StringUtil.equals(
+						matchedGlobalVariableName, globalVariableName)) {
+
 					continue;
 				}
 
@@ -188,7 +190,9 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 					return content;
 				}
 
-				if (StringUtil.equals(group, globalVariableName)) {
+				if (StringUtil.equals(
+						matchedGlobalVariableName, globalVariableName)) {
+
 					return StringUtil.replaceFirst(
 						content, globalVariableName, parameterName, start);
 				}

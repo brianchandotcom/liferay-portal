@@ -608,6 +608,21 @@ definition {
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_term_web_internal_portlet_CommerceTermEntryPortlet");
 	}
 
+	macro searchOrderIdFromAccountSelectorDropdown {
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		Click(
+			key_searchBarValue = ${searchBarValue},
+			locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_EMPTY_SEARCH_BAR");
+
+		SelectFrameTop();
+
+		Type(
+			key_searchBarValue = ${searchBarValue},
+			locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_EMPTY_SEARCH_BAR",
+			value1 = ${orderId});
+	}
+
 	macro selectOrderFromAccountSelector {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 

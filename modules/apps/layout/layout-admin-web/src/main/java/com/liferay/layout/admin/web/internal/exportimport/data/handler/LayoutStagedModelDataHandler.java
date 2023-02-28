@@ -63,6 +63,8 @@ import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -2687,6 +2689,24 @@ public class LayoutStagedModelDataHandler
 						"layout-master-page-template", Boolean.TRUE.toString());
 				}
 			}
+			else {
+				LayoutUtilityPageEntry layoutUtilityPageEntry =
+					_layoutUtilityPageEntryLocalService.
+						fetchLayoutUtilityPageEntryByPlid(layout.getPlid());
+
+				if (layoutUtilityPageEntry == null) {
+					layoutUtilityPageEntry =
+						_layoutUtilityPageEntryLocalService.
+							fetchLayoutUtilityPageEntryByPlid(
+								layout.getClassPK());
+				}
+
+				if (layoutUtilityPageEntry != null) {
+					layoutElement.addAttribute(
+						"layout-content-page-template",
+						Boolean.TRUE.toString());
+				}
+			}
 		}
 
 		LayoutStagingHandler layoutStagingHandler =
@@ -3031,6 +3051,10 @@ public class LayoutStagedModelDataHandler
 
 	@Reference
 	private LayoutTemplateLocalService _layoutTemplateLocalService;
+
+	@Reference
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Reference
 	private PermissionImporter _permissionImporter;

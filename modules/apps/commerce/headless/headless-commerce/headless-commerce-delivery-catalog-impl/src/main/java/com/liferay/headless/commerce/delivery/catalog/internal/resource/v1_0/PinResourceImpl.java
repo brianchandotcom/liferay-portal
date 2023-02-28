@@ -26,14 +26,15 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Pin;
-import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.PinDTOConverter;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.PinDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.PinResource;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -163,7 +164,9 @@ public class PinResourceImpl extends BasePinResourceImpl {
 	@Reference
 	private CSDiagramPinLocalService _csDiagramPinLocalService;
 
-	@Reference
-	private PinDTOConverter _pinDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.PinDTOConverter)"
+	)
+	private DTOConverter<CSDiagramEntry, Pin> _pinDTOConverter;
 
 }

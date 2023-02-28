@@ -118,13 +118,13 @@ public class FormContextUtil {
 								_getMaps(columnsMap, "fields")) {
 
 							formFieldContextList.add(
-								FormContextUtil._toFormFieldContext(fieldsMap));
+								_toFormFieldContext(fieldsMap));
 						}
 					}
 				}
 
-				formFieldContexts =
-					(FormFieldContext[])formFieldContextList.toArray();
+				formFieldContexts = formFieldContextList.toArray(
+					new FormFieldContext[0]);
 
 				showRequiredFieldsWarning = _getBoolean(
 					formPageContext, "showRequiredFieldsWarning");

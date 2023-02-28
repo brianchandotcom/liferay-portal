@@ -305,8 +305,8 @@ public class CommerceMediaServlet extends HttpServlet {
 				if (commerceVirtualOrderItem == null) {
 					_sendError(
 						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
-						"The order item " + commerceVirtualOrderItemId +
-							" was not found.");
+						"The commerce virtual order item " +
+							commerceVirtualOrderItemId + " does not exist");
 
 					return;
 				}
@@ -315,9 +315,9 @@ public class CommerceMediaServlet extends HttpServlet {
 					_sendError(
 						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
 						StringBundler.concat(
-							"The virtual item was not found with oder item id ",
-							commerceVirtualOrderItemId, " and virtual item ",
-							fileEntryId));
+							"The commerce virtual item ",
+							commerceVirtualOrderItemId,
+							" does not have file entry ", fileEntryId));
 
 					return;
 				}
@@ -327,7 +327,7 @@ public class CommerceMediaServlet extends HttpServlet {
 				if (fileEntry == null) {
 					_sendError(
 						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
-						"The virtual item " + fileEntryId + " was not found.");
+						"The file entry " + fileEntryId + " does not exist");
 
 					return;
 				}
@@ -370,7 +370,7 @@ public class CommerceMediaServlet extends HttpServlet {
 				_sendError(
 					httpServletResponse,
 					HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-					"An unexpected rror occurred.");
+					"An unexpected rror occurred");
 
 				return;
 			}

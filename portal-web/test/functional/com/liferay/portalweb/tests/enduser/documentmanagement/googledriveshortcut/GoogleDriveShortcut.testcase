@@ -195,7 +195,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		GoogleDrive.gotoDrive(windowTitle = "New Google Drive Shortcut - ${siteName}");
+		GoogleDrive.gotoDrive(windowTitle = "liferay - ${siteName}");
 
 		GoogleDrive.selectDocument(
 			googleDocName = "liferay2.xls",

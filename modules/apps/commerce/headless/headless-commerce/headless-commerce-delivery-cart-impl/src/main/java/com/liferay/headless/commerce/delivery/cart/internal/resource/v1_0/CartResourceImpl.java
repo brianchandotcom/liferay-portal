@@ -55,8 +55,8 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CouponCode;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartDTOConverter;
-import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverterContext;
+import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -809,8 +810,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	@Reference
 	private CartDTOConverter _cartDTOConverter;
 
-	@Reference
-	private CartItemDTOConverter _cartItemDTOConverter;
+	@Reference(target = DTOConverterConstants.CART_ITEM_DTO_CONVERTER)
+	private DTOConverter<CommerceOrderItem, CartItem> _cartItemDTOConverter;
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;

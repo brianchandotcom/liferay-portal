@@ -33,14 +33,11 @@ public class PortletPreferencesHelper {
 		_portletPreferencesOptional = portletPreferencesOptional;
 	}
 
-	public Optional<Boolean> getBoolean(String key) {
-		Optional<String> valueOptional = _getValue(key);
-
-		return valueOptional.map(GetterUtil::getBoolean);
-	}
-
 	public boolean getBoolean(String key, boolean defaultValue) {
-		Optional<Boolean> valueOptional = getBoolean(key);
+		Optional<String> stringValueOptional = _getValue(key);
+
+		Optional<Boolean> valueOptional = stringValueOptional.map(
+			GetterUtil::getBoolean);
 
 		return valueOptional.orElse(defaultValue);
 	}

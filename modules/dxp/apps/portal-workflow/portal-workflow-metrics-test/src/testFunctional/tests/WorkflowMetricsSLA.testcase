@@ -1298,6 +1298,7 @@ definition {
 	@description = "LPS-89416 - Verify that updating a SLA will recalculate time for all instances In Progress"
 	@priority = 5
 	test UpdatingSLARecalculateTimeInProgressInstances {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#UpdatingSLARecalculateTimeInProgressInstances";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(

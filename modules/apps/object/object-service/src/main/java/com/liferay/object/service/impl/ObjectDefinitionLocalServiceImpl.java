@@ -301,6 +301,22 @@ public class ObjectDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
+			long userId, boolean enableComments, Map<Locale, String> labelMap,
+			boolean modifiable, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			String scope, List<ObjectField> objectFields)
+		throws PortalException {
+
+		return _addObjectDefinition(
+			userId, null, null, enableComments, labelMap, modifiable, name,
+			panelAppOrder, panelCategoryKey, null, null, pluralLabelMap, scope,
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true, null, 1,
+			WorkflowConstants.STATUS_DRAFT, objectFields);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectDefinition addSystemObjectDefinition(
 			long userId, String className, String dbTableName,
 			Map<Locale, String> labelMap, boolean modifiable, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,

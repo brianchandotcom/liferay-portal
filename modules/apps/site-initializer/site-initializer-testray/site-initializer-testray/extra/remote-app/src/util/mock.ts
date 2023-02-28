@@ -12,16 +12,6 @@
  * details.
  */
 
-export type Assignee = {
-	name: string;
-	url: string;
-};
-
-export type Assigned = {
-	name?: string;
-	url?: string;
-};
-
 export type Tasks = {
 	blocked?: number;
 	failed?: number;
@@ -45,18 +35,6 @@ export type Progress = {
 	self: number;
 };
 
-type Routine = {
-	assigned?: any;
-	buildName?: any;
-	progress?: number;
-	projectName?: any;
-	routineName?: any;
-	score: Progress;
-	startDate?: any;
-	status: string;
-	task?: any;
-};
-
 export type Tests = {
 	case: string;
 	component: string;
@@ -67,75 +45,8 @@ export type Tests = {
 	team: string;
 };
 
-const generateItems = <T>(item: T, total = 20): T[] => {
-	return [...new Array(total)].map(() => item);
-};
-
 const getRandom = (max = 50) => Math.ceil(Math.random() * max);
 
 export function getRandomMaximumValue(count: number, max: number) {
 	return [...new Array(count)].map(() => getRandom(max));
 }
-
-export const assigned = generateItems<Assigned>(
-	{
-		name: 'John Doe',
-		url: 'https://picsum.photos/200',
-	},
-	20
-);
-
-export const assignee = generateItems<Assignee>(
-	{
-		name: 'John Doe',
-		url: 'https://picsum.photos/200',
-	},
-	20
-);
-export const tasks = generateItems<Tasks>(
-	{
-		blocked: 12,
-		failed: 31,
-		incomplete: 33,
-		passed: 87,
-		test_fix: 55,
-	},
-	20
-);
-
-export const subtask = generateItems<Subtask>(
-	{
-		assignee,
-		error: "java.lang.Exception: No results for path: $['users'][0]['id']",
-		name: 'ST-1',
-		score: 10,
-		status: 'blocked',
-		tests: 5,
-	},
-	20
-);
-
-export const progress = generateItems<Progress>(
-	{
-		incomplete: 70,
-		other: 0,
-		self: 101,
-	},
-	20
-);
-
-export const routines = generateItems<Routine>(
-	{
-		assigned,
-		buildName:
-			'CE Package Tester - 7.4.3.10-ga10 - 3099 - 2022-01-31[08:44:04]',
-		progress: 20,
-		projectName: 'Liferay Portal 7.4',
-		routineName: 'CE Package Tester',
-		score: progress[0],
-		startDate: 'a day ago',
-		status: 'Blocked',
-		task: 'CE Package Tester - 7.4.3.10-ga10 - 3099 - 2022-01-31[08:44:04]',
-	},
-	20
-);

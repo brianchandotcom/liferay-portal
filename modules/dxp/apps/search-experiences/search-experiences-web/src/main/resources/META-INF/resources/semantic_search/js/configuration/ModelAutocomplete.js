@@ -20,6 +20,7 @@ import React, {useEffect, useRef, useState} from 'react';
  * This can be found on: System Settings > Search Experiences > Semantic Search
  */
 function ModelAutocomplete({
+	disabled,
 	label,
 	name,
 	onBlur,
@@ -155,6 +156,7 @@ function ModelAutocomplete({
 		<ClayAutocomplete>
 			<ClayAutocomplete.Input
 				aria-label={label}
+				disabled={disabled}
 				id={name}
 				name={name}
 				onBlur={onBlur}

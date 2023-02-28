@@ -22,6 +22,7 @@ const SELECT_BOX_SHOW_ITEMS_COUNT = 6;
 function Input({
 	error,
 	children,
+	disabled,
 	helpText,
 	label,
 	name,
@@ -43,6 +44,7 @@ function Input({
 			case 'model':
 				return (
 					<ModelAutocomplete
+						disabled={disabled}
 						label={label}
 						name={name}
 						onBlur={onBlur}
@@ -56,6 +58,7 @@ function Input({
 					<ClaySelectBox
 						aria-label={label}
 						className="mb-0" // Suppress extra margin from ClaySelectBox
+						disabled={disabled}
 						items={items}
 						multiple
 						name={name}
@@ -70,6 +73,7 @@ function Input({
 				return (
 					<ClayInput
 						aria-label={label}
+						disabled={disabled}
 						id={name}
 						max={options.max}
 						min={options.min}
@@ -85,6 +89,7 @@ function Input({
 				return (
 					<ClaySelect
 						aria-label={label}
+						disabled={disabled}
 						id={name}
 						name={name}
 						onBlur={onBlur}
@@ -105,6 +110,7 @@ function Input({
 				return (
 					<ClayInput
 						aria-label={label}
+						disabled={disabled}
 						id={name}
 						name={name}
 						onBlur={onBlur}

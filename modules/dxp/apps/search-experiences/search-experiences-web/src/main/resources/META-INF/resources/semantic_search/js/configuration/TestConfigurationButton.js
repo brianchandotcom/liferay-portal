@@ -27,6 +27,7 @@ function TestConfigurationButton({
 	availableTextEmbeddingProviders,
 	basicAuthPassword,
 	basicAuthUsername,
+	disabled,
 	embeddingVectorDimensions,
 	errors,
 	hostAddress,
@@ -290,10 +291,14 @@ function TestConfigurationButton({
 		<div className="test-configuration-button-root">
 			<ClayTooltipProvider>
 				<ClayButton
-					aria-disabled={loading || isMissingRequiredFields()}
+					aria-disabled={
+						loading || isMissingRequiredFields() || disabled
+					}
 					aria-label={Liferay.Language.get('test-configuration')}
 					className={
-						loading || isMissingRequiredFields() ? 'disabled' : ''
+						loading || isMissingRequiredFields() || disabled
+							? 'disabled'
+							: ''
 					}
 					displayType="secondary"
 					onClick={_handleTestConfigurationButtonClick}

@@ -398,6 +398,7 @@ export default function ({
 								'text-embeddings-enabled'
 							)}
 							checked={!!formik.values.textEmbeddingsEnabled}
+							disabled={formik.isSubmitting}
 							label={Liferay.Language.get(
 								'text-embeddings-enabled'
 							)}
@@ -410,6 +411,7 @@ export default function ({
 					</ClayForm.Group>
 
 					<Input
+						disabled={formik.isSubmitting}
 						error={
 							formik.errors
 								?.textEmbeddingProviderConfigurationJSONs?.[
@@ -479,6 +481,7 @@ export default function ({
 					]?.providerName === TEXT_EMBEDDING_PROVIDER_TYPES.TXTAI && (
 						<>
 							<Input
+								disabled={formik.isSubmitting}
 								error={
 									formik.errors
 										.textEmbeddingProviderConfigurationJSONs?.[
@@ -512,6 +515,7 @@ export default function ({
 							/>
 
 							<Input
+								disabled={formik.isSubmitting}
 								error={
 									formik.errors
 										.textEmbeddingProviderConfigurationJSONs?.[
@@ -540,6 +544,7 @@ export default function ({
 							/>
 
 							<Input
+								disabled={formik.isSubmitting}
 								error={
 									formik.errors
 										.textEmbeddingProviderConfigurationJSONs?.[
@@ -576,6 +581,7 @@ export default function ({
 						TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API && (
 						<>
 							<Input
+								disabled={formik.isSubmitting}
 								error={
 									formik.errors
 										.textEmbeddingProviderConfigurationJSONs?.[
@@ -606,6 +612,7 @@ export default function ({
 							/>
 
 							<Input
+								disabled={formik.isSubmitting}
 								error={
 									formik.errors
 										.textEmbeddingProviderConfigurationJSONs?.[
@@ -648,6 +655,7 @@ export default function ({
 							</Input>
 
 							<Input
+								disabled={formik.isSubmitting}
 								error={
 									formik.errors
 										.textEmbeddingProviderConfigurationJSONs?.[
@@ -690,6 +698,7 @@ export default function ({
 						TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_ENDPOINT && (
 						<>
 							<Input
+								disabled={formik.isSubmitting}
 								error={
 									formik.errors
 										.textEmbeddingProviderConfigurationJSONs?.[
@@ -719,6 +728,7 @@ export default function ({
 								}
 							/>
 							<Input
+								disabled={formik.isSubmitting}
 								error={
 									formik.errors
 										.textEmbeddingProviderConfigurationJSONs?.[
@@ -754,6 +764,7 @@ export default function ({
 					)}
 
 					<Input
+						disabled={formik.isSubmitting}
 						error={
 							formik.errors
 								.textEmbeddingProviderConfigurationJSONs?.[
@@ -804,6 +815,7 @@ export default function ({
 								.textEmbeddingProviderConfigurationJSONs[index]
 								?.attributes.basicAuthUsername
 						}
+						disabled={formik.isSubmitting}
 						embeddingVectorDimensions={
 							formik.values
 								.textEmbeddingProviderConfigurationJSONs[index]
@@ -870,6 +882,7 @@ export default function ({
 					</h3>
 
 					<Input
+						disabled={formik.isSubmitting}
 						error={
 							formik.errors
 								.textEmbeddingProviderConfigurationJSONs?.[
@@ -905,6 +918,7 @@ export default function ({
 					/>
 
 					<Input
+						disabled={formik.isSubmitting}
 						error={
 							formik.errors
 								.textEmbeddingProviderConfigurationJSONs?.[
@@ -935,6 +949,7 @@ export default function ({
 					/>
 
 					<Input
+						disabled={formik.isSubmitting}
 						error={
 							formik.errors
 								.textEmbeddingProviderConfigurationJSONs?.[
@@ -972,6 +987,7 @@ export default function ({
 					/>
 
 					<Input
+						disabled={formik.isSubmitting}
 						error={
 							formik.errors
 								.textEmbeddingProviderConfigurationJSONs?.[
@@ -1015,6 +1031,7 @@ export default function ({
 					</h3>
 
 					<Input
+						disabled={formik.isSubmitting}
 						error={formik.errors.textEmbeddingCacheTimeout}
 						helpText={Liferay.Language.get(
 							'text-embedding-cache-timeout-help'

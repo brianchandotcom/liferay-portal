@@ -195,9 +195,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		GoogleDrive.gotoDrive(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userPassword = PropsUtil.get("email.password.4"));
+		GoogleDrive.gotoDrive(windowTitle = "New Google Drive Shortcut - ${siteName}");
 
 		GoogleDrive.selectDocument(
 			googleDocName = "liferay2.xls",

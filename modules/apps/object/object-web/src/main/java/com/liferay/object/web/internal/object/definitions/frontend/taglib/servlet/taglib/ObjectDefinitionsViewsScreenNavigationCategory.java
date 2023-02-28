@@ -71,7 +71,7 @@ public class ObjectDefinitionsViewsScreenNavigationCategory
 
 	@Override
 	public boolean isVisible(User user, ObjectDefinition objectDefinition) {
-		return !objectDefinition.isSystem();
+		return objectDefinition.isModifiable();
 	}
 
 	@Override

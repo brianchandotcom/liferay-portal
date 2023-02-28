@@ -38,7 +38,7 @@ const useMutate = <T = any>(mutate?: KeyedMutator<T>) => {
 	);
 
 	const removeItemFromList = useCallback(
-		(mutate: KeyedMutator<any>, id: number, options?: MutatorOptions) => {
+		(mutate: KeyedMutator<any>, id: number, options?: MutatorOptions) =>
 			mutate(
 				(response: APIResponse) => ({
 					...response,
@@ -46,8 +46,7 @@ const useMutate = <T = any>(mutate?: KeyedMutator<T>) => {
 					totalCount: response?.totalCount - 1,
 				}),
 				{revalidate: false, ...options}
-			);
-		},
+			),
 		[]
 	);
 
@@ -57,7 +56,7 @@ const useMutate = <T = any>(mutate?: KeyedMutator<T>) => {
 			id: number,
 			data: any,
 			options?: MutatorOptions
-		) => {
+		) =>
 			mutate(
 				(response: APIResponse<any>) => ({
 					...response,
@@ -75,8 +74,7 @@ const useMutate = <T = any>(mutate?: KeyedMutator<T>) => {
 					}),
 				}),
 				{revalidate: false, ...options}
-			);
-		},
+			),
 		[]
 	);
 

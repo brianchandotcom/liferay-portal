@@ -16,10 +16,10 @@ import {useParams} from 'react-router-dom';
 
 import Container from '../../../../../../components/Layout/Container';
 import ListView from '../../../../../../components/ListView';
+import SearchBuilder from '../../../../../../core/SearchBuilder';
 import useRuns from '../../../../../../hooks/useRuns';
 import i18n from '../../../../../../i18n';
 import {testrayRunImpl} from '../../../../../../services/rest';
-import {SearchBuilder} from '../../../../../../util/search';
 import RunFormModal from './RunFormModal';
 import useRunActions from './useRunActions';
 

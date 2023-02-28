@@ -21,6 +21,7 @@ import {KeyedMutator} from 'swr';
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
+import SearchBuilder from '../../../core/SearchBuilder';
 import {useHeader} from '../../../hooks';
 import {useFetch} from '../../../hooks/useFetch';
 import useFormActions from '../../../hooks/useFormActions';
@@ -33,7 +34,6 @@ import {
 	createRequirement,
 	updateRequirement,
 } from '../../../services/rest';
-import {SearchBuilder} from '../../../util/search';
 
 type RequirementsFormType = typeof yupSchema.requirement.__outputType;
 

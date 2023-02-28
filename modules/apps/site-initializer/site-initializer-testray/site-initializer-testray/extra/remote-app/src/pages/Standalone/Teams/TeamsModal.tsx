@@ -13,9 +13,9 @@
  */
 
 import ListView from '../../../components/ListView';
+import SearchBuilder from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
 import {testrayTeamImpl} from '../../../services/rest';
-import {SearchBuilder} from '../../../util/search';
 import TeamFormModal from './TeamsFormModal';
 import useTeamActions from './useTeamActions';
 

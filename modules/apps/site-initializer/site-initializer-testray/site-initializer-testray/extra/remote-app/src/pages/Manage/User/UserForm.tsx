@@ -27,7 +27,7 @@ import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 import {Liferay} from '../../../services/liferay';
-import {UserAccount, liferayUserAccountsRest} from '../../../services/rest';
+import {UserAccount, liferayUserAccountsImpl} from '../../../services/rest';
 import {liferayUserRolesRest} from '../../../services/rest/TestrayRolesUser';
 import {RoleTypes} from '../../../util/constants';
 
@@ -99,9 +99,9 @@ const UserForm = () => {
 			const response = await onSubmit(
 				{...form, userId: userAccount?.id},
 				{
-					create: (data) => liferayUserAccountsRest.create(data),
+					create: (data) => liferayUserAccountsImpl.create(data),
 					update: (id, data) =>
-						liferayUserAccountsRest.update(id, data),
+						liferayUserAccountsImpl.update(id, data),
 				}
 			);
 
@@ -114,8 +114,7 @@ const UserForm = () => {
 			mutateUser(_userAccount);
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};

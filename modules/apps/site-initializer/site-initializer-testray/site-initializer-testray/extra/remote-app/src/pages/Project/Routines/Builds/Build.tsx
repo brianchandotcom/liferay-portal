@@ -14,25 +14,25 @@
 
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-
-import Avatar from '../../../../components/Avatar';
-import AssignToMe from '../../../../components/Avatar/AssigneToMe';
-import Code from '../../../../components/Code';
-import JiraLink from '../../../../components/JiraLink';
-import Container from '../../../../components/Layout/Container';
-import ListViewRest from '../../../../components/ListView';
-import StatusBadge from '../../../../components/StatusBadge';
-import {StatusBadgeType} from '../../../../components/StatusBadge/StatusBadge';
-import useMutate from '../../../../hooks/useMutate';
-import useRuns from '../../../../hooks/useRuns';
-import useSearchBuilder from '../../../../hooks/useSearchBuilder';
-import i18n from '../../../../i18n';
+import Avatar from '~/components/Avatar';
+import AssignToMe from '~/components/Avatar/AssigneToMe';
+import Code from '~/components/Code';
+import JiraLink from '~/components/JiraLink';
+import Container from '~/components/Layout/Container';
+import ListViewRest from '~/components/ListView';
+import StatusBadge from '~/components/StatusBadge';
+import {StatusBadgeType} from '~/components/StatusBadge/StatusBadge';
+import useMutate from '~/hooks/useMutate';
+import useRuns from '~/hooks/useRuns';
+import useSearchBuilder from '~/hooks/useSearchBuilder';
+import i18n from '~/i18n';
 import {
 	PickList,
 	TestrayCaseResult,
 	TestrayCaseResultIssue,
 	testrayCaseResultImpl,
-} from '../../../../services/rest';
+} from '~/services/rest';
+
 import useBuildTestActions from './useBuildTestActions';
 
 const Build = () => {

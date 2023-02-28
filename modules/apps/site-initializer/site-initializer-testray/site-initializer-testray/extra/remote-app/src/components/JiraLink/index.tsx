@@ -13,3 +13,4 @@
  */
 
 export {default} from './JiraLink';
+export * from './JiraLink';

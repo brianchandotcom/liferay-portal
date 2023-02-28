@@ -18,12 +18,12 @@ import Container from '../../../components/Layout/Container';
 import ListView, {ListViewProps} from '../../../components/ListView';
 import {TableProps} from '../../../components/Table';
 import {ListViewContextProviderProps} from '../../../context/ListViewContext';
+import SearchBuilder from '../../../core/SearchBuilder';
 import {FormModal} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {testrayCaseRest} from '../../../services/rest';
 import {Action} from '../../../types';
 import dayjs from '../../../util/date';
-import {SearchBuilder} from '../../../util/search';
 import useCaseActions from './useCaseActions';
 
 type CaseListViewProps = {

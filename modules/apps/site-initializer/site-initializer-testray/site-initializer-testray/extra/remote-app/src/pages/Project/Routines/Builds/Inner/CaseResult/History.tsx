@@ -15,8 +15,8 @@
 import {useOutletContext, useParams} from 'react-router-dom';
 
 import Container from '../../../../../../components/Layout/Container';
+import SearchBuilder from '../../../../../../core/SearchBuilder';
 import {TestrayCaseResult} from '../../../../../../services/rest';
-import {SearchBuilder} from '../../../../../../util/search';
 import CaseResultHistory from '../../../../Cases/CaseResultHistory';
 
 type OutletContext = {

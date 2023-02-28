@@ -16,6 +16,7 @@ import {useForm} from 'react-hook-form';
 
 import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
+import SearchBuilder from '../../../core/SearchBuilder';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {useFetch} from '../../../hooks/useFetch';
 import {FormModalOptions} from '../../../hooks/useFormModal';
@@ -26,7 +27,6 @@ import {
 	TestrayTeam,
 	testrayComponentImpl,
 } from '../../../services/rest';
-import {SearchBuilder} from '../../../util/search';
 
 type ComponentForm = typeof yupSchema.component.__outputType;
 

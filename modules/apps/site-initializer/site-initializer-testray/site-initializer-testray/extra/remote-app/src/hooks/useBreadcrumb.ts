@@ -14,13 +14,13 @@
 
 import {useCallback, useMemo, useRef, useState} from 'react';
 
+import SearchBuilder from '../core/SearchBuilder';
 import i18n from '../i18n';
 import {
 	APIResponse,
 	TestrayCaseResult,
 	testrayCaseResultImpl,
 } from '../services/rest';
-import {SearchBuilder} from '../util/search';
 import useDebounce from './useDebounce';
 import {useFetch} from './useFetch';
 
@@ -73,7 +73,7 @@ const useBreadcrumb = (entities: Entity[], {active}: {active: boolean}) => {
 	);
 
 	const {data} = useFetch<APIResponse<any>>(url, {
-		swrConfig: {stopFetching: !active},
+		swrConfig: {shouldFetch: active},
 		transformData: transformer,
 	});
 

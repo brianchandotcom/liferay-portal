@@ -70,7 +70,6 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			icon: 'cog',
 			name: i18n.translate('manage-product-versions'),
 		},
-
 		{
 			action: ({id}, mutate) =>
 				testrayProjectImpl

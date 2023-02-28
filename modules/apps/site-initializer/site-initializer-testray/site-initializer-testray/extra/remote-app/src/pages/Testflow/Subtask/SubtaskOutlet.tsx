@@ -15,6 +15,7 @@
 import {useEffect} from 'react';
 import {Outlet, useOutletContext, useParams} from 'react-router-dom';
 
+import SearchBuilder from '../../../core/SearchBuilder';
 import {useFetch} from '../../../hooks/useFetch';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
@@ -26,7 +27,6 @@ import {
 	testraySubTaskImpl,
 } from '../../../services/rest';
 import {testraySubtaskIssuesImpl} from '../../../services/rest/TestraySubtaskIssues';
-import {SearchBuilder} from '../../../util/search';
 
 type OutletContext = {
 	data: {

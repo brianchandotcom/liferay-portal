@@ -22,6 +22,7 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView';
 import MarkdownPreview from '../../../components/Markdown';
 import QATable from '../../../components/Table/QATable';
+import SearchBuilder from '../../../core/SearchBuilder';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
 import {
@@ -31,7 +32,6 @@ import {
 	testrayCaseRequirementsImpl,
 } from '../../../services/rest';
 import {DescriptionType} from '../../../types';
-import {SearchBuilder} from '../../../util/search';
 import RequirementCaseLinkModal from './RequirementCaseLinkModal';
 import useRequirementCaseActions from './useRequirementCaseActions';
 

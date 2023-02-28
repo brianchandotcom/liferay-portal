@@ -16,11 +16,11 @@ import React, {useState} from 'react';
 
 import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
+import SearchBuilder from '../../../core/SearchBuilder';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {TestrayRequirementCase} from '../../../services/rest';
-import {SearchBuilder} from '../../../util/search';
 import {CaseListView} from '../Cases';
 
 type RequirementCaseLinkModalProps = {

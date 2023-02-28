@@ -14,7 +14,7 @@
 
 import {useMemo} from 'react';
 
-import {SearchBuilder, SearchBuilderConstructor} from '../util/search';
+import SearchBuilder, {SearchBuilderConstructor} from '../core/SearchBuilder';
 
 const useSearchBuilder = (
 	searchBuilderConstructor: SearchBuilderConstructor

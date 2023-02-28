@@ -4,18 +4,12 @@ Bundle-Version: 5.0.4
 Import-Package:\
 	!com.aayushatharva.brotli4j.*,\
 	\
-	!com.conversantmedia.util.concurrent,\
-	\
-	!com.fasterxml.jackson.dataformat.yaml,\
-	\
 	!com.github.luben.zstd,\
 	\
 	!com.google.crypto.tink.subtle,\
 	!com.google.protobuf.*,\
 	\
 	!com.jcraft.jzlib,\
-	\
-	!com.lmax.disruptor.*,\
 	\
 	!com.ning.compress.*,\
 	\
@@ -47,10 +41,6 @@ Import-Package:\
 	\
 	!net.shibboleth.utilities.java.support.xml,\
 	\
-	!org.apache.commons.compress.compressors,\
-	!org.apache.commons.compress.utils,\
-	!org.apache.commons.csv,\
-	!org.apache.kafka.clients.producer,\
 	!org.apache.logging.log4j.*,\
 	\
 	!org.bouncycastle.*,\
@@ -61,11 +51,7 @@ Import-Package:\
 	\
 	!org.eclipse.jetty.*,\
 	\
-	!org.fusesource.jansi,\
-	\
 	!org.jboss.marshalling,\
-	\
-	!org.jctools.queues,\
 	\
 	!org.joda.time,\
 	\
@@ -73,13 +59,9 @@ Import-Package:\
 	\
 	!org.slf4j.*,\
 	\
-	!org.zeromq,\
-	\
 	!reactor.blockhound.*,\
 	\
 	!sun.security.x509,\
-	\
-	!zipkin2.internal.gson.internal.bind,\
 	\
 	*
 -fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=warning

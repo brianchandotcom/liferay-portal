@@ -13,6 +13,8 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import classNames from 'classnames';
 
 import i18n from '../../../i18n';
 
@@ -36,10 +38,16 @@ const Footer: React.FC<FooterProps> = ({
 	<ClayButton.Group spaced>
 		<ClayButton
 			{...primaryButtonProps}
+			className={classNames(
+				primaryButtonProps.className,
+				'align-items-center d-flex'
+			)}
 			disabled={primaryButtonProps?.disabled || loading}
 			displayType="primary"
 			onClick={onSubmit}
 		>
+			{loading && <ClayLoadingIndicator className="mb-0 mr-2 mt-0" />}
+
 			{i18n.translate(primaryButtonProps?.title ?? 'save')}
 		</ClayButton>
 

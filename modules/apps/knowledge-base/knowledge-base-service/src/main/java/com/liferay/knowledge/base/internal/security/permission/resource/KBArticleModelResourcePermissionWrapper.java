@@ -49,7 +49,7 @@ public class KBArticleModelResourcePermissionWrapper
 		doGetModelResourcePermission() {
 
 		return ModelResourcePermissionFactory.create(
-			KBArticle.class, KBArticle::getRootResourcePrimKey,
+			KBArticle.class, KBArticle::getResourcePrimKey,
 			classPK -> {
 				KBArticle kbArticle =
 					_kbArticleLocalService.fetchLatestKBArticle(

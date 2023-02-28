@@ -54,7 +54,7 @@ public class ObjectActionParametersExceptionMapper
 			String.valueOf(
 				_toJSONArray(objectActionParametersException.getMessageKeys())),
 			Response.Status.BAD_REQUEST, null,
-			"ObjectActionParametersException");
+			ObjectActionParametersException.class.getSimpleName());
 	}
 
 	private JSONArray _toJSONArray(Map<String, Object> messageKeys) {

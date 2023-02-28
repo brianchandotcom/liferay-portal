@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -38,6 +39,10 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -150,6 +155,18 @@ public abstract class BaseCommerceQualifierMetadata<T extends BaseModel<T>>
 		return new OrderByExpression[0];
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_modelListenerServiceRegistration = bundleContext.registerService(
+			(Class<ModelListener<T>>)(Class<?>)ModelListener.class,
+			new CommerceQualifierMetadataModelListener(getModelClass()), null);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_modelListenerServiceRegistration.unregister();
+	}
+
 	protected abstract OrderByExpression[] getAdditionalOrderByExpressions(
 		Map<String, ?> targetAttributes);
 
@@ -216,6 +233,9 @@ public abstract class BaseCommerceQualifierMetadata<T extends BaseModel<T>>
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCommerceQualifierMetadata.class);
+
+	private ServiceRegistration<ModelListener<T>>
+		_modelListenerServiceRegistration;
 
 	private class CommerceQualifierMetadataModelListener
 		extends BaseModelListener<T> {

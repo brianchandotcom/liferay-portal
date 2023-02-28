@@ -104,13 +104,12 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 						continue outerLoop;
 					}
 
-					if (ToolsUtil.isInsideQuotes(followingCode, x + 1)) {
-						continue;
+					if (!ToolsUtil.isInsideQuotes(followingCode, x + 1)) {
+						methodName = StringUtil.trim(
+							followingCode.substring(1, x));
+
+						break;
 					}
-
-					methodName = StringUtil.trim(followingCode.substring(1, x));
-
-					break;
 				}
 
 				if (!methodName.startsWith("get")) {

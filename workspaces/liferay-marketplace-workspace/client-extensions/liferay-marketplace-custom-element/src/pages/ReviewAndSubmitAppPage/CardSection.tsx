@@ -149,21 +149,20 @@ export function CardSection({
 
 			{cardView && (
 				<CardView
-					children={
-						sectionName === 'Licensing' && priceModel !== 'free' ? (
-							<LicensePriceChildren
-								currency={priceData.currency}
-								quantity={priceData.quantity}
-								value={price as string}
-							/>
-						) : (
-							''
-						)
-					}
 					description={cardDescription as string}
 					icon={icon}
 					title={cardTitle as string}
-				/>
+				>
+					{sectionName === 'Licensing' && priceModel !== 'free' ? (
+						<LicensePriceChildren
+							currency={priceData.currency}
+							quantity={priceData.quantity}
+							value={price as string}
+						/>
+					) : (
+						''
+					)}
+				</CardView>
 			)}
 
 			{storefront && (

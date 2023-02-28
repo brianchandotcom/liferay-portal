@@ -82,13 +82,13 @@ export function ProvideAppSupportAndHelpPage({
 		}
 		else {
 			const {id} = await createProductSpecification({
+				appId,
 				body: {
 					productId: appProductId,
 					specificationId: dataSpecification.id,
 					specificationKey: dataSpecification.key,
 					value: {en_US: value},
 				},
-				appId,
 			});
 
 			return id;

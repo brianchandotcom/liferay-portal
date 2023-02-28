@@ -207,9 +207,9 @@ export function DefineAppProfilePage({
 						dispatch({
 							payload: {
 								value: {
-									appProductId: product.productId,
-									appId: product.id,
 									appERC: product.externalReferenceCode,
+									appId: product.id,
+									appProductId: product.productId,
 									appWorkflowStatusInfo:
 										product.workflowStatusInfo,
 								},

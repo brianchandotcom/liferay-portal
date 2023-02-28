@@ -1,6 +1,4 @@
-import analyticsIcon from '../../assets/icons/analytics-icon.svg';
 import {Header} from '../../components/Header/Header';
-import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';
 
 import './SetAppPrivacyPage.scss';

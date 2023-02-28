@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -85,9 +86,10 @@ public class LayoutUtilityPageEntryServiceTest {
 
 		_user = UserTestUtil.addGroupUser(_group, _role.getName());
 
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId()));
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), _user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@After
@@ -100,8 +102,8 @@ public class LayoutUtilityPageEntryServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				0);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				_serviceContext);
 
 		LayoutUtilityPageEntry copiedLayoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.copyLayoutUtilityPageEntry(
@@ -141,8 +143,8 @@ public class LayoutUtilityPageEntryServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				0);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				_serviceContext);
 
 		Repository repository = _portletFileRepository.addPortletRepository(
 			_group.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES,
@@ -193,8 +195,8 @@ public class LayoutUtilityPageEntryServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				0);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				_serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
@@ -211,8 +213,8 @@ public class LayoutUtilityPageEntryServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				0);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				_serviceContext);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			_group.getCompanyId(), Group.class.getName(),
@@ -249,8 +251,8 @@ public class LayoutUtilityPageEntryServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, false,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				0);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				_serviceContext);
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			_group.getCompanyId(), LayoutUtilityPageEntry.class.getName(),
@@ -280,8 +282,8 @@ public class LayoutUtilityPageEntryServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				0);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				_serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
@@ -300,12 +302,12 @@ public class LayoutUtilityPageEntryServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry1 =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), type, 0);
+				RandomTestUtil.randomString(), type, 0, _serviceContext);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry2 =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, false,
-				RandomTestUtil.randomString(), type, 0);
+				RandomTestUtil.randomString(), type, 0, _serviceContext);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			_group.getCompanyId(), Group.class.getName(),
@@ -357,8 +359,8 @@ public class LayoutUtilityPageEntryServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				0);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				_serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
@@ -375,8 +377,8 @@ public class LayoutUtilityPageEntryServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				0);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				_serviceContext);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			_group.getCompanyId(), Group.class.getName(),
@@ -431,6 +433,8 @@ public class LayoutUtilityPageEntryServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
 	private User _user;

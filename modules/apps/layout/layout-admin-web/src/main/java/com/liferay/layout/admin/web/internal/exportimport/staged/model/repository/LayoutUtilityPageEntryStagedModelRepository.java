@@ -63,7 +63,7 @@ public class LayoutUtilityPageEntryStagedModelRepository
 			layoutUtilityPageEntry.getPreviewFileEntryId(),
 			layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry(),
 			layoutUtilityPageEntry.getName(), layoutUtilityPageEntry.getType(),
-			0);
+			0, serviceContext);
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -57,8 +58,10 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@After
@@ -71,7 +74,8 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				null, _group.getGroupId(), 0, 0, true,
-				"Test Layout Utility Page", RandomTestUtil.randomString(), 0);
+				"Test Layout Utility Page", RandomTestUtil.randomString(), 0,
+				_serviceContext);
 
 		Assert.assertEquals(
 			"test-layout-utility-page",
@@ -80,8 +84,8 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 		layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				"ERC", _group.getGroupId(), 0, 0, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				0);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				_serviceContext);
 
 		Assert.assertEquals(
 			"ERC", layoutUtilityPageEntry.getExternalReferenceCode());
@@ -105,6 +109,8 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
 	private User _user;

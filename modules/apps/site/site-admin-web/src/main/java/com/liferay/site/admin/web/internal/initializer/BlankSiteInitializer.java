@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.exception.InitializationException;
@@ -89,7 +90,7 @@ public class BlankSiteInitializer implements SiteInitializer {
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
 				_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 					"LFR-" + errorCode + "-ERROR", groupId, 0, 0, true, name,
-					type, 0);
+					type, 0, ServiceContextThreadLocal.getServiceContext());
 
 			String pageElementJSON =
 				_layoutUtilityPageEntryDefaultPageElementDefinitionProvider.

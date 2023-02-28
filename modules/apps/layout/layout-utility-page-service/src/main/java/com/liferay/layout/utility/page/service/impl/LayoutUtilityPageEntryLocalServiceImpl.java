@@ -159,7 +159,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			addLayoutUtilityPageEntry(
 				null, userId, serviceContext.getScopeGroupId(), 0, 0, false,
-				name, sourceLayoutUtilityPageEntry.getType(), masterLayoutPlid);
+				name, sourceLayoutUtilityPageEntry.getType(), masterLayoutPlid,
+				serviceContext);
 
 		long previewFileEntryId = _copyPreviewFileEntryId(
 			layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),

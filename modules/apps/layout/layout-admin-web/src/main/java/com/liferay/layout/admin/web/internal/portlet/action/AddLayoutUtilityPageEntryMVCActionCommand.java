@@ -107,7 +107,7 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, serviceContext.getUserId(),
 				serviceContext.getScopeGroupId(), 0, 0, false, name, type,
-				masterLayoutPlid);
+				masterLayoutPlid, serviceContext);
 
 		String pageElementJSON =
 			_layoutUtilityPageEntryDefaultPageElementDefinitionProvider.

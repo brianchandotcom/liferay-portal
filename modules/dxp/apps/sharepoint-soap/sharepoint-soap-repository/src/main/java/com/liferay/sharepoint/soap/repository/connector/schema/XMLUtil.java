@@ -67,8 +67,7 @@ public final class XMLUtil {
 		Document document, Node... nodes) {
 
 		return TransformUtil.transformToList(
-			nodes,
-			node -> document.importNode(_toNode(node.toXmlString()), true));
+			nodes, node -> toNode(document, node));
 	}
 
 	public static String toString(org.w3c.dom.Node node) {

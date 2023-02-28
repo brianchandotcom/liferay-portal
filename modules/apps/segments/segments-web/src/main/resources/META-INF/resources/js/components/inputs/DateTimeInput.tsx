@@ -13,9 +13,8 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
-import {usePrevious} from '@liferay/frontend-js-react-web';
 import {format, isValid, parse, parseISO} from 'date-fns';
-import {default as React, useState} from 'react';
+import {default as React, useRef, useState} from 'react';
 
 import {PROPERTY_TYPES} from '../../utils/constants';
 
@@ -71,7 +70,7 @@ function DateTimeInput({
 		return formatInputDate(initialValue);
 	});
 
-	const previousValue = usePrevious(value);
+	const previousValueRef = useRef(value);
 
 	const saveDateTimeValue = () => {
 		const getFormattedDate = (_nextValue: string) => {
@@ -113,30 +112,48 @@ function DateTimeInput({
 				startDateObject,
 			] = getFormattedDate(value.start);
 
-			if (typeof previousValue === 'object') {
+			if (typeof previousValueRef.current === 'object') {
 				if (
-					previousValue.start !== startDateInput ||
-					previousValue.end !== endDateInput ||
+					previousValueRef.current.start !== startDateInput ||
+					previousValueRef.current.end !== endDateInput ||
 					!isValid(startDateObject) ||
 					!isValid(endDateObject)
 				) {
+					previousValueRef.current = {
+						end: endDateOutput,
+						start: startDateOutput,
+					};
+
+					setValue(previousValueRef.current);
+
 					onChange({
 						type: propertyType,
-						value: {end: endDateOutput, start: startDateOutput},
+						value: previousValueRef.current,
 					});
 				}
 			}
 			else {
+				previousValueRef.current = {
+					end: endDateOutput,
+					start: startDateOutput,
+				};
+
+				setValue(previousValueRef.current);
+
 				onChange({
 					type: propertyType,
-					value: {end: endDateOutput, start: startDateOutput},
+					value: previousValueRef.current,
 				});
 			}
 		}
 		else {
 			const [dateInput, dateOutput, dateObject] = getFormattedDate(value);
 
-			if (previousValue !== dateInput || !isValid(dateObject)) {
+			if (
+				previousValueRef.current !== dateInput ||
+				!isValid(dateObject)
+			) {
+				previousValueRef.current = dateInput;
 				setValue(dateInput);
 				onChange({type: propertyType, value: dateOutput});
 			}

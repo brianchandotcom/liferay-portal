@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishList",
-	service = {DTOConverter.class, WishListDTOConverter.class}
+	service = DTOConverter.class
 )
 public class WishListDTOConverter
 	implements DTOConverter<CommerceWishList, WishList> {

@@ -52,6 +52,9 @@ public class BaseOrderValidatorExceptionMapper
 			commerceOrderValidatorResultsStream =
 				commerceOrderValidatorResults.stream();
 
+		String commerceOrderValidatorExceptionName =
+			CommerceOrderValidatorException.class.getName();
+
 		return new Problem(
 			commerceOrderValidatorResultsStream.filter(
 				CommerceOrderValidatorResult::hasMessageResult
@@ -60,8 +63,8 @@ public class BaseOrderValidatorExceptionMapper
 			).collect(
 				Collectors.joining(StringPool.COMMA_AND_SPACE)
 			),
-			Response.Status.BAD_REQUEST, "CommerceOrderValidatorException",
-			"CommerceOrderValidatorException");
+			Response.Status.BAD_REQUEST, commerceOrderValidatorExceptionName,
+			commerceOrderValidatorExceptionName);
 	}
 
 }

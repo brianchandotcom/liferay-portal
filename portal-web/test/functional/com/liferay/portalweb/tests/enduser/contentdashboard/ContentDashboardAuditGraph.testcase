@@ -575,7 +575,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-128990 Given the graph's configuration panel When the user selects a global vocabulary + a site vocabulary Then the vocabularies appear as selected and they will be shown in the Audit graph"
 	@priority = 5
 	test AuditVocabulariesFromGlobalAndSite {
 		property portal.acceptance = "true";
@@ -631,7 +631,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-128990 Given the graph's configuration panel When the user selects two vocabularies from the same site Then the vocabularies appear as selected and they will be shown in the Audit graph"
 	@priority = 5
 	test AuditVocabulariesFromSameSite {
 		property portal.acceptance = "true";
@@ -689,7 +689,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132509 Given a blog with at least one category in one of the vocabularies featured in the graph When the user views the content dashboard Then the document is counted as an asset in the graph"
 	@priority = 4
 	test BlogWithOneCategory {
 		property portal.acceptance = "true";

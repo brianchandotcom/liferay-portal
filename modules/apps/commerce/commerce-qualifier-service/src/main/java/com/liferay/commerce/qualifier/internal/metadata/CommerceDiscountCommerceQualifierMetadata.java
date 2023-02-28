@@ -23,7 +23,6 @@ import com.liferay.commerce.qualifier.metadata.CommerceQualifierMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
-import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 
@@ -37,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.qualifier.configuration.CommerceDiscountCommerceQualifierConfiguration",
-	service = {CommerceQualifierMetadata.class, ModelListener.class}
+	service = CommerceQualifierMetadata.class
 )
 public class CommerceDiscountCommerceQualifierMetadata
 	extends BaseCommerceQualifierMetadata<CommerceDiscount> {

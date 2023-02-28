@@ -25,7 +25,6 @@ import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.AddressTable;
 import com.liferay.portal.kernel.model.ListType;
-import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
@@ -41,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.qualifier.configuration.AddressCommerceQualifierConfiguration",
-	service = {CommerceQualifierMetadata.class, ModelListener.class}
+	service = CommerceQualifierMetadata.class
 )
 public class CommerceShippingAddressCommerceQualifierMetadata
 	extends BaseCommerceQualifierMetadata<Address> {

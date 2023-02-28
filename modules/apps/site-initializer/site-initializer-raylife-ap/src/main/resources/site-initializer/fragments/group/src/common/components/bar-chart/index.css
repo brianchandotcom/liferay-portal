@@ -1,18 +1,22 @@
-.bar-chart{
-  flex-wrap: wrap;
+.bar-chart {
+	flex-wrap: wrap;
 }
 
-.bar-chart .bb-chart-text{
+.bar-chart .bb-chart-text {
 	color: #272833;
 	font-size: 25px;
 	font-weight: bold;
 }
-.bar-chart .bar-chart-title{
-  text-transform: uppercase;
+.bar-chart .bar-chart-title {
+	text-transform: uppercase;
 }
 
-.bar-chart .bb-axis{
-	color: #5C5E5E;
+.bar-chart .bb-axis {
+	color: #5c5e5e;
 	font-size: 10px;
 	text-transform: uppercase;
+}
+
+.bar-chart svg g .bb-axis-x path {
+	display: none !important;
 }

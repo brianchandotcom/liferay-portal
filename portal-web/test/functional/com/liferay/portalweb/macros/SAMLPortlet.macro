@@ -496,7 +496,7 @@ definition {
 	macro viewServiceProviderConfigurations {
 		AssertValue(
 			locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_CLOCK_SKEW_INPUT",
-			value1 = "${clockSkew}");
+			value1 = ${clockSkew});
 
 		AssertChecked(locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_LDAP_IMPORT_ENABLED_CHECKBOX");
 	}

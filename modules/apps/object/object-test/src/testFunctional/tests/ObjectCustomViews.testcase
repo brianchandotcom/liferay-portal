@@ -388,6 +388,92 @@ definition {
 		}
 	}
 
+	@description = "LPS-170529 - Verify if it is possible to create a filter by relationship columns made from the system objects to custom objects"
+	@priority = 5
+	test CanCreateFilterByRelationshipColumnFromSystemObject {
+		property portal.acceptance = "true";
+
+		task ("Given a system object related to another custom object, in a One-to-Many relationship") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 170529",
+				objectName = "CustomObject170529",
+				pluralLabelName = "Custom Objects 170529");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject170529",
+				objectName_2 = "CustomObject170529",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject170529");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject170529");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "Custom Field 170529",
+				objectName = "CustomObject170529",
+				value = "Entry Test");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name 1",
+				accountEntryType = "Business");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name 2",
+				accountEntryType = "Business");
+		}
+
+		task ("When the user creates a filter and the relationship column can be selected as the filter") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 170529");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+			CreateObject.saveObject();
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Relationship");
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(
+				filterBy = "Relationship",
+				filterType = "Includes",
+				filterValue = "Account Name 1");
+		}
+
+		task ("Then the user can filter relationship entries") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject170529");
+
+			AssertElementPresent(
+				key_tabName = "Account Name 1",
+				locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
+
+			AssertElementNotPresent(
+				key_tabName = "Account Name 2",
+				locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
+		}
+	}
+
 	@description = "LPS-166585 - Verify that it's possible to create a filter using the relationship field of the object"
 	@priority = 5
 	test CanCreateFilterUsingRelationshipField {

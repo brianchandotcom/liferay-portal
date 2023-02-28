@@ -265,8 +265,8 @@ public class CommerceMediaServlet extends HttpServlet {
 
 			printWriter.write(jsonObject.toString());
 
-			httpServletResponse.setStatus(status);
 			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+			httpServletResponse.setStatus(status);
 		}
 		catch (IOException ioException) {
 			_log.error(ioException);

@@ -32,7 +32,6 @@ import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContext;
 import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContextValidator;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -82,14 +81,11 @@ public class OAuth2GraphQLRequestContextValidator
 			_checkScope(graphQLRequestContext, serviceReference);
 		}
 
-		Method method = graphQLRequestContext.getResourceMethod();
+		_setServiceDepth();
 
-		if (method != null) {
-			_setServiceDepth();
-
-			_accessControlAdvisor.accept(
-				method, new Object[0], _NULL_ACCESS_CONTROLLED);
-		}
+		_accessControlAdvisor.accept(
+			graphQLRequestContext.getResourceMethod(), new Object[0],
+			_NULL_ACCESS_CONTROLLED);
 	}
 
 	@Activate
@@ -123,6 +119,10 @@ public class OAuth2GraphQLRequestContextValidator
 		_scopeContext.setCompanyId(graphQLRequestContext.getCompanyId());
 
 		try {
+			if (serviceReferences.isEmpty()) {
+				throw new ForbiddenException();
+			}
+
 			for (ServiceReference<ScopeLogic> serviceReference :
 					serviceReferences) {
 
@@ -138,6 +138,10 @@ public class OAuth2GraphQLRequestContextValidator
 					throw new ForbiddenException();
 				}
 			}
+		}
+		catch (Exception exception) {
+			throw new ForbiddenException(
+				"Forbidden operation: " + exception.getMessage(), exception);
 		}
 		finally {
 			_scopeContext.setApplicationName(null);

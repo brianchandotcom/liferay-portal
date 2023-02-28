@@ -112,27 +112,14 @@ function DateTimeInput({
 				startDateObject,
 			] = getFormattedDate(value.start);
 
-			if (typeof previousValueRef.current === 'object') {
-				if (
-					previousValueRef.current.start !== startDateInput ||
-					previousValueRef.current.end !== endDateInput ||
-					!isValid(startDateObject) ||
-					!isValid(endDateObject)
-				) {
-					previousValueRef.current = {
-						end: endDateOutput,
-						start: startDateOutput,
-					};
+			const previousValue = previousValueRef.current as DateRange;
 
-					setValue(previousValueRef.current);
-
-					onChange({
-						type: propertyType,
-						value: previousValueRef.current,
-					});
-				}
-			}
-			else {
+			if (
+				previousValue.start !== startDateInput ||
+				previousValue.end !== endDateInput ||
+				!isValid(startDateObject) ||
+				!isValid(endDateObject)
+			) {
 				previousValueRef.current = {
 					end: endDateOutput,
 					start: startDateOutput,

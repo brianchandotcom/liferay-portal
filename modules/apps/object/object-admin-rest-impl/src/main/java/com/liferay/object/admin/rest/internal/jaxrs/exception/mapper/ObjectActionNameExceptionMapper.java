@@ -57,7 +57,8 @@ public class ObjectActionNameExceptionMapper
 						objectActionNameException.getMessageKey())
 				)
 			).toString(),
-			Response.Status.BAD_REQUEST, null, "ObjectActionNameException");
+			Response.Status.BAD_REQUEST, null,
+			ObjectActionNameException.class.getSimpleName());
 	}
 
 	@Context

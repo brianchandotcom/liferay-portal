@@ -18,7 +18,7 @@
 
 <aui:fieldset cssClass="options-group" markupView="lexicon">
 	<clay:sheet-section>
-		<h3 class="sheet-subtitle"><liferay-ui:message key="permissions" /></h3>
+		<span class="sheet-subtitle"><liferay-ui:message key="permissions" /></span>
 
 		<%
 		ExportImportServiceConfiguration exportImportServiceConfiguration = ConfigurationProviderUtil.getSystemConfiguration(ExportImportServiceConfiguration.class);

@@ -19,7 +19,7 @@
 <c:if test="<%= cmd.equals(Constants.EXPORT) || cmd.equals(Constants.IMPORT) || cmd.equals(Constants.PUBLISH) %>">
 	<aui:fieldset cssClass="options-group" markupView="lexicon">
 		<clay:sheet-section>
-			<h3 class="sheet-subtitle"><liferay-ui:message key="deletions" /></h3>
+			<span class="sheet-subtitle"><liferay-ui:message key="deletions" /></span>
 
 			<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
 				<liferay-staging:checkbox

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {translate} from '../i18n';
+import {translate} from '../../i18n';
 
 type TableChartDataProps = {
 	colors: string[][];

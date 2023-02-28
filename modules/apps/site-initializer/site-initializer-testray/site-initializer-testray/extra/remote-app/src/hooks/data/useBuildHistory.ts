@@ -12,9 +12,9 @@
  * details.
  */
 
-import {TestrayBuild} from '../services/rest';
-import {DATA_COLORS, Statuses} from '../util/constants';
-import {getRandomMaximumValue} from '../util/mock';
+import {TestrayBuild} from '../../services/rest';
+import {DATA_COLORS, Statuses} from '../../util/constants';
+import {getRandomMaximumValue} from '../../util/mock';
 
 const useBuildHistory = () => {
 	return {

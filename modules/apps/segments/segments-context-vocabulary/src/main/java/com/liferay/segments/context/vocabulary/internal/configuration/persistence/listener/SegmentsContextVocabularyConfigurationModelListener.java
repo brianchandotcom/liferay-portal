@@ -25,9 +25,7 @@ import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsCo
 import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -111,22 +109,28 @@ public class SegmentsContextVocabularyConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		try {
-			return Stream.of(
-				Optional.ofNullable(
-					_configurationAdmin.listConfigurations(
-						StringBundler.concat(
-							"(", ConfigurationAdmin.SERVICE_FACTORYPID, "=",
-							SegmentsContextVocabularyConfiguration.class.
-								getCanonicalName(),
-							")"))
-				).orElse(
-					new Configuration[0]
-				)
-			).anyMatch(
-				configuration -> _isDefined(
-					assetVocabularyName, companyId, configuration,
-					entityFieldName)
-			);
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(
+					StringBundler.concat(
+						"(", ConfigurationAdmin.SERVICE_FACTORYPID, "=",
+						SegmentsContextVocabularyConfiguration.class.
+							getCanonicalName(),
+						")"));
+
+			if (configurations == null) {
+				return false;
+			}
+
+			for (Configuration configuration : configurations) {
+				if (_isDefined(
+						assetVocabularyName, companyId, configuration,
+						entityFieldName)) {
+
+					return true;
+				}
+			}
+
+			return false;
 		}
 		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(

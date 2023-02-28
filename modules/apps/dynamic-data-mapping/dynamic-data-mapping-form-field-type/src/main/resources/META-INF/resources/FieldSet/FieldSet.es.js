@@ -119,7 +119,6 @@ const FieldSet = ({
 						name={name}
 						readOnly={readOnly}
 						repeatable={repeatable}
-						showLabel={showLabel}
 						showRepeatableRemoveButton={
 							repeatable && repeatedIndex > 0
 						}

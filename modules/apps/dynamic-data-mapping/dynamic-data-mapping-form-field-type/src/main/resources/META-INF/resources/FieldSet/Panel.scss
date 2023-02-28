@@ -1,11 +1,14 @@
 .collapsable-panel {
-	.collapse-icon-options {
-		position: absolute;
-		right: 16px;
-		z-index: auto;
+	.ddm-form-field-panel-header-container {
+		display: flex;
+		justify-content: space-between;
+	}
 
+	.collapse-icon-options {
 		.ddm-form-field-repeatable-add-button,
 		.ddm-form-field-repeatable-delete-button {
+			display: flex;
+			justify-content: center;
 			position: relative;
 			right: 0;
 		}
@@ -14,13 +17,8 @@
 			margin-right: 4px !important;
 		}
 	}
+}
 
-	.collapse-icon-closed.actions,
-	.collapse-icon-open.actions {
-		right: 0 !important;
-	}
-
-	.panel-header {
-		padding: 0 0 4px;
-	}
+.lfr-ddm-form-field-repeatable-toolbar {
+	display: flex;
 }

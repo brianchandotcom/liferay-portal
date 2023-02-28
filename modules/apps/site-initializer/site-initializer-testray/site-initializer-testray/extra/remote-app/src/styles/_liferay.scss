@@ -43,6 +43,13 @@
 body {
 	font-size: 100%;
 	list-style-type: none;
+	max-height: 100vh !important;
+	overflow: hidden;
+}
+
+html {
+	height: 100vh;
+	overflow: hidden;
 }
 
 .dropdown-section .custom-control-label {
@@ -103,6 +110,55 @@ body {
 	background-color: #fff;
 	bottom: 0;
 	padding: 3px 16px 16px;
-	position: sticky;
+	position: relative;
 	z-index: 999;
+}
+
+.popover-filter {
+	&.popover {
+		width: 300px !important;
+	}
+
+	.popover-body {
+		max-height: 590px !important;
+		min-height: 350px !important;
+		overflow-y: hidden !important;
+		padding: 0;
+	}
+
+	.body-filters {
+		max-height: 390px !important;
+		min-height: 180px !important;
+		overflow-y: none;
+	}
+
+	.dropdown-header {
+		background-color: #fff;
+		position: sticky;
+		top: 0;
+		z-index: 999;
+
+		.form-control {
+			margin: 0;
+		}
+	}
+
+	.popover-filter-content {
+		max-height: 350px;
+		min-height: 180px;
+		overflow-y: auto;
+		padding: 0 16px;
+	}
+
+	.popover-footer {
+		background-color: #fff;
+		padding: 5px 16px 16px;
+		position: sticky;
+		top: 0;
+		z-index: 99;
+	}
+
+	.inline-scroller {
+		overflow-x: hidden;
+	}
 }

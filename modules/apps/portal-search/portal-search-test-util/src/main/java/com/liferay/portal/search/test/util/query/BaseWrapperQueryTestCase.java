@@ -50,6 +50,7 @@ public abstract class BaseWrapperQueryTestCase extends BaseIndexingTestCase {
 	@Test
 	public void testWrapperQuery() {
 		addDocuments(
+			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
 			"java eclipse", "java liferay", "java liferay eclipse",
 			"C is the best language");
 
@@ -57,12 +58,6 @@ public abstract class BaseWrapperQueryTestCase extends BaseIndexingTestCase {
 			"liferay uses java",
 			Arrays.asList(
 				"java liferay", "java liferay eclipse", "java eclipse"));
-	}
-
-	protected void addDocuments(String... values) {
-		addDocuments(
-			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
-			values);
 	}
 
 	protected void assertSearch(Object value, List<String> expectedValues) {

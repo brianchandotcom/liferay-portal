@@ -37,16 +37,13 @@ public abstract class BaseAssetTagNamesQueryPreFilterContributorTestCase
 	public void testAssetTagNamesQueryPreFilter() throws Exception {
 		String[] tagNames = {"tagNameOne", "tagNameThree tagNameTwo"};
 
-		addDocuments(tagNames);
+		addDocuments(
+			value -> DocumentCreationHelpers.singleText(FIELD, value),
+			tagNames);
 
 		assertSearch(tagNames[0], Arrays.asList(tagNames[0]));
 
 		assertSearch(tagNames[1], Arrays.asList(tagNames[1]));
-	}
-
-	protected void addDocuments(String... values) throws Exception {
-		addDocuments(
-			value -> DocumentCreationHelpers.singleText(FIELD, value), values);
 	}
 
 	protected void assertSearch(String queryString, List<String> expectedValues)

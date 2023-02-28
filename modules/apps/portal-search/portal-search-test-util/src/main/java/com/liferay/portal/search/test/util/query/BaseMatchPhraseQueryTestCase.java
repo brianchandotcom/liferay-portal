@@ -40,18 +40,13 @@ public abstract class BaseMatchPhraseQueryTestCase
 	@Test
 	public void testMatchQuery() {
 		addDocuments(
+			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
 			"java eclipse", "java liferay", "liferay uses java for development",
 			"C is the best language");
 
 		assertSearch(
 			"liferay uses java",
 			Arrays.asList("liferay uses java for development"));
-	}
-
-	protected void addDocuments(String... values) {
-		addDocuments(
-			value -> DocumentCreationHelpers.singleText(_FIELD_NAME, value),
-			values);
 	}
 
 	protected void assertSearch(Object value, List<String> expectedValues) {

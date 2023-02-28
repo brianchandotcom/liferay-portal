@@ -372,12 +372,15 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	private Object _getContextObject() {
+		Object infoItem = _httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM);
+
 		InfoItemReference infoItemReference =
 			(InfoItemReference)_httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
 
 		if (infoItemReference == null) {
-			return null;
+			return infoItem;
 		}
 
 		InfoItemIdentifier infoItemIdentifier =
@@ -392,7 +395,12 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				infoItemIdentifier.getInfoItemServiceFilter());
 
 		try {
-			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+			Object object = infoItemObjectProvider.getInfoItem(
+				infoItemIdentifier);
+
+			if (object != null) {
+				return object;
+			}
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {
@@ -400,7 +408,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			}
 		}
 
-		return null;
+		return infoItem;
 	}
 
 	private DefaultLayoutListRetrieverContext
@@ -412,15 +420,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			new DefaultLayoutListRetrieverContext();
 
 		defaultLayoutListRetrieverContext.setConfiguration(_getConfiguration());
-
-		Object object = _getContextObject();
-
-		if (object == null) {
-			object = _httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM);
-		}
-
-		defaultLayoutListRetrieverContext.setContextObject(object);
+		defaultLayoutListRetrieverContext.setContextObject(_getContextObject());
 		defaultLayoutListRetrieverContext.setInfoFilters(
 			_getInfoFilters(layoutListRetriever, listObjectReference));
 		defaultLayoutListRetrieverContext.setSegmentsEntryIds(

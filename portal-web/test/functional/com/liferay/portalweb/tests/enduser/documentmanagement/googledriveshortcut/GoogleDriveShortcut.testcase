@@ -203,6 +203,8 @@ definition {
 
 		PortletEntry.publish();
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		DMDocument.viewPG(dmDocumentTitle = "liferay2");
 	}
 

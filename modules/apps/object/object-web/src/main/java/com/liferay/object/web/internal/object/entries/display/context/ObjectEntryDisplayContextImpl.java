@@ -153,7 +153,7 @@ public class ObjectEntryDisplayContextImpl
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 
 		_readOnly = (Boolean)httpServletRequest.getAttribute(
-			ObjectWebKeys.READ_ONLY);
+			ObjectWebKeys.OBJECT_ENTRY_DISPLAY_CONTEXT_READ_ONLY);
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(

@@ -74,7 +74,7 @@ const createURLFilter = async (data: RequestFilterType) => {
 
 	if (data.organizationName) {
 		filterUrl.push(
-			`organization/organizationName eq '${data.organizationName.trim()}'`
+			`contains(organization/organizationName,'${data.organizationName.trim()}')`
 		);
 	}
 

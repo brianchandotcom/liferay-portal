@@ -10,6 +10,7 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
+import dayjs from 'dayjs';
 import {InputHTMLAttributes, useEffect, useState} from 'react';
 import {UseFormRegister} from 'react-hook-form';
 
@@ -26,6 +27,7 @@ type DatePickerTypes = {
 	required?: boolean;
 	setValue?: any;
 	type?: string;
+	value: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const DatePicker: React.FC<DatePickerTypes> = ({
@@ -36,8 +38,9 @@ const DatePicker: React.FC<DatePickerTypes> = ({
 	id = name,
 	required = false,
 	setValue = () => {},
+	value,
 }) => {
-	const [data, setData] = useState('');
+	const [data, setData] = useState(value);
 
 	useEffect(() => {
 		clearErrors(name);
@@ -56,7 +59,7 @@ const DatePicker: React.FC<DatePickerTypes> = ({
 				placeholder="YYYY-MM-DD"
 				value={data}
 				years={{
-					end: 2024,
+					end: dayjs().year(),
 					start: 1997,
 				}}
 			/>

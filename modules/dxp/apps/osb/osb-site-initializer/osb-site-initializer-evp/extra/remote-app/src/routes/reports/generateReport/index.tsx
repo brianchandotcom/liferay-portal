@@ -38,6 +38,7 @@ const GenerateReport = () => {
 	const {
 		clearErrors,
 		formState: {errors},
+		getValues,
 		handleSubmit,
 		register,
 		setError,
@@ -45,6 +46,8 @@ const GenerateReport = () => {
 		watch,
 	} = useForm<generateReportsType>({
 		defaultValues: {
+			finalRequestDate: '',
+			initialRequestDate: '',
 			liferayBranch: [],
 			requestStatus: [],
 		},
@@ -56,7 +59,7 @@ const GenerateReport = () => {
 
 		if (dateInitial && dateFinal) {
 			if (dateInitial > dateFinal) {
-				setError('initialRequestDate', {
+				setError(FIELDSREPORT.INITIALREQUESTDATE, {
 					message:
 						'Initial Request Date cannot be greater than Final Request Date',
 					type: 'custom',
@@ -89,7 +92,7 @@ const GenerateReport = () => {
 		return true;
 	};
 
-	const constructionFieldsCsv = (fields: RequestType) => {
+	const constructionFieldsCsv = (fields: RequestType[]) => {
 		let fieldsCsv = '';
 
 		const headers = [
@@ -146,6 +149,8 @@ const GenerateReport = () => {
 		);
 
 		if (dateCheck === false) {
+			setIsLoading(false);
+
 			return;
 		}
 
@@ -212,26 +217,30 @@ const GenerateReport = () => {
 						<div className="col">
 							<Form.DatePicker
 								clearErrors={clearErrors}
-								errors={errors}
+								errors={formProps.errors}
 								id="initialRequestDate"
 								label="Initial Request Date"
 								{...register('initialRequestDate')}
 								name="initialRequestDate"
 								placeholder="YYYY-MM-DD"
 								setValue={setValue}
+								value={
+									getValues('initialRequestDate') as string
+								}
 							/>
 						</div>
 
 						<div className="col">
 							<Form.DatePicker
 								clearErrors={clearErrors}
-								errors={errors}
+								errors={formProps.errors}
 								id="finalRequestDate"
 								label="Final Request Date"
 								{...register('finalRequestDate')}
 								name="finalRequestDate"
 								placeholder="YYYY-MM-DD"
 								setValue={setValue}
+								value={getValues('finalRequestDate') as string}
 							/>
 						</div>
 					</div>

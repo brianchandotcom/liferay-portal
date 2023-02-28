@@ -63,8 +63,6 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.Objects;
-
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -256,11 +254,11 @@ public class CommerceMediaServlet extends HttpServlet {
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			JSONObject jsonObject = JSONUtil.put(
-				CommerceMediaConstants.ERROR,
+				CommerceMediaConstants.RESPONSE_ERROR,
 				JSONUtil.put(
-					CommerceMediaConstants.CODE, status
+					CommerceMediaConstants.RESPONSE_CODE, status
 				).put(
-					CommerceMediaConstants.MESSAGE, message
+					CommerceMediaConstants.RESPONSE_MESSAGE, message
 				));
 
 			printWriter.write(jsonObject.toString());
@@ -288,8 +286,7 @@ public class CommerceMediaServlet extends HttpServlet {
 
 		String commerceVirtualOrderItemPath = pathArray[0];
 
-		if (Objects.equals(
-				CommerceMediaConstants.VIRTUAL_ORDER_ITEM,
+		if (CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_ORDER_ITEM.contains(
 				commerceVirtualOrderItemPath)) {
 
 			long commerceVirtualOrderItemId = GetterUtil.getLongStrict(

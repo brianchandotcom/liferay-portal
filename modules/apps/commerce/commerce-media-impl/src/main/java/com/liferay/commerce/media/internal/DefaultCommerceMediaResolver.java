@@ -87,10 +87,10 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 
 		return StringBundler.concat(
 			_portal.getPathModule(), StringPool.SLASH,
-			CommerceMediaConstants.SERVLET_PATH, StringPool.SLASH,
-			CommerceMediaConstants.VIRTUAL_ORDER_ITEM, StringPool.SLASH,
-			commerceVirtualOrderItemId, StringPool.SLASH,
-			CommerceMediaConstants.FILE, StringPool.SLASH,
+			CommerceMediaConstants.SERVLET_PATH,
+			CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_ORDER_ITEM,
+			commerceVirtualOrderItemId,
+			CommerceMediaConstants.URL_SEPARATOR_FILE,
 			fileEntry.getFileEntryId());
 	}
 

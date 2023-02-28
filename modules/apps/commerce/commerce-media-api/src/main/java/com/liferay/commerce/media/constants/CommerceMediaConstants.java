@@ -19,13 +19,11 @@ package com.liferay.commerce.media.constants;
  */
 public class CommerceMediaConstants {
 
-	public static final String CODE = "code";
+	public static final String RESPONSE_CODE = "code";
 
-	public static final String ERROR = "error";
+	public static final String RESPONSE_ERROR = "error";
 
-	public static final String FILE = "file";
-
-	public static final String MESSAGE = "message";
+	public static final String RESPONSE_MESSAGE = "message";
 
 	public static final String SERVICE_NAME =
 		"com.liferay.commerce.media.internal.configuration." +
@@ -33,6 +31,9 @@ public class CommerceMediaConstants {
 
 	public static final String SERVLET_PATH = "commerce-media";
 
-	public static final String VIRTUAL_ORDER_ITEM = "virtual-order-item";
+	public static final String URL_SEPARATOR_FILE = "/file/";
+
+	public static final String URL_SEPARATOR_VIRTUAL_ORDER_ITEM =
+		"/virtual-order-item/";
 
 }

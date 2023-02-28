@@ -82,7 +82,7 @@ public class EventSegmentsCriteriaContributor
 	public List<Field> getFields(PortletRequest portletRequest) {
 		return Arrays.asList(
 			new Field(
-				"blogCommented",
+				"commentPosted",
 				_language.get(
 					_portal.getLocale(portletRequest), "commented-on-blog"),
 				"event"),

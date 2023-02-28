@@ -33,7 +33,6 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.DDMOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
-import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.SkuDTOConverter;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.SkuDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.SkuResource;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -44,6 +43,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -267,7 +267,9 @@ public class SkuResourceImpl
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	@Reference
-	private SkuDTOConverter _skuDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.SkuDTOConverter)"
+	)
+	private DTOConverter<CPInstance, Sku> _skuDTOConverter;
 
 }

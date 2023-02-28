@@ -126,70 +126,72 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 			char previousChar = content.charAt(start - 1);
 
-			if ((previousChar == CharPool.TAB) ||
-				(previousChar == CharPool.SPACE) ||
-				(previousChar == CharPool.OPEN_PARENTHESIS)) {
+			if ((previousChar != CharPool.TAB) &&
+				(previousChar != CharPool.SPACE) &&
+				(previousChar != CharPool.OPEN_PARENTHESIS)) {
 
-				int previousOpenParenthesisPosition = start;
+				continue;
+			}
 
-				while (true) {
-					previousOpenParenthesisPosition = content.lastIndexOf(
-						StringPool.OPEN_PARENTHESIS,
-						previousOpenParenthesisPosition - 1);
+			int previousOpenParenthesisPosition = start;
 
-					if (previousOpenParenthesisPosition == -1) {
-						continue outerLoop;
-					}
+			while (true) {
+				previousOpenParenthesisPosition = content.lastIndexOf(
+					StringPool.OPEN_PARENTHESIS,
+					previousOpenParenthesisPosition - 1);
 
-					if (ToolsUtil.isInsideQuotes(
-							content, previousOpenParenthesisPosition)) {
+				if (previousOpenParenthesisPosition == -1) {
+					continue outerLoop;
+				}
 
+				if (ToolsUtil.isInsideQuotes(
+						content, previousOpenParenthesisPosition)) {
+
+					continue;
+				}
+
+				String methodCall = content.substring(
+					previousOpenParenthesisPosition, start);
+
+				if (ToolsUtil.getLevel(methodCall) == 1) {
+					break;
+				}
+			}
+
+			Matcher matcher2 = _methodCallPattern.matcher(content);
+
+			while (matcher2.find()) {
+				int parenthesisIndex = matcher2.end() - 1;
+
+				if (parenthesisIndex > previousOpenParenthesisPosition) {
+					break;
+				}
+
+				if (parenthesisIndex != previousOpenParenthesisPosition) {
+					continue;
+				}
+
+				if (Validator.isNull(matcher2.group(2))) {
+					String preCode = content.substring(0, matcher2.start());
+
+					if (preCode.endsWith("new ")) {
 						continue;
-					}
-
-					String methodCall = content.substring(
-						previousOpenParenthesisPosition, start);
-
-					if (ToolsUtil.getLevel(methodCall) == 1) {
-						break;
 					}
 				}
 
-				Matcher matcher2 = _methodCallPattern.matcher(content);
+				String methodFullName = matcher2.group();
+				String methodName = matcher2.group(3);
 
-				while (matcher2.find()) {
-					int parenthesisIndex = matcher2.end() - 1;
+				if (!methodName.startsWith("get") &&
+					!methodName.startsWith("_get") &&
+					!methodFullName.startsWith("StringBundler.concat(")) {
 
-					if (parenthesisIndex > previousOpenParenthesisPosition) {
-						break;
-					}
+					return content;
+				}
 
-					if (parenthesisIndex != previousOpenParenthesisPosition) {
-						continue;
-					}
-
-					if (Validator.isNull(matcher2.group(2))) {
-						String preCode = content.substring(0, matcher2.start());
-
-						if (preCode.endsWith("new ")) {
-							continue;
-						}
-					}
-
-					String methodFullName = matcher2.group();
-					String methodName = matcher2.group(3);
-
-					if (!methodName.startsWith("get") &&
-						!methodName.startsWith("_get") &&
-						!methodFullName.startsWith("StringBundler.concat(")) {
-
-						return content;
-					}
-
-					if (StringUtil.equals(group, globalVariableName)) {
-						return StringUtil.replaceFirst(
-							content, globalVariableName, parameterName, start);
-					}
+				if (StringUtil.equals(group, globalVariableName)) {
+					return StringUtil.replaceFirst(
+						content, globalVariableName, parameterName, start);
 				}
 			}
 		}

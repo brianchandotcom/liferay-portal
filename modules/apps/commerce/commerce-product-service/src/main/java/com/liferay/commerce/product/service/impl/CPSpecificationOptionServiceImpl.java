@@ -98,11 +98,14 @@ public class CPSpecificationOptionServiceImpl
 			long cpSpecificationOptionId)
 		throws PortalException {
 
+		CPSpecificationOption cpSpecificationOption =
+			cpSpecificationOptionLocalService.getCPSpecificationOption(
+				cpSpecificationOptionId);
+
 		_cpSpecificationOptionModelResourcePermission.check(
 			getPermissionChecker(), cpSpecificationOptionId, ActionKeys.VIEW);
 
-		return cpSpecificationOptionLocalService.getCPSpecificationOption(
-			cpSpecificationOptionId);
+		return cpSpecificationOption;
 	}
 
 	@Override

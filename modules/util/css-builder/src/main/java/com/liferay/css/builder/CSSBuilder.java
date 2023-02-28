@@ -199,10 +199,8 @@ public class CSSBuilder implements AutoCloseable {
 			long oldestSassModifiedTime = _getModifiedTime(
 				basedir, scssFiles, Comparator.naturalOrder());
 
-			String[] scssFragments = _getScssFragments(basedir);
-
 			long newestFragmentModifiedTime = _getModifiedTime(
-				basedir, scssFragments, Comparator.reverseOrder());
+				basedir, _getScssFragments(basedir), Comparator.reverseOrder());
 
 			if (oldestSassModifiedTime > newestFragmentModifiedTime) {
 				return fileNames;

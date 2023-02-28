@@ -61,23 +61,19 @@ const getValue = (value) => {
 	return JSON.stringify(value);
 };
 
-function transformFileEntryProperties({fileEntryTitle, fileEntryURL, value}) {
+function transformFileEntryProperties({fileEntryTitle, value}) {
 	if (value && typeof value === 'string') {
 		try {
 			const fileEntry = JSON.parse(value);
 
 			fileEntryTitle = fileEntry.title;
-
-			if (fileEntry.url) {
-				fileEntryURL = fileEntry.url;
-			}
 		}
 		catch (error) {
 			console.warn('Unable to parse JSON', value);
 		}
 	}
 
-	return value ? [fileEntryTitle, fileEntryURL] : [];
+	return value ? [fileEntryTitle] : [];
 }
 
 const DocumentLibrary = ({
@@ -93,22 +89,21 @@ const DocumentLibrary = ({
 	readOnly,
 	value,
 }) => {
-	const [transformedFileEntryTitle, transformedFileEntryURL] = useMemo(
+	const [transformedFileEntryTitle] = useMemo(
 		() =>
 			transformFileEntryProperties({
 				fileEntryTitle,
-				fileEntryURL,
 				value,
 			}),
-		[fileEntryTitle, fileEntryURL, value]
+		[fileEntryTitle, value]
 	);
 
 	return (
 		<div className="liferay-ddm-form-field-document-library">
-			{transformedFileEntryURL && readOnly ? (
+			{transformedFileEntryTitle && readOnly ? (
 				<CardItem
 					fileEntryTitle={transformedFileEntryTitle}
-					fileEntryURL={transformedFileEntryURL}
+					fileEntryURL={fileEntryURL}
 				/>
 			) : (
 				<ClayInput.Group>
@@ -170,7 +165,6 @@ const DocumentLibrary = ({
 
 const GuestUploadFile = ({
 	fileEntryTitle = '',
-	fileEntryURL = '',
 	id,
 	message,
 	name,
@@ -185,10 +179,9 @@ const GuestUploadFile = ({
 		() =>
 			transformFileEntryProperties({
 				fileEntryTitle,
-				fileEntryURL,
 				value,
 			}),
-		[fileEntryTitle, fileEntryURL, value]
+		[fileEntryTitle, value]
 	);
 
 	return (
@@ -560,7 +553,6 @@ const Main = ({
 			{allowGuestUsers && !isSignedIn ? (
 				<GuestUploadFile
 					fileEntryTitle={fileEntryTitle}
-					fileEntryURL={fileEntryURL}
 					id={id}
 					message={message}
 					name={name}

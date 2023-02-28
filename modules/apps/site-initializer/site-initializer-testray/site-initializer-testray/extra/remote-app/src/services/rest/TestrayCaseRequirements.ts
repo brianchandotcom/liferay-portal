@@ -12,8 +12,8 @@
  * details.
  */
 
+import Rest from '../../core/Rest';
 import yupSchema from '../../schema/yup';
-import Rest from './Rest';
 import {TestrayRequirementCase} from './types';
 
 type CaseRequirements = typeof yupSchema.requirement.__outputType & {

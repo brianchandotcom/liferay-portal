@@ -12,13 +12,13 @@
  * details.
  */
 
+import Rest from '../../core/Rest';
+import SearchBuilder from '../../core/SearchBuilder';
 import yupSchema from '../../schema/yup';
 import {waitTimeout} from '../../util';
-import {SearchBuilder} from '../../util/search';
 import {CaseResultStatuses} from '../../util/statuses';
 import {Liferay} from '../liferay';
 import {liferayMessageBoardImpl} from './LiferayMessageBoard';
-import Rest from './Rest';
 import {testrayCaseResultsIssuesImpl} from './TestrayCaseresultsIssues';
 import {testrayIssueImpl} from './TestrayIssues';
 import {TestrayCaseResult} from './types';
@@ -191,8 +191,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			);
 
 			return {mbMessage, mbThreadId};
-		}
-		catch {
+		} catch {
 			return {};
 		}
 	}

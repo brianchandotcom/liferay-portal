@@ -12,13 +12,14 @@
  * details.
  */
 
-import yupSchema from '../../schema/yup';
-import Rest from './Rest';
+import Rest from '~/core/Rest';
+import yupSchema from '~/schema/yup';
+
 import {UserAccount} from './types';
 
 type UserForm = typeof yupSchema.userWithPassword.__outputType;
 
-class LiferayUserAccountsRest extends Rest<UserForm, UserAccount> {
+class LiferayUserAccountsImpl extends Rest<UserForm, UserAccount> {
 	constructor() {
 		super({
 			adapter: ({
@@ -41,6 +42,6 @@ class LiferayUserAccountsRest extends Rest<UserForm, UserAccount> {
 	}
 }
 
-const liferayUserAccountsRest = new LiferayUserAccountsRest();
+const liferayUserAccountsImpl = new LiferayUserAccountsImpl();
 
-export {liferayUserAccountsRest};
+export {liferayUserAccountsImpl};

@@ -83,27 +83,6 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 	}
 
 	private boolean _isDefined(
-		String assetVocabularyName, String companyId,
-		Configuration configuration, String entityFieldName) {
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		if ((Objects.equals(
-				assetVocabularyName, properties.get("assetVocabularyName")) &&
-			 Objects.equals(
-				 entityFieldName, properties.get("entityFieldName"))) ||
-			(Objects.equals(
-				companyId, String.valueOf(properties.get("companyId"))) &&
-			 Objects.equals(
-				 entityFieldName, properties.get("entityFieldName")))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isDefined(
 			String assetVocabularyName, String companyId,
 			String entityFieldName)
 		throws ConfigurationModelListenerException {
@@ -122,9 +101,19 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 			}
 
 			for (Configuration configuration : configurations) {
-				if (_isDefined(
-						assetVocabularyName, companyId, configuration,
-						entityFieldName)) {
+				Dictionary<String, Object> properties =
+					configuration.getProperties();
+
+				if ((Objects.equals(
+						assetVocabularyName,
+						properties.get("assetVocabularyName")) &&
+					 Objects.equals(
+						 entityFieldName, properties.get("entityFieldName"))) ||
+					(Objects.equals(
+						companyId,
+						String.valueOf(properties.get("companyId"))) &&
+					 Objects.equals(
+						 entityFieldName, properties.get("entityFieldName")))) {
 
 					return true;
 				}

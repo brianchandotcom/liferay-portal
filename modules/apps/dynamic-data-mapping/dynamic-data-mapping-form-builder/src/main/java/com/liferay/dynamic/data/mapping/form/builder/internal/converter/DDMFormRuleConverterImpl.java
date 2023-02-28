@@ -34,7 +34,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -51,13 +50,7 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 
 	@Override
 	public List<SPIDDMFormRule> convert(List<DDMFormRule> ddmFormRules) {
-		List<SPIDDMFormRule> spiDDMFormRules = new ArrayList<>();
-
-		for (DDMFormRule ddmFormRule : ddmFormRules) {
-			spiDDMFormRules.add(_convertRule(ddmFormRule));
-		}
-
-		return spiDDMFormRules;
+		return TransformUtil.transform(ddmFormRules, this::_convertRule);
 	}
 
 	@Override
@@ -74,13 +67,8 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 	protected void setSPIDDMFormRuleActions(
 		SPIDDMFormRule spiDDMFormRule, List<String> actions) {
 
-		List<SPIDDMFormRuleAction> spiDDMFormRuleActions = new ArrayList<>();
-
-		for (String action : actions) {
-			spiDDMFormRuleActions.add(_convertAction(action));
-		}
-
-		spiDDMFormRule.setSPIDDMFormRuleActions(spiDDMFormRuleActions);
+		spiDDMFormRule.setSPIDDMFormRuleActions(
+			TransformUtil.transform(actions, this::_convertAction));
 	}
 
 	protected void setSPIDDMFormRuleConditions(
@@ -265,17 +253,12 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 			spiDDMFormRule.getLogicalOperator(),
 			spiDDMFormRule.getSPIDDMFormRuleConditions());
 
-		List<String> actions = new ArrayList<>();
-
-		for (SPIDDMFormRuleAction spiDDMFormRuleAction :
-				spiDDMFormRule.getSPIDDMFormRuleActions()) {
-
-			actions.add(
-				spiDDMFormRuleAction.serialize(
-					spiDDMFormRuleSerializerContext));
-		}
-
-		return new DDMFormRule(actions, condition, spiDDMFormRule.getName());
+		return new DDMFormRule(
+			TransformUtil.transform(
+				spiDDMFormRule.getSPIDDMFormRuleActions(),
+				spiDDMFormRuleAction -> spiDDMFormRuleAction.serialize(
+					spiDDMFormRuleSerializerContext)),
+			condition, spiDDMFormRule.getName());
 	}
 
 	private String _createCondition(

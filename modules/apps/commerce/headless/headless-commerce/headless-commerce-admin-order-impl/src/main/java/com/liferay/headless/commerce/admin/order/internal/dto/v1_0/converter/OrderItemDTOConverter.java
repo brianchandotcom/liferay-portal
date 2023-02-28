@@ -146,7 +146,6 @@ public class OrderItemDTOConverter
 
 						return cpMeasurementUnit.getKey();
 					});
-
 				setVirtualItemURLs(
 					() -> {
 						try {

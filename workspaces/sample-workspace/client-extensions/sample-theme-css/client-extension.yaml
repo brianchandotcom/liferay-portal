@@ -1,4 +1,7 @@
 assemble:
+    - from: assets/
+      include: img/*
+      into: static/
     - from: build/buildTheme
       include: "css/*.css"
       into: static

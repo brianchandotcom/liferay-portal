@@ -37,7 +37,7 @@ class WebComponent extends HTMLElement {
 		super();
 
 		this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-			'easy-oauth-application-user-agent'
+			'sample-oauth-application-user-agent'
 		);
 	}
 

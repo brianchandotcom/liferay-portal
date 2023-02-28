@@ -139,7 +139,7 @@ public class SampleRestController {
 			WebClient.Builder builder = WebClient.builder();
 
 			WebClient webClient = builder.baseUrl(
-				_liferayPortalURL
+				_protocol + "://" + _mainDomain
 			).defaultHeader(
 				HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
 			).defaultHeader(
@@ -191,7 +191,10 @@ public class SampleRestController {
 	private static final Log _log = LogFactory.getLog(
 		SampleRestController.class);
 
-	@Value("${liferay.portal.url}")
-	private String _liferayPortalURL;
+	@Value("${com.liferay.lxc.dxp.mainDomain}")
+	private String _mainDomain;
+
+	@Value("${com.liferay.lxc.dxp.server.protocol}")
+	private String _protocol;
 
 }

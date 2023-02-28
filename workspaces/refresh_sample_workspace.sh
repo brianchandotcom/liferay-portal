@@ -44,7 +44,7 @@ function refresh_sample_workspace {
 
 	pushd ${temp_dir}
 
-	${BLADE_PATH} init --liferay-version dxp-7.4-u63
+	${BLADE_PATH} init --liferay-version dxp-7.4-u65
 
 	echo -en "\n**/dist\n**/node_modules_cache\n.DS_Store" >> .gitignore
 
@@ -62,7 +62,7 @@ function refresh_sample_workspace {
 
 	mv gradle.properties.tmp gradle.properties
 
-	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "4.1.13"/' settings.gradle
+	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "4.1.17"/' settings.gradle
 
 	popd
 

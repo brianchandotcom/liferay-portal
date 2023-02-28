@@ -5,6 +5,8 @@ sample-notification-type-1:
     type: notificationType
 sample-oauth-application-user-agent:
     homePageURL: http://localhost:58081
+    #LXC version of homePageURL
+    #homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]
     name: Sample OAuth Application User Agent
     scopes:
         - Liferay.Headless.Admin.Workflow.everything

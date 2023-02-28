@@ -1,0 +1,10 @@
+runtime:
+    cpu: 500m
+    memory: 256Mi
+sample-oauth-application-headless-server:
+    homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]
+    name: Sample OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Admin.User.everything.read
+        - Liferay.Headless.Delivery.everything
+    type: oAuthApplicationHeadlessServer

@@ -603,7 +603,8 @@ public class MappedProductDTOConverter
 	private DTOConverter<CPDefinitionInventory, ProductConfiguration>
 		_productConfigurationDTOConverter;
 
-	@Reference
-	private ProductOptionDTOConverter _productOptionDTOConverter;
+	@Reference(target = DTOConverterConstants.PRODUCT_OPTION_DTO_CONVERTER)
+	private DTOConverter<CPDefinitionOptionRel, ProductOption>
+		_productOptionDTOConverter;
 
 }

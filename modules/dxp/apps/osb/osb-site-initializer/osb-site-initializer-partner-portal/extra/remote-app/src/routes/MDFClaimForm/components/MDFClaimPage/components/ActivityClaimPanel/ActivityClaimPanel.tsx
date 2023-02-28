@@ -126,7 +126,7 @@ const ActivityClaimPanel = ({
 
 						<div className="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
 							<p className="mb-0">
-								Activity Status:
+								Request Status:
 								<div
 									className={
 										activityStatusClassName[

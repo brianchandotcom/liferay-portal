@@ -281,7 +281,7 @@ const RangeDate = ({endDate, startDate}) => (
 );
 
 const Panel = ({children, mdfRequestActivity}) => {
-	const ActivityClaimStatus = mdfRequestActivity.actToMDFClmActs
+	const activityClaimStatus = mdfRequestActivity.actToMDFClmActs
 		.map((mdfClaimActivity) => {
 			return (
 				mdfClaimActivity.r_mdfClmToMDFClmActs_c_mdfClaim.mdfClaimStatus
@@ -315,20 +315,20 @@ const Panel = ({children, mdfRequestActivity}) => {
 							<div
 								className={
 									activityClaimStatusClassName[
-										ActivityClaimStatus
+										activityClaimStatus
 											? 'claimed'
 											: 'unclaimed'
 									]
 								}
 							>
-								{ActivityClaimStatus ? 'Claimed' : 'Unclaimed'}
+								{activityClaimStatus ? 'Claimed' : 'Unclaimed'}
 							</div>
 						</p>
 					</div>
 
 					<div className="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
 						<p className="mb-0">
-							Activity Status:
+							Request Status:
 							<div
 								className={
 									activityStatusClassName[

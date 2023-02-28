@@ -13,7 +13,7 @@
  */
 
 import TableChart from '../../components/TableChart';
-import useTableChartData from '../../data/useTableChartData';
+import useTableChartData from '../../hooks/data/useTableChartData';
 import i18n from '../../i18n';
 
 const CompareRunsComponents: React.FC = () => {

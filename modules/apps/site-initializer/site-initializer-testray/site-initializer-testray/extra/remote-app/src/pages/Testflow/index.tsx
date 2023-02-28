@@ -19,6 +19,7 @@ import ListView from '../../components/ListView';
 import TaskbarProgress from '../../components/ProgressBar/TaskbarProgress';
 import StatusBadge from '../../components/StatusBadge';
 import {StatusBadgeType} from '../../components/StatusBadge/StatusBadge';
+import SearchBuilder from '../../core/SearchBuilder';
 import {useHeader} from '../../hooks';
 import i18n from '../../i18n';
 import {
@@ -30,7 +31,6 @@ import {
 import {StatusesProgressScore, chartClassNames} from '../../util/constants';
 import {getTimeFromNow} from '../../util/date';
 import {getPercentLabel} from '../../util/graph.util';
-import {SearchBuilder} from '../../util/search';
 import {TaskStatuses} from '../../util/statuses';
 import TestflowModal from './TestflowModal';
 import useTestflowActions from './useTestflowActions';

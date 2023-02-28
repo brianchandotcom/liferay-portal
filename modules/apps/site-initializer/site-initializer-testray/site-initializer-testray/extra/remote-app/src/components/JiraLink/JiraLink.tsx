@@ -16,9 +16,9 @@ import ClayIcon from '@clayui/icon';
 import {useContext} from 'react';
 
 import {ApplicationPropertiesContext} from '../../context/ApplicationPropertiesContext';
+import SearchBuilder from '../../core/SearchBuilder';
 import i18n from '../../i18n';
 import {TestrayCaseResultIssue, testrayIssueImpl} from '../../services/rest';
-import {SearchBuilder} from '../../util/search';
 
 type JiraLinkProps = {
 	displayViewInJira?: boolean;

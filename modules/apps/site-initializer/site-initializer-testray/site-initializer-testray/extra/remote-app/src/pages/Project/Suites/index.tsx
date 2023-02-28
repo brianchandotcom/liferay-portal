@@ -16,8 +16,8 @@ import {useNavigate, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView';
+import SearchBuilder from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
-import {SearchBuilder} from '../../../util/search';
 import useSuiteActions from './useSuiteActions';
 
 const Suites = () => {

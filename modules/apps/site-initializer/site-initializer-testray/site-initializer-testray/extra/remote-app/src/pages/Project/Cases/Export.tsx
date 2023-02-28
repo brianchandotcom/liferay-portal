@@ -20,6 +20,7 @@ import EmptyState from '../../../components/EmptyState';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
 import QATable from '../../../components/Table/QATable';
+import SearchBuilder from '../../../core/SearchBuilder';
 import {useFetch} from '../../../hooks/useFetch';
 import useStorage from '../../../hooks/useStorage';
 import i18n from '../../../i18n';
@@ -33,7 +34,6 @@ import {
 } from '../../../services/rest';
 import {STORAGE_KEYS} from '../../../util/constants';
 import dayjs from '../../../util/date';
-import {SearchBuilder} from '../../../util/search';
 
 type CaseWithRequirement = {
 	[key: number]: TestrayRequirement[];
@@ -293,8 +293,7 @@ const Export = () => {
 
 			if (requirement && casesWithRequirement[caseId]) {
 				casesWithRequirement[caseId].push(requirement);
-			}
-			else {
+			} else {
 				casesWithRequirement[caseId] = [requirement];
 			}
 		});

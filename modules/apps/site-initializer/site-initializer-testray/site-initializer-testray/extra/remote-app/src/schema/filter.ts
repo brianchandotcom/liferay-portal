@@ -13,6 +13,7 @@
  */
 
 import {RendererFields} from '../components/Form/Renderer';
+import SearchBuilder from '../core/SearchBuilder';
 import i18n from '../i18n';
 import {
 	TestrayCaseType,
@@ -24,7 +25,6 @@ import {
 	TestrayTeam,
 	UserAccount,
 } from '../services/rest';
-import {SearchBuilder} from '../util/search';
 import {
 	CaseResultStatuses,
 	SubTaskStatuses,
@@ -199,7 +199,6 @@ const baseFilters: Filter = {
 	team: {
 		label: i18n.translate('team'),
 		name: 'teamId',
-		options: [{label: 'Solutions', value: 'solutions'}],
 		resource: ({projectId}) =>
 			`/teams?fields=id,name&sort=name:asc&pageSize=100&filter=${SearchBuilder.eq(
 				'projectId',

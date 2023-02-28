@@ -18,13 +18,13 @@ import {useParams} from 'react-router-dom';
 import Form from '../../../../components/Form';
 import ListView from '../../../../components/ListView';
 import Modal from '../../../../components/Modal';
+import SearchBuilder from '../../../../core/SearchBuilder';
 import {withVisibleContent} from '../../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../../hooks/useFormModal';
 import i18n from '../../../../i18n';
 import fetcher from '../../../../services/fetcher';
 import {APIResponse, TestraySuiteCase} from '../../../../services/rest';
 import {getUniqueList} from '../../../../util';
-import {SearchBuilder} from '../../../../util/search';
 import SelectCase from '../../Suites/modal/SelectCase';
 
 type BuildSelectSuitesModalProps = {

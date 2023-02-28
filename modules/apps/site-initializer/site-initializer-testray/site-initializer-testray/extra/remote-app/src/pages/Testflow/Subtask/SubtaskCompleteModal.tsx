@@ -18,6 +18,7 @@ import {useForm} from 'react-hook-form';
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import Modal from '../../../components/Modal';
+import SearchBuilder from '../../../core/SearchBuilder';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {useFetch} from '../../../hooks/useFetch';
 import {FormModalOptions} from '../../../hooks/useFormModal';
@@ -31,7 +32,6 @@ import {
 	testraySubTaskImpl,
 } from '../../../services/rest';
 import {testraySubtaskIssuesImpl} from '../../../services/rest/TestraySubtaskIssues';
-import {SearchBuilder} from '../../../util/search';
 import {CaseResultStatuses} from '../../../util/statuses';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType;
@@ -110,8 +110,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 			revalidateSubtaskIssues();
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};

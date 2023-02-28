@@ -18,9 +18,9 @@ import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
 import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
+import Permission from '~/core/Permission';
 
 import {HeaderContext} from '../../context/HeaderContext';
-import {Permission} from '../../util/permission';
 import BreadcrumbFinder from '../BreadcrumbFinder';
 import DropDown from '../DropDown';
 import DropDownWithActions from '../DropDown/DropDown';

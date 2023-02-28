@@ -14,6 +14,7 @@
 
 import {useMemo} from 'react';
 
+import SearchBuilder from '../core/SearchBuilder';
 import {Liferay} from '../services/liferay';
 import {
 	APIResponse,
@@ -22,7 +23,6 @@ import {
 	testraySubTaskImpl,
 	testrayTaskUsersImpl,
 } from '../services/rest';
-import {SearchBuilder} from '../util/search';
 import {SubTaskStatuses} from '../util/statuses';
 import {useFetch} from './useFetch';
 

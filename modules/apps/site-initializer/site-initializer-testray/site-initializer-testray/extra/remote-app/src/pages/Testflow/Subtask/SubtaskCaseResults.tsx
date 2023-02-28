@@ -21,6 +21,7 @@ import ListView from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import {ListViewTypes} from '../../../context/ListViewContext';
+import SearchBuilder from '../../../core/SearchBuilder';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../services/liferay';
@@ -30,7 +31,6 @@ import {
 	testraySubTaskImpl,
 } from '../../../services/rest';
 import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
-import {SearchBuilder} from '../../../util/search';
 import {SubTaskStatuses} from '../../../util/statuses';
 
 type OutletContext = {

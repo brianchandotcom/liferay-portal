@@ -17,7 +17,7 @@ import {Link} from 'react-router-dom';
 import Container from '../../components/Layout/Container';
 import QATable from '../../components/Table/QATable';
 import TableChart from '../../components/TableChart';
-import useTableChartData from '../../data/useTableChartData';
+import useTableChartData from '../../hooks/data/useTableChartData';
 import i18n from '../../i18n';
 import {TestrayRun} from '../../services/rest';
 

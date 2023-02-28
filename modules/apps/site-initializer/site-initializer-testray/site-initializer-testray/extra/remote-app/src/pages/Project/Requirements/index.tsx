@@ -21,13 +21,13 @@ import Container from '../../../components/Layout/Container';
 import ListView, {ListViewProps} from '../../../components/ListView';
 import {TableProps} from '../../../components/Table';
 import {ListViewContextProviderProps} from '../../../context/ListViewContext';
+import SearchBuilder from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
 import {
 	getRequirementsTransformData,
 	requirementsResource,
 } from '../../../services/rest';
 import {Action} from '../../../types';
-import {SearchBuilder} from '../../../util/search';
 import useRequirementActions from './useRequirementActions';
 
 type RequirementListViewProps = {

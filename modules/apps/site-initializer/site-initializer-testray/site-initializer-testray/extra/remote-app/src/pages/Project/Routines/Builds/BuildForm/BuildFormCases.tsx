@@ -18,11 +18,11 @@ import {Dispatch, SetStateAction, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
 import Form from '../../../../../components/Form';
+import SearchBuilder from '../../../../../core/SearchBuilder';
 import {useFetch} from '../../../../../hooks/useFetch';
 import useFormModal from '../../../../../hooks/useFormModal';
 import i18n from '../../../../../i18n';
 import {APIResponse, TestrayCase} from '../../../../../services/rest';
-import {SearchBuilder} from '../../../../../util/search';
 import {CaseListView} from '../../../Cases';
 import SuiteFormSelectModal from '../../../Suites/modal';
 import BuildSelectSuitesModal from '../BuildSelectSuitesModal';

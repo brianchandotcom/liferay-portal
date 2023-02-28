@@ -15,16 +15,15 @@
 import ClayChart from '@clayui/charts';
 import ClayIcon from '@clayui/icon';
 import {useParams} from 'react-router-dom';
+import Container from '~/components/Layout/Container';
+import ListView from '~/components/ListView';
+import ProgressBar from '~/components/ProgressBar';
+import SearchBuilder from '~/core/SearchBuilder';
+import i18n from '~/i18n';
+import {TestrayBuild, testrayBuildImpl} from '~/services/rest';
+import {BUILD_STATUS, DATA_COLORS, Statuses} from '~/util/constants';
+import dayjs from '~/util/date';
 
-import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView';
-import ProgressBar from '../../../components/ProgressBar';
-import useBuildHistory from '../../../data/useBuildHistory';
-import i18n from '../../../i18n';
-import {TestrayBuild, testrayBuildImpl} from '../../../services/rest';
-import {BUILD_STATUS} from '../../../util/constants';
-import dayjs from '../../../util/date';
-import {SearchBuilder} from '../../../util/search';
 import BuildAddButton from './Builds/BuildAddButton';
 import useBuildActions from './Builds/useBuildActions';
 
@@ -32,59 +31,97 @@ type BuildChartProps = {
 	builds: TestrayBuild[];
 };
 
-const BuildChart: React.FC<BuildChartProps> = ({builds}) => {
-	const {colors, getColumns} = useBuildHistory();
-
-	return (
-		<div className="graph-container graph-container-sm">
-			<ClayChart
-				axis={{
-					x: {
-						label: {
-							position: 'outer-center',
-							text: i18n.translate('builds-ordered-by-date'),
-						},
+const BuildChart: React.FC<BuildChartProps> = ({builds}) => (
+	<div className="graph-container graph-container-sm">
+		<ClayChart
+			axis={{
+				x: {
+					label: {
+						position: 'outer-center',
+						text: i18n.translate('builds-ordered-by-date'),
 					},
-					y: {
-						label: {
-							position: 'outer-middle',
-							text: i18n.translate('tests').toUpperCase(),
-						},
+				},
+				y: {
+					label: {
+						position: 'outer-middle',
+						text: i18n.translate('tests').toUpperCase(),
 					},
-				}}
-				bar={{
-					width: {
-						max: 30,
+				},
+			}}
+			bar={{
+				width: {
+					max: 30,
+				},
+			}}
+			data={{
+				colors: {
+					[Statuses.BLOCKED]: DATA_COLORS['metrics.blocked'],
+					[Statuses.FAILED]: DATA_COLORS['metrics.failed'],
+					[Statuses.INCOMPLETE]: DATA_COLORS['metrics.incomplete'],
+					[Statuses.PASSED]: DATA_COLORS['metrics.passed'],
+					[Statuses.TEST_FIX]: DATA_COLORS['metrics.testfix'],
+				},
+				columns: [
+					[
+						Statuses.PASSED,
+						...builds.map(({caseResultPassed = 0}) =>
+							Number(caseResultPassed)
+						),
+					],
+					[
+						Statuses.FAILED,
+						...builds.map(({caseResultFailed = 0}) =>
+							Number(caseResultFailed)
+						),
+					],
+					[
+						Statuses.BLOCKED,
+						...builds.map(({caseResultBlocked = 0}) =>
+							Number(caseResultBlocked)
+						),
+					],
+					[
+						Statuses.TEST_FIX,
+						...builds.map(({caseResultTestFix = 0}) =>
+							Number(caseResultTestFix)
+						),
+					],
+					[
+						Statuses.INCOMPLETE,
+						...builds.map(
+							({
+								caseResultInProgress = 0,
+								caseResultUntested = 0,
+							}) =>
+								Number(caseResultInProgress) +
+								Number(caseResultUntested)
+						),
+					],
+				],
+				stack: {
+					normalize: true,
+				},
+				type: 'area',
+			}}
+			legend={{
+				inset: {
+					anchor: 'top-right',
+					step: 1,
+					x: 10,
+					y: -30,
+				},
+				item: {
+					tile: {
+						height: 12,
+						width: 12,
 					},
-				}}
-				data={{
-					colors,
-					columns: getColumns(builds),
-					stack: {
-						normalize: true,
-					},
-					type: 'area',
-				}}
-				legend={{
-					inset: {
-						anchor: 'top-right',
-						step: 1,
-						x: 10,
-						y: -30,
-					},
-					item: {
-						tile: {
-							height: 12,
-							width: 12,
-						},
-					},
-					position: 'inset',
-				}}
-				padding={{bottom: 5, top: 30}}
-			/>
-		</div>
-	);
-};
+				},
+				position: 'inset',
+			}}
+			padding={{bottom: 5, top: 30}}
+		/>
+	</div>
+);
 
 const Routine = () => {
 	const {actions, formModal} = useBuildActions();

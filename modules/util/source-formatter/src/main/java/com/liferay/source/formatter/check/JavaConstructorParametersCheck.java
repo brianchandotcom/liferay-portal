@@ -311,7 +311,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 			Pattern pattern = Pattern.compile(
 				StringBundler.concat(
-					"\\{\n[\\s\\S]*?((_|this\\.)", parameterName, ") =[ \t\n]+",
+					"\n\t*?((_|this\\.)", parameterName, ") =[ \t\n]+",
 					parameterName, ";"));
 
 			Matcher matcher = pattern.matcher(content);

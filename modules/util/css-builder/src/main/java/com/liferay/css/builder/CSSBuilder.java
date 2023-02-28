@@ -196,13 +196,13 @@ public class CSSBuilder implements AutoCloseable {
 		String[] scssFiles = _getScssFiles(basedir);
 
 		if (!_isModified(basedir, scssFiles)) {
-			long oldestSassModifiedTime = _getOldestModifiedTime(
-				basedir, scssFiles);
+			long oldestSassModifiedTime = _getModifiedTime(
+				basedir, scssFiles, Comparator.naturalOrder());
 
 			String[] scssFragments = _getScssFragments(basedir);
 
-			long newestFragmentModifiedTime = _getNewestModifiedTime(
-				basedir, scssFragments);
+			long newestFragmentModifiedTime = _getModifiedTime(
+				basedir, scssFragments, Comparator.reverseOrder());
 
 			if (oldestSassModifiedTime > newestFragmentModifiedTime) {
 				return fileNames;
@@ -220,7 +220,9 @@ public class CSSBuilder implements AutoCloseable {
 		return fileNames;
 	}
 
-	private long _getNewestModifiedTime(String baseDir, String[] fileNames) {
+	private long _getModifiedTime(
+		String baseDir, String[] fileNames, Comparator<Long> comparator) {
+
 		List<Long> lastModifiedTimes = TransformUtil.transformToList(
 			fileNames,
 			fileName -> FileUtil.getLastModifiedTime(
@@ -230,22 +232,7 @@ public class CSSBuilder implements AutoCloseable {
 			return Long.MIN_VALUE;
 		}
 
-		lastModifiedTimes.sort(Comparator.reverseOrder());
-
-		return lastModifiedTimes.get(0);
-	}
-
-	private long _getOldestModifiedTime(String baseDir, String[] fileNames) {
-		List<Long> lastModifiedTimes = TransformUtil.transformToList(
-			fileNames,
-			fileName -> FileUtil.getLastModifiedTime(
-				Paths.get(baseDir, fileName)));
-
-		if (lastModifiedTimes.isEmpty()) {
-			return Long.MIN_VALUE;
-		}
-
-		lastModifiedTimes.sort(Comparator.naturalOrder());
+		lastModifiedTimes.sort(comparator);
 
 		return lastModifiedTimes.get(0);
 	}

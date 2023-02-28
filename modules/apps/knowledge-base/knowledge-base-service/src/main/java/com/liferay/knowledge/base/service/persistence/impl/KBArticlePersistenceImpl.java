@@ -36258,7 +36258,7 @@ public class KBArticlePersistenceImpl
 		"SELECT COUNT(kbArticle) FROM KBArticle kbArticle WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"kbArticle.rootResourcePrimKey";
+		"kbArticle.resourcePrimKey";
 
 	private static final String _FILTER_SQL_SELECT_KBARTICLE_WHERE =
 		"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ";

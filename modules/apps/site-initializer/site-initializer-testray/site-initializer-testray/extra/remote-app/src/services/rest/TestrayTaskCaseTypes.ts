@@ -14,8 +14,8 @@
 
 import {InferType} from 'yup';
 
+import Rest from '../../core/Rest';
 import yupSchema from '../../schema/yup';
-import Rest from './Rest';
 import {TestrayTaskCaseTypes} from './types';
 
 type TaskToCaseTypes = InferType<typeof yupSchema.taskToCaseTypes>;

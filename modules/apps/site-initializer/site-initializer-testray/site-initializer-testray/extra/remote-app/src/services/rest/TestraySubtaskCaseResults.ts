@@ -12,8 +12,8 @@
  * details.
  */
 
+import Rest from '../../core/Rest';
 import yupSchema from '../../schema/yup';
-import Rest from './Rest';
 import {TestraySubTaskCaseResult} from './types';
 
 type SubtaskCaseResultForm = typeof yupSchema.subtaskToCaseResult.__outputType;

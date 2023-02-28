@@ -12,7 +12,7 @@
  * details.
  */
 
-import Rest from './Rest';
+import Rest from '../../core/Rest';
 import {PickList, TestrayDispatchTrigger} from './types';
 
 class TestrayDispatchTriggerImpl extends Rest<

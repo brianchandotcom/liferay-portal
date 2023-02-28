@@ -13,10 +13,10 @@
  */
 
 import TestrayError from '../../TestrayError';
+import Rest from '../../core/Rest';
+import SearchBuilder from '../../core/SearchBuilder';
 import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
-import {SearchBuilder} from '../../util/search';
-import Rest from './Rest';
 import {APIResponse, TestrayCase} from './types';
 
 type Case = typeof yupSchema.case.__outputType & {projectId: number};

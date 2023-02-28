@@ -12,8 +12,9 @@
  * details.
  */
 
-import yupSchema from '../../schema/yup';
-import Rest from './Rest';
+import Rest from '~/core/Rest';
+import yupSchema from '~/schema/yup';
+
 import {Role, UserAccount} from './types';
 
 type RoleForm = typeof yupSchema.role.__outputType;

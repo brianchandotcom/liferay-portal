@@ -791,7 +791,13 @@ definition {
 		task ("Assert the segments permissions are not allocated in Site and Asset Library Administration > People") {
 			Navigator.gotoNavItem(navItem = "Define Permissions");
 
-			AssertClick(
+			WaitForElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+			ScrollWebElementIntoView(
+				key_navItem = "Site and Asset Library Administration",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
+
+			Click.pauseClickAt(
 				key_navItem = "Site and Asset Library Administration",
 				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED",
 				value1 = "Site and Asset Library Administration");

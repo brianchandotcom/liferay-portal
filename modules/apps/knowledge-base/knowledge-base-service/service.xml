@@ -11,7 +11,7 @@
 
 		<!-- Resource -->
 
-		<column name="resourcePrimKey" type="long" />
+		<column filter-primary="true" name="resourcePrimKey" type="long" />
 
 		<!-- Group instance -->
 
@@ -28,7 +28,7 @@
 		<!-- Other fields -->
 
 		<column name="externalReferenceCode" type="String" />
-		<column filter-primary="true" name="rootResourcePrimKey" type="long" />
+		<column name="rootResourcePrimKey" type="long" />
 		<column name="parentResourceClassNameId" type="long" />
 		<column name="parentResourcePrimKey" type="long" />
 		<column name="kbFolderId" type="long" />

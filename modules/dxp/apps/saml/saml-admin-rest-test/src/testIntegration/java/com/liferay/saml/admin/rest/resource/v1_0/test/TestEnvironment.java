@@ -70,7 +70,7 @@ public class TestEnvironment implements AutoCloseable {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		File file = FileUtil.createTempFile(
-			classLoader.getResourceAsStream("testSAMLEntity.jks"));
+			classLoader.getResourceAsStream("keystore.jks"));
 
 		_autoCloseables.add(file::delete);
 		_autoCloseables.add(

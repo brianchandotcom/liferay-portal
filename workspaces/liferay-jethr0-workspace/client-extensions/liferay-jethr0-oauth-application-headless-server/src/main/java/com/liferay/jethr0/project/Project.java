@@ -53,6 +53,10 @@ public interface Project {
 			return _states.get(key);
 		}
 
+		public JSONObject getJSONObject() {
+			return new JSONObject("{\"key\":\"" + getKey() + "\"}");
+		}
+
 		public String getKey() {
 			return _key;
 		}
@@ -85,6 +89,10 @@ public interface Project {
 
 		public static Type getByKey(String key) {
 			return _types.get(key);
+		}
+
+		public JSONObject getJSONObject() {
+			return new JSONObject("{\"key\":\"" + getKey() + "\"}");
 		}
 
 		public String getKey() {

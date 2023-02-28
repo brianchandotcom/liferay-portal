@@ -109,7 +109,7 @@ export default function SearchBar({
 					scope: scopeValue,
 					search: searchValue,
 				},
-				suggestionsURL
+				Liferay.ThemeDisplay.getPathContext() + suggestionsURL
 			),
 			{
 				body: _getSuggestionsContributorConfiguration(),

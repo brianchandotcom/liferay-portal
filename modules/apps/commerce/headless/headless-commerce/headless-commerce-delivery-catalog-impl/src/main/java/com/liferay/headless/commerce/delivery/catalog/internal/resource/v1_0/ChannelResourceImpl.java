@@ -16,7 +16,6 @@ package com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Channel;
-import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.ChannelDTOConverter;
 import com.liferay.headless.commerce.delivery.catalog.internal.odata.entity.v1_0.ChannelEntityModel;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ChannelResource;
 import com.liferay.portal.kernel.search.Field;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -81,8 +81,10 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 	private static final EntityModel _entityModel = new ChannelEntityModel();
 
-	@Reference
-	private ChannelDTOConverter _channelDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.ChannelDTOConverter)"
+	)
+	private DTOConverter<CommerceChannel, Channel> _channelDTOConverter;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

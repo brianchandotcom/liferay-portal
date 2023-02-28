@@ -116,12 +116,12 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 					break;
 				}
 
-				if (StringUtil.equals(group, globalVariableName)) {
-					return StringUtil.replaceFirst(
-						content, globalVariableName, parameterName, start);
+				if (!StringUtil.equals(group, globalVariableName)) {
+					continue;
 				}
 
-				continue;
+				return StringUtil.replaceFirst(
+					content, globalVariableName, parameterName, start);
 			}
 
 			char preChar = content.charAt(start - 1);

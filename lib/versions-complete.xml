@@ -1748,7 +1748,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.frontend.js.minifier.jar!closure-compiler.jar</file-name>
-				<version>v20180204</version>
+				<version>v20220601</version>
 				<project-name>Closure Compiler</project-name>
 				<project-url>https://developers.google.com/closure/compiler/</project-url>
 				<licenses>

@@ -75,7 +75,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 		Matcher matcher1 = pattern.matcher(content);
 
-		outLoop:
+		outerLoop:
 		while (matcher1.find()) {
 			int start = matcher1.start();
 
@@ -101,7 +101,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 						StringPool.OPEN_PARENTHESIS, x + 1);
 
 					if (x == -1) {
-						continue outLoop;
+						continue outerLoop;
 					}
 
 					if (ToolsUtil.isInsideQuotes(followingCode, x + 1)) {
@@ -138,7 +138,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 						preOpenParenthesisIndex - 1);
 
 					if (preOpenParenthesisIndex == -1) {
-						continue outLoop;
+						continue outerLoop;
 					}
 
 					if (ToolsUtil.isInsideQuotes(

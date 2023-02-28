@@ -21,8 +21,8 @@ import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderComment;
-import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.PlacedOrderCommentDTOConverter;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderCommentResource;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -107,7 +107,10 @@ public class PlacedOrderCommentResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private PlacedOrderCommentDTOConverter _placedOrderCommentDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.PlacedOrderCommentDTOConverter)"
+	)
+	private DTOConverter<CommerceOrderNote, PlacedOrderComment>
+		_placedOrderCommentDTOConverter;
 
 }

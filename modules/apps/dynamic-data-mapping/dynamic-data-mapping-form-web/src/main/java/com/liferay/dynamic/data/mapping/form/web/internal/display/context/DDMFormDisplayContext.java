@@ -55,6 +55,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
@@ -104,7 +105,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
@@ -195,17 +195,16 @@ public class DDMFormDisplayContext {
 
 		DDMForm ddmForm = getDDMForm();
 
-		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+		return TransformUtil.transformToArray(
+			ddmForm.getAvailableLocales(),
+			locale -> {
+				if (!siteAvailableLocales.contains(locale)) {
+					return null;
+				}
 
-		Stream<Locale> availableLocalesStream = availableLocales.stream();
-
-		return availableLocalesStream.filter(
-			locale -> siteAvailableLocales.contains(locale)
-		).map(
-			locale -> LanguageUtil.getLanguageId(locale)
-		).toArray(
-			String[]::new
-		);
+				return LanguageUtil.getLanguageId(locale);
+			},
+			String.class);
 	}
 
 	public String getContainerId() {

@@ -13,15 +13,36 @@
  */
 
 /**
- * Recursively traverses the criteria object to build an Ac Gramar filter query
+ * generates an AC grammar date subquery
+ * @param {object} day
+ * @returns An AC grammar date subquery substring like  "and day gt ''2023-02-23''"
+ */
+function buildDateQueryString(day) {
+	let query = '';
+
+	if (typeof day.value === 'object') {
+		query = ` and between(day,''${day.value.start}'',''${day.value.end}'')`;
+	}
+	else {
+		query = ` and day ${day.operatorName} ''${day.value}''`;
+	}
+
+	return query;
+}
+
+/**
+ * Recursively traverses the criteria object to build an Ac Grammar filter query
  * string. Properties is required to parse the correctly with or without quotes
  * and formatting the query differently for certain types like collection.
  * @returns An AC grammar query string built from the criteria object.
  */
 function buildEventQueryString({items}) {
-	const [{assetId, operatorName, propertyName, value}] = items;
+	const [{assetId, day, operatorName, propertyName, value}] = items;
 
-	const filter = `(activityKey eq ''Document#${propertyName}#${assetId}'')`;
+	const dateSubquery = day ? buildDateQueryString(day) : '';
+
+	const filter = `(activityKey eq ''Document#${propertyName}#${assetId}''${dateSubquery})`;
+
 	let query = `activities.filterByCount(filter='${filter}',operator='${operatorName}',value=${value})`;
 
 	query = items[0]?.operatorNot ? `((not ${query}))` : `(${query})`;

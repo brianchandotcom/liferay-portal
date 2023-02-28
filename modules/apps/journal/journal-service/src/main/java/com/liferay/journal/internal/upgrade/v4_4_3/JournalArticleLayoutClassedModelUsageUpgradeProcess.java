@@ -23,7 +23,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
@@ -33,13 +32,10 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import java.util.List;
 
 /**
  * @author Lourdes Fernández Besada
@@ -111,23 +107,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 					long companyId = (Long)values[3];
 
 					_addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
-						assetEntryClassUuid, resourcePrimKey, groupId,
-						journalArticleClassNameId, portletClassNameId,
-						_portletPreferencesLocalService.getPortletPreferences(
-							companyId, groupId,
-							PortletKeys.PREFS_OWNER_ID_DEFAULT,
-							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-							AssetPublisherPortletKeys.ASSET_PUBLISHER, true),
-						serviceContext);
-
-					_addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
-						assetEntryClassUuid, resourcePrimKey, groupId,
-						journalArticleClassNameId, portletClassNameId,
-						_portletPreferencesLocalService.getPortletPreferences(
-							companyId, groupId,
-							PortletKeys.PREFS_OWNER_ID_DEFAULT,
-							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-							AssetPublisherPortletKeys.ASSET_PUBLISHER, false),
+						assetEntryClassUuid, resourcePrimKey, companyId,
+						groupId, journalArticleClassNameId, portletClassNameId,
 						serviceContext);
 
 					_layoutClassedModelUsageLocalService.
@@ -141,49 +122,63 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 	}
 
 	private void _addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
-		String assetEntryClassUuid, long classPK, long groupId,
-		long journalArticleClassNameId, long portletClassNameId,
-		List<PortletPreferences> portletPreferencesList,
-		ServiceContext serviceContext) {
+			String assetEntryClassUuid, long classPK, long companyId,
+			long groupId, long journalArticleClassNameId,
+			long portletClassNameId, ServiceContext serviceContext)
+		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			for (PortletPreferences portletPreferences :
-					portletPreferencesList) {
+			processConcurrently(
+				StringBundler.concat(
+					"select PortletPreferences.plid, ",
+					"PortletPreferences.portletId from PortletPreferences ",
+					"inner join PortletPreferenceValue as ",
+					"PortletPreferenceValue1 on ",
+					"PortletPreferenceValue1.portletPreferencesId = ",
+					"PortletPreferences.portletPreferencesId and ",
+					"PortletPreferenceValue1.name = 'selectionStyle' and ",
+					"(PortletPreferenceValue1.smallValue = 'manual' or ",
+					"PortletPreferenceValue1.largeValue = 'manual') inner ",
+					"join PortletPreferenceValue as PortletPreferenceValue2 ",
+					"on PortletPreferenceValue2.portletPreferencesId = ",
+					"PortletPreferences.portletPreferencesId and ",
+					"PortletPreferenceValue2.name = 'assetEntryXml' and ",
+					"(PortletPreferenceValue2.smallValue like '%",
+					assetEntryClassUuid,
+					"%' or PortletPreferenceValue2.largeValue like '%",
+					assetEntryClassUuid,
+					"%') where PortletPreferences.companyId = ", companyId,
+					" and PortletPreferences.ownerId = ",
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					" and PortletPreferences.ownerType = ",
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					" and PortletPreferences.portletId like '",
+					AssetPublisherPortletKeys.ASSET_PUBLISHER,
+					"%' and not exists (select 1 from LayoutClassedModelUsage ",
+					"where LayoutClassedModelUsage.classPK = ", classPK,
+					" and LayoutClassedModelUsage.classNameId = ",
+					journalArticleClassNameId,
+					" and LayoutClassedModelUsage.containerKey = ",
+					"PortletPreferences.portletId and ",
+					"LayoutClassedModelUsage.containerType = ",
+					portletClassNameId, " and LayoutClassedModelUsage.plid = ",
+					"PortletPreferences.plid)"),
+				resultSet -> new Object[] {
+					resultSet.getLong("plid"),
+					GetterUtil.getString(resultSet.getString("portletId"))
+				},
+				values -> {
+					long plid = (Long)values[0];
+					String portletId = (String)values[1];
 
-				javax.portlet.PortletPreferences jxPortletPreferences =
-					_portletPreferenceValueLocalService.getPreferences(
-						portletPreferences);
-
-				String selectionStyle = jxPortletPreferences.getValue(
-					"selectionStyle", "dynamic");
-
-				if (!StringUtil.equals(selectionStyle, "manual")) {
-					continue;
-				}
-
-				String assetEntryXml = jxPortletPreferences.getValue(
-					"assetEntryXml", StringPool.BLANK);
-
-				if (!assetEntryXml.contains(assetEntryClassUuid)) {
-					continue;
-				}
-
-				LayoutClassedModelUsage layoutClassedModelUsage =
 					_layoutClassedModelUsageLocalService.
-						fetchLayoutClassedModelUsage(
-							journalArticleClassNameId, classPK,
-							portletPreferences.getPortletId(),
-							portletClassNameId, portletPreferences.getPlid());
-
-				if (layoutClassedModelUsage != null) {
-					continue;
-				}
-
-				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-					groupId, journalArticleClassNameId, classPK,
-					portletPreferences.getPortletId(), portletClassNameId,
-					portletPreferences.getPlid(), serviceContext);
-			}
+						addLayoutClassedModelUsage(
+							groupId, journalArticleClassNameId, classPK,
+							portletId, portletClassNameId, plid,
+							serviceContext);
+				},
+				"Unable to create manual selection asset publisher layout " +
+					"classed model usages");
 		}
 	}
 

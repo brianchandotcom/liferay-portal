@@ -2,7 +2,8 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
-	"name": "asset-categories-item-selector-web",
+	"main": "js/index.js",
+	"name": "@liferay/asset-categories-item-selector-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

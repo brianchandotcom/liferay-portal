@@ -31,8 +31,7 @@ page import="com.liferay.asset.categories.item.selector.web.internal.display.con
 page import="com.liferay.asset.categories.item.selector.web.internal.display.context.SelectAssetCategoryTreeNodeDisplayContext" %><%@
 page import="com.liferay.asset.categories.item.selector.web.internal.display.context.SelectAssetVocabularyDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %>
+page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
 <liferay-frontend:defineObjects />
 

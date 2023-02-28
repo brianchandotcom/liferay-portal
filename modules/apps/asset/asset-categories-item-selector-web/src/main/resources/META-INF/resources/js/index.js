@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+import SelectAssetCategory from './SelectAssetCategoryInfoItem.es';
 
-<%
-SelectAssetCategoryInfoItemDisplayContext selectAssetCategoryInfoItemDisplayContext = (SelectAssetCategoryInfoItemDisplayContext)request.getAttribute(AssetCategoryItemSelectorWebKeys.SELECT_ASSET_CATEGORY_INFO_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT);
-%>
-
-<div>
-	<react:component
-		module="js/SelectAssetCategoryInfoItem.es"
-		props="<%= selectAssetCategoryInfoItemDisplayContext.getData() %>"
-	/>
-</div>
+export {SelectAssetCategory};

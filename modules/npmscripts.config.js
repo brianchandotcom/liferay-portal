@@ -35,6 +35,9 @@ module.exports = {
 					'@liferay/amd-loader': {
 						'/': '*',
 					},
+					'@liferay/asset-categories-item-selector-web': {
+						'/': '*',
+					},
 					'@liferay/content-dashboard-web': {
 						'/': '*',
 					},

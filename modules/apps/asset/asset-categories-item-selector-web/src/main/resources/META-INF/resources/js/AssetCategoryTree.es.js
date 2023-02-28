@@ -19,6 +19,8 @@ import ClayIcon from '@clayui/icon';
 import {getOpener, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import './../css/tree.scss';
+
 const nodeByName = (items, name) => {
 	return items.reduce(function reducer(acc, item) {
 		if (item.name?.toLowerCase().includes(name.toLowerCase())) {

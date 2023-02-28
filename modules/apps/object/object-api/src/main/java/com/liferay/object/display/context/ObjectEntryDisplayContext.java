@@ -36,8 +36,6 @@ public interface ObjectEntryDisplayContext {
 
 	public ObjectDefinition getObjectDefinition2() throws PortalException;
 
-	public ObjectEntry getObjectEntry() throws PortalException;
-
 	public ObjectLayout getObjectLayout() throws PortalException;
 
 	public ObjectLayoutBox getObjectLayoutBox(String type)
@@ -61,6 +59,8 @@ public interface ObjectEntryDisplayContext {
 
 	public Map<String, String> getRelationshipContextParams()
 		throws PortalException;
+
+	public ObjectEntry getServiceBuilderObjectEntry() throws PortalException;
 
 	public boolean isDefaultUser();
 

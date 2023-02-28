@@ -22,7 +22,7 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 ObjectEntryDisplayContext objectEntryDisplayContext = (ObjectEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 ObjectDefinition objectDefinition2 = objectEntryDisplayContext.getObjectDefinition2();
-ObjectEntry objectEntry = objectEntryDisplayContext.getObjectEntry();
+ObjectEntry objectEntry = objectEntryDisplayContext.getServiceBuilderObjectEntry();
 ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab();
 
 portletDisplay.setShowBackIcon(true);

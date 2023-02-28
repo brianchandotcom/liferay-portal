@@ -24,7 +24,7 @@ ObjectEntryDisplayContext objectEntryDisplayContext = (ObjectEntryDisplayContext
 ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab();
 %>
 
-<c:if test="<%= (objectEntryDisplayContext.getObjectEntry() != null) && (objectLayoutTab != null) %>">
+<c:if test="<%= (objectEntryDisplayContext.getServiceBuilderObjectEntry() != null) && (objectLayoutTab != null) %>">
 
 	<%
 	ObjectDefinition objectDefinition = objectEntryDisplayContext.getObjectDefinition1();

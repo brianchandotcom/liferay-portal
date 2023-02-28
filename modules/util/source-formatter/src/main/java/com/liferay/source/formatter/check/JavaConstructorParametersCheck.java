@@ -54,7 +54,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 			content = _fixIncorrectEmptyLines(
 				content, _missingLineBreakPattern2, parameters);
 
-			return _checkUsePassedInVar(content, parameters, fileContent);
+			return _fixPassedInVariables(content, parameters, fileContent);
 		}
 
 		return javaTerm.getContent();
@@ -247,48 +247,6 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private String _checkUsePassedInVar(
-		String content, List<JavaParameter> parameters, String fileContent) {
-
-		for (JavaParameter parameter : parameters) {
-			String parameterName = parameter.getParameterName();
-
-			Pattern pattern = Pattern.compile(
-				StringBundler.concat(
-					"\\{\n([\\s\\S]*?)((_|this\\.)", parameterName,
-					") =[ \t\n]+", parameterName, ";"));
-
-			Matcher matcher = pattern.matcher(content);
-
-			if (!matcher.find()) {
-				continue;
-			}
-
-			String globalVariableName = matcher.group(2);
-
-			if (StringUtil.equals(matcher.group(3), "this.")) {
-				globalVariableName = globalVariableName.substring(5);
-			}
-
-			String globalVariableTypeName = getVariableTypeName(
-				content, fileContent, globalVariableName, true);
-			String parameterTypeName = parameter.getParameterType();
-
-			if (!StringUtil.equals(parameterTypeName, globalVariableTypeName)) {
-				continue;
-			}
-
-			String newContent = _checkCallMethodOrLocationMethod(
-				content, matcher.end(), globalVariableName, parameterName);
-
-			if (!StringUtil.equals(content, newContent)) {
-				return newContent;
-			}
-		}
-
-		return content;
-	}
-
 	private boolean _containsParameterName(
 		List<JavaParameter> parameters, String name) {
 
@@ -339,6 +297,48 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				return StringUtil.replaceFirst(
 					content, StringPool.NEW_LINE, StringPool.BLANK,
 					matcher.start(4));
+			}
+		}
+
+		return content;
+	}
+
+	private String _fixPassedInVariables(
+		String content, List<JavaParameter> parameters, String fileContent) {
+
+		for (JavaParameter parameter : parameters) {
+			String parameterName = parameter.getParameterName();
+
+			Pattern pattern = Pattern.compile(
+				StringBundler.concat(
+					"\\{\n([\\s\\S]*?)((_|this\\.)", parameterName,
+					") =[ \t\n]+", parameterName, ";"));
+
+			Matcher matcher = pattern.matcher(content);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String globalVariableName = matcher.group(2);
+
+			if (StringUtil.equals(matcher.group(3), "this.")) {
+				globalVariableName = globalVariableName.substring(5);
+			}
+
+			String globalVariableTypeName = getVariableTypeName(
+				content, fileContent, globalVariableName, true);
+			String parameterTypeName = parameter.getParameterType();
+
+			if (!StringUtil.equals(parameterTypeName, globalVariableTypeName)) {
+				continue;
+			}
+
+			String newContent = _checkCallMethodOrLocationMethod(
+				content, matcher.end(), globalVariableName, parameterName);
+
+			if (!StringUtil.equals(content, newContent)) {
+				return newContent;
 			}
 		}
 

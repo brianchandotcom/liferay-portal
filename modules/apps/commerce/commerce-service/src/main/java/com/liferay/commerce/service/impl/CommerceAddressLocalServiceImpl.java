@@ -265,13 +265,21 @@ public class CommerceAddressLocalServiceImpl
 
 	@Override
 	public List<CommerceAddress> getBillingCommerceAddresses(
-			long channelId, String className, long classPK, int start, int end)
-		throws PortalException {
+		long channelId, String className, long classPK, int start, int end) {
 
 		return TransformUtil.transform(
 			_addressLocalService.dslQuery(
 				_getGroupByStep(
 					DSLQueryFactoryUtil.selectDistinct(AddressTable.INSTANCE),
+					AddressTable.INSTANCE.listTypeId.eq(
+						CommerceAddressImpl.toAddressTypeId(
+							CommerceAddressConstants.ADDRESS_TYPE_BILLING)
+					).or(
+						AddressTable.INSTANCE.listTypeId.eq(
+							CommerceAddressImpl.toAddressTypeId(
+								CommerceAddressConstants.
+									ADDRESS_TYPE_BILLING_AND_SHIPPING))
+					),
 					channelId, className, classPK, true, false
 				).limit(
 					start, end
@@ -307,12 +315,20 @@ public class CommerceAddressLocalServiceImpl
 
 	@Override
 	public int getBillingCommerceAddressesCount(
-			long channelId, String className, long classPK, int start, int end)
-		throws PortalException {
+		long channelId, String className, long classPK, int start, int end) {
 
 		return _addressLocalService.dslQueryCount(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(AddressTable.INSTANCE),
+				AddressTable.INSTANCE.listTypeId.eq(
+					CommerceAddressImpl.toAddressTypeId(
+						CommerceAddressConstants.ADDRESS_TYPE_BILLING)
+				).or(
+					AddressTable.INSTANCE.listTypeId.eq(
+						CommerceAddressImpl.toAddressTypeId(
+							CommerceAddressConstants.
+								ADDRESS_TYPE_BILLING_AND_SHIPPING))
+				),
 				channelId, className, classPK, true, false
 			).limit(
 				start, end
@@ -462,13 +478,21 @@ public class CommerceAddressLocalServiceImpl
 
 	@Override
 	public List<CommerceAddress> getShippingCommerceAddresses(
-			long channelId, String className, long classPK, int start, int end)
-		throws PortalException {
+		long channelId, String className, long classPK, int start, int end) {
 
 		return TransformUtil.transform(
 			_addressLocalService.dslQuery(
 				_getGroupByStep(
 					DSLQueryFactoryUtil.selectDistinct(AddressTable.INSTANCE),
+					AddressTable.INSTANCE.listTypeId.eq(
+						CommerceAddressImpl.toAddressTypeId(
+							CommerceAddressConstants.ADDRESS_TYPE_SHIPPING)
+					).or(
+						AddressTable.INSTANCE.listTypeId.eq(
+							CommerceAddressImpl.toAddressTypeId(
+								CommerceAddressConstants.
+									ADDRESS_TYPE_BILLING_AND_SHIPPING))
+					),
 					channelId, className, classPK, false, true
 				).limit(
 					start, end
@@ -504,12 +528,20 @@ public class CommerceAddressLocalServiceImpl
 
 	@Override
 	public int getShippingCommerceAddressesCount(
-			long channelId, String className, long classPK, int start, int end)
-		throws PortalException {
+		long channelId, String className, long classPK, int start, int end) {
 
 		return _addressLocalService.dslQueryCount(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(AddressTable.INSTANCE),
+				AddressTable.INSTANCE.listTypeId.eq(
+					CommerceAddressImpl.toAddressTypeId(
+						CommerceAddressConstants.ADDRESS_TYPE_SHIPPING)
+				).or(
+					AddressTable.INSTANCE.listTypeId.eq(
+						CommerceAddressImpl.toAddressTypeId(
+							CommerceAddressConstants.
+								ADDRESS_TYPE_BILLING_AND_SHIPPING))
+				),
 				channelId, className, classPK, false, true
 			).limit(
 				start, end
@@ -650,8 +682,9 @@ public class CommerceAddressLocalServiceImpl
 	}
 
 	private GroupByStep _getGroupByStep(
-		FromStep fromStep, long commerceChannelId, String className,
-		long classPK, boolean billingAllowed, boolean shippingAllowed) {
+		FromStep fromStep, Predicate listTypeFilterPredicate,
+		long commerceChannelId, String className, long classPK,
+		boolean billingAllowed, boolean shippingAllowed) {
 
 		JoinStep joinStep = fromStep.from(
 			AddressTable.INSTANCE
@@ -674,6 +707,9 @@ public class CommerceAddressLocalServiceImpl
 					).and(
 						AddressTable.INSTANCE.classPK.eq(classPK)
 					));
+
+				predicate = predicate.and(
+					listTypeFilterPredicate.withParentheses());
 
 				Predicate groupFilterPredicate =
 					CountryTable.INSTANCE.groupFilterEnabled.eq(false);

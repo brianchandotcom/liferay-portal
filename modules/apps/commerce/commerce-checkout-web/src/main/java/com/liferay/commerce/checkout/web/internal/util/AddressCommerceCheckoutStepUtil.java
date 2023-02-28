@@ -101,7 +101,16 @@ public class AddressCommerceCheckoutStepUtil {
 		boolean useAsBilling = ParamUtil.getBoolean(
 			actionRequest, "use-as-billing");
 
+		CommerceAddress commerceAddress =
+			_commerceAddressService.getCommerceAddress(commerceAddressId);
+
 		if (useAsBilling) {
+			Country country = commerceAddress.getCountry();
+
+			if (!country.isBillingAllowed()) {
+				throw new CommerceOrderShippingAndBillingException();
+			}
+
 			_commerceAddressType =
 				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING;
 		}
@@ -113,15 +122,6 @@ public class AddressCommerceCheckoutStepUtil {
 
 			if (commerceAddressId < 1) {
 				throw new CommerceOrderShippingAddressException();
-			}
-
-			CommerceAddress commerceAddress =
-				_commerceAddressService.getCommerceAddress(commerceAddressId);
-
-			Country country = commerceAddress.getCountry();
-
-			if (!country.isBillingAllowed()) {
-				throw new CommerceOrderShippingAndBillingException();
 			}
 
 			_commerceAddressService.updateCommerceAddress(
@@ -218,14 +218,14 @@ public class AddressCommerceCheckoutStepUtil {
 			actionRequest, "use-as-billing");
 
 		if (useAsBilling) {
-			_commerceAddressType =
-				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING;
-
 			Country country = _countryLocalService.getCountry(countryId);
 
 			if (!country.isBillingAllowed()) {
 				throw new CommerceOrderShippingAndBillingException();
 			}
+
+			_commerceAddressType =
+				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING;
 		}
 
 		String name = ParamUtil.getString(actionRequest, "name");

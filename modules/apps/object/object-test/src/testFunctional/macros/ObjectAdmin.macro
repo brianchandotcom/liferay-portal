@@ -202,7 +202,7 @@ definition {
 		if (isSet(formulaFieldOption)) {
 			Click(locator1 = "ObjectAction#SELECT_OPTION_TYPE");
 
-			Click(			
+			Click(
 				key_dropdownItem = ${formulaFieldOption},
 				locator1 = "ObjectField#SELECT_FORMULA_FIELD_OPTION");
 		}

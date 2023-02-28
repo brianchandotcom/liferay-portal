@@ -143,7 +143,6 @@ components:
                 storageType:
                     type: string
                 system:
-                    readOnly: true
                     type: boolean
                 titleObjectFieldName:
                     type: string

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 public abstract class BaseCommerceQualifierMetadata<T extends BaseModel<T>>
-	extends BaseModelListener<T> implements CommerceQualifierMetadata<T> {
+	implements CommerceQualifierMetadata<T> {
 
 	@Override
 	public String[][] getAllowedTargetKeysArray() {
@@ -150,28 +150,12 @@ public abstract class BaseCommerceQualifierMetadata<T extends BaseModel<T>>
 		return new OrderByExpression[0];
 	}
 
-	@Override
-	public void onBeforeRemove(T model) {
-		try {
-			commerceQualifierEntryLocalService.
-				deleteSourceCommerceQualifierEntries(
-					model.getModelClassName(), (Long)model.getPrimaryKeyObj());
-
-			commerceQualifierEntryLocalService.
-				deleteTargetCommerceQualifierEntries(
-					model.getModelClassName(), (Long)model.getPrimaryKeyObj());
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-	}
-
 	protected abstract OrderByExpression[] getAdditionalOrderByExpressions(
 		Map<String, ?> targetAttributes);
 
 	protected abstract Class<?> getConfigurationBeanClass();
+
+	protected abstract Class<T> getModelClass();
 
 	@Reference
 	protected CommerceQualifierEntryLocalService
@@ -232,5 +216,41 @@ public abstract class BaseCommerceQualifierMetadata<T extends BaseModel<T>>
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCommerceQualifierMetadata.class);
+
+	private class CommerceQualifierMetadataModelListener
+		extends BaseModelListener<T> {
+
+		@Override
+		public Class<T> getModelClass() {
+			return _modelClass;
+		}
+
+		@Override
+		public void onBeforeRemove(T model) {
+			try {
+				commerceQualifierEntryLocalService.
+					deleteSourceCommerceQualifierEntries(
+						model.getModelClassName(),
+						(Long)model.getPrimaryKeyObj());
+
+				commerceQualifierEntryLocalService.
+					deleteTargetCommerceQualifierEntries(
+						model.getModelClassName(),
+						(Long)model.getPrimaryKeyObj());
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(portalException);
+				}
+			}
+		}
+
+		private CommerceQualifierMetadataModelListener(Class<T> modelClass) {
+			_modelClass = modelClass;
+		}
+
+		private final Class<T> _modelClass;
+
+	}
 
 }

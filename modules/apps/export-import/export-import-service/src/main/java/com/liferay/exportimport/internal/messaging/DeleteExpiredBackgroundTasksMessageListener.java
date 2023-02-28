@@ -190,7 +190,9 @@ public class DeleteExpiredBackgroundTasksMessageListener
 
 	private static final String[] _BACKGROUND_TASK_EXECUTOR_NAMES = {
 		BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR,
-		BackgroundTaskExecutorNames.PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR
+		BackgroundTaskExecutorNames.LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR,
+		BackgroundTaskExecutorNames.PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR,
+		BackgroundTaskExecutorNames.PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR
 	};
 
 	private static final int[] _STATUSES = {

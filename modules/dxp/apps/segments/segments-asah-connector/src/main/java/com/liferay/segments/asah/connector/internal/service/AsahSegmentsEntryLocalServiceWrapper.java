@@ -37,6 +37,7 @@ import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.service.SegmentsEntryLocalServiceWrapper;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -54,8 +55,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mikel Lorza
  */
 @Component(service = ServiceWrapper.class)
-public class SegmentsEntryLocalServiceWrapper
-	extends com.liferay.segments.service.SegmentsEntryLocalServiceWrapper {
+public class AsahSegmentsEntryLocalServiceWrapper
+	extends SegmentsEntryLocalServiceWrapper {
 
 	@Override
 	public SegmentsEntry recalculateSegmentsEntry(long segmentsEntryId)
@@ -145,7 +146,7 @@ public class SegmentsEntryLocalServiceWrapper
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsEntryLocalServiceWrapper.class);
+		AsahSegmentsEntryLocalServiceWrapper.class);
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;

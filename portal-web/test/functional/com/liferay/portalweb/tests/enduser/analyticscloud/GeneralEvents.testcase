@@ -489,7 +489,7 @@ definition {
 
 			FormPortlet.submitSuccessfully();
 
-			ProxyUtil.startHarRecording("formEvents");
+			ProxyUtil.startHarRecording("formSubmitted");
 
 			ACUtils.waitForSendingRequest();
 

@@ -200,4 +200,32 @@ describe('DateTimeInput', () => {
 			value: defaultValue,
 		});
 	});
+
+	it('works with date ranges', () => {
+		const mockOnChange = jest.fn();
+
+		const {asFragment, getByTestId} = render(
+			<DateTimeInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				propertyType="date"
+				range
+				value={{end: '2022-12-24', start: '2022-01-01'}}
+			/>
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+
+		const element = getByTestId(DATE_INPUT_TESTID);
+
+		testControlledDateInput({
+			element,
+			inputChange: true,
+			mockOnChangeFunc: mockOnChange,
+			newValue: '2022/01/01 - 2022/02/24',
+			newValueExpected: '2022/01/01 - 2022/02/24',
+			newValueOnChange: {end: '2022-02-24', start: '2022-01-01'},
+			value: '2022/01/01 - 2022/12/24',
+		});
+	});
 });

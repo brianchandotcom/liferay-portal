@@ -1,7 +1,7 @@
 {
 	"accountEntryRestricted": false,
 	"label": {
-		"en_US": "Test Object Definition 2"
+		"en_US": "Test Object Definition 2 Update"
 	},
 	"name": "TestObjectDefinition2",
 	"objectFields": [
@@ -14,20 +14,10 @@
 			},
 			"name": "field1",
 			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Field 2"
-			},
-			"name": "field2",
-			"required": false
 		}
 	],
 	"pluralLabel": {
-		"en_US": "Test Object Definitions 2"
+		"en_US": "Test Object Definitions 2 Update"
 	},
 	"scope": "site"
 }

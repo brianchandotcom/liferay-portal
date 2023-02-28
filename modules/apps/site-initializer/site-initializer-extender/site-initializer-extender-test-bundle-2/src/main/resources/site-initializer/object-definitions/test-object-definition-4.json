@@ -1,5 +1,8 @@
 {
 	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToTestObjectDefinition4_accountEntryId",
+	"enableCategorization": true,
+	"enableComments": true,
 	"label": {
 		"en_US": "Test Object Definition 4"
 	},

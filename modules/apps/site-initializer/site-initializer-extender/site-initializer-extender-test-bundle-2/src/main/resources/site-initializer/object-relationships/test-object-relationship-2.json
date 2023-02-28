@@ -1,5 +1,5 @@
 {
-	"deletionType": "cascade",
+	"deletionType": "prevent",
 	"label": {
 		"en_US": "Test Object Relationship 2"
 	},

@@ -44,7 +44,9 @@ export async function downloadActivationLicenseKey(
 
 		return downloadFromBlob(
 			licenseBlob,
-			`activation-key-${productNameFormated}-${activationKeyVersion}-${projectFileName}${extensionFile}`
+			`activation-key-${productNameFormated}-${activationKeyVersion
+				.replaceAll(' ', '-')
+				.toLowerCase()}-${projectFileName}${extensionFile}`
 		);
 	}
 }

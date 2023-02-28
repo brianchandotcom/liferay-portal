@@ -75,7 +75,8 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	}
 
 	private CsdlComplexType _createCsdlComplexType(
-		String namespace, EntityField entityField) {
+		String namespace, EntityField entityField,
+		List<CsdlComplexType> csdlComplexTypes) {
 
 		if (!Objects.equals(entityField.getType(), EntityField.Type.COMPLEX)) {
 			return null;
@@ -99,6 +100,13 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 
 			if (csdlProperty != null) {
 				csdlProperties.add(csdlProperty);
+
+				if (Objects.equals(
+						curEntityField.getType(), EntityField.Type.COMPLEX)) {
+
+					csdlComplexTypes.addAll(
+						_createCsdlComplexTypes(_NAMESPACE, entityFieldsMap));
+				}
 			}
 		}
 
@@ -115,7 +123,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 
 		for (EntityField entityField : entityFieldsMap.values()) {
 			CsdlComplexType csdlComplexType = _createCsdlComplexType(
-				namespace, entityField);
+				namespace, entityField, csdlComplexTypes);
 
 			if (csdlComplexType != null) {
 				csdlComplexTypes.add(csdlComplexType);

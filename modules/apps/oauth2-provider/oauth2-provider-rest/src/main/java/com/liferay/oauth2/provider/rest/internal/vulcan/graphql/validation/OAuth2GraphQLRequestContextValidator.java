@@ -62,7 +62,7 @@ public class OAuth2GraphQLRequestContextValidator
 	public void validate(GraphQLRequestContext graphQLRequestContext)
 		throws Exception {
 
-		if (!graphQLRequestContext.isValidationRequired()) {
+		if (!graphQLRequestContext.isJaxRsResourceInvocation()) {
 			return;
 		}
 

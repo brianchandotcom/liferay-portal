@@ -41,4 +41,8 @@ public interface ServletData {
 		return null;
 	}
 
+	public default boolean isJaxRsResourceInvocation() {
+		return true;
+	}
+
 }

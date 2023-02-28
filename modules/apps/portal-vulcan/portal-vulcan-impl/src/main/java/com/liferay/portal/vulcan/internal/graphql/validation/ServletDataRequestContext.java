@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContext;
-import com.liferay.portal.vulcan.internal.graphql.servlet.ServletDataAdapter;
 
 import java.lang.reflect.Method;
 
@@ -67,14 +66,8 @@ public class ServletDataRequestContext implements GraphQLRequestContext {
 	}
 
 	@Override
-	public boolean isValidationRequired() {
-		if ((_servletData == null) ||
-			(_servletData instanceof ServletDataAdapter)) {
-
-			return false;
-		}
-
-		return true;
+	public boolean isJaxRsResourceInvocation() {
+		return _servletData.isJaxRsResourceInvocation();
 	}
 
 	private String _getNamespace(ServletData servletData) {

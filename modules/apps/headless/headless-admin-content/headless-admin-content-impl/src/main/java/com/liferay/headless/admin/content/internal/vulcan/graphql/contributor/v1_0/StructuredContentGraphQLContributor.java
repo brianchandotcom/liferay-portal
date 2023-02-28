@@ -39,6 +39,11 @@ public class StructuredContentGraphQLContributor implements GraphQLContributor {
 		return new StructuredContentQuery();
 	}
 
+	@Override
+	public boolean isJaxRsResourceInvocation() {
+		return false;
+	}
+
 	public static class StructuredContentQuery {
 
 		@GraphQLTypeExtension(StructuredContent.class)

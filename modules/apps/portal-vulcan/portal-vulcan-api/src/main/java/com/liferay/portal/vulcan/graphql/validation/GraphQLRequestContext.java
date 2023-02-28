@@ -31,6 +31,6 @@ public interface GraphQLRequestContext {
 
 	public Method getResourceMethod();
 
-	public boolean isValidationRequired();
+	public boolean isJaxRsResourceInvocation();
 
 }

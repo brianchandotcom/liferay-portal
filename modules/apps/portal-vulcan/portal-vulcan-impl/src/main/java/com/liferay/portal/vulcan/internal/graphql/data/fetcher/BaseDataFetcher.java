@@ -47,14 +47,10 @@ public abstract class BaseDataFetcher implements DataFetcher<Object> {
 		throws Exception {
 
 		try {
-			if (_graphQLRequestContext != null) {
-				for (GraphQLRequestContextValidator
-						graphQLRequestContextValidator :
-							_graphQLRequestContextValidators) {
+			for (GraphQLRequestContextValidator graphQLRequestContextValidator :
+					_graphQLRequestContextValidators) {
 
-					graphQLRequestContextValidator.validate(
-						_graphQLRequestContext);
-				}
+				graphQLRequestContextValidator.validate(_graphQLRequestContext);
 			}
 
 			return get(

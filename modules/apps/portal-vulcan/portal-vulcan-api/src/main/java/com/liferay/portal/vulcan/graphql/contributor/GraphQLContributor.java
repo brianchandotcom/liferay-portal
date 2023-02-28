@@ -33,4 +33,8 @@ public interface GraphQLContributor {
 		return null;
 	}
 
+	public default boolean isJaxRsResourceInvocation() {
+		return true;
+	}
+
 }

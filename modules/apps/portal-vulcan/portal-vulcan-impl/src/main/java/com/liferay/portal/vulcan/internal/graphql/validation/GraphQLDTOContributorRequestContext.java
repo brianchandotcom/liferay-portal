@@ -60,7 +60,7 @@ public class GraphQLDTOContributorRequestContext
 	}
 
 	@Override
-	public boolean isValidationRequired() {
+	public boolean isJaxRsResourceInvocation() {
 		return true;
 	}
 

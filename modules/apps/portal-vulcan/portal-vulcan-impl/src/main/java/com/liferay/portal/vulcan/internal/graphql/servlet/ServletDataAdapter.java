@@ -46,6 +46,11 @@ public class ServletDataAdapter implements ServletData {
 		return _graphQLContributor.getQuery();
 	}
 
+	@Override
+	public boolean isJaxRsResourceInvocation() {
+		return _graphQLContributor.isJaxRsResourceInvocation();
+	}
+
 	private ServletDataAdapter(GraphQLContributor graphQLContributor) {
 		_graphQLContributor = graphQLContributor;
 	}

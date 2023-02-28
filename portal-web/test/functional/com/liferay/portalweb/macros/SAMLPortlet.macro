@@ -464,7 +464,7 @@ definition {
 	macro viewIdentityProviderConfigurations {
 		AssertValue(
 			locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SESSION_MAXIMUM_AGE_INPUT",
-			value1 = "${sessionMaximum}");
+			value1 = ${sessionMaximum});
 
 		AssertNotChecked(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX");
 	}

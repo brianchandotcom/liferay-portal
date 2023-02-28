@@ -19,6 +19,7 @@ import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
 
 import {
+	HAS_OPERATORS,
 	PROPERTY_TYPES,
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
@@ -73,9 +74,18 @@ class CriteriaRowEditable extends Component {
 	_handleInputChange = (propertyName) => (event) => {
 		const {criterion, onChange} = this.props;
 
+		let value = event.target.value;
+
+		if (Object.values(HAS_OPERATORS).includes(value)) {
+			value =
+				event.target.value === HAS_OPERATORS.HAS
+					? (value = false)
+					: (value = true);
+		}
+
 		onChange({
 			...criterion,
-			[propertyName]: event.target.value,
+			[propertyName]: value,
 		});
 	};
 

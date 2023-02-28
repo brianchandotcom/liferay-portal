@@ -4,13 +4,9 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
+import {saveSpecification} from '../../utils/util';
 
 import './ProvideAppSupportAndHelpPage.scss';
-import {
-	createProductSpecification,
-	createSpecification,
-	updateProductSpecification,
-} from '../../utils/api';
 
 interface ProvideAppSupportAndHelpPageProps {
 	onClickBack: () => void;
@@ -33,67 +29,6 @@ export function ProvideAppSupportAndHelpPage({
 		},
 		dispatch,
 	] = useAppContext();
-
-	async function saveAndUpdate(
-		productSpecificationId: number,
-		key: string,
-		title: string,
-		value: string,
-		action: TYPES
-	) {
-		const id = await submitSupportURLs(
-			productSpecificationId,
-			key,
-			title,
-			value
-		);
-
-		dispatch({
-			payload: {
-				id,
-				value,
-			},
-			type: action,
-		});
-	}
-
-	async function submitSupportURLs(
-		productSpecificationId: number,
-		key: string,
-		title: string,
-		value: string
-	): Promise<void> {
-		const dataSpecification = await createSpecification({
-			body: {
-				key,
-				title: {en_US: title},
-			},
-		});
-		if (productSpecificationId) {
-			updateProductSpecification({
-				body: {
-					specificationKey: dataSpecification.key,
-					value: {en_US: value},
-				},
-				id: productSpecificationId,
-			});
-
-			return;
-		}
-		else {
-			const {id} = await createProductSpecification({
-				appId,
-				body: {
-					productId: appProductId,
-					specificationId: dataSpecification.id,
-					specificationKey: dataSpecification.key,
-					value: {en_US: value},
-				},
-			});
-
-			return id;
-		}
-	}
 
 	return (
 		<div className="provide-app-support-and-help-page-container">
@@ -189,8 +124,10 @@ export function ProvideAppSupportAndHelpPage({
 			<NewAppPageFooterButtons
 				disableContinueButton={!supportURL?.value}
 				onClickBack={() => onClickBack()}
-				onClickContinue={() => {
-					saveAndUpdate(
+				onClickContinue={async () => {
+					const supportURLSpecificationId = await saveSpecification(
+						appId,
+						appProductId,
 						supportURL?.id,
 						'supportURL',
 						'Support URL',
@@ -198,41 +135,148 @@ export function ProvideAppSupportAndHelpPage({
 						TYPES.UPDATE_APP_SUPPORT_URL
 					);
 
+					if (supportURLSpecificationId !== -1) {
+						dispatch({
+							payload: {
+								id: supportURLSpecificationId,
+								value: supportURL.value,
+							},
+							type: TYPES.UPDATE_APP_SUPPORT_URL,
+						});
+					}
+					else {
+						dispatch({
+							payload: {
+								id: supportURL?.id,
+								value: supportURL.value,
+							},
+							type: TYPES.UPDATE_APP_SUPPORT_URL,
+						});
+					}
+
 					if (publisherWebsiteURL?.value) {
-						saveAndUpdate(
-							publisherWebsiteURL?.id,
-							'publisherWebsiteURL',
-							'Publisher Web site URL',
-							publisherWebsiteURL?.value,
-							TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL
-						);
+						const publisherWebsiteURLSpecificationId =
+							await saveSpecification(
+								appId,
+								appProductId,
+								publisherWebsiteURL?.id,
+								'publisherWebsiteURL',
+								'Publisher Web site URL',
+								publisherWebsiteURL?.value,
+								TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL
+							);
+
+						if (publisherWebsiteURLSpecificationId !== -1) {
+							dispatch({
+								payload: {
+									id: publisherWebsiteURLSpecificationId,
+									value: publisherWebsiteURL.value,
+								},
+								type: TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL,
+							});
+						}
+						else {
+							dispatch({
+								payload: {
+									id: publisherWebsiteURL?.id,
+									value: publisherWebsiteURL.value,
+								},
+								type: TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL,
+							});
+						}
 					}
 					if (appUsageTermsURL?.value) {
-						saveAndUpdate(
-							appUsageTermsURL?.id,
-							'appUsageTermsURL',
-							'App Usage Terms URL',
-							appUsageTermsURL?.value,
-							TYPES.UPDATE_APP_USAGE_TERMS_URL
-						);
+						const appUsageTermsURLSpecificationId =
+							await saveSpecification(
+								appId,
+								appProductId,
+								appUsageTermsURL?.id,
+								'appUsageTermsURL',
+								'App Usage Terms URL',
+								appUsageTermsURL?.value,
+								TYPES.UPDATE_APP_USAGE_TERMS_URL
+							);
+
+						if (appUsageTermsURLSpecificationId !== -1) {
+							dispatch({
+								payload: {
+									id: appUsageTermsURLSpecificationId,
+									value: appUsageTermsURL.value,
+								},
+								type: TYPES.UPDATE_APP_USAGE_TERMS_URL,
+							});
+						}
+						else {
+							dispatch({
+								payload: {
+									id: appUsageTermsURL?.id,
+									value: appUsageTermsURL.value,
+								},
+								type: TYPES.UPDATE_APP_USAGE_TERMS_URL,
+							});
+						}
 					}
 					if (appDocumentationURL?.value) {
-						saveAndUpdate(
-							appDocumentationURL?.id,
-							'appDocumentationURL',
-							'App Documentation URL',
-							appDocumentationURL?.value,
-							TYPES.UPDATE_APP_DOCUMENTATION_URL
-						);
+						const appDocumentationURLSpecificationId =
+							await saveSpecification(
+								appId,
+								appProductId,
+								appDocumentationURL?.id,
+								'appDocumentationURL',
+								'App Documentation URL',
+								appDocumentationURL?.value,
+								TYPES.UPDATE_APP_DOCUMENTATION_URL
+							);
+
+						if (appDocumentationURLSpecificationId !== -1) {
+							dispatch({
+								payload: {
+									id: appDocumentationURLSpecificationId,
+									value: appDocumentationURL.value,
+								},
+								type: TYPES.UPDATE_APP_DOCUMENTATION_URL,
+							});
+						}
+						else {
+							dispatch({
+								payload: {
+									id: appDocumentationURL?.id,
+									value: appDocumentationURL.value,
+								},
+								type: TYPES.UPDATE_APP_DOCUMENTATION_URL,
+							});
+						}
 					}
 					if (appInstallationGuideURL?.value) {
-						saveAndUpdate(
-							appInstallationGuideURL?.id,
-							'appInstallationGuideURL',
-							'App Installation Guide URL',
-							appInstallationGuideURL?.value,
-							TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL
-						);
+						const appInstallationGuideURLSpecificationId =
+							await saveSpecification(
+								appId,
+								appProductId,
+								appInstallationGuideURL?.id,
+								'appInstallationGuideURL',
+								'App Installation Guide URL',
+								appInstallationGuideURL?.value,
+								TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL
+							);
+
+						if (appInstallationGuideURLSpecificationId !== -1) {
+							dispatch({
+								payload: {
+									id: appInstallationGuideURLSpecificationId,
+									value: appInstallationGuideURL.value,
+								},
+								type: TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
+							});
+						}
+						else {
+							dispatch({
+								payload: {
+									id: appInstallationGuideURL?.id,
+									value: appInstallationGuideURL.value,
+								},
+								type: TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
+							});
+						}
 					}
 					onClickContinue();
 				}}

@@ -96,9 +96,15 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			return {...state, appName};
 		}
 		case TYPES.UPDATE_APP_NOTES: {
-			const appNotes = action.payload.value;
+			const {id, value} = action.payload;
 
-			return {...state, appNotes};
+			return {
+				...state,
+				appNotes: {
+					id,
+					value,
+				},
+			};
 		}
 		case TYPES.UPDATE_APP_PRICE_MODEL: {
 			const priceModel = action.payload.value;
@@ -152,9 +158,15 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			};
 		}
 		case TYPES.UPDATE_APP_VERSION: {
-			const appVersion = action.payload.value;
+			const {id, value} = action.payload;
 
-			return {...state, appVersion};
+			return {
+				...state,
+				appVersion: {
+					id,
+					value,
+				},
+			};
 		}
 		default:
 			return state;

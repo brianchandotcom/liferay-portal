@@ -36,7 +36,7 @@ export function updateApp({
 	appName: string;
 }) {
 	return fetch(
-		`http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${appERC}`,
+		`o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${appERC}`,
 		{
 			body: JSON.stringify({
 				description: {en_US: appDescription},
@@ -129,7 +129,7 @@ export async function updateProductSpecification({
 	id: number;
 }) {
 	const response = await fetch(
-		`http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/productSpecifications/${id}`,
+		`o/headless-commerce-admin-catalog/v1.0/productSpecifications/${id}`,
 		{
 			body: JSON.stringify(body),
 			headers,

@@ -4,7 +4,7 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {createProductSpecification, createSpecification} from '../../utils/api';
+import {saveSpecification} from '../../utils/util';
 
 import './ProvideVersionDetailsPage.scss';
 
@@ -39,16 +39,14 @@ export function ProvideVersionDetailsPage({
 					label="Version"
 					onChange={({target}) =>
 						dispatch({
-							payload: {
-								value: target.value,
-							},
+							payload: {id: appVersion?.id, value: target.value},
 							type: TYPES.UPDATE_APP_VERSION,
 						})
 					}
 					placeholder="0.0.0"
 					required
 					tooltip="version"
-					value={appVersion}
+					value={appVersion?.value}
 				/>
 
 				<Input
@@ -57,63 +55,75 @@ export function ProvideVersionDetailsPage({
 					localized
 					onChange={({target}) =>
 						dispatch({
-							payload: {
-								value: target.value,
-							},
+							payload: {id: appNotes?.id, value: target.value},
 							type: TYPES.UPDATE_APP_NOTES,
 						})
 					}
 					placeholder="Enter app description"
 					required
 					tooltip="notes"
-					value={appNotes}
+					value={appNotes?.value}
 				/>
 			</Section>
 
 			<NewAppPageFooterButtons
 				disableContinueButton={!appVersion || !appNotes}
 				onClickBack={() => onClickBack()}
-				onClickContinue={() => {
-					const submitVersionDatails = async () => {
-						const dataSpecification = await createSpecification({
-							body: {
-								key: 'version',
-								title: {en_US: 'Version'},
-							},
-						});
+				onClickContinue={async () => {
+					const versionSpecificationId = await saveSpecification(
+						appId,
+						appProductId,
+						appVersion?.id,
+						'version',
+						'Version',
+						appVersion?.value,
+						TYPES.UPDATE_APP_VERSION
+					);
 
-						createProductSpecification({
-							appId,
-							body: {
-								productId: appProductId,
-								specificationId: dataSpecification.id,
-								specificationKey: dataSpecification.key,
-								value: {en_US: appVersion},
+					if (versionSpecificationId !== -1) {
+						dispatch({
+							payload: {
+								id: versionSpecificationId,
+								value: appVersion.value,
 							},
+							type: TYPES.UPDATE_APP_VERSION,
 						});
-					};
-
-					const submitNotesDatails = async () => {
-						const dataSpecification = await createSpecification({
-							body: {
-								key: 'notes',
-								title: {en_US: 'Notes'},
+					}
+					else {
+						dispatch({
+							payload: {
+								id: appVersion?.id,
+								value: appVersion.value,
 							},
+							type: TYPES.UPDATE_APP_VERSION,
 						});
+					}
 
-						createProductSpecification({
-							appId,
-							body: {
-								productId: appProductId,
-								specificationId: dataSpecification.id,
-								specificationKey: dataSpecification.key,
-								value: {en_US: appNotes},
+					const noteSpecificationId = await saveSpecification(
+						appId,
+						appProductId,
+						appNotes?.id,
+						'notes',
+						'Notes',
+						appNotes?.value,
+						TYPES.UPDATE_APP_NOTES
+					);
+
+					if (noteSpecificationId !== -1) {
+						dispatch({
+							payload: {
+								id: noteSpecificationId,
+								value: appNotes.value,
 							},
+							type: TYPES.UPDATE_APP_NOTES,
 						});
-					};
-
-					submitVersionDatails();
-					submitNotesDatails();
+					}
+					else {
+						dispatch({
+							payload: {id: appNotes?.id, value: appNotes.value},
+							type: TYPES.UPDATE_APP_NOTES,
+						});
+					}
 					onClickContinue();
 				}}
 			/>

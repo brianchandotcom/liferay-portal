@@ -52,17 +52,10 @@ function Price({
 		}));
 
 	useEffect(() => {
-		if (namespace) {
-			Liferay.on(`${namespace}${CP_INSTANCE_CHANGED}`, updatePrice);
-		}
+		Liferay.on(`${namespace}${CP_INSTANCE_CHANGED}`, updatePrice);
 
 		return () => {
-			if (namespace) {
-				Liferay.detach(
-					`${namespace}${CP_INSTANCE_CHANGED}`,
-					updatePrice
-				);
-			}
+			Liferay.detach(`${namespace}${CP_INSTANCE_CHANGED}`, updatePrice);
 		};
 	}, [namespace]);
 

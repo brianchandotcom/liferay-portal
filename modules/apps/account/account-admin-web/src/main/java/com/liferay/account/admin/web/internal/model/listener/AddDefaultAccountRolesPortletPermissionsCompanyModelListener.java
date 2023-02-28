@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.account.admin.web.internal.instance.lifecycle;
+package com.liferay.account.admin.web.internal.model.listener;
 
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.service.AccountRoleLocalService;
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
@@ -39,32 +40,33 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(
-	property = "service.ranking:Integer=100",
-	service = PortalInstanceLifecycleListener.class
-)
-public class
-	AddDefaultAccountRolesPortletPermissionsPortalInstanceLifecycleListener
-		extends BasePortalInstanceLifecycleListener {
+@Component(service = ModelListener.class)
+public class AddDefaultAccountRolesPortletPermissionsCompanyModelListener
+	extends BaseModelListener<Company> {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
-		_accountRoleLocalService.checkCompanyAccountRoles(
-			company.getCompanyId());
+	public void onAfterCreate(Company company) {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_accountRoleLocalService.checkCompanyAccountRoles(
+					company.getCompanyId());
 
-		_checkResourcePermissions(
-			company.getCompanyId(),
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
-			HashMapBuilder.put(
-				AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-				new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL}
-			).put(
-				AccountPortletKeys.ACCOUNT_USERS_ADMIN,
-				new String[] {
-					AccountActionKeys.ASSIGN_ACCOUNTS,
-					ActionKeys.ACCESS_IN_CONTROL_PANEL
-				}
-			).build());
+				_checkResourcePermissions(
+					company.getCompanyId(),
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+					HashMapBuilder.put(
+						AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+						new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL}
+					).put(
+						AccountPortletKeys.ACCOUNT_USERS_ADMIN,
+						new String[] {
+							AccountActionKeys.ASSIGN_ACCOUNTS,
+							ActionKeys.ACCESS_IN_CONTROL_PANEL
+						}
+					).build());
+
+				return null;
+			});
 	}
 
 	private void _checkResourcePermissions(
@@ -110,11 +112,6 @@ public class
 		target = "(javax.portlet.name=" + AccountPortletKeys.ACCOUNT_USERS_ADMIN + ")"
 	)
 	private Portlet _accountUsersAdminPortlet;
-
-	@Reference(
-		target = "(component.name=com.liferay.account.internal.instance.lifecycle.AddDefaultAccountRolesPortalInstanceLifecycleListener)"
-	)
-	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.account.service)(&(release.schema.version>=1.0.2)))"

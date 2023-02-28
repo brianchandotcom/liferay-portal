@@ -612,7 +612,8 @@ definition {
 			value1 = "This user is not assigned any asset library roles.");
 
 		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#DEPOT_ROLES_SELECT_LINK",
+			key_roleType = "DepotRole",
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
 			value1 = "SELECT");
 
 		SelectFrame(locator1 = "IFrame#SELECT_DEPOT_ROLE");
@@ -634,7 +635,8 @@ definition {
 		UserNavigator.gotoRoles();
 
 		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#DEPOT_ROLES_SELECT_LINK",
+			key_roleType = "DepotRole",
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
 			value1 = "SELECT");
 
 		SelectFrame(locator1 = "IFrame#SELECT_DEPOT_ROLE");

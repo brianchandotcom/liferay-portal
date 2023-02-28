@@ -205,6 +205,55 @@ definition {
 		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
+	@description = "This is a use cas for LPS-176197. As a publication admin, I would like to preview fragment before publishing"
+	@priority = 3
+	test CanPreviewAfterChangeFragmentBeforePublishing {
+		task ("Add Content Page with paragraph fragment") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+
+			PageEditor.publish();
+		}
+
+		Navigator.openURL();
+
+		JSONPublications.addPublication(publicationName = "Test Publication");
+
+		JSONPublications.selectPublication(publicationName = "Test Publication");
+
+		task ("Edit paragraph fragment and assert the preview before and after the change") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "Paragraph text edited.");
+
+			PageEditor.publish();
+
+			PublicationsNavigator.gotoReviewChanges();
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Page",
+				changeSite = "Guest",
+				changeTitle = "Test Page",
+				changeType = "Modified",
+				changeUser = "Test Test");
+		}
+	}
+
 	@description = "This is a use case for LPS-164162 - Styling Content Pages is not properly applied when the user edits a page in a Publication"
 	@priority = 3
 	test CanStyleContentPages {

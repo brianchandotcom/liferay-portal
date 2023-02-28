@@ -40,7 +40,7 @@ export interface SearchBuilderConstructor {
  * Based in the following article https://help.liferay.com/hc/pt/articles/360031163631-Filter-Sort-and-Search
  */
 
-export class SearchBuilder {
+export default class SearchBuilder {
 	private lock: boolean = false;
 	private query: string = '';
 	private useURIEncode?: boolean = true;
@@ -109,22 +109,6 @@ export class SearchBuilder {
 		return `${key} startsWith '${value}'`;
 	}
 
-	public and() {
-		return this.setContext('and');
-	}
-
-	public build() {
-		const query = this.query.trim();
-
-		if (query.endsWith('or') || query.endsWith('and')) {
-			return query.substring(0, query.length - 3);
-		}
-
-		this.lock = true;
-
-		return this.useURIEncode ? encodeURIComponent(query) : query;
-	}
-
 	static removeEmptyFilter(filter: Filter) {
 		const _filter: Filter = {};
 
@@ -173,8 +157,7 @@ export class SearchBuilder {
 					key.replace('$', ''),
 					value
 				);
-			}
-			else {
+			} else {
 				searchCondition = Array.isArray(value)
 					? SearchBuilder.in(
 							key,
@@ -195,6 +178,22 @@ export class SearchBuilder {
 		}
 
 		return _filter.join(' and ');
+	}
+
+	public and() {
+		return this.setContext('and');
+	}
+
+	public build() {
+		const query = this.query.trim();
+
+		if (query.endsWith('or') || query.endsWith('and')) {
+			return query.substring(0, query.length - 3);
+		}
+
+		this.lock = true;
+
+		return this.useURIEncode ? encodeURIComponent(query) : query;
 	}
 
 	public contains(key: Key, value: Value) {

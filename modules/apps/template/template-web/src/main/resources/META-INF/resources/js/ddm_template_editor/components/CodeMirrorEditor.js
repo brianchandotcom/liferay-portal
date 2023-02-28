@@ -47,11 +47,9 @@ import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/javascript/javascript';
 import {CodeMirrorKeyboardMessage} from '@liferay/layout-content-page-editor-web';
 import CodeMirror from 'codemirror';
+import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
-
-
-import {debounce} from 'frontend-js-web';
 
 export function CodeMirrorEditor({
 	autocompleteData,

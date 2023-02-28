@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
@@ -62,11 +61,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -175,49 +171,46 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				user, ddmFormInstanceRecord, ddmStorageId, status,
 				_VERSION_DEFAULT);
 
-		// Attachments
-
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {
 
-			if (Objects.equals(
+			if (!Objects.equals(
 					ddmFormFieldValue.getType(),
 					DDMFormFieldTypeConstants.DOCUMENT_LIBRARY)) {
 
-				Value value = ddmFormFieldValue.getValue();
-
-				JSONObject valueJSONObject = _jsonFactory.createJSONObject(
-					value.getString(ddmFormValues.getDefaultLocale()));
-
-				DLFileEntry dlFileEntry =
-					_dlFileEntryLocalService.fetchFileEntry(
-						valueJSONObject.getString("uuid"), groupId);
-
-				if (dlFileEntry == null) {
-					continue;
-				}
-
-				Repository repository =
-					_portletFileRepository.fetchPortletRepository(
-						groupId, DDMFormConstants.SERVICE_NAME);
-
-				if (repository == null) {
-					continue;
-				}
-
-				Folder formsFolder = _portletFileRepository.getPortletFolder(
-					repository.getRepositoryId(),
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					DDMFormConstants.DDM_FORM_UPLOADED_FILES_FOLDER_NAME);
-
-				if (dlFileEntry.getFolderId() == formsFolder.getFolderId()) {
-					dlFileEntry.setClassName(
-						DDMFormInstanceRecord.class.getName());
-					dlFileEntry.setClassPK(recordId);
-
-					_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
-				}
+				continue;
 			}
+
+			Value value = ddmFormFieldValue.getValue();
+
+			if (value == null) {
+				continue;
+			}
+
+			JSONObject valueJSONObject = _jsonFactory.createJSONObject(
+				value.getString(ddmFormValues.getDefaultLocale()));
+
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchFileEntry(
+				valueJSONObject.getString("uuid"), groupId);
+
+			if (dlFileEntry == null) {
+				continue;
+			}
+
+			User ddmFormDefaultUser = _userLocalService.fetchUserByScreenName(
+				user.getCompanyId(),
+				DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME);
+
+			if ((ddmFormDefaultUser == null) ||
+				(ddmFormDefaultUser.getUserId() != dlFileEntry.getUserId())) {
+
+				continue;
+			}
+
+			dlFileEntry.setClassName(DDMFormInstanceRecord.class.getName());
+			dlFileEntry.setClassPK(recordId);
+
+			_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 		}
 
 		// Asset
@@ -1124,9 +1117,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private UserLocalService _userLocalService;

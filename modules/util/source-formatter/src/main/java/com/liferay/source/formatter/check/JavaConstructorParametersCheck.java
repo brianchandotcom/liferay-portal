@@ -70,8 +70,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 		String parameterName) {
 
 		Pattern pattern = Pattern.compile(
-			StringBundler.concat(
-				"\\b", globalVariableName, "|", parameterName, "\\b"));
+			StringBundler.concat("\\b", globalVariableName, "\\b"));
 
 		Matcher matcher1 = pattern.matcher(content);
 

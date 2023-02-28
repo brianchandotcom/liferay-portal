@@ -80,19 +80,8 @@ public interface ExportImportServiceConfiguration {
 	)
 	public boolean validateMissingReferences();
 
-	/**
-	 * Set the interval in minutes on how often
-	 * *TODO*CleanupMessageListener will run to check for expired
-	 * Export/Import entries.
-	 */
 	@Meta.AD(
-		deflt = "15", description = "cleanup-job-interval-help",
-		name = "cleanup-job-interval", required = false
-	)
-	public int cleanupJobInterval();
-
-	@Meta.AD(
-		deflt = "-1", description = "export-import-entry-expiry-days-help",
+		deflt = "0", description = "export-import-entry-expiry-days-help",
 		name = "export-import-entry-expiry-days", required = false
 	)
 	public int exportImportEntryExpiryDays();

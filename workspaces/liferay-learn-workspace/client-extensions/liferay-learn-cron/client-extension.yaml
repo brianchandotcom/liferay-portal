@@ -1,0 +1,37 @@
+assemble:
+    - from: .
+      include: "app.sh"
+      into: .
+    - from: build/libs
+      include: "*.jar"
+      into: .
+liferay-learn-cron:
+    homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]
+    name: Liferay Learn Cron
+    scopes:
+        - Liferay.Data.Engine.REST.everything
+        - Liferay.Headless.Admin.User.everything.read
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Headless.Delivery.everything
+        - liferay-json-web-services.everything.write
+        - liferay-json-web-services.everything
+        - liferay-json-web-services.everything.read
+    type: oAuthApplicationHeadlessServer
+runtime:
+    cpu: 2000m
+    env:
+        - name: OAUTH2_JOB_PROFILE
+          value: liferay-learn-cron
+        - name: LIFERAY_LEARN_CRON_GITHUB_BRANCH
+          value: master
+        - name: LIFERAY_LEARN_CRON_LIFERAY_DATA_DEFINITION_KEY
+          value: LEARN-ARTICLE
+        - name: LIFERAY_LEARN_CRON_LIFERAY_SITE_FRIENDLY_URL_PATH
+          value: guest
+        - name: LIFERAY_LEARN_CRON_MARKDOWN_IMPORT_DIR
+          value: ../docs
+        - name: LIFERAY_LEARN_CRON_SKIP_UPDATE_EXAMPLES
+          value: true
+    memory: 3000Mi
+    type: configuration
+    workload: job

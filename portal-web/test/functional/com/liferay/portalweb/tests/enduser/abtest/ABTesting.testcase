@@ -837,7 +837,7 @@ definition {
 		}
 
 		task ("Check that exist only one variant in Analytics Cloud") {
-			Button.click(button = "View Data in Analytics Cloud");
+			ABTest.viewDataInAnalyticsCloud();
 
 			SelectWindow(locator1 = "name=undefined");
 

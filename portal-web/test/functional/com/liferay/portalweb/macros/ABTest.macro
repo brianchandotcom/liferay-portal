@@ -5,7 +5,7 @@ definition {
 			ABTest.runTest();
 		}
 
-		Button.click(button = "View Data in Analytics Cloud");
+		ABTest.viewDataInAnalyticsCloud();
 
 		SelectWindow(locator1 = "name=undefined");
 
@@ -30,7 +30,7 @@ definition {
 			ABTest.runTest();
 		}
 
-		Button.click(button = "View Data in Analytics Cloud");
+		ABTest.viewDataInAnalyticsCloud();
 
 		SelectWindow(locator1 = "name=undefined");
 
@@ -142,7 +142,7 @@ definition {
 	}
 
 	macro openABTestInAC {
-		Button.click(button = "View Data in Analytics Cloud");
+		ABTest.viewDataInAnalyticsCloud();
 
 		SelectWindow(locator1 = "name=undefined");
 

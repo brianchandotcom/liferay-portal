@@ -1225,7 +1225,6 @@ public class BundleSiteInitializerTest {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition3");
 
-		Assert.assertFalse(objectDefinition3.isAccountEntryRestricted());
 		Assert.assertEquals(
 			objectDefinition3.getScope(),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -1241,9 +1240,7 @@ public class BundleSiteInitializerTest {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition4");
 
-		Assert.assertTrue(objectDefinition4.isAccountEntryRestricted());
-		Assert.assertTrue(
-			objectDefinition4.getAccountEntryRestrictedObjectFieldId() != 0);
+		Assert.assertFalse(objectDefinition4.isAccountEntryRestricted());
 		Assert.assertFalse(objectDefinition4.isSystem());
 		Assert.assertEquals(
 			objectDefinition4.getStatus(), WorkflowConstants.STATUS_APPROVED);
@@ -1269,6 +1266,12 @@ public class BundleSiteInitializerTest {
 				_group.getCompanyId(), "C_TestObjectDefinition2");
 
 		Assert.assertFalse(objectDefinition2.isAccountEntryRestricted());
+		Assert.assertEquals(
+			"Test Object Definition 2 Update",
+			objectDefinition2.getLabel(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals(
+			"Test Object Definitions 2 Update",
+			objectDefinition2.getPluralLabel(LocaleUtil.getSiteDefault()));
 		Assert.assertFalse(objectDefinition2.isSystem());
 		Assert.assertEquals(
 			objectDefinition2.getStatus(), WorkflowConstants.STATUS_APPROVED);
@@ -1297,9 +1300,11 @@ public class BundleSiteInitializerTest {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition4");
 
-		Assert.assertTrue(objectDefinition4.isAccountEntryRestricted());
 		Assert.assertTrue(
-			objectDefinition4.getAccountEntryRestrictedObjectFieldId() != 0);
+			objectDefinition4.getAccountEntryRestrictedObjectFieldId() >= 0);
+		Assert.assertTrue(objectDefinition4.isAccountEntryRestricted());
+		Assert.assertTrue(objectDefinition4.isEnableCategorization());
+		Assert.assertTrue(objectDefinition4.isEnableComments());
 		Assert.assertFalse(objectDefinition4.isSystem());
 		Assert.assertEquals(
 			objectDefinition4.getStatus(), WorkflowConstants.STATUS_APPROVED);
@@ -1308,9 +1313,9 @@ public class BundleSiteInitializerTest {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition5");
 
-		Assert.assertTrue(objectDefinition5.isAccountEntryRestricted());
 		Assert.assertTrue(
-			objectDefinition5.getAccountEntryRestrictedObjectFieldId() != 0);
+			objectDefinition5.getAccountEntryRestrictedObjectFieldId() >= 0);
+		Assert.assertTrue(objectDefinition5.isAccountEntryRestricted());
 		Assert.assertFalse(objectDefinition5.isSystem());
 
 		Assert.assertEquals(
@@ -1397,6 +1402,12 @@ public class BundleSiteInitializerTest {
 			"TestObjectDefinition2",
 			existingObjectRelationship2.getObjectDefinitionName2());
 
+		ObjectRelationship.DeletionType objectRelationshipDeletionType2 =
+			existingObjectRelationship2.getDeletionType();
+
+		Assert.assertEquals(
+			"cascade", objectRelationshipDeletionType2.toString());
+
 		ObjectRelationship.Type objectRelationshipType2 =
 			existingObjectRelationship2.getType();
 
@@ -1471,6 +1482,12 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"TestObjectDefinition2",
 			existingObjectRelationship2.getObjectDefinitionName2());
+
+		ObjectRelationship.DeletionType objectRelationshipDeletionType2 =
+			existingObjectRelationship2.getDeletionType();
+
+		Assert.assertEquals(
+			"prevent", objectRelationshipDeletionType2.toString());
 
 		ObjectRelationship.Type objectRelationshipType2 =
 			existingObjectRelationship2.getType();

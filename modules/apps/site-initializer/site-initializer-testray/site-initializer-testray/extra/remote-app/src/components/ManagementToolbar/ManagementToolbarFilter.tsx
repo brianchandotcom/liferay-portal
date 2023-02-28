@@ -13,8 +13,8 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayPopover from '@clayui/popover';
 import {useCallback, useContext, useMemo, useState} from 'react';
 
 import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
@@ -89,17 +89,15 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	}, [dispatch, fields, form]);
 
 	return (
-		<ClayDropDown
-			menuElementAttrs={{
-				className: 'management-toolbar-filter-dropdown',
-			}}
-			menuWidth="sm"
-			renderMenuOnClick
+		<ClayPopover
+			alignPosition="bottom-right"
+			className="popover-filter"
+			closeOnClickOutside
 			trigger={
-				<ClayButton className="nav-link" displayType="unstyled">
+				<ClayButton className="d-flex nav-link" displayType="unstyled">
 					<span className="navbar-breakpoint-down-d-none">
 						<ClayIcon
-							className="inline-item inline-item-after"
+							className="inline-item inline-item-after inline-item-before"
 							symbol="filter"
 						/>
 					</span>
@@ -110,48 +108,52 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 				</ClayButton>
 			}
 		>
-			<div className="dropdown-header">
-				<p className="font-weight-bold my-2">
-					{i18n.translate('filter-results')}
-				</p>
+			<div className="align-content-between d-flex flex-column">
+				<div className="dropdown-header">
+					<p className="font-weight-bold my-2">
+						{i18n.translate('filter-results')}
+					</p>
 
-				<Form.Input
-					name="search-filter"
-					onChange={({target: {value}}) => setFilter(value)}
-					placeholder={i18n.translate('search-filters')}
-					value={filter}
-				/>
+					<Form.Input
+						name="search-filter"
+						onChange={({target: {value}}) => setFilter(value)}
+						placeholder={i18n.translate('search-filters')}
+						value={filter}
+					/>
+
+					<Form.Divider />
+				</div>
+
+				<div className="body-filters">
+					<div className="popover-filter-content">
+						<Form.Renderer
+							fieldOptions={fieldOptions}
+							fields={fields}
+							filter={filter}
+							form={form}
+							onChange={onChange}
+							setFieldOptions={setFieldOptions}
+						/>
+					</div>
+				</div>
+
+				<div className="popover-footer">
+					<Form.Divider />
+
+					<ClayButton onClick={onApply}>
+						{i18n.translate('apply')}
+					</ClayButton>
+
+					<ClayButton
+						className="ml-3"
+						displayType="secondary"
+						onClick={onClear}
+					>
+						{i18n.translate('clear')}
+					</ClayButton>
+				</div>
 			</div>
-
-			<Form.Divider />
-
-			<div className="popover-body">
-				<Form.Renderer
-					fieldOptions={fieldOptions}
-					fields={fields}
-					filter={filter}
-					form={form}
-					onChange={onChange}
-					setFieldOptions={setFieldOptions}
-				/>
-			</div>
-
-			<Form.Divider />
-
-			<div className="popover-footer">
-				<ClayButton onClick={onApply}>
-					{i18n.translate('apply')}
-				</ClayButton>
-
-				<ClayButton
-					className="ml-3"
-					displayType="secondary"
-					onClick={onClear}
-				>
-					{i18n.translate('clear')}
-				</ClayButton>
-			</div>
-		</ClayDropDown>
+		</ClayPopover>
 	);
 };
 

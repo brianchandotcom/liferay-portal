@@ -249,16 +249,15 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 		SPIDDMFormRule spiDDMFormRule,
 		SPIDDMFormRuleSerializerContext spiDDMFormRuleSerializerContext) {
 
-		String condition = _convertConditions(
-			spiDDMFormRule.getLogicalOperator(),
-			spiDDMFormRule.getSPIDDMFormRuleConditions());
-
 		return new DDMFormRule(
 			TransformUtil.transform(
 				spiDDMFormRule.getSPIDDMFormRuleActions(),
 				spiDDMFormRuleAction -> spiDDMFormRuleAction.serialize(
 					spiDDMFormRuleSerializerContext)),
-			condition, spiDDMFormRule.getName());
+			_convertConditions(
+				spiDDMFormRule.getLogicalOperator(),
+				spiDDMFormRule.getSPIDDMFormRuleConditions()),
+			spiDDMFormRule.getName());
 	}
 
 	private String _createCondition(

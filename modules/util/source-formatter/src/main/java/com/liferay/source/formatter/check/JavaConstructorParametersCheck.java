@@ -141,9 +141,10 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				}
 
 				if (Validator.isNull(matcher2.group(2))) {
-					String preCode = content.substring(0, matcher2.start());
+					String previousCode = content.substring(
+						0, matcher2.start());
 
-					if (preCode.endsWith("new ")) {
+					if (previousCode.endsWith("new ")) {
 						continue;
 					}
 				}

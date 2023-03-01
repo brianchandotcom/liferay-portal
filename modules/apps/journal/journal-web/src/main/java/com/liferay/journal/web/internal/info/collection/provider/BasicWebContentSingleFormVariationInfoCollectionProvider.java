@@ -83,7 +83,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 		return InfoPage.of(
 			JournalSearcherUtil.transformJournalArticles(
-				false, searchResponse.getSearchHits()),
+				searchResponse.getDocuments71(), false),
 			collectionQuery.getPagination(), searchResponse.getTotalHits());
 	}
 

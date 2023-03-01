@@ -19,12 +19,11 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -66,45 +65,39 @@ public class JournalSearcherUtil {
 	}
 
 	public static List<Object> transformJournalArticleAndFolders(
-		SearchHits searchHits) {
+		List<Document> documents) {
 
 		return TransformUtil.transform(
-			searchHits.getSearchHits(),
-			searchHit -> {
-				Document document = searchHit.getDocument();
-
-				String className = document.getString(Field.ENTRY_CLASS_NAME);
+			documents,
+			document -> {
+				String className = document.get(Field.ENTRY_CLASS_NAME);
 
 				if (className.equals(JournalArticle.class.getName())) {
 					return _journalArticleLocalService.fetchLatestArticle(
-						GetterUtil.getLong(
-							document.getLong(Field.ENTRY_CLASS_PK)),
+						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
 						WorkflowConstants.STATUS_ANY, false);
 				}
 
 				return _journalFolderLocalService.fetchJournalFolder(
-					GetterUtil.getLong(document.getLong(Field.ENTRY_CLASS_PK)));
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
 			});
 	}
 
 	public static List<JournalArticle> transformJournalArticles(
-		boolean showVersions, SearchHits searchHits) {
+		List<Document> documents, boolean showVersions) {
 
 		return TransformUtil.transform(
-			searchHits.getSearchHits(),
-			searchHit -> {
-				Document document = searchHit.getDocument();
-
+			documents,
+			document -> {
 				if (showVersions) {
 					return _journalArticleLocalService.fetchArticle(
-						GetterUtil.getLong(document.getLong(Field.GROUP_ID)),
-						document.getString(Field.ARTICLE_ID),
-						GetterUtil.getDouble(
-							document.getDouble(Field.VERSION)));
+						GetterUtil.getLong(document.get(Field.GROUP_ID)),
+						document.get(Field.ARTICLE_ID),
+						GetterUtil.getDouble(document.get(Field.VERSION)));
 				}
 
 				return _journalArticleLocalService.fetchLatestArticle(
-					GetterUtil.getLong(document.getLong(Field.ENTRY_CLASS_PK)),
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
 					WorkflowConstants.STATUS_ANY, false);
 			});
 	}

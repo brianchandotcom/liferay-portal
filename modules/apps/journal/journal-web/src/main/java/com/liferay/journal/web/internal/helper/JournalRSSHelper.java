@@ -356,7 +356,7 @@ public class JournalRSSHelper {
 
 		List<JournalArticle> articles =
 			JournalSearcherUtil.transformJournalArticles(
-				false, searchResponse.getSearchHits());
+				searchResponse.getDocuments71(), false);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Syndicating " + articles.size() + " articles");

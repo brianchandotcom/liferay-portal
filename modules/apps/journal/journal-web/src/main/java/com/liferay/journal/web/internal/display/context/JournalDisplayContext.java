@@ -1208,7 +1208,7 @@ public class JournalDisplayContext {
 
 			articleAndFolderSearchContainer.setResultsAndTotal(
 				() -> JournalSearcherUtil.transformJournalArticleAndFolders(
-					searchResponse.getSearchHits()),
+					searchResponse.getDocuments71()),
 				searchResponse.getTotalHits());
 
 			articleAndFolderSearchContainer.setRowChecker(_getEntriesChecker());
@@ -1438,7 +1438,7 @@ public class JournalDisplayContext {
 
 		articleVersionsSearchContainer.setResultsAndTotal(
 			() -> JournalSearcherUtil.transformJournalArticles(
-				true, searchResponse.getSearchHits()),
+				searchResponse.getDocuments71(), true),
 			searchResponse.getTotalHits());
 
 		_articleVersionsSearchContainer = articleVersionsSearchContainer;
@@ -1446,7 +1446,7 @@ public class JournalDisplayContext {
 		return _articleVersionsSearchContainer;
 	}
 
-	private SearchContext _populateSearchContext(
+	private void _populateSearchContext(
 		int start, int end, SearchContext searchContext, boolean showVersions) {
 
 		searchContext.setAndSearch(false);
@@ -1493,8 +1493,6 @@ public class JournalDisplayContext {
 		}
 
 		searchContext.setStart(start);
-
-		return searchContext;
 	}
 
 	private String[] _addMenuFavItems;

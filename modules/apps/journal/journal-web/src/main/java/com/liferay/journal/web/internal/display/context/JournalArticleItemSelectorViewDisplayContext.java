@@ -382,7 +382,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 			articleAndFolderSearchContainer.setResultsAndTotal(
 				() -> JournalSearcherUtil.transformJournalArticleAndFolders(
-					searchResponse.getSearchHits()),
+					searchResponse.getDocuments71()),
 				searchResponse.getTotalHits());
 
 			_articleSearchContainer = articleAndFolderSearchContainer;

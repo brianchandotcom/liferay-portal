@@ -2540,6 +2540,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		Group group = serviceContext.getScopeGroup();
+
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
@@ -2547,7 +2549,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 				FileUtil.getShortFileName(
 					FileUtil.stripExtension(url.getPath())),
 				_replace(
+					_replace(
 					StringUtil.read(url.openStream()),
+						new String[] {
+							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
+							"[$GROUP_KEY$]", "[$PORTAL_URL$]"
+						},
+						new String[] {
+							String.valueOf(group.getCompanyId()),
+							group.getFriendlyURL(),
+							String.valueOf(serviceContext.getScopeGroupId()),
+							group.getGroupKey(), serviceContext.getPortalURL()
+						}),
 					documentsStringUtilReplaceValues));
 		}
 
@@ -2555,28 +2568,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_jsonFactory.createJSONObject(json);
 
 		notificationTemplateJSONObject.put("body", bodyJSONObject);
-
-		json = JSONUtil.toString(notificationTemplateJSONObject);
-
-		Group group = serviceContext.getScopeGroup();
-
-		json = _replace(
-			_replace(
-				json,
-				new String[] {
-					"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
-					"[$GROUP_KEY$]", "[$PORTAL_URL$]"
-				},
-				new String[] {
-					String.valueOf(group.getCompanyId()),
-					group.getFriendlyURL(),
-					String.valueOf(serviceContext.getScopeGroupId()),
-					group.getGroupKey(), serviceContext.getPortalURL()
-				}),
-			documentsStringUtilReplaceValues,
-			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
-
-		notificationTemplateJSONObject = _jsonFactory.createJSONObject(json);
 
 		NotificationTemplate notificationTemplate = NotificationTemplate.toDTO(
 			notificationTemplateJSONObject.toString());

@@ -432,7 +432,7 @@ public class UpgradeReport {
 		).put(
 			"database.version", _getDialectInfo()
 		).put(
-			"property", _getPropertiesInfo()
+			_PROPERTY_KEY, _getPropertiesInfo()
 		).put(
 			"document.library.storage.size", _getDLStorageInfoNew()
 		).put(
@@ -628,6 +628,11 @@ public class UpgradeReport {
 	}
 
 	private String _getUpgradeReportHeaderFromKey(String key) {
+		if (key.startsWith(_PROPERTY_KEY)) {
+			return StringUtil.replaceFirst(
+				StringUtil.upperCaseFirstLetter(key), '.', ' ');
+		}
+
 		return StringUtil.replace(
 			StringUtil.upperCaseFirstLetter(key), '.', ' ');
 	}
@@ -769,6 +774,8 @@ public class UpgradeReport {
 	};
 
 	private static final String _LOG_CONTEXT_PREFIX = "upgrade.report.";
+
+	private static final String _PROPERTY_KEY = "property";
 
 	private static final int _UPGRADE_PROCESSES_COUNT = 20;
 

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.internal.util;
 
+import com.liferay.application.list.GroupProvider;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.internal.action.provider.LayoutActionProvider;
@@ -376,7 +377,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				if (includeActions) {
 					LayoutActionProvider layoutActionProvider =
 						new LayoutActionProvider(
-							httpServletRequest, _language,
+							_groupProvider, httpServletRequest, _language,
 							_siteNavigationMenuLocalService);
 
 					return layoutActionProvider.getActionsJSONArray(
@@ -490,6 +491,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupProvider _groupProvider;
 
 	@Reference
 	private JSONFactory _jsonFactory;

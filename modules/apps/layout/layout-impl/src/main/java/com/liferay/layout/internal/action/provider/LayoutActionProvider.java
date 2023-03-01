@@ -15,7 +15,6 @@
 package com.liferay.layout.internal.action.provider;
 
 import com.liferay.application.list.GroupProvider;
-import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -68,15 +67,15 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutActionProvider {
 
 	public LayoutActionProvider(
-		HttpServletRequest httpServletRequest, Language language,
+		GroupProvider groupProvider, HttpServletRequest httpServletRequest,
+		Language language,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
 
+		_groupProvider = groupProvider;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 
-		_groupProvider = (GroupProvider)httpServletRequest.getAttribute(
-			ApplicationListWebKeys.GROUP_PROVIDER);
 		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
 			(PortletRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST));

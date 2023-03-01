@@ -17,8 +17,8 @@ package com.liferay.commerce.inventory.internal.search.spi.model.query.contribut
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.MissingFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,19 +51,14 @@ public class CommerceInventoryBookedQuantityModelPreFilterContributor
 		String sku = GetterUtil.getString(searchContext.getAttribute("sku"));
 
 		if (Validator.isNull(sku)) {
-			return;
+			Filter existsFilter = new ExistsFilter("sku.raw");
+
+			booleanFilter.add(existsFilter, BooleanClauseOccur.MUST_NOT);
 		}
 
-		BooleanFilter skuBooleanFilter = new BooleanFilter();
+		Filter termFilter = new TermFilter("sku.raw", sku);
 
-		Filter termFilter = new TermFilter("sku", sku);
-
-		skuBooleanFilter.add(termFilter, BooleanClauseOccur.SHOULD);
-
-		skuBooleanFilter.add(
-			new MissingFilter("sku"), BooleanClauseOccur.SHOULD);
-
-		booleanFilter.add(skuBooleanFilter, BooleanClauseOccur.MUST);
+		booleanFilter.add(termFilter, BooleanClauseOccur.MUST);
 	}
 
 }

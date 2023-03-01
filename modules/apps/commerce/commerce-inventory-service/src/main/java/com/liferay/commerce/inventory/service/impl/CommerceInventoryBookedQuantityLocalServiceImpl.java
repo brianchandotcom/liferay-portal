@@ -346,7 +346,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 		searchContext.setEnd(end);
 		searchContext.setKeywords(keywords);
 
-		if (Validator.isNull(sku)) {
+		if (Validator.isNotNull(sku)) {
 			searchContext.setAttribute("sku", sku);
 		}
 

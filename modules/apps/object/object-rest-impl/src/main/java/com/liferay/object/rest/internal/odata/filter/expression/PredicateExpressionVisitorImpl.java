@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -71,12 +72,16 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.ws.rs.ServerErrorException;
 
 /**
  * @author Marco Leo
@@ -387,13 +392,12 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private ObjectRelationship _fetchObjectRelationship(
-		String relationshipName) {
+		long objectDefinitionId, String relationshipName) {
 
 		try {
 			return ObjectRelationshipLocalServiceUtil.
 				getObjectRelationshipByObjectDefinitionId(
-					_objectDefinitionId,
-					GetterUtil.getString(relationshipName));
+					objectDefinitionId, GetterUtil.getString(relationshipName));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -457,6 +461,17 @@ public class PredicateExpressionVisitorImpl
 		return null;
 	}
 
+	private ObjectValuePair<String, List<String>>
+		_getFieldNameObjectRelationshipsNames(String filterString) {
+
+		List<String> stringChunks = Arrays.asList(
+			filterString.split(StringPool.SLASH));
+
+		return new ObjectValuePair<>(
+			stringChunks.get(stringChunks.size() - 1),
+			new ArrayList<>(stringChunks.subList(0, stringChunks.size() - 1)));
+	}
+
 	private Predicate _getInPredicate(
 		Object left, long objectDefinitionId, List<Object> rights) {
 
@@ -504,6 +519,39 @@ public class PredicateExpressionVisitorImpl
 		);
 	}
 
+	private List<ObjectValuePair<ObjectRelationship, Long>>
+		_getListObjectRelationshipsRelatedObjectDefinitionId(
+			long objectDefinitionId, List<String> objectRelationshipsNames) {
+
+		List<ObjectValuePair<ObjectRelationship, Long>> objectValuePairs =
+			new ArrayList<>();
+
+		for (String objectRelationshipsName : objectRelationshipsNames) {
+			ObjectRelationship objectRelationship = _fetchObjectRelationship(
+				objectDefinitionId, objectRelationshipsName);
+
+			if (objectRelationship != null) {
+				objectValuePairs.add(
+					new ObjectValuePair<>(
+						objectRelationship, objectDefinitionId));
+
+				objectDefinitionId = _getRelatedObjectDefinitionId(
+					objectDefinitionId, objectRelationship);
+			}
+		}
+
+		if (objectValuePairs.isEmpty()) {
+			throw new ServerErrorException(
+				500,
+				new Exception(
+					"Unexpected error. ObjectRelationships not founded"));
+		}
+
+		Collections.reverse(objectValuePairs);
+
+		return objectValuePairs;
+	}
+
 	private EntityModel _getObjectDefinitionEntityModel(
 		long objectDefinitionId) {
 
@@ -519,44 +567,15 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private Predicate _getObjectRelationshipPredicate(
-		Object left,
-		UnsafeBiFunction<String, Long, Predicate, Exception> unsafeBiFunction) {
-
-		String leftString = (String)left;
-
-		String[] leftStringParts = leftString.split(StringPool.SLASH);
-
-		String relationshipName = leftStringParts[0];
-
-		ObjectRelationship objectRelationship = _fetchObjectRelationship(
-			relationshipName);
-
-		if (objectRelationship != null) {
-			String objectFieldName = leftStringParts[1];
-
-			try {
-				return _getObjectRelationshipPredicate(
-					objectRelationship,
-					unsafeBiFunction.apply(
-						objectFieldName,
-						_getRelatedObjectDefinitionId(
-							_objectDefinitionId, objectRelationship)));
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		}
-
-		return null;
-	}
-
-	private Predicate _getObjectRelationshipPredicate(
+			long objectDefinitionId,
+			List<ObjectValuePair<ObjectRelationship, Long>>
+				objectRelationshipsObjectsDefinitionIdsList,
 			ObjectRelationship objectRelationship, Predicate predicate)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-				_objectDefinitionId);
+				objectDefinitionId);
 
 		ObjectRelatedModelsPredicateProvider
 			objectRelatedModelsPredicateProvider =
@@ -565,8 +584,55 @@ public class PredicateExpressionVisitorImpl
 						objectDefinition.getClassName(),
 						objectRelationship.getType());
 
-		return objectRelatedModelsPredicateProvider.getPredicate(
-			objectRelationship, predicate);
+		if (objectRelationshipsObjectsDefinitionIdsList.isEmpty()) {
+			return objectRelatedModelsPredicateProvider.getPredicate(
+				objectRelationship, predicate);
+		}
+
+		ObjectValuePair<ObjectRelationship, Long>
+			objectRelationshipRelatedObjectDefinitionId =
+				objectRelationshipsObjectsDefinitionIdsList.remove(0);
+
+		return _getObjectRelationshipPredicate(
+			objectRelationshipRelatedObjectDefinitionId.getValue(),
+			objectRelationshipsObjectsDefinitionIdsList,
+			objectRelationshipRelatedObjectDefinitionId.getKey(),
+			objectRelatedModelsPredicateProvider.getPredicate(
+				objectRelationship, predicate));
+	}
+
+	private Predicate _getObjectRelationshipPredicate(
+		Object left,
+		UnsafeBiFunction<String, Long, Predicate, Exception> unsafeBiFunction) {
+
+		ObjectValuePair<String, List<String>>
+			fieldNameObjectRelationshipsNames =
+				_getFieldNameObjectRelationshipsNames((String)left);
+
+		List<ObjectValuePair<ObjectRelationship, Long>>
+			objectRelationshipObjectDefinitionIdList =
+				_getListObjectRelationshipsRelatedObjectDefinitionId(
+					_objectDefinitionId,
+					fieldNameObjectRelationshipsNames.getValue());
+
+		ObjectValuePair<ObjectRelationship, Long>
+			objectRelationshipObjectDefinitionId =
+				objectRelationshipObjectDefinitionIdList.remove(0);
+
+		try {
+			return _getObjectRelationshipPredicate(
+				objectRelationshipObjectDefinitionId.getValue(),
+				objectRelationshipObjectDefinitionIdList,
+				objectRelationshipObjectDefinitionId.getKey(),
+				unsafeBiFunction.apply(
+					fieldNameObjectRelationshipsNames.getKey(),
+					_getRelatedObjectDefinitionId(
+						objectRelationshipObjectDefinitionId.getValue(),
+						objectRelationshipObjectDefinitionId.getKey())));
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private Predicate _getPredicate(

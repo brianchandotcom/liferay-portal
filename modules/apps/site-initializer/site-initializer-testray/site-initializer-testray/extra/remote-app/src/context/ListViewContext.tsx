@@ -14,11 +14,13 @@
  */
 
 import {ReactNode, createContext, useReducer} from 'react';
+import TestrayStorage, {STORAGE_KEYS} from '~/core/Storage';
+import {CONSENT_TYPE} from '~/util/enum';
 
 import useStorage from '../hooks/useStorage';
 import {ActionMap, SortDirection, SortOption} from '../types';
 
-const STORAGE_NAME_PREFIX = '@testray/listview-';
+const testrayStorage = TestrayStorage.getInstance().getStorage('temporary');
 
 export type Sort = {
 	direction: SortDirection;
@@ -116,8 +118,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 				selectedRows = state.checkAll ? [] : rowIds;
 
 				state.checkAll = !state.checkAll;
-			}
-			else {
+			} else {
 				const rowAlreadyInserted = state.selectedRows.includes(
 					rowIds as number
 				);
@@ -173,16 +174,16 @@ const reducer = (state: InitialState, action: AppActions) => {
 
 			const pin = !state.pin;
 
-			const storageName = STORAGE_NAME_PREFIX + state.id;
+			const storageName = STORAGE_KEYS.LIST_VIEW + state.id;
 
 			if (pin) {
-				localStorage.setItem(
+				testrayStorage.setItem(
 					storageName,
-					JSON.stringify(state.filters)
+					JSON.stringify(state.filters),
+					CONSENT_TYPE.NECESSARY
 				);
-			}
-			else {
-				localStorage.removeItem(storageName);
+			} else {
+				testrayStorage.removeItem(storageName);
 			}
 
 			return {
@@ -240,7 +241,8 @@ const ListViewContextProvider: React.FC<
 	ListViewContextProviderProps & {children: ReactNode; id: string}
 > = ({children, id, ...initialStateProps}) => {
 	const [filterPinnedStorage] = useStorage<ListViewFilter>(
-		STORAGE_NAME_PREFIX + id
+		(STORAGE_KEYS.LIST_VIEW + id) as STORAGE_KEYS,
+		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
 	);
 
 	const [state, dispatch] = useReducer(reducer, {

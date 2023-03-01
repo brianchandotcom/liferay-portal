@@ -16,6 +16,8 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
+import {STORAGE_KEYS} from '~/core/Storage';
+import {CONSENT_TYPE} from '~/util/enum';
 
 import useStorage from '../../hooks/useStorage';
 import i18n from '../../i18n';
@@ -29,7 +31,11 @@ import TaskSidebar from './TasksSidebar';
 
 const Sidebar = () => {
 	const {pathname} = useLocation();
-	const [expanded, setExpanded] = useStorage('sidebar', true);
+	const [expanded, setExpanded] = useStorage(STORAGE_KEYS.SIDEBAR, {
+		consentType: CONSENT_TYPE.PERSONALIZATION,
+		initialValue: true,
+		storageType: 'persisted',
+	});
 	const [visible, setVisible] = useState(false);
 
 	const CompareRunsContent = (

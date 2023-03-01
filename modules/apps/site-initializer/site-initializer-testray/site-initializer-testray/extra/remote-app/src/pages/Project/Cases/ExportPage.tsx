@@ -17,13 +17,14 @@ import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
+import {STORAGE_KEYS} from '~/core/Storage';
+import {CONSENT_TYPE} from '~/util/enum';
 
 import Container from '../../../components/Layout/Container';
 import {useHeader} from '../../../hooks';
 import useFormActions from '../../../hooks/useFormActions';
 import useStorage from '../../../hooks/useStorage';
 import i18n from '../../../i18n';
-import {STORAGE_KEYS} from '../../../util/constants';
 import BuildFormCases from '../Routines/Builds/BuildForm/BuildFormCases';
 
 const id = new Date().getTime();
@@ -33,8 +34,12 @@ const ExportPage = () => {
 
 	const [caseIds, setCaseIds] = useState<number[]>([]);
 	const [, setExportCaseIds] = useStorage<number[]>(
-		`${STORAGE_KEYS.EXPORT_CASE_IDS}-${id}`,
-		[]
+		`${STORAGE_KEYS.EXPORT_CASE_IDS}-${id}` as STORAGE_KEYS,
+		{
+			consentType: CONSENT_TYPE.NECESSARY,
+			initialValue: [],
+			storageType: 'persisted',
+		}
 	);
 
 	useEffect(() => {

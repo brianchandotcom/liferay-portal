@@ -15,6 +15,7 @@
 
 import {ReactNode, createContext, useEffect, useMemo, useReducer} from 'react';
 import {KeyedMutator} from 'swr';
+import {STORAGE_KEYS} from '~/core/Storage';
 
 import {useFetch} from '../hooks/useFetch';
 import useStorage from '../hooks/useStorage';
@@ -122,7 +123,10 @@ const TestrayContextProvider: React.FC<{
 }> = ({children}) => {
 	const [storageValue, setStorageValue] = useStorage<{
 		compareRuns: CompareRuns;
-	}>('compareRuns', initialState, sessionStorage);
+	}>(STORAGE_KEYS.COMPARE_RUNS, {
+		initialValue: initialState,
+		storageType: 'temporary',
+	});
 
 	const [state, dispatch] = useReducer(reducer, {
 		...initialState,

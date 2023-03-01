@@ -192,9 +192,7 @@ public class ObjectEntryDTOConverter
 					StringUtil.replaceLast(objectFieldName, "Id", ""), value);
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-161364") &&
-				nestedField.equals(objectRelationship.getName())) {
-
+			if (nestedField.equals(objectRelationship.getName())) {
 				map.put(nestedField, value);
 			}
 		}
@@ -214,9 +212,7 @@ public class ObjectEntryDTOConverter
 		String relatedObjectEntryERC = GetterUtil.getString(
 			values.get(objectRelationshipERCObjectFieldName));
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-161364") &&
-			(map.get(objectRelationship.getName()) == null)) {
-
+		if (map.get(objectRelationship.getName()) == null) {
 			map.put(
 				objectRelationship.getName() + "ERC", relatedObjectEntryERC);
 		}

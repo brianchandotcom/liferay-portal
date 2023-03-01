@@ -25,7 +25,6 @@ import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -62,9 +61,7 @@ public class RelatedObjectEntryOpenAPIContributor
 	public void contribute(OpenAPI openAPI, OpenAPIContext openAPIContext)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-153324") ||
-			(openAPIContext == null)) {
-
+		if (openAPIContext == null) {
 			return;
 		}
 

@@ -26,7 +26,6 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -121,34 +120,27 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					ObjectRelationship objectRelationship = entry.getKey();
 
 					ObjectDefinition relatedObjectDefinition = entry.getValue();
-					String relatedSchemaName = null;
 
-					if (!relatedObjectDefinition.isSystem() ||
-						FeatureFlagManagerUtil.isEnabled("LPS-162966")) {
+					String relatedSchemaName = getSchemaName(
+						relatedObjectDefinition);
 
-						relatedSchemaName = getSchemaName(
-							relatedObjectDefinition);
+					if (_addRelatedSchemas) {
+						_addObjectRelationshipSchema(
+							relatedObjectDefinition, openAPI,
+							relatedSchemaName);
+					}
 
-						if (_addRelatedSchemas) {
-							_addObjectRelationshipSchema(
-								relatedObjectDefinition, openAPI,
-								relatedSchemaName);
-						}
+					if (Objects.equals(
+							objectRelationship.getType(),
+							ObjectRelationshipConstants.TYPE_MANY_TO_MANY) ||
+						(Objects.equals(
+							objectRelationship.getType(),
+							ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+						 (objectRelationship.getObjectDefinitionId1() ==
+							 _objectDefinition.getObjectDefinitionId()))) {
 
-						if (Objects.equals(
-								objectRelationship.getType(),
-								ObjectRelationshipConstants.
-									TYPE_MANY_TO_MANY) ||
-							(Objects.equals(
-								objectRelationship.getType(),
-								ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
-							 (objectRelationship.getObjectDefinitionId1() ==
-								 _objectDefinition.getObjectDefinitionId()))) {
-
-							_addObjectRelationshipPathItem(
-								key, objectRelationship, paths,
-								relatedSchemaName);
-						}
+						_addObjectRelationshipPathItem(
+							key, objectRelationship, paths, relatedSchemaName);
 					}
 
 					if (_addRelatedSchemas && (relatedSchemaName != null)) {

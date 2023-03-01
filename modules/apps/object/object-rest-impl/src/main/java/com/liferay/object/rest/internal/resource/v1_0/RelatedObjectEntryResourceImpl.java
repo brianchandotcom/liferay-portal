@@ -28,7 +28,6 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
@@ -67,10 +66,6 @@ public class RelatedObjectEntryResourceImpl
 			String objectRelationshipName, Long relatedObjectEntryId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-153324")) {
-			throw new NotFoundException();
-		}
-
 		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition(
 			previousPath);
 
@@ -108,10 +103,6 @@ public class RelatedObjectEntryResourceImpl
 			String objectRelationshipName, Pagination pagination)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-153324")) {
-			throw new NotFoundException();
-		}
-
 		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition(
 			previousPath);
 
@@ -147,10 +138,6 @@ public class RelatedObjectEntryResourceImpl
 			String objectRelationshipName, Long relatedObjectEntryId,
 			Pagination pagination)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-153324")) {
-			throw new NotFoundException();
-		}
 
 		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition(
 			previousPath);

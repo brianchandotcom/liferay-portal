@@ -49,6 +49,8 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,6 +71,7 @@ public class DefaultSearchResultPermissionFilter
 		PermissionChecker permissionChecker, Props props,
 		RelatedEntryIndexerRegistry relatedEntryIndexerRegistry,
 		Function<SearchContext, Hits> searchFunction,
+		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		DefaultSearchResultPermissionFilterConfiguration
 			defaultSearchResultPermissionFilterConfiguration) {
 
@@ -77,6 +80,7 @@ public class DefaultSearchResultPermissionFilter
 		_permissionChecker = permissionChecker;
 		_relatedEntryIndexerRegistry = relatedEntryIndexerRegistry;
 		_searchFunction = searchFunction;
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 
 		_permissionFilteredSearchResultAccurateCountThreshold =
 			defaultSearchResultPermissionFilterConfiguration.
@@ -344,6 +348,7 @@ public class DefaultSearchResultPermissionFilter
 	private final RelatedEntryIndexerRegistry _relatedEntryIndexerRegistry;
 	private final Function<SearchContext, Hits> _searchFunction;
 	private final int _searchQueryResultWindowLimit;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	private class SlidingWindowSearcher {
 
@@ -376,6 +381,8 @@ public class DefaultSearchResultPermissionFilter
 				searchContext.setEnd(amplifiedEnd);
 
 				searchContext.setStart(offset);
+
+				_setSearchRequestFromAndSize(searchContext);
 
 				Hits hits = _getHits(searchContext);
 
@@ -515,6 +522,15 @@ public class DefaultSearchResultPermissionFilter
 			return Math.min(
 				1.0 / (totalViewable / total),
 				_indexPermissionFilterSearchAmplificationFactor);
+		}
+
+		private void _setSearchRequestFromAndSize(SearchContext searchContext) {
+			SearchRequestBuilder searchRequestBuilder =
+				_searchRequestBuilderFactory.builder(searchContext);
+
+			searchRequestBuilder.from(searchContext.getStart());
+			searchRequestBuilder.size(
+				searchContext.getEnd() - searchContext.getStart());
 		}
 
 	}

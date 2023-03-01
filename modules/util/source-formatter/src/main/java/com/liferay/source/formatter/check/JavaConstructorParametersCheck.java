@@ -65,7 +65,113 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CONSTRUCTOR};
 	}
 
-	private String _checkCallMethodOrLocationMethod(
+	private void _checkConstructorParameterOrder(
+		String fileName, JavaTerm javaTerm, List<JavaParameter> parameters) {
+
+		String previousGlobalVariableName = null;
+		String previousParameterName = null;
+		int previousPos = -1;
+
+		for (JavaParameter parameter : parameters) {
+			String parameterName = parameter.getParameterName();
+
+			Pattern pattern = Pattern.compile(
+				StringBundler.concat(
+					"\\{\n([\\s\\S]*?)((_|this\\.)", parameterName,
+					") =[ \t\n]+", parameterName, ";"));
+
+			Matcher matcher = pattern.matcher(javaTerm.getContent());
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			String beforeParameter = matcher.group(1);
+
+			if (beforeParameter.contains(parameterName + " =")) {
+				continue;
+			}
+
+			int pos = matcher.start(2);
+
+			if ((previousPos > pos) &&
+				previousGlobalVariableName.startsWith(matcher.group(3))) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"'", previousGlobalVariableName, " = ",
+						previousParameterName, ";' should come before '",
+						matcher.group(2), " = ", parameterName,
+						";' to match order of constructor parameters"),
+					javaTerm.getLineNumber(previousPos));
+
+				return;
+			}
+
+			previousGlobalVariableName = matcher.group(2);
+			previousParameterName = parameterName;
+			previousPos = pos;
+		}
+	}
+
+	private boolean _containsParameterName(
+		List<JavaParameter> parameters, String name) {
+
+		for (JavaParameter parameter : parameters) {
+			if (name.equals(parameter.getParameterName())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private String _fixIncorrectEmptyLines(
+		String content, Pattern pattern, List<JavaParameter> parameters) {
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String name1 = matcher.group(3);
+			String name2 = matcher.group(5);
+
+			if (!_containsParameterName(parameters, name1) ||
+				!_containsParameterName(parameters, name2)) {
+
+				continue;
+			}
+
+			String previousStatementsBlock = _getPreviousStatementsBlock(
+				content, matcher.group(1), matcher.start() + 1);
+
+			if (previousStatementsBlock.matches(
+					StringBundler.concat(
+						"(?s).*\\W(", matcher.group(2), ")?", name1,
+						"\\W.*"))) {
+
+				continue;
+			}
+
+			String nextStatementsBlock = _getNextStatementsBlock(
+				content, matcher.group(1), matcher.start(6));
+
+			if (Validator.isNull(nextStatementsBlock) ||
+				!nextStatementsBlock.matches(
+					StringBundler.concat(
+						"(?s).*\\W(", matcher.group(2), ")?", name2,
+						"\\W.*"))) {
+
+				return StringUtil.replaceFirst(
+					content, StringPool.NEW_LINE, StringPool.BLANK,
+					matcher.start(4));
+			}
+		}
+
+		return content;
+	}
+
+	private String _fixPassedInVariables(
 		String content, int pos, String globalVariableName,
 		String parameterName) {
 
@@ -175,112 +281,6 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 		return content;
 	}
 
-	private void _checkConstructorParameterOrder(
-		String fileName, JavaTerm javaTerm, List<JavaParameter> parameters) {
-
-		String previousGlobalVariableName = null;
-		String previousParameterName = null;
-		int previousPos = -1;
-
-		for (JavaParameter parameter : parameters) {
-			String parameterName = parameter.getParameterName();
-
-			Pattern pattern = Pattern.compile(
-				StringBundler.concat(
-					"\\{\n([\\s\\S]*?)((_|this\\.)", parameterName,
-					") =[ \t\n]+", parameterName, ";"));
-
-			Matcher matcher = pattern.matcher(javaTerm.getContent());
-
-			if (!matcher.find()) {
-				continue;
-			}
-
-			String beforeParameter = matcher.group(1);
-
-			if (beforeParameter.contains(parameterName + " =")) {
-				continue;
-			}
-
-			int pos = matcher.start(2);
-
-			if ((previousPos > pos) &&
-				previousGlobalVariableName.startsWith(matcher.group(3))) {
-
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"'", previousGlobalVariableName, " = ",
-						previousParameterName, ";' should come before '",
-						matcher.group(2), " = ", parameterName,
-						";' to match order of constructor parameters"),
-					javaTerm.getLineNumber(previousPos));
-
-				return;
-			}
-
-			previousGlobalVariableName = matcher.group(2);
-			previousParameterName = parameterName;
-			previousPos = pos;
-		}
-	}
-
-	private boolean _containsParameterName(
-		List<JavaParameter> parameters, String name) {
-
-		for (JavaParameter parameter : parameters) {
-			if (name.equals(parameter.getParameterName())) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private String _fixIncorrectEmptyLines(
-		String content, Pattern pattern, List<JavaParameter> parameters) {
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String name1 = matcher.group(3);
-			String name2 = matcher.group(5);
-
-			if (!_containsParameterName(parameters, name1) ||
-				!_containsParameterName(parameters, name2)) {
-
-				continue;
-			}
-
-			String previousStatementsBlock = _getPreviousStatementsBlock(
-				content, matcher.group(1), matcher.start() + 1);
-
-			if (previousStatementsBlock.matches(
-					StringBundler.concat(
-						"(?s).*\\W(", matcher.group(2), ")?", name1,
-						"\\W.*"))) {
-
-				continue;
-			}
-
-			String nextStatementsBlock = _getNextStatementsBlock(
-				content, matcher.group(1), matcher.start(6));
-
-			if (Validator.isNull(nextStatementsBlock) ||
-				!nextStatementsBlock.matches(
-					StringBundler.concat(
-						"(?s).*\\W(", matcher.group(2), ")?", name2,
-						"\\W.*"))) {
-
-				return StringUtil.replaceFirst(
-					content, StringPool.NEW_LINE, StringPool.BLANK,
-					matcher.start(4));
-			}
-		}
-
-		return content;
-	}
-
 	private String _fixPassedInVariables(
 		String content, List<JavaParameter> parameters, String fileContent) {
 
@@ -309,7 +309,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			String newContent = _checkCallMethodOrLocationMethod(
+			String newContent = _fixPassedInVariables(
 				content, matcher.end(), globalVariableName, parameterName);
 
 			if (!StringUtil.equals(content, newContent)) {

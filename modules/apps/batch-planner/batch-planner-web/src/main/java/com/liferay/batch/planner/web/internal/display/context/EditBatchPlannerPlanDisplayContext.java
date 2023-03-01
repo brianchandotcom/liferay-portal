@@ -22,6 +22,7 @@ import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -95,6 +96,13 @@ public class EditBatchPlannerPlanDisplayContext {
 
 		for (BatchEngineTaskContentType batchEngineTaskContentType :
 				BatchEngineTaskContentType.values()) {
+
+			if ((batchEngineTaskContentType ==
+					BatchEngineTaskContentType.CSV) &&
+				!FeatureFlagManagerUtil.isEnabled("LPS-173135")) {
+
+				continue;
+			}
 
 			if ((batchEngineTaskContentType ==
 					BatchEngineTaskContentType.XLS) ||

@@ -24,7 +24,30 @@ definition {
 		task ("Create DXP Site with Commerce") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium Demo");
 		}
+	}
 
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownAC();
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.tearDownNonDefaultGroups();
+
+			ACUtils.tearDownCommerce();
+
+			UserGroup.tearDownCP();
+		}
+	}
+
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12667 | Test Summary: Can search for account groups in the select contacts modal"
+	@priority = "4"
+	test CanSearchAccountGroupsInContactsModal {
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
@@ -51,30 +74,7 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		ACUtils.tearDownAC();
-
-		ACUtils.tearDownDXP();
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.tearDownNonDefaultGroups();
-
-			ACUtils.tearDownCommerce();
-
-			UserGroup.tearDownCP();
-		}
-	}
-
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12667 | Test Summary: Can search for account groups in the select contacts modal"
-	@priority = "4"
-	test CanSearchAccountGroupsInContactsModal {
+		
 		task ("Click on sync by account groups") {
 			Click(
 				key_panel = "Select Accounts",
@@ -102,6 +102,33 @@ definition {
 		var foundUserGroup = "LXC UserGroup";
 		var notFoundUserGroup = "AC UserGroup,DXP UserGroup";
 
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Create some user groups") {
 			for (var userGroupName : list "${foundUserGroup},${notFoundUserGroup}") {
 				JSONUserGroup.addUserGroup(
@@ -186,6 +213,33 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12660 | Test Summary: Can search for organizations in the select contacts modal"
 	@priority = "4"
 	test CanSearchOrganizationsInContactsModal {
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Click on sync by organizations") {
 			Click(
 				key_panel = "Select Contacts",
@@ -210,6 +264,36 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12666 | Test Summary: Can sync all accounts"
 	@priority = "5"
 	test CanSyncAllAccounts {
+
+		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
+
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Click on sync all accounts") {
 			ACDXPSettings.syncAccountsData();
 		}
@@ -295,6 +379,33 @@ definition {
 
 		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
 
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Click on sync all contacts and accounts") {
 			ACDXPSettings.syncContactsAndAccountstData();
 		}
@@ -312,6 +423,33 @@ definition {
 
 		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
 
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Click on sync all contacts and sync all accounts") {
 			ACDXPSettings.syncContactsData();
 
@@ -530,6 +668,33 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12669 | Test Summary: Can sync by account groups"
 	@priority = "5"
 	test CanSyncByAccountGroups {
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Click on sync by account groups") {
 			ACDXPSettings.syncAccountsData(accountGroup = "North American Accounts");
 		}
@@ -547,6 +712,33 @@ definition {
 		var accountGroupPageListUp = "brazilian accounts,European Accounts,Gold Accounts,North American Accounts";
 		var accountGroupPageListDown = "North American Accounts,Gold Accounts,European Accounts,brazilian accounts";
 
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Create a account groups") {
 			JSONAccountGroup.addAccountGroup(accountGroupName = "brazilian accounts");
 		}
@@ -630,6 +822,33 @@ definition {
 		var orgNamePageListUp = "Canada,england,Italy,Minium,United States";
 		var orgNamePageListDown = "United States,Minium,Italy,england,Canada";
 
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Create an organization") {
 			JSONOrganization.addOrganization(organizationName = "england");
 		}
@@ -713,6 +932,33 @@ definition {
 		var userGroupPageListUp = "ac UserGroup,DXP UserGroup,LXC UserGroup";
 		var userGroupPageListDown = "LXC UserGroup,DXP UserGroup,ac UserGroup";
 
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Create some user groups") {
 			for (var userGroupName : list "${userGroupPageListUp}") {
 				JSONUserGroup.addUserGroup(
@@ -800,6 +1046,33 @@ definition {
 		var firstPageList = "AC UserGroup Pagination 1,AC UserGroup Pagination 2,AC UserGroup Pagination 3,AC UserGroup Pagination 4,AC UserGroup Pagination 5";
 		var secondPageList = "AC UserGroup Pagination 6";
 
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Create some user groups") {
 			for (var userGroupName : list "${firstPageList},${secondPageList}") {
 				JSONUserGroup.addUserGroup(
@@ -896,6 +1169,33 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12668 | Test Summary: Check that it is possible to make pagination in the account groups"
 	@priority = "4"
 	test CheckIsPossiblePaginateInAccountGroups {
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Create 3 more account groups") {
 			for (var accountGroupName : list "Brazilian Accounts,Silver Accounts,Copper Accounts") {
 				JSONAccountGroup.addAccountGroup(accountGroupName = "${accountGroupName}");
@@ -934,6 +1234,33 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12661 | Test Summary: Check that it is possible to make pagination in the organizations"
 	@priority = "4"
 	test CheckIsPossiblePaginateOrganizations {
+		task ("Connect Commerce and AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Get the property name to enable commerce on the right one") {
+			var channelName = "Minium Demo Portal";
+			var siteName = "Minium Demo";
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Enable commerce and sync the commerce channel and the related site") {
+			ACDXPSettings.syncChannel(
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
+
+			ACDXPSettings.syncSites(
+				propertyName = "${assignedPropertyName}",
+				siteName = "${siteName}");
+		}
+
+		task ("Go to the next page to configure people data") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		
 		task ("Create 2 organizations") {
 			for (var organizationName : list "Brazil,France") {
 				JSONOrganization.addOrganization(organizationName = "${organizationName}");

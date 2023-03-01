@@ -515,9 +515,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		kbArticle.setExpirationDate(new Date());
 
-		kbArticleLocalService.updateKBArticle(kbArticle);
+		kbArticle = kbArticleLocalService.updateKBArticle(kbArticle);
 
 		serviceContext.setCommand(Constants.EXPIRE);
+
+		// Asset
+
+		updateKBArticleAsset(
+			userId, kbArticle, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		return updateStatus(
 			userId, resourcePrimKey, WorkflowConstants.STATUS_EXPIRED,
@@ -1274,7 +1281,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_removeKBArticleAttachments(removeFileEntryIds);
 
-		// indexer
+		// Indexer
 
 		_indexKBArticle(kbArticle);
 

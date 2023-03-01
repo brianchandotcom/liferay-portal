@@ -88,7 +88,7 @@ public interface CPDisplayLayoutLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDisplayLayout addCPDisplayLayout(
 			long userId, long groupId, Class<?> clazz, long classPK,
-			String layoutUuid)
+			String layoutPageTemplateEntryUuid, String layoutUuid)
 		throws PortalException;
 
 	/**
@@ -227,6 +227,17 @@ public interface CPDisplayLayoutLocalService
 		long groupId, Class<?> clazz, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDisplayLayout>
+		fetchCPDisplayLayoutByGroupIdAndLayoutPageTemplateEntryUuid(
+			long groupId, String layoutPageTemplateEntryUuid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDisplayLayout>
+		fetchCPDisplayLayoutByGroupIdAndLayoutPageTemplateEntryUuid(
+			long groupId, String layoutPageTemplateEntryUuid, int start,
+			int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDisplayLayout> fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
 		long groupId, String layoutUuid);
 
@@ -344,8 +355,8 @@ public interface CPDisplayLayoutLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDisplayLayout> searchCPDisplayLayout(
-			long companyId, long groupId, String className, String keywords,
-			int start, int end, Sort sort)
+			long companyId, long groupId, String className, Integer type,
+			String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	/**
@@ -364,7 +375,8 @@ public interface CPDisplayLayoutLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDisplayLayout updateCPDisplayLayout(
-			long cpDisplayLayoutId, long classPK, String layoutUuid)
+			long cpDisplayLayoutId, long classPK,
+			String layoutPageTemplateEntryUuid, String layoutUuid)
 		throws PortalException;
 
 	@Override

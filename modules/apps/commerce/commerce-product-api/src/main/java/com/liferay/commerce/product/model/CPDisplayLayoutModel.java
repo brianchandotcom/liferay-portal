@@ -284,6 +284,22 @@ public interface CPDisplayLayoutModel
 	public void setClassPK(long classPK);
 
 	/**
+	 * Returns the layout page template entry uuid of this cp display layout.
+	 *
+	 * @return the layout page template entry uuid of this cp display layout
+	 */
+	@AutoEscape
+	public String getLayoutPageTemplateEntryUuid();
+
+	/**
+	 * Sets the layout page template entry uuid of this cp display layout.
+	 *
+	 * @param layoutPageTemplateEntryUuid the layout page template entry uuid of this cp display layout
+	 */
+	public void setLayoutPageTemplateEntryUuid(
+		String layoutPageTemplateEntryUuid);
+
+	/**
 	 * Returns the layout uuid of this cp display layout.
 	 *
 	 * @return the layout uuid of this cp display layout

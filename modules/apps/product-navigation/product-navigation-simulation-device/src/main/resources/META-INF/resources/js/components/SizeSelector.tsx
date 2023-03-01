@@ -270,7 +270,7 @@ function CustomSizeSelector({
 			</ClayButton>
 
 			{alertMessage && (
-				<ClayAlert className="mt-3" displayType="info">
+				<ClayAlert className="mt-3" displayType="info" role="status">
 					{alertMessage}
 				</ClayAlert>
 			)}

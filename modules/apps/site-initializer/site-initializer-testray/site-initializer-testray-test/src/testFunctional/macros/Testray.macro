@@ -307,6 +307,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro testrayApisTearDown {
+		ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+	}
+
 	macro typeProjectsField {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 

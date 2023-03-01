@@ -21,6 +21,7 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -104,24 +104,14 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 						journalArticleClassNameId, portletClassNameId,
 						serviceContext);
 
-					String assetEntryClassUuid = _getAssetEntryClassUuid(
-						journalArticleClassNameId, resourcePrimKey);
-
-					if (Validator.isNull(assetEntryClassUuid)) {
-						return;
-					}
-
-					long companyId = (Long)values[3];
-
-					_addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
-						assetEntryClassUuid, resourcePrimKey, companyId,
-						groupId, journalArticleClassNameId, portletClassNameId,
-						serviceContext);
-
 					resourcePrimKeysMap.put(resourcePrimKey, groupId);
 				},
 				"Unable to create journal articles layout classed model " +
 					"usages");
+
+			_addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
+				journalArticleClassNameId, portletClassNameId,
+				resourcePrimKeysMap, serviceContext);
 
 			for (Map.Entry<Long, Long> entry : resourcePrimKeysMap.entrySet()) {
 				_layoutClassedModelUsageLocalService.
@@ -133,60 +123,76 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 	}
 
 	private void _addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
-			String assetEntryClassUuid, long classPK, long companyId,
-			long groupId, long journalArticleClassNameId,
-			long portletClassNameId, ServiceContext serviceContext)
+			long journalArticleClassNameId, long portletClassNameId,
+			Map<Long, Long> resourcePrimKeysMap, ServiceContext serviceContext)
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String sql = StringBundler.concat(
+				"select distinct AssetEntry.groupId, AssetEntry.classPK, ",
+				"PortletPreferences.plid, PortletPreferences.portletId from ",
+				"PortletPreferences inner join AssetEntry as AssetEntry on ",
+				"AssetEntry.classNameId = ", journalArticleClassNameId,
+				" and AssetEntry.visible = 1 and AssetEntry.classUuid is not ",
+				"null and CAST_TEXT(AssetEntry.classUuid) != '' inner join ",
+				"PortletPreferenceValue as PortletPreferenceValue1 on ",
+				"PortletPreferenceValue1.portletPreferencesId = ",
+				"PortletPreferences.portletPreferencesId and ",
+				"PortletPreferenceValue1.name = 'selectionStyle' and ",
+				"(PortletPreferenceValue1.smallValue = 'manual' or ",
+				"PortletPreferenceValue1.largeValue = 'manual') inner join ",
+				"PortletPreferenceValue as PortletPreferenceValue2 on ",
+				"PortletPreferenceValue2.portletPreferencesId = ",
+				"PortletPreferences.portletPreferencesId and ",
+				"PortletPreferenceValue2.name = 'assetEntryXml' and ",
+				"(PortletPreferenceValue2.smallValue like CONCAT('%', ",
+				"AssetEntry.classUuid, '%') or ",
+				"PortletPreferenceValue2.largeValue like CONCAT('%', ",
+				"AssetEntry.classUuid, '%')) where ",
+				"PortletPreferences.companyId = AssetEntry.companyId and ",
+				"PortletPreferences.ownerId = ",
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				" and PortletPreferences.ownerType = ",
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				" and PortletPreferences.portletId like '",
+				AssetPublisherPortletKeys.ASSET_PUBLISHER,
+				"%' and not exists (select 1 from LayoutClassedModelUsage ",
+				"where LayoutClassedModelUsage.classPK = AssetEntry.classPK ",
+				"and LayoutClassedModelUsage.classNameId = ",
+				journalArticleClassNameId,
+				" and LayoutClassedModelUsage.containerKey = ",
+				"PortletPreferences.portletId and ",
+				"LayoutClassedModelUsage.containerType = ", portletClassNameId,
+				" and LayoutClassedModelUsage.plid = PortletPreferences.plid) ",
+				"and not exists (select 1 from LayoutClassedModelUsage where ",
+				"LayoutClassedModelUsage.classPK = AssetEntry.classPK and ",
+				"LayoutClassedModelUsage.classNameId = ",
+				journalArticleClassNameId,
+				" and LayoutClassedModelUsage.containerKey is null and ",
+				"LayoutClassedModelUsage.containerType = 0 and ",
+				"LayoutClassedModelUsage.plid = 0 )");
+
 			processConcurrently(
-				StringBundler.concat(
-					"select PortletPreferences.plid, ",
-					"PortletPreferences.portletId from PortletPreferences ",
-					"inner join PortletPreferenceValue as ",
-					"PortletPreferenceValue1 on ",
-					"PortletPreferenceValue1.portletPreferencesId = ",
-					"PortletPreferences.portletPreferencesId and ",
-					"PortletPreferenceValue1.name = 'selectionStyle' and ",
-					"(PortletPreferenceValue1.smallValue = 'manual' or ",
-					"PortletPreferenceValue1.largeValue = 'manual') inner ",
-					"join PortletPreferenceValue as PortletPreferenceValue2 ",
-					"on PortletPreferenceValue2.portletPreferencesId = ",
-					"PortletPreferences.portletPreferencesId and ",
-					"PortletPreferenceValue2.name = 'assetEntryXml' and ",
-					"(PortletPreferenceValue2.smallValue like '%",
-					assetEntryClassUuid,
-					"%' or PortletPreferenceValue2.largeValue like '%",
-					assetEntryClassUuid,
-					"%') where PortletPreferences.companyId = ", companyId,
-					" and PortletPreferences.ownerId = ",
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					" and PortletPreferences.ownerType = ",
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					" and PortletPreferences.portletId like '",
-					AssetPublisherPortletKeys.ASSET_PUBLISHER,
-					"%' and not exists (select 1 from LayoutClassedModelUsage ",
-					"where LayoutClassedModelUsage.classPK = ", classPK,
-					" and LayoutClassedModelUsage.classNameId = ",
-					journalArticleClassNameId,
-					" and LayoutClassedModelUsage.containerKey = ",
-					"PortletPreferences.portletId and ",
-					"LayoutClassedModelUsage.containerType = ",
-					portletClassNameId, " and LayoutClassedModelUsage.plid = ",
-					"PortletPreferences.plid)"),
+				SQLTransformer.transform(sql),
 				resultSet -> new Object[] {
+					resultSet.getLong("groupId"), resultSet.getLong("classPK"),
 					resultSet.getLong("plid"),
 					GetterUtil.getString(resultSet.getString("portletId"))
 				},
 				values -> {
-					long plid = (Long)values[0];
-					String portletId = (String)values[1];
+					long groupId = (Long)values[0];
+					long classPK = (Long)values[1];
+					long plid = (Long)values[2];
+					String portletId = (String)values[3];
 
 					_layoutClassedModelUsageLocalService.
 						addLayoutClassedModelUsage(
 							groupId, journalArticleClassNameId, classPK,
 							portletId, portletClassNameId, plid,
 							serviceContext);
+
+					resourcePrimKeysMap.computeIfAbsent(
+						classPK, key -> groupId);
 				},
 				"Unable to create manual selection asset publisher layout " +
 					"classed model usages");
@@ -242,26 +248,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 				"Unable to create journal content search layout classed " +
 					"model usages");
 		}
-	}
-
-	private String _getAssetEntryClassUuid(long classNameId, long classPK)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select classUuid from AssetEntry where classNameId = ? and " +
-					"classPK = ?")) {
-
-			preparedStatement.setLong(1, classNameId);
-			preparedStatement.setLong(2, classPK);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getString("classUuid");
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

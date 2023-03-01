@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>REASSIGN_CHECKBOX_DISABLED</td>
-	<td>//div[contains(@class,'custom-control')]//input[@type='checkbox' and @disabled]</td>
+	<td>//ul[contains(@class,'navbar')]//strong[contains(text(),'Filter By')]</td>
 	<td></td>
 </tr>
 <tr>

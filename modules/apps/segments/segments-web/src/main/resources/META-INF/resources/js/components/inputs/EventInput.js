@@ -85,6 +85,7 @@ class EventInput extends Component {
 							'select-has-operator-option'
 						)}`}
 						className="criterion-input form-control operator-input"
+						data-testid="select-has-operator"
 						disabled={disabledInput}
 						onChange={onInputChange('operatorNot')}
 						options={notOperators.map(({label, name}) => ({
@@ -114,6 +115,7 @@ class EventInput extends Component {
 							'select-count-operator-option'
 						)}`}
 						className="criterion-input form-control operator-input"
+						data-testid="integer-operator"
 						disabled={disabledInput}
 						onChange={onInputChange('operatorName')}
 						options={integerOperators.map(({label, name}) => ({

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting",
-	service = {DiagramDTOConverter.class, DTOConverter.class}
+	service = DTOConverter.class
 )
 public class DiagramDTOConverter
 	implements DTOConverter<CSDiagramSetting, Diagram> {

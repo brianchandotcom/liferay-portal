@@ -61,7 +61,7 @@ dependencies {
 	compileInclude group: "org.locationtech.jts", name: "jts-core", version: "1.15.0"
 	compileInclude group: "org.locationtech.spatial4j", name: "spatial4j", version: "0.7"
 	compileInclude group: "org.ow2.asm", name: "asm-debug-all", version: "5.1"
-	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.32"
+	compileInclude group: "org.yaml", name: "snakeyaml", version: "2.0"
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
 	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.4.0"

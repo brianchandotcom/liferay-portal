@@ -36,11 +36,11 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the detail view of the page audit panel Then the checks related to Low contrast ratio, Missing image-alt and Missing input-image-alt will appear under the Accessibility section"
 	@priority = 3
 	test AccessibilityFailures {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
+		property test.name.skip.portal.instance = "PageAudit#AccessibilityFailures";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
@@ -394,7 +394,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the page audit panel detail view When there is more than the 60% of the texts on the page with insufficient font sizes Then the users will see the matching failing elements, with the size of the illegible font and the percentage of text it covers"
 	@priority = 4
 	@uitest
 	test CheckIllegibleFontSizes {
@@ -760,11 +760,11 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the page audit panel detail view When there are more than 10 failing elements for a single issue Then the users can see a Show more button every 10 failing elements, and when they click on it another 10 elements are displayed"
 	@priority = 3
 	test DisplayMoreErrors {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
+		property test.name.skip.portal.instance = "PageAudit#DisplayMoreErrors";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test-10-more-issues.html");
@@ -881,11 +881,11 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-130621 Given the page audit panel When the user clicks the launch button, either the one on the header or the one in the panel Then the API is called and the data is retrieved"
 	@priority = 4
 	test LaunchPageAudit {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
+		property test.name.skip.portal.instance = "PageAudit#LaunchPageAudit";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
@@ -1215,11 +1215,11 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the detail view of the page audit panel Then the checks related to Incorrect image-aspect-ratio, Missing meta-description, Invalid Hreflang, Invalid canonical URL, Illegible font sizes, Small tap targets, Missing <title> element and Crawlable-anchors will appear under the SEO section"
 	@priority = 3
 	test SEOFailures {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
+		property test.name.skip.portal.instance = "PageAudit#SEOFailures";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");

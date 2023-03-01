@@ -18,7 +18,9 @@ import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Pin;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -78,7 +80,8 @@ public class PinDTOConverter implements DTOConverter<CSDiagramEntry, Pin> {
 	@Reference
 	private CSDiagramPinService _csDiagramPinService;
 
-	@Reference
-	private MappedProductDTOConverter _mappedProductDTOConverter;
+	@Reference(target = DTOConverterConstants.MAPPED_PRODUCT_DTO_CONVERTER)
+	private DTOConverter<CSDiagramEntry, MappedProduct>
+		_mappedProductDTOConverter;
 
 }

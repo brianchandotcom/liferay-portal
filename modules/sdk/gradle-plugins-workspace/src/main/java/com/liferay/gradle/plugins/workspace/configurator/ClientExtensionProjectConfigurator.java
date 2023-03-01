@@ -319,6 +319,11 @@ public class ClientExtensionProjectConfigurator
 			project, RootProjectConfigurator.BUILD_DOCKER_IMAGE_TASK_NAME,
 			DockerBuildImage.class);
 
+		dockerBuildImage.setDescription(
+			"Builds a child Docker image from the Liferay base image with " +
+				"all configs deployed.");
+		dockerBuildImage.setGroup(RootProjectConfigurator.DOCKER_GROUP);
+
 		dockerBuildImage.dependsOn(assembleClientExtensionTaskProvider);
 
 		DirectoryProperty inputDirectoryProperty =
@@ -326,11 +331,6 @@ public class ClientExtensionProjectConfigurator
 
 		assembleClientExtensionTaskProvider.configure(
 			copy -> inputDirectoryProperty.set(copy.getDestinationDir()));
-
-		dockerBuildImage.setDescription(
-			"Builds a child docker image from Liferay base image with all " +
-				"configs deployed.");
-		dockerBuildImage.setGroup(RootProjectConfigurator.DOCKER_GROUP);
 
 		DockerRemoveImage dockerRemoveImage = GradleUtil.addTask(
 			project, RootProjectConfigurator.CLEAN_DOCKER_IMAGE_TASK_NAME,

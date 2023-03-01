@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.CTContainerRequestFilter;
@@ -152,6 +153,7 @@ public class VulcanFeature implements Feature {
 				_groupLocalService, _language, _portal,
 				_resourceActionLocalService, _resourcePermissionLocalService,
 				_roleLocalService, _getScopeChecker(), _sortParserProvider,
+				_vulcanBatchEngineExportTaskResource,
 				_vulcanBatchEngineImportTaskResource));
 		featureContext.register(
 			new EntityExtensionHandlerContextResolver(
@@ -245,6 +247,10 @@ public class VulcanFeature implements Feature {
 
 	@Reference
 	private SortParserProvider _sortParserProvider;
+
+	@Reference
+	private VulcanBatchEngineExportTaskResource
+		_vulcanBatchEngineExportTaskResource;
 
 	@Reference
 	private VulcanBatchEngineImportTaskResource

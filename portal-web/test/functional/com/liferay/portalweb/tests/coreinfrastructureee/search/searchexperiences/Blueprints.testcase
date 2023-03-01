@@ -2891,7 +2891,7 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Test");
 
-		var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+		var currentDate = DateUtil.getCurrentYear();
 
 		AssertTextEquals.assertPartialText(
 			cellPosition = 6,
@@ -4114,7 +4114,7 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Test");
 
-		var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+		var currentDate = DateUtil.getCurrentYear();
 
 		AssertTextEquals.assertPartialText(
 			cellPosition = 6,

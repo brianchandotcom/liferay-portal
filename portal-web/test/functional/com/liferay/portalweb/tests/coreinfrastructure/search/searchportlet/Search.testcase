@@ -3058,7 +3058,7 @@ definition {
 			entryTitle = "Potato Blog",
 			groupName = "Test Site");
 
-		var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+		var currentDate = DateUtil.getCurrentYear();
 
 		Search.openSearchPage();
 

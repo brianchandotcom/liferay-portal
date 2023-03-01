@@ -1123,7 +1123,7 @@ definition {
 			entryContent = "This is a blog about Potatoes",
 			entryTitle = "Potato Blog");
 
-		var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+		var currentDate = DateUtil.getCurrentYear();
 
 		Search.openSearchPage();
 

@@ -66,6 +66,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -76,6 +78,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -642,6 +645,15 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
 		commerceOrderItem.setBookedQuantityId(bookedQuantityId);
+
+		try {
+			_reindexCommerceInventoryBookedQuantity(bookedQuantityId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
@@ -1775,6 +1787,19 @@ public class CommerceOrderItemLocalServiceImpl
 		return false;
 	}
 
+	private void _reindexCommerceInventoryBookedQuantity(
+			long commerceInventoryBookedQuantityId)
+		throws PortalException {
+
+		Indexer<CommerceInventoryBookedQuantity> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				CommerceInventoryBookedQuantity.class);
+
+		indexer.reindex(
+			CommerceInventoryBookedQuantity.class.getName(),
+			commerceInventoryBookedQuantityId);
+	}
+
 	private BaseModelSearchResult<CommerceOrderItem> _searchCommerceOrderItems(
 			SearchContext searchContext)
 		throws PortalException {
@@ -2293,6 +2318,9 @@ public class CommerceOrderItemLocalServiceImpl
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.UID
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceOrderItemLocalServiceImpl.class);
 
 	private static volatile CommerceOrderLocalService
 		_commerceOrderLocalService =

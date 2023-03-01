@@ -547,7 +547,13 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 					return null;
 				}
 
-				Collections.reverse(friendlyURLDuplicatedLocales);
+				Locale siteDefaultLocale = _portal.getSiteDefaultLocale(group);
+
+				if ((friendlyURLDuplicatedLocales.size() > 1) &&
+					friendlyURLDuplicatedLocales.remove(siteDefaultLocale)) {
+
+					friendlyURLDuplicatedLocales.add(0, siteDefaultLocale);
+				}
 
 				if (friendlyURLDuplicatedLocales.size() > 3) {
 					return _language.format(

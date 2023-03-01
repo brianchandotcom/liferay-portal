@@ -92,7 +92,6 @@ import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.util.RecentGroupManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -728,7 +727,13 @@ public class JournalEditArticleDisplayContext {
 			return _friendlyURLDuplicatedWarningMessage;
 		}
 
-		Collections.reverse(friendlyURLDuplicatedLocales);
+		Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(group);
+
+		if ((friendlyURLDuplicatedLocales.size() > 1) &&
+			friendlyURLDuplicatedLocales.remove(siteDefaultLocale)) {
+
+			friendlyURLDuplicatedLocales.add(0, siteDefaultLocale);
+		}
 
 		String friendlyURLDuplicatedWarningMessage = null;
 

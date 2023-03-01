@@ -46,7 +46,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-130918 Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings When Enable Segmentation by roles is disabled And the user accesses the Segments tab in the role assignment screen Then the user may still add segments to the list by using the ""+"" button, but assigning won't be accomplished"
 	@priority = 4
 	test AssigningBySegmentNotWorkingDisabledInstanceSettings {
 		property portal.acceptance = "true";
@@ -192,7 +192,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-130918 Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings When Enable Segmentation by roles is enabled And the user accesses the Segments tab in the role assignment screen Then no warning message is shown and the assigning will be accomplished"
 	@priority = 3
 	test CanAssignBySegmentEnabledInstanceSettings {
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CanAssignBySegmentEnabledInstanceSettings";
@@ -289,7 +289,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-130918 Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings When Enable Segmentation by roles is enabled Then it shows a dialog allowing user to assign/unassign site roles"
 	@priority = 4
 	test CanAssignSiteRolesToSegment {
 		property portal.acceptance = "true";
@@ -343,7 +343,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-130918 Given the Segment Service Configuration in Instance Settings When Enable Segmentation by roles is disabled And the user accesses the Segments tab in the role assignment screen Then a message will show: ""Warning: Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service."""
 	@priority = 3
 	test CheckMessageSegmentationByRolesDisabledInstanceSettings {
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CheckMessageSegmentationByRolesDisabledInstanceSettings";
@@ -500,7 +500,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-130918 Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings When Enable Segmentation by roles is disabled Then the Assign Site Roles option will be disabled in the Segments Editor"
 	@priority = 4
 	test DisabledAssignSiteRolesOptionInSegmentsEditor {
 		property portal.acceptance = "true";
@@ -719,7 +719,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-167023 Given the Roles portlet When the user tries to add a new role And the user wants to add segments permissions Then the segments permissions are allocated in Control Panel > Users"
 	@priority = 4
 	test SegmentsPermissionsAllocatedInControlPanel {
 		property custom.properties = "feature.flag.LPS-166954=true";
@@ -747,7 +747,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-167023 Given the user creates a new role When the user clicks on Control Panel > Users > Segments Then in General Permissions, the check Access in Control Panel permission is displayed"
 	@priority = 4
 	test SegmentsPermissionsHaveAccessToControlPanel {
 		property custom.properties = "feature.flag.LPS-166954=true";
@@ -775,7 +775,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-167023 Given the Roles portlet When the user tries to add a new role And the user wants to add segments permissions Then the segments permissions are not allocated in Site and Asset Library Administration > People"
 	@priority = 3
 	test SegmentsPermissionsNotAllocatedInSiteAdministration {
 		property custom.properties = "feature.flag.LPS-166954=true";
@@ -813,7 +813,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-167023 Given a user without Segments permissions When the user clicks on Applications Menu > Control Panel Then the Segments portlet is not present and the user cannot access to the Segments page"
 	@priority = 5
 	test UserWithoutPermissionsCannotAccessSegmentsPortlet {
 		property custom.properties = "feature.flag.LPS-166954=true";
@@ -849,7 +849,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-167023 Given a user with Segments permissions And with View Control Panel Menu permission When the user clicks on Applications Menu > Control Panel > Segment Then the user can access to the Segments page"
 	@priority = 5
 	test UserWithPermissionsCanAccessSegmentsPortlet {
 		property custom.properties = "feature.flag.LPS-166954=true";
@@ -920,7 +920,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-167023 Given a user with Segments permissions And without View Control Panel Menu permission When the user clicks on Applications Menu > Control Panel Then the Segments portlet is not present and the user cannot access to the Segments page"
 	@priority = 5
 	test UserWithSegmentPermissionsWithoutControlPanelCannotAccess {
 		property custom.properties = "feature.flag.LPS-166954=true";

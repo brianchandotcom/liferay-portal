@@ -19,6 +19,7 @@ import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryBookedQuantityServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
@@ -56,6 +57,21 @@ public class CommerceInventoryBookedQuantityServiceImpl
 	}
 
 	@Override
+	public List<CommerceInventoryBookedQuantity>
+			getCommerceInventoryBookedQuantities(
+				long companyId, String keywords, String sku, int start, int end)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		return commerceInventoryBookedQuantityLocalService.
+			getCommerceInventoryBookedQuantities(
+				companyId, keywords, sku, start, end);
+	}
+
+	@Override
 	public int getCommerceInventoryBookedQuantitiesCount(
 			long companyId, String sku)
 		throws PrincipalException {
@@ -66,6 +82,19 @@ public class CommerceInventoryBookedQuantityServiceImpl
 
 		return commerceInventoryBookedQuantityLocalService.
 			getCommerceInventoryBookedQuantitiesCount(companyId, sku);
+	}
+
+	@Override
+	public int getCommerceInventoryBookedQuantitiesCount(
+			long companyId, String keywords, String sku)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		return commerceInventoryBookedQuantityLocalService.
+			getCommerceInventoryBookedQuantitiesCount(companyId, keywords, sku);
 	}
 
 	@Reference(

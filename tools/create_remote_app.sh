@@ -291,9 +291,8 @@ EOF
 
 	cat <<EOF > index.js
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 
-import DadJoke from './common/components/DadJoke';
 import api from './common/services/liferay/api';
 import {Liferay} from './common/services/liferay/liferay';
 import HelloBar from './routes/hello-bar/pages/HelloBar';
@@ -302,7 +301,7 @@ import HelloWorld from './routes/hello-world/pages/HelloWorld';
 
 import './common/styles/index.scss';
 
-const App = ({oAuth2Client, route}) => {
+const App = ({route}) => {
 	if (route === 'hello-bar') {
 		return <HelloBar />;
 	}
@@ -314,12 +313,6 @@ const App = ({oAuth2Client, route}) => {
 	return (
 		<div>
 			<HelloWorld />
-
-			{Liferay.ThemeDisplay.isSignedIn() && (
-				<div>
-					<DadJoke oAuth2Client={oAuth2Client} />
-				</div>
-			)}
 		</div>
 	);
 };
@@ -327,16 +320,11 @@ const App = ({oAuth2Client, route}) => {
 class WebComponent extends HTMLElement {
 	constructor() {
 		super();
-
-		this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-			'easy-oauth-application-user-agent'
-		);
 	}
 
 	connectedCallback() {
-		ReactDOM.render(
+		createRoot(this).render(
 			<App
-				oAuth2Client={this.oAuth2Client}
 				route={this.getAttribute('route')}
 			/>,
 			this

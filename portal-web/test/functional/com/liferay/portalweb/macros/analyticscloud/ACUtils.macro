@@ -385,7 +385,7 @@ definition {
 	macro changePagination {
 		Click(locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT");
 
-		MenuItem.click(menuItem = "${itemsPerPage}");
+		MenuItem.click(menuItem = ${itemsPerPage});
 	}
 
 	macro checkAnyPage {

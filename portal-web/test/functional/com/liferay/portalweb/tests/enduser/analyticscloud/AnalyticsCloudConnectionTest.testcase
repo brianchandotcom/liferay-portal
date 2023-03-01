@@ -198,7 +198,7 @@ definition {
 		task ("Launch AC and copy the token from an existing data source") {
 			ACUtils.launchAC();
 
-			ACSettings.takeTokenFromExistingDataSource(dataSourceName = "${assignedPropertyName}");
+			ACSettings.takeTokenFromExistingDataSource(dataSourceName = ${assignedPropertyName});
 		}
 
 		task ("Reconnect AC with DXP") {

@@ -33,7 +33,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12667 | Test Summary: Can search for account groups in the select contacts modal"
-	@priority = "4"
+	@priority = 4
 	test CanSearchAccountGroupsInContactsModal {
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -61,12 +61,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -74,7 +74,7 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Click on sync by account groups") {
 			Click(
 				key_panel = "Select Accounts",
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12663 | Test Summary: Can search for groups in the select contacts modal"
-	@priority = "4"
+	@priority = 4
 	test CanSearchGroupsInContactsModal {
 		var foundUserGroup = "LXC UserGroup";
 		var notFoundUserGroup = "AC UserGroup,DXP UserGroup";
@@ -115,12 +115,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -128,12 +128,12 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Create some user groups") {
 			for (var userGroupName : list "${foundUserGroup},${notFoundUserGroup}") {
 				JSONUserGroup.addUserGroup(
 					userGroupDescription = "UserGroup Description",
-					userGroupName = "${userGroupName}");
+					userGroupName = ${userGroupName});
 			}
 		}
 
@@ -148,17 +148,17 @@ definition {
 		}
 
 		task ("Search for a group on groups list") {
-			ACUtils.searchBar(searchItem = "${foundUserGroup}");
+			ACUtils.searchBar(searchItem = ${foundUserGroup});
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
 
 		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${foundUserGroup}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundUserGroup});
 		}
 
 		task ("Check that unsearched user groups do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundUserGroup}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundUserGroup});
 		}
 
 		task ("Search by name of a user group that does not exist") {
@@ -188,17 +188,17 @@ definition {
 		}
 
 		task ("Search for a group on groups list") {
-			ACUtils.searchBar(searchItem = "${foundUserGroup}");
+			ACUtils.searchBar(searchItem = ${foundUserGroup});
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
 
 		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${foundUserGroup}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundUserGroup});
 		}
 
 		task ("Check that unsearched user groups do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundUserGroup}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundUserGroup});
 		}
 
 		task ("Search by name of a user group that does not exist") {
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12660 | Test Summary: Can search for organizations in the select contacts modal"
-	@priority = "4"
+	@priority = 4
 	test CanSearchOrganizationsInContactsModal {
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -226,12 +226,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -239,7 +239,7 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Click on sync by organizations") {
 			Click(
 				key_panel = "Select Contacts",
@@ -262,7 +262,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12666 | Test Summary: Can sync all accounts"
-	@priority = "5"
+	@priority = 5
 	test CanSyncAllAccounts {
 
 		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
@@ -280,12 +280,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -293,7 +293,7 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Click on sync all accounts") {
 			ACDXPSettings.syncAccountsData();
 		}
@@ -306,7 +306,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12659 | Test Summary: Can sync all contacts"
-	@priority = "5"
+	@priority = 5
 	test CanSyncAllContacts {
 		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
@@ -315,9 +315,9 @@ definition {
 			task ("Add user, group and assign user to group") {
 				JSONUser.addUser(
 					userEmailAddress = "${userName}@liferay.com",
-					userFirstName = "${userName}",
-					userLastName = "${userName}",
-					userScreenName = "${userName}");
+					userFirstName = ${userName},
+					userLastName = ${userName},
+					userScreenName = ${userName});
 			}
 		}
 
@@ -355,7 +355,7 @@ definition {
 		}
 
 		task ("Go to Known Individuals tab") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToIndividuals();
 
@@ -374,7 +374,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12658 | Test Summary: Can sync all contacts and accounts"
-	@priority = "5"
+	@priority = 5
 	test CanSyncAllContactsAndAccounts {
 
 		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
@@ -392,12 +392,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -405,7 +405,7 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Click on sync all contacts and accounts") {
 			ACDXPSettings.syncContactsAndAccountstData();
 		}
@@ -418,7 +418,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12670 | Test Summary: Can sync all contacts and account groups only"
-	@priority = "5"
+	@priority = 5
 	test CanSyncAllContactsAndAccountsGroupsOnly {
 
 		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
@@ -436,12 +436,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -449,7 +449,7 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Click on sync all contacts and sync all accounts") {
 			ACDXPSettings.syncContactsData();
 
@@ -472,7 +472,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12665 | Test Summary: Can sync all contacts by groups"
-	@priority = "5"
+	@priority = 5
 	test CanSyncAllContactsByGroups {
 		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
@@ -540,7 +540,7 @@ definition {
 		}
 
 		task ("Go to Known Individuals tab") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToIndividuals();
 
@@ -567,7 +567,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12662 | Test Summary: Can sync all contacts by organizations"
-	@priority = "5"
+	@priority = 5
 	test CanSyncAllContactsByOrganizations {
 		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
@@ -639,7 +639,7 @@ definition {
 		}
 
 		task ("Go to Known Individuals tab") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToIndividuals();
 
@@ -666,7 +666,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12669 | Test Summary: Can sync by account groups"
-	@priority = "5"
+	@priority = 5
 	test CanSyncByAccountGroups {
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -681,12 +681,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -694,7 +694,7 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Click on sync by account groups") {
 			ACDXPSettings.syncAccountsData(accountGroup = "North American Accounts");
 		}
@@ -707,7 +707,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12764 | Test Summary: Check that it is possible to sort by account groups name in the account groups list"
-	@priority = "3"
+	@priority = 3
 	test CheckCanSortByAccountGroupsName {
 		var accountGroupPageListUp = "brazilian accounts,European Accounts,Gold Accounts,North American Accounts";
 		var accountGroupPageListDown = "North American Accounts,Gold Accounts,European Accounts,brazilian accounts";
@@ -725,12 +725,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -738,7 +738,7 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Create a account groups") {
 			JSONAccountGroup.addAccountGroup(accountGroupName = "brazilian accounts");
 		}
@@ -762,7 +762,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3,4",
-				itemValueList = "${accountGroupPageListUp}");
+				itemValueList = ${accountGroupPageListUp});
 		}
 
 		task ("Sort the list by the Account Groups column (Descending)") {
@@ -772,7 +772,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3,4",
-				itemValueList = "${accountGroupPageListDown}");
+				itemValueList = ${accountGroupPageListDown});
 		}
 
 		task ("Cancel to exit the wizard") {
@@ -802,7 +802,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3,4",
-				itemValueList = "${accountGroupPageListUp}");
+				itemValueList = ${accountGroupPageListUp});
 		}
 
 		task ("Sort the list by the Account Groups column (Descending)") {
@@ -812,12 +812,12 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3,4",
-				itemValueList = "${accountGroupPageListDown}");
+				itemValueList = ${accountGroupPageListDown});
 		}
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12762 | Test Summary: Check that it is possible to sort by organizations name in the organizations list"
-	@priority = "3"
+	@priority = 3
 	test CheckCanSortByOrganizationsName {
 		var orgNamePageListUp = "Canada,england,Italy,Minium,United States";
 		var orgNamePageListDown = "United States,Minium,Italy,england,Canada";
@@ -835,12 +835,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -848,7 +848,7 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Create an organization") {
 			JSONOrganization.addOrganization(organizationName = "england");
 		}
@@ -872,7 +872,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3,4,5",
-				itemValueList = "${orgNamePageListUp}");
+				itemValueList = ${orgNamePageListUp});
 		}
 
 		task ("Sort the list by the Organizations column (Descending)") {
@@ -882,7 +882,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3,4,5",
-				itemValueList = "${orgNamePageListDown}");
+				itemValueList = ${orgNamePageListDown});
 		}
 
 		task ("Cancel to exit the wizard") {
@@ -912,7 +912,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3,4,5",
-				itemValueList = "${orgNamePageListUp}");
+				itemValueList = ${orgNamePageListUp});
 		}
 
 		task ("Sort the list by the Organizations column (Descending)") {
@@ -922,12 +922,12 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3,4,5",
-				itemValueList = "${orgNamePageListDown}");
+				itemValueList = ${orgNamePageListDown});
 		}
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12763 | Test Summary: Check that it is possible to sort by user groups name in the groups list"
-	@priority = "3"
+	@priority = 3
 	test CheckCanSortByUserGroupsName {
 		var userGroupPageListUp = "ac UserGroup,DXP UserGroup,LXC UserGroup";
 		var userGroupPageListDown = "LXC UserGroup,DXP UserGroup,ac UserGroup";
@@ -945,12 +945,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -958,12 +958,12 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Create some user groups") {
-			for (var userGroupName : list "${userGroupPageListUp}") {
+			for (var userGroupName : list ${userGroupPageListUp}) {
 				JSONUserGroup.addUserGroup(
 					userGroupDescription = "UserGroup Description",
-					userGroupName = "${userGroupName}");
+					userGroupName = ${userGroupName});
 			}
 		}
 
@@ -986,7 +986,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${userGroupPageListUp}");
+				itemValueList = ${userGroupPageListUp});
 		}
 
 		task ("Sort the list by the User Groups column (Descending)") {
@@ -996,7 +996,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${userGroupPageListDown}");
+				itemValueList = ${userGroupPageListDown});
 		}
 
 		task ("Cancel to exit the wizard") {
@@ -1026,7 +1026,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${userGroupPageListUp}");
+				itemValueList = ${userGroupPageListUp});
 		}
 
 		task ("Sort the list by the User Groups column (Descending)") {
@@ -1036,12 +1036,12 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${userGroupPageListDown}");
+				itemValueList = ${userGroupPageListDown});
 		}
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12664 | Test Summary: Check that it is possible to make pagination in the groups"
-	@priority = "3"
+	@priority = 3
 	test CheckIsPossiblePaginateGroups {
 		var firstPageList = "AC UserGroup Pagination 1,AC UserGroup Pagination 2,AC UserGroup Pagination 3,AC UserGroup Pagination 4,AC UserGroup Pagination 5";
 		var secondPageList = "AC UserGroup Pagination 6";
@@ -1059,12 +1059,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -1072,12 +1072,12 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Create some user groups") {
 			for (var userGroupName : list "${firstPageList},${secondPageList}") {
 				JSONUserGroup.addUserGroup(
 					userGroupDescription = "UserGroup Description",
-					userGroupName = "${userGroupName}");
+					userGroupName = ${userGroupName});
 			}
 		}
 
@@ -1092,31 +1092,31 @@ definition {
 		}
 
 		task ("Change the pagination to 5") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = 5);
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
 		}
 
 		task ("Check that 5 user groups appear on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${firstPageList});
 		}
 
 		task ("Check that the user group on the second page does not appear on the first") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${secondPageList}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${secondPageList});
 		}
 
 		task ("Click next page") {
-			ACUtils.checkAnyPage(pageNumber = "2");
+			ACUtils.checkAnyPage(pageNumber = 2);
 
 			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
 		}
 
 		task ("Check that 2 user groups appear on the second page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${secondPageList});
 		}
 
 		task ("Check that the user group on the first page does not appear on the second") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
 		}
 
 		task ("Cancel to exit the wizard") {
@@ -1138,36 +1138,36 @@ definition {
 		}
 
 		task ("Change the pagination to 5") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = 5);
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
 		}
 
 		task ("Check that 5 user groups appear on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${firstPageList});
 		}
 
 		task ("Check that the user group on the second page does not appear on the first") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${secondPageList}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${secondPageList});
 		}
 
 		task ("Click next page") {
-			ACUtils.checkAnyPage(pageNumber = "2");
+			ACUtils.checkAnyPage(pageNumber = 2);
 
 			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
 		}
 
 		task ("Check that 2 user groups appear on the second page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${secondPageList});
 		}
 
 		task ("Check that the user group on the first page does not appear on the second") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
 		}
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12668 | Test Summary: Check that it is possible to make pagination in the account groups"
-	@priority = "4"
+	@priority = 4
 	test CheckIsPossiblePaginateInAccountGroups {
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -1182,12 +1182,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -1195,10 +1195,10 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Create 3 more account groups") {
 			for (var accountGroupName : list "Brazilian Accounts,Silver Accounts,Copper Accounts") {
-				JSONAccountGroup.addAccountGroup(accountGroupName = "${accountGroupName}");
+				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
 			}
 		}
 
@@ -1213,7 +1213,7 @@ definition {
 		}
 
 		task ("Choose the pagination to 5 items per page") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = 5);
 		}
 
 		task ("See that there's only 5 account groups present in the list on the first page") {
@@ -1223,7 +1223,7 @@ definition {
 		}
 
 		task ("Go to the second page and see that there's only one account group in the list") {
-			ACUtils.checkAnyPage(pageNumber = "2");
+			ACUtils.checkAnyPage(pageNumber = 2);
 
 			ACDXPSettings.viewGenericListItem(itemValueList = "Silver Accounts");
 
@@ -1232,7 +1232,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12661 | Test Summary: Check that it is possible to make pagination in the organizations"
-	@priority = "4"
+	@priority = 4
 	test CheckIsPossiblePaginateOrganizations {
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -1247,12 +1247,12 @@ definition {
 
 		task ("Enable commerce and sync the commerce channel and the related site") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Go to the next page to configure people data") {
@@ -1260,10 +1260,10 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY");
 		}
-		
+
 		task ("Create 2 organizations") {
 			for (var organizationName : list "Brazil,France") {
-				JSONOrganization.addOrganization(organizationName = "${organizationName}");
+				JSONOrganization.addOrganization(organizationName = ${organizationName});
 			}
 		}
 
@@ -1278,7 +1278,7 @@ definition {
 		}
 
 		task ("Choose the pagination to 5 items per page") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = 5);
 		}
 
 		task ("See that there's only 5 organizations present in the list on the first page") {
@@ -1288,7 +1288,7 @@ definition {
 		}
 
 		task ("Go to the second page and see that there's only one organization in the list") {
-			ACUtils.checkAnyPage(pageNumber = "2");
+			ACUtils.checkAnyPage(pageNumber = 2);
 
 			ACDXPSettings.viewGenericListItem(itemValueList = "United States");
 

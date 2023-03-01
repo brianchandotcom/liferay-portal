@@ -220,7 +220,7 @@ definition {
 
 			ACDXPSettings.syncSites(
 				newPropertyName = "${sitePageName} Property",
-				siteName = "${sitePageName}");
+				siteName = ${sitePageName});
 		}
 
 		task ("Add a new user") {

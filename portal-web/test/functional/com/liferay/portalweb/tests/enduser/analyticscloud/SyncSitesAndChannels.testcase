@@ -37,7 +37,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12579 | Test Summary: Can search for channels and sites on assigned property modal"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForChannelsAndSitesOnAssignedPropertyModal {
 		var foundChannelName = "Minium Demo Portal";
 		var notFoundChannelName = "AC Search Channel";
@@ -57,7 +57,7 @@ definition {
 
 		task ("Create a new channel") {
 			CommerceJSONChannelsAPI._addChannel(
-				channelName = "${notFoundChannelName}",
+				channelName = ${notFoundChannelName},
 				channelType = "site",
 				currencyCode = "USD");
 		}
@@ -70,26 +70,26 @@ definition {
 
 		task ("Toggle Commerce On > Click on the Assign button") {
 			Check.checkToggleSwitch(
-				key_propertyName = "${assignedPropertyName}",
+				key_propertyName = ${assignedPropertyName},
 				locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");
 
-			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.switchTab(tabName = "Channel");
 		}
 
 		task ("Search for a channel on channels list") {
-			ACDXPSettings.searchACItemInAssignModal(searchItem = "${foundChannelName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = ${foundChannelName});
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
 
 		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${foundChannelName}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundChannelName});
 		}
 
 		task ("Check that unsearched channel names do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundChannelName}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundChannelName});
 		}
 
 		task ("Search by name of a channel that does not exist") {
@@ -105,17 +105,17 @@ definition {
 		}
 
 		task ("Search for a site on sites list") {
-			ACDXPSettings.searchACItemInAssignModal(searchItem = "${foundSitesName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = ${foundSitesName});
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
 
 		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${foundSitesName}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundSitesName});
 		}
 
 		task ("Check that unsearched sites names do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundSitesName}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundSitesName});
 		}
 
 		task ("Search by name of a site that does not exist") {
@@ -135,23 +135,23 @@ definition {
 		}
 
 		task ("Click on the Assign button") {
-			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.switchTab(tabName = "Channel");
 		}
 
 		task ("Search for a channel on channels list") {
-			ACDXPSettings.searchACItemInAssignModal(searchItem = "${foundChannelName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = ${foundChannelName});
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
 
 		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${foundChannelName}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundChannelName});
 		}
 
 		task ("Check that unsearched channel names do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundChannelName}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundChannelName});
 		}
 
 		task ("Search by name of a channel that does not exist") {
@@ -167,17 +167,17 @@ definition {
 		}
 
 		task ("Search for a site on sites list") {
-			ACDXPSettings.searchACItemInAssignModal(searchItem = "${foundSitesName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = ${foundSitesName});
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
 
 		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${foundSitesName}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundSitesName});
 		}
 
 		task ("Check that unsearched sites names do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundSitesName}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundSitesName});
 		}
 
 		task ("Search by name of a site that does not exist") {
@@ -190,7 +190,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12578 | Test Summary: Check that the channel list cannot be edited if toggle is disabled"
-	@priority = "5"
+	@priority = 5
 	test CheckChannelListCannotEditedIfToggleDisabled {
 		var channelNameList = "Minium Demo Portal,AC Channel Disabled";
 
@@ -210,43 +210,43 @@ definition {
 		task ("Toggle Commerce On > Assign channels to the property") {
 			ACDXPSettings.syncChannel(
 				channelName = "Minium Demo Portal",
-				propertyName = "${assignedPropertyName}");
+				propertyName = ${assignedPropertyName});
 		}
 
 		task ("Assign sites to the property") {
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
+				propertyName = ${assignedPropertyName},
 				siteName = "Minium Demo");
 		}
 
 		task ("Check that the number of channels and sites matches the selected ones") {
 			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
-				propertyName = "${assignedPropertyName}",
-				syncedChannelsNumber = "1",
-				syncedSitesNumber = "1");
+				propertyName = ${assignedPropertyName},
+				syncedChannelsNumber = 1,
+				syncedSitesNumber = 1);
 		}
 
 		task ("Toggle Commerce Off > Try to assign channels to the property") {
 			Uncheck.uncheckToggleSwitch(
-				key_propertyName = "${assignedPropertyName}",
+				key_propertyName = ${assignedPropertyName},
 				locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");
 
-			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.switchTab(tabName = "Channel");
 		}
 
 		task ("Check that the channel list is disabled for editing") {
-			for (var channelName : list "${channelNameList}") {
+			for (var channelName : list ${channelNameList}) {
 				AssertElementPresent(
-					key_selectedName = "${channelName}",
+					key_selectedName = ${channelName},
 					locator1 = "ACDXPSettings#CHECKBOX_NOT_AVAILABLE_TO_SELECT");
 			}
 		}
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12576 | Test Summary: Check that it is possible to enable toggle commerce for two different properties"
-	@priority = "5"
+	@priority = 5
 	test CheckIsPossibleEnableToggleCommerceForTwoDifferentProperties {
 		var newPropertyName = "AC Channel Property";
 
@@ -266,44 +266,44 @@ definition {
 		task ("Toggle Commerce On > Assign channels to the property") {
 			ACDXPSettings.syncChannel(
 				channelName = "Minium Demo Portal",
-				propertyName = "${assignedPropertyName}");
+				propertyName = ${assignedPropertyName});
 		}
 
 		task ("Assign sites to the property") {
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
+				propertyName = ${assignedPropertyName},
 				siteName = "Minium Demo");
 		}
 
 		task ("Create new property and Toggle Commerce On > Assign channels to the property") {
 			ACDXPSettings.syncChannel(
 				channelName = "AC Channel 1",
-				newPropertyName = "${newPropertyName}");
+				newPropertyName = ${newPropertyName});
 		}
 
 		task ("Assign sites to the new property") {
 			ACDXPSettings.syncSites(
-				propertyName = "${newPropertyName}",
+				propertyName = ${newPropertyName},
 				siteName = "Site Name");
 		}
 
 		task ("Check that the number of channels and sites matches the selected ones for the last property") {
 			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
-				propertyName = "${newPropertyName}",
-				syncedChannelsNumber = "1",
-				syncedSitesNumber = "1");
+				propertyName = ${newPropertyName},
+				syncedChannelsNumber = 1,
+				syncedSitesNumber = 1);
 		}
 
 		task ("Check that the number of channels and sites matches the selected ones for the first property") {
 			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
-				propertyName = "${assignedPropertyName}",
-				syncedChannelsNumber = "1",
-				syncedSitesNumber = "1");
+				propertyName = ${assignedPropertyName},
+				syncedChannelsNumber = 1,
+				syncedSitesNumber = 1);
 		}
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12577 | Test Summary: Check that a site and a channel can only be selected for a single property"
-	@priority = "4"
+	@priority = 4
 	test CheckSiteAndChannelOnlyBeSelectedForSingleProperty {
 		var newPropertyName = "AC Single Property";
 		var channelName = "Minium Demo Portal";
@@ -317,58 +317,58 @@ definition {
 
 		task ("Toggle Commerce On > Assign channels to the property") {
 			ACDXPSettings.syncChannel(
-				channelName = "${channelName}",
-				propertyName = "${assignedPropertyName}");
+				channelName = ${channelName},
+				propertyName = ${assignedPropertyName});
 		}
 
 		task ("Assign sites to the property") {
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
-				siteName = "${siteName}");
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
 		}
 
 		task ("Check that the number of channels and sites matches the selected ones") {
 			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
-				propertyName = "${assignedPropertyName}",
-				syncedChannelsNumber = "1",
-				syncedSitesNumber = "1");
+				propertyName = ${assignedPropertyName},
+				syncedChannelsNumber = 1,
+				syncedSitesNumber = 1);
 		}
 
 		task ("Create new property") {
-			ACDXPSettings.createNewProperty(newPropertyNameList = "${newPropertyName}");
+			ACDXPSettings.createNewProperty(newPropertyNameList = ${newPropertyName});
 		}
 
 		task ("Toggle Commerce On > Assign channels to the new property and check that channels already used in another property are not available") {
 			Check.checkToggleSwitch(
-				key_propertyName = "${newPropertyName}",
+				key_propertyName = ${newPropertyName},
 				locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");
 
-			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${newPropertyName}");
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = ${newPropertyName});
 
 			ACDXPSettings.switchTab(tabName = "Channel");
 
-			ACDXPSettings.searchACItemInAssignModal(searchItem = "${channelName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = ${channelName});
 
 			AssertElementPresent(
-				key_selectedName = "${channelName}",
+				key_selectedName = ${channelName},
 				locator1 = "ACDXPSettings#CHECKBOX_NOT_AVAILABLE_TO_SELECT");
 		}
 
 		task ("Assign sites to the new property and check that sites already used in another property are not available") {
-			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${newPropertyName}");
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = ${newPropertyName});
 
 			ACDXPSettings.switchTab(tabName = "Sites");
 
-			ACDXPSettings.searchACItemInAssignModal(searchItem = "${siteName}");
+			ACDXPSettings.searchACItemInAssignModal(searchItem = ${siteName});
 
 			AssertElementPresent(
-				key_selectedName = "${siteName}",
+				key_selectedName = ${siteName},
 				locator1 = "ACDXPSettings#CHECKBOX_NOT_AVAILABLE_TO_SELECT");
 		}
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12580 | Test Summary: Check that it is possible to make pagination in the channels and sites tabs on assigned property modal"
-	@priority = "3"
+	@priority = 3
 	test MakePaginationInChannelsAndSitesTabsOnAssignedPropertyModal {
 		var firstChannelsPageList = "AC Sort Channel 1,AC Sort Channel 2,AC Sort Channel 3,AC Sort Channel 4,AC Sort Channel 5";
 		var secondChannelsPageList = "Minium Demo Portal";
@@ -376,9 +376,9 @@ definition {
 		var secondSitesPageList = "Site Name";
 
 		task ("Create five new channels") {
-			for (var channelName : list "${firstChannelsPageList}") {
+			for (var channelName : list ${firstChannelsPageList}) {
 				CommerceJSONChannelsAPI._addChannel(
-					channelName = "${channelName}",
+					channelName = ${channelName},
 					channelType = "site",
 					currencyCode = "USD");
 			}
@@ -386,7 +386,7 @@ definition {
 
 		task ("Create four new sites") {
 			for (var siteName : list "AC Site 1,AC Site 2,AC Site 3") {
-				ACUtils.addSiteAndPage(siteName = "${siteName}");
+				ACUtils.addSiteAndPage(siteName = ${siteName});
 			}
 		}
 
@@ -398,22 +398,22 @@ definition {
 
 		task ("Click on the Assign button") {
 			Check.checkToggleSwitch(
-				key_propertyName = "${assignedPropertyName}",
+				key_propertyName = ${assignedPropertyName},
 				locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");
 
-			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.switchTab(tabName = "Channel");
 		}
 
 		task ("Change the pagination to 5") {
-			ACDXPSettings.changeAssignModalPagination(itemsPerPage = "5");
+			ACDXPSettings.changeAssignModalPagination(itemsPerPage = 5);
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 5 of 6 entries.");
 		}
 
 		task ("Check that 5 channels appear on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${firstChannelsPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${firstChannelsPageList});
 		}
 
 		task ("Click next page") {
@@ -423,7 +423,7 @@ definition {
 		}
 
 		task ("Check that 2 channels appear on the second page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${secondChannelsPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${secondChannelsPageList});
 		}
 
 		task ("Switch to Sites tab") {
@@ -431,13 +431,13 @@ definition {
 		}
 
 		task ("Change the pagination to 5") {
-			ACDXPSettings.changeAssignModalPagination(itemsPerPage = "5");
+			ACDXPSettings.changeAssignModalPagination(itemsPerPage = 5);
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 5 of 6 entries.");
 		}
 
 		task ("Check that 5 sites appear on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${firstSitesPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${firstSitesPageList});
 		}
 
 		task ("Click next page") {
@@ -447,7 +447,7 @@ definition {
 		}
 
 		task ("Check that 2 sites appear on the second page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${secondSitesPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${secondSitesPageList});
 		}
 
 		task ("Cancel to exit the wizard") {
@@ -459,19 +459,19 @@ definition {
 		}
 
 		task ("Toggle Commerce On > Click on the Assign button") {
-			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.switchTab(tabName = "Channel");
 		}
 
 		task ("Change the pagination to 5") {
-			ACDXPSettings.changeAssignModalPagination(itemsPerPage = "5");
+			ACDXPSettings.changeAssignModalPagination(itemsPerPage = 5);
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 5 of 6 entries.");
 		}
 
 		task ("Check that 5 channels appear on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${firstChannelsPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${firstChannelsPageList});
 		}
 
 		task ("Click next page") {
@@ -481,7 +481,7 @@ definition {
 		}
 
 		task ("Check that 2 channels appear on the second page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${secondChannelsPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${secondChannelsPageList});
 		}
 
 		task ("Switch to Sites tab") {
@@ -489,13 +489,13 @@ definition {
 		}
 
 		task ("Change the pagination to 5") {
-			ACDXPSettings.changeAssignModalPagination(itemsPerPage = "5");
+			ACDXPSettings.changeAssignModalPagination(itemsPerPage = 5);
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 1 to 5 of 6 entries.");
 		}
 
 		task ("Check that 5 sites appear on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${firstSitesPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${firstSitesPageList});
 		}
 
 		task ("Click next page") {
@@ -505,12 +505,12 @@ definition {
 		}
 
 		task ("Check that 2 sites appear on the second page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${secondSitesPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${secondSitesPageList});
 		}
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12575 | Test Summary: Assert number of sites counts match selected sites when the commerce toggle is disabled"
-	@priority = "3"
+	@priority = 3
 	test SelectedSiteNumberCorrectWhenCommerceToggleDisabled {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -519,19 +519,19 @@ definition {
 		}
 
 		task ("Assign sites to the property") {
-			ACDXPSettings.syncSites(propertyName = "${assignedPropertyName}");
+			ACDXPSettings.syncSites(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Check that the number of sites matches the selected ones and the number of channels is equal to -") {
 			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
-				propertyName = "${assignedPropertyName}",
+				propertyName = ${assignedPropertyName},
 				syncedChannelsNumber = "-",
-				syncedSitesNumber = "3");
+				syncedSitesNumber = 3);
 		}
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12574 | Test Summary: Assert number of channels and sites counts match selected channels and sites"
-	@priority = "5"
+	@priority = 5
 	test SelectedSitesAndChannelsNumbersCorrectAfterSync {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -542,27 +542,27 @@ definition {
 		task ("Toggle Commerce On > Assign channels to the property") {
 			ACDXPSettings.syncChannel(
 				channelName = "Minium Demo Portal",
-				propertyName = "${assignedPropertyName}");
+				propertyName = ${assignedPropertyName});
 		}
 
 		task ("Assign sites to the property") {
 			for (var siteName : list "Site Name, Minium Demo") {
 				ACDXPSettings.syncSites(
-					propertyName = "${assignedPropertyName}",
-					siteName = "${siteName}");
+					propertyName = ${assignedPropertyName},
+					siteName = ${siteName});
 			}
 		}
 
 		task ("Check that the number of channels and sites matches the selected ones") {
 			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
-				propertyName = "${assignedPropertyName}",
-				syncedChannelsNumber = "1",
-				syncedSitesNumber = "2");
+				propertyName = ${assignedPropertyName},
+				syncedChannelsNumber = 1,
+				syncedSitesNumber = 2);
 		}
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12581 | Test Summary: Check that it is possible to sort by name in the channels and sites tab on assigned property modal"
-	@priority = "3"
+	@priority = 3
 	test SortInChannelsAndSitesTabOnAssignedPropertyModal {
 		var channelsPageListUp = "AC Sort Channels,DXP Sort Channels,Minium Demo Portal";
 		var channelsPageListDown = "Minium Demo Portal,DXP Sort Channels,AC Sort Channels";
@@ -572,7 +572,7 @@ definition {
 		task ("Create two new channels") {
 			for (var channelName : list "AC Sort Channels,DXP Sort Channels") {
 				CommerceJSONChannelsAPI._addChannel(
-					channelName = "${channelName}",
+					channelName = ${channelName},
 					channelType = "site",
 					currencyCode = "USD");
 			}
@@ -586,10 +586,10 @@ definition {
 
 		task ("Toggle Commerce On > Click on the Assign button") {
 			Check.checkToggleSwitch(
-				key_propertyName = "${assignedPropertyName}",
+				key_propertyName = ${assignedPropertyName},
 				locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");
 
-			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.switchTab(tabName = "Channel");
 		}
@@ -603,7 +603,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${channelsPageListUp}");
+				itemValueList = ${channelsPageListUp});
 		}
 
 		task ("Sort the list by the Channel Name column (Descending)") {
@@ -613,7 +613,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${channelsPageListDown}");
+				itemValueList = ${channelsPageListDown});
 		}
 
 		task ("Switch to Sites tab") {
@@ -629,7 +629,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${sitesPageListUp}");
+				itemValueList = ${sitesPageListUp});
 		}
 
 		task ("Sort the list by the Site Name column (Descending)") {
@@ -639,7 +639,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${sitesPageListDown}");
+				itemValueList = ${sitesPageListDown});
 		}
 
 		task ("Sort the list by the Friendly URL column (Ascending)") {
@@ -651,7 +651,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${sitesPageListUp}");
+				itemValueList = ${sitesPageListUp});
 		}
 
 		task ("Sort the list by the Friendly URL column (Descending)") {
@@ -661,7 +661,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${sitesPageListDown}");
+				itemValueList = ${sitesPageListDown});
 		}
 
 		task ("Cancel to exit the wizard") {
@@ -673,7 +673,7 @@ definition {
 		}
 
 		task ("Click on the Assign button") {
-			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${assignedPropertyName}");
+			ACDXPSettings.clickToAssignSitesAndChannel(propertyName = ${assignedPropertyName});
 
 			ACDXPSettings.switchTab(tabName = "Channel");
 		}
@@ -687,7 +687,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${channelsPageListUp}");
+				itemValueList = ${channelsPageListUp});
 		}
 
 		task ("Sort the list by the Channel Name column (Descending)") {
@@ -697,7 +697,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${channelsPageListDown}");
+				itemValueList = ${channelsPageListDown});
 		}
 
 		task ("Switch to Sites tab") {
@@ -713,7 +713,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${sitesPageListUp}");
+				itemValueList = ${sitesPageListUp});
 		}
 
 		task ("Sort the list by the Site Name column (Descending)") {
@@ -723,7 +723,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${sitesPageListDown}");
+				itemValueList = ${sitesPageListDown});
 		}
 
 		task ("Sort the list by the Friendly URL column (Ascending)") {
@@ -735,7 +735,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${sitesPageListUp}");
+				itemValueList = ${sitesPageListUp});
 		}
 
 		task ("Sort the list by the Friendly URL column (Descending)") {
@@ -745,7 +745,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewAssignModalListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${sitesPageListDown}");
+				itemValueList = ${sitesPageListDown});
 		}
 	}
 

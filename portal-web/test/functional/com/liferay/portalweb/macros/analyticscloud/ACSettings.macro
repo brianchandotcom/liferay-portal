@@ -460,22 +460,22 @@ definition {
 	}
 
 	macro checkDataSourceStatus {
-		var sectionTitleList = ListUtil.newListFromString("${sectionTitleList}");
-		var statusList = ListUtil.newListFromString("${statusList}");
-		var size = ListUtil.size("${sectionTitleList}");
-		var i = "0";
+		var sectionTitleList = ListUtil.newListFromString(${sectionTitleList});
+		var statusList = ListUtil.newListFromString(${statusList});
+		var size = ListUtil.size(${sectionTitleList});
+		var i = 0;
 
-		while ("${i}" != "${size}") {
-			var section = ListUtil.get("${sectionTitleList}", "${i}");
-			var status = ListUtil.get("${statusList}", "${i}");
+		while (${i} != ${size}) {
+			var section = ListUtil.get(${sectionTitleList}, ${i});
+			var status = ListUtil.get(${statusList}, ${i});
 
 			ACSettings.assertDataSourceStatus(
-				section = "${section}",
-				status = "${status}");
+				section = ${section},
+				status = ${status});
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 	}
 

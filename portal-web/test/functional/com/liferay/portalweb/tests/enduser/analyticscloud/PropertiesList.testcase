@@ -143,17 +143,17 @@ definition {
 	}
 
 	@description = "Bug: LRAC-10602 | Automation ID: LRAC-11055 | Test Summary: Deleted properties don't appear as an option to sync sites"
-	@priority = "2"
+	@priority = 2
 	test DeletedPropertiesNotAppearAsOptionInSyncSites {
 		task ("Go to properties page and add 2 new properties") {
 			var propertyList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 1,Property DeletedPropertiesNotAppearAsOptionInSyncSites 2";
 
 			ACNavigation.goToSettings();
 
-			for (var propertyName : list "${propertyList}") {
+			for (var propertyName : list ${propertyList}) {
 				ACSettings.goToProperties();
 
-				ACProperties.addNewProperty(propertyName = "${propertyName}");
+				ACProperties.addNewProperty(propertyName = ${propertyName});
 			}
 		}
 
@@ -197,17 +197,17 @@ definition {
 	}
 
 	@description = "Bug: LRAC-11142 | Automation ID: LRAC-11162 | Test Summary: New property created when reconnect and old property remains"
-	@priority = "4"
+	@priority = 4
 	test OnlyAvailablePropertiesAppearInDXP {
 		task ("Go to properties page and add 2 new properties") {
 			var propertyList = "Property OnlyAvailablePropertiesAppearInDXP 1,Property OnlyAvailablePropertiesAppearInDXP 2";
 
 			ACNavigation.goToSettings();
 
-			for (var propertyName : list "${propertyList}") {
+			for (var propertyName : list ${propertyList}) {
 				ACSettings.goToProperties();
 
-				ACProperties.addNewProperty(propertyName = "${propertyName}");
+				ACProperties.addNewProperty(propertyName = ${propertyName});
 			}
 		}
 

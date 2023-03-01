@@ -596,7 +596,7 @@ definition {
 		}
 
 		task ("Delete the Data Source") {
-			ACSettings.deleteDataSource(dataSourceName = "${assignedPropertyName}");
+			ACSettings.deleteDataSource(dataSourceName = ${assignedPropertyName});
 		}
 
 		task ("Exit Settings") {

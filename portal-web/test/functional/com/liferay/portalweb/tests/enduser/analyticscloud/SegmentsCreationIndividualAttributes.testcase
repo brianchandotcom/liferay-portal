@@ -735,7 +735,7 @@ definition {
 		task ("Sync the Custom Field") {
 			ACDXPSettings.syncAttributes(
 				attributeCategory = "People",
-				attributeNameList = "${customFieldNameList}");
+				attributeNameList = ${customFieldNameList});
 		}
 
 		task ("View the page as the new added user") {

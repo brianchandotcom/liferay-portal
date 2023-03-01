@@ -29,13 +29,13 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Story: LRAC-10871 | Automation ID: LRAC-12518 | Test Summary: Disconnect the connection between AC and DXP from the DXP side"
-	@priority = "5"
+	@priority = 5
 	test DisconnectACAndDXPFromDXPSide {
 		task ("Connect AC and DXP") {
 			ACDXPSettings.connectAnalyticsCloud();

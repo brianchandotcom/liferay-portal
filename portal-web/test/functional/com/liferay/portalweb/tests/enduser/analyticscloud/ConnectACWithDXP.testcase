@@ -29,13 +29,13 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Story: LRAC-11860 | Automation ID: LRAC-12437 | Test Summary: Empty state of connection screen"
-	@priority = "3"
+	@priority = 3
 	test CheckConnectionEmptyStateMessage {
 		task ("Go to Instance Settings > Analytics Cloud") {
 			ACDXPSettings.goToInstanceSettingsAC();
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-11860 | Automation ID: LRAC-12439 | Test Summary: Connect DXP with AC token updates data source status"
-	@priority = "4"
+	@priority = 4
 	test CheckDataSourceStatusUpdateWhenSyncSitesAndContacts {
 		property portal.release = "true";
 
@@ -72,14 +72,14 @@ definition {
 
 			ACSettings.goToDataSources();
 
-			ACUtils.searchBar(searchItem = "${dataSource}");
+			ACUtils.searchBar(searchItem = ${dataSource});
 
-			ACNavigation.openItem(itemName = "${dataSource}");
+			ACNavigation.openItem(itemName = ${dataSource});
 		}
 
 		task ("Assert the data source Status: Connected, Sites: Unconfigured, Contacts: Unconfigured") {
 			ACSettings.checkDataSourceStatus(
-				sectionTitleList = "${sectionTitleList}",
+				sectionTitleList = ${sectionTitleList},
 				statusList = "Connected,Unconfigured,Unconfigured");
 		}
 
@@ -90,7 +90,7 @@ definition {
 
 			ACDXPSettings.navToSyncedSitesMenu();
 
-			ACDXPSettings.syncSites(propertyName = "${assignedPropertyName}");
+			ACDXPSettings.syncSites(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Launch AC, go to settings and data source and click in the data source searched") {
@@ -100,14 +100,14 @@ definition {
 
 			ACSettings.goToDataSources();
 
-			ACUtils.searchBar(searchItem = "${dataSource}");
+			ACUtils.searchBar(searchItem = ${dataSource});
 
-			ACNavigation.openItem(itemName = "${dataSource}");
+			ACNavigation.openItem(itemName = ${dataSource});
 		}
 
 		task ("Assert the data source Status: Active, Sites: Configured, Contacts: Unconfigured") {
 			ACSettings.checkDataSourceStatus(
-				sectionTitleList = "${sectionTitleList}",
+				sectionTitleList = ${sectionTitleList},
 				statusList = "Active,Configured,Unconfigured");
 		}
 
@@ -128,14 +128,14 @@ definition {
 
 			ACSettings.goToDataSources();
 
-			ACUtils.searchBar(searchItem = "${dataSource}");
+			ACUtils.searchBar(searchItem = ${dataSource});
 
-			ACNavigation.openItem(itemName = "${dataSource}");
+			ACNavigation.openItem(itemName = ${dataSource});
 		}
 
 		task ("Assert the data source Status: Active, Sites: Configured, Contacts: Configured") {
 			ACSettings.checkDataSourceStatus(
-				sectionTitleList = "${sectionTitleList}",
+				sectionTitleList = ${sectionTitleList},
 				statusList = "Active,Configured,Configured");
 		}
 
@@ -143,13 +143,13 @@ definition {
 			ACSettings.disconnectDataSource();
 
 			ACSettings.checkDataSourceStatus(
-				sectionTitleList = "${sectionTitleList}",
+				sectionTitleList = ${sectionTitleList},
 				statusList = "Disconnected,Unconfigured,Unconfigured");
 		}
 	}
 
 	@description = "Story: LRAC-11860 | Automation ID: LRAC-12438 | Test Summary: Connect AC Token Authentication Passes"
-	@priority = "5"
+	@priority = 5
 	test CheckIsPossibleConnectACWithValidToken {
 		property portal.release = "true";
 
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-11860 | Automation ID: LRAC-12440 | Test Summary: Connect AC Token Authentication Fails"
-	@priority = "5"
+	@priority = 5
 	test CheckUnableConnectACWithInvalidToken {
 		task ("Go to Instance Settings > Analytics Cloud") {
 			ACDXPSettings.goToInstanceSettingsAC();
@@ -189,7 +189,7 @@ definition {
 	}
 
 	@description = "Validate if the user can connect AC to DXP"
-	@priority = "5"
+	@priority = 5
 	test ConnectACToDXPAndSyncSitesAndContacts {
 		property portal.release = "true";
 
@@ -199,7 +199,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-10629 | Automation ID: LRAC-11443 | Test Summary: Sites and Contacts connection status is not changing when renaming the data source"
-	@priority = "3"
+	@priority = 3
 	test ConnectionStatusNotChangeWhenRenameDataSource {
 		task ("Launch AC then go to Data Sources and open the created data source") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud();
@@ -210,18 +210,18 @@ definition {
 
 			ACSettings.goToDataSources();
 
-			ACUtils.searchBar(searchItem = "${assignedPropertyName}");
+			ACUtils.searchBar(searchItem = ${assignedPropertyName});
 
-			ACNavigation.openItem(itemName = "${assignedPropertyName}");
+			ACNavigation.openItem(itemName = ${assignedPropertyName});
 		}
 
 		task ("See that the status of sites and contacts are 'configured'") {
 			ACUtils.viewGenericTextInOrder(
-				index = "1",
+				index = 1,
 				textValueList = "Configured");
 
 			ACUtils.viewGenericTextInOrder(
-				index = "2",
+				index = 2,
 				textValueList = "Configured");
 		}
 
@@ -229,11 +229,11 @@ definition {
 			ACSettings.renameDataSource(dataSourceNewName = "New Data Source Name");
 
 			ACUtils.viewGenericTextInOrder(
-				index = "1",
+				index = 1,
 				textValueList = "Configured");
 
 			ACUtils.viewGenericTextInOrder(
-				index = "2",
+				index = 2,
 				textValueList = "Configured");
 		}
 
@@ -241,11 +241,11 @@ definition {
 			Refresh();
 
 			ACUtils.viewGenericTextInOrder(
-				index = "1",
+				index = 1,
 				textValueList = "Configured");
 
 			ACUtils.viewGenericTextInOrder(
-				index = "2",
+				index = 2,
 				textValueList = "Configured");
 		}
 

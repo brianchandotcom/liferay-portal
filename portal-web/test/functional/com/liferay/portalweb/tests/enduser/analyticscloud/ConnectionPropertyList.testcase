@@ -29,7 +29,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-12019 | Automation ID: LRAC-12584 | Test Summary: Can paginate the list of properties"
-	@priority = "3"
+	@priority = 3
 	test CanPaginatePropertyListInDXP {
 		var firstPageList = "AC Property Pagination 2,AC Property Pagination 3,AC Property Pagination 4,AC Property Pagination 5,AC Property Pagination 6";
 		var secondPageList = "AC Property Pagination 1";
@@ -54,13 +54,13 @@ definition {
 		}
 
 		task ("Change the pagination to 5") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = 5);
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 7 entries.");
 		}
 
 		task ("Check that 5 properties appear on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${firstPageList});
 		}
 
 		task ("Click next page") {
@@ -82,13 +82,13 @@ definition {
 		}
 
 		task ("Change the pagination to 5") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = 5);
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 7 entries.");
 		}
 
 		task ("Check that 5 properties appear on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${firstPageList});
 		}
 
 		task ("Click next page") {
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12571 | Test Summary: Check that the user can put any name in the property"
-	@priority = "5"
+	@priority = 5
 	test CanPutAnyNameInNewProperty {
 		task ("Connect DXP to AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -167,7 +167,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-12019 | Automation ID: LRAC-12585 | Test Summary: Check that it is possible to search for properties"
-	@priority = "3"
+	@priority = 3
 	test CanSearchForPropertiesInDXP {
 		var foundPropertyName = "AC Search Property 1";
 		var notFoundPropertiesName = "AC Search Property 2,AC Search Property 3";
@@ -181,17 +181,17 @@ definition {
 		}
 
 		task ("Search by property name") {
-			ACUtils.searchBar(searchItem = "${foundPropertyName}");
+			ACUtils.searchBar(searchItem = ${foundPropertyName});
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
 
 		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${foundPropertyName}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundPropertyName});
 		}
 
 		task ("Check that unsearched property names do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundPropertiesName}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundPropertiesName});
 		}
 
 		task ("Search by name of a property that does not exist") {
@@ -211,17 +211,17 @@ definition {
 		}
 
 		task ("Search by property name") {
-			ACUtils.searchBar(searchItem = "${foundPropertyName}");
+			ACUtils.searchBar(searchItem = ${foundPropertyName});
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 		}
 
 		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${foundPropertyName}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundPropertyName});
 		}
 
 		task ("Check that unsearched property names do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundPropertiesName}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundPropertiesName});
 		}
 
 		task ("Search by name of a property that does not exist") {
@@ -234,7 +234,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-12019 | Automation ID: LRAC-12586 | Test Summary: Can sort the list of properties"
-	@priority = "3"
+	@priority = 3
 	test CanSortPropertyListInDXP {
 		var propertyNameListByCreateDateUp = "AC Sort Property,LXC Sort Property,DXP Sort Property";
 		var propertyNameListByCreateDateDown = "DXP Sort Property,LXC Sort Property,AC Sort Property";
@@ -246,7 +246,7 @@ definition {
 		}
 
 		task ("Create 3 new properties") {
-			ACDXPSettings.createNewProperty(newPropertyNameList = "${propertyNameListByCreateDateUp}");
+			ACDXPSettings.createNewProperty(newPropertyNameList = ${propertyNameListByCreateDateUp});
 		}
 
 		task ("Search for a common term in property names so only manually created properties appear") {
@@ -262,7 +262,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${propertyNameListByCreateDateUp}");
+				itemValueList = ${propertyNameListByCreateDateUp});
 		}
 
 		task ("Sort the list by the Create Date column (Descending)") {
@@ -272,7 +272,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${propertyNameListByCreateDateDown}");
+				itemValueList = ${propertyNameListByCreateDateDown});
 		}
 
 		task ("Sort the list by the Available Properties column (Ascending)") {
@@ -284,7 +284,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${propertyNameListByAvailablePropertiesUp}");
+				itemValueList = ${propertyNameListByAvailablePropertiesUp});
 		}
 
 		task ("Sort the list by the Available Properties column (Descending)") {
@@ -294,7 +294,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${propertyNameListByAvailablePropertiesDown}");
+				itemValueList = ${propertyNameListByAvailablePropertiesDown});
 		}
 
 		task ("Cancel to exit the wizard") {
@@ -318,7 +318,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${propertyNameListByCreateDateUp}");
+				itemValueList = ${propertyNameListByCreateDateUp});
 		}
 
 		task ("Sort the list by the Create Date column (Descending)") {
@@ -328,7 +328,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${propertyNameListByCreateDateDown}");
+				itemValueList = ${propertyNameListByCreateDateDown});
 		}
 
 		task ("Sort the list by the Available Properties column (Ascending)") {
@@ -340,7 +340,7 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${propertyNameListByAvailablePropertiesUp}");
+				itemValueList = ${propertyNameListByAvailablePropertiesUp});
 		}
 
 		task ("Sort the list by the Available Properties column (Descending)") {
@@ -350,12 +350,12 @@ definition {
 		task ("Check that the list is sorted correctly") {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3",
-				itemValueList = "${propertyNameListByAvailablePropertiesDown}");
+				itemValueList = ${propertyNameListByAvailablePropertiesDown});
 		}
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12572 | Test Summary: Check that a deleted property in AC will not appear in the DXP"
-	@priority = "3"
+	@priority = 3
 	test CheckDeletedPropertyInACSideNotAppearInDXP {
 		var propertyName = "AC Deleted Property";
 
@@ -366,7 +366,7 @@ definition {
 		}
 
 		task ("Create a new property from the list of available properties") {
-			ACDXPSettings.createNewProperty(newPropertyNameList = "${propertyName}");
+			ACDXPSettings.createNewProperty(newPropertyNameList = ${propertyName});
 		}
 
 		task ("Go to AC > Go to Settings > Go to Properties") {
@@ -382,9 +382,9 @@ definition {
 		}
 
 		task ("Delete one property") {
-			ACUtils.searchBar(searchItem = "${autoGeneratePropertyName}");
+			ACUtils.searchBar(searchItem = ${autoGeneratePropertyName});
 
-			ACSettings.deletePropertyByCheckbox(propertyName = "${autoGeneratePropertyName}");
+			ACSettings.deletePropertyByCheckbox(propertyName = ${autoGeneratePropertyName});
 		}
 
 		task ("Go to DXP > Instance Settings > Analytics Cloud") {
@@ -398,16 +398,16 @@ definition {
 		}
 
 		task ("Check that the not deleted property is present in the list") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${propertyName}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${propertyName});
 		}
 
 		task ("Check that the deleted property is not present in the list") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${autoGeneratePropertyName}");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${autoGeneratePropertyName});
 		}
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12570 | Test Summary: Check that a property is created automatically after connection"
-	@priority = "5"
+	@priority = 5
 	test CheckIfPropertyCreatedAutomaticallyAfterConnection {
 		task ("Connect DXP to AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -433,13 +433,13 @@ definition {
 
 		task ("Check that other property was automatically created at the top of the list") {
 			TestUtils.assertNotEquals(
-				actual = "${propertyName2}",
-				expected = "${propertyName1}");
+				actual = ${propertyName2},
+				expected = ${propertyName1});
 		}
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12569 | Test Summary: Assert Empty State upon property creation"
-	@priority = "2"
+	@priority = 2
 	test CheckPropertyListEmptyStateMessage {
 		task ("Create a new workspace") {
 			ACUtils.launchAC(
@@ -489,7 +489,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-12019 | Automation ID: LRAC-12583 | Test Summary: Check that the property list is sorted by creation date by default"
-	@priority = "3"
+	@priority = 3
 	test CheckPropertyListSortedByCreationDateByDefault {
 		task ("Connect DXP to AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -505,8 +505,8 @@ definition {
 
 		task ("Check that the property appears at the top of the list") {
 			TestUtils.assertNotEquals(
-				actual = "${propertyName1}",
-				expected = "${autoGeneratePropertyName}");
+				actual = ${propertyName1},
+				expected = ${autoGeneratePropertyName});
 		}
 
 		task ("Create a new property from the list of available properties and get the first property name from the list") {
@@ -517,8 +517,8 @@ definition {
 
 		task ("Check that the property appears at the top of the list") {
 			TestUtils.assertNotEquals(
-				actual = "${propertyName2}",
-				expected = "${propertyName1}");
+				actual = ${propertyName2},
+				expected = ${propertyName1});
 		}
 
 		task ("Cancel to exit the wizard") {
@@ -537,13 +537,13 @@ definition {
 
 		task ("Check that the property appears at the top of the list") {
 			TestUtils.assertNotEquals(
-				actual = "${propertyName3}",
-				expected = "${propertyName2}");
+				actual = ${propertyName3},
+				expected = ${propertyName2});
 		}
 	}
 
 	@description = "Bug: LRAC-11142 | Automation ID: LRAC-11162 | Test Summary: New property created when reconnect and old property remains"
-	@priority = "4"
+	@priority = 4
 	test OnlyAvailablePropertiesAppearInDXP {
 		task ("Go to AC > Go to properties page and add 2 new properties") {
 			var propertyList = "Property OnlyAvailablePropertiesAppearInDXP 1,Property OnlyAvailablePropertiesAppearInDXP 2";
@@ -552,10 +552,10 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			for (var propertyName : list "${propertyList}") {
+			for (var propertyName : list ${propertyList}) {
 				ACSettings.goToProperties();
 
-				ACProperties.addNewProperty(propertyName = "${propertyName}");
+				ACProperties.addNewProperty(propertyName = ${propertyName});
 			}
 		}
 

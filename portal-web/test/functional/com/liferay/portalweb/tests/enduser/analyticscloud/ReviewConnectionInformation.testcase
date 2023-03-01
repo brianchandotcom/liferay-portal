@@ -37,7 +37,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-11044 | Automation ID: LRAC-12677 | Test Summary: Check that you can modify the sync of contacts in the people review sidebar"
-	@priority = "4"
+	@priority = 4
 	test CanModifyContactsSyncInPeopleReviewSidebar {
 		task ("Go to the people page in the sidebar") {
 			ACDXPSettings.navToSyncedContactDataMenu();
@@ -79,7 +79,7 @@ definition {
 		task ("Check that only sync contacts toggle is enable") {
 			for (var syncFieldName : list "Sync All Contacts and Accounts,Sync All Accounts") {
 				AssertNotChecked.assertNotCheckedNotVisible(
-					key_syncFieldName = "${syncFieldName}",
+					key_syncFieldName = ${syncFieldName},
 					locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
 			}
 
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-11044 | Automation ID: LRAC-12678 | Test Summary: Check that you can modify selected attributes in the attribute review sidebar"
-	@priority = "4"
+	@priority = 4
 	test CanModifySelectedAttributesInAttributeReviewSidebar {
 		task ("Go to the attributes page in the sidebar") {
 			ACDXPSettings.navToSyncedAttributes();
@@ -135,8 +135,8 @@ definition {
 		task ("Check that the correct amount of attributes appear as selected after editing") {
 			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
 				attributeCategory = "People",
-				currentAttributeNumber = "${syncPeopleNumberStart}",
-				decreaseAttributeNumber = "2");
+				currentAttributeNumber = ${syncPeopleNumberStart},
+				decreaseAttributeNumber = 2);
 		}
 
 		task ("Get the number of attributes currently synced") {
@@ -152,8 +152,8 @@ definition {
 		task ("Check that the correct amount of attributes appear as selected after editing") {
 			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
 				attributeCategory = "People",
-				currentAttributeNumber = "${syncPeopleNumberStart}",
-				increaseAttributeNumber = "1");
+				currentAttributeNumber = ${syncPeopleNumberStart},
+				increaseAttributeNumber = 1);
 		}
 
 		task ("Get the number of attributes currently synced") {
@@ -175,8 +175,8 @@ definition {
 		task ("Check that the correct amount of attributes appear as selected after editing") {
 			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
 				attributeCategory = "Account",
-				currentAttributeNumber = "${syncAccountNumberStart}",
-				decreaseAttributeNumber = "2");
+				currentAttributeNumber = ${syncAccountNumberStart},
+				decreaseAttributeNumber = 2);
 		}
 
 		task ("Get the number of attributes currently synced") {
@@ -192,8 +192,8 @@ definition {
 		task ("Check that the correct amount of attributes appear as selected after editing") {
 			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
 				attributeCategory = "Account",
-				currentAttributeNumber = "${syncAccountNumberStart}",
-				increaseAttributeNumber = "1");
+				currentAttributeNumber = ${syncAccountNumberStart},
+				increaseAttributeNumber = 1);
 		}
 
 		task ("Get the number of attributes currently synced") {
@@ -218,7 +218,7 @@ definition {
 	}
 
 	@description = "Story: LRAC-11044 | Automation ID: LRAC-12676 | Test Summary: Check that you can modify the sites and channels synchronized in the property review sidebar"
-	@priority = "4"
+	@priority = 4
 	test CanModifySitesAndChannelsSyncInPropertyReviewSidebar {
 		var newChannelName1 = "AC";
 		var newChannelName2 = "DXP";
@@ -226,7 +226,7 @@ definition {
 		task ("Create two new channels") {
 			for (var channelName : list "${newChannelName1},${newChannelName2}") {
 				CommerceJSONChannelsAPI._addChannel(
-					channelName = "${channelName}",
+					channelName = ${channelName},
 					channelType = "site",
 					currencyCode = "USD");
 			}
@@ -242,30 +242,30 @@ definition {
 
 		task ("Check that the number of channels and sites matches the selected ones") {
 			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
-				propertyName = "${assignedPropertyName}",
-				syncedChannelsNumber = "1",
-				syncedSitesNumber = "2");
+				propertyName = ${assignedPropertyName},
+				syncedChannelsNumber = 1,
+				syncedSitesNumber = 2);
 		}
 
 		task ("Assign channels to the property") {
 			for (var channelName : list "${newChannelName1},${newChannelName2}") {
 				ACDXPSettings.syncChannel(
-					channelName = "${channelName}",
-					propertyName = "${assignedPropertyName}");
+					channelName = ${channelName},
+					propertyName = ${assignedPropertyName});
 			}
 		}
 
 		task ("Assign sites to the property") {
 			ACDXPSettings.syncSites(
-				propertyName = "${assignedPropertyName}",
+				propertyName = ${assignedPropertyName},
 				siteName = "Site Name");
 		}
 
 		task ("Check that the number of channels and sites matches the selected ones") {
 			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
-				propertyName = "${assignedPropertyName}",
-				syncedChannelsNumber = "3",
-				syncedSitesNumber = "3");
+				propertyName = ${assignedPropertyName},
+				syncedChannelsNumber = 3,
+				syncedSitesNumber = 3);
 		}
 	}
 

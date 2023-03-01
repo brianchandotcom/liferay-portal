@@ -26,6 +26,7 @@ jest.mock(
 );
 
 Liferay.ThemeDisplay.getDefaultLanguageId = () => 'en_US';
+Liferay.ThemeDisplay.getPathContext = () => '';
 
 const SEARCH_RESULTS = mockSearchResults();
 const SEARCH_HITS = transformToSearchPreviewHits(SEARCH_RESULTS);

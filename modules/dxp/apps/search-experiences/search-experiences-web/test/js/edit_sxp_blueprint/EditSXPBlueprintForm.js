@@ -58,6 +58,7 @@ afterAll(() => {
 });
 
 Liferay.ThemeDisplay.getDefaultLanguageId = () => 'en_US';
+Liferay.ThemeDisplay.getPathContext = () => '';
 
 function renderEditSXPBlueprintForm(props) {
 	return render(

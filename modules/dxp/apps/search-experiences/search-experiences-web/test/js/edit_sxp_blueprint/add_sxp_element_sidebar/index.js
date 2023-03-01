@@ -23,6 +23,8 @@ import '@testing-library/jest-dom/extend-expect';
 
 const originalError = console.error;
 
+Liferay.ThemeDisplay.getPathContext = () => '';
+
 beforeAll(() => {
 	console.error = (...args) => {
 		if (/Warning.*not wrapped in act/.test(args[0])) {

@@ -11,6 +11,8 @@
 
 import addParams from '../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/fetch/add_params';
 
+Liferay.ThemeDisplay.getPathContext = () => '';
+
 describe('addParams', () => {
 	it('adds a parameter to a url', () => {
 		expect(

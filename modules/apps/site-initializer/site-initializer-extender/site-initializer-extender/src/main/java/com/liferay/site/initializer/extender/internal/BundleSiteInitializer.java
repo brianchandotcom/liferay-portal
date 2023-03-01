@@ -2565,20 +2565,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 				json,
 				new String[] {
 					"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
-					"[$GROUP_KEY$]","[$PORTAL_URL$]"
+					"[$GROUP_KEY$]", "[$PORTAL_URL$]"
 				},
 				new String[] {
 					String.valueOf(group.getCompanyId()),
 					group.getFriendlyURL(),
 					String.valueOf(serviceContext.getScopeGroupId()),
-					group.getGroupKey(),
-					serviceContext.getPortalURL()
+					group.getGroupKey(), serviceContext.getPortalURL()
 				}),
 			documentsStringUtilReplaceValues,
 			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
 
-		notificationTemplateJSONObject =
-			_jsonFactory.createJSONObject(json);
+		notificationTemplateJSONObject = _jsonFactory.createJSONObject(json);
 
 		NotificationTemplate notificationTemplate = NotificationTemplate.toDTO(
 			notificationTemplateJSONObject.toString());

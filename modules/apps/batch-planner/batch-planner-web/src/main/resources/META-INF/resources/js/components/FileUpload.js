@@ -19,6 +19,7 @@ import React, {useEffect, useState} from 'react';
 import parseFile from '../FileParsers';
 import {
 	CSV_ENCLOSING_CHARACTERS,
+	CSV_FORMAT,
 	FILE_EXTENSION_INPUT_PARTIAL_NAME,
 	FILE_SCHEMA_EVENT,
 	IMPORT_FILE_FORMATS,
@@ -42,9 +43,21 @@ function updateNameInput(namespace, fileName) {
 	}
 }
 
-const acceptedExtensions = IMPORT_FILE_FORMATS.map(
-	(format) => `.${format}`
-).join(', ');
+function getAcceptedExtensions() {
+	let acceptedExtensions = '';
+	for (const i in IMPORT_FILE_FORMATS) {
+		if (
+			IMPORT_FILE_FORMATS[i] === CSV_FORMAT &&
+			!Liferay.FeatureFlags['LPS-173135']
+		) {
+			continue;
+		}
+
+		acceptedExtensions += ', .' + IMPORT_FILE_FORMATS[i];
+	}
+
+	return acceptedExtensions.substring(1);
+}
 
 function FileUpload({portletNamespace}) {
 	const isMounted = useIsMounted();
@@ -121,10 +134,10 @@ function FileUpload({portletNamespace}) {
 			<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
 				<label htmlFor={inputFileId}>{`${Liferay.Language.get(
 					'file'
-				)} (${acceptedExtensions})`}</label>
+				)} (${getAcceptedExtensions()})`}</label>
 
 				<ClayInput
-					accept={acceptedExtensions}
+					accept={getAcceptedExtensions()}
 					className="h-auto"
 					id={inputFileId}
 					name={inputFileId}

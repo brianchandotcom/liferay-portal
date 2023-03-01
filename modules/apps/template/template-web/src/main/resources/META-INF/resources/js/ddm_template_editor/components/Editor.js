@@ -131,10 +131,10 @@ export function Editor({autocompleteData, initialScript, mode}) {
 					return response;
 				})
 				.then((response) => response.json())
-				.then((json) => {
-					if (json.error) {
+				.then(({error}) => {
+					if (error) {
 						openToast({
-							message: Liferay.Language.get(json.error),
+							message: Liferay.Language.get(error),
 							title: Liferay.Language.get('error'),
 							type: 'danger',
 						});

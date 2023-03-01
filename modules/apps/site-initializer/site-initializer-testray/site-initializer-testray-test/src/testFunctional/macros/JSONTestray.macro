@@ -121,3 +121,13 @@ definition {
 			projectDescription = ${projectDescription},
 			projectName = ${projectName});
 	}
+
+	macro addRoutine {
+		Variables.assertDefined(parameterList = "${routineName},${projectName}");
+
+		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
+
+		var routineId = JSONTestrayAPI.createRoutineAPI(
+			projectId = ${projectId},
+			routineName = ${routineName});
+	}

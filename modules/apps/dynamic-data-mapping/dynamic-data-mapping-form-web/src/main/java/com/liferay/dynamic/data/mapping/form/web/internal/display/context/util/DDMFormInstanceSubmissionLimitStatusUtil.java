@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Carolina Barbosa
@@ -62,7 +61,7 @@ public class DDMFormInstanceSubmissionLimitStatusUtil {
 				getFormInstanceRecordVersions(
 					user.getUserId(), ddmFormInstance.getFormInstanceId());
 
-		Optional<DDMFormInstanceRecordVersion> optional = Optional.empty();
+		boolean submissionLimitReached = false;
 
 		for (DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion :
 				ddmFormInstanceRecordVersions) {
@@ -72,13 +71,13 @@ public class DDMFormInstanceSubmissionLimitStatusUtil {
 				(ddmFormInstanceRecordVersion.getStatus() !=
 					WorkflowConstants.STATUS_PENDING)) {
 
-				optional = Optional.of(ddmFormInstanceRecordVersion);
+				submissionLimitReached = true;
 
 				break;
 			}
 		}
 
-		return optional.isPresent();
+		return submissionLimitReached;
 	}
 
 }

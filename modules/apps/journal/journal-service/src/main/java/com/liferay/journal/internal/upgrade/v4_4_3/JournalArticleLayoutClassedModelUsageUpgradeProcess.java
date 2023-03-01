@@ -76,49 +76,16 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			Map<Long, Long> resourcePrimKeysMap = new HashMap<>();
 
-			processConcurrently(
-				StringBundler.concat(
-					"select distinct JournalArticle.resourcePrimKey, ",
-					"JournalArticle.groupId, JournalArticle.companyId, ",
-					"JournalArticle.articleId from JournalArticle where not ",
-					"exists (select 1 from LayoutClassedModelUsage where ",
-					"LayoutClassedModelUsage.classPK = ",
-					"JournalArticle.resourcePrimKey and ",
-					"LayoutClassedModelUsage.classNameId = ",
-					journalArticleClassNameId,
-					" and LayoutClassedModelUsage.containerKey is null and ",
-					"LayoutClassedModelUsage.containerType = 0 and ",
-					"LayoutClassedModelUsage.plid = 0 )"),
-				resultSet -> new Object[] {
-					GetterUtil.getString(resultSet.getString("articleId")),
-					resultSet.getLong("resourcePrimKey"),
-					resultSet.getLong("groupId"), resultSet.getLong("companyId")
-				},
-				values -> {
-					String articleId = (String)values[0];
-					long resourcePrimKey = (Long)values[1];
-					long groupId = (Long)values[2];
-
-					_addJournalContentSearchLayoutClassedModelUsages(
-						articleId, resourcePrimKey, groupId,
-						journalArticleClassNameId, portletClassNameId,
-						serviceContext);
-
-					resourcePrimKeysMap.put(resourcePrimKey, groupId);
-				},
-				"Unable to create journal articles layout classed model " +
-					"usages");
+			_addJournalContentSearchLayoutClassedModelUsages(
+				journalArticleClassNameId, portletClassNameId,
+				resourcePrimKeysMap, serviceContext);
 
 			_addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
 				journalArticleClassNameId, portletClassNameId,
 				resourcePrimKeysMap, serviceContext);
 
-			for (Map.Entry<Long, Long> entry : resourcePrimKeysMap.entrySet()) {
-				_layoutClassedModelUsageLocalService.
-					addDefaultLayoutClassedModelUsage(
-						entry.getValue(), journalArticleClassNameId,
-						entry.getKey(), serviceContext);
-			}
+			_addDefaultLayoutClassedModelUsages(
+				journalArticleClassNameId, resourcePrimKeysMap, serviceContext);
 		}
 	}
 
@@ -197,6 +164,58 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 				"Unable to create manual selection asset publisher layout " +
 					"classed model usages");
 		}
+	}
+
+	private void _addDefaultLayoutClassedModelUsages(
+			long journalArticleClassNameId, Map<Long, Long> resourcePrimKeysMap,
+			ServiceContext serviceContext) {
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			for (Map.Entry<Long, Long> entry : resourcePrimKeysMap.entrySet()) {
+				_layoutClassedModelUsageLocalService.
+					addDefaultLayoutClassedModelUsage(
+						entry.getValue(), journalArticleClassNameId,
+						entry.getKey(), serviceContext);
+			}
+		}
+	}
+
+	private void _addJournalContentSearchLayoutClassedModelUsages(
+			long journalArticleClassNameId, long portletClassNameId,
+			Map<Long, Long> resourcePrimKeysMap, ServiceContext serviceContext)
+		throws Exception {
+
+		processConcurrently(
+			StringBundler.concat(
+				"select distinct JournalArticle.resourcePrimKey, ",
+				"JournalArticle.groupId, JournalArticle.companyId, ",
+				"JournalArticle.articleId from JournalArticle where not ",
+				"exists (select 1 from LayoutClassedModelUsage where ",
+				"LayoutClassedModelUsage.classPK = ",
+				"JournalArticle.resourcePrimKey and ",
+				"LayoutClassedModelUsage.classNameId = ",
+				journalArticleClassNameId,
+				" and LayoutClassedModelUsage.containerKey is null and ",
+				"LayoutClassedModelUsage.containerType = 0 and ",
+				"LayoutClassedModelUsage.plid = 0 )"),
+			resultSet -> new Object[] {
+				GetterUtil.getString(resultSet.getString("articleId")),
+				resultSet.getLong("resourcePrimKey"),
+				resultSet.getLong("groupId"), resultSet.getLong("companyId")
+			},
+			values -> {
+				String articleId = (String)values[0];
+				long resourcePrimKey = (Long)values[1];
+				long groupId = (Long)values[2];
+
+				_addJournalContentSearchLayoutClassedModelUsages(
+					articleId, resourcePrimKey, groupId,
+					journalArticleClassNameId, portletClassNameId,
+					serviceContext);
+
+				resourcePrimKeysMap.put(resourcePrimKey, groupId);
+			},
+			"Unable to create journal articles layout classed model usages");
 	}
 
 	private void _addJournalContentSearchLayoutClassedModelUsages(

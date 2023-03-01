@@ -1093,7 +1093,8 @@ definition {
 			extendedMinutes = 2,
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			notificationDate = 0);
+			notificationDate = 0,
+			viewExpirationTime = "true");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",

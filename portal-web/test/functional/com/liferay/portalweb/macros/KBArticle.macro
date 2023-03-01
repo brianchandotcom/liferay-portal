@@ -249,7 +249,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		if (${enableExpirationDate} == "true") {
+		if (${viewExpirationTime} == "true") {
 			var expirationTime = StringUtil.add("${expirationDateFormatted} ", ${expirationDateTime}, "");
 
 			MouseOver(

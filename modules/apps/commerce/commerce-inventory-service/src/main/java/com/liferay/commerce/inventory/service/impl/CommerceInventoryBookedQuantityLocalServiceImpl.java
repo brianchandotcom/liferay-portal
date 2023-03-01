@@ -26,10 +26,23 @@ import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -147,11 +160,39 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceInventoryBookedQuantity>
+			getCommerceInventoryBookedQuantities(
+				long companyId, String keywords, String sku, int start, int end)
+		throws PortalException {
+
+		SearchContext searchContext = _buildSearchContext(
+			companyId, keywords, sku, start, end);
+
+		BaseModelSearchResult<CommerceInventoryBookedQuantity>
+			baseModelSearchResult =
+				commerceInventoryBookedQuantityLocalService.
+					searchCommerceInventoryBookedQuantities(searchContext);
+
+		return baseModelSearchResult.getBaseModels();
+	}
+
+	@Override
 	public int getCommerceInventoryBookedQuantitiesCount(
 		long companyId, String sku) {
 
 		return commerceInventoryBookedQuantityPersistence.countByC_S(
 			companyId, sku);
+	}
+
+	public int getCommerceInventoryBookedQuantitiesCount(
+			long companyId, String keywords, String sku)
+		throws PortalException {
+
+		SearchContext searchContext = _buildSearchContext(
+			companyId, keywords, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		return commerceInventoryBookedQuantityLocalService.
+			searchCommerceInventoryBookedQuantitiesCount(searchContext);
 	}
 
 	@Override
@@ -223,6 +264,43 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 		return commerceInventoryBookedQuantity;
 	}
 
+	public BaseModelSearchResult<CommerceInventoryBookedQuantity>
+			searchCommerceInventoryBookedQuantities(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceInventoryBookedQuantity> indexer =
+			_indexerRegistry.nullSafeGetIndexer(
+				CommerceInventoryBookedQuantity.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext);
+
+			List<CommerceInventoryBookedQuantity>
+				commerceInventoryBookedQuantities =
+					_getCommerceInventoryBookedQuantities(hits);
+
+			if (commerceInventoryBookedQuantities != null) {
+				return new BaseModelSearchResult<>(
+					commerceInventoryBookedQuantities, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
+	@Override
+	public int searchCommerceInventoryBookedQuantitiesCount(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceInventoryBookedQuantity> indexer =
+			_indexerRegistry.nullSafeGetIndexer(
+				CommerceInventoryBookedQuantity.class);
+
+		return GetterUtil.getInteger(indexer.searchCount(searchContext));
+	}
+
 	@Override
 	public CommerceInventoryBookedQuantity
 			updateCommerceInventoryBookedQuantity(
@@ -255,6 +333,68 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 				commerceInventoryBookedQuantity);
 	}
 
+	private SearchContext _buildSearchContext(
+		long companyId, String keywords, String sku, int start, int end) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+		searchContext.setKeywords(keywords);
+
+		if (Validator.isNull(sku)) {
+			searchContext.setAttribute("sku", sku);
+		}
+
+		searchContext.setStart(start);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		return searchContext;
+	}
+
+	private List<CommerceInventoryBookedQuantity>
+			_getCommerceInventoryBookedQuantities(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CommerceInventoryBookedQuantity>
+			commerceInventoryBookedQuantities = new ArrayList<>(
+				documents.size());
+
+		for (Document document : documents) {
+			long commerceInventoryBookedQuantityId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
+				fetchCommerceInventoryBookedQuantity(
+					commerceInventoryBookedQuantityId);
+
+			if (commerceInventoryBookedQuantity == null) {
+				commerceInventoryBookedQuantities = null;
+
+				Indexer<CommerceInventoryBookedQuantity> indexer =
+					_indexerRegistry.getIndexer(
+						CommerceInventoryBookedQuantity.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (commerceInventoryBookedQuantities != null) {
+				commerceInventoryBookedQuantities.add(
+					commerceInventoryBookedQuantity);
+			}
+		}
+
+		return commerceInventoryBookedQuantities;
+	}
+
 	@Reference
 	private CommerceInventoryAuditLocalService
 		_commerceInventoryAuditLocalService;
@@ -262,6 +402,9 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	@Reference
 	private CommerceInventoryAuditTypeRegistry
 		_commerceInventoryAuditTypeRegistry;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private UserLocalService _userLocalService;

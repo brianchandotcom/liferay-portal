@@ -170,12 +170,13 @@ export default function ({
 	namespace = '',
 }) {
 	const _handleFormikValidate = (values) => {
-		const errors = {
-			textEmbeddingProviderConfigurationJSONs: [{attributes: {}}],
-		}; // Sets empty values to avoid undefined errors when setting values.
+		const errors = {};
 
-		values.textEmbeddingProviderConfigurationJSONs?.map(
-			(textEmbeddingProviderConfigurationJSON, index) => {
+		const textEmbeddingProviderConfigurationJSONsErrors = values.textEmbeddingProviderConfigurationJSONs?.map(
+			(textEmbeddingProviderConfigurationJSON) => {
+				const textEmbeddingProviderConfigurationJSONError = {
+					attributes: {}, // Sets empty values to avoid undefined errors when setting values.
+				};
 
 				// Validate "Types" field.
 
@@ -183,9 +184,7 @@ export default function ({
 					!textEmbeddingProviderConfigurationJSON.modelClassNames
 						?.length
 				) {
-					errors.textEmbeddingProviderConfigurationJSONs[
-						index
-					].modelClassNames = sub(
+					textEmbeddingProviderConfigurationJSONError.modelClassNames = sub(
 						Liferay.Language.get('the-x-field-is-required'),
 						[Liferay.Language.get('types')]
 					);
@@ -194,16 +193,21 @@ export default function ({
 				// Validate "Hugging Face Access Token" field.
 
 				if (
-					!textEmbeddingProviderConfigurationJSON.attributes
-						?.accessToken ||
-					textEmbeddingProviderConfigurationJSON.attributes
-						?.accessToken === ''
+					textEmbeddingProviderConfigurationJSON.providerName ===
+						TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API ||
+					textEmbeddingProviderConfigurationJSON.providerName ===
+						TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_ENDPOINT
 				) {
-					errors.textEmbeddingProviderConfigurationJSONs[
-						index
-					].attributes.accessToken = Liferay.Language.get(
-						'this-field-is-required'
-					);
+					if (
+						!textEmbeddingProviderConfigurationJSON.attributes
+							?.accessToken ||
+						textEmbeddingProviderConfigurationJSON.attributes
+							?.accessToken === ''
+					) {
+						textEmbeddingProviderConfigurationJSONError.attributes.accessToken = Liferay.Language.get(
+							'this-field-is-required'
+						);
+					}
 				}
 
 				// Validate "Languages" field.
@@ -211,9 +215,7 @@ export default function ({
 				if (
 					!textEmbeddingProviderConfigurationJSON.languageIds?.length
 				) {
-					errors.textEmbeddingProviderConfigurationJSONs[
-						index
-					].languageIds = sub(
+					textEmbeddingProviderConfigurationJSONError.languageIds = sub(
 						Liferay.Language.get('the-x-field-is-required'),
 						[Liferay.Language.get('languages')]
 					);
@@ -225,9 +227,7 @@ export default function ({
 					!textEmbeddingProviderConfigurationJSON.attributes
 						?.maxCharacterCount === ''
 				) {
-					errors.textEmbeddingProviderConfigurationJSONs[
-						index
-					].attributes.maxCharacterCount = Liferay.Language.get(
+					textEmbeddingProviderConfigurationJSONError.attributes.maxCharacterCount = Liferay.Language.get(
 						'this-field-is-required'
 					);
 				}
@@ -236,9 +236,7 @@ export default function ({
 						textEmbeddingProviderConfigurationJSON.attributes
 							?.maxCharacterCount < 50
 					) {
-						errors.textEmbeddingProviderConfigurationJSONs[
-							index
-						].attributes.maxCharacterCount = sub(
+						textEmbeddingProviderConfigurationJSONError.attributes.maxCharacterCount = sub(
 							Liferay.Language.get(
 								'please-enter-a-value-greater-than-or-equal-to-x'
 							),
@@ -250,9 +248,7 @@ export default function ({
 						textEmbeddingProviderConfigurationJSON.attributes
 							?.maxCharacterCount > 10000
 					) {
-						errors.textEmbeddingProviderConfigurationJSONs[
-							index
-						].attributes.maxCharacterCount = sub(
+						textEmbeddingProviderConfigurationJSONError.attributes.maxCharacterCount = sub(
 							Liferay.Language.get(
 								'please-enter-a-value-less-than-or-equal-to-x'
 							),
@@ -261,82 +257,99 @@ export default function ({
 					}
 				}
 
-				// Validate "Model" field.
-
 				if (
-					!textEmbeddingProviderConfigurationJSON.attributes?.model ||
-					textEmbeddingProviderConfigurationJSON.attributes?.model ===
-						''
+					textEmbeddingProviderConfigurationJSON.providerName ===
+					TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API
 				) {
-					errors.textEmbeddingProviderConfigurationJSONs[
-						index
-					].attributes.model = Liferay.Language.get(
-						'this-field-is-required'
-					);
-				}
 
-				// Validate "Model Timeout" field.
+					// Validate "Model" field.
 
-				if (
-					!textEmbeddingProviderConfigurationJSON.attributes
-						?.modelTimeout ||
-					(textEmbeddingProviderConfigurationJSON.attributes
-						?.modelTimeout === '' &&
-						textEmbeddingProviderConfigurationJSON?.providerName ===
-							TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API)
-				) {
-					errors.textEmbeddingProviderConfigurationJSONs[
-						index
-					].attributes.modelTimeout = Liferay.Language.get(
-						'this-field-is-required'
-					);
-				}
-				else {
 					if (
+						!textEmbeddingProviderConfigurationJSON.attributes
+							?.model ||
 						textEmbeddingProviderConfigurationJSON.attributes
-							?.modelTimeout < 0
+							?.model === ''
 					) {
-						errors.textEmbeddingProviderConfigurationJSONs[
-							index
-						].attributes.modelTimeout = sub(
-							Liferay.Language.get(
-								'please-enter-a-value-greater-than-or-equal-to-x'
-							),
-							['0']
+						textEmbeddingProviderConfigurationJSONError.attributes.model = Liferay.Language.get(
+							'this-field-is-required'
 						);
 					}
 
+					// Validate "Model Timeout" field.
+
 					if (
+						!textEmbeddingProviderConfigurationJSON.attributes
+							?.modelTimeout ||
 						textEmbeddingProviderConfigurationJSON.attributes
-							?.modelTimeout > 60
+							?.modelTimeout === ''
 					) {
-						errors.textEmbeddingProviderConfigurationJSONs[
-							index
-						].attributes.modelTimeout = sub(
-							Liferay.Language.get(
-								'please-enter-a-value-less-than-or-equal-to-x'
-							),
-							['60']
+						textEmbeddingProviderConfigurationJSONError.attributes.modelTimeout = Liferay.Language.get(
+							'this-field-is-required'
 						);
+					}
+					else {
+						if (
+							textEmbeddingProviderConfigurationJSON.attributes
+								?.modelTimeout < 0
+						) {
+							textEmbeddingProviderConfigurationJSONError.attributes.modelTimeout = sub(
+								Liferay.Language.get(
+									'please-enter-a-value-greater-than-or-equal-to-x'
+								),
+								['0']
+							);
+						}
+
+						if (
+							textEmbeddingProviderConfigurationJSON.attributes
+								?.modelTimeout > 60
+						) {
+							textEmbeddingProviderConfigurationJSONError.attributes.modelTimeout = sub(
+								Liferay.Language.get(
+									'please-enter-a-value-less-than-or-equal-to-x'
+								),
+								['60']
+							);
+						}
 					}
 				}
 
 				// Validate "Host Address" field.
 
 				if (
-					!textEmbeddingProviderConfigurationJSON.attributes
-						?.hostAddress ||
-					textEmbeddingProviderConfigurationJSON.attributes
-						?.hostAddress === ''
+					textEmbeddingProviderConfigurationJSON.providerName ===
+						TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_ENDPOINT ||
+					textEmbeddingProviderConfigurationJSON.providerName ===
+						TEXT_EMBEDDING_PROVIDER_TYPES.TXTAI
 				) {
-					errors.textEmbeddingProviderConfigurationJSONs[
-						index
-					].attributes.hostAddress = Liferay.Language.get(
-						'this-field-is-required'
-					);
+					if (
+						!textEmbeddingProviderConfigurationJSON.attributes
+							?.hostAddress ||
+						textEmbeddingProviderConfigurationJSON.attributes
+							?.hostAddress === ''
+					) {
+						textEmbeddingProviderConfigurationJSONError.attributes.hostAddress = Liferay.Language.get(
+							'this-field-is-required'
+						);
+					}
 				}
+
+				return textEmbeddingProviderConfigurationJSONError;
 			}
 		);
+
+		// Update "errors.textEmbeddingProviderConfigurationJSONs" only if it has errors
+
+		if (
+			textEmbeddingProviderConfigurationJSONsErrors.some(
+				({attributes, languageIds, modelClassNames}) =>
+					!!Object.keys(attributes).length ||
+					languageIds ||
+					modelClassNames
+			)
+		) {
+			errors.textEmbeddingProviderConfigurationJSONs = textEmbeddingProviderConfigurationJSONsErrors;
+		}
 
 		// Validate "Text Embedding Cache Timeout" field.
 

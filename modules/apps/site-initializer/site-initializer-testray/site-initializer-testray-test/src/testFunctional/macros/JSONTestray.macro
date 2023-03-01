@@ -14,3 +14,23 @@ definition {
 			routineId = ${routineId});
 	}
 
+	macro addCases {
+		Variables.assertDefined(parameterList = "${caseName},${projectName},${componentName}");
+
+		if (!(isSet(caseType))) {
+			var caseType = "Case Type 1";
+		}
+
+		JSONTestray.addCaseType(caseType = ${caseType});
+
+		var caseTypeId = JSONTestraySetter.getCaseTypeId(caseType = ${caseType});
+		var componentId = JSONTestraySetter.getComponentId(componentName = ${componentName});
+		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
+
+		var caseId = JSONTestrayAPI.createCasesAPI(
+			caseName = ${caseName},
+			caseTypeId = ${caseTypeId},
+			componentId = ${componentId},
+			projectId = ${projectId});
+	}
+

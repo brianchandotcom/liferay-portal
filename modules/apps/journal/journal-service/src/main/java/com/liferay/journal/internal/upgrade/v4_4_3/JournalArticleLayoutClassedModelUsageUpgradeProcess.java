@@ -37,6 +37,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Lourdes Fernández Besada
  */
@@ -71,6 +74,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		ServiceContext serviceContext = new ServiceContext();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			Map<Long, Long> resourcePrimKeysMap = new HashMap<>();
+
 			processConcurrently(
 				"select distinct groupId, resourcePrimKey, companyId, " +
 					"articleId from JournalArticle",
@@ -111,13 +116,17 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 						groupId, journalArticleClassNameId, portletClassNameId,
 						serviceContext);
 
-					_layoutClassedModelUsageLocalService.
-						addDefaultLayoutClassedModelUsage(
-							groupId, journalArticleClassNameId, resourcePrimKey,
-							serviceContext);
+					resourcePrimKeysMap.put(resourcePrimKey, groupId);
 				},
 				"Unable to create journal articles layout classed model " +
 					"usages");
+
+			for (Map.Entry<Long, Long> entry : resourcePrimKeysMap.entrySet()) {
+				_layoutClassedModelUsageLocalService.
+					addDefaultLayoutClassedModelUsage(
+						entry.getValue(), journalArticleClassNameId,
+						entry.getKey(), serviceContext);
+			}
 		}
 	}
 

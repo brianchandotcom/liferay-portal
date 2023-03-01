@@ -2107,6 +2107,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return user;
 	}
 
+	@Override
+	public User fetchDefaultUser(long companyId, int type) {
+		return userPersistence.fetchByC_DU_T(companyId, true, type);
+	}
+
 	/**
 	 * Returns the user with the contact ID.
 	 *

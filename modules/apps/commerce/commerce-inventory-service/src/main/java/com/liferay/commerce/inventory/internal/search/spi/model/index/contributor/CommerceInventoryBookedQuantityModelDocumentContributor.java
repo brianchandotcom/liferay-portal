@@ -45,16 +45,20 @@ public class CommerceInventoryBookedQuantityModelDocumentContributor
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
 
 		try {
-			document.addNumberSortable(
-				Field.ENTRY_CLASS_PK,
-				commerceInventoryBookedQuantity.
-					getCommerceInventoryBookedQuantityId());
-
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemLocalService.
 					fetchCommerceOrderItemByBookedQuantityId(
 						commerceInventoryBookedQuantity.
 							getCommerceInventoryBookedQuantityId());
+
+			if (commerceOrderItem == null) {
+				return;
+			}
+
+			document.addNumberSortable(
+				Field.ENTRY_CLASS_PK,
+				commerceInventoryBookedQuantity.
+					getCommerceInventoryBookedQuantityId());
 
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
@@ -74,7 +78,7 @@ public class CommerceInventoryBookedQuantityModelDocumentContributor
 			document.addNumber(
 				"itemsQuantity", commerceInventoryBookedQuantity.getQuantity());
 
-			document.addText("sku", commerceOrderItem.getSku());
+			document.add(new Field("sku", commerceOrderItem.getSku()));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

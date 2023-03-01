@@ -1875,13 +1875,6 @@ padding-top: 0;
 .portal-popup .login-container {
 padding: 1rem;
 }
-.portal-popup .management-bar-default {
-border-left-width: 0;
-border-radius: 0;
-border-right-width: 0;
-border-top-width: 0;
-margin-bottom: 0;
-}
 .portal-popup .navbar ~ .portlet-configuration-setup,
 .portal-popup .portlet-export-import-container {
 height: calc(100% - 48px);

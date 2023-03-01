@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 
 import DadJoke from './common/components/DadJoke';
 import api from './common/services/liferay/api';
@@ -37,12 +37,12 @@ class WebComponent extends HTMLElement {
 		super();
 
 		this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-			'easy-oauth-application-user-agent'
+			'sample-oauth-application-user-agent'
 		);
 	}
 
 	connectedCallback() {
-		ReactDOM.render(
+		createRoot(this).render(
 			<App
 				oAuth2Client={this.oAuth2Client}
 				route={this.getAttribute('route')}

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 		"dto.class.name=com.liferay.commerce.pricing.model.CommercePricingClass",
 		"version=v1.0"
 	},
-	service = {DTOConverter.class, ProductGroupDTOConverter.class}
+	service = DTOConverter.class
 )
 public class ProductGroupDTOConverter
 	implements DTOConverter<CommercePricingClass, ProductGroup> {

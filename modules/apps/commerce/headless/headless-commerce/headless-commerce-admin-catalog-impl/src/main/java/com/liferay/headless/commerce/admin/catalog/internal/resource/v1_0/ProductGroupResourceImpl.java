@@ -24,7 +24,6 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroupProduct;
-import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductGroupDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.ProductGroupEntityModel;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductGroupProductUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductGroupResource;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -301,8 +301,11 @@ public class ProductGroupResourceImpl extends BaseProductGroupResourceImpl {
 	@Reference
 	private CProductLocalService _cProductLocalService;
 
-	@Reference
-	private ProductGroupDTOConverter _productGroupDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductGroupDTOConverter)"
+	)
+	private DTOConverter<CommercePricingClass, ProductGroup>
+		_productGroupDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

@@ -182,8 +182,23 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		processConcurrently(
 			StringBundler.concat(
 				"select distinct JournalArticle.resourcePrimKey, ",
-				"JournalArticle.groupId, JournalArticle.companyId, ",
-				"JournalArticle.articleId from JournalArticle where not ",
+				"JournalArticle.groupId, JournalContentSearch.portletId, ",
+				"Layout.plid from JournalArticle inner join ",
+				"JournalContentSearch on JournalContentSearch.groupId = ",
+				"JournalArticle.groupId and JournalContentSearch.articleId = ",
+				"JournalArticle.articleId inner join Layout on ",
+				"Layout.privateLayout = JournalContentSearch.privateLayout ",
+				"and Layout.layoutId = JournalContentSearch.layoutId and ",
+				"Layout.groupId = JournalArticle.groupId and not exists ",
+				"(select 1 from LayoutClassedModelUsage where ",
+				"LayoutClassedModelUsage.classPK = ",
+				"JournalArticle.resourcePrimKey and ",
+				"LayoutClassedModelUsage.classNameId = ",
+				journalArticleClassNameId,
+				" and LayoutClassedModelUsage.containerKey = ",
+				"JournalContentSearch.portletId and ",
+				"LayoutClassedModelUsage.containerType = ", portletClassNameId,
+				" and LayoutClassedModelUsage.plid = Layout.plid) where not ",
 				"exists (select 1 from LayoutClassedModelUsage where ",
 				"LayoutClassedModelUsage.classPK = ",
 				"JournalArticle.resourcePrimKey and ",
@@ -193,67 +208,25 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 				"LayoutClassedModelUsage.containerType = 0 and ",
 				"LayoutClassedModelUsage.plid = 0 )"),
 			resultSet -> new Object[] {
-				GetterUtil.getString(resultSet.getString("articleId")),
 				resultSet.getLong("resourcePrimKey"),
-				resultSet.getLong("groupId"), resultSet.getLong("companyId")
+				resultSet.getLong("groupId"),
+				GetterUtil.getString(resultSet.getString("portletId")),
+				resultSet.getLong("plid")
 			},
 			values -> {
-				String articleId = (String)values[0];
-				long resourcePrimKey = (Long)values[1];
-				long groupId = (Long)values[2];
+				long resourcePrimKey = (Long)values[0];
+				long groupId = (Long)values[1];
+				String portletId = (String)values[2];
+				long plid = (Long)values[3];
 
-				_addJournalContentSearchLayoutClassedModelUsages(
-					articleId, resourcePrimKey, groupId,
-					journalArticleClassNameId, portletClassNameId,
-					serviceContext);
+				_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+					groupId, journalArticleClassNameId, resourcePrimKey,
+					portletId, portletClassNameId, plid, serviceContext);
 
 				resourcePrimKeysMap.put(resourcePrimKey, groupId);
 			},
-			"Unable to create journal articles layout classed model usages");
-	}
-
-	private void _addJournalContentSearchLayoutClassedModelUsages(
-			String articleId, long classPK, long groupId,
-			long journalArticleClassNameId, long portletClassNameId,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			processConcurrently(
-				StringBundler.concat(
-					"select Layout.plid, JournalContentSearch.portletId from ",
-					"JournalContentSearch inner join Layout on ",
-					"Layout.privateLayout = ",
-					"JournalContentSearch.privateLayout and Layout.layoutId = ",
-					"JournalContentSearch.layoutId and Layout.groupId = ",
-					groupId, " where JournalContentSearch.groupId = ", groupId,
-					" and JournalContentSearch.articleId = '", articleId,
-					"' and not exists (select 1 from LayoutClassedModelUsage ",
-					"where LayoutClassedModelUsage.classPK = ", classPK,
-					" and LayoutClassedModelUsage.classNameId = ",
-					journalArticleClassNameId,
-					" and LayoutClassedModelUsage.containerKey = ",
-					"JournalContentSearch.portletId and ",
-					"LayoutClassedModelUsage.containerType = ",
-					portletClassNameId,
-					" and LayoutClassedModelUsage.plid = Layout.plid)"),
-				resultSet -> new Object[] {
-					resultSet.getLong("plid"),
-					GetterUtil.getString(resultSet.getString("portletId"))
-				},
-				values -> {
-					long plid = (Long)values[0];
-					String portletId = (String)values[1];
-
-					_layoutClassedModelUsageLocalService.
-						addLayoutClassedModelUsage(
-							groupId, journalArticleClassNameId, classPK,
-							portletId, portletClassNameId, plid,
-							serviceContext);
-				},
-				"Unable to create journal content search layout classed " +
-					"model usages");
-		}
+			"Unable to create journal articles search layout classed model " +
+			"usages");
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

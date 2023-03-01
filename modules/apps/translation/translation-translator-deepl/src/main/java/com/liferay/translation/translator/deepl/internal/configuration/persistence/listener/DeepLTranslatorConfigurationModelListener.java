@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yasuyuki Takeo
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.translation.translator.deepl.internal.configuration.DeepLTranslatorConfiguration",
 	service = ConfigurationModelListener.class
 )

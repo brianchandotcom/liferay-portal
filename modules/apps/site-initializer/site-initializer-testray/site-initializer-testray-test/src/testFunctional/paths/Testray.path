@@ -156,6 +156,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_BREADCRUMB</td>
+	<td>//*[contains(@class, 'cursor-pointer')]//*[text()='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_ENVIRONMENT_FACTORS</td>
 	<td>//div[contains(@class,'listbox')]//label[contains(.,'Available')]/..//div//select//option[text() ='${key_environmentFactors}']</td>
 	<td></td>

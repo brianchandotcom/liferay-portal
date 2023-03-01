@@ -628,7 +628,8 @@ public class UpgradeReport {
 	}
 
 	private String _getUpgradeReportHeaderFromKey(String key) {
-		return "Upgrade " + StringUtil.replace(key, '.', ' ');
+		return StringUtil.replace(
+			StringUtil.upperCaseFirstLetter(key), '.', ' ');
 	}
 
 	private String _getUpgradeReportSimpleValueLine(String key, Object value) {

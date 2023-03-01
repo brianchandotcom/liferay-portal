@@ -271,21 +271,16 @@ public class SearchResultsPortlet extends MVCPortlet {
 			isRenderNothing(renderRequest, searchRequest));
 
 		int paginationDelta = Optional.ofNullable(
-			searchRequest.getSize()
+			portletSharedSearchResponse.getPaginationDelta()
 		).orElse(
 			SearchContainer.DEFAULT_DELTA
 		);
-		int paginationStart = 0;
 
-		int from = Optional.ofNullable(
-			searchRequest.getFrom()
+		int paginationStart = Optional.ofNullable(
+			portletSharedSearchResponse.getPaginationStart()
 		).orElse(
 			0
 		);
-
-		if (from > 0) {
-			paginationStart = (from / paginationDelta) + 1;
-		}
 
 		searchResultsPortletDisplayContext.setSearchContainer(
 			_buildSearchContainer(

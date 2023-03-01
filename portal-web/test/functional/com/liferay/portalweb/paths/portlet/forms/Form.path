@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>FIELDS_GROUP_EXPANDED</td>
-	<td>//button[contains(@class,'collapse-icon')]//following-sibling::div[contains(@class,'collapse show')]</td>
+	<td>//button[contains(@class,'panel-header') and contains(@class,'show')]</td>
 	<td></td>
 </tr>
 <tr>

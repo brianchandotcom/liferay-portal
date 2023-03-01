@@ -15,6 +15,22 @@ definition {
 
 		return ${objectId};
 	}
+
+	macro _getOptionsId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/factoroptions/?search=${optionsName} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+		''';
+
+		var factorOptionsId = JSONCurlUtil.get(${curl}, "$.items[?(@.name=='${optionsName}')].id");
+
+		echo(${factorOptionsId});
+
+		return ${factorOptionsId};
+	}
 	@summary = "create a build via API"
 	macro createBuildAPI {
 		Variables.assertDefined(parameterList = "${buildName},${projectId},${routineId},${productVersionId}");

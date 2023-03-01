@@ -91,3 +91,12 @@ definition {
 
 		var factorCategoryId = JSONTestrayAPI.createFactorCategoriesAPI(categoryName = ${categoryName});
 	}
+
+	macro addFactorOptions {
+		Variables.assertDefined(parameterList = "${optionsName}");
+
+		var factorOptionsId = JSONTestrayAPI.createFactorOptionsAPI(
+			optionsName = ${optionsName},
+			factorCategoryId = ${factorCategoryId});
+	}
+

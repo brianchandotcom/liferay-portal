@@ -309,6 +309,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
+		<field name="layoutPageTemplateEntryUuid" type="String" />
 		<field name="layoutUuid" type="String">
 			<validator name="required" />
 		</field>

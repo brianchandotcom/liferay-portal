@@ -620,10 +620,10 @@ public class FinderWhereClauseEntryPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_NAME_NICKNAME_NAME_2 =
-		"finderWhereClauseEntry.name = ? AND finderWhereClauseEntry.nickname is not NULL";
+		"finderWhereClauseEntry.name = ? AND finderWhereClauseEntry.nickname IS NOT NULL";
 
 	private static final String _FINDER_COLUMN_NAME_NICKNAME_NAME_3 =
-		"(finderWhereClauseEntry.name IS NULL OR finderWhereClauseEntry.name = '') AND finderWhereClauseEntry.nickname is not NULL";
+		"(finderWhereClauseEntry.name IS NULL OR finderWhereClauseEntry.name = '') AND finderWhereClauseEntry.nickname IS NOT NULL";
 
 	public FinderWhereClauseEntryPersistenceImpl() {
 		setModelClass(FinderWhereClauseEntry.class);

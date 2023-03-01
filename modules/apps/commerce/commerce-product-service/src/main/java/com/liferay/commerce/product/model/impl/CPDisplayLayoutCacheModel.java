@@ -78,7 +78,7 @@ public class CPDisplayLayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,6 +104,8 @@ public class CPDisplayLayoutCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", layoutPageTemplateEntryUuid=");
+		sb.append(layoutPageTemplateEntryUuid);
 		sb.append(", layoutUuid=");
 		sb.append(layoutUuid);
 		sb.append("}");
@@ -154,6 +156,14 @@ public class CPDisplayLayoutCacheModel
 		cpDisplayLayoutImpl.setClassNameId(classNameId);
 		cpDisplayLayoutImpl.setClassPK(classPK);
 
+		if (layoutPageTemplateEntryUuid == null) {
+			cpDisplayLayoutImpl.setLayoutPageTemplateEntryUuid("");
+		}
+		else {
+			cpDisplayLayoutImpl.setLayoutPageTemplateEntryUuid(
+				layoutPageTemplateEntryUuid);
+		}
+
 		if (layoutUuid == null) {
 			cpDisplayLayoutImpl.setLayoutUuid("");
 		}
@@ -187,6 +197,7 @@ public class CPDisplayLayoutCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
+		layoutPageTemplateEntryUuid = objectInput.readUTF();
 		layoutUuid = objectInput.readUTF();
 	}
 
@@ -225,6 +236,13 @@ public class CPDisplayLayoutCacheModel
 
 		objectOutput.writeLong(classPK);
 
+		if (layoutPageTemplateEntryUuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(layoutPageTemplateEntryUuid);
+		}
+
 		if (layoutUuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -245,6 +263,7 @@ public class CPDisplayLayoutCacheModel
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
+	public String layoutPageTemplateEntryUuid;
 	public String layoutUuid;
 
 }

@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.commerce.product.model.CPAttachmentFileEntry",
-	service = {AttachmentDTOConverter.class, DTOConverter.class}
+	service = DTOConverter.class
 )
 public class AttachmentDTOConverter
 	implements DTOConverter<CPAttachmentFileEntry, Attachment> {

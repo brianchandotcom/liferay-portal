@@ -27,7 +27,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentBase64;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentUrl;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
-import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.AttachmentDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.AttachmentUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -580,8 +580,11 @@ public class AttachmentResourceImpl
 		return attachments;
 	}
 
-	@Reference
-	private AttachmentDTOConverter _attachmentDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.AttachmentDTOConverter)"
+	)
+	private DTOConverter<CPAttachmentFileEntry, Attachment>
+		_attachmentDTOConverter;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

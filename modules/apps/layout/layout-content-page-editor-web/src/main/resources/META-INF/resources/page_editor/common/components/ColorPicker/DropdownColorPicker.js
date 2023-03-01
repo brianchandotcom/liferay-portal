@@ -25,7 +25,7 @@ import React, {
 	useState,
 } from 'react';
 
-import {TAB_KEYCODE} from '../../../app/config/constants/keycodes';
+import {TAB_KEY_CODE} from '../../../app/config/constants/keyboardCodes';
 import SearchForm from '../../../common/components/SearchForm';
 
 export function DropdownColorPicker({
@@ -99,7 +99,7 @@ export function DropdownColorPicker({
 		let activeItem = items[items.length - 1];
 		let nextItem = items[0];
 
-		if (event.keyCode === TAB_KEYCODE) {
+		if (event.nativeEvent.code === TAB_KEY_CODE) {
 			if (event.shiftKey) {
 				activeItem = items[0];
 				nextItem = items[items.length - 1];

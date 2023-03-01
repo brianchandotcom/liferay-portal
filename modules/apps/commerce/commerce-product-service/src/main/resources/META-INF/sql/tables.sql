@@ -215,6 +215,7 @@ create table CPDisplayLayout (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
+	layoutPageTemplateEntryUuid VARCHAR(75) null,
 	layoutUuid VARCHAR(75) null,
 	primary key (CPDisplayLayoutId, ctCollectionId)
 );

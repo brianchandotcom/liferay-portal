@@ -58,11 +58,12 @@ public class CPDisplayLayoutLocalServiceWrapper
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
 			long userId, long groupId, Class<?> clazz, long classPK,
-			String layoutUuid)
+			String layoutPageTemplateEntryUuid, String layoutUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDisplayLayoutLocalService.addCPDisplayLayout(
-			userId, groupId, clazz, classPK, layoutUuid);
+			userId, groupId, clazz, classPK, layoutPageTemplateEntryUuid,
+			layoutUuid);
 	}
 
 	/**
@@ -265,25 +266,6 @@ public class CPDisplayLayoutLocalServiceWrapper
 			groupId, clazz, classPK);
 	}
 
-	@Override
-	public java.util.List<CPDisplayLayout>
-		fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
-			long groupId, String layoutUuid) {
-
-		return _cpDisplayLayoutLocalService.
-			fetchCPDisplayLayoutByGroupIdAndLayoutUuid(groupId, layoutUuid);
-	}
-
-	@Override
-	public java.util.List<CPDisplayLayout>
-		fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
-			long groupId, String layoutUuid, int start, int end) {
-
-		return _cpDisplayLayoutLocalService.
-			fetchCPDisplayLayoutByGroupIdAndLayoutUuid(
-				groupId, layoutUuid, start, end);
-	}
-
 	/**
 	 * Returns the cp display layout matching the UUID and group.
 	 *
@@ -354,6 +336,46 @@ public class CPDisplayLayoutLocalServiceWrapper
 		int start, int end) {
 
 		return _cpDisplayLayoutLocalService.getCPDisplayLayouts(start, end);
+	}
+
+	@Override
+	public java.util.List<CPDisplayLayout>
+		getCPDisplayLayoutsByGroupIdAndLayoutPageTemplateEntryUuid(
+			long groupId, String layoutPageTemplateEntryUuid) {
+
+		return _cpDisplayLayoutLocalService.
+			getCPDisplayLayoutsByGroupIdAndLayoutPageTemplateEntryUuid(
+				groupId, layoutPageTemplateEntryUuid);
+	}
+
+	@Override
+	public java.util.List<CPDisplayLayout>
+		getCPDisplayLayoutsByGroupIdAndLayoutPageTemplateEntryUuid(
+			long groupId, String layoutPageTemplateEntryUuid, int start,
+			int end) {
+
+		return _cpDisplayLayoutLocalService.
+			getCPDisplayLayoutsByGroupIdAndLayoutPageTemplateEntryUuid(
+				groupId, layoutPageTemplateEntryUuid, start, end);
+	}
+
+	@Override
+	public java.util.List<CPDisplayLayout>
+		getCPDisplayLayoutsByGroupIdAndLayoutUuid(
+			long groupId, String layoutUuid) {
+
+		return _cpDisplayLayoutLocalService.
+			getCPDisplayLayoutsByGroupIdAndLayoutUuid(groupId, layoutUuid);
+	}
+
+	@Override
+	public java.util.List<CPDisplayLayout>
+		getCPDisplayLayoutsByGroupIdAndLayoutUuid(
+			long groupId, String layoutUuid, int start, int end) {
+
+		return _cpDisplayLayoutLocalService.
+			getCPDisplayLayoutsByGroupIdAndLayoutUuid(
+				groupId, layoutUuid, start, end);
 	}
 
 	/**
@@ -445,12 +467,13 @@ public class CPDisplayLayoutLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPDisplayLayout> searchCPDisplayLayout(
-				long companyId, long groupId, String className, String keywords,
-				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+				long companyId, long groupId, String className, Integer type,
+				String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDisplayLayoutLocalService.searchCPDisplayLayout(
-			companyId, groupId, className, keywords, start, end, sort);
+			companyId, groupId, className, type, keywords, start, end, sort);
 	}
 
 	/**
@@ -473,11 +496,13 @@ public class CPDisplayLayoutLocalServiceWrapper
 
 	@Override
 	public CPDisplayLayout updateCPDisplayLayout(
-			long cpDisplayLayoutId, long classPK, String layoutUuid)
+			long cpDisplayLayoutId, long classPK,
+			String layoutPageTemplateEntryUuid, String layoutUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDisplayLayoutLocalService.updateCPDisplayLayout(
-			cpDisplayLayoutId, classPK, layoutUuid);
+			cpDisplayLayoutId, classPK, layoutPageTemplateEntryUuid,
+			layoutUuid);
 	}
 
 	@Override

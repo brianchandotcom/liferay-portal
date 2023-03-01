@@ -510,6 +510,38 @@ definition {
 
 	@description = "LPS-164948 - Verify that the user is able to add formula fields when managing System Objects"
 	@priority = 5
+	test CanCreateFormulaFieldOnCustomObject {
+		property portal.acceptance = "true";
+
+		task ("Given a Custom Object)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 176817",
+				objectName = "CustomObject176817",
+				pluralLabelName = "Custom Objects 176817");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+		}
+
+		task ("When managing Fields on Custom Object)") {
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Formula Field",
+				fieldType = "Formula",
+				formulaFieldOption = "Decimal");
+		}
+
+		task ("Then add a Formula Field in the Custom Object)") {
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Formula Field",
+				fieldType = "Formula");
+		}
+	}
+
+	@description = "LPS-164948 - Verify that the user is able to add formula fields when managing System Objects"
+	@priority = 5
 	test CanCreateFormulaFieldOnSystemObject {
 		property portal.acceptance = "true";
 

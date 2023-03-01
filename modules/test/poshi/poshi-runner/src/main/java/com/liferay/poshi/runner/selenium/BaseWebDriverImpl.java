@@ -2134,16 +2134,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			targetURL = PropsValues.PORTAL_URL + targetURL;
 		}
 
-		try {
-			if (_isValidURL(targetURL)) {
-				get(targetURL);
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Invalid URL argument: " + targetURL);
-			}
+		if (_isValidURL(targetURL)) {
+			get(targetURL);
 		}
-		catch (MalformedURLException | URISyntaxException exception) {
+		else {
+			throw new IllegalArgumentException("Invalid URL: " + targetURL);
 		}
 	}
 
@@ -4548,9 +4543,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	}
 
-	private boolean _isValidURL(String targetURL)
-		throws MalformedURLException, URISyntaxException {
-
+	private boolean _isValidURL(String targetURL) {
 		try {
 			URL url = new URL(targetURL);
 

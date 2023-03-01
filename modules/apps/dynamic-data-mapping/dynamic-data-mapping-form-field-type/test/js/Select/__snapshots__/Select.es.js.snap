@@ -434,6 +434,7 @@ exports[`Select filters according to the input and calls onChange callback when 
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
+                      aria-label="Search"
                       class="btn btn-unstyled"
                       type="button"
                     >
@@ -2110,6 +2111,7 @@ exports[`Select shows a search input when the number of options is more than the
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
+                      aria-label="Search"
                       class="btn btn-unstyled"
                       type="button"
                     >

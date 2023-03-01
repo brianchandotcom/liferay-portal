@@ -14,6 +14,7 @@
 
 package com.liferay.portal.http.internal;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.memory.FinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.CharPool;
@@ -357,57 +358,19 @@ public class HttpImpl implements Http {
 	}
 
 	@Deactivate
-	protected synchronized void deactivate() {
-		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager =
-			_poolingHttpClientConnectionManager;
-
-		if (poolingHttpClientConnectionManager == null) {
-			return;
-		}
-
-		int retry = 0;
-
-		while (retry < 10) {
-			PoolStats poolStats =
-				poolingHttpClientConnectionManager.getTotalStats();
-
-			int availableConnections = poolStats.getAvailable();
-
-			if (availableConnections <= 0) {
-				break;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						toString(), " is waiting on ", availableConnections,
-						" connections"));
-			}
-
-			poolingHttpClientConnectionManager.closeIdleConnections(
-				200, TimeUnit.MILLISECONDS);
-
-			try {
-				Thread.sleep(500);
-			}
-			catch (InterruptedException interruptedException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedException);
-				}
-			}
-
-			retry++;
-		}
-
-		poolingHttpClientConnectionManager.shutdown();
+	protected void deactivate() {
+		_poolingHttpClientConnectionManagerDCLSingleton.destroy(
+			HttpImpl::_destroyPoolingHttpClientConnectionManager);
 	}
 
 	protected CloseableHttpClient getCloseableHttpClient(HttpHost proxyHost) {
 		if (proxyHost != null) {
-			return _getProxyCloseableHttpClient();
+			return _proxyCloseableHttpClientDCLSingleton.getSingleton(
+				this::_createProxyCloseableHttpClient);
 		}
 
-		return _getCloseableHttpClient();
+		return _closeableHttpClientDCLSingleton.getSingleton(
+			this::_createCloseableHttpClient);
 	}
 
 	protected RequestConfig.Builder getRequestConfigBuilder(
@@ -440,7 +403,10 @@ public class HttpImpl implements Http {
 
 			PoolingHttpClientConnectionManager
 				poolingHttpClientConnectionManager =
-					_getPoolingHttpClientConnectionManager();
+					_poolingHttpClientConnectionManagerDCLSingleton.
+						getSingleton(
+							HttpImpl::
+								_createPoolingHttpClientConnectionManager);
 
 			poolingHttpClientConnectionManager.setMaxPerRoute(
 				new HttpRoute(new HttpHost(uri.getHost(), uri.getPort())),
@@ -758,7 +724,10 @@ public class HttpImpl implements Http {
 
 						PoolingHttpClientConnectionManager
 							poolingHttpClientConnectionManager =
-								_getPoolingHttpClientConnectionManager();
+								_poolingHttpClientConnectionManagerDCLSingleton.
+									getSingleton(
+										HttpImpl::
+											_createPoolingHttpClientConnectionManager);
 
 						ConnectionConfig.Builder connectionConfigBuilder =
 							ConnectionConfig.custom();
@@ -1000,123 +969,112 @@ public class HttpImpl implements Http {
 		}
 	}
 
-	private CloseableHttpClient _getCloseableHttpClient() {
-		if (_closeableHttpClient != null) {
-			return _closeableHttpClient;
-		}
+	private static PoolingHttpClientConnectionManager
+		_createPoolingHttpClientConnectionManager() {
 
-		synchronized (this) {
-			if (_closeableHttpClient != null) {
-				return _closeableHttpClient;
-			}
+		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager =
+			new PoolingHttpClientConnectionManager(
+				RegistryBuilder.<ConnectionSocketFactory>create(
+				).register(
+					Http.HTTP, PlainConnectionSocketFactory.getSocketFactory()
+				).register(
+					Http.HTTPS,
+					SSLConnectionSocketFactory.getSystemSocketFactory()
+				).build());
 
-			// Mimic behavior found in
-			// http://java.sun.com/j2se/1.5.0/docs/guide/net/properties.html
+		poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
+			_MAX_CONNECTIONS_PER_HOST);
+		poolingHttpClientConnectionManager.setMaxTotal(_MAX_TOTAL_CONNECTIONS);
 
-			HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-			httpClientBuilder.setConnectionManager(
-				_getPoolingHttpClientConnectionManager());
-
-			RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
-
-			requestConfigBuilder = requestConfigBuilder.setConnectTimeout(
-				_TIMEOUT);
-			requestConfigBuilder =
-				requestConfigBuilder.setConnectionRequestTimeout(_TIMEOUT);
-
-			httpClientBuilder.setDefaultRequestConfig(
-				requestConfigBuilder.build());
-
-			httpClientBuilder.setRoutePlanner(
-				new SystemDefaultRoutePlanner(ProxySelector.getDefault()));
-
-			_closeableHttpClient = httpClientBuilder.build();
-		}
-
-		return _closeableHttpClient;
+		return poolingHttpClientConnectionManager;
 	}
 
-	private PoolingHttpClientConnectionManager
-		_getPoolingHttpClientConnectionManager() {
+	private static void _destroyPoolingHttpClientConnectionManager(
+		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager) {
 
-		if (_poolingHttpClientConnectionManager != null) {
-			return _poolingHttpClientConnectionManager;
-		}
+		int retry = 0;
 
-		synchronized (this) {
-			if (_poolingHttpClientConnectionManager != null) {
-				return _poolingHttpClientConnectionManager;
+		while (retry < 10) {
+			PoolStats poolStats =
+				poolingHttpClientConnectionManager.getTotalStats();
+
+			int availableConnections = poolStats.getAvailable();
+
+			if (availableConnections <= 0) {
+				break;
 			}
 
-			PoolingHttpClientConnectionManager
-				poolingHttpClientConnectionManager =
-					new PoolingHttpClientConnectionManager(
-						RegistryBuilder.<ConnectionSocketFactory>create(
-						).register(
-							Http.HTTP,
-							PlainConnectionSocketFactory.getSocketFactory()
-						).register(
-							Http.HTTPS,
-							SSLConnectionSocketFactory.getSystemSocketFactory()
-						).build());
+			poolingHttpClientConnectionManager.closeIdleConnections(
+				200, TimeUnit.MILLISECONDS);
 
-			poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
-				_MAX_CONNECTIONS_PER_HOST);
-			poolingHttpClientConnectionManager.setMaxTotal(
-				_MAX_TOTAL_CONNECTIONS);
+			try {
+				Thread.sleep(500);
+			}
+			catch (InterruptedException interruptedException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(interruptedException);
+				}
+			}
 
-			_poolingHttpClientConnectionManager =
-				poolingHttpClientConnectionManager;
+			retry++;
 		}
 
-		return _poolingHttpClientConnectionManager;
+		poolingHttpClientConnectionManager.shutdown();
 	}
 
-	private CloseableHttpClient _getProxyCloseableHttpClient() {
-		if (_proxyCloseableHttpClient != null) {
-			return _proxyCloseableHttpClient;
+	private CloseableHttpClient _createCloseableHttpClient() {
+
+		// Mimic behavior found in
+		// http://java.sun.com/j2se/1.5.0/docs/guide/net/properties.html
+
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		httpClientBuilder.setConnectionManager(
+			_poolingHttpClientConnectionManagerDCLSingleton.getSingleton(
+				HttpImpl::_createPoolingHttpClientConnectionManager));
+
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
+
+		requestConfigBuilder = requestConfigBuilder.setConnectTimeout(_TIMEOUT);
+		requestConfigBuilder = requestConfigBuilder.setConnectionRequestTimeout(
+			_TIMEOUT);
+
+		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
+
+		httpClientBuilder.setRoutePlanner(
+			new SystemDefaultRoutePlanner(ProxySelector.getDefault()));
+
+		return httpClientBuilder.build();
+	}
+
+	private CloseableHttpClient _createProxyCloseableHttpClient() {
+		if (!hasProxyConfig() || Validator.isNull(_PROXY_USERNAME)) {
+			return _closeableHttpClientDCLSingleton.getSingleton(
+				this::_createCloseableHttpClient);
 		}
 
-		synchronized (this) {
-			if (_proxyCloseableHttpClient != null) {
-				return _proxyCloseableHttpClient;
-			}
+		HttpClientBuilder proxyHttpClientBuilder = HttpClientBuilder.create();
 
-			if (!hasProxyConfig() || Validator.isNull(_PROXY_USERNAME)) {
-				_proxyCloseableHttpClient = _getCloseableHttpClient();
-			}
-			else {
-				HttpClientBuilder proxyHttpClientBuilder =
-					HttpClientBuilder.create();
+		proxyHttpClientBuilder.setRoutePlanner(
+			new SystemDefaultRoutePlanner(ProxySelector.getDefault()));
 
-				proxyHttpClientBuilder.setRoutePlanner(
-					new SystemDefaultRoutePlanner(ProxySelector.getDefault()));
+		proxyHttpClientBuilder.setConnectionManager(
+			_poolingHttpClientConnectionManagerDCLSingleton.getSingleton(
+				HttpImpl::_createPoolingHttpClientConnectionManager));
 
-				proxyHttpClientBuilder.setConnectionManager(
-					_getPoolingHttpClientConnectionManager());
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
 
-				RequestConfig.Builder requestConfigBuilder =
-					RequestConfig.custom();
+		requestConfigBuilder = requestConfigBuilder.setConnectTimeout(_TIMEOUT);
+		requestConfigBuilder = requestConfigBuilder.setConnectionRequestTimeout(
+			_TIMEOUT);
 
-				requestConfigBuilder = requestConfigBuilder.setConnectTimeout(
-					_TIMEOUT);
-				requestConfigBuilder =
-					requestConfigBuilder.setConnectionRequestTimeout(_TIMEOUT);
+		requestConfigBuilder.setProxy(new HttpHost(_PROXY_HOST, _PROXY_PORT));
+		requestConfigBuilder.setProxyPreferredAuthSchemes(_proxyAuthPrefs);
 
-				requestConfigBuilder.setProxy(
-					new HttpHost(_PROXY_HOST, _PROXY_PORT));
-				requestConfigBuilder.setProxyPreferredAuthSchemes(
-					_proxyAuthPrefs);
+		proxyHttpClientBuilder.setDefaultRequestConfig(
+			requestConfigBuilder.build());
 
-				proxyHttpClientBuilder.setDefaultRequestConfig(
-					requestConfigBuilder.build());
-
-				_proxyCloseableHttpClient = proxyHttpClientBuilder.build();
-			}
-		}
-
-		return _proxyCloseableHttpClient;
+		return proxyHttpClientBuilder.build();
 	}
 
 	private static final String _DEFAULT_USER_AGENT =
@@ -1161,11 +1119,13 @@ public class HttpImpl implements Http {
 
 	private static final ThreadLocal<Cookie[]> _cookies = new ThreadLocal<>();
 
-	private volatile CloseableHttpClient _closeableHttpClient;
-	private volatile PoolingHttpClientConnectionManager
-		_poolingHttpClientConnectionManager;
+	private final DCLSingleton<CloseableHttpClient>
+		_closeableHttpClientDCLSingleton = new DCLSingleton<>();
+	private final DCLSingleton<PoolingHttpClientConnectionManager>
+		_poolingHttpClientConnectionManagerDCLSingleton = new DCLSingleton<>();
 	private final List<String> _proxyAuthPrefs = new ArrayList<>();
-	private volatile CloseableHttpClient _proxyCloseableHttpClient;
+	private final DCLSingleton<CloseableHttpClient>
+		_proxyCloseableHttpClientDCLSingleton = new DCLSingleton<>();
 	private Credentials _proxyCredentials;
 
 }

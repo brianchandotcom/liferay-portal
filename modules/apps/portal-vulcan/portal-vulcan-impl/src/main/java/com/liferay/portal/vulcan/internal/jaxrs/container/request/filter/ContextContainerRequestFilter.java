@@ -28,6 +28,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
@@ -71,6 +72,7 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, Object scopeChecker,
 		SortParserProvider sortParserProvider,
+		VulcanBatchEngineExportTaskResource vulcanBatchEngineExportTaskResource,
 		VulcanBatchEngineImportTaskResource
 			vulcanBatchEngineImportTaskResource) {
 
@@ -85,6 +87,8 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 		_roleLocalService = roleLocalService;
 		_scopeChecker = scopeChecker;
 		_sortParserProvider = sortParserProvider;
+		_vulcanBatchEngineExportTaskResource =
+			vulcanBatchEngineExportTaskResource;
 		_vulcanBatchEngineImportTaskResource =
 			vulcanBatchEngineImportTaskResource;
 	}
@@ -248,6 +252,13 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 				field.set(instance, _portal.getUser(httpServletRequest));
 			}
 			else if (fieldClass.isAssignableFrom(
+						VulcanBatchEngineExportTaskResource.class)) {
+
+				field.setAccessible(true);
+
+				field.set(instance, _vulcanBatchEngineExportTaskResource);
+			}
+			else if (fieldClass.isAssignableFrom(
 						VulcanBatchEngineImportTaskResource.class)) {
 
 				field.setAccessible(true);
@@ -269,6 +280,8 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 	private final RoleLocalService _roleLocalService;
 	private final Object _scopeChecker;
 	private final SortParserProvider _sortParserProvider;
+	private final VulcanBatchEngineExportTaskResource
+		_vulcanBatchEngineExportTaskResource;
 	private final VulcanBatchEngineImportTaskResource
 		_vulcanBatchEngineImportTaskResource;
 

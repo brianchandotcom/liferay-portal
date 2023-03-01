@@ -170,6 +170,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
+		printWriter.write(".lfr-layout-structure-item-container {padding: 0;}");
 		printWriter.write(".lfr-layout-structure-item-row {overflow: hidden;}");
 
 		JSONObject frontendTokensJSONObject = _getFrontendTokensJSONObject(

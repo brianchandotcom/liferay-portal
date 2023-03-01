@@ -212,6 +212,7 @@ const FilterOrderControls = ({
 						disabled={disabled}
 						displayType="unstyled"
 						href={sortingURL}
+						role="button"
 						symbol={classNames({
 							'order-list-down': sortingOrder === 'desc',
 							'order-list-up':

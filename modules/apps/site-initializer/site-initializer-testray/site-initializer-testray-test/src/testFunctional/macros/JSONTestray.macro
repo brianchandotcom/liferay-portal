@@ -131,3 +131,14 @@ definition {
 			projectId = ${projectId},
 			routineName = ${routineName});
 	}
+
+	macro addSuite {
+		if (!(isSet(projectName))) {
+			var projectName = "Project 1";
+		}
+
+		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
+		var suiteId = JSONTestrayAPI.createSuiteAPI(
+			suiteName = ${suiteName},
+			projectId = ${projectId});
+	}

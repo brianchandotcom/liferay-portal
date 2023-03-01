@@ -399,8 +399,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			try {
 				if (Objects.equals(
 						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
-					!objectRelationship.isReverse()) {
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
 					_bundleContext.registerService(
 						RelatedInfoItemCollectionProvider.class,

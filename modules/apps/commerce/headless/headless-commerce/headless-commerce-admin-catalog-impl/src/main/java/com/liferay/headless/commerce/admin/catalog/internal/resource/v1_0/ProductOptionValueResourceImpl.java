@@ -19,13 +19,13 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOptionValue;
-import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductOptionValueDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductOptionValueUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionValueResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -142,8 +142,11 @@ public class ProductOptionValueResourceImpl
 	private CPDefinitionOptionValueRelService
 		_cpDefinitionOptionValueRelService;
 
-	@Reference
-	private ProductOptionValueDTOConverter _productOptionValueDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductOptionValueDTOConverter)"
+	)
+	private DTOConverter<CPDefinitionOptionValueRel, ProductOptionValue>
+		_productOptionValueDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

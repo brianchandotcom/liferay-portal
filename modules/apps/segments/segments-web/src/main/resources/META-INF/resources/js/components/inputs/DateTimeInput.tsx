@@ -13,7 +13,7 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
-import {format, isValid, parse, parseISO} from 'date-fns';
+import {format, isValid, parse} from 'date-fns';
 import {default as React, useRef, useState} from 'react';
 
 import {PROPERTY_TYPES} from '../../utils/constants';
@@ -45,96 +45,29 @@ function DateTimeInput({
 }: Props) {
 	const [expanded, setExpanded] = useState(false);
 
-	const [displayDate, setDisplayDate] = useState<DateRange | string>(() => {
-		const toDisplayDate = (internalDate: string | undefined) => {
-			let isoDate = new Date().toISOString();
-
-			if (internalDate && propertyType !== PROPERTY_TYPES.DATE_TIME) {
-				isoDate = parse(
-					internalDate,
-					INTERNAL_DATE_FORMAT,
-					new Date()
-				).toISOString();
-			}
-
-			return format(new Date(isoDate), DISPLAY_DATE_FORMAT);
-		};
-
-		if (typeof initialValue === 'object') {
-			return {
-				end: toDisplayDate(initialValue?.end),
-				start: toDisplayDate(initialValue?.start),
-			};
-		}
-
-		return toDisplayDate(initialValue);
-	});
+	const [displayDate, setDisplayDate] = useState<DateRange | string>(() =>
+		transformDate(initialValue || new Date().toISOString(), toDisplayDate)
+	);
 
 	const previousDisplayDateRef = useRef(displayDate);
 
 	const saveDateTimeValue = () => {
-		const toInternalDate = (_displayDate: string) => {
-			const dateObject = parseISO(_displayDate.replace(/\//g, '-'));
+		const internalDate = transformDate(
+			displayDate,
+			propertyType === PROPERTY_TYPES.DATE_TIME
+				? toInternalDateTime
+				: toInternalDate
+		);
 
-			let internalDate = '';
+		const previousDisplayDate = previousDisplayDateRef.current;
 
-			if (isValid(dateObject)) {
-				internalDate = format(
-					new Date(_displayDate),
-					INTERNAL_DATE_FORMAT
-				);
-			}
-			else {
-				internalDate = format(new Date(), INTERNAL_DATE_FORMAT);
-			}
+		if (!datesAreEqual(previousDisplayDate, displayDate)) {
+			previousDisplayDateRef.current = displayDate;
 
-			if (propertyType === PROPERTY_TYPES.DATE_TIME) {
-				internalDate = parse(
-					internalDate,
-					INTERNAL_DATE_FORMAT,
-					new Date()
-				).toISOString();
-			}
-
-			return [internalDate, dateObject] as const;
-		};
-
-		if (typeof displayDate === 'object') {
-			const [internalEndDate, endDateObject] = toInternalDate(
-				displayDate.end
-			);
-			const [internalStartDate, startDateObject] = toInternalDate(
-				displayDate.start
-			);
-			const previousDisplayDate = previousDisplayDateRef.current as DateRange;
-
-			if (
-				previousDisplayDate.start !== displayDate.start ||
-				previousDisplayDate.end !== displayDate.end ||
-				!isValid(startDateObject) ||
-				!isValid(endDateObject)
-			) {
-				previousDisplayDateRef.current = displayDate;
-
-				onChange({
-					type: propertyType,
-					value: {
-						end: internalEndDate,
-						start: internalStartDate,
-					},
-				});
-			}
-		}
-		else {
-			const [internalDate, dateObject] = toInternalDate(displayDate);
-
-			if (
-				previousDisplayDateRef.current !== displayDate ||
-				!isValid(dateObject)
-			) {
-				previousDisplayDateRef.current = displayDate;
-				onChange({type: propertyType, value: internalDate});
-			}
+			onChange({
+				type: propertyType,
+				value: internalDate,
+			});
 		}
 	};
 
@@ -142,10 +75,10 @@ function DateTimeInput({
 		if (range) {
 			const [start, end] = nextDisplayDate.split(' - ');
 
-			setDisplayDate({end, start});
+			setDisplayDate(transformDate({end, start}, toDisplayDate));
 		}
 		else {
-			setDisplayDate(nextDisplayDate);
+			setDisplayDate(transformDate(nextDisplayDate, toDisplayDate));
 		}
 	};
 
@@ -210,6 +143,63 @@ function DateTimeInput({
 			/>
 		</div>
 	);
+}
+
+function datesAreEqual(dateA: DateRange | string, dateB: DateRange | string) {
+	if (typeof dateA === 'object' && typeof dateB === 'object') {
+		return dateA.start === dateB.start && dateA.end === dateB.end;
+	}
+	else if (typeof dateA === 'string' && typeof dateB === 'string') {
+		return dateA === dateB;
+	}
+
+	return false;
+}
+
+function toDisplayDate(internalOrIsoDate: string) {
+	let dateObject = new Date(internalOrIsoDate);
+
+	if (!isValid(dateObject)) {
+		dateObject = parse(internalOrIsoDate, INTERNAL_DATE_FORMAT, new Date());
+	}
+
+	if (!isValid(dateObject)) {
+		dateObject = new Date();
+	}
+
+	return format(dateObject, DISPLAY_DATE_FORMAT);
+}
+
+function toInternalDate(displayOrIsoDate: string) {
+	let dateObject = new Date(displayOrIsoDate);
+
+	if (!isValid(dateObject)) {
+		dateObject = parse(displayOrIsoDate, DISPLAY_DATE_FORMAT, new Date());
+	}
+
+	if (!isValid(dateObject)) {
+		dateObject = new Date();
+	}
+
+	return format(dateObject, INTERNAL_DATE_FORMAT);
+}
+
+function toInternalDateTime(displayOrIsoDate: string) {
+	return new Date(toInternalDate(displayOrIsoDate)).toISOString();
+}
+
+function transformDate(
+	date: DateRange | string,
+	transform: (date: string) => string
+) {
+	if (typeof date === 'object') {
+		const end = transform(date.end);
+		const start = transform(date.start);
+
+		return start && end ? {end, start} : '';
+	}
+
+	return transform(date);
 }
 
 export default DateTimeInput;

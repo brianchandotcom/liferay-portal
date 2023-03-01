@@ -21,7 +21,6 @@ export default function getDTOFromMDFRequestActivity(
 	externalReferenceCodeSF?: string
 ): MDFRequestActivityDTO {
 	const activityDescription = {...mdfRequestActivity.activityDescription};
-	delete mdfRequestActivity.activityDescription;
 
 	return {
 		...activityDescription,

@@ -36,7 +36,7 @@ export default function PagesTree({
 	const {loadMoreItemsURL, maxPageSize, moveItemURL, namespace} = config;
 
 	const onLoadMore = useCallback(
-		(item, updateExpandedKeys) => {
+		(item) => {
 			if (!item.hasChildren) {
 				return Promise.resolve({
 					cursor: null,
@@ -60,16 +60,10 @@ export default function PagesTree({
 				method: 'post',
 			})
 				.then((response) => response.json())
-				.then(({hasMoreElements, items: nextItems}) => {
-					if (item.itemRef) {
-						updateExpandedKeys(item.id);
-					}
-
-					return {
-						cursor: hasMoreElements ? cursor + 1 : null,
-						items: nextItems,
-					};
-				})
+				.then(({hasMoreElements, items: nextItems}) => ({
+					cursor: hasMoreElements ? cursor + 1 : null,
+					items: nextItems,
+				}))
 				.catch(() => openErrorToast());
 		},
 		[isPrivateLayoutsTree, loadMoreItemsURL, maxPageSize, namespace]
@@ -120,11 +114,7 @@ export default function PagesTree({
 					setExpandedKeys(Array.from(keys));
 				}}
 				onItemMove={onItemMove}
-				onLoadMore={(item) =>
-					onLoadMore(item, (key) =>
-						setExpandedKeys([...expandedKeys, key])
-					)
-				}
+				onLoadMore={onLoadMore}
 				selectionMode={null}
 				showExpanderOnHover={false}
 			>

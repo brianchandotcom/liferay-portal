@@ -108,6 +108,8 @@ public class ClientExtensionProjectConfigurator
 		_clientExtensionConfigurers.put(
 			"globalJS", Collections.singletonList(nodeBuildConfigurer));
 		_clientExtensionConfigurers.put(
+			"staticContent", Collections.singletonList(nodeBuildConfigurer));
+		_clientExtensionConfigurers.put(
 			"themeCSS",
 			Arrays.asList(nodeBuildConfigurer, new ThemeCSSTypeConfigurer()));
 		_clientExtensionConfigurers.put(

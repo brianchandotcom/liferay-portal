@@ -20,7 +20,7 @@ import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValue
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
-import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductSpecificationDTOConverter;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductSpecificationHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductSpecificationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -190,8 +191,12 @@ public class ProductSpecificationResourceImpl
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;
 
-	@Reference
-	private ProductSpecificationDTOConverter _productSpecificationDTOConverter;
+	@Reference(
+		target = DTOConverterConstants.PRODUCT_SPECIFICATION_DTO_CONVERTER
+	)
+	private DTOConverter
+		<CPDefinitionSpecificationOptionValue, ProductSpecification>
+			_productSpecificationDTOConverter;
 
 	@Reference
 	private ProductSpecificationHelper _productSpecificationHelper;

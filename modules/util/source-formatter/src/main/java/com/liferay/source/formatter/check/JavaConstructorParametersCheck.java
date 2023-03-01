@@ -88,31 +88,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				break;
 			}
 
-			if (followingCode.startsWith(".")) {
-				String methodName = null;
-
-				int x = -1;
-
-				while (true) {
-					x = followingCode.indexOf(
-						StringPool.OPEN_PARENTHESIS, x + 1);
-
-					if (x == -1) {
-						continue outerLoop;
-					}
-
-					if (!ToolsUtil.isInsideQuotes(followingCode, x + 1)) {
-						methodName = StringUtil.trim(
-							followingCode.substring(1, x));
-
-						break;
-					}
-				}
-
-				if (!methodName.startsWith("get")) {
-					break;
-				}
-
+			if (followingCode.startsWith(".get")) {
 				return StringUtil.replaceFirst(
 					content, globalVariableName, parameterName, start);
 			}

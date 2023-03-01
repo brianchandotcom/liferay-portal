@@ -30,13 +30,13 @@ definition {
 			key_title = "Add Site",
 			locator1 = "IFrame#MODAL_ANY");
 
-		PortletEntry.inputName(name = "Testray 2");
+		PortletEntry.inputName(name = ${siteName});
 
 		Button.click(button = "Add");
 
 		Site.openSitesAdmin();
 
-		while (IsElementNotPresent(key_siteName = "Testray 2", locator1 = "Sites#SITE_TABLE_NAME")) {
+		while (IsElementNotPresent(key_siteName = ${siteName}, locator1 = "Sites#SITE_TABLE_NAME")) {
 			Refresh();
 
 			WaitForPageLoad();
@@ -308,6 +308,8 @@ definition {
 	}
 
 	macro testrayApisTearDown {
+		Testray.tearDownCP();
+
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");

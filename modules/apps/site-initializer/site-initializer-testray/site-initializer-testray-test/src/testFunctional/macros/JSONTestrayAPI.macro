@@ -152,7 +152,7 @@ definition {
 
 	@summary = "create a Case via API"
 	macro createCasesAPI {
-		Variables.assertDefined(parameterList = "${caseName},${caseTypeId},${componentId},${projectId}");
+		Variables.assertDefined(parameterList = "${caseName},${caseTypeId},${projectId},${componentId}");
 
 		if (!(isSet(description))) {
 			var description = "";
@@ -258,7 +258,8 @@ definition {
 				-d '{
 					"name": "${environmentFactorsName}",
 					"r_factorCategoryToFactors_c_factorCategoryId": "${factorCategoryId}",
-					"r_factorOptionToFactors_c_factorOptionId": "${factorOptionsId}"
+					"r_factorOptionToFactors_c_factorOptionId": "${factorOptionsId}",
+					"r_routineToFactors_c_routineId": ${routineId}
 				}'
 		''';
 
@@ -500,7 +501,6 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
-					"caseParameters": "{\"0\":${casesId},\"testrayTeams\":[{\"label\":\"Team 1\",\"value\":\"${teamId}\"}],\"testrayCaseTypes\":[{\"label\":\"Case 1\",\"value\":\"${caseTypeId}\"}],\"testrayComponents\":[{\"label\":\"Component 1\",\"value\":\"${componentId}\"}],\"testrayRequirements\":[{\"label\":\"Requirements Summary\",\"value\":\"${requirementId}\"}]}",
 					"name": "${suiteName}",
 					"description": "${description}",
 					"type": "${typeSuite}",
@@ -566,7 +566,7 @@ definition {
 	@summary = "This calls the JSON WS API to delete an object"
 	macro deleteObjectViaAPI {
 		var portalURL = JSONCompany.getPortalURL();
-		var objectId = JSONTestrayAPI.getObjectId(
+		var objectId = JSONTestrayAPI._getObjectId(
 			object = ${object},
 			objectName = ${objectName});
 
@@ -592,20 +592,6 @@ definition {
 		''';
 
 		JSONCurlUtil.delete(${curl});
-	}
-
-	@summary = "This calls the JSON WS API to get object id"
-	macro getObjectId {
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/c/${object} \
-				-u test@liferay.com:test
-		''';
-
-		var objectId = JSONCurlUtil.get(${curl}, "$.items[?(@.name=='${objectName}')].id");
-
-		return ${objectId};
 	}
 
 	macro getProject {

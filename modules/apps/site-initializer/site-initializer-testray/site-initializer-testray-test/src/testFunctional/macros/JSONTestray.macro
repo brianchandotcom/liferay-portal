@@ -55,7 +55,7 @@ definition {
 	}
 
 	macro addEnvironmentFactors {
-		Variables.assertDefined(parameterList = "${environmentFactorsName}");
+		Variables.assertDefined(parameterList = ${environmentFactorsName});
 
 		if (!(isSet(optionsName))) {
 			var optionsName = "Option 1";
@@ -74,11 +74,12 @@ definition {
 		var factorCategoryId = JSONTestraySetter.getFactorCategoryId(categoryName = ${categoryName});
 
 		JSONTestray.addFactorOptions(
-			optionsName = ${optionsName},
-			factorCategoryId = ${factorCategoryId});
+			factorCategoryId = ${factorCategoryId},
+			optionsName = ${optionsName});
 
 		var factorOptionsId = JSONTestraySetter.getFactorOptionsId(optionsName = ${optionsName});
 		var routineId = JSONTestraySetter.getRoutineId(routineName = ${routineName});
+
 		var environmentFactorsId = JSONTestrayAPI.createEnvironmentFactorsAPI(
 			environmentFactorsName = ${environmentFactorsName},
 			factorCategoryId = ${factorCategoryId},
@@ -87,17 +88,17 @@ definition {
 	}
 
 	macro addFactorCategory {
-		Variables.assertDefined(parameterList = "${categoryName}");
+		Variables.assertDefined(parameterList = ${categoryName});
 
 		var factorCategoryId = JSONTestrayAPI.createFactorCategoriesAPI(categoryName = ${categoryName});
 	}
 
 	macro addFactorOptions {
-		Variables.assertDefined(parameterList = "${optionsName}");
+		Variables.assertDefined(parameterList = ${optionsName});
 
 		var factorOptionsId = JSONTestrayAPI.createFactorOptionsAPI(
-			optionsName = ${optionsName},
-			factorCategoryId = ${factorCategoryId});
+			factorCategoryId = ${factorCategoryId},
+			optionsName = ${optionsName});
 	}
 
 	macro addProductVersion {
@@ -138,9 +139,10 @@ definition {
 		}
 
 		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
+
 		var suiteId = JSONTestrayAPI.createSuiteAPI(
-			suiteName = ${suiteName},
-			projectId = ${projectId});
+			projectId = ${projectId},
+			suiteName = ${suiteName});
 	}
 
 	macro addTeam {

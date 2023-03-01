@@ -42,9 +42,7 @@ definition {
 
 		TestrayBuild.addSelectStacksInBuild(
 			parameterLabel = ${labelStack},
-			parameterLabel2 = ${labelStack2},
-			stackoptions = ${stackName},
-			stackoptions2 = ${stackName2});
+			stackoptions = ${stackName});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
@@ -72,11 +70,6 @@ definition {
 			locator1 = "TestrayBuild#SELECT_STACKS_PARAMETER_LABEL_FIELD",
 			parameterLabel = ${parameterLabel},
 			stackoptions = ${stackoptions});
-
-		Click(
-			locator1 = "TestrayBuild#SELECT_STACKS_PARAMETER_LABEL_FIELD_2",
-			parameterLabel = ${parameterLabel2},
-			stackoptions = ${stackoptions2});
 
 		Button.click(button = "Next");
 

@@ -18,7 +18,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTR2Site(siteName = ${testSiteName});
+			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
 		task ("Go to Testray, Create Project and change pagination") {
@@ -40,8 +40,6 @@ definition {
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
-
-		Testray.tearDownCP();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();

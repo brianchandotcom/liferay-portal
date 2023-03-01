@@ -16,18 +16,18 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import {useEffect, useState} from 'react';
 
 import {
-	ARROW_DOWN_KEYCODE,
-	ARROW_LEFT_KEYCODE,
-	ARROW_RIGHT_KEYCODE,
-	ARROW_UP_KEYCODE,
-} from '../../../app/config/constants/keycodes';
+	ARROW_DOWN_KEY_CODE,
+	ARROW_LEFT_KEY_CODE,
+	ARROW_RIGHT_KEY_CODE,
+	ARROW_UP_KEY_CODE,
+} from '../../../app/config/constants/keyboardCodes';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
 
-const ALLOWED_KEYCODES = [
-	ARROW_DOWN_KEYCODE,
-	ARROW_LEFT_KEYCODE,
-	ARROW_RIGHT_KEYCODE,
-	ARROW_UP_KEYCODE,
+const ALLOWED_KEY_CODES = [
+	ARROW_DOWN_KEY_CODE,
+	ARROW_LEFT_KEY_CODE,
+	ARROW_RIGHT_KEY_CODE,
+	ARROW_UP_KEY_CODE,
 ];
 
 export default function useKeyboardNavigation({handleOpen, type}) {
@@ -46,17 +46,19 @@ export default function useKeyboardNavigation({handleOpen, type}) {
 	useEventListener(
 		'keydown',
 		(event) => {
-			if (!ALLOWED_KEYCODES.includes(event.keyCode)) {
+			const {code} = event;
+
+			if (!ALLOWED_KEY_CODES.includes(code)) {
 				return;
 			}
 
 			event.preventDefault();
 
 			if (type === LIST_ITEM_TYPES.header) {
-				onHeaderKeyDown(element, event.keyCode, handleOpen);
+				onHeaderKeyDown(element, code, handleOpen);
 			}
 			else if (type === LIST_ITEM_TYPES.listItem) {
-				onListItemKeyDown(element, event.keyCode);
+				onListItemKeyDown(element, code);
 			}
 		},
 		true,
@@ -84,7 +86,7 @@ export default function useKeyboardNavigation({handleOpen, type}) {
 }
 
 function onHeaderKeyDown(element, keyCode, handleOpen) {
-	if (keyCode === ARROW_DOWN_KEYCODE) {
+	if (keyCode === ARROW_DOWN_KEY_CODE) {
 
 		// Target first item of the list. If it's collapsed, target next header
 
@@ -102,7 +104,7 @@ function onHeaderKeyDown(element, keyCode, handleOpen) {
 			nextHeader?.focus();
 		}
 	}
-	else if (keyCode === ARROW_UP_KEYCODE) {
+	else if (keyCode === ARROW_UP_KEY_CODE) {
 
 		// Target last item of the previous list. If it's collapsed, target previous header
 
@@ -126,13 +128,13 @@ function onHeaderKeyDown(element, keyCode, handleOpen) {
 			previousHeader.focus();
 		}
 	}
-	else if (keyCode === ARROW_RIGHT_KEYCODE) {
+	else if (keyCode === ARROW_RIGHT_KEY_CODE) {
 
 		// Expand
 
 		handleOpen(true);
 	}
-	else if (keyCode === ARROW_LEFT_KEYCODE) {
+	else if (keyCode === ARROW_LEFT_KEY_CODE) {
 
 		// Collapse
 
@@ -141,7 +143,7 @@ function onHeaderKeyDown(element, keyCode, handleOpen) {
 }
 
 function onListItemKeyDown(element, keyCode) {
-	if (keyCode === ARROW_UP_KEYCODE) {
+	if (keyCode === ARROW_UP_KEY_CODE) {
 
 		// Target previous list item. If it's the first one, target header
 
@@ -155,7 +157,7 @@ function onListItemKeyDown(element, keyCode) {
 			header.focus();
 		}
 	}
-	else if (keyCode === ARROW_DOWN_KEYCODE) {
+	else if (keyCode === ARROW_DOWN_KEY_CODE) {
 
 		// Target next list item. If it's the last one, target next header
 
@@ -170,7 +172,7 @@ function onListItemKeyDown(element, keyCode) {
 			nextHeader?.focus();
 		}
 	}
-	else if (keyCode === ARROW_RIGHT_KEYCODE) {
+	else if (keyCode === ARROW_RIGHT_KEY_CODE) {
 
 		// If the active element is the list item itself, target first option button
 
@@ -187,7 +189,7 @@ function onListItemKeyDown(element, keyCode) {
 			nextButton?.focus();
 		}
 	}
-	else if (keyCode === ARROW_LEFT_KEYCODE) {
+	else if (keyCode === ARROW_LEFT_KEY_CODE) {
 
 		// If the previous element is another button, target it, otherwise target the list item
 

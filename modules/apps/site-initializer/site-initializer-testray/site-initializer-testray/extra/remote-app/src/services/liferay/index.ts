@@ -12,6 +12,8 @@
  * details.
  */
 
+import {CONSENT_TYPE} from '~/util/enum';
+
 interface IThemeDisplay {
 	getBCP47LanguageId(): () => string;
 	getCompanyGroupId: () => number;
@@ -24,7 +26,14 @@ interface IThemeDisplay {
 	getUserName: () => string;
 }
 
+export type LiferayStorage = Storage & {
+	getItem(key: string, consentType: CONSENT_TYPE): string | null;
+	setItem(key: string, value: string, consentType: CONSENT_TYPE): void;
+};
+
 interface LiferayUtil {
+	LocalStorage: LiferayStorage;
+	SessionStorage: LiferayStorage;
 	openToast: (options?: {
 		message: string;
 		onClick?: ({event}: {event: any}) => void;
@@ -57,6 +66,8 @@ export const Liferay = window.Liferay || {
 		getUserName: () => 'Test Test',
 	},
 	Util: {
+		LocalStorage: localStorage,
+		SessionStorage: sessionStorage,
 		openToast: () => null,
 	},
 	authToken: '',

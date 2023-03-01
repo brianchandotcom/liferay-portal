@@ -437,3 +437,5 @@ export type MessageBoardMessage = {
 	headline: string;
 	id: string;
 };
+
+export type StorageType = 'persisted' | 'temporary';

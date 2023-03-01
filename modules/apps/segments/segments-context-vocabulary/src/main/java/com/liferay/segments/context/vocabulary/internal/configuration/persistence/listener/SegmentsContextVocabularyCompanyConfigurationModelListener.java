@@ -72,14 +72,10 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 	}
 
 	private ResourceBundle _getResourceBundle() {
-		if (_resourceBundle == null) {
-			Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
-			return ResourceBundleUtil.getBundle(
-				"content.Language", locale, getClass());
-		}
-
-		return _resourceBundle;
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 	}
 
 	private boolean _isDefined(
@@ -131,7 +127,5 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
-
-	private ResourceBundle _resourceBundle;
 
 }

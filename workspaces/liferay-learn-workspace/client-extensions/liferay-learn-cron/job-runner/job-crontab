@@ -1,0 +1,1 @@
+@reboot /usr/local/bin/register_job.sh every_day

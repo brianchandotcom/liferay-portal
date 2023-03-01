@@ -41,7 +41,7 @@ send_slack_message "Cloned repo *${LIFERAY_LEARN_CRON_GITHUB_REPO}* commit: *${G
 
 cd $REPO_FOLDER/docs || exit
 
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+export JAVA_HOME=/usr/lib/jvm/zulu-8-amd64
 export PATH=$JAVA_HOME/bin:$PATH
 
 source ${REPO_FOLDER}/_common.sh
@@ -151,7 +151,7 @@ done
 
 echo "Starting java import"
 
-export JAVA_HOME=/opt/java/openjdk
+export JAVA_HOME=/usr/lib/jvm/zulu-11-amd64
 export PATH=$JAVA_HOME/bin:$PATH
 
 java -version
@@ -171,7 +171,7 @@ if [ -z "$LIFERAY_LEARN_CRON_LIFERAY_URL" ] ; then
 	LIFERAY_LEARN_CRON_LIFERAY_URL=https://$(cat /etc/liferay/lxc/dxp-metadata/com.liferay.lxc.dxp.mainDomain)
 fi
 
-java -Xmx2048m -agentlib:jdwp=transport=dt_socket,address=*:${DEBUG_PORT:-8001},server=y,suspend=n -jar /app.jar
+java -Xmx2048m -jar /opt/liferay/liferay-learn-cron.jar
 
 IMPORT_RC=$?
 

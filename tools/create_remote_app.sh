@@ -99,6 +99,10 @@ function create_react_app {
 
 	rm -f App* index* logo.svg reportWebVitals.js setupTests.js
 
+	mkdir -p common/components
+
+	touch common/components/.gitkeep
+
 	mkdir -p routes/hello-bar/components routes/hello-bar/pages
 
 	touch routes/hello-bar/components/.gitkeep
@@ -291,7 +295,7 @@ EOF
 
 	cat <<EOF > index.js
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 
 import DadJoke from './common/components/DadJoke';
 import api from './common/services/liferay/api';
@@ -315,7 +319,7 @@ const App = ({oAuth2Client, route}) => {
 		<div>
 			<HelloWorld />
 
-			{Liferay.ThemeDisplay.isSignedIn() && (
+			{Liferay.ThemeDisplay.isSignedIn() && oAuth2Client && (
 				<div>
 					<DadJoke oAuth2Client={oAuth2Client} />
 				</div>
@@ -328,18 +332,21 @@ class WebComponent extends HTMLElement {
 	constructor() {
 		super();
 
-		this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-			'easy-oauth-application-user-agent'
-		);
+		try {
+			this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
+				'easy-oauth-application-user-agent'
+			);
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	connectedCallback() {
-		ReactDOM.render(
+		createRoot(this).render(
 			<App
 				oAuth2Client={this.oAuth2Client}
 				route={this.getAttribute('route')}
-			/>,
-			this
+			/>
 		);
 
 		if (Liferay.ThemeDisplay.isSignedIn()) {
@@ -414,6 +421,43 @@ const HelloWorld = () => (
 
 export default HelloWorld;
 EOF
+
+	#
+	# common/components/DadJoke.js
+	#
+
+	cat <<EOF > common/components/DadJoke.js
+import React, { useEffect } from 'react';
+
+const DadJoke = ({oAuth2Client}) => {
+	const [state, setState] = useState();
+
+	useEffect(() => {
+		const request = oAuth2Client.fetch(
+			'/dad/joke'
+		).then(response => response.text()
+		).then(text => {
+			setState({"joke": text});
+		});
+
+		return () => {
+			request?.cancel();
+		}
+	}, [oAuth2Client])
+
+	if (state) {
+		return <div>Loading...</div>
+	}
+
+	return  <div>{state.joke}</div>
 }
+
+export default DadJoke;
+
+EOF
+
+}
+
+
 
 main "${@}"

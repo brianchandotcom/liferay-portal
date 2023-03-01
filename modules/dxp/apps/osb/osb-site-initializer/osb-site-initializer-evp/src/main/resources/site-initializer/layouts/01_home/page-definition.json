@@ -131,7 +131,7 @@
 																		"abstractLength": "200",
 																		"anyAssetType": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
 																		"anyClassTypeDLFileEntryAssetRendererFactory": "true",
-																		"anyClassTypeJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
+																		"anyClassTypeJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:NEWS$]",
 																		"assetLinkBehavior": "viewInPortlet",
 																		"assetVocabularyId": "",
 																		"classNameIds": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
@@ -490,7 +490,7 @@
 								"definition": {
 									"collectionConfig": {
 										"collectionReference": {
-											"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_20097_C_EVPData"
+											"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_[$COMPANY_ID$]_C_EVPData"
 										},
 										"collectionType": "CollectionProvider"
 									},

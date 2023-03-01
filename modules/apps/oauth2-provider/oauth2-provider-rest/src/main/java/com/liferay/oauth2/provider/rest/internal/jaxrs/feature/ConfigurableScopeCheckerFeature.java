@@ -90,8 +90,6 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 				ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8
 			).build());
 
-		Configuration configuration = context.getConfiguration();
-
 		HashSet<String> scopes = new HashSet<>();
 
 		for (CheckPattern checkPattern : _checkPatterns) {
@@ -104,7 +102,7 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 
 		_serviceRegistration = _bundleContext.registerService(
 			ScopeFinder.class, new CollectionScopeFinder(scopes),
-			_buildProperties(configuration));
+			_buildProperties(context.getConfiguration()));
 
 		return true;
 	}

@@ -59,7 +59,7 @@ export declare const SIZES: {
 		readonly rotatedId: 'smartphoneRotated';
 		readonly screenSize: {
 			readonly height: 640;
-			readonly width: 400;
+			readonly width: number;
 		};
 	};
 	readonly smartphoneRotated: {
@@ -71,7 +71,7 @@ export declare const SIZES: {
 		readonly rotatedId: 'smartphone';
 		readonly screenSize: {
 			readonly height: 400;
-			readonly width: 640;
+			readonly width: number;
 		};
 	};
 	readonly tablet: {
@@ -82,7 +82,7 @@ export declare const SIZES: {
 		readonly rotatedId: 'tabletRotated';
 		readonly screenSize: {
 			readonly height: 900;
-			readonly width: 760;
+			readonly width: number;
 		};
 	};
 	readonly tabletRotated: {
@@ -93,7 +93,7 @@ export declare const SIZES: {
 		readonly rotatedId: 'tablet';
 		readonly screenSize: {
 			readonly height: 760;
-			readonly width: 900;
+			readonly width: number;
 		};
 	};
 };

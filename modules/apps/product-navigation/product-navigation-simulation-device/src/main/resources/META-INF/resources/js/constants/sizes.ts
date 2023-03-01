@@ -12,6 +12,9 @@
  * details.
  */
 
+const ROTATED_SIZE_PADDING = 100;
+const NORMAL_SIZE_PADDING = 40;
+
 export type Size = {
 	cssClass?: string;
 	icon: string;
@@ -60,7 +63,7 @@ export const SIZES = {
 		rotatedId: 'smartphoneRotated',
 		screenSize: {
 			height: 640,
-			width: 400,
+			width: 575 + NORMAL_SIZE_PADDING,
 		},
 	},
 	smartphoneRotated: {
@@ -72,7 +75,7 @@ export const SIZES = {
 		rotatedId: 'smartphone',
 		screenSize: {
 			height: 400,
-			width: 640,
+			width: 767 + ROTATED_SIZE_PADDING,
 		},
 	},
 	tablet: {
@@ -83,7 +86,7 @@ export const SIZES = {
 		rotatedId: 'tabletRotated',
 		screenSize: {
 			height: 900,
-			width: 760,
+			width: 768 + NORMAL_SIZE_PADDING,
 		},
 	},
 	tabletRotated: {
@@ -94,7 +97,7 @@ export const SIZES = {
 		rotatedId: 'tablet',
 		screenSize: {
 			height: 760,
-			width: 900,
+			width: 991 + ROTATED_SIZE_PADDING,
 		},
 	},
 } as const;

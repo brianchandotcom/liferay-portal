@@ -12,30 +12,30 @@
  * details.
  */
 
-export const ARROW_DOWN_KEYCODE = 40;
+export const ARROW_DOWN_KEY_CODE = 'ArrowDown';
 
-export const ARROW_LEFT_KEYCODE = 37;
+export const ARROW_LEFT_KEY_CODE = 'ArrowLeft';
 
-export const ARROW_RIGHT_KEYCODE = 39;
+export const ARROW_RIGHT_KEY_CODE = 'ArrowRight';
 
-export const ARROW_UP_KEYCODE = 38;
+export const ARROW_UP_KEY_CODE = 'ArrowUp';
 
-export const BACKSPACE_KEYCODE = 8;
+export const BACKSPACE_KEY_CODE = 'Backspace';
 
-export const D_KEYCODE = 68;
+export const D_KEY_CODE = 'KeyD';
 
-export const END_KEYCODE = 35;
+export const END_KEY_CODE = 'End';
 
-export const ENTER_KEYCODE = 13;
+export const ENTER_KEY_CODE = 'Enter';
 
-export const ESCAPE_KEYCODE = 27;
+export const ESCAPE_KEY_CODE = 'Escape';
 
-export const HOME_KEYCODE = 36;
+export const HOME_KEY_CODE = 'Home';
 
-export const PERIOID_KEYCODE = 190;
+export const PERIOD_KEY_CODE = 'Period';
 
-export const S_KEYCODE = 83;
+export const S_KEY_CODE = 'KeyS';
 
-export const TAB_KEYCODE = 9;
+export const TAB_KEY_CODE = 'Tab';
 
-export const Z_KEYCODE = 90;
+export const Z_KEY_CODE = 'KeyZ';

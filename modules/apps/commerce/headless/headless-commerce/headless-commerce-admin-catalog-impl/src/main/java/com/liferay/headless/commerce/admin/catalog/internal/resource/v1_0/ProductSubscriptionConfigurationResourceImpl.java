@@ -19,11 +19,11 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSubscriptionConfiguration;
-import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductSubscriptionConfigurationDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductSubscriptionConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSubscriptionConfigurationResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -166,8 +166,10 @@ public class ProductSubscriptionConfigurationResourceImpl
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
 
-	@Reference
-	private ProductSubscriptionConfigurationDTOConverter
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductSubscriptionConfigurationDTOConverter)"
+	)
+	private DTOConverter<CPDefinition, ProductSubscriptionConfiguration>
 		_productSubscriptionConfigurationDTOConverter;
 
 	@Reference

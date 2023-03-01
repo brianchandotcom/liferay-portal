@@ -1399,8 +1399,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return kbArticle;
 		}
 
-		String action = Constants.ADD;
-
 		if (!kbArticle.isFirstVersion()) {
 			KBArticle oldKBArticle = kbArticlePersistence.findByR_V(
 				resourcePrimKey, kbArticle.getVersion() - 1);
@@ -1416,8 +1414,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				KBArticle.class);
 
 			indexer.delete(oldKBArticle);
-
-			action = Constants.UPDATE;
 		}
 
 		// Asset
@@ -1490,11 +1486,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			_NOTIFICATION_RECEIVER_SUBSCRIBER);
 
 		if (status == WorkflowConstants.STATUS_EXPIRED) {
-			action = Constants.EXPIRE;
 			receivers.add(_NOTIFICATION_RECEIVER_OWNER);
 		}
 
-		_notify(receivers, userId, kbArticle, action, serviceContext);
+		_notify(
+			receivers, userId, kbArticle, _getAction(kbArticle, status),
+			serviceContext);
 
 		return kbArticle;
 	}
@@ -1704,6 +1701,18 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				WorkflowConstants.STATUS_EXPIRED,
 				_getServiceContext(company, kbArticle));
 		}
+	}
+
+	private String _getAction(KBArticle kbArticle, int status) {
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			return Constants.EXPIRE;
+		}
+
+		if (kbArticle.isFirstVersion()) {
+			return Constants.ADD;
+		}
+
+		return Constants.UPDATE;
 	}
 
 	private void _getAllDescendantKBArticles(

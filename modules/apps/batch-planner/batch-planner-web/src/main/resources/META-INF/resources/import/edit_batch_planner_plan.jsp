@@ -98,14 +98,16 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 								/>
 							</clay:alert>
 
-							<div class="mt-2">
-								<clay:checkbox
-									checked="<%= false %>"
-									disabled="<%= true %>"
-									label='<%= LanguageUtil.get(request, "detect-category-names-from-CSV-file") %>'
-									name="headerCheckbox"
-								/>
-							</div>
+							<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-173135") %>'>
+								<div class="mt-2">
+									<clay:checkbox
+										checked="<%= false %>"
+										disabled="<%= true %>"
+										label='<%= LanguageUtil.get(request, "detect-category-names-from-CSV-file") %>'
+										name="headerCheckbox"
+									/>
+								</div>
+							</c:if>
 
 							<div class="mt-2">
 								<clay:checkbox

@@ -34,3 +34,7 @@ definition {
 			projectId = ${projectId});
 	}
 
+	macro addCaseType {
+		var caseTypeId = JSONTestrayAPI.createCaseTypeAPI(caseType = ${caseType});
+	}
+

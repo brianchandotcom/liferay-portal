@@ -142,3 +142,15 @@ definition {
 			suiteName = ${suiteName},
 			projectId = ${projectId});
 	}
+
+	macro addTeam {
+		Variables.assertDefined(parameterList = "${teamName},${projectName}");
+
+		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
+
+		var teamId = JSONTestrayAPI.createTeamAPI(
+			projectId = ${projectId},
+			teamName = ${teamName});
+	}
+
+}

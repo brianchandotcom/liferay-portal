@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.rss.export.RSSExporter;
 import com.liferay.rss.model.SyndContent;
 import com.liferay.rss.model.SyndEnclosure;
@@ -349,9 +350,13 @@ public class JournalRSSHelper {
 
 		syndFeed.setEntries(syndEntries);
 
-		List<JournalArticle> articles =
+		SearchResponse searchResponse =
 			JournalSearcherUtil.searchJournalArticles(
 				searchContext -> _populateSearchContext(feed, searchContext));
+
+		List<JournalArticle> articles =
+			JournalSearcherUtil.transformJournalArticles(
+				false, searchResponse.getSearchHits());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Syndicating " + articles.size() + " articles");

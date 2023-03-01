@@ -39,11 +39,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.searcher.SearchResponse;
 
 import java.io.Serializable;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -73,14 +73,16 @@ public class DDMStructureRelatedInfoCollectionProvider
 				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
 
-		List<JournalArticle> articles =
+		SearchResponse searchResponse =
 			JournalSearcherUtil.searchJournalArticles(
 				searchContext -> _populateSearchContext(
 					(AssetCategory)relatedItem, collectionQuery,
 					searchContext));
 
 		return InfoPage.of(
-			articles, collectionQuery.getPagination(), articles.size());
+			JournalSearcherUtil.transformJournalArticles(
+				false, searchResponse.getSearchHits()),
+			collectionQuery.getPagination(), searchResponse.getTotalHits());
 	}
 
 	@Override

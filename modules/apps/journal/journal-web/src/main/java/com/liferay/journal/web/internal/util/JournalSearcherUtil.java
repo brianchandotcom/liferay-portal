@@ -41,18 +41,32 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = {})
 public class JournalSearcherUtil {
 
-	public static List<Object> searchJournalArticleAndFolders(
+	public static SearchResponse searchJournalArticleAndFolders(
 		Consumer<SearchContext> searchContextConsumer) {
 
-		SearchResponse searchResponse = _searcher.search(
+		return _searcher.search(
 			_searchRequestBuilderFactory.builder(
 			).modelIndexerClasses(
 				JournalArticle.class, JournalFolder.class
 			).withSearchContext(
 				searchContextConsumer
 			).build());
+	}
 
-		SearchHits searchHits = searchResponse.getSearchHits();
+	public static SearchResponse searchJournalArticles(
+		Consumer<SearchContext> searchContextConsumer) {
+
+		return _searcher.search(
+			_searchRequestBuilderFactory.builder(
+			).modelIndexerClasses(
+				JournalArticle.class
+			).withSearchContext(
+				searchContextConsumer
+			).build());
+	}
+
+	public static List<Object> transformJournalArticleAndFolders(
+		SearchHits searchHits) {
 
 		return TransformUtil.transform(
 			searchHits.getSearchHits(),
@@ -73,18 +87,8 @@ public class JournalSearcherUtil {
 			});
 	}
 
-	public static List<JournalArticle> searchJournalArticles(
-		boolean showVersions, Consumer<SearchContext> searchContextConsumer) {
-
-		SearchResponse searchResponse = _searcher.search(
-			_searchRequestBuilderFactory.builder(
-			).modelIndexerClasses(
-				JournalArticle.class
-			).withSearchContext(
-				searchContextConsumer
-			).build());
-
-		SearchHits searchHits = searchResponse.getSearchHits();
+	public static List<JournalArticle> transformJournalArticles(
+		boolean showVersions, SearchHits searchHits) {
 
 		return TransformUtil.transform(
 			searchHits.getSearchHits(),
@@ -103,12 +107,6 @@ public class JournalSearcherUtil {
 					GetterUtil.getLong(document.getLong(Field.ENTRY_CLASS_PK)),
 					WorkflowConstants.STATUS_ANY, false);
 			});
-	}
-
-	public static List<JournalArticle> searchJournalArticles(
-		Consumer<SearchContext> searchContextConsumer) {
-
-		return searchJournalArticles(false, searchContextConsumer);
 	}
 
 	@Reference(unbind = "-")

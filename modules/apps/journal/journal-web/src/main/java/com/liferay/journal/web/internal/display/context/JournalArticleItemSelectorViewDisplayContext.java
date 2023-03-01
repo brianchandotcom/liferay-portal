@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.constants.SearchContextAttributes;
+import com.liferay.portal.search.searcher.SearchResponse;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -364,7 +365,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				folderIds.add(_getFolderId());
 			}
 
-			List<Object> results =
+			SearchResponse searchResponse =
 				JournalSearcherUtil.searchJournalArticleAndFolders(
 					searchContext -> {
 						try {
@@ -380,7 +381,9 @@ public class JournalArticleItemSelectorViewDisplayContext {
 					});
 
 			articleAndFolderSearchContainer.setResultsAndTotal(
-				() -> results, results.size());
+				() -> JournalSearcherUtil.transformJournalArticleAndFolders(
+					searchResponse.getSearchHits()),
+				searchResponse.getTotalHits());
 
 			_articleSearchContainer = articleAndFolderSearchContainer;
 

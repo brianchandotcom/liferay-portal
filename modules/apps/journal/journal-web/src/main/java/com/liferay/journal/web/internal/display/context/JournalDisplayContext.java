@@ -104,6 +104,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
@@ -1198,7 +1199,7 @@ public class JournalDisplayContext {
 		articleAndFolderSearchContainer.setOrderByType(getOrderByType());
 
 		if (isSearch()) {
-			List<Object> results =
+			SearchResponse searchResponse =
 				JournalSearcherUtil.searchJournalArticleAndFolders(
 					searchContext -> _populateSearchContext(
 						articleAndFolderSearchContainer.getStart(),
@@ -1206,7 +1207,9 @@ public class JournalDisplayContext {
 						false));
 
 			articleAndFolderSearchContainer.setResultsAndTotal(
-				() -> results, results.size());
+				() -> JournalSearcherUtil.transformJournalArticleAndFolders(
+					searchResponse.getSearchHits()),
+				searchResponse.getTotalHits());
 
 			articleAndFolderSearchContainer.setRowChecker(_getEntriesChecker());
 
@@ -1426,16 +1429,17 @@ public class JournalDisplayContext {
 				getOrderByCol(), getOrderByType()));
 		articleVersionsSearchContainer.setOrderByType(getOrderByType());
 
-		List<JournalArticle> results =
+		SearchResponse searchResponse =
 			JournalSearcherUtil.searchJournalArticles(
-				true,
 				searchContext -> _populateSearchContext(
 					articleVersionsSearchContainer.getStart(),
 					articleVersionsSearchContainer.getEnd(), searchContext,
 					true));
 
 		articleVersionsSearchContainer.setResultsAndTotal(
-			() -> results, results.size());
+			() -> JournalSearcherUtil.transformJournalArticles(
+				true, searchResponse.getSearchHits()),
+			searchResponse.getTotalHits());
 
 		_articleVersionsSearchContainer = articleVersionsSearchContainer;
 

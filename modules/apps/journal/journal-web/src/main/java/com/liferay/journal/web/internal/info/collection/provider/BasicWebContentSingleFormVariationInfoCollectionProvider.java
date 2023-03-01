@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import java.io.Serializable;
@@ -75,13 +76,15 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 	public InfoPage<JournalArticle> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		List<JournalArticle> articles =
+		SearchResponse searchResponse =
 			JournalSearcherUtil.searchJournalArticles(
 				searchContext -> _populateSearchContext(
 					collectionQuery, searchContext));
 
 		return InfoPage.of(
-			articles, collectionQuery.getPagination(), articles.size());
+			JournalSearcherUtil.transformJournalArticles(
+				false, searchResponse.getSearchHits()),
+			collectionQuery.getPagination(), searchResponse.getTotalHits());
 	}
 
 	@Override

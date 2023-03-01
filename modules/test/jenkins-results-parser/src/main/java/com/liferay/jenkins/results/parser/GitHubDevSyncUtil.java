@@ -993,7 +993,7 @@ public class GitHubDevSyncUtil {
 			callables, _threadPoolExecutor);
 
 		for (Boolean bool : parallelExecutor.execute()) {
-			if (!bool) {
+			if ((bool == null) || !bool) {
 				return false;
 			}
 		}

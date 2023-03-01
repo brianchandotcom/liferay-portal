@@ -69,6 +69,11 @@ public class CETLabelUtil {
 			return "iframe";
 		}
 		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_STATIC_CONTENT)) {
+
+			return "static-content";
+		}
+		else if (Objects.equals(
 					type, ClientExtensionEntryConstants.TYPE_THEME_CSS)) {
 
 			return "theme-css";

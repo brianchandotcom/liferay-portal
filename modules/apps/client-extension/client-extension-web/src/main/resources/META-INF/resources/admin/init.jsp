@@ -24,6 +24,7 @@ page import="com.liferay.client.extension.type.CustomElementCET" %><%@
 page import="com.liferay.client.extension.type.GlobalCSSCET" %><%@
 page import="com.liferay.client.extension.type.GlobalJSCET" %><%@
 page import="com.liferay.client.extension.type.IFrameCET" %><%@
+page import="com.liferay.client.extension.type.StaticContentCET" %><%@
 page import="com.liferay.client.extension.type.ThemeCSSCET" %><%@
 page import="com.liferay.client.extension.type.ThemeFaviconCET" %><%@
 page import="com.liferay.client.extension.type.ThemeJSCET" %><%@

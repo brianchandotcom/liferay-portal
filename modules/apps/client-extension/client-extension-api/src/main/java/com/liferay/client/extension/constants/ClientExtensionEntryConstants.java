@@ -27,6 +27,8 @@ public class ClientExtensionEntryConstants {
 
 	public static final String TYPE_IFRAME = "iframe";
 
+	public static final String TYPE_STATIC_CONTENT = "staticContent";
+
 	public static final String TYPE_THEME_CSS = "themeCSS";
 
 	public static final String TYPE_THEME_FAVICON = "themeFavicon";

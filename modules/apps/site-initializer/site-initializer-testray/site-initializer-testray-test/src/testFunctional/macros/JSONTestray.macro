@@ -100,3 +100,16 @@ definition {
 			factorCategoryId = ${factorCategoryId});
 	}
 
+	macro addProductVersion {
+		Variables.assertDefined(parameterList = "${productVersion},${projectName}");
+
+		if (!(isSet(projectName))) {
+			var projectName = "Project 1";
+		}
+
+		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
+
+		var productVersionId = JSONTestrayAPI.createProductVersionAPI(
+			productVersion = ${productVersion},
+			projectId = ${projectId});
+	}

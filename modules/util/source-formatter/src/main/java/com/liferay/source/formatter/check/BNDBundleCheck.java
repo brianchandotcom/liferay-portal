@@ -65,11 +65,6 @@ public class BNDBundleCheck extends BaseFileCheck {
 				"${liferay.releng.app.title.prefix} " + appTitle);
 		}
 
-		if (content.matches("(?s).*Liferay-Releng-Deprecated:\\s*true.*")) {
-			content = BNDSourceUtil.updateInstruction(
-				content, "Liferay-Releng-Bundle", "false");
-		}
-
 		content = BNDSourceUtil.updateInstruction(
 			content, "Liferay-Releng-Public", "${liferay.releng.public}");
 

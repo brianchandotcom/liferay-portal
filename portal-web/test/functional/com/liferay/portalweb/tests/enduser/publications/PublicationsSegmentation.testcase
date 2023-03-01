@@ -199,11 +199,11 @@ definition {
 			entryTitle = "Segments Entry",
 			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
 
-		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "Segments Entry");
+		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "Edited Segment Title");
 
 		PublicationsChanges.discardChanges(
-			changeCategory = "Asset",
-			changeTitle = "Segments Entry",
+			changeCategory = "Segments Entry",
+			changeTitle = "Edited Segment Title",
 			conflictingChanges = "true",
 			entryTitle = "Segments Entry");
 	}

@@ -224,14 +224,68 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12659 | Test Summary: Can sync all contacts"
 	@priority = "5"
 	test CanSyncAllContacts {
-		task ("Click on sync all contacts") {
-			ACDXPSettings.syncContactsData();
+		property analytics.cloud.upstream = "false";
+		property portal.release = "true";
+
+		for (var userName : list "dxp,lxc") {
+			task ("Add user, group and assign user to group") {
+				JSONUser.addUser(
+					userEmailAddress = "${userName}@liferay.com",
+					userFirstName = "${userName}",
+					userLastName = "${userName}",
+					userScreenName = "${userName}");
+			}
+		}
+
+		task ("Connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(contacts = "True");
+		}
+
+		task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
+		}
+
+		task ("Click on Select Contacts") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
 		}
 
 		task ("Check if the toggle was enabled") {
 			ACDXPSettings.assertToggleOnOff(
 				boolean = "true",
 				toggleType = "sync-all-contacts");
+		}
+
+		task ("Interact with the user who belongs to the user group and the user who does not belong") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "dxp@liferay.com,lxc@liferay.com",
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+		}
+
+		task ("Go to Known Individuals tab") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+		}
+
+		task ("Check that users appear in the known individuals list") {
+			ACUtils.searchBar(searchItem = "dxp dxp");
+
+			ACUtils.viewNameList(nameList = "dxp dxp");
+
+			ACUtils.searchBar(searchItem = "lxc lxc");
+
+			ACUtils.viewNameList(nameList = "lxc lxc");
 		}
 	}
 

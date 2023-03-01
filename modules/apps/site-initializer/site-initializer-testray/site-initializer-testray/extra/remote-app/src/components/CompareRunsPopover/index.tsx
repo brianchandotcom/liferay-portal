@@ -27,12 +27,14 @@ import Form from '../Form';
 type CompareRunsPopoverProps = {
 	expanded?: boolean;
 	setVisible: (state: boolean) => void;
+	triggedRef: React.RefObject<HTMLDivElement>;
 	visible: boolean;
 };
 
 const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 	expanded = false,
 	setVisible,
+	triggedRef,
 	visible,
 }) => {
 	const {compareRuns, setRunA, setRunB} = useRuns();
@@ -73,7 +75,11 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 
 	useEffect(() => {
 		const handleClickOutside = (event: any) => {
-			if (ref.current && !ref.current.contains(event.target)) {
+			if (
+				ref.current &&
+				!ref.current.contains(event.target) &&
+				!triggedRef.current?.contains(event.target)
+			) {
 				setVisible(false);
 			}
 		};
@@ -82,7 +88,7 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 
 		return () =>
 			document.removeEventListener('mousedown', handleClickOutside);
-	}, [setVisible]);
+	}, [setVisible, triggedRef]);
 
 	return (
 		<div

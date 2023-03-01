@@ -40,7 +40,7 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 		other: 'others-completed',
 		passed: 'passed',
 		self: 'self-completed',
-		testfix: 'testfix',
+		test_fix: 'test-fix',
 	},
 	totalCompleted,
 }) => {

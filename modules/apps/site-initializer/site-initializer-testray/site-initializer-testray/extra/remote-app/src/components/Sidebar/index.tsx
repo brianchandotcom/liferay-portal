@@ -14,7 +14,7 @@
 
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {STORAGE_KEYS} from '~/core/Storage';
 import {CONSENT_TYPE} from '~/util/enum';
@@ -57,6 +57,8 @@ const Sidebar = () => {
 		</div>
 	);
 
+	const ref = useRef<HTMLDivElement>(null);
+
 	const sidebarItems = [
 		{
 			icon: 'polls',
@@ -77,6 +79,7 @@ const Sidebar = () => {
 						'testray-sidebar-item-normal': !expanded,
 					})}
 					onClick={() => setVisible((show) => !show)}
+					ref={ref}
 				>
 					<Tooltip
 						position="right"
@@ -161,6 +164,7 @@ const Sidebar = () => {
 						<CompareRunsPopover
 							expanded={expanded}
 							setVisible={setVisible}
+							triggedRef={ref}
 							visible={visible}
 						/>
 

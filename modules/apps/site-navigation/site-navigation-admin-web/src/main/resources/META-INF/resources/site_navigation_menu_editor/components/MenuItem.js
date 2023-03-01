@@ -14,7 +14,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
-import {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
+import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
@@ -148,6 +148,10 @@ export function MenuItem({item}) {
 				role="listitem"
 			>
 				<ClayCard
+					aria-label={sub(
+						Liferay.Language.get('select-x'),
+						`${title} (${type})`
+					)}
 					className={classNames(
 						'mb-3 site_navigation_menu_editor_MenuItem',
 						{
@@ -155,91 +159,86 @@ export function MenuItem({item}) {
 							dragging: isDragging,
 						}
 					)}
-					ref={handlerRef}
-					selectable
-					style={itemStyle}
-				>
-					<ClayCheckbox
-						aria-label={sub(
-							Liferay.Language.get('select-x'),
-							`${title} (${type})`
-						)}
-						checked={selected}
-						onChange={() => {
+					onClick={() => {
+						setSelectedMenuItemId(siteNavigationMenuItemId);
+						setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
+					}}
+					onKeyDown={(event) => {
+						if (event.key === ' ' || event.key === 'Enter') {
 							setSelectedMenuItemId(siteNavigationMenuItemId);
 							setSidebarPanelId(
 								SIDEBAR_PANEL_IDS.menuItemSettings
 							);
-						}}
-					>
-						<ClayCard.Body className="px-0">
-							<div ref={handlerRef}>
-								<ClayCard.Row>
-									<ClayLayout.ContentCol gutters>
-										<ClayIcon symbol="drag" />
-									</ClayLayout.ContentCol>
+						}
+					}}
+					ref={handlerRef}
+					selectable
+					style={itemStyle}
+					tabIndex={0}
+				>
+					<ClayCard.Body className="px-0">
+						<div ref={handlerRef}>
+							<ClayCard.Row>
+								<ClayLayout.ContentCol gutters>
+									<ClayIcon symbol="drag" />
+								</ClayLayout.ContentCol>
 
-									<ClayLayout.ContentCol expand>
-										<ClayCard.Description
-											displayType="title"
-											title={title}
+								<ClayLayout.ContentCol expand>
+									<ClayCard.Description
+										displayType="title"
+										title={title}
+									>
+										{title}
+
+										{item.icon && (
+											<ClayIcon
+												className="ml-2 text-warning"
+												symbol={item.icon}
+											/>
+										)}
+									</ClayCard.Description>
+
+									<div className="d-flex">
+										<ClayLabel
+											className="mt-1"
+											displayType="secondary"
 										>
-											{title}
+											{type}
+										</ClayLabel>
 
-											{item.icon && (
-												<ClayIcon
-													className="ml-2 text-warning"
-													symbol={item.icon}
-												/>
-											)}
-										</ClayCard.Description>
-
-										<div className="d-flex">
+										{item.dynamic && (
 											<ClayLabel
 												className="mt-1"
-												displayType="secondary"
+												displayType="info"
 											>
-												{type}
+												{Liferay.Language.get(
+													'dynamic'
+												)}
 											</ClayLabel>
+										)}
+									</div>
+								</ClayLayout.ContentCol>
 
-											{item.dynamic && (
-												<ClayLabel
-													className="mt-1"
-													displayType="info"
-												>
-													{Liferay.Language.get(
-														'dynamic'
-													)}
-												</ClayLabel>
-											)}
-										</div>
-									</ClayLayout.ContentCol>
-
-									<ClayLayout.ContentCol gutters>
-										<ClayButtonWithIcon
-											aria-label={sub(
-												Liferay.Language.get(
-													'delete-x'
-												),
-												`${title} (${type})`
-											)}
-											className="delete-item-button"
-											displayType="unstyled"
-											onClick={() =>
-												item.children.length
-													? setDeletionModalVisible(
-															true
-													  )
-													: deleteMenuItem()
-											}
-											size="sm"
-											symbol="times-circle"
-										/>
-									</ClayLayout.ContentCol>
-								</ClayCard.Row>
-							</div>
-						</ClayCard.Body>
-					</ClayCheckbox>
+								<ClayLayout.ContentCol gutters>
+									<ClayButtonWithIcon
+										aria-label={sub(
+											Liferay.Language.get('delete-x'),
+											`${title} (${type})`
+										)}
+										className="delete-item-button"
+										displayType="unstyled"
+										onClick={() =>
+											item.children.length
+												? setDeletionModalVisible(true)
+												: deleteMenuItem()
+										}
+										size="sm"
+										symbol="times-circle"
+									/>
+								</ClayLayout.ContentCol>
+							</ClayCard.Row>
+						</div>
+					</ClayCard.Body>
 				</ClayCard>
 			</div>
 

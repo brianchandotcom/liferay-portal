@@ -3,6 +3,14 @@
 .site_navigation_menu_editor_MenuItem {
 	width: 40ch;
 
+	&:focus {
+		outline: none;
+
+		.card {
+			box-shadow: 0 0 0 2px $primary-l1;
+		}
+	}
+
 	.delete-item-button {
 		opacity: 0;
 

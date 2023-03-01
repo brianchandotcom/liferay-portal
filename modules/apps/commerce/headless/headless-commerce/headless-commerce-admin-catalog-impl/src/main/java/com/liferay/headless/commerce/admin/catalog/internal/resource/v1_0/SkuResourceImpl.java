@@ -24,7 +24,7 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
-import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.SkuDTOConverter;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.SkuHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.SkuEntityModel;
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -396,8 +397,8 @@ public class SkuResourceImpl
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
 
-	@Reference
-	private SkuDTOConverter _skuDTOConverter;
+	@Reference(target = DTOConverterConstants.SKU_DTO_CONVERTER)
+	private DTOConverter<CPInstance, Sku> _skuDTOConverter;
 
 	@Reference
 	private SkuHelper _skuHelper;

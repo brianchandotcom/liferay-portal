@@ -42,6 +42,11 @@ export default function SearchBar({
 	suggestionsDisplayThreshold = '2',
 	suggestionsURL = '/o/portal-search-rest/v1.0/suggestions',
 }) {
+	const fetchURL = new URL(
+		`${Liferay.ThemeDisplay.getPathContext()}${suggestionsURL}`,
+		Liferay.ThemeDisplay.getPortalURL()
+	);
+
 	const [active, setActive] = useState(false);
 	const [autocompleteSearchValue, setAutocompleteSearchValue] = useState('');
 	const [inputValue, setInputValue] = useState(keywords);
@@ -109,7 +114,7 @@ export default function SearchBar({
 					scope: scopeValue,
 					search: searchValue,
 				},
-				Liferay.ThemeDisplay.getPathContext() + suggestionsURL
+				fetchURL.href
 			),
 			{
 				body: _getSuggestionsContributorConfiguration(),

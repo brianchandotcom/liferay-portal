@@ -304,8 +304,8 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 			Pattern pattern = Pattern.compile(
 				StringBundler.concat(
-					"\n\t*?((_|this\\.)", parameterName, ") =[ \t\n]+",
-					parameterName, ";"));
+					"\n\t*?(_", parameterName, ") =[ \t\n]+", parameterName,
+					";"));
 
 			Matcher matcher = pattern.matcher(content);
 
@@ -315,12 +315,9 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 			String globalVariableName = matcher.group(1);
 
-			if (StringUtil.equals(matcher.group(2), "this.")) {
-				globalVariableName = globalVariableName.substring(5);
-			}
-
 			String globalVariableTypeName = getVariableTypeName(
 				content, fileContent, globalVariableName, true);
+
 			String parameterTypeName = parameter.getParameterType();
 
 			if (!StringUtil.equals(parameterTypeName, globalVariableTypeName)) {

@@ -25,10 +25,10 @@ export default function getActivationStatusDateRange(orderItems) {
 	);
 	const earliestStartDate = new Date(
 		Math.min(...dates.startDates.map((date) => new Date(date)))
-	);
+	).toString();
 	const farthestEndDate = new Date(
 		Math.max(...dates.endDates.map((date) => new Date(date)))
-	);
+	).toString();
 	const activationStatusDateRange = `${getDateCustomFormat(
 		earliestStartDate,
 		FORMAT_DATE_TYPES.day2DMonthSYearN

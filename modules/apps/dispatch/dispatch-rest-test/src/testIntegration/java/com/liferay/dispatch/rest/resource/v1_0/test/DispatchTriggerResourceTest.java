@@ -63,12 +63,12 @@ public class DispatchTriggerResourceTest
 
 	@Override
 	@Test
-	public void testPostDispatchTriggerRun() throws Exception {
-		DispatchTrigger randomDispatchTrigger = randomDispatchTrigger();
+	public void testPostDispatchTriggerRun()
+		throws Exception {
 
-		Long dispatchId = randomDispatchTrigger.getId();
+		DispatchTrigger dispatchTrigger = _addDispatchTrigger(randomDispatchTrigger());
 
-		_addDispatchTrigger(randomDispatchTrigger);
+		long dispatchId = dispatchTrigger.getId();
 
 		dispatchTriggerResource.postDispatchTriggerRun(dispatchId);
 	}

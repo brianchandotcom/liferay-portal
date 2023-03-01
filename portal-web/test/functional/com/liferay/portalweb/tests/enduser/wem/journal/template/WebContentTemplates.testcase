@@ -308,7 +308,7 @@ definition {
 
 			ClickNoError.mouseDownMouseUp(locator1 = "//span[contains(@class,'btn')][normalize-space(text())='Save']/..");
 
-			Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
+			Alert.viewErrorMessage(errorMessage = "The template could not be created because template creation is disabled.");
 		}
 
 		task ("Enable Template Creation") {

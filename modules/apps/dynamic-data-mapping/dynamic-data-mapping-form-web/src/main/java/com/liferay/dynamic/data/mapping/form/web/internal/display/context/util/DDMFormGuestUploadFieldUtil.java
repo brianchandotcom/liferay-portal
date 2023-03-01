@@ -27,12 +27,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -94,18 +92,18 @@ public class DDMFormGuestUploadFieldUtil {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		Collection<DDMFormField> ddmFormFields = ddmFormFieldsMap.values();
+		Optional<DDMFormField> ddmFormFieldOptional = Optional.empty();
 
-		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			if (Objects.equals(ddmFormField.getType(), "document_library") &&
+				GetterUtil.getBoolean(
+					ddmFormField.getProperty("allowGuestUsers"))) {
 
-		Optional<DDMFormField> ddmFormFieldOptional =
-			ddmFormFieldsStream.filter(
-				ddmFormField ->
-					Objects.equals(
-						ddmFormField.getType(), "document_library") &&
-					GetterUtil.getBoolean(
-						ddmFormField.getProperty("allowGuestUsers"))
-			).findFirst();
+				ddmFormFieldOptional = Optional.of(ddmFormField);
+
+				break;
+			}
+		}
 
 		return ddmFormFieldOptional.isPresent();
 	}

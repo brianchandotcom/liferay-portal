@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author David Truong
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
 		"mvc.command.name=/change_tracking/view_ct_collection_templates"

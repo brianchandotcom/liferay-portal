@@ -117,7 +117,7 @@ describe('KeyboardMovementManager', () => {
 
 		document.body.dispatchEvent(
 			new KeyboardEvent('keydown', {
-				keyCode: 38,
+				code: 'ArrowUp',
 			})
 		);
 
@@ -137,7 +137,7 @@ describe('KeyboardMovementManager', () => {
 
 		document.body.dispatchEvent(
 			new KeyboardEvent('keydown', {
-				keyCode: 40,
+				code: 'ArrrwDown',
 			})
 		);
 
@@ -157,7 +157,7 @@ describe('KeyboardMovementManager', () => {
 
 		document.body.dispatchEvent(
 			new KeyboardEvent('keydown', {
-				keyCode: 27,
+				code: 'Escape',
 			})
 		);
 
@@ -175,7 +175,7 @@ describe('KeyboardMovementManager', () => {
 
 		document.body.dispatchEvent(
 			new KeyboardEvent('keydown', {
-				keyCode: 13,
+				code: 'Enter',
 			})
 		);
 

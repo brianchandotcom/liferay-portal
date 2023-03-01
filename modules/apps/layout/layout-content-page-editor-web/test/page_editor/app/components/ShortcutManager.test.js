@@ -54,8 +54,7 @@ describe('ShortcutManager', () => {
 
 		document.body.dispatchEvent(
 			new KeyboardEvent('keydown', {
-				key: '.',
-				keyCode: 190,
+				code: 'Period',
 				metaKey: true,
 				shiftKey: true,
 			})
@@ -85,8 +84,7 @@ describe('ShortcutManager', () => {
 
 		document.body.dispatchEvent(
 			new KeyboardEvent('keydown', {
-				key: '.',
-				keyCode: 190,
+				code: 'Period',
 				metaKey: true,
 				shiftKey: true,
 			})

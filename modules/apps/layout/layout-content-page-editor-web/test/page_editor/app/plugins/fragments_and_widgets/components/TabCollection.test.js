@@ -82,7 +82,7 @@ describe('TabCollection', () => {
 		await fireEvent(
 			firstItem,
 			new KeyboardEvent('keydown', {
-				keyCode: 40,
+				code: 'ArrowDown',
 			})
 		);
 
@@ -102,7 +102,7 @@ describe('TabCollection', () => {
 		await fireEvent(
 			secondItem,
 			new KeyboardEvent('keydown', {
-				keyCode: 38,
+				code: 'ArrowUp',
 			})
 		);
 
@@ -124,7 +124,7 @@ describe('TabCollection', () => {
 		await fireEvent(
 			secondItem,
 			new KeyboardEvent('keydown', {
-				keyCode: 39,
+				code: 'ArrowRight',
 			})
 		);
 
@@ -143,7 +143,7 @@ describe('TabCollection', () => {
 		await fireEvent(
 			firstItem,
 			new KeyboardEvent('keydown', {
-				keyCode: 39,
+				code: 'ArrowRight',
 			})
 		);
 
@@ -162,7 +162,7 @@ describe('TabCollection', () => {
 		await fireEvent(
 			firstItem,
 			new KeyboardEvent('keydown', {
-				keyCode: 37,
+				code: 'ArrowLeft',
 			})
 		);
 

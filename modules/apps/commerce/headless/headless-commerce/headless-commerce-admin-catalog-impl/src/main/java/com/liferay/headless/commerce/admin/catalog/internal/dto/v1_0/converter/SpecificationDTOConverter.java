@@ -17,7 +17,9 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -78,7 +80,8 @@ public class SpecificationDTOConverter
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;
 
-	@Reference
-	private OptionCategoryDTOConverter _optionCategoryDTOConverter;
+	@Reference(target = DTOConverterConstants.OPTION_CATEGORY_DTO_CONVERTER)
+	private DTOConverter<CPOptionCategory, OptionCategory>
+		_optionCategoryDTOConverter;
 
 }

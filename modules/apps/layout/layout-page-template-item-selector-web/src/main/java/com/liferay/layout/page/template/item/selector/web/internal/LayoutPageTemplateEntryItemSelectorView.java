@@ -197,9 +197,9 @@ public class LayoutPageTemplateEntryItemSelectorView
 							_themeDisplay.getPortalURL() +
 								_themeDisplay.getPathMain() +
 									"/portal/get_page_preview",
-							"p_l_mode", Constants.PREVIEW,
-							"segmentsExperienceId", "selPlid",
+							"p_l_mode", Constants.PREVIEW, "selPlid",
 							_layoutPageTemplateEntry.getPlid(),
+							"segmentsExperienceId",
 							_segmentsExperienceLocalService.
 								fetchDefaultSegmentsExperienceId(
 									_layoutPageTemplateEntry.getPlid()));

@@ -57,6 +57,7 @@ interface ObjectActionParameters {
 	relatedObjectEntries?: boolean;
 	script?: string;
 	secret?: string;
+	system?: boolean;
 	url?: string;
 }
 
@@ -343,6 +344,7 @@ interface ObjectDefinitionsRelationship {
 	id: number;
 	label: string;
 	related?: boolean;
+	system?: boolean;
 }
 
 interface ObjectState {

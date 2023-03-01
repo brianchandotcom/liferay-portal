@@ -44,11 +44,11 @@ export async function fetchObjectDefinitions(
 	const unrelatedObjects: LabelValueObject[] = [];
 
 	relationships?.forEach((object) => {
-		const {externalReferenceCode, id, label} = object;
+		const {externalReferenceCode, id, label, system} = object;
 
 		const target = object.related ? relatedObjects : unrelatedObjects;
 
-		target.push({label, value: `${externalReferenceCode},${id}`});
+		target.push({label, value: `${externalReferenceCode},${id},${system}`});
 	});
 
 	const objectsOptionsList: ObjectsOptionsList = [];
@@ -72,18 +72,18 @@ export async function fetchObjectDefinitions(
 export async function fetchObjectDefinitionFields(
 	objectDefinitionId: number,
 	objectDefinitionExternalReferenceCode: string,
+	systemObject: boolean,
 	values: Partial<ObjectAction>,
-	isValidField: ({
-		businessType,
-		objectFieldSettings,
-		system,
-	}: ObjectField) => void,
+	isValidField: (
+		{businessType, name, objectFieldSettings, system}: ObjectField,
+		isObjectActionSystem?: boolean
+	) => boolean,
 	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void,
 	setValues: (values: Partial<ObjectAction>) => void
 ) {
 	let definitionId = objectDefinitionId;
 	let externalReferenceCode = objectDefinitionExternalReferenceCode;
-	let validFields: ObjectField[] = [];
+	const validFields: ObjectField[] = [];
 
 	if (values.objectActionExecutorKey === 'add-object-entry') {
 		definitionId = values?.parameters?.objectDefinitionId as number;
@@ -96,7 +96,11 @@ export async function fetchObjectDefinitionFields(
 			externalReferenceCode
 		);
 
-		validFields = items.filter(isValidField);
+		items.forEach((field) => {
+			if (isValidField(field, systemObject)) {
+				validFields.push(field);
+			}
+		});
 	}
 
 	setCurrentObjectDefinitionFields(validFields);

@@ -19,11 +19,10 @@ import './ThenContainer.scss';
 import {ActionError} from '../..';
 interface ThenContainerProps {
 	errors: ActionError;
-	isValidField: ({
-		businessType,
-		objectFieldSettings,
-		system,
-	}: ObjectField) => boolean;
+	isValidField: (
+		{businessType, name, objectFieldSettings, system}: ObjectField,
+		isObjectActionSystem?: boolean
+	) => boolean;
 	newObjectActionExecutors: CustomItem<string>[];
 	objectActionExecutors: CustomItem[];
 	objectDefinitionExternalReferenceCode: string;

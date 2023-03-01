@@ -26,12 +26,12 @@ export declare function fetchObjectDefinitions(
 export declare function fetchObjectDefinitionFields(
 	objectDefinitionId: number,
 	objectDefinitionExternalReferenceCode: string,
+	systemObject: boolean,
 	values: Partial<ObjectAction>,
-	isValidField: ({
-		businessType,
-		objectFieldSettings,
-		system,
-	}: ObjectField) => void,
+	isValidField: (
+		{businessType, name, objectFieldSettings, system}: ObjectField,
+		isObjectActionSystem?: boolean
+	) => boolean,
 	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void,
 	setValues: (values: Partial<ObjectAction>) => void
 ): Promise<void>;

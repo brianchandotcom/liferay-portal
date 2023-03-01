@@ -36,11 +36,10 @@ import {ActionError} from '../..';
 
 interface ThenContainerProps {
 	errors: ActionError;
-	isValidField: ({
-		businessType,
-		objectFieldSettings,
-		system,
-	}: ObjectField) => boolean;
+	isValidField: (
+		{businessType, name, objectFieldSettings, system}: ObjectField,
+		isObjectActionSystem?: boolean
+	) => boolean;
 	newObjectActionExecutors: CustomItem<string>[];
 	objectActionExecutors: CustomItem[];
 	objectDefinitionExternalReferenceCode: string;
@@ -136,6 +135,7 @@ export function ThenContainer({
 			fetchObjectDefinitionFields(
 				objectDefinitionId,
 				objectDefinitionExternalReferenceCode,
+				systemObject,
 				values,
 				isValidField,
 				setCurrentObjectDefinitionFields,

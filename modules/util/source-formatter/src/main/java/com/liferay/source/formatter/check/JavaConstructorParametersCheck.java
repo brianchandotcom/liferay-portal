@@ -88,8 +88,12 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				break;
 			}
 
-			if (followingCode.startsWith(".get") ||
-				followingCode.startsWith(".is")) {
+			if (followingCode.startsWith(".")) {
+				if (!followingCode.startsWith(".get") &&
+					!followingCode.startsWith(".is")) {
+
+					break;
+				}
 
 				return StringUtil.replaceFirst(
 					content, globalVariableName, parameterName, start);

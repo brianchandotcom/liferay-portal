@@ -14,12 +14,12 @@
 
 import {debounce, openSelectionModal} from 'frontend-js-web';
 
+import {SPACE_KEY_CODE} from '../config/constants/keyboardCodes';
 import {config} from '../config/index';
 import isNullOrUndefined from '../utils/isNullOrUndefined';
 
-const KEY_ENTER = 13;
-const KEY_SPACE = 32;
-const KEY_SHIFT_ENTER = (window.CKEDITOR?.SHIFT ?? 0) + KEY_ENTER;
+const ENTER_KEYCODE = 13;
+const SHIFT_ENTER_KEYCODE = (window.CKEDITOR?.SHIFT ?? 0) + ENTER_KEYCODE;
 
 const defaultGetEditorWrapper = (element) => {
 	const wrapper = document.createElement('div');
@@ -38,7 +38,7 @@ const defaultRender = (element, value) => {
 };
 
 const keyupHandler = (event) => {
-	if (event.keyCode === KEY_SPACE) {
+	if (event.code === SPACE_KEY_CODE) {
 		event.preventDefault();
 	}
 };
@@ -165,8 +165,8 @@ export default function getAlloyEditorProcessor(
 				},
 				nativeEditor.on('key', (event) => {
 					if (
-						(event.data.keyCode === KEY_ENTER ||
-							event.data.keyCode === KEY_SHIFT_ENTER) &&
+						(event.data.keyCode === ENTER_KEYCODE ||
+							event.data.keyCode === SHIFT_ENTER_KEYCODE) &&
 						_element &&
 						(_element.getAttribute('type') === 'text' ||
 							_element.dataset.lfrEditableType === 'text')

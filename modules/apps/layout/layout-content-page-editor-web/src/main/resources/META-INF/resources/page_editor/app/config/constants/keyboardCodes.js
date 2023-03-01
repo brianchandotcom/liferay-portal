@@ -36,6 +36,8 @@ export const PERIOD_KEY_CODE = 'Period';
 
 export const S_KEY_CODE = 'KeyS';
 
+export const SPACE_KEY_CODE = 'Space';
+
 export const TAB_KEY_CODE = 'Tab';
 
 export const Z_KEY_CODE = 'KeyZ';

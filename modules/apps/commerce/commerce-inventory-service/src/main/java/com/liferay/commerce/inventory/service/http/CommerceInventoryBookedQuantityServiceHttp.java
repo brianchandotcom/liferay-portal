@@ -97,6 +97,52 @@ public class CommerceInventoryBookedQuantityServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity>
+				getCommerceInventoryBookedQuantities(
+					HttpPrincipal httpPrincipal, long companyId,
+					String keywords, String sku, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceInventoryBookedQuantityServiceUtil.class,
+				"getCommerceInventoryBookedQuantities",
+				_getCommerceInventoryBookedQuantitiesParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, keywords, sku, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.inventory.model.
+					CommerceInventoryBookedQuantity>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static int getCommerceInventoryBookedQuantitiesCount(
 			HttpPrincipal httpPrincipal, long companyId, String sku)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
@@ -105,7 +151,7 @@ public class CommerceInventoryBookedQuantityServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryBookedQuantityServiceUtil.class,
 				"getCommerceInventoryBookedQuantitiesCount",
-				_getCommerceInventoryBookedQuantitiesCountParameterTypes1);
+				_getCommerceInventoryBookedQuantitiesCountParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, sku);
@@ -139,6 +185,48 @@ public class CommerceInventoryBookedQuantityServiceHttp {
 		}
 	}
 
+	public static int getCommerceInventoryBookedQuantitiesCount(
+			HttpPrincipal httpPrincipal, long companyId, String keywords,
+			String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceInventoryBookedQuantityServiceUtil.class,
+				"getCommerceInventoryBookedQuantitiesCount",
+				_getCommerceInventoryBookedQuantitiesCountParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, keywords, sku);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		CommerceInventoryBookedQuantityServiceHttp.class);
 
@@ -147,7 +235,14 @@ public class CommerceInventoryBookedQuantityServiceHttp {
 			long.class, String.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getCommerceInventoryBookedQuantitiesCountParameterTypes1 =
+		_getCommerceInventoryBookedQuantitiesParameterTypes1 = new Class[] {
+			long.class, String.class, String.class, int.class, int.class
+		};
+	private static final Class<?>[]
+		_getCommerceInventoryBookedQuantitiesCountParameterTypes2 =
 			new Class[] {long.class, String.class};
+	private static final Class<?>[]
+		_getCommerceInventoryBookedQuantitiesCountParameterTypes3 =
+			new Class[] {long.class, String.class, String.class};
 
 }

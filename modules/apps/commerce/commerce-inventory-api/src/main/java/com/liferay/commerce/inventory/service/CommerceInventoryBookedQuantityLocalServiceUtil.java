@@ -285,6 +285,15 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 			companyId, sku, start, end);
 	}
 
+	public static List<CommerceInventoryBookedQuantity>
+			getCommerceInventoryBookedQuantities(
+				long companyId, String keywords, String sku, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceInventoryBookedQuantities(
+			companyId, keywords, sku, start, end);
+	}
+
 	/**
 	 * Returns the number of commerce inventory booked quantities.
 	 *
@@ -299,6 +308,14 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 
 		return getService().getCommerceInventoryBookedQuantitiesCount(
 			companyId, sku);
+	}
+
+	public static int getCommerceInventoryBookedQuantitiesCount(
+			long companyId, String keywords, String sku)
+		throws PortalException {
+
+		return getService().getCommerceInventoryBookedQuantitiesCount(
+			companyId, keywords, sku);
 	}
 
 	/**
@@ -361,6 +378,25 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 
 		return getService().restockCommerceInventoryBookedQuantity(
 			userId, commerceInventoryBookedQuantityId, context);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<CommerceInventoryBookedQuantity>
+				searchCommerceInventoryBookedQuantities(
+					com.liferay.portal.kernel.search.SearchContext
+						searchContext)
+			throws PortalException {
+
+		return getService().searchCommerceInventoryBookedQuantities(
+			searchContext);
+	}
+
+	public static int searchCommerceInventoryBookedQuantitiesCount(
+			com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws PortalException {
+
+		return getService().searchCommerceInventoryBookedQuantitiesCount(
+			searchContext);
 	}
 
 	/**

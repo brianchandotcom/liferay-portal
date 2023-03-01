@@ -22,11 +22,9 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +48,36 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ObjectFieldNotificationTemplateTermsMVCResourceCommand
 	extends BaseNotificationTemplateTermsMVCResourceCommand {
+
+	public enum AuthorTerm {
+
+		AUTHOR_EMAIL("author-email-address", "CREATOR_EMAIL"),
+		AUTHOR_FIRST_NAME("author-first-name", "CREATOR_FIRSTNAME"),
+		AUTHOR_ID("author-id", "CREATOR_ID"),
+		AUTHOR_LAST_NAME("author-last-name", "CREATOR_LASTNAME"),
+		AUTHOR_MIDDLE_NAME("author-middle-name", "CREATOR_MIDDLENAME"),
+		AUTHOR_PREFIX("author-prefix", "CREATOR_PREFIX"),
+		AUTHOR_SUFFIX("author-suffix", "CREATOR_SUFFIX");
+
+		public static Map<String, String> getTermMap() {
+			Map<String, String> map = new LinkedHashMap<>();
+
+			for (AuthorTerm authorTerm : values()) {
+				map.put(authorTerm._key, authorTerm._name);
+			}
+
+			return map;
+		}
+
+		private AuthorTerm(String key, String name) {
+			_key = key;
+			_name = name;
+		}
+
+		private final String _key;
+		private final String _name;
+
+	}
 
 	@Override
 	protected void doServeResource(
@@ -78,7 +106,7 @@ public class ObjectFieldNotificationTemplateTermsMVCResourceCommand
 			if (StringUtil.equals(objectField.getName(), "creator") &&
 				FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
 
-				termValues.putAll(_creatorTermValues);
+				termValues.putAll(AuthorTerm.getTermMap());
 			}
 			else {
 				termValues.put(
@@ -95,24 +123,6 @@ public class ObjectFieldNotificationTemplateTermsMVCResourceCommand
 		return ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
 			_objectDefinition.getShortName(), value);
 	}
-
-	private static final Map<String, String> _creatorTermValues =
-		Collections.unmodifiableMap(
-			LinkedHashMapBuilder.put(
-				"author-email-address", "CREATOR_EMAIL"
-			).put(
-				"author-first-name", "CREATOR_FIRSTNAME"
-			).put(
-				"author-id", "CREATOR_ID"
-			).put(
-				"author-last-name", "CREATOR_LASTNAME"
-			).put(
-				"author-middle-name", "CREATOR_MIDDLENAME"
-			).put(
-				"author-prefix", "CREATOR_PREFIX"
-			).put(
-				"author-suffix", "CREATOR_SUFFIX"
-			).build());
 
 	private ObjectDefinition _objectDefinition;
 

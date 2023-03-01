@@ -32,9 +32,9 @@ import org.gradle.api.tasks.Input;
 /**
  * @author Seiphon Wang
  */
-public class DockerFindDanglingImage extends AbstractDockerRemoteApiTask {
+public class DockerListImage extends AbstractDockerRemoteApiTask {
 
-	public DockerFindDanglingImage() {
+	public DockerListImage() {
 		Project project = getProject();
 
 		ObjectFactory objectFactory = project.getObjects();
@@ -42,6 +42,8 @@ public class DockerFindDanglingImage extends AbstractDockerRemoteApiTask {
 		_imageIdProperty = objectFactory.property(String.class);
 
 		_imagesProperty = objectFactory.listProperty(Image.class);
+
+		_withDanglingFilter = objectFactory.property(Boolean.class);
 
 		Action<Image> action = new Action<Image>() {
 
@@ -67,7 +69,7 @@ public class DockerFindDanglingImage extends AbstractDockerRemoteApiTask {
 
 		ListImagesCmd listImagesCmd = dockerClient.listImagesCmd();
 
-		listImagesCmd.withDanglingFilter(true);
+		listImagesCmd.withDanglingFilter(_withDanglingFilter.getOrElse(true));
 
 		if (getNextHandler() != null) {
 			List<Image> images = listImagesCmd.exec();
@@ -78,10 +80,17 @@ public class DockerFindDanglingImage extends AbstractDockerRemoteApiTask {
 		}
 	}
 
+	public boolean withDanglingFilter() {
+		return _withDanglingFilter.get();
+	}
+
 	@Input
 	private Property<String> _imageIdProperty;
 
 	@Input
 	private ListProperty<Image> _imagesProperty;
+
+	@Input
+	private Property<Boolean> _withDanglingFilter;
 
 }

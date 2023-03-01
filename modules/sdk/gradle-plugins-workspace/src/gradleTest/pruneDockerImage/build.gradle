@@ -1,11 +1,11 @@
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
-import com.liferay.gradle.plugins.workspace.docker.DockerFindDanglingImage
+import com.liferay.gradle.plugins.workspace.docker.DockerListImage
 
-task buildImage(type: DockerFindDanglingImage)
+task buildImage(type: DockerListImage)
 task buildImageOne(type: DockerBuildImage)
 task buildImageTwo(type: DockerBuildImage)
-task checkDanglingImage(type: DockerFindDanglingImage)
+task checkDanglingImage(type: DockerListImage)
 task pruneDanglingImage
 task runGradleTest
 
@@ -20,6 +20,7 @@ buildImage {
 
 	doLast {
 		imageId = buildImageOne.getImageId().get()
+
 	}
 
 	finalizedBy buildImageTwo
@@ -44,6 +45,7 @@ buildImageOne {
 		assert inputDirFileNames.contains("patching")
 		assert inputDirFileNames.contains("scripts")
 		assert inputDirFileNames.contains("work")
+
 	}
 }
 
@@ -66,6 +68,7 @@ buildImageTwo {
 		assert inputDirFileNames.contains("patching")
 		assert inputDirFileNames.contains("scripts")
 		assert inputDirFileNames.contains("work")
+
 	}
 }
 
@@ -78,6 +81,7 @@ pruneDanglingImage {
 
 	doFirst {
 		assert buildImage.getImages().toString().contains(imageId)
+
 	}
 
 	finalizedBy pruneDockerImage
@@ -88,6 +92,7 @@ runGradleTest {
 
 	doLast {
 		assert !checkDanglingImage.getImages().toString().contains(imageId)
+
 	}
 
 	finalizedBy cleanDockerImage

@@ -44,7 +44,8 @@ const useStorage = <T = string>(
 			storageValue = storage.getItem(key, consentType);
 
 			return storageValue ? JSON.parse(storageValue) : initialValue;
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 
 			return storageValue || initialValue;
@@ -57,7 +58,8 @@ const useStorage = <T = string>(
 				setStoredValue(value);
 
 				storage.setItem(key, JSON.stringify(value), consentType);
-			} catch (error) {
+			}
+			catch (error) {
 				console.error(error);
 			}
 		},

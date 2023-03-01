@@ -43,6 +43,8 @@ public class DockerPruneImage extends DockerExistingImage {
 
 		PruneCmd pruneCmd = dockerClient.pruneCmd(PruneType.IMAGES);
 
+		pruneCmd = pruneCmd.withDangling(true);
+
 		pruneCmd.exec();
 	}
 

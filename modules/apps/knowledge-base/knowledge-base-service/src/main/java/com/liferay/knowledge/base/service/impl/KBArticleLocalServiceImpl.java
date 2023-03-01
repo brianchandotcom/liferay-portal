@@ -517,8 +517,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		kbArticle = kbArticleLocalService.updateKBArticle(kbArticle);
 
-		serviceContext.setCommand(Constants.EXPIRE);
-
 		// Asset
 
 		updateKBArticleAsset(
@@ -1482,10 +1480,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
-			KBArticle.class);
-
-		indexer.reindex(kbArticle);
+		_indexKBArticle(kbArticle);
 
 		// Subscriptions
 

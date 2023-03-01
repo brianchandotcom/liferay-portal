@@ -172,11 +172,11 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterColumnNameNonexistedColumn() throws Exception {
+	public void testAlterColumnNameNonexistentColumn() throws Exception {
 		try {
 			alterColumnName(
-				_TABLE_NAME, "nonexistedColumn",
-				"newNonexistedColumn LONG null");
+				_TABLE_NAME, "nonexistentColumn",
+				"newNonexistentColumn LONG null");
 
 			Assert.fail();
 		}
@@ -184,7 +184,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 		}
 
 		Assert.assertFalse(
-			_dbInspector.hasColumn(_TABLE_NAME, "nonexistedColumn"));
+			_dbInspector.hasColumn(_TABLE_NAME, "nonexistentColumn"));
 	}
 
 	@Test
@@ -266,9 +266,9 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterColumnTypeNonexistedColumn() throws Exception {
+	public void testAlterColumnTypeNonexistentColumn() throws Exception {
 		try {
-			alterColumnType(_TABLE_NAME, "nonexistedColumn", "TEXT not null");
+			alterColumnType(_TABLE_NAME, "nonexistentColumn", "TEXT not null");
 
 			Assert.fail();
 		}
@@ -277,7 +277,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 		Assert.assertFalse(
 			_dbInspector.hasColumnType(
-				_TABLE_NAME, "nonexistedColumn", "TEXT not null"));
+				_TABLE_NAME, "nonexistentColumn", "TEXT not null"));
 	}
 
 	@Test
@@ -405,8 +405,8 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
-	public void testAlterTableDropNonexistedColumn() throws Exception {
-		alterTableDropColumn(_TABLE_NAME, "nonexistedColumn");
+	public void testAlterTableDropNonexistentColumn() throws Exception {
+		alterTableDropColumn(_TABLE_NAME, "nonexistentColumn");
 	}
 
 	@Test

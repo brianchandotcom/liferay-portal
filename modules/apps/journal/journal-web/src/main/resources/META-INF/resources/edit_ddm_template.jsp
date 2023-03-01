@@ -67,9 +67,6 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 		</clay:container-fluid>
 	</nav>
 
-	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
-	<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
-
 	<c:if test="<%= (ddmTemplate != null) && (journalEditDDMTemplateDisplayContext.getGroupId() != scopeGroupId) %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />

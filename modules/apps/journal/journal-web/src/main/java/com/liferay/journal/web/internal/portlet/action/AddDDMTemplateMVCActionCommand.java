@@ -16,6 +16,8 @@ package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.exception.TemplateCreationDisabledException;
+import com.liferay.dynamic.data.mapping.exception.TemplateNameException;
+import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
@@ -125,6 +127,14 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 				message =
 					"the-template-could-not-be-created-because-template-" +
 						"creation-is-disabled";
+			}
+
+			if (portalException instanceof TemplateNameException) {
+				message = "please-enter-a-valid-name";
+			}
+
+			if (portalException instanceof TemplateScriptException) {
+				message = "please-enter-a-valid-script";
 			}
 
 			if (message == null) {

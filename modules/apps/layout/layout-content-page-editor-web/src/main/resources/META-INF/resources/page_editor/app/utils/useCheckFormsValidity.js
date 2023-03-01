@@ -218,6 +218,8 @@ async function checkUnmappedInputChild(
 		}
 
 		addError(validations, form, FORM_ERROR_TYPES.missingFragments);
+
+		break;
 	}
 }
 

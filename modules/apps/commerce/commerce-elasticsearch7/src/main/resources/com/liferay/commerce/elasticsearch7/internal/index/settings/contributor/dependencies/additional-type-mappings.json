@@ -119,6 +119,10 @@
 					"analyzer": "1_10_ngram",
 					"type": "text"
 				},
+				"raw": {
+					"store": true,
+					"type": "keyword"
+				},
 				"reverse": {
 					"analyzer": "reverse_keyword_lowercase",
 					"type": "text"

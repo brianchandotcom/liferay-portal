@@ -51,12 +51,34 @@ public class CommerceInventoryBookedQuantityServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity>
+				getCommerceInventoryBookedQuantities(
+					long companyId, String keywords, String sku, int start,
+					int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryBookedQuantityService.
+			getCommerceInventoryBookedQuantities(
+				companyId, keywords, sku, start, end);
+	}
+
+	@Override
 	public int getCommerceInventoryBookedQuantitiesCount(
 			long companyId, String sku)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return _commerceInventoryBookedQuantityService.
 			getCommerceInventoryBookedQuantitiesCount(companyId, sku);
+	}
+
+	@Override
+	public int getCommerceInventoryBookedQuantitiesCount(
+			long companyId, String keywords, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryBookedQuantityService.
+			getCommerceInventoryBookedQuantitiesCount(companyId, keywords, sku);
 	}
 
 	/**

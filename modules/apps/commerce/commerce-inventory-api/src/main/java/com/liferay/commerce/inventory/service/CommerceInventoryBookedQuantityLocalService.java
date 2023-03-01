@@ -24,8 +24,10 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -64,6 +66,7 @@ public interface CommerceInventoryBookedQuantityLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryBookedQuantityLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce inventory booked quantity local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceInventoryBookedQuantityLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceInventoryBookedQuantity addCommerceBookedQuantity(
 			long userId, String sku, int quantity, Date expirationDate,
 			Map<String, String> context)
@@ -247,6 +250,12 @@ public interface CommerceInventoryBookedQuantityLocalService
 		getCommerceInventoryBookedQuantities(
 			long companyId, String sku, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceInventoryBookedQuantity>
+			getCommerceInventoryBookedQuantities(
+				long companyId, String keywords, String sku, int start, int end)
+		throws PortalException;
+
 	/**
 	 * Returns the number of commerce inventory booked quantities.
 	 *
@@ -258,6 +267,11 @@ public interface CommerceInventoryBookedQuantityLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceInventoryBookedQuantitiesCount(
 		long companyId, String sku);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceInventoryBookedQuantitiesCount(
+			long companyId, String keywords, String sku)
+		throws PortalException;
 
 	/**
 	 * Returns the commerce inventory booked quantity with the primary key.
@@ -300,6 +314,16 @@ public interface CommerceInventoryBookedQuantityLocalService
 				Map<String, String> context)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceInventoryBookedQuantity>
+			searchCommerceInventoryBookedQuantities(SearchContext searchContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCommerceInventoryBookedQuantitiesCount(
+			SearchContext searchContext)
+		throws PortalException;
+
 	/**
 	 * Updates the commerce inventory booked quantity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -315,6 +339,7 @@ public interface CommerceInventoryBookedQuantityLocalService
 		updateCommerceInventoryBookedQuantity(
 			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceInventoryBookedQuantity
 			updateCommerceInventoryBookedQuantity(
 				long userId, long commerceInventoryBookedQuantityId,

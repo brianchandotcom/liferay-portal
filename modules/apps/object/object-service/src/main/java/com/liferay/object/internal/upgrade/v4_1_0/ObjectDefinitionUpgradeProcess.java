@@ -28,6 +28,9 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 		runSQL(
 			"update ObjectDefinition set modifiable = [$TRUE$] where system_ " +
 				"= [$FALSE$]");
+		runSQL(
+			"update ObjectDefinition set modifiable = [$FALSE$] where " +
+				"system_ = [$TRUE$]");
 	}
 
 	@Override

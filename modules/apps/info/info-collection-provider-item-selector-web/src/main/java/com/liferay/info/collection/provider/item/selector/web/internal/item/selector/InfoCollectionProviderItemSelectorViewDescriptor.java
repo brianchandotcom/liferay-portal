@@ -142,16 +142,9 @@ public class InfoCollectionProviderItemSelectorViewDescriptor
 		if (Validator.isNotNull(itemType)) {
 			infoCollectionProviders = ListUtil.filter(
 				infoCollectionProviders,
-				infoCollectionProvider -> {
-					if (Objects.equals(
-							infoCollectionProvider.getCollectionItemClassName(),
-							itemType)) {
-
-						return true;
-					}
-
-					return false;
-				});
+				infoCollectionProvider -> Objects.equals(
+					infoCollectionProvider.getCollectionItemClassName(),
+					itemType));
 		}
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
@@ -164,11 +157,7 @@ public class InfoCollectionProviderItemSelectorViewDescriptor
 						infoCollectionProvider.getLabel(
 							_themeDisplay.getLocale()));
 
-					if (label.contains(StringUtil.toLowerCase(keywords))) {
-						return true;
-					}
-
-					return false;
+					return label.contains(StringUtil.toLowerCase(keywords));
 				});
 		}
 

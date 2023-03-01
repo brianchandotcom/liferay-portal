@@ -143,17 +143,10 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 		if (Validator.isNotNull(_getSelectedItemType())) {
 			relatedInfoItemCollectionProviders = ListUtil.filter(
 				relatedInfoItemCollectionProviders,
-				relatedInfoItemCollectionProvider -> {
-					if (Objects.equals(
-							relatedInfoItemCollectionProvider.
-								getCollectionItemClassName(),
-							_getSelectedItemType())) {
-
-						return true;
-					}
-
-					return false;
-				});
+				relatedInfoItemCollectionProvider -> Objects.equals(
+					relatedInfoItemCollectionProvider.
+						getCollectionItemClassName(),
+					_getSelectedItemType()));
 		}
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
@@ -166,11 +159,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 						relatedInfoItemCollectionProvider.getLabel(
 							_themeDisplay.getLocale()));
 
-					if (label.contains(StringUtil.toLowerCase(keywords))) {
-						return true;
-					}
-
-					return false;
+					return label.contains(StringUtil.toLowerCase(keywords));
 				});
 		}
 

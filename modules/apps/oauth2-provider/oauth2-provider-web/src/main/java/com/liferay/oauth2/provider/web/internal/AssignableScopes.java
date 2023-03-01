@@ -225,7 +225,7 @@ public class AssignableScopes {
 	}
 
 	private final ApplicationDescriptorLocator _applicationDescriptorLocator;
-	private Set<LiferayOAuth2Scope> _liferayOAuth2Scopes = new HashSet<>();
+	private final Set<LiferayOAuth2Scope> _liferayOAuth2Scopes;
 	private final Locale _locale;
 	private final ScopeDescriptorLocator _scopeDescriptorLocator;
 

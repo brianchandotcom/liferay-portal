@@ -281,21 +281,19 @@ public class AssignScopesDisplayContext
 	public Map<AssignableScopes, Relations>
 		getGlobalAssignableScopesRelations() {
 
-		Map<AssignableScopes, Relations> assignableScopesRelationss =
+		Map<AssignableScopes, Relations> assignableScopesRelations =
 			new HashMap<>();
 
 		for (Set<AssignableScopes> assignableScopess :
 				_globalAssignableScopesByApplicationName.values()) {
 
-			assignableScopesRelationss.putAll(
+			assignableScopesRelations.putAll(
 				HashMapBuilder.put(
-					assignableScopess,
-					assignableScopes -> _assignableScopesRelations.get(
-						assignableScopes)
+					assignableScopess, _assignableScopesRelations::get
 				).build());
 		}
 
-		return assignableScopesRelationss;
+		return assignableScopesRelations;
 	}
 
 	public List<Map.Entry<String, String>>
@@ -389,7 +387,8 @@ public class AssignScopesDisplayContext
 
 		private AssignableScopes _assignedAssignableScopes;
 		private Set<String> _assignedScopeAliases;
-		private Set<AssignableScopes> _globalAssignableScopes = new HashSet<>();
+		private final Set<AssignableScopes> _globalAssignableScopes =
+			new HashSet<>();
 		private final Set<String> _scopeAliases;
 
 	}
@@ -398,8 +397,7 @@ public class AssignScopesDisplayContext
 		Set<AssignableScopes> assignableScopes) {
 
 		return HashMapBuilder.put(
-			assignableScopes,
-			assignableScope -> _assignableScopesRelations.get(assignableScope)
+			assignableScopes, _assignableScopesRelations::get
 		).build();
 	}
 

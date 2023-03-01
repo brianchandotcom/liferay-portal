@@ -58,13 +58,6 @@ public class AccountCategoryForecastDTOConverter
 					assetCategoryCommerceMLForecast.getCommerceAccountId();
 				actual = assetCategoryCommerceMLForecast.getActual();
 				category = assetCategoryCommerceMLForecast.getAssetCategoryId();
-
-				if (assetCategory != null) {
-					categoryTitle = assetCategory.getTitle(
-						LocaleUtil.toLanguageId(
-							dtoConverterContext.getLocale()));
-				}
-
 				forecast = assetCategoryCommerceMLForecast.getForecast();
 				forecastLowerBound =
 					assetCategoryCommerceMLForecast.getForecastLowerBound();
@@ -72,6 +65,17 @@ public class AccountCategoryForecastDTOConverter
 					assetCategoryCommerceMLForecast.getForecastUpperBound();
 				timestamp = assetCategoryCommerceMLForecast.getTimestamp();
 				unit = assetCategoryCommerceMLForecast.getTarget();
+
+				setCategoryTitle(
+					() -> {
+						if (assetCategory == null) {
+							return null;
+						}
+
+						return assetCategory.getTitle(
+							LocaleUtil.toLanguageId(
+								dtoConverterContext.getLocale()));
+					});
 			}
 		};
 	}

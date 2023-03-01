@@ -26,7 +26,6 @@ import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Pin;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
-import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.PinDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.MappedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.PinUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.PinResource;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -285,8 +285,10 @@ public class PinResourceImpl
 	@Reference
 	private CSDiagramPinService _csDiagramPinService;
 
-	@Reference
-	private PinDTOConverter _pinDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.PinDTOConverter)"
+	)
+	private DTOConverter<CSDiagramEntry, Pin> _pinDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

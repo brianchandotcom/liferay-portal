@@ -43,6 +43,14 @@ definition {
 		}
 	}
 
+	macro addTR2Site {
+		Site.openSitesAdmin();
+
+		Site.addSiteTemplateCP(
+			siteName = ${siteName},
+			siteTemplateName = "Liferay Site Initializer Testray");
+	}
+
 	macro assertItemName {
 		AssertElementPresent(
 			key_projectName = ${key_name},

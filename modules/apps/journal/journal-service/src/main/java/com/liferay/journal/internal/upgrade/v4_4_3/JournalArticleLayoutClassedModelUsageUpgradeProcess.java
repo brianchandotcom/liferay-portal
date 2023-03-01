@@ -17,12 +17,9 @@ package com.liferay.journal.internal.upgrade.v4_4_3;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -33,9 +30,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -227,41 +221,34 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
 				StringBundler.concat(
-					"select privateLayout, layoutId, portletId from ",
-					"JournalContentSearch where groupId = ", groupId,
-					" and articleId = '", articleId, StringPool.APOSTROPHE),
+					"select Layout.plid, JournalContentSearch.portletId from ",
+					"JournalContentSearch inner join Layout on ",
+					"Layout.privateLayout = ",
+					"JournalContentSearch.privateLayout and Layout.layoutId = ",
+					"JournalContentSearch.layoutId and Layout.groupId = ",
+					groupId, " where JournalContentSearch.groupId = ", groupId,
+					" and JournalContentSearch.articleId = '", articleId,
+					"' and not exists (select 1 from LayoutClassedModelUsage ",
+					"where LayoutClassedModelUsage.classPK = ", classPK,
+					" and LayoutClassedModelUsage.classNameId = ",
+					journalArticleClassNameId,
+					" and LayoutClassedModelUsage.containerKey = ",
+					"JournalContentSearch.portletId and ",
+					"LayoutClassedModelUsage.containerType = ",
+					portletClassNameId,
+					" and LayoutClassedModelUsage.plid = Layout.plid)"),
 				resultSet -> new Object[] {
-					resultSet.getBoolean("privateLayout"),
-					resultSet.getLong("layoutId"),
+					resultSet.getLong("plid"),
 					GetterUtil.getString(resultSet.getString("portletId"))
 				},
 				values -> {
-					boolean privateLayout = (Boolean)values[0];
-					long layoutId = (Long)values[1];
-
-					Layout layout = _layoutLocalService.fetchLayout(
-						groupId, privateLayout, layoutId);
-
-					if (layout == null) {
-						return;
-					}
-
-					String portletId = (String)values[2];
-
-					LayoutClassedModelUsage layoutClassedModelUsage =
-						_layoutClassedModelUsageLocalService.
-							fetchLayoutClassedModelUsage(
-								journalArticleClassNameId, classPK, portletId,
-								portletClassNameId, layout.getPlid());
-
-					if (layoutClassedModelUsage != null) {
-						return;
-					}
+					long plid = (Long)values[0];
+					String portletId = (String)values[1];
 
 					_layoutClassedModelUsageLocalService.
 						addLayoutClassedModelUsage(
 							groupId, journalArticleClassNameId, classPK,
-							portletId, portletClassNameId, layout.getPlid(),
+							portletId, portletClassNameId, plid,
 							serviceContext);
 				},
 				"Unable to create journal content search layout classed " +

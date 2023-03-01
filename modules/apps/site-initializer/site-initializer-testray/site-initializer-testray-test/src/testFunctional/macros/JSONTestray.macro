@@ -54,3 +54,34 @@ definition {
 			teamId = ${teamId});
 	}
 
+	macro addEnvironmentFactors {
+		Variables.assertDefined(parameterList = "${environmentFactorsName}");
+
+		if (!(isSet(optionsName))) {
+			var optionsName = "Option 1";
+		}
+
+		if (!(isSet(categoryName))) {
+			var categoryName = "Category 1";
+		}
+
+		if (!(isSet(routineName))) {
+			var routineName = "Routine 1";
+		}
+
+		JSONTestray.addFactorCategory(categoryName = ${categoryName});
+
+		var factorCategoryId = JSONTestraySetter.getFactorCategoryId(categoryName = ${categoryName});
+
+		JSONTestray.addFactorOptions(
+			optionsName = ${optionsName},
+			factorCategoryId = ${factorCategoryId});
+
+		var factorOptionsId = JSONTestraySetter.getFactorOptionsId(optionsName = ${optionsName});
+		var routineId = JSONTestraySetter.getRoutineId(routineName = ${routineName});
+		var environmentFactorsId = JSONTestrayAPI.createEnvironmentFactorsAPI(
+			environmentFactorsName = ${environmentFactorsName},
+			factorCategoryId = ${factorCategoryId},
+			factorOptionsId = ${factorOptionsId},
+			routineId = ${routineId});
+	}

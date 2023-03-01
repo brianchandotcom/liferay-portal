@@ -7,6 +7,7 @@ Import-Package:\
 	\
 	*
 Main-Class: com.liferay.portal.tools.rest.builder.RESTBuilder
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore
 -includeresource:\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncStringReader.class,\
 	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\

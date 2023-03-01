@@ -79,9 +79,6 @@ public class LayoutActionProvider {
 		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
 			(PortletRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST));
-		_namespace = PortalUtil.getPortletNamespace(
-			ProductNavigationProductMenuPortletKeys.
-				PRODUCT_NAVIGATION_PRODUCT_MENU);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -543,9 +540,13 @@ public class LayoutActionProvider {
 		String pageTypeSelectedOption =
 			ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT;
 
+		String namespace = PortalUtil.getPortletNamespace(
+			ProductNavigationProductMenuPortletKeys.
+				PRODUCT_NAVIGATION_PRODUCT_MENU);
+
 		String pageTypeSelectedOptionSessionValue = SessionClicks.get(
 			_httpServletRequest,
-			_namespace +
+			namespace +
 				ProductNavigationProductMenuWebKeys.PAGE_TYPE_SELECTED_OPTION,
 			ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT);
 
@@ -701,7 +702,6 @@ public class LayoutActionProvider {
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private final String _namespace;
 	private String _pageTypeSelectedOption;
 	private String _redirect;
 	private final SiteNavigationMenuLocalService

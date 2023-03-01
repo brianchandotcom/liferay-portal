@@ -2937,6 +2937,46 @@ definition {
 		}
 	}
 
+	@description = "LPS-164948 - Verify that Formula fields can't be required"
+	@priority = 4
+	test FormulaFieldsIsNotMandatory {
+		property custom.properties = "feature.flag.LPS-164948=true";
+
+		task ("Given: an Object with formula field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 176829 ",
+				objectName = "CustomObject176829",
+				pluralLabelName = "Custom Objects 176829");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 176829");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Formula 176829",
+				fieldType = "Formula",
+				formulaFieldOption = "Decimal");
+		}
+
+		task ("When: view the formula field details (mandatory option is unavailable)") {
+			ObjectAdmin.goToFieldsDetails(label = "Custom Formula 176829");
+
+			AssertElementNotPresent(locator1 = "ObjectField#MANDATORY_TOGGLE");
+		}
+
+		task ("Then: assert that is the entry is not required") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject176829");
+
+			LexiconEntry.gotoAdd();
+
+			AssertElementNotPresent(locator1 = "Icon#ASTERISK");
+
+			PortletEntry.save();
+		}
+	}
+
 	@description = "LPS-146523 - Verify if the default folder will be the Global Documents and Media Home Folder"
 	@priority = 4
 	test GlobalDocumentsAndMediaHomeFolderIsDefaultWhenScopedByCompany {

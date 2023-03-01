@@ -101,6 +101,11 @@ public class BaseGraphQLServlet {
 			return _testQuery;
 		}
 
+		@Override
+		public boolean isJaxRsResourceInvocation() {
+			return false;
+		}
+
 		private final TestQuery _testQuery = new TestQuery();
 
 	}

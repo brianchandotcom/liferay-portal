@@ -295,7 +295,9 @@ public class DataDefinitionResourceTest
 
 			Assert.assertEquals("text2", problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("MustNotDuplicateFieldName", problem.getType());
+			Assert.assertEquals(
+				"DataDefinitionValidationException.MustNotDuplicateFieldName",
+				problem.getType());
 		}
 
 		// MustSetAvailableLocales
@@ -313,7 +315,9 @@ public class DataDefinitionResourceTest
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("MustSetAvailableLocales", problem.getType());
+			Assert.assertEquals(
+				"DataDefinitionValidationException.MustSetAvailableLocales",
+				problem.getType());
 		}
 
 		// MustSetDefaultLocaleAsAvailableLocale
@@ -334,7 +338,9 @@ public class DataDefinitionResourceTest
 			Assert.assertEquals("es_ES", problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				"MustSetDefaultLocaleAsAvailableLocale", problem.getType());
+				"DataDefinitionValidationException." +
+					"MustSetDefaultLocaleAsAvailableLocale",
+				problem.getType());
 		}
 
 		// MustSetFields
@@ -354,7 +360,9 @@ public class DataDefinitionResourceTest
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("MustSetFields", problem.getType());
+			Assert.assertEquals(
+				"DataDefinitionValidationException.MustSetFields",
+				problem.getType());
 		}
 
 		_testDataDefinitionContentType.setAllowEmptyDataDefinition(true);
@@ -381,7 +389,9 @@ public class DataDefinitionResourceTest
 
 			Assert.assertEquals("text1", problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("MustSetFieldType", problem.getType());
+			Assert.assertEquals(
+				"DataDefinitionValidationException.MustSetFieldType",
+				problem.getType());
 		}
 
 		// MustSetOptionsForField
@@ -401,7 +411,9 @@ public class DataDefinitionResourceTest
 
 			Assert.assertEquals("select1", problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("MustSetOptionsForField", problem.getType());
+			Assert.assertEquals(
+				"DataDefinitionValidationException.MustSetOptionsForField",
+				problem.getType());
 		}
 
 		// MustSetValidCharactersForFieldName
@@ -422,7 +434,9 @@ public class DataDefinitionResourceTest
 			Assert.assertEquals("#name*", problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				"MustSetValidCharactersForFieldName", problem.getType());
+				"DataDefinitionValidationException." +
+					"MustSetValidCharactersForFieldName",
+				problem.getType());
 		}
 
 		// MustSetValidCharactersForFieldType
@@ -443,7 +457,9 @@ public class DataDefinitionResourceTest
 			Assert.assertEquals("text$#", problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals(
-				"MustSetValidCharactersForFieldType", problem.getType());
+				"DataDefinitionValidationException." +
+					"MustSetValidCharactersForFieldType",
+				problem.getType());
 		}
 
 		// MustSetValidContentType
@@ -461,7 +477,9 @@ public class DataDefinitionResourceTest
 
 			Assert.assertEquals("INVALID", problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("MustSetValidContentType", problem.getType());
+			Assert.assertEquals(
+				"DataDefinitionValidationException.MustSetValidContentType",
+				problem.getType());
 		}
 
 		// MustSetValidName
@@ -479,7 +497,9 @@ public class DataDefinitionResourceTest
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("MustSetValidName", problem.getType());
+			Assert.assertEquals(
+				"DataDefinitionValidationException.MustSetValidName",
+				problem.getType());
 		}
 
 		// MustSetValidType
@@ -498,7 +518,9 @@ public class DataDefinitionResourceTest
 
 			Assert.assertEquals("string", problem.getDetail());
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("MustSetValidType", problem.getType());
+			Assert.assertEquals(
+				"DataDefinitionValidationException.MustSetValidType",
+				problem.getType());
 		}
 
 		// Provide default layout name when none is informed

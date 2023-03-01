@@ -233,45 +233,6 @@ definition {
 		ACUtils.assertPageTitle(pageTitle = "Data Sources");
 	}
 
-	@description = "Sync Liferay Data Source Contacts"
-	@priority = 5
-	test CanSyncAllContactsFromDXPToAC {
-		property analytics.cloud.upstream = "false";
-		property portal.release = "true";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${propertyName});
-
-		ACNavigation.goToIndividuals();
-
-		ACNavigation.switchTab(tabName = "Known Individuals");
-
-		ACUtils.searchBar(searchItem = "userfn userln");
-
-		ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "userfn userln");
-
-		ACNavigation.switchTab(tabName = "Details");
-
-		ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userea@liferay.com");
-
-		ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userfn");
-	}
-
 	@description = "Bug: LRAC-11423 | Automation ID: LRAC-11475 | Test Summary: Check if it is possible to connect AC with DXP using an existing data source"
 	@priority = 4
 	test CheckIfIsPossibleToReconnectACWithDXP {

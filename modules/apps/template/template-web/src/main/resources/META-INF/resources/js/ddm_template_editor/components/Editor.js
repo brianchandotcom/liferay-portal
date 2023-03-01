@@ -127,6 +127,18 @@ export function Editor({autocompleteData, initialScript, mode}) {
 					}
 
 					changeDisabled(false);
+
+					return response;
+				})
+				.then((response) => response.json())
+				.then((json) => {
+					if (json.error) {
+						openToast({
+							message: Liferay.Language.get(json.error),
+							title: Liferay.Language.get('error'),
+							type: 'danger',
+						});
+					}
 				})
 				.catch(() => {
 					changeDisabled(true);

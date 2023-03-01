@@ -88,7 +88,9 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				break;
 			}
 
-			if (followingCode.startsWith(".get")) {
+			if (followingCode.startsWith(".get") ||
+				followingCode.startsWith(".is")) {
+
 				return StringUtil.replaceFirst(
 					content, globalVariableName, parameterName, start);
 			}
@@ -152,8 +154,10 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				String methodFullName = matcher2.group();
 				String methodName = matcher2.group(3);
 
-				if (!methodName.startsWith("get") &&
-					!methodName.startsWith("_get") &&
+				if (!methodName.startsWith("_get") &&
+					!methodName.startsWith("_is") &&
+					!methodName.startsWith("get") &&
+					!methodName.startsWith("is") &&
 					!methodFullName.startsWith("StringBundler.concat(")) {
 
 					return content;

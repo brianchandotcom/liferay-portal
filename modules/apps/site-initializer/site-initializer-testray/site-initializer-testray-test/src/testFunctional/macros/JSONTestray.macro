@@ -85,3 +85,9 @@ definition {
 			factorOptionsId = ${factorOptionsId},
 			routineId = ${routineId});
 	}
+
+	macro addFactorCategory {
+		Variables.assertDefined(parameterList = "${categoryName}");
+
+		var factorCategoryId = JSONTestrayAPI.createFactorCategoriesAPI(categoryName = ${categoryName});
+	}

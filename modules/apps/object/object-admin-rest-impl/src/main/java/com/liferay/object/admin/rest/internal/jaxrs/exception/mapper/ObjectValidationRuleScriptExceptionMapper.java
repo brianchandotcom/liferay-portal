@@ -57,7 +57,7 @@ public class ObjectValidationRuleScriptExceptionMapper
 					objectValidationRuleScriptException.getMessageKey())
 			).toString(),
 			Response.Status.BAD_REQUEST, null,
-			ObjectValidationRuleScriptException.class.getSimpleName());
+			ObjectValidationRuleScriptException.class.getName());
 	}
 
 	@Context

@@ -59,7 +59,7 @@ public class InvalidFormatExceptionMapper
 				"Unable to map JSON path \"", sb.toString(), "\" with value \"",
 				invalidFormatException.getValue(), "\" to class \"",
 				clazz.getSimpleName(), "\""),
-			"InvalidFormatException");
+			InvalidFormatException.class.getName());
 	}
 
 }

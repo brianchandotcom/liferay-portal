@@ -15,18 +15,26 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.exception.TemplateCreationDisabledException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -96,13 +104,45 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
-		DDMTemplate ddmTemplate = _ddmTemplateService.addTemplate(
-			groupId, _portal.getClassNameId(DDMStructure.class), classPK,
-			_portal.getClassNameId(JournalArticle.class), templateKey, nameMap,
-			descriptionMap, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
-			StringPool.BLANK, TemplateConstants.LANG_TYPE_FTL, script,
-			cacheable, smallImage, smallImageURL, smallImageFile,
-			serviceContext);
+		DDMTemplate ddmTemplate = null;
+
+		try {
+			ddmTemplate = _ddmTemplateService.addTemplate(
+				groupId, _portal.getClassNameId(DDMStructure.class), classPK,
+				_portal.getClassNameId(JournalArticle.class), templateKey,
+				nameMap, descriptionMap,
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
+				TemplateConstants.LANG_TYPE_FTL, script, cacheable, smallImage,
+				smallImageURL, smallImageFile, serviceContext);
+		}
+		catch (PortalException portalException) {
+			String message = null;
+
+			if (portalException instanceof TemplateCreationDisabledException) {
+				message =
+					"the-template-could-not-be-created-because-template-" +
+						"creation-is-disabled";
+			}
+
+			if (message == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(portalException);
+				}
+
+				message = "an-unexpected-error-occurred";
+			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"error",
+					_language.get(themeDisplay.getRequest(), message)));
+
+			return;
+		}
 
 		boolean saveAndContinue = ParamUtil.getBoolean(
 			uploadPortletRequest, "saveAndContinue");
@@ -122,8 +162,14 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AddDDMTemplateMVCActionCommand.class);
+
 	@Reference
 	private DDMTemplateService _ddmTemplateService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Localization _localization;

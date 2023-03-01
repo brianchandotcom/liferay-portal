@@ -29,9 +29,11 @@ import java.util.Locale;
  */
 public class DDMTemplateNameComparator extends OrderByComparator<DDMTemplate> {
 
-	public static final String ORDER_BY_ASC = "DDMTemplate.name ASC";
+	public static final String ORDER_BY_ASC =
+		"CAST_CLOB_TEXT(DDMTemplate.name) ASC";
 
-	public static final String ORDER_BY_DESC = "DDMTemplate.name DESC";
+	public static final String ORDER_BY_DESC =
+		"CAST_CLOB_TEXT(DDMTemplate.name) DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 

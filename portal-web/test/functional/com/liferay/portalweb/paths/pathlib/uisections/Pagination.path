@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>NEXT_LINK_2</td>
-	<td>xpath=(//*[contains(@class, 'page-link')]//*[contains(@class,'right')])[2]</td>
+	<td>xpath=(//*[contains(@class, 'page-link')]//*[contains(@class,'right')])[2] | (//*[contains(@class, 'page-item')]//*[contains(text(),'Next')])[2]</td>
 	<td></td>
 </tr>
 <tr>

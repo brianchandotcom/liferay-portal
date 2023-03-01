@@ -14,23 +14,10 @@
 
 package com.liferay.segments.context.vocabulary.internal.configuration.persistence.listener;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
-import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyCompanyConfiguration;
 
-import java.util.Dictionary;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.ResourceBundle;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Yurena Cabrera
@@ -40,92 +27,11 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationModelListener.class
 )
 public class SegmentsContextVocabularyCompanyConfigurationModelListener
-	implements ConfigurationModelListener {
+	extends BaseConfigurationModelListener {
 
 	@Override
-	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
-		throws ConfigurationModelListenerException {
-
-		String entityFieldName = String.valueOf(
-			properties.get("entityFieldName"));
-
-		if (Validator.isNull(entityFieldName)) {
-			throw new ConfigurationModelListenerException(
-				ResourceBundleUtil.getString(
-					_getResourceBundle(),
-					"please-enter-a-valid-session-property-name"),
-				SegmentsContextVocabularyCompanyConfiguration.class, getClass(),
-				properties);
-		}
-
-		if (_isDefined(
-				String.valueOf(properties.get("assetVocabularyName")),
-				String.valueOf(properties.get("companyId")), entityFieldName)) {
-
-			throw new DuplicatedSegmentsContextVocabularyConfigurationModelListenerException(
-				ResourceBundleUtil.getString(
-					_getResourceBundle(),
-					"this-field-is-already-linked-to-one-vocabulary"),
-				SegmentsContextVocabularyCompanyConfiguration.class, getClass(),
-				properties);
-		}
+	protected Class<?> getConfigurationClass() {
+		return SegmentsContextVocabularyCompanyConfiguration.class;
 	}
-
-	private ResourceBundle _getResourceBundle() {
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
-
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-	}
-
-	private boolean _isDefined(
-			String assetVocabularyName, String companyId,
-			String entityFieldName)
-		throws ConfigurationModelListenerException {
-
-		try {
-			Configuration[] configurations =
-				_configurationAdmin.listConfigurations(
-					StringBundler.concat(
-						"(", ConfigurationAdmin.SERVICE_FACTORYPID, "=",
-						SegmentsContextVocabularyCompanyConfiguration.class.
-							getCanonicalName(),
-						")"));
-
-			if (configurations == null) {
-				return false;
-			}
-
-			for (Configuration configuration : configurations) {
-				Dictionary<String, Object> properties =
-					configuration.getProperties();
-
-				if ((Objects.equals(
-						assetVocabularyName,
-						properties.get("assetVocabularyName")) &&
-					 Objects.equals(
-						 entityFieldName, properties.get("entityFieldName"))) ||
-					(Objects.equals(
-						companyId,
-						String.valueOf(properties.get("companyId"))) &&
-					 Objects.equals(
-						 entityFieldName, properties.get("entityFieldName")))) {
-
-					return true;
-				}
-			}
-
-			return false;
-		}
-		catch (Exception exception) {
-			throw new ConfigurationModelListenerException(
-				exception.getMessage(),
-				SegmentsContextVocabularyCompanyConfiguration.class, getClass(),
-				null);
-		}
-	}
-
-	@Reference
-	private ConfigurationAdmin _configurationAdmin;
 
 }

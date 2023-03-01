@@ -35,7 +35,7 @@ public class Problem {
 
 		Class<?> clazz = exception.getClass();
 
-		_type = clazz.getSimpleName();
+		_type = clazz.getName();
 	}
 
 	public Problem(Response.Status status, String title) {

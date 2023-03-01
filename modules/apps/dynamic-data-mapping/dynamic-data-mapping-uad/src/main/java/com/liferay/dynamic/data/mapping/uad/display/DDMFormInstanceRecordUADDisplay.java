@@ -281,19 +281,14 @@ public class DDMFormInstanceRecordUADDisplay
 		}
 
 		public void putDDMFormInstanceRecords(long userId) {
-			List<DDMFormInstanceRecord> ddmFormInstanceRecords =
-				new ArrayList<>();
-
-			ddmFormInstanceRecords.addAll(
-				ddmFormInstanceRecordLocalService.getFormInstanceRecords(
-					_formInstanceId, userId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null));
-
-			ddmFormInstanceRecords.sort(
-				Comparator.comparing(DDMFormInstanceRecord::getCreateDate));
-
 			_ddmFormInstanceRecordUADUserMap.put(
-				userId, ddmFormInstanceRecords);
+				userId,
+				ListUtil.sort(
+					ddmFormInstanceRecordLocalService.getFormInstanceRecords(
+						_formInstanceId, userId, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null),
+					Comparator.comparing(
+						DDMFormInstanceRecord::getCreateDate)));
 		}
 
 		private final Map<Long, List<DDMFormInstanceRecord>>

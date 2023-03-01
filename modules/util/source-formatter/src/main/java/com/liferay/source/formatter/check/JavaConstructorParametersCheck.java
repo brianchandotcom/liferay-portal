@@ -479,7 +479,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 	private static final Pattern _assignCallPattern = Pattern.compile(
 		"\t(_|this\\.)(\\w+) (=[^;]+;)\n");
 	private static final Pattern _methodCallPattern = Pattern.compile(
-		"((_?\\w+)\\.\\n?\\s*?)?(_?\\w+)\\(");
+		"((\\w+)\\.\\s*)?(\\w+)\\(");
 	private static final Pattern _missingLineBreakPattern1 = Pattern.compile(
 		"\n(\t+)(_)(\\w+) =[ \t\n]+\\3;(?=(\n\n)\\1_(\\w+) =[ \t\n]+\\5(;)\n)");
 	private static final Pattern _missingLineBreakPattern2 = Pattern.compile(

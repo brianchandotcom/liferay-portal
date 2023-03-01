@@ -1504,6 +1504,8 @@ definition {
 	@description = "This is a test for COMMERCE-10639. Sitemaps display the language tags properly"
 	@priority = 3
 	test CanViewLanguageTagsOnSitemapPage {
+		property test.name.skip.portal.instance = "CPCommerceProductConfigurations#CanViewLanguageTagsOnSitemapPage";
+
 		task ("Given an account is created") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Commerce",

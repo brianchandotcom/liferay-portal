@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.13.2"
+	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.14.2"
 	compileInclude group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jsr310", version: "2.13.2"
 	compileInclude group: "com.github.mifmif", name: "generex", version: "1.0.2"
 	compileInclude group: "com.squareup.okhttp3", name: "logging-interceptor", version: "3.12.12"

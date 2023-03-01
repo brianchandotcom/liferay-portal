@@ -145,7 +145,7 @@ export function MenuItem({item}) {
 				data-item-id={item.siteNavigationMenuItemId}
 				data-parent-item-id={parentItemId}
 				ref={targetRef}
-				role="listitem"
+				role="menuitem"
 			>
 				<ClayCard
 					aria-label={sub(

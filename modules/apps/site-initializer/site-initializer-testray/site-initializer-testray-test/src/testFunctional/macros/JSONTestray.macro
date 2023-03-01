@@ -38,3 +38,19 @@ definition {
 		var caseTypeId = JSONTestrayAPI.createCaseTypeAPI(caseType = ${caseType});
 	}
 
+	macro addComponent {
+		Variables.assertDefined(parameterList = "${componentName},${projectName},${teamName}");
+
+		if (!(isSet(object))) {
+			var object = "teams";
+		}
+
+		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
+		var teamId = JSONTestraySetter.getTeamId(teamName = ${teamName});
+
+		var componentId = JSONTestrayAPI.createComponentAPI(
+			componentName = ${componentName},
+			projectId = ${projectId},
+			teamId = ${teamId});
+	}
+

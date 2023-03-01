@@ -87,6 +87,10 @@ public class ConfigYAML {
 		return _generateBatch;
 	}
 
+	public boolean isGenerateExportBatch() {
+		return _generateExportBatch;
+	}
+
 	public boolean isGenerateGraphQL() {
 		return _generateGraphQL;
 	}
@@ -161,6 +165,10 @@ public class ConfigYAML {
 		_generateBatch = generateBatch;
 	}
 
+	public void setGenerateExportBatch(boolean generateExportBatch) {
+		_generateExportBatch = generateExportBatch;
+	}
+
 	public void setGenerateGraphQL(boolean generateGraphQL) {
 		_generateGraphQL = generateGraphQL;
 	}
@@ -216,6 +224,7 @@ public class ConfigYAML {
 	private boolean _forcePredictableOperationId;
 	private boolean _forcePredictableSchemaPropertyName = true;
 	private boolean _generateBatch = true;
+	private boolean _generateExportBatch;
 	private boolean _generateGraphQL = true;
 	private boolean _generateOpenAPI = true;
 	private boolean _generateREST = true;

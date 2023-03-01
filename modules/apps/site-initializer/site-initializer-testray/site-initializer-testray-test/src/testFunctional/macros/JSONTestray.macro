@@ -1,0 +1,16 @@
+definition {
+
+	macro addBuild {
+		Variables.assertDefined(parameterList = "${buildName},${projectName},${routineName},${productVersion}");
+
+		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
+		var routineId = JSONTestraySetter.getRoutineId(routineName = ${routineName});
+		var productVersionId = JSONTestraySetter.getProductVersionId(productVersion = ${productVersion});
+
+		var buildId = JSONTestrayAPI.createBuildAPI(
+			buildName = ${buildName},
+			productVersionId = ${productVersionId},
+			projectId = ${projectId},
+			routineId = ${routineId});
+	}
+

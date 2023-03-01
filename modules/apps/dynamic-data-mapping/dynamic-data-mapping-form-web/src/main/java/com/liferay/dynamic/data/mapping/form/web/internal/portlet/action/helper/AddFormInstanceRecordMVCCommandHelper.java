@@ -42,13 +42,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -262,34 +260,27 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
 		Set<String> nonevaluableFieldNames) {
 
-		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
-
 		for (String nonevaluableFieldName : nonevaluableFieldNames) {
-			ddmFormFieldValues.addAll(
-				ddmFormFieldValuesMap.get(nonevaluableFieldName));
+			for (DDMFormFieldValue ddmFormFieldValue :
+					ddmFormFieldValuesMap.get(nonevaluableFieldName)) {
+
+				if (ddmFormFieldValue.getValue() != null) {
+					_removeDDMFormFieldValue(ddmFormFieldValue);
+				}
+			}
 		}
-
-		ddmFormFieldValues = ListUtil.filter(
-			ddmFormFieldValues,
-			ddmFormFieldValue -> ddmFormFieldValue.getValue() != null);
-
-		ddmFormFieldValues.forEach(this::_removeDDMFormFieldValue);
 	}
 
 	private void _updateNonevaluableDDMFormFields(
 		Map<String, DDMFormField> ddmFormFieldsMap,
 		Set<String> nonevaluableFieldNames) {
 
-		List<DDMFormField> ddmFormFields = ListUtil.filter(
-			new ArrayList<>(ddmFormFieldsMap.values()),
-			ddmFormField -> nonevaluableFieldNames.contains(
-				ddmFormField.getName()));
-
-		ddmFormFields.forEach(
-			ddmFormField -> {
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			if (nonevaluableFieldNames.contains(ddmFormField.getName())) {
 				ddmFormField.setDDMFormFieldValidation(null);
 				ddmFormField.setRequired(false);
-			});
+			}
+		}
 	}
 
 	@Reference

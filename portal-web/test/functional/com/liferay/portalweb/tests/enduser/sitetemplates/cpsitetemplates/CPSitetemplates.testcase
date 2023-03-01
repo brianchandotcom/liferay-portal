@@ -51,7 +51,7 @@ definition {
 		}
 	}
 
-	@description = "User can create site based on templates and changes made on the parent template will apply to the child site by default."
+	@description = "This is a use case for LPS-166515. TC-1: The changes made on the site template will apply to the site created by the template by default and background tasks are deleted at the end of propagation."
 	@priority = 4
 	test AddSiteTemplateApplySiteTemplateChangesToSite {
 		property portal.acceptance = "true";
@@ -94,6 +94,20 @@ definition {
 			}
 
 			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+		}
+
+		task ("And: Verify the propagation background task is deleted") {
+			var mysqlStatement = "SELECT * FROM BackgroundTask WHERE taskExecutorClassName = 'com.liferay.exportimport.internal.background.task.LayoutSetPrototypeImportBackgroundTaskExecutor' AND STATUS NOT IN (0, 1, 4);";
+
+			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+
+			var getHeader = StringUtil.regexReplaceAll(${sqlResults}, "[\r\n]", "");
+
+			var getRecord = StringUtil.replace(${getHeader}, "mvccVersion,backgroundTaskId,groupId,companyId,userId,userName,createDate,modifiedDate,name,servletContextNames,taskExecutorClassName,taskContextMap,completed,completionDate,status,statusMessage", "Empty set");
+
+			TestUtils.assertPartialEquals(
+				actual = ${getRecord},
+				expected = "Empty set");
 		}
 	}
 

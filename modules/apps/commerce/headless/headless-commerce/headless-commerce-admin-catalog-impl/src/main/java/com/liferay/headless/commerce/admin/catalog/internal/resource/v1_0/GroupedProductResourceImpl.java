@@ -20,12 +20,12 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct;
-import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.GroupedProductDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -226,8 +226,11 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private GroupedProductDTOConverter _groupedProductDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.GroupedProductDTOConverter)"
+	)
+	private DTOConverter<CPDefinitionGroupedEntry, GroupedProduct>
+		_groupedProductDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

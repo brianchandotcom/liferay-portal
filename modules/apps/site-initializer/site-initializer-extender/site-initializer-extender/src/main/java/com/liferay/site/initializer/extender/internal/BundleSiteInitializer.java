@@ -781,18 +781,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				String json = StringUtil.read(url.openStream());
 
-				json = _replace(
-					json, assetListEntryIdsStringUtilReplaceValues,
-					documentsStringUtilReplaceValues);
-
 				Group group = serviceContext.getScopeGroup();
 
 				json = _replace(
-					json,
-					new String[] {"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]"},
-					new String[] {
-						group.getFriendlyURL(), String.valueOf(groupId)
-					});
+					_replace(
+						json,
+						new String[] {
+							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
+							"[$GROUP_KEY$]", "[$PORTAL_URL$]"
+						},
+						new String[] {
+							String.valueOf(group.getCompanyId()),
+							group.getFriendlyURL(),
+							String.valueOf(serviceContext.getScopeGroupId()),
+							group.getGroupKey(), serviceContext.getPortalURL()
+						}),
+					assetListEntryIdsStringUtilReplaceValues,
+					documentsStringUtilReplaceValues);
 
 				zipWriter.addEntry(
 					_removeFirst(fileName, parentResourcePath), json);
@@ -867,13 +872,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				json,
 				new String[] {
 					"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
-					"[$GROUP_KEY$]"
+					"[$GROUP_KEY$]", "[$PORTAL_URL$]"
 				},
 				new String[] {
 					String.valueOf(group.getCompanyId()),
 					group.getFriendlyURL(),
 					String.valueOf(serviceContext.getScopeGroupId()),
-					group.getGroupKey()
+					group.getGroupKey(), serviceContext.getPortalURL()
 				}),
 			assetListEntryIdsStringUtilReplaceValues,
 			clientExtensionEntryIdsStringUtilReplaceValues,
@@ -1014,25 +1019,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				String json = StringUtil.read(url.openStream());
 
-				json = _replace(
-					json, assetListEntryIdsStringUtilReplaceValues,
-					documentsStringUtilReplaceValues,
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-					taxonomyCategoryIdsStringUtilReplaceValues);
-
 				Group group = serviceContext.getScopeGroup();
 
 				json = _replace(
-					json,
-					new String[] {
-						"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
-						"[$GROUP_KEY$]"
-					},
-					new String[] {
-						group.getFriendlyURL(),
-						String.valueOf(serviceContext.getScopeGroupId()),
-						group.getGroupKey()
-					});
+					_replace(
+						json,
+						new String[] {
+							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
+							"[$GROUP_KEY$]", "[$PORTAL_URL$]"
+						},
+						new String[] {
+							String.valueOf(group.getCompanyId()),
+							group.getFriendlyURL(),
+							String.valueOf(serviceContext.getScopeGroupId()),
+							group.getGroupKey(), serviceContext.getPortalURL()
+						}),
+					assetListEntryIdsStringUtilReplaceValues,
+					documentsStringUtilReplaceValues,
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					taxonomyCategoryIdsStringUtilReplaceValues);
 
 				String css = _replace(
 					SiteInitializerUtil.read(
@@ -1135,25 +1140,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (StringUtil.endsWith(urlPath, "page-definition.json")) {
 				String json = StringUtil.read(url.openStream());
 
-				json = _replace(
-					json, assetListEntryIdsStringUtilReplaceValues,
-					documentsStringUtilReplaceValues,
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-					taxonomyCategoryIdsStringUtilReplaceValues);
-
 				Group group = serviceContext.getScopeGroup();
 
 				json = _replace(
-					json,
-					new String[] {
-						"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
-						"[$GROUP_KEY$]"
-					},
-					new String[] {
-						group.getFriendlyURL(),
-						String.valueOf(serviceContext.getScopeGroupId()),
-						group.getGroupKey()
-					});
+					_replace(
+						json,
+						new String[] {
+							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
+							"[$GROUP_KEY$]", "[$PORTAL_URL$]"
+						},
+						new String[] {
+							String.valueOf(group.getCompanyId()),
+							group.getFriendlyURL(),
+							String.valueOf(serviceContext.getScopeGroupId()),
+							group.getGroupKey(), serviceContext.getPortalURL()
+						}),
+					assetListEntryIdsStringUtilReplaceValues,
+					documentsStringUtilReplaceValues,
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					taxonomyCategoryIdsStringUtilReplaceValues);
 
 				String css = _replace(
 					SiteInitializerUtil.read(

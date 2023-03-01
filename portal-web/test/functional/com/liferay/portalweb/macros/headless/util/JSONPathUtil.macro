@@ -1,17 +1,25 @@
 definition {
 
 	macro getErcValue {
-		Variables.assertDefined(parameterList = ${response});
-
-		var propertyValue = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
+		var propertyValue = JSONPathUtil.getProperty(
+			property = "$.externalReferenceCode",
+			response = ${response});
 
 		return ${propertyValue};
 	}
 
 	macro getIdValue {
-		Variables.assertDefined(parameterList = ${response});
+		var propertyValue = JSONPathUtil.getProperty(
+			property = "$.id",
+			response = ${response});
 
-		var propertyValue = JSONUtil.getWithJSONPath(${response}, "$.id");
+		return ${propertyValue};
+	}
+
+	macro getProperty {
+		Variables.assertDefined(parameterList = "${response},${property}");
+
+		var propertyValue = JSONUtil.getWithJSONPath(${response}, ${property});
 
 		return ${propertyValue};
 	}

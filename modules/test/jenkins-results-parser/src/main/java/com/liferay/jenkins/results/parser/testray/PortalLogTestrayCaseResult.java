@@ -115,4 +115,9 @@ public class PortalLogTestrayCaseResult extends BatchBuildTestrayCaseResult {
 		return null;
 	}
 
+	@Override
+	public String getName() {
+		return "PortalLogAssertorTest-" + getAxisName();
+	}
+
 }

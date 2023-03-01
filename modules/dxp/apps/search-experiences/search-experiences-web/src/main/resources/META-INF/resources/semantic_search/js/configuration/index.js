@@ -9,19 +9,25 @@
  * distribution rights of the Software.
  */
 
+import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useFormik} from 'formik';
-import React from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useState} from 'react';
 
 import {LearnMessageWithoutContext} from '../../../sxp_blueprint_admin/js/shared/LearnMessage';
 import sub from '../../../sxp_blueprint_admin/js/utils/language/sub';
 import Input from './Input';
+import SubmitWarningModal from './SubmitWarningModal';
 import TestConfigurationButton from './TestConfigurationButton';
 import {TEXT_EMBEDDING_PROVIDER_TYPES} from './constants';
 
 const DEFAULT_TEXT_EMBEDDING_PROVIDER_CONFIGURATIONS = {
 	attributes: {
+		accessToken: '',
+		hostAddress: '',
 		maxCharacterCount: 500,
+		model: '',
 		modelTimeout: 25,
 	},
 	embeddingVectorDimensions: 768,
@@ -163,12 +169,103 @@ export default function ({
 	availableModelClassNames,
 	availableTextEmbeddingProviders,
 	availableTextTruncationStrategies,
+	formName,
 	initialTextEmbeddingCacheTimeout,
 	initialTextEmbeddingProviderConfigurationJSONs,
 	initialTextEmbeddingsEnabled,
 	learnMessages,
 	namespace = '',
+	redirectURL,
 }) {
+	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
+
+	const _handleFormikSubmit = async (values) => {
+		const {
+			attributes = {},
+			languageIds,
+			modelClassNames,
+			providerName,
+			embeddingVectorDimensions,
+		} = values.textEmbeddingProviderConfigurationJSONs[0];
+
+		const {
+			accessToken,
+			basicAuthPassword,
+			basicAuthUsername,
+			hostAddress,
+			maxCharacterCount,
+			model,
+			modelTimeout,
+			textTruncationStrategy,
+		} = attributes;
+
+		const textEmbeddingProviderSettings =
+			providerName ===
+			TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API
+				? {
+						accessToken,
+						model,
+						modelTimeout,
+				  }
+				: providerName ===
+				  TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_ENDPOINT
+				? {
+						accessToken,
+						hostAddress,
+				  }
+				: providerName === TEXT_EMBEDDING_PROVIDER_TYPES.TXTAI
+				? {
+						basicAuthPassword,
+						basicAuthUsername,
+						hostAddress,
+				  }
+				: {};
+
+		const responseData = await fetch(
+			'/o/search-experiences-rest/v1.0/text-embeddings/validate-provider-configuration',
+			{
+				body: JSON.stringify({
+					attributes: {
+						maxCharacterCount,
+						textTruncationStrategy,
+						...textEmbeddingProviderSettings,
+					},
+					embeddingVectorDimensions,
+					languageIds,
+					modelClassNames,
+					providerName,
+				}),
+				headers: new Headers({
+					'Accept': 'application/json',
+					'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+					'Content-Type': 'application/json',
+				}),
+				method: 'POST',
+			}
+		)
+			.then((response) => response.json())
+			.catch((error) => {
+				setShowSubmitWarningModal(true);
+
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+			});
+
+		if (
+			responseData.errorMessage ||
+			responseData.message ||
+			Number(responseData.expectedDimensions === 0) ||
+			Number(responseData.expectedDimensions) !==
+				Number(embeddingVectorDimensions)
+		) {
+			setShowSubmitWarningModal(true);
+		}
+		else {
+			submitForm(document[formName]);
+		}
+	};
+
 	const _handleFormikValidate = (values) => {
 		const errors = {};
 
@@ -379,6 +476,7 @@ export default function ({
 			),
 			textEmbeddingsEnabled: initialTextEmbeddingsEnabled,
 		},
+		onSubmit: _handleFormikSubmit,
 		validate: _handleFormikValidate,
 		validateOnMount: true,
 	});
@@ -393,6 +491,20 @@ export default function ({
 
 	const _handleInputChange = (name) => (val) => {
 		formik.setFieldValue(name, val);
+	};
+
+	const _handleSubmit = () => {
+		formik.handleSubmit();
+	};
+
+	const _handleSubmitWarningModalClose = () => {
+		setShowSubmitWarningModal(false);
+	};
+
+	const _handleSubmitWarningModalSave = () => {
+		_handleSubmitWarningModalClose();
+
+		submitForm(document[formName]);
 	};
 
 	const _renderEmbeddingProviderConfigurationInputs = (index) => {
@@ -1072,6 +1184,15 @@ export default function ({
 		<div className="semantic-search-settings-root">
 			{_renderEmbeddingProviderConfigurationInputs(0)}
 
+			<SubmitWarningModal
+				message={Liferay.Language.get(
+					'unsuccessful-connection-warning'
+				)}
+				onClose={_handleSubmitWarningModalClose}
+				onSubmit={_handleSubmitWarningModalSave}
+				visible={showSubmitWarningModal}
+			/>
+
 			<input
 				name={`${namespace}textEmbeddingProviderConfigurationJSONs`}
 				type="hidden"
@@ -1081,6 +1202,29 @@ export default function ({
 					)
 					.join('|')}
 			/>
+
+			<ClayButton.Group spaced>
+				<ClayButton
+					disabled={formik.isSubmitting}
+					onClick={_handleSubmit}
+					type="submit"
+				>
+					{formik.isSubmitting && (
+						<span className="inline-item inline-item-before">
+							<span
+								aria-hidden="true"
+								className="loading-animation"
+							></span>
+						</span>
+					)}
+
+					{Liferay.Language.get('save')}
+				</ClayButton>
+
+				<a className="btn btn-cancel btn-secondary" href={redirectURL}>
+					{Liferay.Language.get('cancel')}
+				</a>
+			</ClayButton.Group>
 		</div>
 	);
 }

@@ -16,13 +16,15 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
 <%@ page import="com.liferay.learn.LearnMessageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.search.experiences.web.internal.display.context.SemanticSearchCompanyConfigurationDisplayContext" %>
 
 <portlet:defineObjects />
+<portlet:renderURL var="redirectURL" />
 
 <%
 SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurationDisplayContext = (SemanticSearchCompanyConfigurationDisplayContext)request.getAttribute(SemanticSearchCompanyConfigurationDisplayContext.class.getName());
@@ -45,6 +47,8 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 			).put(
 				"availableTextTruncationStrategies", semanticSearchCompanyConfigurationDisplayContext.getAvailableTextTruncationStrategies()
 			).put(
+				"formName", liferayPortletResponse.getNamespace() + "fm"
+			).put(
 				"initialTextEmbeddingCacheTimeout", semanticSearchCompanyConfigurationDisplayContext.getTextEmbeddingCacheTimeout()
 			).put(
 				"initialTextEmbeddingProviderConfigurationJSONs", semanticSearchCompanyConfigurationDisplayContext.getTextEmbeddingProviderConfigurationJSONs()
@@ -54,7 +58,20 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 				"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"redirectURL", redirectURL
 			).build()
 		%>'
 	/>
 </div>
+
+<aui:script>
+	function <portlet:namespace />removeExistingFormSubmitButtons() {
+		let formElement = document.getElementById('<portlet:namespace />fm');
+		let submitButtonGroupElement = formElement.querySelector('.button-holder');
+
+		submitButtonGroupElement.remove();
+	}
+
+	<portlet:namespace />removeExistingFormSubmitButtons();
+</aui:script>

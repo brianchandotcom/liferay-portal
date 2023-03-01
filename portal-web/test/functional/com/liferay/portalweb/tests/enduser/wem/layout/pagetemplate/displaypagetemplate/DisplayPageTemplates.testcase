@@ -148,11 +148,11 @@ definition {
 
 			AssertElementPresent(
 				key_title = "General Settings",
-				locator1 = "Header#H4_TITLE");
+				locator1 = "Header#H3_TITLE");
 
 			AssertElementPresent(
 				key_title = "Sitemap",
-				locator1 = "Header#H4_TITLE");
+				locator1 = "Header#H3_TITLE");
 		}
 	}
 

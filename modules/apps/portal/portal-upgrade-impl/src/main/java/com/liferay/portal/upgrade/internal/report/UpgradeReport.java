@@ -430,22 +430,22 @@ public class UpgradeReport {
 		).put(
 			"portal", _getPortalVersionInfo()
 		).put(
-			"using.database", _getDialectInfo()
+			"database.version", _getDialectInfo()
 		).put(
-			"properties", _getPropertiesInfo()
+			"property", _getPropertiesInfo()
 		).put(
 			"document.library.storage.size", _getDLStorageInfoNew()
 		).put(
 			"tables.initial.final.rows", _getDatabaseTableCounts()
 		).put(
-			"longest.running.upgrade.processes",
+			"longest.upgrade.processes",
 			_getLongestRunningUpgradeProcessesList()
 		).put(
 			"errors", _getSortedLogEvents("errors")
 		).put(
 			"warnings", _getSortedLogEvents("warnings")
 		).put(
-			"release.osgi.info",
+			"osgi.status",
 			() -> {
 				if (releaseManagerOSGiCommands == null) {
 					return "Not possible to check upgrades status";

@@ -66,9 +66,13 @@ definition {
 			ACDXPSettings.syncAccountsData(accountGroup = "European Accounts");
 		}
 
-		task ("Refresh the page and Go to the people page in the sidebar") {
-			TestUtils.hardRefresh();
+		task ("Finish the wizard steps") {
+			for (var n : list "1,2") {
+				Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+			}
+		}
 
+		task ("Go to the people page in the sidebar") {
 			ACDXPSettings.navToSyncedContactDataMenu();
 		}
 

@@ -134,6 +134,7 @@ export default function ChangeTrackingChangesView({
 	spritemap,
 	statusLabel,
 	statusStyle,
+	total,
 	typeNames,
 	typesFromURL,
 	unscheduleURL,
@@ -753,7 +754,7 @@ export default function ChangeTrackingChangesView({
 		id: initialNode.nodeId,
 		nav:
 			!!ctMappingInfos.length &&
-			(!changes.length || navigationFromURL === NAVIGATION_RELATIONSHIPS)
+			(!total || navigationFromURL === NAVIGATION_RELATIONSHIPS)
 				? NAVIGATION_RELATIONSHIPS
 				: NAVIGATION_DATA,
 		node: initialNode,
@@ -1013,7 +1014,7 @@ export default function ChangeTrackingChangesView({
 
 			if (
 				!!ctMappingInfos.length &&
-				(!changes.length || navigation === NAVIGATION_RELATIONSHIPS)
+				(!total || navigation === NAVIGATION_RELATIONSHIPS)
 			) {
 				navigation = NAVIGATION_RELATIONSHIPS;
 			}
@@ -1090,12 +1091,12 @@ export default function ChangeTrackingChangesView({
 			PARAM_SITES,
 			PARAM_TYPES,
 			PARAM_USERS,
-			changes,
 			ctMappingInfos,
 			filterNodes,
 			getFilters,
 			getNode,
 			isWithinApp,
+			total,
 		]
 	);
 
@@ -1994,7 +1995,7 @@ export default function ChangeTrackingChangesView({
 						trigger={
 							<ClayButton
 								className="nav-link"
-								disabled={!changes.length}
+								disabled={!total}
 								displayType="unstyled"
 							>
 								<span className="navbar-breakpoint-down-d-none">
@@ -2121,7 +2122,7 @@ export default function ChangeTrackingChangesView({
 													'search'
 												)}
 												className="form-control input-group-inset input-group-inset-after"
-												disabled={!changes.length}
+												disabled={!total}
 												onChange={(event) =>
 													setEntrySearchTerms(
 														event.target.value
@@ -2140,7 +2141,7 @@ export default function ChangeTrackingChangesView({
 											>
 												<ClayButtonWithIcon
 													className="navbar-breakpoint-d-none"
-													disabled={!changes.length}
+													disabled={!total}
 													displayType="unstyled"
 													onClick={() =>
 														setSearchMobile(false)
@@ -2150,7 +2151,7 @@ export default function ChangeTrackingChangesView({
 												/>
 
 												<ClayButtonWithIcon
-													disabled={!changes.length}
+													disabled={!total}
 													displayType="unstyled"
 													spritemap={spritemap}
 													symbol="search"
@@ -2167,7 +2168,7 @@ export default function ChangeTrackingChangesView({
 									<ManagementToolbar.Item className="navbar-breakpoint-d-none">
 										<ClayButton
 											className="nav-link nav-link-monospaced"
-											disabled={!changes.length}
+											disabled={!total}
 											displayType="unstyled"
 											onClick={() =>
 												setSearchMobile(true)
@@ -2183,7 +2184,7 @@ export default function ChangeTrackingChangesView({
 
 								<ManagementToolbar.Item className="simple-toggle-switch-reverse">
 									<ClayToggle
-										disabled={!changes.length}
+										disabled={!total}
 										label={Liferay.Language.get(
 											'show-all-items'
 										)}
@@ -2217,12 +2218,10 @@ export default function ChangeTrackingChangesView({
 							>
 								<ClayLink
 									className={
-										!changes.length
-											? 'btn-link disabled'
-											: undefined
+										!total ? 'btn-link disabled' : undefined
 									}
 									onClick={
-										!changes.length
+										!total
 											? null
 											: () =>
 													handleNavigationUpdate(
@@ -2757,7 +2756,7 @@ export default function ChangeTrackingChangesView({
 	};
 
 	const renderMainContent = () => {
-		if (!changes.length && !ctMappingInfos.length) {
+		if (!total && !ctMappingInfos.length) {
 			return (
 				<div className="container-fluid container-fluid-max-xl">
 					{renderExpiredBanner()}
@@ -2854,8 +2853,7 @@ export default function ChangeTrackingChangesView({
 						'btn btn-' + displayType + ' btn-sm',
 						{
 							disabled:
-								(!changes.length && !ctMappingInfos.length) ||
-								expired,
+								(!total && !ctMappingInfos.length) || expired,
 						}
 					)}
 					href={setParameter(

@@ -727,6 +727,8 @@ public class ViewChangesDisplayContext {
 			_publicationsDisplayContext.getStatusStyle(
 				_ctCollection.getStatus())
 		).put(
+			"total", ctEntriesCount
+		).put(
 			"typeNames",
 			() -> {
 				JSONObject typeNamesJSONObject =

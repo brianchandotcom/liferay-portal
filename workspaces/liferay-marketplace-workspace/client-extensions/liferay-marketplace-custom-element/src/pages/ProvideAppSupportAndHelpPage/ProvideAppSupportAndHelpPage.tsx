@@ -132,7 +132,6 @@ export function ProvideAppSupportAndHelpPage({
 						'supportURL',
 						'Support URL',
 						supportURL?.value,
-						TYPES.UPDATE_APP_SUPPORT_URL
 					);
 
 					if (supportURLSpecificationId !== -1) {
@@ -163,7 +162,6 @@ export function ProvideAppSupportAndHelpPage({
 								'publisherWebsiteURL',
 								'Publisher Web site URL',
 								publisherWebsiteURL?.value,
-								TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL
 							);
 
 						if (publisherWebsiteURLSpecificationId !== -1) {
@@ -194,7 +192,6 @@ export function ProvideAppSupportAndHelpPage({
 								'appUsageTermsURL',
 								'App Usage Terms URL',
 								appUsageTermsURL?.value,
-								TYPES.UPDATE_APP_USAGE_TERMS_URL
 							);
 
 						if (appUsageTermsURLSpecificationId !== -1) {
@@ -225,7 +222,6 @@ export function ProvideAppSupportAndHelpPage({
 								'appDocumentationURL',
 								'App Documentation URL',
 								appDocumentationURL?.value,
-								TYPES.UPDATE_APP_DOCUMENTATION_URL
 							);
 
 						if (appDocumentationURLSpecificationId !== -1) {
@@ -256,7 +252,6 @@ export function ProvideAppSupportAndHelpPage({
 								'appInstallationGuideURL',
 								'App Installation Guide URL',
 								appInstallationGuideURL?.value,
-								TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL
 							);
 
 						if (appInstallationGuideURLSpecificationId !== -1) {

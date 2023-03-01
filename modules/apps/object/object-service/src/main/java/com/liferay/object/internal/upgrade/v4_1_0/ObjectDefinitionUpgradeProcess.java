@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.internal.upgrade.v4_0_1;
+package com.liferay.object.internal.upgrade.v4_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;

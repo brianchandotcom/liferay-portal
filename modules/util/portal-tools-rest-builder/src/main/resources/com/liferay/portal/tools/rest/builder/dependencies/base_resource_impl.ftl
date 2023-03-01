@@ -45,6 +45,7 @@ import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -143,6 +144,10 @@ public abstract class Base${schemaName}ResourceImpl
 					<#assign postBatchJavaMethodSignature = javaMethodSignature />
 				</#if>
 			</#if>
+		<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "sPageExportBatch")>
+			<#if !freeMarkerTool.isVersionCompatible(configYAML, 2)>
+				<#continue>
+			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName)>
 			<#assign putBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "putByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "put" + parentSchemaName + schemaName + "ByExternalReferenceCode")>
@@ -170,6 +175,19 @@ public abstract class Base${schemaName}ResourceImpl
 
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.deleteImportTask(${javaDataType}.class.getName(), callbackURL, object)
+				).build();
+			<#elseif generateBatch && stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "sPageExportBatch")>
+				vulcanBatchEngineExportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
+				vulcanBatchEngineExportTaskResource.setContextCompany(contextCompany);
+				vulcanBatchEngineExportTaskResource.setContextHttpServletRequest(contextHttpServletRequest);
+				vulcanBatchEngineExportTaskResource.setContextUriInfo(contextUriInfo);
+				vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
+				vulcanBatchEngineExportTaskResource.setGroupLocalService(groupLocalService);
+
+				javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.accepted();
+
+				return responseBuilder.entity(
+					vulcanBatchEngineExportTaskResource.postExportTask(${javaDataType}.class.getName(), callbackURL, fieldNames)
 				).build();
 			<#elseif generateBatch && (stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "Batch") || stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + "Id" + schemaName + "Batch"))>
 				vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
@@ -895,6 +913,12 @@ public abstract class Base${schemaName}ResourceImpl
 	}
 
 	<#if generateBatch>
+		<#if freeMarkerTool.isVersionCompatible(configYAML, 2)>
+			public void setVulcanBatchEngineExportTaskResource(VulcanBatchEngineExportTaskResource vulcanBatchEngineExportTaskResource) {
+				this.vulcanBatchEngineExportTaskResource = vulcanBatchEngineExportTaskResource;
+			}
+		</#if>
+
 		public void setVulcanBatchEngineImportTaskResource(VulcanBatchEngineImportTaskResource vulcanBatchEngineImportTaskResource) {
 			this.vulcanBatchEngineImportTaskResource = vulcanBatchEngineImportTaskResource;
 		}
@@ -1026,6 +1050,9 @@ public abstract class Base${schemaName}ResourceImpl
 	protected SortParserProvider sortParserProvider;
 
 	<#if generateBatch>
+		<#if freeMarkerTool.isVersionCompatible(configYAML, 2)>
+			protected VulcanBatchEngineExportTaskResource vulcanBatchEngineExportTaskResource;
+		</#if>
 		protected VulcanBatchEngineImportTaskResource vulcanBatchEngineImportTaskResource;
 	</#if>
 

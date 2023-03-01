@@ -16,6 +16,16 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+
+<#assign
+	javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, "mutation", openAPIYAML)
+
+	generateAggregationFunction = freeMarkerTool.isVersionCompatible(configYAML, 2) && freeMarkerTool.containsAggregationFunction(javaMethodSignatures)
+/>
+
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -24,6 +34,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Date;
+import java.util.List;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -46,7 +57,6 @@ import org.osgi.service.component.ComponentServiceObjects;
 public class Mutation {
 
 	<#assign
-		javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, "mutation", openAPIYAML)
 		schemaNames = freeMarkerTool.getGraphQLSchemaNames(javaMethodSignatures)
 	/>
 
@@ -131,7 +141,11 @@ public class Mutation {
 			${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setRoleLocalService(_roleLocalService);
 
 			<#if generateBatch>
-				<#assign useVulcanBatchEngineImportTaskResource = true />
+				<#assign useVulcanBatchEngineTaskResources = true />
+
+				<#if freeMarkerTool.isVersionCompatible(configYAML, 2)>
+					${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setVulcanBatchEngineExportTaskResource(_vulcanBatchEngineExportTaskResource);
+				</#if>
 
 				${freeMarkerTool.getSchemaVarName(schemaName)}Resource.setVulcanBatchEngineImportTaskResource(_vulcanBatchEngineImportTaskResource);
 			</#if>
@@ -143,7 +157,13 @@ public class Mutation {
 	</#list>
 
 	private AcceptLanguage _acceptLanguage;
+
+	<#if generateAggregationFunction>
+		private BiFunction<Object, List<String>, Aggregation> _aggregationBiFunction;
+	</#if>
+
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
@@ -152,7 +172,11 @@ public class Mutation {
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
 
-	<#if useVulcanBatchEngineImportTaskResource??>
+	<#if useVulcanBatchEngineTaskResources??>
+		<#if freeMarkerTool.isVersionCompatible(configYAML, 2)>
+			private VulcanBatchEngineExportTaskResource _vulcanBatchEngineExportTaskResource;
+		</#if>
+
 		private VulcanBatchEngineImportTaskResource _vulcanBatchEngineImportTaskResource;
 	</#if>
 

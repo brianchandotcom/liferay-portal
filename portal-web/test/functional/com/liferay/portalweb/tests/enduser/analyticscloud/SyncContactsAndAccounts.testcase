@@ -282,18 +282,50 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12665 | Test Summary: Can sync all contacts by groups"
 	@priority = "5"
 	test CanSyncAllContactsByGroups {
+		property analytics.cloud.upstream = "false";
+		property portal.release = "true";
 
-		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
-		// This test should cover the SyncDataSourceContactsByGroups after the changes
+		task ("Add user, group and assign user to group") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		task ("Create some user groups") {
 			JSONUserGroup.addUserGroup(
-				userGroupDescription = "Group 1",
-				userGroupName = "Group 1");
+				userGroupDescription = "User Group Description",
+				userGroupName = "User Group Name");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
+			User.assignUserGroupCP(userGroupName = "User Group Name");
 		}
 
-		task ("Click on sync by user groups") {
-			ACDXPSettings.syncContactsData(userGroup = "Minium User Group");
+		task ("Create a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(userGroup = "User Group Name");
+		}
+
+		task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
+		}
+
+		task ("Click on Select Contacts") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
 		}
 
 		task ("See that there's one user group selected") {
@@ -301,23 +333,143 @@ definition {
 				syncFieldName = "User Groups",
 				syncNumber = "1 Selected");
 		}
+
+		task ("Interact with the user who belongs to the user group and the user who does not belong") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "ac@liferay.com,userea@liferay.com",
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+		}
+
+		task ("Go to Known Individuals tab") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+		}
+
+		task ("Check that the user who is not included in the user group does not appear in the AC") {
+			ACUtils.searchBar(searchItem = "ac ac");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no results found.");
+		}
+
+		task ("Assert that the new user is present") {
+			ACUtils.searchBar(searchItem = "userfn userln");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "userfn userln");
+
+			ACNavigation.switchTab(tabName = "Details");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userea@liferay.com");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userfn");
+		}
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12662 | Test Summary: Can sync all contacts by organizations"
 	@priority = "5"
 	test CanSyncAllContactsByOrganizations {
+		property analytics.cloud.upstream = "false";
+		property portal.release = "true";
 
-		// We need to update this tests when it is possible to interact with the DXP and verify that the contacts appear in the AC
-		// This test should cover the SyncDataSourceContactsByOrganizations after the changes
+		task ("Create a new user, a new organization and assign the organization for the created user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		task ("Click on sync by organizations") {
-			ACDXPSettings.syncContactsData(orgName = "Minium");
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name",
+				userEmailAddress = "userea@liferay.com");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			UsersAndOrganizationsNavigator.gotoOrganizations();
+
+			Organization.gotoCP(orgName = "Organization Name");
+
+			Organization.viewUser(userName = "userfn userln");
+		}
+
+		task ("Create a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(orgName = "Organization Name");
+		}
+
+		task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
+		}
+
+		task ("Click on Select Contacts") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
 		}
 
 		task ("See that there's one organization selected") {
 			ACDXPSettings.viewSyncNumberPreview(
 				syncFieldName = "Organizations",
 				syncNumber = "1 Selected");
+		}
+
+		task ("Interact with the user who belongs to the organization and the user who does not belong") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "ac@liferay.com,userea@liferay.com",
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+		}
+
+		task ("Go to Known Individuals tab") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+		}
+
+		task ("Check that the user who is not included in the organization does not appear in the AC") {
+			ACUtils.searchBar(searchItem = "ac ac");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no results found.");
+		}
+
+		task ("Assert that the new user is present") {
+			ACUtils.searchBar(searchItem = "userfn userln");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "userfn userln");
+
+			ACNavigation.switchTab(tabName = "Details");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userea@liferay.com");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "userfn");
 		}
 	}
 

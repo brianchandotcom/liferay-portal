@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(immediate = true, service = AssetCategoryConfigurationProvider.class)
+@Component(service = AssetCategoryConfigurationProvider.class)
 public class AssetCategoryConfigurationProviderImpl
 	implements AssetCategoryConfigurationProvider {
 

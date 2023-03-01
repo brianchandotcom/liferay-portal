@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Cristina González
  */
-@Component(immediate = true, service = EventSegmentsCriteriaContributor.class)
+@Component(service = {})
 public class EventSegmentsCriteriaContributor
 	implements SegmentsCriteriaContributor {
 

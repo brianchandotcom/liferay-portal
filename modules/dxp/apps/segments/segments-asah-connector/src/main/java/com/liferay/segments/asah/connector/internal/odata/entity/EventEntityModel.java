@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Cristina González
  */
 @Component(
-	immediate = true, property = "entity.model.name=" + EventEntityModel.NAME,
+	property = "entity.model.name=" + EventEntityModel.NAME,
 	service = EntityModel.class
 )
 public class EventEntityModel implements EntityModel {

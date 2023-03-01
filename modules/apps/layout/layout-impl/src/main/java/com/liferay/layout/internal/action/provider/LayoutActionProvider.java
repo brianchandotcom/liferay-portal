@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
@@ -76,9 +74,6 @@ public class LayoutActionProvider {
 		_language = language;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 
-		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
-			(PortletRequest)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST));
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -350,7 +345,7 @@ public class LayoutActionProvider {
 
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
-				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/select_layout_collections.jsp"
@@ -374,7 +369,7 @@ public class LayoutActionProvider {
 
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
-				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/select_layout_page_template_entry.jsp"
@@ -410,7 +405,7 @@ public class LayoutActionProvider {
 	private String _getConfigureLayoutURL() throws Exception {
 		PortletURL configureLayoutURL = PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
-				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/layout_admin/edit_layout"
@@ -420,8 +415,7 @@ public class LayoutActionProvider {
 
 		if (layout.isTypeAssetDisplay() || layout.isTypeControlPanel()) {
 			String redirect = ParamUtil.getString(
-				_liferayPortletRequest, "redirect",
-				_themeDisplay.getURLCurrent());
+				_httpServletRequest, "redirect", _themeDisplay.getURLCurrent());
 
 			configureLayoutURL.setParameter("redirect", redirect);
 			configureLayoutURL.setParameter("backURL", redirect);
@@ -456,8 +450,7 @@ public class LayoutActionProvider {
 			"/layout_admin/add_layout"
 		).setRedirect(
 			ParamUtil.getString(
-				_liferayPortletRequest, "redirect",
-				_themeDisplay.getURLCurrent())
+				_httpServletRequest, "redirect", _themeDisplay.getURLCurrent())
 		).setParameter(
 			"privateLayout", layout.isPrivateLayout()
 		).setParameter(
@@ -478,7 +471,7 @@ public class LayoutActionProvider {
 		}
 
 		String redirect = ParamUtil.getString(
-			_liferayPortletRequest, "redirect", _themeDisplay.getURLCurrent());
+			_httpServletRequest, "redirect", _themeDisplay.getURLCurrent());
 
 		Layout curLayout = _themeDisplay.getLayout();
 
@@ -502,7 +495,7 @@ public class LayoutActionProvider {
 
 		return ActionURLBuilder.createActionURL(
 			(ActionURL)PortalUtil.getControlPanelPortletURL(
-				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/layout_admin/delete_layout"
@@ -588,7 +581,7 @@ public class LayoutActionProvider {
 
 	private String _getViewCollectionItemsURL() throws Exception {
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_liferayPortletRequest, AssetListEntry.class.getName(),
+			_httpServletRequest, AssetListEntry.class.getName(),
 			PortletProvider.Action.BROWSE);
 
 		if (portletURL == null) {
@@ -602,7 +595,7 @@ public class LayoutActionProvider {
 
 		if (layout.isTypeAssetDisplay() || layout.isTypeControlPanel()) {
 			redirect = ParamUtil.getString(
-				_liferayPortletRequest, "redirect", redirect);
+				_httpServletRequest, "redirect", redirect);
 		}
 
 		portletURL.setParameter("redirect", redirect);
@@ -701,7 +694,6 @@ public class LayoutActionProvider {
 	private final GroupProvider _groupProvider;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
-	private final LiferayPortletRequest _liferayPortletRequest;
 	private String _pageTypeSelectedOption;
 	private String _redirect;
 	private final SiteNavigationMenuLocalService

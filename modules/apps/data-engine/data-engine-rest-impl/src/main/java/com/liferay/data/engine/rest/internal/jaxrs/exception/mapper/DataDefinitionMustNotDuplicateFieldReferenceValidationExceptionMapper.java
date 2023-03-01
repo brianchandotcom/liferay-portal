@@ -52,7 +52,8 @@ public class
 				StringPool.COMMA),
 			Response.Status.BAD_REQUEST,
 			mustNotDuplicateFieldReference.getMessage(),
-			"MustNotDuplicateFieldReference");
+			DataDefinitionValidationException.MustNotDuplicateFieldReference.
+				class.getName());
 	}
 
 }

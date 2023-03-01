@@ -57,7 +57,8 @@ public class
 			).toString(),
 			Response.Status.BAD_REQUEST,
 			mustSetValidAvailableLocalesForProperty.getMessage(),
-			"MustSetValidAvailableLocalesForProperty");
+			DataDefinitionValidationException.
+				MustSetValidAvailableLocalesForProperty.class.getName());
 	}
 
 }

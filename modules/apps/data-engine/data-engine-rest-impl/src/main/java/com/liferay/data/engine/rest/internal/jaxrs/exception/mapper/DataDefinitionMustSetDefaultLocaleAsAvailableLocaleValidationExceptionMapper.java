@@ -52,7 +52,8 @@ public class
 				mustSetDefaultLocaleAsAvailableLocale.getDefaultLocale()),
 			Response.Status.BAD_REQUEST,
 			mustSetDefaultLocaleAsAvailableLocale.getMessage(),
-			"MustSetDefaultLocaleAsAvailableLocale");
+			DataDefinitionValidationException.
+				MustSetDefaultLocaleAsAvailableLocale.class.getName());
 	}
 
 	@Reference

@@ -56,7 +56,8 @@ public class DataDefinitionMustNotDuplicateFieldNameValidationExceptionMapper
 		return new Problem(
 			stream.collect(Collectors.joining(StringPool.COMMA)),
 			Response.Status.BAD_REQUEST, mustNotDuplicateFieldName.getMessage(),
-			"MustNotDuplicateFieldName");
+			DataDefinitionValidationException.MustNotDuplicateFieldName.class.
+				getName());
 	}
 
 }

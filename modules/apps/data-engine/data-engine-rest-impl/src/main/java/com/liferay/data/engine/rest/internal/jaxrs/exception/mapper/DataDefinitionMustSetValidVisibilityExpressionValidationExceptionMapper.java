@@ -55,7 +55,8 @@ public class
 			).toString(),
 			Response.Status.BAD_REQUEST,
 			mustSetValidVisibilityExpression.getMessage(),
-			"MustSetValidVisibilityExpression");
+			DataDefinitionValidationException.MustSetValidVisibilityExpression.
+				class.getName());
 	}
 
 }

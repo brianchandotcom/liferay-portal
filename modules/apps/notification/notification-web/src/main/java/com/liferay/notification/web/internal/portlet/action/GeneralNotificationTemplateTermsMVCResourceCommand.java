@@ -16,9 +16,8 @@ package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,27 +36,39 @@ import org.osgi.service.component.annotations.Component;
 public class GeneralNotificationTemplateTermsMVCResourceCommand
 	extends BaseNotificationTemplateTermsMVCResourceCommand {
 
-	@Override
-	protected Set<Map.Entry<String, String>> getEntrySet() {
-		return _currentUserTermsMap.entrySet();
+	public enum CurrentUserTerm {
+
+		CURRENT_USER_EMAIL(
+			"current-user-email-address", "[%CURRENT_USER_EMAIL%]"),
+		CURRENT_USER_FIRST_NAME(
+			"current-user-first-name", "[%CURRENT_USER_FIRSTNAME%]"),
+		CURRENT_USER_ID("current-user-id", "[%CURRENT_USER_ID%]"),
+		CURRENT_USER_LAST_NAME(
+			"current-user-last-name", "[%CURRENT_USER_LASTNAME%]"),
+		CURRENT_USER_MIDDLE_NAME(
+			"current-user-middle-name", "[%CURRENT_USER_MIDDLENAME%]"),
+		CURRENT_USER_PREFIX("current-user-prefix", "[%CURRENT_USER_PREFIX%]"),
+		CURRENT_USER_SUFFIX("current-user-suffix", "[%CURRENT_USER_SUFFIX%]");
+
+		private CurrentUserTerm(String key, String termName) {
+			_key = key;
+			_termName = termName;
+		}
+
+		private final String _key;
+		private final String _termName;
+
 	}
 
-	private static final Map<String, String> _currentUserTermsMap =
-		Collections.unmodifiableMap(
-			HashMapBuilder.put(
-				"current-user-email-address", "[%CURRENT_USER_EMAIL%]"
-			).put(
-				"current-user-first-name", "[%CURRENT_USER_FIRSTNAME%]"
-			).put(
-				"current-user-id", "[%CURRENT_USER_ID%]"
-			).put(
-				"current-user-last-name", "[%CURRENT_USER_LASTNAME%]"
-			).put(
-				"current-user-middle-name", "[%CURRENT_USER_MIDDLENAME%]"
-			).put(
-				"current-user-prefix", "[%CURRENT_USER_PREFIX%]"
-			).put(
-				"current-user-suffix", "[%CURRENT_USER_SUFFIX%]"
-			).build());
+	@Override
+	protected Set<Map.Entry<String, String>> getEntrySet() {
+		Map<String, String> map = new LinkedHashMap<>();
+
+		for (CurrentUserTerm currentUserTerm : CurrentUserTerm.values()) {
+			map.put(currentUserTerm._key, currentUserTerm._termName);
+		}
+
+		return map.entrySet();
+	}
 
 }

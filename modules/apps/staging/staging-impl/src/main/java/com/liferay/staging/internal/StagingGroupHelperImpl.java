@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -152,12 +151,8 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 
 	@Override
 	public Group getStagedPortletGroup(Group group, String portletId) {
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if (stagingGroupHelper.isLocalStagingGroup(group.getGroupId()) &&
-			!stagingGroupHelper.isStagedPortlet(
-				group.getGroupId(), portletId)) {
+		if (isLocalStagingGroup(group.getGroupId()) &&
+			!isStagedPortlet(group.getGroupId(), portletId)) {
 
 			return group.getLiveGroup();
 		}
@@ -167,7 +162,9 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 
 	@Override
 	public long getStagedPortletGroupId(long groupId, String portletId) {
-		if (!isStagedPortlet(groupId, portletId)) {
+		if (!isStagedPortlet(groupId, portletId) &&
+			!isRemoteStagingGroup(groupId)) {
+
 			Group liveGroup = fetchLiveGroup(groupId);
 
 			if (liveGroup != null) {

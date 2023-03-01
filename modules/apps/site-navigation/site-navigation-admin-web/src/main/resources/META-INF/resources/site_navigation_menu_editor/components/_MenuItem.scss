@@ -5,6 +5,10 @@
 
 	.delete-item-button {
 		opacity: 0;
+
+		&:focus {
+			opacity: 1;
+		}
 	}
 
 	&:hover,

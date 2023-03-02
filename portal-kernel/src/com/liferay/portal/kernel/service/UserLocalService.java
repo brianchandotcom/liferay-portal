@@ -212,6 +212,18 @@ public interface UserLocalService
 	public void addTeamUsers(long teamId, long[] userIds)
 		throws PortalException;
 
+	public User addUser(
+			long creatorUserId, long companyId, boolean autoPassword,
+			String password1, String password2, boolean autoScreenName,
+			String screenName, String emailAddress, Locale locale,
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, int type, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Adds a user.
 	 *
@@ -295,6 +307,18 @@ public interface UserLocalService
 	 * @throws PortalException
 	 */
 	public void addUserGroupUsers(long userGroupId, long[] userIds)
+		throws PortalException;
+
+	public User addUserWithWorkflow(
+			long creatorUserId, long companyId, boolean autoPassword,
+			String password1, String password2, boolean autoScreenName,
+			String screenName, String emailAddress, Locale locale,
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, int type, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -788,6 +812,9 @@ public interface UserLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public User fetchDefaultUser(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public User fetchDefaultUser(long companyId, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public User fetchUser(long userId);

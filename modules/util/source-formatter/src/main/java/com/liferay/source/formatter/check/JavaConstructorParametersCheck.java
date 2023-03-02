@@ -54,7 +54,8 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 			content = _fixIncorrectEmptyLines(
 				content, _missingLineBreakPattern2, parameters);
 
-			return _fixPassedInVariables(content, parameters, fileContent);
+			return _fixPassedInVariables(
+				absolutePath, content, parameters, fileContent);
 		}
 
 		return javaTerm.getContent();
@@ -313,7 +314,12 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 	}
 
 	private String _fixPassedInVariables(
-		String content, List<JavaParameter> parameters, String fileContent) {
+		String absolutePath, String content, List<JavaParameter> parameters,
+		String fileContent) {
+
+		if (!isAttributeValue(_CHECK_PASSED_IN_VARIABLES_KEY, absolutePath)) {
+			return content;
+		}
 
 		for (JavaParameter parameter : parameters) {
 			String parameterName = parameter.getParameterName();
@@ -506,6 +512,9 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 
 		return content;
 	}
+
+	private static final String _CHECK_PASSED_IN_VARIABLES_KEY =
+		"checkPassedInVariables";
 
 	private static final Pattern _assignCallPattern = Pattern.compile(
 		"\t(_|this\\.)(\\w+) (=[^;]+;)\n");

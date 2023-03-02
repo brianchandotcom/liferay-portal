@@ -74,7 +74,7 @@ class SelectEventEntityInput extends React.Component {
 			<div className="criterion-input input-group select-entity-input">
 				<div className="input-group-item input-group-prepend">
 					<input
-						data-testid="entity-select-input"
+						data-testid="entity-select-event-input"
 						disabled={disabled}
 						type="hidden"
 						value={value}

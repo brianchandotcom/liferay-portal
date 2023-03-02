@@ -22,5 +22,7 @@ dependencies {
 	testIntegrationCompile group: "org.mockito", name: "mockito-core", version: "1.10.8"
 	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationCompile project(":apps:portal:portal-upgrade-test-util")
+	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

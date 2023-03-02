@@ -413,6 +413,30 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								"item.class.name",
 								objectDefinition.getClassName()
 							).build()));
+
+					ObjectRelationship reverseObjectRelationship =
+						_objectRelationshipLocalService.getObjectRelationship(
+							objectRelationship.getObjectDefinitionId2(),
+							objectRelationship.getName());
+
+					ObjectDefinition objectDefinition2 =
+						_objectDefinitionLocalService.getObjectDefinition(
+							objectRelationship.getObjectDefinitionId2());
+
+					serviceRegistrations.add(
+						_bundleContext.registerService(
+							RelatedInfoItemCollectionProvider.class,
+							new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+								objectDefinition2,
+								_objectDefinitionLocalService,
+								_objectEntryLocalService,
+								reverseObjectRelationship),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"company.id", objectDefinition2.getCompanyId()
+							).put(
+								"item.class.name",
+								objectDefinition2.getClassName()
+							).build()));
 				}
 				else if (Objects.equals(
 							objectRelationship.getType(),

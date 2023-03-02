@@ -2881,7 +2881,7 @@ export default function ChangeTrackingChangesView({
 							<ManageCollaborators {...collaboratorsData} />
 						</ClayToolbar.Item>
 
-						{Liferay.FeatureFlags['LPS-171364'] ? (
+						{Liferay.FeatureFlags['LPS-171364'] && publishURL ? (
 							<ClayToolbar.Item>
 								<MoveChangesModal
 									changes={selectedChanges}

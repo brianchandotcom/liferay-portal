@@ -36,7 +36,7 @@ public class FileEntryDisplayContextHelper {
 
 		_fileEntry = fileEntry;
 
-		if (_fileEntry == null) {
+		if (fileEntry == null) {
 			_setValuesForNullFileEntry();
 		}
 	}

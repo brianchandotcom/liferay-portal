@@ -29,7 +29,7 @@ public class RESTContextPathResolverImpl implements RESTContextPathResolver {
 
 		_objectScopeProvider = objectScopeProvider;
 
-		if (_objectScopeProvider.isGroupAware() && !system) {
+		if (objectScopeProvider.isGroupAware() && !system) {
 			_contextPath = contextPath + "/scopes/{scopeKey}";
 		}
 		else {

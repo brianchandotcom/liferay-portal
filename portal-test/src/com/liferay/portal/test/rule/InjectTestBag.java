@@ -49,7 +49,7 @@ public class InjectTestBag {
 			for (Field field : ReflectionUtil.getDeclaredFields(testClass)) {
 				boolean staticField = Modifier.isStatic(field.getModifiers());
 
-				if (((_target == null) == staticField) &&
+				if (((target == null) == staticField) &&
 					field.isAnnotationPresent(Inject.class)) {
 
 					_fields.add(field);

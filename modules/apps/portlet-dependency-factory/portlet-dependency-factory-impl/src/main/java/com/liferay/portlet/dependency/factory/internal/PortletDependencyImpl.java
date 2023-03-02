@@ -37,7 +37,7 @@ public class PortletDependencyImpl implements PortletDependency {
 		_markup = markup;
 		_absolutePortalURLBuilder = absolutePortalURLBuilder;
 
-		if (_name == null) {
+		if (name == null) {
 			_type = Type.OTHER;
 		}
 		else if (_name.endsWith(".css")) {

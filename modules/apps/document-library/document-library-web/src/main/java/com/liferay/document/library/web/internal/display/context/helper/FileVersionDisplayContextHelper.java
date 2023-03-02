@@ -26,7 +26,7 @@ public class FileVersionDisplayContextHelper {
 	public FileVersionDisplayContextHelper(FileVersion fileVersion) {
 		_fileVersion = fileVersion;
 
-		if (_fileVersion == null) {
+		if (fileVersion == null) {
 			_approved = false;
 			_draft = false;
 			_officeDoc = false;

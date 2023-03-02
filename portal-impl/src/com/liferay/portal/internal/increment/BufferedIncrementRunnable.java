@@ -41,7 +41,7 @@ public class BufferedIncrementRunnable implements Runnable {
 		_queueLengthTracker = queueLengthTracker;
 		_dispatchThread = dispatchThread;
 
-		if (_bufferedIncrementConfiguration.isStandbyEnabled()) {
+		if (bufferedIncrementConfiguration.isStandbyEnabled()) {
 			_queueLengthTracker.incrementAndGet();
 		}
 

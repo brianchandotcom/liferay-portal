@@ -68,7 +68,7 @@ public class SoyComponentRendererHelper {
 			(String)_context.get("id"), componentDescriptor.getComponentId());
 
 		_elementSelector = _getElementSelector(
-			_wrapperId, _componentDescriptor.isWrapper());
+			_wrapperId, componentDescriptor.isWrapper());
 
 		_prepareContext();
 	}

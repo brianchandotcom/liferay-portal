@@ -44,7 +44,7 @@ public class PortletAppImpl implements PortletApp {
 	public PortletAppImpl(String servletContextName) {
 		_servletContextName = servletContextName;
 
-		if (Validator.isNotNull(_servletContextName)) {
+		if (Validator.isNotNull(servletContextName)) {
 			_contextPath = StringPool.SLASH.concat(_servletContextName);
 			_warFile = true;
 		}

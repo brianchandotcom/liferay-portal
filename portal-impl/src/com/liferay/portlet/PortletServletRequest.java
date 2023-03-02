@@ -72,7 +72,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 		_lifecycle = _liferayPortletRequest.getLifecycle();
 
-		if (Validator.isNotNull(_queryString)) {
+		if (Validator.isNotNull(queryString)) {
 			_liferayPortletRequest.setPortletRequestDispatcherRequest(
 				httpServletRequest);
 		}

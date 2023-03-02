@@ -34,7 +34,7 @@ public class FileShortcutDisplayContextHelper {
 
 		_fileShortcut = fileShortcut;
 
-		if (_fileShortcut == null) {
+		if (fileShortcut == null) {
 			_setValuesForNullFileShortcut();
 		}
 	}

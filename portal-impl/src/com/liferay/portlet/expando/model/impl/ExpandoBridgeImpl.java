@@ -63,7 +63,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	public ExpandoBridgeImpl(long companyId, String className, long classPK) {
 		_companyId = companyId;
 
-		if (_companyId == 0) {
+		if (companyId == 0) {
 			_companyId = CompanyThreadLocal.getCompanyId();
 		}
 

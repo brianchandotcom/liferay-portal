@@ -90,7 +90,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 
 	<c:if test="<%= !hideAgendaView %>">
 		window.<portlet:namespace />agendaView = new Liferay.SchedulerAgendaView({
-			daysCount: <%= maxDaysDisplayed %>,
+			daysCount: <%= maxDaysDisplayed + 1 %>,
 			height: 700,
 			isoTime: <%= useIsoTimeFormat %>,
 			readOnly: <%= readOnly %>,

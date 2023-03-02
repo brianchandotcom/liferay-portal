@@ -16,12 +16,25 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -47,8 +60,48 @@ public class DownloadFileEntryMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-			ParamUtil.getLong(resourceRequest, "fileEntryId"));
+		long fileEntryId = 0;
+
+		DDMFormInstanceRecord ddmFormInstanceRecord =
+			_ddmFormInstanceRecordService.getFormInstanceRecord(
+				ParamUtil.getLong(resourceRequest, "ddmFormInstanceRecordId"));
+
+		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap(true);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmFormFieldValuesMap.get(
+					ParamUtil.getString(resourceRequest, "ddmFormFieldName"))) {
+
+			Value value = ddmFormFieldValue.getValue();
+
+			if (value == null) {
+				continue;
+			}
+
+			JSONObject valueJSONObject = _jsonFactory.createJSONObject(
+				value.getString(themeDisplay.getLocale()));
+
+			if (valueJSONObject.isNull("fileEntryId")) {
+				continue;
+			}
+
+			if (Objects.equals(
+					valueJSONObject.getLong("fileEntryId"),
+					ParamUtil.getLong(resourceRequest, "fileEntryId"))) {
+
+				fileEntryId = valueJSONObject.getLong("fileEntryId");
+
+				break;
+			}
+		}
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, fileEntry.getFileName(),
@@ -57,6 +110,12 @@ public class DownloadFileEntryMVCResourceCommand
 	}
 
 	@Reference
+	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

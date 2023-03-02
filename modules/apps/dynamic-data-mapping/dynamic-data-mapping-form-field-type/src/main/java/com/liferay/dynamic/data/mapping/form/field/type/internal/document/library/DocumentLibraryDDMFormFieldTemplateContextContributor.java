@@ -141,9 +141,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				return value;
 			}
 		).putAll(
-			_getFileEntryParameters(
-				ddmFormFieldRenderingContext.getHttpServletRequest(),
-				ddmFormFieldRenderingContext.getValue())
+			_getFileEntryParameters(ddmFormField, ddmFormFieldRenderingContext)
 		).putAll(
 			_getUploadParameters(ddmFormField, ddmFormFieldRenderingContext)
 		).build();
@@ -354,7 +352,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 	}
 
 	private Map<String, Object> _getFileEntryParameters(
-		HttpServletRequest httpServletRequest, String value) {
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		String value = ddmFormFieldRenderingContext.getValue();
 
 		if (Validator.isNull(value)) {
 			return new HashMap<>();
@@ -379,12 +380,18 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 					RequestBackedPortletURLFactoryUtil.create(
-						httpServletRequest);
+						ddmFormFieldRenderingContext.getHttpServletRequest());
 
 				return ResourceURLBuilder.createResourceURL(
 					(ResourceURL)
 						requestBackedPortletURLFactory.createResourceURL(
 							DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM)
+				).setParameter(
+					"ddmFormFieldName", ddmFormField.getName()
+				).setParameter(
+					"ddmFormInstanceRecordId",
+					ddmFormFieldRenderingContext.getProperty(
+						"ddmFormInstanceRecordId")
 				).setParameter(
 					"fileEntryId", fileEntry.getFileEntryId()
 				).setResourceID(

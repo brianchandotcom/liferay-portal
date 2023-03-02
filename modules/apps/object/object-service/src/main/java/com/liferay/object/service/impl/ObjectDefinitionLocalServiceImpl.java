@@ -840,7 +840,8 @@ public class ObjectDefinitionLocalServiceImpl
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 
 		dbTableName = _getDBTableName(
-			dbTableName, name, system, user.getCompanyId(), shortName);
+			dbTableName, modifiable, name, system, user.getCompanyId(),
+			shortName);
 
 		pkObjectFieldName = _getPKObjectFieldName(
 			pkObjectFieldName, system, shortName);
@@ -865,7 +866,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setCompanyId(user.getCompanyId());
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
-		objectDefinition.setActive(system);
+		objectDefinition.setActive(!modifiable && system);
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setClassName(
 			_getClassName(
@@ -899,7 +900,7 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition.class.getName(),
 			objectDefinition.getObjectDefinitionId(), false, true, true);
 
-		if (!objectDefinition.isSystem()) {
+		if (!objectDefinition.isSystem() || objectDefinition.isModifiable()) {
 			dbTableName = "ObjectEntry";
 		}
 
@@ -940,7 +941,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition = _updateTitleObjectFieldId(
 			objectDefinition, titleObjectFieldName);
 
-		if (system) {
+		if (!modifiable && system) {
 			_createTable(
 				objectDefinition.getExtensionDBTableName(), objectDefinition);
 		}
@@ -984,7 +985,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		String dbColumnName = ObjectEntryTable.INSTANCE.objectEntryId.getName();
 
-		if (system) {
+		if (!objectDefinition.isModifiable() && system) {
 			dbColumnName = pkObjectFieldName;
 		}
 
@@ -1050,14 +1051,14 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private String _getDBTableName(
-		String dbTableName, String name, boolean system, Long companyId,
-		String shortName) {
+		String dbTableName, boolean modifiable, String name, boolean system,
+		Long companyId, String shortName) {
 
 		if (Validator.isNotNull(dbTableName)) {
 			return dbTableName;
 		}
 
-		if (system) {
+		if (!modifiable && system) {
 			return name;
 		}
 
@@ -1296,8 +1297,9 @@ public class ObjectDefinitionLocalServiceImpl
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 
 		dbTableName = _getDBTableName(
-			dbTableName, name, objectDefinition.isSystem(),
-			objectDefinition.getCompanyId(), shortName);
+			dbTableName, objectDefinition.isModifiable(), name,
+			objectDefinition.isSystem(), objectDefinition.getCompanyId(),
+			shortName);
 
 		pkObjectFieldName = _getPKObjectFieldName(
 			pkObjectFieldName, objectDefinition.isSystem(), shortName);

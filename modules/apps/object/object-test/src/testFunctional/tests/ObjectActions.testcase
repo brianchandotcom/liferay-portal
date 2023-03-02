@@ -511,7 +511,7 @@ definition {
 
 		task ("When: An entry is added and updated") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customObjectField",
+				fieldName = "customField",
 				objectName = "CustomObject175191",
 				value = "Entry Test");
 

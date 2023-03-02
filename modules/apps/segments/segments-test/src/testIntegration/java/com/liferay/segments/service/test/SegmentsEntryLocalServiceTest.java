@@ -15,6 +15,7 @@
 package com.liferay.segments.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,7 +61,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -133,15 +133,10 @@ public class SegmentsEntryLocalServiceTest {
 			segmentsEntry.getSegmentsEntryId(), classPKs,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		List<SegmentsEntryRel> segmentsEntryRels =
+		long[] actualClassPKs = TransformUtil.transformToLongArray(
 			_segmentsEntryRelLocalService.getSegmentsEntryRels(
-				segmentsEntry.getSegmentsEntryId());
-
-		Stream<SegmentsEntryRel> stream = segmentsEntryRels.stream();
-
-		long[] actualClassPKs = stream.mapToLong(
-			SegmentsEntryRel::getClassPK
-		).toArray();
+				segmentsEntry.getSegmentsEntryId()),
+			SegmentsEntryRel::getClassPK);
 
 		Assert.assertTrue(ArrayUtil.containsAll(actualClassPKs, classPKs));
 	}

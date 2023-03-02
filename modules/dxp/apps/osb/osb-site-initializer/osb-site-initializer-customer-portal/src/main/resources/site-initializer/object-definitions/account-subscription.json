@@ -67,6 +67,16 @@
 			"required": false
 		},
 		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Product Key"
+			},
+			"name": "productKey",
+			"required": false
+		},
+		{
 			"DBType": "Integer",
 			"indexed": true,
 			"indexedAsKeyword": false,

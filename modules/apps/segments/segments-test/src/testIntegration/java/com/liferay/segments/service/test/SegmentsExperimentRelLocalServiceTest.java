@@ -16,6 +16,7 @@ package com.liferay.segments.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -43,7 +44,6 @@ import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -222,11 +222,9 @@ public class SegmentsExperimentRelLocalServiceTest {
 			segmentsExperimentRels.toString(), 3,
 			segmentsExperimentRels.size());
 
-		Stream<SegmentsExperimentRel> stream = segmentsExperimentRels.stream();
-
-		long[] segmentsExperienceIds = stream.mapToLong(
-			SegmentsExperimentRelModel::getSegmentsExperienceId
-		).toArray();
+		long[] segmentsExperienceIds = TransformUtil.transformToLongArray(
+			segmentsExperimentRels,
+			SegmentsExperimentRelModel::getSegmentsExperienceId);
 
 		Assert.assertTrue(
 			ArrayUtil.containsAll(

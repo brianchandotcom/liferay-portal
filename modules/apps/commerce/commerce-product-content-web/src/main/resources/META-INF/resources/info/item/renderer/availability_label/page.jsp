@@ -20,13 +20,13 @@
 	<span class="label-item label-item-expand"><%= label %></span>
 </span>
 
-<c:if test="<%= Validator.isNotNull(namespace) %>">
-	<liferay-frontend:component
-		context='<%=
-			HashMapBuilder.<String, Object>put(
-				"namespace", namespace
-			).build()
-		%>'
-		module="info/item/renderer/availability_label/js/AvailabilityCPInstanceChangeHandler"
-	/>
-</c:if>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"displayAvailability", displayAvailability
+		).put(
+			"namespace", namespace
+		).build()
+	%>'
+	module="info/item/renderer/availability_label/js/AvailabilityCPInstanceChangeHandler"
+/>

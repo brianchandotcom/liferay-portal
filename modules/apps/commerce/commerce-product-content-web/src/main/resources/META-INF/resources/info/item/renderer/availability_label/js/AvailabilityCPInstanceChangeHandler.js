@@ -16,21 +16,24 @@ import * as Events from 'commerce-frontend-js/utilities/eventsDefinitions';
 
 const COMPONENT_NAME = 'availability-label';
 
-export default function ({namespace}) {
+export default function ({displayAvailability, namespace}) {
 	Liferay.on(`${namespace}${Events.CP_INSTANCE_CHANGED}`, ({cpInstance}) => {
 		const elementClassName = `${namespace}${COMPONENT_NAME}`;
 
 		const componentElement = document.querySelector(`.${elementClassName}`);
 
 		if (componentElement) {
-			const {availability, availabilityDisplayType} = cpInstance;
+			let availabilityDisplayType = 'danger';
 
-			componentElement.querySelector(
-				'.label-item'
-			).innerHTML = availability;
+			if (cpInstance.availability.label === 'available') {
+				availabilityDisplayType = 'success';
+			}
+
+			componentElement.querySelector('.label-item').innerHTML =
+				cpInstance.availability.label_i18n;
 
 			componentElement.className = `label ${
-				availabilityDisplayType
+				displayAvailability
 					? `label-${availabilityDisplayType}`
 					: 'invisible'
 			} m-0 ${elementClassName}`;

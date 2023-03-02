@@ -18,6 +18,7 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.commerce.frontend.util.ProductHelper;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
@@ -25,6 +26,7 @@ import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -75,6 +77,15 @@ public class AvailabilityLabelInfoItemRenderer
 		}
 
 		try {
+			CPDefinitionInventory cpDefinitionInventory =
+				_cpDefinitionInventoryLocalService.
+					fetchCPDefinitionInventoryByCPDefinitionId(
+						cpDefinition.getCPDefinitionId());
+
+			httpServletRequest.setAttribute(
+				"liferay-commerce:availability-label:displayAvailability",
+				cpDefinitionInventory.isDisplayAvailability());
+
 			String namespace = (String)httpServletRequest.getAttribute(
 				"liferay-commerce:availability-label:namespace");
 
@@ -172,6 +183,10 @@ public class AvailabilityLabelInfoItemRenderer
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
 
 	@Reference
 	private Language _language;

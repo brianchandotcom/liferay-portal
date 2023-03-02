@@ -90,7 +90,7 @@ public class MentionsPortletTest {
 
 	@Test
 	public void testServletResponseWithoutQuery() throws Exception {
-		_addUser("example", _group.getGroupId());
+		_addUser("example");
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -126,7 +126,7 @@ public class MentionsPortletTest {
 	public void testServletResponseWithQueryWithFullScreenName()
 		throws Exception {
 
-		_addUser("example", _group.getGroupId());
+		_addUser("example");
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -159,7 +159,7 @@ public class MentionsPortletTest {
 	public void testServletResponseWithQueryWithPartialScreenName()
 		throws Exception {
 
-		_addUser("example", _group.getGroupId());
+		_addUser("example");
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -189,7 +189,7 @@ public class MentionsPortletTest {
 
 	@Test
 	public void testServletResponseWithQueryWithWildard() throws Exception {
-		_addUser("example", _group.getGroupId());
+		_addUser("example");
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -263,16 +263,14 @@ public class MentionsPortletTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private User _addUser(String screenName, long... groupIds)
-		throws Exception {
-
+	private User _addUser(String screenName) throws Exception {
 		User adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());
 
 		return UserTestUtil.addUser(
 			_company.getCompanyId(), adminUser.getUserId(), screenName,
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), groupIds,
-			ServiceContextTestUtil.getServiceContext());
+			RandomTestUtil.randomString(), new long[] {_group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
 	}
 
 	private void _assertAnyJSONObject(

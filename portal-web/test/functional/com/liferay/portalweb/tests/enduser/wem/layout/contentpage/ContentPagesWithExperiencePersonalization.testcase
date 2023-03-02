@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-157033 Given the View mode of a page When an experience is active in the Control Menu Then the ACTIVE label will appear next to the experience name"
 	@priority = 3
 	test ActiveExperienceLabelInControlMenu {
 		task ("Create an experience and add on content page") {
@@ -69,7 +69,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-157033 Given the View mode of a page When the Experience dropdown menu is displayed And there experiences active Then the ACTIVE label will appear next to each experience name active"
 	@priority = 3
 	test ActiveExperienceLabelInViewDropdown {
 		task ("Create an experience and add on content page") {
@@ -249,7 +249,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-157033 Given the View mode of a page When an experience is inactive in the Control Menu Then the INACTIVE label will appear next to the experience name"
 	@priority = 3
 	test InactiveExperienceLabelInControlMenu {
 		task ("Create an experience and add on content page") {
@@ -281,7 +281,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-157033 Given the View mode of a page When the Experience dropdown menu is displayed And there experiences inactive Then the INACTIVE label will appear next to each experience name inactive"
 	@priority = 3
 	test InactiveExperienceLabelInViewDropdown {
 		task ("Create an experience and add on content page") {

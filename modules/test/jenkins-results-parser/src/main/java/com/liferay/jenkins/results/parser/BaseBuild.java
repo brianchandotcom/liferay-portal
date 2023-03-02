@@ -111,7 +111,8 @@ public abstract class BaseBuild implements Build {
 		ParallelExecutor<Build> parallelExecutor = new ParallelExecutor<>(
 			callables, true, getExecutorService());
 
-		downstreamBuilds.addAll(parallelExecutor.execute());
+		downstreamBuilds.addAll(
+			parallelExecutor.execute(1000L * 60L * 60L * 3L));
 	}
 
 	@Override

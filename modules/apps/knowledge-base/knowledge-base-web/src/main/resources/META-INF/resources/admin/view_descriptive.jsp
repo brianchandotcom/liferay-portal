@@ -170,7 +170,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator
-		displayStyle="descriptive"
+		displayStyle="<%= kbAdminManagementToolbarDisplayContext.getDisplayStyle() %>"
 		markupView="lexicon"
 		resultRowSplitter="<%= kbFolderView ? new KBResultRowSplitter() : null %>"
 	/>

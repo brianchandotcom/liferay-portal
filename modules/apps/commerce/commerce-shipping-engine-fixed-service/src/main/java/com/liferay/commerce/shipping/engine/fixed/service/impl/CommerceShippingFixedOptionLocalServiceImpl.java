@@ -59,12 +59,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -405,15 +402,13 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 			nameMap.get(LocaleThreadLocal.getDefaultLocale()));
 
 		if (Validator.isNull(key)) {
-			Collection<String> values = nameMap.values();
+			for (String value : nameMap.values()) {
+				if (Validator.isNotNull(value)) {
+					key = FriendlyURLNormalizerUtil.normalize(value);
 
-			Stream<String> stream = values.stream();
-
-			Optional<String> firstOptional = stream.filter(
-				value -> Validator.isNotNull(value)
-			).findFirst();
-
-			key = FriendlyURLNormalizerUtil.normalize(firstOptional.get());
+					break;
+				}
+			}
 		}
 
 		CommerceShippingFixedOption commerceShippingFixedOption =

@@ -40,9 +40,7 @@ public class DockerListImage extends AbstractDockerRemoteApiTask {
 		ObjectFactory objectFactory = project.getObjects();
 
 		_imageIdProperty = objectFactory.property(String.class);
-
 		_imagesProperty = objectFactory.listProperty(Image.class);
-
 		_withDanglingFilter = objectFactory.property(Boolean.class);
 
 		Action<Image> action = new Action<Image>() {
@@ -75,7 +73,9 @@ public class DockerListImage extends AbstractDockerRemoteApiTask {
 			List<Image> images = listImagesCmd.exec();
 
 			for (Image image : images) {
-				getNextHandler().execute(image);
+				Action<Image> action = getNextHandler();
+
+				action.execute(image);
 			}
 		}
 	}

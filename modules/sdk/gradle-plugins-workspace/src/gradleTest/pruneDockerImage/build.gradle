@@ -20,14 +20,13 @@ buildImage {
 
 	doLast {
 		imageId = buildImageOne.getImageId().get()
-
 	}
 
 	finalizedBy buildImageTwo
 }
 
 buildImageOne {
-	dependsOn "verifyProduct", "createDockerfile"
+	dependsOn "createDockerfile", "verifyProduct"
 	mustRunAfter "verifyProduct"
 
 	doLast {
@@ -45,12 +44,11 @@ buildImageOne {
 		assert inputDirFileNames.contains("patching")
 		assert inputDirFileNames.contains("scripts")
 		assert inputDirFileNames.contains("work")
-
 	}
 }
 
 buildImageTwo {
-	dependsOn "verifyProduct", "createDockerfile"
+	dependsOn "createDockerfile", "verifyProduct"
 	mustRunAfter "verifyProduct"
 
 	doLast {
@@ -68,7 +66,6 @@ buildImageTwo {
 		assert inputDirFileNames.contains("patching")
 		assert inputDirFileNames.contains("scripts")
 		assert inputDirFileNames.contains("work")
-
 	}
 }
 
@@ -81,7 +78,6 @@ pruneDanglingImage {
 
 	doFirst {
 		assert buildImage.getImages().toString().contains(imageId)
-
 	}
 
 	finalizedBy pruneDockerImage
@@ -92,7 +88,6 @@ runGradleTest {
 
 	doLast {
 		assert !checkDanglingImage.getImages().toString().contains(imageId)
-
 	}
 
 	finalizedBy cleanDockerImage

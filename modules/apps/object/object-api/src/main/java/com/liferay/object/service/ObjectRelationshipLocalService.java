@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -373,6 +374,9 @@ public interface ObjectRelationshipLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void registerObjectRelationshipsRelatedInfoCollectionProviders(
+		ObjectDefinition objectDefinition);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectRelationship updateObjectRelationship(

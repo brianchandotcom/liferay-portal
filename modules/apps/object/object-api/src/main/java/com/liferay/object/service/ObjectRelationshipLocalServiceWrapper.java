@@ -539,6 +539,15 @@ public class ObjectRelationshipLocalServiceWrapper
 	}
 
 	@Override
+	public void registerObjectRelationshipsRelatedInfoCollectionProviders(
+		com.liferay.object.model.ObjectDefinition objectDefinition) {
+
+		_objectRelationshipLocalService.
+			registerObjectRelationshipsRelatedInfoCollectionProviders(
+				objectDefinition);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectRelationship updateObjectRelationship(
 			long objectRelationshipId, long parameterObjectFieldId,
 			String deletionType,

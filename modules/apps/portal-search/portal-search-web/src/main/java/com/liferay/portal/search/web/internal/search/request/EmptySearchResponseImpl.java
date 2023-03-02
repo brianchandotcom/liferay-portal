@@ -39,12 +39,8 @@ import java.util.function.Function;
  */
 public class EmptySearchResponseImpl implements SearchResponse {
 
-	public EmptySearchResponseImpl(
-		SearchContext searchContext, SearchRequest searchRequest) {
-
+	public EmptySearchResponseImpl(SearchRequest searchRequest) {
 		_searchRequest = searchRequest;
-
-		_facetContextImpl = new FacetContextImpl(searchContext);
 	}
 
 	@Override
@@ -135,7 +131,7 @@ public class EmptySearchResponseImpl implements SearchResponse {
 	public <T> T withFacetContextGet(
 		Function<FacetContext, T> facetContextFunction) {
 
-		return facetContextFunction.apply(_facetContextImpl);
+		return null;
 	}
 
 	@Override
@@ -160,7 +156,6 @@ public class EmptySearchResponseImpl implements SearchResponse {
 		return null;
 	}
 
-	private final FacetContextImpl _facetContextImpl;
 	private final Hits _hits = new HitsImpl();
 	private final SearchRequest _searchRequest;
 

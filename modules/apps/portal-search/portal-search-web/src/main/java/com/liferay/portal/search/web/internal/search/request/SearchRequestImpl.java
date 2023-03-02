@@ -85,7 +85,7 @@ public class SearchRequestImpl {
 					SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH))) {
 
 			searchResponse = new EmptySearchResponseImpl(
-				searchContext, searchRequestBuilder.build());
+				searchRequestBuilder.build());
 		}
 		else {
 			searchResponse = _searcher.search(searchRequestBuilder.build());

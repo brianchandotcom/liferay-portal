@@ -1228,13 +1228,14 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	private String _getDefaultArticleLanguageIdRelatedDDMStructure() {
-		if (_ddmStructure != null) {
+		DDMStructure ddmStructure = getDDMStructure();
+
+		if (ddmStructure != null) {
 			try {
 				JournalArticle ddmStructureArticle =
 					JournalArticleServiceUtil.getArticle(
-						_ddmStructure.getGroupId(),
-						DDMStructure.class.getName(),
-						_ddmStructure.getStructureId());
+						ddmStructure.getGroupId(), DDMStructure.class.getName(),
+						ddmStructure.getStructureId());
 
 				return ddmStructureArticle.getDefaultLanguageId();
 			}

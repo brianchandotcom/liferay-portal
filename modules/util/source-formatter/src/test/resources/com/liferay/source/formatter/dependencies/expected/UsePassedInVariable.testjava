@@ -17,18 +17,17 @@ package com.liferay.source.formatter.dependencies;
 /**
  * @author Qi Zhang
  */
-public class UsePassedInVar {
+public class UsePassedInVariable {
 
-	public UsePassedInVar(String testA) {
+	public UsePassedInVariable(String testA) {
 		_testA = testA;
 
-		_testBytes = _testA.getBytes();
+		_testBytes = testA.getBytes();
 
-		_testB = _getMethod(_testA);
+		_testB = _getMethod(testA);
 	}
 
 	private String _getMethod(String a) {
-
 		return a.subString(1);
 	}
 

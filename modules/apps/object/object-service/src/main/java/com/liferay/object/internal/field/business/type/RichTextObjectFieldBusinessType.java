@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
-	service = {
-		ObjectFieldBusinessType.class, RichTextObjectFieldBusinessType.class
-	}
+	service = ObjectFieldBusinessType.class
 )
 public class RichTextObjectFieldBusinessType
 	implements ObjectFieldBusinessType {

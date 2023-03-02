@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
-	service = {
-		LongIntegerObjectFieldBusinessType.class, ObjectFieldBusinessType.class
-	}
+	service = ObjectFieldBusinessType.class
 )
 public class LongIntegerObjectFieldBusinessType
 	implements ObjectFieldBusinessType {

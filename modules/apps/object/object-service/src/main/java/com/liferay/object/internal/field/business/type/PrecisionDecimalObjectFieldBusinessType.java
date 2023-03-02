@@ -35,10 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
-	service = {
-		ObjectFieldBusinessType.class,
-		PrecisionDecimalObjectFieldBusinessType.class
-	}
+	service = ObjectFieldBusinessType.class
 )
 public class PrecisionDecimalObjectFieldBusinessType
 	implements ObjectFieldBusinessType {

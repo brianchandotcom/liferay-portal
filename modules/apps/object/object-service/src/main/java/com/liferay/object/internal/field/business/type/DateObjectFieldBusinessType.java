@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_DATE,
-	service = {DateObjectFieldBusinessType.class, ObjectFieldBusinessType.class}
+	service = ObjectFieldBusinessType.class
 )
 public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
 

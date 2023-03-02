@@ -52,9 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
-	service = {
-		ObjectFieldBusinessType.class, RelationshipObjectFieldBusinessType.class
-	}
+	service = ObjectFieldBusinessType.class
 )
 public class RelationshipObjectFieldBusinessType
 	implements ObjectFieldBusinessType {

@@ -54,9 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-	service = {
-		ObjectFieldBusinessType.class, PicklistObjectFieldBusinessType.class
-	}
+	service = ObjectFieldBusinessType.class
 )
 public class PicklistObjectFieldBusinessType
 	implements ObjectFieldBusinessType {

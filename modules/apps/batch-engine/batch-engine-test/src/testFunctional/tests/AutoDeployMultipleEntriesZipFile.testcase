@@ -102,9 +102,9 @@ definition {
 				actual = ${blogTotalCount},
 				expected = 2);
 
-			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "TestObject");
-
-			var objectStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = ${objectDefinitionId});
+			var objectStatus = ObjectDefinitionAPI.getObjectDefinitionStatusByName(
+				name = "TestObject",
+				objectDefinitionId = ${objectDefinitionId});
 
 			TestUtils.assertEquals(
 				actual = ${objectStatus},
@@ -133,10 +133,12 @@ definition {
 		}
 
 		task ("Then all object definitions are imported") {
-			var objectDefinitionId1 = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "TestObject");
-			var objectDefinitionId2 = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Coupon");
-			var objectStatus1 = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = ${objectDefinitionId1});
-			var objectStatus2 = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = ${objectDefinitionId2});
+			var objectStatus1 = ObjectDefinitionAPI.getObjectDefinitionStatusByName(
+				name = "TestObject",
+				objectDefinitionId = ${objectDefinitionId1});
+			var objectStatus2 = ObjectDefinitionAPI.getObjectDefinitionStatusByName(
+				name = "Coupon",
+				objectDefinitionId = ${objectDefinitionId2});
 
 			TestUtils.assertEquals(
 				actual = ${objectStatus1},

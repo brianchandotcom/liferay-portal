@@ -744,6 +744,14 @@ definition {
 		return ${response};
 	}
 
+	macro getObjectDefinitionStatusByName {
+		var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${name});
+
+		var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = ${objectDefinitionId});
+
+		return ${objectDefinitionStatus};
+	}
+
 	macro getObjectEntries {
 		Variables.assertDefined(parameterList = ${en_US_plural_label});
 

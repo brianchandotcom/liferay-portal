@@ -14,6 +14,7 @@
 
 package com.liferay.image.internal;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.image.ImageMagick;
@@ -60,7 +61,9 @@ public class ImageMagickImpl implements ImageMagick {
 			reset();
 		}
 
-		ProcessExecutor processExecutor = _getProcessExecutor();
+		ProcessExecutor processExecutor =
+			_processExecutorDCLSingleton.getSingleton(
+				ImageMagickImpl::_createProcessExecutor);
 
 		LiferayConvertCmd liferayConvertCmd = new LiferayConvertCmd();
 
@@ -74,15 +77,7 @@ public class ImageMagickImpl implements ImageMagick {
 
 	@Override
 	public void destroy() {
-		if (_processExecutor == null) {
-			return;
-		}
-
-		synchronized (ProcessExecutor.class) {
-			_processExecutor.shutdownNow();
-		}
-
-		_processExecutor = null;
+		_processExecutorDCLSingleton.destroy(ProcessExecutor::shutdownNow);
 	}
 
 	@Override
@@ -132,7 +127,9 @@ public class ImageMagickImpl implements ImageMagick {
 				"Cannot call \"identify\" when ImageMagick is disabled");
 		}
 
-		ProcessExecutor processExecutor = _getProcessExecutor();
+		ProcessExecutor processExecutor =
+			_processExecutorDCLSingleton.getSingleton(
+				ImageMagickImpl::_createProcessExecutor);
 
 		LiferayIdentifyCmd liferayIdentifyCmd = new LiferayIdentifyCmd();
 
@@ -225,23 +222,15 @@ public class ImageMagickImpl implements ImageMagick {
 		return resourceLimits;
 	}
 
-	private ProcessExecutor _getProcessExecutor() {
-		if (_processExecutor != null) {
-			return _processExecutor;
-		}
+	private static ProcessExecutor _createProcessExecutor() {
+		ProcessExecutor processExecutor = new ProcessExecutor();
 
-		synchronized (ProcessExecutor.class) {
-			if (_processExecutor == null) {
-				_processExecutor = new ProcessExecutor();
+		processExecutor.setThreadFactory(
+			new NamedThreadFactory(
+				ImageMagickImpl.class.getName(), Thread.MIN_PRIORITY,
+				PortalClassLoaderUtil.getClassLoader()));
 
-				_processExecutor.setThreadFactory(
-					new NamedThreadFactory(
-						ImageMagickImpl.class.getName(), Thread.MIN_PRIORITY,
-						PortalClassLoaderUtil.getClassLoader()));
-			}
-		}
-
-		return _processExecutor;
+		return processExecutor;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -252,7 +241,8 @@ public class ImageMagickImpl implements ImageMagick {
 	@Reference
 	private PrefsProps _prefsProps;
 
-	private volatile ProcessExecutor _processExecutor;
+	private final DCLSingleton<ProcessExecutor> _processExecutorDCLSingleton =
+		new DCLSingleton<>();
 	private Properties _resourceLimitsProperties;
 	private boolean _warned;
 

@@ -176,7 +176,8 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 		String parameterName) {
 
 		Pattern pattern = Pattern.compile(
-			StringBundler.concat("\\b", globalVariableName, "\\b"));
+			StringBundler.concat(
+				"\\b(", globalVariableName, "|", parameterName, ")\\b"));
 
 		Matcher matcher1 = pattern.matcher(content);
 
@@ -194,6 +195,8 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				break;
 			}
 
+			String matchedGlobalVariableName = matcher1.group();
+
 			if (followingCode.startsWith(".")) {
 				if (!followingCode.startsWith(".get") &&
 					!followingCode.startsWith(".is")) {
@@ -201,8 +204,12 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 					break;
 				}
 
-				return StringUtil.replaceFirst(
-					content, globalVariableName, parameterName, start);
+				if (StringUtil.equals(
+						matchedGlobalVariableName, globalVariableName)) {
+
+					return StringUtil.replaceFirst(
+						content, globalVariableName, parameterName, start);
+				}
 			}
 
 			char previousChar = content.charAt(start - 1);
@@ -273,8 +280,12 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 					return content;
 				}
 
-				return StringUtil.replaceFirst(
-					content, globalVariableName, parameterName, start);
+				if (StringUtil.equals(
+						matchedGlobalVariableName, globalVariableName)) {
+
+					return StringUtil.replaceFirst(
+						content, globalVariableName, parameterName, start);
+				}
 			}
 		}
 

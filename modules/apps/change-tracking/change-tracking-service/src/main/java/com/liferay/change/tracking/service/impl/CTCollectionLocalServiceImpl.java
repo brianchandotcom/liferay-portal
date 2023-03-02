@@ -704,8 +704,6 @@ public class CTCollectionLocalServiceImpl
 				)
 			));
 
-		//ctEntrySet.addAll(ctEntries);
-
 		Set<CTEntry> ctEntrySet = new HashSet<>();
 
 		for (CTEntry ctEntry : ctEntries) {

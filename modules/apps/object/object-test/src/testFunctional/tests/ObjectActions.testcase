@@ -1191,6 +1191,97 @@ definition {
 		}
 	}
 
+	@description = "LPS-175196 - Verify if is possible create a validation using the oldValue function using the Picklist field"
+	test CanCreateValidationUsingOldValueFunctionWithPicklistField {
+		task ("Given: A picklist with two items is created (via API)") {
+			Picklist.addPicklistViaAPI(picklistName = "Status");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "open",
+				itemName = "Open",
+				picklistName = "Status");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "inProgress",
+				itemName = "In Progress",
+				picklistName = "Status");
+		}
+
+		task ("And given: An object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175196",
+				objectName = "CustomObject175196",
+				pluralLabelName = "Custom Objects 175196");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Picklist",
+				fieldLabelName = "Custom Picklist Field",
+				fieldName = "customPicklistField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject175196",
+				picklistName = "Status");
+		}
+
+		task ("And given: A custom validation with expression builder is created and the object is published") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175196");
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Expression Builder");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = '''oldValue("customPicklistField") == "open"''');
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "Invalid Value.");
+
+			PortletEntry.save();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175196");
+		}
+
+		task ("When: An entry is created") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175196");
+
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Open");
+		}
+
+		task ("And when: the validation toggle is active") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175196");
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			PortletEntry.save();
+		}
+
+		task ("Then: The validation condition is met and the entry can be updated") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175196");
+
+			ObjectPortlet.viewEntryDetails(entry = "Open");
+
+			ObjectAdmin.changePicklistFieldEntry(
+				entrySelected = "Open",
+				newPicklistOption = "In Progress");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175196");
+
+			ObjectPortlet.viewEntry(entry = "In Progress");
+		}
+	}
+
 	@description = "LPS-139008 - Verify it is possible to delete an Action"
 	@priority = 5
 	test CanDeleteAction {

@@ -76,20 +76,7 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 			properties
 		);
 
-		Configuration[] configurations = {configuration};
-
-		ConfigurationAdmin configurationAdmin = Mockito.mock(
-			ConfigurationAdmin.class);
-
-		Mockito.when(
-			configurationAdmin.listConfigurations(Mockito.any())
-		).thenReturn(
-			configurations
-		);
-
-		ReflectionTestUtil.getAndSetFieldValue(
-			_segmentsContextVocabularyConfigurationModelListener,
-			"configurationAdmin", configurationAdmin);
+		_setUpConfigurationAdmin(configuration);
 
 		_segmentsContextVocabularyConfigurationModelListener.onBeforeSave(
 			pid, properties);
@@ -131,20 +118,7 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 			propertiesConfiguration
 		);
 
-		Configuration[] configurations = {configuration};
-
-		ConfigurationAdmin configurationAdmin = Mockito.mock(
-			ConfigurationAdmin.class);
-
-		Mockito.when(
-			configurationAdmin.listConfigurations(Mockito.any())
-		).thenReturn(
-			configurations
-		);
-
-		ReflectionTestUtil.getAndSetFieldValue(
-			_segmentsContextVocabularyConfigurationModelListener,
-			"configurationAdmin", configurationAdmin);
+		_setUpConfigurationAdmin(configuration);
 
 		_segmentsContextVocabularyConfigurationModelListener.onBeforeSave(
 			pid, properties);
@@ -184,20 +158,7 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 			propertiesConfiguration
 		);
 
-		Configuration[] configurations = {configuration};
-
-		ConfigurationAdmin configurationAdmin = Mockito.mock(
-			ConfigurationAdmin.class);
-
-		Mockito.when(
-			configurationAdmin.listConfigurations(Mockito.any())
-		).thenReturn(
-			configurations
-		);
-
-		ReflectionTestUtil.getAndSetFieldValue(
-			_segmentsContextVocabularyConfigurationModelListener,
-			"configurationAdmin", configurationAdmin);
+		_setUpConfigurationAdmin(configuration);
 
 		_segmentsContextVocabularyConfigurationModelListener.onBeforeSave(
 			pid, properties);
@@ -215,6 +176,23 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
+	}
+
+	private void _setUpConfigurationAdmin(Configuration configuration)
+		throws Exception {
+
+		ConfigurationAdmin configurationAdmin = Mockito.mock(
+			ConfigurationAdmin.class);
+
+		Mockito.when(
+			configurationAdmin.listConfigurations(Mockito.any())
+		).thenReturn(
+			new Configuration[] {configuration}
+		);
+
+		ReflectionTestUtil.getAndSetFieldValue(
+			_segmentsContextVocabularyConfigurationModelListener,
+			"configurationAdmin", configurationAdmin);
 	}
 
 	private final SegmentsContextVocabularyConfigurationModelListener

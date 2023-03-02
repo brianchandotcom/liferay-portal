@@ -2,6 +2,8 @@
 definition {
 
 	property ci.retries.disabled = "true";
+	property custom.properties = "feature.flag.LPS-142518=true${line.separator}jsonws.web.service.paths.excludes=${line.separator}system.properties.set=true${line.separator}system.properties.set.override=true";
+	property custom.system.properties = "cookie.http.only.names.excludes=GUEST_LANGUAGE_ID";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Cookies";
@@ -80,6 +82,127 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-170904 TC-7. Verify only functional cookies are set when Instance level configuration is Disabled, and the user is a first-time visitor."
+	@priority = 5
+	test VerifyFunctionalCookiesForFirstVisitInInstanceLevelDisableImplicitMode {
+		property test.name.skip.portal.instance = "CookiesSiteLevelUseCase#VerifyFunctionalCookiesForFirstVisitInInstanceLevelDisableImplicitMode";
+
+		task ("Given: Site Administrator disabled the cookie preference handling in instance level and the implicit cookie consent mode.") {
+			CookiePreferenceHandlingAdmin.disablePreferenceHandlingWithOutCookieConsentInSiteSettings(
+				baseURL = "http://localhost:8080",
+				portlet = "Preference Handling",
+				siteURLKey = "guest");
+
+			CookiePreferenceHandlingAdmin.disablePreferenceHandling(explicitMode = "disable");
+		}
+
+		task ("When: End User first visits the site") {
+			UserBar.signOut();
+
+			CookieHelper.deleteAllCookiesAndRefreshPage();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:8080",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Then: Verify No cookies are set, only the functional cookie: GUEST_LANGUAGE_ID is set verify cookie banner is not present.") {
+			CookieBanner.verifyCookieBannerIsNotPresent();
+
+			CookieConsentPanel.verifyCookiesForCookieCategoriesAreNotPresent();
+
+			CookieHelper._checkSelectedCookieValue(
+				cookieName = "GUEST_LANGUAGE_ID",
+				expectedCookieValue = "en_US");
+		}
+	}
+
+	@description = "This is a use case for LPS-170904 TC-6. Verify only functional cookies are set in instance level and Implicit mode, when the user is a first-time visitor."
+	@priority = 5
+	test VerifyFunctionalCookiesForFirstVisitInstanceLevelImplicitMode {
+		property test.name.skip.portal.instance = "CookiesSiteLevelUseCase#VerifyFunctionalCookiesForFirstVisitInstanceLevelImplicitMode";
+
+		task ("Given: Site Administrator enabled the cookie preference handling in instance level and the explicit cookie consent mode.") {
+			CookiePreferenceHandlingAdmin.disablePreferenceHandlingWithOutCookieConsentInSiteSettings(
+				baseURL = "http://localhost:8080",
+				portlet = "Preference Handling",
+				siteURLKey = "guest");
+
+			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithOutCookieConsentInInstanceSittings();
+		}
+
+		task ("When: End User first visits the site") {
+			UserBar.signOut();
+
+			CookieHelper.deleteAllCookiesAndRefreshPage();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:8080",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Then: Verify No cookies are set, not even the functional cookie: GUEST_LANGUAGE_ID verify cookie banner is present.") {
+			CookieBanner.verifyCookieBannerIsPresent();
+
+			CookieConsentPanel.verifyCookiesForCookieCategoriesAreNotPresent();
+
+			CookieHelper._checkSelectedCookieValue(
+				cookieName = "GUEST_LANGUAGE_ID",
+				expectedCookieValue = "en_US");
+		}
+	}
+
+	@description = "This is a use case for LPS-170904 TC-8. Verify only functional cookies are set in Site level enable then disable, when the user isn't a first-time visitor."
+	@priority = 5
+	test VerifyFunctionalCookiesForNotFirstVisitInInstanceLevelEnableThenDisable {
+		property test.name.skip.portal.instance = "CookiesSiteLevelUseCase#VerifyFunctionalCookiesForNotFirstVisitInInstanceLevelEnableThenDisable";
+
+		task ("Given: Site Administrator enabled agreed on the cookie usage, then disable the cookie preference handling in site level.") {
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:8080",
+				userEmailAddress = "test@liferay.com");
+
+			CookieBanner.cookiesBannerAcceptAll();
+
+			CookieHelper.checkAllCookieAreAcceptedAndSaved();
+
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:8080",
+				userEmailAddress = "test@liferay.com");
+
+			CookiePreferenceHandlingAdmin.disablePreferenceHandling();
+		}
+
+		task ("When: End User first visits the site") {
+			UserBar.signOut();
+
+			CookieHelper.deleteAllCookiesAndRefreshPage();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:8080",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Then: Verify No cookies are set, not even the functional cookie: GUEST_LANGUAGE_ID verify cookie banner is present.") {
+			CookieBanner.verifyCookieBannerIsNotPresent();
+
+			CookieConsentPanel.verifyCookiesForCookieCategoriesAreNotPresent();
+
+			CookieHelper._checkSelectedCookieValue(
+				cookieName = "GUEST_LANGUAGE_ID",
+				expectedCookieValue = "en_US");
+		}
+	}
+
 	@description = "This is a use case for LPS-159221 TC-1. Verifying that Cookies are not saved until End-User sets them via Cookie Banner. Blocked by LPS-162952."
 	@ignore = "true"
 	@priority = 5
@@ -115,6 +238,42 @@ definition {
 
 		task ("Then: Cookies are saved with true as value.") {
 			CookieHelper.checkEachCookiesSavedValue(cookieNameListWithTrueValue = "CONSENT_TYPE_NECESSARY,CONSENT_TYPE_PERSONALIZATION,CONSENT_TYPE_FUNCTIONAL,CONSENT_TYPE_PERFORMANCE");
+		}
+	}
+
+	@description = "This is a use case for LPS-170904 TC-5. Verify no cookies are set in instance level and Explicit mode, when the user is a first-time visitor"
+	@priority = 5
+	test VerifyNoCookiesForFirstVisitInstanceLevelExplicitMode {
+		property test.name.skip.portal.instance = "CookiesSiteLevelUseCase#VerifyNoCookiesForFirstVisitInstanceLevelExplicitMode";
+
+		task ("Given: Site Administrator enabled the cookie preference handling in instance level and the explicit cookie consent mode.") {
+			CookiePreferenceHandlingAdmin.disablePreferenceHandlingWithOutCookieConsentInSiteSettings(
+				baseURL = "http://localhost:8080",
+				portlet = "Preference Handling",
+				siteURLKey = "guest");
+
+			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithCookieConsent();
+		}
+
+		task ("When: End User first visits the site") {
+			UserBar.signOut();
+
+			CookieHelper.deleteAllCookiesAndRefreshPage();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:8080",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Then: Verify No cookies are set, not even the functional cookie: GUEST_LANGUAGE_ID verify cookie banner is present.") {
+			CookieBanner.verifyCookieBannerIsPresent();
+
+			CookieConsentPanel.verifyCookiesForCookieCategoriesAreNotPresent();
+
+			CookieHelper.checkSelectedCookieIsNotPresent(
+				cookieName = "GUEST_LANGUAGE_ID",
+				expectedCookieValue = "en_US");
 		}
 	}
 

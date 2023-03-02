@@ -14,6 +14,11 @@
 <!-- GENERAL CARDS -->
 
 <tr>
+	<td>CHART_DATA_PRESENT</td>
+	<td>//*[text()='${key_cardName}']/../..//div[@data-qa-is-chart-populated='true']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INTERVAL_OPTION</td>
 	<td>//button[contains(@class,'interval-option')][normalize-space(text())='${interval}']</td>
 	<td></td>

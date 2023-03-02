@@ -16,6 +16,7 @@ package com.liferay.commerce.internal.order.status;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceShippingHelper;
@@ -70,6 +71,29 @@ public class PartiallyShippedCommerceOrderStatusImpl
 	@Override
 	public int getPriority() {
 		return PRIORITY;
+	}
+
+	public boolean isTransitionCriteriaMet(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		boolean allOrderItemsShipped = true;
+
+		for (CommerceOrderItem shippedCommerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			if ((shippedCommerceOrderItem.getShippedQuantity() <
+					shippedCommerceOrderItem.getQuantity()) &&
+				shippedCommerceOrderItem.isShippable()) {
+
+				allOrderItemsShipped = false;
+			}
+		}
+
+		if (!allOrderItemsShipped) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

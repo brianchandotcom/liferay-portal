@@ -672,7 +672,9 @@ public class UpgradeReport {
 				sb.append(_printContextMap(key, (Map<?, ?>)value));
 			}
 			else if (value instanceof List<?>) {
-				sb.append(_getUpgradeReportHeaderFromKey(key));
+				String header = _getUpgradeReportHeaderFromKey(key);
+
+				sb.append(header);
 
 				List<Object> elements = (List<Object>)value;
 
@@ -683,7 +685,10 @@ public class UpgradeReport {
 				else {
 					sb.append(StringPool.NEW_LINE);
 					sb.append(
-						"-------------------------------------------------");
+						ListUtil.toString(
+							Collections.nCopies(
+								header.length(), StringPool.MINUS),
+							StringPool.NULL, StringPool.BLANK));
 					sb.append(StringPool.NEW_LINE);
 
 					for (Object object : (List<Object>)value) {

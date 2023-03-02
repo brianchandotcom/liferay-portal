@@ -37,6 +37,11 @@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.petra.string.StringUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.Layout" %><%@
+page import="com.liferay.portal.kernel.model.Portlet" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletIdCodec" %><%@
+page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.PortletPreferenceValueLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -51,7 +56,8 @@ page import="com.liferay.template.web.internal.display.context.EditDDMTemplateDi
 page import="com.liferay.template.web.internal.display.context.InformationTemplatesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.template.web.internal.display.context.InformationTemplatesTemplateDisplayContext" %><%@
 page import="com.liferay.template.web.internal.display.context.WidgetTemplatesManagementToolbarDisplayContext" %><%@
-page import="com.liferay.template.web.internal.display.context.WidgetTemplatesTemplateDisplayContext" %>
+page import="com.liferay.template.web.internal.display.context.WidgetTemplatesTemplateDisplayContext" %><%@
+page import="com.liferay.template.web.internal.display.context.WidgetTemplatesTemplateViewUsagesDisplayContext" %>
 
 <%@ page import="java.util.Objects" %>
 

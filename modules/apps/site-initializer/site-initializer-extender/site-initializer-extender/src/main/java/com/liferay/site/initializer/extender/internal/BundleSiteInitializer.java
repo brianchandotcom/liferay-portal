@@ -1111,6 +1111,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-162765")) {
+			return;
+		}
+
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			"/site-initializer/layout-utility-page-entries", StringPool.STAR,
 			true);

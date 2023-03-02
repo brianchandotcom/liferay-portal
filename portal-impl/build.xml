@@ -441,7 +441,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="format-source-all">
 		<antcall target="format-source-files">
-			<param name="check.vulnerabilities" value="false" />
+			<param name="check.vulnerabilities" value="${check.vulnerabilities}" />
 		</antcall>
 	</target>
 

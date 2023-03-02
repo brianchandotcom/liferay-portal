@@ -26,20 +26,31 @@
  * details.
  */
 import ClayButton from '@clayui/button';
+import {useEffect, useState} from 'react';
 
 import {updateRaylifeApplication} from '../../../../../../../common/services';
-import {CONSTANTS} from '../../../../../../../common/utils/constants';
+import {getUserNotification} from '../../../../../../../common/services/UserNotification';
+import {
+	CONSTANTS,
+	ConstantListType,
+} from '../../../../../../../common/utils/constants';
 import {redirectTo} from '../../../../../../../common/utils/liferay';
 
 import './index.scss';
 
 type UnderwriterApplicationType = {
 	externalReferenceCode?: string;
+	id?: number;
 };
 
 const UnderwritingContent = ({
 	externalReferenceCode,
+	id,
 }: UnderwriterApplicationType) => {
+	const [underwriterComment, setUnderwriterComment] = useState<String | null>(
+		null
+	);
+
 	const handleUpdateApplicationStatus = () => {
 		updateRaylifeApplication(
 			externalReferenceCode as string,
@@ -47,6 +58,32 @@ const UnderwritingContent = ({
 		);
 
 		redirectTo('Applications');
+	};
+
+	useEffect(() => {
+		getUserNotification().then((response) => {
+			const notifications = response?.data?.items;
+
+			const message = notifications.filter(
+				(notification: ConstantListType) => {
+					if (notification.message.includes(`${id}`)) {
+						return notification.message;
+					}
+				}
+			);
+
+			const comment = message[0]?.message?.split(': ')[1];
+
+			setUnderwriterComment(comment);
+		});
+	}, [id]);
+
+	const handleShowComment = () => {
+		if (underwriterComment !== null) {
+			return underwriterComment
+				? underwriterComment
+				: 'This is uninsurable';
+		}
 	};
 
 	return (
@@ -79,7 +116,7 @@ const UnderwritingContent = ({
 							Underwriter Comments
 						</div>
 
-						<div>This is uninsurable</div>
+						{handleShowComment()}
 					</>
 				)}
 			</div>

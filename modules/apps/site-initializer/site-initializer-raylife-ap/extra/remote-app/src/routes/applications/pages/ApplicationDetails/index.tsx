@@ -184,7 +184,7 @@ const ApplicationDetails = () => {
 							)}
 
 							{currentStep === STEP.REJECTED && (
-								<UnderwritingContent />
+								<UnderwritingContent id={app?.data?.id} />
 							)}
 						</ActionDetail>
 					</div>

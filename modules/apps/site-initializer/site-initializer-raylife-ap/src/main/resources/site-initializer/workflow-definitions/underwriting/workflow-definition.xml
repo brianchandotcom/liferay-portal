@@ -122,7 +122,7 @@
 		</metadata>
 		<actions>
 			<action>
-				<name>reviewed</name>
+				<name>Reviewed</name>
 				<description></description>
 				<script>
 	  <![CDATA[
@@ -277,7 +277,7 @@ WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.]]>
+					<![CDATA[Application ${entryClassPK} has been reviewed by underwriting and requires your attention.<#if taskComments?has_content>The reviewer applied the following comment: ${taskComments}</#if>.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>

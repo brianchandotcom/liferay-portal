@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -167,6 +168,34 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			groupId, searchContext, cpQuery, 0, 0);
 
 		return cpDefinitionSearcher.searchCount(searchContext);
+	}
+
+	@Override
+	public List<CPDefinition> searchCPDefinitions(
+			long groupId, SearchContext searchContext, CPQuery cpQuery,
+			int start, int end)
+		throws PortalException {
+
+		List<CPDefinition> cpDefinitions = new ArrayList<>();
+
+		CPDefinitionSearcher cpDefinitionSearcher = _getCPDefinitionSearcher(
+			groupId, searchContext, cpQuery, start, end);
+
+		Hits hits = cpDefinitionSearcher.search(searchContext);
+
+		Document[] documents = hits.getDocs();
+
+		for (Document document : documents) {
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.fetchCPDefinition(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+
+			if (cpDefinition != null) {
+				cpDefinitions.add(cpDefinition);
+			}
+		}
+
+		return cpDefinitions;
 	}
 
 	private long _checkChannelGroupId(long groupId) {

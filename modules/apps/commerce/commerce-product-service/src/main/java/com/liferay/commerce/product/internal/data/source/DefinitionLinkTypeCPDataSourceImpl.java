@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.internal.data.source;
 
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -25,16 +24,12 @@ import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.util.CPDefinitionLinkSearchUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -81,37 +76,16 @@ public class DefinitionLinkTypeCPDataSourceImpl implements CPDataSource {
 			return new CPDataSourceResult(new ArrayList<>(), 0);
 		}
 
-		SearchContext searchContext = new SearchContext();
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		searchContext.setAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				Field.STATUS, WorkflowConstants.STATUS_APPROVED
-			).put(
-				"commerceAccountGroupIds",
-				() -> {
-					CommerceContext commerceContext =
-						(CommerceContext)httpServletRequest.getAttribute(
-							CommerceWebKeys.COMMERCE_CONTEXT);
-
-					CommerceAccount commerceAccount =
-						commerceContext.getCommerceAccount();
-
-					if (commerceAccount == null) {
-						return null;
-					}
-
-					return _commerceAccountHelper.getCommerceAccountGroupIds(
-						commerceAccount.getCommerceAccountId());
-				}
-			).put(
-				"definitionLinkCPDefinitionId",
-				cpCatalogEntry.getCPDefinitionId()
-			).put(
-				"definitionLinkType", _cpDefinitionLinkTypeConfiguration.type()
-			).put(
-				"excludedCPDefinitionId", cpCatalogEntry.getCPDefinitionId()
-			).build());
-		searchContext.setCompanyId(_portal.getCompanyId(httpServletRequest));
+		SearchContext searchContext =
+			CPDefinitionLinkSearchUtil.getCPDefinitionLinkSearchContext(
+				commerceContext.getCommerceAccount(), _commerceAccountHelper,
+				_portal.getCompanyId(httpServletRequest),
+				cpCatalogEntry.getCPDefinitionId(),
+				_cpDefinitionLinkTypeConfiguration.type());
 
 		return _cpDefinitionHelper.search(
 			_portal.getScopeGroupId(httpServletRequest), searchContext,

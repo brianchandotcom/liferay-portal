@@ -80,18 +80,18 @@ public class DocumentsAssert {
 
 	public static void assertValuesIgnoreRelevance(
 		String message, com.liferay.portal.kernel.search.Document[] documents,
-		String fieldName, Collection<String> expectedValues) {
+		String fieldName, List<String> expectedValues) {
 
 		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
 
 		Assert.assertEquals(
 			_getMessage(message, documents, actualValues),
-			_sort(expectedValues), _sort(actualValues));
+			_getSortedString(expectedValues), _getSortedString(actualValues));
 	}
 
 	public static void assertValuesIgnoreRelevance(
 		String message, List<Document> documentsList, String fieldName,
-		Collection<?> expectedValues) {
+		List<String> expectedValues) {
 
 		Document[] documents = documentsList.toArray(new Document[0]);
 
@@ -99,7 +99,7 @@ public class DocumentsAssert {
 
 		Assert.assertEquals(
 			_getMessage(message, documents, actualValues),
-			_sort(expectedValues), _sort(actualValues));
+			_getSortedString(expectedValues), _getSortedString(actualValues));
 	}
 
 	public static void assertValuesIgnoreRelevance(
@@ -112,7 +112,7 @@ public class DocumentsAssert {
 
 		Assert.assertEquals(
 			_getMessage(message, documents, actualValues), expected,
-			_sort(actualValues));
+			_getSortedString(actualValues));
 	}
 
 	private static List<Object> _getFieldValues(
@@ -130,7 +130,8 @@ public class DocumentsAssert {
 			return String.valueOf(fieldValues.get(0));
 		}
 
-		return _sort(fieldValues);
+		return _getSortedString(
+			TransformUtil.transform(fieldValues, String::valueOf));
 	}
 
 	private static List<String> _getFieldValueStrings(
@@ -158,13 +159,10 @@ public class DocumentsAssert {
 			message, "->", StringUtil.merge(objects), "->", values);
 	}
 
-	private static String _sort(Collection<?> collection) {
-		List<String> list = TransformUtil.transform(
-			collection, String::valueOf);
+	private static String _getSortedString(List<String> strings) {
+		Collections.sort(strings);
 
-		Collections.sort(list);
-
-		return list.toString();
+		return strings.toString();
 	}
 
 }

@@ -14,14 +14,17 @@
 
 package com.liferay.segments.context.vocabulary.internal.configuration.persistence.listener;
 
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.context.Context;
 
 import java.util.Dictionary;
-import java.util.ResourceBundle;
 
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,6 +43,11 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		_setUpResourceBundleUtil();
+	}
 
 	@Test(
 		expected = DuplicatedSegmentsContextVocabularyConfigurationModelListenerException.class
@@ -81,13 +89,7 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 
 		ReflectionTestUtil.getAndSetFieldValue(
 			_segmentsContextVocabularyConfigurationModelListener,
-			"_configurationAdmin", configurationAdmin);
-
-		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
-
-		ReflectionTestUtil.getAndSetFieldValue(
-			_segmentsContextVocabularyConfigurationModelListener,
-			"_resourceBundle", resourceBundle);
+			"configurationAdmin", configurationAdmin);
 
 		_segmentsContextVocabularyConfigurationModelListener.onBeforeSave(
 			pid, properties);
@@ -142,13 +144,7 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 
 		ReflectionTestUtil.getAndSetFieldValue(
 			_segmentsContextVocabularyConfigurationModelListener,
-			"_configurationAdmin", configurationAdmin);
-
-		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
-
-		ReflectionTestUtil.getAndSetFieldValue(
-			_segmentsContextVocabularyConfigurationModelListener,
-			"_resourceBundle", resourceBundle);
+			"configurationAdmin", configurationAdmin);
 
 		_segmentsContextVocabularyConfigurationModelListener.onBeforeSave(
 			pid, properties);
@@ -201,14 +197,24 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 
 		ReflectionTestUtil.getAndSetFieldValue(
 			_segmentsContextVocabularyConfigurationModelListener,
-			"_configurationAdmin", configurationAdmin);
-
-		ReflectionTestUtil.getAndSetFieldValue(
-			_segmentsContextVocabularyConfigurationModelListener,
-			"_resourceBundle", null);
+			"configurationAdmin", configurationAdmin);
 
 		_segmentsContextVocabularyConfigurationModelListener.onBeforeSave(
 			pid, properties);
+	}
+
+	private static void _setUpResourceBundleUtil() {
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
+
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(Mockito.any())
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
+		);
 	}
 
 	private final SegmentsContextVocabularyConfigurationModelListener

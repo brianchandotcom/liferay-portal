@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		JSONRole.deleteRole(roleTitle = "Regular Role");
+	 	JSONRole.deleteRole(roleTitle = "Regular Role");
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
@@ -1012,8 +1012,8 @@ definition {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		Picklist.addPicklistItemViaAPI(
-			itemKey = "ItemTest",
-			itemName = "Picklist Item",
+			itemKey = "itemTest",
+			itemName = "Item Test",
 			picklistName = "Picklist Test");
 
 		JSONRole.addRegularRole(
@@ -1053,15 +1053,29 @@ definition {
 
 		Picklist.gotoPicklists();
 
-		Picklist.viewPicklist(picklistName = "Picklist Test");
+		WaitForElementPresent(
+			key_pageNumber = "1",
+			locator1 = "ObjectPortlet#ANY_PAGE");
+
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "View");
+
+		WaitForElementPresent(
+			key_labelName = "Item Test",
+			locator1 = "CreateObject#VIEW_OBJECT");
+		
+		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
+
+		Click(
+			key_labelName = "Item Test",
+			locator1 = "CreateObject#VIEW_OBJECT");
 
 		Picklist.assertDisabledPicklistName();
 
 		Picklist.assertDisabledSaveButton();
 
-		Picklist.viewPicklist(picklistName = "Picklist Item");
-
-		Picklist.assertDisabledPicklistItem(keyName = "ItemTest");
+		Picklist.assertDisabledPicklistItem(keyName = "itemTest");
 
 		Picklist.assertDisabledSaveButton();
 	}
@@ -1271,6 +1285,8 @@ definition {
 		Refresh();
 
 		Picklist.gotoPicklistView(picklistName = "Picklist Test");
+
+		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 
 		Picklist.assertDisabledPicklistName();
 
@@ -1561,7 +1577,7 @@ definition {
 
 		Picklist.gotoPicklists();
 
-		Picklist.viewPicklist(picklistName = "Picklist Test");
+		CreateObject.viewObject(labelName = "Picklist Test");
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 
@@ -1902,7 +1918,7 @@ definition {
 
 		Picklist.gotoPicklists();
 
-		Picklist.viewPicklist(picklistName = "Custom Picklist 148939");
+		CreateObject.viewObject(labelName = "Custom Picklist 148939");
 
 		Picklist.updatePicklistName(picklistName = "Update Custom Picklist");
 
@@ -1960,7 +1976,7 @@ definition {
 
 		Picklist.assertPicklist(picklistName = "Picklist Test");
 
-		Picklist.viewPicklist(picklistName = "Picklist Test");
+		CreateObject.viewObject(labelName = "Picklist Test");
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 

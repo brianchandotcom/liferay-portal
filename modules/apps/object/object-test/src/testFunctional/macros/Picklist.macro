@@ -120,8 +120,6 @@ definition {
 	}
 
 	macro assertDisabledPicklistName {
-		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
-
 		AssertElementPresent(locator1 = "Picklist#DISABLED_PICKLIST_NAME");
 	}
 

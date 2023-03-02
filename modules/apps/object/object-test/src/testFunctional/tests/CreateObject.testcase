@@ -3099,7 +3099,7 @@ definition {
 
 		Search.searchCP(searchTerm = "GivenName");
 
-		CreateObject.viewObject(labelName = "First Name");
+		ObjectAdmin.goToFieldsDetails(label = "First Name");
 
 		CreateObject.assertLabelBasicInfo(fieldLabel = "First Name");
 

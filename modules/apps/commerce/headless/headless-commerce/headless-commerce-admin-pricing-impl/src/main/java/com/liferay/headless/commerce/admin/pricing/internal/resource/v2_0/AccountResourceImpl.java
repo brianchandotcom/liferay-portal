@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.discount.model.CommerceDiscountAccountRel;
 import com.liferay.commerce.discount.service.CommerceDiscountAccountRelService;
 import com.liferay.commerce.price.list.model.CommercePriceListAccountRel;
@@ -21,8 +22,8 @@ import com.liferay.commerce.price.list.service.CommercePriceListAccountRelServic
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Account;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountAccount;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListAccount;
-import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.AccountDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.AccountResource;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -68,8 +69,10 @@ public class AccountResourceImpl
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 
-	@Reference
-	private AccountDTOConverter _accountDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.AccountDTOConverter)"
+	)
+	private DTOConverter<AccountEntry, Account> _accountDTOConverter;
 
 	@Reference
 	private CommerceDiscountAccountRelService

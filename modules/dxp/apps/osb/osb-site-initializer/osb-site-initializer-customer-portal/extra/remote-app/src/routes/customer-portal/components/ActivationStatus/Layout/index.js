@@ -53,7 +53,7 @@ const ActivationStatusLayout = ({
 							/>
 
 							<ClayCard.Description
-								className="h5 ml-3"
+								className="col-8 h5 ml-2 px-0 text-truncate"
 								displayType="title"
 								tag="h5"
 								title={project.name}

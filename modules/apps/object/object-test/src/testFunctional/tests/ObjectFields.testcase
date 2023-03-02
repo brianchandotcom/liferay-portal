@@ -1345,26 +1345,34 @@ definition {
 	@description = "LPS-161887 - Verify that it's not possible to create an Object without adding a field."
 	@priority = 5
 	test CannotCreateEmptyObject {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+		task ("Given: an object without an field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
 
-		ObjectAdmin.openObjectAdmin();
+			ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+		}
 
-		ObjectAdmin.publishObjectViaUI();
+		task ("When a empty is published") {
+			Button.clickPublish();
+		}
 
-		AssertTextPresent(
-			locator1 = "Message#ALERT_DISMISSIBLE",
-			value1 = "At least one custom field must be added.");
+		task ("Then the error message is displayed on the page") {
+			AssertTextPresent(
+				locator1 = "Message#ALERT_DISMISSIBLE",
+				value1 = "At least one custom field must be added.");
+		}
 
-		ObjectAdmin.openObjectAdmin();
+		task ("And the Object that was created is show with Draft") {
+			ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.assertObjectStatus(
-			label = "Custom Object",
-			status = "Draft");
+			ObjectAdmin.assertObjectStatus(
+				label = "Custom Object",
+				status = "Draft");
+		}
 	}
 
 	@description = "LPS-162174 - Verify that it is not possible to edit ERC fields in Objects management."

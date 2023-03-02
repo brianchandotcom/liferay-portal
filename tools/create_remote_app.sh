@@ -117,54 +117,7 @@ function create_angular_app {
 		-e '/class AppModule {/a}' \
 		src/app/app.module.ts
 
-	# Configure client extension
-
-	cat >client-extension.yaml <<EOF
-assemble:
-	- from: dist
-	  include: ${REMOTE_APP_DIR}/
-	  into: static/
-${REMOTE_APP_DIR}:
-	cssURLs:
-		- ${REMOTE_APP_DIR}/styles.*.css
-	friendlyURLMapping: ${REMOTE_APP_DIR}
-	htmlElementName: ${CUSTOM_ELEMENT_NAME}
-	instanceable: false
-	name: ${CUSTOM_ELEMENT_DISPLAY_NAME}
-	portletCategoryName: category.remote-apps
-	type: customElement
-	urls:
-		- ${REMOTE_APP_DIR}/main.*.js
-		- ${REMOTE_APP_DIR}/polyfills.*.js
-		- ${REMOTE_APP_DIR}/runtime.*.js
-	useESM: true
-#
-# To enable live development replace the configuration sections cssURLs and urls
-# above with the following ones:
-#
-# cssURLs:
-# - http://localhost:4200/styles.js
-#
-# urls:
-# - http://localhost:4200/runtime.js
-# - http://localhost:4200/polyfills.js
-# - http://localhost:4200/styles.js
-# - http://localhost:4200/vendor.js
-# - http://localhost:4200/main.js
-#
-# Then run the following command:
-#
-# blade gw deploy && yarn start
-#
-# This will deploy the client extension pointing to Angular's live development
-# server (which is usually started at http://localhost:4200) instead of bundling
-# the built files inside the deployable ZIP.
-#
-# With this simple trick, DXP will fetch the custom element from the live
-# development server and update it accordingly as soon as you make any change to
-# the source code and refresh the page.
-#
-EOF
+	write_angular_client_extension
 
 	cd ..
 }
@@ -187,7 +140,7 @@ function create_react_app {
 
 	rm -f public/favicon.ico public/logo* public/manifest.json public/robots.txt
 
-	write_client_extension
+	write_react_client_extension
 
 	cd src
 
@@ -269,7 +222,28 @@ function random_letter {
 	echo cat /dev/urandom | tr -cd 'a-z' | head -c 1
 }
 
-function write_client_extension {
+function write_angular_client_extension {
+	echo "assemble:" > client-extension.yaml
+	echo "    - from: dist" >> client-extension.yaml
+	echo "      include: ${REMOTE_APP_DIR}/" >> client-extension.yaml
+	echo "      into: static/" >> client-extension.yaml
+	echo "${REMOTE_APP_DIR}:" >> client-extension.yaml
+	echo "    cssURLs:" >> client-extension.yaml
+	echo "        - ${REMOTE_APP_DIR}/styles.*.css" >> client-extension.yaml
+	echo "    friendlyURLMapping: ${REMOTE_APP_DIR}" >> client-extension.yaml
+	echo "    htmlElementName: ${CUSTOM_ELEMENT_NAME}" >> client-extension.yaml
+	echo "    instanceable: false" >> client-extension.yaml
+	echo "    name: ${CUSTOM_ELEMENT_DISPLAY_NAME}" >> client-extension.yaml
+	echo "    portletCategoryName: category.client-extensions" >> client-extension.yaml
+	echo "    type: customElement" >> client-extension.yaml
+	echo "    urls:" >> client-extension.yaml
+	echo "        - ${REMOTE_APP_DIR}/main.*.js" >> client-extension.yaml
+	echo "        - ${REMOTE_APP_DIR}/polyfills.*.js" >> client-extension.yaml
+	echo "        - ${REMOTE_APP_DIR}/runtime.*.js" >> client-extension.yaml
+	echo -n "    useESM: true" >> client-extension.yaml
+}
+
+function write_react_client_extension {
 	echo "assemble:" > client-extension.yaml
 	echo "    - from: build" >> client-extension.yaml
 	echo "      include: \"static/**/*\"" >> client-extension.yaml

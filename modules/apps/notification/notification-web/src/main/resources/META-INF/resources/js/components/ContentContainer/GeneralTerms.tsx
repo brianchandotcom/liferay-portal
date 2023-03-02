@@ -67,7 +67,7 @@ export function GeneralTerms({baseResourceURL}: GeneralTermsProps) {
 	return (
 		<ClayPanel
 			collapsable
-			defaultExpanded={false}
+			defaultExpanded
 			displayTitle={Liferay.Language.get('general-terms')}
 			displayType="secondary"
 			showCollapseIcon={true}

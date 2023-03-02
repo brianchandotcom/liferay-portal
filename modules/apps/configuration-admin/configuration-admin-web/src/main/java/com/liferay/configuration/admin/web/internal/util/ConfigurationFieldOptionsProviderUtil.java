@@ -40,10 +40,6 @@ public class ConfigurationFieldOptionsProviderUtil {
 		getConfigurationFieldOptionsProvider(
 			String configurationPid, String fieldName) {
 
-		if (_serviceTrackerMap == null) {
-			return null;
-		}
-
 		return _serviceTrackerMap.getService(
 			_getKey(configurationPid, fieldName));
 	}
@@ -73,7 +69,7 @@ public class ConfigurationFieldOptionsProviderUtil {
 	}
 
 	@Deactivate
-	protected synchronized void deactivate() {
+	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
 
@@ -102,7 +98,7 @@ public class ConfigurationFieldOptionsProviderUtil {
 		return Arrays.asList((String)propertyValue);
 	}
 
-	private static volatile ServiceTrackerMap
-		<String, ConfigurationFieldOptionsProvider> _serviceTrackerMap;
+	private static ServiceTrackerMap<String, ConfigurationFieldOptionsProvider>
+		_serviceTrackerMap;
 
 }

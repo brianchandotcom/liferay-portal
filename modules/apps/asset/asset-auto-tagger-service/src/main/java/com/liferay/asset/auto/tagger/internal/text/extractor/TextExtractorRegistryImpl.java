@@ -57,11 +57,10 @@ public class TextExtractorRegistryImpl implements TextExtractorRegistry {
 	}
 
 	@Deactivate
-	protected synchronized void deactivate() {
+	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
 
-	private volatile ServiceTrackerMap<String, TextExtractor<?>>
-		_serviceTrackerMap;
+	private ServiceTrackerMap<String, TextExtractor<?>> _serviceTrackerMap;
 
 }

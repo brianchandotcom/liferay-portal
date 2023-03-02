@@ -1177,7 +1177,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		}
 
 		for (DocumentContributor<?> documentContributor :
-				_getDocumentContributors()) {
+				_documentContributors) {
 
 			DocumentContributor<Object> objectDocumentContributor =
 				(DocumentContributor<Object>)documentContributor;
@@ -1441,23 +1441,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			queryBooleanFilter, entryClassNameIndexerMap, searchContext);
 	}
 
-	private ServiceTrackerList<DocumentContributor<?>>
-		_getDocumentContributors() {
-
-		if (_documentContributors == null) {
-			synchronized (this) {
-				if (_documentContributors == null) {
-					_documentContributors = ServiceTrackerListFactory.open(
-						SystemBundleUtil.getBundleContext(),
-						(Class<DocumentContributor<?>>)
-							(Class<?>)DocumentContributor.class);
-				}
-			}
-		}
-
-		return _documentContributors;
-	}
-
 	private Map<String, Indexer<?>> _getEntryClassNameIndexerMap(
 		String[] entryClassNames) {
 
@@ -1551,8 +1534,10 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	private String[] _defaultSelectedFieldNames;
 	private String[] _defaultSelectedLocalizedFieldNames;
 	private final Document _document = new DocumentImpl();
-	private volatile ServiceTrackerList<DocumentContributor<?>>
-		_documentContributors;
+	private final ServiceTrackerList<DocumentContributor<?>>
+		_documentContributors = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(),
+			(Class<DocumentContributor<?>>)(Class<?>)DocumentContributor.class);
 	private boolean _filterSearch;
 	private Boolean _indexerEnabled;
 	private boolean _permissionAware;

@@ -205,14 +205,14 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				followingCode.startsWith(">") ||
 				followingCode.startsWith("<")) {
 
-				if (StringUtil.equals(
+				if (!StringUtil.equals(
 						matchedGlobalVariableName, globalVariableName)) {
 
-					return StringUtil.replaceFirst(
-						content, globalVariableName, parameterName, start);
+					continue;
 				}
 
-				continue;
+				return StringUtil.replaceFirst(
+					content, globalVariableName, parameterName, start);
 			}
 			else if (followingCode.startsWith(".")) {
 				if (!followingCode.startsWith(".get") &&

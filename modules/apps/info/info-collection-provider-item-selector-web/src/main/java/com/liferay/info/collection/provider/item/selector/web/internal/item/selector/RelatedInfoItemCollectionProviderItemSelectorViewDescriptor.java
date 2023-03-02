@@ -14,29 +14,15 @@
 
 package com.liferay.info.collection.provider.item.selector.web.internal.item.selector;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.ItemSelectorViewDescriptor;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Diego Hu
  */
 public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
-	implements ItemSelectorViewDescriptor
+	extends BaseItemSelectorViewDescriptor
 		<RelatedInfoItemCollectionProvider<?, ?>> {
 
 	public RelatedInfoItemCollectionProviderItemSelectorViewDescriptor(
@@ -59,55 +45,8 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 		List<RelatedInfoItemCollectionProvider<?, ?>>
 			relatedInfoItemCollectionProviders) {
 
-		_httpServletRequest = httpServletRequest;
-		_portletURL = portletURL;
-		_relatedInfoItemCollectionProviders =
-			relatedInfoItemCollectionProviders;
-
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-
-	@Override
-	public String[] getDisplayViews() {
-		return new String[] {"icon"};
-	}
-
-	@Override
-	public List<LabelItem> getFilterLabelItems() {
-		return LabelItemListBuilder.add(
-			() -> Validator.isNotNull(_getSelectedItemType()),
-			labelItem -> {
-				labelItem.putData(
-					"removeLabelURL",
-					PortletURLBuilder.create(
-						_portletURL
-					).setParameter(
-						"itemType", (String)null
-					).buildString());
-				labelItem.setDismissible(true);
-
-				String modelResource = ResourceActionsUtil.getModelResource(
-					_themeDisplay.getLocale(), _getSelectedItemType());
-
-				labelItem.setLabel(
-					LanguageUtil.get(_themeDisplay.getLocale(), "item-type") +
-						": " + modelResource);
-			}
-		).build();
-	}
-
-	@Override
-	public List<DropdownItem> getFilterNavigationDropdownItems() {
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					_getFilterTypeDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						_themeDisplay.getLocale(), "filter-by-item-type"));
-			}
-		).build();
+		super(
+			httpServletRequest, portletURL, relatedInfoItemCollectionProviders);
 	}
 
 	@Override
@@ -116,7 +55,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 			relatedInfoItemCollectionProvider) {
 
 		return new RelatedInfoItemCollectionProviderItemDescriptor(
-			_httpServletRequest, relatedInfoItemCollectionProvider);
+			httpServletRequest, relatedInfoItemCollectionProvider);
 	}
 
 	@Override
@@ -128,105 +67,45 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 		getSearchContainer() {
 
 		PortletRequest portletRequest =
-			(PortletRequest)_httpServletRequest.getAttribute(
+			(PortletRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		SearchContainer<RelatedInfoItemCollectionProvider<?, ?>>
 			searchContainer = new SearchContainer<>(
-				portletRequest, _portletURL, null,
+				portletRequest, portletURL, null,
 				"there-are-no-related-items-collection-providers");
 
 		List<RelatedInfoItemCollectionProvider<?, ?>>
-			relatedInfoItemCollectionProviders = new ArrayList<>(
-				_relatedInfoItemCollectionProviders);
+			relatedInfoItemCollectionProviderList = new ArrayList<>(
+				infoCollectionProviders);
 
-		if (Validator.isNotNull(_getSelectedItemType())) {
-			relatedInfoItemCollectionProviders = ListUtil.filter(
-				relatedInfoItemCollectionProviders,
+		if (Validator.isNotNull(getSelectedItemType())) {
+			relatedInfoItemCollectionProviderList = ListUtil.filter(
+				relatedInfoItemCollectionProviderList,
 				relatedInfoItemCollectionProvider -> Objects.equals(
 					relatedInfoItemCollectionProvider.
 						getCollectionItemClassName(),
-					_getSelectedItemType()));
+					getSelectedItemType()));
 		}
 
-		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
-			relatedInfoItemCollectionProviders = ListUtil.filter(
-				relatedInfoItemCollectionProviders,
+			relatedInfoItemCollectionProviderList = ListUtil.filter(
+				relatedInfoItemCollectionProviderList,
 				relatedInfoItemCollectionProvider -> {
 					String label = StringUtil.toLowerCase(
 						relatedInfoItemCollectionProvider.getLabel(
-							_themeDisplay.getLocale()));
+							themeDisplay.getLocale()));
 
 					return label.contains(StringUtil.toLowerCase(keywords));
 				});
 		}
 
-		searchContainer.setResultsAndTotal(relatedInfoItemCollectionProviders);
+		searchContainer.setResultsAndTotal(
+			relatedInfoItemCollectionProviderList);
 
 		return searchContainer;
 	}
-
-	@Override
-	public boolean isShowSearch() {
-		return true;
-	}
-
-	private List<DropdownItem> _getFilterTypeDropdownItems() {
-		List<KeyValuePair> keyValuePairs = TransformUtil.transform(
-			_relatedInfoItemCollectionProviders,
-			relatedInfoItemCollectionProvider -> {
-				String collectionItemClassName =
-					relatedInfoItemCollectionProvider.
-						getCollectionItemClassName();
-
-				return new KeyValuePair(
-					collectionItemClassName,
-					ResourceActionsUtil.getModelResource(
-						_themeDisplay.getLocale(), collectionItemClassName));
-			});
-
-		ListUtil.distinct(
-			keyValuePairs, new KeyValuePairComparator(false, true));
-
-		return new DropdownItemList() {
-			{
-				for (KeyValuePair keyValuePair : keyValuePairs) {
-					add(
-						dropdownItem -> {
-							if (Objects.equals(
-									keyValuePair.getKey(),
-									_getSelectedItemType())) {
-
-								dropdownItem.setActive(true);
-							}
-
-							dropdownItem.setHref(
-								_portletURL, "itemType", keyValuePair.getKey());
-							dropdownItem.setLabel(keyValuePair.getValue());
-						});
-				}
-			}
-		};
-	}
-
-	private String _getSelectedItemType() {
-		if (_selectedItemType != null) {
-			return _selectedItemType;
-		}
-
-		_selectedItemType = ParamUtil.getString(
-			_httpServletRequest, "itemType");
-
-		return _selectedItemType;
-	}
-
-	private final HttpServletRequest _httpServletRequest;
-	private final PortletURL _portletURL;
-	private final List<RelatedInfoItemCollectionProvider<?, ?>>
-		_relatedInfoItemCollectionProviders;
-	private String _selectedItemType;
-	private final ThemeDisplay _themeDisplay;
 
 }

@@ -249,6 +249,26 @@ public class UserLocalServiceUtil {
 		getService().addTeamUsers(teamId, userIds);
 	}
 
+	public static User addUser(
+			long creatorUserId, long companyId, boolean autoPassword,
+			String password1, String password2, boolean autoScreenName,
+			String screenName, String emailAddress, java.util.Locale locale,
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, int type, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addUser(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, type, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+	}
+
 	/**
 	 * Adds a user.
 	 *
@@ -351,6 +371,26 @@ public class UserLocalServiceUtil {
 		throws PortalException {
 
 		getService().addUserGroupUsers(userGroupId, userIds);
+	}
+
+	public static User addUserWithWorkflow(
+			long creatorUserId, long companyId, boolean autoPassword,
+			String password1, String password2, boolean autoScreenName,
+			String screenName, String emailAddress, java.util.Locale locale,
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, int type, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addUserWithWorkflow(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, type, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
 	/**
@@ -982,6 +1022,10 @@ public class UserLocalServiceUtil {
 	 */
 	public static User fetchDefaultUser(long companyId) {
 		return getService().fetchDefaultUser(companyId);
+	}
+
+	public static User fetchDefaultUser(long companyId, int type) {
+		return getService().fetchDefaultUser(companyId, type);
 	}
 
 	public static User fetchUser(long userId) {

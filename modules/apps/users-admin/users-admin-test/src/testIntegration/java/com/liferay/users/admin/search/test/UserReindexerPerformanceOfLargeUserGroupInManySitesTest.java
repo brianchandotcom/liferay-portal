@@ -255,7 +255,9 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
 			searchResponse.getRequestString(), searchResponse.getDocuments(),
-			Field.USER_ID, TransformUtil.transform(users, User::getUserId));
+			Field.USER_ID,
+			TransformUtil.transform(
+				users, user -> String.valueOf(user.getUserId())));
 	}
 
 	protected SearchRequestBuilder getSearchRequestBuilder(long companyId) {

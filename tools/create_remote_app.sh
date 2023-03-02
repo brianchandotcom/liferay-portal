@@ -6,7 +6,7 @@ function check_usage {
 		echo "Usage: create_remote_app.sh <custom-element-name> <js-framework>"
 		echo ""
 		echo "  custom-element-name: liferay-hello-world"
-		echo "  js-framework: react, vue2, vue3"
+		echo "  js-framework: angular, react, vue2, vue3"
 		echo ""
 		echo "Example: create_remote_app.sh liferay-hello-world react"
 
@@ -73,6 +73,100 @@ function check_utils {
 	do
 		command -v ${util} >/dev/null 2>&1 || { echo >&2 "The utility ${util} is not installed."; exit 1; }
 	done
+}
+
+function create_angular_app {
+	npx @angular/cli new ${REMOTE_APP_DIR} --defaults --skip-install
+
+	cd ${REMOTE_APP_DIR}
+
+	# Add support for custom elements and disable tests
+
+	sed -i \
+		-e '/"@angular\/core":/a\    "@angular/elements": "^15.0.0",' \
+		-e 's/"test":/"e2e-test":/' \
+		package.json
+
+	# Convert sample widget to custom element
+
+	sed -i \
+		-e 's/{ Component }/{ Component, Input }/' \
+		-e 's/title = /@Input("title") title = /' \
+		src/app/app.component.ts
+
+	sed -i \
+		-e 's/{ NgModule }/{ Injector, NgModule }/' \
+		-e '/@angular\/core/aimport { createCustomElement } from "@angular/elements";' \
+		-e '/@NgModule({/a\  entryComponents: [AppComponent],' \
+		-e '/bootstrap: /d' \
+		-e 's/class AppModule { }/class AppModule {/' \
+		-e '/class AppModule {/a\ ' \
+		-e '/class AppModule {/a\  constructor(private injector: Injector) {}' \
+		-e '/class AppModule {/a\ ' \
+		-e '/class AppModule {/a\  ngDoBootstrap() {' \
+		-e '/class AppModule {/a\    const AppComponentElement = ' \
+		-e '/class AppModule {/a\      createCustomElement(AppComponent, {' \
+		-e '/class AppModule {/a\        injector: this.injector' \
+		-e '/class AppModule {/a\      });' \
+		-e '/class AppModule {/a\ ' \
+		-e "/class AppModule {/a\    customElements.define('${CUSTOM_ELEMENT_NAME}'," \
+		-e '/class AppModule {/a\      AppComponentElement' \
+		-e '/class AppModule {/a\    );' \
+		-e '/class AppModule {/a\  }' \
+		-e '/class AppModule {/a\ ' \
+		-e '/class AppModule {/a}' \
+		src/app/app.module.ts
+
+	# Configure client extension
+
+	cat >client-extension.yaml <<EOF
+assemble:
+	- from: dist
+	  include: ${REMOTE_APP_DIR}/
+	  into: static/
+${REMOTE_APP_DIR}:
+	cssURLs:
+		- ${REMOTE_APP_DIR}/styles.*.css
+	friendlyURLMapping: ${REMOTE_APP_DIR}
+	htmlElementName: ${CUSTOM_ELEMENT_NAME}
+	instanceable: false
+	name: ${CUSTOM_ELEMENT_DISPLAY_NAME}
+	portletCategoryName: category.remote-apps
+	type: customElement
+	urls:
+		- ${REMOTE_APP_DIR}/main.*.js
+		- ${REMOTE_APP_DIR}/polyfills.*.js
+		- ${REMOTE_APP_DIR}/runtime.*.js
+	useESM: true
+#
+# To enable live development replace the configuration sections cssURLs and urls
+# above with the following ones:
+#
+# cssURLs:
+# - http://localhost:4200/styles.js
+#
+# urls:
+# - http://localhost:4200/runtime.js
+# - http://localhost:4200/polyfills.js
+# - http://localhost:4200/styles.js
+# - http://localhost:4200/vendor.js
+# - http://localhost:4200/main.js
+#
+# Then run the following command:
+#
+# blade gw deploy && yarn start
+#
+# This will deploy the client extension pointing to Angular's live development
+# server (which is usually started at http://localhost:4200) instead of bundling
+# the built files inside the deployable ZIP.
+#
+# With this simple trick, DXP will fetch the custom element from the live
+# development server and update it accordingly as soon as you make any change to
+# the source code and refresh the page.
+#
+EOF
+
+	cd ..
 }
 
 function create_react_app {
@@ -148,7 +242,10 @@ function main {
 		REMOTE_APP_DIR=${REMOTE_APP_DIR}-$(random_letter)$(random_digit)$(random_letter)$(random_digit)
 	fi
 
-	if [ "${2}" == "react" ]
+	if [ "${2}" == "angular" ]
+	then
+		create_angular_app
+	elif [ "${2}" == "react" ]
 	then
 		create_react_app
 	elif [ "${2}" == "vue2" ]

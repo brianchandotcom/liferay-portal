@@ -139,6 +139,16 @@ EOF
 	sed -i "s/react-scripts test/react-scripts test --passWithNoTests --watchAll=false/" sample-custom-element-2/package.json
 
 	mv sample-custom-element-2 sample-workspace/client-extensions
+
+	#
+	# Client Extension: Sample Custom Element 3
+	#
+
+	rm -fr sample-workspace/client-extensions/sample-custom-element-3
+
+	../tools/create_remote_app.sh sample-custom-element-3 angular
+
+	mv sample-custom-element-3 sample-workspace/client-extensions
 }
 
 function main {

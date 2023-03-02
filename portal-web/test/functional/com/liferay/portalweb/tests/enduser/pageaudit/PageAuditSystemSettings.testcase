@@ -38,7 +38,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-119066 Given the Page Audit Panel When the audit is launched (the API is called) Then a progress bar shows and moves forward while retrieving the data until they can be shown."
 	@priority = 3
 	@uitest
 	test AssertProgressBar {
@@ -65,7 +65,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-134760 Given the Page Audit panel When the API key is set but it is not valid Then the Page Speed API will show a ""Show details"" link, that will display the info details of the error, provided by the API."
 	@priority = 3
 	test CheckErrorDetailsDisplayedInvalidApiKey {
 		property test.name.skip.portal.instance = "PageAudit#CheckErrorDetailsDisplayedInvalidApiKey";
@@ -91,7 +91,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-125851 Given the preferred strategy dropdown in the Site Scope section When the value is void (""Choose an option"") Then the call is made for Google Page Speed default value - desktop"
 	@priority = 3
 	test DefaultStrategyAtSystemSettings {
 		property portal.acceptance = "true";
@@ -122,7 +122,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-125851 Given the preferred strategy dropdown in the Site Scope section When the value is Desktop Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are NOT retrieved"
 	@priority = 4
 	test DesktopStrategyAtSystemSettings {
 		property portal.acceptance = "true";
@@ -153,7 +153,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-125851 Given the preferred strategy dropdown in the Site Scope section When the value is Mobile Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
 	@priority = 4
 	test MobileStrategyAtSystemSettings {
 		property portal.acceptance = "true";
@@ -266,7 +266,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132232 Given the Page Audit Panel When the user opens it and there are no failing elements retrieved for any of the checks Then a message ""Your page has no issues"" and the matching image show, the two sections SEO and Accessibility show and they are collapsed by default"
 	@priority = 3
 	@uitest
 	test PageWithNoIssues {
@@ -294,7 +294,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-125851 Given any value in the Site Scope section When that value has been overwritten in any of the sites Then the value in the site prevails over any changes in the System Settings Site Scope section"
 	@priority = 5
 	test SiteSettingsHierarchyOverSystemSettings {
 		property portal.acceptance = "true";
@@ -331,7 +331,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-125851 Given the Google PageSpeed settings tab in the ""SITE SCOPE"" section When the Enable Google PageSpeed Insights check is unchecked Then the ""Google PageSpeed Insights"" tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites "
 	@priority = 3
 	test UncheckedSystemSettingsSiteScopeThenUncheckedAtTabSiteSettings {
 		property portal.acceptance = "true";
@@ -359,7 +359,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-128383 Given the PageSpeed Insights settings in the System Settings When Google PageSpeed Insights is not enabled (unchecked) Then the tab Google PageSpeed Insights is not visible from Instance settings"
 	@priority = 4
 	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings {
 		property portal.acceptance = "true";
@@ -393,7 +393,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-125851 Given the Google PageSpeed settings tab in the System Scope section When the Enable Google PageSpeed Insights check is unchecked Then the ""Google PageSpeed Insights"" tab isn't visible in the ""SITE SCOPE"" section"
 	@priority = 3
 	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtSiteScope {
 		property portal.acceptance = "true";
@@ -411,7 +411,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-125851 Given the Google PageSpeed settings tab in the System Scope section When the Enable Google PageSpeed Insights check is unchecked Then the ""Google PageSpeed Insights"" tab isn't visible in the ""VIRTUAL INSTANCE SCOPE"" section"
 	@priority = 3
 	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtVirtualInstance {
 		property portal.acceptance = "true";
@@ -429,7 +429,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-125851 Given the Google PageSpeed settings tab in the Virtual Instance Scope section When the Enable Google PageSpeed Insights check is unchecked Then the ""Google PageSpeed Insights"" tab isn't visible in the Site settings of any of the sites of the current Instance."
 	@priority = 3
 	test UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings {
 		property portal.acceptance = "true";
@@ -457,7 +457,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-125851 Given the Google PageSpeed settings tab in the Virtual Instance Scope section When the Enable Google PageSpeed Insights check is unchecked Then the ""Google PageSpeed Insights"" tab is visible in the ""SITE SCOPE"" section"
 	@priority = 3
 	test UncheckedSystemSettingsVirtualInstanceThenVisibleAtSiteScope {
 		property portal.acceptance = "true";

@@ -17,19 +17,27 @@ package com.liferay.journal.internal.upgrade.v4_4_3;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,36 +73,39 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		long portletClassNameId = _classNameLocalService.getClassNameId(
 			Portlet.class.getName());
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			Map<Long, Long> resourcePrimKeysMap = new HashMap<>();
+			Map<Long, Map<Long, Long>> resourcePrimKeysMap = new HashMap<>();
+
+			Map<Long, Integer> layoutClassedModelUsageTypes = new HashMap<>();
 
 			_addJournalContentSearchLayoutClassedModelUsages(
-				journalArticleClassNameId, portletClassNameId,
-				resourcePrimKeysMap, serviceContext);
+				journalArticleClassNameId, layoutClassedModelUsageTypes,
+				portletClassNameId, resourcePrimKeysMap);
 
 			_addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
-				journalArticleClassNameId, portletClassNameId,
-				resourcePrimKeysMap, serviceContext);
+				journalArticleClassNameId, layoutClassedModelUsageTypes,
+				portletClassNameId, resourcePrimKeysMap);
 
 			_addDefaultLayoutClassedModelUsages(
-				journalArticleClassNameId, resourcePrimKeysMap, serviceContext);
+				journalArticleClassNameId, resourcePrimKeysMap);
 		}
 	}
 
 	private void _addAssetPublisherPortletPreferencesLayoutClassedModelUsages(
-			long journalArticleClassNameId, long portletClassNameId,
-			Map<Long, Long> resourcePrimKeysMap, ServiceContext serviceContext)
+			long journalArticleClassNameId,
+			Map<Long, Integer> layoutClassedModelUsageTypes,
+			long portletClassNameId,
+			Map<Long, Map<Long, Long>> resourcePrimKeysMap)
 		throws Exception {
 
 		String sql = StringBundler.concat(
-			"select distinct AssetEntry.groupId, AssetEntry.classPK, ",
-			"PortletPreferences.plid, PortletPreferences.portletId from ",
-			"PortletPreferences inner join AssetEntry as AssetEntry on ",
-			"AssetEntry.classNameId = ", journalArticleClassNameId,
-			" and AssetEntry.visible = 1 and AssetEntry.classUuid is not null ",
-			"and CAST_TEXT(AssetEntry.classUuid) != '' inner join ",
+			"select distinct AssetEntry.groupId, AssetEntry.companyId, ",
+			"AssetEntry.classPK, PortletPreferences.plid, ",
+			"PortletPreferences.portletId from PortletPreferences inner join ",
+			"AssetEntry as AssetEntry on AssetEntry.classNameId = ",
+			journalArticleClassNameId,
+			" and AssetEntry.visible = [$TRUE$] and AssetEntry.classUuid is ",
+			"not null and CAST_TEXT(AssetEntry.classUuid) != '' inner join ",
 			"PortletPreferenceValue as PortletPreferenceValue1 on ",
 			"PortletPreferenceValue1.portletPreferencesId = ",
 			"PortletPreferences.portletPreferencesId and ",
@@ -131,24 +142,36 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
 				SQLTransformer.transform(sql),
+				StringBundler.concat(
+					"insert into LayoutClassedModelUsage (uuid_, ",
+					"layoutClassedModelUsageId, groupId, companyId, ",
+					"createDate, modifiedDate, classNameId, classPK, ",
+					"containerKey, containerType, plid, type_ ) values (?, ?, ",
+					"?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"),
 				resultSet -> new Object[] {
-					resultSet.getLong("groupId"), resultSet.getLong("classPK"),
-					resultSet.getLong("plid"),
+					resultSet.getLong("groupId"),
+					resultSet.getLong("companyId"),
+					resultSet.getLong("classPK"), resultSet.getLong("plid"),
 					GetterUtil.getString(resultSet.getString("portletId"))
 				},
-				values -> {
+				(values, preparedStatement) -> {
 					long groupId = (Long)values[0];
-					long classPK = (Long)values[1];
-					long plid = (Long)values[2];
-					String portletId = (String)values[3];
+					long companyId = (Long)values[1];
+					long classPK = (Long)values[2];
+					long plid = (Long)values[3];
+					String portletId = (String)values[4];
 
-					_layoutClassedModelUsageLocalService.
-						addLayoutClassedModelUsage(
-							groupId, journalArticleClassNameId, classPK,
-							portletId, portletClassNameId, plid,
-							serviceContext);
+					_addBatch(
+						groupId, journalArticleClassNameId, classPK, companyId,
+						portletId, portletClassNameId,
+						layoutClassedModelUsageTypes, plid, preparedStatement,
+						resourcePrimKeysMap);
 
-					resourcePrimKeysMap.computeIfAbsent(
+					Map<Long, Long> companyResourcePrimKeysMap =
+						resourcePrimKeysMap.computeIfAbsent(
+							companyId, key -> new HashMap<>());
+
+					companyResourcePrimKeysMap.computeIfAbsent(
 						classPK, key -> groupId);
 				},
 				"Unable to create manual selection asset publisher layout " +
@@ -156,38 +179,118 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		}
 	}
 
-	private void _addDefaultLayoutClassedModelUsages(
-			long journalArticleClassNameId, Map<Long, Long> resourcePrimKeysMap,
-			ServiceContext serviceContext) {
+	private void _addBatch(
+			long groupId, long classNameId, long classPK, long companyId,
+			String containerKey, long containerType,
+			Map<Long, Integer> layoutClassedModelUsageTypes, long plid,
+			PreparedStatement preparedStatement,
+			Map<Long, Map<Long, Long>> resourcePrimKeysMap)
+		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			for (Map.Entry<Long, Long> entry : resourcePrimKeysMap.entrySet()) {
-				_layoutClassedModelUsageLocalService.
-					addDefaultLayoutClassedModelUsage(
-						entry.getValue(), journalArticleClassNameId,
-						entry.getKey(), serviceContext);
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+
+		preparedStatement.setString(1, PortalUUIDUtil.generate());
+		preparedStatement.setLong(2, increment());
+		preparedStatement.setLong(3, groupId);
+		preparedStatement.setLong(4, companyId);
+		preparedStatement.setTimestamp(5, now);
+		preparedStatement.setTimestamp(6, now);
+		preparedStatement.setLong(7, classNameId);
+		preparedStatement.setLong(8, classPK);
+		preparedStatement.setString(9, containerKey);
+		preparedStatement.setLong(10, containerType);
+		preparedStatement.setLong(11, plid);
+
+		if (!layoutClassedModelUsageTypes.containsKey(plid)) {
+			layoutClassedModelUsageTypes.put(
+				plid, _getLayoutClassedModelUsageType(plid));
+		}
+
+		preparedStatement.setLong(12, layoutClassedModelUsageTypes.get(plid));
+
+		preparedStatement.addBatch();
+
+		Map<Long, Long> companyResourcePrimKeysMap =
+			resourcePrimKeysMap.computeIfAbsent(
+				companyId, key -> new HashMap<>());
+
+		companyResourcePrimKeysMap.computeIfAbsent(classPK, key -> groupId);
+	}
+
+	private void _addDefaultLayoutClassedModelUsages(
+			long journalArticleClassNameId,
+			Map<Long, Map<Long, Long>> resourcePrimKeysMap)
+		throws SQLException {
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"insert into LayoutClassedModelUsage (uuid_, ",
+						"layoutClassedModelUsageId, groupId, companyId, ",
+						"createDate, modifiedDate, classNameId, classPK, ",
+						"containerKey, containerType, plid, type_ ) values ",
+						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
+
+			for (Map.Entry<Long, Map<Long, Long>> companyResourcePrimKeysEntry :
+					resourcePrimKeysMap.entrySet()) {
+
+				long companyId = companyResourcePrimKeysEntry.getKey();
+				Map<Long, Long> groupResourcePrimKeysMap =
+					companyResourcePrimKeysEntry.getValue();
+
+				for (Map.Entry<Long, Long> resourcePrimKeysEntry :
+						groupResourcePrimKeysMap.entrySet()) {
+
+					Timestamp now = new Timestamp(System.currentTimeMillis());
+
+					preparedStatement.setString(1, PortalUUIDUtil.generate());
+					preparedStatement.setLong(2, increment());
+					preparedStatement.setLong(
+						3, resourcePrimKeysEntry.getValue());
+					preparedStatement.setLong(4, companyId);
+					preparedStatement.setTimestamp(5, now);
+					preparedStatement.setTimestamp(6, now);
+					preparedStatement.setLong(7, journalArticleClassNameId);
+					preparedStatement.setLong(
+						8, resourcePrimKeysEntry.getKey());
+					preparedStatement.setString(9, null);
+					preparedStatement.setLong(10, 0);
+					preparedStatement.setLong(11, 0);
+
+					preparedStatement.setLong(
+						12, LayoutClassedModelUsageConstants.TYPE_DEFAULT);
+
+					preparedStatement.addBatch();
+				}
 			}
+
+			preparedStatement.executeBatch();
 		}
 	}
 
 	private void _addJournalContentSearchLayoutClassedModelUsages(
-			long journalArticleClassNameId, long portletClassNameId,
-			Map<Long, Long> resourcePrimKeysMap, ServiceContext serviceContext)
+			long journalArticleClassNameId,
+			Map<Long, Integer> layoutClassedModelUsageTypes,
+			long portletClassNameId,
+			Map<Long, Map<Long, Long>> resourcePrimKeysMap)
 		throws Exception {
 
 		String sql = StringBundler.concat(
 			"select distinct JournalArticle.resourcePrimKey, ",
-			"JournalArticle.groupId, JournalContentSearch.portletId, ",
-			"Layout.plid from JournalArticle inner join JournalContentSearch ",
-			"on JournalContentSearch.groupId = JournalArticle.groupId and ",
-			"JournalContentSearch.articleId = JournalArticle.articleId inner ",
-			"join Layout on Layout.privateLayout = ",
-			"JournalContentSearch.privateLayout and Layout.layoutId = ",
-			"JournalContentSearch.layoutId and Layout.groupId = ",
-			"JournalArticle.groupId and not exists (select 1 from ",
-			"LayoutClassedModelUsage where LayoutClassedModelUsage.classPK = ",
-			"JournalArticle.resourcePrimKey and ",
-			"LayoutClassedModelUsage.classNameId = ", journalArticleClassNameId,
+			"JournalArticle.groupId, JournalArticle.companyId, ",
+			"JournalContentSearch.portletId, Layout.plid from JournalArticle ",
+			"inner join JournalContentSearch on JournalContentSearch.groupId ",
+			"= JournalArticle.groupId and JournalContentSearch.articleId = ",
+			"JournalArticle.articleId inner join Layout on ",
+			"Layout.privateLayout = JournalContentSearch.privateLayout and ",
+			"Layout.layoutId = JournalContentSearch.layoutId and ",
+			"Layout.groupId = JournalArticle.groupId and not exists (select 1 ",
+			"from LayoutClassedModelUsage where ",
+			"LayoutClassedModelUsage.classPK = JournalArticle.resourcePrimKey ",
+			"and LayoutClassedModelUsage.classNameId = ",
+			journalArticleClassNameId,
 			" and LayoutClassedModelUsage.containerKey = ",
 			"JournalContentSearch.portletId and ",
 			"LayoutClassedModelUsage.containerType = ", portletClassNameId,
@@ -203,28 +306,72 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
 				sql,
+				StringBundler.concat(
+					"insert into LayoutClassedModelUsage (uuid_, ",
+					"layoutClassedModelUsageId, groupId, companyId, ",
+					"createDate, modifiedDate, classNameId, classPK, ",
+					"containerKey, containerType, plid, type_ ) values (?, ?, ",
+					"?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"),
 				resultSet -> new Object[] {
 					resultSet.getLong("resourcePrimKey"),
 					resultSet.getLong("groupId"),
+					resultSet.getLong("companyId"),
 					GetterUtil.getString(resultSet.getString("portletId")),
 					resultSet.getLong("plid")
 				},
-				values -> {
+				(values, preparedStatement) -> {
 					long resourcePrimKey = (Long)values[0];
 					long groupId = (Long)values[1];
-					String portletId = (String)values[2];
-					long plid = (Long)values[3];
+					long companyId = (Long)values[2];
+					String portletId = (String)values[3];
+					long plid = (Long)values[4];
 
-					_layoutClassedModelUsageLocalService.
-						addLayoutClassedModelUsage(
-							groupId, journalArticleClassNameId, resourcePrimKey,
-							portletId, portletClassNameId, plid,
-							serviceContext);
-
-					resourcePrimKeysMap.put(resourcePrimKey, groupId);
+					_addBatch(
+						groupId, journalArticleClassNameId, resourcePrimKey,
+						companyId, portletId, portletClassNameId,
+						layoutClassedModelUsageTypes, plid, preparedStatement,
+						resourcePrimKeysMap);
 				},
 				"Unable to create journal articles search layout classed " +
 					"model usages");
+		}
+	}
+
+	private int _getLayoutClassedModelUsageType(long plid) throws Exception {
+		if (plid <= 0) {
+			return LayoutClassedModelUsageConstants.TYPE_DEFAULT;
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select Layout.plid, LayoutPageTemplateEntry.type_ from ",
+					"Layout left join LayoutPageTemplateEntry on ",
+					"(Layout.classPK = 0 and LayoutPageTemplateEntry.plid = ",
+					plid,
+					") or (LayoutPageTemplateEntry.plid = Layout.classPK) ",
+					"where Layout.plid = ", plid))) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					int layoutPageTemplateEntryType = resultSet.getInt("type_");
+
+					if (layoutPageTemplateEntryType == 0) {
+						return LayoutClassedModelUsageConstants.TYPE_LAYOUT;
+					}
+
+					if (layoutPageTemplateEntryType ==
+							LayoutPageTemplateEntryTypeConstants.
+								TYPE_DISPLAY_PAGE) {
+
+						return LayoutClassedModelUsageConstants.
+							TYPE_DISPLAY_PAGE_TEMPLATE;
+					}
+
+					return LayoutClassedModelUsageConstants.TYPE_PAGE_TEMPLATE;
+				}
+
+				return LayoutClassedModelUsageConstants.TYPE_DEFAULT;
+			}
 		}
 	}
 

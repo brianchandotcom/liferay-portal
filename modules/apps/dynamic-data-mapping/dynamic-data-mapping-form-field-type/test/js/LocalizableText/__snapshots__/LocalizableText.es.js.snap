@@ -705,7 +705,6 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -1413,7 +1412,6 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -2123,7 +2121,6 @@ exports[`Field LocalizableText fills with the default language value when the se
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -2833,7 +2830,6 @@ exports[`Field LocalizableText fills with the selected language value when the s
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -4259,7 +4255,6 @@ exports[`Field LocalizableText has a placeholder 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -4967,7 +4962,6 @@ exports[`Field LocalizableText is not readOnly 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -5675,7 +5669,6 @@ exports[`Field LocalizableText is not required 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -6385,7 +6378,6 @@ exports[`Field LocalizableText removes the translation of an item already transl
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -7093,7 +7085,6 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -7801,7 +7792,6 @@ exports[`Field LocalizableText renders values 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -8509,7 +8499,6 @@ exports[`Field LocalizableText shows default language value when no other langua
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;

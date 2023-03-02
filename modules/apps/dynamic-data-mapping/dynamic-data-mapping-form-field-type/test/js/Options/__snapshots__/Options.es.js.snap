@@ -50,6 +50,7 @@ exports[`Options shows the options 1`] = `
                 title="Option 1"
               >
                 <input
+                  aria-invalid="true"
                   class="form-control ddm-field-text"
                   id="keyValueLabeloption0"
                   name="keyValueLabeloption0"
@@ -63,7 +64,6 @@ exports[`Options shows the options 1`] = `
                 type="hidden"
                 value="false"
               />
-              
             </div>
             <button
               aria-label="remove-x-option"
@@ -116,7 +116,6 @@ exports[`Options shows the options 1`] = `
               type="hidden"
               value="false"
             />
-            
           </div>
         </div>
       </div>
@@ -159,6 +158,7 @@ exports[`Options shows the options 1`] = `
                 title="Option 2"
               >
                 <input
+                  aria-invalid="true"
                   class="form-control ddm-field-text"
                   id="keyValueLabeloption1"
                   name="keyValueLabeloption1"
@@ -172,7 +172,6 @@ exports[`Options shows the options 1`] = `
                 type="hidden"
                 value="false"
               />
-              
             </div>
             <button
               aria-label="remove-x-option"
@@ -225,7 +224,6 @@ exports[`Options shows the options 1`] = `
               type="hidden"
               value="false"
             />
-            
           </div>
         </div>
       </div>
@@ -268,6 +266,7 @@ exports[`Options shows the options 1`] = `
                 title="enter-an-option"
               >
                 <input
+                  aria-invalid="true"
                   class="form-control ddm-field-text"
                   id="keyValueLabeloption2"
                   name="keyValueLabeloption2"
@@ -281,7 +280,6 @@ exports[`Options shows the options 1`] = `
                 type="hidden"
                 value="false"
               />
-              
             </div>
             <div
               class="active form-text key-value-editor"
@@ -320,7 +318,6 @@ exports[`Options shows the options 1`] = `
               type="hidden"
               value="false"
             />
-            
           </div>
         </div>
       </div>
@@ -330,7 +327,6 @@ exports[`Options shows the options 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;

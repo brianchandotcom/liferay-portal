@@ -171,7 +171,9 @@ exports[`Grid has a tip 1`] = `
       aria-hidden="true"
       class="form-feedback-group lfr-de__field-feedback"
     >
-      <div>
+      <div
+        id="undefined_fieldHelp"
+      >
         Type something
       </div>
     </div>
@@ -261,7 +263,6 @@ exports[`Grid has an id 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -339,7 +340,6 @@ exports[`Grid is not editable 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -420,7 +420,6 @@ exports[`Grid is not required 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -619,7 +618,6 @@ exports[`Grid renders columns 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -673,7 +671,6 @@ exports[`Grid renders no columns when columns comes empty 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -717,7 +714,6 @@ exports[`Grid renders no rows when row comes empty 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -834,7 +830,6 @@ exports[`Grid renders rows 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;

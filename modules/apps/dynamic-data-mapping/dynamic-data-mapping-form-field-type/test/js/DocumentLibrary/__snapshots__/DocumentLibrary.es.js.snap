@@ -59,6 +59,8 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
     >
       <div
         class="form-feedback-item"
+        id="uploadField_fieldError"
+        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -74,7 +76,9 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
         </span>
          you-need-to-be-signed-in-to-edit-this-field
       </div>
-      <div>
+      <div
+        id="uploadField_fieldHelp"
+      >
         Type something
       </div>
     </div>
@@ -154,6 +158,8 @@ exports[`Field DocumentLibrary has a label 1`] = `
     >
       <div
         class="form-feedback-item"
+        id="uploadField_fieldError"
+        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -242,6 +248,8 @@ exports[`Field DocumentLibrary has a placeholder 1`] = `
     >
       <div
         class="form-feedback-item"
+        id="uploadField_fieldError"
+        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -327,6 +335,8 @@ exports[`Field DocumentLibrary has a spritemap 1`] = `
     >
       <div
         class="form-feedback-item"
+        id="uploadField_fieldError"
+        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -412,6 +422,8 @@ exports[`Field DocumentLibrary has a value 1`] = `
     >
       <div
         class="form-feedback-item"
+        id="uploadField_fieldError"
+        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -498,6 +510,8 @@ exports[`Field DocumentLibrary has an id 1`] = `
     >
       <div
         class="form-feedback-item"
+        id="ID_fieldError"
+        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -575,7 +589,6 @@ exports[`Field DocumentLibrary is not readOnly 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -639,6 +652,8 @@ exports[`Field DocumentLibrary is not required 1`] = `
     >
       <div
         class="form-feedback-item"
+        id="uploadField_fieldError"
+        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"
@@ -729,6 +744,8 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
     >
       <div
         class="form-feedback-item"
+        id="uploadField_fieldError"
+        role="alert"
       >
         <span
           class="form-feedback-indicator inline-item-before"

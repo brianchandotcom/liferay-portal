@@ -13,6 +13,7 @@ exports[`Field Numeric Integer Input Mask toggle has an inputMaskFormat 1`] = `
       title="+12 (34) 5678-9012"
     >
       <input
+        aria-invalid="true"
         class="form-control ddm-form-field-type__numeric--rtl"
         id="numericField"
         name="numericField_masked"
@@ -31,7 +32,6 @@ exports[`Field Numeric Integer Input Mask toggle has an inputMaskFormat 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -47,6 +47,7 @@ exports[`Field Numeric renders the default markup 1`] = `
       data-tooltip-align="top"
     >
       <input
+        aria-invalid="true"
         class="form-control ddm-form-field-type__numeric--rtl"
         name="undefined"
         type="text"
@@ -58,7 +59,6 @@ exports[`Field Numeric renders the default markup 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;

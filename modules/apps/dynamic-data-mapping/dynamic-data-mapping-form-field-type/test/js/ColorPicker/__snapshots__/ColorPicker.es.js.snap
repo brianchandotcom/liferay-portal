@@ -58,7 +58,6 @@ exports[`Field Color Picker renders field disabled 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -123,7 +122,9 @@ exports[`Field Color Picker renders field with helptext 1`] = `
       aria-hidden="true"
       class="form-feedback-group lfr-de__field-feedback"
     >
-      <div>
+      <div
+        id="colorPicker_fieldHelp"
+      >
         Helptext
       </div>
     </div>
@@ -202,7 +203,9 @@ exports[`Field Color Picker renders field with label 1`] = `
       aria-hidden="true"
       class="form-feedback-group lfr-de__field-feedback"
     >
-      <div>
+      <div
+        id="colorPicker_fieldHelp"
+      >
         Helptext
       </div>
     </div>

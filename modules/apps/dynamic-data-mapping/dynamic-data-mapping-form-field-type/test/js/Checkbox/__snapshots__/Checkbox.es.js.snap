@@ -46,7 +46,9 @@ exports[`Field Checkbox has a helptext 1`] = `
       aria-hidden="true"
       class="form-feedback-group lfr-de__field-feedback"
     >
-      <div>
+      <div
+        id="undefined_fieldHelp"
+      >
         Type something
       </div>
     </div>
@@ -103,7 +105,6 @@ exports[`Field Checkbox has a key 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -151,7 +152,6 @@ exports[`Field Checkbox has a label 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -198,7 +198,6 @@ exports[`Field Checkbox has a predefined Value 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -246,7 +245,6 @@ exports[`Field Checkbox has a value 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -293,7 +291,6 @@ exports[`Field Checkbox has an id 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -341,7 +338,6 @@ exports[`Field Checkbox is not editable 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -388,7 +384,6 @@ exports[`Field Checkbox is not required 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -435,7 +430,6 @@ exports[`Field Checkbox is shown as a switcher 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -470,7 +464,6 @@ exports[`Field Checkbox is shown as checkbox 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -517,7 +510,6 @@ exports[`Field Checkbox renders Label if showLabel is true 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;

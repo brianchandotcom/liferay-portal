@@ -12,6 +12,8 @@ exports[`Field Text has a helptext 1`] = `
       data-tooltip-align="top"
     >
       <input
+        aria-describedby="textField_fieldHelp"
+        aria-invalid="true"
         class="form-control ddm-field-text"
         id="textField"
         name="textField"
@@ -28,7 +30,9 @@ exports[`Field Text has a helptext 1`] = `
       aria-hidden="true"
       class="form-feedback-group lfr-de__field-feedback"
     >
-      <div>
+      <div
+        id="textField_fieldHelp"
+      >
         Type something
       </div>
     </div>
@@ -59,6 +63,7 @@ exports[`Field Text has a label 1`] = `
       data-tooltip-align="top"
     >
       <input
+        aria-invalid="true"
         class="form-control ddm-field-text"
         id="textField"
         name="textField"
@@ -94,6 +99,7 @@ exports[`Field Text has a placeholder 1`] = `
       title="Placeholder"
     >
       <input
+        aria-invalid="true"
         class="form-control ddm-field-text"
         id="textField"
         name="textField"
@@ -107,7 +113,6 @@ exports[`Field Text has a placeholder 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -125,6 +130,7 @@ exports[`Field Text has a value 1`] = `
       title="value"
     >
       <input
+        aria-invalid="true"
         class="form-control ddm-field-text"
         id="textField"
         name="textField"
@@ -137,7 +143,6 @@ exports[`Field Text has a value 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -154,6 +159,7 @@ exports[`Field Text has an id 1`] = `
       data-tooltip-align="top"
     >
       <input
+        aria-invalid="true"
         class="form-control ddm-field-text"
         id="Id"
         name="textField"
@@ -166,7 +172,6 @@ exports[`Field Text has an id 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -183,6 +188,7 @@ exports[`Field Text is not readOnly 1`] = `
       data-tooltip-align="top"
     >
       <input
+        aria-invalid="true"
         class="form-control ddm-field-text"
         id="textField"
         name="textField"
@@ -195,7 +201,6 @@ exports[`Field Text is not readOnly 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -212,6 +217,8 @@ exports[`Field Text is not required 1`] = `
       data-tooltip-align="top"
     >
       <input
+        aria-invalid="true"
+        aria-required="false"
         class="form-control ddm-field-text"
         id="textField"
         name="textField"
@@ -224,7 +231,6 @@ exports[`Field Text is not required 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -241,6 +247,7 @@ exports[`Field Text is readOnly 1`] = `
       data-tooltip-align="top"
     >
       <input
+        aria-invalid="true"
         class="form-control ddm-field-text"
         disabled=""
         id="textField"
@@ -254,7 +261,6 @@ exports[`Field Text is readOnly 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -276,6 +282,7 @@ exports[`Field Text renders Label if showLabel is true 1`] = `
       data-tooltip-align="top"
     >
       <input
+        aria-invalid="true"
         class="form-control ddm-field-text"
         id="textField"
         name="textField"

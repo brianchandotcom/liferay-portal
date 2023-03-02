@@ -78,7 +78,9 @@ exports[`Field Checkbox Multiple has a helptext 1`] = `
       aria-hidden="true"
       class="form-feedback-group lfr-de__field-feedback"
     >
-      <div>
+      <div
+        id="undefined_fieldHelp"
+      >
         Type something
       </div>
     </div>
@@ -166,7 +168,6 @@ exports[`Field Checkbox Multiple has a key 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -334,7 +335,6 @@ exports[`Field Checkbox Multiple has a predefined Value 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -413,7 +413,6 @@ exports[`Field Checkbox Multiple has a spritemap 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -492,7 +491,6 @@ exports[`Field Checkbox Multiple has a value 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -571,7 +569,6 @@ exports[`Field Checkbox Multiple has an id 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -652,7 +649,6 @@ exports[`Field Checkbox Multiple is not editable 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -731,7 +727,6 @@ exports[`Field Checkbox Multiple is not required 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -810,7 +805,6 @@ exports[`Field Checkbox Multiple is shown as a switcher 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -877,7 +871,6 @@ exports[`Field Checkbox Multiple is shown as checkbox 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;

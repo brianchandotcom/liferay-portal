@@ -83,7 +83,6 @@ exports[`ReactFieldBase renders the FieldBase with contentRenderer 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -104,7 +103,9 @@ exports[`ReactFieldBase renders the FieldBase with help text 1`] = `
       aria-hidden="true"
       class="form-feedback-group lfr-de__field-feedback"
     >
-      <div>
+      <div
+        id="undefined_fieldHelp"
+      >
         Type something!
       </div>
     </div>
@@ -130,7 +131,6 @@ exports[`ReactFieldBase renders the FieldBase with id 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;
@@ -256,7 +256,6 @@ exports[`ReactFieldBase renders the default markup 1`] = `
       type="hidden"
       value="false"
     />
-    
   </div>
 </div>
 `;

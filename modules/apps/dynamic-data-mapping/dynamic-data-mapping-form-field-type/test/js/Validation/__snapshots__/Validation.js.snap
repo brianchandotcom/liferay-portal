@@ -49,7 +49,6 @@ exports[`Validation renders checkbox to enable Validation 1`] = `
         type="hidden"
         value="false"
       />
-      
     </div>
   </div>
 </div>

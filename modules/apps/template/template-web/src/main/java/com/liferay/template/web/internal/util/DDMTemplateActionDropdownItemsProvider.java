@@ -25,8 +25,11 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
@@ -212,7 +215,15 @@ public class DDMTemplateActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getViewDDMTemplateUsagesActionUnsafeConsumer() {
 
+		int usagesCount =
+			PortletPreferenceValueLocalServiceUtil.
+				getPortletPreferenceValuesCount(
+					_ddmTemplate.getCompanyId(), "displayStyle",
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						HtmlUtil.escape(_ddmTemplate.getTemplateKey()));
+
 		return dropdownItem -> {
+			dropdownItem.setDisabled(usagesCount == 0);
 			dropdownItem.setHref(
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse

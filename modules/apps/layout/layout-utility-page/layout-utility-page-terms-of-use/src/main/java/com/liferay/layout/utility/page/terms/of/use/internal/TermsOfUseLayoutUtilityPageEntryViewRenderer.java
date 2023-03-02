@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
+	enabled = false,
 	property = "utility.page.type=" + LayoutUtilityPageEntryConstants.TYPE_TERMS_OF_USE,
 	service = LayoutUtilityPageEntryViewRenderer.class
 )

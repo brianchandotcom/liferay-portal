@@ -26,7 +26,7 @@
 	<span aria-hidden="true" class="loading-animation"></span>
 
 	<div class="video-embed-placeholder-text">
-		<liferay-ui:message key="generating-video-preview-will-take-a-few-minutes" />
+		<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
 	</div>
 </div>
 

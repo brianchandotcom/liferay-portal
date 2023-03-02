@@ -66,6 +66,8 @@ public interface WebKeys {
 
 	public static final String BEAN_PORTLET_IDS = "BEAN_PORTLET_IDS";
 
+	public static final String BLOCK_LOGIN_PROMPT = "BLOCK_LOGIN_REQUEST";
+
 	public static final String BLOGS_CATEGORY = "BLOGS_CATEGORY";
 
 	public static final String BLOGS_ENTRY = "BLOGS_ENTRY";

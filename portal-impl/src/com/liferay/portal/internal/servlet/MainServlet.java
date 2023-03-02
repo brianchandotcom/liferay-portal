@@ -1148,7 +1148,10 @@ public class MainServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		if ((userId > 0) ||
+		boolean blockLoginPrompt = GetterUtil.getBoolean(
+			httpServletRequest.getAttribute(WebKeys.BLOCK_LOGIN_PROMPT));
+
+		if (blockLoginPrompt || (userId > 0) ||
 			(ParamUtil.getInteger(httpServletRequest, "p_p_lifecycle") == 2)) {
 
 			PortalUtil.sendError(

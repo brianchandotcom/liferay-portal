@@ -90,6 +90,14 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 			return false;
 		}
 
+		HttpSession httpSession = httpServletRequest.getSession(false);
+
+		if ((httpSession != null)
+			&& (httpSession.getAttribute(SamlWebKeys.SAML_SSO_ERROR) != null)) {
+
+			return true;
+		}
+
 		try {
 			User user = _portal.getUser(httpServletRequest);
 
@@ -123,6 +131,14 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 
 		String requestPath = _samlHttpRequestUtil.getRequestPath(
 			httpServletRequest);
+
+		HttpSession httpSession = httpServletRequest.getSession(false);
+
+		if ((httpSession != null)
+			&& (httpSession.getAttribute(SamlWebKeys.SAML_SSO_ERROR) != null)) {
+
+			httpServletRequest.setAttribute(WebKeys.BLOCK_LOGIN_PROMPT, Boolean.TRUE);
+		}
 
 		if (requestPath.equals("/c/portal/login")) {
 			RequestDispatcher requestDispatcher =

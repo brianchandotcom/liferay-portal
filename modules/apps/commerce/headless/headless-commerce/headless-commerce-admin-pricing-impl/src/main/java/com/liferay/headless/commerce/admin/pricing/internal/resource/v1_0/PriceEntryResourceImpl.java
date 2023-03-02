@@ -26,13 +26,13 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceEntry;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.TierPrice;
-import com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.PriceEntryDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.TierPriceUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.PriceEntryResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -355,8 +355,11 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 	@Reference
 	private CPInstanceService _cpInstanceService;
 
-	@Reference
-	private PriceEntryDTOConverter _priceEntryDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.PriceEntryDTOConverter)"
+	)
+	private DTOConverter<CommercePriceEntry, PriceEntry>
+		_priceEntryDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

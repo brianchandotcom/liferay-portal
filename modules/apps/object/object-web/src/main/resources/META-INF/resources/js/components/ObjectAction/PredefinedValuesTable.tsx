@@ -119,8 +119,8 @@ export default function PredefinedValuesTable({
 					</div>
 				),
 
-				name, 
-				
+				name,
+
 				newValue: (
 					<div className="lfr-object-web__predefined-values-table-new-value">
 						<ExpressionBuilder

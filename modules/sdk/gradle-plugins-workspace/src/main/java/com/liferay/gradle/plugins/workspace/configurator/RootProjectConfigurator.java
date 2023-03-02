@@ -455,8 +455,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerPruneImage.setDescription("Prunes the Docker image.");
 		dockerPruneImage.setGroup(DOCKER_GROUP);
 
-		dockerBuildImage.finalizedBy(PRUNE_DOCKER_IMAGE_TASK_NAME);
-
 		Project rootProject = project.getRootProject();
 
 		rootProject.afterEvaluate(

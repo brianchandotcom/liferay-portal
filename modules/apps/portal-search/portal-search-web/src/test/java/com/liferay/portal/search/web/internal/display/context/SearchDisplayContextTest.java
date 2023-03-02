@@ -87,6 +87,11 @@ public class SearchDisplayContextTest {
 	}
 
 	@Test
+	public void testBasicKeywords() throws Exception {
+		_assertSearchKeywords("keyword", "keyword");
+	}
+
+	@Test
 	public void testConfigurationKeywordsEmptySkipsSearch() throws Exception {
 		_assertSearchSkippedAndNullResults(
 			null,
@@ -97,7 +102,7 @@ public class SearchDisplayContextTest {
 	public void testNoScopeParameter() throws Exception {
 		portletPreferences.setValue("searchScope", "let-the-user-choose");
 
-		_assertSearchKeywords(StringPool.DOUBLE_SPACE, StringPool.BLANK);
+		_assertSearchKeywords("keyword", "keyword");
 	}
 
 	@Test
@@ -151,11 +156,20 @@ public class SearchDisplayContextTest {
 
 		SearchContext searchContext = searchDisplayContext.getSearchContext();
 
-		Mockito.verify(
-			searcher
-		).search(
-			Mockito.any()
-		);
+		if (searchDisplayContextKeywords.isEmpty()) {
+			Mockito.verify(
+				searcher, Mockito.never()
+			).search(
+				Mockito.any()
+			);
+		}
+		else {
+			Mockito.verify(
+				searcher
+			).search(
+				Mockito.any()
+			);
+		}
 
 		Assert.assertEquals(
 			searchDisplayContextKeywords, searchContext.getKeywords());

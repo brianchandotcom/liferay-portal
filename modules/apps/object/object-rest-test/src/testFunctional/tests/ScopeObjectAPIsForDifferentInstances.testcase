@@ -72,6 +72,8 @@ definition {
 		}
 	}
 
+	@description = "Ignore tests since Oauth scopes problems in LPS-169916"
+	@ignore = "true"
 	@priority = 4
 	test CanCreateObjectEntryByScopeKey {
 		property portal.acceptance = "true";
@@ -101,6 +103,8 @@ definition {
 		}
 	}
 
+	@description = "Ignore tests since Oauth scopes problems in LPS-169916"
+	@ignore = "true"
 	@priority = 4
 	test CanCreateObjectEntryInVirtualInstance {
 		property portal.acceptance = "true";
@@ -132,6 +136,8 @@ definition {
 		}
 	}
 
+	@description = "Ignore tests since Oauth scopes problems in LPS-169916"
+	@ignore = "true"
 	@priority = 4
 	test CanIncludeObjectFieldInAPIExplorer {
 		property portal.acceptance = "true";

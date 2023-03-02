@@ -145,16 +145,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			return fileVersion.getSize();
 		}
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
-
-		Long value = adaptiveMedia.getValue(
-			AMAttribute.getContentLengthAMAttribute());
-
-		if (value == null) {
-			return 0L;
-		}
-
-		return value;
+		return _getValue(adaptiveMedias.get(0));
 	}
 
 	@Override
@@ -197,16 +188,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			return 0L;
 		}
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
-
-		Long value = adaptiveMedia.getValue(
-			AMAttribute.getContentLengthAMAttribute());
-
-		if (value == null) {
-			return 0L;
-		}
-
-		return value;
+		return _getValue(adaptiveMedias.get(0));
 	}
 
 	@Override
@@ -349,6 +331,17 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH),
 			PrefsPropsUtil.getInteger(
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT));
+	}
+
+	private Long _getValue(AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
+		Long value = adaptiveMedia.getValue(
+			AMAttribute.getContentLengthAMAttribute());
+
+		if (value == null) {
+			return 0L;
+		}
+
+		return value;
 	}
 
 	private boolean _isMimeTypeSupported(String mimeType) {

@@ -62,10 +62,13 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -245,7 +248,12 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getScope(),
 					objectDefinition.getStorageType(),
 					transformToList(
-						objectDefinition.getObjectFields(),
+						ArrayUtil.filter(
+							objectDefinition.getObjectFields(),
+							objectField -> !StringUtil.equals(
+								objectField.getBusinessTypeAsString(),
+								ObjectFieldConstants.
+									BUSINESS_TYPE_AGGREGATION)),
 						objectField -> ObjectFieldUtil.toObjectField(
 							_listTypeDefinitionLocalService, objectField,
 							_objectFieldLocalService,
@@ -277,6 +285,37 @@ public class ObjectDefinitionResourceImpl
 			objectDefinition.getObjectLayouts(),
 			objectDefinition.getObjectRelationships(),
 			objectDefinition.getObjectViews());
+
+		List<com.liferay.object.model.ObjectField> aggregationFields =
+			transformToList(
+				ArrayUtil.filter(
+					objectDefinition.getObjectFields(),
+					objectField -> StringUtil.equals(
+						objectField.getBusinessTypeAsString(),
+						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)),
+				objectField -> ObjectFieldUtil.toObjectField(
+					_listTypeDefinitionLocalService, objectField,
+					_objectFieldLocalService, _objectFieldSettingLocalService,
+					_objectFilterLocalService));
+
+		for (com.liferay.object.model.ObjectField aggregationField :
+				aggregationFields) {
+
+			_objectFieldLocalService.addCustomObjectField(
+				aggregationField.getExternalReferenceCode(),
+				GuestOrUserUtil.getUserId(),
+				aggregationField.getListTypeDefinitionId(),
+				serviceBuilderObjectDefinition.getObjectDefinitionId(),
+				aggregationField.getBusinessType(),
+				aggregationField.getDBType(),
+				aggregationField.getDefaultValue(),
+				aggregationField.isIndexed(),
+				aggregationField.isIndexedAsKeyword(),
+				aggregationField.getIndexedLanguageId(),
+				aggregationField.getLabelMap(), aggregationField.getName(),
+				aggregationField.isRequired(), aggregationField.isState(),
+				aggregationField.getObjectFieldSettings());
+		}
 
 		return _toObjectDefinition(serviceBuilderObjectDefinition);
 	}

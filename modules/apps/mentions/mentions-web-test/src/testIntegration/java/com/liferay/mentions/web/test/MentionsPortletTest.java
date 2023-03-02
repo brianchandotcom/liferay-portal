@@ -27,9 +27,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -300,8 +298,7 @@ public class MentionsPortletTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(_group.getCompanyId()));
+		themeDisplay.setCompany(_company);
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setPpid(MentionsPortletKeys.MENTIONS);
 		themeDisplay.setSiteGroupId(_group.getGroupId());
@@ -314,11 +311,7 @@ public class MentionsPortletTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
 	private Group _group;
-
 	private Layout _layout;
 
 	@Inject
@@ -326,8 +319,5 @@ public class MentionsPortletTest {
 
 	@Inject(filter = "javax.portlet.name=" + MentionsPortletKeys.MENTIONS)
 	private Portlet _portlet;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

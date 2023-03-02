@@ -259,7 +259,7 @@ function write_react_client_extension {
 	echo "    type: customElement" >> client-extension.yaml
 	echo "    urls:" >> client-extension.yaml
 	echo "        - static/js/main.*.js" >> client-extension.yaml
-	echo -n "    useESM: false" >> client-extension.yaml
+	echo -n "    useESM: true" >> client-extension.yaml
 }
 
 function write_gitignore {

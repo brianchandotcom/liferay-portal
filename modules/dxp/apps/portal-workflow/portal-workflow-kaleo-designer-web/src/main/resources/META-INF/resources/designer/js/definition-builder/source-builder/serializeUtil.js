@@ -100,7 +100,10 @@ function appendXMLActions(
 				);
 			}
 
-			if (isValidValue(status, index)) {
+			if (
+				isValidValue(status, index) &&
+				scriptLanguage[index] === 'update-status'
+			) {
 				buffer.push(
 					createTagWithEscapedContent('status', status[index])
 				);

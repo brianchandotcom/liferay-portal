@@ -226,4 +226,10 @@ definition {
 			value1 = ${count});
 	}
 
+	macro viewCardDataIsPresent {
+		AssertElementPresent(
+			key_cardName = ${cardName},
+			locator1 = "ACCards#CHART_DATA_PRESENT");
+	}
+
 }

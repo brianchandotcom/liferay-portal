@@ -1221,7 +1221,7 @@ definition {
 	}
 
 	macro publishObjectViaUI {
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		Alert.viewSuccessMessage();
 

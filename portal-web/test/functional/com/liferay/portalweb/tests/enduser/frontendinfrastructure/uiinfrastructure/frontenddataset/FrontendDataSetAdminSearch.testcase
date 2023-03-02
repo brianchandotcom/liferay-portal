@@ -1,12 +1,12 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
+	property custom.properties = "feature.flag.LPS-164563=true";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Dataset";
 	property testray.main.component.name = "User Interface";
-	property custom.properties = "feature.flag.LPS-164563=true";
 
 	setUp {
 		TestCase.setUpPortalInstance();

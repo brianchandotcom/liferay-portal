@@ -54,9 +54,9 @@ public interface SearchBarPortletPreferences {
 	public static final String PREFERENCE_KEY_USE_ADVANCED_SEARCH_SYNTAX =
 		"useAdvancedSearchSyntax";
 
-	public Optional<String> getDestinationOptional();
+	public String getDestination();
 
-	public String getDestinationString();
+	public Optional<String> getDestinationOptional();
 
 	public String getFederatedSearchKey();
 

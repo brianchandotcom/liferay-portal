@@ -46,12 +46,12 @@ public class DDMFormValuesFactoryUtil {
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			Collection<String> entryKeys = _sort(
-				_getEntryKeys(
-					ddmFormFieldValuesMap, ddmFormField.getName(),
-					StringPool.BLANK));
+			for (String entryKey :
+					_sort(
+						_getEntryKeys(
+							ddmFormFieldValuesMap, ddmFormField.getName(),
+							StringPool.BLANK))) {
 
-			for (String entryKey : entryKeys) {
 				DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValuesMap.get(
 					entryKey);
 
@@ -129,12 +129,12 @@ public class DDMFormValuesFactoryUtil {
 		int index = 0;
 
 		for (DDMFormField nestedDDMFormField : nestedDDMFormFields) {
-			Collection<String> entryKeys = _sort(
-				_getEntryKeys(
-					ddmFormFieldValuesMap, nestedDDMFormField.getName(),
-					parentEntryKey));
+			for (String entryKey :
+					_sort(
+						_getEntryKeys(
+							ddmFormFieldValuesMap, nestedDDMFormField.getName(),
+							parentEntryKey))) {
 
-			for (String entryKey : entryKeys) {
 				DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValuesMap.get(
 					entryKey);
 

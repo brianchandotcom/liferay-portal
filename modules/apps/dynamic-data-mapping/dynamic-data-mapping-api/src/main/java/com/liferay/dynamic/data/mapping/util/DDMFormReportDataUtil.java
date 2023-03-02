@@ -75,7 +75,7 @@ public class DDMFormReportDataUtil {
 
 			DDMFormField ddmFormField = entry.getValue();
 
-			if (StringUtil.equals(ddmFormField.getType(), "fieldset")) {
+			if (StringUtil.equals("fieldset", ddmFormField.getType())) {
 				continue;
 			}
 

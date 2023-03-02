@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -153,36 +154,29 @@ public class DDMFormFactoryHelper {
 	protected List<com.liferay.dynamic.data.mapping.model.DDMFormField>
 		getDDMFormFields() {
 
-		List<com.liferay.dynamic.data.mapping.model.DDMFormField>
-			ddmFormFields = new ArrayList<>();
+		return TransformUtil.transform(
+			getDDMFormFieldMethods(),
+			method -> {
+				DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
+					new DDMFormFieldFactoryHelper(this, method);
 
-		for (Method method : getDDMFormFieldMethods()) {
-			DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
-				new DDMFormFieldFactoryHelper(this, method);
+				ddmFormFieldFactoryHelper.setAvailableLocales(
+					_availableLocales);
+				ddmFormFieldFactoryHelper.setDefaultLocale(_defaultLocale);
 
-			ddmFormFieldFactoryHelper.setAvailableLocales(_availableLocales);
-			ddmFormFieldFactoryHelper.setDefaultLocale(_defaultLocale);
-
-			ddmFormFields.add(ddmFormFieldFactoryHelper.createDDMFormField());
-		}
-
-		return ddmFormFields;
+				return ddmFormFieldFactoryHelper.createDDMFormField();
+			});
 	}
 
 	protected List<com.liferay.dynamic.data.mapping.model.DDMFormRule>
 		getDDMFormRules() {
 
-		List<com.liferay.dynamic.data.mapping.model.DDMFormRule> ddmFormRules =
-			new ArrayList<>();
-
-		for (DDMFormRule ddmFormRule : _ddmForm.rules()) {
-			ddmFormRules.add(
+		return TransformUtil.transformToList(
+			_ddmForm.rules(),
+			ddmFormRule ->
 				new com.liferay.dynamic.data.mapping.model.DDMFormRule(
 					ListUtil.fromArray(ddmFormRule.actions()),
 					ddmFormRule.condition()));
-		}
-
-		return ddmFormRules;
 	}
 
 	protected Locale getDefaultLocale() {

@@ -359,10 +359,7 @@ public class JournalServiceUpgradeStepRegistrator
 		registry.register(
 			"4.4.2", "4.4.3",
 			new JournalArticleLayoutClassedModelUsageUpgradeProcess(
-				_assetEntryLocalService, _classNameLocalService,
-				_layoutLocalService, _layoutClassedModelUsageLocalService,
-				_portletPreferencesLocalService,
-				_portletPreferenceValueLocalService));
+				_classNameLocalService));
 
 		registry.register(
 			"4.4.3", "4.4.4",

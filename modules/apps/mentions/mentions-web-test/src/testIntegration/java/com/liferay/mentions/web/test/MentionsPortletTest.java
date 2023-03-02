@@ -317,7 +317,6 @@ public class MentionsPortletTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	private Layout _layout;

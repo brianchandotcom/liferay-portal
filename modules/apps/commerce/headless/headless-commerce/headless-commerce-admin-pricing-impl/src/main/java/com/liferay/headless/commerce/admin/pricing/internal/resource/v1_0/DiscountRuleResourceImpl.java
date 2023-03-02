@@ -20,11 +20,11 @@ import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountRule;
-import com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.DiscountRuleDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountRuleUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.DiscountRuleResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -196,8 +196,11 @@ public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 	@Reference
 	private CommerceDiscountService _commerceDiscountService;
 
-	@Reference
-	private DiscountRuleDTOConverter _discountRuleDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.DiscountRuleDTOConverter)"
+	)
+	private DTOConverter<CommerceDiscountRule, DiscountRule>
+		_discountRuleDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

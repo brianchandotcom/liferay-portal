@@ -1,3 +1,5 @@
+/* eslint-disable @liferay/portal/no-global-fetch */
+/* eslint-disable eqeqeq */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -22,7 +24,6 @@ const paymentData = [];
 const paymentDataFromRequest = [];
 
 const getPaymentData = async () => {
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	await fetch(`/o/c/evppaymentconfirmations`, {
 		headers: {
 			'content-type': 'application/json',
@@ -37,8 +38,7 @@ const getPaymentData = async () => {
 const getPaymentDataFromRequest = async () => {
 	await getPaymentData();
 
-	paymentData[0].items.map((item) => {
-		// eslint-disable-next-line eqeqeq
+	paymentData[0]?.items.map((item) => {
 		if (item?.r_requestId_c_evpRequestId == evpRequestId) {
 			paymentDataFromRequest.push(item);
 		}

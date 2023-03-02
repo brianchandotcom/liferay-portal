@@ -574,8 +574,7 @@ public class JournalEditArticleDisplayContext {
 			if (getClassNameId() ==
 					JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
 
-				defaultArticleLanguageId =
-					_getDefaultArticleLanguageIdRelatedDDMStructure();
+				defaultArticleLanguageId = _getDDMStructureDefaultLanguageId();
 			}
 
 			if (defaultArticleLanguageId == null) {
@@ -1231,17 +1230,17 @@ public class JournalEditArticleDisplayContext {
 			DDMFormValuesFactory.class.getName());
 	}
 
-	private String _getDefaultArticleLanguageIdRelatedDDMStructure() {
+	private String _getDDMStructureDefaultLanguageId() {
 		DDMStructure ddmStructure = getDDMStructure();
 
 		if (ddmStructure != null) {
 			try {
-				JournalArticle ddmStructureArticle =
+				JournalArticle ddmStructureJournalArticle =
 					JournalArticleServiceUtil.getArticle(
 						ddmStructure.getGroupId(), DDMStructure.class.getName(),
 						ddmStructure.getStructureId());
 
-				return ddmStructureArticle.getDefaultLanguageId();
+				return ddmStructureJournalArticle.getDefaultLanguageId();
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {

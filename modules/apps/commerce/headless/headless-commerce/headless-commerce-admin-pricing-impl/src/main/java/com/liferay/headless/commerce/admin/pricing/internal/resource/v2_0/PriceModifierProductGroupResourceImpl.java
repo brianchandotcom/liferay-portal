@@ -23,7 +23,6 @@ import com.liferay.commerce.pricing.service.CommercePriceModifierService;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifier;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifierProductGroup;
-import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.PriceModifierProductGroupDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceModifierProductGroupUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceModifierProductGroupResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -235,8 +235,10 @@ public class PriceModifierProductGroupResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private PriceModifierProductGroupDTOConverter
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.PriceModifierProductGroupDTOConverter)"
+	)
+	private DTOConverter<CommercePriceModifierRel, PriceModifierProductGroup>
 		_priceModifierProductGroupDTOConverter;
 
 	@Reference

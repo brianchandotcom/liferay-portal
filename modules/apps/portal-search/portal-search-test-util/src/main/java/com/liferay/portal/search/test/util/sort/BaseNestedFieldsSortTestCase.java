@@ -50,13 +50,6 @@ public abstract class BaseNestedFieldsSortTestCase
 		assertSort("ddm__keyword__41523__Textp47b_en_US");
 	}
 
-	protected void addDocumentWithOneDDMField(
-		String name, String valueFieldName, Object value) {
-
-		addDocument(
-			DocumentCreationHelpers.oneDDMField(name, valueFieldName, value));
-	}
-
 	protected void assertSort(String fieldName) {
 		addDocuments(
 			value -> DocumentCreationHelpers.oneDDMField(

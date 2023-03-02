@@ -111,10 +111,7 @@ public class MentionsPortletTest {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			mockHttpServletResponse.getContentAsString());
 
-		int companyUsersCount = _userLocalService.getCompanyUsersCount(
-			_company.getCompanyId());
-
-		Assert.assertEquals(companyUsersCount - 1, jsonArray.length());
+		Assert.assertEquals(1, jsonArray.length());
 
 		_assertAnyJSONObject(
 			jsonArray,
@@ -210,10 +207,7 @@ public class MentionsPortletTest {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			mockHttpServletResponse.getContentAsString());
 
-		int companyUsersCount = _userLocalService.getCompanyUsersCount(
-			_company.getCompanyId());
-
-		Assert.assertEquals(companyUsersCount - 1, jsonArray.length());
+		Assert.assertEquals(1, jsonArray.length());
 
 		_assertAnyJSONObject(
 			jsonArray,
@@ -244,10 +238,7 @@ public class MentionsPortletTest {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			mockHttpServletResponse.getContentAsString());
 
-		int companyUsersCount = _userLocalService.getCompanyUsersCount(
-			_company.getCompanyId());
-
-		Assert.assertEquals(companyUsersCount - 1, jsonArray.length());
+		Assert.assertEquals(0, jsonArray.length());
 	}
 
 	private Layout _addLayout(long groupId, long userId) throws Exception {

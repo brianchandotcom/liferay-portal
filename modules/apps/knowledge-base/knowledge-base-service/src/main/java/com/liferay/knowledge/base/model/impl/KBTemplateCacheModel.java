@@ -77,10 +77,12 @@ public class KBTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", kbTemplateId=");
@@ -113,6 +115,7 @@ public class KBTemplateCacheModel
 		KBTemplateImpl kbTemplateImpl = new KBTemplateImpl();
 
 		kbTemplateImpl.setMvccVersion(mvccVersion);
+		kbTemplateImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			kbTemplateImpl.setUuid("");
@@ -178,6 +181,8 @@ public class KBTemplateCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		kbTemplateId = objectInput.readLong();
@@ -198,6 +203,8 @@ public class KBTemplateCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -242,6 +249,7 @@ public class KBTemplateCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long kbTemplateId;
 	public long groupId;

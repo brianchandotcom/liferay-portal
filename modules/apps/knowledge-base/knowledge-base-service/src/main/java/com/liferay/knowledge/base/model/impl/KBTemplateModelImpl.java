@@ -74,12 +74,13 @@ public class KBTemplateModelImpl
 	public static final String TABLE_NAME = "KBTemplate";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"kbTemplateId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"title", Types.VARCHAR},
-		{"content", Types.CLOB}, {"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"kbTemplateId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"title", Types.VARCHAR}, {"content", Types.CLOB},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -87,6 +88,7 @@ public class KBTemplateModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("kbTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -101,7 +103,7 @@ public class KBTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KBTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,content TEXT null,lastPublishDate DATE null)";
+		"create table KBTemplate (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,kbTemplateId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,content TEXT null,lastPublishDate DATE null,primary key (kbTemplateId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KBTemplate";
 
@@ -251,6 +253,8 @@ public class KBTemplateModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", KBTemplate::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", KBTemplate::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", KBTemplate::getUuid);
 			attributeGetterFunctions.put(
 				"kbTemplateId", KBTemplate::getKbTemplateId);
@@ -285,6 +289,9 @@ public class KBTemplateModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<KBTemplate, Long>)KBTemplate::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<KBTemplate, Long>)KBTemplate::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<KBTemplate, String>)KBTemplate::setUuid);
 			attributeSetterBiConsumers.put(
@@ -335,6 +342,21 @@ public class KBTemplateModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -635,6 +657,7 @@ public class KBTemplateModelImpl
 		KBTemplateImpl kbTemplateImpl = new KBTemplateImpl();
 
 		kbTemplateImpl.setMvccVersion(getMvccVersion());
+		kbTemplateImpl.setCtCollectionId(getCtCollectionId());
 		kbTemplateImpl.setUuid(getUuid());
 		kbTemplateImpl.setKbTemplateId(getKbTemplateId());
 		kbTemplateImpl.setGroupId(getGroupId());
@@ -658,6 +681,8 @@ public class KBTemplateModelImpl
 
 		kbTemplateImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kbTemplateImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		kbTemplateImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		kbTemplateImpl.setKbTemplateId(
 			this.<Long>getColumnOriginalValue("kbTemplateId"));
@@ -755,6 +780,8 @@ public class KBTemplateModelImpl
 		KBTemplateCacheModel kbTemplateCacheModel = new KBTemplateCacheModel();
 
 		kbTemplateCacheModel.mvccVersion = getMvccVersion();
+
+		kbTemplateCacheModel.ctCollectionId = getCtCollectionId();
 
 		kbTemplateCacheModel.uuid = getUuid();
 
@@ -885,6 +912,7 @@ public class KBTemplateModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _kbTemplateId;
 	private long _groupId;
@@ -929,6 +957,7 @@ public class KBTemplateModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("kbTemplateId", _kbTemplateId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -965,27 +994,29 @@ public class KBTemplateModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("kbTemplateId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("kbTemplateId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("title", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("content", 1024L);
+		columnBitmasks.put("title", 1024L);
 
-		columnBitmasks.put("lastPublishDate", 2048L);
+		columnBitmasks.put("content", 2048L);
+
+		columnBitmasks.put("lastPublishDate", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

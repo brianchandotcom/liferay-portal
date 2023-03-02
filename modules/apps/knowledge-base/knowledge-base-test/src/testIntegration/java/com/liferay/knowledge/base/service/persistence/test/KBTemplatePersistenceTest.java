@@ -126,6 +126,8 @@ public class KBTemplatePersistenceTest {
 
 		newKBTemplate.setMvccVersion(RandomTestUtil.nextLong());
 
+		newKBTemplate.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newKBTemplate.setUuid(RandomTestUtil.randomString());
 
 		newKBTemplate.setGroupId(RandomTestUtil.nextLong());
@@ -154,6 +156,9 @@ public class KBTemplatePersistenceTest {
 		Assert.assertEquals(
 			existingKBTemplate.getMvccVersion(),
 			newKBTemplate.getMvccVersion());
+		Assert.assertEquals(
+			existingKBTemplate.getCtCollectionId(),
+			newKBTemplate.getCtCollectionId());
 		Assert.assertEquals(
 			existingKBTemplate.getUuid(), newKBTemplate.getUuid());
 		Assert.assertEquals(
@@ -247,10 +252,10 @@ public class KBTemplatePersistenceTest {
 
 	protected OrderByComparator<KBTemplate> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KBTemplate", "mvccVersion", true, "uuid", true, "kbTemplateId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "title",
-			true, "lastPublishDate", true);
+			"KBTemplate", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "kbTemplateId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "title", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -531,6 +536,8 @@ public class KBTemplatePersistenceTest {
 		KBTemplate kbTemplate = _persistence.create(pk);
 
 		kbTemplate.setMvccVersion(RandomTestUtil.nextLong());
+
+		kbTemplate.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kbTemplate.setUuid(RandomTestUtil.randomString());
 

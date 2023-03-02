@@ -34,6 +34,8 @@ public class KBCommentTable extends BaseTable<KBCommentTable> {
 
 	public final Column<KBCommentTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KBCommentTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KBCommentTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KBCommentTable, Long> kbCommentId = createColumn(

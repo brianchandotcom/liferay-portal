@@ -35,6 +35,8 @@ public class KBArticleTable extends BaseTable<KBArticleTable> {
 
 	public final Column<KBArticleTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KBArticleTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KBArticleTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KBArticleTable, Long> kbArticleId = createColumn(

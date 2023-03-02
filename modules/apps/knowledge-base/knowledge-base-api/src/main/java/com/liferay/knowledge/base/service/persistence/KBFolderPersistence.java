@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.service.persistence;
 import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface KBFolderPersistence extends BasePersistence<KBFolder> {
+public interface KBFolderPersistence
+	extends BasePersistence<KBFolder>, CTPersistence<KBFolder> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

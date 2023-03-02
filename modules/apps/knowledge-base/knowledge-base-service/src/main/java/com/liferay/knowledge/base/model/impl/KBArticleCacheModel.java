@@ -76,10 +76,12 @@ public class KBArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", kbArticleId=");
@@ -152,6 +154,7 @@ public class KBArticleCacheModel
 		KBArticleImpl kbArticleImpl = new KBArticleImpl();
 
 		kbArticleImpl.setMvccVersion(mvccVersion);
+		kbArticleImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			kbArticleImpl.setUuid("");
@@ -295,6 +298,8 @@ public class KBArticleCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		kbArticleId = objectInput.readLong();
@@ -346,6 +351,8 @@ public class KBArticleCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -458,6 +465,7 @@ public class KBArticleCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long kbArticleId;
 	public long resourcePrimKey;

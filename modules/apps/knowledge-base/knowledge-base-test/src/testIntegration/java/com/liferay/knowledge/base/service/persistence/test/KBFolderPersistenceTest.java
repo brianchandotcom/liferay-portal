@@ -127,6 +127,8 @@ public class KBFolderPersistenceTest {
 
 		newKBFolder.setMvccVersion(RandomTestUtil.nextLong());
 
+		newKBFolder.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newKBFolder.setUuid(RandomTestUtil.randomString());
 
 		newKBFolder.setExternalReferenceCode(RandomTestUtil.randomString());
@@ -160,6 +162,9 @@ public class KBFolderPersistenceTest {
 
 		Assert.assertEquals(
 			existingKBFolder.getMvccVersion(), newKBFolder.getMvccVersion());
+		Assert.assertEquals(
+			existingKBFolder.getCtCollectionId(),
+			newKBFolder.getCtCollectionId());
 		Assert.assertEquals(existingKBFolder.getUuid(), newKBFolder.getUuid());
 		Assert.assertEquals(
 			existingKBFolder.getExternalReferenceCode(),
@@ -309,11 +314,12 @@ public class KBFolderPersistenceTest {
 
 	protected OrderByComparator<KBFolder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KBFolder", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "kbFolderId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "parentKBFolderId", true, "name", true,
-			"urlTitle", true, "description", true, "lastPublishDate", true);
+			"KBFolder", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "externalReferenceCode", true, "kbFolderId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "parentKBFolderId", true,
+			"name", true, "urlTitle", true, "description", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -634,6 +640,8 @@ public class KBFolderPersistenceTest {
 		KBFolder kbFolder = _persistence.create(pk);
 
 		kbFolder.setMvccVersion(RandomTestUtil.nextLong());
+
+		kbFolder.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kbFolder.setUuid(RandomTestUtil.randomString());
 

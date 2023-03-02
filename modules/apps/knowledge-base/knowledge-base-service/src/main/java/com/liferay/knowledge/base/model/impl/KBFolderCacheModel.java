@@ -76,10 +76,12 @@ public class KBFolderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -118,6 +120,7 @@ public class KBFolderCacheModel
 		KBFolderImpl kbFolderImpl = new KBFolderImpl();
 
 		kbFolderImpl.setMvccVersion(mvccVersion);
+		kbFolderImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			kbFolderImpl.setUuid("");
@@ -197,6 +200,8 @@ public class KBFolderCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -221,6 +226,8 @@ public class KBFolderCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -281,6 +288,7 @@ public class KBFolderCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long kbFolderId;

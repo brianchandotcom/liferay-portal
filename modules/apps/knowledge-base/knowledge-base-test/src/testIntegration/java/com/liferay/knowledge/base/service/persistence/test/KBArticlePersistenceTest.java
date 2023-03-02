@@ -127,6 +127,8 @@ public class KBArticlePersistenceTest {
 
 		newKBArticle.setMvccVersion(RandomTestUtil.nextLong());
 
+		newKBArticle.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newKBArticle.setUuid(RandomTestUtil.randomString());
 
 		newKBArticle.setResourcePrimKey(RandomTestUtil.nextLong());
@@ -194,6 +196,9 @@ public class KBArticlePersistenceTest {
 
 		Assert.assertEquals(
 			existingKBArticle.getMvccVersion(), newKBArticle.getMvccVersion());
+		Assert.assertEquals(
+			existingKBArticle.getCtCollectionId(),
+			newKBArticle.getCtCollectionId());
 		Assert.assertEquals(
 			existingKBArticle.getUuid(), newKBArticle.getUuid());
 		Assert.assertEquals(
@@ -738,10 +743,10 @@ public class KBArticlePersistenceTest {
 
 	protected OrderByComparator<KBArticle> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KBArticle", "mvccVersion", true, "uuid", true, "kbArticleId", true,
-			"resourcePrimKey", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "externalReferenceCode", true,
+			"KBArticle", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "kbArticleId", true, "resourcePrimKey", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "externalReferenceCode", true,
 			"rootResourcePrimKey", true, "parentResourceClassNameId", true,
 			"parentResourcePrimKey", true, "kbFolderId", true, "version", true,
 			"title", true, "urlTitle", true, "description", true, "priority",
@@ -1072,6 +1077,8 @@ public class KBArticlePersistenceTest {
 		KBArticle kbArticle = _persistence.create(pk);
 
 		kbArticle.setMvccVersion(RandomTestUtil.nextLong());
+
+		kbArticle.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kbArticle.setUuid(RandomTestUtil.randomString());
 

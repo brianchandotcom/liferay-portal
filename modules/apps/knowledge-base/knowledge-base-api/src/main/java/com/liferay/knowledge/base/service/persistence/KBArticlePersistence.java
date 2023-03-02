@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.service.persistence;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface KBArticlePersistence extends BasePersistence<KBArticle> {
+public interface KBArticlePersistence
+	extends BasePersistence<KBArticle>, CTPersistence<KBArticle> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

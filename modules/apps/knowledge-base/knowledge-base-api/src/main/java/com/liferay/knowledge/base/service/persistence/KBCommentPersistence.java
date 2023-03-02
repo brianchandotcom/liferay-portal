@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.service.persistence;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface KBCommentPersistence extends BasePersistence<KBComment> {
+public interface KBCommentPersistence
+	extends BasePersistence<KBComment>, CTPersistence<KBComment> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -76,10 +76,12 @@ public class KBCommentCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", kbCommentId=");
@@ -118,6 +120,7 @@ public class KBCommentCacheModel
 		KBCommentImpl kbCommentImpl = new KBCommentImpl();
 
 		kbCommentImpl.setMvccVersion(mvccVersion);
+		kbCommentImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			kbCommentImpl.setUuid("");
@@ -181,6 +184,8 @@ public class KBCommentCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		kbCommentId = objectInput.readLong();
@@ -208,6 +213,8 @@ public class KBCommentCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -252,6 +259,7 @@ public class KBCommentCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long kbCommentId;
 	public long groupId;

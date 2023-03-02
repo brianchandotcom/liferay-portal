@@ -35,6 +35,8 @@ public class KBTemplateTable extends BaseTable<KBTemplateTable> {
 
 	public final Column<KBTemplateTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KBTemplateTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KBTemplateTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KBTemplateTable, Long> kbTemplateId = createColumn(

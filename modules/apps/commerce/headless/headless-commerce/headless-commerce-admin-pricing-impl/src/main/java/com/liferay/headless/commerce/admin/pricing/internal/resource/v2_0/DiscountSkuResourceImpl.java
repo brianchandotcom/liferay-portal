@@ -20,7 +20,6 @@ import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Discount;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountSku;
-import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.DiscountSkuDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountSkuUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountSkuResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -132,8 +132,11 @@ public class DiscountSkuResourceImpl
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@Reference
-	private DiscountSkuDTOConverter _discountSkuDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.DiscountSkuDTOConverter)"
+	)
+	private DTOConverter<CommerceDiscountRel, DiscountSku>
+		_discountSkuDTOConverter;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

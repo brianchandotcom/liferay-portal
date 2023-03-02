@@ -30,6 +30,7 @@ $bgColor: #fff;
 		&__content-left {
 			align-items: center;
 			display: flex;
+			margin-left: 1rem;
 		}
 	}
 
@@ -47,6 +48,7 @@ $bgColor: #fff;
 		&__content-right {
 			align-items: center;
 			display: flex;
+			margin-left: 1rem;
 
 			.simple-toggle-switch.toggle-switch {
 				display: contents;

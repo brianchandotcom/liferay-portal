@@ -54,17 +54,6 @@ export function PanelHeader({
 					}
 				)}
 			>
-				{type === 'regular' && (
-					<ClayButtonWithIcon
-						aria-label={Liferay.Util.sub(
-							Liferay.Language.get('drag-x'),
-							title
-						)}
-						displayType="unstyled"
-						symbol="drag"
-					/>
-				)}
-
 				<h3
 					className={classNames('object-admin-panel__title', {
 						'ml-3': type !== 'regular',

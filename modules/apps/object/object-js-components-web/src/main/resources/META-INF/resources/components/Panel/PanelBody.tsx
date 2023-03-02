@@ -12,7 +12,6 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -55,15 +54,6 @@ export function PanelSimpleBody({
 	return (
 		<div className="object-admin-panel__simple-body">
 			<div className="object-admin-panel__simple-body__content-left">
-				<ClayButtonWithIcon
-					aria-label={Liferay.Util.sub(
-						Liferay.Language.get('drag-x'),
-						title
-					)}
-					displayType="unstyled"
-					symbol="drag"
-				/>
-
 				<div>
 					<h5 className="object-admin-panel__title">{title}</h5>
 

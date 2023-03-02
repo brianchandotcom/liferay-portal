@@ -961,8 +961,9 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.getDefaultValue(), objectField.isIndexed(),
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
-						objectField.getLabelMap(), objectField.getName(),
-						objectField.isRequired(), objectField.isState(),
+						objectField.getLabelMap(), objectField.isLocalized(),
+						objectField.getName(), objectField.isRequired(),
+						objectField.isState(),
 						objectField.getObjectFieldSettings());
 				}
 			}

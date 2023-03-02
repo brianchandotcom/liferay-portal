@@ -293,22 +293,23 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
 			ObjectFieldConstants.DB_TYPE_BIG_DECIMAL, null, true, false, null,
-			LocalizedMapUtil.getLocalizedMap("Speed"), "speed", false, false,
-			Collections.emptyList());
+			LocalizedMapUtil.getLocalizedMap("Speed"), false, "speed", false,
+			false, Collections.emptyList());
 		_objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(),
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 			ObjectFieldConstants.DB_TYPE_STRING, "listTypeEntryKey1", false,
-			true, "", LocalizedMapUtil.getLocalizedMap("State"), "state", true,
-			true, Collections.emptyList());
+			true, "", LocalizedMapUtil.getLocalizedMap("State"), false, "state",
+			true, true, Collections.emptyList());
 		_objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 			ObjectFieldConstants.DB_TYPE_LONG, null, true, false, null,
-			LocalizedMapUtil.getLocalizedMap("Upload"), "upload", false, false,
+			LocalizedMapUtil.getLocalizedMap("Upload"), false, "upload", false,
+			false,
 			Arrays.asList(
 				_createObjectFieldSetting("acceptedFileExtensions", "txt"),
 				_createObjectFieldSetting("fileSource", "userComputer"),
@@ -318,8 +319,8 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 			ObjectFieldConstants.DB_TYPE_DOUBLE, null, true, false, null,
-			LocalizedMapUtil.getLocalizedMap("Weight"), "weight", false, false,
-			Collections.emptyList());
+			LocalizedMapUtil.getLocalizedMap("Weight"), false, "weight", false,
+			false, Collections.emptyList());
 	}
 
 	@After
@@ -636,8 +637,8 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_FORMULA,
 			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Overweight"), "overweight", false,
-			false,
+			LocalizedMapUtil.getLocalizedMap("Overweight"), false, "overweight",
+			false, false,
 			Arrays.asList(
 				_createObjectFieldSetting("script", "weight + 10"),
 				_createObjectFieldSetting(
@@ -1246,7 +1247,7 @@ public class ObjectEntryLocalServiceTest {
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"longField", false, false, Collections.emptyList());
+			false, "longField", false, false, Collections.emptyList());
 		_objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
@@ -1255,7 +1256,7 @@ public class ObjectEntryLocalServiceTest {
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"textField", true, false, Collections.emptyList());
+			false, "textField", true, false, Collections.emptyList());
 
 		User user = UserTestUtil.addUser();
 

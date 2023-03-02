@@ -51,8 +51,8 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 			String externalReferenceCode, long listTypeDefinitionId,
 			long objectDefinitionId, String businessType, String dbType,
 			String defaultValue, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, boolean state,
+			String indexedLanguageId, Map<Locale, String> labelMap,
+			boolean localized, String name, boolean required, boolean state,
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
@@ -73,8 +73,8 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 		return objectFieldLocalService.addCustomObjectField(
 			externalReferenceCode, getUserId(), listTypeDefinitionId,
 			objectDefinitionId, businessType, dbType, defaultValue, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			state, objectFieldSettings);
+			indexedAsKeyword, indexedLanguageId, labelMap, localized, name,
+			required, state, objectFieldSettings);
 	}
 
 	@Override
@@ -125,8 +125,9 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 			listTypeDefinitionId, objectField.getObjectDefinitionId(),
 			businessType, objectField.getDBColumnName(),
 			objectField.getDBTableName(), dbType, defaultValue, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			state, objectField.isSystem(), objectFieldSettings);
+			indexedAsKeyword, indexedLanguageId, labelMap,
+			objectField.isLocalized(), name, required, state,
+			objectField.isSystem(), objectFieldSettings);
 	}
 
 	@Reference(

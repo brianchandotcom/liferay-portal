@@ -106,8 +106,9 @@ public class ObjectFieldLocalServiceImpl
 			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbType, String defaultValue,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			boolean state, List<ObjectFieldSetting> objectFieldSettings)
+			Map<Locale, String> labelMap, boolean localized, String name,
+			boolean required, boolean state,
+			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		name = StringUtil.trim(name);
@@ -125,7 +126,8 @@ public class ObjectFieldLocalServiceImpl
 			externalReferenceCode, userId, listTypeDefinitionId,
 			objectDefinitionId, businessType, name + StringPool.UNDERLINE,
 			dbTableName, dbType, defaultValue, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, state, false);
+			indexedLanguageId, labelMap, localized, name, required, state,
+			false);
 
 		if (objectDefinition.isApproved() &&
 			!objectField.compareBusinessType(
@@ -150,8 +152,9 @@ public class ObjectFieldLocalServiceImpl
 			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbType, String defaultValue,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			boolean state, List<ObjectFieldSetting> objectFieldSettings)
+			Map<Locale, String> labelMap, boolean localized, String name,
+			boolean required, boolean state,
+			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		ObjectField existingObjectField = null;
@@ -177,8 +180,8 @@ public class ObjectFieldLocalServiceImpl
 			return objectFieldLocalService.addCustomObjectField(
 				externalReferenceCode, userId, listTypeDefinitionId,
 				objectDefinitionId, businessType, dbType, defaultValue, indexed,
-				indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-				state, objectFieldSettings);
+				indexedAsKeyword, indexedLanguageId, labelMap, localized, name,
+				required, state, objectFieldSettings);
 		}
 
 		return objectFieldLocalService.updateCustomObjectField(
@@ -234,7 +237,7 @@ public class ObjectFieldLocalServiceImpl
 		return _addObjectField(
 			null, userId, 0, objectDefinitionId, businessType, dbColumnName,
 			dbTableName, dbType, defaultValue, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, state, true);
+			indexedLanguageId, labelMap, false, name, required, state, true);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -632,8 +635,8 @@ public class ObjectFieldLocalServiceImpl
 			String businessType, String dbColumnName, String dbTableName,
 			String dbType, String defaultValue, boolean indexed,
 			boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			boolean state, boolean system,
+			Map<Locale, String> labelMap, boolean localized, String name,
+			boolean required, boolean state, boolean system,
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
@@ -647,8 +650,8 @@ public class ObjectFieldLocalServiceImpl
 		return objectFieldLocalService.addOrUpdateCustomObjectField(
 			externalReferenceCode, objectFieldId, userId, listTypeDefinitionId,
 			objectDefinitionId, businessType, dbType, defaultValue, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			state, objectFieldSettings);
+			indexedAsKeyword, indexedLanguageId, labelMap, localized, name,
+			required, state, objectFieldSettings);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -677,8 +680,8 @@ public class ObjectFieldLocalServiceImpl
 			String businessType, String dbColumnName, String dbTableName,
 			String dbType, String defaultValue, boolean indexed,
 			boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			boolean state, boolean system)
+			Map<Locale, String> labelMap, boolean localized, String name,
+			boolean required, boolean state, boolean system)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -718,6 +721,7 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
+		objectField.setLocalized(localized);
 		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectField.setName(name);
 		objectField.setRelationshipType(null);

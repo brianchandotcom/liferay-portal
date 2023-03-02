@@ -23,13 +23,14 @@ import {
 } from '../../utils/constants';
 import {getSupportedOperatorsFromEvent} from '../../utils/utils.es';
 import IntegerInput from './IntegerInput.es';
-import SelectEntityInput from './SelectEntityInput.es';
+import SelectEventEntityInput from './SelectEventEntityInput.es';
 
 class EventInput extends Component {
 	static propTypes = {
 		criterion: PropTypes.object.isRequired,
 		error: PropTypes.bool,
 		onChange: PropTypes.func.isRequired,
+		onEntityChange: PropTypes.func,
 		renderEmptyValuesErrors: PropTypes.bool,
 		selectedOperator: PropTypes.object,
 		selectedProperty: PropTypes.object.isRequired,
@@ -99,7 +100,7 @@ class EventInput extends Component {
 						<b>{propertyLabel}</b>
 					</span>
 
-					<SelectEntityInput
+					<SelectEventEntityInput
 						disabled={disabledInput}
 						displayValue={criterion.assetId}
 						onChange={onChange}

@@ -101,7 +101,7 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 
 				_setDeployConfiguration(zipFile, zipEntry.getName());
 
-				if ((_companyId > 0) && (_userId > 0)) {
+				if ((_companyId > 0) && (_groupName != null) && (_userId > 0)) {
 					return true;
 				}
 			}
@@ -184,15 +184,18 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 
 		ZipEntry zipEntry = zipFile.getEntry(zipEntryName + "config.json");
 
-		if (zipEntry != null) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				StringUtil.read(zipFile.getInputStream(zipEntry)));
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			StringUtil.read(zipFile.getInputStream(zipEntry)));
 
-			_userId = jsonObject.getLong("userId");
-			_companyId = jsonObject.getLong("companyId");
-			_groupName = jsonObject.getString("groupName");
+		_groupName = jsonObject.getString("groupName");
+
+		if (_groupName == null) {
+			return;
 		}
-		else {
+
+		_companyId = jsonObject.getLong("companyId");
+
+		if (_companyId == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Using default company ID for this site process");
 			}
@@ -206,7 +209,11 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 			catch (PortalException portalException) {
 				_log.error("Unable to get default company ID", portalException);
 			}
+		}
 
+		_userId = jsonObject.getLong("userId");
+
+		if (_userId == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Using default user ID for this site process");
 			}

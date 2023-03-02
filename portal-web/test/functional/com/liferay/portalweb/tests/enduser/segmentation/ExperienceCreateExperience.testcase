@@ -154,7 +154,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-147302 Given there are several users segmented, one per segment And there experiences created in a content page, one per user/segment And the experiences are all over the default experience When each user visits the content page Then the user will see the correct experience"
 	@priority = 4
 	test AddExperienceForDifferentUsers {
 		property portal.acceptance = "true";
@@ -4853,7 +4853,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-86292 Create a segment, Create an experience based on that segment, Validate that in the simulation mode the default experience is shown when no segment is selected"
 	@priority = 4
 	test PreviewDefaultExperience {
 		property portal.acceptance = "true";
@@ -4910,7 +4910,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-86292 Create a segment, Create an experience based on that segment, Validate that in the simulation mode the experience is shown for that segment"
 	@priority = 5
 	test PreviewExperience {
 		property portal.acceptance = "true";
@@ -4973,7 +4973,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-86292 Create a segment, Create an experience based on that segment, Validate that in the simulation mode its possible to navigate insided the page"
 	@priority = 3
 	test PreviewExperienceNavigation {
 		task ("Create Name Segment") {
@@ -5310,7 +5310,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-91946 Given in the Site Editor => Page => Content Editor; Having at least on Segment created When trying to create a new experience without filling the Experience Name input Then the modal does not hides away and the Experience Name input reports an error"
 	@priority = 4
 	test RequiredExperienceNameField {
 		property portal.acceptance = "true";

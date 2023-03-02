@@ -6,6 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Dataset";
 	property testray.main.component.name = "User Interface";
+	property custom.properties = "feature.flag.LPS-164563=true";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -31,8 +32,6 @@ definition {
 	@description = "LPS-174054: Display a list of headless resources in new FDS View modal"
 	@priority = 5
 	test CanDisplayHeadlessDeliveryAPIResources {
-		property custom.properties = "feature.flag.LPS-164563=true";
-
 		task ("When go to add Datasets") {
 			LexiconEntry.gotoAdd();
 		}
@@ -63,8 +62,6 @@ definition {
 	@description = "LPS-175205: Display matched result in new FDS View modal"
 	@priority = 3
 	test CanReturnAMatchedResult {
-		property custom.properties = "feature.flag.LPS-164563=true";
-
 		task ("When go to add Datasets") {
 			LexiconEntry.gotoAdd();
 		}
@@ -85,8 +82,6 @@ definition {
 	@description = "LPS-175206: Display no matched result in new FDS View modal"
 	@priority = 4
 	test CanReturnNoMatchedResults {
-		property custom.properties = "feature.flag.LPS-164563=true";
-
 		task ("When go to add Datasets") {
 			LexiconEntry.gotoAdd();
 		}

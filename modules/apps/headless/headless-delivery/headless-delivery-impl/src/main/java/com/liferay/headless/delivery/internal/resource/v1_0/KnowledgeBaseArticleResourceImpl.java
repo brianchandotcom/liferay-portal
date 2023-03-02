@@ -205,21 +205,24 @@ public class KnowledgeBaseArticleResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					KBActionKeys.ADD_KB_ARTICLE,
+					KBActionKeys.ADD_KB_ARTICLE, kbFolder.getKbFolderId(),
 					"postKnowledgeBaseFolderKnowledgeBaseArticle",
-					KBConstants.RESOURCE_NAME_ADMIN, kbFolder.getGroupId())
+					kbFolder.getUserId(), KBConstants.RESOURCE_NAME_ADMIN,
+					kbFolder.getGroupId())
 			).put(
 				"createBatch",
 				addAction(
-					KBActionKeys.ADD_KB_ARTICLE,
+					KBActionKeys.ADD_KB_ARTICLE, kbFolder.getKbFolderId(),
 					"postKnowledgeBaseFolderKnowledgeBaseArticleBatch",
-					KBConstants.RESOURCE_NAME_ADMIN, kbFolder.getGroupId())
+					kbFolder.getUserId(), KBConstants.RESOURCE_NAME_ADMIN,
+					kbFolder.getGroupId())
 			).put(
 				"get",
 				addAction(
-					ActionKeys.VIEW,
+					ActionKeys.VIEW, kbFolder.getKbFolderId(),
 					"getKnowledgeBaseFolderKnowledgeBaseArticlesPage",
-					KBConstants.RESOURCE_NAME_ADMIN, kbFolder.getGroupId())
+					kbFolder.getUserId(), KBConstants.RESOURCE_NAME_ADMIN,
+					kbFolder.getGroupId())
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =

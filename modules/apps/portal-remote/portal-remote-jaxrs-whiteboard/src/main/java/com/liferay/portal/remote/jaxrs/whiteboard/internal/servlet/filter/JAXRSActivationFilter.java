@@ -23,6 +23,7 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -59,7 +60,10 @@ public class JAXRSActivationFilter implements Filter {
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)servletRequest;
 
-		String key = httpServletRequest.getPathInfo();
+		String key = GetterUtil.getString(
+			httpServletRequest.getAttribute(
+				RequestDispatcher.INCLUDE_PATH_INFO),
+			httpServletRequest.getPathInfo());
 
 		int index = key.indexOf('/', 1);
 

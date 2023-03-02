@@ -43,7 +43,7 @@ public class JAXRSActivationFilterTracker {
 		_filterServiceRegistration = bundleContext.registerService(
 			Filter.class, new JAXRSActivationFilter(bundleContext, this),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"dispatcher", new String[] {"FORWARD", "REQUEST"}
+				"dispatcher", new String[] {"FORWARD", "INCLUDE", "REQUEST"}
 			).put(
 				"servlet-context-name", ""
 			).put(

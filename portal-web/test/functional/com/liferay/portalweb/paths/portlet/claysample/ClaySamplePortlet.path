@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>CLAY_SECTION</td>
-	<td>//*[contains(@class,'container-fluid')]//parent::*[not(contains(@class,'hide')) and contains(@id,'ClaySamplePortlet')]</td>
+	<td>//div[contains(@class, portlet-dropzone)]//div[contains(@class, "portlet-boundary_com_liferay_clay_sample_web_portlet_ClaySamplePortlet_")]</td>
 	<td></td>
 </tr>
 

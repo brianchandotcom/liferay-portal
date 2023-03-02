@@ -577,7 +577,10 @@ public class JournalEditArticleDisplayContext {
 				defaultArticleLanguageId = _getDDMStructureDefaultLanguageId();
 			}
 
-			if (defaultArticleLanguageId == null) {
+			if ((defaultArticleLanguageId == null) ||
+				!LanguageUtil.isAvailableLocale(
+					getGroupId(), defaultArticleLanguageId)) {
+
 				Locale siteDefaultLocale = null;
 
 				try {

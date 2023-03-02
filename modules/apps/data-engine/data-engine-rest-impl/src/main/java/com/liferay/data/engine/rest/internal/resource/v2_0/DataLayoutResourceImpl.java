@@ -18,6 +18,7 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
 import com.liferay.data.engine.constants.DataActionKeys;
+import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRenderingContext;
@@ -31,6 +32,7 @@ import com.liferay.data.engine.rest.internal.security.permission.resource.DataDe
 import com.liferay.data.engine.rest.resource.exception.DataLayoutValidationException;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
+import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.form.builder.rule.DDMFormRuleDeserializer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -69,6 +71,7 @@ import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -80,7 +83,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -441,8 +443,26 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
 
+		DataDefinitionContentType dataDefinitionContentType =
+			_dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
+				ddmStructure.getClassNameId());
+
 		if (Validator.isNull(keywords)) {
 			return Page.of(
+				HashMapBuilder.<String, Map<String, String>>put(
+					"createBatch",
+					() -> {
+						if (dataDefinitionContentType == null) {
+							return null;
+						}
+
+						return addAction(
+							DDMActionKeys.ADD_STRUCTURE,
+							"postDataDefinitionDataLayoutBatch",
+							dataDefinitionContentType.getPortletResourceName(),
+							contextCompany.getCompanyId());
+					}
+				).build(),
 				transform(
 					_ddmStructureLayoutLocalService.getStructureLayouts(
 						ddmStructure.getGroupId(),
@@ -462,7 +482,20 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		}
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			HashMapBuilder.<String, Map<String, String>>put(
+				"createBatch",
+				() -> {
+					if (dataDefinitionContentType == null) {
+						return null;
+					}
+
+					return addAction(
+						DDMActionKeys.ADD_STRUCTURE,
+						"postDataDefinitionDataLayoutBatch",
+						dataDefinitionContentType.getPortletResourceName(),
+						contextCompany.getCompanyId());
+				}
+			).build(),
 			booleanQuery -> {
 			},
 			null, DDMStructureLayout.class.getName(), keywords, pagination,

@@ -46,9 +46,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.Objects;
-import java.util.function.Predicate;
-
 import javax.portlet.Portlet;
 
 import org.junit.Assert;
@@ -94,10 +91,9 @@ public class MentionsPortletTest {
 
 		Assert.assertEquals(1, jsonArray.length());
 
-		_assertAnyJSONObject(
-			jsonArray,
-			jsonObject -> Objects.equals(
-				jsonObject.getString("screenName"), "example"));
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals("example", jsonObject.getString("screenName"));
 	}
 
 	@Test
@@ -138,10 +134,9 @@ public class MentionsPortletTest {
 
 		Assert.assertEquals(1, jsonArray.length());
 
-		_assertAnyJSONObject(
-			jsonArray,
-			jsonObject -> Objects.equals(
-				jsonObject.getString("screenName"), "example"));
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals("example", jsonObject.getString("screenName"));
 	}
 
 	@Test
@@ -174,18 +169,6 @@ public class MentionsPortletTest {
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new long[] {_group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
-	}
-
-	private void _assertAnyJSONObject(
-		JSONArray jsonArray, Predicate<JSONObject> predicate) {
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			if (predicate.test(jsonArray.getJSONObject(i))) {
-				return;
-			}
-		}
-
-		Assert.assertFalse(jsonArray.toString(), false);
 	}
 
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(

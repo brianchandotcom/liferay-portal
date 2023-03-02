@@ -31,6 +31,19 @@ dependencies {
 }
 
 mainClassName = "com.liferay.learn.Main"
+jar {
+	manifest {
+		attributes "Main-Class": "$mainClassName"
+
+	}
+
+	from {
+		configurations.compile.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+
+	}
+}
 
 repositories {
 	mavenLocal()
@@ -38,4 +51,9 @@ repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 	}
+}
+
+def assembleClientExtensionTasks= getTasksByName("assembleClientExtension", true)
+assembleClientExtensionTasks.each{
+	it.dependsOn(jar)
 }

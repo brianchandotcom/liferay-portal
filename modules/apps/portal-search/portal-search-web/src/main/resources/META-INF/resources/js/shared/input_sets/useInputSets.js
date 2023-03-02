@@ -1,0 +1,195 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import {useMemo, useRef, useState} from 'react';
+
+const ITEM_ID_PROPERTY = '_inputSetItemId';
+
+/**
+ * Moves an item in an array. Does not mutate the original array.
+ * @param {Array} list The list to move an item.
+ * @param {number} from The index of the item being moved.
+ * @param {number} to The new index that the item will be moved to.
+ *  @return {Array} Array of items with new order.
+ */
+function move(list, from, to) {
+	const listWithInserted = [
+		...list.slice(0, to),
+		list[from],
+		...list.slice(to, list.length),
+	];
+
+	const updatedFrom = from > to ? from + 1 : from;
+
+	return listWithInserted.filter((_, index) => index !== updatedFrom);
+}
+
+/**
+ * Ensures that `initialValue` is an array, otherwise functions in
+ * `useInputSets` will be incompatible. Also adds IDs to properly move and
+ * delete items.
+ * @param {*} initialValue
+ * @return {Array}
+ */
+function prepareInitialValue(initialValue) {
+	let parsedValue = initialValue;
+
+	if (typeof initialValue === 'string' || initialValue instanceof String) {
+		try {
+			parsedValue = JSON.parse(initialValue);
+		}
+		catch (error) {
+			if (process.env.NODE_ENV === 'development') {
+				console.error(error);
+			}
+
+			return [];
+		}
+	}
+
+	if (Array.isArray(parsedValue)) {
+
+		// Add IDs
+
+		return parsedValue.map((item, index) => ({
+			[ITEM_ID_PROPERTY]: index,
+			...item,
+		}));
+	}
+	else {
+		return [];
+	}
+}
+
+function useInputSets(initialValue) {
+	const preparedInitialValue = useMemo(
+		() => prepareInitialValue(initialValue),
+		[initialValue]
+	);
+
+	/**
+	 * Used for assigning IDs to newly added items.
+	 */
+	const idCounterRef = useRef(preparedInitialValue.length);
+
+	const [value, setValue] = useState(preparedInitialValue);
+
+	/**
+	 * A helper function to get the ID to be used as the `key` property in
+	 * the `InputSets.Item` component.
+	 * @param {object} inputSetItem
+	 * @returns {number}
+	 */
+	const _getInputSetItemId = (inputSetItem) => {
+		return inputSetItem[ITEM_ID_PROPERTY];
+	};
+
+	/**
+	 * A helper function to pass in required props into the `InputSets.Item`
+	 * component.
+	 *
+	 * Example:
+	 * <InputSets.Item {...getInputSetItemProps(valueItem, valueIndex)}>
+	 *
+	 * @param {object} inputSetItem
+	 * @returns {object}
+	 */
+	const _getInputSetItemProps = (inputSetItem, index) => {
+		return {
+			index,
+			isLastItem: value.length - 1 === index,
+			key: _getInputSetItemId(inputSetItem),
+			onInputSetItemDelete: _handleInputSetItemDelete,
+			onInputSetItemMove: _handleInputSetItemMove,
+		};
+	};
+
+	/**
+	 * Adds a new item to the end of the input sets.
+	 * @param {object} newValue The new object to add.
+	 */
+	const _handleItemSetsAdd = (newValue = {}) => {
+		setValue([
+			...value,
+			{
+				...newValue,
+				[ITEM_ID_PROPERTY]: idCounterRef.current++,
+			},
+		]);
+	};
+
+	/**
+	 * Changes a single object property's value.
+	 * @param {number} index The position of the item in the list.
+	 * @param {string} property The name of the property to change.
+	 */
+	const _handleInputSetItemChange = (index, property) => (event) => {
+		setValue(
+			value.map((item, i) =>
+				i === index ? {...item, [property]: event.target.value} : item
+			)
+		);
+	};
+
+	/**
+	 * Deletes the item at the specified `index`. The exported
+	 * `onInputSetItemDelete` should be passed into the `InputSets.Item`
+	 * component.
+	 * @param {number} index The index position to be removed.
+	 * @returns
+	 */
+	const _handleInputSetItemDelete = (index) => () => {
+		setValue(value.filter((_, i) => i !== index));
+	};
+
+	/**
+	 * Moves a set item. The exported `onInputSetItemMove` should be passed into
+	 * the `InputSets.Item` component.
+	 * @param {number} from The current index position.
+	 * @param {number} to The new index position to move to.
+	 */
+	const _handleInputSetItemMove = (from, to) => {
+		setValue(move(value, from, to));
+	};
+
+	/**
+	 * Similar to `_handleInputSetItemChange` except this will replace the
+	 * entire object.
+	 * @param {number} index
+	 * @param {string} newValue
+	 * @returns
+	 */
+	const _handleInputSetItemReplace = (index, newValue) => () => {
+		setValue(
+			value.map((item, i) =>
+				i === index
+					? {[ITEM_ID_PROPERTY]: item[ITEM_ID_PROPERTY], ...newValue}
+					: item
+			)
+		);
+	};
+
+	return {
+		getInputSetItemId: _getInputSetItemId,
+		getInputSetItemProps: _getInputSetItemProps,
+		onInputSetItemChange: _handleInputSetItemChange,
+		onInputSetItemDelete: _handleInputSetItemDelete,
+		onInputSetItemMove: _handleInputSetItemMove,
+		onInputSetItemReplace: _handleInputSetItemReplace,
+		onInputSetsAdd: _handleItemSetsAdd,
+		value,
+	};
+}
+
+export {useInputSets};

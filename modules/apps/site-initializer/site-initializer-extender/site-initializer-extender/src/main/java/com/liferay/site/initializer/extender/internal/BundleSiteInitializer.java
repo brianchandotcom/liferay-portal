@@ -787,8 +787,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_replace(
 						json,
 						new String[] {
-							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
-							"[$GROUP_KEY$]", "[$PORTAL_URL$]"
+							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]",
+							"[$GROUP_ID$]", "[$GROUP_KEY$]", "[$PORTAL_URL$]"
 						},
 						new String[] {
 							String.valueOf(group.getCompanyId()),
@@ -1025,8 +1025,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_replace(
 						json,
 						new String[] {
-							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
-							"[$GROUP_KEY$]", "[$PORTAL_URL$]"
+							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]",
+							"[$GROUP_ID$]", "[$GROUP_KEY$]", "[$PORTAL_URL$]"
 						},
 						new String[] {
 							String.valueOf(group.getCompanyId()),
@@ -1146,8 +1146,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_replace(
 						json,
 						new String[] {
-							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
-							"[$GROUP_KEY$]", "[$PORTAL_URL$]"
+							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]",
+							"[$GROUP_ID$]", "[$GROUP_KEY$]", "[$PORTAL_URL$]"
 						},
 						new String[] {
 							String.valueOf(group.getCompanyId()),
@@ -2555,10 +2555,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 					FileUtil.stripExtension(url.getPath())),
 				_replace(
 					_replace(
-					StringUtil.read(url.openStream()),
+						StringUtil.read(url.openStream()),
 						new String[] {
-							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
-							"[$GROUP_KEY$]", "[$PORTAL_URL$]"
+							"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]",
+							"[$GROUP_ID$]", "[$GROUP_KEY$]", "[$PORTAL_URL$]"
 						},
 						new String[] {
 							String.valueOf(group.getCompanyId()),

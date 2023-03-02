@@ -373,3 +373,4 @@ public class PojoEntityTuplizer extends AbstractEntityTuplizer {
 		return null;
 	}
 }
+/* @generated */

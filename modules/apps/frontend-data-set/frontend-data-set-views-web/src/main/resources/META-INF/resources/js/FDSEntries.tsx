@@ -22,7 +22,7 @@ import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import {fetch, openModal} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import '../css/FDSEntries.scss';
 
@@ -174,16 +174,14 @@ const FDSEntries = ({
 	headlessResources,
 	namespace,
 }: IFDSEntriesProps) => {
-	const headlessResourcesMapRef = useRef<Map<string, HeadlessResource>>();
-
-	useEffect(() => {
-		headlessResourcesMapRef.current = new Map(
+	const headlessResourcesMapRef = useRef<Map<string, HeadlessResource>>(
+		new Map(
 			headlessResources.map((headlessResource) => [
 				headlessResource.entityClassName,
 				headlessResource,
 			])
-		);
-	}, [headlessResources]);
+		)
+	);
 
 	type FDSEntry = {
 		entityClassName: string;
@@ -194,7 +192,7 @@ const FDSEntries = ({
 	}
 
 	const ProviderRenderer = ({itemData}: IProviderRendererProps) => {
-		const headlessResource = headlessResourcesMapRef.current?.get(
+		const headlessResource = headlessResourcesMapRef.current.get(
 			itemData.entityClassName
 		);
 

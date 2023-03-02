@@ -22,10 +22,10 @@ import com.liferay.commerce.price.list.service.CommercePriceListDiscountRelServi
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListDiscount;
-import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.PriceListDiscountDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceListDiscountUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceListDiscountResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -190,8 +190,11 @@ public class PriceListDiscountResourceImpl
 	@Reference
 	private CommercePriceListService _commercePriceListService;
 
-	@Reference
-	private PriceListDiscountDTOConverter _priceListDiscountDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.PriceListDiscountDTOConverter)"
+	)
+	private DTOConverter<CommercePriceListDiscountRel, PriceListDiscount>
+		_priceListDiscountDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

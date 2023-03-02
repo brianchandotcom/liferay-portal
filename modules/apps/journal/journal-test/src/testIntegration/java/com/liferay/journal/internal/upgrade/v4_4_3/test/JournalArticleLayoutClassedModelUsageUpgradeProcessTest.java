@@ -27,6 +27,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -306,6 +307,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			UpgradeProcess upgradeProcess = _getUpgradeProcess();
 
 			upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
 		}
 	}
 
@@ -338,6 +341,9 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 	@Inject
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

@@ -36,7 +36,7 @@ public interface DBPartitionConfiguration {
 	public String[] excludedMessageBusDestinationNames();
 
 	@Meta.AD(
-		deflt = "com.liferay.analytics.settings.internal.messaging.CheckAnalyticsConnectionsMessageListener|com.liferay.portal.store.s3.AbortedMultipartUploadCleaner|com.liferay.server.admin.web.internal.messaging.PluginRepositoriesMessageListener",
+		deflt = "com.liferay.analytics.settings.internal.messaging.CheckAnalyticsConnectionsMessageListener|com.liferay.portal.store.s3.AbortedMultipartUploadCleaner",
 		description = "excluded-scheduler-job-names-description",
 		name = "excluded-scheduler-job-names", required = false
 	)

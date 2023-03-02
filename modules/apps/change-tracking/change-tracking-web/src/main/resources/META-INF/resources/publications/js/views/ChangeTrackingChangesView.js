@@ -2884,7 +2884,23 @@ export default function ChangeTrackingChangesView({
 						{Liferay.FeatureFlags['LPS-171364'] ? (
 							<ClayToolbar.Item>
 								<MoveChangesModal
-									changes={selectedChanges}
+									changes={
+										renderState.node.modelClassNameId
+											? [
+													{
+														ctEntryId:
+															renderState.node
+																.ctEntryId,
+														modelClassNameId:
+															renderState.node
+																.modelClassNameId,
+														modelClassPK:
+															renderState.node
+																.modelClassPK,
+													},
+											  ]
+											: selectedChanges
+									}
 									ctCollectionId={ctCollectionId}
 									moveChangesURL={moveChangesURL}
 									namespace={namespace}

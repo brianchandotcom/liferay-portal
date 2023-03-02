@@ -269,8 +269,9 @@ definition {
 		Portlet.viewTitle(portletName = "IFrame");
 	}
 
-	@priority = 3
+	@priority = 4
 	test InstanceCreatedOnRestartPickUpNewCompanyLocale {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Locale#InstanceCreatedOnRestartPickUpNewCompanyLocale";
 
 		User.firstLoginPG();

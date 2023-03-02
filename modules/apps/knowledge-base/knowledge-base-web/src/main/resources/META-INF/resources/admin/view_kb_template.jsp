@@ -46,7 +46,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<c:if test='<%= portletTitleBasedNavigation && FeatureFlagManagerUtil.isEnabled("LPS-166643") %>'>
+<c:if test="<%= portletTitleBasedNavigation %>">
 
 	<%
 	KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);

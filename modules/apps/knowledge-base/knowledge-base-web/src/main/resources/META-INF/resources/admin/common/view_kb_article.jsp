@@ -63,26 +63,16 @@ if (portletTitleBasedNavigation) {
 
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
 		<clay:container-fluid>
-			<ul class="<%= FeatureFlagManagerUtil.isEnabled("LPS-166643") ? "justify-content-end" : "" %> navbar-nav navbar-nav-expand">
-				<c:choose>
-					<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-166643") %>'>
-						<li class="nav-item">
-							<clay:link
-								aria-label='<%= LanguageUtil.get(request, "edit") %>'
-								cssClass="btn-monospaced btn-secondary btn-sm"
-								href="<%= viewKBArticleDisplayContext.getEditArticleURL(kbArticle) %>"
-								icon="pencil"
-								title='<%= LanguageUtil.get(request, "edit") %>'
-							/>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li class="m-auto nav-item">
-							<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
-						</li>
-					</c:otherwise>
-				</c:choose>
-
+			<ul class="justify-content-end navbar-nav navbar-nav-expand">
+				<li class="nav-item">
+					<clay:link
+						aria-label='<%= LanguageUtil.get(request, "edit") %>'
+						cssClass="btn-monospaced btn-secondary btn-sm"
+						href="<%= viewKBArticleDisplayContext.getEditArticleURL(kbArticle) %>"
+						icon="pencil"
+						title='<%= LanguageUtil.get(request, "edit") %>'
+					/>
+				</li>
 				<li class="nav-item">
 					<liferay-frontend:sidebar-toggler-button
 						cssClass="btn btn-monospaced btn-secondary btn-sm btn-unstyled"
@@ -90,7 +80,7 @@ if (portletTitleBasedNavigation) {
 					/>
 				</li>
 
-				<c:if test='<%= viewKBArticleDisplayContext.isSubscriptionEnabled(kbArticle) && FeatureFlagManagerUtil.isEnabled("LPS-166643") %>'>
+				<c:if test="<%= viewKBArticleDisplayContext.isSubscriptionEnabled(kbArticle) %>">
 					<li class="nav-item">
 						<clay:link
 							aria-label="<%= viewKBArticleDisplayContext.getSubscriptionLabel(kbArticle) %>"

@@ -401,31 +401,35 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						objectRelationship.getType(),
 						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-					_bundleContext.registerService(
-						RelatedInfoItemCollectionProvider.class,
-						new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-							objectDefinition, _objectDefinitionLocalService,
-							_objectEntryLocalService, objectRelationship),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"company.id", objectDefinition.getCompanyId()
-						).put(
-							"item.class.name", objectDefinition.getClassName()
-						).build());
+					serviceRegistrations.add(
+						_bundleContext.registerService(
+							RelatedInfoItemCollectionProvider.class,
+							new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+								objectDefinition, _objectDefinitionLocalService,
+								_objectEntryLocalService, objectRelationship),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"company.id", objectDefinition.getCompanyId()
+							).put(
+								"item.class.name",
+								objectDefinition.getClassName()
+							).build()));
 				}
 				else if (Objects.equals(
 							objectRelationship.getType(),
 							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-					_bundleContext.registerService(
-						RelatedInfoItemCollectionProvider.class,
-						new OneToManyObjectRelationshipRelatedInfoCollectionProvider(
-							objectDefinition, _objectDefinitionLocalService,
-							_objectEntryLocalService, objectRelationship),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"company.id", objectDefinition.getCompanyId()
-						).put(
-							"item.class.name", objectDefinition.getClassName()
-						).build());
+					serviceRegistrations.add(
+						_bundleContext.registerService(
+							RelatedInfoItemCollectionProvider.class,
+							new OneToManyObjectRelationshipRelatedInfoCollectionProvider(
+								objectDefinition, _objectDefinitionLocalService,
+								_objectEntryLocalService, objectRelationship),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"company.id", objectDefinition.getCompanyId()
+							).put(
+								"item.class.name",
+								objectDefinition.getClassName()
+							).build()));
 				}
 			}
 			catch (PortalException portalException) {

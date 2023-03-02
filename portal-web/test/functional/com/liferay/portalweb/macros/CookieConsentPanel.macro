@@ -140,6 +140,15 @@ definition {
 			expectedCookieValue = "true");
 	}
 
+	@description = "Verify that cookies for cookie categories are not exist"
+	macro verifyCookiesForCookieCategoriesAreNotPresent {
+		CookieHelper.checkSelectedCookieIsNotExist(cookieName = "CONSENT_TYPE_PERFORMANCE");
+
+		CookieHelper.checkSelectedCookieIsNotExist(cookieName = "CONSENT_TYPE_FUNCTIONAL");
+
+		CookieHelper.checkSelectedCookieIsNotExist(cookieName = "CONSENT_TYPE_PERSONALIZATION");
+	}
+
 	@description = "Verify that customized texts are present"
 	macro verifyCustomTextsArePresent {
 		Variables.assertDefined(parameterList = ${key_text});

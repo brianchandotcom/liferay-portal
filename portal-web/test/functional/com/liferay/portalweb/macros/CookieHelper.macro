@@ -111,6 +111,58 @@ definition {
 		}
 	}
 
+	@description = "Get Cookie check if it's exist."
+	macro checkSelectedCookieIsExist {
+		Variables.assertDefined(parameterList = ${cookieName});
+
+		var javascript = '''var cookieName = "${cookieName}";
+                                var allCookies = document.cookie.split(';');
+        						var value="empty";
+                                for (var i = 0; i < allCookies.length; i++){
+                                	if(allCookies[i].includes(cookieName)){
+                                		value = "true";
+                                	}
+                                }
+                                return value;''';
+
+		var cookieExistValue = selenium.getEval(${javascript});
+
+		if (${cookieExistValue} == "true") {
+			echo("Cookie with name: ${cookieName} is exist");
+
+			TestUtils.pass(message = "Cookie named: ${cookieName} is exist.");
+		}
+		else if (${cookieExistValue} != "true") {
+			fail("Cookie with name ${cookieName} is not exist.");
+		}
+	}
+
+	@description = "Get Cookie check if it's not exist."
+	macro checkSelectedCookieIsNotExist {
+		Variables.assertDefined(parameterList = ${cookieName});
+
+		var javascript = '''var cookieName = "${cookieName}";
+                                var allCookies = document.cookie.split(';');
+        						var value="empty";
+                                for (var i = 0; i < allCookies.length; i++){
+                                	if(allCookies[i].includes(cookieName)){
+                                		value = "true";
+                                	}
+                                }
+                                return value;''';
+
+		var cookieExistValue = selenium.getEval(${javascript});
+
+		if (${cookieExistValue} != "true") {
+			echo("Cookie with name: ${cookieName} is not exist");
+
+			TestUtils.pass(message = "Cookie named: ${cookieName} is not exist.");
+		}
+		else if (${cookieExistValue} == "true") {
+			fail("Cookie with name ${cookieName} is exist.");
+		}
+	}
+
 	@description = "Get Cookie check if it's not present."
 	macro checkSelectedCookieIsNotPresent {
 		Variables.assertDefined(parameterList = "${cookieName},${expectedCookieValue}");

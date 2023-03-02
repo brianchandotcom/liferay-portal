@@ -65,7 +65,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the page audit panel detail view and a user with permissions to edit Instance Settings When there is no canonical URL, or it doesn't coincide with the page's URL Then the users will see the invalid canonical URL, and a text with a link to the instance settings: If the problem is that the canonical URL doesn't match the URL of the page, try changing the configuration for using localized canonical URLs from Instance settings > Pages > SEO. "
 	@priority = 4
 	@uitest
 	test CheckInvalidCanonicalURL {
@@ -95,7 +95,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the page audit panel detail view and a user with NO permissions to edit Instance Settings When there is no canonical URL, or it doesn't coincide with the page's URL Then the users will see the invalid canonical URL, and a text: If the problem is that the canonical URL doesn't match the URL of the page, try changing the configuration for using localized canonical URLs from Instance settings > Pages > SEO. "
 	@priority = 4
 	test CheckInvalidCanonicalURLWithoutPermission {
 		property portal.acceptance = "true";
@@ -143,7 +143,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the page audit panel detail view and a user with permissions for editing the page When the page has any invalid hreflang link Then the users will see the matching failing elements, with the incorrect hreflang links"
 	@priority = 4
 	@uitest
 	test CheckInvalidHreflang {
@@ -177,7 +177,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the page audit panel detail view and a user with permissions for editing the page When  the link texts are not title as the link text Then the users will see the link text and the link destination URL"
 	@priority = 4
 	@uitest
 	test CheckLinksTexts {
@@ -215,7 +215,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the page audit panel detail view and a user with permissions for editing the page When there is no meta description for the page Then the users will see a text with a link to the configuration section: Add a meta-description from the Configuration section of this page."
 	@priority = 4
 	@uitest
 	test CheckMissingMetaDescription {
@@ -249,7 +249,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the page audit panel detail view and a user with NO permissions for editing the page When there is no meta description for the page Then the users will see a text: Add a meta-description from the Configuration section of this page."
 	@priority = 4
 	test CheckMissingMetaDescriptionWithoutPermission {
 		property portal.acceptance = "true";
@@ -297,7 +297,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the page audit panel detail view and a user with permissions for editing the page When there is no title for the page Then the users will see a text with a link to the configuration section: Add a title from the Configuration section of this page."
 	@priority = 4
 	@uitest
 	test CheckMissingTitleElement {
@@ -1190,7 +1190,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the page audit panel detail view and a user with permissions for editing the page When the page is blocked from indexing Then the users will see a text with a link to the configuration section: Change the robots.txt setting from the Configuration section of this page."
 	@priority = 4
 	@uitest
 	test CheckPageBlockedFromIndexing {
@@ -1224,7 +1224,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-132234 Given the page audit panel detail view and a user with NO permissions for editing the page When the page is blocked from indexing Then the users will see a text: Change the robots.txt setting from the Configuration section of this page."
 	@priority = 4
 	test CheckPageBlockedFromIndexingWithoutPermission {
 		property portal.acceptance = "true";

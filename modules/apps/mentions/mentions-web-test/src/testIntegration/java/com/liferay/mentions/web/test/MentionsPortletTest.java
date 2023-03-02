@@ -90,24 +90,7 @@ public class MentionsPortletTest {
 	public void testServletResponseWithoutQuery() throws Exception {
 		_addUser("example");
 
-		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
-
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		mvcPortlet.serveResource(
-			_getMockLiferayResourceRequest(null), mockLiferayResourceResponse);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			(MockHttpServletResponse)
-				mockLiferayResourceResponse.getHttpServletResponse();
-
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_JSON,
-			mockHttpServletResponse.getContentType());
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			mockHttpServletResponse.getContentAsString());
+		JSONArray jsonArray = _getServletResponseJSONArray(null);
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -123,25 +106,7 @@ public class MentionsPortletTest {
 
 		_addUser("example");
 
-		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
-
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		mvcPortlet.serveResource(
-			_getMockLiferayResourceRequest("example"),
-			mockLiferayResourceResponse);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			(MockHttpServletResponse)
-				mockLiferayResourceResponse.getHttpServletResponse();
-
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_JSON,
-			mockHttpServletResponse.getContentType());
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			mockHttpServletResponse.getContentAsString());
+		JSONArray jsonArray = _getServletResponseJSONArray("example");
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -156,24 +121,7 @@ public class MentionsPortletTest {
 
 		_addUser("example");
 
-		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
-
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		mvcPortlet.serveResource(
-			_getMockLiferayResourceRequest("exa"), mockLiferayResourceResponse);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			(MockHttpServletResponse)
-				mockLiferayResourceResponse.getHttpServletResponse();
-
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_JSON,
-			mockHttpServletResponse.getContentType());
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			mockHttpServletResponse.getContentAsString());
+		JSONArray jsonArray = _getServletResponseJSONArray("exa");
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -186,24 +134,7 @@ public class MentionsPortletTest {
 	public void testServletResponseWithQueryWithWildard() throws Exception {
 		_addUser("example");
 
-		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
-
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		mvcPortlet.serveResource(
-			_getMockLiferayResourceRequest(""), mockLiferayResourceResponse);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			(MockHttpServletResponse)
-				mockLiferayResourceResponse.getHttpServletResponse();
-
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_JSON,
-			mockHttpServletResponse.getContentType());
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			mockHttpServletResponse.getContentAsString());
+		JSONArray jsonArray = _getServletResponseJSONArray("");
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -217,24 +148,7 @@ public class MentionsPortletTest {
 	public void testServletResponseWithQueryWithWildcardAndNoResults()
 		throws Exception {
 
-		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
-
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		mvcPortlet.serveResource(
-			_getMockLiferayResourceRequest(""), mockLiferayResourceResponse);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			(MockHttpServletResponse)
-				mockLiferayResourceResponse.getHttpServletResponse();
-
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_JSON,
-			mockHttpServletResponse.getContentType());
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			mockHttpServletResponse.getContentAsString());
+		JSONArray jsonArray = _getServletResponseJSONArray("");
 
 		Assert.assertEquals(0, jsonArray.length());
 	}
@@ -293,6 +207,29 @@ public class MentionsPortletTest {
 		}
 
 		return mockLiferayResourceRequest;
+	}
+
+	private JSONArray _getServletResponseJSONArray(String query)
+		throws Exception {
+
+		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
+
+		mvcPortlet.serveResource(
+			_getMockLiferayResourceRequest(query), mockLiferayResourceResponse);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockLiferayResourceResponse.getHttpServletResponse();
+
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_JSON,
+			mockHttpServletResponse.getContentType());
+
+		return JSONFactoryUtil.createJSONArray(
+			mockHttpServletResponse.getContentAsString());
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

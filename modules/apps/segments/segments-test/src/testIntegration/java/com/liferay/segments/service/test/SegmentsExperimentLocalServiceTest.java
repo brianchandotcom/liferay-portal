@@ -16,6 +16,7 @@ package com.liferay.segments.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -58,7 +59,6 @@ import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -454,11 +454,9 @@ public class SegmentsExperimentLocalServiceTest {
 		Assert.assertEquals(
 			segmentsExperiments.toString(), 2, segmentsExperiments.size());
 
-		Stream<SegmentsExperiment> stream = segmentsExperiments.stream();
-
-		long[] segmentsExperimentIds = stream.mapToLong(
-			SegmentsExperimentModel::getSegmentsExperimentId
-		).toArray();
+		long[] segmentsExperimentIds = TransformUtil.transformToLongArray(
+			segmentsExperiments,
+			SegmentsExperimentModel::getSegmentsExperimentId);
 
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
@@ -501,11 +499,9 @@ public class SegmentsExperimentLocalServiceTest {
 		Assert.assertEquals(
 			segmentsExperiments.toString(), 3, segmentsExperiments.size());
 
-		Stream<SegmentsExperiment> stream = segmentsExperiments.stream();
-
-		long[] segmentsExperimentIds = stream.mapToLong(
-			SegmentsExperimentModel::getSegmentsExperimentId
-		).toArray();
+		long[] segmentsExperimentIds = TransformUtil.transformToLongArray(
+			segmentsExperiments,
+			SegmentsExperimentModel::getSegmentsExperimentId);
 
 		Assert.assertTrue(
 			ArrayUtil.containsAll(

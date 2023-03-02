@@ -22,13 +22,13 @@ import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListOrderType;
-import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.PriceListOrderTypeDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceListOrderTypeUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceListOrderTypeResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -207,8 +207,11 @@ public class PriceListOrderTypeResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private PriceListOrderTypeDTOConverter _priceListOrderTypeDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.PriceListOrderTypeDTOConverter)"
+	)
+	private DTOConverter<CommercePriceListOrderTypeRel, PriceListOrderType>
+		_priceListOrderTypeDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

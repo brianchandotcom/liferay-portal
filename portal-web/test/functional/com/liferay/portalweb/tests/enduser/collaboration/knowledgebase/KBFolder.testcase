@@ -29,8 +29,6 @@ definition {
 	@description = "This test checks that articles can be sorted by alphabetical order."
 	@priority = 3
 	test AssetsCanBeSortedByAlphabeticalOrder {
-		property custom.properties = "feature.flag.LPS-166643=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",
@@ -65,8 +63,6 @@ definition {
 	@description = "This test checks that articles can be sorted by the modified date."
 	@priority = 3
 	test AssetsCanBeSortedByModifiedDate {
-		property custom.properties = "feature.flag.LPS-166643=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",
@@ -120,8 +116,6 @@ definition {
 	@description = "This test checks that articles can be sorted by view count."
 	@priority = 3
 	test AssetsCanBeSortedByViewCount {
-		property custom.properties = "feature.flag.LPS-166643=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",
@@ -202,7 +196,7 @@ definition {
 	@description = "This test checks that all articles in a folder can be deleted via Toolbar."
 	@priority = 3
 	test CanDeleteAllArticlesViaToolbar {
-		property custom.properties = "feature.flag.LPS-156421=true${line.separator}feature.flag.LPS-166643=true";
+		property custom.properties = "feature.flag.LPS-156421=true";
 
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -484,8 +478,6 @@ definition {
 	@description = "This test checks that the management toolbar displays the checkbox, Filter & Order button, Order By button, search bar, and the info icon"
 	@priority = 5
 	test CorrectActionsAppearInToolbarAfterSelectingFolder {
-		property custom.properties = "feature.flag.LPS-166643=true";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",

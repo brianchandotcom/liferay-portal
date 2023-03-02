@@ -34,7 +34,7 @@ definition {
 	@description = "This test checks that a user can subscribe and unsubscribe from an article."
 	@priority = 4
 	test CanSubscribeToArticleViaToolbar {
-		property custom.properties = "feature.flag.LPS-166643=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",

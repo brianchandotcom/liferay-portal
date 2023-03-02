@@ -74,8 +74,6 @@ definition {
 	@description = "This test checks that an article can be searched for in the admin search bar."
 	@priority = 4
 	test CanSearchForArticleInAdmin {
-		property custom.properties = "feature.flag.LPS-166643=true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Orange Color Text",

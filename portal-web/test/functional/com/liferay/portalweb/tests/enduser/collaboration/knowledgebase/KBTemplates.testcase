@@ -271,8 +271,6 @@ definition {
 	@description = "This test checks checks that the correct actions appear in the management toolbar for a KB template and that it is editable."
 	@priority = 5
 	test CanEditTemplateViaToolbar {
-		property custom.properties = "feature.flag.LPS-166643=true";
-
 		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
 			kbTemplateTitle = "Knowledge Base Template Title");
@@ -360,8 +358,6 @@ definition {
 	@description = "This test checks that the checkbox, Filter & Order button, Order By button, and the search bar options appear in KB templates management toolbar."
 	@priority = 5
 	test CorrectActionsAppearInToolbar {
-		property custom.properties = "feature.flag.LPS-166643=true";
-
 		KBAdmin.openKBTemplates(siteURLKey = "guest");
 
 		KBTemplate.viewNoTemplates(

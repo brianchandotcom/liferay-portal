@@ -323,8 +323,19 @@ public class ObjectDefinitionResourceImpl
 	public void postObjectDefinitionPublish(Long objectDefinitionId)
 		throws Exception {
 
-		_objectDefinitionService.publishCustomObjectDefinition(
-			objectDefinitionId);
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.getObjectDefinition(
+					objectDefinitionId);
+
+		if (GetterUtil.getBoolean(serviceBuilderObjectDefinition.getSystem())) {
+			_objectDefinitionService.publishSystemObjectDefinition(
+				objectDefinitionId);
+		}
+		else {
+			_objectDefinitionService.publishCustomObjectDefinition(
+				objectDefinitionId);
+		}
 	}
 
 	@Override

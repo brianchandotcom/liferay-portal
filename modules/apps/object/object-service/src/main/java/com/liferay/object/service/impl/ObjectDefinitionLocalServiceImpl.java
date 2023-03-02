@@ -561,36 +561,20 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionStatusException();
 		}
 
-		int count = _objectFieldPersistence.countByODI_S(
-			objectDefinition.getObjectDefinitionId(), false);
+		_publishObjectDefinition(userId, objectDefinition);
 
-		if (count == 0) {
-			throw new RequiredObjectFieldException();
-		}
+		return objectDefinition;
+	}
 
-		objectDefinition.setActive(true);
-		objectDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+	@Override
+	public ObjectDefinition publishSystemObjectDefinition(
+			long userId, long objectDefinitionId)
+		throws PortalException {
 
-		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		_createTable(objectDefinition.getDBTableName(), objectDefinition);
-		_createTable(
-			objectDefinition.getExtensionDBTableName(), objectDefinition);
-
-		for (ObjectRelationship objectRelationship :
-				_objectRelationshipLocalService.getObjectRelationships(
-					objectDefinition.getObjectDefinitionId(),
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
-
-			_objectRelationshipLocalService.
-				createManyToManyObjectRelationshipTable(
-					userId, objectRelationship);
-		}
-
-		deployObjectDefinition(objectDefinition);
-
-		_registerTransactionCallbackForCluster(
-			_deployObjectDefinitionMethodKey, objectDefinition);
+		_publishObjectDefinition(userId, objectDefinition);
 
 		return objectDefinition;
 	}
@@ -1146,6 +1130,44 @@ public class ObjectDefinitionLocalServiceImpl
 						StringPool.DASH, locale, StringPool.DASH, 0));
 			}
 		}
+	}
+
+	private ObjectDefinition _publishObjectDefinition(
+			long userId, ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		int count = _objectFieldPersistence.countByODI_S(
+			objectDefinition.getObjectDefinitionId(), false);
+
+		if (count == 0) {
+			throw new RequiredObjectFieldException();
+		}
+
+		objectDefinition.setActive(true);
+		objectDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+
+		_createTable(objectDefinition.getDBTableName(), objectDefinition);
+		_createTable(
+			objectDefinition.getExtensionDBTableName(), objectDefinition);
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipLocalService.getObjectRelationships(
+					objectDefinition.getObjectDefinitionId(),
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			_objectRelationshipLocalService.
+				createManyToManyObjectRelationshipTable(
+					userId, objectRelationship);
+		}
+
+		deployObjectDefinition(objectDefinition);
+
+		_registerTransactionCallbackForCluster(
+			_deployObjectDefinitionMethodKey, objectDefinition);
+
+		return objectDefinition;
 	}
 
 	private void _registerTransactionCallbackForCluster(

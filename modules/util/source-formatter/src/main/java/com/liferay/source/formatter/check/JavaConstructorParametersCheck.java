@@ -214,21 +214,22 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				return StringUtil.replaceFirst(
 					content, globalVariableName, parameterName, start);
 			}
-			else if (followingCode.startsWith(".")) {
+
+			if (followingCode.startsWith(".")) {
 				if (!followingCode.startsWith(".get") &&
 					!followingCode.startsWith(".is")) {
 
 					break;
 				}
 
-				if (StringUtil.equals(
+				if (!StringUtil.equals(
 						matchedGlobalVariableName, globalVariableName)) {
 
-					return StringUtil.replaceFirst(
-						content, globalVariableName, parameterName, start);
+					continue;
 				}
 
-				continue;
+				return StringUtil.replaceFirst(
+					content, globalVariableName, parameterName, start);
 			}
 
 			char previousChar = content.charAt(start - 1);

@@ -18,7 +18,7 @@
 					{
 						"definition": {
 							"fragment": {
-								"key": "home-welcome-banner",
+								"key": "evp-home-welcome-banner",
 								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
@@ -110,7 +110,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "news",
+																"key": "evp-news",
 																"siteKey": "[$GROUP_ID$]"
 															},
 															"fragmentConfig": {
@@ -490,7 +490,7 @@
 								"definition": {
 									"collectionConfig": {
 										"collectionReference": {
-											"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_[$COMPANY_ID$]_C_EVPData"
+											"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_[$COMPANY_ID$]_C_EVPHomepageData"
 										},
 										"collectionType": "CollectionProvider"
 									},
@@ -1597,7 +1597,7 @@
 																									"fields": [
 																										{
 																											"fieldName": "friendlyURL",
-																											"fieldValue": "/my-evp"
+																											"fieldValue": "/request"
 																										},
 																										{
 																											"fieldName": "privatePage",

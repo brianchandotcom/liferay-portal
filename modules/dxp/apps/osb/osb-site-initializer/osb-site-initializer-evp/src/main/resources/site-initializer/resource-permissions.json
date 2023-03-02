@@ -148,7 +148,7 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPData$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPHomepageData$]",
 		"roleName": "Guest",
 		"scope": "1"
 	}

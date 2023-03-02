@@ -249,7 +249,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "organization-status-update-buttons-staff",
+																				"key": "evp-organization-status-update-buttons-staff",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {

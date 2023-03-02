@@ -241,7 +241,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "login-button",
+														"key": "evp-login-button",
 														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {

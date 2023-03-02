@@ -374,10 +374,9 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		sb.append(" in (");
 
 		int i = 0;
-		int batchSize = 1000;
 
 		for (Serializable serializable : ctEntries.keySet()) {
-			if (i == batchSize) {
+			if (i == _BATCH_SIZE) {
 				sb.setStringAt(")", sb.index() - 1);
 				sb.append(" or ");
 				sb.append(primaryKeyName);
@@ -393,6 +392,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		}
 
 		sb.setStringAt(")", sb.index() - 1);
+
 		sb.append(")");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

@@ -671,8 +671,6 @@ definition {
 		Click(
 			key_picklistOption = ${newPicklistOption},
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
-
-		PortletEntry.save();
 	}
 
 	macro changePluralLabelLanguage {

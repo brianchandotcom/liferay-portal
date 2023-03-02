@@ -64,7 +64,7 @@ public class ObjectFieldSettingLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), RandomTestUtil.randomBoolean(), false,
+			false, StringUtil.randomId(), RandomTestUtil.randomBoolean(), false,
 			Collections.emptyList());
 	}
 

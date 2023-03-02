@@ -132,8 +132,8 @@ public class SalesforceObjectEntryManagerImplTest {
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Title"), "title", false, false,
-			Collections.emptyList());
+			LocalizedMapUtil.getLocalizedMap("Title"), false, "title", false,
+			false, Collections.emptyList());
 
 		_objectFieldLocalService.updateCustomObjectField(
 			"Title__c", objectField.getObjectFieldId(), 0,

@@ -109,7 +109,7 @@ public class ObjectStateFlowLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), true, true,
+			false, StringUtil.randomId(), true, true,
 			Arrays.asList(
 				new ObjectFieldSettingBuilder(
 				).name(
@@ -429,7 +429,7 @@ public class ObjectStateFlowLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), true, state, objectFieldSettings);
+			false, StringUtil.randomId(), true, state, objectFieldSettings);
 	}
 
 	private void _assertEquals(

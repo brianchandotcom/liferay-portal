@@ -150,7 +150,8 @@ public class ObjectFieldResourceImpl
 				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
-				objectField.getName(), objectField.getRequired(),
+				objectField.getLocalized(), objectField.getName(),
+				objectField.getRequired(),
 				GetterUtil.getBoolean(objectField.getState()),
 				ObjectFieldSettingUtil.toObjectFieldSettings(
 					ObjectFieldUtil.addListTypeDefinition(

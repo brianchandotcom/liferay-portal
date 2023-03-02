@@ -68,8 +68,8 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Able"), "able", true, false,
-			Collections.emptyList());
+			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", true,
+			false, Collections.emptyList());
 	}
 
 	@After

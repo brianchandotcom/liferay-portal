@@ -50,9 +50,10 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 	public ObjectField addCustomObjectField(
 			String externalReferenceCode, long listTypeDefinitionId,
 			long objectDefinitionId, String businessType, String dbType,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			boolean state, List<ObjectFieldSetting> objectFieldSettings)
+			boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<Locale, String> labelMap,
+			boolean localized, String name, boolean required, boolean state,
+			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -71,9 +72,9 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 
 		return objectFieldLocalService.addCustomObjectField(
 			externalReferenceCode, getUserId(), listTypeDefinitionId,
-			objectDefinitionId, businessType, dbType, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, state,
-			objectFieldSettings);
+			objectDefinitionId, businessType, dbType, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, localized, name,
+			required, state, objectFieldSettings);
 	}
 
 	@Override
@@ -122,8 +123,9 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 			externalReferenceCode, objectFieldId, getUserId(),
 			listTypeDefinitionId, objectField.getObjectDefinitionId(),
 			businessType, objectField.getDBColumnName(),
-			objectField.getDBTableName(), dbType, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, state,
+			objectField.getDBTableName(), dbType, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap,
+			objectField.isLocalized(), name, required, state,
 			objectField.isSystem(), objectFieldSettings);
 	}
 

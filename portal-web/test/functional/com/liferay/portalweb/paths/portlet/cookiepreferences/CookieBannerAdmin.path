@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_TEXT</td>
+	<td>//span[normalize-space(text())='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRIVACY_POLICY_LINK</td>
 	<td>//textarea[contains(@name,'privacyPolicyLink')]</td>
 	<td></td>

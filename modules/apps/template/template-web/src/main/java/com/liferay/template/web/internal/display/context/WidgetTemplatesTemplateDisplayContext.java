@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -67,13 +66,12 @@ public class WidgetTemplatesTemplateDisplayContext
 			return _classNameIds;
 		}
 
-		Long[] classNameIds = TransformUtil.transformToArray(
+		_classNameIds = TransformUtil.transformToLongArray(
 			_portletDisplayTemplate.getPortletDisplayTemplateHandlers(),
 			templateHandler -> PortalUtil.getClassNameId(
-				templateHandler.getClassName()),
-			Long.class);
+				templateHandler.getClassName()));
 
-		return ArrayUtil.toArray(classNameIds);
+		return _classNameIds;
 	}
 
 	public List<DropdownItem> getDDMTemplateActionDropdownItems(

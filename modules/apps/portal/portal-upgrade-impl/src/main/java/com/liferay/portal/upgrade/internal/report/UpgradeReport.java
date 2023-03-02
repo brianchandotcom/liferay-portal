@@ -125,7 +125,7 @@ public class UpgradeReport {
 			releaseManagerOSGiCommands);
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
-			_setReportLogContext(reportData);
+			_printLogContextReport(reportData);
 		}
 
 		File reportFile = null;
@@ -136,7 +136,7 @@ public class UpgradeReport {
 			FileUtil.write(
 				reportFile,
 				StringUtil.merge(
-					new String[] {_printUpgradeReport(reportData)},
+					new String[] {_generateReport(reportData)},
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
 
 			if (_log.isInfoEnabled()) {
@@ -156,6 +156,53 @@ public class UpgradeReport {
 				ThreadContext.clearMap();
 			}
 		}
+	}
+
+	private String _generateReport(Map<String, Object> reportData) {
+		StringBundler sb = new StringBundler();
+
+		for (Map.Entry<String, Object> entry : reportData.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+
+			if (value instanceof Map<?, ?>) {
+				sb.append(_printContextMap(key, (Map<?, ?>)value));
+			}
+			else if (value instanceof List<?>) {
+				String header = _getReportHeaderFromKey(key);
+
+				sb.append(header);
+
+				List<Object> elements = (List<Object>)value;
+
+				if (elements.isEmpty()) {
+					sb.append(": Nothing registered");
+					sb.append(StringPool.NEW_LINE);
+				}
+				else {
+					sb.append(StringPool.NEW_LINE);
+					sb.append(
+						ListUtil.toString(
+							Collections.nCopies(
+								header.length(), StringPool.MINUS),
+							StringPool.NULL, StringPool.BLANK));
+					sb.append(StringPool.NEW_LINE);
+
+					for (Object object : (List<Object>)value) {
+						sb.append(object.toString());
+						sb.append(StringPool.NEW_LINE);
+					}
+				}
+			}
+			else {
+				sb.append(_getReportSimpleValueLine(key, value));
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return sb.toString();
 	}
 
 	private int _getBuildNumber() {
@@ -492,6 +539,22 @@ public class UpgradeReport {
 		return reportFile;
 	}
 
+	private String _getReportHeaderFromKey(String key) {
+		if (key.startsWith(_PROPERTY_KEY)) {
+			return StringUtil.replaceFirst(
+				StringUtil.upperCaseFirstLetter(key), '.', ' ');
+		}
+
+		return StringUtil.replace(
+			StringUtil.upperCaseFirstLetter(key), '.', ' ');
+	}
+
+	private String _getReportSimpleValueLine(String key, Object value) {
+		return StringBundler.concat(
+			_getReportHeaderFromKey(key), StringPool.COLON, StringPool.SPACE,
+			value.toString());
+	}
+
 	private String _getRootDir(String dlStoreConfigurationPid) {
 		try {
 			Dictionary<String, String> configurations =
@@ -627,22 +690,6 @@ public class UpgradeReport {
 			"%s seconds", DBUpgrader.getUpgradeTime() / Time.SECOND);
 	}
 
-	private String _getUpgradeReportHeaderFromKey(String key) {
-		if (key.startsWith(_PROPERTY_KEY)) {
-			return StringUtil.replaceFirst(
-				StringUtil.upperCaseFirstLetter(key), '.', ' ');
-		}
-
-		return StringUtil.replace(
-			StringUtil.upperCaseFirstLetter(key), '.', ' ');
-	}
-
-	private String _getUpgradeReportSimpleValueLine(String key, Object value) {
-		return StringBundler.concat(
-			_getUpgradeReportHeaderFromKey(key), StringPool.COLON,
-			StringPool.SPACE, value.toString());
-	}
-
 	private String _printContextMap(String key, Map<?, ?> map) {
 		StringBundler sb = new StringBundler();
 
@@ -650,7 +697,7 @@ public class UpgradeReport {
 			Object innerKey = entry.getKey();
 
 			sb.append(
-				_getUpgradeReportSimpleValueLine(
+				_getReportSimpleValueLine(
 					key + StringPool.PERIOD + innerKey, entry.getValue()));
 
 			sb.append(StringPool.NEW_LINE);
@@ -659,53 +706,27 @@ public class UpgradeReport {
 		return sb.toString();
 	}
 
-	private String _printUpgradeReport(Map<String, Object> reportData) {
-		_logContext = false;
+	private void _printLogContextReport(Map<String, Object> reportData) {
+		_logContext = true;
 
-		StringBundler sb = new StringBundler();
+		try {
+			for (Map.Entry<String, Object> entry : reportData.entrySet()) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
 
-		for (Map.Entry<String, Object> entry : reportData.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-
-			if (value instanceof Map<?, ?>) {
-				sb.append(_printContextMap(key, (Map<?, ?>)value));
-			}
-			else if (value instanceof List<?>) {
-				String header = _getUpgradeReportHeaderFromKey(key);
-
-				sb.append(header);
-
-				List<Object> elements = (List<Object>)value;
-
-				if (elements.isEmpty()) {
-					sb.append(": Nothing registered");
-					sb.append(StringPool.NEW_LINE);
+				if (value instanceof Map<?, ?>) {
+					_setContextMap(
+						_getLogContextSectionKey(key), (Map<?, ?>)value);
 				}
 				else {
-					sb.append(StringPool.NEW_LINE);
-					sb.append(
-						ListUtil.toString(
-							Collections.nCopies(
-								header.length(), StringPool.MINUS),
-							StringPool.NULL, StringPool.BLANK));
-					sb.append(StringPool.NEW_LINE);
-
-					for (Object object : (List<Object>)value) {
-						sb.append(object.toString());
-						sb.append(StringPool.NEW_LINE);
-					}
+					ThreadContext.put(
+						_getLogContextSectionKey(key), value.toString());
 				}
 			}
-			else {
-				sb.append(_getUpgradeReportSimpleValueLine(key, value));
-				sb.append(StringPool.NEW_LINE);
-			}
-
-			sb.append(StringPool.NEW_LINE);
 		}
-
-		return sb.toString();
+		finally {
+			_logContext = false;
+		}
 	}
 
 	private void _setContextMap(String key, Map<?, ?> map) {
@@ -716,25 +737,6 @@ public class UpgradeReport {
 			ThreadContext.put(
 				key + StringPool.PERIOD + innerKey.toString(), value);
 		}
-	}
-
-	private void _setReportLogContext(Map<String, Object> reportData) {
-		_logContext = true;
-
-		for (Map.Entry<String, Object> entry : reportData.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-
-			if (value instanceof Map<?, ?>) {
-				_setContextMap(_getLogContextSectionKey(key), (Map<?, ?>)value);
-			}
-			else {
-				ThreadContext.put(
-					_getLogContextSectionKey(key), value.toString());
-			}
-		}
-
-		_logContext = false;
 	}
 
 	private void _setRootDir() {

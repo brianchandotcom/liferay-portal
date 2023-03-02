@@ -17,12 +17,13 @@ package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.service.CommerceDiscountRelService;
 import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
+import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePriceModifierRelService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountProductGroup;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifierProductGroup;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.ProductGroup;
-import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.ProductGroupDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.ProductGroupResource;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -80,7 +81,10 @@ public class ProductGroupResourceImpl
 	@Reference
 	private CommercePriceModifierRelService _commercePriceModifierRelService;
 
-	@Reference
-	private ProductGroupDTOConverter _productGroupDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.ProductGroupDTOConverter)"
+	)
+	private DTOConverter<CommercePricingClass, ProductGroup>
+		_productGroupDTOConverter;
 
 }

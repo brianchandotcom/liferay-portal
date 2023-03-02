@@ -50,7 +50,8 @@ definition {
 		}
 
 		task ("Change tabs and take a screenshot") {
-			// ClaySamplePortlet.assertNavTabVisualContent(tab = "Badges");
+
+			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Badges");
 
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Dropdowns");
 
@@ -64,7 +65,8 @@ definition {
 
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Progress Bars");
 
-			// ClaySamplePortlet.assertNavTabVisualContent(tab = "Stickers");
+			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Stickers");
+
 		}
 	}
 

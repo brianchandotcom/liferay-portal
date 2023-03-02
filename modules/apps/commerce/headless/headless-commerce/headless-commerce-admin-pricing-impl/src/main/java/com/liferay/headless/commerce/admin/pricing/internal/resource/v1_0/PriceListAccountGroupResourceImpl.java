@@ -15,16 +15,17 @@
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v1_0;
 
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
+import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceListAccountGroup;
-import com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.PriceListAccountGroupDTOConverter;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.PriceListAccountGroupUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.PriceListAccountGroupResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -221,9 +222,12 @@ public class PriceListAccountGroupResourceImpl
 	@Reference
 	private CommercePriceListService _commercePriceListService;
 
-	@Reference
-	private PriceListAccountGroupDTOConverter
-		_priceListAccountGroupDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.PriceListAccountGroupDTOConverter)"
+	)
+	private DTOConverter
+		<CommerceDiscountCommerceAccountGroupRel, PriceListAccountGroup>
+			_priceListAccountGroupDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

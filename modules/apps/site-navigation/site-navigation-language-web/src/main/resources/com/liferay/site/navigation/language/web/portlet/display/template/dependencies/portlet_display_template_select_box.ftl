@@ -1,6 +1,4 @@
-<#include "${templatesPath}/macro-ftl">
-
-<@language_form>
+<#if entries?has_content>
 	<#assign languageId = localeUtil.toLanguageId(locale) />
 
 	<style>
@@ -16,24 +14,37 @@
 		</#list>
 	</style>
 
-	<@liferay_aui["select"]
-		changesContext=true
-		id='${namespace + formName}'
-		label=""
-		name='${name}'
-		onChange='${namespace + "changeLanguage();"}'
-		title="language"
+	<@liferay_aui["form"]
+		action=formAction
+		method="post"
+		name='${namespace + formName}'
+		useNamespace=false
 	>
-		<#list entries as entry>
-			<@liferay_aui["option"]
-				cssClass="taglib-language-option taglib-language-option-${entry.getW3cLanguageId()}"
-				disabled=entry.isDisabled()
-				label=entry.getLongDisplayName()
-				lang=entry.getW3cLanguageId()
-				localizeLabel=false
-				selected=entry.isSelected()
-				value=entry.getLanguageId()
-			/>
-		</#list>
+		<@liferay_aui["select"]
+			changesContext=true
+			id='${namespace + formName}'
+			label=""
+			name='${name}'
+			onChange='${namespace + "changeLanguage();"}'
+			title="language"
+		>
+			<#list entries as entry>
+				<@liferay_aui["option"]
+					cssClass="taglib-language-option taglib-language-option-${entry.getW3cLanguageId()}"
+					disabled=entry.isDisabled()
+					label=entry.getLongDisplayName()
+					lang=entry.getW3cLanguageId()
+					localizeLabel=false
+					selected=entry.isSelected()
+					value=entry.getLanguageId()
+				/>
+			</#list>
+		</@>
 	</@>
-</@>
+
+	<@liferay_aui["script"]>
+		function ${namespace}changeLanguage() {
+			submitForm(document.${namespace + formName});
+		}
+	</@>
+</#if>

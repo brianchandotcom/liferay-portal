@@ -2,15 +2,6 @@
 
 <root>
 	<template>
-		<template-key>macro-ftl</template-key>
-		<name>portlet-display-template-name-macro</name>
-		<description>portlet-display-template-description-macro</description>
-		<language>ftl</language>
-		<type>macro</type>
-		<script-file>com/liferay/site/navigation/language/web/portlet/display/template/dependencies/portlet_display_template_macro.ftl</script-file>
-		<cacheable>false</cacheable>
-	</template>
-	<template>
 		<template-key>language-icon-ftl</template-key>
 		<name>portlet-display-template-name-icon</name>
 		<description>portlet-display-template-description-icon</description>

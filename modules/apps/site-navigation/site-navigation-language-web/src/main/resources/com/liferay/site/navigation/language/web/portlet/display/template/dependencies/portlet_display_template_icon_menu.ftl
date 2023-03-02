@@ -1,6 +1,4 @@
-<#include "${templatesPath}/macro-ftl">
-
-<@language_form_with_input>
+<#if entries?has_content>
 	<#assign normalizedDefaultLanguageId = stringUtil.replace(languageId, "_", "-") />
 
 	<div class="text-truncate">
@@ -29,10 +27,10 @@
 						iconCssClass="inline-item inline-item-before"
 						markupView="lexicon"
 						message=displayName
-						url=get_url(entry)
+						url=entry.getURL()
 					/>
 				</#if>
 			</#list>
 		</@>
 	</div>
-</@>
+</#if>

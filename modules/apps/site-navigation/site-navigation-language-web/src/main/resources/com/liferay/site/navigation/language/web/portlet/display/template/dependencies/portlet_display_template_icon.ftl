@@ -1,6 +1,4 @@
-<#include "${templatesPath}/macro-ftl">
-
-<@language_form_with_input>
+<#if entries?has_content>
 	<#list entries as entry>
 		<#if entry.isSelected()>
 			<#assign cssClass = "current-language" />
@@ -13,8 +11,8 @@
 				image=entry.getW3cLanguageId()?lower_case
 				markupView="lexicon"
 				message=entry.getLongDisplayName()
-				url=get_url(entry)
+				url=entry.getURL()
 			/>
 		</#if>
 	</#list>
-</@>
+</#if>

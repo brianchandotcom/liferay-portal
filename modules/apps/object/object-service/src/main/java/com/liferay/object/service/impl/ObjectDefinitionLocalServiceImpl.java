@@ -819,18 +819,19 @@ public class ObjectDefinitionLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		name = _getName(name, system);
+		name = _getName(name, modifiable, system);
 
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 
 		dbTableName = _getDBTableName(
-			dbTableName, name, system, user.getCompanyId(), shortName);
+			dbTableName, modifiable, name, system, user.getCompanyId(),
+			shortName);
 
 		pkObjectFieldName = _getPKObjectFieldName(
-			pkObjectFieldName, system, shortName);
+			pkObjectFieldName, modifiable, system, shortName);
 
 		pkObjectFieldDBColumnName = _getPKObjectFieldDBColumnName(
-			pkObjectFieldDBColumnName, pkObjectFieldName, system);
+			pkObjectFieldDBColumnName, pkObjectFieldName, modifiable, system);
 
 		storageType = Validator.isNotNull(storageType) ? storageType :
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT;
@@ -838,7 +839,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateEnableComments(enableComments, storageType, system);
 
 		_validateLabel(labelMap);
-		_validateName(0, user.getCompanyId(), name, system);
+		_validateName(0, user.getCompanyId(), modifiable, name, system);
 		_validatePluralLabel(pluralLabelMap);
 		_validateScope(scope);
 		_validateVersion(system, version);
@@ -849,11 +850,12 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setCompanyId(user.getCompanyId());
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
-		objectDefinition.setActive(system);
+		objectDefinition.setActive(!modifiable && system);
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setClassName(
 			_getClassName(
-				objectDefinition.getObjectDefinitionId(), className, system));
+				objectDefinition.getObjectDefinitionId(), className, modifiable,
+				system));
 		objectDefinition.setEnableCategorization(
 			!system &&
 			StringUtil.equals(
@@ -883,7 +885,7 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition.class.getName(),
 			objectDefinition.getObjectDefinitionId(), false, true, true);
 
-		if (!objectDefinition.isSystem()) {
+		if (!objectDefinition.isSystem() || objectDefinition.isModifiable()) {
 			dbTableName = "ObjectEntry";
 		}
 
@@ -924,7 +926,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition = _updateTitleObjectFieldId(
 			objectDefinition, titleObjectFieldName);
 
-		if (system) {
+		if (!modifiable && system) {
 			_createTable(
 				objectDefinition.getExtensionDBTableName(), objectDefinition);
 		}
@@ -968,7 +970,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		String dbColumnName = ObjectEntryTable.INSTANCE.objectEntryId.getName();
 
-		if (system) {
+		if (!objectDefinition.isModifiable() && system) {
 			dbColumnName = pkObjectFieldName;
 		}
 
@@ -1024,9 +1026,10 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private String _getClassName(
-		long objectDefinitionId, String className, boolean system) {
+		long objectDefinitionId, String className, boolean modifiable,
+		boolean system) {
 
-		if (system) {
+		if (!modifiable && system) {
 			return className;
 		}
 
@@ -1034,14 +1037,14 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private String _getDBTableName(
-		String dbTableName, String name, boolean system, Long companyId,
-		String shortName) {
+		String dbTableName, boolean modifiable, String name, boolean system,
+		Long companyId, String shortName) {
 
 		if (Validator.isNotNull(dbTableName)) {
 			return dbTableName;
 		}
 
-		if (system) {
+		if (!modifiable && system) {
 			return name;
 		}
 
@@ -1049,10 +1052,10 @@ public class ObjectDefinitionLocalServiceImpl
 			"O_", companyId, StringPool.UNDERLINE, shortName);
 	}
 
-	private String _getName(String name, boolean system) {
+	private String _getName(String name, boolean modifiable, boolean system) {
 		name = StringUtil.trim(name);
 
-		if (!system) {
+		if (!system || modifiable) {
 			name = "C_" + name;
 		}
 
@@ -1061,13 +1064,13 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private String _getPKObjectFieldDBColumnName(
 		String pkObjectFieldDBColumnName, String pkObjectFieldName,
-		boolean system) {
+		boolean modifiable, boolean system) {
 
 		if (Validator.isNotNull(pkObjectFieldDBColumnName)) {
 			return pkObjectFieldDBColumnName;
 		}
 
-		if (system) {
+		if (_isUnmodifiableSystemObject(modifiable, system)) {
 			return pkObjectFieldName;
 		}
 
@@ -1075,7 +1078,8 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private String _getPKObjectFieldName(
-		String pkObjectFieldName, boolean system, String shortName) {
+		String pkObjectFieldName, boolean modifiable, boolean system,
+		String shortName) {
 
 		if (Validator.isNotNull(pkObjectFieldName)) {
 			return pkObjectFieldName;
@@ -1084,7 +1088,7 @@ public class ObjectDefinitionLocalServiceImpl
 		pkObjectFieldName = TextFormatter.format(
 			shortName + "Id", TextFormatter.I);
 
-		if (system) {
+		if (_isUnmodifiableSystemObject(modifiable, system)) {
 			return pkObjectFieldName;
 		}
 
@@ -1248,7 +1252,8 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setClassName(
 			_getClassName(
 				objectDefinition.getObjectDefinitionId(),
-				objectDefinition.getClassName(), objectDefinition.isSystem()));
+				objectDefinition.getClassName(),
+				objectDefinition.isModifiable(), objectDefinition.isSystem()));
 		objectDefinition.setEnableCategorization(enableCategorization);
 		objectDefinition.setEnableComments(enableComments);
 		objectDefinition.setEnableObjectEntryHistory(enableObjectEntryHistory);
@@ -1275,24 +1280,28 @@ public class ObjectDefinitionLocalServiceImpl
 			return objectDefinitionPersistence.update(objectDefinition);
 		}
 
-		name = _getName(name, objectDefinition.isSystem());
+		name = _getName(
+			name, objectDefinition.isModifiable(), objectDefinition.isSystem());
 
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 
 		dbTableName = _getDBTableName(
-			dbTableName, name, objectDefinition.isSystem(),
-			objectDefinition.getCompanyId(), shortName);
+			dbTableName, objectDefinition.isModifiable(), name,
+			objectDefinition.isSystem(), objectDefinition.getCompanyId(),
+			shortName);
 
 		pkObjectFieldName = _getPKObjectFieldName(
-			pkObjectFieldName, objectDefinition.isSystem(), shortName);
+			pkObjectFieldName, objectDefinition.isModifiable(),
+			objectDefinition.isSystem(), shortName);
 
 		pkObjectFieldDBColumnName = _getPKObjectFieldDBColumnName(
 			pkObjectFieldDBColumnName, pkObjectFieldName,
-			objectDefinition.isSystem());
+			objectDefinition.isModifiable(), objectDefinition.isSystem());
 
 		_validateName(
 			objectDefinition.getObjectDefinitionId(),
-			objectDefinition.getCompanyId(), name, objectDefinition.isSystem());
+			objectDefinition.getCompanyId(), objectDefinition.isModifiable(),
+			name, objectDefinition.isSystem());
 		_validateScope(scope);
 
 		objectDefinition.setDBTableName(dbTableName);
@@ -1493,15 +1502,17 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _validateName(
-			long objectDefinitionId, long companyId, String name,
-			boolean system)
+			long objectDefinitionId, long companyId, boolean modifiable,
+			String name, boolean system)
 		throws PortalException {
 
 		if (Validator.isNull(name) || (!system && name.equals("C_"))) {
 			throw new ObjectDefinitionNameException.MustNotBeNull();
 		}
 
-		if (system && (name.startsWith("C_") || name.startsWith("c_"))) {
+		if (_isUnmodifiableSystemObject(modifiable, system) &&
+			(name.startsWith("C_") || name.startsWith("c_"))) {
+
 			throw new ObjectDefinitionNameException.
 				MustNotStartWithCAndUnderscoreForSystemObject();
 		}
@@ -1513,7 +1524,7 @@ public class ObjectDefinitionLocalServiceImpl
 		char[] nameCharArray = name.toCharArray();
 
 		for (int i = 0; i < nameCharArray.length; i++) {
-			if (!system) {
+			if (!system || modifiable) {
 
 				// Skip C_
 

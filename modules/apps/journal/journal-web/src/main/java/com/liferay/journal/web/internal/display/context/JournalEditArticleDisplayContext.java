@@ -568,11 +568,15 @@ public class JournalEditArticleDisplayContext {
 			return _defaultArticleLanguageId;
 		}
 
-		String defaultArticleLanguageId;
+		String defaultArticleLanguageId = null;
 
 		if (Validator.isNull(getArticleId())) {
-			defaultArticleLanguageId =
-				_getDefaultArticleLanguageIdRelatedDDMStructure();
+			if (getClassNameId() ==
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
+
+				defaultArticleLanguageId =
+					_getDefaultArticleLanguageIdRelatedDDMStructure();
+			}
 
 			if (defaultArticleLanguageId == null) {
 				Locale siteDefaultLocale = null;

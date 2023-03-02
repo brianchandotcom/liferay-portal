@@ -189,15 +189,32 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			String followingCode = content.substring(matcher1.end());
+			String followingCode = StringUtil.trimLeading(
+				content.substring(matcher1.end()));
 
-			if (followingCode.startsWith(" =")) {
+			if (followingCode.startsWith("=") &&
+				!followingCode.startsWith("==")) {
+
 				break;
 			}
 
 			String matchedGlobalVariableName = matcher1.group();
 
-			if (followingCode.startsWith(".")) {
+			if (followingCode.startsWith("!=") ||
+				followingCode.startsWith("==") ||
+				followingCode.startsWith(">") ||
+				followingCode.startsWith("<")) {
+
+				if (StringUtil.equals(
+						matchedGlobalVariableName, globalVariableName)) {
+
+					return StringUtil.replaceFirst(
+						content, globalVariableName, parameterName, start);
+				}
+
+				continue;
+			}
+			else if (followingCode.startsWith(".")) {
 				if (!followingCode.startsWith(".get") &&
 					!followingCode.startsWith(".is")) {
 
@@ -210,6 +227,8 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 					return StringUtil.replaceFirst(
 						content, globalVariableName, parameterName, start);
 				}
+
+				continue;
 			}
 
 			char previousChar = content.charAt(start - 1);

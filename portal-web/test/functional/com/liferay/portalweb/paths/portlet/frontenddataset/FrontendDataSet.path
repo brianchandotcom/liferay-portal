@@ -242,7 +242,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMPTY_DROPDOWN</td>
+	<td>DROPDOWN_LIST</td>
 	<td>//ul[contains(@class,'list-unstyled')][@role='listbox']//li</td>
 	<td></td>
 </tr>

@@ -1,15 +1,13 @@
 definition {
 
 	macro searchProvider {
-		Click(locator1 = "CreateObject#OBJECT_LABEL");
+		Click(
+			dropdownLabel = "Choose an Option",
+			locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
 
 		Type(
-			locator1 = "CreateObject#OBJECT_LABEL",
-			value1 = "${key_provider}");
-
-		KeyPress(
-			locator1 = "CreateObject#OBJECT_LABEL",
-			value1 = "\ENTER");
+			locator1 = "ContentDashboard#SEARCH_FIELD",
+			value1 = ${key_provider});
 	}
 
 }

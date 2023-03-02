@@ -782,8 +782,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String json = StringUtil.read(url.openStream());
 
 				json = _replace(
-					_replace(
-						json, serviceContext),
+					_replace(json, serviceContext),
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues);
 
@@ -854,8 +853,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		json = _replace(
-			_replace(
-				json, serviceContext),
+			_replace(json, serviceContext),
 			assetListEntryIdsStringUtilReplaceValues,
 			clientExtensionEntryIdsStringUtilReplaceValues,
 			ddmStructureEntryIdsStringUtilReplaceValues,
@@ -996,8 +994,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String json = StringUtil.read(url.openStream());
 
 				json = _replace(
-					_replace(
-						json, serviceContext),
+					_replace(json, serviceContext),
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
@@ -1105,8 +1102,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String json = StringUtil.read(url.openStream());
 
 				json = _replace(
-					_replace(
-						json, serviceContext),
+					_replace(json, serviceContext),
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
@@ -2497,8 +2493,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		Group group = serviceContext.getScopeGroup();
-
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
@@ -2506,8 +2500,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				FileUtil.getShortFileName(
 					FileUtil.stripExtension(url.getPath())),
 				_replace(
-					_replace(
-						StringUtil.read(url.openStream()), serviceContext),
+					_replace(StringUtil.read(url.openStream()), serviceContext),
 					documentsStringUtilReplaceValues));
 		}
 
@@ -4431,10 +4424,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			s, "[$", "$]", aggregatedStringUtilReplaceValues);
 	}
 
-	private String _replace(String s, String oldSub, String newSub) {
-		return StringUtil.replace(s, oldSub, newSub);
-	}
-
 	private String _replace(String s, ServiceContext serviceContext)
 		throws Exception {
 
@@ -4451,6 +4440,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String.valueOf(serviceContext.getScopeGroupId()),
 				group.getGroupKey(), serviceContext.getPortalURL()
 			});
+	}
+
+	private String _replace(String s, String oldSub, String newSub) {
+		return StringUtil.replace(s, oldSub, newSub);
 	}
 
 	private void _setDefaultLayoutUtilityPageEntries(

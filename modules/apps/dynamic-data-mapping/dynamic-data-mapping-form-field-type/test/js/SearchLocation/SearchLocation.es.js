@@ -51,7 +51,7 @@ const defaultConfig = {
 const hasAllFields = (getAllByLabelText, labels) => {
 	Object.values(labels).forEach((label) => {
 		const allByLabelText = getAllByLabelText(label);
-		expect(allByLabelText).toHaveLength(2);
+		expect(allByLabelText).toHaveLength(1);
 		if (!allByLabelText[1]) {
 			return false;
 		}
@@ -308,8 +308,8 @@ describe('Field Search Location', () => {
 		);
 
 		const searchLocationField = getAllByLabelText('Search Location');
-		expect(searchLocationField).toHaveLength(2);
-		const searchLocationFieldTagName = searchLocationField[1].getElementsByTagName(
+		expect(searchLocationField).toHaveLength(1);
+		const searchLocationFieldTagName = searchLocationField[0].getElementsByTagName(
 			'script'
 		);
 		expect(searchLocationFieldTagName).toHaveLength(1);

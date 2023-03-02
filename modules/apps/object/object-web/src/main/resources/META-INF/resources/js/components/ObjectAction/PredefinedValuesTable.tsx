@@ -119,6 +119,8 @@ export default function PredefinedValuesTable({
 					</div>
 				),
 
+				name, 
+				
 				newValue: (
 					<div className="lfr-object-web__predefined-values-table-new-value">
 						<ExpressionBuilder
@@ -198,7 +200,7 @@ export default function PredefinedValuesTable({
 		};
 
 		const deletePredefinedValueField = ({itemData}: {itemData: Item}) => {
-			const [name] = itemData.name.props.children;
+			const name = itemData.name;
 
 			if (objectFieldsMap.get(name)?.required) {
 				openToast({
@@ -373,6 +375,6 @@ interface IProps {
 interface Item {
 	inputAsValue: JSX.Element;
 	label: JSX.Element;
-	name: JSX.Element;
+	name: string;
 	newValue: JSX.Element;
 }

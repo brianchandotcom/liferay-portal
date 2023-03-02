@@ -48,8 +48,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -92,7 +90,7 @@ public class MentionsPortletTest {
 
 	@Test
 	public void testServletResponseWithoutQuery() throws Exception {
-		_users.add(_addUser("example", _group.getGroupId()));
+		_addUser("example", _group.getGroupId());
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -128,7 +126,7 @@ public class MentionsPortletTest {
 	public void testServletResponseWithQueryWithFullScreenName()
 		throws Exception {
 
-		_users.add(_addUser("example", _group.getGroupId()));
+		_addUser("example", _group.getGroupId());
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -161,7 +159,7 @@ public class MentionsPortletTest {
 	public void testServletResponseWithQueryWithPartialScreenName()
 		throws Exception {
 
-		_users.add(_addUser("example", _group.getGroupId()));
+		_addUser("example", _group.getGroupId());
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -191,7 +189,7 @@ public class MentionsPortletTest {
 
 	@Test
 	public void testServletResponseWithQueryWithWildard() throws Exception {
-		_users.add(_addUser("example", _group.getGroupId()));
+		_addUser("example", _group.getGroupId());
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -343,7 +341,5 @@ public class MentionsPortletTest {
 
 	@Inject
 	private UserLocalService _userLocalService;
-
-	private final List<User> _users = new ArrayList<>();
 
 }

@@ -117,12 +117,12 @@
 </tr>
 <tr>
 	<td>SELECT_FROM_LIST_SELECT_OPTION_TRIGGER_INDEXED</td>
-	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div[contains(@class,'select-field')]//div[contains(@class,'select-field-trigger')])[${index}]</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div/div[contains(@class,'form-builder-select-field')]//div[contains(@class,'select-field-trigger')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FROM_LIST_SELECTED_OPTION_INDEXED</td>
-	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div[contains(@class,'form-builder-select-field')]//div[contains(@class,'option-selected')])[${index}]</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div/div[contains(@class,'form-builder-select-field')]//div[contains(@class,'option-selected')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

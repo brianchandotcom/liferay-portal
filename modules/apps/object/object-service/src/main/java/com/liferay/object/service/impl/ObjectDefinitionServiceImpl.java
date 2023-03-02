@@ -186,6 +186,19 @@ public class ObjectDefinitionServiceImpl
 			getUserId(), objectDefinitionId);
 	}
 
+	@Override
+	public ObjectDefinition publishSystemObjectDefinition(
+			long objectDefinitionId)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			ObjectActionKeys.PUBLISH_OBJECT_DEFINITION);
+
+		return objectDefinitionLocalService.publishSystemObjectDefinition(
+			getUserId(), objectDefinitionId);
+	}
+
 	public ObjectDefinition updateCustomObjectDefinition(
 			String externalReferenceCode, long objectDefinitionId,
 			long accountEntryRestrictedObjectFieldId,

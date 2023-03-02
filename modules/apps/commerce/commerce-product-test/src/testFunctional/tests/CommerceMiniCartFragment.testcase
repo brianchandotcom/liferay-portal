@@ -1,0 +1,104 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-5898=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Given a business account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the current site theme is changed into Classic Theme") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "minium");
+
+			PagesAdmin.changeSiteCurrentTheme(themeName = "Classic");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-10778. I want to deploy Mini Cart Fragment and use it to manage orders."
+	@priority = 5
+	test CanUseMiniCartFragment {
+		property portal.acceptance = "true";
+
+		task ("Given a public page is added with the Mini Cart fragment") {
+			JSONLayout.addPublicLayout(
+				groupName = "Minium",
+				layoutName = "Test Mini Cart Fragment Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Mini Cart Fragment Page",
+				siteName = "Minium");
+
+			PageEditor.addFragment(
+				collectionName = "Cart",
+				fragmentName = "Mini Cart");
+
+			PageEditor.publish();
+		}
+
+		task ("When buyer adds some products to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Catalog");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the products are shown in the mini cart fragment") {
+			CommerceEntry.gotoMenuTab(menuTab = "Test Mini Cart Fragment Page");
+
+			CommerceNavigator.gotoMiniCart();
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#MINI_CART_RESUME",
+				value1 = "1 Product");
+
+			FrontStore.viewMiniCart(
+				cartItemNames = "U-Joint",
+				cartItemPriceValues = 24,
+				cartItemQuantities = 1,
+				cartItemSkUs = "MIN55861");
+		}
+
+		task ("And the checkout is completed successfully") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+	}
+
+}

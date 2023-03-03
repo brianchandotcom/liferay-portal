@@ -82,9 +82,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -102,13 +103,32 @@ public class ObjectFieldLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-146755", "true"
+			).build());
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-163716", "true"
 			).build());
+	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-146755", "false"
+			).build());
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-163716", "false"
+			).build());
+	}
+
+	@Before
+	public void setUp() throws Exception {
 		_listTypeEntryKey = RandomTestUtil.randomString();
 
 		_listTypeDefinition =
@@ -117,14 +137,6 @@ public class ObjectFieldLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.singletonList(
 					ListTypeEntryUtil.createListTypeEntry(_listTypeEntryKey)));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-163716", "false"
-			).build());
 	}
 
 	@Test
@@ -241,6 +253,36 @@ public class ObjectFieldLocalServiceTest {
 						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 						ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE))
 			).state(
+				true
+			).build());
+
+		_testAddCustomObjectField(
+			"Object definition must be localized",
+			new ObjectFieldBuilder(
+			).businessType(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).localized(
+				true
+			).build());
+
+		_testAddCustomObjectField(
+			StringBundler.concat(
+				"Only ", ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+				StringPool.COMMA, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+				" and ", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				" business types support localization"),
+			new ObjectFieldBuilder(
+			).businessType(
+				ObjectFieldConstants.BUSINESS_TYPE_DATE
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).localized(
 				true
 			).build());
 	}

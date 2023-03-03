@@ -93,6 +93,12 @@ public class ObjectFieldBuilder {
 		return this;
 	}
 
+	public ObjectFieldBuilder localized(boolean localized) {
+		objectField.setLocalized(localized);
+
+		return this;
+	}
+
 	public ObjectFieldBuilder name(String name) {
 		objectField.setName(name);
 

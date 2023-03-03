@@ -483,7 +483,7 @@ public class UpgradeReport {
 		).put(
 			"document.library.storage.size", _getDLStorageInfoNew()
 		).put(
-			"tables.initial.final.rows", _getDatabaseTableCounts()
+			_TABLES_KEY + ".initial.final.rows", _getDatabaseTableCounts()
 		).put(
 			"longest.upgrade.processes",
 			_getLongestRunningUpgradeProcessesList()
@@ -543,6 +543,11 @@ public class UpgradeReport {
 		if (key.startsWith(_PROPERTY_KEY)) {
 			return StringUtil.replaceFirst(
 				StringUtil.upperCaseFirstLetter(key), '.', ' ');
+		}
+
+		if (key.startsWith(_TABLES_KEY)) {
+			return String.format(
+				TableCounts.FORMAT, "Table name", "Initial rows", "Final rows");
 		}
 
 		return StringUtil.replace(
@@ -784,6 +789,8 @@ public class UpgradeReport {
 
 	private static final String _PROPERTY_KEY = "property";
 
+	private static final String _TABLES_KEY = "tables";
+
 	private static final int _UPGRADE_PROCESSES_COUNT = 20;
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
@@ -886,6 +893,8 @@ public class UpgradeReport {
 
 	private class TableCounts {
 
+		public static final String FORMAT = "%-30s %20s %20s";
+
 		public TableCounts(
 			String tableName, String initialCount, String finalCount) {
 
@@ -902,10 +911,8 @@ public class UpgradeReport {
 					StringPool.COLON, _finalCount);
 			}
 
-			String format = "%-30s %20s %20s";
-
 			return String.format(
-				format, _tableName, _initialCount, _finalCount);
+				FORMAT, _tableName, _initialCount, _finalCount);
 		}
 
 		private final String _finalCount;

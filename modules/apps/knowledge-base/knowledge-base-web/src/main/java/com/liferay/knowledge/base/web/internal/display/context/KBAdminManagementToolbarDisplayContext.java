@@ -517,17 +517,17 @@ public class KBAdminManagementToolbarDisplayContext {
 		return new DropdownItemList() {
 			{
 				final Map<String, String> orderColumnsMap = HashMapBuilder.put(
-					"modifiedDate", "modified-date"
+					"modified-date", "modified-date"
 				).put(
 					"priority", "priority"
 				).put(
 					"title", "title"
 				).put(
-					"viewCount", "view-count"
+					"view-count", "view-count"
 				).build();
 
 				String[] orderColumns = {
-					"priority", "modifiedDate", "title", "viewCount"
+					"priority", "modified-date", "title", "view-count"
 				};
 
 				for (String orderByCol : orderColumns) {

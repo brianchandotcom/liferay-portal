@@ -16,12 +16,12 @@ package com.liferay.content.dashboard.document.library.internal.item.selector;
 
 import com.liferay.content.dashboard.document.library.internal.item.display.context.ContentDashboardFileExtensionItemSelectorViewDisplayContext;
 import com.liferay.content.dashboard.document.library.internal.item.provider.FileExtensionGroupsProvider;
-import com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterion.FileExtensionItemSelectorCriterion;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.item.selector.criteria.file.criterion.FileExtensionItemSelectorCriterion;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;

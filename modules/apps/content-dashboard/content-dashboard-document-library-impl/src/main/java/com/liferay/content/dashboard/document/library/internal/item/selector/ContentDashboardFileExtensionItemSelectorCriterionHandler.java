@@ -14,9 +14,9 @@
 
 package com.liferay.content.dashboard.document.library.internal.item.selector;
 
-import com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterion.FileExtensionItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
+import com.liferay.item.selector.criteria.file.criterion.FileExtensionItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

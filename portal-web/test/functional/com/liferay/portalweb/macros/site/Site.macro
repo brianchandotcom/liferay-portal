@@ -1185,6 +1185,20 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro selectSiteTemplateTab {
+		if (${siteTemplateTab} == "Custom Site Templates") {
+			Navigator.gotoNavTab(navTab = "Custom Site Templates");
+
+			Navigator.viewActivatedNavTab(navTab = "Custom Site Templates");
+		}
+
+		if (${siteTemplateTab} == "Provided by Liferay") {
+			Navigator.gotoNavTab(navTab = "Provided by Liferay");
+
+			Navigator.viewActivatedNavTab(navTab = "Provided by Liferay");
+		}
+	}
+
 	macro tearDownCP {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",

@@ -7122,7 +7122,43 @@ ${docker.start.error}</fail>
 					<equals arg1="${database.type}" arg2="db2" />
 				</and>
 				<then>
-					<property name="docker.database.wait.condition">[[ "$(/bin/su - db2inst1 -c '~/sqllib/bin/db2 db2start')" =~ "SQL1026N" ]]</property>
+				<sequential>
+						<property name="db2.wait.script" location="db2_wait.sh" />
+
+						<echo file="${db2.wait.script}">
+							<![CDATA[
+							while [ -z "$(docker logs ${database.host} | grep "Setup has completed.")" ]
+							do
+								echo "Searching for db2 initialization message"
+								sleep 5
+							done
+							echo "db2 initialization message found"
+							]]>
+						</echo>
+
+						<print-file file.name="${db2.wait.script}" />
+
+						<chmod
+							perm="a+x"
+						>
+							<fileset
+								dir="/opt/dev/projects/github/liferay-portal/"
+								includes="db2_wait.sh"
+							/>
+						</chmod>
+
+						<echo>
+							executing db2_wait.sh
+						</echo>
+
+						<exec executable="/bin/bash">
+							<arg value="${db2.wait.script}"/>
+						</exec>
+
+						<delete file="${db2.wait.script}" />
+
+						<property name="docker.database.wait.condition">[[ "$(/bin/su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 db2start')" =~ "SQL1026N" ]]</property>
+					</sequential>
 				</then>
 				<elseif>
 					<equals arg1="${database.type}" arg2="db2" />

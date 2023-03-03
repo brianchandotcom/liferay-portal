@@ -166,6 +166,18 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 					return false;
 				}
 
+				CTCollection ctCollection =
+					_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
+
+				if ((ctCollection == null) ||
+					(ctCollection.getStatus() ==
+						WorkflowConstants.STATUS_APPROVED) ||
+					(ctCollection.getStatus() ==
+						WorkflowConstants.STATUS_EXPIRED)) {
+
+					return true;
+				}
+
 				return !CTCollectionPermission.contains(
 					_themeDisplay.getPermissionChecker(), ctCollectionId,
 					ActionKeys.PERMISSIONS);

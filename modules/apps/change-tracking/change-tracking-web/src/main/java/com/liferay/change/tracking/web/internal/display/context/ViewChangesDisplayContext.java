@@ -28,7 +28,6 @@ import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
-import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.CTModelDisplayRendererAdapter;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
@@ -83,7 +82,6 @@ import java.util.Date;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -269,8 +267,6 @@ public class ViewChangesDisplayContext {
 			}
 		}
 
-		Set<Long> rootClassNameIds = _getRootClassNameIds(ctClosure);
-
 		return HashMapBuilder.<String, Object>put(
 			"changes",
 			() -> {
@@ -296,8 +292,8 @@ public class ViewChangesDisplayContext {
 		).put(
 			"contextView",
 			_getContextViewJSONObject(
-				ctClosure, modelInfoMap, rootClassNameIds,
-				contextViewJSONObject, typeNameCacheMap)
+				ctClosure, modelInfoMap, contextViewJSONObject,
+				typeNameCacheMap)
 		).put(
 			"ctCollectionId", _ctCollection.getCtCollectionId()
 		).put(
@@ -637,23 +633,6 @@ public class ViewChangesDisplayContext {
 				).buildString();
 			}
 		).put(
-			"rootDisplayClasses",
-			() -> {
-				JSONArray rootDisplayClassesJSONArray =
-					JSONFactoryUtil.createJSONArray();
-
-				for (long rootClassNameId : rootClassNameIds) {
-					if (classNameIdClassPKsMap.containsKey(rootClassNameId)) {
-						rootDisplayClassesJSONArray.put(
-							_getTypeName(
-								_themeDisplay.getLocale(), rootClassNameId,
-								typeNameCacheMap));
-					}
-				}
-
-				return rootDisplayClassesJSONArray;
-			}
-		).put(
 			"scheduleURL",
 			() -> {
 				if ((_ctCollection.getStatus() !=
@@ -795,7 +774,7 @@ public class ViewChangesDisplayContext {
 
 	private JSONObject _getContextViewJSONObject(
 		CTClosure ctClosure, Map<ModelInfoKey, ModelInfo> modelInfoMap,
-		Set<Long> rootClassNameIds, JSONObject defaultContextViewJSONObject,
+		JSONObject defaultContextViewJSONObject,
 		Map<Long, String> typeNameCacheMap) {
 
 		if (ctClosure == null) {
@@ -844,9 +823,7 @@ public class ViewChangesDisplayContext {
 
 					childrenJSONArray.put(jsonObject);
 
-					if (rootClassNameIds.contains(modelClassNameId) &&
-						rootModelKeys.add(modelKey)) {
-
+					if (rootModelKeys.add(modelKey)) {
 						JSONArray jsonArray = rootDisplayMap.computeIfAbsent(
 							modelClassNameId,
 							key -> JSONFactoryUtil.createJSONArray());
@@ -990,31 +967,6 @@ public class ViewChangesDisplayContext {
 			"Missing model from ", _ctCollection.getName(), ": {classPK=",
 			classPK, ", ctCollectionId=", _ctCollection.getCtCollectionId(),
 			", modelClassNameId=", modelClassNameId, "}");
-	}
-
-	private Set<Long> _getRootClassNameIds(CTClosure ctClosure) {
-		if (ctClosure == null) {
-			return Collections.emptySet();
-		}
-
-		Set<Long> rootClassNameIds = new LinkedHashSet<>();
-
-		for (String className : _ctConfiguration.rootDisplayClassNames()) {
-			rootClassNameIds.add(_portal.getClassNameId(className));
-		}
-
-		for (String childClassName :
-				_ctConfiguration.rootDisplayChildClassNames()) {
-
-			for (long parentClassNameId :
-					CTClosureUtil.getParentClassNameIds(
-						ctClosure, _portal.getClassNameId(childClassName))) {
-
-				rootClassNameIds.add(parentClassNameId);
-			}
-		}
-
-		return rootClassNameIds;
 	}
 
 	private <T extends BaseModel<T>> String _getTitle(

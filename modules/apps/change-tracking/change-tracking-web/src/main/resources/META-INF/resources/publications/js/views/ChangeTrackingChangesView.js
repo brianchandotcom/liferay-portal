@@ -126,7 +126,6 @@ export default function ChangeTrackingChangesView({
 	publishURL,
 	rescheduleURL,
 	revertURL,
-	rootDisplayClasses,
 	scheduleURL,
 	showHideableFromURL,
 	siteNames,
@@ -377,24 +376,6 @@ export default function ChangeTrackingChangesView({
 
 	if (contextView && contextViewRef.current === null) {
 		contextViewRef.current = JSON.parse(JSON.stringify(contextView));
-
-		for (let i = 0; i < rootDisplayClasses.length; i++) {
-			const className = rootDisplayClasses[i];
-
-			const rootClass = contextViewRef.current[className];
-
-			const keys = Object.keys(typesRef.current);
-
-			for (let j = 0; j < keys.length; j++) {
-				const type = typesRef.current[keys[j]];
-
-				if (type.name === className && type.hideable) {
-					rootClass.hideable = true;
-
-					break;
-				}
-			}
-		}
 	}
 
 	const getModels = useCallback((nodes) => {

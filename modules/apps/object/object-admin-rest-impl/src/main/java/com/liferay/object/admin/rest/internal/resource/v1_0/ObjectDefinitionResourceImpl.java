@@ -43,6 +43,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -230,6 +231,12 @@ public class ObjectDefinitionResourceImpl
 	public ObjectDefinition postObjectDefinition(
 			ObjectDefinition objectDefinition)
 		throws Exception {
+
+		if (Validator.isNotNull(objectDefinition.getEnableLocalization()) &&
+			!FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+
+			throw new ObjectDefinitionEnableLocalizationException();
+		}
 
 		if (Validator.isNotNull(objectDefinition.getModifiable()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
@@ -490,8 +497,8 @@ public class ObjectDefinitionResourceImpl
 					objectField.getIndexedAsKeyword(),
 					objectField.getIndexedLanguageId(),
 					LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
-					objectField.getLocalized(), objectField.getName(),
-					objectField.getRequired(),
+					GetterUtil.getBoolean(objectField.getLocalized()),
+					objectField.getName(), objectField.getRequired(),
 					GetterUtil.getBoolean(objectField.getState()),
 					objectField.getSystem(),
 					transformToList(
@@ -781,6 +788,12 @@ public class ObjectDefinitionResourceImpl
 				enableCategorization =
 					objectDefinition.getEnableCategorization();
 				enableComments = objectDefinition.getEnableComments();
+
+				if (FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+					enableLocalization =
+						objectDefinition.getEnableLocalization();
+				}
+
 				enableObjectEntryHistory =
 					objectDefinition.getEnableObjectEntryHistory();
 				externalReferenceCode =

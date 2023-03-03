@@ -839,6 +839,7 @@
 		<exception>ObjectDefinitionActive</exception>
 		<exception>ObjectDefinitionEnableCategorization</exception>
 		<exception>ObjectDefinitionEnableComments</exception>
+		<exception>ObjectDefinitionEnableLocalization</exception>
 		<exception>ObjectDefinitionEnableObjectEntryHistory</exception>
 		<exception>ObjectDefinitionLabel</exception>
 		<exception>ObjectDefinitionModifiable</exception>
@@ -854,6 +855,7 @@
 		<exception>ObjectFieldDefaultValue</exception>
 		<exception>ObjectFieldLabel</exception>
 		<exception>ObjectFieldListTypeDefinitionId</exception>
+		<exception>ObjectFieldLocalized</exception>
 		<exception>ObjectFieldName</exception>
 		<exception>ObjectFieldRelationshipType</exception>
 		<exception>ObjectFieldSettingName</exception>

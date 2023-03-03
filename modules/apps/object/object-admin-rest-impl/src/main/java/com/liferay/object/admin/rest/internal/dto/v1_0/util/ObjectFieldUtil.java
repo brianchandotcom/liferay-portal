@@ -188,6 +188,12 @@ public class ObjectFieldUtil {
 			objectField.getIndexedLanguageId());
 		serviceBuilderObjectField.setLabelMap(
 			LocalizedMapUtil.getLocalizedMap(objectField.getLabel()));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+			serviceBuilderObjectField.setLocalized(
+				GetterUtil.getBoolean(objectField.getLocalized()));
+		}
+
 		serviceBuilderObjectField.setName(objectField.getName());
 		serviceBuilderObjectField.setObjectFieldSettings(
 			TransformUtil.transformToList(

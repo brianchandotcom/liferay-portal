@@ -19,6 +19,7 @@ import com.liferay.object.definition.notification.term.util.ObjectDefinitionNoti
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -65,7 +66,9 @@ public class ObjectDefinitionNotificationTermEvaluator
 			return user.getFullName(true, true);
 		}
 
-		Map<String, Long> objectFieldIds = _getObjectFieldIds();
+		Map<String, Long> objectFieldIds =
+			_objectFieldIdsDCLSingleton.getSingleton(
+				this::_createObjectFieldIds);
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectFieldIds.get(termName));
@@ -83,41 +86,27 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return String.valueOf(termValues.get(objectField.getDBColumnName()));
 	}
 
-	private Map<String, Long> _getObjectFieldIds() {
-		Map<String, Long> objectFieldIds = _objectFieldIds;
+	private Map<String, Long> _createObjectFieldIds() {
+		Map<String, Long> objectFieldIds = HashMapBuilder.put(
+			"[%OBJECT_ENTRY_CREATOR%]", 0L
+		).build();
 
-		if (objectFieldIds != null) {
-			return objectFieldIds;
-		}
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId())) {
 
-		synchronized (this) {
-			if (_objectFieldIds != null) {
-				return _objectFieldIds;
-			}
-
-			objectFieldIds = HashMapBuilder.put(
-				"[%OBJECT_ENTRY_CREATOR%]", 0L
-			).build();
-
-			for (ObjectField objectField :
-					_objectFieldLocalService.getObjectFields(
-						_objectDefinition.getObjectDefinitionId())) {
-
-				objectFieldIds.put(
-					ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-						_objectDefinition.getShortName(),
-						objectField.getName()),
-					objectField.getObjectFieldId());
-			}
-
-			_objectFieldIds = objectFieldIds;
+			objectFieldIds.put(
+				ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
+					_objectDefinition.getShortName(), objectField.getName()),
+				objectField.getObjectFieldId());
 		}
 
 		return objectFieldIds;
 	}
 
 	private final ObjectDefinition _objectDefinition;
-	private volatile Map<String, Long> _objectFieldIds;
+	private final DCLSingleton<Map<String, Long>> _objectFieldIdsDCLSingleton =
+		new DCLSingleton<>();
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final UserLocalService _userLocalService;
 

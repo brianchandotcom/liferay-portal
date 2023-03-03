@@ -47,9 +47,7 @@ definition {
 		}
 
 		task ("When a user makes a query to getAssetLibraryLanguagesPage") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
-			var response = LanguageAPI.getAssetLibraryLanguages(assetLibraryId = ${assetLibraryId});
+			var response = LanguageAPI.getAssetLibraryLanguages(depotName = "Test Depot Name");
 		}
 
 		task ("Then the response returns the configured languages for the AssetLibrary") {
@@ -74,9 +72,7 @@ definition {
 		}
 
 		task ("When a user makes a query to getSiteLanguagesPage") {
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
-
-			var response = LanguageAPI.getSiteLanguages(siteId = ${siteId});
+			var response = LanguageAPI.getSiteLanguages(groupName = "Guest");
 		}
 
 		task ("Then the response returns the configured languages for the site") {

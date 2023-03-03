@@ -442,9 +442,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		Set<String> nodeIds = new HashSet<>();
 
 		for (String nodeKey : nodeKeys) {
-			String[] ids = StringUtil.split(nodeKey, CharPool.COLON);
-
-			nodeIds.add(ids[0]);
+			nodeIds.add(StringUtil.split(nodeKey, CharPool.COLON)[0]);
 		}
 
 		return nodeIds;

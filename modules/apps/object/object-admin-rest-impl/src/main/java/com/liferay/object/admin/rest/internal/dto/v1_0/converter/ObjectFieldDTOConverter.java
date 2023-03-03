@@ -21,6 +21,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -72,6 +73,11 @@ public class ObjectFieldDTOConverter
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectField.getLabelMap());
 				listTypeDefinitionId = objectField.getListTypeDefinitionId();
+
+				if (FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+					localized = objectField.getLocalized();
+				}
+
 				name = objectField.getName();
 				objectFieldSettings = TransformUtil.transformToArray(
 					objectField.getObjectFieldSettings(),

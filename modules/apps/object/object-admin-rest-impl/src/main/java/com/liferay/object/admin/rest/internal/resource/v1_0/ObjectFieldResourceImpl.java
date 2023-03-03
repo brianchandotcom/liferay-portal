@@ -24,6 +24,7 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectFieldEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.exception.ObjectFieldLocalizedException;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -136,6 +137,12 @@ public class ObjectFieldResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		if (Validator.isNotNull(objectField.getLocalized()) &&
+			!FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+
+			throw new ObjectFieldLocalizedException();
+		}
+
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
 				objectField.getExternalReferenceCode(),
@@ -150,8 +157,8 @@ public class ObjectFieldResourceImpl
 				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
-				objectField.getLocalized(), objectField.getName(),
-				objectField.getRequired(),
+				GetterUtil.getBoolean(objectField.getLocalized()),
+				objectField.getName(), objectField.getRequired(),
 				GetterUtil.getBoolean(objectField.getState()),
 				ObjectFieldSettingUtil.toObjectFieldSettings(
 					ObjectFieldUtil.addListTypeDefinition(

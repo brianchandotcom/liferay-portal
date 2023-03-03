@@ -130,16 +130,16 @@ definition {
 
 		task ("View the Custom Assets page") {
 			ACAssets.interactWithCustomAssets(
-				viewPageNumber = "1,2,3",
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				viewPageNumber = "1,2,3");
 		}
 
 		task ("Interact with Custom Assets by downloading, clicking and submitting the form") {
 			ACAssets.interactWithCustomAssets(
+				downloadNumber = "1,2",
 				formOptionNameList = "DXP,AC",
-				submissionNumber = "1,2",
-				downloadNumber = "1,2");
+				submissionNumber = "1,2");
 		}
 
 		task ("Close sessions") {

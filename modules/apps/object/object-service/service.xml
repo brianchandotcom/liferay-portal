@@ -844,6 +844,7 @@
 		<exception>ObjectDefinitionPluralLabel</exception>
 		<exception>ObjectDefinitionScope</exception>
 		<exception>ObjectDefinitionStatus</exception>
+		<exception>ObjectDefinitionSystem</exception>
 		<exception>ObjectDefinitionVersion</exception>
 		<exception>ObjectEntryCount</exception>
 		<exception>ObjectEntryValues</exception>

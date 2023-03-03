@@ -25,6 +25,7 @@ import com.liferay.object.exception.ObjectFieldDBTypeException;
 import com.liferay.object.exception.ObjectFieldDefaultValueException;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldListTypeDefinitionIdException;
+import com.liferay.object.exception.ObjectFieldLocalizedException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectFieldStateException;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -697,6 +699,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateIndexed(
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 		_validateLabel(labelMap);
+		_validateLocalized(businessType, localized, objectDefinition);
 		_validateName(0, objectDefinition, name, system);
 		_validateState(required, state);
 
@@ -1063,6 +1066,36 @@ public class ObjectFieldLocalServiceImpl
 
 			throw new ObjectFieldListTypeDefinitionIdException(
 				"List type definition ID is 0");
+		}
+	}
+
+	private void _validateLocalized(
+			String businessType, boolean localized,
+			ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-146755") || !localized) {
+			return;
+		}
+
+		if (!businessType.equals(
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT) &&
+			!businessType.equals(
+				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT) &&
+			!businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
+
+			throw new ObjectFieldLocalizedException(
+				StringBundler.concat(
+					"Only ", ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+					StringPool.COMMA,
+					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT, " and ",
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					" business types support localization"));
+		}
+
+		if (!objectDefinition.isEnableLocalization()) {
+			throw new ObjectFieldLocalizedException(
+				"Object definition must be localized");
 		}
 	}
 

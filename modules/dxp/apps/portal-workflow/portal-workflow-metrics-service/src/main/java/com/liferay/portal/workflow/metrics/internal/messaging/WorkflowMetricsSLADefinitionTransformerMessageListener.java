@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
@@ -43,9 +44,7 @@ import com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetric
 import com.liferay.portal.workflow.metrics.internal.sla.transformer.WorkflowMetricsSLADefinitionTransformer;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -145,29 +144,24 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 
 		searchSearchRequest.setSize(10000);
 
-		Stream.of(
-			_searchEngineAdapter.execute(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).forEach(
-			document -> {
-				try {
-					_workflowMetricsSLADefinitionTransformer.transform(
-						document.getLong("companyId"),
-						document.getString("version"),
-						document.getLong("processId"));
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
-				}
+		SearchSearchResponse searchSearchResponse =
+			_searchEngineAdapter.execute(searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			Document document = searchHit.getDocument();
+
+			try {
+				_workflowMetricsSLADefinitionTransformer.transform(
+					document.getLong("companyId"),
+					document.getString("version"),
+					document.getLong("processId"));
 			}
-		);
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

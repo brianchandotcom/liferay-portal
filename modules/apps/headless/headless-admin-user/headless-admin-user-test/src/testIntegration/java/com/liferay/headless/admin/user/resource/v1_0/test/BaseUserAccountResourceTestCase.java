@@ -2833,23 +2833,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 	@Test
 	public void testPostProfileImage() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount = testPostProfileImage_addUserAccount();
-
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.postProfileImageHttpResponse(
-				userAccount.getId(), null, null));
-
-		assertHttpResponseStatusCode(
-			404, userAccountResource.postProfileImageHttpResponse(0L, null, null));
-	}
-
-	protected UserAccount testPostProfileImage_addUserAccount()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	@Rule

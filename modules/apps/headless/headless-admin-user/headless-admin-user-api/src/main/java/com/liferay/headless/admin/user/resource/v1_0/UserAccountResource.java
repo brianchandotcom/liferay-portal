@@ -175,7 +175,7 @@ public interface UserAccountResource {
 	public Response putUserAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void postProfileImage(
+	public Response postProfileImage(
 			Long userAccountId, MultipartBody multipartBody)
 		throws Exception;
 

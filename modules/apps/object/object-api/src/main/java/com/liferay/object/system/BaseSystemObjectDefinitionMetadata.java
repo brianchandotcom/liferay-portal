@@ -18,10 +18,17 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -98,6 +105,30 @@ public abstract class BaseSystemObjectDefinitionMetadata
 		}
 
 		return null;
+	}
+
+	protected void setExtendedProperties(
+			String className, Object entity,
+			List<ExtensionProvider> extensionProviders, User user,
+			Map<String, Object> values)
+		throws Exception {
+
+		if (ListUtil.isEmpty(extensionProviders)) {
+			return;
+		}
+
+		Map<String, Serializable> extendedProperties = new HashMap<>();
+
+		for (Map.Entry<String, Object> entry : values.entrySet()) {
+			extendedProperties.put(
+				entry.getKey(), (Serializable)entry.getValue());
+		}
+
+		for (ExtensionProvider extensionProvider : extensionProviders) {
+			extensionProvider.setExtendedProperties(
+				user.getCompanyId(), user.getUserId(), className, entity,
+				extendedProperties);
+		}
 	}
 
 	private String _translate(String labelKey) {

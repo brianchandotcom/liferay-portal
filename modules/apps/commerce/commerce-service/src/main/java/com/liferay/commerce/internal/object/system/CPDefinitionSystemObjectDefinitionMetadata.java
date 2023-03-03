@@ -29,9 +29,11 @@ import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,6 +57,12 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 		ProductResource productResource = _getProductResource(user);
 
 		Product product = productResource.postProduct(_getProduct(values));
+
+		setExtendedProperties(
+			Product.class.getName(), product,
+			_extensionProviderRegistry.getExtensionProviders(
+				user.getCompanyId(), Product.class.getName()),
+			user, values);
 
 		return product.getId();
 	}
@@ -174,6 +182,12 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 
 		productResource.patchProduct(
 			cpDefinition.getCProductId(), _getProduct(values));
+
+		setExtendedProperties(
+			Product.class.getName(), JSONUtil.put("id", primaryKey),
+			_extensionProviderRegistry.getExtensionProviders(
+				user.getCompanyId(), Product.class.getName()),
+			user, values);
 	}
 
 	private Product _getProduct(Map<String, Object> values) {
@@ -211,6 +225,9 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 
 	@Reference
 	private CProductLocalService _cProductLocalService;
+
+	@Reference
+	private ExtensionProviderRegistry _extensionProviderRegistry;
 
 	@Reference
 	private ProductResource.Factory _productResourceFactory;

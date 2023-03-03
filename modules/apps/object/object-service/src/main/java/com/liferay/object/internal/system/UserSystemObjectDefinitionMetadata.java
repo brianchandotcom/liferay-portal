@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,6 +57,12 @@ public class UserSystemObjectDefinitionMetadata
 
 		UserAccount userAccount = userAccountResource.postUserAccount(
 			_getUserAccount(values));
+
+		setExtendedProperties(
+			UserAccount.class.getName(), userAccount,
+			_extensionProviderRegistry.getExtensionProviders(
+				user.getCompanyId(), UserAccount.class.getName()),
+			user, values);
 
 		return userAccount.getId();
 	}
@@ -187,8 +194,14 @@ public class UserSystemObjectDefinitionMetadata
 
 		UserAccountResource userAccountResource = _getUserAccountResource(user);
 
-		userAccountResource.patchUserAccount(
+		UserAccount userAccount = userAccountResource.patchUserAccount(
 			primaryKey, _getUserAccount(values));
+
+		setExtendedProperties(
+			UserAccount.class.getName(), userAccount,
+			_extensionProviderRegistry.getExtensionProviders(
+				user.getCompanyId(), UserAccount.class.getName()),
+			user, values);
 	}
 
 	private UserAccount _getUserAccount(Map<String, Object> values) {
@@ -219,6 +232,9 @@ public class UserSystemObjectDefinitionMetadata
 			user
 		).build();
 	}
+
+	@Reference
+	private ExtensionProviderRegistry _extensionProviderRegistry;
 
 	@Reference
 	private UserAccountResource.Factory _userAccountResourceFactory;

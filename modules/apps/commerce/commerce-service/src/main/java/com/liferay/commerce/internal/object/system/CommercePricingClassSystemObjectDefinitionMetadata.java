@@ -27,9 +27,11 @@ import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,6 +57,12 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 
 		ProductGroup productGroup = productGroupResource.postProductGroup(
 			_getProductGroup(values));
+
+		setExtendedProperties(
+			ProductGroup.class.getName(), productGroup,
+			_extensionProviderRegistry.getExtensionProviders(
+				user.getCompanyId(), ProductGroup.class.getName()),
+			user, values);
 
 		return productGroup.getId();
 	}
@@ -156,6 +164,12 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 
 		productGroupResource.patchProductGroup(
 			primaryKey, _getProductGroup(values));
+
+		setExtendedProperties(
+			ProductGroup.class.getName(), JSONUtil.put("id", primaryKey),
+			_extensionProviderRegistry.getExtensionProviders(
+				user.getCompanyId(), ProductGroup.class.getName()),
+			user, values);
 	}
 
 	private ProductGroup _getProductGroup(Map<String, Object> values) {
@@ -186,6 +200,9 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 
 	@Reference
 	private CommercePricingClassLocalService _commercePricingClassLocalService;
+
+	@Reference
+	private ExtensionProviderRegistry _extensionProviderRegistry;
 
 	@Reference
 	private ProductGroupResource.Factory _productGroupResourceFactory;

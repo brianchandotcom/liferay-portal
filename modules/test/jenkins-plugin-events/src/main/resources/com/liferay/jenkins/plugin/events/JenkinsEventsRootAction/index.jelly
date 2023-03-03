@@ -15,66 +15,66 @@
 				</div>
 				<f:form method="post" name="jenkinsEventsConfiguration" action="jenkinsEventsConfiguration">
 					<f:entry>
-						<f:repeatable var="jenkinsWebHooks" items="${it.jenkinsWebHooks}">
-							<h3>Jenkins WebHook</h3>
+						<f:repeatable var="jenkinsPublishers" items="${it.jenkinsPublishers}">
+							<h3>Jenkins Publisher</h3>
 							<f:entry>
 								<div align="right">
 									<f:repeatableDeleteButton />
 								</div>
 							</f:entry>
 							<f:entry title="URL">
-								<f:textbox name="url" value="${jenkinsWebHooks.url}" />
+								<f:textbox name="url" value="${jenkinsPublishers.url}" />
 							</f:entry>
 							<f:advanced title="Event Configurations">
 								<f:section title="Build Events">
 									<f:entry title="BUILD_COMPLETED">
-										<f:checkbox name="buildCompleted" value="${jenkinsWebHooks.buildCompleted}" checked="${jenkinsWebHooks.buildCompleted}" />
+										<f:checkbox name="buildCompleted" value="${jenkinsPublishers.buildCompleted}" checked="${jenkinsPublishers.buildCompleted}" />
 									</f:entry>
 									<f:entry title="BUILD_STARTED">
-										<f:checkbox name="buildStarted" value="${jenkinsWebHooks.buildStarted}" checked="${jenkinsWebHooks.buildStarted}" />
+										<f:checkbox name="buildStarted" value="${jenkinsPublishers.buildStarted}" checked="${jenkinsPublishers.buildStarted}" />
 									</f:entry>
 								</f:section>
 								<f:section title="Computer Events">
 									<f:entry title="COMPUTER_BUSY">
-										<f:checkbox name="computerBusy" value="${jenkinsWebHooks.computerBusy}" checked="${jenkinsWebHooks.computerBusy}" />
+										<f:checkbox name="computerBusy" value="${jenkinsPublishers.computerBusy}" checked="${jenkinsPublishers.computerBusy}" />
 									</f:entry>
 									<f:entry title="COMPUTER_IDLE">
-										<f:checkbox name="computerIdle" value="${jenkinsWebHooks.computerIdle}" checked="${jenkinsWebHooks.computerIdle}" />
+										<f:checkbox name="computerIdle" value="${jenkinsPublishers.computerIdle}" checked="${jenkinsPublishers.computerIdle}" />
 									</f:entry>
 									<f:entry title="COMPUTER_OFFLINE">
-										<f:checkbox name="computerOffline" value="${jenkinsWebHooks.computerOffline}" checked="${jenkinsWebHooks.computerOffline}" />
+										<f:checkbox name="computerOffline" value="${jenkinsPublishers.computerOffline}" checked="${jenkinsPublishers.computerOffline}" />
 									</f:entry>
 									<f:entry title="COMPUTER_ONLINE">
-										<f:checkbox name="computerOnline" value="${jenkinsWebHooks.computerOnline}" checked="${jenkinsWebHooks.computerOnline}" />
+										<f:checkbox name="computerOnline" value="${jenkinsPublishers.computerOnline}" checked="${jenkinsPublishers.computerOnline}" />
 									</f:entry>
 									<f:entry title="COMPUTER_TEMPORARILY_OFFLINE">
-										<f:checkbox name="computerTemporarilyOffline" value="${jenkinsWebHooks.computerTemporarilyOffline}" checked="${jenkinsWebHooks.computerTemporarilyOffline}" />
+										<f:checkbox name="computerTemporarilyOffline" value="${jenkinsPublishers.computerTemporarilyOffline}" checked="${jenkinsPublishers.computerTemporarilyOffline}" />
 									</f:entry>
 									<f:entry title="COMPUTER_TEMPORARILY_ONLINE">
-										<f:checkbox name="computerTemporarilyOnline" value="${jenkinsWebHooks.computerTemporarilyOnline}" checked="${jenkinsWebHooks.computerTemporarilyOnline}" />
+										<f:checkbox name="computerTemporarilyOnline" value="${jenkinsPublishers.computerTemporarilyOnline}" checked="${jenkinsPublishers.computerTemporarilyOnline}" />
 									</f:entry>
 								</f:section>
 								<f:section title="Queue Events">
 									<f:entry title="QUEUE_ITEM_ENTER_BLOCKED">
-										<f:checkbox name="queueItemEnterBlocked" value="${jenkinsWebHooks.queueItemEnterBlocked}" checked="${jenkinsWebHooks.queueItemEnterBlocked}" />
+										<f:checkbox name="queueItemEnterBlocked" value="${jenkinsPublishers.queueItemEnterBlocked}" checked="${jenkinsPublishers.queueItemEnterBlocked}" />
 									</f:entry>
 									<f:entry title="QUEUE_ITEM_ENTER_BUILDABLE">
-										<f:checkbox name="queueItemEnterBuildable" value="${jenkinsWebHooks.queueItemEnterBuildable}" checked="${jenkinsWebHooks.queueItemEnterBuildable}" />
+										<f:checkbox name="queueItemEnterBuildable" value="${jenkinsPublishers.queueItemEnterBuildable}" checked="${jenkinsPublishers.queueItemEnterBuildable}" />
 									</f:entry>
 									<f:entry title="QUEUE_ITEM_ENTER_WAITING">
-										<f:checkbox name="queueItemEnterWaiting" value="${jenkinsWebHooks.queueItemEnterWaiting}" checked="${jenkinsWebHooks.queueItemEnterWaiting}" />
+										<f:checkbox name="queueItemEnterWaiting" value="${jenkinsPublishers.queueItemEnterWaiting}" checked="${jenkinsPublishers.queueItemEnterWaiting}" />
 									</f:entry>
 									<f:entry title="QUEUE_ITEM_LEAVE_BLOCKED">
-										<f:checkbox name="queueItemLeaveBlocked" value="${jenkinsWebHooks.queueItemLeaveBlocked}" checked="${jenkinsWebHooks.queueItemLeaveBlocked}" />
+										<f:checkbox name="queueItemLeaveBlocked" value="${jenkinsPublishers.queueItemLeaveBlocked}" checked="${jenkinsPublishers.queueItemLeaveBlocked}" />
 									</f:entry>
 									<f:entry title="QUEUE_ITEM_LEAVE_BUILDABLE">
-										<f:checkbox name="queueItemLeaveBuildable" value="${jenkinsWebHooks.queueItemLeaveBuildable}" checked="${jenkinsWebHooks.queueItemLeaveBuildable}" />
+										<f:checkbox name="queueItemLeaveBuildable" value="${jenkinsPublishers.queueItemLeaveBuildable}" checked="${jenkinsPublishers.queueItemLeaveBuildable}" />
 									</f:entry>
 									<f:entry title="QUEUE_ITEM_LEAVE_WAITING">
-										<f:checkbox name="queueItemLeaveWaiting" value="${jenkinsWebHooks.queueItemLeaveWaiting}" checked="${jenkinsWebHooks.queueItemLeaveWaiting}" />
+										<f:checkbox name="queueItemLeaveWaiting" value="${jenkinsPublishers.queueItemLeaveWaiting}" checked="${jenkinsPublishers.queueItemLeaveWaiting}" />
 									</f:entry>
 									<f:entry title="QUEUE_ITEM_LEFT">
-										<f:checkbox name="queueItemLeft" value="${jenkinsWebHooks.queueItemLeft}" checked="${jenkinsWebHooks.queueItemLeft}" />
+										<f:checkbox name="queueItemLeft" value="${jenkinsPublishers.queueItemLeft}" checked="${jenkinsPublishers.queueItemLeft}" />
 									</f:entry>
 								</f:section>
 							</f:advanced>

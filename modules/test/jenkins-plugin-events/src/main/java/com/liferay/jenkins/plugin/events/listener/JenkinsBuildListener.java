@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.jenkins.plugin.events;
+package com.liferay.jenkins.plugin.events.listener;
+
+import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisher;
+import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisherUtil;
 
 import hudson.Extension;
 
@@ -29,24 +32,24 @@ public class JenkinsBuildListener extends RunListener<Build> {
 
 	@Override
 	public void onCompleted(Build build, TaskListener taskListener) {
-		JenkinsEventsConfigurationUtil.publish(
-			JenkinsWebHook.EventTrigger.BUILD_COMPLETED, build);
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.BUILD_COMPLETED, build);
 
 		Executor executor = build.getExecutor();
 
-		JenkinsEventsConfigurationUtil.publish(
-			JenkinsWebHook.EventTrigger.COMPUTER_IDLE, executor.getOwner());
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.COMPUTER_IDLE, executor.getOwner());
 	}
 
 	@Override
 	public void onStarted(Build build, TaskListener listener) {
 		Executor executor = build.getExecutor();
 
-		JenkinsEventsConfigurationUtil.publish(
-			JenkinsWebHook.EventTrigger.COMPUTER_BUSY, executor.getOwner());
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.COMPUTER_BUSY, executor.getOwner());
 
-		JenkinsEventsConfigurationUtil.publish(
-			JenkinsWebHook.EventTrigger.BUILD_STARTED, build);
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.BUILD_STARTED, build);
 	}
 
 }

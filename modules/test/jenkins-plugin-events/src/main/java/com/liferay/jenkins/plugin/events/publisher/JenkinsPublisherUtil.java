@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.jenkins.plugin.events;
+package com.liferay.jenkins.plugin.events.publisher;
+
+import com.liferay.jenkins.plugin.events.JenkinsEventsRootAction;
 
 import hudson.model.Build;
 import hudson.model.Computer;
@@ -32,10 +34,10 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class JenkinsEventsConfigurationUtil {
+public class JenkinsPublisherUtil {
 
 	public static void publish(
-		JenkinsWebHook.EventTrigger eventTrigger, Object eventObject) {
+		JenkinsPublisher.EventTrigger eventTrigger, Object eventObject) {
 
 		Jenkins jenkins = Jenkins.getInstanceOrNull();
 
@@ -57,14 +59,15 @@ public class JenkinsEventsConfigurationUtil {
 		JenkinsEventsRootAction jenkinsEventsRootAction =
 			jenkins.getDescriptorByType(JenkinsEventsRootAction.class);
 
-		for (JenkinsWebHook jenkinsWebHook :
-				jenkinsEventsRootAction.getJenkinsWebHooks()) {
+		for (JenkinsPublisher jenkinsPublisher :
+				jenkinsEventsRootAction.getJenkinsPublishers()) {
 
-			if (!jenkinsWebHook.containsEventTrigger(eventTrigger)) {
+			if (!jenkinsPublisher.containsEventTrigger(eventTrigger)) {
 				continue;
 			}
 
-			jenkinsWebHook.publish(payloadJSONObject.toString(), eventTrigger);
+			jenkinsPublisher.publish(
+				payloadJSONObject.toString(), eventTrigger);
 		}
 	}
 
@@ -109,7 +112,7 @@ public class JenkinsEventsConfigurationUtil {
 	}
 
 	private static JSONObject _getComputerJSONObject(
-		Object eventObject, JenkinsWebHook.EventTrigger eventTrigger) {
+		Object eventObject, JenkinsPublisher.EventTrigger eventTrigger) {
 
 		Computer computer = _getComputer(eventObject);
 
@@ -119,10 +122,10 @@ public class JenkinsEventsConfigurationUtil {
 
 		JSONObject jsonObject = new JSONObject();
 
-		if (eventTrigger == JenkinsWebHook.EventTrigger.COMPUTER_IDLE) {
+		if (eventTrigger == JenkinsPublisher.EventTrigger.COMPUTER_IDLE) {
 			jsonObject.put("busy", false);
 		}
-		else if (eventTrigger == JenkinsWebHook.EventTrigger.COMPUTER_BUSY) {
+		else if (eventTrigger == JenkinsPublisher.EventTrigger.COMPUTER_BUSY) {
 			jsonObject.put("busy", true);
 		}
 		else {

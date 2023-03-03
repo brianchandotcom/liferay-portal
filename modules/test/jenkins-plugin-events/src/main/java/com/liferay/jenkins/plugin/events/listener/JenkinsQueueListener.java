@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.jenkins.plugin.events;
+package com.liferay.jenkins.plugin.events.listener;
+
+import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisher;
+import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisherUtil;
 
 import hudson.Extension;
 
@@ -27,46 +30,50 @@ public class JenkinsQueueListener extends QueueListener {
 
 	@Override
 	public void onEnterBlocked(Queue.BlockedItem blockedItem) {
-		JenkinsEventsConfigurationUtil.publish(
-			JenkinsWebHook.EventTrigger.QUEUE_ITEM_ENTER_BLOCKED, blockedItem);
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.QUEUE_ITEM_ENTER_BLOCKED,
+			blockedItem);
 	}
 
 	@Override
 	public void onEnterBuildable(Queue.BuildableItem buildableItem) {
-		JenkinsEventsConfigurationUtil.publish(
-			JenkinsWebHook.EventTrigger.QUEUE_ITEM_ENTER_BUILDABLE,
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.QUEUE_ITEM_ENTER_BUILDABLE,
 			buildableItem);
 	}
 
 	@Override
 	public void onEnterWaiting(Queue.WaitingItem waitingItem) {
-		JenkinsEventsConfigurationUtil.publish(
-			JenkinsWebHook.EventTrigger.QUEUE_ITEM_ENTER_WAITING, waitingItem);
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.QUEUE_ITEM_ENTER_WAITING,
+			waitingItem);
 	}
 
 	@Override
 	public void onLeaveBlocked(Queue.BlockedItem blockedItem) {
-		JenkinsEventsConfigurationUtil.publish(
-			JenkinsWebHook.EventTrigger.QUEUE_ITEM_LEAVE_BLOCKED, blockedItem);
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.QUEUE_ITEM_LEAVE_BLOCKED,
+			blockedItem);
 	}
 
 	@Override
 	public void onLeaveBuildable(Queue.BuildableItem buildableItem) {
-		JenkinsEventsConfigurationUtil.publish(
-			JenkinsWebHook.EventTrigger.QUEUE_ITEM_LEAVE_BUILDABLE,
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.QUEUE_ITEM_LEAVE_BUILDABLE,
 			buildableItem);
 	}
 
 	@Override
 	public void onLeaveWaiting(Queue.WaitingItem waitingItem) {
-		JenkinsEventsConfigurationUtil.publish(
-			JenkinsWebHook.EventTrigger.QUEUE_ITEM_LEAVE_WAITING, waitingItem);
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.QUEUE_ITEM_LEAVE_WAITING,
+			waitingItem);
 	}
 
 	@Override
 	public void onLeft(Queue.LeftItem leftItem) {
-		JenkinsEventsConfigurationUtil.publish(
-			JenkinsWebHook.EventTrigger.QUEUE_ITEM_LEFT, leftItem);
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.QUEUE_ITEM_LEFT, leftItem);
 	}
 
 }

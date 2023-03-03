@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jenkins.plugin.events;
+package com.liferay.jenkins.plugin.events.publisher;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -32,13 +32,13 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class JenkinsWebHook {
+public class JenkinsPublisher {
 
-	public JenkinsWebHook() {
+	public JenkinsPublisher() {
 		_initializeEventTypes();
 	}
 
-	public JenkinsWebHook(JSONObject jsonObject) {
+	public JenkinsPublisher(JSONObject jsonObject) {
 		buildCompleted = jsonObject.getBoolean("buildCompleted");
 		buildStarted = jsonObject.getBoolean("buildStarted");
 		computerBusy = jsonObject.getBoolean("computerBusy");

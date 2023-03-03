@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.plugin.events;
 
+import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisher;
+
 import hudson.Extension;
 
 import hudson.model.Describable;
@@ -46,7 +48,7 @@ public class JenkinsEventsRootAction
 	public JenkinsEventsRootAction() {
 		super(JenkinsEventsRootAction.class);
 
-		jenkinsWebHooks = new LinkedList<>();
+		jenkinsPublishers = new LinkedList<>();
 
 		load();
 	}
@@ -55,30 +57,32 @@ public class JenkinsEventsRootAction
 			StaplerRequest staplerRequest, StaplerResponse staplerResponse)
 		throws IOException, ServletException {
 
-		jenkinsWebHooks.clear();
+		jenkinsPublishers.clear();
 
 		JSONObject jsonObject = new JSONObject(
 			staplerRequest.getParameter("json"));
 
-		Object jenkinsWebHooksObject = jsonObject.get("jenkinsWebHooks");
+		Object jenkinsPublishersObject = jsonObject.get("jenkinsPublishers");
 
-		if (jenkinsWebHooksObject instanceof JSONArray) {
-			JSONArray webHookJSONArray = (JSONArray)jenkinsWebHooksObject;
+		if (jenkinsPublishersObject instanceof JSONArray) {
+			JSONArray jenkinsPublishersJSONArray =
+				(JSONArray)jenkinsPublishersObject;
 
-			for (int i = 0; i < webHookJSONArray.length(); i++) {
-				JSONObject webHookJSONObject = webHookJSONArray.optJSONObject(
-					i);
+			for (int i = 0; i < jenkinsPublishersJSONArray.length(); i++) {
+				JSONObject jenkinsPublisherJSONObject =
+					jenkinsPublishersJSONArray.optJSONObject(i);
 
-				if (webHookJSONObject == null) {
+				if (jenkinsPublisherJSONObject == null) {
 					continue;
 				}
 
-				jenkinsWebHooks.add(new JenkinsWebHook(webHookJSONObject));
+				jenkinsPublishers.add(
+					new JenkinsPublisher(jenkinsPublisherJSONObject));
 			}
 		}
-		else if (jenkinsWebHooksObject instanceof JSONObject) {
-			jenkinsWebHooks.add(
-				new JenkinsWebHook((JSONObject)jenkinsWebHooksObject));
+		else if (jenkinsPublishersObject instanceof JSONObject) {
+			jenkinsPublishers.add(
+				new JenkinsPublisher((JSONObject)jenkinsPublishersObject));
 		}
 
 		save();
@@ -105,8 +109,8 @@ public class JenkinsEventsRootAction
 		return "clipboard.png";
 	}
 
-	public List<JenkinsWebHook> getJenkinsWebHooks() {
-		return jenkinsWebHooks;
+	public List<JenkinsPublisher> getJenkinsPublishers() {
+		return jenkinsPublishers;
 	}
 
 	@Override
@@ -114,6 +118,6 @@ public class JenkinsEventsRootAction
 		return "jenkins-events";
 	}
 
-	public List<JenkinsWebHook> jenkinsWebHooks;
+	public List<JenkinsPublisher> jenkinsPublishers;
 
 }

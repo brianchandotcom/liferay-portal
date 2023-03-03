@@ -110,7 +110,8 @@ public class BatchEngineServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.alterColumnType(
 				"BatchEngineExportTask", "fieldNames", "STRING null"));
 
-		registry.register("4.6.2", "4.6.3",
+		registry.register(
+			"4.6.2", "4.6.3",
 			UpgradeProcessFactory.alterColumnType(
 				"BatchEngineExportTask", "callbackURL", "VARCHAR(255) null"),
 			UpgradeProcessFactory.alterColumnType(

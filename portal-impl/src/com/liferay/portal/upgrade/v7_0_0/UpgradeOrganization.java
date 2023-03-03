@@ -34,8 +34,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -119,26 +117,26 @@ public class UpgradeOrganization extends UpgradeProcess {
 					continue;
 				}
 
-				List<String> treePaths = StringUtil.split(
+				List<String> organizationIds = StringUtil.split(
 					organizationGroup._organizationTreePath, CharPool.SLASH);
 
-				Stream<String> stream = treePaths.stream();
+				StringBundler sb = new StringBundler(
+					(2 * organizationIds.size()) + 1);
 
-				String groupTreePath = stream.filter(
-					organizationId -> organizationId.length() > 0
-				).map(
-					organizationId -> String.valueOf(
-						OrganizationGroup.getGroupId(organizationId))
-				).collect(
-					Collectors.joining(
-						StringPool.SLASH, StringPool.SLASH, StringPool.SLASH)
-				);
+				sb.append(StringPool.SLASH);
+
+				for (String organizationId : organizationIds) {
+					if (organizationId.length() > 0) {
+						sb.append(OrganizationGroup.getGroupId(organizationId));
+						sb.append(StringPool.SLASH);
+					}
+				}
 
 				preparedStatement2.setLong(
 					1,
 					OrganizationGroup.getGroupId(
 						organizationGroup._parentOrganizationId));
-				preparedStatement2.setString(2, groupTreePath);
+				preparedStatement2.setString(2, sb.toString());
 				preparedStatement2.setLong(3, organizationGroup._groupId);
 
 				preparedStatement2.addBatch();

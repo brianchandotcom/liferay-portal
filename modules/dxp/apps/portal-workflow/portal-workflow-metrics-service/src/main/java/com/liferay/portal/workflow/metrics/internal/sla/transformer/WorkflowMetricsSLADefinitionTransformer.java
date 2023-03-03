@@ -44,10 +44,9 @@ import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionL
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -104,25 +103,20 @@ public class WorkflowMetricsSLADefinitionTransformer {
 			(TopHitsAggregationResult)
 				processVersionBucket.getChildAggregationResult("topHits");
 
-		return Stream.of(
-			topHitsAggregationResult.getSearchHits()
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::parallelStream
-		).map(
-			SearchHit::getSourcesMap
-		).findFirst(
-		).map(
-			sourceMap -> MapUtil.getString(sourceMap, "nodeId")
-		).orElseGet(
-			() -> StringPool.BLANK
-		);
+		SearchHits searchHits = topHitsAggregationResult.getSearchHits();
+
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			return MapUtil.getString(searchHit.getSourcesMap(), "nodeId");
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private Map<String, String> _getNodeIdMap(
 		String currentProcessVersion, String latestProcessVersion,
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+
+		Map<String, String> nodeIds = new HashMap<>();
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -165,27 +159,26 @@ public class WorkflowMetricsSLADefinitionTransformer {
 		TermsAggregationResult nameTermsAggregationResult =
 			(TermsAggregationResult)aggregationResultsMap.get("name");
 
-		return Stream.of(
-			nameTermsAggregationResult.getBuckets()
-		).flatMap(
-			Collection::parallelStream
-		).map(
-			bucket -> (TermsAggregationResult)bucket.getChildAggregationResult(
-				"version")
-		).filter(
-			versionTermsAggregationResult -> {
-				Collection<Bucket> versionBuckets =
-					versionTermsAggregationResult.getBuckets();
+		for (Bucket bucket : nameTermsAggregationResult.getBuckets()) {
+			TermsAggregationResult versionTermsAggregationResult =
+				(TermsAggregationResult)bucket.getChildAggregationResult(
+					"version");
 
-				return versionBuckets.size() == 2;
+			Collection<Bucket> versionBuckets =
+				versionTermsAggregationResult.getBuckets();
+
+			if (versionBuckets.size() != 2) {
+				continue;
 			}
-		).collect(
-			Collectors.toMap(
-				versionTermsAggregationResult -> _getNodeId(
+
+			nodeIds.put(
+				_getNodeId(
 					currentProcessVersion, versionTermsAggregationResult),
-				versionTermsAggregationResult -> _getNodeId(
-					latestProcessVersion, versionTermsAggregationResult))
-		);
+				_getNodeId(
+					latestProcessVersion, versionTermsAggregationResult));
+		}
+
+		return nodeIds;
 	}
 
 	private void _transform(

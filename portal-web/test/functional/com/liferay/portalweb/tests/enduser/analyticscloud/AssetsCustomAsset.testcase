@@ -128,11 +128,18 @@ definition {
 				userLoginFullName = "userfn userln");
 		}
 
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				documentTitleList = "1,2,3",
+		task ("View the Custom Assets page") {
+			ACAssets.interactWithCustomAssets(
+				viewPageNumber = "1,2,3",
 				pageName = "AC Page",
 				siteName = "Site Name");
+		}
+
+		task ("Interact with Custom Assets by downloading, clicking and submitting the form") {
+			ACAssets.interactWithCustomAssets(
+				formOptionNameList = "DXP,AC",
+				submissionNumber = "1,2",
+				downloadNumber = "1,2");
 		}
 
 		task ("Close sessions") {
@@ -148,7 +155,7 @@ definition {
 		task ("Add three custom asset reports") {
 			var n = 1;
 
-			for (var metricName : list "Asset Views (sum),Asset Interaction Time (average),Asset Downloads (sum)") {
+			for (var metricName : list "Asset Views (sum),Asset Clicks (sum),Form Submissions (sum),Asset Downloads (sum)") {
 				ACNavigation.goToAssets();
 
 				ACNavigation.switchTab(tabName = "Custom");
@@ -162,9 +169,15 @@ definition {
 			}
 		}
 
-		task ("View the new reports") {
-			for (var n : list "1,2,3") {
+		task ("Check that the report was created and that the chart appears with data") {
+			for (var n : list "1,2,3,4") {
 				ACCards.viewCards(cardTitle = "Test Custom Asset Report ${n}");
+
+				ACTimeFilter.clickTimeFilterButton(cardName = "Test Custom Asset Report ${n}");
+
+				ACTimeFilter.setLast24Hours();
+
+				ACCards.viewCardDataIsPresent(cardName = "Test Custom Asset Report ${n}");
 			}
 		}
 	}

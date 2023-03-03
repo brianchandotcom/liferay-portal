@@ -79,7 +79,21 @@ definition {
 	}
 
 	macro answerQuestion {
-		CKEditor.addContent(content = ${contentField});
+		Click(
+			key_text = "Add Answer",
+			locator1 = "Button#ANY");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = ${contentField});
+
+		SelectFrame(value1 = "relative-top");
+
+		ScrollWebElementIntoView(
+			key_text = "Post Answer",
+			locator1 = "Button#ANY");
 
 		Click(
 			key_text = "Post Answer",

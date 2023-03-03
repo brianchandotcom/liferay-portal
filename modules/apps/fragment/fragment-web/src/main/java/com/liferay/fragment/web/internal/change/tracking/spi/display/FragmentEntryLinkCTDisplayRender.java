@@ -107,7 +107,7 @@ public class FragmentEntryLinkCTDisplayRender
 		).display(
 			"css", fragmentEntryLink.getCss(), true, true
 		).display(
-			"editabled-values",
+			"editable-values",
 			() -> {
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					fragmentEntryLink.getEditableValues());

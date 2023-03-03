@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Google Maps Web
-Bundle-SymbolicName: com.liferay.google.maps.web
-Bundle-Version: 5.0.23
-Web-ContextPath: /google-maps-web

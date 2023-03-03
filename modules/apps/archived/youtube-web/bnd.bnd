@@ -1,4 +1,0 @@
-Bundle-Name: Liferay YouTube Web
-Bundle-SymbolicName: com.liferay.youtube.web
-Bundle-Version: 5.0.20
-Web-ContextPath: /youtube-web

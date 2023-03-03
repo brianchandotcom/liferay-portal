@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Web Form Web
-Bundle-SymbolicName: com.liferay.web.form.web
-Bundle-Version: 5.0.26
-Import-Package:\
-	!org.apache.xmlbeans.*,\
-	\
-	*
-Web-ContextPath: /web-form-web

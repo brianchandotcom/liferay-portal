@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Weather Web
-Bundle-SymbolicName: com.liferay.weather.web
-Bundle-Version: 5.0.21
-Web-ContextPath: /weather-web

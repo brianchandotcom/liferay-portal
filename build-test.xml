@@ -6875,12 +6875,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									<isset property="operating.system.docker.image" />
 									<then>
 										<sequential>
+											<get-app-server-property property.name="max.log.size.in.mb" />
 											<get-operating-system-property property.name="operating.system.host" />
 
 											<docker-execute container="${operating.system.host}">
 												chmod +x ${test.app.server.bin.dir}/${app.server.start.executable}
 
-												${test.app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line} | head -c 2M
+												${test.app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line} | head -c ${app.server.max.log.size.in.mb}M
 											</docker-execute>
 										</sequential>
 									</then>

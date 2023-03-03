@@ -232,6 +232,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Boolean enableComments;
 
+	public Boolean getEnableLocalization() {
+		return enableLocalization;
+	}
+
+	public void setEnableLocalization(Boolean enableLocalization) {
+		this.enableLocalization = enableLocalization;
+	}
+
+	public void setEnableLocalization(
+		UnsafeSupplier<Boolean, Exception> enableLocalizationUnsafeSupplier) {
+
+		try {
+			enableLocalization = enableLocalizationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean enableLocalization;
+
 	public Boolean getEnableObjectEntryHistory() {
 		return enableObjectEntryHistory;
 	}

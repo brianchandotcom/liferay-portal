@@ -166,6 +166,9 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setEnableComments(RandomTestUtil.randomBoolean());
 
+		newObjectDefinition.setEnableLocalization(
+			RandomTestUtil.randomBoolean());
+
 		newObjectDefinition.setEnableObjectEntryHistory(
 			RandomTestUtil.randomBoolean());
 
@@ -257,6 +260,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableComments(),
 			newObjectDefinition.isEnableComments());
+		Assert.assertEquals(
+			existingObjectDefinition.isEnableLocalization(),
+			newObjectDefinition.isEnableLocalization());
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableObjectEntryHistory(),
 			newObjectDefinition.isEnableObjectEntryHistory());
@@ -441,12 +447,12 @@ public class ObjectDefinitionPersistenceTest {
 			true, "descriptionObjectFieldId", true, "titleObjectFieldId", true,
 			"accountEntryRestricted", true, "active", true, "dbTableName", true,
 			"label", true, "className", true, "enableCategorization", true,
-			"enableComments", true, "enableObjectEntryHistory", true,
-			"modifiable", true, "name", true, "panelAppOrder", true,
-			"panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
-			"pkObjectFieldName", true, "pluralLabel", true, "portlet", true,
-			"scope", true, "storageType", true, "system", true, "version", true,
-			"status", true);
+			"enableComments", true, "enableLocalization", true,
+			"enableObjectEntryHistory", true, "modifiable", true, "name", true,
+			"panelAppOrder", true, "panelCategoryKey", true,
+			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
+			"pluralLabel", true, "portlet", true, "scope", true, "storageType",
+			true, "system", true, "version", true, "status", true);
 	}
 
 	@Test
@@ -796,6 +802,8 @@ public class ObjectDefinitionPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableComments(RandomTestUtil.randomBoolean());
+
+		objectDefinition.setEnableLocalization(RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableObjectEntryHistory(
 			RandomTestUtil.randomBoolean());

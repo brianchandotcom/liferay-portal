@@ -307,6 +307,27 @@ public class ObjectField implements Cloneable, Serializable {
 
 	protected Long listTypeDefinitionId;
 
+	public Boolean getLocalized() {
+		return localized;
+	}
+
+	public void setLocalized(Boolean localized) {
+		this.localized = localized;
+	}
+
+	public void setLocalized(
+		UnsafeSupplier<Boolean, Exception> localizedUnsafeSupplier) {
+
+		try {
+			localized = localizedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean localized;
+
 	public String getName() {
 		return name;
 	}

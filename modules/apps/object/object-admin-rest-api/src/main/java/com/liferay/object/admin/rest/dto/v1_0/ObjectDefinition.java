@@ -323,6 +323,34 @@ public class ObjectDefinition implements Serializable {
 	protected Boolean enableComments;
 
 	@Schema
+	public Boolean getEnableLocalization() {
+		return enableLocalization;
+	}
+
+	public void setEnableLocalization(Boolean enableLocalization) {
+		this.enableLocalization = enableLocalization;
+	}
+
+	@JsonIgnore
+	public void setEnableLocalization(
+		UnsafeSupplier<Boolean, Exception> enableLocalizationUnsafeSupplier) {
+
+		try {
+			enableLocalization = enableLocalizationUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enableLocalization;
+
+	@Schema
 	public Boolean getEnableObjectEntryHistory() {
 		return enableObjectEntryHistory;
 	}
@@ -1114,6 +1142,16 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"enableComments\": ");
 
 			sb.append(enableComments);
+		}
+
+		if (enableLocalization != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableLocalization\": ");
+
+			sb.append(enableLocalization);
 		}
 
 		if (enableObjectEntryHistory != null) {

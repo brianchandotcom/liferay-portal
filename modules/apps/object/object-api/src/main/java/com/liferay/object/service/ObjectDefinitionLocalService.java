@@ -72,10 +72,10 @@ public interface ObjectDefinitionLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition addCustomObjectDefinition(
-			long userId, boolean enableComments, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			Map<Locale, String> pluralLabelMap, String scope,
-			String storageType, List<ObjectField> objectFields)
+			long userId, boolean enableComments, boolean enableLocalization,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			String scope, String storageType, List<ObjectField> objectFields)
 		throws PortalException;
 
 	/**
@@ -390,9 +390,10 @@ public interface ObjectDefinitionLocalService
 			long descriptionObjectFieldId, long titleObjectFieldId,
 			boolean accountEntryRestricted, boolean active,
 			boolean enableCategorization, boolean enableComments,
-			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			boolean portlet, Map<Locale, String> pluralLabelMap, String scope)
+			boolean enableLocalization, boolean enableObjectEntryHistory,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, boolean portlet,
+			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException;
 
 	public ObjectDefinition updateExternalReferenceCode(

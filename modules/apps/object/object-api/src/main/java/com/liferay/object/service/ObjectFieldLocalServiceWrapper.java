@@ -43,8 +43,8 @@ public class ObjectFieldLocalServiceWrapper
 			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbType, String defaultValue,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			java.util.Map<java.util.Locale, String> labelMap, String name,
-			boolean required, boolean state,
+			java.util.Map<java.util.Locale, String> labelMap, boolean localized,
+			String name, boolean required, boolean state,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
 				objectFieldSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -52,8 +52,8 @@ public class ObjectFieldLocalServiceWrapper
 		return _objectFieldLocalService.addCustomObjectField(
 			externalReferenceCode, userId, listTypeDefinitionId,
 			objectDefinitionId, businessType, dbType, defaultValue, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			state, objectFieldSettings);
+			indexedAsKeyword, indexedLanguageId, labelMap, localized, name,
+			required, state, objectFieldSettings);
 	}
 
 	/**
@@ -79,8 +79,8 @@ public class ObjectFieldLocalServiceWrapper
 			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbType, String defaultValue,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			java.util.Map<java.util.Locale, String> labelMap, String name,
-			boolean required, boolean state,
+			java.util.Map<java.util.Locale, String> labelMap, boolean localized,
+			String name, boolean required, boolean state,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
 				objectFieldSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -88,8 +88,8 @@ public class ObjectFieldLocalServiceWrapper
 		return _objectFieldLocalService.addOrUpdateCustomObjectField(
 			externalReferenceCode, objectFieldId, userId, listTypeDefinitionId,
 			objectDefinitionId, businessType, dbType, defaultValue, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-			state, objectFieldSettings);
+			indexedAsKeyword, indexedLanguageId, labelMap, localized, name,
+			required, state, objectFieldSettings);
 	}
 
 	@Override
@@ -552,8 +552,8 @@ public class ObjectFieldLocalServiceWrapper
 			long listTypeDefinitionId, String businessType, String dbType,
 			String defaultValue, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId,
-			java.util.Map<java.util.Locale, String> labelMap, String name,
-			boolean required, boolean state,
+			java.util.Map<java.util.Locale, String> labelMap, boolean localized,
+			String name, boolean required, boolean state,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
 				objectFieldSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -561,7 +561,7 @@ public class ObjectFieldLocalServiceWrapper
 		return _objectFieldLocalService.updateCustomObjectField(
 			externalReferenceCode, objectFieldId, listTypeDefinitionId,
 			businessType, dbType, defaultValue, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, state,
+			indexedLanguageId, labelMap, localized, name, required, state,
 			objectFieldSettings);
 	}
 
@@ -589,8 +589,8 @@ public class ObjectFieldLocalServiceWrapper
 			String businessType, String dbColumnName, String dbTableName,
 			String dbType, String defaultValue, boolean indexed,
 			boolean indexedAsKeyword, String indexedLanguageId,
-			java.util.Map<java.util.Locale, String> labelMap, String name,
-			boolean required, boolean state, boolean system,
+			java.util.Map<java.util.Locale, String> labelMap, boolean localized,
+			String name, boolean required, boolean state, boolean system,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
 				objectFieldSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -599,7 +599,8 @@ public class ObjectFieldLocalServiceWrapper
 			externalReferenceCode, objectFieldId, userId, listTypeDefinitionId,
 			objectDefinitionId, businessType, dbColumnName, dbTableName, dbType,
 			defaultValue, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, state, system, objectFieldSettings);
+			labelMap, localized, name, required, state, system,
+			objectFieldSettings);
 	}
 
 	@Override

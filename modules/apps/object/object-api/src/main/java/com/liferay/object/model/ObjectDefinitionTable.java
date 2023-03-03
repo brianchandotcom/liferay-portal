@@ -89,6 +89,10 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 		createColumn(
 			"enableComments", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, Boolean> enableLocalization =
+		createColumn(
+			"enableLocalization", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Boolean>
 		enableObjectEntryHistory = createColumn(
 			"enableObjectEntryHistory", Boolean.class, Types.BOOLEAN,

@@ -10,7 +10,9 @@
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="callbackURL" type="String" />
+		<field name="callbackURL" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="className" type="String">
 			<hint name="max-length">255</hint>
 		</field>
@@ -40,7 +42,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="batchSize" type="long" />
-		<field name="callbackURL" type="String" />
+		<field name="callbackURL" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="className" type="String">
 			<hint name="max-length">255</hint>
 		</field>

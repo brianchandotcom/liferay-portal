@@ -19,6 +19,13 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayoutTab;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 
 import java.io.IOException;
 
@@ -62,6 +69,36 @@ public class ObjectLayoutTabScreenNavigationCategory
 	}
 
 	@Override
+	public boolean isVisible(User user, ObjectLayoutTab objectLayoutTab) {
+		long objectRelationshipId = _objectLayoutTab.getObjectRelationshipId();
+
+		if (objectRelationshipId == 0) {
+			return true;
+		}
+
+		try {
+			ObjectRelationship objectRelationship =
+				ObjectRelationshipLocalServiceUtil.getObjectRelationship(
+					objectRelationshipId);
+
+			if (objectRelationship != null) {
+				ObjectDefinition objectDefinition =
+					ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId2());
+
+				if (objectDefinition.isActive()) {
+					return true;
+				}
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return false;
+	}
+
+	@Override
 	public void render(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -70,6 +107,9 @@ public class ObjectLayoutTabScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			ObjectWebKeys.REGULAR_OBJECT_LAYOUT_TAB, Boolean.TRUE);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectLayoutTabScreenNavigationCategory.class);
 
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectLayoutTab _objectLayoutTab;

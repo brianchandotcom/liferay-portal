@@ -30,7 +30,6 @@ class EventInput extends Component {
 		criterion: PropTypes.object.isRequired,
 		error: PropTypes.bool,
 		onChange: PropTypes.func.isRequired,
-		onEntityChange: PropTypes.func,
 		renderEmptyValuesErrors: PropTypes.bool,
 		selectedOperator: PropTypes.object,
 		selectedProperty: PropTypes.object.isRequired,

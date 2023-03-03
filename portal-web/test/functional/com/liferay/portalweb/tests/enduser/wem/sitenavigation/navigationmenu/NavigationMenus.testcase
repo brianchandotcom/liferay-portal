@@ -640,7 +640,7 @@ definition {
 		}
 
 		task ("Assert no Page option in drop down list") {
-			Click(locator1 = "Button#PLUS");
+			Button.clickAdd();
 
 			MenuItem.viewNotPresent(menuItem = "Page");
 
@@ -1584,7 +1584,7 @@ definition {
 
 				NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
 
-				Click(locator1 = "Button#PLUS");
+				Button.clickAdd();
 
 				MenuItem.click(menuItem = "Page");
 

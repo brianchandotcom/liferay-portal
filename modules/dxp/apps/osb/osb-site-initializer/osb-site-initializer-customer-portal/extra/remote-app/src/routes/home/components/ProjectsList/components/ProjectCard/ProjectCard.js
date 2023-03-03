@@ -28,7 +28,11 @@ const statusReport = {
 };
 
 const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
-	const showSLAStatus = Boolean(koroneikiAccount.slaCurrent);
+	const showSLAStatus = Boolean(
+		koroneikiAccount.slaCurrent ||
+			koroneikiAccount.slaExpired ||
+			koroneikiAccount.slaFuture
+	);
 
 	const SLAStatus = () => {
 		if (loading) {

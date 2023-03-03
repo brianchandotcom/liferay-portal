@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import classNames from 'classnames';
 import {openSelectionModal} from 'frontend-js-web';
+import hash from 'hash.js';
 import propTypes from 'prop-types';
 import React from 'react';
 
@@ -51,7 +52,10 @@ class SelectEventEntityInput extends React.Component {
 				const value = JSON.parse(event.value);
 
 				onChange({
-					assetId: value.fileEntryId,
+					assetId: hash
+						.sha256()
+						.update(value.fileEntryId)
+						.digest('hex'),
 					displayValue: value.title,
 				});
 			},

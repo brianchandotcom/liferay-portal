@@ -23,6 +23,7 @@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/portal-workflow" prefix="liferay-portal-workflow" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -86,6 +87,7 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 

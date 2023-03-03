@@ -8,12 +8,14 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
+	var testSiteName = "Testray 2";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Testray.addTestraySite();
+		Testray.addTestraySite(siteName = ${testSiteName});
 
 		Refresh();
 	}
@@ -38,7 +40,7 @@ definition {
 	@priority = 5
 	test AdminCanAddProject {
 		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Project Description",
@@ -58,7 +60,7 @@ definition {
 	@priority = 4
 	test AdminCanAddProjectFromDropdown {
 		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectByDropdown(
 				description = "Projects_1 Description",
@@ -78,7 +80,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteProject {
 		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Description",
@@ -96,7 +98,7 @@ definition {
 	@priority = 5
 	test AdminCanEditProject {
 		task ("Go to Testray, Create Project and change pagination") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Description",
@@ -134,7 +136,7 @@ definition {
 	@priority = 5
 	test AdminCanNotAddDuplicateProject {
 		task ("Go to Testray, Create Project duplicate") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Description",
@@ -154,7 +156,7 @@ definition {
 	@priority = 3
 	test AdminCanViewWarningMessage {
 		task ("Go to Testray, Create Project and create product version") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "",
@@ -172,7 +174,7 @@ definition {
 	@priority = 5
 	test CanDeleteProjectsThatContainRoutinesWithoutAssociatedBuilds {
 		task ("Create project, change pagination and create Routine") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Description",
@@ -198,7 +200,7 @@ definition {
 	@priority = 5
 	test CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds {
 		task ("Go to Testray and create a Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Description",

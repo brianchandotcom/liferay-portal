@@ -8,12 +8,14 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
+	var testSiteName = "Testray 2";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Testray.addTestraySite();
+		Testray.addTestraySite(siteName = ${testSiteName});
 
 		Refresh();
 	}
@@ -36,7 +38,7 @@ definition {
 	@priority = 5
 	test AdminCanAddTeam {
 		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Project Description",
@@ -62,7 +64,7 @@ definition {
 	@priority = 4
 	test AdminCanAssignTeamsByDualbox {
 		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Project Description",
@@ -112,7 +114,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteTeam {
 		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Project Description",
@@ -144,7 +146,7 @@ definition {
 	@priority = 5
 	test AdminCanEditTeam {
 		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Project Description",
@@ -176,7 +178,7 @@ definition {
 	@priority = 5
 	test AdminCanNotAddDuplicateTeams {
 		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Project Description",
@@ -204,7 +206,7 @@ definition {
 	@priority = 4
 	test AdminCanViewWarningMessage {
 		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Project Description",

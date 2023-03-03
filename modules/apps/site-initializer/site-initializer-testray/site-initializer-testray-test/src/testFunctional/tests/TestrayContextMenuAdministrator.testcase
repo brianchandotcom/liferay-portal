@@ -8,12 +8,14 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
+	var testSiteName = "Testray 2";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Testray.addTestraySite();
+		Testray.addTestraySite(siteName = ${testSiteName});
 	}
 
 	tearDown {

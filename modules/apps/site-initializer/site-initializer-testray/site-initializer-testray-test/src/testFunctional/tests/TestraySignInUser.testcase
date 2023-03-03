@@ -8,12 +8,14 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
+	var testSiteName = "Testray 2";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Testray.addTestraySite();
+		Testray.addTestraySite(siteName = ${testSiteName});
 
 		Refresh();
 	}
@@ -34,7 +36,7 @@ definition {
 	@priority = 2
 	test CanFieldLabelBeGreen {
 		task ("Go to Testray and exit Testray") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			var portalURL = PropsUtil.get("portal.url");
 
@@ -58,7 +60,7 @@ definition {
 	@priority = 2
 	test CanFieldLabelBeRed {
 		task ("Go to Testray and exit Testray") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			var portalURL = PropsUtil.get("portal.url");
 
@@ -84,7 +86,7 @@ definition {
 	@priority = 5
 	test CanSignIn {
 		task ("Go to Testray and exit Testray") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			var portalURL = PropsUtil.get("portal.url");
 
@@ -110,7 +112,7 @@ definition {
 	@priority = 4
 	test CanSignInAfterPasswordWrong {
 		task ("Go to Testray and exit Testray") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			var portalURL = PropsUtil.get("portal.url");
 

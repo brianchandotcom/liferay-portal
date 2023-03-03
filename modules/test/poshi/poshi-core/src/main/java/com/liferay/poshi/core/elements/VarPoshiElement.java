@@ -120,6 +120,8 @@ public class VarPoshiElement extends PoshiElement {
 	public void parsePoshiScript(String poshiScript)
 		throws PoshiScriptParserException {
 
+		checkSemicolon(poshiScript);
+
 		if (poshiScript.startsWith("static var")) {
 			addAttribute("static", "true");
 
@@ -449,6 +451,11 @@ public class VarPoshiElement extends PoshiElement {
 		return null;
 	}
 
+	@Override
+	protected Pattern getStatementPattern() {
+		return _statementPattern;
+	}
+
 	protected void initValueAttributeName(Element element) {
 		if (element.attribute("from") != null) {
 			valueAttributeName = "from";
@@ -606,8 +613,7 @@ public class VarPoshiElement extends PoshiElement {
 			_VAR_VALUE_OBJECT_REGEX, "|", _VAR_VALUE_VARIABLE_REGEX, ")");
 
 		_statementPattern = Pattern.compile(
-			"^" + VAR_NAME_REGEX + ASSIGNMENT_REGEX + _VAR_VALUE_REGEX +
-				VAR_STATEMENT_END_REGEX,
+			"^" + VAR_NAME_REGEX + ASSIGNMENT_REGEX + _VAR_VALUE_REGEX,
 			Pattern.DOTALL);
 
 		_varValueMathExpressionPattern = Pattern.compile(

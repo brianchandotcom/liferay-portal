@@ -117,6 +117,7 @@ html {
 .popover-filter {
 	&.popover {
 		width: 300px !important;
+		z-index: 999;
 	}
 
 	.popover-body {
@@ -161,4 +162,9 @@ html {
 	.inline-scroller {
 		overflow-x: hidden;
 	}
+}
+
+.filter-button {
+	height: fit-content !important;
+	width: fit-content !important;
 }

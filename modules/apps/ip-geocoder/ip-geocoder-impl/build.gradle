@@ -13,6 +13,7 @@ dependencies {
 	compileOnly project(":apps:ip-geocoder:ip-geocoder-api")
 	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-function")
 
 	geolite2 ext: "mmdb", group: "com.liferay", name: "com.maxmind.geolite2.country", version: "2022-09-02"

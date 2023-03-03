@@ -17,6 +17,7 @@ package com.liferay.ip.geocoder.internal;
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
 import com.liferay.ip.geocoder.internal.configuration.IPGeocoderConfiguration;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,8 +42,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -61,21 +60,25 @@ public class IPGeocoderImpl implements IPGeocoder {
 		return new IPInfo(_getCountryCode(ipAddress), ipAddress);
 	}
 
-	@Modified
-	public void modified(Map<String, String> properties) {
-		_databaseReader = null;
-		_properties = properties;
-	}
-
 	@Activate
 	protected void activate(Map<String, String> properties) {
 		_properties = properties;
 	}
 
-	@Deactivate
-	protected void deactivate(Map<String, String> properties) {
-		_databaseReader = null;
-		_properties = null;
+	private DatabaseReader _createDatabaseReader() {
+		try {
+			return new DatabaseReader.Builder(
+				_getFile()
+			).withCache(
+				new CHMCache()
+			).build();
+		}
+		catch (IOException ioException) {
+			_log.error("Unable to activate IP Geocoder", ioException);
+
+			throw new RuntimeException(
+				"Unable to activate IP Geocoder", ioException);
+		}
 	}
 
 	private String _getCountryCode(String ipAddress) {
@@ -88,7 +91,9 @@ public class IPGeocoderImpl implements IPGeocoder {
 				return null;
 			}
 
-			DatabaseReader databaseReader = _getDatabaseReader();
+			DatabaseReader databaseReader =
+				_databaseReaderDCLSingleton.getSingleton(
+					this::_createDatabaseReader);
 
 			CountryResponse countryResponse = databaseReader.country(
 				inetAddress);
@@ -113,38 +118,6 @@ public class IPGeocoderImpl implements IPGeocoder {
 		}
 
 		return null;
-	}
-
-	private DatabaseReader _getDatabaseReader() {
-		DatabaseReader databaseReader = _databaseReader;
-
-		if (databaseReader != null) {
-			return databaseReader;
-		}
-
-		synchronized (this) {
-			if (databaseReader != null) {
-				return databaseReader;
-			}
-
-			try {
-				databaseReader = new DatabaseReader.Builder(
-					_getFile()
-				).withCache(
-					new CHMCache()
-				).build();
-
-				_databaseReader = databaseReader;
-
-				return databaseReader;
-			}
-			catch (IOException ioException) {
-				_log.error("Unable to activate IP Geocoder", ioException);
-
-				throw new RuntimeException(
-					"Unable to activate IP Geocoder", ioException);
-			}
-		}
 	}
 
 	private File _getFile() throws IOException {
@@ -197,7 +170,8 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 	private static final Log _log = LogFactoryUtil.getLog(IPGeocoderImpl.class);
 
-	private volatile DatabaseReader _databaseReader;
+	private final DCLSingleton<DatabaseReader> _databaseReaderDCLSingleton =
+		new DCLSingleton<>();
 
 	@Reference
 	private Portal _portal;

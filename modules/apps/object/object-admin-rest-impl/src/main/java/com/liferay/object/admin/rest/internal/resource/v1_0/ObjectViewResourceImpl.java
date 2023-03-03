@@ -18,6 +18,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewFilterColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewSortColumn;
+import com.liferay.object.admin.rest.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.admin.rest.resource.v1_0.util.NameMapUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -297,9 +298,7 @@ public class ObjectViewResourceImpl
 	@Reference
 	private ObjectViewColumnPersistence _objectViewColumnPersistence;
 
-	@Reference(
-		target = "(component.name=com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectViewDTOConverter)"
-	)
+	@Reference(target = DTOConverterConstants.OBJECT_VIEW_DTO_CONVERTER)
 	private DTOConverter<com.liferay.object.model.ObjectView, ObjectView>
 		_objectViewDTOConverter;
 

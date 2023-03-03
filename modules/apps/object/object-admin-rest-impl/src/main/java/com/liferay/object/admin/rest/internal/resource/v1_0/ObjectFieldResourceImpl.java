@@ -18,6 +18,7 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectFieldEntityModel;
@@ -365,9 +366,7 @@ public class ObjectFieldResourceImpl
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@Reference(
-		target = "(component.name=com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectFieldDTOConverter)"
-	)
+	@Reference(target = DTOConverterConstants.OBJECT_FIELD_DTO_CONVERTER)
 	private DTOConverter<com.liferay.object.model.ObjectField, ObjectField>
 		_objectFieldDTOConverter;
 

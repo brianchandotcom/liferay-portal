@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectRelationshipEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.model.ObjectField;
@@ -305,9 +306,7 @@ public class ObjectRelationshipResourceImpl
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
 
-	@Reference(
-		target = "(component.name=com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectRelationshipDTOConverter)"
-	)
+	@Reference(target = DTOConverterConstants.OBJECT_RELATIONSHIP_DTO_CONVERTER)
 	private DTOConverter
 		<com.liferay.object.model.ObjectRelationship, ObjectRelationship>
 			_objectRelationshipDTOConverter;

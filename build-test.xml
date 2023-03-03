@@ -6881,7 +6881,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 											<docker-execute container="${operating.system.host}">
 												chmod +x ${test.app.server.bin.dir}/${app.server.start.executable}
 
-												${test.app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line} | head -c ${app.server.max.log.size.in.mb}M
+												${test.app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line} | head -c ${app.server.max.log.size}M
 											</docker-execute>
 										</sequential>
 									</then>

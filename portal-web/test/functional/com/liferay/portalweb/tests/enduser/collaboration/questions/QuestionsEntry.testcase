@@ -866,7 +866,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoTab(questionTabField = "My Subscriptions");
+		Questions.gotoTab(questionTabField = "Subscriptions");
 
 		Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
 
@@ -878,7 +878,7 @@ definition {
 
 		Questions.subscribeQuestion();
 
-		Questions.gotoTab(questionTabField = "My Subscriptions");
+		Questions.gotoTab(questionTabField = "Subscriptions");
 
 		Questions.viewSubscribedQuestion(subscribedQuestion = "Title AddQuestion");
 
@@ -886,7 +886,7 @@ definition {
 
 		Questions.gotoTab(questionTabField = "Questions");
 
-		Questions.gotoTab(questionTabField = "My Subscriptions");
+		Questions.gotoTab(questionTabField = "Subscriptions");
 
 		Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
 
@@ -954,7 +954,7 @@ definition {
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
 
-		Questions.gotoTab(questionTabField = "My Subscriptions");
+		Questions.gotoTab(questionTabField = "Subscriptions");
 
 		Questions.viewSubscribedTopic(noSubscribedTopic = "true");
 
@@ -962,7 +962,7 @@ definition {
 
 		Questions.subscribeTopic();
 
-		Questions.gotoTab(questionTabField = "My Subscriptions");
+		Questions.gotoTab(questionTabField = "Subscriptions");
 
 		Questions.viewSubscribedTopic(subscribedTopic = "Questions Test Category");
 

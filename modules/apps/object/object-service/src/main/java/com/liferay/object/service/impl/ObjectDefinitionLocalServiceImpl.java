@@ -850,7 +850,8 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setCompanyId(user.getCompanyId());
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
-		objectDefinition.setActive(!modifiable && system);
+		objectDefinition.setActive(
+			_isUnmodifiableSystemObject(modifiable, system));
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setClassName(
 			_getClassName(
@@ -926,7 +927,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition = _updateTitleObjectFieldId(
 			objectDefinition, titleObjectFieldName);
 
-		if (!modifiable && system) {
+		if (_isUnmodifiableSystemObject(modifiable, system)) {
 			_createTable(
 				objectDefinition.getExtensionDBTableName(), objectDefinition);
 		}
@@ -970,7 +971,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 		String dbColumnName = ObjectEntryTable.INSTANCE.objectEntryId.getName();
 
-		if (!objectDefinition.isModifiable() && system) {
+		if (_isUnmodifiableSystemObject(
+				objectDefinition.isModifiable(), system)) {
+
 			dbColumnName = pkObjectFieldName;
 		}
 
@@ -1029,7 +1032,7 @@ public class ObjectDefinitionLocalServiceImpl
 		long objectDefinitionId, String className, boolean modifiable,
 		boolean system) {
 
-		if (!modifiable && system) {
+		if (_isUnmodifiableSystemObject(modifiable, system)) {
 			return className;
 		}
 
@@ -1044,7 +1047,7 @@ public class ObjectDefinitionLocalServiceImpl
 			return dbTableName;
 		}
 
-		if (!modifiable && system) {
+		if (_isUnmodifiableSystemObject(modifiable, system)) {
 			return name;
 		}
 
@@ -1134,6 +1137,16 @@ public class ObjectDefinitionLocalServiceImpl
 						StringPool.DASH, locale, StringPool.DASH, 0));
 			}
 		}
+	}
+
+	private boolean _isUnmodifiableSystemObject(
+		boolean modifiable, boolean system) {
+
+		if (!modifiable && system) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private ObjectDefinition _publishObjectDefinition(

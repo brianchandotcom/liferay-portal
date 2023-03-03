@@ -205,7 +205,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.viewPG(dmDocumentTitle = "liferay2");
+		DMDocument.viewPG(
+			dmDocumentFileName = "liferay2.xls",
+			dmDocumentTitle = "liferay");
 	}
 
 	@description = "This ensures that a user can move a Google Doc to a folder in a content page."

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.security.permission.resource;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -30,7 +31,8 @@ public abstract class BasePortletResourcePermissionWrapper
 		throws PrincipalException {
 
 		PortletResourcePermission portletResourcePermission =
-			_getPortletResourcePermission();
+			_portletResourcePermissionDCLSingleton.getSingleton(
+				this::doGetPortletResourcePermission);
 
 		portletResourcePermission.check(permissionChecker, group, actionId);
 	}
@@ -41,7 +43,8 @@ public abstract class BasePortletResourcePermissionWrapper
 		throws PrincipalException {
 
 		PortletResourcePermission portletResourcePermission =
-			_getPortletResourcePermission();
+			_portletResourcePermissionDCLSingleton.getSingleton(
+				this::doGetPortletResourcePermission);
 
 		portletResourcePermission.check(permissionChecker, groupId, actionId);
 	}
@@ -51,7 +54,8 @@ public abstract class BasePortletResourcePermissionWrapper
 		PermissionChecker permissionChecker, Group group, String actionId) {
 
 		PortletResourcePermission portletResourcePermission =
-			_getPortletResourcePermission();
+			_portletResourcePermissionDCLSingleton.getSingleton(
+				this::doGetPortletResourcePermission);
 
 		return portletResourcePermission.contains(
 			permissionChecker, group, actionId);
@@ -62,7 +66,8 @@ public abstract class BasePortletResourcePermissionWrapper
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		PortletResourcePermission portletResourcePermission =
-			_getPortletResourcePermission();
+			_portletResourcePermissionDCLSingleton.getSingleton(
+				this::doGetPortletResourcePermission);
 
 		return portletResourcePermission.contains(
 			permissionChecker, groupId, actionId);
@@ -71,7 +76,8 @@ public abstract class BasePortletResourcePermissionWrapper
 	@Override
 	public String getResourceName() {
 		PortletResourcePermission portletResourcePermission =
-			_getPortletResourcePermission();
+			_portletResourcePermissionDCLSingleton.getSingleton(
+				this::doGetPortletResourcePermission);
 
 		return portletResourcePermission.getResourceName();
 	}
@@ -79,27 +85,7 @@ public abstract class BasePortletResourcePermissionWrapper
 	protected abstract PortletResourcePermission
 		doGetPortletResourcePermission();
 
-	private PortletResourcePermission _getPortletResourcePermission() {
-		PortletResourcePermission portletResourcePermission =
-			_portletResourcePermission;
-
-		if (portletResourcePermission != null) {
-			return portletResourcePermission;
-		}
-
-		synchronized (this) {
-			if (_portletResourcePermission != null) {
-				return _portletResourcePermission;
-			}
-
-			portletResourcePermission = doGetPortletResourcePermission();
-
-			_portletResourcePermission = portletResourcePermission;
-		}
-
-		return portletResourcePermission;
-	}
-
-	private volatile PortletResourcePermission _portletResourcePermission;
+	private final DCLSingleton<PortletResourcePermission>
+		_portletResourcePermissionDCLSingleton = new DCLSingleton<>();
 
 }

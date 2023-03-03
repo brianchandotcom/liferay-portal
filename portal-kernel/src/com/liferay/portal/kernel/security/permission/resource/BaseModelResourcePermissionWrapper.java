@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.security.permission.resource;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -31,7 +32,8 @@ public abstract class BaseModelResourcePermissionWrapper<T extends ClassedModel>
 		throws PortalException {
 
 		ModelResourcePermission<T> modelResourcePermission =
-			_getModelResourcePermission();
+			_modelResourcePermissionDCLSingleton.getSingleton(
+				this::doGetModelResourcePermission);
 
 		modelResourcePermission.check(permissionChecker, primaryKey, actionId);
 	}
@@ -42,7 +44,8 @@ public abstract class BaseModelResourcePermissionWrapper<T extends ClassedModel>
 		throws PortalException {
 
 		ModelResourcePermission<T> modelResourcePermission =
-			_getModelResourcePermission();
+			_modelResourcePermissionDCLSingleton.getSingleton(
+				this::doGetModelResourcePermission);
 
 		modelResourcePermission.check(permissionChecker, model, actionId);
 	}
@@ -54,7 +57,8 @@ public abstract class BaseModelResourcePermissionWrapper<T extends ClassedModel>
 		throws PortalException {
 
 		ModelResourcePermission<T> modelResourcePermission =
-			_getModelResourcePermission();
+			_modelResourcePermissionDCLSingleton.getSingleton(
+				this::doGetModelResourcePermission);
 
 		return modelResourcePermission.contains(
 			permissionChecker, primaryKey, actionId);
@@ -66,7 +70,8 @@ public abstract class BaseModelResourcePermissionWrapper<T extends ClassedModel>
 		throws PortalException {
 
 		ModelResourcePermission<T> modelResourcePermission =
-			_getModelResourcePermission();
+			_modelResourcePermissionDCLSingleton.getSingleton(
+				this::doGetModelResourcePermission);
 
 		return modelResourcePermission.contains(
 			permissionChecker, model, actionId);
@@ -75,7 +80,8 @@ public abstract class BaseModelResourcePermissionWrapper<T extends ClassedModel>
 	@Override
 	public String getModelName() {
 		ModelResourcePermission<T> modelResourcePermission =
-			_getModelResourcePermission();
+			_modelResourcePermissionDCLSingleton.getSingleton(
+				this::doGetModelResourcePermission);
 
 		return modelResourcePermission.getModelName();
 	}
@@ -83,7 +89,8 @@ public abstract class BaseModelResourcePermissionWrapper<T extends ClassedModel>
 	@Override
 	public PortletResourcePermission getPortletResourcePermission() {
 		ModelResourcePermission<T> modelResourcePermission =
-			_getModelResourcePermission();
+			_modelResourcePermissionDCLSingleton.getSingleton(
+				this::doGetModelResourcePermission);
 
 		return modelResourcePermission.getPortletResourcePermission();
 	}
@@ -91,27 +98,7 @@ public abstract class BaseModelResourcePermissionWrapper<T extends ClassedModel>
 	protected abstract ModelResourcePermission<T>
 		doGetModelResourcePermission();
 
-	private ModelResourcePermission<T> _getModelResourcePermission() {
-		ModelResourcePermission<T> modelResourcePermission =
-			_modelResourcePermission;
-
-		if (modelResourcePermission != null) {
-			return modelResourcePermission;
-		}
-
-		synchronized (this) {
-			if (_modelResourcePermission != null) {
-				return _modelResourcePermission;
-			}
-
-			modelResourcePermission = doGetModelResourcePermission();
-
-			_modelResourcePermission = modelResourcePermission;
-		}
-
-		return modelResourcePermission;
-	}
-
-	private volatile ModelResourcePermission<T> _modelResourcePermission;
+	private final DCLSingleton<ModelResourcePermission<T>>
+		_modelResourcePermissionDCLSingleton = new DCLSingleton<>();
 
 }

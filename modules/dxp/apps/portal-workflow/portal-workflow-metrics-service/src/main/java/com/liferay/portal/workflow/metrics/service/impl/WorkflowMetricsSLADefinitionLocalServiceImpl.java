@@ -61,11 +61,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -442,15 +442,15 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			return Collections.emptySet();
 		}
 
-		return Stream.of(
-			nodeKeys
-		).map(
-			nodeKey -> StringUtil.split(nodeKey, CharPool.COLON)
-		).map(
-			nodeKeyParts -> nodeKeyParts[0]
-		).collect(
-			Collectors.toSet()
-		);
+		Set<String> nodeIds = new HashSet<>();
+
+		for (String nodeKey : nodeKeys) {
+			String[] ids = StringUtil.split(nodeKey, CharPool.COLON);
+
+			nodeIds.add(ids[0]);
+		}
+
+		return nodeIds;
 	}
 
 	private long _getNodeIdsCount(

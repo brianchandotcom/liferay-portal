@@ -233,7 +233,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 				reportContent.indexOf(fasterUpgradeProcessName));
 
 		String upgradeProcesses = _getLogContextKey(
-			"upgrade.report.longest.running.upgrade.processes");
+			"upgrade.report.longest.upgrade.processes");
 
 		Assert.assertTrue(
 			upgradeProcesses.indexOf(slowerUpgradeProcessName) <
@@ -264,7 +264,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		_assertLogContextContains("upgrade.report.warnings", "2:Warning");
 		_assertLogContextContains(
-			"upgrade.report.longest.running.upgrade.processes",
+			"upgrade.report.longest.upgrade.processes",
 			"com.liferay.portal.UpgradeTest:20401 ms");
 	}
 
@@ -296,7 +296,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 				bundleSymbolicName, " from 0.0.1 to ", currentSchemaVersion));
 
 		_assertLogContextContains(
-			"upgrade.report.release.osgi.info",
+			"upgrade.report.osgi.status",
 			StringBundler.concat(
 				"There are upgrade processes available for ",
 				bundleSymbolicName, " from 0.0.1 to ", currentSchemaVersion));
@@ -308,15 +308,14 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		_appender.stop();
 
-		_assertReport("Upgrade errors: Nothing registered");
-		_assertReport(
-			"Upgrade longest running upgrade processes: Nothing registered");
-		_assertReport("Upgrade warnings: Nothing registered");
+		_assertReport("Errors: Nothing registered");
+		_assertReport("Longest upgrade processes: Nothing registered");
+		_assertReport("Warnings: Nothing registered");
 
 		_assertLogContextContains("upgrade.report.warnings", "[]");
 		_assertLogContextContains("upgrade.report.errors", "[]");
 		_assertLogContextContains(
-			"upgrade.report.longest.running.upgrade.processes", "[]");
+			"upgrade.report.longest.upgrade.processes", "[]");
 	}
 
 	@Test
@@ -327,26 +326,25 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		_assertReport(
 			StringBundler.concat(
-				"Upgrade properties liferay home: ", PropsValues.LIFERAY_HOME,
-				StringPool.NEW_LINE, "Upgrade properties locales: ",
+				"Property liferay.home: ", PropsValues.LIFERAY_HOME,
+				StringPool.NEW_LINE, "Property locales: ",
 				Arrays.toString(PropsValues.LOCALES), StringPool.NEW_LINE,
-				"Upgrade properties locales enabled: ",
+				"Property locales.enabled: ",
 				Arrays.toString(PropsValues.LOCALES_ENABLED),
-				StringPool.NEW_LINE, "Upgrade properties ",
-				StringUtil.replace(PropsKeys.DL_STORE_IMPL, '.', ' '),
+				StringPool.NEW_LINE, "Property ", PropsKeys.DL_STORE_IMPL,
 				StringPool.COLON, StringPool.SPACE, PropsValues.DL_STORE_IMPL,
 				StringPool.NEW_LINE));
 
 		_assertLogContextContains(
-			"upgrade.report.properties.liferay.home", PropsValues.LIFERAY_HOME);
+			"upgrade.report.property.liferay.home", PropsValues.LIFERAY_HOME);
 		_assertLogContextContains(
-			"upgrade.report.properties.locales",
+			"upgrade.report.property.locales",
 			Arrays.toString(PropsValues.LOCALES));
 		_assertLogContextContains(
-			"upgrade.report.properties.locales.enabled",
+			"upgrade.report.property.locales.enabled",
 			Arrays.toString(PropsValues.LOCALES_ENABLED));
 		_assertLogContextContains(
-			"upgrade.report.properties." + PropsKeys.DL_STORE_IMPL,
+			"upgrade.report.property." + PropsKeys.DL_STORE_IMPL,
 			PropsValues.DL_STORE_IMPL);
 	}
 
@@ -380,15 +378,13 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		_assertReport(
 			StringBundler.concat(
-				"Upgrade portal initial build number: 7100\n",
-				"Upgrade portal initial schema version: 1.0.0\n",
-				"Upgrade portal final build number: ",
-				ReleaseInfo.getBuildNumber(), StringPool.NEW_LINE,
-				"Upgrade portal final schema version: ",
+				"Portal initial build number: 7100\n",
+				"Portal initial schema version: 1.0.0\n",
+				"Portal final build number: ", ReleaseInfo.getBuildNumber(),
+				StringPool.NEW_LINE, "Portal final schema version: ",
 				latestSchemaVersion.toString(), StringPool.NEW_LINE,
-				"Upgrade portal expected build number: ",
-				ReleaseInfo.getBuildNumber(), StringPool.NEW_LINE,
-				"Upgrade portal expected schema version: ",
+				"Portal expected build number: ", ReleaseInfo.getBuildNumber(),
+				StringPool.NEW_LINE, "Portal expected schema version: ",
 				latestSchemaVersion.toString(), StringPool.NEW_LINE));
 
 		_assertLogContextContains(

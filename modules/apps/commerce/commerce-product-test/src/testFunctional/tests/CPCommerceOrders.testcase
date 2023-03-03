@@ -2336,6 +2336,124 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10750. User can see if a SKU is on order and can search for Order Id or Account Name the orders under Order Tab in Inventory"
+	@priority = 5
+	test CanViewOrderSKUAndSearchForSpecificOrderIdAndAccountName {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with money order enable and two accounts are created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.editPaymentMethod(
+				active = "true",
+				paymentMethod = "Money Order");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+		}
+
+		task ("And 2 orders are created") {
+			var orderIds = ListUtil.newList();
+
+			for (var quantity : list "1,1") {
+				var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
+					accountEntryName = "Account Name",
+					orderItems = "MIN55861:${quantity}",
+					orderStatus = 2,
+					paymentMethod = "money-order",
+					paymentStatus = 2);
+
+				ListUtil.add(${orderIds}, ${orderId});
+			}
+
+			var firstOrderId = ListUtil.get(${orderIds}, 0);
+			var secondOrderId = ListUtil.get(${orderIds}, 1);
+
+			for (var list : list "0,1") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+				CommerceCheckout.gotoCheckoutViaMiniCart();
+
+				CommerceCheckout.initializersCheckout(
+					newAddressAddress = "Test Address",
+					newAddressCity = "Test City",
+					newAddressCountry = "United States",
+					newAddressName = "Address Name",
+					newAddressZipCode = "Test Zip Code",
+					productName = "U-Joint",
+					productQuantity = 1,
+					productUnitPrice = 24,
+					shippingMethod = "Standard");
+			}
+		}
+
+		task ("And the Order SKU is searched on the inventory page") {
+			CommerceInventory.openInventoryAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "MIN55861");
+
+			AssertElementPresent(
+				key_orderQuantity = 2,
+				key_reference = "MIN55861",
+				locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
+		}
+
+		task ("And the order ID is searched on the On Order tab") {
+			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+			Navigator.gotoNavTab(navTab = "On Order");
+
+			CommerceNavigator.searchEntry(entryName = ${firstOrderId});
+		}
+
+		task ("And the correct order ID is shown") {
+			AssertElementPresent(
+				key_orderQuantity = 1,
+				key_reference = ${firstOrderId},
+				locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
+
+			AssertElementNotPresent(
+				key_orderQuantity = 2,
+				key_reference = ${secondOrderId},
+				locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
+		}
+
+		task ("When the account is searched on the On Order tab") {
+			CommerceNavigator.searchEntry(entryName = "Account Name");
+		}
+
+		task ("Then the correct account is shown") {
+			AssertElementPresent(
+				key_orderQuantity = 1,
+				key_reference = "Account Name",
+				locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
+
+			AssertElementNotPresent(
+				key_orderQuantity = 0,
+				key_reference = "Commerce Account",
+				locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-5843. Deactivate Currency"
 	@priority = 3
 	test DeactivateCurrency {
@@ -3267,75 +3385,6 @@ definition {
 
 			var index = ${index} + 1;
 		}
-	}
-
-	@description = "This is a test for COMMERCE-5845. As a product specialist I want to see if a SKU is on order"
-	@priority = 5
-	test ViewOrderSKU {
-		property portal.acceptance = "true";
-
-		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
-
-		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
-			accountName = "Commerce Account",
-			emailAddress = "buyertester@test.com",
-			role = "Buyer",
-			userFirstName = "Buyer",
-			userLastName = "User",
-			userScreenName = "buyeruser");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-
-		FrontStore.addInitializerProductToCart(
-			productName = "U-Joint",
-			productQuantity = 1);
-
-		Click(locator1 = "Button#ANGLE_DOWN");
-
-		WaitForElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
-
-		var orderId = selenium.getText("CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
-
-		CommerceCheckout.gotoCheckout();
-
-		CommerceCheckout.initializersCheckout(
-			newAddressAddress = "Test Address",
-			newAddressCity = "Test City",
-			newAddressCountry = "United States",
-			newAddressName = "Address Name",
-			newAddressZipCode = "Test Zip Code",
-			productName = "U-Joint",
-			productQuantity = 1,
-			productUnitPrice = 24,
-			shippingMethod = "Standard");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Inventory Management",
-			portlet = "Inventory");
-
-		CommerceNavigator.searchEntry(entryName = "MIN55861");
-
-		AssertElementPresent(
-			key_orderQuantity = 1,
-			key_reference = "MIN55861",
-			locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
-
-		CommerceNavigator.gotoEntry(entryName = "MIN55861");
-
-		Navigator.gotoNavTab(navTab = "On Order");
-
-		AssertElementPresent(
-			key_orderQuantity = 1,
-			key_reference = ${orderId},
-			locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
 	}
 
 }

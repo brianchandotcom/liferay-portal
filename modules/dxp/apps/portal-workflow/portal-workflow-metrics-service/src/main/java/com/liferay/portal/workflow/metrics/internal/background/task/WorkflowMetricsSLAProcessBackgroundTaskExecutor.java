@@ -419,8 +419,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-		long instanceId = 0L;
-
 		List<Long> instanceIds = TransformUtil.transform(
 			searchHits.getSearchHits(),
 			searchHit -> {
@@ -440,14 +438,11 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			});
 
 		if (instanceIds.isEmpty()) {
-			instanceId = startInstanceId;
-		}
-		else {
-			instanceId = Collections.max(instanceIds);
+			return startInstanceId;
 		}
 
 		if (searchHits.getTotalHits() >= 10000) {
-			return instanceId;
+			return Collections.max(instanceIds);
 		}
 
 		return startInstanceId;

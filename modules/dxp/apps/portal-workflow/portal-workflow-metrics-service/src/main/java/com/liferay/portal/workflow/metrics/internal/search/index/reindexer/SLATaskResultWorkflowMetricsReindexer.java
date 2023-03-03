@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.internal.search.index.reindexer;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -33,9 +34,7 @@ import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetric
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,37 +93,29 @@ public class SLATaskResultWorkflowMetricsReindexer
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		Stream.of(
-			searchHits.getSearchHits()
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).map(
-			document ->
-				_slaTaskResultWorkflowMetricsIndexer.creatDefaultDocument(
-					companyId, document.getLong("nodeId"),
-					document.getLong("processId"), document.getString("name"))
-		).map(
-			document -> new IndexDocumentRequest(
-				_slaTaskResultWorkflowMetricsIndexer.getIndexName(companyId),
-				document) {
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			Document document = searchHit.getDocument();
 
-				{
-					setType(
-						_slaTaskResultWorkflowMetricsIndexer.getIndexType());
-				}
-			}
-		).forEach(
-			indexDocumentRequest -> {
-				bulkDocumentRequest.addBulkableDocumentRequest(
-					indexDocumentRequest);
+			bulkDocumentRequest.addBulkableDocumentRequest(
+				new IndexDocumentRequest(
+					_slaTaskResultWorkflowMetricsIndexer.getIndexName(
+						companyId),
+					_slaTaskResultWorkflowMetricsIndexer.creatDefaultDocument(
+						companyId, document.getLong("nodeId"),
+						document.getLong("processId"),
+						document.getString("name"))) {
 
-				_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
-					atomicCounter.incrementAndGet(), searchHits.getTotalHits(),
-					"sla-task-result");
-			}
-		);
+					{
+						setType(
+							_slaTaskResultWorkflowMetricsIndexer.
+								getIndexType());
+					}
+				});
+
+			_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
+				atomicCounter.incrementAndGet(), searchHits.getTotalHits(),
+				"sla-task-result");
+		}
 
 		if (ListUtil.isNotEmpty(
 				bulkDocumentRequest.getBulkableDocumentRequests())) {

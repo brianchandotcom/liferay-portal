@@ -303,6 +303,28 @@ public abstract class PoshiElement
 		detach();
 	}
 
+	protected void checkSemicolon(String poshiScript)
+		throws PoshiScriptParserException {
+
+		Pattern statementPattern = getStatementPattern();
+
+		Matcher matcher = statementPattern.matcher(poshiScript);
+
+		matcher.find();
+
+		for (int i = matcher.end(); i < poshiScript.length(); i++) {
+			char c = poshiScript.charAt(i);
+
+			if (Character.isWhitespace(c)) {
+				continue;
+			}
+
+			if (c != ';') {
+				throw new PoshiScriptParserException("Missing semicolon", this);
+			}
+		}
+	}
+
 	protected String createPoshiScriptBlock(List<PoshiNode<?, ?>> poshiNodes) {
 		StringBuilder sb = new StringBuilder();
 
@@ -726,6 +748,10 @@ public abstract class PoshiElement
 
 	protected String getSingleQuotedContent(String poshiScript) {
 		return RegexUtil.getGroup(poshiScript, ".*?\'(.*)\'", 1);
+	}
+
+	protected Pattern getStatementPattern() {
+		return null;
 	}
 
 	protected String getValueFromAssignment(String assignment) {

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
@@ -48,8 +49,10 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import javax.portlet.Portlet;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -70,10 +73,18 @@ public class MentionsPortletTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
 		User adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());
 
 		_group = GroupTestUtil.addGroup(
@@ -164,11 +175,13 @@ public class MentionsPortletTest {
 	private User _addUser(String screenName) throws Exception {
 		User adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());
 
-		return UserTestUtil.addUser(
+		_user = UserTestUtil.addUser(
 			_company.getCompanyId(), adminUser.getUserId(), screenName,
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new long[] {_group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
+
+		return _user;
 	}
 
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
@@ -228,10 +241,14 @@ public class MentionsPortletTest {
 		return themeDisplay;
 	}
 
-	@DeleteAfterTestRun
-	private Company _company;
+	private static Company _company;
 
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
 	private Layout _layout;
 
 	@Inject
@@ -239,5 +256,8 @@ public class MentionsPortletTest {
 
 	@Inject(filter = "javax.portlet.name=" + MentionsPortletKeys.MENTIONS)
 	private Portlet _portlet;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

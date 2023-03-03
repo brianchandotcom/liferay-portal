@@ -65,8 +65,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -79,8 +81,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -97,6 +101,22 @@ public class ObjectFieldLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-146755", "true"
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-146755", "false"
+			).build());
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -213,6 +233,36 @@ public class ObjectFieldLocalServiceTest {
 			).name(
 				"a" + RandomTestUtil.randomString()
 			).state(
+				true
+			).build());
+
+		_testAddCustomObjectField(
+			"Object definition must be localized",
+			new ObjectFieldBuilder(
+			).businessType(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).localized(
+				true
+			).build());
+
+		_testAddCustomObjectField(
+			StringBundler.concat(
+				"Only ", ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+				StringPool.COMMA, ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+				" and ", ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				" business types support localization"),
+			new ObjectFieldBuilder(
+			).businessType(
+				ObjectFieldConstants.BUSINESS_TYPE_DATE
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).localized(
 				true
 			).build());
 	}

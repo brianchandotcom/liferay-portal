@@ -434,9 +434,7 @@ definition {
 		task ("And Then the blog article body is updated") {
 			var response = BlogPostingAPI.getBlogPostings();
 
-			var blogPostingHeadline = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
-				fieldName = "headline",
-				response = ${response});
+			var blogPostingHeadline = JSONUtil.getWithJSONPath(${response}, "$.items.[0].headline");
 
 			TestUtils.assertEquals(
 				actual = ${blogPostingHeadline},

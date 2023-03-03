@@ -152,6 +152,14 @@ definition {
 			value1 = ${templateName});
 	}
 
+	macro openFolderInWebContentAdmin {
+		var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
+		Navigator.openWithAppendToBaseURL(
+			baseURL = ${baseURL},
+			urlAppend = "group/asset-library-${assetLibraryId}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}");
+	}
+
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
 	macro openToAddBasicArticle {

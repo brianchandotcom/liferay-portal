@@ -56,6 +56,7 @@ export default withRouter(
 					})}
 				>
 					<ClayIcon
+						aria-label={Liferay.Language.get('reply')}
 						className="c-mt-3 c-mt-md-0 questions-reply-icon text-secondary"
 						symbol="reply"
 					/>
@@ -104,6 +105,7 @@ export default withRouter(
 						<>
 							<div className="font-weight-bold text-secondary">
 								<ClayButton
+									aria-label={Liferay.Language.get('delete')}
 									className="btn-sm c-mr-2 c-px-2 c-py-1"
 									displayType="secondary"
 									onClick={() => {
@@ -128,6 +130,7 @@ export default withRouter(
 								)}
 
 								<ClayButton
+									aria-label={Liferay.Language.get('edit')}
 									className="btn-sm c-px-2 c-py-1"
 									displayType="secondary"
 								>

@@ -178,7 +178,10 @@ const QuestionsFilter = ({onApplyFilter, urlParams}) => {
 			menuElementAttrs={{className: 'management-toolbar-filter-dropdown'}}
 			menuHeight="auto"
 			trigger={
-				<ClayButton displayType="secondary">
+				<ClayButton
+					aria-label={Liferay.Language.get('filter-and-order')}
+					displayType="secondary"
+				>
 					{Liferay.Language.get('filter-and-order')}
 
 					<ClayIcon className="ml-2" symbol="caret-bottom" />
@@ -297,6 +300,7 @@ const QuestionsFilter = ({onApplyFilter, urlParams}) => {
 				</ClayDropDown.ItemList>
 
 				<ClayButton
+					aria-label={Liferay.Language.get('apply')}
 					block
 					className="btn btn-primary c-mt-4 c-mt-sm-0"
 					onClick={onApply}

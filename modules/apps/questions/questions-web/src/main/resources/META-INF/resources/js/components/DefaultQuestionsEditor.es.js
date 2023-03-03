@@ -52,7 +52,12 @@ export default forwardRef(
 							{label}
 
 							<span className="c-ml-2 reference-mark">
-								<ClayIcon symbol="asterisk" />
+								<ClayIcon
+									aria-label={Liferay.Language.get(
+										'asterisk'
+									)}
+									symbol="asterisk"
+								/>
 							</span>
 						</label>
 
@@ -60,7 +65,12 @@ export default forwardRef(
 							{question && question.locked && (
 								<div className="question-locked-text">
 									<span>
-										<ClayIcon symbol="lock" />
+										<ClayIcon
+											aria-label={Liferay.Language.get(
+												'lock'
+											)}
+											symbol="lock"
+										/>
 									</span>
 
 									{Liferay.Language.get(

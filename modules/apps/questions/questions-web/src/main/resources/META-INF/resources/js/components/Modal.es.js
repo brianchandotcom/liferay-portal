@@ -44,12 +44,17 @@ export default function Modal({
 
 					<ClayModal.Footer
 						first={
-							<ClayButton displayType="secondary" onClick={close}>
+							<ClayButton
+								aria-label={textSecondaryButton}
+								displayType="secondary"
+								onClick={close}
+							>
 								{textSecondaryButton}
 							</ClayButton>
 						}
 						last={
 							<ClayButton
+								aria-label={textPrimaryButton}
 								displayType="primary"
 								onClick={() => {
 									callback();

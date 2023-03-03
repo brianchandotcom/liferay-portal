@@ -24,22 +24,22 @@ export default function Alert({displayType = 'danger', info}) {
 		}
 	}, [info]);
 
+	if (!alert) {
+		return null;
+	}
+
 	return (
-		<>
-			{alert && (
-				<ClayAlert.ToastContainer>
-					<ClayAlert
-						autoClose={5000}
-						displayType={displayType}
-						onClose={() => {
-							setAlert(null);
-						}}
-						title={alert.title || alert.message}
-					>
-						{alert.title && alert.message}
-					</ClayAlert>
-				</ClayAlert.ToastContainer>
-			)}
-		</>
+		<ClayAlert.ToastContainer>
+			<ClayAlert
+				autoClose={5000}
+				displayType={displayType}
+				onClose={() => {
+					setAlert(null);
+				}}
+				title={alert.title || alert.message}
+			>
+				{alert.title && alert.message}
+			</ClayAlert>
+		</ClayAlert.ToastContainer>
 	);
 }

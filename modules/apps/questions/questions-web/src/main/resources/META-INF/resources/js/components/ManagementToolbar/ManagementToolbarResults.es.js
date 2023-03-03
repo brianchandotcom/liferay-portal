@@ -60,6 +60,7 @@ const ManagementToolbarResults = ({
 
 		<ClayResultsBar.Item>
 			<ClayButton
+				aria-label={Liferay.Language.get('clear')}
 				className="component-link tbar-link"
 				displayType="unstyled"
 				onClick={onClear}

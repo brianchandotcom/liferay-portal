@@ -199,11 +199,18 @@ export default withRouter(
 								visible={visible}
 							/>
 							<ClayButton
+								aria-label={Liferay.Language.get('new-topic')}
 								className="breadcrumb-button c-ml-3 c-p-2"
 								displayType="unstyled"
 								onClick={() => setVisible(true)}
 							>
-								<ClayIcon className="c-mr-2" symbol="plus" />
+								<ClayIcon
+									aria-label={Liferay.Language.get(
+										'new-topic'
+									)}
+									className="c-mr-2"
+									symbol="plus"
+								/>
 
 								{Liferay.Language.get('new-topic')}
 							</ClayButton>
@@ -221,7 +228,12 @@ export default withRouter(
 						hasDropdown={!context.showCardsForTopicNavigation}
 						isFirstNode={true}
 						section={breadcrumbNodes[0]}
-						ui={<ClayIcon symbol="home-full" />}
+						ui={
+							<ClayIcon
+								aria-label="Icon Home"
+								symbol="home-full"
+							/>
+						}
 					/>
 					{breadcrumbNodes
 						.filter((section) => section.title)
@@ -246,7 +258,12 @@ export default withRouter(
 						hasDropdown={!context.showCardsForTopicNavigation}
 						isFirstNode={true}
 						section={breadcrumbNodes[0]}
-						ui={<ClayIcon symbol="home-full" />}
+						ui={
+							<ClayIcon
+								aria-label="Icon Home"
+								symbol="home-full"
+							/>
+						}
 					/>
 					<BreadcrumbNode
 						hasDropdown={true}

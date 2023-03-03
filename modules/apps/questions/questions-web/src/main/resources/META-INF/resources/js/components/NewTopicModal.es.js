@@ -149,6 +149,7 @@ export default function NewTopicModal({
 						last={
 							<ClayButton.Group spaced>
 								<ClayButton
+									aria-label={Liferay.Language.get('cancel')}
 									displayType="secondary"
 									onClick={close}
 								>
@@ -156,6 +157,7 @@ export default function NewTopicModal({
 								</ClayButton>
 
 								<ClayButton
+									aria-label={Liferay.Language.get('create')}
 									displayType="primary"
 									onClick={() => {
 										createTopic();

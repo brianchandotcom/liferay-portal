@@ -109,6 +109,7 @@ const QuestionList = ({
 				</PaginatedList>
 
 				<ClayButton
+					aria-label={Liferay.Language.get('ask-question')}
 					className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
 					displayType="primary"
 					onClick={navigateToNewQuestion}
@@ -127,6 +128,7 @@ const QuestionList = ({
 
 	return (
 		<ClayEmptyState
+			aria-label={Liferay.Language.get('the-topic-is-not-found')}
 			className="c-mx-auto c-px-0 col-xl-10"
 			description={lang.sub(
 				Liferay.Language.get(

@@ -46,14 +46,17 @@ export default function BreadcrumbNode({
 					trigger={
 						<span className="c-p-0 questions-breadcrumb-unstyled text-truncate">
 							{isEllipsis ? (
-								<ClayIcon symbol="ellipsis-h" />
+								<ClayIcon
+									aria-label={Liferay.Language.get('options')}
+									symbol="ellipsis-h"
+								/>
 							) : (
 								<span className="breadcrumb-item breadcrumb-text-truncate questions-breadcrumb-item">
 									{ui || section.title}
 								</span>
 							)}
 
-							<ClayIcon symbol="caret-bottom" />
+							<ClayIcon aria-label="Icon" symbol="caret-bottom" />
 						</span>
 					}
 				>

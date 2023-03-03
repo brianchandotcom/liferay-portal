@@ -238,6 +238,15 @@ export default withRouter(
 
 						<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
 							<ClayButton
+								aria-label={
+									context.trustedUser
+										? Liferay.Language.get(
+												'post-your-question'
+										  )
+										: Liferay.Language.get(
+												'submit-for-publication'
+										  )
+								}
 								className="c-mt-4 c-mt-sm-0"
 								disabled={isPostButtonDisable}
 								displayType="primary"

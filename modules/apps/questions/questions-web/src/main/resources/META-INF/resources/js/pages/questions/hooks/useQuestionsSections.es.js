@@ -68,7 +68,7 @@ const useQuestionsSections = ({
 			getSectionBySectionTitle({
 				variables,
 			}).then(({data}) => {
-				if (data.messageBoardSections.items[0]) {
+				if (data.messageBoardSections?.items[0]) {
 					setSection(data.messageBoardSections.items[0]);
 					setSectionQuery(getSectionBySectionTitleQuery);
 					setSectionQueryVariables(variables);

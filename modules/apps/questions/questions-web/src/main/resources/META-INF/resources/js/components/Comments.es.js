@@ -129,6 +129,15 @@ export default withRouter(
 
 							<ClayButton.Group className="c-mt-3" spaced>
 								<ClayButton
+									aria-label={
+										context.trustedUser
+											? Liferay.Language.get(
+													'add-comment'
+											  )
+											: Liferay.Language.get(
+													'submit-for-publication'
+											  )
+									}
 									disabled={isReplyButtonDisable}
 									displayType="primary"
 									onClick={onCreateComment}
@@ -141,6 +150,7 @@ export default withRouter(
 								</ClayButton>
 
 								<ClayButton
+									aria-label={Liferay.Language.get('cancel')}
 									displayType="secondary"
 									onClick={() => showNewCommentChange(false)}
 								>

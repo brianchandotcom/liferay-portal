@@ -102,6 +102,19 @@ export default withRouter(
 
 						<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
 							<ClayButton
+								aria-label={
+									context.trustedUser
+										? isAReplyMessage
+											? Liferay.Language.get(
+													'update-your-comment'
+											  )
+											: Liferay.Language.get(
+													'update-your-answer'
+											  )
+										: Liferay.Language.get(
+												'submit-for-publication'
+										  )
+								}
 								className="c-mt-4 c-mt-sm-0"
 								disabled={isUpdateButtonDisabled}
 								displayType="primary"
@@ -121,6 +134,7 @@ export default withRouter(
 							</ClayButton>
 
 							<ClayButton
+								aria-label={Liferay.Language.get('cancel')}
 								className="c-ml-sm-3"
 								displayType="secondary"
 								onClick={() => history.goBack()}

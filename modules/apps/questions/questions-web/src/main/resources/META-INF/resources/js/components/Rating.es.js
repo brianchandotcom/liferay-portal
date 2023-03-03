@@ -62,7 +62,8 @@ export default function Rating({
 					ratingValue: normalizedValue,
 				},
 			});
-		} else {
+		}
+		else {
 			createVoteMessage({
 				variables: {
 					messageBoardMessageId: entityId,

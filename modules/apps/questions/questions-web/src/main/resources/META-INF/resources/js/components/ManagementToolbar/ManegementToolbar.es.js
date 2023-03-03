@@ -80,6 +80,7 @@ const ManagementToolbar = ({
 
 							<ClayInput.GroupInsetItem after tag="span">
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('close')}
 									className="navbar-breakpoint-d-none"
 									displayType="unstyled"
 									onClick={() => setSearchMobile(false)}
@@ -87,6 +88,7 @@ const ManagementToolbar = ({
 								/>
 
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('search')}
 									displayType="unstyled"
 									symbol="search"
 									type="submit"

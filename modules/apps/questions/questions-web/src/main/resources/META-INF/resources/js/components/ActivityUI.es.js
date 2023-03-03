@@ -106,6 +106,9 @@ const ActivityHeader = ({
 		{!!locked && (
 			<span className="c-ml-2">
 				<ClayIcon
+					aria-label={Liferay.Language.get(
+						'this-question-is-closed-new-answers-and-comments-are-disabled'
+					)}
 					data-tooltip-align="top"
 					symbol="lock"
 					title={Liferay.Language.get(

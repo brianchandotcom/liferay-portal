@@ -51,7 +51,7 @@ export default function ArticleBodyAnwser({
 			)}
 		>
 			<div className="icon-quote-left position-absolute">
-				<ClayIcon symbol="quote-left" />
+				<ClayIcon aria-label="quote left" symbol="quote-left" />
 			</div>
 
 			{encodingFormat !== 'bbcode' && compactMode && (
@@ -78,7 +78,7 @@ export default function ArticleBodyAnwser({
 			)}
 
 			<div className="icon-quote-right position-absolute">
-				<ClayIcon symbol="quote-right" />
+				<ClayIcon aria-label="quote right" symbol="quote-right" />
 			</div>
 		</div>
 	);

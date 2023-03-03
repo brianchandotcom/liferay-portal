@@ -24,7 +24,7 @@ import PaginatedList from '../../components/PaginatedList.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {getUserActivityQuery} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
-import {Question} from '../questions/Question.new.es';
+import {Question} from '../questions/Question.es';
 
 export default withRouter(
 	({
@@ -133,6 +133,9 @@ export default withRouter(
 						data={data && data.messageBoardMessages}
 						emptyState={
 							<ClayEmptyState
+								aria-label={Liferay.Language.get(
+									'there-are-no-results'
+								)}
 								description={Liferay.Language.get(
 									'sorry,-no-results-were-found'
 								)}

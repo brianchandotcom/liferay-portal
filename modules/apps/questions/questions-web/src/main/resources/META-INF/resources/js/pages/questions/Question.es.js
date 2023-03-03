@@ -382,6 +382,7 @@ const Question = ({
 							title={error.title}
 						>
 							<ClayButton
+								aria-label={Liferay.Language.get('home')}
 								displayType="primary"
 								onClick={() => historyPushParser('/questions')}
 							>
@@ -413,6 +414,7 @@ const Question = ({
 							<ClayButton.Group className="ml-0">
 								<ClayButton
 									alert
+									aria-label={Liferay.Language.get('cancel')}
 									onClick={() => setIsModerate(false)}
 								>
 									{Liferay.Language.get('cancel')}

@@ -108,6 +108,7 @@ export default withRouter(({history, isHomePath}) => {
 
 			<div className="d-flex justify-content-end pb-3">
 				<ClayButton
+					aria-label={Liferay.Language.get('all-questions')}
 					className={classNames('font-weight-bold', {
 						'text-white': isHomePath,
 					})}
@@ -234,6 +235,9 @@ export default withRouter(({history, isHomePath}) => {
 									sections.actions &&
 									!!sections.actions.create && (
 										<ClayButton
+											aria-label={Liferay.Language.get(
+												'new-topic'
+											)}
 											displayType="primary"
 											onClick={() =>
 												setTopicModalVisibility(true)

@@ -17,10 +17,21 @@ import React from 'react';
 import Questions from '../../../../src/main/resources/META-INF/resources/js/pages/questions/Questions.es';
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup} from '@testing-library/react';
+import {act, cleanup} from '@testing-library/react';
 import {Route} from 'react-router-dom';
 
 import {renderComponent} from '../../../helpers.es';
+
+const mockKeywords = {
+	data: {
+		keywords: {
+			items: [
+				{id: 1, name: 'React'},
+				{id: 2, name: 'Liferay'},
+			],
+		},
+	},
+};
 
 const mockMessageBoardSections = {
 	data: {
@@ -90,7 +101,7 @@ const mockMessageBoardSections = {
 
 const mockThreads = {
 	data: {
-		messageBoardThreads: {
+		messageBoardSectionMessageBoardThreads: {
 			items: [
 				{
 					aggregateRating: null,
@@ -145,9 +156,18 @@ const mockThreads = {
 };
 
 describe('Questions', () => {
+	beforeEach(() => {
+		jest.useFakeTimers();
+	});
+
 	afterEach(() => {
-		jest.clearAllMocks();
 		cleanup();
+		jest.clearAllTimers();
+		jest.restoreAllMocks();
+	});
+
+	afterAll(() => {
+		jest.useRealTimers();
 	});
 
 	it('questions shows loading animation', async () => {
@@ -155,6 +175,12 @@ describe('Questions', () => {
 		const route = '/questions/portal';
 
 		global.fetch
+			.mockImplementationOnce(() =>
+				Promise.resolve({
+					json: () => Promise.resolve(mockKeywords),
+					ok: true,
+				})
+			)
 			.mockImplementationOnce(() =>
 				Promise.resolve({
 					json: () => Promise.resolve(mockMessageBoardSections),
@@ -185,46 +211,15 @@ describe('Questions', () => {
 		});
 
 		const loading = container.querySelectorAll('.loading-animation');
-
 		expect(loading.length).toBe(1);
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 
 		await findByText('Test Question 1');
 
 		expect(container.querySelector('.loading-animation')).toBe(null);
-	});
-
-	it('questions shows questions created by users', async () => {
-		const path = '/questions/:sectionTitle';
-		const route = '/questions/portal';
-
-		global.fetch
-			.mockImplementationOnce(() =>
-				Promise.resolve({
-					json: () => Promise.resolve(mockMessageBoardSections),
-					ok: true,
-					text: () =>
-						Promise.resolve(
-							JSON.stringify(mockMessageBoardSections)
-						),
-				})
-			)
-			.mockImplementation(() =>
-				Promise.resolve({
-					json: () => Promise.resolve(mockThreads),
-					ok: true,
-					text: () => Promise.resolve(JSON.stringify(mockThreads)),
-				})
-			);
-
-		const {findByText} = renderComponent({
-			contextValue: {
-				questionsVisited: [],
-				sections: [],
-				siteKey: '20020',
-			},
-			route,
-			ui: <Route component={Questions} path={path} />,
-		});
 
 		const questionHeadline1 = await findByText('Test Question 1');
 		const questionBody1 = await findByText('This is the test question 1');

@@ -334,6 +334,10 @@ definition {
 		LexiconCard.viewCardTitle(card = ${templateName});
 
 		if (isSet(templateSmallImage)) {
+			WaitForElementPresent(
+				locator1 = "DDMSelectTemplate#TEMPLATE_CARDS_SMALL_IMAGE_2",
+				value1 = ${templateSmallImage});
+
 			AssertVisible(
 				locator1 = "DDMSelectTemplate#TEMPLATE_CARDS_SMALL_IMAGE_2",
 				value1 = ${templateSmallImage});

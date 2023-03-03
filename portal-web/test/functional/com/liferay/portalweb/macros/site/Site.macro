@@ -202,13 +202,25 @@ definition {
 	}
 
 	macro addSiteTemplateCP {
-		Site.addCP(
-			membershipType = ${membershipType},
-			parentSiteName = ${parentSiteName},
-			siteName = ${siteName},
-			siteTemplateName = ${siteTemplateName},
-			siteType = "Site Template",
-			uncheckPropagation = ${uncheckPropagation});
+		if (isSet(siteTemplateTab)) {
+			Site.addCP(
+				membershipType = ${membershipType},
+				parentSiteName = ${parentSiteName},
+				siteName = ${siteName},
+				siteTemplateName = ${siteTemplateName},
+				siteTemplateTab = ${siteTemplateTab},
+				siteType = "Site Template",
+				uncheckPropagation = ${uncheckPropagation});
+		}
+		else {
+			Site.addCP(
+				membershipType = ${membershipType},
+				parentSiteName = ${parentSiteName},
+				siteName = ${siteName},
+				siteTemplateName = ${siteTemplateName},
+				siteType = "Site Template",
+				uncheckPropagation = ${uncheckPropagation});
+		}
 	}
 
 	macro addVirtualHostsURLCP {

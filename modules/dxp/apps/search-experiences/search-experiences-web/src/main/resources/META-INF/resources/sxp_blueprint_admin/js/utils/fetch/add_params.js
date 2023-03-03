@@ -16,7 +16,11 @@
  * @returns {string} The modified url.
  */
 export default function addParams(url, params) {
-	const fetchURL = new URL(url, Liferay.ThemeDisplay.getPortalURL());
+	const contextURL = url.startsWith(Liferay.ThemeDisplay.getPathContext())
+		? url
+		: `${Liferay.ThemeDisplay.getPathContext()}${url}`;
+
+	const fetchURL = new URL(contextURL, Liferay.ThemeDisplay.getPortalURL());
 
 	Object.keys(params).forEach((key) => {
 		if (params[key] !== null) {

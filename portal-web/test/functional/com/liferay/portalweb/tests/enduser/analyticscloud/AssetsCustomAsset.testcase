@@ -83,11 +83,11 @@ definition {
 				userLoginFullName = "userfn userln");
 		}
 
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				actionType = "View WC",
+		task ("View the Custom Assets page") {
+			ACAssets.interactWithCustomAssets(
 				pageName = "AC Page",
-				siteName = "Site Name");
+				siteName = "Site Name",
+				viewPageNumber = "1,2,3");
 		}
 
 		task ("Close sessions") {
@@ -113,6 +113,16 @@ definition {
 
 		task ("View the new report") {
 			ACCards.viewCards(cardTitle = "Test Custom Asset Report");
+		}
+
+		task ("Check that the report was created and that the chart appears with data") {
+			ACCards.viewCards(cardTitle = "Test Custom Asset Report");
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Test Custom Asset Report");
+
+			ACTimeFilter.setLast24Hours();
+
+			ACCards.viewCardDataIsPresent(cardName = "Test Custom Asset Report");
 		}
 	}
 

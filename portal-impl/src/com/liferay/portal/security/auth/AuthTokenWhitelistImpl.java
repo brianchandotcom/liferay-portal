@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -37,7 +38,10 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 
 	@Override
 	public boolean isOriginCSRFWhitelisted(long companyId, String origin) {
-		for (String whitelistedOrigin : _getOriginCSRFWhitelist()) {
+		for (String whitelistedOrigin :
+				_originCSRFWhitelist.getSingleton(
+					this::_createOriginCSRFWhitelist)) {
+
 			if (origin.startsWith(whitelistedOrigin)) {
 				return true;
 			}
@@ -50,7 +54,8 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 	public boolean isPortletCSRFWhitelisted(
 		HttpServletRequest httpServletRequest, Portlet portlet) {
 
-		Set<String> portletCSRFWhitelist = _getPortletCSRFWhitelist();
+		Set<String> portletCSRFWhitelist = _portletCSRFWhitelist.getSingleton(
+			this::_createPortletCSRFWhitelist);
 
 		return portletCSRFWhitelist.contains(portlet.getRootPortletId());
 	}
@@ -60,7 +65,8 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 		HttpServletRequest httpServletRequest, Portlet portlet) {
 
 		Set<String> portletInvocationWhitelist =
-			_getPortletInvocationWhitelist();
+			_portletInvocationWhitelist.getSingleton(
+				this::_createPortletInvocationWhitelist);
 
 		return portletInvocationWhitelist.contains(portlet.getPortletId());
 	}
@@ -72,7 +78,8 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 		String rootPortletId = PortletIdCodec.decodePortletName(
 			liferayPortletURL.getPortletId());
 
-		Set<String> portletCSRFWhitelist = _getPortletCSRFWhitelist();
+		Set<String> portletCSRFWhitelist = _portletCSRFWhitelist.getSingleton(
+			this::_createPortletCSRFWhitelist);
 
 		return portletCSRFWhitelist.contains(rootPortletId);
 	}
@@ -82,7 +89,8 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 		LiferayPortletURL liferayPortletURL) {
 
 		Set<String> portletInvocationWhitelist =
-			_getPortletInvocationWhitelist();
+			_portletInvocationWhitelist.getSingleton(
+				this::_createPortletInvocationWhitelist);
 
 		return portletInvocationWhitelist.contains(
 			liferayPortletURL.getPortletId());
@@ -100,91 +108,49 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 			DigesterUtil.digest(PropsValues.AUTH_TOKEN_SHARED_SECRET));
 	}
 
-	private Set<String> _getOriginCSRFWhitelist() {
-		Set<String> originCSRFWhitelist = _originCSRFWhitelist;
+	private Set<String> _createOriginCSRFWhitelist() {
+		Set<String> originCSRFWhitelist = Collections.newSetFromMap(
+			new ConcurrentHashMap<>());
 
-		if (originCSRFWhitelist != null) {
-			return originCSRFWhitelist;
-		}
+		registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS);
 
-		synchronized (this) {
-			if (_originCSRFWhitelist == null) {
-				originCSRFWhitelist = Collections.newSetFromMap(
-					new ConcurrentHashMap<>());
-
-				registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS);
-
-				trackWhitelistServices(
-					PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS, originCSRFWhitelist);
-
-				_originCSRFWhitelist = originCSRFWhitelist;
-			}
-			else {
-				originCSRFWhitelist = _originCSRFWhitelist;
-			}
-		}
+		trackWhitelistServices(
+			PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS, originCSRFWhitelist);
 
 		return originCSRFWhitelist;
 	}
 
-	private Set<String> _getPortletCSRFWhitelist() {
-		Set<String> portletCSRFWhitelist = _portletCSRFWhitelist;
+	private Set<String> _createPortletCSRFWhitelist() {
+		Set<String> portletCSRFWhitelist = Collections.newSetFromMap(
+			new ConcurrentHashMap<>());
 
-		if (portletCSRFWhitelist != null) {
-			return portletCSRFWhitelist;
-		}
+		registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS);
 
-		synchronized (this) {
-			if (_portletCSRFWhitelist == null) {
-				portletCSRFWhitelist = Collections.newSetFromMap(
-					new ConcurrentHashMap<>());
-
-				registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS);
-
-				trackWhitelistServices(
-					PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS, portletCSRFWhitelist);
-
-				_portletCSRFWhitelist = portletCSRFWhitelist;
-			}
-			else {
-				portletCSRFWhitelist = _portletCSRFWhitelist;
-			}
-		}
+		trackWhitelistServices(
+			PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS, portletCSRFWhitelist);
 
 		return portletCSRFWhitelist;
 	}
 
-	private Set<String> _getPortletInvocationWhitelist() {
-		Set<String> portletInvocationWhitelist = _portletInvocationWhitelist;
+	private Set<String> _createPortletInvocationWhitelist() {
+		Set<String> portletInvocationWhitelist = Collections.newSetFromMap(
+			new ConcurrentHashMap<>());
 
-		if (portletInvocationWhitelist != null) {
-			return portletInvocationWhitelist;
-		}
+		registerPortalProperty(
+			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
 
-		synchronized (this) {
-			if (_portletInvocationWhitelist == null) {
-				portletInvocationWhitelist = Collections.newSetFromMap(
-					new ConcurrentHashMap<>());
-
-				registerPortalProperty(
-					PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
-
-				trackWhitelistServices(
-					PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,
-					portletInvocationWhitelist);
-
-				_portletInvocationWhitelist = portletInvocationWhitelist;
-			}
-			else {
-				portletInvocationWhitelist = _portletInvocationWhitelist;
-			}
-		}
+		trackWhitelistServices(
+			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,
+			portletInvocationWhitelist);
 
 		return portletInvocationWhitelist;
 	}
 
-	private volatile Set<String> _originCSRFWhitelist;
-	private volatile Set<String> _portletCSRFWhitelist;
-	private volatile Set<String> _portletInvocationWhitelist;
+	private final DCLSingleton<Set<String>> _originCSRFWhitelist =
+		new DCLSingleton<>();
+	private final DCLSingleton<Set<String>> _portletCSRFWhitelist =
+		new DCLSingleton<>();
+	private final DCLSingleton<Set<String>> _portletInvocationWhitelist =
+		new DCLSingleton<>();
 
 }

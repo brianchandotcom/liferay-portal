@@ -70,6 +70,8 @@ public class CollectionLayoutStructureItemMapper
 					{
 						collectionConfig = _getCollectionConfig(
 							collectionStyledLayoutStructureItem);
+						collectionViewports = _getCollectionViewports(
+							collectionStyledLayoutStructureItem);
 						displayAllItems =
 							collectionStyledLayoutStructureItem.
 								isDisplayAllItems();
@@ -78,12 +80,16 @@ public class CollectionLayoutStructureItemMapper
 								isDisplayAllPages();
 						emptyCollectionConfig = _getEmptyCollectionConfig(
 							collectionStyledLayoutStructureItem);
+						fragmentViewports = getFragmentViewPorts(
+							collectionStyledLayoutStructureItem.
+								getItemConfigJSONObject());
 						layout = _toLayout(collectionStyledLayoutStructureItem);
 						listItemStyle =
 							collectionStyledLayoutStructureItem.
 								getListItemStyle();
 						listStyle =
 							collectionStyledLayoutStructureItem.getListStyle();
+						name = collectionStyledLayoutStructureItem.getName();
 						numberOfColumns =
 							collectionStyledLayoutStructureItem.
 								getNumberOfColumns();
@@ -105,15 +111,6 @@ public class CollectionLayoutStructureItemMapper
 						templateKey =
 							collectionStyledLayoutStructureItem.
 								getTemplateKey();
-
-						setCollectionViewports(
-							_getCollectionViewports(
-								collectionStyledLayoutStructureItem));
-						setFragmentViewports(
-							() -> getFragmentViewPorts(
-								collectionStyledLayoutStructureItem.
-									getItemConfigJSONObject()));
-						setName(collectionStyledLayoutStructureItem::getName);
 					}
 				};
 				type = Type.COLLECTION;
@@ -234,8 +231,8 @@ public class CollectionLayoutStructureItemMapper
 
 		return new EmptyCollectionConfig() {
 			{
-				setDisplayMessage(emptyCollectionOptions::isDisplayMessage);
-				setMessage_i18n(emptyCollectionOptions::getMessage);
+				displayMessage = emptyCollectionOptions.isDisplayMessage();
+				message_i18n = emptyCollectionOptions.getMessage();
 			}
 		};
 	}

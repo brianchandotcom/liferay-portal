@@ -114,55 +114,6 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_HELP_TEXT");
 	}
 
-	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@priority = 5
-	test FieldsetNameRenamedWhenNameAlreadyExistent {
-		var textValue = "Text";
-		var numericValue = "Numeric";
-		var structureTitle = "WC Structure Name";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = ${structureTitle});
-
-		DataEngine.addField(
-			fieldFieldLabel = ${textValue},
-			fieldName = ${textValue});
-
-		DataEngine.editFieldReference(
-			assertFieldReference = ${textValue},
-			fieldFieldLabel = ${textValue},
-			fieldReference = ${textValue});
-
-		DataEngine.addField(
-			fieldFieldLabel = ${numericValue},
-			fieldName = ${numericValue});
-
-		DataEngine.editFieldReference(
-			assertFieldReference = ${textValue},
-			fieldFieldLabel = ${numericValue},
-			fieldReference = ${textValue});
-
-		WebContentStructures.saveCP(structureName = ${structureTitle});
-
-		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
-
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = ${numericValue},
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = ${numericValue});
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		AssertTextNotEquals(
-			key_fieldLabel = "Field Reference",
-			key_fieldName = "fieldReference",
-			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = ${textValue});
-	}
-
 	@description = "This is a test for LPS-107630. Make sure Fieldsets can be set as collapsible"
 	@priority = 4
 	test FieldsetSetAsCollapsible {

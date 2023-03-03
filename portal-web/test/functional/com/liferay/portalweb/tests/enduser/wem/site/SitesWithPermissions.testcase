@@ -79,6 +79,7 @@ definition {
 			Site.addCP(
 				siteName = "Site Name",
 				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Site Template");
 		}
 

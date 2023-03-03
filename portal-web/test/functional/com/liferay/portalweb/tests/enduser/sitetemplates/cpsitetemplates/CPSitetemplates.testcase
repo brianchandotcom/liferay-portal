@@ -47,7 +47,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 	}
 
@@ -66,6 +67,7 @@ definition {
 			Site.addCP(
 				siteName = "Site Template Site Name",
 				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Site Template");
 
 			Navigator.openSiteURL(siteName = "Site Template Site Name");
@@ -131,6 +133,7 @@ definition {
 			Site.addCP(
 				siteName = "Site Template Site Name",
 				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Site Template");
 		}
 
@@ -162,7 +165,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
@@ -250,6 +254,7 @@ definition {
 			Site.addCP(
 				siteName = "Site Template Site Name",
 				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Site Template");
 		}
 
@@ -298,7 +303,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("When: User adds a new page to the site") {
@@ -375,6 +381,7 @@ definition {
 			Site.addCP(
 				siteName = "Site Name",
 				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Site Template");
 
 			var homePageModificationDate1 = SiteTemplates.getPageModificationDate(
@@ -488,6 +495,7 @@ definition {
 			Site.addCP(
 				siteName = "Site Template Site Name",
 				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Site Template");
 
 			SiteTemplates.addSitePageViaSiteTemplateCP(
@@ -545,6 +553,7 @@ definition {
 			Site.addCP(
 				siteName = "Site Template Site Name",
 				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Site Template");
 		}
 
@@ -585,6 +594,7 @@ definition {
 			Site.addCP(
 				siteName = "Site Template Site Name",
 				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Site Template");
 		}
 
@@ -737,7 +747,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("When: User tries to delete the Site template") {
@@ -775,7 +786,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("When: User export the site templates") {
@@ -876,7 +888,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("When: User disables the site template") {
@@ -976,6 +989,7 @@ definition {
 			Site.addCP(
 				siteName = "Site Template Site Name",
 				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Site Template");
 		}
 
@@ -1071,7 +1085,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("When: User changes the position of the portlet to the first column on the new site") {
@@ -1136,6 +1151,7 @@ definition {
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
 				siteTemplateName = '''<script>alert(123);</script>''',
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Site Template",
 				uncheckPropagation = "true");
 		}
@@ -1174,7 +1190,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("And: Disables propagation of the template") {
@@ -1261,7 +1278,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("Then: The javascript will be inherited from the site template") {

@@ -129,7 +129,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("And: Is not able to delete the child page on the Site which is connected to the Site template") {
@@ -208,7 +209,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("Then: The previously created site pages are visible both on the site and on the site template") {
@@ -232,7 +234,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("When: User navigate to the Permissions of the created site") {
@@ -320,7 +323,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("And: Remove the VIEW permission of Guest role on the created portlet on the site's page") {
@@ -607,6 +611,7 @@ definition {
 
 			Site.addCP(
 				siteName = "Site Name",
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Template");
 		}
 
@@ -716,7 +721,8 @@ definition {
 
 			Site.addCP(
 				siteName = "New Site",
-				siteTemplateName = "New Site Template");
+				siteTemplateName = "New Site Template",
+				siteTemplateTab = "Custom Site Templates");
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -746,7 +752,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site A",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 
 			Navigator.gotoSitePage(
 				pageName = "Home",
@@ -927,7 +934,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("Then: Navigation menus are inherited from the Site Template") {
@@ -989,7 +997,8 @@ definition {
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
-				siteTemplateName = "Site Template Name");
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 		}
 
 		task ("Then: The portlet inherit the configuration from the Site template") {

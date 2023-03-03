@@ -133,6 +133,7 @@ definition {
 				siteName = "Test Site Name",
 				siteTemplateActive = "Yes",
 				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
 				siteType = "Site Template",
 				uncheckPropagation = "true");
 		}

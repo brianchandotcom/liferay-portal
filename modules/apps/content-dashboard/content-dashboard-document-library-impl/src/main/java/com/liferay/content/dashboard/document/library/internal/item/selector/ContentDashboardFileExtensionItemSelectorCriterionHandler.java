@@ -14,7 +14,7 @@
 
 package com.liferay.content.dashboard.document.library.internal.item.selector;
 
-import com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterio.ContentDashboardFileExtensionItemSelectorCriterion;
+import com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterion.ContentDashboardFileExtensionItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 

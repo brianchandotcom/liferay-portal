@@ -14,7 +14,7 @@
 
 package com.liferay.content.dashboard.document.library.internal.item.filter;
 
-import com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterio.ContentDashboardFileExtensionItemSelectorCriterion;
+import com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterion.ContentDashboardFileExtensionItemSelectorCriterion;
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;

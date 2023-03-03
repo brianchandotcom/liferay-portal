@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterio;
+package com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 

@@ -16,7 +16,7 @@ package com.liferay.content.dashboard.document.library.internal.item.selector;
 
 import com.liferay.content.dashboard.document.library.internal.item.display.context.ContentDashboardFileExtensionItemSelectorViewDisplayContext;
 import com.liferay.content.dashboard.document.library.internal.item.provider.FileExtensionGroupsProvider;
-import com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterio.ContentDashboardFileExtensionItemSelectorCriterion;
+import com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterion.ContentDashboardFileExtensionItemSelectorCriterion;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.item.selector.ItemSelectorReturnType;

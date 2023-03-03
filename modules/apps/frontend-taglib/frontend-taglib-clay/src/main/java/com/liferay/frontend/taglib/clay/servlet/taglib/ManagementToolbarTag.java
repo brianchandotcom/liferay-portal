@@ -762,7 +762,8 @@ public class ManagementToolbarTag extends BaseContainerTag {
 				jspWriter.write(
 					LanguageUtil.format(
 						resourceBundle,
-						"clear-selection.-there-are-currently-x-of-x-x-selected",
+						"clear-selection.-there-are-currently-x-of-x-x-" +
+							"selected",
 						new Object[] {
 							selectedItems, itemsTotal, localizedItemsType
 						}));

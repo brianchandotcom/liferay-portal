@@ -96,12 +96,11 @@ public class NotificationQueueEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteNotificationQueueEntries(
-			long companyId, java.util.Date sentDate)
+	public void deleteNotificationQueueEntries(java.util.Date sentDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_notificationQueueEntryLocalService.deleteNotificationQueueEntries(
-			companyId, sentDate);
+			sentDate);
 	}
 
 	/**
@@ -285,6 +284,14 @@ public class NotificationQueueEntryLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.notification.model.NotificationQueueEntry>
+		getNotificationEntries(String type, int status) {
+
+		return _notificationQueueEntryLocalService.getNotificationEntries(
+			type, status);
+	}
+
 	/**
 	 * Returns a range of all the notification queue entries.
 	 *
@@ -351,14 +358,6 @@ public class NotificationQueueEntryLocalServiceWrapper
 
 		return _notificationQueueEntryLocalService.getPersistedModel(
 			primaryKeyObj);
-	}
-
-	@Override
-	public java.util.List<com.liferay.notification.model.NotificationQueueEntry>
-		getUnsentNotificationEntries(long companyId, String type) {
-
-		return _notificationQueueEntryLocalService.getUnsentNotificationEntries(
-			companyId, type);
 	}
 
 	@Override

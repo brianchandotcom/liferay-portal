@@ -99,7 +99,7 @@ public interface NotificationQueueEntryLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteNotificationQueueEntries(long companyId, Date sentDate)
+	public void deleteNotificationQueueEntries(Date sentDate)
 		throws PortalException;
 
 	/**
@@ -224,6 +224,10 @@ public interface NotificationQueueEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NotificationQueueEntry> getNotificationEntries(
+		String type, int status);
+
 	/**
 	 * Returns a range of all the notification queue entries.
 	 *
@@ -273,10 +277,6 @@ public interface NotificationQueueEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<NotificationQueueEntry> getUnsentNotificationEntries(
-		long companyId, String type);
 
 	public NotificationQueueEntry resendNotificationQueueEntry(
 			long notificationQueueEntryId)

@@ -41,13 +41,7 @@ public class NotificationQueueConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-155659") &&
-			(scope == ExtendedObjectClassDefinition.Scope.COMPANY)) {
-
-			return false;
-		}
-
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-173894");
 	}
 
 }

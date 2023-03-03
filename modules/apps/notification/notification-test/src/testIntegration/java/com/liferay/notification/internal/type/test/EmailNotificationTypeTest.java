@@ -77,8 +77,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			NotificationConstants.TYPE_EMAIL);
 
 		List<NotificationQueueEntry> notificationQueueEntries =
-			notificationQueueEntryLocalService.getUnsentNotificationEntries(
-				user.getCompanyId(), NotificationConstants.TYPE_EMAIL);
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
 
 		Assert.assertEquals(
 			notificationQueueEntries.toString(), 1,
@@ -89,7 +90,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		Assert.assertEquals("Body termValue", notificationQueueEntry.getBody());
 		Assert.assertEquals(
-			NotificationQueueEntryConstants.STATUS_UNSENT,
+			NotificationQueueEntryConstants.STATUS_SENT,
 			notificationQueueEntry.getStatus());
 		Assert.assertEquals(
 			"Subject termValue", notificationQueueEntry.getSubject());

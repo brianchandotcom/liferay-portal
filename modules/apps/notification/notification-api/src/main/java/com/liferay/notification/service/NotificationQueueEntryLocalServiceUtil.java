@@ -91,11 +91,10 @@ public class NotificationQueueEntryLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteNotificationQueueEntries(
-			long companyId, java.util.Date sentDate)
+	public static void deleteNotificationQueueEntries(java.util.Date sentDate)
 		throws PortalException {
 
-		getService().deleteNotificationQueueEntries(companyId, sentDate);
+		getService().deleteNotificationQueueEntries(sentDate);
 	}
 
 	/**
@@ -251,6 +250,12 @@ public class NotificationQueueEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static List<NotificationQueueEntry> getNotificationEntries(
+		String type, int status) {
+
+		return getService().getNotificationEntries(type, status);
+	}
+
 	/**
 	 * Returns a range of all the notification queue entries.
 	 *
@@ -307,12 +312,6 @@ public class NotificationQueueEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static List<NotificationQueueEntry> getUnsentNotificationEntries(
-		long companyId, String type) {
-
-		return getService().getUnsentNotificationEntries(companyId, type);
 	}
 
 	public static NotificationQueueEntry resendNotificationQueueEntry(

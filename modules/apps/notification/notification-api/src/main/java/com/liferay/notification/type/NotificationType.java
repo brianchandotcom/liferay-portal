@@ -47,11 +47,17 @@ public interface NotificationType {
 
 	public String getTypeLanguageKey();
 
+	public default void resendNotification(
+			NotificationQueueEntry notificationQueueEntry)
+		throws PortalException {
+	}
+
+	public default void resendNotifications(int status, String type)
+		throws PortalException {
+	}
+
 	public void sendNotification(NotificationContext notificationContext)
 		throws PortalException;
-
-	public default void sendUnsentNotifications(long companyId) {
-	}
 
 	public Object[] toRecipients(
 		List<NotificationRecipientSetting> notificationRecipientSettings);

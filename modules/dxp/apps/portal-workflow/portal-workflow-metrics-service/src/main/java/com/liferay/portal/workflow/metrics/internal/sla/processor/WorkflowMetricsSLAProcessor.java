@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.sla.processor;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -37,8 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Stack;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -472,17 +471,11 @@ public class WorkflowMetricsSLAProcessor {
 			return Collections.emptyList();
 		}
 
-		return Stream.of(
-			documents
-		).flatMap(
-			List::stream
-		).map(
+		return TransformUtil.transform(
+			documents,
 			document -> _createWorkflowMetricsSLATaskResult(
 				document, instanceCompleted, instanceCompletionLocalDateTime,
-				nowLocalDateTime, workflowMetricsSLAInstanceResult)
-		).collect(
-			Collectors.toList()
-		);
+				nowLocalDateTime, workflowMetricsSLAInstanceResult));
 	}
 
 	private LocalDateTime _getMaxLocalDateTime(

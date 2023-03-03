@@ -16,16 +16,18 @@
 
 <%@ include file="/sidebar_panel/init.jsp" %>
 
-<div class="info-panel sidenav-menu-slider">
+<div aria-label="<%= Validator.isNotNull(title) ? title : StringPool.BLANK %>" class="info-panel sidenav-menu-slider" role="tabpanel" tabindex="-1">
 	<div class="sidebar sidebar-light sidenav-menu">
 		<c:if test="<%= closeButton %>">
 			<clay:button
+				aria-label='<%= Validator.isNotNull(title) ? LanguageUtil.format(request, "close-x", title, false) : StringPool.BLANK %>'
 				borderless="<%= true %>"
-				cssClass="d-flex d-sm-none sidenav-close"
+				cssClass="d-flex sidenav-close"
 				displayType="secondary"
 				monospaced="<%= true %>"
 				outline="<%= true %>"
 				small="<%= true %>"
+				title='<%= LanguageUtil.get(request, "close") %>'
 			>
 				<span class="c-inner" tabindex="-1">
 					<span class="inline-item">

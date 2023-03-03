@@ -44,6 +44,7 @@ public class SidebarPanelTag extends IncludeTag {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		setNamespacedAttribute(getRequest(), "closeButton", _closeButton);
+		setNamespacedAttribute(getRequest(), "title", _title);
 
 		super.doStartTag();
 
@@ -60,6 +61,10 @@ public class SidebarPanelTag extends IncludeTag {
 
 	public String getSearchContainerId() {
 		return _searchContainerId;
+	}
+
+	public String getTitle() {
+		return _title;
 	}
 
 	public void setCloseButton(boolean closeButton) {
@@ -81,6 +86,10 @@ public class SidebarPanelTag extends IncludeTag {
 		_searchContainerId = searchContainerId;
 	}
 
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -88,6 +97,7 @@ public class SidebarPanelTag extends IncludeTag {
 		_closeButton = true;
 		_resourceURL = null;
 		_searchContainerId = null;
+		_title = null;
 	}
 
 	@Override
@@ -110,5 +120,6 @@ public class SidebarPanelTag extends IncludeTag {
 	private boolean _closeButton = true;
 	private String _resourceURL;
 	private String _searchContainerId;
+	private String _title;
 
 }

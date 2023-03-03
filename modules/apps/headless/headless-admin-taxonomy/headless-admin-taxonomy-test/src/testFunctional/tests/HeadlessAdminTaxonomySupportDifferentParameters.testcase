@@ -27,19 +27,17 @@ definition {
 	test CanReceiveABodyWithNameOnlyInResponse {
 		property portal.acceptance = "true";
 
-		task ("Given a AssetLibrary with keyword created") {
+		task ("Given an AssetLibrary with keyword created") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
 
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			TaxonomyVocabularyAPI.createAssetLibraryWithKeyWords(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				name = "Liferay");
 		}
 
 		task ("When with curl I request getAssetLibraryKeywordsPage with fields=name") {
 			var response = TaxonomyVocabularyAPI.getAssetLibraryKeywordsWithDifferentParameters(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				parameter = "fields",
 				parameterValue = "name");
 
@@ -92,10 +90,8 @@ definition {
 		task ("Given a AssetLibrary with keyword created") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
 
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			var responseFromCreate = TaxonomyVocabularyAPI.createAssetLibraryWithKeyWords(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				name = "liferay");
 		}
 
@@ -124,17 +120,15 @@ definition {
 		task ("Given a Taxonomy Vocabulary with assetLibrary") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
 
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				name = "Vocabulary Name");
 		}
 
 		task ("When with curl I request getAssetLibraryTaxonomyVocabulariesPage with restrictFields equal all fields except name field") {
 			var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyWithDifferentParameters(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				parameter = "restrictFields",
 				parameterValue = "actions,assetLibraryKey,assetTypes,availableLanguages,creator,dateCreated,dateModified,description,externalReferenceCode,id,numberOfTaxonomyCategories");
 
@@ -155,10 +149,8 @@ definition {
 		task ("Given a AssetLibrary with keyword created") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
 
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			var responseFromCreate = TaxonomyVocabularyAPI.createAssetLibraryWithKeyWords(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				name = "liferay");
 		}
 

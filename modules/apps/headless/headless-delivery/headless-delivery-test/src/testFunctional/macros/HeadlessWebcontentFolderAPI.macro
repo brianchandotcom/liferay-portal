@@ -50,7 +50,9 @@ definition {
 			var externalReferenceCode = "";
 		}
 
-		if (isSet(assetLibraryId)) {
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
 			var api = "asset-libraries/${assetLibraryId}/structured-content-folders";
 		}
 		else {
@@ -100,7 +102,9 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(assetLibraryId)) {
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
 			var api = "asset-libraries/${assetLibraryId}/structured-content-folders/by-external-reference-code/${externalReferenceCode}";
 		}
 		else {
@@ -121,7 +125,9 @@ definition {
 	macro _filterStructuredContentFolders {
 		Variables.assertDefined(parameterList = ${filterValue});
 
-		if (isSet(assetLibraryId)) {
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
 			var api = "asset-libraries/${assetLibraryId}/structured-content-folders";
 		}
 		else {
@@ -174,9 +180,13 @@ definition {
 	}
 
 	macro _getStructuredContentFoldersByErcInAssetLibrary {
-		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
+		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(assetLibraryId))) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+		}
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/structured-content-folders/by-external-reference-code/${externalReferenceCode} \
@@ -191,6 +201,8 @@ definition {
 
 	macro _getStructuredContentFoldersWithDifferentParameters {
 		var portalURL = JSONCompany.getPortalURL();
+		var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
 		var api = "asset-libraries/${assetLibraryId}/structured-content-folders";
 
 		if (isSet(parameter)) {
@@ -227,7 +239,9 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(assetLibraryId)) {
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
 			var api = "asset-libraries/${assetLibraryId}/structured-content-folders/by-external-reference-code/${externalReferenceCode}";
 		}
 		else {
@@ -264,10 +278,10 @@ definition {
 	}
 
 	macro assertProperTotalCountOfStructuredContentFoldersInAssetLibrary {
-		Variables.assertDefined(parameterList = "${assetLibraryId},${expectedStructuredContentFolderTotalCount}");
+		Variables.assertDefined(parameterList = "${depotName},${expectedStructuredContentFolderTotalCount}");
 
 		var response = HeadlessWebcontentFolderAPI._filterStructuredContentFolders(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			filterValue = ${filterValue});
 
 		var actualTotalCount = JSONUtil.getWithJSONPath(${response}, "$..['totalCount']");
@@ -341,10 +355,10 @@ definition {
 	}
 
 	macro createStructuredContentFolderInAssetLibrary {
-		Variables.assertDefined(parameterList = "${assetLibraryId},${name}");
+		Variables.assertDefined(parameterList = "${depotName},${name}");
 
 		var response = HeadlessWebcontentFolderAPI._addWebcontentFolder(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			description = ${description},
 			externalReferenceCode = ${externalReferenceCode},
 			name = ${name},
@@ -394,10 +408,10 @@ definition {
 	}
 
 	macro deleteStructuredContentFolderByErcInAssetLibrary {
-		Variables.assertDefined(parameterList = ${assetLibraryId});
+		Variables.assertDefined(parameterList = ${depotName});
 
 		HeadlessWebcontentFolderAPI._deleteStructuredContentFolderByErc(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode});
 	}
 
@@ -432,20 +446,21 @@ definition {
 	}
 
 	macro getStructuredContentFoldersByErcInAssetLibrary {
-		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
+		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var response = HeadlessWebcontentFolderAPI._getStructuredContentFoldersByErcInAssetLibrary(
 			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode});
 
 		return ${response};
 	}
 
 	macro getStructuredContentFoldersWithDifferentParameters {
-		Variables.assertDefined(parameterList = ${assetLibraryId});
+		Variables.assertDefined(parameterList = ${depotName});
 
 		var response = HeadlessWebcontentFolderAPI._getStructuredContentFoldersWithDifferentParameters(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			parameter = ${parameter},
 			parameterValue = ${parameterValue});
 
@@ -463,10 +478,10 @@ definition {
 	}
 
 	macro updateStructureContentFolderByErcInAssetLibrary {
-		Variables.assertDefined(parameterList = ${assetLibraryId});
+		Variables.assertDefined(parameterList = ${depotName});
 
 		var response = HeadlessWebcontentFolderAPI._updateStructureContentFolderByErc(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode},
 			externalReferenceCodeInBody = ${externalReferenceCodeInBody},
 			name = ${name});

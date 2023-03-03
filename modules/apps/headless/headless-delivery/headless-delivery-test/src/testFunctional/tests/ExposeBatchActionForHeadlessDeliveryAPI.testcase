@@ -25,17 +25,13 @@ definition {
 		}
 
 		task ("When with get request and assetLibraryId to retrieve document folders") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(
-				depotName = "Test Depot Name",
-				noSelenium = "true");
-
-			var response = DocumentFolderAPI.getDocumentFolders(assetLibraryId = ${assetLibraryId});
+			var response = DocumentFolderAPI.getDocumentFolders(depotName = "Test Depot Name");
 		}
 
 		task ("Then I can see details of updateBatch, createBatch and deleteBatch inside of action block in response") {
 			DocumentFolderAPI.assertProperBatchInActionBlock(
-				assetLibraryId = ${assetLibraryId},
 				batchActions = "createBatch,updateBatch,deleteBatch",
+				depotName = "Test Depot Name",
 				responseToParse = ${response});
 		}
 	}

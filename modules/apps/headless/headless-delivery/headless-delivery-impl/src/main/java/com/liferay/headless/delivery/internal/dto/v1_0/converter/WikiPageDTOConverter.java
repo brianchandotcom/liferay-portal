@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.wiki.model.WikiPage",
-	service = {DTOConverter.class, WikiPageDTOConverter.class}
+	service = DTOConverter.class
 )
 public class WikiPageDTOConverter
 	implements DTOConverter<com.liferay.wiki.model.WikiPage, WikiPage> {

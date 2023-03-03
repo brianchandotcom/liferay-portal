@@ -21,7 +21,6 @@ import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.converter.WikiPageDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.WikiPageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
@@ -48,6 +47,7 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -471,8 +471,11 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 	@Reference
 	private WikiNodeService _wikiNodeService;
 
-	@Reference
-	private WikiPageDTOConverter _wikiPageDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.delivery.internal.dto.v1_0.converter.WikiPageDTOConverter)"
+	)
+	private DTOConverter<com.liferay.wiki.model.WikiPage, WikiPage>
+		_wikiPageDTOConverter;
 
 	@Reference
 	private WikiPageLocalService _wikiPageLocalService;

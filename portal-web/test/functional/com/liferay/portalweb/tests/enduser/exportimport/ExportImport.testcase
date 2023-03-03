@@ -1236,6 +1236,79 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-77950. Verify is possible export/import pages linked circular reference."
+	@priority = 3
+	test ExportImportPagesLinkCircular {
+		property test.name.skip.portal.instance = "ExportImport#ExportImportPagesLinkCircular";
+
+		task ("Given: User creates site pages that link to each other/circular references") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Parent Page",
+				type = "content");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Child Page",
+				parentLayoutName = "Site Parent Page",
+				type = "content");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Child Child Page",
+				parentLayoutName = "Site Child Page",
+				type = "content");
+
+			for (var name : list "Parent,Child,Child Child") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Site ${name} Page",
+					siteName = "Site Name");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("And: Add Button widget on Site Child Child Page link to Site Child Page, link Site Child Page to Site Child Child Page the same") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Site Child Page",
+				siteName = "Site Name");
+
+			PageEditor.addWidget(portletName = "Button");
+
+			PageEditorEditableLink.mapEditableFieldToPage(
+				fragmentName = "Button",
+				id = "link",
+				pageName = "Site Child Child Page");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Site Child Child Page",
+				siteName = "Site Name");
+
+			PageEditor.addWidget(portletName = "Button");
+
+			PageEditorEditableLink.mapEditableFieldToPage(
+				fragmentName = "Button",
+				id = "link",
+				pageName = "Site Child Page");
+
+			PageEditor.publish();
+		}
+
+		task ("When: User exports the page tree with circular references") {
+			LAR.exportSiteCP(siteScopeName = "Site Name");
+		}
+
+		task ("Then: Export will be successful") {
+			AssertTextEquals(
+				locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
+				value1 = "Successful");
+		}
+	}
+
 	@description = "Verify is possible export/import a Portlet."
 	@priority = 5
 	test ExportImportPortlet {

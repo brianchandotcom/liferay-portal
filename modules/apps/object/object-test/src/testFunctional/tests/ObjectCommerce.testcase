@@ -126,7 +126,7 @@ definition {
 
 			CreateObject.selectTitleField(fieldLabel = "Name");
 
-			PortletEntry.save();
+			CreateObject.saveObject();
 		}
 
 		task ("Create a Commerce Product") {
@@ -154,6 +154,10 @@ definition {
 			PortletEntry.save();
 
 			CreateObject.assertEntrySelectedOnRelationshipField(entry = "Simple T-Shirt");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject289");
+
+			ObjectPortlet.viewEntry(entry = "Simple T-Shirt");
 		}
 	}
 

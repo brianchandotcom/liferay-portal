@@ -13,17 +13,18 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
+import classNames from 'classnames';
 import {useManualQuery} from 'graphql-hooks';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import ActivityQuestionRow from '../../components/ActivityQuestionRow.es';
 import PaginatedList from '../../components/PaginatedList.es';
-import QuestionRow from '../../components/QuestionRow.es';
-import UserIcon from '../../components/UserIcon.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {getUserActivityQuery} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
+import {Question} from '../questions/Question.new.es';
 
 export default withRouter(
 	({
@@ -31,24 +32,17 @@ export default withRouter(
 		location,
 		match: {
 			params: {creatorId},
+			url,
 		},
 	}) => {
-		const context = useContext(AppContext);
-		const queryParams = useQueryParams(location);
-		const siteKey = context.siteKey;
+		const [currentQuestion, setCurrentQuestion] = useState(null);
 		const [loading, setLoading] = useState(true);
 		const [page, setPage] = useState(null);
 		const [pageSize, setPageSize] = useState(null);
 		const [totalCount, setTotalCount] = useState(0);
-		const [userInfo, setUserInfo] = useState({
-			id: creatorId,
-			image: null,
-			name: decodeURI(
-				JSON.parse(`"${Liferay.ThemeDisplay.getUserName()}"`)
-			),
-			postsNumber: 0,
-			rank: context.defaultRank,
-		});
+		const context = useContext(AppContext);
+		const queryParams = useQueryParams(location);
+		const siteKey = context.siteKey;
 
 		useEffect(() => {
 			const pageNumber = queryParams.get('page') || 1;
@@ -66,6 +60,7 @@ export default withRouter(
 		const [fetchUserActivity, {data}] = useManualQuery(
 			getUserActivityQuery,
 			{
+				useCache: false,
 				variables: {
 					filter: `creatorId eq ${creatorId}`,
 					page,
@@ -82,22 +77,9 @@ export default withRouter(
 
 			setLoading(true);
 
-			fetchUserActivity().then(({data, loading}) => {
-				if (data.messageBoardMessages.items.length) {
-					const {
-						creator,
-						creatorStatistics,
-					} = data.messageBoardMessages.items[0];
-					setUserInfo({
-						id: creator.id,
-						image: creator.image,
-						name: creator.name,
-						postsNumber: creatorStatistics.postsNumber,
-						rank: creatorStatistics.rank,
-					});
-				}
+			fetchUserActivity().then(({data}) => {
 				setTotalCount(data?.messageBoardMessages.totalCount || 0);
-				setLoading(loading);
+				setLoading(false);
 			});
 		}, [fetchUserActivity, page, pageSize]);
 
@@ -113,112 +95,111 @@ export default withRouter(
 
 		const addSectionToQuestion = (question) => {
 			return {
-				messageBoardSection:
-					question.messageBoardThread.messageBoardSection,
 				...question,
+				messageBoardSection:
+					question?.messageBoardThread?.messageBoardSection,
 			};
 		};
 
+		useEffect(() => {
+			if (data) {
+				setCurrentQuestion(data?.messageBoardMessages?.items[0]);
+			}
+		}, [data]);
+
+		const sectionTitleQuestion =
+			data?.messageBoardMessages?.items[0]?.messageBoardThread
+				.messageBoardSection.title;
+
+		const hasActivities = totalCount > 0;
+
 		return (
-			<section className="questions-section questions-section-list">
-				<div className="c-p-5 questions-container row">
-					<div className="c-mt-3 c-mx-auto c-px-0 w-100">
-						<div className="d-flex flex-row">
-							<div className="c-mt-3">
-								<UserIcon
-									fullName={userInfo.name}
-									portraitURL={userInfo.image}
-									size="xl"
-									userId={String(userInfo.id)}
-								/>
-							</div>
+			<section className="d-flex justify-content-between p-0 questions-section questions-section-list user-activity-page">
+				<div
+					className={classNames('activity-panel pl-5 pr-3', {
+						'col-xl-8': hasActivities,
+						'col-xl-12': !hasActivities,
+					})}
+				>
+					<h2 className="py-2">
+						{Liferay.Language.get('latest-activity')}
+					</h2>
 
-							<div className="c-ml-4 flex-column">
-								<div>
-									<span className="small">
-										{Liferay.Language.get('rank') +
-											':' +
-											' '}
-
-										{userInfo.rank}
-									</span>
-								</div>
-
-								<div>
-									<strong className="h2">
-										{userInfo.name}
-									</strong>
-								</div>
-
-								<div>
-									<span className="small">
-										{Liferay.Language.get('posts') +
-											':' +
-											' '}
-
-										{userInfo.postsNumber}
-									</span>
-								</div>
-							</div>
-						</div>
-
-						<div className="border-bottom c-mt-5">
-							<h2>
-								{Liferay.Language.get('latest-questions-asked')}
-							</h2>
-						</div>
-					</div>
-
-					<div className="c-mx-auto c-px-0 col-xl-10">
-						<PaginatedList
-							activeDelta={pageSize}
-							activePage={page}
-							changeDelta={(pageSize) =>
-								changePage(page, pageSize)
-							}
-							changePage={(page) => changePage(page, pageSize)}
-							data={data && data.messageBoardMessages}
-							emptyState={
-								<ClayEmptyState
-									description={Liferay.Language.get(
-										'sorry,-no-results-were-found'
-									)}
-									imgSrc={
-										context.includeContextPath +
-										'/assets/empty_questions_list.png'
-									}
-									title={Liferay.Language.get(
-										'there-are-no-results'
-									)}
-								/>
-							}
-							loading={loading}
-							totalCount={totalCount}
-						>
-							{(question) => (
-								<QuestionRow
-									context={context}
-									currentSection={
-										context.useTopicNamesInURL
-											? question.messageBoardThread
-													.messageBoardSection &&
-											  question.messageBoardThread
-													.messageBoardSection.title
-											: (question.messageBoardThread
-													.messageBoardSection &&
-													question.messageBoardThread
-														.messageBoardSection
-														.id) ||
-											  context.rootTopicId
-									}
-									key={question.id}
-									question={addSectionToQuestion(question)}
-									showSectionLabel={true}
-								/>
-							)}
-						</PaginatedList>
-					</div>
+					<PaginatedList
+						activeDelta={pageSize}
+						activePage={page}
+						changeDelta={(pageSize) => changePage(page, pageSize)}
+						changePage={(page) => changePage(page, pageSize)}
+						data={data && data.messageBoardMessages}
+						emptyState={
+							<ClayEmptyState
+								description={Liferay.Language.get(
+									'sorry,-no-results-were-found'
+								)}
+								imgSrc={
+									context.includeContextPath +
+									'/assets/empty_questions_list.png'
+								}
+								title={Liferay.Language.get(
+									'there-are-no-results'
+								)}
+							/>
+						}
+						hidden
+						loading={loading}
+						totalCount={totalCount}
+					>
+						{(question) => (
+							<ActivityQuestionRow
+								context={context}
+								creatorId={question.creator?.id}
+								currentSection={
+									context.useTopicNamesInURL
+										? question.messageBoardThread
+												.messageBoardSection
+										: (question.messageBoardThread
+												.messageBoardSection &&
+												question.messageBoardThread
+													.messageBoardSection.id) ||
+										  context.rootTopicId
+								}
+								key={question.id}
+								linkProps={{
+									id: 'user-activity-row',
+									onClick: (event) => {
+										event.preventDefault();
+										setCurrentQuestion(question);
+									},
+								}}
+								question={addSectionToQuestion(question)}
+								rowSelected={currentQuestion?.friendlyUrlPath}
+							/>
+						)}
+					</PaginatedList>
 				</div>
+
+				{hasActivities && (
+					<div className="activity-panel border-left col-xl-4 modal-body">
+						<Question
+							display={{
+								actions: false,
+								activity: true,
+								addAnswer: false,
+								breadcrumb: false,
+								flags: false,
+								preview: true,
+								rating: false,
+								showAnswer: false,
+								showSignature: true,
+								styled: true,
+							}}
+							history={history}
+							questionId={currentQuestion?.friendlyUrlPath}
+							sectionTitle={sectionTitleQuestion}
+							url={url}
+						/>
+					</div>
+				)}
 			</section>
 		);
 	}

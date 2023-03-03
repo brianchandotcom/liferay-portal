@@ -82,14 +82,13 @@ definition {
 
 		task ("Given a web content created") {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Test Site Name");
 
 			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
 				ddmStructureId = ${ddmStructureId},
+				groupName = "Test Site Name",
 				label = "Text",
 				name = "Text",
-				siteId = ${siteId},
 				title = "WC WebContent Title");
 		}
 
@@ -163,14 +162,13 @@ definition {
 
 		task ("Given a web content created") {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Test Site Name");
 
 			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
 				ddmStructureId = ${ddmStructureId},
+				groupName = "Test Site Name",
 				label = "Text",
 				name = "Text",
-				siteId = ${siteId},
 				title = "WC WebContent Title");
 		}
 
@@ -214,14 +212,13 @@ definition {
 
 		task ("And Given web content created") {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Test Site Name");
 
 			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
 				ddmStructureId = ${ddmStructureId},
+				groupName = "Test Site Name",
 				label = "Text",
 				name = "Text",
-				siteId = ${siteId},
 				title = "WC WebContent Title");
 		}
 
@@ -264,14 +261,13 @@ definition {
 
 		task ("And Given web content created") {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Test Site Name");
 
 			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
 				ddmStructureId = ${ddmStructureId},
+				groupName = "Test Site Name",
 				label = "Text",
 				name = "Text",
-				siteId = ${siteId},
 				title = "WC WebContent Title");
 		}
 

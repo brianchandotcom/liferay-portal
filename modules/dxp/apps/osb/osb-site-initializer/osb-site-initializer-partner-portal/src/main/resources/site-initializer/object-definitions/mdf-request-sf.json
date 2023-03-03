@@ -134,6 +134,19 @@
 			"name": "liferaysUserIdSF",
 			"required": false,
 			"type": "BigDecimal"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "CurrencyIsoCode",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Currency"
+			},
+			"name": "currency",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

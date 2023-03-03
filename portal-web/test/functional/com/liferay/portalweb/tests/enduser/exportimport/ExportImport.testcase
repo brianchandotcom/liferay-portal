@@ -1237,7 +1237,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-77950. Verify is possible export/import pages linked circular reference."
-	@priority = 3
+	@priority = 4
 	test ExportImportPagesLinkCircular {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportPagesLinkCircular";
 

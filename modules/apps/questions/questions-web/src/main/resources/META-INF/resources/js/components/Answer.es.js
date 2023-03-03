@@ -126,7 +126,12 @@ export default withRouter(
 												)}
 											</span>
 
-											<ClayIcon symbol="check-circle-full" />
+											<ClayIcon
+												aria-label={Liferay.Language.get(
+													'chosen-answer'
+												)}
+												symbol="check-circle-full"
+											/>
 										</p>
 									</div>
 								)}
@@ -179,6 +184,9 @@ export default withRouter(
 												answer.status !== 'pending' &&
 												!comments.length && (
 													<ClayButton
+														aria-label={Liferay.Language.get(
+															'add-comment'
+														)}
 														className={classnames(
 															'btn-sm c-mr-2 c-px-2 c-py-1',
 															{
@@ -200,6 +208,9 @@ export default withRouter(
 											{answer.actions.delete && (
 												<>
 													<ClayButton
+														aria-label={Liferay.Language.get(
+															'delete'
+														)}
 														className={classnames(
 															'btn-sm c-mr-2 c-px-2 c-py-1',
 															{
@@ -251,8 +262,7 @@ export default withRouter(
 																			);
 																		}
 																	);
-																}
-																else {
+																} else {
 																	deleteAnswer(
 																		answer
 																	);
@@ -280,6 +290,15 @@ export default withRouter(
 
 											{canMarkAsAnswer && (
 												<ClayButton
+													aria-label={
+														showAsAnswer
+															? Liferay.Language.get(
+																	'unmark-as-answer'
+															  )
+															: Liferay.Language.get(
+																	'mark-as-answer'
+															  )
+													}
 													className={classnames(
 														'btn-sm c-mr-2 c-px-2 c-py-1',
 														{
@@ -337,6 +356,9 @@ export default withRouter(
 												answer.actions.replace &&
 												showItems && (
 													<ClayButton
+														aria-label={Liferay.Language.get(
+															'edit'
+														)}
 														className="btn-sm c-mr-2 c-px-2 c-py-1"
 														displayType="secondary"
 													>
@@ -399,6 +421,9 @@ export default withRouter(
 							{answer.actions['reply-to-message'] &&
 								answer.status !== 'pending' && (
 									<ClayButton
+										aria-label={Liferay.Language.get(
+											'add-comment'
+										)}
 										className="btn-sm c-px-2 c-py-1"
 										onClick={() => setShowNewComment(true)}
 									>

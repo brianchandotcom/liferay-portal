@@ -53,6 +53,7 @@ export default function SubscriptionButton({
 
 	return (
 		<ClayButton
+			aria-label={btnTitle}
 			data-tooltip-align="top"
 			displayType={subscription ? 'primary' : 'secondary'}
 			onClick={changeSubscription}

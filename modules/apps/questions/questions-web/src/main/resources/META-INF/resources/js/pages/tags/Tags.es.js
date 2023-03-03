@@ -113,6 +113,9 @@ export default withRouter(({history, location}) => {
 									{!loading &&
 										((!!search && (
 											<ClayButtonWithIcon
+												aria-label={Liferay.Language.get(
+													'clear'
+												)}
 												displayType="unstyled"
 												onClick={() => {
 													debounceCallback('');
@@ -122,6 +125,9 @@ export default withRouter(({history, location}) => {
 											/>
 										)) || (
 											<ClayButtonWithIcon
+												aria-label={Liferay.Language.get(
+													'search'
+												)}
 												displayType="unstyled"
 												symbol="search"
 												type="search"
@@ -146,6 +152,9 @@ export default withRouter(({history, location}) => {
 						data={tags}
 						emptyState={
 							<ClayEmptyState
+								aria-label={Liferay.Language.get(
+									'there-are-no-results'
+								)}
 								className="empty-state-icon"
 								title={Liferay.Language.get(
 									'there-are-no-results'

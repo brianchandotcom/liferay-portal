@@ -36,8 +36,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.ClassRule;
@@ -196,8 +196,7 @@ public class AssetTagNamesFacetedSearcherTest
 	}
 
 	protected void assertEntryClassNames(
-		Collection<String> entryClassNames, Hits hits,
-		SearchContext searchContext) {
+		List<String> entryClassNames, Hits hits, SearchContext searchContext) {
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
 			(String)searchContext.getAttribute("queryString"), hits.getDocs(),

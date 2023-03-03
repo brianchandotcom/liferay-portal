@@ -12,8 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -22,21 +20,14 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {CONTRIBUTOR_TYPES} from '../../utils/types/contributorTypes';
+import ContributorInputSetItemHeader from './ContributorInputSetItemHeader';
 import BasicAttributes from './attributes/BasicAttributes';
 import SXPBlueprintAttributes from './attributes/SXPBlueprintAttributes';
 
-const DEFAULT_ATTRIBUTES = {
-	characterThreshold: '',
-	fields: [],
-	includeAssetSearchSummary: true,
-	includeAssetURL: true,
-	sxpBlueprintId: '',
-};
-
-function FieldListInputs({
-	onChange,
-	onReplace,
-	contributorOptions,
+function ContributorInputSetItem({
+	index,
+	learnMessages,
+	onInputSetItemChange,
 	value = {},
 }) {
 	const [touched, setTouched] = useState({
@@ -49,92 +40,14 @@ function FieldListInputs({
 		setTouched({...touched, [field]: true});
 	};
 
-	const _handleChange = (property) => (event) => {
-		onChange({[property]: event.target.value});
-	};
-
-	const _handleChangeContributorName = (contributorName) => {
-		if (contributorName === CONTRIBUTOR_TYPES.BASIC) {
-			onReplace({
-				contributorName,
-				displayGroupName: value.displayGroupName,
-				size: value.size,
-			});
-		}
-		else {
-			onChange({
-				attributes: DEFAULT_ATTRIBUTES,
-				contributorName,
-				displayGroupName: value.displayGroupName,
-				size: value.size,
-			});
-		}
-	};
-
 	return (
 		<ClayInput.GroupItem>
+			<ContributorInputSetItemHeader
+				contributorName={value.contributorName}
+				learnMessages={learnMessages}
+			/>
+
 			<div className="form-group-autofit">
-				<ClayInput.GroupItem>
-					<label>
-						{Liferay.Language.get('suggestion-contributor')}
-
-						<span className="reference-mark">
-							<ClayIcon symbol="asterisk" />
-						</span>
-
-						<ClayTooltipProvider>
-							<span
-								className="ml-2"
-								data-tooltip-align="top"
-								title={Liferay.Language.get(
-									'suggestion-contributor-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</ClayTooltipProvider>
-					</label>
-
-					<ClayDropDown
-						closeOnClick
-						menuWidth="sm"
-						trigger={
-							<ClayButton
-								aria-label={Liferay.Language.get(
-									'suggestion-contributor'
-								)}
-								className="form-control form-control-select"
-								displayType="unstyled"
-							>
-								{
-									contributorOptions.find(
-										({name}) =>
-											name === value.contributorName
-									).title
-								}
-							</ClayButton>
-						}
-					>
-						<ClayDropDown.ItemList items={contributorOptions}>
-							{(item) => (
-								<ClayDropDown.Item
-									active={value.contributorName === item.name}
-									key={item.name}
-									onClick={() =>
-										_handleChangeContributorName(item.name)
-									}
-								>
-									<div>{item.title}</div>
-
-									<div className="text-2">
-										{item.subtitle}
-									</div>
-								</ClayDropDown.Item>
-							)}
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
-				</ClayInput.GroupItem>
-
 				<ClayInput.GroupItem
 					className={getCN({
 						'has-error':
@@ -163,7 +76,10 @@ function FieldListInputs({
 
 					<ClayInput
 						onBlur={_handleBlur('displayGroupName')}
-						onChange={_handleChange('displayGroupName')}
+						onChange={onInputSetItemChange(
+							index,
+							'displayGroupName'
+						)}
 						required
 						type="text"
 						value={value.displayGroupName || ''}
@@ -171,7 +87,7 @@ function FieldListInputs({
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem
-					className={getCN('size-input', {
+					className={getCN({
 						'has-error':
 							(!value.size || value.size < 0) && touched.size,
 					})}
@@ -200,7 +116,7 @@ function FieldListInputs({
 						aria-label={Liferay.Language.get('size')}
 						min="0"
 						onBlur={_handleBlur('size')}
-						onChange={_handleChange('size')}
+						onChange={onInputSetItemChange(index, 'size')}
 						required
 						type="number"
 						value={value.size || ''}
@@ -222,13 +138,18 @@ function FieldListInputs({
 			</div>
 
 			{value.contributorName === CONTRIBUTOR_TYPES.BASIC && (
-				<BasicAttributes onChange={onChange} value={value} />
+				<BasicAttributes
+					index={index}
+					onInputSetItemChange={onInputSetItemChange}
+					value={value}
+				/>
 			)}
 
 			{value.contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT && (
 				<SXPBlueprintAttributes
+					index={index}
 					onBlur={_handleBlur}
-					onChange={onChange}
+					onInputSetItemChange={onInputSetItemChange}
 					touched={touched}
 					value={value}
 				/>
@@ -237,4 +158,4 @@ function FieldListInputs({
 	);
 }
 
-export default FieldListInputs;
+export default ContributorInputSetItem;

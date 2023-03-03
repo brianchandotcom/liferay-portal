@@ -25,7 +25,13 @@ import React, {useEffect, useState} from 'react';
 
 import SelectSXPBlueprintModal from '../../select_sxp_blueprint_modal/SelectSXPBlueprintModal';
 
-function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
+function SXPBlueprintAttributes({
+	index,
+	onBlur,
+	onInputSetItemChange,
+	touched,
+	value,
+}) {
 	const [showModal, setShowModal] = useState(false);
 	const [sxpBlueprint, setSXPBlueprint] = useState({
 		loading: false,
@@ -87,8 +93,17 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 		}
 	}, []); //eslint-disable-line
 
+	const _handleChangeAttribute = (property) => (event) => {
+		onInputSetItemChange(index, {
+			attributes: {
+				...value.attributes,
+				[property]: event.target.value,
+			},
+		});
+	};
+
 	const _handleSXPBlueprintSelectorSubmit = (id, title) => {
-		onChange({
+		onInputSetItemChange(index, {
 			attributes: {
 				...value.attributes,
 				sxpBlueprintId: id,
@@ -117,12 +132,6 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 		event.preventDefault();
 	};
 
-	const _handleChangeAttribute = (property) => (event) => {
-		onChange({
-			attributes: {...value.attributes, [property]: event.target.value},
-		});
-	};
-
 	const _handleMultiSelectBlur = () => {
 		if (multiSelectValue) {
 			_handleMultiSelectChange([
@@ -138,12 +147,13 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 	};
 
 	const _handleMultiSelectChange = (newValue) => {
-		onChange({
+		onInputSetItemChange(index, {
 			attributes: {
 				...value.attributes,
 				fields: newValue.map((item) => item.value),
 			},
 		});
+
 		setMultiSelectItems(newValue);
 	};
 

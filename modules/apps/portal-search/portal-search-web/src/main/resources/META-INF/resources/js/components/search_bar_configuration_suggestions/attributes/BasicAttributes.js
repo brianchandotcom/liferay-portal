@@ -17,10 +17,13 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
-function BasicAttributes({onChange, value}) {
+function BasicAttributes({index, onInputSetItemChange, value}) {
 	const _handleChangeAttribute = (property) => (event) => {
-		onChange({
-			attributes: {...value.attributes, [property]: event.target.value},
+		onInputSetItemChange(index, {
+			attributes: {
+				...value.attributes,
+				[property]: event.target.value,
+			},
 		});
 	};
 

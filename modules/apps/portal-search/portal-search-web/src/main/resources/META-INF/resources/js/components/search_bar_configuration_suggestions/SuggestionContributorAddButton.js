@@ -17,36 +17,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import LearnMessage from '../../shared/LearnMessage';
-import {CONTRIBUTOR_TYPES} from '../../utils/types/contributorTypes';
-
-function SuggestionContributorAddButton(learnMessages, onClick) {
-	const _handleOnClick = (contributorName) => () => {
-		if (contributorName === CONTRIBUTOR_TYPES.BASIC) {
-			onClick({
-				attributes: {
-					characterThreshold: '',
-				},
-				contributorName,
-				displayGroupName: '',
-				size: '',
-			});
-		} else if (contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT) {
-			onClick({
-				attributes: {
-					characterThreshold: '',
-					fields: [],
-					includeAssetSearchSummary: true,
-					includeAssetURL: true,
-					sxpBlueprintId: '',
-				},
-				contributorName,
-				displayGroupName: '',
-				size: '',
-			});
-		}
-	};
-
+function SuggestionContributorAddButton({children}) {
 	return (
 		<ClayDropDown
 			closeOnClick
@@ -64,33 +35,7 @@ function SuggestionContributorAddButton(learnMessages, onClick) {
 				</ClayButton>
 			}
 		>
-			<ClayDropDown.Item
-				onClick={_handleOnClick(CONTRIBUTOR_TYPES.BASIC)}
-			>
-				<div>{Liferay.Language.get('basic')}</div>
-
-				<div className="text-2">
-					{Liferay.Language.get('basic-suggestions-contributor-help')}
-				</div>
-			</ClayDropDown.Item>
-
-			<ClayDropDown.Item
-				onClick={_handleOnClick(CONTRIBUTOR_TYPES.SXP_BLUEPRINT)}
-			>
-				<div>{Liferay.Language.get('blueprint')}</div>
-
-				<div className="text-2">
-					{Liferay.Language.get(
-						'blueprint-suggestions-contributor-help'
-					)}
-
-					<LearnMessage
-						className="ml-1"
-						learnMessages={learnMessages}
-						resourceKey="search-bar-suggestions-blueprints"
-					/>
-				</div>
-			</ClayDropDown.Item>
+			{children}
 		</ClayDropDown>
 	);
 }

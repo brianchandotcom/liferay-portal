@@ -132,14 +132,30 @@ function useInputSets(initialValue) {
 	/**
 	 * Changes a single object property's value.
 	 * @param {number} index The position of the item in the list.
-	 * @param {string} property The name of the property to change.
+	 * @param {string|object} newValue If this is a string, value will be used as
+	 * 	the property name.
+	 * 	If this is an object, this will be used as the new value to merge into
+	 * 	the existing value.
 	 */
-	const _handleInputSetItemChange = (index, property) => (event) => {
-		setValue(
-			value.map((item, i) =>
-				i === index ? {...item, [property]: event.target.value} : item
-			)
-		);
+	const _handleInputSetItemChange = (index, newValue) => {
+		if (typeof newValue !== 'string') {
+			setValue(
+				value.map((item, i) =>
+					i === index ? {...item, ...newValue} : item
+				)
+			);
+		}
+		else {
+			return (event) => {
+				setValue(
+					value.map((item, i) =>
+						i === index
+							? {...item, [newValue]: event.target.value}
+							: item
+					)
+				);
+			};
+		}
 	};
 
 	/**

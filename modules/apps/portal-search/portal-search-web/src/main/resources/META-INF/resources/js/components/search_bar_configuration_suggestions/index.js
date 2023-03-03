@@ -12,21 +12,15 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import ClayDropDown from '@clayui/drop-down';
+import React, {useMemo} from 'react';
 
 import LearnMessage from '../../shared/LearnMessage';
+import InputSets, {useInputSets} from '../../shared/input_sets/index';
 import cleanSuggestionsContributorConfiguration from '../../utils/clean_suggestions_contributor_configuration';
 import {CONTRIBUTOR_TYPES} from '../../utils/types/contributorTypes';
-import FieldList from '../FieldList';
-import FieldListInputs from './FieldListInputs';
-
-const DEFAULT_ATTRIBUTES = {
-	characterThreshold: '',
-	fields: [],
-	includeAssetSearchSummary: true,
-	includeAssetURL: true,
-	sxpBlueprintId: '',
-};
+import ContributorInputSetItem from './ContributorInputSetItem';
+import SuggestionContributorAddButton from './SuggestionContributorAddButton';
 
 /**
  * Cleans up the fields array by removing those that do not have the required
@@ -57,39 +51,37 @@ function SearchBarConfigurationSuggestions({
 	namespace = '',
 	suggestionsContributorConfigurationName = '',
 }) {
-	const blueprintsEnabled = isDXP && isSearchExperiencesSupported;
-
-	const [
-		suggestionsContributorConfiguration,
-		setSuggestionsContributorConfiguration,
-	] = useState(
-		cleanSuggestionsContributorConfiguration(
+	const preparedSuggestionsContributorConfiguration = useMemo(
+		() =>
+			cleanSuggestionsContributorConfiguration(
+				initialSuggestionsContributorConfiguration,
+				isSearchExperiencesSupported
+			),
+		[
 			initialSuggestionsContributorConfiguration,
-			isSearchExperiencesSupported
-		).map((item, index) => ({
-			...item,
-			id: index, // For FieldList item `key` when reordering.
-		}))
+			isSearchExperiencesSupported,
+		]
 	);
 
-	/*
-	 * If blueprints are not enabled, exactly one contributor can be added.
-	 */
-	const _hasAvailableContributors = () =>
-		blueprintsEnabled || !suggestionsContributorConfiguration.length;
+	const {
+		getInputSetItemProps,
+		onInputSetItemChange,
+		onInputSetsAdd,
+		value: suggestionsContributorConfiguration,
+	} = useInputSets(preparedSuggestionsContributorConfiguration);
 
-	const _getContributorOptions = (index) => {
+	const contributorOptions = useMemo(() => {
 		const BASIC_OPTION = {
-			name: CONTRIBUTOR_TYPES.BASIC,
-			subtitle: Liferay.Language.get(
+			contributorName: CONTRIBUTOR_TYPES.BASIC,
+			description: Liferay.Language.get(
 				'basic-suggestions-contributor-help'
 			),
 			title: Liferay.Language.get('basic'),
 		};
 
 		const BLUEPRINT_OPTION = {
-			name: CONTRIBUTOR_TYPES.SXP_BLUEPRINT,
-			subtitle: (
+			contributorName: CONTRIBUTOR_TYPES.SXP_BLUEPRINT,
+			description: (
 				<>
 					{Liferay.Language.get(
 						'blueprint-suggestions-contributor-help'
@@ -105,44 +97,53 @@ function SearchBarConfigurationSuggestions({
 			title: Liferay.Language.get('blueprint'),
 		};
 
-		if (!blueprintsEnabled) {
-			return [BASIC_OPTION];
+		const options = [];
+
+		const basicContributorExists =
+			suggestionsContributorConfiguration.findIndex(
+				(value) => value.contributorName === CONTRIBUTOR_TYPES.BASIC
+			) > -1;
+
+		if (!basicContributorExists) {
+			options.push(BASIC_OPTION);
 		}
 
-		const indexOfBasic = suggestionsContributorConfiguration.findIndex(
-			(value) => value.contributorName === CONTRIBUTOR_TYPES.BASIC
-		);
-
-		if (indexOfBasic > -1 && index !== indexOfBasic) {
-			return [BLUEPRINT_OPTION];
+		if (isDXP && isSearchExperiencesSupported) {
+			options.push(BLUEPRINT_OPTION);
 		}
 
-		return [BASIC_OPTION, BLUEPRINT_OPTION];
-	};
+		return options;
+	}, [suggestionsContributorConfiguration.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	const _getDefaultValue = () => {
-		if (
-			suggestionsContributorConfiguration.some(
-				(config) => config.contributorName === CONTRIBUTOR_TYPES.BASIC
-			)
-		) {
-			return {
-				attributes: DEFAULT_ATTRIBUTES,
-				contributorName: CONTRIBUTOR_TYPES.SXP_BLUEPRINT,
+	const _handleInputSetAdd = (contributorName) => () => {
+		if (contributorName === CONTRIBUTOR_TYPES.BASIC) {
+			onInputSetsAdd({
+				attributes: {
+					characterThreshold: '',
+				},
+				contributorName,
 				displayGroupName: '',
 				size: '',
-			};
+			});
 		}
-
-		return {
-			contributorName: CONTRIBUTOR_TYPES.BASIC,
-			displayGroupName: '',
-			size: '',
-		};
+		else if (contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT) {
+			onInputSetsAdd({
+				attributes: {
+					characterThreshold: '',
+					fields: [],
+					includeAssetSearchSummary: true,
+					includeAssetURL: true,
+					sxpBlueprintId: '',
+				},
+				contributorName,
+				displayGroupName: '',
+				size: '',
+			});
+		}
 	};
 
 	return (
-		<div className="search-bar-configuration-suggestions">
+		<div className="search-bar-configuration-suggestions-root">
 			{removeEmptyFields(suggestionsContributorConfiguration).length ? (
 				removeEmptyFields(
 					suggestionsContributorConfiguration
@@ -164,24 +165,42 @@ function SearchBarConfigurationSuggestions({
 				/>
 			)}
 
-			<FieldList
-				addButtonLabel={Liferay.Language.get('add-contributor')}
-				defaultValue={_getDefaultValue()}
-				onChange={setSuggestionsContributorConfiguration}
-				renderInputs={({index, onChange, onReplace, value}) => (
-					<FieldListInputs
-						contributorOptions={_getContributorOptions(index)}
-						key={index}
-						onChange={onChange}
-						onReplace={onReplace}
-						value={value}
-					/>
+			<InputSets>
+				{suggestionsContributorConfiguration.map(
+					(valueItem, valueIndex) => (
+						// eslint-disable-next-line react/jsx-key
+						<InputSets.Item
+							{...getInputSetItemProps(valueItem, valueIndex)}
+						>
+							<ContributorInputSetItem
+								index={valueIndex}
+								learnMessages={learnMessages}
+								onInputSetItemChange={onInputSetItemChange}
+								value={valueItem}
+							/>
+						</InputSets.Item>
+					)
 				)}
-				showAddButton={_hasAvailableContributors()}
-				showDeleteButton={true}
-				showDragButton={blueprintsEnabled}
-				value={suggestionsContributorConfiguration}
-			/>
+
+				{!!contributorOptions.length && (
+					<SuggestionContributorAddButton>
+						{contributorOptions.map((option, index) => (
+							<ClayDropDown.Item
+								key={index}
+								onClick={_handleInputSetAdd(
+									option.contributorName
+								)}
+							>
+								<div>{option.title}</div>
+
+								<div className="text-2">
+									{option.description}
+								</div>
+							</ClayDropDown.Item>
+						))}
+					</SuggestionContributorAddButton>
+				)}
+			</InputSets>
 		</div>
 	);
 }

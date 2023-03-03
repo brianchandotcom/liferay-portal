@@ -16,6 +16,7 @@ package com.liferay.commerce.payment.engine.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.context.CommerceGroupThreadLocal;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -104,6 +106,9 @@ public class CommercePaymentEngineTest {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
+
+		CommerceGroupThreadLocal.set(
+			_groupLocalService.fetchGroup(_commerceChannel.getGroupId()));
 
 		_commercePaymentMethodGroupRelLocalService.
 			addCommercePaymentMethodGroupRel(
@@ -328,6 +333,10 @@ public class CommercePaymentEngineTest {
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	private HttpServletRequest _httpServletRequest;
 	private ServiceContext _serviceContext;
 

@@ -5,8 +5,6 @@ definition {
 
 		var tabName = StringUtil.toLowerCase(${tabName});
 
-		echo(${tabName});
-
 		Navigator.gotoNavTab(navTab = ${tab});
 
 		OcularAssertElementImage(

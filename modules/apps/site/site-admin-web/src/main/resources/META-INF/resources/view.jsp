@@ -50,6 +50,7 @@ SiteAdminManagementToolbarDisplayContext siteAdminManagementToolbarDisplayContex
 	<liferay-frontend:sidebar-panel
 		resourceURL="<%= sidebarPanelURL %>"
 		searchContainerId="sites"
+		title='<%= LanguageUtil.get(request, "sites") %>'
 	>
 		<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>

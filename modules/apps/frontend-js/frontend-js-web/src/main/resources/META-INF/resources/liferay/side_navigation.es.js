@@ -338,34 +338,32 @@ SideNavigation.prototype = {
 		this._emitter.emit(event, this);
 	},
 
-	_focusCloseButton() {
-		const maybeFocus = () => {
-			const container = document.querySelector(this.options.container);
+	_focusNavigation() {
+		const container = document.querySelector(this.options.container);
 
-			if (!container) {
-				return;
-			}
+		if (!container) {
+			return;
+		}
 
-			const button = container.querySelector('.sidenav-close');
+		const navigation = container.querySelector(this.options.navigation);
 
-			if (!button) {
-				return;
-			}
+		if (!navigation) {
+			container.focus();
 
-			button.addEventListener('click', () => this.toggler.focus(), {
-				once: true,
-			});
+			return;
+		}
 
-			button.focus();
+		navigation.focus();
+	},
 
-			clearInterval(intervalId);
-			clearTimeout(timeoutId);
-		};
+	_focusTrigger() {
+		const toggler = this.toggler;
 
-		const intervalId = setInterval(maybeFocus, 200);
-		const timeoutId = setTimeout(() => clearInterval(intervalId), 3000);
+		if (!toggler) {
+			return;
+		}
 
-		maybeFocus();
+		toggler.focus();
 	},
 
 	_getSidenavWidth() {
@@ -893,7 +891,8 @@ SideNavigation.prototype = {
 	},
 
 	hideSidenav() {
-		const options = this.options;
+		const instance = this;
+		const options = instance.options;
 
 		const container = document.querySelector(options.container);
 
@@ -902,7 +901,7 @@ SideNavigation.prototype = {
 			const navigation = container.querySelector(options.navigation);
 			const menu = navigation.querySelector('.sidenav-menu');
 
-			const sidenavRight = this._isSidenavRight();
+			const sidenavRight = instance._isSidenavRight();
 
 			let positionDirection = options.rtl ? 'right' : 'left';
 
@@ -923,9 +922,13 @@ SideNavigation.prototype = {
 
 			if (sidenavRight) {
 				setStyles(menu, {
-					[positionDirection]: px(this._getSidenavWidth()),
+					[positionDirection]: px(instance._getSidenavWidth()),
 				});
 			}
+
+			instance._subscribeSidenavTransitionEnd(menu, () => {
+				instance._focusTrigger();
+			});
 		}
 	},
 
@@ -971,6 +974,8 @@ SideNavigation.prototype = {
 					'closed.lexicon.sidenav',
 					instance
 				);
+
+				instance._focusTrigger();
 			});
 
 			if (hasClass(content, openClass)) {
@@ -1194,7 +1199,8 @@ SideNavigation.prototype = {
 	},
 
 	showSidenav() {
-		const options = this.options;
+		const instance = this;
+		const options = instance.options;
 
 		const container = document.querySelector(options.container);
 		const navigation = container.querySelector(options.navigation);
@@ -1208,12 +1214,14 @@ SideNavigation.prototype = {
 		const url = options.url;
 
 		if (url) {
-			this._loadUrl(menu, url);
+			instance._loadUrl(menu, url);
 		}
 
-		this.setWidth();
+		instance.setWidth();
 
-		this._focusCloseButton();
+		instance._subscribeSidenavTransitionEnd(menu, () => {
+			instance._focusNavigation();
+		});
 	},
 
 	showSimpleSidenav() {
@@ -1258,7 +1266,7 @@ SideNavigation.prototype = {
 
 				dispatchCustomEvent(document, 'open.lexicon.sidenav', instance);
 
-				this._focusCloseButton();
+				this._focusNavigation();
 			});
 
 			setClasses(content, {

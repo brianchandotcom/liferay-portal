@@ -53,6 +53,15 @@ public class EchoPoshiElement extends PoshiElement {
 	public void parsePoshiScript(String poshiScript)
 		throws PoshiScriptParserException {
 
+		checkSemicolon(poshiScript);
+
+		String trimmedPoshiScript = poshiScript.trim();
+
+		if (!trimmedPoshiScript.endsWith(";")) {
+			throw new PoshiScriptParserException(
+				"Missing semicolon", poshiScript, (PoshiElement)getParent());
+		}
+
 		String parentheticalContent = getParentheticalContent(poshiScript);
 
 		if (!isQuotedContent(parentheticalContent)) {
@@ -140,6 +149,11 @@ public class EchoPoshiElement extends PoshiElement {
 		return "echo";
 	}
 
+	@Override
+	protected Pattern getStatementPattern() {
+		return _statementPattern;
+	}
+
 	private boolean _isElementType(String poshiScript) {
 		return isValidPoshiScriptStatement(_statementPattern, poshiScript);
 	}
@@ -149,6 +163,6 @@ public class EchoPoshiElement extends PoshiElement {
 	private static final String _POSHI_SCRIPT_KEYWORD = _ELEMENT_NAME;
 
 	private static final Pattern _statementPattern = Pattern.compile(
-		"^" + _POSHI_SCRIPT_KEYWORD + PARAMETER_REGEX + STATEMENT_END_REGEX);
+		"^" + _POSHI_SCRIPT_KEYWORD + PARAMETER_REGEX);
 
 }

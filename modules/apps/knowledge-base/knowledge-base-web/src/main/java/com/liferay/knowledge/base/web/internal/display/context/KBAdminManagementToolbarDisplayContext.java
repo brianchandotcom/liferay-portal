@@ -40,6 +40,7 @@ import com.liferay.knowledge.base.web.internal.util.comparator.KBOrderByComparat
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -398,7 +399,7 @@ public class KBAdminManagementToolbarDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169675"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-169675")) {
 			return null;
 		}
 

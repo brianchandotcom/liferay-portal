@@ -14,11 +14,11 @@
 
 package com.liferay.site.initializer.extender.internal.deploy.auto;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -41,16 +43,14 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerFactory;
 
 import java.io.File;
-
 import java.io.FileInputStream;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
+
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -67,11 +67,25 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 	public int deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 
+		long currentCompanyId = CompanyThreadLocal.getCompanyId();
+		PermissionChecker currentPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String currentPrincipalThreadLocalName = PrincipalThreadLocal.getName();
+		ServiceContext currentServiceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		try {
 			_deploy(autoDeploymentContext.getFile());
 		}
 		catch (Exception exception) {
 			throw new AutoDeployException(exception);
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(currentCompanyId);
+			PermissionThreadLocal.setPermissionChecker(
+				currentPermissionChecker);
+			PrincipalThreadLocal.setName(currentPrincipalThreadLocalName);
+			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
 		}
 
 		return AutoDeployer.CODE_DEFAULT;
@@ -89,21 +103,13 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 			return false;
 		}
 
-		try (ZipFile zipFile = new ZipFile(file)) {
-			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+		try {
+			JSONObject jsonObject = _getJSONObject(file);
 
-			while (enumeration.hasMoreElements()) {
-				ZipEntry zipEntry = enumeration.nextElement();
+			if ((jsonObject != null) &&
+				Validator.isNotNull(jsonObject.getString("groupName"))) {
 
-				if (!zipEntry.isDirectory() || !_isValid(zipEntry.getName())) {
-					continue;
-				}
-
-				_setDeployConfiguration(zipFile, zipEntry.getName());
-
-				if ((_companyId > 0) && (_groupName != null) && (_userId > 0)) {
-					return true;
-				}
+				return true;
 			}
 		}
 		catch (Exception exception) {
@@ -120,119 +126,107 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 					file.getName());
 		}
 
-		Map<Locale, String> nameMap = HashMapBuilder.put(
-			LocaleUtil.getDefault(), _groupName
-		).build();
+		JSONObject jsonObject = _getJSONObject(file);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(_companyId);
-		serviceContext.setUserId(_userId);
-
-		PrincipalThreadLocal.setName(_userId);
-
-		Group group = _groupLocalService.addGroup(
-			_userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0, 0,
-			nameMap, null, GroupConstants.TYPE_SITE_OPEN, true, 0,
-			"/" + FriendlyURLNormalizerUtil.normalize(_groupName), true, true,
-			serviceContext);
-
-		serviceContext.setScopeGroupId(group.getGroupId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(
-				_userLocalService.getUser(_userId)));
-
-		File tempFile = FileUtil.createTempFile();
-
-		FileUtil.write(
-			tempFile,
-			new FileInputStream(file));
-
-		File tempDir1 = FileUtil.createTempFolder();
-
-		FileUtil.unzip(tempFile, tempDir1);
-
-		tempFile.delete();
-
-		SiteInitializer siteInitializer = _siteInitializerFactory.create(
-			new File(tempDir1, "site-initializer"), null);
-
-		tempFile.delete();
-
-		try {
-			siteInitializer.initialize(group.getGroupId());
-		}
-		catch (Exception e) {
-			ServiceContextThreadLocal.popServiceContext();
-			_groupLocalService.deleteGroup(group);
-		}
-	}
-
-	private boolean _isValid(String fileName) {
-		if (Objects.equals(fileName, "site-initializer/")) {
-			return true;
+		if (jsonObject == null) {
+			throw new AutoDeployException();
 		}
 
-		return false;
-	}
+		long companyId = jsonObject.getLong("companyId");
 
-	private void _setDeployConfiguration(ZipFile zipFile, String zipEntryName)
-		throws Exception {
-
-		ZipEntry zipEntry = zipFile.getEntry(zipEntryName + "config.json");
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			StringUtil.read(zipFile.getInputStream(zipEntry)));
-
-		_groupName = jsonObject.getString("groupName");
-
-		if (_groupName == null) {
-			return;
-		}
-
-		_companyId = jsonObject.getLong("companyId");
-
-		if (_companyId == 0) {
+		if (companyId == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Using default company ID for this site process");
 			}
 
-			try {
-				Company company = _companyLocalService.getCompanyByWebId(
-					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+			Company company = _companyLocalService.getCompanyByWebId(
+				PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
-				_companyId = company.getCompanyId();
-			}
-			catch (PortalException portalException) {
-				_log.error("Unable to get default company ID", portalException);
-			}
+			companyId = company.getCompanyId();
 		}
 
-		_userId = jsonObject.getLong("userId");
+		long userId = jsonObject.getLong("userId");
 
-		if (_userId == 0) {
+		if (userId == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Using default user ID for this site process");
 			}
 
-			try {
-				_userId = _userLocalService.getUserIdByScreenName(
-					_companyId,
-					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME));
-			}
-			catch (PortalException portalException) {
-				_log.error("Unable to get default user ID", portalException);
-			}
+			userId = _userLocalService.getUserIdByScreenName(
+				companyId, PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME));
 		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setUserId(userId);
+
+		String groupName = jsonObject.getString("groupName");
+
+		Group group = _groupLocalService.addGroup(
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0, 0,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), groupName
+			).build(),
+			null, GroupConstants.TYPE_SITE_PRIVATE, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(groupName),
+			true, true, serviceContext);
+
+		serviceContext.setScopeGroupId(group.getGroupId());
+
+		CompanyThreadLocal.setCompanyId(companyId);
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(
+				_userLocalService.getUser(userId)));
+		PrincipalThreadLocal.setName(userId);
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		File tempDir = _getTempDir(file);
+
+		SiteInitializer siteInitializer = _siteInitializerFactory.create(
+			new File(tempDir, "site-initializer"), file.getName());
+
+		try {
+			siteInitializer.initialize(group.getGroupId());
+		}
+		finally {
+			FileUtil.deltree(tempDir);
+			PermissionCacheUtil.clearCache(userId);
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	private JSONObject _getJSONObject(File file) throws Exception {
+		try (ZipFile zipFile = new ZipFile(file)) {
+			ZipEntry zipEntry = zipFile.getEntry(
+				"site-initializer/config.json");
+
+			if ((zipEntry == null) || zipEntry.isDirectory()) {
+				return null;
+			}
+
+			return _jsonFactory.createJSONObject(
+				StringUtil.read(zipFile.getInputStream(zipEntry)));
+		}
+	}
+
+	private File _getTempDir(File file) throws Exception {
+		File tempFile = FileUtil.createTempFile();
+
+		FileUtil.write(tempFile, new FileInputStream(file));
+
+		File tempDir = FileUtil.createTempFolder();
+
+		FileUtil.unzip(tempFile, tempDir);
+
+		tempFile.delete();
+
+		return tempDir;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerAutoDeployListener.class);
-
-	private long _companyId;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
@@ -245,10 +239,6 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 
 	@Reference
 	private SiteInitializerFactory _siteInitializerFactory;
-
-	private String _groupName;
-
-	private long _userId;
 
 	@Reference
 	private UserLocalService _userLocalService;

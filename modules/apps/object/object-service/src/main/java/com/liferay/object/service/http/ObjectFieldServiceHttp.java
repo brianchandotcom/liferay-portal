@@ -55,8 +55,8 @@ public class ObjectFieldServiceHttp {
 			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbType, boolean indexed,
 			boolean indexedAsKeyword, String indexedLanguageId,
-			java.util.Map<java.util.Locale, String> labelMap, String name,
-			boolean required, boolean state,
+			java.util.Map<java.util.Locale, String> labelMap, boolean localized,
+			String name, boolean required, boolean state,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
 				objectFieldSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -69,8 +69,8 @@ public class ObjectFieldServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, listTypeDefinitionId,
 				objectDefinitionId, businessType, dbType, indexed,
-				indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-				state, objectFieldSettings);
+				indexedAsKeyword, indexedLanguageId, labelMap, localized, name,
+				required, state, objectFieldSettings);
 
 			Object returnObj = null;
 
@@ -182,8 +182,8 @@ public class ObjectFieldServiceHttp {
 			long objectFieldId, long listTypeDefinitionId, String businessType,
 			String dbType, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId,
-			java.util.Map<java.util.Locale, String> labelMap, String name,
-			boolean required, boolean state,
+			java.util.Map<java.util.Locale, String> labelMap, boolean localized,
+			String name, boolean required, boolean state,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
 				objectFieldSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -196,8 +196,8 @@ public class ObjectFieldServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, objectFieldId,
 				listTypeDefinitionId, businessType, dbType, indexed,
-				indexedAsKeyword, indexedLanguageId, labelMap, name, required,
-				state, objectFieldSettings);
+				indexedAsKeyword, indexedLanguageId, labelMap, localized, name,
+				required, state, objectFieldSettings);
 
 			Object returnObj = null;
 
@@ -234,7 +234,8 @@ public class ObjectFieldServiceHttp {
 		new Class[] {
 			String.class, long.class, long.class, String.class, String.class,
 			boolean.class, boolean.class, String.class, java.util.Map.class,
-			String.class, boolean.class, boolean.class, java.util.List.class
+			boolean.class, String.class, boolean.class, boolean.class,
+			java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectFieldParameterTypes1 =
 		new Class[] {long.class};
@@ -244,7 +245,8 @@ public class ObjectFieldServiceHttp {
 		new Class[] {
 			String.class, long.class, long.class, String.class, String.class,
 			boolean.class, boolean.class, String.class, java.util.Map.class,
-			String.class, boolean.class, boolean.class, java.util.List.class
+			boolean.class, String.class, boolean.class, boolean.class,
+			java.util.List.class
 		};
 
 }

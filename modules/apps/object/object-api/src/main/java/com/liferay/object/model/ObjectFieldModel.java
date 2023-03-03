@@ -468,6 +468,27 @@ public interface ObjectFieldModel
 	public void setLabelMap(Map<Locale, String> labelMap, Locale defaultLocale);
 
 	/**
+	 * Returns the localized of this object field.
+	 *
+	 * @return the localized of this object field
+	 */
+	public boolean getLocalized();
+
+	/**
+	 * Returns <code>true</code> if this object field is localized.
+	 *
+	 * @return <code>true</code> if this object field is localized; <code>false</code> otherwise
+	 */
+	public boolean isLocalized();
+
+	/**
+	 * Sets whether this object field is localized.
+	 *
+	 * @param localized the localized of this object field
+	 */
+	public void setLocalized(boolean localized);
+
+	/**
 	 * Returns the name of this object field.
 	 *
 	 * @return the name of this object field

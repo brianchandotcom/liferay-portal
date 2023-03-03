@@ -53,6 +53,7 @@
 		</field>
 		<field name="enableCategorization" type="boolean" />
 		<field name="enableComments" type="boolean" />
+		<field name="enableLocalization" type="boolean" />
 		<field name="enableObjectEntryHistory" type="boolean" />
 		<field name="modifiable" type="boolean" />
 		<field name="name" type="String" />
@@ -108,6 +109,7 @@
 		<field name="indexedAsKeyword" type="boolean" />
 		<field name="indexedLanguageId" type="String" />
 		<field localized="true" name="label" type="String" />
+		<field name="localized" type="boolean" />
 		<field name="name" type="String" />
 		<field name="relationshipType" type="String" />
 		<field name="required" type="boolean" />

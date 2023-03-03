@@ -202,6 +202,16 @@ public class ObjectFieldSerDes {
 			sb.append(objectField.getListTypeDefinitionId());
 		}
 
+		if (objectField.getLocalized() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"localized\": ");
+
+			sb.append(objectField.getLocalized());
+		}
+
 		if (objectField.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -413,6 +423,13 @@ public class ObjectFieldSerDes {
 				String.valueOf(objectField.getListTypeDefinitionId()));
 		}
 
+		if (objectField.getLocalized() == null) {
+			map.put("localized", null);
+		}
+		else {
+			map.put("localized", String.valueOf(objectField.getLocalized()));
+		}
+
 		if (objectField.getName() == null) {
 			map.put("name", null);
 		}
@@ -566,6 +583,11 @@ public class ObjectFieldSerDes {
 				if (jsonParserFieldValue != null) {
 					objectField.setListTypeDefinitionId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "localized")) {
+				if (jsonParserFieldValue != null) {
+					objectField.setLocalized((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

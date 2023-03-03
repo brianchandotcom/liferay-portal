@@ -62,6 +62,7 @@ public class ObjectFieldWrapper
 		attributes.put("indexedAsKeyword", isIndexedAsKeyword());
 		attributes.put("indexedLanguageId", getIndexedLanguageId());
 		attributes.put("label", getLabel());
+		attributes.put("localized", isLocalized());
 		attributes.put("name", getName());
 		attributes.put("relationshipType", getRelationshipType());
 		attributes.put("required", isRequired());
@@ -187,6 +188,12 @@ public class ObjectFieldWrapper
 
 		if (label != null) {
 			setLabel(label);
+		}
+
+		Boolean localized = (Boolean)attributes.get("localized");
+
+		if (localized != null) {
+			setLocalized(localized);
 		}
 
 		String name = (String)attributes.get("name");
@@ -427,6 +434,16 @@ public class ObjectFieldWrapper
 	}
 
 	/**
+	 * Returns the localized of this object field.
+	 *
+	 * @return the localized of this object field
+	 */
+	@Override
+	public boolean getLocalized() {
+		return model.getLocalized();
+	}
+
+	/**
 	 * Returns the modified date of this object field.
 	 *
 	 * @return the modified date of this object field
@@ -596,6 +613,16 @@ public class ObjectFieldWrapper
 	@Override
 	public boolean isIndexedAsKeyword() {
 		return model.isIndexedAsKeyword();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object field is localized.
+	 *
+	 * @return <code>true</code> if this object field is localized; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isLocalized() {
+		return model.isLocalized();
 	}
 
 	/**
@@ -820,6 +847,16 @@ public class ObjectFieldWrapper
 	@Override
 	public void setListTypeDefinitionId(long listTypeDefinitionId) {
 		model.setListTypeDefinitionId(listTypeDefinitionId);
+	}
+
+	/**
+	 * Sets whether this object field is localized.
+	 *
+	 * @param localized the localized of this object field
+	 */
+	@Override
+	public void setLocalized(boolean localized) {
+		model.setLocalized(localized);
 	}
 
 	/**

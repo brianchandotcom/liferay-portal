@@ -39,8 +39,8 @@ public class ObjectFieldServiceWrapper
 			String externalReferenceCode, long listTypeDefinitionId,
 			long objectDefinitionId, String businessType, String dbType,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			java.util.Map<java.util.Locale, String> labelMap, String name,
-			boolean required, boolean state,
+			java.util.Map<java.util.Locale, String> labelMap, boolean localized,
+			String name, boolean required, boolean state,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
 				objectFieldSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -48,7 +48,7 @@ public class ObjectFieldServiceWrapper
 		return _objectFieldService.addCustomObjectField(
 			externalReferenceCode, listTypeDefinitionId, objectDefinitionId,
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, state, objectFieldSettings);
+			labelMap, localized, name, required, state, objectFieldSettings);
 	}
 
 	@Override
@@ -82,8 +82,8 @@ public class ObjectFieldServiceWrapper
 			String externalReferenceCode, long objectFieldId,
 			long listTypeDefinitionId, String businessType, String dbType,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			java.util.Map<java.util.Locale, String> labelMap, String name,
-			boolean required, boolean state,
+			java.util.Map<java.util.Locale, String> labelMap, boolean localized,
+			String name, boolean required, boolean state,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
 				objectFieldSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -91,7 +91,7 @@ public class ObjectFieldServiceWrapper
 		return _objectFieldService.updateObjectField(
 			externalReferenceCode, objectFieldId, listTypeDefinitionId,
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, state, objectFieldSettings);
+			labelMap, localized, name, required, state, objectFieldSettings);
 	}
 
 	@Override

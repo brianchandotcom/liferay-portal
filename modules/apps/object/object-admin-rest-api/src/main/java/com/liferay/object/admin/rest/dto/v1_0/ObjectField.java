@@ -424,6 +424,34 @@ public class ObjectField implements Serializable {
 	protected Long listTypeDefinitionId;
 
 	@Schema
+	public Boolean getLocalized() {
+		return localized;
+	}
+
+	public void setLocalized(Boolean localized) {
+		this.localized = localized;
+	}
+
+	@JsonIgnore
+	public void setLocalized(
+		UnsafeSupplier<Boolean, Exception> localizedUnsafeSupplier) {
+
+		try {
+			localized = localizedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean localized;
+
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -810,6 +838,16 @@ public class ObjectField implements Serializable {
 			sb.append("\"listTypeDefinitionId\": ");
 
 			sb.append(listTypeDefinitionId);
+		}
+
+		if (localized != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"localized\": ");
+
+			sb.append(localized);
 		}
 
 		if (name != null) {

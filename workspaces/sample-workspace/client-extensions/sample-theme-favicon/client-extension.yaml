@@ -1,7 +1,7 @@
 assemble:
-    - from: assets
+    - from: assets/
       include: "**/*"
-      into: static
+      into: static/
 sample-theme-favicon:
     name: Sample Theme Favicon
     type: themeFavicon

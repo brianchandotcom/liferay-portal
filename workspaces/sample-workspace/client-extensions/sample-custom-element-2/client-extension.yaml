@@ -1,7 +1,7 @@
 assemble:
-    - from: build
+    - from: build/
       include: "static/**/*"
-      into: static
+      into: static/
 sample-custom-element-2:
     cssURLs:
         - static/css/main.*.css

@@ -17,11 +17,15 @@ import {PropTypes} from 'prop-types';
 import React from 'react';
 
 import {
+	DATE_OPERATORS,
 	HAS_OPERATORS,
+	PROPERTY_TYPES,
+	SUPPORTED_EVENT_DATE_OPERATORS,
 	SUPPORTED_EVENT_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
 } from '../../utils/constants';
 import {getSupportedOperatorsFromEvent} from '../../utils/utils.es';
+import DateTimeInput from './DateTimeInput';
 import IntegerInput from './IntegerInput';
 import SelectEventEntityInput from './SelectEventEntityInput.es';
 
@@ -118,6 +122,43 @@ function EventInput({
 					type="number"
 					value={value}
 				/>
+
+				<ClaySelectWithOption
+					aria-label={`${propertyLabel}: ${Liferay.Language.get(
+						'select-date-operator-option'
+					)}`}
+					className="criterion-input form-control"
+					disabled={disabledInput}
+					onChange={(event) =>
+						onChange({
+							day: {
+								...criterion.day,
+								operatorName: event.target.value,
+							},
+						})
+					}
+					options={SUPPORTED_EVENT_DATE_OPERATORS.map(
+						({label, name: value}) => ({label, value})
+					)}
+					value={criterion.day?.operatorName || DATE_OPERATORS.EVER}
+				/>
+
+				{criterion.day?.operatorName !== DATE_OPERATORS.EVER ? (
+					<DateTimeInput
+						onChange={({value}) =>
+							onChange({
+								day: {...criterion.day, value},
+							})
+						}
+						propertyLabel={propertyLabel}
+						propertyType={PROPERTY_TYPES.DATE}
+						range={
+							criterion.day?.operatorName ===
+							DATE_OPERATORS.BETWEEN
+						}
+						value={criterion.day?.value}
+					/>
+				) : null}
 			</div>
 		</div>
 	);

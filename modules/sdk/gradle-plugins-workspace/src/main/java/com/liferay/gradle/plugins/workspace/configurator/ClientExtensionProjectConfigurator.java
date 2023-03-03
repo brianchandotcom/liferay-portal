@@ -74,6 +74,7 @@ import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.bundling.Zip;
@@ -165,7 +166,7 @@ public class ClientExtensionProjectConfigurator
 						JsonNode assembleJsonNode = entry.getValue();
 
 						_configureAssembleClientExtensionTask(
-							assembleClientExtensionTaskProvider,
+							project, assembleClientExtensionTaskProvider,
 							assembleJsonNode);
 					}
 					else if (Objects.equals("runtime", id)) {
@@ -354,7 +355,7 @@ public class ClientExtensionProjectConfigurator
 	}
 
 	private void _configureAssembleClientExtensionTask(
-		TaskProvider<Copy> assembleClientExtensionTaskProvider,
+		Project project, TaskProvider<Copy> assembleClientExtensionTaskProvider,
 		JsonNode assembleJsonNode) {
 
 		assembleClientExtensionTaskProvider.configure(
@@ -364,8 +365,25 @@ public class ClientExtensionProjectConfigurator
 					JsonNode includeJsonNode = copyJsonNode.get("include");
 					JsonNode intoJsonNode = copyJsonNode.get("into");
 
+					Object fromPath = null;
+
+					if (fromJsonNode != null) {
+						String from = fromJsonNode.asText();
+
+						TaskContainer taskContainer = project.getTasks();
+
+						Task fromTask = taskContainer.findByName(from);
+
+						if (fromTask != null) {
+							fromPath = fromTask;
+						}
+						else {
+							fromPath = fromJsonNode.asText();
+						}
+					}
+
 					copy.from(
-						(fromJsonNode != null) ? fromJsonNode.asText() : ".",
+						(fromPath != null) ? fromPath : ".",
 						copySpec -> {
 							if (includeJsonNode instanceof ArrayNode) {
 								ArrayNode arrayNode =

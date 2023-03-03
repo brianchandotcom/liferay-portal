@@ -570,38 +570,36 @@ public class JournalEditArticleDisplayContext {
 
 		String defaultArticleLanguageId = null;
 
-		if (Validator.isNull(getArticleId())) {
-			if (getClassNameId() ==
-					JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
-
-				defaultArticleLanguageId = _getDDMStructureDefaultLanguageId();
-			}
-
-			if ((defaultArticleLanguageId == null) ||
-				!LanguageUtil.isAvailableLocale(
-					getGroupId(), defaultArticleLanguageId)) {
-
-				Locale siteDefaultLocale = null;
-
-				try {
-					siteDefaultLocale = PortalUtil.getSiteDefaultLocale(
-						getGroupId());
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
-
-					siteDefaultLocale = LocaleUtil.getSiteDefault();
-				}
-
-				defaultArticleLanguageId = LocaleUtil.toLanguageId(
-					siteDefaultLocale);
-			}
-		}
-		else {
+		if (Validator.isNotNull(getArticleId())) {
 			DDMFormValues ddmFormValues = _article.getDDMFormValues();
 
 			defaultArticleLanguageId = LocaleUtil.toLanguageId(
 				ddmFormValues.getDefaultLocale());
+		}
+		else if (getClassNameId() ==
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
+
+			defaultArticleLanguageId = _getDDMStructureDefaultLanguageId();
+		}
+
+		if ((defaultArticleLanguageId == null) ||
+			!LanguageUtil.isAvailableLocale(
+				getGroupId(), defaultArticleLanguageId)) {
+
+			Locale siteDefaultLocale = null;
+
+			try {
+				siteDefaultLocale = PortalUtil.getSiteDefaultLocale(
+					getGroupId());
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+
+				siteDefaultLocale = LocaleUtil.getSiteDefault();
+			}
+
+			defaultArticleLanguageId = LocaleUtil.toLanguageId(
+				siteDefaultLocale);
 		}
 
 		_defaultArticleLanguageId = defaultArticleLanguageId;

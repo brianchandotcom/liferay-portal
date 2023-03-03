@@ -20,7 +20,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		NavItem.click(navItem = ${navItem});
+		MenuBar.click(menuBar = ${navItem});
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 

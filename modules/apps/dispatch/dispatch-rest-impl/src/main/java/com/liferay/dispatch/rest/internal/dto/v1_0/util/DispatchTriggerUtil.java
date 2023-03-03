@@ -72,7 +72,8 @@ public class DispatchTriggerUtil {
 		Map<String, ?> parameters) {
 
 		Map<String, String> map = new HashMap<>();
-		if(parameters != null) {
+
+		if (parameters != null) {
 			for (Map.Entry<String, ?> entry : parameters.entrySet()) {
 				map.put(entry.getKey(), String.valueOf(entry.getValue()));
 			}

@@ -118,9 +118,8 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					align="right"
 					name="Status"
-					value="--"
+					value=""
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -207,7 +206,6 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					align="left"
 					name="status"
 				>
 					<aui:workflow-status helpMessage='<%= kbArticle.isExpired() ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>' markupView="lexicon" showHelpMessage="<%= kbArticle.isExpired() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />

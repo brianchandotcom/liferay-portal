@@ -14,9 +14,12 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener;
 
 import java.io.Serializable;
+
+import java.util.function.Supplier;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
@@ -38,33 +41,13 @@ public class EhcachePortalCache<K extends Serializable, V>
 		super(baseEhcachePortalCacheManager, ehcachePortalCacheConfiguration);
 
 		_cacheManager = baseEhcachePortalCacheManager.getEhcacheManager();
+
+		_ehcacheSupplier = this::_createEhcache;
 	}
 
 	@Override
 	public Ehcache getEhcache() {
-		if (_ehcache == null) {
-			synchronized (this) {
-				if (_ehcache == null) {
-					synchronized (_cacheManager) {
-						if (!_cacheManager.cacheExists(getPortalCacheName())) {
-							_cacheManager.addCache(getPortalCacheName());
-						}
-					}
-
-					_ehcache = _cacheManager.getCache(getPortalCacheName());
-
-					RegisteredEventListeners registeredEventListeners =
-						_ehcache.getCacheEventNotificationService();
-
-					registeredEventListeners.registerListener(
-						new PortalCacheCacheEventListener<>(
-							aggregatedPortalCacheListener, this),
-						NotificationScope.ALL);
-				}
-			}
-		}
-
-		return _ehcache;
+		return _ehcacheDCLSingleton.getSingleton(_ehcacheSupplier);
 	}
 
 	@Override
@@ -74,10 +57,32 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected void resetEhcache() {
-		_ehcache = null;
+		_ehcacheDCLSingleton.destroy(null);
+	}
+
+	private Ehcache _createEhcache() {
+		synchronized (_cacheManager) {
+			if (!_cacheManager.cacheExists(getPortalCacheName())) {
+				_cacheManager.addCache(getPortalCacheName());
+			}
+		}
+
+		Ehcache ehcache = _cacheManager.getCache(getPortalCacheName());
+
+		RegisteredEventListeners registeredEventListeners =
+			ehcache.getCacheEventNotificationService();
+
+		registeredEventListeners.registerListener(
+			new PortalCacheCacheEventListener<>(
+				aggregatedPortalCacheListener, this),
+			NotificationScope.ALL);
+
+		return ehcache;
 	}
 
 	private final CacheManager _cacheManager;
-	private volatile Ehcache _ehcache;
+	private final DCLSingleton<Ehcache> _ehcacheDCLSingleton =
+		new DCLSingleton<>();
+	private final Supplier<Ehcache> _ehcacheSupplier;
 
 }

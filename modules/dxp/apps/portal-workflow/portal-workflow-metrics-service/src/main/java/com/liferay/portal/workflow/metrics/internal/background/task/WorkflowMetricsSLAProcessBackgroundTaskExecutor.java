@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.background.task;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -68,13 +69,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -422,33 +423,32 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-		long instanceId = Stream.of(
-			searchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).mapToLong(
-			taskDocument -> {
-				List<Document> documents = taskDocuments.computeIfAbsent(
-					taskDocument.getLong("instanceId"), k -> new ArrayList<>());
+		long instanceId = 0L;
 
-				documents.add(taskDocument);
+		List<Long> instanceIds = TransformUtil.transform(
+			searchHits.getSearchHits(),
+			searchHit -> {
+				Document document = searchHit.getDocument();
+
+				List<Document> documents = taskDocuments.computeIfAbsent(
+					document.getLong("instanceId"), k -> new ArrayList<>());
+
+				documents.add(document);
 
 				documents.sort(
 					Comparator.comparing(
-						document -> LocalDateTime.parse(
-							document.getDate("createDate"),
-							_dateTimeFormatter)));
+						d -> LocalDateTime.parse(
+							d.getDate("createDate"), _dateTimeFormatter)));
 
-				return taskDocument.getLong("instanceId");
-			}
-		).max(
-		).orElse(
-			startInstanceId
-		);
+				return document.getLong("instanceId");
+			});
+
+		if (instanceIds.isEmpty()) {
+			instanceId = startInstanceId;
+		}
+		else {
+			instanceId = Collections.max(instanceIds);
+		}
 
 		if (searchHits.getTotalHits() >= 10000) {
 			return instanceId;
@@ -544,17 +544,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-		List<Document> instanceDocuments = Stream.of(
-			searchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).collect(
-			Collectors.toList()
-		);
+		List<Document> instanceDocuments = TransformUtil.transform(
+			searchHits.getSearchHits(), SearchHit::getDocument);
 
 		if (instanceDocuments.isEmpty()) {
 			return instanceId;
@@ -598,83 +589,84 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		List<Document> slaInstanceResultDocuments = new ArrayList<>();
 		List<Document> slaTaskResultDocuments = new ArrayList<>();
 
-		Stream.of(
-			instanceDocuments
-		).flatMap(
-			List::stream
-		).map(
-			document -> _workflowMetricsSLAProcessor.process(
-				_getCompletionLocalDateTime(document),
-				LocalDateTime.parse(
-					document.getDate("createDate"), _dateTimeFormatter),
-				taskDocuments.get(document.getLong("instanceId")),
-				document.getLong("instanceId"), nowLocalDateTime, startNodeId,
-				workflowMetricsSLADefinitionVersion,
-				workflowMetricsSLAInstanceResults.get(
-					document.getLong("instanceId")))
-		).filter(
-			Objects::nonNull
-		).forEach(
-			workflowMetricsSLAInstanceResult -> {
-				slaInstanceResultDocuments.add(
-					_slaInstanceResultWorkflowMetricsIndexer.createDocument(
-						workflowMetricsSLAInstanceResult));
+		for (Document document : instanceDocuments) {
+			WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult =
+				_workflowMetricsSLAProcessor.process(
+					_getCompletionLocalDateTime(document),
+					LocalDateTime.parse(
+						document.getDate("createDate"), _dateTimeFormatter),
+					taskDocuments.get(document.getLong("instanceId")),
+					document.getLong("instanceId"), nowLocalDateTime,
+					startNodeId, workflowMetricsSLADefinitionVersion,
+					workflowMetricsSLAInstanceResults.get(
+						document.getLong("instanceId")));
 
-				for (WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult :
-						workflowMetricsSLAInstanceResult.
-							getWorkflowMetricsSLATaskResults()) {
-
-					slaTaskResultDocuments.add(
-						_slaTaskResultWorkflowMetricsIndexer.createDocument(
-							workflowMetricsSLATaskResult));
-				}
-
-				ScriptBuilder scriptBuilder = _scripts.builder();
-				WorkflowMetricsSLAStatus workflowMetricsSLAStatus =
-					workflowMetricsSLAInstanceResult.
-						getWorkflowMetricsSLAStatus();
-
-				bulkDocumentRequest.addBulkableDocumentRequest(
-					new UpdateDocumentRequest(
-						_instanceWorkflowMetricsIndex.getIndexName(
-							workflowMetricsSLAInstanceResult.getCompanyId()),
-						WorkflowMetricsIndexerUtil.digest(
-							_instanceWorkflowMetricsIndex.getIndexType(),
-							workflowMetricsSLAInstanceResult.getCompanyId(),
-							workflowMetricsSLAInstanceResult.getInstanceId()),
-						scriptBuilder.idOrCode(
-							StringUtil.read(
-								getClass(),
-								"dependencies/workflow-metrics-update-sla-" +
-									"instance-script.painless")
-						).language(
-							"painless"
-						).putParameter(
-							"slaResult",
-							HashMapBuilder.<String, Object>put(
-								"onTime",
-								workflowMetricsSLAInstanceResult.isOnTime()
-							).put(
-								"overdueDate",
-								_dateTimeFormatter.format(
-									workflowMetricsSLAInstanceResult.
-										getOverdueLocalDateTime())
-							).put(
-								"remainingTime",
-								workflowMetricsSLAInstanceResult.
-									getRemainingTime()
-							).put(
-								"slaDefinitionId",
-								workflowMetricsSLAInstanceResult.
-									getSLADefinitionId()
-							).put(
-								"status", workflowMetricsSLAStatus.name()
-							).build()
-						).scriptType(
-							ScriptType.INLINE
-						).build()));
+			if (workflowMetricsSLAInstanceResult == null) {
+				continue;
 			}
-		);
+
+			slaInstanceResultDocuments.add(
+				_slaInstanceResultWorkflowMetricsIndexer.createDocument(
+					workflowMetricsSLAInstanceResult));
+
+			for (WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult :
+					workflowMetricsSLAInstanceResult.
+						getWorkflowMetricsSLATaskResults()) {
+
+				slaTaskResultDocuments.add(
+					_slaTaskResultWorkflowMetricsIndexer.createDocument(
+						workflowMetricsSLATaskResult));
+			}
+
+			ScriptBuilder scriptBuilder = _scripts.builder();
+
+			bulkDocumentRequest.addBulkableDocumentRequest(
+				new UpdateDocumentRequest(
+					_instanceWorkflowMetricsIndex.getIndexName(
+						workflowMetricsSLAInstanceResult.getCompanyId()),
+					WorkflowMetricsIndexerUtil.digest(
+						_instanceWorkflowMetricsIndex.getIndexType(),
+						workflowMetricsSLAInstanceResult.getCompanyId(),
+						workflowMetricsSLAInstanceResult.getInstanceId()),
+					scriptBuilder.idOrCode(
+						StringUtil.read(
+							getClass(),
+							"dependencies/workflow-metrics-update-sla-" +
+								"instance-script.painless")
+					).language(
+						"painless"
+					).putParameter(
+						"slaResult",
+						HashMapBuilder.<String, Object>put(
+							"onTime",
+							workflowMetricsSLAInstanceResult.isOnTime()
+						).put(
+							"overdueDate",
+							_dateTimeFormatter.format(
+								workflowMetricsSLAInstanceResult.
+									getOverdueLocalDateTime())
+						).put(
+							"remainingTime",
+							workflowMetricsSLAInstanceResult.getRemainingTime()
+						).put(
+							"slaDefinitionId",
+							workflowMetricsSLAInstanceResult.
+								getSLADefinitionId()
+						).put(
+							"status",
+							() -> {
+								WorkflowMetricsSLAStatus
+									workflowMetricsSLAStatus =
+										workflowMetricsSLAInstanceResult.
+											getWorkflowMetricsSLAStatus();
+
+								return workflowMetricsSLAStatus.name();
+							}
+						).build()
+					).scriptType(
+						ScriptType.INLINE
+					).build()));
+		}
 
 		_slaInstanceResultWorkflowMetricsIndexer.addDocuments(
 			slaInstanceResultDocuments);

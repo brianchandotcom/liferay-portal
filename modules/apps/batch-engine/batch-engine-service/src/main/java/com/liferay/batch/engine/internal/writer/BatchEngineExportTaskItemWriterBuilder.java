@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Field;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,18 +67,9 @@ public class BatchEngineExportTaskItemWriterBuilder {
 		}
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.JSONT) {
-			BatchEngineAutoDeployListener.BatchEngineImportConfiguration
-				batchEngineImportConfiguration =
-					new BatchEngineAutoDeployListener.
-						BatchEngineImportConfiguration();
-
-			batchEngineImportConfiguration.setClassName(_itemClass.getName());
-			batchEngineImportConfiguration.setVersion("v1.0");
-			batchEngineImportConfiguration.setParameters(_parameters);
-
 			return new JSONTBatchEngineExportTaskItemWriterImpl(
-				fieldsMap.keySet(), batchEngineImportConfiguration, _fieldNames,
-				_outputStream);
+				fieldsMap.keySet(), _getBatchEngineImportConfiguration(),
+				_fieldNames, _outputStream);
 		}
 
 		throw new IllegalArgumentException(
@@ -123,6 +115,29 @@ public class BatchEngineExportTaskItemWriterBuilder {
 		_parameters = parameters;
 
 		return this;
+	}
+
+	private BatchEngineAutoDeployListener.BatchEngineImportConfiguration
+		_getBatchEngineImportConfiguration() {
+
+		BatchEngineAutoDeployListener.BatchEngineImportConfiguration
+			batchEngineImportConfiguration =
+				new BatchEngineAutoDeployListener.
+					BatchEngineImportConfiguration();
+
+		batchEngineImportConfiguration.setClassName(_itemClass.getName());
+		batchEngineImportConfiguration.setVersion("v1.0");
+
+		if (_parameters == null) {
+			_parameters = new HashMap<>();
+		}
+
+		_parameters.computeIfAbsent("createStrategy", key -> "INSERT");
+		_parameters.computeIfAbsent("updateStrategy", key -> "UPDATE");
+
+		batchEngineImportConfiguration.setParameters(_parameters);
+
+		return batchEngineImportConfiguration;
 	}
 
 	private BatchEngineTaskContentType _batchEngineTaskContentType;

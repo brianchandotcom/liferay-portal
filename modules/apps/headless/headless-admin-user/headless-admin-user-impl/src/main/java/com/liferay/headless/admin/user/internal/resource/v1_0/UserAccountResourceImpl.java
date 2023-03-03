@@ -115,6 +115,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -569,11 +570,15 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
-	public void postProfileImage(Long id, MultipartBody multipartBody)
+	public Response postProfileImage(Long id, MultipartBody multipartBody)
 		throws Exception {
 
 		_userService.updatePortrait(
 			id, multipartBody.getBinaryFileAsBytes("image"));
+
+		Response.ResponseBuilder responseBuilder = Response.noContent();
+
+		return responseBuilder.build();
 	}
 
 	@Override

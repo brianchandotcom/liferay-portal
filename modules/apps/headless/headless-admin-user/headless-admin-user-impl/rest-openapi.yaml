@@ -4196,10 +4196,15 @@ paths:
                             $ref: "#/components/schemas/Image"
                 required: true
             responses:
+                201:
+                    description:
+                        Created
                 204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
             tags: ["UserAccount"]
     "/user-accounts/{userAccountId}/password-reset-ticket":
         get:

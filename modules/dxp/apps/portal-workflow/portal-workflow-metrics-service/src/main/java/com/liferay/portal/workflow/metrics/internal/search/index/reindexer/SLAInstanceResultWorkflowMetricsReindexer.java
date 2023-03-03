@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -33,9 +34,6 @@ import com.liferay.portal.workflow.metrics.internal.background.task.WorkflowMetr
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAInstanceResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,31 +103,24 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		Stream.of(
-			searchHits.getSearchHits()
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).map(
-			document ->
-				_slaInstanceResultWorkflowMetricsIndexer.creatDefaultDocument(
-					companyId, document.getLong("processId"))
-		).map(
-			document -> new IndexDocumentRequest(
-				_slaInstanceResultWorkflowMetricsIndexer.getIndexName(
-					companyId),
-				document) {
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			Document document = searchHit.getDocument();
 
-				{
-					setType(
-						_slaInstanceResultWorkflowMetricsIndexer.
-							getIndexType());
-				}
-			}
-		).forEach(
-			bulkDocumentRequest::addBulkableDocumentRequest
-		);
+			bulkDocumentRequest.addBulkableDocumentRequest(
+				new IndexDocumentRequest(
+					_slaInstanceResultWorkflowMetricsIndexer.getIndexName(
+						companyId),
+					_slaInstanceResultWorkflowMetricsIndexer.
+						creatDefaultDocument(
+							companyId, document.getLong("processId"))) {
+
+					{
+						setType(
+							_slaInstanceResultWorkflowMetricsIndexer.
+								getIndexType());
+					}
+				});
+		}
 
 		if (ListUtil.isNotEmpty(
 				bulkDocumentRequest.getBulkableDocumentRequests())) {

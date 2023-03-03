@@ -17,9 +17,9 @@ package com.liferay.portal.dao.orm.hibernate;
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Member;
@@ -62,7 +62,8 @@ public class PrivateFieldPropertyAccessor implements PropertyAccessStrategy {
 
 		return _propertyAccesses.computeIfAbsent(
 			StringBundler.concat(
-				clazz.getName(), StringPool.POUND, propertyName),
+				clazz.hashCode(), StringPool.POUND, clazz.getName(),
+				StringPool.POUND, propertyName),
 			key -> new FieldPropertyAccess(new FieldHolder(clazz, fieldName)));
 	}
 

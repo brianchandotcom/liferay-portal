@@ -44,7 +44,8 @@ public class MethodPropertyAccessor implements PropertyAccessStrategy {
 
 		return _propertyAccesses.computeIfAbsent(
 			StringBundler.concat(
-				clazz.getName(), StringPool.POUND, propertyName),
+				clazz.hashCode(), StringPool.POUND, clazz.getName(),
+				StringPool.POUND, propertyName),
 			key -> new MethodPropertyAccess(this, clazz, propertyName));
 	}
 

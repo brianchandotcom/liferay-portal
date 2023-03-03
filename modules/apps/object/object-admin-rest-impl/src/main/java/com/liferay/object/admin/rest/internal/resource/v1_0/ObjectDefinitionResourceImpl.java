@@ -245,7 +245,9 @@ public class ObjectDefinitionResourceImpl
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition;
 
-		if (GetterUtil.getBoolean(objectDefinition.getSystem())) {
+		if (GetterUtil.getBoolean(objectDefinition.getSystem()) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addSystemObjectDefinition(
 					contextUser.getUserId(),
@@ -328,7 +330,9 @@ public class ObjectDefinitionResourceImpl
 				_objectDefinitionService.getObjectDefinition(
 					objectDefinitionId);
 
-		if (GetterUtil.getBoolean(serviceBuilderObjectDefinition.getSystem())) {
+		if (GetterUtil.getBoolean(serviceBuilderObjectDefinition.getSystem()) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+
 			_objectDefinitionService.publishSystemObjectDefinition(
 				objectDefinitionId);
 		}

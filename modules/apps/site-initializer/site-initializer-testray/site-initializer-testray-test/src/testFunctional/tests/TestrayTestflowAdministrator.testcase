@@ -121,9 +121,11 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Testray.tearDownCP();
+		TestrayRoutines.deleteRoutineSetup();
 
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		Testray.deleteAllProjects();
+
+		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -193,12 +195,14 @@ definition {
 
 			Button.click(button = "Save");
 
+			WaitForPageLoad();
+
 			TestrayTestflow.assertTaskDetails(
 				build = "Builds_1 Project",
-				nameTask = "Task_1",
 				project = "Projects_1 Project",
 				routine = "Routines_1 Routine",
-				status = "In Analysis");
+				status = "In Analysis",
+				taskName = "Task_1");
 		}
 	}
 
@@ -216,12 +220,14 @@ definition {
 				taskName = "Task_1",
 				userName = "Test Test");
 
+			WaitForPageLoad();
+
 			TestrayTestflow.assertTaskDetails(
 				build = "Builds_1 Project",
-				nameTask = "Task_1",
 				project = "Projects_1 Project",
 				routine = "Routines_1 Routine",
-				status = "In Analysis");
+				status = "In Analysis",
+				taskName = "Task_1");
 
 			Click(locator1 = "Button#PLUS");
 
@@ -307,8 +313,6 @@ definition {
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
 			Button.click(button = "Save");
-
-			Button.click(button = "View Task");
 		}
 
 		task ("Then can see the status of the task In Analysis") {

@@ -54,10 +54,10 @@ definition {
 	macro assertTaskDetails {
 		AssertElementPresent(
 			key_build = ${build},
-			key_nameTask = ${nameTask},
 			key_project = ${project},
 			key_routine = ${routine},
 			key_status = ${status},
+			key_taskName = ${taskName},
 			locator1 = "TestrayTestflow#TASK_DETAILS");
 	}
 

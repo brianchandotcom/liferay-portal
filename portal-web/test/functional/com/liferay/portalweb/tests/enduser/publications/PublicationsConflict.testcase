@@ -235,17 +235,11 @@ definition {
 		task ("Go to the Widget Page and edit Asset Publisher") {
 			Navigator.gotoPage(pageName = "Test Page");
 
-			Portlet.gotoPortletOptions(
-				portletName = "Asset Publisher",
-				portletOption = "Configuration");
+			AssetPublisherPortlet.gotoConfigurationPG();
 
-			SelectFrameTop();
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_MANUAL");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
-
-			Click(
-				locator1 = "Radio#ANY",
-				radioLabel = "Manual");
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Remove Asset Publisher from the Page and publish the Publication") {

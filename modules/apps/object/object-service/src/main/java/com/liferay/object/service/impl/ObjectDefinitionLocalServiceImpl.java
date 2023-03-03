@@ -39,6 +39,7 @@ import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
+import com.liferay.object.exception.ObjectDefinitionSystemException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.RequiredObjectDefinitionException;
@@ -83,6 +84,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -306,6 +308,8 @@ public class ObjectDefinitionLocalServiceImpl
 			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
 			String scope, List<ObjectField> objectFields)
 		throws PortalException {
+
+		_validateSystem(modifiable);
 
 		return _addObjectDefinition(
 			userId, null, null, enableComments, labelMap, modifiable, name,
@@ -1621,6 +1625,18 @@ public class ObjectDefinitionLocalServiceImpl
 		catch (IllegalArgumentException illegalArgumentException) {
 			throw new ObjectDefinitionScopeException(
 				illegalArgumentException.getMessage());
+		}
+	}
+
+	private void _validateSystem(boolean modifiable) throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+			return;
+		}
+
+		if (!modifiable) {
+			throw new ObjectDefinitionSystemException(
+				"System object definitions cannot be created if they are not " +
+					"modifiable");
 		}
 	}
 

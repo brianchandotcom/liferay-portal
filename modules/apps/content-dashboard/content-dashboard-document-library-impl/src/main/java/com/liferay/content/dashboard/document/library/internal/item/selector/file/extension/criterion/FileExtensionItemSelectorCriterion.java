@@ -19,6 +19,6 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 /**
  * @author Alejandro Tardín
  */
-public class ContentDashboardFileExtensionItemSelectorCriterion
+public class FileExtensionItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 }

@@ -17,7 +17,6 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
-import com.liferay.headless.delivery.internal.dto.v1_0.converter.SitePageDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
 import com.liferay.petra.string.StringBundler;
@@ -52,6 +51,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -477,7 +477,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;
 
-	@Reference
-	private SitePageDTOConverter _sitePageDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.delivery.internal.dto.v1_0.converter.SitePageDTOConverter)"
+	)
+	private DTOConverter<Layout, SitePage> _sitePageDTOConverter;
 
 }

@@ -128,10 +128,6 @@ String displayStyle = kbAdminManagementToolbarDisplayContext.getDisplayStyle();
 			<c:choose>
 				<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-156421") || kbAdminManagementToolbarDisplayContextSearchContainer.hasResults() || kbAdminManagementToolbarDisplayContext.isSearch() %>'>
 
-					<%
-					KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderResponse);
-					%>
-
 				<c:choose>
 						<c:when test='<%= displayStyle.equals("descriptive") %>'>
 							<liferay-util:include page="/admin/view_descriptive.jsp" servletContext="<%= application %>" />

@@ -49,8 +49,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -145,22 +143,16 @@ public abstract class BaseWorkflowMetricsIndexer {
 		DocumentBuilder documentBuilder, String fieldName,
 		Map<Locale, String> localizedMap) {
 
-		Stream.of(
-			localizedMap.entrySet()
-		).flatMap(
-			Set::stream
-		).forEach(
-			entry -> {
-				String localizedName = Field.getLocalizedName(
-					entry.getKey(), fieldName);
+		for (Map.Entry<Locale, String> entry : localizedMap.entrySet()) {
+			String localizedName = Field.getLocalizedName(
+				entry.getKey(), fieldName);
 
-				documentBuilder.setValue(
-					localizedName, entry.getValue()
-				).setValue(
-					Field.getSortableFieldName(localizedName), entry.getValue()
-				);
-			}
-		);
+			documentBuilder.setValue(
+				localizedName, entry.getValue()
+			).setValue(
+				Field.getSortableFieldName(localizedName), entry.getValue()
+			);
+		}
 	}
 
 	protected void updateDocuments(
@@ -194,33 +186,25 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		Stream.of(
-			searchHits.getSearchHits()
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).forEach(
-			document -> {
-				DocumentBuilder documentBuilder =
-					documentBuilderFactory.builder();
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			Document document = searchHit.getDocument();
+			DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
-				documentBuilder.setString("uid", document.getString("uid"));
+			documentBuilder.setString("uid", document.getString("uid"));
 
-				fieldsMap.forEach(documentBuilder::setValue);
+			fieldsMap.forEach(documentBuilder::setValue);
 
-				UpdateDocumentRequest updateDocumentRequest =
-					new UpdateDocumentRequest(
-						getIndexName(companyId), document.getString("uid"),
-						documentBuilder.build());
+			UpdateDocumentRequest updateDocumentRequest =
+				new UpdateDocumentRequest(
+					getIndexName(companyId), document.getString("uid"),
+					documentBuilder.build());
 
-				updateDocumentRequest.setType(getIndexType());
-				updateDocumentRequest.setUpsert(true);
+			updateDocumentRequest.setType(getIndexType());
+			updateDocumentRequest.setUpsert(true);
 
-				bulkDocumentRequest.addBulkableDocumentRequest(
-					updateDocumentRequest);
-			}
-		);
+			bulkDocumentRequest.addBulkableDocumentRequest(
+				updateDocumentRequest);
+		}
 
 		if (ListUtil.isNotEmpty(
 				bulkDocumentRequest.getBulkableDocumentRequests())) {

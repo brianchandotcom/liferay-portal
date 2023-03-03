@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -76,8 +77,6 @@ import java.math.BigDecimal;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.frutilla.FrutillaRule;
 
@@ -505,17 +504,12 @@ public class CommerceOrderEngineTest {
 			openCommerceOrderStatus.getKey(), OpenCommerceOrderStatusImpl.KEY);
 		Assert.assertTrue(openCommerceOrderStatus.isComplete(_commerceOrder));
 
-		List<CommerceOrderStatus> nextCommerceOrderStatuses =
-			_commerceOrderEngine.getNextCommerceOrderStatuses(_commerceOrder);
-
-		Stream<CommerceOrderStatus> stream = nextCommerceOrderStatuses.stream();
-
 		List<CommerceOrderStatus> inProgressCommerceOrderStatuses =
-			stream.filter(
-				entry -> entry.getKey() == InProgressCommerceOrderStatusImpl.KEY
-			).collect(
-				Collectors.toList()
-			);
+			ListUtil.filter(
+				_commerceOrderEngine.getNextCommerceOrderStatuses(
+					_commerceOrder),
+				entry ->
+					entry.getKey() == InProgressCommerceOrderStatusImpl.KEY);
 
 		Assert.assertEquals(
 			inProgressCommerceOrderStatuses.toString(), 1,
@@ -1005,19 +999,12 @@ public class CommerceOrderEngineTest {
 			PendingCommerceOrderStatusImpl.KEY,
 			_commerceOrder.getOrderStatus());
 
-		List<CommerceOrderStatus> nextCommerceOrderStatuses =
-			_commerceOrderEngine.getNextCommerceOrderStatuses(_commerceOrder);
-
-		Stream<CommerceOrderStatus> stream = nextCommerceOrderStatuses.stream();
-
-		List<CommerceOrderStatus> inProgressCommerceOrderStatuses =
-			stream.filter(
-				entry -> entry.getPriority() == -1
-			).collect(
-				Collectors.toList()
-			);
-
-		Assert.assertFalse(inProgressCommerceOrderStatuses.isEmpty());
+		Assert.assertFalse(
+			ListUtil.isEmpty(
+				ListUtil.filter(
+					_commerceOrderEngine.getNextCommerceOrderStatuses(
+						_commerceOrder),
+					entry -> entry.getPriority() == -1)));
 	}
 
 	@Test
@@ -1044,19 +1031,12 @@ public class CommerceOrderEngineTest {
 		Assert.assertEquals(
 			openCommerceOrderStatus.getKey(), OpenCommerceOrderStatusImpl.KEY);
 
-		List<CommerceOrderStatus> nextCommerceOrderStatuses =
-			_commerceOrderEngine.getNextCommerceOrderStatuses(_commerceOrder);
-
-		Stream<CommerceOrderStatus> stream = nextCommerceOrderStatuses.stream();
-
-		List<CommerceOrderStatus> inProgressCommerceOrderStatuses =
-			stream.filter(
-				entry -> entry.getPriority() == -1
-			).collect(
-				Collectors.toList()
-			);
-
-		Assert.assertTrue(inProgressCommerceOrderStatuses.isEmpty());
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				ListUtil.filter(
+					_commerceOrderEngine.getNextCommerceOrderStatuses(
+						_commerceOrder),
+					entry -> entry.getPriority() == -1)));
 	}
 
 	@Test

@@ -48,11 +48,12 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialRequestInterpreter;
 
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.Portlet;
 import javax.portlet.PreferencesValidator;
@@ -111,72 +112,32 @@ public class PortletBagImpl implements PortletBag {
 		}
 
 		_serviceRegistrations.clear();
+
+		for (ServiceTrackerList<?> serviceTrackerList :
+				_serviceTrackerListMap.values()) {
+
+			serviceTrackerList.close();
+		}
 	}
 
 	@Override
 	public List<AssetRendererFactory<?>> getAssetRendererFactoryInstances() {
-		if (_assetRendererFactoryInstances == null) {
-			synchronized (this) {
-				if (_assetRendererFactoryInstances == null) {
-					_assetRendererFactoryInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext,
-							(Class<AssetRendererFactory<?>>)
-								(Class<?>)AssetRendererFactory.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_assetRendererFactoryInstances);
+		return _getList(AssetRendererFactory.class);
 	}
 
 	@Override
 	public List<ConfigurationAction> getConfigurationActionInstances() {
-		if (_configurationActionInstances == null) {
-			synchronized (this) {
-				if (_configurationActionInstances == null) {
-					_configurationActionInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, ConfigurationAction.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_configurationActionInstances);
+		return _getList(ConfigurationAction.class);
 	}
 
 	@Override
 	public List<ControlPanelEntry> getControlPanelEntryInstances() {
-		if (_controlPanelEntryInstances == null) {
-			synchronized (this) {
-				if (_controlPanelEntryInstances == null) {
-					_controlPanelEntryInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, ControlPanelEntry.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_controlPanelEntryInstances);
+		return _getList(ControlPanelEntry.class);
 	}
 
 	@Override
 	public List<CustomAttributesDisplay> getCustomAttributesDisplayInstances() {
-		if (_customAttributesDisplayInstances == null) {
-			synchronized (this) {
-				if (_customAttributesDisplayInstances == null) {
-					_customAttributesDisplayInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, CustomAttributesDisplay.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_customAttributesDisplayInstances);
+		return _getList(CustomAttributesDisplay.class);
 	}
 
 	@Override
@@ -186,98 +147,34 @@ public class PortletBagImpl implements PortletBag {
 
 	@Override
 	public List<Indexer<?>> getIndexerInstances() {
-		if (_indexerInstances == null) {
-			synchronized (this) {
-				if (_indexerInstances == null) {
-					_indexerInstances = ServiceTrackerListFactory.open(
-						_bundleContext,
-						(Class<Indexer<?>>)(Class<?>)Indexer.class,
-						_filterString);
-				}
-			}
-		}
-
-		return _toList(_indexerInstances);
+		return _getList(Indexer.class);
 	}
 
 	@Override
 	public List<OpenSearch> getOpenSearchInstances() {
-		if (_openSearchInstances == null) {
-			synchronized (this) {
-				if (_openSearchInstances == null) {
-					_openSearchInstances = ServiceTrackerListFactory.open(
-						_bundleContext, OpenSearch.class, _filterString);
-				}
-			}
-		}
-
-		return _toList(_openSearchInstances);
+		return _getList(OpenSearch.class);
 	}
 
 	@Override
 	public List<PermissionPropagator> getPermissionPropagatorInstances() {
-		if (_permissionPropagatorInstances == null) {
-			synchronized (this) {
-				if (_permissionPropagatorInstances == null) {
-					_permissionPropagatorInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, PermissionPropagator.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_permissionPropagatorInstances);
+		return _getList(PermissionPropagator.class);
 	}
 
 	@Override
 	public List<MessageListener> getPopMessageListenerInstances() {
-		if (_popMessageListenerInstances == null) {
-			synchronized (this) {
-				if (_popMessageListenerInstances == null) {
-					_popMessageListenerInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, MessageListener.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_popMessageListenerInstances);
+		return _getList(MessageListener.class);
 	}
 
 	@Override
 	public List<PortletConfigurationListener>
 		getPortletConfigurationListenerInstances() {
 
-		if (_portletConfigurationListenerInstances == null) {
-			synchronized (this) {
-				if (_portletConfigurationListenerInstances == null) {
-					_portletConfigurationListenerInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, PortletConfigurationListener.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_portletConfigurationListenerInstances);
+		return _getList(PortletConfigurationListener.class);
 	}
 
 	@Override
 	public List<PortletDataHandler> getPortletDataHandlerInstances() {
-		if (_portletDataHandlerInstances == null) {
-			synchronized (this) {
-				if (_portletDataHandlerInstances == null) {
-					_portletDataHandlerInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, PortletDataHandler.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_portletDataHandlerInstances);
+		return _getList(PortletDataHandler.class);
 	}
 
 	@Override
@@ -287,18 +184,7 @@ public class PortletBagImpl implements PortletBag {
 
 	@Override
 	public List<PortletLayoutListener> getPortletLayoutListenerInstances() {
-		if (_portletLayoutListenerInstances == null) {
-			synchronized (this) {
-				if (_portletLayoutListenerInstances == null) {
-					_portletLayoutListenerInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, PortletLayoutListener.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_portletLayoutListenerInstances);
+		return _getList(PortletLayoutListener.class);
 	}
 
 	@Override
@@ -308,18 +194,7 @@ public class PortletBagImpl implements PortletBag {
 
 	@Override
 	public List<PreferencesValidator> getPreferencesValidatorInstances() {
-		if (_preferencesValidatorInstances == null) {
-			synchronized (this) {
-				if (_preferencesValidatorInstances == null) {
-					_preferencesValidatorInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, PreferencesValidator.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_preferencesValidatorInstances);
+		return _getList(PreferencesValidator.class);
 	}
 
 	@Override
@@ -359,177 +234,63 @@ public class PortletBagImpl implements PortletBag {
 	public List<SocialActivityInterpreter>
 		getSocialActivityInterpreterInstances() {
 
-		if (_socialActivityInterpreterInstances == null) {
-			synchronized (this) {
-				if (_socialActivityInterpreterInstances == null) {
-					_socialActivityInterpreterInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, SocialActivityInterpreter.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_socialActivityInterpreterInstances);
+		return _getList(SocialActivityInterpreter.class);
 	}
 
 	@Override
 	public List<SocialRequestInterpreter>
 		getSocialRequestInterpreterInstances() {
 
-		if (_socialRequestInterpreterInstances == null) {
-			synchronized (this) {
-				if (_socialRequestInterpreterInstances == null) {
-					_socialRequestInterpreterInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, SocialRequestInterpreter.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_socialRequestInterpreterInstances);
+		return _getList(SocialRequestInterpreter.class);
 	}
 
 	@Override
 	public List<StagedModelDataHandler<?>>
 		getStagedModelDataHandlerInstances() {
 
-		if (_stagedModelDataHandlerInstances == null) {
-			synchronized (this) {
-				if (_stagedModelDataHandlerInstances == null) {
-					_stagedModelDataHandlerInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext,
-							(Class<StagedModelDataHandler<?>>)
-								(Class<?>)StagedModelDataHandler.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_stagedModelDataHandlerInstances);
+		return _getList(StagedModelDataHandler.class);
 	}
 
 	@Override
 	public List<TemplateHandler> getTemplateHandlerInstances() {
-		if (_templateHandlerInstances == null) {
-			synchronized (this) {
-				if (_templateHandlerInstances == null) {
-					_templateHandlerInstances = ServiceTrackerListFactory.open(
-						_bundleContext, TemplateHandler.class, _filterString);
-				}
-			}
-		}
-
-		return _toList(_templateHandlerInstances);
+		return _getList(TemplateHandler.class);
 	}
 
 	@Override
 	public List<TrashHandler> getTrashHandlerInstances() {
-		if (_trashHandlerInstances == null) {
-			synchronized (this) {
-				if (_trashHandlerInstances == null) {
-					_trashHandlerInstances = ServiceTrackerListFactory.open(
-						_bundleContext, TrashHandler.class, _filterString);
-				}
-			}
-		}
-
-		return _toList(_trashHandlerInstances);
+		return _getList(TrashHandler.class);
 	}
 
 	@Override
 	public List<URLEncoder> getURLEncoderInstances() {
-		if (_urlEncoderInstances == null) {
-			synchronized (this) {
-				if (_urlEncoderInstances == null) {
-					_urlEncoderInstances = ServiceTrackerListFactory.open(
-						_bundleContext, URLEncoder.class, _filterString);
-				}
-			}
-		}
-
-		return _toList(_urlEncoderInstances);
+		return _getList(URLEncoder.class);
 	}
 
 	@Override
 	public List<UserNotificationDefinition>
 		getUserNotificationDefinitionInstances() {
 
-		if (_userNotificationDefinitionInstances == null) {
-			synchronized (this) {
-				if (_userNotificationDefinitionInstances == null) {
-					_userNotificationDefinitionInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, UserNotificationDefinition.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_userNotificationDefinitionInstances);
+		return _getList(UserNotificationDefinition.class);
 	}
 
 	@Override
 	public List<UserNotificationHandler> getUserNotificationHandlerInstances() {
-		if (_userNotificationHandlerInstances == null) {
-			synchronized (this) {
-				if (_userNotificationHandlerInstances == null) {
-					_userNotificationHandlerInstances =
-						ServiceTrackerListFactory.open(
-							_bundleContext, UserNotificationHandler.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_userNotificationHandlerInstances);
+		return _getList(UserNotificationHandler.class);
 	}
 
 	@Override
 	public List<WebDAVStorage> getWebDAVStorageInstances() {
-		if (_webDAVStorageInstances == null) {
-			synchronized (this) {
-				if (_webDAVStorageInstances == null) {
-					_webDAVStorageInstances = ServiceTrackerListFactory.open(
-						_bundleContext, WebDAVStorage.class, _filterString);
-				}
-			}
-		}
-
-		return _toList(_webDAVStorageInstances);
+		return _getList(WebDAVStorage.class);
 	}
 
 	@Override
 	public List<WorkflowHandler<?>> getWorkflowHandlerInstances() {
-		if (_workflowHandlerInstances == null) {
-			synchronized (this) {
-				if (_workflowHandlerInstances == null) {
-					_workflowHandlerInstances = ServiceTrackerListFactory.open(
-						_bundleContext,
-						(Class<WorkflowHandler<?>>)
-							(Class<?>)WorkflowHandler.class,
-						_filterString);
-				}
-			}
-		}
-
-		return _toList(_workflowHandlerInstances);
+		return _getList(WorkflowHandler.class);
 	}
 
 	@Override
 	public List<Method> getXmlRpcMethodInstances() {
-		if (_xmlRpcMethodInstances == null) {
-			synchronized (this) {
-				if (_xmlRpcMethodInstances == null) {
-					_xmlRpcMethodInstances = ServiceTrackerListFactory.open(
-						_bundleContext, Method.class, _filterString);
-				}
-			}
-		}
-
-		return _toList(_xmlRpcMethodInstances);
+		return _getList(Method.class);
 	}
 
 	@Override
@@ -542,62 +303,32 @@ public class PortletBagImpl implements PortletBag {
 		_portletName = portletName;
 	}
 
-	private <T> List<T> _toList(ServiceTrackerList<T> serviceTrackerList) {
-		return Collections.unmodifiableList(serviceTrackerList.toList());
+	private final <T> List<T> _getList(Class<?> clazz) {
+		ServiceTrackerList<Class<?>> serviceTrackerList =
+			_serviceTrackerListMap.computeIfAbsent(
+				clazz,
+				key ->
+					(ServiceTrackerList<Class<?>>)
+						(ServiceTrackerList)ServiceTrackerListFactory.open(
+							_bundleContext, clazz, _filterString));
+
+		return (List<T>)serviceTrackerList.toList();
 	}
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 
-	private volatile ServiceTrackerList<AssetRendererFactory<?>>
-		_assetRendererFactoryInstances;
-	private volatile ServiceTrackerList<ConfigurationAction>
-		_configurationActionInstances;
-	private volatile ServiceTrackerList<ControlPanelEntry>
-		_controlPanelEntryInstances;
-	private volatile ServiceTrackerList<CustomAttributesDisplay>
-		_customAttributesDisplayInstances;
 	private final String _filterString;
 	private final FriendlyURLMapperTracker _friendlyURLMapperTracker;
-	private volatile ServiceTrackerList<Indexer<?>> _indexerInstances;
-	private volatile ServiceTrackerList<OpenSearch> _openSearchInstances;
-	private volatile ServiceTrackerList<PermissionPropagator>
-		_permissionPropagatorInstances;
-	private volatile ServiceTrackerList<MessageListener>
-		_popMessageListenerInstances;
-	private volatile ServiceTrackerList<PortletConfigurationListener>
-		_portletConfigurationListenerInstances;
-	private volatile ServiceTrackerList<PortletDataHandler>
-		_portletDataHandlerInstances;
 	private Portlet _portletInstance;
-	private volatile ServiceTrackerList<PortletLayoutListener>
-		_portletLayoutListenerInstances;
 	private String _portletName;
-	private volatile ServiceTrackerList<PreferencesValidator>
-		_preferencesValidatorInstances;
 	private final String _resourceBundleBaseName;
 	private final DCLSingleton<ResourceBundleLoader>
 		_resourceBundleLoaderDCLSingleton = new DCLSingleton<>();
 	private final List<ServiceRegistration<?>> _serviceRegistrations;
+	private final Map<Class<?>, ServiceTrackerList<Class<?>>>
+		_serviceTrackerListMap = new ConcurrentHashMap<>();
 	private final ServletContext _servletContext;
-	private volatile ServiceTrackerList<SocialActivityInterpreter>
-		_socialActivityInterpreterInstances;
-	private volatile ServiceTrackerList<SocialRequestInterpreter>
-		_socialRequestInterpreterInstances;
-	private volatile ServiceTrackerList<StagedModelDataHandler<?>>
-		_stagedModelDataHandlerInstances;
-	private volatile ServiceTrackerList<TemplateHandler>
-		_templateHandlerInstances;
-	private volatile ServiceTrackerList<TrashHandler> _trashHandlerInstances;
-	private volatile ServiceTrackerList<URLEncoder> _urlEncoderInstances;
-	private volatile ServiceTrackerList<UserNotificationDefinition>
-		_userNotificationDefinitionInstances;
-	private volatile ServiceTrackerList<UserNotificationHandler>
-		_userNotificationHandlerInstances;
-	private volatile ServiceTrackerList<WebDAVStorage> _webDAVStorageInstances;
-	private volatile ServiceTrackerList<WorkflowHandler<?>>
-		_workflowHandlerInstances;
-	private volatile ServiceTrackerList<Method> _xmlRpcMethodInstances;
 
 	@SuppressWarnings("deprecation")
 	private static class PermissionPropagatorServiceTrackerCustomizer

@@ -16,7 +16,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite(siteName = ${testSiteName});
+			Testray.addTR2Site(siteName = ${testSiteName});
 
 			Refresh();
 		}
@@ -430,6 +430,43 @@ definition {
 
 		task ("Then the task should appear on the list with the status complete") {
 			Testray.assertItemName(key_name = "Complete");
+		}
+	}
+
+	@description = "This is a test for LPS-171780 - Verify that as an Administrator I should see the build that is associated with the task"
+	@priority = 4
+	test AdminCanViewAssociatedBuildInTask {
+		task ("Given that the user add a Task") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.addTask(
+				checkCaseType = "Compile",
+				selectBuild = "Builds_1 Project",
+				selectProject = "Projects_1 Project",
+				selectRoutine = "Routines_1 Routine",
+				taskName = "Task_1",
+				userName = "Test Test");
+
+			WaitForPageLoad();
+
+			TestrayTestflow.assertTaskDetails(
+				build = "Builds_1 Project",
+				project = "Projects_1 Project",
+				routine = "Routines_1 Routine",
+				status = "In Analysis",
+				taskName = "Task_1");
+		}
+
+		task ("When the user associates a task with a build") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Task_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "View Associete Build");
+		}
+
+		task ("Then the user can redirect to the build associated with the task") {
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Builds_1 Project");
 		}
 	}
 

@@ -259,7 +259,7 @@ public class AzureStore implements Store {
 
 		pagedIterable.forEach(
 			blobItem -> {
-				if (!GetterUtil.getBoolean(blobItem.isPrefix())) {
+				if (GetterUtil.getBoolean(blobItem.isPrefix())) {
 					return;
 				}
 

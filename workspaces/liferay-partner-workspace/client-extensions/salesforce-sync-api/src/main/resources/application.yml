@@ -4,11 +4,10 @@ logging:
         org.springframework.cloud: DEBUG
         org.springframework.security: DEBUG
         org.springframework.web: DEBUG
+lxc.default.oauth.application: salesforce-sync-api-user-agent
 server:
     port: 80
 spring:
-  # https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.files.configtree
-  config:
-    import: "configtree:/etc/liferay/lxc/*/"
-
-lxc.default.oauth.application: salesforce-sync-api-user-agent
+    # https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.files.configtree
+    config:
+        import: "configtree:/etc/liferay/lxc/*/"

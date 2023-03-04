@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HealthResource {
 
-  @GetMapping("/")
-  public String ready() throws Exception {
-    return "READY";
-  }
+	@GetMapping("/")
+	public String ready() throws Exception {
+		return "READY";
+	}
+
 }

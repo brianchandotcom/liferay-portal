@@ -9,21 +9,22 @@ import org.springframework.security.oauth2.jwt.Jwt;
 
 public class ClientIdValidator implements OAuth2TokenValidator<Jwt> {
 
-    private static final OAuth2Error NO_CLIENT_ID_MATCH = new OAuth2Error(
-        "invalid_token", "The client_id does not match", null);
+	public ClientIdValidator(String clientId) {
+		this.clientId = clientId;
+	}
 
-    private final String clientId;
+	@Override
+	public OAuth2TokenValidatorResult validate(Jwt jwt) {
+		if (Objects.equals(jwt.getClaimAsString("client_id"), clientId)) {
+			return OAuth2TokenValidatorResult.success();
+		}
 
-    public ClientIdValidator(String clientId) {
-        this.clientId = clientId;
-    }
+		return OAuth2TokenValidatorResult.failure(NO_CLIENT_ID_MATCH);
+	}
 
-    @Override
-    public OAuth2TokenValidatorResult validate(Jwt jwt) {
-        if (Objects.equals(jwt.getClaimAsString("client_id"), clientId)) {
-            return OAuth2TokenValidatorResult.success();
-        }
-        return OAuth2TokenValidatorResult.failure(NO_CLIENT_ID_MATCH);
-    }
+	private static final OAuth2Error NO_CLIENT_ID_MATCH = new OAuth2Error(
+		"invalid_token", "The client_id does not match", null);
+
+	private final String clientId;
 
 }

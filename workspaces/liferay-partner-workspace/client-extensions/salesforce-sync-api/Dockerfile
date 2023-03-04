@@ -5,7 +5,6 @@ ENV DEBUG_PORT=""
 RUN apt-get update && \
 	apt-get install -y tini && \
 	rm -rf /var/lib/apt/lists/*
-
 RUN \
   export ARCH=$(dpkg --print-architecture) && \
     curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/${ARCH}" && \

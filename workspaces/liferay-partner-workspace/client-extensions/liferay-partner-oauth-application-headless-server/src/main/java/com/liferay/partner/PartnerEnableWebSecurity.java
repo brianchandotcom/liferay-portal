@@ -46,6 +46,7 @@ import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.web.reactive.function.client.ServletBearerExchangeFilterFunction;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -141,6 +142,8 @@ public class PartnerEnableWebSecurity {
 				_liferayPortalURL
 			).defaultHeader(
 				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+			).filter(
+				new ServletBearerExchangeFilterFunction()
 			).build();
 		}
 

@@ -23,11 +23,8 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -44,28 +41,22 @@ import reactor.core.publisher.Mono;
 public class PartnerRestController {
 
 	@GetMapping("/")
-	public ResponseEntity<String> trigger(@AuthenticationPrincipal Jwt jwt) {
-		if (_log.isInfoEnabled()) {
-			_log.info("JWT Claims: " + jwt.getClaims());
-			_log.info("JWT ID: " + jwt.getId());
-			_log.info("JWT Subject: " + jwt.getSubject());
-		}
-
+	public ResponseEntity<String> trigger() {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("type", "Testing 4444");
 
 		_addOrUpdateObjectEntry(
-			"opportunities", "testing1", jsonObject.toString(), jwt);
+			"opportunities", "testing1", jsonObject.toString());
 
-		_getObjectEntries("opportunitysfs", jwt);
+		_getObjectEntries("opportunitysfs");
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	private void _addOrUpdateObjectEntry(
 		String objectDefinitionName, String externalReferenceCode,
-		String bodyValue, Jwt jwt) {
+		String bodyValue) {
 
 		try {
 			_webClient.put(
@@ -75,8 +66,6 @@ public class PartnerRestController {
 					"/by-external-reference-code/", externalReferenceCode)
 			).bodyValue(
 				bodyValue
-			).header(
-				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 			).exchangeToMono(
 				clientResponse -> {
 					HttpStatus httpStatus = clientResponse.statusCode();
@@ -106,13 +95,11 @@ public class PartnerRestController {
 		}
 	}
 
-	private void _getObjectEntries(String objectDefinitionName, Jwt jwt) {
+	private void _getObjectEntries(String objectDefinitionName) {
 		try {
 			_webClient.get(
 			).uri(
 				"/o/c/" + objectDefinitionName + "/"
-			).header(
-				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 			).exchangeToMono(
 				clientResponse -> {
 					HttpStatus httpStatus = clientResponse.statusCode();

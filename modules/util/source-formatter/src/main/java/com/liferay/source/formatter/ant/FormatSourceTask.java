@@ -121,6 +121,10 @@ public class FormatSourceTask extends Task {
 		_sourceFormatterArgs.setIncludeSubrepositories(includeSubrepositories);
 	}
 
+	public void setJavaParserEnabled(boolean javaParserEnabled) {
+		_sourceFormatterArgs.setJavaParserEnabled(javaParserEnabled);
+	}
+
 	public void setMaxLineLength(int maxLineLength) {
 		_sourceFormatterArgs.setMaxLineLength(maxLineLength);
 	}

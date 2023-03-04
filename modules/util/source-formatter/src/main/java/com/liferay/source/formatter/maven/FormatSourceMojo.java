@@ -146,6 +146,13 @@ public class FormatSourceMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setJavaParserEnabled(boolean javaParserEnabled) {
+		_sourceFormatterArgs.setJavaParserEnabled(javaParserEnabled);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setMaxLineLength(int maxLineLength) {
 		_sourceFormatterArgs.setMaxLineLength(maxLineLength);
 	}

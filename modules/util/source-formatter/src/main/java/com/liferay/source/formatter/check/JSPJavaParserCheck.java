@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.java.parser.JavaParser;
+import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.source.formatter.processor.SourceProcessor;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,6 +33,15 @@ public class JSPJavaParserCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
+
+		SourceProcessor sourceProcessor = getSourceProcessor();
+
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
+
+		if (!sourceFormatterArgs.isJavaParserEnabled()) {
+			return content;
+		}
 
 		Matcher matcher = _javaSourcePattern.matcher(content);
 

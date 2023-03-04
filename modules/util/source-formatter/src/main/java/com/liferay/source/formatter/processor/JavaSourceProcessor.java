@@ -86,6 +86,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
+		if (!sourceFormatterArgs.isJavaParserEnabled()) {
+			return content;
+		}
+
 		String newContent = JavaParser.parse(
 			file, content, sourceFormatterArgs.getMaxLineLength(), false);
 

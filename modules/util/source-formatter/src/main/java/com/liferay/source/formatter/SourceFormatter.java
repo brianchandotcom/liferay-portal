@@ -230,6 +230,10 @@ public class SourceFormatter {
 			sourceFormatterArgs.setIncludeSubrepositories(
 				includeSubrepositories);
 
+			sourceFormatterArgs.setJavaParserEnabled(
+				ArgumentsUtil.getBoolean(
+					arguments, "java.parser.enabled",
+					SourceFormatterArgs.JAVA_PARSER_ENABLED));
 			sourceFormatterArgs.setMaxLineLength(
 				ArgumentsUtil.getInteger(
 					arguments, "max.line.length",

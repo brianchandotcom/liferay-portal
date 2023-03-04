@@ -49,6 +49,8 @@ public class SourceFormatterArgs {
 
 	public static final boolean INCLUDE_SUBREPOSITORIES = false;
 
+	public static final boolean JAVA_PARSER_ENABLED = true;
+
 	public static final int MAX_DIR_LEVEL = ToolsUtil.PORTAL_MAX_DIR_LEVEL;
 
 	public static final int MAX_LINE_LENGTH = 80;
@@ -167,6 +169,10 @@ public class SourceFormatterArgs {
 		return _includeSubrepositories;
 	}
 
+	public boolean isJavaParserEnabled() {
+		return _javaParserEnabled;
+	}
+
 	public boolean isPrintErrors() {
 		return _printErrors;
 	}
@@ -256,6 +262,10 @@ public class SourceFormatterArgs {
 		_includeSubrepositories = includeSubrepositories;
 	}
 
+	public void setJavaParserEnabled(boolean javaParserEnabled) {
+		_javaParserEnabled = javaParserEnabled;
+	}
+
 	public void setMaxDirLevel(int maxDirLevel) {
 		_maxDirLevel = maxDirLevel;
 	}
@@ -309,6 +319,7 @@ public class SourceFormatterArgs {
 	private String _gitWorkingBranchName = GIT_WORKING_BRANCH_NAME;
 	private boolean _includeGeneratedFiles = INCLUDE_GENERATED_FILES;
 	private boolean _includeSubrepositories = INCLUDE_SUBREPOSITORIES;
+	private boolean _javaParserEnabled = JAVA_PARSER_ENABLED;
 	private int _maxDirLevel = MAX_DIR_LEVEL;
 	private int _maxLineLength = MAX_LINE_LENGTH;
 	private String _outputFileName = OUTPUT_FILE_NAME;

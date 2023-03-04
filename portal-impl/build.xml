@@ -606,6 +606,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					<arg value="format.local.changes=${format.local.changes}" />
 					<arg value="git.working.branch.name=${git.working.branch.name}" />
 					<arg value="include.subrepositories=${source.formatter.include.subrepositories}" />
+					<arg value="java.parser.enabled=${java.parser.enabled}" />
 					<arg value="max.line.length=${source.formatter.max.line.length}" />
 					<arg value="processor.thread.count=${source.formatter.processor.thread.count}" />
 					<arg value="show.debug.information=${source.formatter.show.debug.information}" />

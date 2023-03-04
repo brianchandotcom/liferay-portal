@@ -16,16 +16,12 @@ package com.liferay.partner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author Jair Medeiros
  * @author Thaynam Lázaro
  * @author Raymond Augé
  */
-@Configuration
-@EnableScheduling
 @SpringBootApplication
 public class PartnerSpringBootApplication {
 

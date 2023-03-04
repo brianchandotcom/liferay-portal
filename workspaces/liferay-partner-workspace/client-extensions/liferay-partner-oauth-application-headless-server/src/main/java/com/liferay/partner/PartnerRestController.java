@@ -18,7 +18,9 @@ import com.liferay.petra.string.StringBundler;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -43,137 +45,125 @@ public class PartnerRestController {
 
 	@GetMapping("/")
 	public ResponseEntity<String> trigger(@AuthenticationPrincipal Jwt jwt) {
-		System.out.println("oie");
-
 		if (_log.isInfoEnabled()) {
 			_log.info("JWT Claims: " + jwt.getClaims());
 			_log.info("JWT ID: " + jwt.getId());
 			_log.info("JWT Subject: " + jwt.getSubject());
 		}
 
-		// _getObjectEntries("opportunity", jwt);
-		// _createObjectEntry("opportunity", "1", jwt);
-		// _updateObjectEntry("opportunity", 55943, "00", jwt);
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("type", "Testing 4444");
+
+		_addOrUpdateObjectEntry(
+			"opportunities", "testing1", jsonObject.toString(), jwt);
+
+		_getObjectEntries("opportunities", jwt);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	private void _createObjectEntry(String objectName, String type, Jwt jwt) {
+	private void _addOrUpdateObjectEntry(
+		String objectDefinitionName, String externalReferenceCode,
+		String bodyValue, Jwt jwt) {
+
 		try {
 			WebClient.Builder builder = WebClient.builder();
 
 			WebClient webClient = builder.baseUrl(
-					_liferayPortalURL).defaultHeader(
-							HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-					.defaultHeader(
-							HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-					.build();
+				_liferayPortalURL
+			).defaultHeader(
+				HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
+			).defaultHeader(
+				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+			).build();
 
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("type", type);
+			webClient.put(
+			).uri(
+				StringBundler.concat(
+					"/o/c/", objectDefinitionName,
+					"/by-external-reference-code/", externalReferenceCode)
+			).bodyValue(
+				bodyValue
+			).header(
+				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+			).exchangeToMono(
+				clientResponse -> {
+					HttpStatus httpStatus = clientResponse.statusCode();
 
-			webClient.post().uri(
-					"/o/c/" + objectName + "/").bodyValue(
-							jsonObject)
-					.header(
-							HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue())
-					.exchangeToMono(
-							clientResponse -> {
-								HttpStatus httpStatus = clientResponse.statusCode();
+					if (httpStatus.is2xxSuccessful()) {
+						return clientResponse.bodyToMono(String.class);
+					}
+					else if (httpStatus.is4xxClientError()) {
+						return Mono.just(httpStatus.getReasonPhrase());
+					}
 
-								if (httpStatus.is2xxSuccessful()) {
-									return clientResponse.bodyToMono(String.class);
-								} else if (httpStatus.is4xxClientError()) {
-									return Mono.just(httpStatus.getReasonPhrase());
-								}
+					Mono<WebClientResponseException> mono =
+						clientResponse.createException();
 
-								Mono<WebClientResponseException> mono = clientResponse.createException();
-
-								return mono.flatMap(Mono::error);
-							})
-					.doOnNext(
-							output -> {
-								if (_log.isInfoEnabled()) {
-									_log.info("Output: " + output);
-								}
-							})
-					.subscribe();
-		} catch (Exception exception) {
-			_log.error("ERROR");
+					return mono.flatMap(Mono::error);
+				}
+			).doOnNext(
+				output -> {
+					if (_log.isInfoEnabled()) {
+						_log.info("Output: " + output);
+					}
+				}
+			).subscribe();
+		}
+		catch (WebClientResponseException webClientResponseException) {
+			_log.error("ERROR" + webClientResponseException);
 		}
 	}
 
-	private void _getObjectEntries(String objectName, Jwt jwt) {
-		WebClient webClient = WebClient.builder().baseUrl(
-				"https://".concat("dxp.lfr.dev")).defaultHeader(
-						HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-				.defaultHeader(
-						HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				.build();
+	private void _getObjectEntries(String objectDefinitionName, Jwt jwt) {
+		try {
+			WebClient.Builder builder = WebClient.builder();
 
-		webClient.get().uri(
-				"/o/c/" + objectName + "/").header(
-						HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue())
-				.exchangeToMono(
-						r -> {
-							if (r.statusCode().equals(
-									HttpStatus.OK)) {
+			WebClient webClient = builder.baseUrl(
+				_liferayPortalURL
+			).defaultHeader(
+				HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
+			).build();
 
-								return r.bodyToMono(String.class);
-							} else if (r.statusCode().is4xxClientError()) {
+			webClient.get(
+			).uri(
+				"/o/c/" + objectDefinitionName + "/"
+			).header(
+				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+			).exchangeToMono(
+				clientResponse -> {
+					HttpStatus httpStatus = clientResponse.statusCode();
 
-								return Mono.just("Error response");
-							}
+					if (httpStatus.is2xxSuccessful()) {
+						return clientResponse.bodyToMono(String.class);
+					}
+					else if (httpStatus.is4xxClientError()) {
+						return Mono.just(httpStatus.getReasonPhrase());
+					}
 
-							return r.createException().flatMap(
-									Mono::error);
-						})
-				.doOnNext(
-						System.out::println)
-				.subscribe();
-	}
+					Mono<WebClientResponseException> mono =
+						clientResponse.createException();
 
-	private void _updateObjectEntry(
-			String objectName, int objectEntryId, String type, Jwt jwt) {
-
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("type", type);
-
-		WebClient webClient = WebClient.builder().baseUrl(
-				"https://".concat("dxp.lfr.dev")).defaultHeader(
-						HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-				.defaultHeader(
-						HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				.build();
-
-		webClient.patch().uri(
-				StringBundler.concat("/o/c/", objectName, "/", objectEntryId)).header(
-						HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue())
-				.bodyValue(
-						jsonObject)
-				.exchangeToMono(
-						r -> {
-							if (r.statusCode().equals(
-									HttpStatus.OK)) {
-
-								return r.bodyToMono(String.class);
-							} else if (r.statusCode().is4xxClientError()) {
-
-								return Mono.just("Error response");
-							}
-
-							return r.createException().flatMap(
-									Mono::error);
-						})
-				.doOnNext(
-						System.out::println)
-				.subscribe();
+					return mono.flatMap(Mono::error);
+				}
+			).doOnNext(
+				output -> {
+					if (_log.isInfoEnabled()) {
+						_log.info("Output: " + output);
+					}
+				}
+			).subscribe();
+		}
+		catch (WebClientResponseException webClientResponseException) {
+			_log.error("ERROR" + webClientResponseException);
+		}
 	}
 
 	private static final Log _log = LogFactory.getLog(
-			PartnerRestController.class);
+		PartnerRestController.class);
 
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;
+
 }

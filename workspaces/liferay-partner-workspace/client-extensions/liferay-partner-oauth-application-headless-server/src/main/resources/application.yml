@@ -4,7 +4,7 @@ logging:
         org.springframework.cloud: DEBUG
         org.springframework.security: DEBUG
         org.springframework.web: DEBUG
-lxc.default.oauth.application: salesforce-sync-api-user-agent
+lxc.default.oauth.application: liferay-partner-oauth-application-headless-server
 server:
     port: 80
 spring:

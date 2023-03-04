@@ -1,11 +1,11 @@
+liferay-partner-oauth-application-headless-server:
+    homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]
+    name: Liferay Partner OAuth Application Headless Server
+    scopes:
+        - C_Opportunity.everything
+    type: oAuthApplicationUserAgent
 runtime:
     cpu: 1000m
     memory: 512Mi
     template: service-springboot
     type: service
-salesforce-sync-api-user-agent:
-    homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]
-    name: Salesforce Sync API OAuth Application User Agent
-    scopes:
-        - C_Opportunity.everything
-    type: oAuthApplicationUserAgent

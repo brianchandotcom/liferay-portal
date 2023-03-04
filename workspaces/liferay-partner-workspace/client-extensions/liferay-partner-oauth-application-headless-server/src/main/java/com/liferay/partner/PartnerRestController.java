@@ -21,10 +21,10 @@ import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -58,7 +58,7 @@ public class PartnerRestController {
 		_addOrUpdateObjectEntry(
 			"opportunities", "testing1", jsonObject.toString(), jwt);
 
-		_getObjectEntries("opportunities", jwt);
+		_getObjectEntries("opportunitysfs", jwt);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -68,17 +68,7 @@ public class PartnerRestController {
 		String bodyValue, Jwt jwt) {
 
 		try {
-			WebClient.Builder builder = WebClient.builder();
-
-			WebClient webClient = builder.baseUrl(
-				_liferayPortalURL
-			).defaultHeader(
-				HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
-			).defaultHeader(
-				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-			).build();
-
-			webClient.put(
+			_webClient.put(
 			).uri(
 				StringBundler.concat(
 					"/o/c/", objectDefinitionName,
@@ -118,15 +108,7 @@ public class PartnerRestController {
 
 	private void _getObjectEntries(String objectDefinitionName, Jwt jwt) {
 		try {
-			WebClient.Builder builder = WebClient.builder();
-
-			WebClient webClient = builder.baseUrl(
-				_liferayPortalURL
-			).defaultHeader(
-				HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
-			).build();
-
-			webClient.get(
+			_webClient.get(
 			).uri(
 				"/o/c/" + objectDefinitionName + "/"
 			).header(
@@ -165,5 +147,8 @@ public class PartnerRestController {
 
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;
+
+	@Autowired
+	private WebClient _webClient;
 
 }

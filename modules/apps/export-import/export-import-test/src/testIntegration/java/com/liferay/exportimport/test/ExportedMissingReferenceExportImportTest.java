@@ -295,8 +295,12 @@ public class ExportedMissingReferenceExportImportTest
 		List<PortletDataHandler> oldDataHandlerInstances =
 			portletBag.getPortletDataHandlerInstances();
 
-		ReflectionTestUtil.setFieldValue(
-			portletBag, "_portletDataHandlerInstances",
+		Map<Class<?>, Object> serviceTrackerListMap =
+			ReflectionTestUtil.getFieldValue(
+				portletBag, "_serviceTrackerListMap");
+
+		serviceTrackerListMap.put(
+			PortletDataHandler.class,
 			new ServiceTrackerList<PortletDataHandler>() {
 
 				@Override

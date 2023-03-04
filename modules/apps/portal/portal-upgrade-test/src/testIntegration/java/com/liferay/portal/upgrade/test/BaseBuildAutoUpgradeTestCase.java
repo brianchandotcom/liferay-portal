@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DBAssertionUtil;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -42,8 +44,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.lang.reflect.Field;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -144,13 +144,12 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 		Object serviceComponentLocalServiceImpl =
 			aopInvocationHandler.getTarget();
 
-		Class<?> clazz = serviceComponentLocalServiceImpl.getClass();
+		DCLSingleton<?> serviceComponentsDCLSingleton =
+			ReflectionTestUtil.getFieldValue(
+				serviceComponentLocalServiceImpl,
+				"_serviceComponentsDCLSingleton");
 
-		Field field = clazz.getDeclaredField("_serviceComponents");
-
-		field.setAccessible(true);
-
-		field.set(serviceComponentLocalServiceImpl, null);
+		serviceComponentsDCLSingleton.destroy(null);
 	}
 
 	@Test

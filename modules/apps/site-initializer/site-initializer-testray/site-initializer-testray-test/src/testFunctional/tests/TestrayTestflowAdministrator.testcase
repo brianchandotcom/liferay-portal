@@ -357,6 +357,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-171778 - Verify that as an administrator I can reanalyze an complete task"
+	@priority = 5
+	test AdminCanReanalyzeCompleteTask {
+		task ("Given that the user add a Task") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.addTask(
+				checkCaseType = "Compile",
+				selectBuild = "Builds_1 Project",
+				selectProject = "Projects_1 Project",
+				selectRoutine = "Routines_1 Routine",
+				taskName = "Task_1",
+				userName = "Test Test");
+
+			WaitForPageLoad();
+
+			TestrayTestflow.assertTaskDetails(
+				build = "Builds_1 Project",
+				project = "Projects_1 Project",
+				routine = "Routines_1 Routine",
+				status = "In Analysis",
+				taskName = "Task_1");
+		}
+
+		task ("When the user reanalyze an complete task") {
+			Button.click(button = "Complete");
+
+			Button.click(button = "Reanalyze");
+
+			TestrayTestflow.assertStatus(
+				label = "Task Details",
+				status = "Complete");
+		}
+
+		task ("Then the task should appear on the list with the status in analysis") {
+			TestrayTestflow.assertStatus(
+				label = "Task Details",
+				status = "In Analysis");
+		}
+	}
+
 	@description = "This is a test for LPS-161404 - Verify if as an Administrator I should be able to update a task's status to complete"
 	@priority = 5
 	test AdminCanUpdateTaskStatusToComplete {

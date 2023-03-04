@@ -154,6 +154,14 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 				Boolean.parseBoolean(formatLocalChanges));
 		}
 
+		String javaParserEnabled = GradleUtil.getTaskPrefixedProperty(
+			formatSourceTask, "java.parser.enabled");
+
+		if (Validator.isNotNull(javaParserEnabled)) {
+			formatSourceTask.setJavaParserEnabled(
+				Boolean.parseBoolean(javaParserEnabled));
+		}
+
 		String sourceBaseDir = GradleUtil.getTaskPrefixedProperty(
 			formatSourceTask, "source.base.dir");
 

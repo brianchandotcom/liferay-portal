@@ -105,10 +105,13 @@ Property Name | Type | Default Value | Description
 `formatLocalChanges` | `boolean` | `false` | Whether to format only the unstaged files contained in `baseDir`. It sets the `format.local.changes` argument.
 `gitWorkingBranchName` | `String` | `"master"` | The Git working branch name. It sets the `git.working.branch.name` argument.
 `includeSubrepositories` | `boolean` | `false` | Whether to format files that are in read-only subrepositories. It sets the `include.subrepositories` argument.
+`javaParserEnabled` | `boolean` | `true` | Whether to allow Java and JSP formatting using JavaParser. It sets the `java.parser.enabled` argument.
 `maxLineLength` | `int` | `80` | The maximum number of characters allowed in Java files. It sets the `max.line.length` argument.
 `printErrors` | `boolean` | `true` | Whether to print formatting errors on the Standard Output stream. It sets the `source.print.errors` argument.
 `processorThreadCount` | `int` | `5` | The number of threads used by Source Formatter. It sets the `processor.thread.count` argument.
 `showDebugInformation` | `boolean` | `false` | Whether to show debug information, if present. It sets the `show.debug.information` argument.
+
+Note that setting the property `javaParserEnabled` to `false` may prevent certain Java and JSP checks from working correctly.
 
 ## Additional Configuration
 

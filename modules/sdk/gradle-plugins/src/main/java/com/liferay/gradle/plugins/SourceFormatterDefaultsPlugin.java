@@ -292,6 +292,14 @@ public class SourceFormatterDefaultsPlugin
 				Boolean.parseBoolean(includeSubrepositories));
 		}
 
+		String javaParserEnabled = GradleUtil.getProperty(
+			project, "java.parser.enabled", (String)null);
+
+		if (Validator.isNotNull(javaParserEnabled)) {
+			formatSourceTask.setJavaParserEnabled(
+				Boolean.parseBoolean(javaParserEnabled));
+		}
+
 		String maxLineLength = GradleUtil.getProperty(
 			project, "source.formatter.max.line.length", (String)null);
 

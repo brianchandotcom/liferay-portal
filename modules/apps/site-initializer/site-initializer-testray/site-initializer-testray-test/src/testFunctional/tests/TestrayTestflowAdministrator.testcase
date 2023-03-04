@@ -357,6 +357,41 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-161404 - Verify if as an Administrator I should be able to update a task's status to complete"
+	@priority = 5
+	test AdminCanUpdateTaskStatusToComplete {
+		task ("Given that the user add a Task") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.addTask(
+				checkCaseType = "Compile",
+				selectBuild = "Builds_1 Project",
+				selectProject = "Projects_1 Project",
+				selectRoutine = "Routines_1 Routine",
+				taskName = "Task_1",
+				userName = "Test Test");
+
+			WaitForPageLoad();
+
+			TestrayTestflow.assertTaskDetails(
+				build = "Builds_1 Project",
+				project = "Projects_1 Project",
+				routine = "Routines_1 Routine",
+				status = "In Analysis",
+				taskName = "Task_1");
+		}
+
+		task ("When the user update task status to complete") {
+			Button.click(button = "Complete");
+
+			TestrayTestflow.goToTestflow();
+		}
+
+		task ("Then the task should appear on the list with the status complete") {
+			Testray.assertItemName(key_name = "Complete");
+		}
+	}
+
 	@description = "This is a test for LPS-168093 - Verify that the user cannot create a task without assign users"
 	@priority = 4
 	test AdminCanViewRequiredAssignUsers {

@@ -14,11 +14,14 @@
 
 package com.liferay.partner;
 
+import com.liferay.partner.services.ObjectDefinitionService;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +46,15 @@ public class PartnerRestController {
 
 		jsonObject.put("type", "Testing 4444");
 
+		_objectDefinitionService.getSalesforceObjectDefinitions(
+		).subscribe(
+			objectDefinitions -> {
+				if (_log.isInfoEnabled()) {
+					_log.info("Sucess: " + objectDefinitions);
+				}
+			}
+		);
+
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -51,5 +63,8 @@ public class PartnerRestController {
 
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;
+
+	@Autowired
+	private ObjectDefinitionService _objectDefinitionService;
 
 }

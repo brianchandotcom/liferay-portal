@@ -34,9 +34,11 @@ public class ObjectDefinitionService {
 		return _webClient.get(
 		).uri(
 			uriBuilder -> uriBuilder.path(
-				"o/object-admin/object-definitions"
+				"o/object-admin/v1.0/object-definitions"
 			).queryParam(
-				"filter", "storageType eq 'salesforce'"
+				"filter", "contains(name, 'SF')"
+			).queryParam(
+				"pageSize", 9999
 			).build()
 		).retrieve(
 		).bodyToMono(

@@ -54,6 +54,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
+ * @author Jair Medeiros
  * @author Raymond Augé
  * @author Gregory Amerson
  * @author Brian Wing Shun Chan

@@ -129,7 +129,7 @@ definition {
 	@priority = 5
 	test AdminCanNotAddDuplicateProject {
 		task ("When the user tries to create a duplicate project") {
-			JSONTestrayAPI.createProjectAPI(
+			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
 
@@ -163,7 +163,7 @@ definition {
 	@priority = 5
 	test CanDeleteProjectsThatContainRoutinesWithoutAssociatedBuilds {
 		task ("Given that the user Create a Project without associated builds") {
-			JSONTestrayAPI.createProjectAPI(
+			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
 
@@ -185,10 +185,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160897. Verify if as an Administrator I should not be able to delete a project that contains routines with associated builds"
+	@description = "Automation ID: LPS-160897| Test Summary: Verify if as an Administrator I should not be able to delete a project that contains routines with associated builds"
 	@priority = 5
 	test CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds {
-		task ("Go to Testray and create a Project") {
+		task ("Given that the user Create a Project") {
 			Testray.createProjectTestray(
 				description = "Projects_1 Description",
 				key_name = "Projects_1 Project");
@@ -198,7 +198,7 @@ definition {
 				valuePagination = 150);
 		}
 
-		task ("Go to created project and add a new team") {
+		task ("And add a new team") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
@@ -208,7 +208,7 @@ definition {
 			TestrayManage.closeModalInOptions();
 		}
 
-		task ("Go to created project and add a component") {
+		task ("And add a component") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
@@ -220,7 +220,7 @@ definition {
 			Refresh();
 		}
 
-		task ("Create a new Routine and a new Case") {
+		task ("And create a new Routine and a new Case") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -243,7 +243,7 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Routine");
 		}
 
-		task ("Add a new build with enviroments") {
+		task ("And add a new build with enviroments") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
@@ -270,9 +270,11 @@ definition {
 			Testray.assertItemName(key_name = "Builds_1 Project");
 		}
 
-		task ("Delete project and assert a warning message is displayed") {
+		task ("When the user tries to delete a project with associated constructions") {
 			Testray.deleteProject(nameProject = "Projects_1 Project");
+		}
 
+		task ("Then an error message is displayed") {
 			Alert.viewErrorMessage(errorMessage = "The Project cannot be deleted because it has associated builds");
 		}
 	}

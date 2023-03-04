@@ -466,7 +466,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "2 of 6 Selected");
+			value1 = "2 of 6 Items Selected");
 
 		ClickNoError(locator1 = "Icon#DELETE");
 

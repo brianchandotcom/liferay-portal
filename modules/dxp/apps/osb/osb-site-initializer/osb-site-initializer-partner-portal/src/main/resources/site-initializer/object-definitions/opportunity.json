@@ -201,6 +201,5 @@
 	"pluralLabel": {
 		"en_US": "Opportunities"
 	},
-	"scope": "company",
-	"storageType": "salesforce"
+	"scope": "company"
 }

@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.language.LanguageImpl;
@@ -56,6 +57,13 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 
 	@Before
 	public void setUp() {
+		ConfigurationFieldOptionsProviderUtil
+			configurationFieldOptionsProviderUtil =
+				new ConfigurationFieldOptionsProviderUtil();
+
+		configurationFieldOptionsProviderUtil.activate(
+			SystemBundleUtil.getBundleContext());
+
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(new LanguageImpl());

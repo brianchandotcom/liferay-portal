@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.cache.test.util.TestPortalCacheListener;
 import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
@@ -608,13 +609,19 @@ public class BaseEhcachePortalCacheTest {
 
 	@Test
 	public void testResetEhcache() {
+		DCLSingleton<Ehcache> ehcacheDCLSingleton =
+			ReflectionTestUtil.getFieldValue(
+				_ehcachePortalCache, "_ehcacheDCLSingleton");
+
 		Assert.assertNotNull(
-			ReflectionTestUtil.getFieldValue(_ehcachePortalCache, "_ehcache"));
+			ReflectionTestUtil.getFieldValue(
+				ehcacheDCLSingleton, "_singleton"));
 
 		_ehcachePortalCache.resetEhcache();
 
 		Assert.assertNull(
-			ReflectionTestUtil.getFieldValue(_ehcachePortalCache, "_ehcache"));
+			ReflectionTestUtil.getFieldValue(
+				ehcacheDCLSingleton, "_singleton"));
 	}
 
 	@Test

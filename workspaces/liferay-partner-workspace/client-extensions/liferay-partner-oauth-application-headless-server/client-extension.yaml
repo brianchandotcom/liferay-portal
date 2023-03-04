@@ -1,11 +1,6 @@
 liferay-partner-oauth-application-headless-server:
-    homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]
+    homePageURL: http://localhost:58081
     name: Liferay Partner OAuth Application Headless Server
     scopes:
         - C_Opportunity.everything
     type: oAuthApplicationUserAgent
-runtime:
-    cpu: 1000m
-    memory: 512Mi
-    template: service-springboot
-    type: service

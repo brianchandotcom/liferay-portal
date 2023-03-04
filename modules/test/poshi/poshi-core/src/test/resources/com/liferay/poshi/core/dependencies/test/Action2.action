@@ -1,5 +1,0 @@
-<definition>
-	<command name="test2">
-		<case comparator="contains" locator1="/test2" />
-	</command>
-</definition>

@@ -4,5 +4,5 @@ liferay-partner-oauth-application-user-agent:
     homePageURL: http://localhost:58081
     name: Liferay Partner OAuth Application User Agent
     scopes:
-        - C_Opportunity.everything
+        - C_Opportunity.everything.write
     type: oAuthApplicationUserAgent

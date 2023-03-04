@@ -117,6 +117,30 @@ definition {
 		Button.click(button = "Save");
 	}
 
+	macro editTask {
+		Button.click(button = "Edit Task");
+
+		if (isSet(taskName)) {
+			Type(
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = ${taskName});
+		}
+
+		if (isSet(userName)) {
+			Button.click(button = "Assign Users");
+
+			Click.clickAtNotVisible(
+				key_checkboxOption = ${userName},
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+
+			Button.click(button = "Select Users");
+
+			Testray.checkSuccessAlertAppearsAndDisappears();
+		}
+
+		Button.click(button = "Save");
+	}
+
 	macro goToTask {
 		Click(
 			key_projectName = ${taskName},

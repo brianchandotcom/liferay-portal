@@ -1,0 +1,13 @@
+definition {
+
+	macro invalidSyntax {
+	    var this = "wrong
+	    ";
+
+		for (var item : list ""item 1, item2"") {
+		    echo(${item});
+		}
+
+    }
+
+}

@@ -243,6 +243,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-160726 - Verify if as an Administrator I should be able to delete a task through the Context Menu"
+	@priority = 5
+	test AdminCanDeleteTaskContextMenu {
+		task ("Given that the user add a Task") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.addTask(
+				checkCaseType = "Compile",
+				selectBuild = "Builds_1 Project",
+				selectProject = "Projects_1 Project",
+				selectRoutine = "Routines_1 Routine",
+				taskName = "Task_1",
+				userName = "Test Test");
+
+			WaitForPageLoad();
+
+			TestrayTestflow.assertTaskDetails(
+				build = "Builds_1 Project",
+				project = "Projects_1 Project",
+				routine = "Routines_1 Routine",
+				status = "In Analysis",
+				taskName = "Task_1");
+
+			Button.click(button = "Complete");
+
+			TestrayTestflow.goToTestflow();
+		}
+
+		task ("When the user delete the task through the Context Menu") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Task_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+		}
+
+		task ("Then the task is not displayed anymore") {
+			Testray.assertItemNotPresent(key_name = "Task_1");
+		}
+	}
+
 	@description = "This is a test for LPS-166561 - Verify if as an Administrator I should not be able to add a duplicate Task"
 	@priority = 5
 	test AdminCanNotAddDuplicateTestflow {

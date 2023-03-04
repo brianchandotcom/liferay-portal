@@ -243,7 +243,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160726 - Verify if as an Administrator I should be able to delete a task through the Context Menu"
+	@description = "This is a test for LPS-171777 - Verify if as an Administrator I should be able to delete a task through the Context Menu"
 	@priority = 5
 	test AdminCanDeleteTaskContextMenu {
 		task ("Given that the user add a Task") {
@@ -279,6 +279,41 @@ definition {
 
 		task ("Then the task is not displayed anymore") {
 			Testray.assertItemNotPresent(key_name = "Task_1");
+		}
+	}
+
+	@description = "This is a test for LPS-160727 - Verify if as an Administrator I should be able to edit a task"
+	@priority = 5
+	test AdminCanEditTask {
+		task ("Given that the user add a Task") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.addTask(
+				checkCaseType = "Compile",
+				selectBuild = "Builds_1 Project",
+				selectProject = "Projects_1 Project",
+				selectRoutine = "Routines_1 Routine",
+				taskName = "Task_1",
+				userName = "Test Test");
+
+			WaitForPageLoad();
+
+			TestrayTestflow.assertTaskDetails(
+				build = "Builds_1 Project",
+				project = "Projects_1 Project",
+				routine = "Routines_1 Routine",
+				status = "In Analysis",
+				taskName = "Task_1");
+		}
+
+		task ("When the user edit the task") {
+			TestrayTestflow.editTask(taskName = "Task_2");
+
+			TestrayTestflow.goToTestflow();
+		}
+
+		task ("Then the task is edited with new details") {
+			Testray.assertItemName(key_name = "Task_2");
 		}
 	}
 

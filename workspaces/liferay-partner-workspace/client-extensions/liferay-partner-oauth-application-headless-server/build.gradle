@@ -32,10 +32,3 @@ repositories {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 	}
 }
-
-try {
-	tasks.named("assembleClientExtension") {
-		from bootJar
-	}
-} catch (Exception e) {
-}

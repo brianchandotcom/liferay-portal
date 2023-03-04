@@ -678,6 +678,8 @@ definition {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = ${indexList2},
 				itemValueList = ${attributesAscendingOrder2});
+
+			ACUtils.checkAnyPage(pageNumber = 1);
 		}
 
 		task ("See that the list is sorted by attributes in the descending order") {
@@ -694,6 +696,8 @@ definition {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = ${indexList2},
 				itemValueList = ${attributesDescendingOrder2});
+
+			ACUtils.checkAnyPage(pageNumber = 1);
 		}
 
 		task ("See that the list is sorted by the data type of the attributes in ascending order") {
@@ -710,6 +714,8 @@ definition {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = ${indexList2},
 				itemValueList = ${attributesDataTypeAscending2});
+
+			ACUtils.checkAnyPage(pageNumber = 1);
 		}
 
 		task ("See that the list is sorted by the data type of the attributes in descending order") {

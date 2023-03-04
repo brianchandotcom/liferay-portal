@@ -12,44 +12,44 @@
  * details.
  */
 
-package com.liferay.partner;
+package com.liferay.partner.services;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 /**
  * @author Jair Medeiros
  * @author Thaynam Lázaro
- * @author Raymond Augé
  */
-@RestController
-public class PartnerRestController {
+@Service
+public class ObjectDefinitionService {
 
-	@GetMapping("/")
-	public ResponseEntity<String> trigger() {
-		if (_log.isInfoEnabled()) {
-			_log.info("Hello World");
-		}
-
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("type", "Testing 4444");
-
-		return new ResponseEntity<>(HttpStatus.OK);
+	public Mono<String> getSalesforceObjectDefinitions() {
+		return _webClient.get(
+		).uri(
+			uriBuilder -> uriBuilder.path(
+				"o/object-admin/object-definitions"
+			).queryParam(
+				"filter", "storageType eq 'salesforce'"
+			).build()
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).doOnError(
+			error -> _log.error(error)
+		);
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		PartnerRestController.class);
+		ObjectDefinitionService.class);
 
-	@Value("${liferay.portal.url}")
-	private String _liferayPortalURL;
+	@Autowired
+	private WebClient _webClient;
 
 }

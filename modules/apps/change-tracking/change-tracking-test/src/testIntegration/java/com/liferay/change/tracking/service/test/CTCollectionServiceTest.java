@@ -235,43 +235,7 @@ public class CTCollectionServiceTest {
 	}
 
 	@Test
-	public void testPublishCTCollectionWithOver1000DeletedEntries()
-		throws Exception {
-
-		UserTestUtil.setUser(_user);
-
-		_ctCollection = _ctCollectionService.addCTCollection(
-			_user.getCompanyId(), _user.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		_addOver1000JournalFolders();
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
-
-			for (JournalFolder journalFolder :
-					_journalFolderLocalService.getFolders(
-						_group.getGroupId())) {
-
-				_journalFolderLocalService.deleteFolder(journalFolder);
-			}
-
-			_ctCollectionService.publishCTCollection(
-				_user.getUserId(), _ctCollection.getCtCollectionId());
-		}
-
-		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
-			_ctCollection.getCtCollectionId());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
-	}
-
-	@Test
-	public void testPublishCTCollectionWithOver1000NewEntries()
-		throws Exception {
-
+	public void testPublishCTCollectionWithOver1000Entries() throws Exception {
 		UserTestUtil.setUser(_user);
 
 		_ctCollection = _ctCollectionService.addCTCollection(
@@ -282,7 +246,7 @@ public class CTCollectionServiceTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
-			_addOver1000JournalFolders();
+			_addJournalFolders(_BATCH_SIZE);
 
 			_ctCollectionService.publishCTCollection(
 				_user.getUserId(), _ctCollection.getCtCollectionId());
@@ -293,19 +257,10 @@ public class CTCollectionServiceTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
-	}
-
-	@Test
-	public void testPublishCTCollectionWithOver1000UpdatedEntries()
-		throws Exception {
-
-		UserTestUtil.setUser(_user);
 
 		_ctCollection = _ctCollectionService.addCTCollection(
 			_user.getCompanyId(), _user.getUserId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		_addOver1000JournalFolders();
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -324,19 +279,46 @@ public class CTCollectionServiceTest {
 				_user.getUserId(), _ctCollection.getCtCollectionId());
 		}
 
-		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+		ctCollection = _ctCollectionLocalService.getCTCollection(
+			_ctCollection.getCtCollectionId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
+
+		_ctCollection = _ctCollectionService.addCTCollection(
+			_user.getCompanyId(), _user.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			for (JournalFolder journalFolder :
+					_journalFolderLocalService.getFolders(
+						_group.getGroupId())) {
+
+				_journalFolderLocalService.deleteFolder(journalFolder);
+			}
+
+			_ctCollectionService.publishCTCollection(
+				_user.getUserId(), _ctCollection.getCtCollectionId());
+		}
+
+		ctCollection = _ctCollectionLocalService.getCTCollection(
 			_ctCollection.getCtCollectionId());
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
 	}
 
-	private void _addOver1000JournalFolders() throws Exception {
-		for (int i = 0; i < 1001; i++) {
+	private void _addJournalFolders(int batchSize) throws Exception {
+		for (int i = 0; i < batchSize; i++) {
 			_journalFolderFixture.addFolder(
 				_group.getGroupId(), RandomTestUtil.randomString());
 		}
 	}
+
+	private static final int _BATCH_SIZE = 1001;
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;

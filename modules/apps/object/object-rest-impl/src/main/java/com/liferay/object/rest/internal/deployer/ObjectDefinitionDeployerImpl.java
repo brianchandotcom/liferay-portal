@@ -274,10 +274,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	private ObjectEntryResourceImpl _createObjectEntryResourceImpl() {
 		return new ObjectEntryResourceImpl(
-			_filterPredicateFactory, _objectDefinitionLocalService,
-			_objectEntryLocalService, _objectEntryManagerRegistry,
-			_objectFieldLocalService, _objectRelationshipService,
-			_objectScopeProviderRegistry,
+			_objectDefinitionLocalService, _objectEntryLocalService,
+			_objectEntryManagerRegistry, _objectFieldLocalService,
+			_objectRelationshipService, _objectScopeProviderRegistry,
 			_systemObjectDefinitionMetadataRegistry);
 	}
 

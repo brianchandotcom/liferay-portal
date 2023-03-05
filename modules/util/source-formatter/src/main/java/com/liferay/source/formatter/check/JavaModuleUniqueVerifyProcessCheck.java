@@ -1,0 +1,86 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.check;
+
+import com.liferay.source.formatter.SourceFormatterExcludes;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.ParseException;
+import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
+
+import java.io.File;
+import java.io.IOException;
+
+import java.util.List;
+
+/**
+ * @author Alan
+ */
+public class JavaModuleUniqueVerifyProcessCheck extends BaseFileCheck {
+
+	@Override
+	public boolean isModuleSourceCheck() {
+		return true;
+	}
+
+	@Override
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
+		throws IOException, ParseException {
+
+		int x = absolutePath.indexOf("/src/");
+
+		if (x == -1) {
+			return content;
+		}
+
+		List<String> javaFileNames = SourceFormatterUtil.scanForFiles(
+			absolutePath.substring(0, x + 5), new String[0],
+			new String[] {"**/*.java"}, new SourceFormatterExcludes(), true);
+
+		int verifyProcessClassCount = 0;
+
+		for (String javaFileName : javaFileNames) {
+			File file = new File(javaFileName);
+
+			if (!file.exists()) {
+				continue;
+			}
+
+			JavaClass javaClass = JavaClassParser.parseJavaClass(
+				javaFileName, FileUtil.read(file));
+
+			List<String> extendedClassNames = javaClass.getExtendedClassNames(
+				true);
+
+			if (extendedClassNames.contains(
+					"com.liferay.portal.verify.VerifyProcess")) {
+
+				verifyProcessClassCount++;
+			}
+
+			if (verifyProcessClassCount > 1) {
+				addMessage(
+					fileName,
+					"A module can not have more than 1 verify process class " +
+						"(class extends VerifyProcess)");
+			}
+		}
+
+		return content;
+	}
+
+}

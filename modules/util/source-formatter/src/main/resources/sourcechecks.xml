@@ -897,6 +897,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks package names in tests." />
 		</check>
+		<check name="JavaModuleUniqueVerifyProcessCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that a module can not have more than 1 verify process class (class extends VerifyProcess)." />
+		</check>
 		<check name="JavaOSGiReferenceCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on classes with `@Component` annotation." />

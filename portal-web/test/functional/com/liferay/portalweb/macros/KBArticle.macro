@@ -1459,12 +1459,6 @@ definition {
 					value1 = ${kbArticleTitle});
 			}
 
-			if (isSet(kbStatus)) {
-				AssertTextEquals(
-					locator1 = "KnowledgeBase#ARTICLE_TABLE_ARTICLE_STATUS",
-					value1 = ${kbStatus});
-			}
-
 			AssertClick(
 				locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE",
 				value1 = ${kbArticleTitle});
@@ -1481,15 +1475,22 @@ definition {
 			}
 
 			if (isSet(kbStatus)) {
-				AssertTextEquals(
-					key_kbArticleStatus = ${kbStatus},
-					locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_PREVIEW_ARTICLE_STATUS",
+				if (IsElementNotPresent(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE")) {
+					ManagementBar.clickInfo();
+				}
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "Message#WORKFLOW_STATUS",
 					value1 = ${kbStatus});
 			}
 
 			if (isSet(versionNumber)) {
-				AssertTextEquals(
-					locator1 = "KnowledgeBase#ARTICLE_PREVIEW_VERSION_NUMBER",
+				if (IsElementNotPresent(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE")) {
+					ManagementBar.clickInfo();
+				}
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "KnowledgeBase#ARTICLE_VERSION_NUMBER",
 					value1 = ${versionNumber});
 			}
 

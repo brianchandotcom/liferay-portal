@@ -142,7 +142,7 @@ if (emailAddresses.isEmpty()) {
 
 				<li class="<%= emailAddress.isPrimary() ? "primary" : "" %>">
 					<span class="property-type"><liferay-ui:message key="<%= listType.getName() %>" /></span>
-					<span class="property"><a href="mailto:<%= emailAddress.getAddress() %>"><%= emailAddress.getAddress() %></a></span>
+					<span class="property"><a class="text-decoration-underline" href="mailto:<%= emailAddress.getAddress() %>"><%= emailAddress.getAddress() %></a></span>
 				</li>
 
 			<%
@@ -291,7 +291,7 @@ if (websites.isEmpty()) {
 				<li class="<%= website.isPrimary() ? "primary" : "" %>">
 					<span class="property-type"><liferay-ui:message key="<%= website.getListType().getName() %>" /></span>
 
-					<span class="property"><a href="<%= website.getUrl() %>"><%= website.getUrl() %></a></span>
+					<span class="property"><a class="text-decoration-underline" href="<%= website.getUrl() %>"><%= website.getUrl() %></a></span>
 				</li>
 
 			<%

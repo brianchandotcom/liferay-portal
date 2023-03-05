@@ -146,7 +146,9 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	protected String buildLink(String link, String text) {
-		return StringBundler.concat("<a href=\"", link, "\">", text, "</a>");
+		return StringBundler.concat(
+			"<a class=\"text-decoration-underline\" href=\"", link, "\">", text,
+			"</a>");
 	}
 
 	protected SocialActivityFeedEntry doInterpret(
@@ -238,8 +240,8 @@ public abstract class BaseSocialActivityInterpreter
 			}
 
 			return StringBundler.concat(
-				"<a class=\"group\" href=\"", groupDisplayURL, "\">",
-				HtmlUtil.escape(groupName), "</a>");
+				"<a class=\"group text-decoration-underline\" href=\"",
+				groupDisplayURL, "\">", HtmlUtil.escape(groupName), "</a>");
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

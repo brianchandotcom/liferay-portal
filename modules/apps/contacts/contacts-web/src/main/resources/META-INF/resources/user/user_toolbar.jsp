@@ -148,11 +148,11 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 	<portlet:param name="userId" value="<%= String.valueOf(user2.getUserId()) %>" />
 </portlet:resourceURL>
 
-<liferay-ui:icon
-	image="../aui/save"
-	label="<%= true %>"
-	message="vcard"
-	url="<%= exportURL %>"
+<clay:link
+	cssClass="text-decoration-underline"
+	href="<%= exportURL %>"
+	icon="download"
+	label="vcard"
 />
 
 <aui:script use="aui-base,aui-io-plugin-deprecated">

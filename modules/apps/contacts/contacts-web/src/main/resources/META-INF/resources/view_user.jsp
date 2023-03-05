@@ -164,7 +164,7 @@ request.setAttribute("view_user.jsp-user", user2);
 
 				<div class="<%= showIcon ? StringPool.BLANK : "no-icon" %> lfr-contact-info">
 					<div class="lfr-contact-name">
-						<a href="<%= user2.getDisplayURL(themeDisplay) %>"><%= user2.getFullName() %></a>
+						<a class="text-decoration-underline" href="<%= user2.getDisplayURL(themeDisplay) %>"><%= user2.getFullName() %></a>
 					</div>
 
 					<div class="lfr-contact-job-title">
@@ -172,7 +172,7 @@ request.setAttribute("view_user.jsp-user", user2);
 					</div>
 
 					<div class="lfr-contact-extra">
-						<a href="mailto:<%= user2.getEmailAddress() %>"><%= user2.getEmailAddress() %></a>
+						<a class="text-decoration-underline" href="mailto:<%= user2.getEmailAddress() %>"><%= user2.getEmailAddress() %></a>
 					</div>
 				</div>
 
@@ -272,7 +272,7 @@ request.setAttribute("view_user.jsp-user", user2);
 												for (Group curGroup : results) {
 												%>
 
-													<li class="user-information-sites"><a href="<%= curGroup.getDisplayURL(themeDisplay, !curGroup.hasPublicLayouts()) %>"><%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %></a></li>
+													<li class="user-information-sites"><a class="text-decoration-underline" href="<%= curGroup.getDisplayURL(themeDisplay, !curGroup.hasPublicLayouts()) %>"><%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %></a></li>
 
 												<%
 												}
@@ -331,7 +331,7 @@ request.setAttribute("view_user.jsp-user", user2);
 															WindowState.MAXIMIZED
 														).buildPortletURL();
 
-														sb.append("<li><a href=\"");
+														sb.append("<li><a class=\"text-decoration-underline\" href=\"");
 														sb.append(searchURL);
 														sb.append("\">");
 														sb.append(assetTag.getName());

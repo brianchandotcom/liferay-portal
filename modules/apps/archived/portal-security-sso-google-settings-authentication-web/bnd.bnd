@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Security SSO Google Settings Authentication Web
-Bundle-SymbolicName: com.liferay.portal.security.sso.google.settings.authentication.web
-Bundle-Version: 3.0.11
-Web-ContextPath: /portal-security-sso-google-settings-authentication-web

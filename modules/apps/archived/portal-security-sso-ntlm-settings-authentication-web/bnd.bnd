@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Security SSO NTLM Settings Authentication Web
-Bundle-SymbolicName: com.liferay.portal.security.sso.ntlm.settings.authentication.web
-Bundle-Version: 3.0.11
-Web-ContextPath: /portal-security-sso-ntlm-settings-authentication-web

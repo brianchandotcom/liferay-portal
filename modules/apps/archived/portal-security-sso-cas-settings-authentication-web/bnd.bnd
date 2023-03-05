@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Security SSO CAS Settings Authentication Web
-Bundle-SymbolicName: com.liferay.portal.security.sso.cas.settings.authentication.web
-Bundle-Version: 1.0.9
-Web-ContextPath: /portal-security-sso-cas-settings-authentication-web

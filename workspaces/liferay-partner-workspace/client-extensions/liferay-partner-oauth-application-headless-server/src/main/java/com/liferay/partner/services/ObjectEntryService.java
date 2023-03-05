@@ -14,14 +14,9 @@
 
 package com.liferay.partner.services;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import reactor.core.publisher.Mono;
 
 /**
  * @author Jair Medeiros
@@ -30,23 +25,19 @@ import reactor.core.publisher.Mono;
 @Service
 public class ObjectEntryService {
 
-	public Mono<String> addOrUpdateBatch(
-		String objectDefinitionName, String value) {
+	public void putObjectEntryBatch(String objectDefinitionName, Object object)
+		throws Exception {
 
-		return _webClient.put(
+		_webClient.put(
 		).uri(
 			"/o/c/" + objectDefinitionName
 		).bodyValue(
-			value
+			object
 		).retrieve(
 		).bodyToMono(
-			String.class
-		).doOnError(
-			error -> _log.error(error)
-		);
+			Void.class
+		).block();
 	}
-
-	private static final Log _log = LogFactory.getLog(ObjectEntryService.class);
 
 	@Autowired
 	private WebClient _webClient;

@@ -22,7 +22,6 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,31 +37,22 @@ public class PartnerRestController {
 
 	@GetMapping("/")
 	public ResponseEntity<String> trigger() {
-		if (_log.isInfoEnabled()) {
-			_log.info("Hello World");
-		}
-
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("type", "Testing 4444");
 
-		_objectDefinitionService.getSalesforceObjectDefinitions(
-		).subscribe(
-			objectDefinitions -> {
-				if (_log.isInfoEnabled()) {
-					_log.info("Sucess: " + objectDefinitions);
-				}
-			}
-		);
+		try {
+			_objectDefinitionService.getSalesforceObjectDefinitionsPage();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	private static final Log _log = LogFactory.getLog(
 		PartnerRestController.class);
-
-	@Value("${liferay.portal.url}")
-	private String _liferayPortalURL;
 
 	@Autowired
 	private ObjectDefinitionService _objectDefinitionService;

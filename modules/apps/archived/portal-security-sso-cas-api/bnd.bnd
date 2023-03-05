@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Portal Security SSO CAS API
-Bundle-SymbolicName: com.liferay.portal.security.sso.cas.api
-Bundle-Version: 5.0.12
-Export-Package:\
-	com.liferay.portal.security.sso.cas.configuration,\
-	com.liferay.portal.security.sso.cas.constants

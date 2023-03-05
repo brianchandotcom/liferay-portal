@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Currency Converter API
-Bundle-SymbolicName: com.liferay.currency.converter.api
-Bundle-Version: 4.0.8
-Export-Package:\
-	com.liferay.currency.converter.model,\
-	com.liferay.currency.converter.util

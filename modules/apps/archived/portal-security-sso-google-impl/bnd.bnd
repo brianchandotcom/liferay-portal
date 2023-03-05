@@ -1,9 +1,0 @@
-Bundle-Name: Liferay Portal Security SSO Google Implementation
-Bundle-SymbolicName: com.liferay.portal.security.sso.google.impl
-Bundle-Version: 4.0.20
-Import-Package:\
-	!com.google.*,\
-	\
-	!org.apache.http.*,\
-	\
-	*

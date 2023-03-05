@@ -14,14 +14,14 @@
 
 package com.liferay.partner.services;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.client.pagination.Page;
+import com.liferay.object.admin.rest.client.pagination.Pagination;
+import com.liferay.object.admin.rest.client.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.partner.PartnerEnableWebSecurity.ResourceClientConfiguration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import reactor.core.publisher.Mono;
 
 /**
  * @author Jair Medeiros
@@ -30,28 +30,17 @@ import reactor.core.publisher.Mono;
 @Service
 public class ObjectDefinitionService {
 
-	public Mono<String> getSalesforceObjectDefinitions() {
-		return _webClient.get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				"o/object-admin/v1.0/object-definitions"
-			).queryParam(
-				"filter", "contains(name, 'SF')"
-			).queryParam(
-				"pageSize", 9999
-			).build()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).doOnError(
-			error -> _log.error(error)
-		);
+	public Page<ObjectDefinition> getSalesforceObjectDefinitionsPage()
+		throws Exception {
+
+		ObjectDefinitionResource objectDefinitionResource =
+			_resourceClientConfiguration.getObjectDefinitionResource();
+
+		return objectDefinitionResource.getObjectDefinitionsPage(
+			null, null, "contains(name, 'SF')", Pagination.of(1, 9999), null);
 	}
 
-	private static final Log _log = LogFactory.getLog(
-		ObjectDefinitionService.class);
-
 	@Autowired
-	private WebClient _webClient;
+	private ResourceClientConfiguration _resourceClientConfiguration;
 
 }

@@ -17,6 +17,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.ParseException;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
@@ -29,7 +30,7 @@ import java.util.List;
 /**
  * @author Alan
  */
-public class JavaModuleUniqueVerifyProcessCheck extends BaseFileCheck {
+public class JavaModuleUniqueVerifyProcessCheck extends BaseJavaTermCheck {
 
 	@Override
 	public boolean isModuleSourceCheck() {
@@ -38,13 +39,28 @@ public class JavaModuleUniqueVerifyProcessCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
 		throws IOException, ParseException {
+
+		JavaClass javaClass = (JavaClass)javaTerm;
+
+		if (javaClass.getParentJavaClass() != null) {
+			return javaTerm.getContent();
+		}
+
+		List<String> extendedClassNames = javaClass.getExtendedClassNames(true);
+
+		if (!extendedClassNames.contains(
+				"com.liferay.portal.verify.VerifyProcess")) {
+
+			return javaTerm.getContent();
+		}
 
 		int x = absolutePath.indexOf("/src/");
 
 		if (x == -1) {
-			return content;
+			return javaTerm.getContent();
 		}
 
 		List<String> javaFileNames = SourceFormatterUtil.scanForFiles(
@@ -60,11 +76,10 @@ public class JavaModuleUniqueVerifyProcessCheck extends BaseFileCheck {
 				continue;
 			}
 
-			JavaClass javaClass = JavaClassParser.parseJavaClass(
+			javaClass = JavaClassParser.parseJavaClass(
 				javaFileName, FileUtil.read(file));
 
-			List<String> extendedClassNames = javaClass.getExtendedClassNames(
-				true);
+			extendedClassNames = javaClass.getExtendedClassNames(true);
 
 			if (extendedClassNames.contains(
 					"com.liferay.portal.verify.VerifyProcess")) {
@@ -80,7 +95,12 @@ public class JavaModuleUniqueVerifyProcessCheck extends BaseFileCheck {
 			}
 		}
 
-		return content;
+		return javaTerm.getContent();
+	}
+
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_CLASS};
 	}
 
 }

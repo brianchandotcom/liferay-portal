@@ -163,7 +163,7 @@ definition {
 		}
 
 		if (!(isSet(priority))) {
-			var priority = "";
+			var priority = "3";
 		}
 
 		if (!(isSet(steps))) {

@@ -1,5 +1,0 @@
-dependencies {
-	testIntegrationCompile project(":apps:archived:document-library-file-rank-api")
-	testIntegrationCompile project(":apps:document-library:document-library-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

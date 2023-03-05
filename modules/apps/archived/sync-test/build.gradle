@@ -1,9 +1,0 @@
-dependencies {
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testCompile project(":apps:archived:sync-api")
-	testCompile project(":apps:archived:sync-service")
-	testCompile project(":core:petra:petra-string")
-
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

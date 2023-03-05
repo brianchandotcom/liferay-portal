@@ -1,5 +1,0 @@
-dependencies {
-	testIntegrationCompile project(":apps:archived:portal-security-wedeploy-auth-api")
-	testIntegrationCompile project(":apps:archived:portal-security-wedeploy-auth-service")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

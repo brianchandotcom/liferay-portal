@@ -1,4 +1,0 @@
-Bundle-Name: Liferay OAuth Test
-Bundle-SymbolicName: com.liferay.oauth.test
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Title: OAuth Provider

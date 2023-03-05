@@ -16,12 +16,8 @@ package com.liferay.object.rest.internal.jaxrs.context.provider;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.internal.deployer.ObjectDefinitionDeployerImpl;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.object.rest.internal.jaxrs.context.provider.util.ObjectsContextProviderUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.ext.Provider;
 
@@ -45,33 +41,9 @@ public class ObjectDefinitionContextProvider
 
 	@Override
 	public ObjectDefinition createContext(Message message) {
-		long companyId = _portal.getCompanyId(
-			(HttpServletRequest)message.getContextualProperty("HTTP.REQUEST"));
-
-		String restContextPath = (String)message.getContextualProperty(
-			"org.apache.cxf.message.Message.BASE_PATH");
-
-		restContextPath = restContextPath.substring(
-			restContextPath.indexOf("/o/"));
-
-		restContextPath = StringUtil.removeFirst(restContextPath, "/o");
-		restContextPath = StringUtil.replaceLast(restContextPath, '/', "");
-
-		try {
-			return _objectDefinitionDeployerImpl.getObjectDefinition(
-				companyId, restContextPath);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-
-			throw new RuntimeException(exception);
-		}
+		return ObjectsContextProviderUtil.getObjectDefinition(
+			message, _objectDefinitionDeployerImpl, _portal);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectDefinitionContextProvider.class);
 
 	private final ObjectDefinitionDeployerImpl _objectDefinitionDeployerImpl;
 	private final Portal _portal;

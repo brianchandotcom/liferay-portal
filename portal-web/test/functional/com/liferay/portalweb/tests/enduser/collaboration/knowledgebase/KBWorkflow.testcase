@@ -111,10 +111,6 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbStatus = "Pending");
-
-		KBArticle.viewInfoPanel(
-			kbArticleTitle = "Knowledge Base Article Title",
-			workflowStatus = "PENDING");
 	}
 
 	@priority = 4

@@ -67,17 +67,11 @@ $section-header-bg: #cce6f7;
 			margin-left: 10px;
 		}
 
-		.lfr-contact-thumb {
-			float: left;
-		}
-
 		.lfr-contact-thumb img {
 			width: 100px;
 		}
 
 		.lfr-contact-info {
-			margin-left: 100px;
-
 			&.no-icon {
 				margin-left: 0;
 			}
@@ -97,14 +91,6 @@ $section-header-bg: #cce6f7;
 					margin-right: 10px;
 				}
 			}
-		}
-
-		.lfr-contact-extra,
-		.lfr-contact-job-title,
-		.lfr-contact-name {
-			overflow-x: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
 		}
 	}
 
@@ -240,8 +226,6 @@ $section-header-bg: #cce6f7;
 
 		.lfr-contact-name {
 			font-size: 2em;
-			overflow: hidden;
-			text-overflow: ellipsis;
 		}
 
 		.lfr-contact-name a {

@@ -144,7 +144,7 @@ request.setAttribute("view_user.jsp-user", user2);
 				</clay:col>
 			</clay:row>
 
-			<div class="lfr-detail-info lfr-field-group" data-title="<%= LanguageUtil.get(request, "details") %>">
+			<div class="d-flex lfr-detail-info lfr-field-group" data-title="<%= LanguageUtil.get(request, "details") %>">
 
 				<%
 				PortletURL editDetailsURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);

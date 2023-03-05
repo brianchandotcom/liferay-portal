@@ -16,8 +16,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_PREVIEW_VERSION_NUMBER</td>
-	<td>//span[contains(@class,'workflow-version')]/span[contains(@class,'workflow-value')]</td>
+	<td>ARTICLE_VERSION_NUMBER</td>
+	<td>//span[contains(@class,'label-info')]/span</td>
 	<td></td>
 </tr>
 <tr>

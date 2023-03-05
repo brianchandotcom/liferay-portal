@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.source.formatter.SourceFormatterExcludes;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaTerm;
@@ -76,8 +77,15 @@ public class JavaModuleUniqueVerifyProcessCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			javaClass = JavaClassParser.parseJavaClass(
-				javaFileName, FileUtil.read(file));
+			String content = FileUtil.read(file);
+
+			if (SourceUtil.containsUnquoted(content, "@generated") ||
+				SourceUtil.containsUnquoted(content, "$ANTLR")) {
+
+				continue;
+			}
+
+			javaClass = JavaClassParser.parseJavaClass(javaFileName, content);
 
 			extendedClassNames = javaClass.getExtendedClassNames(true);
 

@@ -262,10 +262,6 @@ public class DataDefinitionUtil {
 		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
 
-		if (ListUtil.isEmpty(ddmFormFields)) {
-			return new DataDefinitionField[0];
-		}
-
 		return TransformUtil.transformToArray(
 			ddmFormFields,
 			ddmFormField -> _toDataDefinitionField(

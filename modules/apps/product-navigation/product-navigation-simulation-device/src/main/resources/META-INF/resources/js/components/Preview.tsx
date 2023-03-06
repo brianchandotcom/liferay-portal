@@ -44,10 +44,10 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 	}
 
 	return (
-		<div className="align-items-center d-flex justify-content-center lfr-simulation-device">
+		<div className="align-items-center d-flex justify-content-center simulation-preview">
 			<div
 				className={classNames(
-					'lfr-device position-absolute',
+					'device position-absolute',
 					activeSize.cssClass,
 					{resizable: activeSize.id === SIZES.custom.id}
 				)}

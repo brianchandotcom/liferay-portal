@@ -66,7 +66,7 @@ export default function SizeSelector({
 
 	return (
 		<ClayLayout.Container>
-			<ClayLayout.Row className="default-devices">
+			<ClayLayout.Row className="size-selector">
 				{sizesList.map((size) => (
 					<SizeButton
 						activeSize={activeSize}
@@ -137,7 +137,7 @@ function SizeButton({
 						: false
 					: undefined
 			}
-			className={classNames('col-4 lfr-device-item text-center', {
+			className={classNames('col-4 size-button text-center', {
 				'd-lg-block d-none': !responsive,
 				'selected': activeSize.id === id,
 			})}

@@ -49,7 +49,7 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 				</div>
 
 				<div aria-expanded="<%= true %>" aria-labelledby="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Header" class="collapse panel-collapse show" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" role="tabpanel">
-					<div class="list-group-item simulation-app-panel-body">
+					<div class="simulation-app-panel-body">
 
 						<%
 						panelApp.include(request, response);

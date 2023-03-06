@@ -92,7 +92,7 @@ public class RedirectEntriesDisplayContext {
 		_redirectEntryService = redirectEntryService;
 		_stagingGroupHelper = stagingGroupHelper;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_expirationDateFormat = DateFormat.getDateInstance(

@@ -68,15 +68,24 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 	public static void setUpClassBaseExpandoTestCase() {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
-			FieldQueryFactory.class,
-			createFieldQueryFactory(createExpandoFieldQueryBuilderFactory()),
+		_fieldQueryBuilderFactoryServiceRegistration =
+			bundleContext.registerService(
+				FieldQueryBuilderFactory.class,
+				createExpandoFieldQueryBuilderFactory(), null);
+
+		_fieldQueryFactoryServiceRegistration = bundleContext.registerService(
+			FieldQueryFactory.class, createFieldQueryFactory(bundleContext),
 			null);
 	}
 
 	@AfterClass
 	public static void tearDownClassBaseExpandoTestCase() {
-		_serviceRegistration.unregister();
+		ReflectionTestUtil.invoke(
+			_fieldQueryFactoryImpl, "deactivate", new Class<?>[0], null);
+
+		_fieldQueryBuilderFactoryServiceRegistration.unregister();
+
+		_fieldQueryFactoryServiceRegistration.unregister();
 	}
 
 	@Test
@@ -126,16 +135,19 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 	}
 
 	protected static FieldQueryFactoryImpl createFieldQueryFactory(
-		FieldQueryBuilderFactory fieldQueryBuilderFactory) {
+		BundleContext bundleContext) {
 
-		return new FieldQueryFactoryImpl() {
-			{
-				descriptionFieldQueryBuilder =
-					createDescriptionFieldQueryBuilder();
+		_fieldQueryFactoryImpl = new FieldQueryFactoryImpl();
 
-				addFieldQueryBuilderFactory(fieldQueryBuilderFactory);
-			}
-		};
+		ReflectionTestUtil.setFieldValue(
+			_fieldQueryFactoryImpl, "_descriptionFieldQueryBuilder",
+			createDescriptionFieldQueryBuilder());
+
+		ReflectionTestUtil.invoke(
+			_fieldQueryFactoryImpl, "activate",
+			new Class<?>[] {BundleContext.class}, bundleContext);
+
+		return _fieldQueryFactoryImpl;
 	}
 
 	protected DocumentCreationHelper addKeyword(String value) {
@@ -357,7 +369,10 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 	private static final String _FIELD_TEXT =
 		"expando__custom_fields__testColumnName";
 
-	private static ServiceRegistration<?> _serviceRegistration;
+	private static ServiceRegistration<FieldQueryBuilderFactory>
+		_fieldQueryBuilderFactoryServiceRegistration;
+	private static FieldQueryFactoryImpl _fieldQueryFactoryImpl;
+	private static ServiceRegistration<?> _fieldQueryFactoryServiceRegistration;
 
 	@Mock
 	private ExpandoColumn _indexTypeKeywordExpandoColumn = createExpandoColumn(

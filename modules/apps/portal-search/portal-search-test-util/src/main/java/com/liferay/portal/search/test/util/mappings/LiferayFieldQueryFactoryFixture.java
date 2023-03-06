@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.test.util.mappings;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.internal.analysis.SimpleKeywordTokenizer;
 import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.internal.query.field.AssetTagNamesFieldQueryBuilderFactory;
@@ -22,10 +24,13 @@ import com.liferay.portal.search.internal.query.field.FieldQueryBuilderFactoryIm
 import com.liferay.portal.search.internal.query.field.FieldQueryFactoryImpl;
 import com.liferay.portal.search.internal.query.field.SubstringFieldQueryBuilder;
 import com.liferay.portal.search.internal.query.field.TitleFieldQueryBuilder;
+import com.liferay.portal.search.query.field.FieldQueryBuilderFactory;
 import com.liferay.portal.search.query.field.FieldQueryFactory;
 import com.liferay.portal.search.query.field.QueryPreProcessConfiguration;
 
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author André de Oliveira
@@ -64,15 +69,21 @@ public class LiferayFieldQueryFactoryFixture {
 					}
 				};
 
-		_fieldQueryFactory = new FieldQueryFactoryImpl() {
-			{
-				descriptionFieldQueryBuilder = _descriptionFieldQueryBuilder;
+		ReflectionTestUtil.setFieldValue(
+			_fieldQueryFactory, "_descriptionFieldQueryBuilder",
+			_descriptionFieldQueryBuilder);
 
-				addFieldQueryBuilderFactory(
-					assetTagNamesFieldQueryBuilderFactory);
-				addFieldQueryBuilderFactory(fieldQueryBuilderFactoryImpl);
-			}
-		};
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		bundleContext.registerService(
+			FieldQueryBuilderFactory.class,
+			assetTagNamesFieldQueryBuilderFactory, null);
+		bundleContext.registerService(
+			FieldQueryBuilderFactory.class, fieldQueryBuilderFactoryImpl, null);
+
+		ReflectionTestUtil.invoke(
+			_fieldQueryFactory, "activate",
+			new Class<?>[] {BundleContext.class}, bundleContext);
 	}
 
 	public FieldQueryFactory getFieldQueryFactory() {
@@ -118,7 +129,8 @@ public class LiferayFieldQueryFactoryFixture {
 	}
 
 	private final DescriptionFieldQueryBuilder _descriptionFieldQueryBuilder;
-	private final FieldQueryFactory _fieldQueryFactory;
+	private final FieldQueryFactory _fieldQueryFactory =
+		new FieldQueryFactoryImpl();
 	private final SubstringFieldQueryBuilder _substringFieldQueryBuilder;
 	private final TitleFieldQueryBuilder _titleFieldQueryBuilder;
 

@@ -16,13 +16,12 @@ package com.liferay.segments.context.vocabulary.internal.options.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.context.Context;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -43,33 +42,20 @@ public class EntityFieldConfigurationFieldOptionsProviderTest {
 
 	@Test
 	public void testGetOptionsWithDoubleEntityField() {
-		List<ConfigurationFieldOptionsProvider.Option> options =
-			_configurationFieldOptionsProvider.getOptions();
-
-		Stream<ConfigurationFieldOptionsProvider.Option> stream =
-			options.stream();
-
 		Assert.assertFalse(
-			stream.filter(
+			ListUtil.exists(
+				_configurationFieldOptionsProvider.getOptions(),
 				option -> Objects.equals(
-					option.getValue(), Context.DEVICE_SCREEN_RESOLUTION_HEIGHT)
-			).findAny(
-			).isPresent());
+					option.getValue(),
+					Context.DEVICE_SCREEN_RESOLUTION_HEIGHT)));
 	}
 
 	@Test
 	public void testGetOptionsWithStringEntityField() {
-		List<ConfigurationFieldOptionsProvider.Option> options =
-			_configurationFieldOptionsProvider.getOptions();
-
-		Stream<ConfigurationFieldOptionsProvider.Option> stream =
-			options.stream();
-
 		Assert.assertTrue(
-			stream.filter(
-				option -> Objects.equals(option.getValue(), Context.BROWSER)
-			).findAny(
-			).isPresent());
+			ListUtil.exists(
+				_configurationFieldOptionsProvider.getOptions(),
+				option -> Objects.equals(option.getValue(), Context.BROWSER)));
 	}
 
 	@Inject(

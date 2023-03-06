@@ -39,7 +39,7 @@ public class IndexerRequest {
 		_indexer = new NoAutoCommitIndexer<>(indexer);
 
 		_modelClassName = classedModel.getModelClassName();
-		_modelPrimaryKey = (Long)_classedModel.getPrimaryKeyObj();
+		_modelPrimaryKey = (Long)classedModel.getPrimaryKeyObj();
 	}
 
 	public IndexerRequest(

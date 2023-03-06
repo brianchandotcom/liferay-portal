@@ -50,7 +50,7 @@ public class SortDisplayContextBuilder {
 		_renderRequest = renderRequest;
 		_sortPortletPreferences = sortPortletPreferences;
 
-		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();

@@ -369,6 +369,12 @@ public class CompanyLocalServiceTest {
 
 		_companyLocalService.deleteCompany(companyId);
 
+		Assert.assertNull(
+			_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
+				layoutSetPrototype.getLayoutSetPrototypeId()));
+		Assert.assertNull(
+			_userGroupLocalService.fetchUserGroup(userGroup.getUserGroupId()));
+
 		deleteStagingClassNameEntries();
 	}
 

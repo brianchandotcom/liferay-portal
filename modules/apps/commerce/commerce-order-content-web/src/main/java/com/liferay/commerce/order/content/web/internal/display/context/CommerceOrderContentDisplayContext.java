@@ -185,13 +185,13 @@ public class CommerceOrderContentDisplayContext {
 			DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
 
-		_commerceContext = (CommerceContext)_httpServletRequest.getAttribute(
+		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
 
 		_commerceAccount = _commerceContext.getCommerceAccount();
 
 		_commerceOrderNoteId = ParamUtil.getLong(
-			_httpServletRequest, "commerceOrderNoteId");
+			httpServletRequest, "commerceOrderNoteId");
 	}
 
 	public CommerceChannel fetchCommerceChannel() {

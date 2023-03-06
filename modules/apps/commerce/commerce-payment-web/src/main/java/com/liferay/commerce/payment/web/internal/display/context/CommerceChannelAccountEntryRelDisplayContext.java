@@ -62,7 +62,7 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		long accountEntryId = ParamUtil.getLong(
 			httpServletRequest, "accountEntryId");
 
-		_accountEntry = _accountEntryService.getAccountEntry(accountEntryId);
+		_accountEntry = accountEntryService.getAccountEntry(accountEntryId);
 
 		long commerceChannelId = ParamUtil.getLong(
 			httpServletRequest, "commerceChannelId");
@@ -73,7 +73,7 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		commercePaymentMethodRequestHelper =
 			new CommercePaymentMethodRequestHelper(httpServletRequest);
 
-		_locale = _portal.getLocale(httpServletRequest);
+		_locale = portal.getLocale(httpServletRequest);
 	}
 
 	public long getAccountEntryId() {

@@ -64,7 +64,7 @@ public class CommerceVirtualOrderItemEditDisplayContext {
 			renderRequest, "commerceOrderId");
 
 		if (commerceOrderId > 0) {
-			_commerceOrder = _commerceOrderService.getCommerceOrder(
+			_commerceOrder = commerceOrderService.getCommerceOrder(
 				commerceOrderId);
 		}
 		else {

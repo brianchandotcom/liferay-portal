@@ -73,7 +73,7 @@ public class CommerceAddressDisplayContext {
 		_liferayPortletResponse = _cpRequestHelper.getLiferayPortletResponse();
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
+			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();

@@ -54,7 +54,7 @@ public class CPPriceRangeFacetsDisplayContext {
 		_paginationStartParameterName = paginationStartParameterName;
 		_portletSharedSearchResponse = portletSharedSearchResponse;
 
-		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();

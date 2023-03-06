@@ -55,7 +55,7 @@ public class ObjectRecipientCommerceDefinitionTermContributor
 		_userLocalService = userLocalService;
 
 		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(_objectDefinitionId);
+			objectFieldLocalService.getObjectFields(objectDefinitionId);
 
 		for (ObjectField objectField : objectFields) {
 			_objectFieldIds.put(

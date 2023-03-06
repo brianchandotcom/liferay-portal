@@ -96,7 +96,7 @@ public class CommerceAccountDisplayContext {
 		_userService = userService;
 
 		long accountEntryId = ParamUtil.getLong(
-			_httpServletRequest, "accountEntryId");
+			httpServletRequest, "accountEntryId");
 
 		_accountEntry = _accountEntryService.fetchAccountEntry(accountEntryId);
 
@@ -104,7 +104,7 @@ public class CommerceAccountDisplayContext {
 			httpServletRequest);
 
 		long commerceChannelId = ParamUtil.getLong(
-			_httpServletRequest, "commerceChannelId");
+			httpServletRequest, "commerceChannelId");
 
 		_commerceChannel = _commerceChannelService.fetchCommerceChannel(
 			commerceChannelId);

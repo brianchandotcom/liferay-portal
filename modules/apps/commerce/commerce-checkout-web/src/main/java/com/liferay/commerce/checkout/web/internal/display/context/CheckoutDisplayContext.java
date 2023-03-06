@@ -62,12 +62,12 @@ public class CheckoutDisplayContext {
 			liferayPortletRequest, "checkoutStepName");
 
 		CommerceCheckoutStep commerceCheckoutStep =
-			_commerceCheckoutStepRegistry.getCommerceCheckoutStep(
+			commerceCheckoutStepRegistry.getCommerceCheckoutStep(
 				checkoutStepName);
 
 		if ((commerceCheckoutStep == null) && (_commerceOrder != null)) {
 			List<CommerceCheckoutStep> commerceCheckoutSteps =
-				_commerceCheckoutStepRegistry.getCommerceCheckoutSteps(
+				commerceCheckoutStepRegistry.getCommerceCheckoutSteps(
 					_httpServletRequest, _httpServletResponse, true);
 
 			commerceCheckoutStep = commerceCheckoutSteps.get(0);

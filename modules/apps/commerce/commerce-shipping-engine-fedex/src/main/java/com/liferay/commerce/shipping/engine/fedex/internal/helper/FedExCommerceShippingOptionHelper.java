@@ -132,7 +132,7 @@ public class FedExCommerceShippingOptionHelper {
 
 		_commerceCurrency =
 			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
-				_commerceOrder.getCompanyId());
+				commerceOrder.getCompanyId());
 
 		if (_commerceCurrency == null) {
 			throw new CommerceShippingEngineException.MustSetPrimaryCurrency();
@@ -148,13 +148,13 @@ public class FedExCommerceShippingOptionHelper {
 		_weightUnits = WeightUnits.fromValue(
 			StringUtil.toUpperCase(_weightCPMeasurementUnit.getKey()));
 
-		_shippingAddress = _commerceOrder.getShippingAddress();
+		_shippingAddress = commerceOrder.getShippingAddress();
 
 		if (_shippingAddress == null) {
 			throw new CommerceShippingEngineException.MustSetShippingAddress();
 		}
 
-		long groupId = _commerceOrder.getGroupId();
+		long groupId = commerceOrder.getGroupId();
 
 		_fedExCommerceShippingEngineGroupServiceConfiguration =
 			configurationProvider.getConfiguration(

@@ -71,7 +71,7 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		long accountEntryId = ParamUtil.getLong(
 			httpServletRequest, "accountEntryId");
 
-		_accountEntry = _accountEntryService.getAccountEntry(accountEntryId);
+		_accountEntry = accountEntryService.getAccountEntry(accountEntryId);
 
 		_commerceCountryRequestHelper = new CommerceCountryRequestHelper(
 			httpServletRequest);

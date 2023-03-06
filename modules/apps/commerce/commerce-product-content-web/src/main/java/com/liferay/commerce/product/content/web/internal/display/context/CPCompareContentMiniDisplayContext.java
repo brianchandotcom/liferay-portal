@@ -92,11 +92,11 @@ public class CPCompareContentMiniDisplayContext {
 				PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 			_cpDefinitionIds = new ArrayList<>(
-				_cpCompareHelper.getCPDefinitionIds(
+				cpCompareHelper.getCPDefinitionIds(
 					commerceContext.getCommerceChannelGroupId(),
 					commerceAccount.getCommerceAccountId(),
 					CookiesManagerUtil.getCookieValue(
-						_cpCompareHelper.getCPDefinitionIdsCookieKey(
+						cpCompareHelper.getCPDefinitionIdsCookieKey(
 							commerceContext.getCommerceChannelGroupId()),
 						originalHttpServletRequest)));
 		}

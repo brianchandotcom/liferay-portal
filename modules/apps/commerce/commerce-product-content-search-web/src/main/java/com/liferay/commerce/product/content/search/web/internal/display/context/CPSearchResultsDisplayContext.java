@@ -23,6 +23,7 @@ import com.liferay.commerce.product.content.render.list.CPContentListRendererReg
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
+import com.liferay.commerce.product.content.search.web.internal.constants.CPSearchResultsConstants;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.type.CPType;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -231,12 +233,20 @@ public class CPSearchResultsDisplayContext {
 		String portletId = ParamUtil.getString(
 			originalHttpServletRequest, "p_p_id");
 
-		return ParamUtil.getString(
+		String orderByCol = ParamUtil.getString(
 			originalHttpServletRequest,
 			StringBundler.concat(
 				StringPool.UNDERLINE, portletId, StringPool.UNDERLINE,
 				SearchContainer.DEFAULT_ORDER_BY_COL_PARAM),
-			"relevance");
+			CPSearchResultsConstants.DEFAULT_SORT_OPTION);
+
+		if (ArrayUtil.contains(
+				CPSearchResultsConstants.SORT_OPTIONS, orderByCol)) {
+
+			return orderByCol;
+		}
+
+		return CPSearchResultsConstants.DEFAULT_SORT_OPTION;
 	}
 
 	public int getPaginationDelta() {

@@ -45,7 +45,7 @@ SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsD
 		<div class="dropdown-menu dropdown-menu-right" id="<portlet:namespace />commerce-dropdown-order-by">
 
 			<%
-			String[] sortOptions = {"relevance", "price-low-to-high", "price-high-to-low", "new-items", "name-ascending", "name-descending"};
+			String[] sortOptions = CPSearchResultsConstants.SORT_OPTIONS;
 
 			for (String sortOption : sortOptions) {
 			%>

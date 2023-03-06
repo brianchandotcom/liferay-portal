@@ -24,7 +24,14 @@ public class CPSearchResultsConstants {
 	public static final String CATEGORY_KEY_RENDER_SELECTION =
 		"render-selection";
 
+	public static final String DEFAULT_SORT_OPTION = "relevance";
+
 	public static final String FORM_NAVIGATOR_ID_CONFIGURATION =
 		"search.results.configuration";
+
+	public static final String[] SORT_OPTIONS = {
+		"relevance", "price-low-to-high", "price-high-to-low", "new-items",
+		"name-ascending", "name-descending"
+	};
 
 }

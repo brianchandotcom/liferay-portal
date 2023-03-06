@@ -58,7 +58,7 @@ public class DepotAdminSitesDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_currentURL = PortletURLUtil.getCurrent(
-			_liferayPortletRequest, _liferayPortletResponse);
+			liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public DropdownItemList getConnectedSiteDropdownItems(

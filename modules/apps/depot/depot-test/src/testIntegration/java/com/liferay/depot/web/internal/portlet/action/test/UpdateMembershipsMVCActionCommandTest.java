@@ -275,7 +275,7 @@ public class UpdateMembershipsMVCActionCommandTest {
 					return new String[] {sb.toString()};
 				}
 			).put(
-				"p_u_i_d", new String[] {String.valueOf(_user.getUserId())}
+				"p_u_i_d", new String[] {String.valueOf(user.getUserId())}
 			).build();
 		}
 

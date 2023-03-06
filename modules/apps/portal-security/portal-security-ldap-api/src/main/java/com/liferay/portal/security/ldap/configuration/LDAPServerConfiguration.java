@@ -116,6 +116,12 @@ public interface LDAPServerConfiguration {
 	public boolean groupSearchFilterEnabled();
 
 	@Meta.AD(
+		deflt = "true", description = "ignore-user-search-filter-for-auth-help",
+		name = "ignore-user-search-filter-for-auth", required = false
+	)
+	public boolean ignoreUserSearchFilterForAuth();
+
+	@Meta.AD(
 		deflt = "(objectClass=groupOfUniqueNames)",
 		description = "group-search-filter-help", name = "group-search-filter",
 		required = false

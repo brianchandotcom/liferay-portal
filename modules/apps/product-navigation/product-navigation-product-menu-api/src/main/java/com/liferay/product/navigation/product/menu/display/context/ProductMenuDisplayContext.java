@@ -54,16 +54,15 @@ public class ProductMenuDisplayContext {
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 
-		_httpServletRequest = PortalUtil.getHttpServletRequest(_portletRequest);
-		_panelAppRegistry = (PanelAppRegistry)_portletRequest.getAttribute(
+		_httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
+		_panelAppRegistry = (PanelAppRegistry)portletRequest.getAttribute(
 			ApplicationListWebKeys.PANEL_APP_REGISTRY);
-		_panelCategoryHelper =
-			(PanelCategoryHelper)_portletRequest.getAttribute(
-				ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+		_panelCategoryHelper = (PanelCategoryHelper)portletRequest.getAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
 		_panelCategoryRegistry =
-			(PanelCategoryRegistry)_portletRequest.getAttribute(
+			(PanelCategoryRegistry)portletRequest.getAttribute(
 				ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
-		_themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

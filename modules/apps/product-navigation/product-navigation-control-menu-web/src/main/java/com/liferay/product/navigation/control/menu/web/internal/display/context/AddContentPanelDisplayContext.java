@@ -78,12 +78,12 @@ public class AddContentPanelDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_assetHelper = (AssetHelper)_httpServletRequest.getAttribute(
+		_assetHelper = (AssetHelper)httpServletRequest.getAttribute(
 			AssetWebKeys.ASSET_HELPER);
 		_portletCategoryManager =
-			(PortletCategoryManager)_httpServletRequest.getAttribute(
+			(PortletCategoryManager)httpServletRequest.getAttribute(
 				PortletCategoryManager.class.getName());
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

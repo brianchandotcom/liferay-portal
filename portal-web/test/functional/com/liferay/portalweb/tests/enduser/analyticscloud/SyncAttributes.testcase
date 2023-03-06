@@ -964,7 +964,7 @@ definition {
 			''';
 
 		task ("Click to configure orders attributes") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Orders");
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Order");
 		}
 
 		task ("See that the required attributes can not be deselected") {

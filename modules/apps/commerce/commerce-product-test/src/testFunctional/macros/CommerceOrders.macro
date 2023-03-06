@@ -300,6 +300,16 @@ definition {
 		}
 	}
 
+	macro deleteOrderItem {
+		Click(
+			key_value = ${orderItemSku},
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteOrderType {
 		CommerceNavigator.searchEntry(entryName = ${orderTypeName});
 

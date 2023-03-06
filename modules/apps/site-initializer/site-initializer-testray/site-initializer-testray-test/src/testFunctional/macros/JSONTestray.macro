@@ -41,10 +41,6 @@ definition {
 	macro addComponent {
 		Variables.assertDefined(parameterList = "${componentName},${projectName},${teamName}");
 
-		if (!(isSet(object))) {
-			var object = "teams";
-		}
-
 		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
 		var teamId = JSONTestraySetter.getTeamId(teamName = ${teamName});
 

@@ -1,5 +1,72 @@
 definition {
 
+	macro _addCommerceAccountAddress {
+		Variables.assertDefined(parameterList = "${accountEntryName},${addressCity},${addressName},${addressStreet1},${addressZip},${countryISOCode}");
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(description))) {
+			var description = "";
+		}
+
+		if (!(isSet(latitude))) {
+			var latitude = 0;
+		}
+
+		if (!(isSet(longitude))) {
+			var longitude = 0;
+		}
+
+		if (!(isSet(phoneNumber))) {
+			var phoneNumber = "";
+		}
+
+		if (!(isSet(regionISOCode))) {
+			var regionISOCode = "";
+		}
+
+		if (!(isSet(addressStreet2))) {
+			var addressStreet2 = "";
+		}
+
+		if (!(isSet(addressStreet3))) {
+			var addressStreet3 = "";
+		}
+
+		if (!(isSet(addressType))) {
+			var addressType = 2;
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/accountAddresses \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"city": "${addressCity}",
+					"countryISOCode": "${countryISOCode}",
+					"description": "${description}",
+					"latitude": ${latitude},
+					"longitude": ${longitude},
+					"name": "${addressName}",
+					"phoneNumber": "${phoneNumber}",
+					"regionISOCode": "${regionISOCode}",
+					"street1": "${addressStreet1}",
+					"street2": "${addressStreet2}",
+					"street3": "${addressStreet3}",
+					"type": ${addressType},
+					"zip": "${addressZip}"
+				}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
+	}
+
 	macro _deleteAllCommerceAccounts {
 		var baseURL = ${baseURL};
 

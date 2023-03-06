@@ -38,15 +38,15 @@ public class GeneralNotificationTemplateTermsMVCResourceCommand
 
 	public enum CurrentUserTerm {
 
-		CURRENT_USER_EMAIL(
-			"current-user-email-address", "[%CURRENT_USER_EMAIL%]"),
+		CURRENT_USER_EMAIL_ADDRESS(
+			"current-user-email-address", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
 		CURRENT_USER_FIRST_NAME(
-			"current-user-first-name", "[%CURRENT_USER_FIRSTNAME%]"),
+			"current-user-first-name", "[%CURRENT_USER_FIRST_NAME%]"),
 		CURRENT_USER_ID("current-user-id", "[%CURRENT_USER_ID%]"),
 		CURRENT_USER_LAST_NAME(
-			"current-user-last-name", "[%CURRENT_USER_LASTNAME%]"),
+			"current-user-last-name", "[%CURRENT_USER_LAST_NAME%]"),
 		CURRENT_USER_MIDDLE_NAME(
-			"current-user-middle-name", "[%CURRENT_USER_MIDDLENAME%]"),
+			"current-user-middle-name", "[%CURRENT_USER_MIDDLE_NAME%]"),
 		CURRENT_USER_PREFIX("current-user-prefix", "[%CURRENT_USER_PREFIX%]"),
 		CURRENT_USER_SUFFIX("current-user-suffix", "[%CURRENT_USER_SUFFIX%]");
 

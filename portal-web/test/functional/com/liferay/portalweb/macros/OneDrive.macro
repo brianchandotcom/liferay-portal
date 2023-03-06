@@ -174,7 +174,7 @@ definition {
 	}
 
 	macro goToOneDrive {
-		Navigator.openSpecificURL(url = "https://liferaycolab-my.sharepoint.com/personal/sharepoint_liferaycolab_onmicrosoft_com/_layouts/15/onedrive.aspx");
+		Navigator.openSpecificURL(url = "https://liferaycolab-my.sharepoint.com/personal/sharepoint_liferaycolab_onmicrosoft_com/_layouts/15/onedrive.aspx?view=0");
 
 		WaitForPageLoad();
 

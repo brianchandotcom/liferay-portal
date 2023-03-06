@@ -1,0 +1,33 @@
+definition {
+
+	macro missingSemicolonEcho {
+		var variable = "variable text";
+
+		echo("Missing semicolon")
+
+		MissingSemicolon.validMacro();
+	}
+
+	macro missingSemicolonExecute {
+		var variable = "variable text";
+
+		MissingSemicolon.validMacro()
+
+		MissingSemicolon.validMacro();
+	}
+
+	macro missingSemicolonVar {
+		var variable = "variable text";
+
+		var missingSemicolon = "missing semicolon"
+
+		MissingSemicolon.validMacro();
+	}
+
+	macro validMacro {
+		var variable = "variable text";
+
+		return ${variable};
+	}
+
+}

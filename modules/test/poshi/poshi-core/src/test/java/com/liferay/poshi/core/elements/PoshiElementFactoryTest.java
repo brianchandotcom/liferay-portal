@@ -14,21 +14,13 @@
 
 package com.liferay.poshi.core.elements;
 
-import com.github.difflib.DiffUtils;
-import com.github.difflib.UnifiedDiffUtils;
-import com.github.difflib.patch.Patch;
-
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.util.Dom4JUtil;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.PropsUtil;
+import com.liferay.poshi.core.util.TestUtil;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.StringReader;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -355,7 +347,7 @@ public class PoshiElementFactoryTest {
 		}
 
 		if (compare != 0) {
-			_printDiffs(
+			TestUtil.printDiffs(
 				expectedFileName, Dom4JUtil.format(expectedElement),
 				actualFileName, Dom4JUtil.format(actualElement));
 
@@ -370,7 +362,7 @@ public class PoshiElementFactoryTest {
 		throws Exception {
 
 		if (!actualContent.equals(expectedContent)) {
-			_printDiffs(
+			TestUtil.printDiffs(
 				expectedFileName, expectedContent, actualFileName,
 				actualContent);
 
@@ -394,60 +386,9 @@ public class PoshiElementFactoryTest {
 		return new File(_BASE_DIR + fileName);
 	}
 
-	private List<String> _getLines(String s) throws Exception {
-		List<String> lines = new LinkedList<>();
-
-		String line = null;
-
-		BufferedReader bufferedReader = new BufferedReader(new StringReader(s));
-
-		while ((line = bufferedReader.readLine()) != null) {
-			lines.add(line);
-		}
-
-		bufferedReader.close();
-
-		return lines;
-	}
-
 	private PoshiElement _getPoshiElement(String fileName) throws Exception {
 		return (PoshiElement)PoshiNodeFactory.newPoshiNodeFromFile(
 			FileUtil.getURL(_getFile(fileName)));
-	}
-
-	private void _printDiffs(
-			String expectedFileName, String expectedContent,
-			String actualFileName, String actualContent)
-		throws Exception {
-
-		Patch<String> patch = DiffUtils.diff(
-			_getLines(expectedContent), _getLines(actualContent));
-
-		List<String> unifiedDiffLines = UnifiedDiffUtils.generateUnifiedDiff(
-			expectedFileName, "Generated from " + actualFileName,
-			_getLines(expectedContent), patch, 0);
-
-		for (String line : unifiedDiffLines) {
-			if (line.startsWith("+++") || line.startsWith("---")) {
-				System.out.println(line);
-
-				continue;
-			}
-
-			if (line.startsWith("+")) {
-				System.out.println("\033[32m" + line + "\033[0m");
-
-				continue;
-			}
-
-			if (line.startsWith("-")) {
-				System.out.println("\033[31m" + line + "\033[0m");
-
-				continue;
-			}
-
-			System.out.println(line);
-		}
 	}
 
 	private static final String _BASE_DIR =

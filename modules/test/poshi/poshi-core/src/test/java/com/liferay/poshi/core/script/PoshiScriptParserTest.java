@@ -15,16 +15,19 @@
 package com.liferay.poshi.core.script;
 
 import com.liferay.poshi.core.PoshiContext;
+import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.PropsUtil;
+import com.liferay.poshi.core.util.TestUtil;
 
-import java.util.Iterator;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 import junit.framework.TestCase;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,12 +36,114 @@ import org.junit.Test;
  */
 public class PoshiScriptParserTest extends TestCase {
 
-	@Test
-	public void testInvalidSyntax() throws Exception {
-		String poshiFileDir =
-			"src/test/resources/com/liferay/poshi/core/dependencies/script";
-
+	@After
+	@Override
+	public void tearDown() {
+		PoshiContext.clear();
+		PoshiScriptParserException.clear();
 		PropsUtil.clear();
+	}
+
+	@Test
+	public void testInvalidSyntax() {
+		String fileName = "InvalidSyntax.macro";
+
+		_preparePoshiContext(fileName);
+
+		List<PoshiScriptParserException> actualExceptions = new ArrayList<>(
+			PoshiScriptParserException.getExceptions());
+
+		PoshiScriptParserException.clear();
+
+		_throwPoshiScriptParserException(
+			"Invalid variable assignment syntax, please use triple quotes " +
+				"(''') to wrap a multiline string instead of double quotes",
+			4, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Unescaped quotes in list value: \"item 1, item2\"", 7,
+			_getFilePath(fileName));
+
+		_assertExceptions(
+			PoshiScriptParserException.getExceptions(), actualExceptions);
+	}
+
+	@Test
+	public void testMissingSemicolon() {
+		String fileName = "MissingSemicolon.macro";
+
+		_preparePoshiContext(fileName);
+
+		List<PoshiScriptParserException> actualExceptions = new ArrayList<>(
+			PoshiScriptParserException.getExceptions());
+
+		PoshiScriptParserException.clear();
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 6, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 14, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 22, _getFilePath(fileName));
+
+		_assertExceptions(
+			PoshiScriptParserException.getExceptions(), actualExceptions);
+	}
+
+	private void _assertContains(String s, String text) {
+		if (!s.contains(text)) {
+			TestUtil.printDiffs(null, s, null, text);
+		}
+
+		Assert.assertTrue(s.contains(text));
+	}
+
+	private void _assertExceptions(
+		List<PoshiScriptParserException> expectedExceptions,
+		List<PoshiScriptParserException> actualExceptions) {
+
+		if (expectedExceptions == actualExceptions) {
+			throw new RuntimeException(
+				"Exception lists should not reference the same object");
+		}
+
+		for (int i = 0; i < expectedExceptions.size(); i++) {
+			PoshiScriptParserException expectedPoshiScriptParserException =
+				expectedExceptions.get(i);
+
+			PoshiScriptParserException actualPoshiScriptParserException =
+				actualExceptions.get(i);
+
+			_assertContains(
+				actualPoshiScriptParserException.getMessage(),
+				expectedPoshiScriptParserException.getMessage());
+
+			assertEquals(
+				expectedPoshiScriptParserException.getErrorLineNumber(),
+				actualPoshiScriptParserException.getErrorLineNumber());
+
+			assertEquals(
+				expectedPoshiScriptParserException.getFilePath(),
+				actualPoshiScriptParserException.getFilePath());
+		}
+	}
+
+	private URL _getFilePath(String fileName) {
+		String filePath = FileUtil.getCanonicalPath(
+			_BASE_POSHI_FILE_DIR + "/" + fileName);
+
+		try {
+			return new URL("file://" + filePath);
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
+
+	private void _preparePoshiContext(String dirName) {
+		String poshiFileDir = _BASE_POSHI_FILE_DIR + "/" + dirName;
 
 		PropsUtil.set("test.base.dir.name", poshiFileDir);
 
@@ -48,52 +153,20 @@ public class PoshiScriptParserTest extends TestCase {
 		catch (Exception exception) {
 			System.out.println(exception);
 		}
+	}
 
-		Map<String, Integer> expectedErrorMessages =
-			new TreeMap<String, Integer>() {
-				{
-					put(
-						"Invalid variable assignment syntax, please use " +
-							"triple quotes (''') to wrap a multiline string " +
-								"instead of double quotes",
-						4);
-					put("Unescaped quotes in list value: \"item 1, item2\"", 7);
-				}
-			};
+	private void _throwPoshiScriptParserException(
+		String message, int lineNumber, URL filePath) {
 
-		List<PoshiScriptParserException> poshiScriptParserExceptions =
-			PoshiScriptParserException.getExceptions();
-
-		Iterator<PoshiScriptParserException>
-			poshiScriptParserExceptionIterator =
-				poshiScriptParserExceptions.iterator();
-
-		Set<Map.Entry<String, Integer>> expectedErrorMessagesEntries =
-			expectedErrorMessages.entrySet();
-
-		Iterator<Map.Entry<String, Integer>> expectedErrorMessagesIterator =
-			expectedErrorMessagesEntries.iterator();
-
-		while (poshiScriptParserExceptionIterator.hasNext() &&
-			   expectedErrorMessagesIterator.hasNext()) {
-
-			Map.Entry<String, Integer> expectedErrorMessagesEntry =
-				expectedErrorMessagesIterator.next();
-
-			PoshiScriptParserException poshiScriptParserException =
-				poshiScriptParserExceptionIterator.next();
-
-			String actualErrorMessage = poshiScriptParserException.getMessage();
-
-			Assert.assertTrue(
-				actualErrorMessage.contains(
-					expectedErrorMessagesEntry.getKey()));
-
-			assertEquals(
-				expectedErrorMessagesEntry.getValue(),
-				Integer.valueOf(
-					poshiScriptParserException.getErrorLineNumber()));
+		try {
+			throw new PoshiScriptParserException(
+				message, lineNumber, null, filePath);
+		}
+		catch (PoshiScriptParserException poshiScriptParserException) {
 		}
 	}
+
+	private static final String _BASE_POSHI_FILE_DIR =
+		"src/test/resources/com/liferay/poshi/core/dependencies/script";
 
 }

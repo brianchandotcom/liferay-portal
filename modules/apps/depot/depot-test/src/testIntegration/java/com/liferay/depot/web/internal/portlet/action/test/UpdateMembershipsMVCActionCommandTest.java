@@ -240,7 +240,6 @@ public class UpdateMembershipsMVCActionCommandTest {
 
 			_company = company;
 			_group = group;
-
 			_user = user;
 
 			_parameters = HashMapBuilder.put(

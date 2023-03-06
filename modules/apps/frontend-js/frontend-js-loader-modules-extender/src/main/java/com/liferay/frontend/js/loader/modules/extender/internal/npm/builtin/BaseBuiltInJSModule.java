@@ -53,7 +53,6 @@ public abstract class BaseBuiltInJSModule implements JSModule {
 		_flagsJSONObject = flagsJSONObject;
 
 		_id = ModuleNameUtil.getModuleId(jsPackage, name);
-
 		_resolvedId = StringBundler.concat(
 			jsPackage.getName(), StringPool.AT, jsPackage.getVersion(),
 			StringPool.SLASH, name);

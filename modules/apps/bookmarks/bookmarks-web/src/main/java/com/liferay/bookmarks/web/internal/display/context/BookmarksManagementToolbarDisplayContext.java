@@ -77,13 +77,10 @@ public class BookmarksManagementToolbarDisplayContext {
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
-
 		_folderId = GetterUtil.getLong(
 			(String)httpServletRequest.getAttribute("view.jsp-folderId"));
-
 		_searchContainer = (SearchContainer)httpServletRequest.getAttribute(
 			"view.jsp-bookmarksSearchContainer");
-
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

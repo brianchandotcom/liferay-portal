@@ -72,6 +72,14 @@ public class BatchEngineExportTaskItemWriterBuilder {
 
 			batchEngineUnitConfiguration.setClassName(_itemClass.getName());
 			batchEngineUnitConfiguration.setVersion("v1.0");
+
+			if (_parameters == null) {
+				_parameters = new HashMap<>();
+			}
+
+			_parameters.computeIfAbsent("createStrategy", key -> "INSERT");
+			_parameters.computeIfAbsent("updateStrategy", key -> "UPDATE");
+
 			batchEngineUnitConfiguration.setParameters(_parameters);
 
 			return new JSONTBatchEngineExportTaskItemWriterImpl(
@@ -122,30 +130,6 @@ public class BatchEngineExportTaskItemWriterBuilder {
 		_parameters = parameters;
 
 		return this;
-	}
-
-	private BatchEngineAutoDeployListener.BatchEngineImportConfiguration
-		_getBatchEngineImportConfiguration() {
-
-		BatchEngineAutoDeployListener.BatchEngineImportConfiguration
-			batchEngineImportConfiguration =
-				new BatchEngineAutoDeployListener.
-					BatchEngineImportConfiguration();
-
-		batchEngineImportConfiguration.setClassName(_itemClass.getName());
-
-		if (_parameters == null) {
-			_parameters = new HashMap<>();
-		}
-
-		_parameters.computeIfAbsent("createStrategy", key -> "INSERT");
-		_parameters.computeIfAbsent("updateStrategy", key -> "UPDATE");
-
-		batchEngineImportConfiguration.setParameters(_parameters);
-
-		batchEngineImportConfiguration.setVersion("v1.0");
-
-		return batchEngineImportConfiguration;
 	}
 
 	private BatchEngineTaskContentType _batchEngineTaskContentType;

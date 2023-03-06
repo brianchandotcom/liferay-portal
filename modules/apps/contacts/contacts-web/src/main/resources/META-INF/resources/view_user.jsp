@@ -150,10 +150,16 @@ request.setAttribute("view_user.jsp-user", user2);
 				PortletURL editDetailsURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
 				%>
 
-				<liferay-ui:icon
+				<clay:link
+					borderless="<%= true %>"
+					cssClass="edit-button lfr-portal-tooltip"
+					displayType="secondary"
+					href="<%= editDetailsURL.toString() %>"
 					icon="pencil"
-					markupView="lexicon"
-					url="<%= editDetailsURL.toString() %>"
+					monospaced="<%= true %>"
+					small="<%= true %>"
+					title='<%= LanguageUtil.format(request, "edit-x", LanguageUtil.get(request, "information"), false) %>'
+					type="button"
 				/>
 
 				<c:if test="<%= showIcon %>">
@@ -305,10 +311,16 @@ request.setAttribute("view_user.jsp-user", user2);
 												PortletURL editCategorizationURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
 												%>
 
-												<liferay-ui:icon
+												<clay:link
+													borderless="<%= true %>"
+													cssClass="edit-button lfr-portal-tooltip"
+													displayType="secondary"
+													href="<%= editCategorizationURL.toString() %>"
 													icon="pencil"
-													markupView="lexicon"
-													url="<%= editCategorizationURL.toString() %>"
+													monospaced="<%= true %>"
+													small="<%= true %>"
+													title='<%= LanguageUtil.format(request, "edit-x", LanguageUtil.get(request, "information"), false) %>'
+													type="button"
 												/>
 
 												<ul class="user-tags">

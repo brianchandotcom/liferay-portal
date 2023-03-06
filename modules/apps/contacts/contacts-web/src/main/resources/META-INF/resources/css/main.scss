@@ -250,8 +250,8 @@ $section-header-bg: #cce6f7;
 			display: none;
 		}
 
-		.lfr-field-group .lexicon-icon-pencil {
-			display: none;
+		.lfr-field-group .edit-button {
+			opacity: 0;
 		}
 	}
 
@@ -521,7 +521,7 @@ $section-header-bg: #cce6f7;
 			width: initial;
 		}
 
-		.lexicon-icon-pencil {
+		.edit-button {
 			position: absolute;
 			right: 5px;
 			top: 5px;
@@ -529,8 +529,8 @@ $section-header-bg: #cce6f7;
 
 		&:focus-within,
 		&:hover {
-			.lexicon-icon-pencil {
-				display: block;
+			.edit-button {
+				opacity: 1;
 			}
 		}
 

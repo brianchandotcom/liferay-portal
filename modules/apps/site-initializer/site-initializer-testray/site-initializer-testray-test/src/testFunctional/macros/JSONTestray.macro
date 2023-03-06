@@ -119,6 +119,19 @@ definition {
 			projectName = ${projectName});
 	}
 
+	macro addRequirement {
+		Variables.assertDefined(parameterList = "${componentName},${linkTitle},${projectName},${requirementName}");
+
+		var componentId = JSONTestraySetter.getComponentId(componentName = ${componentName});
+		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
+
+		var requirementId = JSONTestrayAPI.createRequirementAPI(
+			componentId = ${componentId},
+			linkTitle = ${linkTitle},
+			projectId = ${projectId},
+			requirementName = ${requirementName});
+	}
+
 	macro addRoutine {
 		Variables.assertDefined(parameterList = "${routineName},${projectName}");
 

@@ -196,6 +196,8 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			}
 		}
 
+		Assert.assertTrue(table1Exists && table2Exists);
+
 		_assertLogContextContains(
 			"upgrade.report.tables.initial.final.rows",
 			"UpgradeReportTable1:0:1");
@@ -452,7 +454,9 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	private void _assertLogContextContains(String key, String testString) {
 		String values = _getLogContextKey(key);
 
-		Assert.assertTrue(values.contains(testString));
+		Assert.assertTrue(
+			StringUtil.containsIgnoreCase(
+				values, testString, StringPool.BLANK));
 	}
 
 	private void _assertReport(String testString) throws Exception {

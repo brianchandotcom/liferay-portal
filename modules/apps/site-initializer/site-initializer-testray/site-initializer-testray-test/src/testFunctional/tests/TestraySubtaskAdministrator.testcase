@@ -14,9 +14,9 @@ definition {
 
 			User.firstLoginPG();
 
-			// Testray.addTestraySite();
+			Testray.addTestraySite();
 
-			// Refresh();
+			Refresh();
 		}
 
 		task ("Setup for SubtaskAPI") {
@@ -54,13 +54,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		// ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		// Testray.tearDownCP();
+		Testray.tearDownCP();
 
-		// if ("${testPortalInstance}" == "true") {
-		// 	PortalInstances.tearDownCP();
-		// }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 	}
 
 	@description = "This is a test for LPS-169401 - Verify if, as an Administrator, can cancel merge subtasks"

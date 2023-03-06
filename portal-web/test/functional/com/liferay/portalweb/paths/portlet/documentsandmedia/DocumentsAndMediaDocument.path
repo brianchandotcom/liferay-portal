@@ -264,6 +264,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_INFO_TAGS_HEADER</td>
+	<td>//dt[contains(.,'Tags')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_INFO_VERSION</td>
 	<td>//div[@class='sidebar-header']//span[contains(@class,'label-item') and contains(.,'Version')]</td>
 	<td></td>

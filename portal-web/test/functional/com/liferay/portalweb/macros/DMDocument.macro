@@ -4151,6 +4151,8 @@ definition {
 		DMDocument.expandInfo();
 
 		for (var tagName : list ${tagName}) {
+			ScrollWebElementIntoView(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TAGS_HEADER");
+
 			var tagName = StringUtil.lowerCase(${tagName});
 
 			AssertTextEquals.assertPartialText(

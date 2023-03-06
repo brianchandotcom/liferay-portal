@@ -33,7 +33,7 @@ import CollectionInput from '../inputs/CollectionInput.es';
 import DateTimeInput from '../inputs/DateTimeInput';
 import DecimalInput from '../inputs/DecimalInput.es';
 import EventInput from '../inputs/EventInput';
-import IntegerInput from '../inputs/IntegerInput.es';
+import IntegerInput from '../inputs/IntegerInput';
 import SelectEntityInput from '../inputs/SelectEntityInput.es';
 import StringInput from '../inputs/StringInput.es';
 

@@ -22,7 +22,7 @@ import {
 	SUPPORTED_PROPERTY_TYPES,
 } from '../../utils/constants';
 import {getSupportedOperatorsFromEvent} from '../../utils/utils.es';
-import IntegerInput from './IntegerInput.es';
+import IntegerInput from './IntegerInput';
 import SelectEventEntityInput from './SelectEventEntityInput.es';
 
 class EventInput extends Component {

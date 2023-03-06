@@ -15,7 +15,7 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import IntegerInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/IntegerInput.es';
+import IntegerInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/IntegerInput';
 import {testControlledInput} from '../../utils';
 
 const OPTIONS_INTEGER_NUMBER_INPUT_TESTID = 'options-integer';

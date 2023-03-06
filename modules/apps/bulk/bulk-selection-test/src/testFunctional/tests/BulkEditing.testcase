@@ -565,7 +565,7 @@ definition {
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2");
 
 		DMDocument.moveToFolderPG(
-			bulkSelection = "2 of 3 Selected",
+			bulkSelection = "2 of 3 Items Selected",
 			dmFolderName = "Folder 1");
 
 		for (var key_dmDocumentTitle : list "Document_1,Document_2") {

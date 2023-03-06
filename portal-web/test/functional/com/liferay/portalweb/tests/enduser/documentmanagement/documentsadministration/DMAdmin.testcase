@@ -118,9 +118,9 @@ definition {
 
 		PortletEntry.selectAll();
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "All Selected");
+			value1 = "All Selected (4 of 4 Items Selected)");
 
 		Button.click(button = "Clear");
 
@@ -294,17 +294,17 @@ definition {
 
 		DMDocument.checkDocumentCheckboxPG(dmDocumentTitle = "Document_2.jpg");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "1 of 11 Selected");
+			value1 = "1 of 11 Items Selected");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		Click.clickNoWaitForVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "5 of 11 Selected");
+			value1 = "5 of 11 Items Selected");
 	}
 
 	@description = "This test covers LPS-103231. It validates that the owner name from a document cannot execute XSS from the info panel."

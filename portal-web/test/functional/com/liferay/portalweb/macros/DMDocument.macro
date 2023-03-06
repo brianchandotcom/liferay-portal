@@ -1288,7 +1288,7 @@ definition {
 
 			Button.click(button = "Select All");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "ManagementBar#NAVBAR_TEXT",
 				value1 = "All Selected");
 
@@ -2148,7 +2148,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		if (isSet(bulkSelection)) {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "ManagementBar#NAVBAR_TEXT",
 				value1 = ${bulkSelection});
 

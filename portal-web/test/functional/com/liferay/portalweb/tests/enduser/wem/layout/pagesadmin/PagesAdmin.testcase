@@ -2005,7 +2005,7 @@ definition {
 		}
 
 		task ("View managment bar text is shown") {
-			ManagementBar.viewNumberOfSelectedItems(text = "1 of 2 Selected");
+			ManagementBar.viewNumberOfSelectedItems(text = "1 of 2 Items Selected");
 		}
 
 		task ("Select all pages via management bar") {
@@ -2015,7 +2015,7 @@ definition {
 		}
 
 		task ("View managment bar text is shown") {
-			ManagementBar.viewNumberOfSelectedItems(text = "All Selected");
+			ManagementBar.viewNumberOfSelectedItems(text = "All Selected (2 of 2 Items Selected)");
 		}
 
 		task ("View both pages are selected") {

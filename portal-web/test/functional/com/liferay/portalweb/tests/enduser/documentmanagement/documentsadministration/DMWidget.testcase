@@ -240,17 +240,17 @@ definition {
 
 		DMDocument.checkDocumentCheckboxPG(dmDocumentTitle = "Document_2.jpg");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "1 of 10 Selected");
+			value1 = "1 of 10 Items Selected");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		DMDocument.checkDocumentCheckboxPG(dmDocumentTitle = "Document_4.jpg");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "2 of 10 Selected");
+			value1 = "2 of 10 Items Selected");
 	}
 
 	@description = "This test ensures that the DM widgets follow W3C accessibility standards."

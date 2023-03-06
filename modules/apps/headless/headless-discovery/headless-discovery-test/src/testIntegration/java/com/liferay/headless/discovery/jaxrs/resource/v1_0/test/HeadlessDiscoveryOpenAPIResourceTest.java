@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
@@ -40,7 +41,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -51,6 +51,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Carlos Correa
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class HeadlessDiscoveryOpenAPIResourceTest {
 
@@ -65,14 +66,6 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 		_objectDefinition2 = _publishObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_SITE);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition1.getObjectDefinitionId());
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition2.getObjectDefinitionId());
 	}
 
 	@Test

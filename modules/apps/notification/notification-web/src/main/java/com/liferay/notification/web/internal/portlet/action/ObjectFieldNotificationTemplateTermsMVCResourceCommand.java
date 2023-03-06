@@ -51,13 +51,13 @@ public class ObjectFieldNotificationTemplateTermsMVCResourceCommand
 
 	public enum AuthorTerm {
 
-		AUTHOR_EMAIL("author-email-address", "CREATOR_EMAIL"),
-		AUTHOR_FIRST_NAME("author-first-name", "CREATOR_FIRSTNAME"),
-		AUTHOR_ID("author-id", "CREATOR_ID"),
-		AUTHOR_LAST_NAME("author-last-name", "CREATOR_LASTNAME"),
-		AUTHOR_MIDDLE_NAME("author-middle-name", "CREATOR_MIDDLENAME"),
-		AUTHOR_PREFIX("author-prefix", "CREATOR_PREFIX"),
-		AUTHOR_SUFFIX("author-suffix", "CREATOR_SUFFIX");
+		AUTHOR_EMAIL_ADDRESS("author-email-address", "AUTHOR_EMAIL_ADDRESS"),
+		AUTHOR_FIRST_NAME("author-first-name", "AUTHOR_FIRST_NAME"),
+		AUTHOR_ID("author-id", "AUTHOR_ID"),
+		AUTHOR_LAST_NAME("author-last-name", "AUTHOR_LAST_NAME"),
+		AUTHOR_MIDDLE_NAME("author-middle-name", "AUTHOR_MIDDLE_NAME"),
+		AUTHOR_PREFIX("author-prefix", "AUTHOR_PREFIX"),
+		AUTHOR_SUFFIX("author-suffix", "AUTHOR_SUFFIX");
 
 		public static Map<String, String> getTermMap() {
 			Map<String, String> map = new LinkedHashMap<>();

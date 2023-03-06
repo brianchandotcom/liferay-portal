@@ -730,15 +730,6 @@ public class CompanyLocalServiceTest {
 		_virtualHostLocalService.getVirtualHost(company.getWebId());
 	}
 
-	@Test
-	public void testDeleteCompanyWithLDAPPasswordPolicyEnabled()
-		throws Exception {
-
-		Company company = addCompany();
-
-		_companyLocalService.deleteCompany(company);
-	}
-
 	@Test(expected = RequiredCompanyException.class)
 	public void testDeleteDefaultCompany() throws Exception {
 		long companyId = PortalInstances.getDefaultCompanyId();

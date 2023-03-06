@@ -1272,7 +1272,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_removeKBArticleAttachments(removeFileEntryIds);
 
-		// indexer
+		// Indexer
 
 		_indexKBArticle(kbArticle);
 
@@ -1473,10 +1473,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
-			KBArticle.class);
-
-		indexer.reindex(kbArticle);
+		_indexKBArticle(kbArticle);
 
 		// Subscriptions
 

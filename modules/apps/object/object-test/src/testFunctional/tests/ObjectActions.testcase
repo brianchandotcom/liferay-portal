@@ -2519,6 +2519,76 @@ definition {
 		}
 	}
 
+	@description = "LPS-173774 - Verify that an unpublished object with a standalone action does NOT show up in permissions."
+	@priority = 4
+	test CheckStandaloneActionPermissionOfUnpublishedObject {
+		task ("Given: Add an object entry and publish it") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 173774",
+				objectName = "CustomObject173774",
+				pluralLabelName = "Custom Objects 173774");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject173774");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject173774");
+		}
+
+		task ("And: Add another object entry with a standalone action and unpublish it") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 173774Test",
+				objectName = "CustomObject173774Test",
+				pluralLabelName = "Custom Objects 173774Test");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 173774Test");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Action Label",
+				actionName = "ActionName",
+				active = "true",
+				errorMessage = "Error",
+				inputMethod = "true",
+				inputValue = "Test",
+				objectLabel = "Custom Object 173774",
+				thenAction = "Add an Object Entry",
+				whenAction = "Standalone");
+		}
+
+		task ("When: Check the object entries in define permissions tab of a regular role") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			RoleNavigator.gotoDefineRolePermissions(roleTitle = "Portal Content Reviewer");
+
+			Type(
+				locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
+				value1 = "Object");
+		}
+
+		task ("Then: Assert the unpublished object entry with a standalone action is not present") {
+			AssertElementPresent(
+				key_permissionNavHeader = "Object",
+				key_permissionNavItem = "Custom Objects 173774",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION");
+
+			AssertElementNotPresent(
+				key_permissionNavHeader = "Object",
+				key_permissionNavItem = "Custom Objects 173774Test",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION");
+		}
+	}
+
 	@description = "LPS-146871 - Verify that the Action name is required"
 	@priority = 4
 	test VerifyActionNameIsRequired {

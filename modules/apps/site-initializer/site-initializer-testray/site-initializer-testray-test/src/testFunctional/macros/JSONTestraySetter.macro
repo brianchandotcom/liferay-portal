@@ -87,9 +87,7 @@ definition {
 	}
 
 	macro getTeamId {
-		var teamId = JSONTestrayAPI._getObjectId(
-			object = "teams",
-			objectName = ${teamName});
+		var teamId = JSONTestrayAPI._getTeamId(teamName = ${teamName});
 
 		return ${teamId};
 	}

@@ -84,7 +84,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 		_displayStyle = displayStyle;
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
+			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = themeDisplay.getPermissionChecker();

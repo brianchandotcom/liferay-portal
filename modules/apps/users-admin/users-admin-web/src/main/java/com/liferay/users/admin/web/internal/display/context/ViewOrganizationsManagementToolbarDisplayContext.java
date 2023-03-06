@@ -69,8 +69,7 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
 
-		_currentURL = PortletURLUtil.getCurrent(
-			_renderRequest, _renderResponse);
+		_currentURL = PortletURLUtil.getCurrent(renderRequest, renderResponse);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

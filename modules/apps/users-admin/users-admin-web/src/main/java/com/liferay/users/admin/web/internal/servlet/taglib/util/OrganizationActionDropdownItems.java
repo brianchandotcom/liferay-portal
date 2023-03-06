@@ -59,7 +59,7 @@ public class OrganizationActionDropdownItems {
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-		_organizationGroup = _organization.getGroup();
+		_organizationGroup = organization.getGroup();
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

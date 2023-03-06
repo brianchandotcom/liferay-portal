@@ -80,7 +80,7 @@ public class UserDisplayContext {
 
 		_permissionChecker = themeDisplay.getPermissionChecker();
 
-		_renderResponse = (RenderResponse)_httpServletRequest.getAttribute(
+		_renderResponse = (RenderResponse)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		_selUser = PortalUtil.getSelectedUser(httpServletRequest);

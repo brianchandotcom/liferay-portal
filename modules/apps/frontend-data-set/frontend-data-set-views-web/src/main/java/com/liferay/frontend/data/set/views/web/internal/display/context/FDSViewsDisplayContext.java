@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Comparator;
 import java.util.List;
@@ -88,13 +89,27 @@ public class FDSViewsDisplayContext {
 				).put(
 					"entityClassName", fdsHeadlessResource.getEntityClassName()
 				).put(
-					"name", fdsHeadlessResource.getName()
+					"name", _getName(fdsHeadlessResource)
 				).put(
 					"version", fdsHeadlessResource.getVersion()
 				));
 		}
 
 		return jsonArray;
+	}
+
+	private String _getName(FDSHeadlessResource fdsHeadlessResource) {
+		String name = fdsHeadlessResource.getName();
+
+		if (name.startsWith("ObjectEntry")) {
+			String[] nameParts = StringUtil.split(name, "#C_");
+
+			if (nameParts.length == 2) {
+				return nameParts[1];
+			}
+		}
+
+		return name;
 	}
 
 	private final PortletRequest _portletRequest;

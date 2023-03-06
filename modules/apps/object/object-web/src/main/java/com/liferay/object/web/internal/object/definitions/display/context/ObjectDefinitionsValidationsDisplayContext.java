@@ -22,20 +22,20 @@ import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -82,24 +82,19 @@ public class ObjectDefinitionsValidationsDisplayContext
 	}
 
 	public List<Map<String, String>> getObjectValidationRuleEngines() {
-		return Stream.of(
-			_objectValidationRuleEngineRegistry.getObjectValidationRuleEngines()
-		).flatMap(
-			List::stream
-		).map(
-			objectValidationRuleEngine -> HashMapBuilder.put(
-				"label",
-				LanguageUtil.get(
-					objectRequestHelper.getLocale(),
-					objectValidationRuleEngine.getName())
-			).put(
-				"name", objectValidationRuleEngine.getName()
-			).build()
-		).sorted(
-			Comparator.comparing(item -> item.get("label"))
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.sort(
+			TransformUtil.transform(
+				_objectValidationRuleEngineRegistry.
+					getObjectValidationRuleEngines(),
+				objectValidationRuleEngine -> HashMapBuilder.put(
+					"label",
+					LanguageUtil.get(
+						objectRequestHelper.getLocale(),
+						objectValidationRuleEngine.getName())
+				).put(
+					"name", objectValidationRuleEngine.getName()
+				).build()),
+			Comparator.comparing(item -> item.get("label")));
 	}
 
 	public Map<String, Object> getProps(

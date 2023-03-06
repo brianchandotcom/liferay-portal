@@ -52,6 +52,8 @@ definition {
 	}
 
 	macro assertItemName {
+		var key_name = ${text};
+
 		AssertElementPresent(
 			key_projectName = ${key_name},
 			locator1 = "Testray#ITEM_NAME");

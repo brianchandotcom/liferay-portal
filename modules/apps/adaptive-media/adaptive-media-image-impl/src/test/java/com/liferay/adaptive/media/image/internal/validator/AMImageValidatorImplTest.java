@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Optional;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -44,10 +42,10 @@ public class AMImageValidatorImplTest {
 	@Before
 	public void setUp() {
 		Mockito.when(
-			_adaptiveMedia.getValueOptional(
+			_adaptiveMedia.getValue(
 				AMAttribute.getConfigurationUuidAMAttribute())
 		).thenReturn(
-			Optional.of(RandomTestUtil.randomString())
+			RandomTestUtil.randomString()
 		);
 
 		_amImageValidatorImpl.setAMImageEntryLocalService(

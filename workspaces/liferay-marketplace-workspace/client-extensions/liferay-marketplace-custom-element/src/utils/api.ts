@@ -15,10 +15,11 @@ export function createApp({
 }) {
 	return fetch('/o/headless-commerce-admin-catalog/v1.0/products', {
 		body: JSON.stringify({
-			active: false,
+			active: true,
 			catalogId,
 			description: {en_US: appDescription},
 			name: {en_US: appName},
+			productStatus: 2,
 			productType: 'virtual',
 		}),
 		headers,

@@ -75,7 +75,7 @@ public class WikiNodesManagementToolbarDisplayContext {
 		_renderRequest = renderRequest;
 		_trashHelper = trashHelper;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

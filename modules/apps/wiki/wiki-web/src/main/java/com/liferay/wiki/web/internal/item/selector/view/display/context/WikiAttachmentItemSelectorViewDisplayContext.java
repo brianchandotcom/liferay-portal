@@ -71,7 +71,7 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		_wikiAttachmentItemSelectorView = wikiAttachmentItemSelectorView;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
+			httpServletRequest);
 	}
 
 	public Set<String> getAllowedCreationMenuUIItemKeys() {

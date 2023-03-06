@@ -100,6 +100,8 @@ public class JavaModuleUniqueVerifyProcessCheck extends BaseJavaTermCheck {
 					fileName,
 					"A module can not have more than 1 verify process class " +
 						"(class extends VerifyProcess)");
+
+				return javaTerm.getContent();
 			}
 		}
 

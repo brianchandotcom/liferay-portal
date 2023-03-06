@@ -67,8 +67,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
-import java.io.Serializable;
-
 import java.text.Format;
 
 import java.util.ArrayList;
@@ -302,37 +300,11 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					_getDisplayPageURL(objectEntry, themeDisplay)));
 		}
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectEntry.getObjectDefinitionId(), false);
-
-		for (ObjectField objectField : objectFields) {
-			objectEntryFieldValues.add(
-				new InfoFieldValue<>(
-					InfoField.builder(
-					).infoFieldType(
-						ObjectFieldDBTypeUtil.getInfoFieldType(objectField)
-					).namespace(
-						ObjectField.class.getSimpleName()
-					).name(
-						objectField.getName()
-					).labelInfoLocalizedValue(
-						InfoLocalizedValue.<String>builder(
-						).values(
-							objectField.getLabelMap()
-						).build()
-					).build(),
-					_getValue(objectField, values)));
-
-			List<InfoFieldValue<Object>> attachmentInfoFieldValues =
-				_getAttachmentInfoFieldValues(objectField, values);
-
-			if (ListUtil.isNotEmpty(attachmentInfoFieldValues)) {
-				objectEntryFieldValues.addAll(attachmentInfoFieldValues);
-			}
-		}
+		objectEntryFieldValues.addAll(
+			_getObjectFieldsInfoFieldValues(
+				_objectFieldLocalService.getObjectFields(
+					objectEntry.getObjectDefinitionId(), false),
+				objectEntry.getValues()));
 
 		return objectEntryFieldValues;
 	}
@@ -380,14 +352,24 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				ObjectEntryInfoItemFields.displayPageURLInfoField,
 				_getDisplayPageURL(serviceBuilderObjectEntry, themeDisplay)));
 
-		Map<String, Object> properties = objectEntry.getProperties();
+		objectEntryFieldValues.addAll(
+			_getObjectFieldsInfoFieldValues(
+				_objectFieldLocalService.getObjectFields(
+					serviceBuilderObjectEntry.getObjectDefinitionId()),
+				objectEntry.getProperties()));
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				serviceBuilderObjectEntry.getObjectDefinitionId());
+		return objectEntryFieldValues;
+	}
+
+	private List<InfoFieldValue<Object>> _getObjectFieldsInfoFieldValues(
+			List<ObjectField> objectFields, Map<String, ?> values)
+		throws Exception {
+
+		List<InfoFieldValue<Object>> objectFieldsInfoFieldValues =
+			new ArrayList<>();
 
 		for (ObjectField objectField : objectFields) {
-			objectEntryFieldValues.add(
+			objectFieldsInfoFieldValues.add(
 				new InfoFieldValue<>(
 					InfoField.builder(
 					).infoFieldType(
@@ -402,17 +384,17 @@ public class ObjectEntryInfoItemFieldValuesProvider
 							objectField.getLabelMap()
 						).build()
 					).build(),
-					_getValue(objectField, properties)));
+					_getValue(objectField, values)));
 
 			List<InfoFieldValue<Object>> attachmentInfoFieldValues =
-				_getAttachmentInfoFieldValues(objectField, properties);
+				_getAttachmentInfoFieldValues(objectField, values);
 
 			if (ListUtil.isNotEmpty(attachmentInfoFieldValues)) {
-				objectEntryFieldValues.addAll(attachmentInfoFieldValues);
+				objectFieldsInfoFieldValues.addAll(attachmentInfoFieldValues);
 			}
 		}
 
-		return objectEntryFieldValues;
+		return objectFieldsInfoFieldValues;
 	}
 
 	private ThemeDisplay _getThemeDisplay() {

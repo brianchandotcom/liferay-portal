@@ -106,7 +106,7 @@ public class ContentDashboardItemSearchContainerFactory {
 		_portletResponse = portletResponse;
 		_searcher = searcher;
 
-		_locale = _portal.getLocale(_portletRequest);
+		_locale = portal.getLocale(portletRequest);
 	}
 
 	private SearchContainer<ContentDashboardItem<?>> _create(

@@ -57,7 +57,7 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 			FileEntry.class.getName(),
 			new ClassNameClassPKInfoItemIdentifier(
 				DLFileEntryType.class.getName(),
-				_dlFileEntryType.getFileEntryTypeId()));
+				dlFileEntryType.getFileEntryTypeId()));
 	}
 
 	@Override

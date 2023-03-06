@@ -436,11 +436,9 @@ public class ExecutePoshiElement extends PoshiElement {
 
 		String trimmedPoshiScript = poshiScript.trim();
 
-		if ((trimmedPoshiScript.contains("isSet") ||
-			 trimmedPoshiScript.contains("contains")) &&
-			(parentPoshiElement instanceof AndPoshiElement ||
-			 parentPoshiElement instanceof IfPoshiElement ||
-			 parentPoshiElement instanceof NotPoshiElement)) {
+		if ((trimmedPoshiScript.startsWith("isSet") ||
+			 trimmedPoshiScript.startsWith("contains")) &&
+			isConditionValidInParent(parentPoshiElement)) {
 
 			return false;
 		}

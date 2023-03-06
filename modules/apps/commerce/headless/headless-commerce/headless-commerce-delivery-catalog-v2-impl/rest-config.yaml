@@ -1,0 +1,12 @@
+apiDir: "../headless-commerce-delivery-catalog-v2-api/src/main/java"
+apiPackagePath: "com.liferay.headless.commerce.delivery.catalog.v2"
+application:
+    baseURI: "/headless-commerce-delivery-catalog"
+    className: "HeadlessCommerceDeliveryCatalogApplication"
+    name: "Liferay.Headless.Commerce.Delivery.Catalog"
+author: "Crescenzo Rega"
+clientDir: "../headless-commerce-delivery-catalog-v2-client/src/main/java"
+compatibilityVersion: 2
+forcePredictableOperationId: true
+forcePredictableSchemaPropertyName: true
+testDir: "../headless-commerce-delivery-catalog-v2-test/src/testIntegration/java"

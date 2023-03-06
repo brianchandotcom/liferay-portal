@@ -162,7 +162,9 @@ public class LayoutStructureCommonStylesCSSServletTest {
 
 		Assert.assertEquals(
 			_normalize(mockHttpServletResponse.getContentAsString()),
-			_normalize(".lfr-layout-structure-item-row {overflow: hidden;}"));
+			_normalize(
+				".lfr-layout-structure-item-container {padding: 0;}." +
+					"lfr-layout-structure-item-row {overflow: hidden;}"));
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws Exception {

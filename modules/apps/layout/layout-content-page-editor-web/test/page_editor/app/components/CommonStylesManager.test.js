@@ -185,6 +185,10 @@ describe('CommonStylesManager', () => {
 		renderCommonStylesManager();
 
 		const expected = `
+			.lfr-layout-structure-item-container { 
+				padding: 0; 
+			}
+			
 			.lfr-layout-structure-item-row { 
 				overflow: hidden; 
 			}
@@ -220,6 +224,10 @@ describe('CommonStylesManager', () => {
 		renderCommonStylesManager();
 
 		const expected = `
+			.lfr-layout-structure-item-container { 
+				padding: 0; 
+			}
+
 			.lfr-layout-structure-item-row { 
 				overflow: hidden; 
 			}
@@ -245,6 +253,10 @@ describe('CommonStylesManager', () => {
 		});
 
 		const expected = `
+			.lfr-layout-structure-item-container { 
+				padding: 0; 
+			}
+
 			.lfr-layout-structure-item-row { 
 				overflow: hidden; 
 			}
@@ -288,6 +300,10 @@ describe('CommonStylesManager', () => {
 		});
 
 		const expected = `
+			.lfr-layout-structure-item-container { 
+				padding: 0; 
+			}
+
 			.lfr-layout-structure-item-row { 
 				overflow: hidden; 
 			}

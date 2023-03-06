@@ -37,7 +37,7 @@ public class GroupConfigurationTemporarySwapper implements AutoCloseable {
 		_pid = pid;
 		_settingsFactory = settingsFactory;
 
-		Settings settings = _settingsFactory.getSettings(
+		Settings settings = settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(_groupId, _pid));
 
 		ModifiableSettings modifiableSettings =

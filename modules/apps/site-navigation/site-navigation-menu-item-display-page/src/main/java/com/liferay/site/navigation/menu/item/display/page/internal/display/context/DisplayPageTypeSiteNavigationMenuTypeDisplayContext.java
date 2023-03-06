@@ -71,7 +71,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		_siteNavigationMenuItem = siteNavigationMenuItem;
 
 		PortletResponse portletResponse =
-			(PortletResponse)_httpServletRequest.getAttribute(
+			(PortletResponse)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(

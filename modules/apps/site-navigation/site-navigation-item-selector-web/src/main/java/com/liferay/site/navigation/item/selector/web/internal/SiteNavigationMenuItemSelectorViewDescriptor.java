@@ -49,7 +49,7 @@ public class SiteNavigationMenuItemSelectorViewDescriptor
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

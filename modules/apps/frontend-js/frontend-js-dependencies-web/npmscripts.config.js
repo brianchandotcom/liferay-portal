@@ -15,6 +15,8 @@
 module.exports = {
 	build: {
 		exports: [
+			'@liferay/js-api',
+			'@liferay/js-api/data-set',
 			'date-fns',
 			'qrcode',
 			'react-transition-group',

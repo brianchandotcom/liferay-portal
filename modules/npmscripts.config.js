@@ -437,6 +437,7 @@ module.exports = {
 		],
 		imports: {
 			'@liferay/frontend-js-dependencies-web': [
+				'@liferay/js-api',
 				'clipboard',
 				'dagre',
 				'date-fns',

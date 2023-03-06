@@ -96,6 +96,8 @@ definition {
 	@description = "This test ensures that users can delete the kb template from the center pane."
 	@priority = 5
 	test CanDeleteTemplateEntryViaCenterPane {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
 			kbTemplateTitle = "Knowledge Base Template Title");
@@ -116,6 +118,8 @@ definition {
 	@description = "This test ensures that users can delete the kb template from the navigation pane."
 	@priority = 5
 	test CanDeleteTemplateEntryViaNavigationPane {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
 			kbTemplateTitle = "Knowledge Base Template Title");
@@ -287,6 +291,8 @@ definition {
 	@description = "This test ensures that users can preview the kb template from the center pane."
 	@priority = 5
 	test CanPreviewTemplateViaCenterPane {
+		property portal.acceptance = "true";
+
 		KBTemplate.addCP(
 			embedImage = "true",
 			kbTemplateContent = "Knowledge Base Template Content",

@@ -26,6 +26,8 @@ definition {
 	@e2etest
 	@priority = 5
 	test CanImportArticleViaCenterPaneButton {
+		property portal.acceptance = "true";
+
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.openPageTreePanel(section = "Folders and Articles");

@@ -94,6 +94,8 @@ definition {
 	@description = "This test checks that matched text from search results in the KB admin screen is highlighted in the search results."
 	@priority = 4
 	test ResultsAppearIfAtLeastThreeCharactersMatchQuery {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KBFolder 1 Description",

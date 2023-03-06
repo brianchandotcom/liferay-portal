@@ -50,6 +50,8 @@ definition {
 	@e2etest
 	@priority = 5
 	test CanAddArticleViaCenterPaneButton {
+		property portal.acceptance = "true";
+
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 
 		KBArticle.addCP(
@@ -115,6 +117,8 @@ definition {
 	@description = "This test ensures that users can add an article with a custom friendly URL via the new configuration pane."
 	@priority = 5
 	test CanAddArticleWithCustomFriendlyURL {
+		property portal.acceptance = "true";
+
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
@@ -415,6 +419,8 @@ definition {
 	@description = "This test ensures that a user can edit the kb entry from the navigation pane."
 	@priority = 5
 	test CanEditEntryFromNavigationPane {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -442,6 +448,7 @@ definition {
 	@priority = 5
 	test CanExpireAnArticle {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KBArticle#CanExpireAnArticle";
 
 		JSONKnowledgeBase.addkBArticle(
@@ -468,6 +475,8 @@ definition {
 	@description = "This test ensures that a user can move the kb entry from the navigation pane."
 	@priority = 5
 	test CanMoveArticleFromNavigationPane {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderName = "KB Folder");
@@ -844,6 +853,7 @@ definition {
 	@priority = 5
 	test CanReviewArticleWhenReviewDateIsReached {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "kbArticle#CanReviewArticleWhenReviewDateIsReached";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);

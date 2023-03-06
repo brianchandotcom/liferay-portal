@@ -55,6 +55,8 @@ definition {
 	@description = "This test ensures that an article in the folder is displayed in the KB page tree when the folder is expanded."
 	@priority = 5
 	test CanViewArticleInFolderThroughPageTreePanel {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",

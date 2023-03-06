@@ -34,6 +34,7 @@ String ldapSecurityCredentials = Portal.TEMP_OBFUSCATION_VALUE;
 
 String ldapAuthSearchFilter = ldapServerConfiguration.authSearchFilter();
 String ldapUserSearchFilter = ldapServerConfiguration.userSearchFilter();
+boolean ignoreUserAuthFilterForAuth = ldapServerConfiguration.ignoreUserSearchFilterForAuth();
 String ldapGroupSearchFilter = ldapServerConfiguration.groupSearchFilter();
 String ldapUsersDN = ldapServerConfiguration.usersDN();
 String[] ldapUserDefaultObjectClasses = ldapServerConfiguration.userDefaultObjectClasses();
@@ -201,6 +202,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 				<aui:input cssClass="lfr-input-text-container" helpMessage="enter-the-search-filter-that-is-used-to-test-the-validity-of-a-user" label="authentication-search-filter" name='<%= "ldap--" + LDAPConstants.AUTH_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapAuthSearchFilter %>" />
 
 				<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "ldap--" + LDAPConstants.USER_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapUserSearchFilter %>" />
+
+				<aui:input cssClass="lfr-input-text-container" helpMessage="ignore-user-search-filter-for-auth-help" label="ignore-user-search-filter-for-auth" name='<%= "ldap--" + LDAPConstants.INGORE_USER_SEARCH_FILTER_FOR_AUTH + "--" %>' type="checkbox" value="<%= ignoreUserAuthFilterForAuth %>" />
 
 				<h4><liferay-ui:message key="user-mapping" /></h4>
 

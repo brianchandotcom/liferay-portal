@@ -115,6 +115,9 @@ public class LDAPConstants {
 	public static final String IMPORT_USER_SYNC_STRATEGY =
 		"importUserSyncStrategy";
 
+	public static final String INGORE_USER_SEARCH_FILTER_FOR_AUTH =
+		"ignoreUserSearchFilterForAuth";
+
 	public static final String LDAP_SERVER_ID = "ldapServerId";
 
 	public static final String PAGE_SIZE = "pageSize";

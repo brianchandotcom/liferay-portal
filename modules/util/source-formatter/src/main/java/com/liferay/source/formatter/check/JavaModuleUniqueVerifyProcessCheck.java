@@ -68,7 +68,7 @@ public class JavaModuleUniqueVerifyProcessCheck extends BaseJavaTermCheck {
 			absolutePath.substring(0, x + 5), new String[0],
 			new String[] {"**/*.java"}, new SourceFormatterExcludes(), true);
 
-		int verifyProcessClassCount = 0;
+		int extendedVerifyProcessClassCount = 0;
 
 		for (String javaFileName : javaFileNames) {
 			File file = new File(javaFileName);
@@ -92,10 +92,10 @@ public class JavaModuleUniqueVerifyProcessCheck extends BaseJavaTermCheck {
 			if (extendedClassNames.contains(
 					"com.liferay.portal.verify.VerifyProcess")) {
 
-				verifyProcessClassCount++;
+				extendedVerifyProcessClassCount++;
 			}
 
-			if (verifyProcessClassCount > 1) {
+			if (extendedVerifyProcessClassCount > 1) {
 				addMessage(
 					fileName,
 					"A module can not have more than 1 verify process class " +

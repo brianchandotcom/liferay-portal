@@ -355,7 +355,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		objectEntryFieldValues.addAll(
 			_getObjectFieldsInfoFieldValues(
 				_objectFieldLocalService.getObjectFields(
-					serviceBuilderObjectEntry.getObjectDefinitionId()),
+					serviceBuilderObjectEntry.getObjectDefinitionId(), false),
 				objectEntry.getProperties()));
 
 		return objectEntryFieldValues;

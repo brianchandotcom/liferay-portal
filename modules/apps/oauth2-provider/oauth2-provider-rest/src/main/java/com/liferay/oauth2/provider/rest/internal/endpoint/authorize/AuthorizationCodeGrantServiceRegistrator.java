@@ -311,7 +311,7 @@ public class AuthorizationCodeGrantServiceRegistrator {
 				messageContext.getHttpServletRequest();
 
 			for (Cookie cookie : httpServletRequest.getCookies()) {
-				if (Objects.equals(cookie.getName(), cookieName)) {
+				if (Objects.equals(cookieName, cookie.getName())) {
 					return cookie.getValue();
 				}
 			}

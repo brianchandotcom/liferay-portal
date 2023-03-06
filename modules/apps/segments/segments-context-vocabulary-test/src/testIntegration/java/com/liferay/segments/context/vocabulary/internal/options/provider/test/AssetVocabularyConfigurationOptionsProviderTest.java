@@ -24,14 +24,13 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -64,19 +63,12 @@ public class AssetVocabularyConfigurationOptionsProviderTest {
 				null, null, ServiceContextTestUtil.getServiceContext());
 
 		try {
-			List<ConfigurationFieldOptionsProvider.Option> options =
-				_configurationFieldOptionsProvider.getOptions();
-
-			Stream<ConfigurationFieldOptionsProvider.Option> stream =
-				options.stream();
-
 			Assert.assertTrue(
-				stream.filter(
+				ListUtil.exists(
+					_configurationFieldOptionsProvider.getOptions(),
 					option -> Objects.equals(
 						option.getLabel(LocaleUtil.getDefault()),
-						assetVocabulary.getTitle(LocaleUtil.getDefault()))
-				).findFirst(
-				).isPresent());
+						assetVocabulary.getTitle(LocaleUtil.getDefault()))));
 		}
 		finally {
 			_assetVocabularyLocalService.deleteVocabulary(

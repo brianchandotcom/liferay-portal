@@ -75,7 +75,6 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 			repositoryEntryBrowserDisplayContext) {
 
 		_httpServletRequest = httpServletRequest;
-
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_repositoryEntryBrowserDisplayContext =
@@ -83,7 +82,6 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
-
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
 	}

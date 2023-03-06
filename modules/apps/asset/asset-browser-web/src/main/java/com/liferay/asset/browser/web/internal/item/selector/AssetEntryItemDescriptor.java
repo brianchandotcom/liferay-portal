@@ -56,7 +56,7 @@ public class AssetEntryItemDescriptor
 
 		_assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_assetEntry.getClassName());
+				assetEntry.getClassName());
 	}
 
 	@Override

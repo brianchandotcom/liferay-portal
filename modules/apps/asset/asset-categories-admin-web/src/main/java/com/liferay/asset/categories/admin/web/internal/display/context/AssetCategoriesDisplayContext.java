@@ -105,10 +105,10 @@ public class AssetCategoriesDisplayContext {
 
 		_assetCategoriesAdminWebConfiguration =
 			(AssetCategoriesAdminWebConfiguration)
-				_httpServletRequest.getAttribute(
+				httpServletRequest.getAttribute(
 					AssetCategoriesAdminWebKeys.
 						ASSET_CATEGORIES_ADMIN_CONFIGURATION);
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

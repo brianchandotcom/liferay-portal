@@ -190,7 +190,7 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 
 			_assetAutoTaggerCompanyConfiguration =
 				new CompanyAssetAutoTaggerConfiguration(
-					_companyLocalService.getCompany(_group.getCompanyId()));
+					_companyLocalService.getCompany(group.getCompanyId()));
 		}
 
 		@Override

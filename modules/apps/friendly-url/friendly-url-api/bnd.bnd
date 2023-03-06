@@ -2,6 +2,7 @@ Bundle-Name: Liferay Friendly URL API
 Bundle-SymbolicName: com.liferay.friendly.url.api
 Bundle-Version: 6.0.1
 Export-Package:\
+	com.liferay.friendly.url.configuration.helper,\
 	com.liferay.friendly.url.exception,\
 	com.liferay.friendly.url.info.item.provider,\
 	com.liferay.friendly.url.info.item.updater,\

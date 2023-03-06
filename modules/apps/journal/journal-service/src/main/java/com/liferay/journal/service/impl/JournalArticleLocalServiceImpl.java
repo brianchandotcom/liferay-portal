@@ -6994,14 +6994,14 @@ public class JournalArticleLocalServiceImpl
 			return value;
 		}
 
-		long tempFileEntryId = 0;
+		FileEntry tempFileEntry = null;
 
 		try {
 			boolean tempFile = fileEntry.isRepositoryCapabilityProvided(
 				TemporaryFileEntriesCapability.class);
 
 			if (tempFile) {
-				FileEntry tempFileEntry = fileEntry;
+				tempFileEntry = fileEntry;
 
 				Folder folder = article.addImagesFolder();
 
@@ -7015,8 +7015,6 @@ public class JournalArticleLocalServiceImpl
 					article.getResourcePrimKey(), JournalConstants.SERVICE_NAME,
 					folder.getFolderId(), tempFileEntry.getContentStream(),
 					fileEntryName, tempFileEntry.getMimeType(), false);
-
-				tempFileEntryId = tempFileEntry.getFileEntryId();
 			}
 
 			String previewURL = _dlURLHelper.getPreviewURL(
@@ -7030,13 +7028,21 @@ public class JournalArticleLocalServiceImpl
 				valueJSONObject.getString("width"));
 		}
 		finally {
-			long finalTempFileEntryId = tempFileEntryId;
+			FileEntry finalTempFileEntry = tempFileEntry;
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					if (finalTempFileEntryId > 0) {
-						TempFileEntryUtil.deleteTempFileEntry(
-							finalTempFileEntryId);
+					if (finalTempFileEntry != null) {
+						FileEntry persistedFileEntry =
+							_portletFileRepository.fetchPortletFileEntry(
+								finalTempFileEntry.getGroupId(),
+								finalTempFileEntry.getFolderId(),
+								finalTempFileEntry.getFileName());
+
+						if (persistedFileEntry != null) {
+							TempFileEntryUtil.deleteTempFileEntry(
+								finalTempFileEntry.getFileEntryId());
+						}
 					}
 
 					return null;

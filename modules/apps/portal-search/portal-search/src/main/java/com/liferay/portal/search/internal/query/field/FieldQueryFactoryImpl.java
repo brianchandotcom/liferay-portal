@@ -38,7 +38,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		String fieldName, String keywords, boolean like,
 		boolean splitKeywords) {
 
-		FieldQueryBuilder fieldQueryBuilder = getQueryBuilder(fieldName);
+		FieldQueryBuilder fieldQueryBuilder = _getQueryBuilder(fieldName);
 
 		return fieldQueryBuilder.build(fieldName, keywords);
 	}
@@ -54,7 +54,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		_serviceTrackerList.close();
 	}
 
-	protected FieldQueryBuilder getQueryBuilder(String fieldName) {
+	private FieldQueryBuilder _getQueryBuilder(String fieldName) {
 		for (FieldQueryBuilderFactory fieldQueryBuilderFactory :
 				_serviceTrackerList) {
 

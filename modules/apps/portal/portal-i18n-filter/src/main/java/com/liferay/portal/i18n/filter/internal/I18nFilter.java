@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.i18n;
+package com.liferay.portal.i18n.filter.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,14 +39,28 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author Roberto Díaz
+ * @author Daniel Mijarra
  */
+@Component(
+	immediate = true,
+	property = {
+		"before-filter=GZip Filter", "dispatcher=FORWARD", "dispatcher=REQUEST",
+		"servlet-context-name=", "servlet-filter-name=I18n Filter",
+		"url-pattern=/group/*", "url-pattern=/user/*", "url-pattern=/web/*"
+	},
+	service = Filter.class
+)
 public class I18nFilter extends BasePortalFilter {
 
 	public static final String SKIP_FILTER =
@@ -100,7 +114,7 @@ public class I18nFilter extends BasePortalFilter {
 		throws Exception {
 
 		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
-			PortalUtil.getCompanyId(httpServletRequest),
+			_portal.getCompanyId(httpServletRequest),
 			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		if (localePrependFriendlyURLStyle == 0) {
@@ -113,7 +127,7 @@ public class I18nFilter extends BasePortalFilter {
 			return null;
 		}
 
-		String contextPath = PortalUtil.getPathContext();
+		String contextPath = _portal.getPathContext();
 
 		String requestURI = httpServletRequest.getRequestURI();
 
@@ -132,7 +146,7 @@ public class I18nFilter extends BasePortalFilter {
 
 		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
 
-		if (!LanguageUtil.isAvailableLocale(locale)) {
+		if (!_language.isAvailableLocale(locale)) {
 			return null;
 		}
 
@@ -140,7 +154,7 @@ public class I18nFilter extends BasePortalFilter {
 			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 		String i18nPath = StringPool.SLASH.concat(
-			PortalUtil.getI18nPathLanguageId(locale, i18nLanguageId));
+			_portal.getI18nPathLanguageId(locale, i18nLanguageId));
 
 		if (requestURI.contains(i18nPath.concat(StringPool.SLASH))) {
 			return null;
@@ -148,7 +162,7 @@ public class I18nFilter extends BasePortalFilter {
 
 		String redirect = contextPath + i18nPath + requestURI;
 
-		int[] groupFriendlyURLIndex = PortalUtil.getGroupFriendlyURLIndex(
+		int[] groupFriendlyURLIndex = _portal.getGroupFriendlyURLIndex(
 			requestURI);
 
 		String groupFriendlyURL = StringPool.BLANK;
@@ -163,11 +177,11 @@ public class I18nFilter extends BasePortalFilter {
 				friendlyURLStart, friendlyURLEnd);
 		}
 
-		Group friendlyURLGroup = GroupLocalServiceUtil.fetchFriendlyURLGroup(
-			PortalUtil.getCompanyId(httpServletRequest), groupFriendlyURL);
+		Group friendlyURLGroup = _groupLocalService.fetchFriendlyURLGroup(
+			_portal.getCompanyId(httpServletRequest), groupFriendlyURL);
 
 		if ((friendlyURLGroup != null) &&
-			!LanguageUtil.isAvailableLocale(
+			!_language.isAvailableLocale(
 				friendlyURLGroup.getGroupId(), i18nLanguageId)) {
 
 			return null;
@@ -244,14 +258,14 @@ public class I18nFilter extends BasePortalFilter {
 
 		String friendlyURL = getFriendlyURL(httpServletRequest);
 
-		long companyId = PortalUtil.getCompanyId(httpServletRequest);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		try {
-			Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
+			Group group = _groupLocalService.getFriendlyURLGroup(
 				companyId, friendlyURL);
 
 			return LocaleUtil.toLanguageId(
-				PortalUtil.getSiteDefaultLocale(group.getGroupId()));
+				_portal.getSiteDefaultLocale(group.getGroupId()));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -318,7 +332,7 @@ public class I18nFilter extends BasePortalFilter {
 		else if (prependFriendlyUrlStyle == 2) {
 			if (PropsValues.LOCALE_DEFAULT_REQUEST) {
 				return LocaleUtil.toLanguageId(
-					PortalUtil.getLocale(httpServletRequest));
+					_portal.getLocale(httpServletRequest));
 			}
 
 			return requestedLanguageId;
@@ -375,5 +389,14 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(I18nFilter.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

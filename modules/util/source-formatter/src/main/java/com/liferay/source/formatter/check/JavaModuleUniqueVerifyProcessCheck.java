@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author Alan
+ * @author Alan Huang
  */
 public class JavaModuleUniqueVerifyProcessCheck extends BaseJavaTermCheck {
 

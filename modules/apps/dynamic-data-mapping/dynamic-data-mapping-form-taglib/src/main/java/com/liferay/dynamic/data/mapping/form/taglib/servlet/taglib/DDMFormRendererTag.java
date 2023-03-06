@@ -312,7 +312,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
 		if (workflowEnabled) {
-			return LanguageUtil.get(resourceBundle, "submit-for-publication");
+			return LanguageUtil.get(resourceBundle, "submit-for-workflow");
 		}
 
 		return LanguageUtil.get(resourceBundle, "submit-form");

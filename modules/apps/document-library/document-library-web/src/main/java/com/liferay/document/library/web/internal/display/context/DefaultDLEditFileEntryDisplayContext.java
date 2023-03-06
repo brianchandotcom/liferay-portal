@@ -187,7 +187,7 @@ public class DefaultDLEditFileEntryDisplayContext
 	@Override
 	public String getPublishButtonLabel() {
 		if (_hasFolderWorkflowDefinitionLink()) {
-			return "submit-for-publication";
+			return "submit-for-workflow";
 		}
 
 		DLPortletInstanceSettings dlPortletInstanceSettings =

@@ -200,7 +200,7 @@ public class CommerceTermEntryDisplayContext {
 				commerceTermEntryRequestHelper.getScopeGroupId(),
 				CommerceTermEntry.class.getName())) {
 
-			publishButtonLabel = "submit-for-publication";
+			publishButtonLabel = "submit-for-workflow";
 		}
 
 		String additionalClasses = "btn-primary";

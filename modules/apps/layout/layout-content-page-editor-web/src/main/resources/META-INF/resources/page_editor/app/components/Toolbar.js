@@ -194,7 +194,7 @@ function ToolbarBody({className}) {
 		publishButtonLabel = Liferay.Language.get('save-variant');
 	}
 	else if (config.workflowEnabled) {
-		publishButtonLabel = Liferay.Language.get('submit-for-publication');
+		publishButtonLabel = Liferay.Language.get('submit-for-workflow');
 	}
 
 	useEffect(() => {

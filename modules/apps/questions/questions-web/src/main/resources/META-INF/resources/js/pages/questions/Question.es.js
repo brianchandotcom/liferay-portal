@@ -680,7 +680,7 @@ export default withRouter(
 																	'post-answer'
 															  )
 															: Liferay.Language.get(
-																	'submit-for-publication'
+																	'submit-for-workflow'
 															  )}
 													</ClayButton>
 												)}

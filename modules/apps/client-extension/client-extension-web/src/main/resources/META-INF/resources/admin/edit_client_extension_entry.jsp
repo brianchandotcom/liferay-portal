@@ -137,7 +137,7 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 	<liferay-frontend:edit-form-footer>
 		<liferay-frontend:edit-form-buttons
 			redirect="<%= editClientExtensionEntryDisplayContext.getRedirect() %>"
-			submitLabel='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), 0L, ClientExtensionEntry.class.getName()) ? "submit-for-publication" : "publish" %>'
+			submitLabel='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), 0L, ClientExtensionEntry.class.getName()) ? "submit-for-workflow" : "publish" %>'
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

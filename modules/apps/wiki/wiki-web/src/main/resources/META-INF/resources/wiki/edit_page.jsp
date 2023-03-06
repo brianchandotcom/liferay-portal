@@ -387,7 +387,7 @@ if (portletTitleBasedNavigation) {
 						String publishButtonLabel = "publish";
 
 						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName())) {
-							publishButtonLabel = "submit-for-publication";
+							publishButtonLabel = "submit-for-workflow";
 						}
 						%>
 

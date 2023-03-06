@@ -372,7 +372,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 						String publishButtonLabel = "publish";
 
 						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, BlogsEntry.class.getName())) {
-							publishButtonLabel = "submit-for-publication";
+							publishButtonLabel = "submit-for-workflow";
 						}
 						%>
 

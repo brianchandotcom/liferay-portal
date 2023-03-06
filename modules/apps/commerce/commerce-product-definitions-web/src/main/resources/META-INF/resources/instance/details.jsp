@@ -264,7 +264,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 		String publishButtonLabel = "publish";
 
 		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, CPInstance.class.getName())) {
-			publishButtonLabel = "submit-for-publication";
+			publishButtonLabel = "submit-for-workflow";
 		}
 		%>
 

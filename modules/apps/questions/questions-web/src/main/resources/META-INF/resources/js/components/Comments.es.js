@@ -136,7 +136,7 @@ export default withRouter(
 									{context.trustedUser
 										? Liferay.Language.get('add-comment')
 										: Liferay.Language.get(
-												'submit-for-publication'
+												'submit-for-workflow'
 										  )}
 								</ClayButton>
 

@@ -517,7 +517,7 @@ while (manageableCalendarsIterator.hasNext()) {
 		String publishButtonLabel = "publish";
 
 		if (hasWorkflowDefinitionLink) {
-			publishButtonLabel = "submit-for-publication";
+			publishButtonLabel = "submit-for-workflow";
 		}
 		%>
 
@@ -920,7 +920,7 @@ while (manageableCalendarsIterator.hasNext()) {
 					approvalProcessAlert.classList.toggle('hide', <%= !approved %>);
 
 					publishButton.innerHTML =
-						'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "submit-for-publication")) %>';
+						'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "submit-for-workflow")) %>';
 				}
 				else {
 					approvalProcessAlert.classList.toggle('hide');

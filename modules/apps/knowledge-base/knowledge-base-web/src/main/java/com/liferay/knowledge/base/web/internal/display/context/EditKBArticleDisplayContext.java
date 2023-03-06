@@ -236,7 +236,7 @@ public class EditKBArticleDisplayContext {
 				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
 				KBArticle.class.getName())) {
 
-			return "submit-for-publication";
+			return "submit-for-workflow";
 		}
 
 		return "publish";

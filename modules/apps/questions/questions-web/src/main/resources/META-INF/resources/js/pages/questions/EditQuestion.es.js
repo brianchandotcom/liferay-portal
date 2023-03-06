@@ -162,7 +162,7 @@ export default withRouter(
 											'update-your-question'
 									  )
 									: Liferay.Language.get(
-											'submit-for-publication'
+											'submit-for-workflow'
 									  )}
 							</ClayButton>
 

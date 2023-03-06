@@ -502,7 +502,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 				commercePricingRequestHelper.getScopeGroupId(),
 				CommerceDiscount.class.getName())) {
 
-			publishButtonLabel = "submit-for-publication";
+			publishButtonLabel = "submit-for-workflow";
 		}
 
 		String additionalClasses = "btn-primary";

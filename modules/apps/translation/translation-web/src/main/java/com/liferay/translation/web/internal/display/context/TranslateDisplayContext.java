@@ -306,7 +306,7 @@ public class TranslateDisplayContext {
 				_themeDisplay.getCompanyId(), _getGroupId(),
 				TranslationEntry.class.getName())) {
 
-			return "submit-for-publication";
+			return "submit-for-workflow";
 		}
 
 		return "publish";

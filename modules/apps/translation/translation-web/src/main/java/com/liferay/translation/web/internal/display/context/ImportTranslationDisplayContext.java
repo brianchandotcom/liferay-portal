@@ -95,7 +95,7 @@ public class ImportTranslationDisplayContext {
 		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				_companyId, _groupId, TranslationEntry.class.getName())) {
 
-			return "submit-for-publication";
+			return "submit-for-workflow";
 		}
 
 		return "publish";

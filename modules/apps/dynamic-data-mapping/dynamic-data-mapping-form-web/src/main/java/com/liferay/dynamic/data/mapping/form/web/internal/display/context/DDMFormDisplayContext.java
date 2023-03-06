@@ -546,7 +546,7 @@ public class DDMFormDisplayContext {
 				}
 			}
 
-			return LanguageUtil.get(resourceBundle, "submit-for-publication");
+			return LanguageUtil.get(resourceBundle, "submit-for-workflow");
 		}
 
 		return LanguageUtil.get(resourceBundle, "submit-form");

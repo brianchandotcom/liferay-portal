@@ -63,8 +63,7 @@ public class DefaultCommentTreeDisplayContext
 			!_isCommentPending()) {
 
 			publishButtonLabel = LanguageUtil.get(
-				_discussionRequestHelper.getRequest(),
-				"submit-for-publication");
+				_discussionRequestHelper.getRequest(), "submit-for-workflow");
 		}
 
 		return publishButtonLabel;

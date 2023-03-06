@@ -106,7 +106,7 @@ childPages.remove(wikiPage);
 	<div class="sheet-footer">
 		<c:choose>
 			<c:when test="<%= hasWorkflowDefinitionLink %>">
-				<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= liferayPortletResponse.getNamespace() + "publishPage();" %>' value="submit-for-publication" />
+				<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= liferayPortletResponse.getNamespace() + "publishPage();" %>' value="submit-for-workflow" />
 			</c:when>
 			<c:otherwise>
 				<aui:button disabled="<%= !newParentAvailable %>" type="submit" value="change-parent" />

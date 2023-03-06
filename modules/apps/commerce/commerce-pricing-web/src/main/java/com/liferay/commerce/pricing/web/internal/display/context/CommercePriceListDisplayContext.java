@@ -209,7 +209,7 @@ public class CommercePriceListDisplayContext
 				cpRequestHelper.getScopeGroupId(),
 				CommercePriceList.class.getName())) {
 
-			publishButtonLabel = "submit-for-publication";
+			publishButtonLabel = "submit-for-workflow";
 		}
 
 		String additionalClasses = "btn-primary";

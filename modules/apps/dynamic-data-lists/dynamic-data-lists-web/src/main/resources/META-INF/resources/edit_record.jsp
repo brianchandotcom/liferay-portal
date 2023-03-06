@@ -266,7 +266,7 @@ else {
 				String publishButtonLabel = "publish";
 
 				if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, DDLRecordSet.class.getName(), recordSetId)) {
-					publishButtonLabel = "submit-for-publication";
+					publishButtonLabel = "submit-for-workflow";
 				}
 
 				if (ddlDisplayContext.isFormView()) {

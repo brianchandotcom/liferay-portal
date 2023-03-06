@@ -37,7 +37,7 @@
 	</c:if>
 
 	<div class="sheet-footer">
-		<aui:button disabled="<%= pending %>" type="submit" value='<%= hasWorkflowDefinitionLink ? "submit-for-publication" : "rename" %>' />
+		<aui:button disabled="<%= pending %>" type="submit" value='<%= hasWorkflowDefinitionLink ? "submit-for-workflow" : "rename" %>' />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</div>

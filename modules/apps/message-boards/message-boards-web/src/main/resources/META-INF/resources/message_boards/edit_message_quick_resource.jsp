@@ -194,7 +194,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				String publishButtonLabel = "publish";
 
 				if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBMessage.class.getName())) {
-					publishButtonLabel = "submit-for-publication";
+					publishButtonLabel = "submit-for-workflow";
 				}
 				%>
 

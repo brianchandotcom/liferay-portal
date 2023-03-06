@@ -132,7 +132,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 							<liferay-ui:message key="save-variant" />
 						</c:when>
 						<c:when test="<%= contentPageEditorDisplayContext.isWorkflowEnabled() %>">
-							<liferay-ui:message key="submit-for-publication" />
+							<liferay-ui:message key="submit-for-workflow" />
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:message key="publish" />

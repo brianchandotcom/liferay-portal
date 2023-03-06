@@ -419,7 +419,7 @@ public class CPDefinitionsDisplayContext
 				cpRequestHelper.getScopeGroupId(),
 				CPDefinition.class.getName())) {
 
-			publishButtonLabel = "submit-for-publication";
+			publishButtonLabel = "submit-for-workflow";
 		}
 
 		String additionalClasses = "btn-primary";

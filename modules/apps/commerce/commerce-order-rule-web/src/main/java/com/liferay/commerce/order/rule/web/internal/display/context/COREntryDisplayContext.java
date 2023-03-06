@@ -252,7 +252,7 @@ public class COREntryDisplayContext {
 				corEntryRequestHelper.getScopeGroupId(),
 				COREntry.class.getName())) {
 
-			publishButtonLabel = "submit-for-publication";
+			publishButtonLabel = "submit-for-workflow";
 		}
 
 		String additionalClasses = "btn-primary";

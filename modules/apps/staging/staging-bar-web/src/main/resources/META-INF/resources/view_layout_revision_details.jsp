@@ -85,7 +85,7 @@ else {
 							label = LanguageUtil.format(request, "enable-in-x", layoutSetBranchName, false);
 						}
 						else if (workflowEnabled) {
-							label = "submit-for-publication";
+							label = "submit-for-workflow";
 						}
 						%>
 

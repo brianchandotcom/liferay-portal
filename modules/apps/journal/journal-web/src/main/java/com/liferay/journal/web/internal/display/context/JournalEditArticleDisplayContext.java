@@ -820,7 +820,7 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		if (_isWorkflowEnabled()) {
-			return "submit-for-publication";
+			return "submit-for-workflow";
 		}
 
 		return "publish";

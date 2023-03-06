@@ -431,9 +431,9 @@ public class DDMFormDisplayContextTest {
 	public void testGetSubmitLabelWithWorkflow() throws Exception {
 		_mockDDMFormInstance(Mockito.mock(DDMFormInstanceSettings.class));
 
-		String submitLabel = "Submit For Publication";
+		String submitLabel = "Submit For Workflow";
 
-		_mockLanguageGet("submit-for-publication", submitLabel);
+		_mockLanguageGet("submit-for-workflow", submitLabel);
 
 		_mockWorkflowDefinitionLinkLocalService(true);
 

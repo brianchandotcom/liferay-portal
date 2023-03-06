@@ -112,7 +112,7 @@ public class LangSanitizer {
 		}
 	}
 
-	private String _getCorrectionTips(String sentence1, String sentence2) {
+	private String _getCorrectionTip(String sentence1, String sentence2) {
 		String[] words1 = sentence1.split("\\s+");
 		String[] words2 = sentence2.split("\\s+");
 
@@ -126,9 +126,9 @@ public class LangSanitizer {
 			}
 		}
 
-		Set<String> escapeCharacters = EscapeUtil.getEscapeCharacters();
+		Set<String> escapedCharacters = EscapeUtil.getEscapedCharacters();
 
-		for (String character : escapeCharacters) {
+		for (String character : escapedCharacters) {
 			String unexpectedChar = character.substring(
 				0, character.length() - 1);
 
@@ -227,7 +227,7 @@ public class LangSanitizer {
 			return new SanitizedMessage(
 				file.getAbsolutePath(), key, originalValue,
 				EscapeUtil.unescapeTag(sanitizedValue),
-				_getCorrectionTips(
+				_getCorrectionTip(
 					originalValue, EscapeUtil.unescapeTag(sanitizedValue)));
 		}
 
@@ -316,7 +316,7 @@ public class LangSanitizer {
 			sb.append("\tKey: ");
 			sb.append(_languageKey);
 			sb.append(System.lineSeparator());
-			sb.append("\tOriginal  Content: ");
+			sb.append("\tOriginal Content: ");
 			sb.append(_originalContent);
 			sb.append(System.lineSeparator());
 			sb.append("\tSanitized Content: ");
@@ -324,7 +324,7 @@ public class LangSanitizer {
 
 			if (Objects.nonNull(_correctionTip)) {
 				sb.append(System.lineSeparator());
-				sb.append("\tTips: ");
+				sb.append("\tCorrection Tip: ");
 				sb.append(_correctionTip);
 			}
 

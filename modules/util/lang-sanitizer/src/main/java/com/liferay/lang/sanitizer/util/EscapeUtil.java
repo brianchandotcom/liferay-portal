@@ -55,7 +55,7 @@ public class EscapeUtil {
 		return content;
 	}
 
-	public static Set<String> getEscapeCharacters() {
+	public static Set<String> getEscapedCharacters() {
 		return _escapedCharacterMap.keySet();
 	}
 

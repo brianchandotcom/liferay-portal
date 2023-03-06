@@ -52,7 +52,7 @@ public class PortletPreferencesHelper {
 	}
 
 	public String getString(String key, String defaultValue) {
-		String string = getString(key);
+		String string = _getStringValue(key);
 
 		if (string == null) {
 			return defaultValue;

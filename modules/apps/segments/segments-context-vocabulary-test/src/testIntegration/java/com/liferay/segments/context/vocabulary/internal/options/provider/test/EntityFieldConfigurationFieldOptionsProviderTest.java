@@ -46,8 +46,8 @@ public class EntityFieldConfigurationFieldOptionsProviderTest {
 			ListUtil.exists(
 				_configurationFieldOptionsProvider.getOptions(),
 				option -> Objects.equals(
-					option.getValue(),
-					Context.DEVICE_SCREEN_RESOLUTION_HEIGHT)));
+					Context.DEVICE_SCREEN_RESOLUTION_HEIGHT,
+					option.getValue())));
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class EntityFieldConfigurationFieldOptionsProviderTest {
 		Assert.assertTrue(
 			ListUtil.exists(
 				_configurationFieldOptionsProvider.getOptions(),
-				option -> Objects.equals(option.getValue(), Context.BROWSER)));
+				option -> Objects.equals(Context.BROWSER, option.getValue())));
 	}
 
 	@Inject(

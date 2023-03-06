@@ -67,8 +67,8 @@ public class AssetVocabularyConfigurationOptionsProviderTest {
 				ListUtil.exists(
 					_configurationFieldOptionsProvider.getOptions(),
 					option -> Objects.equals(
-						option.getLabel(LocaleUtil.getDefault()),
-						assetVocabulary.getTitle(LocaleUtil.getDefault()))));
+						assetVocabulary.getTitle(LocaleUtil.getDefault()),
+						option.getLabel(LocaleUtil.getDefault()))));
 		}
 		finally {
 			_assetVocabularyLocalService.deleteVocabulary(

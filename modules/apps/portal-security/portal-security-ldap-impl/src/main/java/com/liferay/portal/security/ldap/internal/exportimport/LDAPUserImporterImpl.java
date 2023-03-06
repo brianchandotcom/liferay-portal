@@ -198,6 +198,14 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				ldapServerId, companyId, ldapUser.getScreenName(),
 				ldapUser.getEmailAddress())) {
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"User with screen name ", ldapUser.getScreenName(),
+						" does not match search filter for LDAP server ",
+						ldapServerId, ".  Returning null."));
+			}
+
 			return null;
 		}
 

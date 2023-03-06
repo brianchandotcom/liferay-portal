@@ -249,6 +249,16 @@ definition {
 				changeTitle = "Test Page",
 				changeType = "Modified",
 				changeUser = "Test Test");
+
+			PublicationsNavigator.gotoViewChangeDetails(
+				changeCategory = "Page",
+				changeTitle = "Test Page");
+
+			var ctCollectionId = JSONPublicationsAPI._getCTCollectionId(publicationName = "Test Publication");
+
+			PublicationsChangeDetails.viewFragmentChangePreviewInDisplay(
+				fragmentPreviewInProduction = "previewCTCollectionId=0",
+				fragmentPreviewInPublication = "previewCTCollectionId=${ctCollectionId}");
 		}
 	}
 

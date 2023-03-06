@@ -44,6 +44,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileExtensionItemSelectorCriterion;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -751,12 +752,14 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setLabel(label);
 			}
 		).add(
+			() -> FeatureFlagManagerUtil.isEnabled("LPS-84424"),
 			dropdownItem -> {
 				dropdownItem.putData("action", "openExtensionSelector");
 				dropdownItem.putData(
 					"extensionsFilterURL", _getFileExtensionsItemSelectorURL());
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "Extensions..."));
+					LanguageUtil.get(_httpServletRequest, "extensions") +
+						StringPool.TRIPLE_PERIOD);
 			}
 		).build();
 	}

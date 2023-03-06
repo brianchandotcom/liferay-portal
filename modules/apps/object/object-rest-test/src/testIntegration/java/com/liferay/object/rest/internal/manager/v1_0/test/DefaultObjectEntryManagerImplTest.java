@@ -21,7 +21,6 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -57,6 +56,7 @@ import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.internal.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -193,7 +193,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition1 = _createObjectDefinition(
+		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -214,7 +214,7 @@ public class DefaultObjectEntryManagerImplTest {
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				Collections.emptyList());
 
-		_objectDefinition2 = _createObjectDefinition(
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Arrays.asList(
 				new AttachmentObjectFieldBuilder(
 				).labelMap(
@@ -1961,23 +1961,6 @@ public class DefaultObjectEntryManagerImplTest {
 			"))");
 	}
 
-	private ObjectDefinition _createObjectDefinition(
-			List<ObjectField> objectFields)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				_adminUser.getUserId(), false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
-
-		return _objectDefinitionLocalService.publishCustomObjectDefinition(
-			_adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
-	}
-
 	private ObjectFieldSetting _createObjectFieldSetting(
 		String name, String value) {
 
@@ -2116,10 +2099,6 @@ public class DefaultObjectEntryManagerImplTest {
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	private Role _accountManagerRole;
-
-	@Inject
-	private AccountRoleLocalService _accountRoleLocalService;
-
 	private Role _buyerRole;
 
 	@Inject

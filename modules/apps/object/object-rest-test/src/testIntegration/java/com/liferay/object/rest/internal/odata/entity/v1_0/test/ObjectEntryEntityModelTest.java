@@ -15,7 +15,6 @@
 package com.liferay.object.rest.internal.odata.entity.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
@@ -23,6 +22,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.internal.util.ObjectDefinitionTestUtil;
+import com.liferay.object.rest.internal.util.ObjectRelationshipTestUtil;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -103,8 +104,6 @@ public class ObjectEntryEntityModelTest {
 				"feature.flag.LPS-154672", "true"
 			).build());
 
-		String value = "A" + RandomTestUtil.randomString();
-
 		List<ObjectField> customObjectFields = Arrays.asList(
 			_createObjectField(ObjectFieldConstants.DB_TYPE_BIG_DECIMAL),
 			_createObjectField(ObjectFieldConstants.DB_TYPE_BOOLEAN),
@@ -116,10 +115,10 @@ public class ObjectEntryEntityModelTest {
 			_createObjectField(ObjectFieldConstants.DB_TYPE_STRING));
 
 		ObjectDefinition objectDefinition = _publishObjectDefinition(
-			value, customObjectFields);
+			customObjectFields);
 
 		ObjectDefinition relatedObjectDefinition = _publishObjectDefinition(
-			"A" + RandomTestUtil.randomString(), customObjectFields);
+			customObjectFields);
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			objectDefinition, relatedObjectDefinition);
@@ -179,13 +178,9 @@ public class ObjectEntryEntityModelTest {
 		throws Exception {
 
 		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				relatedObjectDefinition, objectDefinition,
 				TestPropsValues.getUserId(),
-				relatedObjectDefinition.getObjectDefinitionId(),
-				objectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationships.add(objectRelationship);
@@ -327,22 +322,11 @@ public class ObjectEntryEntityModelTest {
 	}
 
 	private ObjectDefinition _publishObjectDefinition(
-			String objectDefinitionName, List<ObjectField> objectFields)
+			List<ObjectField> objectFields)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), false,
-				LocalizedMapUtil.getLocalizedMap(objectDefinitionName),
-				objectDefinitionName, null, null,
-				LocalizedMapUtil.getLocalizedMap(objectDefinitionName),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
-
-		objectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId());
+			ObjectDefinitionTestUtil.publishObjectDefinition(objectFields);
 
 		_objectDefinitions.add(objectDefinition);
 

@@ -31,19 +31,14 @@ import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -281,9 +276,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_objectEntry2, jsonObject.getJSONArray("items"));
 
@@ -292,9 +286,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry2.getPrimaryKey(), _objectEntry1.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_objectEntry2, jsonObject.getJSONArray("items"));
 
@@ -305,9 +298,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_objectEntry2, jsonObject.getJSONArray("items"));
 	}
@@ -316,9 +308,11 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	public void testGetRelatedObjectsWhenRelationDoesNotExist()
 		throws Exception {
 
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(StringUtil.randomId()), Http.Method.GET);
+
 		Assert.assertEquals(
-			HttpStatus.NOT_FOUND.value(),
-			_invokeGetHttpCode(_getLocation(StringUtil.randomId())));
+			HttpStatus.NOT_FOUND.name(), jsonObject.getString("status"));
 	}
 
 	@Test
@@ -340,9 +334,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_user, jsonObject.getJSONArray("items"));
 
@@ -351,9 +344,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_user, jsonObject.getJSONArray("items"));
 
@@ -364,9 +356,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_user, jsonObject.getJSONArray("items"));
 	}
@@ -380,9 +371,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition1, _objectDefinition2,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -390,16 +380,15 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(
 			_objectEntry2,
-			JSONFactoryUtil.createJSONObject(
-				_invoke(
-					Http.Method.PUT,
-					_getLocation(
-						objectRelationship.getName(),
-						_objectEntry2.getPrimaryKey()))));
+			HTTPTestUtil.invoke(
+				null,
+				_getLocation(
+					objectRelationship.getName(),
+					_objectEntry2.getPrimaryKey()),
+				Http.Method.PUT));
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
 
@@ -411,9 +400,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition1, _objectDefinition2,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
 
@@ -421,16 +409,15 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(
 			_objectEntry2,
-			JSONFactoryUtil.createJSONObject(
-				_invoke(
-					Http.Method.PUT,
-					_getLocation(
-						objectRelationship.getName(),
-						_objectEntry2.getPrimaryKey()))));
+			HTTPTestUtil.invoke(
+				null,
+				_getLocation(
+					objectRelationship.getName(),
+					_objectEntry2.getPrimaryKey()),
+				Http.Method.PUT));
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
 
@@ -453,9 +440,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition1, relatedObjectDefinition,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -463,15 +449,13 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(
 			_user,
-			JSONFactoryUtil.createJSONObject(
-				_invoke(
-					Http.Method.PUT,
-					_getLocation(
-						objectRelationship.getName(), _user.getUserId()))));
+			HTTPTestUtil.invoke(
+				null,
+				_getLocation(objectRelationship.getName(), _user.getUserId()),
+				Http.Method.PUT));
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
 
@@ -483,9 +467,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition1, relatedObjectDefinition,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
 
@@ -493,15 +476,13 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(
 			_user,
-			JSONFactoryUtil.createJSONObject(
-				_invoke(
-					Http.Method.PUT,
-					_getLocation(
-						objectRelationship.getName(), _user.getUserId()))));
+			HTTPTestUtil.invoke(
+				null,
+				_getLocation(objectRelationship.getName(), _user.getUserId()),
+				Http.Method.PUT));
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
 
@@ -554,50 +535,15 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			baseModel.getPrimaryKeyObj(), jsonObject.getLong("id"));
 	}
 
-	private Http.Options _createOptions(
-		Http.Method httpMethod, String location) {
-
-		Http.Options options = new Http.Options();
-
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.addHeader(
-			"Authorization",
-			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
-		options.setLocation(location);
-		options.setMethod(httpMethod);
-
-		return options;
-	}
-
 	private String _getLocation(String name) {
 		return StringBundler.concat(
-			"http://localhost:8080/o/", _objectDefinition1.getRESTContextPath(),
-			StringPool.SLASH, _objectEntry1.getObjectEntryId(),
-			StringPool.SLASH, name);
+			_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+			_objectEntry1.getObjectEntryId(), StringPool.SLASH, name);
 	}
 
 	private String _getLocation(String name, long primaryKey) {
 		return StringBundler.concat(
 			_getLocation(name), StringPool.SLASH, primaryKey);
-	}
-
-	private String _invoke(Http.Method httpMethod, String location)
-		throws Exception {
-
-		Http.Options options = _createOptions(httpMethod, location);
-
-		return HttpUtil.URLtoString(options);
-	}
-
-	private int _invokeGetHttpCode(String location) throws Exception {
-		Http.Options options = _createOptions(Http.Method.GET, location);
-
-		HttpUtil.URLtoString(options);
-
-		Http.Response response = options.getResponse();
-
-		return response.getResponseCode();
 	}
 
 	private void _testDeleteCustomObjectDefinition1WithCustomObjectDefinition2(
@@ -651,9 +597,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition1, _userSystemObjectDefinition,
 			_objectEntry1.getPrimaryKey(), _user.getUserId(), type);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
@@ -668,9 +613,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				_user.getUserId()),
 			Http.Method.DELETE);
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		itemsJSONArray = jsonObject.getJSONArray("items");
 
@@ -712,9 +656,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			_invoke(
-				Http.Method.GET, _getLocation(objectRelationship.getName())));
+		jsonObject = HTTPTestUtil.invoke(
+			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 

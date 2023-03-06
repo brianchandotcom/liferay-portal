@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -129,17 +128,10 @@ public class CommerceThemeMiniumHttpHelper {
 		List<Layout> layouts = themeDisplay.getLayouts();
 
 		if (ListUtil.isNotEmpty(layouts)) {
-			Stream<Layout> layoutsStream = layouts.stream();
-
-			Layout friendlyURLLayout = layoutsStream.filter(
-				layout -> Objects.equals(layout.getFriendlyURL(), friendlyURL)
-			).findFirst(
-			).orElse(
-				null
-			);
-
-			if (friendlyURLLayout != null) {
-				return _portal.getLayoutURL(friendlyURLLayout, themeDisplay);
+			for (Layout layout : layouts) {
+				if (Objects.equals(layout.getFriendlyURL(), friendlyURL)) {
+					return _portal.getLayoutURL(layout, themeDisplay);
+				}
 			}
 
 			long plid = _portal.getPlidFromPortletId(

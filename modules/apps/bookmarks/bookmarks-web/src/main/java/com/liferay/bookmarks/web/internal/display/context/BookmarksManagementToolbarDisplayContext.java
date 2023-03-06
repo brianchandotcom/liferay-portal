@@ -76,15 +76,15 @@ public class BookmarksManagementToolbarDisplayContext {
 		_trashHelper = trashHelper;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
-			_liferayPortletRequest, _liferayPortletResponse);
+			liferayPortletRequest, liferayPortletResponse);
 
 		_folderId = GetterUtil.getLong(
-			(String)_httpServletRequest.getAttribute("view.jsp-folderId"));
+			(String)httpServletRequest.getAttribute("view.jsp-folderId"));
 
-		_searchContainer = (SearchContainer)_httpServletRequest.getAttribute(
+		_searchContainer = (SearchContainer)httpServletRequest.getAttribute(
 			"view.jsp-bookmarksSearchContainer");
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

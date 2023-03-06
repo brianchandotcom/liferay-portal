@@ -62,8 +62,8 @@ public class BookmarksDisplayContext {
 		_folderId = folderId;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			httpServletRequest);
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

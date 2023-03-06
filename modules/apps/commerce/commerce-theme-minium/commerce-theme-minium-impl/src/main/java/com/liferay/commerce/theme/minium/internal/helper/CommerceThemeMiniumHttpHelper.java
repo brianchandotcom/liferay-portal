@@ -127,27 +127,31 @@ public class CommerceThemeMiniumHttpHelper {
 
 		List<Layout> layouts = themeDisplay.getLayouts();
 
-		if (ListUtil.isNotEmpty(layouts)) {
-			for (Layout layout : layouts) {
-				if (Objects.equals(layout.getFriendlyURL(), friendlyURL)) {
-					return _portal.getLayoutURL(layout, themeDisplay);
-				}
-			}
+		if (ListUtil.isEmpty(layouts)) {
+			return StringPool.BLANK;
+		}
 
-			long plid = _portal.getPlidFromPortletId(
-				themeDisplay.getScopeGroupId(), portletId);
-
-			if (plid != 0) {
-				PortletURL portletURL = PortletProviderUtil.getPortletURL(
-					httpServletRequest, portletId, PortletProvider.Action.VIEW);
-
-				if (portletURL != null) {
-					return String.valueOf(portletURL);
-				}
+		for (Layout layout : layouts) {
+			if (Objects.equals(layout.getFriendlyURL(), friendlyURL)) {
+				return _portal.getLayoutURL(layout, themeDisplay);
 			}
 		}
 
-		return StringPool.BLANK;
+		long plid = _portal.getPlidFromPortletId(
+			themeDisplay.getScopeGroupId(), portletId);
+
+		if (plid == 0) {
+			return StringPool.BLANK;
+		}
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, portletId, PortletProvider.Action.VIEW);
+
+		if (portletURL == null) {
+			return StringPool.BLANK;
+		}
+
+		return String.valueOf(portletURL);
 	}
 
 	@Reference

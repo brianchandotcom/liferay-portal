@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Objects;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,8 +57,11 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			DDMStructure originalDDMStructure, DDMStructure ddmStructure)
 		throws ModelListenerException {
 
-		if (ddmStructure.getClassNameId() != _portal.getClassNameId(
-				JournalArticle.class)) {
+		if ((ddmStructure.getClassNameId() != _portal.getClassNameId(
+				JournalArticle.class)) ||
+			Objects.equals(
+				originalDDMStructure.getDefinition(),
+				ddmStructure.getDefinition())) {
 
 			return;
 		}

@@ -125,7 +125,9 @@ const ActionsInfo = ({
 				(prevSection) => prevSection.identifier !== identifier
 			);
 
-			updateSelectedItem(newSections);
+			if (name && executionType) {
+				updateSelectedItem(newSections);
+			}
 
 			return newSections;
 		});

@@ -8,6 +8,16 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
+	var buildName = "Build 1";
+	var caseName = "Case 1";
+	var caseType = "Case Type 1";
+	var componentName = "Component 1";
+	var environmentFactorsName = "Environment Factors 1";
+	var productVersion = "1.2";
+	var projectName = "Project 1";
+	var routineName = "Routine 1";
+	var suiteName = "Suite 1";
+	var teamName = "Team 1";
 	var testSiteName = "Testray 2";
 
 	setUp {
@@ -16,178 +26,125 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite(siteName = ${testSiteName});
-
-			Refresh();
+			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 
-		task ("Go to Testray, Create Project and change pagination") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
+		task ("Given that I create all the necessary objects") {
+			JSONTestray.addProject(
+				projectDescription = "Project Description 1",
+				projectName = ${projectName});
 
-			Testray.createProjectTestray(
-				description = "Projects_1 Description",
-				key_name = "Projects_1 Project");
+			JSONTestray.addTeam(
+				teamName = ${teamName},
+				projectName = ${projectName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			JSONTestray.addComponent(
+				componentName = ${componentName},
+				projectName = ${projectName},
+				teamName = ${teamName});
+			
+			JSONTestray.addRoutine(
+				projectName = ${projectName},
+				routineName = ${routineName});
+
+			JSONTestray.addCaseType(caseType = ${caseType});
+
+			JSONTestray.addCases(
+				caseName = ${caseName},
+				caseType = ${caseType},
+				componentName = ${componentName},
+				projectName = ${projectName});
+
+			JSONTestray.addEnvironmentFactors(environmentFactorsName = ${environmentFactorsName});
+
+			JSONTestray.addProductVersion(
+				productVersion = ${productVersion},
+				projectName = ${projectName});
 		}
 
-		task ("Go to created project and add a new team") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
-
-			TestrayManage.createTeam(teamName = "Components_1 Team");
-
-			TestrayManage.closeModalInOptions();
-		}
-
-		task ("Go to created project and add a component") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-
-			Testray.addNewComponent(
-				componentName = "Components_1 Project 1",
-				teamName = "Components_1 Team");
-
-			Testray.addNewComponent(
-				componentName = "Components_1 Project 2",
-				teamName = "Components_1 Team");
-
-			Refresh();
-		}
-
-		task ("Create a new Routine and a new Case") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
-
-			Testray.projectTabNavigator(navTabName = "Cases");
-
-			TestrayCases.typeCasesField(
-				caseName = "Cases_1 Case",
-				caseTypeId = "Manual Test",
-				componentId = "Components_1 Project 1",
-				description = "Cases_1 Case Description",
-				duration = 40,
-				priority = 5,
-				steps = "Auto Test Steps");
-
-			Testray.projectTabNavigator(navTabName = "Routine");
-		}
-
-		task ("Add Environments Factors") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
-
-			TestrayBuild.selectDefaultEnvironmentFactors(
-				label = "Application Server",
-				label1 = "Browser",
-				listCategory = "Application Server,Browser",
-				listOption = "JBoss 6.1",
-				listOption1 = "Chrome x");
-		}
-
-		task ("Go to Testray 2 and change the pagination") {
+		task ("Then I go to TR2 and change the paging") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
-		}
+			}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		TestrayBuild.deleteBuild(itemName = "Builds_1 Project");
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-		Testray.deleteAllProjects();
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "casetypes",
+			objectName = ${caseType});
 
-		Testray.tearDownCP();
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "factorcategories",
+			objectName = "Category 1");
 
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "productversions",
+			objectName = ${productVersion});
+
+		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "This is a test for LPS-156438 - Verify if as an Administrator can Add a Build"
+	@description = "Automation ID: LPS-156438 | Test Summary: Verify if as an Administrator can Add a Build"
 	@priority = 5
 	test AdminCanAddBuild {
 		task ("Given that the user add a new build") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			JSONTestray.addBuild(
+				buildName = ${buildName},
+				productVersion = ${productVersion},
+				projectName = ${projectName},
+				routineName = ${routineName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayBuild.createBuild(
-				addVersion = "1.2",
-				caseName = "Cases_1 Case",
-				description = "Builds_1 Project Description",
-				dropdownItem = "New Build",
-				fieldName = "Builds_1 Project",
-				gitHash = 12345,
-				productVersion = "1.2",
-				routine = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 		}
 
 		task ("Then the Routine should appear on the list") {
-			Testray.assertItemName(key_name = "Builds_1 Project");
+			Testray.assertItemName(text = "Build 1");
 		}
 	}
 
-	@description = "This is a test for LPS-163712 - Verify if as an administrator can add a build with multiple options(Suite, Case, Option and Select Stacks)"
+	@description = "Automation ID: LPS-163712 | Test Summary: Verify if as an administrator can add a build with multiple options(Suite, Case, Option and Select Stacks)"
 	@priority = 5
 	test AdminCanAddBuildWithMultipleOptions {
 		task ("Given that the user add a new build") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			JSONTestray.addSuite(suiteName = ${suiteName});
+
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			Testray.projectTabNavigator(navTabName = "Suites");
 
-			TestraySuites.addSuite(
-				caseType = "Automated Functional Test",
-				mainComponent = "Tags",
-				priorityNumber = 3,
-				smartSuite = "true",
-				suiteDescription = "ATF_Suites_1 Suite Description",
-				suiteName = "ATF_Suites_1 Suite");
+			Testray.assertItemName(text = "Suite 1");
 
 			Testray.projectTabNavigator(navTabName = "Routines");
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.addBuildWithMultipleOptions(
-				addVersion = "1.2",
-				caseName = "Cases_1 Case",
-				categoryName = "Database",
-				description = "Builds_1 Project Description",
+			TestrayBuild.addBuildViaUI(
+				buildFieldName = ${buildName},
+				caseName = ${caseName},
 				dropdownItem = "New Build",
-				fieldName = "Builds_1 Project",
-				gitHash = 12345,
-				labelStack = "Application Server",
-				labelStack2 = "Browser",
-				optionName = "Option_1",
-				productVersion = "1.2",
-				routine = "Routines_1 Routine",
-				stackName = "TcServer 3.2",
-				stackName2 = "Internet Explorer 7",
-				suiteName = "ATF_Suites_1 Suite");
+				productVersionOption = ${productVersion},
+				routine = ${routineName});
 		}
 
-		task ("Then the Routine should appear on the list") {
-			Testray.assertItemName(key_name = "Builds_1 Project");
+		task ("Then the Build should appear on the list") {
+			Testray.assertItemName(text = "Build 1");
 		}
 	}
 
-	@description = "This is a test for LPS-157540 - Verify if as an Administrator I should be able to archive a build "
+	@description = "Automation ID: LPS-157540 | Test Summary: Verify if as an Administrator I should be able to archive a build "
 	@ignore = "Test Stub"
 	@priority = 3
 	test AdminCanArchiveBuild {
@@ -196,7 +153,7 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-157539 - Verify if as an Administrator I should be able to Autoanalyze Builds in a Routine and assert that the Assignee, Comments, Issues have been copied"
+	@description = "Automation ID: LPS-157539 | Test Summary: Verify if as an Administrator I should be able to Autoanalyze Builds in a Routine and assert that the Assignee, Comments, Issues have been copied"
 	@ignore = "Test Stub"
 	@priority = 5
 	test AdminCanAutoanalyzeBuildsInRoutine {
@@ -205,61 +162,70 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-156513 - Verify if as an Administrator I can delete Builds"
+	@description = "Automation ID: LPS-156513 | Test Summary: Verify if as an Administrator I can delete Builds"
 	@priority = 5
 	test AdminCanDeleteBuild {
-		task ("Given that the user add a new build") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Then I create a build") {
+			JSONTestray.addBuild(
+				buildName = ${buildName},
+				productVersion = ${productVersion},
+				projectName = ${projectName},
+				routineName = ${routineName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayBuild.createBuild(
-				addVersion = "1.2",
-				caseName = "Cases_1 Case",
-				description = "Builds_1 Project Description",
-				dropdownItem = "New Build",
-				fieldName = "Builds_1 Project",
-				gitHash = 12345,
-				productVersion = "1.2",
-				routine = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			Testray.assertItemName(text = "Build 1");
 		}
 
 		task ("When a build is deleted") {
-			TestrayBuild.deleteBuild(itemName = "Builds_1 Project");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "builds",
+				objectName = ${buildName});
 		}
 
 		task ("Then the build should not appear on the list") {
-			Testray.assertItemNotPresent(itemName = "Builds_1 Project");
+			TestrayLayout.clickResultsOnSidebar();
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			Testray.assertItemNotPresent(itemName = "Build 1");
 		}
 	}
 
-	@description = "This is a test for LPS-156575 - Verify if as an Administrator I should be able to delete a build that contains runs"
+	@description = "Automation ID: LPS-156575 | Test Summary: Verify if as an Administrator I should be able to delete a build that contains runs"
 	@priority = 4
 	test AdminCanDeleteBuildContainsRuns {
 		task ("Given that the user add a new build with Environments Factors") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.createBuild(
-				addVersion = "1.2",
-				caseName = "Cases_1 Case",
-				description = "Builds_1 Project Description",
+			TestrayBuild.addBuildViaUI(
+				buildFieldName = ${buildName},
+				caseName = ${caseName},
 				dropdownItem = "New Build",
-				fieldName = "Builds_1 Project",
-				gitHash = 12345,
-				productVersion = "1.2",
-				routine = "Routines_1 Routine");
+				productVersionOption = ${productVersion},
+				routine = ${routineName});
 		}
 
 		task ("And deleted build with runs") {
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = "Build 1");
 
 			Testray.projectTabNavigator(navTabName = "Runs");
 
-			Testray.assertItemName(key_name = "JBoss 6.1");
+			Testray.assertItemName(text = "Option 1");
 
-			Testray.assertItemName(key_name = "Chrome x");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "builds",
+				objectName = "Build 1");
 
 			TestrayLayout.clickResultsOnSidebar();
 
@@ -267,84 +233,73 @@ definition {
 				numberItems = 20,
 				valuePagination = 150);
 
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayBuild.deleteBuild(itemName = "Builds_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = ${routineName});
 		}
 
 		task ("Then the build with runs should not appear on the list") {
-			Testray.assertItemNotPresent(itemName = "Builds_1 Project");
+			Testray.assertItemNotPresent(itemName = "Build 1");
 		}
 	}
 
-	@description = "This is a test for LPS-156543 - Verify if as an Administrator I am able to edit Builds"
+	@description = "Automation ID: LPS-156543 | Test Summary: Verify if as an Administrator I am able to edit Builds"
 	@priority = 5
 	test AdminCanEditBuild {
 		task ("Given that the user add a new build") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.createBuild(
-				addVersion = "1.2",
-				caseName = "Cases_1 Case",
-				description = "Builds_1 Project Description",
+			TestrayBuild.addBuildViaUI(
+				buildFieldName = ${buildName},
+				caseName = ${caseName},
 				dropdownItem = "New Build",
-				fieldName = "Builds_1 Project",
-				gitHash = 12345,
-				productVersion = "1.2",
-				routine = "Routines_1 Routine");
+				productVersionOption = ${productVersion},
+				routine = ${routineName});
 		}
 
 		task ("When a build is edited") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Builds_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = "Build 1");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
 
 			TestrayBuild.editBuild(
-				description = "Builds_1 Project Description Edited",
-				fieldName = "Builds_1 Project Edited",
+				description = "Description Edited",
+				fieldName = "Build 1 Edited",
 				gitHash = 12345,
 				productVersion = "1.2",
-				routine = "Routines_1 Routine");
+				routine = "Routine 1");
 		}
 
 		task ("Then the build should appear on the list with name edited") {
-			Testray.assertItemName(key_name = "Builds_1 Project Edited");
+			Testray.assertItemName(text = "Build 1 Edited");
 		}
 	}
 
-	@description = "This is a test for LPS-156546 - Verify if as an Administrator I should not be able to add a duplicate build"
+	@description = "Automation ID: LPS-156546 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate build"
 	@priority = 5
 	test AdminCanNotAddDuplicateBuild {
 		task ("Given that the user add a new build") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.createBuild(
-				addVersion = "1.2",
-				caseName = "Cases_1 Case",
-				description = "Builds_1 Project Description",
+			TestrayBuild.addBuildViaUI(
+				buildFieldName = ${buildName},
+				caseName = ${caseName},
 				dropdownItem = "New Build",
-				fieldName = "Builds_1 Project",
-				gitHash = 12345,
-				productVersion = "1.2",
-				routine = "Routines_1 Routine");
+				productVersionOption = ${productVersion},
+				routine = ${routineName});
 		}
 
 		task ("When add a build with duplicated name") {
-			TestrayBuild.createBuild(
-				addVersion = "1.4",
-				caseName = "Cases_1 Case",
-				description = "Builds_1 Project Description",
+			TestrayBuild.addBuildViaUI(
+				buildFieldName = ${buildName},
+				caseName = ${caseName},
 				dropdownItem = "New Build",
-				fieldName = "Builds_1 Project",
-				gitHash = 12345,
-				productVersion = "1.4",
-				routine = "Routines_1 Routine");
+				productVersionOption = "1.3",
+				routine = ${routineName});
 		}
 
 		task ("Then a warning message is displayed") {
@@ -352,7 +307,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-156557 - Verify if as an Administrator I should not be able to archive a build where its task is in analysis"
+	@description = "Automation ID: LPS-156557 | Test Summary: Verify if as an Administrator I should not be able to archive a build where its task is in analysis"
 	@ignore = "Test Stub"
 	@priority = 3
 	test AdminCanNotArchivedBuildInAnalysis {
@@ -361,7 +316,7 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-156455 - Verify if as an Administrator I should not be able to archive a promoted build"
+	@description = "Automation ID: LPS-156455 | Test Summary: Verify if as an Administrator I should not be able to archive a promoted build"
 	@ignore = "Test Stub"
 	@priority = 5
 	test AdminCanNotArchivePromotedBuild {
@@ -370,27 +325,24 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-156583 - Verify if as an Administrator I should be able to promote a build"
+	@description = "Automation ID: LPS-156583 | Test Summary: Verify if as an Administrator I should be able to promote a build"
 	@priority = 5
 	test AdminCanPromoteBuild {
 		task ("Given that the user add a new build") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.createBuild(
-				addVersion = "1.2",
-				caseName = "Cases_1 Case",
-				description = "Builds_1 Project Description",
+			TestrayBuild.addBuildViaUI(
+				buildFieldName = ${buildName},
+				caseName = ${caseName},
 				dropdownItem = "New Build",
-				fieldName = "Builds_1 Project",
-				gitHash = 12345,
-				productVersion = "1.2",
-				routine = "Routines_1 Routine");
+				productVersionOption = ${productVersion},
+				routine = ${routineName});
 		}
 
 		task ("When a build is promoted") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Builds_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = "Build 1");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Promote");
 		}
@@ -400,7 +352,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-156585 - Verify if as an Administrator I should be able to sort the Builds Name"
+	@description = "Automation ID: LPS-156585 | Test Summary: Verify if as an Administrator I should be able to sort the Builds Name"
 	@ignore = "Test Stub"
 	@priority = 4
 	test AdminCanSortBuildByName {
@@ -409,7 +361,7 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-156588 - Verify if as an Administrator I should be able to sort the Builds Product Version"
+	@description = "Automation ID: LPS-156588 | Test Summary: Verify if as an Administrator I should be able to sort the Builds Product Version"
 	@ignore = "Test Stub"
 	@priority = 4
 	test AdminCanSortBuildProductVersion {
@@ -418,7 +370,7 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-156586 - Verify if as an Administrator I should be able to sort the Builds Promoted"
+	@description = "Automation ID: LPS-156586 | Test Summary: Verify if as an Administrator I should be able to sort the Builds Promoted"
 	@ignore = "Test Stub"
 	@priority = 3
 	test AdminCanSortBuildPromoted {
@@ -427,7 +379,7 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-156580 - Verify if as an Administrator I should be able to specify a start and end parameter when fetching a build index "
+	@description = "Automation ID: LPS-156580 | Test Summary: Verify if as an Administrator I should be able to specify a start and end parameter when fetching a build index "
 	@ignore = "Test Stub"
 	@priority = 4
 	test AdminCanSpecifyStartAndEndParameter {
@@ -436,7 +388,7 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-156592 - Verify if as an Administrator I should be able to unarchive a build"
+	@description = "Automation ID: LPS-156592 | Test Summary: Verify if as an Administrator I should be able to unarchive a build"
 	@ignore = "Test Stub"
 	@priority = 4
 	test AdminCanUnarchiveBuilds {

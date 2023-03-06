@@ -434,6 +434,11 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			_objectDefinitionLocalService.getObjectDefinition(
 				relatedObjectEntry.getObjectDefinitionId());
 
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByObjectFieldId2(
+					objectField.getObjectFieldId());
+
 		Map<String, ?> relatedObjectEntryValues =
 			relatedObjectEntry.getValues();
 
@@ -447,8 +452,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				).namespace(
 					StringBundler.concat(
 						ObjectRelationship.class.getSimpleName(),
-						StringPool.POUND,
-						objectDefinition.getExternalReferenceCode())
+						StringPool.POUND, objectDefinition.getName(),
+						StringPool.POUND, objectRelationship.getName())
 				).name(
 					relatedObjectField.getName()
 				).labelInfoLocalizedValue(

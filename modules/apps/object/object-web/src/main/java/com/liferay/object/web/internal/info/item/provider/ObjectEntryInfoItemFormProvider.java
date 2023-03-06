@@ -663,8 +663,8 @@ public class ObjectEntryInfoItemFormProvider
 				_getObjectDefinitionInfoFieldSet(
 					StringBundler.concat(
 						ObjectRelationship.class.getSimpleName(),
-						StringPool.POUND,
-						relatedObjectDefinition.getExternalReferenceCode()),
+						StringPool.POUND, relatedObjectDefinition.getName(),
+						StringPool.POUND, objectRelationship.getName()),
 					relatedObjectDefinition));
 		}
 

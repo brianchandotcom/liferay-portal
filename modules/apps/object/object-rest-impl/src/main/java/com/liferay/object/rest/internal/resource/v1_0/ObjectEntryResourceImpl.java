@@ -187,7 +187,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		return new ObjectEntryEntityModel(
-			_objectDefinition,
+			_objectDefinition.getObjectDefinitionId(),
 			_objectFieldLocalService.getObjectFields(
 				_objectDefinition.getObjectDefinitionId()));
 	}

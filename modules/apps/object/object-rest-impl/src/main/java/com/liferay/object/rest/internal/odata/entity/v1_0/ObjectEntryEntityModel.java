@@ -59,7 +59,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 	}
 
 	public ObjectEntryEntityModel(
-			ObjectDefinition objectDefinition, List<ObjectField> objectFields)
+			long objectDefinitionId, List<ObjectField> objectFields)
 		throws Exception {
 
 		_entityFieldsMap = _getStringEntityFieldMap(objectFields);
@@ -67,6 +67,10 @@ public class ObjectEntryEntityModel implements EntityModel {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-154672")) {
 			return;
 		}
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+				objectDefinitionId);
 
 		List<ObjectRelationship> objectRelationships =
 			ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(

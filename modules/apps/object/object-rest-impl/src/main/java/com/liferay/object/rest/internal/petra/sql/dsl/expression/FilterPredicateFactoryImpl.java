@@ -15,12 +15,10 @@
 package com.liferay.object.rest.internal.petra.sql.dsl.expression;
 
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProviderRegistry;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.internal.odata.filter.expression.PredicateExpressionVisitorImpl;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.util.Validator;
@@ -82,12 +80,8 @@ public class FilterPredicateFactoryImpl implements FilterPredicateFactory {
 	@Override
 	public Predicate create(String filterString, long objectDefinitionId) {
 		try {
-			ObjectDefinition objectDefinition =
-				ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-					objectDefinitionId);
-
 			EntityModel entityModel = new ObjectEntryEntityModel(
-				objectDefinition,
+				objectDefinitionId,
 				_objectFieldLocalService.getObjectFields(objectDefinitionId));
 
 			return create(entityModel, filterString, objectDefinitionId);

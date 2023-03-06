@@ -378,8 +378,7 @@ public class PredicateExpressionVisitorImpl
 	private EntityModel _createEntityModel(long objectDefinitionId) {
 		try {
 			return new ObjectEntryEntityModel(
-				ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-					objectDefinitionId),
+				objectDefinitionId,
 				_objectFieldLocalService.getObjectFields(objectDefinitionId));
 		}
 		catch (Exception exception) {

@@ -1289,6 +1289,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			String[] assetTagNames, long[] assetLinkEntryIds)
 		throws PortalException {
 
+		_updateKBArticleAsset(
+			userId, kbArticle, assetCategoryIds, assetTagNames,
+			assetLinkEntryIds, WorkflowConstants.STATUS_ANY);
+	}
+
+	private void _updateKBArticleAsset(
+		long userId, KBArticle kbArticle, long[] assetCategoryIds,
+		String[] assetTagNames, long[] assetLinkEntryIds, int status)
+		throws PortalException {
 		boolean visible = false;
 
 		if (kbArticle.isApproved()) {
@@ -1298,10 +1307,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		String summary = _htmlParser.extractText(
 			StringUtil.shorten(kbArticle.getContent(), 500));
 
+		long classPK = kbArticle.getClassPK();
+
+		if(status == WorkflowConstants.STATUS_EXPIRED){
+			classPK = kbArticle.getResourcePrimKey();
+		}
+
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
 			userId, kbArticle.getGroupId(), kbArticle.getCreateDate(),
 			kbArticle.getModifiedDate(), KBArticle.class.getName(),
-			kbArticle.getClassPK(), kbArticle.getUuid(), 0, assetCategoryIds,
+			classPK, kbArticle.getUuid(), 0, assetCategoryIds,
 			assetTagNames, true, visible, null, null, null,
 			kbArticle.getExpirationDate(), ContentTypes.TEXT_HTML,
 			kbArticle.getTitle(), kbArticle.getDescription(), summary, null,
@@ -1430,9 +1445,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		long[] assetLinkEntryIds = StringUtil.split(
 			ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
 
-		updateKBArticleAsset(
+		_updateKBArticleAsset(
 			userId, kbArticle, assetEntry.getCategoryIds(),
-			assetEntry.getTagNames(), assetLinkEntryIds);
+			assetEntry.getTagNames(), assetLinkEntryIds, status);
 
 		SystemEventHierarchyEntryThreadLocal.push(KBArticle.class);
 

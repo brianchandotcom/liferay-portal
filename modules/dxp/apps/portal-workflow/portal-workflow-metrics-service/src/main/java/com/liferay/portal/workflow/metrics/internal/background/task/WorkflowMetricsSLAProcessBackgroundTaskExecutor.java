@@ -425,14 +425,15 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				Document document = searchHit.getDocument();
 
 				List<Document> documents = taskDocuments.computeIfAbsent(
-					document.getLong("instanceId"), k -> new ArrayList<>());
+					document.getLong("instanceId"), key -> new ArrayList<>());
 
 				documents.add(document);
 
 				documents.sort(
 					Comparator.comparing(
-						d -> LocalDateTime.parse(
-							d.getDate("createDate"), _dateTimeFormatter)));
+						curDocument -> LocalDateTime.parse(
+							curDocument.getDate("createDate"),
+							_dateTimeFormatter)));
 
 				return document.getLong("instanceId");
 			});

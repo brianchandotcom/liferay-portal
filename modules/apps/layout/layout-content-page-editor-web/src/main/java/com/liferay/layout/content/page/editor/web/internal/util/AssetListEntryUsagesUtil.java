@@ -76,9 +76,12 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Víctor Galán
  */
+@Component(service = {})
 public class AssetListEntryUsagesUtil {
 
 	public static JSONArray getPageContentsJSONArray(

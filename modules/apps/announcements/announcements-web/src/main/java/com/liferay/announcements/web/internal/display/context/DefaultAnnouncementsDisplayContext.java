@@ -96,7 +96,7 @@ public class DefaultAnnouncementsDisplayContext
 		_segmentsEntryRetriever = segmentsEntryRetriever;
 		_segmentsConfigurationProvider = segmentsConfigurationProvider;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

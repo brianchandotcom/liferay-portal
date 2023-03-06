@@ -51,7 +51,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 		_liferayPortletResponse = liferayPortletResponse;
 		_tabs1 = tabs1;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

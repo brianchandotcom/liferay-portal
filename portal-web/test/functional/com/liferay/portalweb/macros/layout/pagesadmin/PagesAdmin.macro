@@ -629,11 +629,10 @@ definition {
 	macro addUtilityPage {
 		LexiconEntry.gotoAdd();
 
-		if (!(isSet(type))) {
-			var type = "404 Error";
-		}
-
-		MenuItem.click(menuItem = ${type});
+		//if (!(isSet(type))) {
+		//	var type = "404 Error";
+		//}
+		//MenuItem.click(menuItem = ${type});
 
 		if (isSet(masterLayoutName)) {
 			LexiconCard.clickCard(card = ${masterLayoutName});

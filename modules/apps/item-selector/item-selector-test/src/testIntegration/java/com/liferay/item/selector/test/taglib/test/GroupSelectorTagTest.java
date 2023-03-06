@@ -185,8 +185,8 @@ public class GroupSelectorTagTest {
 				ListUtil.exists(
 					(List<Group>)mockHttpServletRequest.getAttribute(
 						"liferay-item-selector:group-selector:groups"),
-					curGroup -> Objects.equals(
-						curGroup.getGroupId(), group.getGroupId())));
+					currentGroup -> Objects.equals(
+						group.getGroupId(), currentGroup.getGroupId())));
 		}
 		finally {
 			GroupTestUtil.deleteGroup(group);

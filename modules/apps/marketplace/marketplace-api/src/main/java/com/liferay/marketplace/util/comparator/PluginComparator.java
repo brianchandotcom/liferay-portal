@@ -50,7 +50,7 @@ public class PluginComparator implements Comparator<Object>, Serializable {
 
 		_locale = locale;
 
-		_collator = CollatorUtil.getInstance(_locale);
+		_collator = CollatorUtil.getInstance(locale);
 	}
 
 	@Override

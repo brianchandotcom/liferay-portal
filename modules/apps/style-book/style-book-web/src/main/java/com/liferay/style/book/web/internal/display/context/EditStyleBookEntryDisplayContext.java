@@ -97,11 +97,11 @@ public class EditStyleBookEntryDisplayContext {
 			(FragmentCollectionContributorRegistry)renderRequest.getAttribute(
 				StyleBookWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 		_frontendTokenDefinitionRegistry =
-			(FrontendTokenDefinitionRegistry)_renderRequest.getAttribute(
+			(FrontendTokenDefinitionRegistry)renderRequest.getAttribute(
 				FrontendTokenDefinitionRegistry.class.getName());
-		_itemSelector = (ItemSelector)_renderRequest.getAttribute(
+		_itemSelector = (ItemSelector)renderRequest.getAttribute(
 			ItemSelector.class.getName());
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_setViewAttributes();

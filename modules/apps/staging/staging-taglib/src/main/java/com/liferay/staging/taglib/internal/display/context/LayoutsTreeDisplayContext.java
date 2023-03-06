@@ -55,7 +55,7 @@ public class LayoutsTreeDisplayContext {
 		_selectedLayoutIds = selectedLayoutIds;
 		_treeId = treeId;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

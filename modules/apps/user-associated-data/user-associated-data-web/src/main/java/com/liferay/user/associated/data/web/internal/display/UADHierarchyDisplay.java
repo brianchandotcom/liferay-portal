@@ -62,7 +62,7 @@ public class UADHierarchyDisplay {
 		_uadHierarchyDeclaration = uadHierarchyDeclaration;
 
 		_containerUADDisplays =
-			_uadHierarchyDeclaration.getContainerUADDisplays();
+			uadHierarchyDeclaration.getContainerUADDisplays();
 
 		Stream<UADDisplay<?>> containerUADDisplayStream = Arrays.stream(
 			_containerUADDisplays);
@@ -75,7 +75,7 @@ public class UADHierarchyDisplay {
 
 		_uadDisplays = ArrayUtil.append(
 			_containerUADDisplays,
-			_uadHierarchyDeclaration.getNoncontainerUADDisplays());
+			uadHierarchyDeclaration.getNoncontainerUADDisplays());
 
 		Map<Class<?>, UADDisplay<?>> uadDisplayMap = new LinkedHashMap<>();
 

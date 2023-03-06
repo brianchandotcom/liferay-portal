@@ -46,10 +46,10 @@ public class PasswordPolicyDisplayContext {
 		_renderResponse = renderResponse;
 
 		_passwordPolicyId = ParamUtil.getLong(
-			_httpServletRequest, "passwordPolicyId");
+			httpServletRequest, "passwordPolicyId");
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
+			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = themeDisplay.getPermissionChecker();

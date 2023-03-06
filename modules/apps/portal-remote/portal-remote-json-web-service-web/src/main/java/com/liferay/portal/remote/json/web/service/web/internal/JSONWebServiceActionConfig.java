@@ -83,7 +83,7 @@ public class JSONWebServiceActionConfig
 		Method realActionMethod = null;
 
 		try {
-			realActionMethod = _actionClass.getDeclaredMethod(
+			realActionMethod = actionClass.getDeclaredMethod(
 				actionMethod.getName(), actionMethod.getParameterTypes());
 		}
 		catch (NoSuchMethodException noSuchMethodException) {

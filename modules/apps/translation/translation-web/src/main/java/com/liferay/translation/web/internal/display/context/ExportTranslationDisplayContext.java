@@ -85,7 +85,7 @@ public class ExportTranslationDisplayContext {
 		_translationInfoItemFieldValuesExporterRegistry =
 			translationInfoItemFieldValuesExporterRegistry;
 
-		_className = PortalUtil.getClassName(_classNameId);
+		_className = PortalUtil.getClassName(classNameId);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

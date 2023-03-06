@@ -78,7 +78,7 @@ public class TestClusterChannel implements ClusterChannel {
 		_localAddress = new TestAddress(_atomicInteger.getAndIncrement());
 
 		SortedMap<Address, TestClusterChannel> clusterChannels = _clusters.get(
-			_clusterName);
+			clusterName);
 
 		if (clusterChannels == null) {
 			clusterChannels = new TreeMap<>();

@@ -34,7 +34,7 @@ public class SelectAccountUsersDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_accountEntryId = ParamUtil.getLong(
-			_liferayPortletRequest, "accountEntryId");
+			liferayPortletRequest, "accountEntryId");
 	}
 
 	public long getAccountEntryId() {

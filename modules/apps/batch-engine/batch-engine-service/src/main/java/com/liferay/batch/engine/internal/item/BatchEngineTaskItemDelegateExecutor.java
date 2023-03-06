@@ -66,7 +66,7 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 		_sortParserProvider = sortParserProvider;
 		_user = user;
 
-		_batchEngineTaskItemDelegate = _serviceObjects.getService();
+		_batchEngineTaskItemDelegate = serviceObjects.getService();
 	}
 
 	@Override

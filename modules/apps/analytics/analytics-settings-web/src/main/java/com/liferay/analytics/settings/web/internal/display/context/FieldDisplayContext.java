@@ -67,7 +67,7 @@ public class FieldDisplayContext {
 			(AnalyticsUsersManager)renderRequest.getAttribute(
 				AnalyticsSettingsWebKeys.ANALYTICS_USERS_MANAGER);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_companyId = themeDisplay.getCompanyId();

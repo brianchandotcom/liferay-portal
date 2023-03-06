@@ -69,8 +69,8 @@ public class RSSFeed {
 			!HttpComponentsUtil.hasDomain(syndFeedLink)) {
 
 			baseURL = StringBundler.concat(
-				HttpComponentsUtil.getProtocol(_url), Http.PROTOCOL_DELIMITER,
-				HttpComponentsUtil.getDomain(_url));
+				HttpComponentsUtil.getProtocol(url), Http.PROTOCOL_DELIMITER,
+				HttpComponentsUtil.getDomain(url));
 
 			if (Validator.isNotNull(syndFeedLink)) {
 				syndFeedLink = baseURL.concat(syndFeedLink);

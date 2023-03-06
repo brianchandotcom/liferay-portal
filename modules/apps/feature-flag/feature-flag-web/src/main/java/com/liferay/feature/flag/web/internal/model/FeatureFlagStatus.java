@@ -74,8 +74,8 @@ public enum FeatureFlagStatus {
 		_value = value;
 
 		_descriptionLanguageKey = FeatureFlagConstants.getKey(
-			"status.description", _value);
-		_titleLanguageKey = FeatureFlagConstants.getKey("status.title", _value);
+			"status.description", value);
+		_titleLanguageKey = FeatureFlagConstants.getKey("status.title", value);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

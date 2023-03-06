@@ -64,7 +64,7 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 		_userODataRetriever = userODataRetriever;
 		_userLocalService = userLocalService;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

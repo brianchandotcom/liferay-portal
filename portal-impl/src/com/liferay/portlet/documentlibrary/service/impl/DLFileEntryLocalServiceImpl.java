@@ -2511,6 +2511,10 @@ public class DLFileEntryLocalServiceImpl
 				companyId, expirationDate);
 
 		for (DLFileEntry fileEntry : fileEntries) {
+			if (fileEntry.isInTrash()) {
+				continue;
+			}
+
 			DLFileVersion latestFileVersion =
 				_dlFileVersionLocalService.fetchLatestFileVersion(
 					fileEntry.getFileEntryId(), false);

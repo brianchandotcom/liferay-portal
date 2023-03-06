@@ -2301,6 +2301,213 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10086. As admin, I can update the status of a Partially Shipped order as Shipped once unshipped order items are deleted. And after clicking Deliver, the status is updated as Completed."
+	@priority = 3
+	test CanUpdateOrderStatusByDeletingUnshippedItems {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a business account is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test Address",
+				countryISOCode = "US",
+				name = "Test Name",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+		}
+
+		task ("And a payment method is activated") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And an order is placed with multiple products") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "MIN55860:1",
+				orderStatus = 1,
+				paymentMethod = "Money Order",
+				paymentStatus = 0,
+				shippingAddressName = "Test Name",
+				shippingMethod = "Variable Rate",
+				shippingOption = "Standard Option");
+
+			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55859");
+		}
+
+		task ("When the order is accepted and shipped only partially") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_index = "Accept Order",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			CommerceOrders.createShipment(
+				productSkuList = "MIN55860",
+				warehouseName = "Italy");
+		}
+
+		task ("Then the status of the order is Partially Shipped") {
+			Click(locator1 = "Icon#BACK");
+
+			AssertElementPresent(
+				key_orderStatus = "Partially Shipped",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+		}
+
+		task ("When the remaining order item is deleted from the order") {
+			ClickNoError(
+				key_orderStatus = "Partially Shipped",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+
+			CommerceEntry.clickNoError(menuItem = "View");
+
+			CommerceOrders.deleteOrderItem(orderItemSku = "MIN55859");
+		}
+
+		task ("Then the status of the order is updated as Shipped") {
+			Click(locator1 = "Icon#BACK");
+
+			AssertElementPresent(
+				key_orderStatus = "Shipped",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+		}
+
+		task ("And the status of the order is Completed after Deliver is clicked") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Shipments");
+
+			Click(
+				key_text = "Shipped",
+				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Edit");
+
+			Click(
+				key_index = "Deliver",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			Click(locator1 = "Icon#BACK");
+
+			AssertElementPresent(
+				key_text = "Delivered",
+				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+			CommerceOrders.openOrdersAdmin();
+
+			AssertElementPresent(
+				key_orderStatus = "Completed",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10086. As admin, I can update the status of a Partially Shipped order as Completed once I edit unshipped order items quantity after Ship and Deliver is completed."
+	@priority = 3
+	test CanUpdateOrderStatusByEditingUnshippedItemsQuantity {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a business account is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test Address",
+				countryISOCode = "US",
+				name = "Test Name",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+		}
+
+		task ("And a payment method is activated") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And an order is placed with a product in multiple quantity") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "MIN55861:5",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 0,
+				shippingAddressName = "Test Name",
+				shippingMethod = "Variable Rate",
+				shippingOption = "Standard Option");
+		}
+
+		task ("When the order is accepted, shipped and delivered only partially") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_index = "Accept Order",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			CommerceOrders.createShipment(
+				complement = "Deliver",
+				productSkuList = "MIN55861",
+				warehouseName = "Italy");
+		}
+
+		task ("Then the status of the order is Partially Shipped") {
+			CommerceOrders.openOrdersAdmin();
+
+			AssertElementPresent(
+				key_orderStatus = "Partially Shipped",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+		}
+
+		task ("When the remaining order item quantity is edited as 5 instead of 10") {
+			ClickNoError(
+				key_orderStatus = "Partially Shipped",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+
+			CommerceEntry.clickNoError(menuItem = "View");
+
+			CommerceOrders.editOrderItemDetails(
+				orderItemQuantity = 1,
+				orderItemSku = "MIN55861");
+		}
+
+		task ("Then the status of the order is updated as Completed") {
+			Click(locator1 = "Icon#BACK");
+
+			AssertElementPresent(
+				key_orderStatus = "Completed",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+		}
+
+		task ("And the status of the shipment is shown as Delivered") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Shipments");
+
+			AssertElementPresent(
+				key_text = "Delivered",
+				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10829. As a user with permissions, I can add/edit Commerce Order Notes via API and verify the result in order notes section of the placed order's details page."
 	@priority = 5
 	test CanUserWithPermissionsAddCommerceOrderNotesViaAPI {

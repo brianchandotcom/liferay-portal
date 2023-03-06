@@ -86,6 +86,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_PREVIEW_IN_PRODUCTION</td>
+	<td>//td[contains(@class,'publications-render-view-content')]//iframe[contains(@src,'${key_fragmentPreviewInProduction}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_PREVIEW_IN_PUBLICATION</td>
+	<td>//td[contains(@class,'publications-render-view-content')]//iframe[contains(@src,'${key_fragmentPreviewInPublication}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_VIEWPORT_PREVIEW</td>
 	<td>//td[contains(@class,'publications-render-view-content')]//iframe[contains(@src,'${key_pageURL}')]</td>
 	<td></td>

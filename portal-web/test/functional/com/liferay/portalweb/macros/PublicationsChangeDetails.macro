@@ -391,4 +391,18 @@ definition {
 		}
 	}
 
+	macro viewFragmentChangePreviewInDisplay {
+		if (isSet(fragmentPreviewInProduction)) {
+			AssertElementPresent(
+				key_fragmentPreviewInProduction = ${fragmentPreviewInProduction},
+				locator1 = "PublicationsChangeDetails#FRAGMENT_PREVIEW_IN_PRODUCTION");
+		}
+
+		if (isSet(fragmentPreviewInPublication)) {
+			AssertElementPresent(
+				key_fragmentPreviewInPublication = ${fragmentPreviewInPublication},
+				locator1 = "PublicationsChangeDetails#FRAGMENT_PREVIEW_IN_PUBLICATION");
+		}
+	}
+
 }

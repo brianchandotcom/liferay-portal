@@ -44,13 +44,7 @@ public class PortletPreferencesHelper {
 	}
 
 	public int getInteger(String key, int defaultValue) {
-		Integer integer = getInteger(key);
-
-		if (integer == null) {
-			return defaultValue;
-		}
-
-		return integer;
+		return GetterUtil.getInteger(_getStringValue(key), defaultValue);
 	}
 
 	public String getString(String key) {

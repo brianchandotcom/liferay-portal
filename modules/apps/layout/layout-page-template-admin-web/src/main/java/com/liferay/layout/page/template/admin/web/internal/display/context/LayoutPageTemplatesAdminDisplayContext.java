@@ -50,7 +50,6 @@ public class LayoutPageTemplatesAdminDisplayContext {
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
-
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

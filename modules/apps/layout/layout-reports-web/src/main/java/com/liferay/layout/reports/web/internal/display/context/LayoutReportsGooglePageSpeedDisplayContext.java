@@ -29,7 +29,6 @@ public class LayoutReportsGooglePageSpeedDisplayContext {
 		boolean enable, PortletRequest portletRequest) {
 
 		_enable = enable;
-
 		_portletRequest = portletRequest;
 
 		_unicodeProperties = _getUnicodeProperties(portletRequest);

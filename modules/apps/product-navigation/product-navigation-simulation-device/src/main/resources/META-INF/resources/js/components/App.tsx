@@ -19,6 +19,8 @@ import {SIZES, Size} from '../constants/sizes';
 import Preview from './Preview';
 import SizeSelector from './SizeSelector';
 
+import '../../css/main.scss';
+
 interface IProps {
 	portletNamespace: string;
 }

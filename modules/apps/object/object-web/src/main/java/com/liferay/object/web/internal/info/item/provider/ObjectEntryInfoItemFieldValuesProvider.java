@@ -40,12 +40,15 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -91,6 +94,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		JSONFactory jsonFactory,
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectDefinition objectDefinition,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -108,6 +112,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		_jsonFactory = jsonFactory;
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_objectDefinition = objectDefinition;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -392,9 +397,67 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			if (ListUtil.isNotEmpty(attachmentInfoFieldValues)) {
 				objectFieldsInfoFieldValues.addAll(attachmentInfoFieldValues);
 			}
+
+			List<InfoFieldValue<Object>> relatedObjectEntryInfoFieldValues =
+				_getRelatedObjectEntryFieldValues(objectField, values);
+
+			if (ListUtil.isNotEmpty(relatedObjectEntryInfoFieldValues)) {
+				objectFieldsInfoFieldValues.addAll(
+					relatedObjectEntryInfoFieldValues);
+			}
 		}
 
 		return objectFieldsInfoFieldValues;
+	}
+
+	private List<InfoFieldValue<Object>> _getRelatedObjectEntryFieldValues(
+			ObjectField objectField, Map<String, ?> values)
+		throws Exception {
+
+		Object value = values.get(objectField.getName());
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083") ||
+			Validator.isNull(objectField.getRelationshipType()) ||
+			(GetterUtil.getLong(value) == 0)) {
+
+			return Collections.emptyList();
+		}
+
+		ObjectEntry relatedObjectEntry =
+			_objectEntryLocalService.fetchObjectEntry((Long)value);
+
+		if (relatedObjectEntry == null) {
+			return Collections.emptyList();
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				relatedObjectEntry.getObjectDefinitionId());
+
+		Map<String, ?> relatedObjectEntryValues =
+			relatedObjectEntry.getValues();
+
+		return TransformUtil.transform(
+			_objectFieldLocalService.getObjectFields(
+				relatedObjectEntry.getObjectDefinitionId(), false),
+			relatedObjectField -> new InfoFieldValue<>(
+				InfoField.builder(
+				).infoFieldType(
+					ObjectFieldDBTypeUtil.getInfoFieldType(relatedObjectField)
+				).namespace(
+					StringBundler.concat(
+						ObjectRelationship.class.getSimpleName(),
+						StringPool.POUND,
+						objectDefinition.getExternalReferenceCode())
+				).name(
+					relatedObjectField.getName()
+				).labelInfoLocalizedValue(
+					InfoLocalizedValue.<String>builder(
+					).values(
+						relatedObjectField.getLabelMap()
+					).build()
+				).build(),
+				_getValue(relatedObjectField, relatedObjectEntryValues)));
 	}
 
 	private ThemeDisplay _getThemeDisplay() {
@@ -540,6 +603,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private final JSONFactory _jsonFactory;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ObjectDefinition _objectDefinition;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectFieldLocalService _objectFieldLocalService;

@@ -207,8 +207,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_dlFileEntryLocalService, _dlURLHelper,
 					_infoItemFieldReaderFieldSetProvider, _jsonFactory,
 					_listTypeEntryLocalService, objectDefinition,
-					_objectEntryLocalService, _objectEntryManagerRegistry,
-					_objectFieldLocalService, _objectRelationshipLocalService,
+					_objectDefinitionLocalService, _objectEntryLocalService,
+					_objectEntryManagerRegistry, _objectFieldLocalService,
+					_objectRelationshipLocalService,
 					_templateInfoItemFieldSetProvider, _userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()

@@ -86,6 +86,14 @@ public class FilterPredicateFactoryImpl implements FilterPredicateFactory {
 
 			return create(entityModel, filterString, objectDefinitionId);
 		}
+		catch (ExpressionVisitException expressionVisitException) {
+			throw new InvalidFilterException(
+				expressionVisitException.getMessage(),
+				expressionVisitException);
+		}
+		catch (InvalidFilterException invalidFilterException) {
+			throw invalidFilterException;
+		}
 		catch (Exception exception) {
 			throw new ServerErrorException(500, exception);
 		}

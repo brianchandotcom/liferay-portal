@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
@@ -125,7 +126,11 @@ public class AssetCategoryActionDropdownItemsProvider {
 					).add(
 						() -> _getDisplayPageURL(category) != null,
 						dropdownItem -> {
-							dropdownItem.setHref(_getDisplayPageURL(category));
+							dropdownItem.setHref(
+								HttpComponentsUtil.addParameters(
+									_getDisplayPageURL(category),
+									"p_l_back_url",
+									_themeDisplay.getURLCurrent()));
 							dropdownItem.setIcon("view");
 							dropdownItem.setLabel(
 								LanguageUtil.get(

@@ -60,7 +60,7 @@ public class ViewPortalPropertiesDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_renderResponse = renderResponse;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

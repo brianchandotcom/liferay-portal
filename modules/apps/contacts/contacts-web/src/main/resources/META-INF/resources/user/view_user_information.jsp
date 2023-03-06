@@ -49,7 +49,7 @@ if (assetTags.isEmpty() || Validator.isNull(user2.getComments())) {
 			type="button"
 		/>
 
-		<h3><liferay-ui:message key="introduction" />:</h3>
+		<span class="h3"><liferay-ui:message key="introduction" />:</span>
 
 		<ul class="property-list">
 			<li>
@@ -92,7 +92,7 @@ if (phones.isEmpty()) {
 			type="button"
 		/>
 
-		<h3><liferay-ui:message key="phones" />:</h3>
+		<span class="h3"><liferay-ui:message key="phones" />:</span>
 
 		<ul class="property-list">
 
@@ -147,7 +147,7 @@ if (emailAddresses.isEmpty()) {
 			type="button"
 		/>
 
-		<h3><liferay-ui:message key="additional-email-addresses" />:</h3>
+		<span class="h3"><liferay-ui:message key="additional-email-addresses" />:</span>
 
 		<ul class="property-list">
 
@@ -202,7 +202,7 @@ if (Validator.isNull(jabberSn) && Validator.isNull(skypeSn)) {
 			type="button"
 		/>
 
-		<h3><liferay-ui:message key="instant-messenger" />:</h3>
+		<span class="h3"><liferay-ui:message key="instant-messenger" />:</span>
 
 		<ul class="property-list">
 			<c:if test="<%= Validator.isNotNull(jabberSn) %>">
@@ -255,7 +255,7 @@ if (addresses.isEmpty()) {
 			type="button"
 		/>
 
-		<h3><liferay-ui:message key="addresses" />:</h3>
+		<span class="h3"><liferay-ui:message key="addresses" />:</span>
 
 		<ul class="property-list">
 
@@ -315,7 +315,7 @@ if (websites.isEmpty()) {
 			type="button"
 		/>
 
-		<h3><liferay-ui:message key="websites" />:</h3>
+		<span class="h3"><liferay-ui:message key="websites" />:</span>
 
 		<ul class="property-list">
 
@@ -372,7 +372,7 @@ if (Validator.isNull(facebook) && Validator.isNull(twitter)) {
 			type="button"
 		/>
 
-		<h3><liferay-ui:message key="social-network" />:</h3>
+		<span class="h3"><liferay-ui:message key="social-network" />:</span>
 
 		<ul class="property-list">
 			<c:if test="<%= Validator.isNotNull(facebook) %>">
@@ -425,7 +425,7 @@ if (Validator.isNull(contact2.getSmsSn())) {
 			type="button"
 		/>
 
-		<h3><liferay-ui:message key="sms" />:</h3>
+		<span class="h3"><liferay-ui:message key="sms" />:</span>
 
 		<ul class="property-list">
 			<li class="property">

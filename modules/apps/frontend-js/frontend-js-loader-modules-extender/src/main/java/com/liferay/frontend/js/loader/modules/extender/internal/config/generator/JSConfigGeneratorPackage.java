@@ -58,7 +58,7 @@ public class JSConfigGeneratorPackage {
 		_bundle = bundle;
 		_contextPath = contextPath;
 
-		String jsVersion = String.valueOf(_bundle.getVersion());
+		String jsVersion = String.valueOf(bundle.getVersion());
 
 		int index = jsVersion.indexOf(".hotfix");
 

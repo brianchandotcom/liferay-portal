@@ -52,11 +52,11 @@ public abstract class BaseBuiltInJSModule implements JSModule {
 		_dependencies = dependencies;
 		_flagsJSONObject = flagsJSONObject;
 
-		_id = ModuleNameUtil.getModuleId(_jsPackage, _name);
+		_id = ModuleNameUtil.getModuleId(jsPackage, name);
 
 		_resolvedId = StringBundler.concat(
-			_jsPackage.getName(), StringPool.AT, _jsPackage.getVersion(),
-			StringPool.SLASH, _name);
+			jsPackage.getName(), StringPool.AT, jsPackage.getVersion(),
+			StringPool.SLASH, name);
 	}
 
 	@Override

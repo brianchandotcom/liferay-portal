@@ -62,10 +62,10 @@ public class SoyComponentRendererHelper {
 		_jsModuleLauncher = jsModuleLauncher;
 		_portal = portal;
 
-		_moduleName = _getModuleName(_componentDescriptor.getModule());
+		_moduleName = _getModuleName(componentDescriptor.getModule());
 
 		_wrapperId = _generateWrapperId(
-			(String)_context.get("id"), _componentDescriptor.getComponentId());
+			(String)_context.get("id"), componentDescriptor.getComponentId());
 
 		_elementSelector = _getElementSelector(
 			_wrapperId, _componentDescriptor.isWrapper());

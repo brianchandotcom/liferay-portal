@@ -297,8 +297,8 @@ public class ViewObjectEntriesDisplayContext {
 					_objectDefinition.getObjectDefinitionId())) {
 
 			if (!Objects.equals(
-					objectField.getRelationshipType(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
+					objectField.getRelationshipType())) {
 
 				continue;
 			}

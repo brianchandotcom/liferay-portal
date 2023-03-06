@@ -44,7 +44,6 @@ public class WorkflowDefinitionActiveComparator
 		boolean ascending, Locale locale) {
 
 		_ascending = ascending;
-
 		_locale = locale;
 
 		_collator = CollatorUtil.getInstance(locale);

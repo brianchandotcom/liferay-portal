@@ -11,6 +11,7 @@
 
 import formatLocaleWithUnderscores from '../language/format_locale_with_underscores';
 import renameKeys from '../language/rename_keys';
+import transformLocale from '../language/transform_locale';
 import replaceTemplateVariable from './replace_template_variable';
 
 /**
@@ -27,9 +28,12 @@ export default function getSXPElementJSON(sxpElement, uiConfigurationValues) {
 
 	const {category, configuration, icon} = elementDefinition;
 
+	const descriptionObject = renameKeys(description_i18n, transformLocale);
+	const titleObject = renameKeys(title_i18n, transformLocale);
+
 	return {
 		description_i18n: renameKeys(
-			description_i18n,
+			descriptionObject,
 			formatLocaleWithUnderscores
 		),
 		elementDefinition: {
@@ -42,6 +46,6 @@ export default function getSXPElementJSON(sxpElement, uiConfigurationValues) {
 				: configuration,
 			icon,
 		},
-		title_i18n: renameKeys(title_i18n, formatLocaleWithUnderscores),
+		title_i18n: renameKeys(titleObject, formatLocaleWithUnderscores),
 	};
 }

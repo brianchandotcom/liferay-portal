@@ -20,7 +20,7 @@
 CollectionItemsDetailDisplayContext collectionItemsDetailDisplayContext = (CollectionItemsDetailDisplayContext)request.getAttribute(CollectionPageLayoutTypeControllerWebKeys.COLLECTION_ITEMS_DETAIL_DISPLAY_CONTEXT);
 %>
 
-<li class="control-menu-nav-item control-menu-nav-item-content">
+<li class="control-menu-nav-item">
 	<button class="btn btn-unstyled text-muted" id="<%= collectionItemsDetailDisplayContext.getNamespace() %>viewCollectionItems" />
 		(<%= LanguageUtil.format(resourceBundle, "x-items", collectionItemsDetailDisplayContext.getCollectionItemsCount(), false) %>)
 	</button>

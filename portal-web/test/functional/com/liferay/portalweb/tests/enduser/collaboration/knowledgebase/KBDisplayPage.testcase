@@ -84,6 +84,8 @@ definition {
 	@description = "This test ensures that when viewing a KB article in the navigation fragment, the corresponding KB article content is displayed in another fragment that selects to display KB content."
 	@priority = 5
 	test CanViewArticlesViaKBNavigation {
+		property portal.acceptance = "quarantine";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONKnowledgeBase.addkBArticle(

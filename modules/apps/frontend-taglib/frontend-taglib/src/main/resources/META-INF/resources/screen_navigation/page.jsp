@@ -119,6 +119,20 @@ PortletURLBuilder.create(
 		<div class="<%= (screenNavigationEntries.size() > 1) ? containerCssClass : fullContainerCssClass %>">
 
 			<%
+			String selectedScreenNavigationEntryLabel = selectedScreenNavigationEntry.getLabel(themeDisplay.getLocale());
+
+			if (Validator.isNotNull(selectedScreenNavigationEntryLabel)) {
+				PortalUtil.addPageSubtitle(selectedScreenNavigationEntryLabel, request);
+			}
+
+			if (selectedScreenNavigationCategory != null) {
+				String selectedScreenNavigationCategoryLabel = selectedScreenNavigationCategory.getLabel(themeDisplay.getLocale());
+
+				if (Validator.isNotNull(selectedScreenNavigationCategoryLabel)) {
+					PortalUtil.addPageSubtitle(selectedScreenNavigationCategoryLabel, request);
+				}
+			}
+
 			selectedScreenNavigationEntry.render(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 			%>
 

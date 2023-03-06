@@ -18,14 +18,18 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.internal.searcher.helper.IndexSearcherHelper;
 import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -79,11 +83,20 @@ public class SearcherImpl implements Searcher {
 			searchResponseBuilderFactory.builder(
 				searchRequestImpl.getSearchContext());
 
-		_smartSearch(searchRequestImpl, searchResponseBuilder);
+		SearchContext searchContext = searchRequestImpl.getSearchContext();
+
+		if (Validator.isBlank(StringUtil.trim(searchContext.getKeywords())) &&
+			!GetterUtil.getBoolean(
+				searchContext.getAttribute(
+					SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH))) {
+
+			searchResponseBuilder.hits(new HitsImpl());
+		}
+		else {
+			_smartSearch(searchRequestImpl, searchResponseBuilder);
+		}
 
 		_federatedSearches(searchRequestImpl, searchResponseBuilder);
-
-		SearchContext searchContext = searchRequestImpl.getSearchContext();
 
 		String exceptionMessage = (String)searchContext.getAttribute(
 			"search.exception.message");

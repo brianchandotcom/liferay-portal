@@ -14,6 +14,7 @@
 
 package com.liferay.portal.i18n.filter.internal;
 
+import com.liferay.friendly.url.configuration.helper.FriendlyURLRedirectionConfigurationHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -38,6 +40,7 @@ import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -381,14 +384,43 @@ public class I18nFilter extends BasePortalFilter {
 			return;
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Redirect " + redirect);
+		if (_isPermanentRedirect(CompanyThreadLocal.getCompanyId())) {
+			httpServletResponse.setHeader("Location", redirect);
+			httpServletResponse.setStatus(
+				HttpServletResponse.SC_MOVED_PERMANENTLY);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					HttpServletResponse.SC_MOVED_PERMANENTLY +
+						" Moved Permanently to Location " + redirect);
+			}
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Redirect " + redirect);
+			}
+
+			httpServletResponse.sendRedirect(redirect);
+		}
+	}
+
+	private boolean _isPermanentRedirect(long companyId) {
+		if (Objects.equals(
+				_friendlyURLRedirectionConfigurationHelper.redirectionType(
+					companyId),
+				"permanent")) {
+
+			return true;
 		}
 
-		httpServletResponse.sendRedirect(redirect);
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(I18nFilter.class);
+
+	@Reference
+	private FriendlyURLRedirectionConfigurationHelper
+		_friendlyURLRedirectionConfigurationHelper;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

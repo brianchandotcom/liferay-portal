@@ -39,7 +39,7 @@ public class BundlePluginPackage implements PluginPackage {
 		_bundle = bundle;
 		_portletApp = portletApp;
 
-		_headers = _bundle.getHeaders(StringPool.BLANK);
+		_headers = bundle.getHeaders(StringPool.BLANK);
 		_version = Version.getInstance(getVersion());
 	}
 

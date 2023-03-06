@@ -94,7 +94,7 @@ public class ServletContextHelperRegistrationImpl
 
 		_servletContextName = getServletContextName(contextPath);
 
-		URL url = _bundle.getEntry("WEB-INF/");
+		URL url = bundle.getEntry("WEB-INF/");
 
 		if (url != null) {
 			_annotatedClasses = new HashSet<>();

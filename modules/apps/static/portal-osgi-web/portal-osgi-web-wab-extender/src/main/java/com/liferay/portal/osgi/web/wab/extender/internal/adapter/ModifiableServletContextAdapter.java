@@ -143,7 +143,7 @@ public class ModifiableServletContextAdapter
 		_jspServletFactory = jspServletFactory;
 		_webXMLDefinition = webXMLDefinition;
 
-		_bundle = _bundleContext.getBundle();
+		_bundle = bundleContext.getBundle();
 	}
 
 	public FilterRegistration.Dynamic addFilter(

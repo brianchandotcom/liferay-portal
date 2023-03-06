@@ -310,18 +310,28 @@ public abstract class PoshiElement
 
 		Matcher matcher = statementPattern.matcher(poshiScript);
 
-		matcher.find();
+		String errorMessage = "Missing semicolon";
 
-		for (int i = matcher.end(); i < poshiScript.length(); i++) {
-			char c = poshiScript.charAt(i);
+		if (matcher.find()) {
+			for (int i = matcher.end(); i < poshiScript.length(); i++) {
+				char c = poshiScript.charAt(i);
 
-			if (Character.isWhitespace(c)) {
-				continue;
+				if (Character.isWhitespace(c)) {
+					continue;
+				}
+
+				if (c != ';') {
+					throw new PoshiScriptParserException(
+						errorMessage, poshiScript, (PoshiElement)getParent());
+				}
 			}
+		}
 
-			if (c != ';') {
-				throw new PoshiScriptParserException("Missing semicolon", this);
-			}
+		poshiScript = poshiScript.trim();
+
+		if (!poshiScript.endsWith(";")) {
+			throw new PoshiScriptParserException(
+				errorMessage, poshiScript, (PoshiElement)getParent());
 		}
 	}
 

@@ -105,9 +105,36 @@ public class AsahSegmentsEntryLocalServiceWrapper
 		Criteria criteria = expressionContext.accept(
 			new IndividualSegmentsExpressionVisitorImpl());
 
-		return updateSegmentsEntry(
+		return super.updateSegmentsEntry(
 			segmentsEntry.getSegmentsEntryId(), individualSegment.getId(),
 			nameMap, null, true, _serialize(criteria), serviceContext);
+	}
+
+	@Override
+	public SegmentsEntry updateSegmentsEntry(
+			long segmentsEntryId, String segmentsEntryKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			boolean active, String criteria, ServiceContext serviceContext)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.getSegmentsEntry(segmentsEntryId);
+
+		IndividualSegment individualSegment =
+			_asahFaroBackendClient.getIndividualSegment(
+				segmentsEntry.getCompanyId(),
+				segmentsEntry.getSegmentsEntryKey());
+
+		individualSegment.setFilter(criteria);
+		individualSegment.setName(
+			nameMap.get(
+				_portal.getSiteDefaultLocale(
+					serviceContext.getScopeGroupId())));
+
+		_asahFaroBackendClient.updateIndividualSegment(
+			segmentsEntry.getCompanyId(), individualSegment);
+
+		return recalculateSegmentsEntry(segmentsEntryId);
 	}
 
 	@Activate

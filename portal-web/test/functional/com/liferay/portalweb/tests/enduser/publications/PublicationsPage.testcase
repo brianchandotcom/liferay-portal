@@ -225,8 +225,6 @@ definition {
 			PageEditor.publish();
 		}
 
-		Navigator.openURL();
-
 		JSONPublications.addPublication(publicationName = "Test Publication");
 
 		JSONPublications.selectPublication(publicationName = "Test Publication");

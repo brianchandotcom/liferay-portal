@@ -63,7 +63,7 @@ export const SIZES = {
 		rotatedId: 'smartphoneRotated',
 		screenSize: {
 			height: 640,
-			width: 575 + NORMAL_SIZE_PADDING,
+			width: 360 + NORMAL_SIZE_PADDING,
 		},
 	},
 	smartphoneRotated: {
@@ -75,7 +75,7 @@ export const SIZES = {
 		rotatedId: 'smartphone',
 		screenSize: {
 			height: 400,
-			width: 767 + ROTATED_SIZE_PADDING,
+			width: 540 + ROTATED_SIZE_PADDING,
 		},
 	},
 	tablet: {

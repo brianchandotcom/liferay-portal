@@ -1032,20 +1032,14 @@ public class LiferayOAuthDataProvider
 	private Collection<LiferayOAuth2Scope> _getLiferayOAuth2Scopes(
 		long oAuth2ApplicationScopeAliasesId, List<String> scopeAliases) {
 
-		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes = new ArrayList<>();
-
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
 			_oAuth2ApplicationScopeAliasesLocalService.
 				fetchOAuth2ApplicationScopeAliases(
 					oAuth2ApplicationScopeAliasesId);
 
-		if (oAuth2ApplicationScopeAliases != null) {
-			liferayOAuth2Scopes = _scopeLocator.getLiferayOAuth2Scopes(
-				oAuth2ApplicationScopeAliases.getCompanyId());
+		if (oAuth2ApplicationScopeAliases == null) {
+			return Collections.emptyList();
 		}
-
-		Collection<LiferayOAuth2Scope> finalLiferayOAuth2Scopes =
-			liferayOAuth2Scopes;
 
 		return TransformUtil.transform(
 			_oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
@@ -1064,8 +1058,12 @@ public class LiferayOAuthDataProvider
 						oAuth2ScopeGrant.getApplicationName(),
 						oAuth2ScopeGrant.getScope());
 
+				Collection<LiferayOAuth2Scope> liferayOAuth2Scopes =
+					_scopeLocator.getLiferayOAuth2Scopes(
+						oAuth2ApplicationScopeAliases.getCompanyId());
+
 				if ((liferayOAuth2Scope == null) ||
-					!finalLiferayOAuth2Scopes.contains(liferayOAuth2Scope)) {
+					!liferayOAuth2Scopes.contains(liferayOAuth2Scope)) {
 
 					return null;
 				}

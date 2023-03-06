@@ -146,6 +146,11 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
+	public String getStickerShape() {
+		return null;
+	}
+
+	@Override
 	public String getStickerStyle() {
 		return "primary";
 	}

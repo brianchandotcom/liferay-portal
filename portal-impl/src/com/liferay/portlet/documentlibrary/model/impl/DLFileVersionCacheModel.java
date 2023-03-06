@@ -77,7 +77,7 @@ public class DLFileVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -123,6 +123,8 @@ public class DLFileVersionCacheModel
 		sb.append(extraSettings);
 		sb.append(", fileEntryTypeId=");
 		sb.append(fileEntryTypeId);
+		sb.append(", storeUUID=");
+		sb.append(storeUUID);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append(", size=");
@@ -250,6 +252,13 @@ public class DLFileVersionCacheModel
 
 		dlFileVersionImpl.setFileEntryTypeId(fileEntryTypeId);
 
+		if (storeUUID == null) {
+			dlFileVersionImpl.setStoreUUID("");
+		}
+		else {
+			dlFileVersionImpl.setStoreUUID(storeUUID);
+		}
+
 		if (version == null) {
 			dlFileVersionImpl.setVersion("");
 		}
@@ -344,6 +353,7 @@ public class DLFileVersionCacheModel
 		extraSettings = (String)objectInput.readObject();
 
 		fileEntryTypeId = objectInput.readLong();
+		storeUUID = objectInput.readUTF();
 		version = objectInput.readUTF();
 
 		size = objectInput.readLong();
@@ -454,6 +464,13 @@ public class DLFileVersionCacheModel
 
 		objectOutput.writeLong(fileEntryTypeId);
 
+		if (storeUUID == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(storeUUID);
+		}
+
 		if (version == null) {
 			objectOutput.writeUTF("");
 		}
@@ -510,6 +527,7 @@ public class DLFileVersionCacheModel
 	public String changeLog;
 	public String extraSettings;
 	public long fileEntryTypeId;
+	public String storeUUID;
 	public String version;
 	public long size;
 	public String checksum;

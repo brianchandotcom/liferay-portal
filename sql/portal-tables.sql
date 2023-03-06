@@ -428,6 +428,7 @@ create table DLFileVersion (
 	changeLog VARCHAR(75) null,
 	extraSettings TEXT null,
 	fileEntryTypeId LONG,
+	storeUUID VARCHAR(75) null,
 	version VARCHAR(75) null,
 	size_ LONG,
 	checksum VARCHAR(75) null,

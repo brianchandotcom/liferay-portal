@@ -1,5 +1,21 @@
 definition {
 
+	macro _getTeamId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/teams/?search=${teamName} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+		''';
+
+		var teamId = JSONCurlUtil.get(${curl}, "$.items[?(@.name=='${teamName}')].id");
+
+		echo(${teamId});
+
+		return ${teamId};
+	}
+
 	@summary = "This calls the JSON WS API to get object id"
 	macro _getObjectId {
 		var portalURL = JSONCompany.getPortalURL();

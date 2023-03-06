@@ -28,6 +28,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -47,7 +48,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assume;
@@ -143,12 +143,11 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 
 			@Override
 			public void evaluate() throws Throwable {
-				Stream<Method> methodStream = _parentTestMethods.stream();
-
-				Assume.assumeTrue(
-					methodStream.noneMatch(
+				Assume.assumeFalse(
+					ListUtil.exists(
+						_parentTestMethods,
 						m -> Objects.equals(
-							m.getName(), description.getMethodName())));
+							description.getMethodName(), m.getName())));
 
 				statement.evaluate();
 			}
@@ -213,55 +212,50 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter(
 				new File(larFilePath));
 
-			List<String> entries = zipReader.getEntries();
+			for (String zipEntry : zipReader.getEntries()) {
+				try {
+					if (zipEntry.equals("manifest.xml")) {
+						Document document = SAXReaderUtil.read(
+							zipReader.getEntryAsInputStream(zipEntry));
 
-			Stream<String> entriesStream = entries.stream();
+						Element rootElement = document.getRootElement();
 
-			entriesStream.forEach(
-				zipEntry -> {
-					try {
-						if (zipEntry.equals("manifest.xml")) {
-							Document document = SAXReaderUtil.read(
-								zipReader.getEntryAsInputStream(zipEntry));
+						List<Element> missingReferencesElements =
+							rootElement.elements("missing-references");
 
-							Element rootElement = document.getRootElement();
+						Element missingReferencesElement =
+							missingReferencesElements.get(0);
 
-							List<Element> missingReferencesElements =
-								rootElement.elements("missing-references");
+						List<Element> missingReferenceElements =
+							missingReferencesElement.elements(
+								"missing-reference");
 
-							Element missingReferencesElement =
-								missingReferencesElements.get(0);
+						for (Element missingReferenceElement :
+								missingReferenceElements) {
 
-							List<Element> missingReferenceElements =
-								missingReferencesElement.elements(
-									"missing-reference");
+							Attribute elementPathAttribute =
+								missingReferenceElement.attribute(
+									"element-path");
 
-							for (Element missingReferenceElement :
-									missingReferenceElements) {
-
-								Attribute elementPathAttribute =
-									missingReferenceElement.attribute(
-										"element-path");
-
-								if (elementPathAttribute != null) {
-									missingReferencesElement.remove(
-										missingReferenceElement);
-								}
+							if (elementPathAttribute != null) {
+								missingReferencesElement.remove(
+									missingReferenceElement);
 							}
+						}
 
-							zipWriter.addEntry(
-								zipEntry, document.formattedString());
-						}
-						else {
-							zipWriter.addEntry(
-								zipEntry,
-								zipReader.getEntryAsInputStream(zipEntry));
-						}
+						zipWriter.addEntry(
+							zipEntry, document.formattedString());
 					}
-					catch (Exception exception) {
-						throw new RuntimeException(exception);
+					else {
+						zipWriter.addEntry(
+							zipEntry,
+							zipReader.getEntryAsInputStream(zipEntry));
 					}
-				});
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
+				}
+			}
 
 			FileUtil.delete(file);
 		}

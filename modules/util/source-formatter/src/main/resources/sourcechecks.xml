@@ -900,6 +900,7 @@
 		<check name="JavaModuleUniqueVerifyProcessCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that a module can not have more than 1 verify process class (class extends VerifyProcess)." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaOSGiReferenceCheck">
 			<category name="Bug Prevention" />

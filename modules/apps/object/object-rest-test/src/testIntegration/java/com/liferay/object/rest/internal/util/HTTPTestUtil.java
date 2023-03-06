@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.rest.internal.resource.v1_0.test.util;
+package com.liferay.object.rest.internal.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

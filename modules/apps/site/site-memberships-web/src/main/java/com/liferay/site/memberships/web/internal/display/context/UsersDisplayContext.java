@@ -63,7 +63,7 @@ public class UsersDisplayContext {
 		_renderResponse = renderResponse;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
+			httpServletRequest);
 	}
 
 	public String getDisplayStyle() {

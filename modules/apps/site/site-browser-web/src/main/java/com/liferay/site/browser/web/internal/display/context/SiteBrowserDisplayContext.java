@@ -75,7 +75,7 @@ public class SiteBrowserDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_selUser = PortalUtil.getSelectedUser(_httpServletRequest);
+		_selUser = PortalUtil.getSelectedUser(httpServletRequest);
 	}
 
 	public String getDisplayStyle() {

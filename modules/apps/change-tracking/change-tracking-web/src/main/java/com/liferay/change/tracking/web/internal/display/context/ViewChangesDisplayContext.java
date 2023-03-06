@@ -134,7 +134,7 @@ public class ViewChangesDisplayContext {
 		_renderResponse = renderResponse;
 		_userLocalService = userLocalService;
 
-		_httpServletRequest = _portal.getHttpServletRequest(renderRequest);
+		_httpServletRequest = portal.getHttpServletRequest(renderRequest);
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

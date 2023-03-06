@@ -66,7 +66,7 @@ public class ViewScheduledDisplayContext
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

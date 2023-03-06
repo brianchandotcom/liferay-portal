@@ -38,7 +38,7 @@ public class PublicationsConfigurationDisplayContext {
 		_httpServletRequest = httpServletRequest;
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
+			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		CTSettingsConfiguration ctSettingsConfiguration =

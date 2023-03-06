@@ -59,11 +59,11 @@ public class ViewDiscardDisplayContext {
 		_renderResponse = renderResponse;
 		_userLocalService = userLocalService;
 
-		_ctCollectionId = ParamUtil.getLong(_renderRequest, "ctCollectionId");
+		_ctCollectionId = ParamUtil.getLong(renderRequest, "ctCollectionId");
 		_modelClassNameId = ParamUtil.getLong(
-			_renderRequest, "modelClassNameId");
-		_modelClassPK = ParamUtil.getLong(_renderRequest, "modelClassPK");
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			renderRequest, "modelClassNameId");
+		_modelClassPK = ParamUtil.getLong(renderRequest, "modelClassPK");
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

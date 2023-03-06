@@ -83,8 +83,8 @@ public class ViewConflictsDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_httpServletRequest = _portal.getHttpServletRequest(_renderRequest);
-		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+		_httpServletRequest = portal.getHttpServletRequest(renderRequest);
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

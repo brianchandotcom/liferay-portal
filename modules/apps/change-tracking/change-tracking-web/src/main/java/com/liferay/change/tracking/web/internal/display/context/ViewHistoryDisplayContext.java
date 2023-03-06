@@ -96,7 +96,7 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 		_renderResponse = renderResponse;
 		_userLocalService = userLocalService;
 
-		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

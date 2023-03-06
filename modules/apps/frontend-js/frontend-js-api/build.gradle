@@ -1,3 +1,5 @@
+import com.liferay.gradle.plugins.node.task.PublishNodeModuleTask
+
 dependencies {
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -9,4 +11,11 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:frontend-js:frontend-js-importmaps-extender-api")
 	compileOnly project(":core:petra:petra-function")
+}
+
+task publishNodeModule(type: PublishNodeModuleTask)
+
+publishNodeModule {
+	dependsOn packageRunBuild
+	workingDir = "build/node/packageRunBuild/resources"
 }

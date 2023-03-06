@@ -96,18 +96,18 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
 		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		portletDisplay.setShowBackIcon(true);
 
-		String redirect = ParamUtil.getString(_renderRequest, "redirect");
+		String redirect = ParamUtil.getString(renderRequest, "redirect");
 
 		if (Validator.isNull(redirect)) {
 			DDMFormAdminDisplayContext ddmFormAdminDisplayContext =
-				(DDMFormAdminDisplayContext)_renderRequest.getAttribute(
+				(DDMFormAdminDisplayContext)renderRequest.getAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 			redirect = String.valueOf(

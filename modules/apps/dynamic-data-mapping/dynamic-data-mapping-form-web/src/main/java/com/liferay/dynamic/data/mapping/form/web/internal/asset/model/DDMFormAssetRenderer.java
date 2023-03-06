@@ -86,7 +86,7 @@ public class DDMFormAssetRenderer
 		DDMFormInstance ddmFormInstance = null;
 
 		try {
-			ddmFormInstance = _ddmFormInstanceRecordVersion.getFormInstance();
+			ddmFormInstance = ddmFormInstanceRecordVersion.getFormInstance();
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

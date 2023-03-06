@@ -112,7 +112,7 @@ public class LangSanitizer {
 		}
 	}
 
-	private String _getCorrectionTip(String sentence1, String sentence2) {
+	private String _getMessage(String sentence1, String sentence2) {
 		String[] words1 = sentence1.split("\\s+");
 		String[] words2 = sentence2.split("\\s+");
 
@@ -227,7 +227,7 @@ public class LangSanitizer {
 			return new SanitizedMessage(
 				file.getAbsolutePath(), key, originalValue,
 				EscapeUtil.unescapeTag(sanitizedValue),
-				_getCorrectionTip(
+				_getMessage(
 					originalValue, EscapeUtil.unescapeTag(sanitizedValue)));
 		}
 
@@ -275,13 +275,13 @@ public class LangSanitizer {
 
 		public SanitizedMessage(
 			String fileName, String languageKey, String originalContent,
-			String santizedContent, String correctionTip) {
+			String santizedContent, String message) {
 
 			_fileName = fileName;
 			_languageKey = languageKey;
 			_originalContent = originalContent;
 			_santizedContent = santizedContent;
-			_correctionTip = correctionTip;
+			_message = message;
 		}
 
 		@Override
@@ -322,18 +322,18 @@ public class LangSanitizer {
 			sb.append("\tSanitized Content: ");
 			sb.append(_santizedContent);
 
-			if (Objects.nonNull(_correctionTip)) {
+			if (Objects.nonNull(_message)) {
 				sb.append(System.lineSeparator());
-				sb.append("\tCorrection Tip: ");
-				sb.append(_correctionTip);
+				sb.append("\tMessage: ");
+				sb.append(_message);
 			}
 
 			return sb.toString();
 		}
 
-		private final String _correctionTip;
 		private final String _fileName;
 		private final String _languageKey;
+		private final String _message;
 		private final String _originalContent;
 		private final String _santizedContent;
 

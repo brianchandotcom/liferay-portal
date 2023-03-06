@@ -60,6 +60,8 @@ definition {
 	}
 
 	macro assertItemNotPresent {
+		var key_name = ${text};
+		
 		AssertElementNotPresent(
 			key_projectName = ${key_name},
 			locator1 = "Testray#ITEM_NAME");

@@ -563,7 +563,7 @@ definition {
 	@description = "This test covers LPS-102478. It ensures that an Office 365 document is deleted automatically after the lock is expired."
 	@priority = 4
 	test DocumentIsDeletedAfterLockExpiration {
-		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=1000";
+		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=90000";
 		property test.name.skip.portal.instance = "OneDrive#DocumentIsDeletedAfterLockExpiration";
 
 		var num = MathUtil.randomNumber(10);
@@ -581,6 +581,10 @@ definition {
 			dmDocumentTypeName = "Word");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		// This pause is required to wait for the One Drive document to expire. See LPS-157957.
+
+		Pause(locator1 = 90000);
 
 		Refresh();
 

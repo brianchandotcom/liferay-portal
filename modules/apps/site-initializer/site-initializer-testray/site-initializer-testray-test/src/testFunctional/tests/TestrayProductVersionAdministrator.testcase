@@ -57,7 +57,7 @@ definition {
 				nameOptions = "Projects_1 Project",
 				version = "1.x");
 
-			Testray.assertItemName(key_name = "1.x");
+			Testray.assertItemName(text = "1.x");
 		}
 	}
 
@@ -76,7 +76,7 @@ definition {
 				itemManage = "Delete",
 				versionName = "1.x");
 
-			Testray.assertItemNotPresent(key_name = "1.x");
+			Testray.assertItemNotPresent(text = "1.x");
 		}
 	}
 
@@ -96,7 +96,7 @@ definition {
 				itemManage = "Edit",
 				valueName = "1.x");
 
-			Testray.assertItemName(key_name = "1.1.x");
+			Testray.assertItemName(text = "1.1.x");
 		}
 	}
 

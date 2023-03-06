@@ -448,7 +448,7 @@ definition {
 				numberItems = 20,
 				valuePagination = 150);
 
-			Testray.assertItemName(key_name = "Components_1 Project");
+			Testray.assertItemName(text = "Components_1 Project");
 		}
 	}
 
@@ -470,7 +470,7 @@ definition {
 				numberItems = 20,
 				valuePagination = 150);
 
-			Testray.assertItemName(key_name = "Teams_1 Team");
+			Testray.assertItemName(text = "Teams_1 Team");
 		}
 	}
 

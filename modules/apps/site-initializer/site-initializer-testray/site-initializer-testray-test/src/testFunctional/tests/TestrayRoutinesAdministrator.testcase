@@ -94,7 +94,7 @@ definition {
 		}
 
 		task ("Then the Routine should appear on the list") {
-			Testray.assertItemName(key_name = ${routineName});
+			Testray.assertItemName(text = ${routineName});
 		}
 	}
 
@@ -110,7 +110,7 @@ definition {
 		}
 
 		task ("Then the routine should appear on the list") {
-			Testray.assertItemName(key_name = ${routineName});
+			Testray.assertItemName(text = ${routineName});
 
 			TestrayLayout.clickResultsOnSidebar();
 		}
@@ -177,7 +177,7 @@ definition {
 
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			Testray.assertItemName(key_name = "Build 1");
+			Testray.assertItemName(text = "Build 1");
 
 			TestrayLayout.clickResultsOnSidebar();
 		}
@@ -225,7 +225,7 @@ definition {
 		}
 
 		task ("Then the Routine should be updated on the list") {
-			Testray.assertItemName(key_name = "Routine 1 Edited");
+			Testray.assertItemName(text = "Routine 1 Edited");
 		}
 	}
 

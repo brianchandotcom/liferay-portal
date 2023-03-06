@@ -197,7 +197,7 @@ definition {
 
 			Button.click(button = "Select Cases");
 
-			Testray.assertItemName(key_name = "Cases_1 Case");
+			Testray.assertItemName(text = "Cases_1 Case");
 		}
 
 		task ("Then can delete this case and it no longer appears in the list") {
@@ -205,7 +205,7 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
 
-			Testray.assertItemNotPresent(key_name = "Cases_1 Case");
+			Testray.assertItemNotPresent(text = "Cases_1 Case");
 		}
 	}
 

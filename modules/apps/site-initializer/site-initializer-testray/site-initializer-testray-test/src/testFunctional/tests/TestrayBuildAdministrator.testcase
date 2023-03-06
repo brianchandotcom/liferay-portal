@@ -35,14 +35,14 @@ definition {
 				projectName = ${projectName});
 
 			JSONTestray.addTeam(
-				teamName = ${teamName},
-				projectName = ${projectName});
+				projectName = ${projectName},
+				teamName = ${teamName});
 
 			JSONTestray.addComponent(
 				componentName = ${componentName},
 				projectName = ${projectName},
 				teamName = ${teamName});
-			
+
 			JSONTestray.addRoutine(
 				projectName = ${projectName},
 				routineName = ${routineName});
@@ -68,7 +68,7 @@ definition {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
-			}
+		}
 	}
 
 	tearDown {

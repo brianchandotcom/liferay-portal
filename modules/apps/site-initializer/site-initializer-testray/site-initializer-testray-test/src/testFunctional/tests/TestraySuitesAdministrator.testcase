@@ -157,7 +157,7 @@ definition {
 		task ("Then the selected case is displayed on suite details") {
 			TestraySuites.goToSuiteDetails(suiteName = "ATF_Suites_1 Suite");
 
-			Testray.assertItemName(key_name = "ATF_Suites Case");
+			Testray.assertItemName(text = "ATF_Suites Case");
 		}
 	}
 

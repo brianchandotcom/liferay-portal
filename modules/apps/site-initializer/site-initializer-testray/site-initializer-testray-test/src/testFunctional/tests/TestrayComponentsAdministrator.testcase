@@ -58,7 +58,7 @@ definition {
 
 			Testray.addNewComponent(componentName = "Components_1 Project");
 
-			Testray.assertItemName(key_name = "Components_1 Project");
+			Testray.assertItemName(text = "Components_1 Project");
 		}
 
 		task ("And when a component without team is deleted") {
@@ -80,7 +80,7 @@ definition {
 
 			TestrayManage.createTeam(teamName = "Components_1 Team");
 
-			Testray.assertItemName(key_name = "Components_1 Team");
+			Testray.assertItemName(text = "Components_1 Team");
 		}
 
 		task ("When the user goes to add a new component and selects the team") {
@@ -96,9 +96,9 @@ definition {
 		}
 
 		task ("Then the component and team should appear on the list") {
-			Testray.assertItemName(key_name = "Components_1 Project");
+			Testray.assertItemName(text = "Components_1 Project");
 
-			Testray.assertItemName(key_name = "Components_1 Team");
+			Testray.assertItemName(text = "Components_1 Team");
 		}
 
 		task ("And when a component is deleted") {
@@ -122,7 +122,7 @@ definition {
 		}
 
 		task ("Then the component should appear on the list") {
-			Testray.assertItemName(key_name = "Components_1 Project");
+			Testray.assertItemName(text = "Components_1 Project");
 		}
 	}
 
@@ -138,9 +138,9 @@ definition {
 
 			TestrayManage.createTeam(teamName = "Components_1 Team Second");
 
-			Testray.assertItemName(key_name = "Components_1 Team");
+			Testray.assertItemName(text = "Components_1 Team");
 
-			Testray.assertItemName(key_name = "Components_1 Team Second");
+			Testray.assertItemName(text = "Components_1 Team Second");
 		}
 
 		task ("And given that the user goes to add a new component and selects the team") {
@@ -154,9 +154,9 @@ definition {
 				componentName = "Components_1 Project",
 				teamName = "Components_1 Team");
 
-			Testray.assertItemName(key_name = "Components_1 Project");
+			Testray.assertItemName(text = "Components_1 Project");
 
-			Testray.assertItemName(key_name = "Components_1 Team");
+			Testray.assertItemName(text = "Components_1 Team");
 		}
 
 		task ("When the user goes to edit the component and change the team") {
@@ -171,7 +171,7 @@ definition {
 		}
 
 		task ("Then the team should be updated on the list") {
-			Testray.assertItemName(key_name = "Components_1 Team Second");
+			Testray.assertItemName(text = "Components_1 Team Second");
 		}
 	}
 
@@ -185,7 +185,7 @@ definition {
 
 			Testray.addNewComponent(componentName = "Components_1 Project");
 
-			Testray.assertItemName(key_name = "Components_1 Project");
+			Testray.assertItemName(text = "Components_1 Project");
 		}
 
 		task ("When the user goes to edit the component and change the name") {
@@ -195,7 +195,7 @@ definition {
 		}
 
 		task ("Then the component should be update on the list") {
-			Testray.assertItemName(key_name = "Components_1 Project Edited");
+			Testray.assertItemName(text = "Components_1 Project Edited");
 		}
 	}
 
@@ -211,7 +211,7 @@ definition {
 		}
 
 		task ("When the user try to add a component with duplicated name") {
-			Testray.assertItemName(key_name = "Components_1 Project");
+			Testray.assertItemName(text = "Components_1 Project");
 
 			Testray.addNewComponent(componentName = "Components_1 Project");
 		}

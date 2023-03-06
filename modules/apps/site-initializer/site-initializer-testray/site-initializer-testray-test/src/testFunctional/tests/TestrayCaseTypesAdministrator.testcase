@@ -56,7 +56,7 @@ definition {
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
-			Testray.assertItemName(key_name = "Case_Type");
+			Testray.assertItemName(text = "Case_Type");
 		}
 	}
 
@@ -70,7 +70,7 @@ definition {
 
 			TestrayManage.deleteCasesTypes(valueName = "Case_Type");
 
-			Testray.assertItemNotPresent(key_name = "Case_Type");
+			Testray.assertItemNotPresent(text = "Case_Type");
 		}
 	}
 
@@ -86,7 +86,7 @@ definition {
 				valueName = "Case_Type",
 				valueType = "Case_Type_Edited");
 
-			Testray.assertItemName(key_name = "Case_Type_Edited");
+			Testray.assertItemName(text = "Case_Type_Edited");
 		}
 	}
 

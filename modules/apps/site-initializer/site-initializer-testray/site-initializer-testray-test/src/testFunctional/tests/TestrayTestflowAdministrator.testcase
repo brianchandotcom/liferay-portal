@@ -369,7 +369,7 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Remove");
 
-			Testray.assertItemNotPresent(key_name = "Test Test");
+			Testray.assertItemNotPresent(text = "Test Test");
 		}
 	}
 

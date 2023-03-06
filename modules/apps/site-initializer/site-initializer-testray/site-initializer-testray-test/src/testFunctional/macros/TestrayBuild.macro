@@ -1,15 +1,15 @@
 definition {
 
 	macro addBuildViaUI {
-		if(!(isSet(addVersion))) {
+		if (!(isSet(addVersion))) {
 			var addVersion = "1.3";
 		}
 
-		if(!(isSet(description))) {
+		if (!(isSet(description))) {
 			var description = "";
 		}
 
-		if(!(isSet(gitHash))) {
+		if (!(isSet(gitHash))) {
 			var gitHash = "";
 		}
 

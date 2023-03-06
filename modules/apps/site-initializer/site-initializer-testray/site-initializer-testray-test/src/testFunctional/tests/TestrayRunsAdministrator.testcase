@@ -186,7 +186,7 @@ definition {
 				listOption = "Option 1",
 				listOption1 = "Option 3");
 
-			Testray.assertItemName(key_name = 01);
+			Testray.assertItemName(text = 01);
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
@@ -194,7 +194,7 @@ definition {
 		task ("Then run should not appear on the list") {
 			TestrayRun.deleteRun(runName = 01);
 
-			Testray.assertItemNotPresent(key_name = 01);
+			Testray.assertItemNotPresent(text = 01);
 		}
 	}
 
@@ -218,7 +218,7 @@ definition {
 				listOption = "Option 1",
 				listOption1 = "Option 3");
 
-			Testray.assertItemName(key_name = 01);
+			Testray.assertItemName(text = 01);
 
 			TestrayRun.assertValueRun(valueRun = "Option 1");
 

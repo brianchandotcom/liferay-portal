@@ -73,7 +73,7 @@ public class EditRolePermissionsFormDisplayContext {
 		_roleDisplayContext = roleDisplayContext;
 		_servletContext = servletContext;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

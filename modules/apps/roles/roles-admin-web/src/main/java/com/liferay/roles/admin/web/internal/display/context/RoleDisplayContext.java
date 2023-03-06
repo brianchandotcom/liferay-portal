@@ -75,7 +75,7 @@ public class RoleDisplayContext {
 			RoleTypeContributorRetrieverUtil.getCurrentRoleTypeContributor(
 				httpServletRequest);
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

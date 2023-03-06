@@ -51,8 +51,7 @@ public class MBNavigationDisplayContext {
 		_renderResponse = renderResponse;
 
 		_mvcRenderCommandName = ParamUtil.getString(
-			_httpServletRequest, "mvcRenderCommandName",
-			"/message_boards/view");
+			httpServletRequest, "mvcRenderCommandName", "/message_boards/view");
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

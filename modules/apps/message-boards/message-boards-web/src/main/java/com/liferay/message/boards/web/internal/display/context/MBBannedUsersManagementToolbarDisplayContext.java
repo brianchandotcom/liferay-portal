@@ -56,7 +56,7 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

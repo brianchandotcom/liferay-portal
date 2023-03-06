@@ -68,7 +68,7 @@ public class BlogsItemSelectorViewDisplayContext {
 		_search = search;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
+			httpServletRequest);
 	}
 
 	public Folder fetchAttachmentsFolder(long userId, long groupId) {

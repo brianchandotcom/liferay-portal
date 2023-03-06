@@ -53,11 +53,11 @@ public class BlogsAggregatorDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 		_portletPreferences =
 			PortletPreferencesFactoryUtil.getPortletPreferences(
-				_httpServletRequest, BlogsPortletKeys.BLOGS_AGGREGATOR);
+				httpServletRequest, BlogsPortletKeys.BLOGS_AGGREGATOR);
 	}
 
 	public int getMax() {

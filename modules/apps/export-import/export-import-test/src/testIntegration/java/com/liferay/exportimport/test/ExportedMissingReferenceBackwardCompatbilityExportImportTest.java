@@ -146,8 +146,8 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 				Assume.assumeFalse(
 					ListUtil.exists(
 						_parentTestMethods,
-						m -> Objects.equals(
-							description.getMethodName(), m.getName())));
+						method -> Objects.equals(
+							description.getMethodName(), method.getName())));
 
 				statement.evaluate();
 			}

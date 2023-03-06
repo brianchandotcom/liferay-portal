@@ -254,10 +254,10 @@ export default function ({
 
 		if (
 			responseData.errorMessage ||
-			responseData.message ||
-			Number(responseData.expectedDimensions === 0) ||
+			Number(responseData.expectedDimensions) === 0 ||
 			Number(responseData.expectedDimensions) !==
-				Number(embeddingVectorDimensions)
+				Number(embeddingVectorDimensions) ||
+			responseData.message
 		) {
 			setShowSubmitWarningModal(true);
 		}

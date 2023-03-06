@@ -67,10 +67,17 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 
 <aui:script>
 	function <portlet:namespace />removeExistingFormSubmitButtons() {
-		let formElement = document.getElementById('<portlet:namespace />fm');
-		let submitButtonGroupElement = formElement.querySelector('.button-holder');
+		const formElement = document.getElementById('<portlet:namespace />fm');
 
-		submitButtonGroupElement.remove();
+		if (formElement) {
+			const submitButtonGroupElement = formElement.querySelector(
+				'.button-holder'
+			);
+
+			if (submitButtonGroupElement) {
+				submitButtonGroupElement.remove();
+			}
+		}
 	}
 
 	<portlet:namespace />removeExistingFormSubmitButtons();

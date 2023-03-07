@@ -30,8 +30,8 @@ definition {
 				projectName = ${projectName});
 
 			JSONTestray.addTeam(
-				teamName = ${teamName},
-				projectName = ${projectName});
+				projectName = ${projectName},
+				teamName = ${teamName});
 
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -89,9 +89,9 @@ definition {
 			Button.click(button = "Cancel");
 
 			TestrayCases.verifyCase(
+				caseComponent = "Component 1",
 				caseName = "Copy - Case 1",
-				casePriority = 3,
-				caseComponent = "Component 1");
+				casePriority = 3);
 		}
 	}
 
@@ -120,9 +120,9 @@ definition {
 
 		task ("Then the case is created with the new infos") {
 			TestrayCases.verifyCase(
+				caseComponent = "Component 1",
 				caseName = "Case 1",
-				casePriority = 3,
-				caseComponent = "Component 1");
+				casePriority = 3);
 		}
 	}
 
@@ -229,9 +229,9 @@ definition {
 
 		task ("Then the case is created with the new infos") {
 			TestrayCases.verifyCase(
+				caseComponent = "Component 1",
 				caseName = "Case 1",
-				casePriority = 3,
-				caseComponent = "Component 1");
+				casePriority = 3);
 		}
 
 		task ("And the user goes to edit a case") {
@@ -251,9 +251,9 @@ definition {
 
 		task ("Then the case is edited with the new infos") {
 			TestrayCases.verifyCase(
+				caseComponent = "Component 1",
 				caseName = "Case Edited",
-				casePriority = 3,
-				caseComponent = "Component 1");
+				casePriority = 3);
 		}
 	}
 
@@ -387,7 +387,7 @@ definition {
 				caseTypeId = ${caseType},
 				componentId = ${componentName},
 				description = "",
-				duration = "60",
+				duration = 60,
 				priority = 3,
 				steps = "Auto Test Steps");
 		}
@@ -457,7 +457,6 @@ definition {
 	@description = "Automation ID:]q  LPS-164133 | Test Summary: Verify that the user can not create a case if all the required fields are not filled in"
 	@priority = 3
 	test AdminCanViewRequiredField {
-
 		task ("Given I go to the 'Cases' page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 

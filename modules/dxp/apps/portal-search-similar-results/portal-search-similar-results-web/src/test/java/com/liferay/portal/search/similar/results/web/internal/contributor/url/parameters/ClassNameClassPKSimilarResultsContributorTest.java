@@ -24,8 +24,6 @@ import com.liferay.portal.search.similar.results.web.internal.portlet.shared.sea
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.RouteHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Optional;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -85,9 +83,7 @@ public class ClassNameClassPKSimilarResultsContributorTest
 		_classNameClassPKSimilarResultsContributor.resolveCriteria(
 			criteriaBuilderImpl, criteriaHelper);
 
-		Optional<Criteria> criteraOptional = criteriaBuilderImpl.build();
-
-		Criteria criteria = criteraOptional.get();
+		Criteria criteria = criteriaBuilderImpl.build();
 
 		Assert.assertEquals(
 			"assetEntryClassName_PORTLET_42790", criteria.getUID());

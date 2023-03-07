@@ -73,12 +73,15 @@ public class SimilarResultsPortletSharedSearchContributor
 				_getURLString(portletSharedSearchSettings));
 
 		optional.flatMap(
-			similarResultsRoute -> _getSimilarResultsInputOptional(
-				getGroupId(portletSharedSearchSettings), similarResultsRoute)
-		).ifPresent(
-			similarResultsInput -> contribute(
-				similarResultsInput, portletSharedSearchSettings)
-		);
+			similarResultsRoute -> {
+				Criteria criteria = _getSimilarResultsInputOptional(
+					getGroupId(portletSharedSearchSettings),
+					similarResultsRoute);
+
+				if (criteria != null) {
+					contribute(criteria, portletSharedSearchSettings);
+				}
+			});
 	}
 
 	protected void contribute(
@@ -220,7 +223,7 @@ public class SimilarResultsPortletSharedSearchContributor
 		return moreLikeThisQuery;
 	}
 
-	private Optional<Criteria> _getSimilarResultsInputOptional(
+	private Criteria _getSimilarResultsInputOptional(
 		long groupId, SimilarResultsRoute similarResultsRoute) {
 
 		SimilarResultsContributor similarResultsContributor =

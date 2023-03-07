@@ -49,11 +49,11 @@ import java.io.Serializable;
 import java.text.Format;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -162,12 +162,9 @@ public class ObjectEntryRowInfoItemRenderer
 				return null;
 			});
 
-		Map<String, Serializable> stringSerializableMap = new LinkedHashMap<>(
-			entries.size());
+		Map<String, Serializable> stringSerializableMap = new TreeMap<>();
 
-		for (Map.Entry<String, Serializable> entry :
-				ListUtil.sort(entries, Map.Entry.comparingByKey())) {
-
+		for (Map.Entry<String, Serializable> entry : entries) {
 			if (entry.getValue() == null) {
 				stringSerializableMap.put(entry.getKey(), StringPool.BLANK);
 

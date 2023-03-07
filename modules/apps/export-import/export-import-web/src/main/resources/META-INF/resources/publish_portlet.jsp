@@ -91,7 +91,10 @@ if (!GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(
 
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(errorMessageKey) %>">
-			<liferay-ui:message key="<%= errorMessageKey %>" />
+			<clay:stripe
+				displayType="warning"
+				message="<%= errorMessageKey %>"
+			/>
 		</c:when>
 		<c:when test="<%= (themeDisplay.getURLPublishToLive() != null) || layout.isTypeControlPanel() %>">
 			<c:choose>

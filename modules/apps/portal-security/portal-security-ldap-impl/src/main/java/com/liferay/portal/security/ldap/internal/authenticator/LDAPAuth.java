@@ -433,9 +433,10 @@ public class LDAPAuth implements Authenticator {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Incorrect search filter with ", fullUserDN,
-							" on LDAP server ", ldapServerId, ", company ",
-							companyId, ", and LDAP context ", safeLdapContext));
+							"Rejecting authenticated user ", fullUserDN,
+							" because of failed import from LDAP server ",
+							ldapServerId, ", company ", companyId,
+							", and LDAP context ", safeLdapContext));
 				}
 
 				return FAILURE;

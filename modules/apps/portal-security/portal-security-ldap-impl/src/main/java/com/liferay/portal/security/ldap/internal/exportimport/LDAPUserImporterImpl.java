@@ -202,8 +202,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				_log.debug(
 					StringBundler.concat(
 						"User with screen name ", ldapUser.getScreenName(),
-						" does not match search filter for LDAP server ",
-						ldapServerId, ".  Returning null."));
+						" does not belong to LDAP server ", ldapServerId));
 			}
 
 			return null;

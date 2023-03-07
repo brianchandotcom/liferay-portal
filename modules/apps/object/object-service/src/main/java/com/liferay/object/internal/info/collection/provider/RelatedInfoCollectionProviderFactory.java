@@ -18,7 +18,6 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -35,15 +34,10 @@ import org.osgi.service.component.annotations.Reference;
 public class RelatedInfoCollectionProviderFactory {
 
 	public RelatedInfoItemCollectionProvider create(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2,
 			ObjectRelationship objectRelationship)
 		throws PortalException {
-
-		ObjectDefinition objectDefinition1 =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-		ObjectDefinition objectDefinition2 =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
 
 		if (objectDefinition1.isSystem() || objectDefinition2.isSystem()) {
 			return null;
@@ -71,9 +65,6 @@ public class RelatedInfoCollectionProviderFactory {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

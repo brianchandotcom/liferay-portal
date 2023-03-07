@@ -24,8 +24,7 @@ import com.liferay.object.exception.ObjectRelationshipNameException;
 import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.exception.ObjectRelationshipTypeException;
-import com.liferay.object.internal.info.collection.provider.ManyToManyObjectRelationshipRelatedInfoCollectionProvider;
-import com.liferay.object.internal.info.collection.provider.OneToManyObjectRelationshipRelatedInfoCollectionProvider;
+import com.liferay.object.internal.info.collection.provider.RelatedInfoCollectionProviderFactory;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.model.ObjectDefinition;
@@ -51,7 +50,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -612,46 +610,33 @@ public class ObjectRelationshipLocalServiceImpl
 				objectDefinition1.getObjectDefinitionId());
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
+			if (!Objects.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
+				!Objects.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+				continue;
+			}
+
 			try {
 				ObjectDefinition objectDefinition2 =
 					objectDefinitionLocalService.getObjectDefinition(
 						objectRelationship.getObjectDefinitionId2());
 
-				if (objectDefinition2.isSystem()) {
-					continue;
-				}
+				_registerRelatedInfoItemCollectionProvider(
+					objectDefinition1, objectDefinition2, objectRelationship);
 
 				if (Objects.equals(
 						objectRelationship.getType(),
 						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
 					_registerRelatedInfoItemCollectionProvider(
-						objectDefinition1, objectRelationship,
-						new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-							_language, objectDefinition1, objectDefinition2,
-							_objectEntryLocalService, objectRelationship));
-
-					ObjectRelationship reverseObjectRelationship =
+						objectDefinition1, objectDefinition2,
 						objectRelationshipLocalService.getObjectRelationship(
 							objectRelationship.getObjectDefinitionId2(),
-							objectRelationship.getName());
-
-					_registerRelatedInfoItemCollectionProvider(
-						objectDefinition2, reverseObjectRelationship,
-						new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-							_language, objectDefinition2, objectDefinition1,
-							_objectEntryLocalService,
-							reverseObjectRelationship));
-				}
-				else if (Objects.equals(
-							objectRelationship.getType(),
-							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
-
-					_registerRelatedInfoItemCollectionProvider(
-						objectDefinition1, objectRelationship,
-						new OneToManyObjectRelationshipRelatedInfoCollectionProvider(
-							_language, objectDefinition1, objectDefinition2,
-							_objectEntryLocalService, objectRelationship));
+							objectRelationship.getName()));
 				}
 			}
 			catch (PortalException portalException) {
@@ -827,6 +812,13 @@ public class ObjectRelationshipLocalServiceImpl
 		objectRelationship.setReverse(reverse);
 		objectRelationship.setType(type);
 
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId1);
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId2);
+
 		if (Objects.equals(type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE) ||
 			Objects.equals(
 				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
@@ -842,6 +834,9 @@ public class ObjectRelationshipLocalServiceImpl
 					type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
 				 !reverse) {
 
+			_registerRelatedInfoItemCollectionProvider(
+				objectDefinition1, objectDefinition2, objectRelationship);
+
 			_addObjectRelationship(
 				userId, objectDefinitionId2, objectDefinitionId1,
 				parameterObjectFieldId, deletionType, labelMap, name, true,
@@ -851,6 +846,9 @@ public class ObjectRelationshipLocalServiceImpl
 				createManyToManyObjectRelationshipTable(
 					userId, objectRelationship);
 		}
+
+		_registerRelatedInfoItemCollectionProvider(
+			objectDefinition1, objectDefinition2, objectRelationship);
 
 		return objectRelationshipLocalService.updateObjectRelationship(
 			objectRelationship);
@@ -908,9 +906,18 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	private void _registerRelatedInfoItemCollectionProvider(
-		ObjectDefinition objectDefinition,
-		ObjectRelationship objectRelationship,
-		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider) {
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2,
+			ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider =
+			_relatedInfoCollectionProviderFactory.create(
+				objectDefinition1, objectDefinition2, objectRelationship);
+
+		if (relatedInfoItemCollectionProvider == null) {
+			return;
+		}
 
 		_serviceRegistrations.computeIfAbsent(
 			_getServiceRegistrationKey(objectRelationship),
@@ -918,9 +925,9 @@ public class ObjectRelationshipLocalServiceImpl
 				RelatedInfoItemCollectionProvider.class,
 				relatedInfoItemCollectionProvider,
 				HashMapDictionaryBuilder.<String, Object>put(
-					"company.id", objectDefinition.getCompanyId()
+					"company.id", objectDefinition1.getCompanyId()
 				).put(
-					"item.class.name", objectDefinition.getClassName()
+					"item.class.name", objectDefinition1.getClassName()
 				).build()));
 	}
 
@@ -1125,9 +1132,6 @@ public class ObjectRelationshipLocalServiceImpl
 
 	private BundleContext _bundleContext;
 
-	@Reference
-	private Language _language;
-
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
@@ -1152,6 +1156,10 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Reference
 	private ObjectLayoutTabPersistence _objectLayoutTabPersistence;
+
+	@Reference
+	private RelatedInfoCollectionProviderFactory
+		_relatedInfoCollectionProviderFactory;
 
 	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
 		new ConcurrentHashMap<>();

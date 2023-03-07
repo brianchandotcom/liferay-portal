@@ -904,7 +904,7 @@ definition {
 		property portal.release = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.name.skip.portal.instance = "SitesUsecase#SitesDemoSiteManagement";
-		property testray.component.names = "Site Administration,Site Pages Administration";
+		property testray.component.names = "Site Administration,Page Administration";
 
 		var portalURL = PropsUtil.get("portal.url");
 

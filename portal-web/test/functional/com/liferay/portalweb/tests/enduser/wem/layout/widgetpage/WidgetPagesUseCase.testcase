@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Site Pages Administration";
+	property testray.main.component.name = "Page Administration";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -419,7 +419,7 @@ definition {
 	@description = "This is a test for LPS-145264. The changes on widget page template should be propagate to widget page when Inherit Changes is enabled."
 	@priority = 4
 	test PropagateChangesFromWidgetPageTemplate {
-		property testray.component.names = "Site Pages Administration,Widget Page Templates";
+		property testray.component.names = "Page Administration,Widget Page Templates";
 
 		task ("Given a page creator has a widget page template") {
 			task ("Add a widget page template") {

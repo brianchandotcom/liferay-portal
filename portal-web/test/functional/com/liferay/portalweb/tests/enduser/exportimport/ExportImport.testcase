@@ -1115,7 +1115,7 @@ definition {
 	@priority = 3
 	test ExportImportLayoutCircularReference {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportLayoutCircularReference";
-		property testray.component.names = "Site Pages Administration,Web Content Administration";
+		property testray.component.names = "Page Administration,Web Content Administration";
 
 		task ("Given: User adds a new site and a page to it") {
 			JSONGroup.addGroup(groupName = "Site Name");

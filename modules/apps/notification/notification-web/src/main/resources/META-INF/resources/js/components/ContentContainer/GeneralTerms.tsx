@@ -52,7 +52,7 @@ export function GeneralTerms({baseResourceURL}: GeneralTermsProps) {
 			const response = await fetch(
 				createResourceURL(baseResourceURL, {
 					p_p_resource_id:
-						'/notification_templates/general_notification_template_terms',
+						'/notification_templates/get_general_notification_template_terms',
 				}).toString()
 			);
 

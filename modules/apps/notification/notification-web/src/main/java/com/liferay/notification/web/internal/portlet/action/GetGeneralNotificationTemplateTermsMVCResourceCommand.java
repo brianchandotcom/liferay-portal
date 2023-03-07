@@ -29,11 +29,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"javax.portlet.name=" + NotificationPortletKeys.NOTIFICATION_TEMPLATES,
-		"mvc.command.name=/notification_templates/general_notification_template_terms"
+		"mvc.command.name=/notification_templates/get_general_notification_template_terms"
 	},
 	service = MVCResourceCommand.class
 )
-public class GeneralNotificationTemplateTermsMVCResourceCommand
+public class GetGeneralNotificationTemplateTermsMVCResourceCommand
 	extends BaseNotificationTemplateTermsMVCResourceCommand {
 
 	@Override

@@ -81,8 +81,8 @@ public interface ExportImportServiceConfiguration {
 	public boolean validateMissingReferences();
 
 	@Meta.AD(
-		deflt = "0", description = "export-import-entry-expiry-days-help",
-		name = "export-import-entry-expiry-days", required = false
+		deflt = "0", description = "export-import-entry-expiry-duration-help",
+		name = "export-import-entry-expiry-duration", required = false
 	)
 	public int exportImportEntryExpiryDays();
 

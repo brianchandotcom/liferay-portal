@@ -16,6 +16,8 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 
 import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeRequest;
 import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeResponse;
+import com.liferay.portal.search.engine.adapter.search.ClearScrollRequest;
+import com.liferay.portal.search.engine.adapter.search.ClearScrollResponse;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;
@@ -47,6 +49,13 @@ public class ElasticsearchSearchRequestExecutor
 
 		return _closePointInTimeRequestExecutor.execute(
 			closePointInTimeRequest);
+	}
+
+	@Override
+	public ClearScrollResponse executeSearchRequest(
+		ClearScrollRequest clearScrollRequest) {
+
+		return _clearScrollRequestExecutor.execute(clearScrollRequest);
 	}
 
 	@Override
@@ -84,6 +93,9 @@ public class ElasticsearchSearchRequestExecutor
 
 		return _suggestSearchRequestExecutor.execute(suggestSearchRequest);
 	}
+
+	@Reference
+	private ClearScrollRequestExecutor _clearScrollRequestExecutor;
 
 	@Reference
 	private ClosePointInTimeRequestExecutor _closePointInTimeRequestExecutor;

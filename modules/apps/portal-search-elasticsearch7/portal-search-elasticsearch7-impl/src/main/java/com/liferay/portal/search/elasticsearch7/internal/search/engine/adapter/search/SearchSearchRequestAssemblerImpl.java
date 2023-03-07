@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 
@@ -67,6 +68,7 @@ public class SearchSearchRequestAssemblerImpl
 		_setHighlighter(searchSourceBuilder, searchSearchRequest);
 		_setPagination(searchSourceBuilder, searchSearchRequest);
 		_setPreference(searchRequest, searchSearchRequest);
+		_setScroll(searchRequest, searchSearchRequest);
 		_setSearchAfter(searchSourceBuilder, searchSearchRequest);
 		_setSorts(searchSourceBuilder, searchSearchRequest);
 		_setStats(searchSourceBuilder, searchSearchRequest);
@@ -190,6 +192,18 @@ public class SearchSearchRequestAssemblerImpl
 
 		if (!Validator.isBlank(preference)) {
 			searchRequest.preference(preference);
+		}
+	}
+
+	private void _setScroll(
+		SearchRequest searchRequest, SearchSearchRequest searchSearchRequest) {
+
+		long scrollKeepAliveMinutes =
+			searchSearchRequest.getScrollKeepAliveMinutes();
+
+		if (scrollKeepAliveMinutes > 0) {
+			searchRequest.scroll(
+				TimeValue.timeValueMinutes(scrollKeepAliveMinutes));
 		}
 	}
 

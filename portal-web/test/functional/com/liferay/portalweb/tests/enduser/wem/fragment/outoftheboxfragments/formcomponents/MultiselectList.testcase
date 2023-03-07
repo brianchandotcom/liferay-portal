@@ -1,0 +1,134 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-161631=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a picklist with items") {
+			Picklist.addPicklistViaAPI(picklistName = "Fruits");
+
+			for (var fruit : list "Apple,Banana,Peach,Lemon,Pineapple,Watermelon") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = ${fruit},
+					itemName = ${fruit},
+					picklistName = "Fruits");
+			}
+		}
+
+		task ("Add a company Object with a Multiselect field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "MultiselectPicklist",
+				fieldLabelName = "Favorite",
+				fieldName = "favorite",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder",
+				picklistName = "Fruits");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
+		}
+	}
+
+	@description = "This is a test for LPS-169936. The page designer can map Multiselect List fragment to multiselect picklist field."
+	@priority = 4
+	test MapMultiselectListToMultiselectField {
+		task ("Given a pages designer has a Form Container on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+		}
+
+		task ("When the pages designer maps the Form Container to object") {
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+		}
+
+		task ("Then the pages designer sees the Multiselect List fragment mapped to multiselect field") {
+			PageEditor.viewInputStyle(
+				label = "Favorite",
+				showLabel = "true",
+				type = "multiselect-list");
+		}
+
+		task ("When the page designer enables the Show Help Text") {
+			PageEditor.editInput(
+				fragmentName = "Multiselect List",
+				hideHelpText = "false");
+		}
+
+		task ("Then the pages designer sees the Help Text on Multiselect List fragment") {
+			PageEditor.viewInputStyle(
+				helpText = "Add your help text here.",
+				showHelpText = "true",
+				type = "multiselect-list");
+		}
+
+		task ("When the pages designer types a new label") {
+			PageEditor.editInput(
+				fragmentName = "Multiselect List",
+				label = "Preferences");
+		}
+
+		task ("Then the pages designer sees the new label on Multiselect List fragment") {
+			PageEditor.viewInputStyle(
+				label = "Preferences",
+				showLabel = "true",
+				type = "multiselect-list");
+		}
+
+		task ("When the page designer marks the Multiselect List as required") {
+			PageEditor.editInput(
+				fragmentName = "Multiselect List",
+				markAsRequired = "true");
+		}
+
+		task ("Then the pages designer sees the asterisk symbol shown on the Multiselect List fragment") {
+			PageEditor.viewInputStyle(
+                label = "Preferences",
+				markAsRequired = "true",
+				type = "multiselect-list");
+		}
+	}
+
+}

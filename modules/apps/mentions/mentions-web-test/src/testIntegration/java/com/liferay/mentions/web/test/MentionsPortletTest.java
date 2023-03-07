@@ -47,6 +47,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.portlet.Portlet;
 
 import org.junit.AfterClass;
@@ -172,16 +175,16 @@ public class MentionsPortletTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private User _addUser(String screenName) throws Exception {
+	private void _addUser(String screenName) throws Exception {
 		User adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());
 
-		_user = UserTestUtil.addUser(
-			_company.getCompanyId(), adminUser.getUserId(), screenName,
-			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new long[] {_group.getGroupId()},
-			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
-
-		return _user;
+		_users.add(
+			UserTestUtil.addUser(
+				_company.getCompanyId(), adminUser.getUserId(), screenName,
+				LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), new long[] {_group.getGroupId()},
+				ServiceContextTestUtil.getServiceContext(
+					_company.getGroupId())));
 	}
 
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
@@ -258,6 +261,6 @@ public class MentionsPortletTest {
 	private Portlet _portlet;
 
 	@DeleteAfterTestRun
-	private User _user;
+	private final List<User> _users = new ArrayList<>();
 
 }

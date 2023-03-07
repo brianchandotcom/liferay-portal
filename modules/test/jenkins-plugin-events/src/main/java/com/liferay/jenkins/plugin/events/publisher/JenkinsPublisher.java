@@ -64,6 +64,10 @@ public class JenkinsPublisher {
 	}
 
 	public boolean containsEventTrigger(EventTrigger eventTrigger) {
+		if (eventTrigger == null) {
+			return false;
+		}
+
 		if (_eventTriggers.contains(eventTrigger)) {
 			return true;
 		}

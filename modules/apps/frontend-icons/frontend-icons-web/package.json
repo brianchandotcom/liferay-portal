@@ -1,7 +1,4 @@
 {
-	"dependencies": {
-		"frontend-js-web": "*"
-	},
 	"main": "js/index.js",
 	"name": "@liferay/frontend-icons-web",
 	"scripts": {

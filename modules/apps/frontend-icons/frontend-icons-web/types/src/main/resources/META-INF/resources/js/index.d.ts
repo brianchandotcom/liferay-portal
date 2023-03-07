@@ -13,3 +13,4 @@
  */
 
 export declare function getSpritemap(): string;
+export declare function getControlPanelSpritemap(): string;

@@ -46,9 +46,10 @@ public class JenkinsBuildListener extends RunListener<Build> {
 		Executor executor = build.getExecutor();
 
 		JenkinsPublisherUtil.publish(
-			JenkinsPublisher.EventTrigger.BUILD_STARTED, build);
-		JenkinsPublisherUtil.publish(
 			JenkinsPublisher.EventTrigger.COMPUTER_BUSY, executor.getOwner());
+
+		JenkinsPublisherUtil.publish(
+			JenkinsPublisher.EventTrigger.BUILD_STARTED, build);
 	}
 
 }

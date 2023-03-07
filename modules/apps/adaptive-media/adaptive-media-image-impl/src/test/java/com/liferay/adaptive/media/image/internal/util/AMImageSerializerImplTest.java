@@ -86,13 +86,11 @@ public class AMImageSerializerImplTest {
 
 		Assert.assertEquals(
 			new URI("http://localhost"), adaptiveMedia.getURI());
-
 		Assert.assertEquals(
 			"200",
 			String.valueOf(
 				adaptiveMedia.getValue(
 					AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT)));
-
 		Assert.assertEquals(
 			"300",
 			String.valueOf(
@@ -125,10 +123,8 @@ public class AMImageSerializerImplTest {
 
 		Assert.assertEquals(
 			new URI("http://localhost"), adaptiveMedia.getURI());
-
 		Assert.assertNull(
 			adaptiveMedia.getValue(AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT));
-
 		Assert.assertNull(
 			adaptiveMedia.getValue(AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH));
 	}

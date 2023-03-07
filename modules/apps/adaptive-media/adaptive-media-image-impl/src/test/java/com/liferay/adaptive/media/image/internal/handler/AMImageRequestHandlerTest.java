@@ -268,23 +268,19 @@ public class AMImageRequestHandlerTest {
 			_amImageRequestHandler.handleRequest(httpServletRequest);
 
 		Assert.assertNotNull(adaptiveMedia);
-
 		Assert.assertEquals(
 			_fileVersion.getContentStream(false),
 			adaptiveMedia.getInputStream());
-
 		Assert.assertEquals(
 			_fileVersion.getFileName(),
 			adaptiveMedia.getValue(AMAttribute.getFileNameAMAttribute()));
-
 		Assert.assertEquals(
 			_fileVersion.getMimeType(),
 			adaptiveMedia.getValue(AMAttribute.getContentTypeAMAttribute()));
-
-		Long contentLength = adaptiveMedia.getValue(
-			AMAttribute.getContentLengthAMAttribute());
-
-		Assert.assertEquals(_fileVersion.getSize(), contentLength.longValue());
+		Assert.assertEquals(
+			_fileVersion.getSize(),
+			(long)adaptiveMedia.<Long>getValue(
+				AMAttribute.getContentLengthAMAttribute()));
 
 		Mockito.verify(
 			_amAsyncProcessor

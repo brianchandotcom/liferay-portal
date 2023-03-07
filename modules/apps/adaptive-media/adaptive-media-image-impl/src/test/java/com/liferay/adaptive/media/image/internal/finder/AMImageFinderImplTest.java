@@ -240,7 +240,6 @@ public class AMImageFinderImplTest {
 		Assert.assertEquals(
 			Integer.valueOf(99),
 			adaptiveMedia.getValue(AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT));
-
 		Assert.assertEquals(
 			Integer.valueOf(199),
 			adaptiveMedia.getValue(AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH));
@@ -635,7 +634,6 @@ public class AMImageFinderImplTest {
 		Assert.assertEquals(
 			Integer.valueOf(99),
 			adaptiveMedia.getValue(AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT));
-
 		Assert.assertEquals(
 			Integer.valueOf(1000),
 			adaptiveMedia.getValue(AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH));

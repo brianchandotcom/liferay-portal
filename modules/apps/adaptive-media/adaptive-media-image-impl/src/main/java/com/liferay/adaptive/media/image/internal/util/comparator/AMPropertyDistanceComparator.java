@@ -45,7 +45,6 @@ public class AMPropertyDistanceComparator
 				(AMAttribute<AMImageProcessor, Object>)entry.getKey();
 
 			Object value1 = adaptiveMedia1.getValue(amAttribute);
-
 			Object value2 = adaptiveMedia2.getValue(amAttribute);
 
 			long result = 0L;
@@ -53,10 +52,10 @@ public class AMPropertyDistanceComparator
 			if ((value1 != null) && (value2 != null)) {
 				Object requestedValue = entry.getValue();
 
-				Long valueDistance1 = amAttribute.distance(
+				long valueDistance1 = amAttribute.distance(
 					value1, requestedValue);
 
-				Long valueDistance2 = amAttribute.distance(
+				long valueDistance2 = amAttribute.distance(
 					value2, requestedValue);
 
 				result = valueDistance1 - valueDistance2;

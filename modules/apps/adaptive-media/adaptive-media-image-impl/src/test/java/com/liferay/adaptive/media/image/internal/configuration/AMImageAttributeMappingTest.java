@@ -44,7 +44,6 @@ public class AMImageAttributeMappingTest {
 		Assert.assertNull(
 			amImageAttributeMapping.getValue(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT));
-
 		Assert.assertNull(
 			amImageAttributeMapping.getValue(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH));
@@ -76,7 +75,6 @@ public class AMImageAttributeMappingTest {
 		Assert.assertNull(
 			amImageAttributeMapping.getValue(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT));
-
 		Assert.assertNull(
 			amImageAttributeMapping.getValue(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH));
@@ -95,7 +93,6 @@ public class AMImageAttributeMappingTest {
 			Integer.valueOf(100),
 			amImageAttributeMapping.getValue(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT));
-
 		Assert.assertEquals(
 			Integer.valueOf(200),
 			amImageAttributeMapping.getValue(
@@ -114,7 +111,6 @@ public class AMImageAttributeMappingTest {
 			Integer.valueOf(100),
 			amImageAttributeMapping.getValue(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT));
-
 		Assert.assertNull(
 			amImageAttributeMapping.getValue(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH));

@@ -111,7 +111,7 @@ element.textContent = 'Fragment Example';''';
 	@description = "This is a test for LPS-164104. View fragment with fragmentEntryLinkNamespace variable to JavaScript on associated display page template."
 	@priority = 4
 	test AddFragmentWithFragmentEntryLinkNamespaceInJavaScriptToDisplayPageTemplate {
-		property testray.component.names = "Display Pages,Fragments";
+		property testray.component.names = "Display Page Templates,Fragments";
 
 		task ("Given a page creator has a fragment with fragmentEntryLinkNamespace in JavaScript") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");

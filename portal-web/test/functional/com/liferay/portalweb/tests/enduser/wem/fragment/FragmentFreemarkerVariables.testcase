@@ -148,7 +148,7 @@ definition {
 	@priority = 3
 	test AddFragmentWithLayoutModeToDisplayPageTemplate {
 		property portal.acceptance = "true";
-		property testray.component.names = "Display Pages,Fragments";
+		property testray.component.names = "Display Page Templates,Fragments";
 
 		task ("Given a display page template designer has a fragment with layoutMode freemarker variable") {
 			var newLine = '''

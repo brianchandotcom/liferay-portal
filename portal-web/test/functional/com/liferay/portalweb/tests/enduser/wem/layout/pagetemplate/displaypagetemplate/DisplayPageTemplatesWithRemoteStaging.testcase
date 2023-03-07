@@ -4,7 +4,7 @@ definition {
 	property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Display Pages";
+	property testray.main.component.name = "Display Page Templates";
 
 	setUp {
 		task ("Set up instance and sign in") {

@@ -33,7 +33,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -49,7 +48,6 @@ import java.io.Serializable;
 import java.text.Format;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -136,6 +134,8 @@ public class ObjectEntryRowInfoItemRenderer
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws PortalException {
 
+		Map<String, Serializable> stringSerializableMap = new TreeMap<>();
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -152,19 +152,11 @@ public class ObjectEntryRowInfoItemRenderer
 			objectFieldsMap.put(objectField.getName(), objectField);
 		}
 
-		List<Map.Entry<String, Serializable>> entries = TransformUtil.transform(
-			values.entrySet(),
-			entry -> {
-				if (objectFieldsMap.containsKey(entry.getKey())) {
-					return entry;
-				}
+		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
+			if (!objectFieldsMap.containsKey(entry.getKey())) {
+				continue;
+			}
 
-				return null;
-			});
-
-		Map<String, Serializable> stringSerializableMap = new TreeMap<>();
-
-		for (Map.Entry<String, Serializable> entry : entries) {
 			if (entry.getValue() == null) {
 				stringSerializableMap.put(entry.getKey(), StringPool.BLANK);
 
@@ -187,8 +179,8 @@ public class ObjectEntryRowInfoItemRenderer
 			}
 
 			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+					objectField.getBusinessType())) {
 
 				long dlFileEntryId = GetterUtil.getLong(
 					values.get(objectField.getName()));
@@ -219,8 +211,8 @@ public class ObjectEntryRowInfoItemRenderer
 			}
 
 			if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_DATE)) {
+					ObjectFieldConstants.DB_TYPE_DATE,
+					objectField.getDBType())) {
 
 				Format dateFormat = FastDateFormatFactoryUtil.getDate(
 					serviceContext.getLocale());

@@ -54,6 +54,7 @@ import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.override.OverrideBeanDefinitionRegistryPostProcessor;
 import com.liferay.portal.tools.DBUpgrader;
+import com.liferay.portal.upgrade.util.DBUpgradeStatus;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -341,6 +342,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			}
 		}
 		else {
+			DBUpgradeStatus.setNoUpgradesEnabled();
 
 			// Check class names
 

@@ -32,6 +32,12 @@
                             <f:entry title="URL">
                                 <f:textbox name="url" value="${jenkinsPublishers.url}" />
                             </f:entry>
+                            <f:entry title="User Name">
+                                <f:textbox name="userName" value="${jenkinsPublishers.userName}" />
+                            </f:entry>
+                            <f:entry title="User Password">
+                                <f:textbox name="userPassword" value="${jenkinsPublishers.userPassword}" />
+                            </f:entry>
                             <f:advanced title="Event Configurations">
                                 <f:section title="Build Events">
                                     <f:entry title="BUILD_COMPLETED">

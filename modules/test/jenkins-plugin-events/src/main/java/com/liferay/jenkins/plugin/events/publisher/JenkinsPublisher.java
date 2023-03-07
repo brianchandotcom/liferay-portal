@@ -59,6 +59,8 @@ public class JenkinsPublisher {
 		queueItemLeaveWaiting = jsonObject.getBoolean("queueItemLeaveWaiting");
 		queueItemLeft = jsonObject.getBoolean("queueItemLeft");
 		url = jsonObject.getString("url");
+		userName = jsonObject.getString("userName");
+		userPassword = jsonObject.getString("userPassword");
 
 		_initializeEventTypes();
 	}
@@ -175,6 +177,8 @@ public class JenkinsPublisher {
 	public boolean queueItemLeaveWaiting;
 	public boolean queueItemLeft;
 	public String url;
+	public String userName;
+	public String userPassword;
 
 	public enum EventTrigger {
 
@@ -192,7 +196,7 @@ public class JenkinsPublisher {
 
 		sb.append("Basic ");
 
-		String userNamePassword = "admin:admin";
+		String userNamePassword = userName + ":" + userPassword;
 
 		Base64.Encoder base64Encoder = Base64.getEncoder();
 

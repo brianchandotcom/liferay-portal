@@ -58,7 +58,7 @@ export function DefinitionOfTerms({
 			createResourceURL(baseResourceURL, {
 				objectDefinitionId: objectDefinition.id,
 				p_p_resource_id:
-					'/notification_templates/object_field_notification_template_terms',
+					'/notification_templates/get_object_field_notification_template_terms',
 			}).toString()
 		);
 

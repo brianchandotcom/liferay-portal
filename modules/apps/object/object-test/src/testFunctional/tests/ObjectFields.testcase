@@ -3272,6 +3272,40 @@ definition {
 			value1 = "An unexpected error occurred while uploading your file.");
 	}
 
+	@description = "LPS-176823 - Verify that the Output Field on Formula Field is required"
+	@priority = 4
+	test OutputFieldIsRequiredOnFormulaField {
+		property custom.properties = "feature.flag.LPS-164948=true";
+
+		task ("Given: an Object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 176823",
+				objectName = "CustomObject176823",
+				pluralLabelName = "Custom Objects 176823");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 176823");
+
+			ObjectAdmin.goToFieldsTab();
+		}
+
+		task ("When: managing a Formula Field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Formula",
+				fieldType = "Formula",
+				formulaFieldOption = "Decimal");
+
+			ObjectAdmin.goToFieldsDetails(label = "Custom Formula");
+		}
+
+		task ("Then: the output field is a mandatory field") {
+			AssertElementPresent(
+				key_fieldName = "Output",
+				locator1 = "ObjectField#MANDATORY_FIELD");
+		}
+	}
+
 	@description = "Verify that the Range - Start/End operator is available when adding filters for the date fields to select date from the object"
 	@priority = 4
 	test RangeIsAvailableForDateFields {

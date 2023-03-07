@@ -624,75 +624,33 @@ public class ObjectRelationshipLocalServiceImpl
 						objectRelationship.getType(),
 						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-					ManyToManyObjectRelationshipRelatedInfoCollectionProvider
-						manyToManyObjectRelationshipRelatedInfoCollectionProvider =
-							new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-								_language, objectDefinition1, objectDefinition2,
-								_objectEntryLocalService, objectRelationship);
-
-					_serviceRegistrations.computeIfAbsent(
-						_getServiceRegistrationKey(objectRelationship),
-						serviceRegistrationKey ->
-							_bundleContext.registerService(
-								RelatedInfoItemCollectionProvider.class,
-								manyToManyObjectRelationshipRelatedInfoCollectionProvider,
-								HashMapDictionaryBuilder.<String, Object>put(
-									"company.id",
-									objectDefinition1.getCompanyId()
-								).put(
-									"item.class.name",
-									objectDefinition1.getClassName()
-								).build()));
+					_registerRelatedInfoItemCollectionProvider(
+						objectDefinition1, objectRelationship,
+						new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+							_language, objectDefinition1, objectDefinition2,
+							_objectEntryLocalService, objectRelationship));
 
 					ObjectRelationship reverseObjectRelationship =
 						objectRelationshipLocalService.getObjectRelationship(
 							objectRelationship.getObjectDefinitionId2(),
 							objectRelationship.getName());
 
-					ManyToManyObjectRelationshipRelatedInfoCollectionProvider
-						reverseManyToManyObjectRelationshipRelatedInfoCollectionProvider =
-							new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-								_language, objectDefinition2, objectDefinition1,
-								_objectEntryLocalService,
-								reverseObjectRelationship);
-
-					_serviceRegistrations.computeIfAbsent(
-						_getServiceRegistrationKey(reverseObjectRelationship),
-						serviceRegistrationKey ->
-							_bundleContext.registerService(
-								RelatedInfoItemCollectionProvider.class,
-								reverseManyToManyObjectRelationshipRelatedInfoCollectionProvider,
-								HashMapDictionaryBuilder.<String, Object>put(
-									"company.id",
-									objectDefinition2.getCompanyId()
-								).put(
-									"item.class.name",
-									objectDefinition2.getClassName()
-								).build()));
+					_registerRelatedInfoItemCollectionProvider(
+						objectDefinition2, reverseObjectRelationship,
+						new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+							_language, objectDefinition2, objectDefinition1,
+							_objectEntryLocalService,
+							reverseObjectRelationship));
 				}
 				else if (Objects.equals(
 							objectRelationship.getType(),
 							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-					OneToManyObjectRelationshipRelatedInfoCollectionProvider
-						oneToManyObjectRelationshipRelatedInfoCollectionProvider =
-							new OneToManyObjectRelationshipRelatedInfoCollectionProvider(
-								_language, objectDefinition1, objectDefinition2,
-								_objectEntryLocalService, objectRelationship);
-
-					_serviceRegistrations.computeIfAbsent(
-						_getServiceRegistrationKey(objectRelationship),
-						serviceRegistrationKey ->
-							_bundleContext.registerService(
-								RelatedInfoItemCollectionProvider.class,
-								oneToManyObjectRelationshipRelatedInfoCollectionProvider,
-								HashMapDictionaryBuilder.<String, Object>put(
-									"company.id",
-									objectDefinition1.getCompanyId()
-								).put(
-									"item.class.name",
-									objectDefinition1.getClassName()
-								).build()));
+					_registerRelatedInfoItemCollectionProvider(
+						objectDefinition1, objectRelationship,
+						new OneToManyObjectRelationshipRelatedInfoCollectionProvider(
+							_language, objectDefinition1, objectDefinition2,
+							_objectEntryLocalService, objectRelationship));
 				}
 			}
 			catch (PortalException portalException) {
@@ -946,6 +904,23 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private void _registerRelatedInfoItemCollectionProvider(
+		ObjectDefinition objectDefinition,
+		ObjectRelationship objectRelationship,
+		RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider) {
+
+		_serviceRegistrations.computeIfAbsent(
+			_getServiceRegistrationKey(objectRelationship),
+			serviceRegistrationKey -> _bundleContext.registerService(
+				RelatedInfoItemCollectionProvider.class,
+				relatedInfoItemCollectionProvider,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", objectDefinition.getClassName()
+				).build()));
 	}
 
 	private ObjectRelationship _updateObjectRelationship(

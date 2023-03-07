@@ -647,7 +647,7 @@ public abstract class Base${schemaName}ResourceImpl
 		}
 
 		@Override
-		public void update(java.util.Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
+		public void update(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#if updateStrategies?has_content>
 				UnsafeConsumer<${javaDataType}, Exception> ${schemaVarName}UnsafeConsumer = null;
 
@@ -981,12 +981,16 @@ public abstract class Base${schemaName}ResourceImpl
 		return TransformUtil.transform(array, unsafeFunction, clazz);
 	}
 
-	protected <T, R, E extends Throwable> R[] transformToArray(java.util.Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction, Class<?> clazz) {
+	protected <T, R, E extends Throwable> R[] transformToArray(Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction, Class<?> clazz) {
 		return TransformUtil.transformToArray(collection, unsafeFunction, clazz);
 	}
 
 	protected <T, R, E extends Throwable> List<R> transformToList(T[] array, UnsafeFunction<T, R, E> unsafeFunction) {
 		return TransformUtil.transformToList(array, unsafeFunction);
+	}
+
+	protected <T, R, E extends Throwable> long[] transformToLongArray(Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) {
+		return TransformUtil.transformToLongArray(collection, unsafeFunction);
 	}
 
 	protected <T, R, E extends Throwable> List<R> unsafeTransform(Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) throws E {

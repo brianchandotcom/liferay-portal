@@ -94,11 +94,11 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 	@Override
 	public String getLabel(Locale locale) {
 		if (!objectRelationship.isSelf()) {
-			return _objectDefinition2.getLabel(locale);
+			return objectRelationship.getLabel(locale);
 		}
 
 		return StringBundler.concat(
-			_objectDefinition2.getLabel(locale), StringPool.SPACE,
+			objectRelationship.getLabel(locale), StringPool.SPACE,
 			StringPool.OPEN_PARENTHESIS,
 			_language.get(
 				locale, objectRelationship.isReverse() ? "child" : "parent"),

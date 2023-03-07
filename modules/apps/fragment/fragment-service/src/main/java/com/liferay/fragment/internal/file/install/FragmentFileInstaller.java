@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -91,6 +92,7 @@ public class FragmentFileInstaller implements FileInstaller {
 
 	@Override
 	public URL transformURL(File file) throws Exception {
+		Long currentCompanyId = CompanyThreadLocal.getCompanyId();
 		PermissionChecker currentPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 		String currentName = PrincipalThreadLocal.getName();
@@ -103,6 +105,7 @@ public class FragmentFileInstaller implements FileInstaller {
 		finally {
 			file.delete();
 
+			CompanyThreadLocal.setCompanyId(currentCompanyId);
 			PermissionThreadLocal.setPermissionChecker(
 				currentPermissionChecker);
 			PrincipalThreadLocal.setName(currentName);
@@ -135,10 +138,14 @@ public class FragmentFileInstaller implements FileInstaller {
 		}
 
 		if ((company != null) && deployJSONObject.has("groupKey")) {
+			CompanyThreadLocal.setCompanyId(company.getCompanyId());
+
 			group = _getDeploymentGroup(
 				company.getCompanyId(), deployJSONObject.getString("groupKey"));
 		}
 		else if (company != null) {
+			CompanyThreadLocal.setCompanyId(company.getCompanyId());
+
 			group = _groupLocalService.getCompanyGroup(company.getCompanyId());
 		}
 		else {
@@ -149,6 +156,8 @@ public class FragmentFileInstaller implements FileInstaller {
 			}
 
 			company = companies.get(0);
+
+			CompanyThreadLocal.setCompanyId(company.getCompanyId());
 		}
 
 		_importFragmentEntriesAndLayouts(company, file, group);

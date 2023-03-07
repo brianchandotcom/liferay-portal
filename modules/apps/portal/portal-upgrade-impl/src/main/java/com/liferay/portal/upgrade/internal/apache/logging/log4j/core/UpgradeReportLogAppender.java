@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.upgrade.internal.report.UpgradeReport;
 import com.liferay.portal.upgrade.util.DBUpgradeStatus;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -125,7 +126,9 @@ public class UpgradeReportLogAppender implements Appender {
 	public void start() {
 		_started = true;
 
-		_upgradeReport = new UpgradeReport();
+		if (PropsValues.UPGRADE_REPORT_ENABLED) {
+			_upgradeReport = new UpgradeReport();
+		}
 
 		_rootLogger.addAppender(this);
 	}
@@ -135,10 +138,12 @@ public class UpgradeReportLogAppender implements Appender {
 		if (_started) {
 			DBUpgradeStatus.upgradeFinished();
 
-			_upgradeReport.generateReport(
-				_persistenceManager, _releaseManagerOSGiCommands);
+			if (_upgradeReport != null) {
+				_upgradeReport.generateReport(
+					_persistenceManager, _releaseManagerOSGiCommands);
 
-			_upgradeReport = null;
+				_upgradeReport = null;
+			}
 		}
 
 		_started = false;

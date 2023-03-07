@@ -170,6 +170,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>NotificationQueueEntryStatus</exception>
 		<exception>NotificationRecipientSettingValue</exception>
 		<exception>NotificationTemplateAttachmentObjectFieldId</exception>
 		<exception>NotificationTemplateEditorType</exception>

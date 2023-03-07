@@ -1,0 +1,7 @@
+assemble:
+    - from: .
+      include: "*.ico"
+      into: static
+liferay-learn-resources:
+    name: Liferay Learn Resources
+    type: staticContent

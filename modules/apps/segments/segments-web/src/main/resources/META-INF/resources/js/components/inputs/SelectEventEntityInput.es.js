@@ -15,7 +15,6 @@
 import ClayButton from '@clayui/button';
 import classNames from 'classnames';
 import {openSelectionModal} from 'frontend-js-web';
-import hash from 'hash.js';
 import propTypes from 'prop-types';
 import React from 'react';
 
@@ -48,21 +47,32 @@ class SelectEventEntityInput extends React.Component {
 		} = this.props;
 
 		openSelectionModal({
-			onSelect: (event) => {
+			onSelect: async (event) => {
 				const value = JSON.parse(event.value);
+				const assetId = await this._digestMessage(value.fileEntryId);
 
-				onChange({
-					assetId: hash
-						.sha256()
-						.update(value.fileEntryId)
-						.digest('hex'),
-					displayValue: value.title,
-				});
+				onChange({assetId, displayValue: value.title});
 			},
 			selectEventName: id,
 			title,
 			url: uri,
 		});
+	};
+
+	/**
+	 * Returns the SHA-256 Hex value of the given message.
+	 * @param {string} message
+	 * @returns {Promise<string>}
+	 */
+	_digestMessage = async (message) => {
+		const encodedMessage = new TextEncoder().encode(message);
+		const hashBuffer = await crypto.subtle.digest(
+			'SHA-256',
+			encodedMessage
+		);
+		const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+		return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 	};
 
 	render() {

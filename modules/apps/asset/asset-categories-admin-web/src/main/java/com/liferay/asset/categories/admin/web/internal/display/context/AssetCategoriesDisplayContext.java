@@ -342,7 +342,9 @@ public class AssetCategoriesDisplayContext {
 
 		emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex(sb.toString());
 
-		categoriesSearchContainer.setRowChecker(emptyOnClickRowChecker);
+		if (vocabulary.getGroupId() == _themeDisplay.getScopeGroupId()) {
+			categoriesSearchContainer.setRowChecker(emptyOnClickRowChecker);
+		}
 
 		_categoriesSearchContainer = categoriesSearchContainer;
 
@@ -843,6 +845,23 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean isShowCategoriesSelectButton() {
+		try {
+			AssetVocabulary vocabulary = getVocabulary();
+
+			if (vocabulary.getGroupId() != _themeDisplay.getScopeGroupId()) {
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return true;
 	}
 
 	public boolean isShowSelectAssetDisplayPage() {

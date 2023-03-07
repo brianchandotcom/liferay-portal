@@ -52,6 +52,7 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 
 		_className = objectDefinition.getClassName();
+		_companyId = objectDefinition.getCompanyId();
 	}
 
 	@Override
@@ -141,6 +142,11 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
 	public String getObjectRelationshipType() {
 		return ObjectRelationshipConstants.TYPE_ONE_TO_ONE;
 	}
@@ -167,6 +173,7 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 	}
 
 	private final String _className;
+	private final long _companyId;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService

@@ -45,6 +45,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 
 		_className = objectDefinition.getClassName();
+		_companyId = objectDefinition.getCompanyId();
 	}
 
 	@Override
@@ -110,6 +111,11 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
 	public String getObjectRelationshipType() {
 		return ObjectRelationshipConstants.TYPE_MANY_TO_MANY;
 	}
@@ -159,6 +165,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 	}
 
 	private final String _className;
+	private final long _companyId;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;

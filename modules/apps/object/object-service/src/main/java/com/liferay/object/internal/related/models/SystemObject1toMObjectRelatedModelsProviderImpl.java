@@ -171,6 +171,11 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _objectDefinition.getCompanyId();
+	}
+
+	@Override
 	public String getObjectRelationshipType() {
 		return ObjectRelationshipConstants.TYPE_ONE_TO_MANY;
 	}

@@ -127,7 +127,14 @@ definition {
 
 		AssertElementPresent(locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD");
 
-		SikuliAssertElementPresent(locator1 = "SystemSettings#SECURITY_CREDENTIAL_HIDDEN_IMAGE");
+		ScrollBy(value1 = "0, 500");
+
+		TestUtils.maximizeWindow();
+
+		OcularAssertElementImage(
+			locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD",
+			value1 = "obscured_credential/ldap_server_security_credential.png",
+			value2 = 70);
 	}
 
 	macro editTextAreaSetting {

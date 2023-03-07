@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -8,3 +9,63 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+
+const updateStatus = async (key, name) => {
+	const organizationID = fragmentElement.querySelector('.organizationID')
+		.value;
+
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	await fetch(`/o/c/evporganizations/${organizationID}`, {
+		body: `{
+		"organizationStatus":{
+		   "key":"${key}",
+		   "name":"${name}"
+		}
+	 }`,
+		headers: {
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'PATCH',
+	});
+
+	location.reload();
+};
+
+const openModal = () => {
+	const organizationName = fragmentElement.querySelector('.organizationName')
+		.innerHTML;
+
+	Liferay.Util.openModal({
+		buttons: [
+			{
+				displayType: 'danger',
+				label: 'Reject',
+				async onClick() {
+					await updateStatus('rejected', 'Rejected');
+				},
+				type: 'submit',
+			},
+			{
+				displayType: 'success',
+				label: 'Approve',
+				async onClick() {
+					await updateStatus(
+						'awaitingFinanceApproval',
+						'Awaiting Finance Approval'
+					);
+				},
+				type: 'submit',
+			},
+		],
+		center: true,
+		headerHTML: `<p class="headerTextModal">Approve or Reject the organization ${organizationName} </p>`,
+		size: 'md',
+	});
+};
+
+const btnOpenModal = fragmentElement.querySelector('.btnOpenModal');
+
+if (btnOpenModal) {
+	btnOpenModal.onclick = openModal;
+}

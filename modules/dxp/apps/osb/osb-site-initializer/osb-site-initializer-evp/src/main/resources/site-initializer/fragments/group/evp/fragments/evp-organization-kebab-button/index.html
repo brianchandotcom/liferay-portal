@@ -1,19 +1,37 @@
 [#assign layoutURL = (themeDisplay.getPortalURL() + themeDisplay.getURLCurrent())! /]
 [#assign objectRequest = (request.getAttribute("INFO_ITEM_REFERENCE"))! /]
-[#assign requestId = objectRequest.classPK! /]
-[#assign URL = (layoutURL?substring(0, layoutURL?lastIndexOf('/')))! /]
+[#assign organizationId = objectRequest.classPK! /]
+[#assign URL = (layoutURL?substring(0,layoutURL?lastIndexOf('/')))! /]
 
-<div id="evp-organization-kebab-button">
-	[@liferay_ui["icon-menu"]
-		direction="left-side"
-		markupView="lexicon"
-		showWhenSingleIcon=true
-	]
+[#if organizationId?? && organizationId?hasContent]
+	[#assign organizationStatus = (restClient.get("/c/evporganizations/" + organizationId).organizationStatus.key) ! /]
+	[#assign organizationName = (restClient.get("/c/evporganizations/" + organizationId).organizationName)! /]
+	[#assign organizationStatusListing = ["rejected","awaitingFinanceApproval","verified"] /]
 
-		[@liferay_ui["icon"]
-			message="Details"
-			url=URL + "/l/" + requestId
-		/]
+	<input class="organizationID" id="${organizationId}" type="hidden" value="${organizationId}" />
 
-	[/@]
-</div>
+	<span class="organizationName" hidden>${organizationName}</span>
+
+	<div id="evp-organization-kebab-button">
+		[@liferay_ui["icon-menu"]
+			direction="left-side"
+			markupView="lexicon"
+			showWhenSingleIcon=true
+		]
+
+			[@liferay_ui["icon"]
+				message="Details"
+				url=URL + "/l/" + organizationId
+			/]
+
+			[#if !organizationStatusListing?seqContains(organizationStatus)]
+				<div class="btnOpenModal">
+					[@liferay_ui["icon"]
+						message="Approve or Reject"
+						url="#${organizationId}"
+					/]
+				</div>
+			[/#if]
+		[/@]
+	</div>
+[/#if]

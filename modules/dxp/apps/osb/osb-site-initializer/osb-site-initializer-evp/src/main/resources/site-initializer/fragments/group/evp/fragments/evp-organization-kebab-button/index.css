@@ -17,3 +17,11 @@
 .dropdown-menu {
 	min-width: 90px;
 }
+
+.headerTextModal {
+	margin-bottom: 0 !important;
+	max-width: 25ch;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

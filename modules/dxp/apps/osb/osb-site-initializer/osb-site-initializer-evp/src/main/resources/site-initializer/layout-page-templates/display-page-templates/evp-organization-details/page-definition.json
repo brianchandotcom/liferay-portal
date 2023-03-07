@@ -222,69 +222,6 @@
 																	}
 																],
 																"type": "Column"
-															},
-															{
-																"definition": {
-																	"columnViewports": [
-																		{
-																			"columnViewportDefinition": {
-																				"size": 12
-																			},
-																			"id": "landscapeMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "portraitMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "tablet"
-																		}
-																	],
-																	"size": 2
-																},
-																"pageElements": [
-																	{
-																		"definition": {
-																			"fragment": {
-																				"key": "evp-organization-status-update-buttons-staff",
-																				"siteKey": "[$GROUP_KEY$]"
-																			},
-																			"fragmentConfig": {
-																				"inverted": false,
-																				"style": "primary",
-																				"type": "solid",
-																				"uppercase": false
-																			},
-																			"fragmentFields": [
-																				{
-																					"id": "link approved",
-																					"value": {
-																						"fragmentLink": {
-																						}
-																					}
-																				},
-																				{
-																					"id": "link reject",
-																					"value": {
-																						"fragmentLink": {
-																						}
-																					}
-																				}
-																			],
-																			"fragmentStyle": {
-																				"paddingBottom": "1",
-																				"paddingRight": "1",
-																				"paddingTop": "1"
-																			},
-																			"indexed": true
-																		},
-																		"type": "Fragment"
-																	}
-																],
-																"type": "Column"
 															}
 														],
 														"type": "Row"

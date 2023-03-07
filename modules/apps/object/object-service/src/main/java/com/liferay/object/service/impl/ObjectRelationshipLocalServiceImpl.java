@@ -604,7 +604,8 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Override
 	public void registerObjectRelationshipsRelatedInfoCollectionProviders(
-		ObjectDefinition objectDefinition1) {
+		ObjectDefinition objectDefinition1,
+		ObjectDefinitionLocalService objectDefinitionLocalService) {
 
 		List<ObjectRelationship> objectRelationships =
 			objectRelationshipLocalService.getObjectRelationships(
@@ -613,7 +614,7 @@ public class ObjectRelationshipLocalServiceImpl
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			try {
 				ObjectDefinition objectDefinition2 =
-					_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionLocalService.getObjectDefinition(
 						objectRelationship.getObjectDefinitionId2());
 
 				if (objectDefinition2.isSystem()) {

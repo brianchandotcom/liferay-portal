@@ -385,7 +385,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		_objectRelationshipLocalService.
 			registerObjectRelationshipsRelatedInfoCollectionProviders(
-				objectDefinition);
+				objectDefinition, _objectDefinitionLocalService);
 
 		return serviceRegistrations;
 	}

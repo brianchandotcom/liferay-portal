@@ -18,19 +18,15 @@ import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -63,8 +59,30 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(service = {})
-public class POPNotificationsMessageListener extends BaseMessageListener {
+@Component(service = SchedulerJobConfiguration.class)
+public class POPNotificationsMessageListener
+	implements SchedulerJobConfiguration {
+
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> _companyLocalService.forEachCompanyId(
+			companyId -> {
+				if (!PrefsPropsUtil.getBoolean(
+						companyId, PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED,
+						PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED)) {
+
+					return;
+				}
+
+				_popNotifications(companyId);
+			});
+	}
+
+	@Override
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			1, TimeUnit.MINUTE);
+	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
@@ -96,44 +114,11 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 				}
 
 			});
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, 1, TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
-
 		_messageListenerWrappers.close();
-	}
-
-	@Override
-	protected void doReceive(
-			com.liferay.portal.kernel.messaging.Message message)
-		throws MessagingException {
-
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				if (!PrefsPropsUtil.getBoolean(
-						companyId, PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED,
-						PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED)) {
-
-					return;
-				}
-
-				_popNotifications(companyId);
-			});
 	}
 
 	private String _getEmailAddress(Address[] addresses) {
@@ -295,11 +280,5 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 	private MailService _mailService;
 
 	private ServiceTrackerList<MessageListenerWrapper> _messageListenerWrappers;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

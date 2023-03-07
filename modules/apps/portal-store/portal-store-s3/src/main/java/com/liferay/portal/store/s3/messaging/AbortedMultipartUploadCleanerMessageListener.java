@@ -17,13 +17,10 @@ package com.liferay.portal.store.s3.messaging;
 import com.amazonaws.services.s3.transfer.TransferManager;
 
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.store.s3.S3Store;
 
 import java.time.LocalDateTime;
@@ -33,47 +30,32 @@ import java.time.temporal.ChronoUnit;
 
 import java.util.Date;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Minhchau Dang
  * @author Samuel Ziemer
  */
-@Component(enabled = false, service = {})
+@Component(enabled = false, service = SchedulerJobConfiguration.class)
 public class AbortedMultipartUploadCleanerMessageListener
-	extends BaseMessageListener {
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate() {
-		Class<?> clazz = getClass();
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> {
+			S3Store s3Store = (S3Store)_store;
 
-		String className = clazz.getName();
+			TransferManager transferManager = s3Store.getTransferManager();
 
-		_schedulerEngineHelper.register(
-			this,
-			new SchedulerEntryImpl(
-				className,
-				_triggerFactory.createTrigger(
-					className, className, null, null, 1, TimeUnit.DAY)),
-			DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+			transferManager.abortMultipartUploads(
+				s3Store.getBucketName(), _computeStartDate());
+		};
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		S3Store s3Store = (S3Store)_store;
-
-		TransferManager transferManager = s3Store.getTransferManager();
-
-		transferManager.abortMultipartUploads(
-			s3Store.getBucketName(), _computeStartDate());
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(1, TimeUnit.DAY);
 	}
 
 	private Date _computeStartDate() {
@@ -91,13 +73,7 @@ public class AbortedMultipartUploadCleanerMessageListener
 		return Date.from(zonedDateTime.toInstant());
 	}
 
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
 	@Reference(target = "(store.type=com.liferay.portal.store.s3.S3Store)")
 	private Store _store;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

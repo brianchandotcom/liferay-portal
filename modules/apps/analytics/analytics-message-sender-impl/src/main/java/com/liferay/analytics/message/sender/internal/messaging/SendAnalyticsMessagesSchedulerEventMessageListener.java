@@ -15,68 +15,50 @@
 package com.liferay.analytics.message.sender.internal.messaging;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
  */
-@Component(service = {})
+@Component(service = SchedulerJobConfiguration.class)
 public class SendAnalyticsMessagesSchedulerEventMessageListener
-	extends BaseMessageListener {
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate() {
-		Class<?> clazz = getClass();
+	public UnsafeConsumer<Long, Exception> getCompanyJobExecutor() {
+		return companyId -> {
+			if (_isDisabled()) {
+				return;
+			}
 
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, 1, TimeUnit.HOUR);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+			_analyticsMessagesHelper.send(companyId);
+		};
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		if (_isDisabled()) {
-			return;
-		}
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> {
+			if (_isDisabled()) {
+				return;
+			}
 
-		_companyLocalService.forEachCompanyId(
-			companyId -> _analyticsMessagesHelper.send(companyId));
+			_companyLocalService.forEachCompanyId(
+				companyId -> _analyticsMessagesHelper.send(companyId));
+		};
 	}
 
 	@Override
-	protected void doReceive(Message message, long companyId) throws Exception {
-		if (_isDisabled()) {
-			return;
-		}
-
-		_analyticsMessagesHelper.send(companyId);
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			1, TimeUnit.HOUR);
 	}
 
 	private boolean _isDisabled() {
@@ -97,11 +79,5 @@ public class SendAnalyticsMessagesSchedulerEventMessageListener
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

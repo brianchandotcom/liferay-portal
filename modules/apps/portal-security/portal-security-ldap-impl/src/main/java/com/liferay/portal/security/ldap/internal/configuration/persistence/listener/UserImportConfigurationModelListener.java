@@ -14,18 +14,15 @@
 
 package com.liferay.portal.security.ldap.internal.configuration.persistence.listener;
 
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
@@ -36,7 +33,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
@@ -46,54 +42,46 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration",
-	service = {}
+	service = SchedulerJobConfiguration.class
 )
-public class UserImportConfigurationModelListener extends BaseMessageListener {
+public class UserImportConfigurationModelListener
+	implements SchedulerJobConfiguration {
+
+	public UnsafeConsumer<Long, Exception> getCompanyJobExecutor() {
+		return companyId -> _importUsers(companyId, _getLastImportTime());
+	}
+
+	@Override
+	public String getDestinationName() {
+		return LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT;
+	}
+
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> {
+			long time = _getLastImportTime();
+
+			_companyLocalService.forEachCompanyId(
+				companyId -> _importUsers(companyId, time));
+		};
+	}
+
+	@Override
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_ldapImportConfiguration.importInterval(), TimeUnit.MINUTE);
+	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		LDAPImportConfiguration ldapImportConfiguration =
-			ConfigurableUtil.createConfigurable(
-				LDAPImportConfiguration.class, properties);
+		_ldapImportConfiguration = ConfigurableUtil.createConfigurable(
+			LDAPImportConfiguration.class, properties);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"LDAP user imports will be attempted every " +
-					ldapImportConfiguration.importInterval() + " minutes");
+					_ldapImportConfiguration.importInterval() + " minutes");
 		}
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			ldapImportConfiguration.importInterval(), TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry,
-			LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
-	}
-
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		long time = _getLastImportTime();
-
-		_companyLocalService.forEachCompanyId(
-			companyId -> _importUsers(companyId, time));
-	}
-
-	@Override
-	protected void doReceive(Message message, long companyId) throws Exception {
-		_importUsers(companyId, _getLastImportTime());
 	}
 
 	private long _getLastImportTime() throws Exception {
@@ -148,6 +136,8 @@ public class UserImportConfigurationModelListener extends BaseMessageListener {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	private LDAPImportConfiguration _ldapImportConfiguration;
+
 	@Reference(
 		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)"
 	)
@@ -159,11 +149,5 @@ public class UserImportConfigurationModelListener extends BaseMessageListener {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile LDAPUserImporter _ldapUserImporter;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

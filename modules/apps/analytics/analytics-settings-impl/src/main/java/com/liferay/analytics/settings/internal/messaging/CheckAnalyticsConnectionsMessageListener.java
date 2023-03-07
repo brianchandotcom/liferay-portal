@@ -17,79 +17,59 @@ package com.liferay.analytics.settings.internal.messaging;
 import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = {})
+@Component(service = SchedulerJobConfiguration.class)
 public class CheckAnalyticsConnectionsMessageListener
-	extends BaseMessageListener {
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate() {
-		Class<?> clazz = getClass();
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> {
+			Map<Long, AnalyticsConfiguration> analyticsConfigurations =
+				_analyticsConfigurationRegistry.getAnalyticsConfigurations();
 
-		String className = clazz.getName();
+			if (analyticsConfigurations.isEmpty()) {
+				return;
+			}
 
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, 15, TimeUnit.MINUTE);
+			for (Map.Entry<Long, AnalyticsConfiguration>
+					analyticsConfigurationEntry :
+						analyticsConfigurations.entrySet()) {
 
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
+				try {
+					_analyticsMessageSenderClient.validateConnection(
+						analyticsConfigurationEntry.getKey());
+				}
+				catch (Exception exception) {
+					_log.error(
+						"Unable to connect Analytics Cloud for company " +
+							analyticsConfigurationEntry.getKey(),
+						exception);
 
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+					throw exception;
+				}
+			}
+		};
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		Map<Long, AnalyticsConfiguration> analyticsConfigurations =
-			_analyticsConfigurationRegistry.getAnalyticsConfigurations();
-
-		if (analyticsConfigurations.isEmpty()) {
-			return;
-		}
-
-		for (Map.Entry<Long, AnalyticsConfiguration>
-				analyticsConfigurationEntry :
-					analyticsConfigurations.entrySet()) {
-
-			try {
-				_analyticsMessageSenderClient.validateConnection(
-					analyticsConfigurationEntry.getKey());
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to connect Analytics Cloud for company " +
-						analyticsConfigurationEntry.getKey(),
-					exception);
-
-				throw exception;
-			}
-		}
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			15, TimeUnit.MINUTE);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -100,11 +80,5 @@ public class CheckAnalyticsConnectionsMessageListener
 
 	@Reference
 	private AnalyticsMessageSenderClient _analyticsMessageSenderClient;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

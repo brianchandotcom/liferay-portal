@@ -52,7 +52,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -244,11 +243,13 @@ public class ObjectEntryRowInfoItemRenderer
 						}
 					}
 
-					return Optional.ofNullable(
-						entry.getValue()
-					).orElse(
-						StringPool.BLANK
-					);
+					Object value = entry.getValue();
+
+					if (value != null) {
+						return value;
+					}
+
+					return StringPool.BLANK;
 				},
 				(oldValue, newValue) -> oldValue, LinkedHashMap::new)
 		);

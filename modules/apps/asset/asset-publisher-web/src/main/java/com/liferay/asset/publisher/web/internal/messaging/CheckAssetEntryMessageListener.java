@@ -16,17 +16,13 @@ package com.liferay.asset.publisher.web.internal.messaging;
 
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.messaging.helper.AssetEntriesCheckerHelper;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -34,7 +30,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -48,52 +43,28 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
-	service = {}
+	service = SchedulerJobConfiguration.class
 )
-public class CheckAssetEntryMessageListener extends BaseMessageListener {
+public class CheckAssetEntryMessageListener
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		AssetPublisherWebConfiguration assetPublisherWebConfiguration =
-			ConfigurableUtil.createConfigurable(
-				AssetPublisherWebConfiguration.class, properties);
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _getTrigger(
-			assetPublisherWebConfiguration.checkCronExpression(),
-			assetPublisherWebConfiguration.checkInterval());
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return _assetEntriesCheckerUtil::checkAssetEntries;
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		_assetEntriesCheckerUtil.checkAssetEntries();
-	}
-
-	private Trigger _getTrigger(String checkCronExpression, int checkInterval) {
-		Trigger trigger = null;
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
+	public TriggerConfiguration getTriggerConfiguration() {
+		String checkCronExpression =
+			_assetPublisherWebConfiguration.checkCronExpression();
 
 		if (Validator.isNotNull(checkCronExpression)) {
 			try {
-				trigger = _triggerFactory.createTrigger(
-					className, className, null, null, checkCronExpression);
+				_triggerFactory.createTrigger(
+					getName(), getName(), null, null, checkCronExpression);
+
+				return TriggerConfiguration.createTriggerConfiguration(
+					checkCronExpression);
 			}
 			catch (RuntimeException runtimeException) {
 				if (_log.isWarnEnabled()) {
@@ -102,12 +73,14 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 			}
 		}
 
-		if (trigger == null) {
-			trigger = _triggerFactory.createTrigger(
-				className, className, null, null, checkInterval, TimeUnit.HOUR);
-		}
+		return TriggerConfiguration.createTriggerConfiguration(
+			_assetPublisherWebConfiguration.checkInterval(), TimeUnit.HOUR);
+	}
 
-		return trigger;
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
+			AssetPublisherWebConfiguration.class, properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -116,8 +89,7 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 	@Reference
 	private AssetEntriesCheckerHelper _assetEntriesCheckerUtil;
 
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
+	private AssetPublisherWebConfiguration _assetPublisherWebConfiguration;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

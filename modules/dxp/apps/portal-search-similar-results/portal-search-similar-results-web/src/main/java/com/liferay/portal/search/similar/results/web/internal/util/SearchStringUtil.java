@@ -62,7 +62,7 @@ public class SearchStringUtil {
 
 	public static String[] splitAndUnquote(String s) {
 		return Stream.of(
-			StringUtil.split(s.trim(), CharPool.COMMA)
+			StringUtil.split(s, CharPool.COMMA)
 		).map(
 			String::trim
 		).map(

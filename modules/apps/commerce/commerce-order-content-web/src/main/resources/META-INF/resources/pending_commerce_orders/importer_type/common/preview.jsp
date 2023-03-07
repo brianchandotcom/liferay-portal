@@ -38,22 +38,25 @@ CommerceOrderImporterType commerceOrderImporterType = commerceOrderContentDispla
 		<aui:input name="commerceOrderImporterTypeKey" type="hidden" value="<%= commerceOrderImporterTypeKey %>" />
 		<aui:input name="<%= commerceOrderImporterType.getCommerceOrderImporterItemParamName() %>" type="hidden" value="<%= commerceOrderImporterItemParamName %>" />
 
-		<frontend-data-set:classic-display
-			contextParams='<%=
-				HashMapBuilder.<String, String>put(
-					"commerceOrderId", String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId())
-				).put(
-					"commerceOrderImporterTypeKey", commerceOrderImporterTypeKey
-				).put(
-					commerceOrderImporterType.getCommerceOrderImporterItemParamName(), commerceOrderImporterItemParamName
-				).build()
-			%>'
-			dataProviderKey="<%= CommerceOrderFDSNames.PREVIEW_ORDER_ITEMS %>"
-			id="<%= CommerceOrderFDSNames.PREVIEW_ORDER_ITEMS %>"
-			itemsPerPage="<%= 10 %>"
-			showSearch="<%= false %>"
-			style="fluid"
-		/>
+		<div class="pb-6">
+			<frontend-data-set:classic-display
+				contextParams='<%=
+					HashMapBuilder.<String, String>put(
+						"commerceOrderId", String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId())
+					).put(
+						"commerceOrderImporterTypeKey", commerceOrderImporterTypeKey
+					).put(
+						commerceOrderImporterType.getCommerceOrderImporterItemParamName(), commerceOrderImporterItemParamName
+					).build()
+				%>'
+				dataProviderKey="<%= CommerceOrderFDSNames.PREVIEW_ORDER_ITEMS %>"
+				id="<%= CommerceOrderFDSNames.PREVIEW_ORDER_ITEMS %>"
+				itemsPerPage="<%= 10 %>"
+				showManagementBar="<%= false %>"
+				showSearch="<%= false %>"
+				style="fluid"
+			/>
+		</div>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" name="importButton" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "import") %>' />

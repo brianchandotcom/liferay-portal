@@ -385,7 +385,7 @@ public abstract class Base${schemaName}ResourceImpl
 		/>
 		@Override
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		public void create(java.util.Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
+		public void create(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 
 			<#if createStrategies?has_content>
 				UnsafeConsumer<${javaDataType}, Exception> ${schemaVarName}UnsafeConsumer = null;
@@ -517,7 +517,7 @@ public abstract class Base${schemaName}ResourceImpl
 		}
 
 		@Override
-		public void delete(java.util.Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
+		public void delete(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#if deleteBatchJavaMethodSignature?? && properties?keys?seq_contains("id")>
 				for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
 					delete${schemaName}(${schemaVarName}.getId());
@@ -841,7 +841,7 @@ public abstract class Base${schemaName}ResourceImpl
 	}
 
 	<#if generateBatch>
-		public void setContextBatchUnsafeConsumer(UnsafeBiConsumer<java.util.Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer) {
+		public void setContextBatchUnsafeConsumer(UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer) {
 			this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 		}
 	</#if>
@@ -973,7 +973,7 @@ public abstract class Base${schemaName}ResourceImpl
 		}
 	</#if>
 
-	protected <T, R, E extends Throwable> List<R> transform(java.util.Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) {
+	protected <T, R, E extends Throwable> List<R> transform(Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) {
 		return TransformUtil.transform(collection, unsafeFunction);
 	}
 
@@ -989,7 +989,7 @@ public abstract class Base${schemaName}ResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	protected <T, R, E extends Throwable> List<R> unsafeTransform(java.util.Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) throws E {
+	protected <T, R, E extends Throwable> List<R> unsafeTransform(Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) throws E {
 		return TransformUtil.unsafeTransform(collection, unsafeFunction);
 	}
 
@@ -997,7 +997,7 @@ public abstract class Base${schemaName}ResourceImpl
 		return TransformUtil.unsafeTransform(array, unsafeFunction, clazz);
 	}
 
-	protected <T, R, E extends Throwable> R[] unsafeTransformToArray(java.util.Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction, Class<?> clazz) throws E {
+	protected <T, R, E extends Throwable> R[] unsafeTransformToArray(Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction, Class<?> clazz) throws E {
 		return TransformUtil.unsafeTransformToArray(collection, unsafeFunction, clazz);
 	}
 
@@ -1008,7 +1008,7 @@ public abstract class Base${schemaName}ResourceImpl
 	protected AcceptLanguage contextAcceptLanguage;
 
 	<#if generateBatch>
-		protected UnsafeBiConsumer<java.util.Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer;
+		protected UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer;
 	</#if>
 
 	protected com.liferay.portal.kernel.model.Company contextCompany;

@@ -35,7 +35,7 @@ definition {
 	@refactordone
 	test CanDisableApps {
 		property portal.acceptance = "true";
-		property testray.component.names = "Asset Lists";
+		property testray.component.names = "Collections";
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="ParentFieldSet" index-type="" instance-id="8ps6PdCf" name="ParentFieldSet" type="fieldset">
+		<dynamic-element field-reference="GrandChild" index-type="keyword" instance-id="6tF6cZDv" name="Field68979894" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent1GrandChild1]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="GrandChild" index-type="keyword" instance-id="0s1ms1s1" name="Field68979894" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent1GrandChild2]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Parent" index-type="keyword" instance-id="pkc7g3J9" name="Text80567124" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent1]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Child" index-type="keyword" instance-id="92sKERxS" name="Field32391309" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent1Child1]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Child" index-type="keyword" instance-id="34hptw4d" name="Field32391309" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent1Child2]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element field-reference="ParentFieldSet" index-type="" instance-id="jr8j5rlc" name="ParentFieldSet" type="fieldset">
+		<dynamic-element field-reference="GrandChild" index-type="keyword" instance-id="7wwx082e" name="Field68979894" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent2GrandChild1]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="GrandChild" index-type="keyword" instance-id="yey5nnj9" name="Field68979894" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent2GrandChild2]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Parent" index-type="keyword" instance-id="cnvlac12" name="Text80567124" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent2]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Child" index-type="keyword" instance-id="ldldzahi" name="Field32391309" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent2Child1]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element field-reference="ParentFieldSet" index-type="" instance-id="uj7xbtnn" name="ParentFieldSet" type="fieldset">
+		<dynamic-element field-reference="GrandChild" index-type="keyword" instance-id="0jnwqpca" name="Field68979894" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent3GrandChild1]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Parent" index-type="keyword" instance-id="6ktsvmlv" name="Text80567124" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent3]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Child" index-type="keyword" instance-id="jcuh0bfx" name="Field32391309" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent3Child1]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Child" index-type="keyword" instance-id="jvwlw4vc" name="Field32391309" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Parent3Child2]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

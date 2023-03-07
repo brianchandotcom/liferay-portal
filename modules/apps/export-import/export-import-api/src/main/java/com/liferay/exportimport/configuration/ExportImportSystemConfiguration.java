@@ -39,8 +39,8 @@ public interface ExportImportSystemConfiguration {
 	 * Export/Import entries.
 	 */
 	@Meta.AD(
-		deflt = "30", description = "cleanup-job-interval-help",
-		name = "cleanup-job-interval", required = false
+		deflt = "30", description = "export-import-clean-up-job-interval-help",
+		name = "export-import-clean-up-job-interval", required = false
 	)
 	public int cleanupJobInterval();
 

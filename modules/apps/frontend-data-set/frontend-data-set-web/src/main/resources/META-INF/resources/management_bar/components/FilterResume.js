@@ -12,9 +12,9 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
@@ -28,17 +28,48 @@ function FilterResume(props) {
 
 	const [open, setOpen] = useState(false);
 
-	const label = (
-		<ClayLabel
+	const button = (
+		<ClayButton
 			className={classNames(
-				'filter-resume component-label tbar-label mr-2',
+				'filter-resume component-label tbar-label',
 				props.disabled && 'disabled',
 				open && 'active'
 			)}
-			closeButtonProps={{
-				className: 'filter-resume-close',
-				disabled: props.disabled,
-				onClick: () => {
+			displayType="secondary"
+			size="sm"
+		>
+			<div className="filter-resume-content">
+				<ClayIcon
+					className="mr-2"
+					symbol={open ? 'caret-top' : 'caret-bottom'}
+				/>
+
+				<div className="label-section">
+					{props.label}: {props.selectedItemsLabel}
+				</div>
+			</div>
+		</ClayButton>
+	);
+
+	const dropDownButtonGroup = (
+		<ClayButton.Group>
+			<ClayDropDown
+				active={open}
+				className="d-inline-flex"
+				onActiveChange={setOpen}
+				trigger={button}
+			>
+				<li className="dropdown-subheader">{props.label}</li>
+
+				<Filter {...props} />
+			</ClayDropDown>
+
+			<ClayButton
+				className="filter-resume-close"
+				disabled={props.disabled}
+				displayType="secondary"
+				monospaced
+				onClick={() =>
 					viewsDispatch({
 						type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
 						value: filters.map((filter) => ({
@@ -51,39 +82,17 @@ function FilterResume(props) {
 								  }
 								: {}),
 						})),
-					});
-				},
-				title: Liferay.Language.get('remove-filter'),
-			}}
-			role="button"
-		>
-			<div className="filter-resume-content">
-				<ClayIcon
-					className="mr-2"
-					symbol={open ? 'caret-top' : 'caret-bottom'}
-				/>
-
-				<div className="label-section">
-					{props.label}: {props.selectedItemsLabel}
-				</div>
-			</div>
-		</ClayLabel>
+					})
+				}
+				size="sm"
+				title={Liferay.Language.get('remove-filter')}
+			>
+				<ClayIcon symbol="times-small" />
+			</ClayButton>
+		</ClayButton.Group>
 	);
 
-	const dropDown = (
-		<ClayDropDown
-			active={open}
-			className="d-inline-flex"
-			onActiveChange={setOpen}
-			trigger={label}
-		>
-			<li className="dropdown-subheader">{props.label}</li>
-
-			<Filter {...props} />
-		</ClayDropDown>
-	);
-
-	return props.disabled ? label : dropDown;
+	return props.disabled ? button : dropDownButtonGroup;
 }
 
 FilterResume.propTypes = {

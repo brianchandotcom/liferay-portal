@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.StagingGroupHelper;
@@ -52,7 +51,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -142,25 +140,31 @@ public class FragmentFileInstaller implements FileInstaller {
 
 			group = _getDeploymentGroup(
 				company.getCompanyId(), deployJSONObject.getString("groupKey"));
+
+			_importFragmentEntriesAndLayouts(company, file, group);
 		}
 		else if (company != null) {
 			CompanyThreadLocal.setCompanyId(company.getCompanyId());
 
 			group = _groupLocalService.getCompanyGroup(company.getCompanyId());
+
+			_importFragmentEntriesAndLayouts(company, file, group);
 		}
 		else {
-			List<Company> companies = _companyLocalService.getCompanies(0, 1);
+			_companyLocalService.forEachCompany(
+				currentCompany -> {
+					try {
+						CompanyThreadLocal.setCompanyId(
+							currentCompany.getCompanyId());
 
-			if (ListUtil.isEmpty(companies)) {
-				throw new Exception();
-			}
-
-			company = companies.get(0);
-
-			CompanyThreadLocal.setCompanyId(company.getCompanyId());
+						_importFragmentEntriesAndLayouts(
+							currentCompany, file, null);
+					}
+					catch (Exception exception) {
+						_log.error(exception);
+					}
+				});
 		}
-
-		_importFragmentEntriesAndLayouts(company, file, group);
 	}
 
 	private JSONObject _getDeployJSONObject(File file)

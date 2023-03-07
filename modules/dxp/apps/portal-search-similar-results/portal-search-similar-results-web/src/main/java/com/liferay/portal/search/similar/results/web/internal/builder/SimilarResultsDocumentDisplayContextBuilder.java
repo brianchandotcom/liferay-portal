@@ -61,7 +61,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -609,7 +608,7 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 
 		SimilarResultsPortletPreferences similarResultsPortletPreferences =
 			new SimilarResultsPortletPreferencesImpl(
-				Optional.of(_renderRequest.getPreferences()));
+				_renderRequest.getPreferences());
 
 		if (Objects.equals(
 				similarResultsPortletPreferences.getLinkBehavior(),

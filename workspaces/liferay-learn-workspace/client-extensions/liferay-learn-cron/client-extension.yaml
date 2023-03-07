@@ -1,6 +1,6 @@
 assemble:
     - from: .
-      include: "liferay_learn_cron.sh"
+      include: "liferay_learn_cron_entrypoint.sh"
       into: .
     - from: build/libs
       include: "*.jar"

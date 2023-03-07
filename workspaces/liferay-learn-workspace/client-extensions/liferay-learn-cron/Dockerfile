@@ -8,6 +8,6 @@ RUN chown liferay:liferay /public_html
 
 USER liferay
 
-COPY liferay_learn_cron.sh *.jar /home/liferay/
+COPY liferay_learn_cron_entrypoint.sh *.jar /home/liferay/
 
-ENTRYPOINT ["/usr/bin/tini", "--", "/home/liferay/liferay_learn_cron.sh"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/home/liferay/liferay_learn_cron_entrypoint.sh"]

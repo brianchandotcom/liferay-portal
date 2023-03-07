@@ -151,45 +151,7 @@ public class FragmentFileInstaller implements FileInstaller {
 			company = companies.get(0);
 		}
 
-		User user = _getUser(company, group);
-
-		if (user == null) {
-			throw new Exception();
-		}
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		if (company != null) {
-			serviceContext.setCompanyId(company.getCompanyId());
-		}
-		else {
-			serviceContext.setCompanyId(CompanyConstants.SYSTEM);
-		}
-
-		serviceContext.setUserId(user.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		long groupId = 0;
-
-		if (group != null) {
-			groupId = group.getGroupId();
-		}
-
-		_fragmentsImporter.importFragmentEntries(
-			user.getUserId(), groupId, 0, file, true);
-
-		if ((company != null) && (group != null) &&
-			(company.getGroupId() != group.getGroupId())) {
-
-			_layoutsImporter.importFile(
-				user.getUserId(), groupId, 0L, file, true);
-		}
+		_importFragmentEntriesAndLayouts(company, file, group);
 	}
 
 	private JSONObject _getDeployJSONObject(File file)
@@ -276,6 +238,51 @@ public class FragmentFileInstaller implements FileInstaller {
 		}
 
 		return user;
+	}
+
+	private void _importFragmentEntriesAndLayouts(
+			Company company, File file, Group group)
+		throws Exception {
+
+		User user = _getUser(company, group);
+
+		if (user == null) {
+			throw new Exception();
+		}
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		if (company != null) {
+			serviceContext.setCompanyId(company.getCompanyId());
+		}
+		else {
+			serviceContext.setCompanyId(CompanyConstants.SYSTEM);
+		}
+
+		serviceContext.setUserId(user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		long groupId = 0;
+
+		if (group != null) {
+			groupId = group.getGroupId();
+		}
+
+		_fragmentsImporter.importFragmentEntries(
+			user.getUserId(), groupId, 0, file, true);
+
+		if ((company != null) && (group != null) &&
+			(company.getGroupId() != group.getGroupId())) {
+
+			_layoutsImporter.importFile(
+				user.getUserId(), groupId, 0L, file, true);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

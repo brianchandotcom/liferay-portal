@@ -131,14 +131,6 @@ public class PortalUtil {
 		_portal.addPageTitle(title, httpServletRequest);
 	}
 
-	public static boolean addPortalInetSocketAddressEventListener(
-		PortalInetSocketAddressEventListener
-			portalInetSocketAddressEventListener) {
-
-		return _portal.addPortalInetSocketAddressEventListener(
-			portalInetSocketAddressEventListener);
-	}
-
 	/**
 	 * Adds an entry to the portlet breadcrumbs for the page in the request.
 	 *
@@ -1290,12 +1282,6 @@ public class PortalUtil {
 		return _portal;
 	}
 
-	public static PortalInetSocketAddressEventListener[]
-		getPortalInetSocketAddressEventListeners() {
-
-		return _portal.getPortalInetSocketAddressEventListeners();
-	}
-
 	public static InetAddress getPortalLocalInetAddress(boolean secure) {
 		return _portal.getPortalLocalInetAddress(secure);
 	}
@@ -1964,14 +1950,6 @@ public class PortalUtil {
 
 	public static boolean isValidResourceId(String resourceId) {
 		return _portal.isValidResourceId(resourceId);
-	}
-
-	public static boolean removePortalEventListener(
-		PortalInetSocketAddressEventListener
-			portalInetSocketAddressEventListener) {
-
-		return _portal.removePortalInetSocketAddressEventListener(
-			portalInetSocketAddressEventListener);
 	}
 
 	public static void resetCDNHosts() {

@@ -139,10 +139,6 @@ public interface Portal {
 	public void addPageTitle(
 		String title, HttpServletRequest httpServletRequest);
 
-	public boolean addPortalInetSocketAddressEventListener(
-		PortalInetSocketAddressEventListener
-			portalInetSocketAddressEventListener);
-
 	/**
 	 * Adds an entry to the portlet breadcrumbs for the page.
 	 *
@@ -853,9 +849,6 @@ public interface Portal {
 	public long getPlidFromPortletId(long groupId, String portletId)
 		throws PortalException;
 
-	public PortalInetSocketAddressEventListener[]
-		getPortalInetSocketAddressEventListeners();
-
 	public InetAddress getPortalLocalInetAddress(boolean secure);
 
 	public int getPortalLocalPort(boolean secure);
@@ -1192,10 +1185,6 @@ public interface Portal {
 	public boolean isValidPortalDomain(long companyId, String domain);
 
 	public boolean isValidResourceId(String resourceId);
-
-	public boolean removePortalInetSocketAddressEventListener(
-		PortalInetSocketAddressEventListener
-			portalInetSocketAddressEventListener);
 
 	public void resetCDNHosts();
 

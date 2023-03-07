@@ -120,7 +120,15 @@ definition {
 
 	@summary = "This calls the JSON WS API to create a Case Results object"
 	macro createCaseResultAPI {
-		Variables.assertDefined(parameterList = "${buildId},${casesId},${componentId},${runId}");
+		Variables.assertDefined(parameterList = "${buildId},${casesId},${caseResultName},${componentId},${runId}");
+
+		if (!(isSet(key))) {
+			var key = "UNTESTED";
+		}
+
+		if (!(isSet(statusCaseResult))) {
+			var statusCaseResult = "Untested";
+		}
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -130,6 +138,11 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
+					"dueStatus": {
+						"key": "${key}",
+						"name": "${statusCaseResult}"
+					},
+					"name": "${caseResultName}",
 					"r_buildToCaseResult_c_buildId": "${buildId}",
 					"r_caseToCaseResult_c_caseId": "${casesId}",
 					"r_componentToCaseResult_c_componentId": "${componentId}",
@@ -146,7 +159,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to create a Case Results For Subtask object"
 	macro createCaseResultsForSubtaskAPI {
-		Variables.assertDefined(parameterList = "${name},${caseResultId},${subtaskId}");
+		Variables.assertDefined(parameterList = "${caseResultForSubtask},${caseResultId},${subtaskId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -156,7 +169,7 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
-					"name": "${name}",
+					"name": "${caseResultForSubtask}",
 					"r_caseResultToSubtasksCasesResults_c_caseResultId": "${caseResultId}",
 					"r_subtaskToSubtasksCasesResults_c_subtaskId": "${subtaskId}"
 				}'
@@ -448,6 +461,10 @@ definition {
 	macro createRunAPI {
 		Variables.assertDefined(parameterList = "${runName},${buildId}");
 
+		if (!(isSet(runNumber))) {
+			var runNumber = 01;
+		}
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -470,7 +487,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to create a Subtask object"
 	macro createSubtaskAPI {
-		Variables.assertDefined(parameterList = "${subtaskName},${taskId}");
+		Variables.assertDefined(parameterList = ${subtaskName});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -488,9 +505,13 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
-					"name": "${subtaskName}",
+					"dueStatus": {
+						"key": "${key}",
+						"name": "${statusSubtask}"
+					},
 					"number": "${subtaskNumber}",
 					"score": "${score}",
+					"name": "${subtaskName}",
 					"r_taskToSubtasks_c_taskId": "${taskId}"
 				}'
 		''';
@@ -546,6 +567,10 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
+					"dueStatus": {
+						"key": "${key}",
+						"name": "${statusTask}"
+					},
 					"name": "${taskName}",
 					"r_buildToTasks_c_buildId": "${buildId}"
 				}'

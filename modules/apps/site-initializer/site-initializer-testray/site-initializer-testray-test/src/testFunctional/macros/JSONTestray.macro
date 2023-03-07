@@ -14,6 +14,34 @@ definition {
 			routineId = ${routineId});
 	}
 
+	macro addCaseResult {
+		Variables.assertDefined(parameterList = "${buildName},${caseResultName},${componentName},${caseName},${runName}");
+
+		var buildId = JSONTestraySetter.getBuildId(buildName = ${buildName});
+		var componentId = JSONTestraySetter.getComponentId(componentName = ${componentName});
+		var casesId = JSONTestraySetter.getCaseId(caseName = ${caseName});
+		var runId = JSONTestraySetter.getRunId(runName = ${runName});
+
+		var caseResultId = JSONTestrayAPI.createCaseResultAPI(
+			caseResultName = ${caseResultName},
+			buildId = ${buildId},
+			casesId = ${casesId},
+			componentId = ${componentId},
+			runId = ${runId});
+	}
+
+	macro addCaseResultForSubtask {
+		Variables.assertDefined(parameterList = "${caseResultForSubtask},${caseResultName},${subtaskName}");
+
+		var caseResultId = JSONTestraySetter.getCaseResultId(caseResultName = ${caseResultName});
+		var subtaskId = JSONTestraySetter.getSubtaskId(subtaskName = ${subtaskName});
+
+		var caseResultForSubtaskId = JSONTestrayAPI.createCaseResultsForSubtaskAPI(
+			caseResultForSubtask = ${caseResultForSubtask},
+			caseResultId = ${caseResultId},
+			subtaskId = ${subtaskId});
+	}
+
 	macro addCases {
 		Variables.assertDefined(parameterList = "${caseName},${projectName},${componentName}");
 
@@ -142,6 +170,30 @@ definition {
 			routineName = ${routineName});
 	}
 
+	macro addRun {
+		Variables.assertDefined(parameterList = "${runName},${buildName}");
+
+		var buildId = JSONTestraySetter.getBuildId(buildName = ${buildName});
+
+		var runId = JSONTestrayAPI.createRunAPI(
+			buildId = ${buildId},
+			runName = ${runName});
+	}
+
+	macro addSubtask {
+		Variables.assertDefined(parameterList = "${subtaskName},${subtaskNumber},${taskName},${key},${score}");
+
+		var taskId = JSONTestraySetter.getTaskId(taskName = ${taskName});
+
+		var subtaskId = JSONTestrayAPI.createSubtaskAPI(
+			key = ${key},
+			score = ${score},
+			statusSubtask = ${statusSubtask},
+			subtaskName = ${subtaskName},
+			subtaskNumber = ${subtaskNumber},
+			taskId = ${taskId});
+	}
+
 	macro addSuite {
 		if (!(isSet(projectName))) {
 			var projectName = "Project 1";
@@ -152,6 +204,18 @@ definition {
 		var suiteId = JSONTestrayAPI.createSuiteAPI(
 			projectId = ${projectId},
 			suiteName = ${suiteName});
+	}
+
+	macro addTask {
+		Variables.assertDefined(parameterList = "${taskName},${key},${statusTask},${buildName}");
+
+		var buildId = JSONTestraySetter.getBuildId(buildName = ${buildName});
+
+		var taskId = JSONTestrayAPI.createTaskAPI(
+			buildId = ${buildId},
+			key = ${key},
+			statusTask = ${statusTask},
+			taskName = ${taskName});
 	}
 
 	macro addTeam {

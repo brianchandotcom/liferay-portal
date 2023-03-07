@@ -16,6 +16,14 @@ definition {
 		return ${caseId};
 	}
 
+	macro getCaseResultId {
+		var caseResultId = JSONTestrayAPI._getObjectId(
+			object = "caseresults",
+			objectName = ${caseResultName});
+
+		return ${caseResultId};
+	}
+
 	macro getCaseTypeId {
 		var caseTypeId = JSONTestrayAPI._getObjectId(
 			object = "casetypes",
@@ -78,12 +86,36 @@ definition {
 		return ${routineId};
 	}
 
+	macro getRunId {
+		var runId = JSONTestrayAPI._getObjectId(
+			object = "runs",
+			objectName = ${runName});
+
+		return ${runId};
+	}
+
+	macro getSubtaskId {
+		var subtaskId = JSONTestrayAPI._getObjectId(
+			object = "subtasks",
+			objectName = ${subtaskName});
+
+		return ${subtaskId};
+	}
+
 	macro getSuiteId {
 		var suiteId = JSONTestrayAPI._getObjectId(
 			object = "suites",
 			objectName = ${suiteName});
 
 		return ${suiteId};
+	}
+
+	macro getTaskId {
+		var taskId = JSONTestrayAPI._getObjectId(
+			object = "tasks",
+			objectName = ${taskName});
+
+		return ${taskId};
 	}
 
 	macro getTeamId {

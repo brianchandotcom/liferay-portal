@@ -7,7 +7,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/builds \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"description": "${description}",
@@ -22,39 +22,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
-	}
-
-	@summary = "create a Case Result via API"
-	macro createCaseResultAPI {
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/c/caseresults \
-				-u test@liferay.com:test \
-                -H 'accept: application/json' \
-				-H 'Content-Type: application/json' \
-				-d '{
-					"dueStatus": {
-						"key": "${key}",
-						"name": "${statusCaseResult}"
-					},
-					"r_buildToCaseResult_c_buildId": "${buildId}",
-					"r_caseToCaseResult_c_caseId": "${casesId}",
-					"r_componentToCaseResult_c_componentId": "${componentId}",
-					"r_runToCaseResult_c_runId": "${runId}"
-				}'
-		''';
-
-		var response = JSONCurlUtil.post("${curl}", "$.id");
-
-		echo("${response}");
-
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create second Case Result via API"
@@ -64,7 +36,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/caseresults \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"dueStatus": {
@@ -78,11 +50,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create third Case Result via API"
@@ -92,7 +64,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/caseresults \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"dueStatus": {
@@ -106,11 +78,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create fourth Case Result via API"
@@ -120,7 +92,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/caseresults \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"dueStatus": {
@@ -134,34 +106,39 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
-	@summary = "create a Case Results For Subtask via API"
-	macro createCaseResultsForSubtaskAPI {
+	@summary = "create a Case Result via API"
+	macro createCaseResultAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/o/c/subtaskscasesresultses \
+			${portalURL}/o/c/caseresults \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
-					"name": "${name}",
-					"r_caseResultToSubtasksCasesResults_c_caseResultId": "${caseResultId}",
-					"r_subtaskToSubtasksCasesResults_c_subtaskId": "${subtaskId}"
+					"dueStatus": {
+						"key": "${key}",
+						"name": "${statusCaseResult}"
+					},
+					"r_buildToCaseResult_c_buildId": "${buildId}",
+					"r_caseToCaseResult_c_caseId": "${casesId}",
+					"r_componentToCaseResult_c_componentId": "${componentId}",
+					"r_runToCaseResult_c_runId": "${runId}"
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create second Case Results For second Subtask via API"
@@ -171,7 +148,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/subtaskscasesresultses \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"name": "${name}",
@@ -180,11 +157,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create third Case Results For second Subtask via API"
@@ -194,7 +171,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/subtaskscasesresultses \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"name": "${name}",
@@ -203,11 +180,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create fourth Case Results For second Subtask via API"
@@ -217,7 +194,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/subtaskscasesresultses \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"name": "${name}",
@@ -226,11 +203,34 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
+	}
+
+	@summary = "create a Case Results For Subtask via API"
+	macro createCaseResultsForSubtaskAPI {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/subtaskscasesresultses \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"name": "${name}",
+					"r_caseResultToSubtasksCasesResults_c_caseResultId": "${caseResultId}",
+					"r_subtaskToSubtasksCasesResults_c_subtaskId": "${subtaskId}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post(${curl}, "$.id");
+
+		echo(${response});
+
+		return ${response};
 	}
 
 	@summary = "create a Case via API"
@@ -240,9 +240,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/cases \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${casesName}",
 					"description": "${description}",
 					"estimatedDuration": "${estimatedDuration}",
@@ -255,11 +255,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Case Type via API"
@@ -269,18 +269,18 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/casetypes \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${caseType}"
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Component via API"
@@ -290,20 +290,20 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/components \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${componentName}",
 					"r_projectToComponents_c_projectId": "${projectId}",
 					"r_teamToComponents_c_teamId": "${teamId}"
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Factor Categories via API"
@@ -313,18 +313,18 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/factorcategories \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${factorCategory}"
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Factor Options via API"
@@ -334,19 +334,19 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/factoroptions \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${factorOptions}",
 					"r_factorCategoryToOptions_c_factorCategoryId": "${factorCategoryId}"
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a product version via API"
@@ -356,19 +356,19 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/productversions \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${productVersion}",
 					"r_projectToProductVersions_c_projectId": "${projectId}"
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a project with description via API"
@@ -378,19 +378,19 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/projects \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
-                -H 'Content-Type: application/json' \
-                -d '{
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
 					"name": "${projectName}",
 					"description": "${projectDescription}"
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Requirements via API"
@@ -400,9 +400,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/requirements \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"summary": "${requirementName}",
 					"description": "${description}",
 					"key": "${keyRequirement}",
@@ -413,11 +413,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a routine via API"
@@ -427,20 +427,20 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/routines \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
-                -H 'Content-Type: application/json' \
-                -d '{
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
 					"name": "${routineName}",
 					"autoanalyze": "${autoanalyze}",
 					"r_routineToProjects_c_projectId": "${projectId}"
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Run via API"
@@ -450,7 +450,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/runs \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"name": "${runName}",
@@ -459,39 +459,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
-	}
-
-	@summary = "create a Subtask via API"
-	macro createSubtaskAPI {
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/c/subtasks \
-				-u test@liferay.com:test \
-                -H 'accept: application/json' \
-				-H 'Content-Type: application/json' \
-				-d '{
-					"dueStatus": {
-						"key": "${key}",
-						"name": "${statusSubtask}"
-					},
-					"name": "${subtaskName}",
-					"number": "${subtaskNumber}",
-					"score": "${score}",
-					"r_taskToSubtasks_c_taskId": "${taskId}"
-				}'
-		''';
-
-		var response = JSONCurlUtil.post("${curl}", "$.id");
-
-		echo("${response}");
-
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create second Subtask via API"
@@ -501,7 +473,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/subtasks \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"dueStatus": {
@@ -515,11 +487,39 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
+	}
+
+	@summary = "create a Subtask via API"
+	macro createSubtaskAPI {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/subtasks \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"dueStatus": {
+						"key": "${key}",
+						"name": "${statusSubtask}"
+					},
+					"name": "${subtaskName}",
+					"number": "${subtaskNumber}",
+					"score": "${score}",
+					"r_taskToSubtasks_c_taskId": "${taskId}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post(${curl}, "$.id");
+
+		echo(${response});
+
+		return ${response};
 	}
 
 	@summary = "create a Suite via API"
@@ -529,9 +529,9 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/suites \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"caseParameters": "{\"0\":${casesId},\"testrayTeams\":[{\"label\":\"Teams_1 Team\",\"value\":\"${teamId}\"}],\"testrayCaseTypes\":[{\"label\":\"Case_Type\",\"value\":\"${caseTypeId}\"}],\"testrayComponents\":[{\"label\":\"Components_1 Project\",\"value\":\"${componentId}\"}],\"testrayRequirements\":[{\"label\":\"R-516 (ATF_Requirements Summary)\",\"value\":\"${requirementId}\"}]}",
 					"name": "${suiteName}",
 					"description": "${description}",
@@ -540,11 +540,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Task via API"
@@ -554,7 +554,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/tasks \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"dueStatus": {
@@ -566,11 +566,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Team via API"
@@ -580,19 +580,19 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/teams \
 				-u test@liferay.com:test \
-                -H 'accept: application/json' \
+				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-                -d '{
+				-d '{
 					"name": "${teamName}",
 					"r_projectToTeams_c_projectId": "${projectId}"
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro deleteTestrayGroupId {
@@ -600,30 +600,30 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/builds/${buildId} \
-			${portalURL}/o/c/caseresults/${caseResultId} \
-			${portalURL}/o/c/subtaskscasesresultses/${caseResultsForSubtaskId} \
-			${portalURL}/o/c/cases/${casesId} \
-			${portalURL}/o/c/casetypes/${caseTypeId} \
-			${portalURL}/o/c/components/${componentId} \
-			${portalURL}/o/c/factorcategories/${factorCategoryId} \
-			${portalURL}/o/c/factoroptions/${factorOptionsId} \
-			${portalURL}/o/c/productversions/${productVersionId} \
-			${portalURL}/o/c/projects/${projectId} \
-			${portalURL}/o/c/requirements/${requirementId} \
-			${portalURL}/o/c/routines/${routineId} \
-			${portalURL}/o/c/runs/${runId} \
-			${portalURL}/o/c/subtasks/${subtaskId} \
-			${portalURL}/o/c/suites/${suiteId} \
-			${portalURL}/o/c/tasks/${taskId} \
-			${portalURL}/o/c/teams/${teamId} \
-			-u test@liferay.com:test \
-         	-H 'accept: application/json' \
-			-H 'Content-Type: application/json' \
+				${portalURL}/o/c/caseresults/${caseResultId} \
+				${portalURL}/o/c/subtaskscasesresultses/${caseResultsForSubtaskId} \
+				${portalURL}/o/c/cases/${casesId} \
+				${portalURL}/o/c/casetypes/${caseTypeId} \
+				${portalURL}/o/c/components/${componentId} \
+				${portalURL}/o/c/factorcategories/${factorCategoryId} \
+				${portalURL}/o/c/factoroptions/${factorOptionsId} \
+				${portalURL}/o/c/productversions/${productVersionId} \
+				${portalURL}/o/c/projects/${projectId} \
+				${portalURL}/o/c/requirements/${requirementId} \
+				${portalURL}/o/c/routines/${routineId} \
+				${portalURL}/o/c/runs/${runId} \
+				${portalURL}/o/c/subtasks/${subtaskId} \
+				${portalURL}/o/c/suites/${suiteId} \
+				${portalURL}/o/c/tasks/${taskId} \
+				${portalURL}/o/c/teams/${teamId} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
 		''';
 
-		var curl = JSONCurlUtil.delete("${curl}");
+		var curl = JSONCurlUtil.delete(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 }

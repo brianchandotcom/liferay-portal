@@ -8,63 +8,137 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
+	var buildName = "Build 1";
+	var caseName = "Case 1";
+	var caseType = "Case Type 1";
+	var componentName = "Component 1";
+	var environmentFactorsName = "Environment Factors 1";
+	var productVersion = "1.2";
+	var projectName = "Project 1";
+	var routineName = "Routine 1";
+	var suiteName = "Suite 1";
+	var teamName = "Team 1";
+	var runName = "Option 1";
+	var taskName = "Task_1";
+	var caseResultName = "case result 1";
+	var testSiteName = "Testray 2";
+
 	setUp {
 		task ("Login and create a Testray Site") {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite();
-
-			Refresh();
+			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
 		task ("Setup for SubtaskAPI") {
-			TestraySubtask.initiateMockSubtaskData();
+			JSONTestray.addProject(
+				projectDescription = "Project Description 1",
+				projectName = ${projectName});
+
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
+
+			JSONTestray.addComponent(
+				componentName = ${componentName},
+				projectName = ${projectName},
+				teamName = ${teamName});
+
+			JSONTestray.addRoutine(
+				projectName = ${projectName},
+				routineName = ${routineName});
+
+			JSONTestray.addCaseType(caseType = ${caseType});
+
+			JSONTestray.addCases(
+				caseName = ${caseName},
+				caseType = ${caseType},
+				componentName = ${componentName},
+				projectName = ${projectName});
+
+			JSONTestray.addEnvironmentFactors(environmentFactorsName = ${environmentFactorsName});
+
+			JSONTestray.addProductVersion(
+				productVersion = ${productVersion},
+				projectName = ${projectName});
+
+			JSONTestray.addBuild(
+				buildName = ${buildName},
+				productVersion = ${productVersion},
+				projectName = ${projectName},
+				routineName = ${routineName});
+
+			JSONTestray.addRun(
+				buildName = ${buildName},
+				runName = ${runName});
+
+			JSONTestray.addCaseResult(
+				caseResultName = ${caseResultName},
+				buildName = ${buildName},
+				caseName = ${caseName},
+				componentName = ${componentName},
+				runName = ${runName});
+
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
+
+			JSONTestray.addSubtask(
+				taskName = ${taskName},
+				key = "OPEN",
+				score = 3,
+				statusSubtask = "Open",
+				subtaskName = "Subtask_1",
+				subtaskNumber = 1);
+
+			JSONTestray.addSubtask(
+				taskName = ${taskName},
+				key = "OPEN",
+				score = 3,
+				statusSubtask = "Open",
+				subtaskName = "Subtask_2",
+				subtaskNumber = 2);
 		}
 
 		task ("Go to Testray 2 and select enviroments factors for the routine") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
-
-			TestrayBuild.selectDefaultEnvironmentFactors(
-				label = "Application Server",
-				label1 = "Browser",
-				listCategory = "Application Server,Browser",
-				listOption = "JBoss 6.1",
-				listOption1 = "Chrome x");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Task") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			Refresh();
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-		Testray.tearDownCP();
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "casetypes",
+			objectName = ${caseType});
 
-		if ("${testPortalInstance}" == "true") {
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "factorcategories",
+			objectName = "Category 1");
+
+		Testray.testrayApisTearDown();
+
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-169401 - Verify if, as an Administrator, can cancel merge subtasks"
-	@priority = "3"
+	@priority = 3
 	test AdminCanCancelMergeSubtask {
 		task ("Given that the user trying merge subtasks") {
 			TestrayTestflow.assertStatus(
@@ -88,7 +162,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169436 - Verify if as an Administrator I should be able to complete a subtask as Blocked"
-	@priority = "5"
+	@priority = 5
 	test AdminCanCompleteSubtaskAsBlocked {
 		task ("Given the user edit a Subtask as Blocked") {
 			TestrayTestflow.assertStatus(
@@ -117,7 +191,7 @@ definition {
 			TestraySubtask.verifySubtaskDetails(
 				comment = "None",
 				issues = "LPS-166191",
-				score = "5",
+				score = 5,
 				status = "Complete",
 				updated = "a few seconds ago",
 				userName = "Test");
@@ -125,7 +199,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160716 - Verify if as an Administrator I should be able to complete a subtask as failing"
-	@priority = "5"
+	@priority = 5
 	test AdminCanCompleteSubtaskAsFailing {
 		task ("Given the user edit a Subtask as Failed") {
 			TestrayTestflow.assertStatus(
@@ -154,7 +228,7 @@ definition {
 			TestraySubtask.verifySubtaskDetails(
 				comment = "None",
 				issues = "LPS-166191",
-				score = "5",
+				score = 5,
 				status = "Complete",
 				updated = "a few seconds ago",
 				userName = "Test");
@@ -162,7 +236,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160717 - Verify if as an Administrator I should be able to complete a subtask as passing"
-	@priority = "5"
+	@priority = 5
 	test AdminCanCompleteSubtaskAsPassing {
 		task ("Given the user edit a Subtask as passed") {
 			TestrayTestflow.assertStatus(
@@ -188,7 +262,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169435 - Verify if as an Administrator I should be able to complete a subtask as Test Fix"
-	@priority = "5"
+	@priority = 5
 	test AdminCanCompleteSubtaskAsTestFix {
 		task ("Given the user edit a Subtask as Test Fix") {
 			TestrayTestflow.assertStatus(
@@ -213,7 +287,7 @@ definition {
 			TestraySubtask.verifySubtaskDetails(
 				comment = "None",
 				issues = "LPS-166191",
-				score = "5",
+				score = 5,
 				status = "Complete",
 				updated = "a few seconds ago",
 				userName = "Test");
@@ -221,7 +295,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169399 - Verify is as an Administrator I should be able to merge a complete subtask with a complete subtask"
-	@priority = "5"
+	@priority = 5
 	test AdminCanMergeCompletedSubtaskWithCompletedSubtask {
 		task ("Given that the user complete a Subtask") {
 			TestrayTestflow.assertStatus(
@@ -271,7 +345,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169430 - Verify if as  an Administrator I should be able to merge an Complete subtask with a Open subtask"
-	@priority = "5"
+	@priority = 5
 	test AdminCanMergeCompleteSubtaskWithOpenSubtask {
 		task ("Given that the user complete a Subtask") {
 			TestrayTestflow.assertStatus(
@@ -307,7 +381,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-161402 - Verify if as  an Administrator I should be able to merge an in analysis subtask with a completed subtask"
-	@priority = "5"
+	@priority = 5
 	test AdminCanMergeInAnalysisSubtaskWithCompletedSubtask {
 		task ("Given that the user complete a Subtask") {
 			TestrayTestflow.assertStatus(
@@ -364,7 +438,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169400 - Verify is as an Administrator I should be able to merge an in analysis subtask with an in analysis subtask"
-	@priority = "5"
+	@priority = 5
 	test AdminCanMergeInAnalysisSubtaskWithInAnalysisSubtask {
 		task ("Given that the user in analysis a Subtask") {
 			TestrayTestflow.assertStatus(
@@ -408,7 +482,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160723 - Verify if as an Administrator I should be able a subtask return to open"
-	@priority = "5"
+	@priority = 5
 	test AdminCanReturnToOpenSubtask {
 		task ("Given that the user Assign and Begin Analysis of the subtask") {
 			TestrayTestflow.assertStatus(
@@ -436,7 +510,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160722 - Verify if as an Administrator I should be able to merge multiple unassigned subtasks"
-	@priority = "5"
+	@priority = 5
 	test AdminShouldBeAbleToMergeMultipleUnassignedSubtasks {
 		task ("Given that the user merged multiple unassigned subtasks") {
 			TestrayTestflow.assertStatus(

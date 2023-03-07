@@ -612,68 +612,65 @@ public class ObjectRelationshipLocalServiceImpl
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			try {
+				ObjectDefinition objectDefinition2 =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId2());
+
+				if (objectDefinition2.isSystem()) {
+					continue;
+				}
+
 				if (Objects.equals(
 						objectRelationship.getType(),
 						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-					ObjectDefinition objectDefinition2 =
-						_objectDefinitionLocalService.getObjectDefinition(
-							objectRelationship.getObjectDefinitionId2());
+					ManyToManyObjectRelationshipRelatedInfoCollectionProvider
+						manyToManyObjectRelationshipRelatedInfoCollectionProvider =
+							new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+								_language, objectDefinition,
+								_objectDefinitionLocalService,
+								_objectEntryLocalService, objectRelationship);
 
-					if (!objectDefinition2.isSystem()) {
-						ManyToManyObjectRelationshipRelatedInfoCollectionProvider
-							manyToManyObjectRelationshipRelatedInfoCollectionProvider =
-								new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-									_language, objectDefinition,
-									_objectDefinitionLocalService,
-									_objectEntryLocalService,
-									objectRelationship);
+					_serviceRegistrations.computeIfAbsent(
+						_getServiceRegistrationKey(objectRelationship),
+						serviceRegistrationKey ->
+							_bundleContext.registerService(
+								RelatedInfoItemCollectionProvider.class,
+								manyToManyObjectRelationshipRelatedInfoCollectionProvider,
+								HashMapDictionaryBuilder.<String, Object>put(
+									"company.id",
+									objectDefinition.getCompanyId()
+								).put(
+									"item.class.name",
+									objectDefinition.getClassName()
+								).build()));
 
-						_serviceRegistrations.computeIfAbsent(
-							_getServiceRegistrationKey(objectRelationship),
-							serviceRegistrationKey ->
-								_bundleContext.registerService(
-									RelatedInfoItemCollectionProvider.class,
-									manyToManyObjectRelationshipRelatedInfoCollectionProvider,
-									HashMapDictionaryBuilder.
-										<String, Object>put(
-											"company.id",
-											objectDefinition.getCompanyId()
-										).put(
-											"item.class.name",
-											objectDefinition.getClassName()
-										).build()));
+					ObjectRelationship reverseObjectRelationship =
+						objectRelationshipLocalService.getObjectRelationship(
+							objectRelationship.getObjectDefinitionId2(),
+							objectRelationship.getName());
 
-						ObjectRelationship reverseObjectRelationship =
-							objectRelationshipLocalService.
-								getObjectRelationship(
-									objectRelationship.getObjectDefinitionId2(),
-									objectRelationship.getName());
+					ManyToManyObjectRelationshipRelatedInfoCollectionProvider
+						reverseManyToManyObjectRelationshipRelatedInfoCollectionProvider =
+							new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
+								_language, objectDefinition2,
+								_objectDefinitionLocalService,
+								_objectEntryLocalService,
+								reverseObjectRelationship);
 
-						ManyToManyObjectRelationshipRelatedInfoCollectionProvider
-							reverseManyToManyObjectRelationshipRelatedInfoCollectionProvider =
-								new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-									_language, objectDefinition2,
-									_objectDefinitionLocalService,
-									_objectEntryLocalService,
-									reverseObjectRelationship);
-
-						_serviceRegistrations.computeIfAbsent(
-							_getServiceRegistrationKey(
-								reverseObjectRelationship),
-							serviceRegistrationKey ->
-								_bundleContext.registerService(
-									RelatedInfoItemCollectionProvider.class,
-									reverseManyToManyObjectRelationshipRelatedInfoCollectionProvider,
-									HashMapDictionaryBuilder.
-										<String, Object>put(
-											"company.id",
-											objectDefinition2.getCompanyId()
-										).put(
-											"item.class.name",
-											objectDefinition2.getClassName()
-										).build()));
-					}
+					_serviceRegistrations.computeIfAbsent(
+						_getServiceRegistrationKey(reverseObjectRelationship),
+						serviceRegistrationKey ->
+							_bundleContext.registerService(
+								RelatedInfoItemCollectionProvider.class,
+								reverseManyToManyObjectRelationshipRelatedInfoCollectionProvider,
+								HashMapDictionaryBuilder.<String, Object>put(
+									"company.id",
+									objectDefinition2.getCompanyId()
+								).put(
+									"item.class.name",
+									objectDefinition2.getClassName()
+								).build()));
 				}
 				else if (Objects.equals(
 							objectRelationship.getType(),

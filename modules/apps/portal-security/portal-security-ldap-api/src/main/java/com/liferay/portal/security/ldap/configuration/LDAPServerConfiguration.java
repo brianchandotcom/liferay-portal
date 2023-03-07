@@ -18,6 +18,8 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Michael C. Han
  */
@@ -30,6 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	id = "com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration",
 	localization = "content/Language", name = "ldap-server-configuration-name"
 )
+@ProviderType
 public interface LDAPServerConfiguration {
 
 	public static final long LDAP_SERVER_ID_DEFAULT = 0;

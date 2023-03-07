@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.util.WebKeys;
  */
 public class KBWebKeys implements WebKeys {
 
+	public static final String KNOWLEDGE_BASE_ADMIN_PORTLET =
+		"com_liferay_knowledge_base_web_portlet_AdminPortlet";
+
 	public static final String KNOWLEDGE_BASE_EXACT_MATCH =
 		"KNOWLEDGE_BASE_EXACT_MATCH";
 

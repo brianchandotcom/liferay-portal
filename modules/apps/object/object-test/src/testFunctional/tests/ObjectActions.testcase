@@ -1458,6 +1458,8 @@ definition {
 				entrySelected = "Open",
 				newPicklistOption = "In Progress");
 
+			PortletEntry.save();
+
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175196");
 
 			ObjectPortlet.viewEntry(entry = "In Progress");

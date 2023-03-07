@@ -139,8 +139,8 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					/>
 				</c:if>
 
-				<span data-text-cp-instance-subscription-info></span>
-				<span data-text-cp-instance-delivery-subscription-info></span>
+				<span class="d-block" data-text-cp-instance-subscription-info></span>
+				<span class="d-block" data-text-cp-instance-delivery-subscription-info></span>
 			</h4>
 
 			<div class="product-detail-options">

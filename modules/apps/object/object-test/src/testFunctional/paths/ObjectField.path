@@ -1,4 +1,4 @@
-<html>
+	<html>
 <head>
 <title>ObjectField</title>
 </head>
@@ -75,6 +75,11 @@
 	<tr>
 		<td>MANDATORY_TOGGLE</td>
 		<td>//input[@name="required"]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>MANDATORY_FIELD</td>
+		<td>//label[contains(text(),'${key_fieldName}')]/*[contains(text(),'Mandatory')]</td>
 		<td></td>
 	</tr>
 	<tr>

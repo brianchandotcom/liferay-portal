@@ -1,0 +1,62 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.user.dto.v1_0.Account",
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"description": "P03 Account - We Test person in Zip Files",
+			"externalReferenceCode": "ERC-P03-A003",
+			"name": "P0-03 Name",
+			"type": "person"
+		},
+		{
+			"description": "P04 Account - We Test person in Zip Files",
+			"externalReferenceCode": "ERC-P04-A004",
+			"name": "P0-04 Name",
+			"type": "person"
+		},
+		{
+			"description": "P05 Account - We Test person in Zip Files",
+			"externalReferenceCode": "ERC-P05-A005",
+			"name": "P0-05 Name",
+			"type": "person"
+		},
+		{
+			"description": "P06 Account - We Test person in Zip Files",
+			"externalReferenceCode": "ERC-P06-A006",
+			"name": "P0-06 Name",
+			"type": "person"
+		},
+		{
+			"description": "P01 Account - We Test person in Zip Files",
+			"externalReferenceCode": "ERC-P01-A001",
+			"name": "P0-01 Name",
+			"type": "person"
+		},
+		{
+			"description": "P02 Account - We Test person in Zip Files",
+			"externalReferenceCode": "ERC-P02-A002",
+			"name": "P0-02 Name",
+			"type": "person"
+		},
+		{
+			"description": "P07 Account - We Test person in Zip Files",
+			"externalReferenceCode": "ERC-P07-A007",
+			"name": "P0-07 Name",
+			"type": "person"
+		},
+		{
+			"description": "P08 Account - We Test person in Zip Files",
+			"externalReferenceCode": "ERC-P08-A008",
+			"name": "P0-08 Name",
+			"type": "person"
+		},
+		{
+			"description": "P09 Account - We Test person in Zip Files",
+			"externalReferenceCode": "ERC-P09-A009",
+			"name": "P0-09 Name",
+			"type": "person"
+		}
+	]
+}

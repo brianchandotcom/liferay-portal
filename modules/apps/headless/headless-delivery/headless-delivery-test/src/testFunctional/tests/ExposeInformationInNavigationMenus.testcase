@@ -75,15 +75,13 @@ definition {
 		}
 
 		task ("When with get request and siteId to retrieve the navigation menu") {
-			var response = NavigationMenuAPI.getNavigationMenu(groupName = ${groupName});
+			var response = NavigationMenuAPI.getNavigationMenu(groupName = "Guest");
 		}
 
 		task ("Then I can see values of useCustomName is false, contentURL equals to document endpoint and type equals to document") {
-			var portalURL = JSONCompany.getPortalURL();
-
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "document",
-				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
+				expectedURL = "o/headless-delivery/v1.0/documents/${documentId}",
 				expectedUseCustomName = "false",
 				responseFromSite = "true",
 				responseToParse = ${response});

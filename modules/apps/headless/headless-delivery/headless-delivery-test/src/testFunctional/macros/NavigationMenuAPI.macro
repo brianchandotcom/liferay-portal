@@ -24,7 +24,7 @@ definition {
 
 		NavigationMenuAPI._assertResponseIncludeCorrectElement(
 			element = "contentURL",
-			expectedElement = ${expectedURL},
+			expectedElement = ${expectedContentURL},
 			responseFromSite = ${responseFromSite},
 			responseToParse = ${responseToParse});
 

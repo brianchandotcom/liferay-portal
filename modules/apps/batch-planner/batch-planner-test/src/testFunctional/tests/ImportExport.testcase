@@ -808,7 +808,7 @@ definition {
 		}
 
 		task ("And Then the status of the imported objectDefinition is approved") {
-			var objectStatus2 = ObjectDefinitionAPI.getObjectDefinitionStatusByName(
+			var objectDefinitionStatus = ObjectDefinitionAPI.getObjectDefinitionStatusByName(
 				name = "Coupon",
 				objectDefinitionId = ${objectDefinitionId});
 
@@ -851,7 +851,7 @@ definition {
 		}
 
 		task ("And Then the status of the imported objectDefinition is Draft") {
-			var objectStatus2 = ObjectDefinitionAPI.getObjectDefinitionStatusByName(
+			var objectDefinitionStatus = ObjectDefinitionAPI.getObjectDefinitionStatusByName(
 				name = "Coupon",
 				objectDefinitionId = ${objectDefinitionId});
 

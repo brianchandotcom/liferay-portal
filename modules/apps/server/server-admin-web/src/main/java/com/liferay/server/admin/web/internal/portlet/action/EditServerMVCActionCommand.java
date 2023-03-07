@@ -723,6 +723,8 @@ public class EditServerMVCActionCommand
 
 		String advancedProperties = ParamUtil.getString(
 			actionRequest, "advancedProperties");
+		boolean enablePopServerNotifications = ParamUtil.getBoolean(
+			actionRequest, "enablePopServerNotifications");
 		String pop3Host = ParamUtil.getString(actionRequest, "pop3Host");
 		String pop3Password = ParamUtil.getString(
 			actionRequest, "pop3Password");
@@ -805,6 +807,10 @@ public class EditServerMVCActionCommand
 			PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL, storeProtocol);
 		portletPreferences.setValue(
 			PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL, transportProtocol);
+
+		portletPreferences.setValue(
+			PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED,
+			String.valueOf(enablePopServerNotifications));
 
 		portletPreferences.store();
 

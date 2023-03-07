@@ -37,18 +37,12 @@ public class AMImageAttributeMapping {
 
 		return new AMImageAttributeMapping(
 			HashMapBuilder.<AMAttribute<AMImageProcessor, ?>, Object>put(
-				AMAttribute.getConfigurationUuidAMAttribute(), () -> null
-			).put(
 				AMAttribute.getContentLengthAMAttribute(), fileVersion.getSize()
 			).put(
 				AMAttribute.getContentTypeAMAttribute(),
 				fileVersion.getMimeType()
 			).put(
 				AMAttribute.getFileNameAMAttribute(), fileVersion.getFileName()
-			).put(
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, () -> null
-			).put(
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH, () -> null
 			).build());
 	}
 

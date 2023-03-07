@@ -203,7 +203,9 @@ public class LiferayRelengUtil {
 			String includeResource = bndProperties.getProperty(
 				Constants.INCLUDERESOURCE);
 
-			if (includeResource.contains(artifactName)) {
+			if (Validator.isNotNull(includeResource) &&
+				includeResource.contains(artifactName)) {
+
 				return true;
 			}
 		}

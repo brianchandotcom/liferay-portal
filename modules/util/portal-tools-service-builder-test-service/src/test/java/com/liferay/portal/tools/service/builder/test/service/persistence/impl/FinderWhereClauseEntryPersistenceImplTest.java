@@ -28,7 +28,7 @@ public class FinderWhereClauseEntryPersistenceImplTest {
 	public void testFinderWhereClause() {
 		Assert.assertEquals(
 			"finderWhereClauseEntry.name = ? AND finderWhereClauseEntry." +
-				"nickname is not NULL",
+				"nickname IS NOT NULL",
 			ReflectionTestUtil.getFieldValue(
 				FinderWhereClauseEntryPersistenceImpl.class,
 				"_FINDER_COLUMN_NAME_NICKNAME_NAME_2"));

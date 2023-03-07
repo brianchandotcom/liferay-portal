@@ -172,7 +172,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="Name_Nickname" return-type="Collection" where="nickname is not NULL">
+		<finder name="Name_Nickname" return-type="Collection" where="nickname IS NOT NULL">
 			<finder-column name="name" />
 		</finder>
 	</entity>

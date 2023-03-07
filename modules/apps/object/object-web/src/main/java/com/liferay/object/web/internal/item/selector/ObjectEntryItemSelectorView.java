@@ -358,6 +358,7 @@ public class ObjectEntryItemSelectorView
 				_objectRelatedModelsProviderRegistry.
 					getObjectRelatedModelsProvider(
 						_objectDefinition.getClassName(),
+						_objectDefinition.getCompanyId(),
 						ParamUtil.getString(
 							_portletRequest, "objectRelationshipType"));
 

@@ -87,6 +87,7 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 				_objectRelatedModelsProviderRegistry.
 					getObjectRelatedModelsProvider(
 						ParamUtil.getString(actionRequest, "className"),
+						objectRelationship.getCompanyId(),
 						objectRelationship.getType());
 
 			objectRelatedModelsProvider.disassociateRelatedModels(

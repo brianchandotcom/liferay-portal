@@ -96,6 +96,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				relatedObjectDefinition.getClassName(),
+				relatedObjectDefinition.getCompanyId(),
 				objectRelationship.getType());
 
 		objectRelatedModelsProvider.disassociateRelatedModels(

@@ -290,6 +290,7 @@ public class SystemObjectEntryItemSelectorView
 					_objectRelatedModelsProviderRegistry.
 						getObjectRelatedModelsProvider(
 							_objectDefinition.getClassName(),
+							_objectDefinition.getCompanyId(),
 							objectRelationshipType);
 
 				List<BaseModel<?>> baseModels =

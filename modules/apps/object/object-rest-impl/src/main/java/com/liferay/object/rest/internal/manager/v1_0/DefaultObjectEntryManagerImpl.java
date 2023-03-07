@@ -566,6 +566,7 @@ public class DefaultObjectEntryManagerImpl
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				relatedObjectDefinition.getClassName(),
+				relatedObjectDefinition.getCompanyId(),
 				objectRelationship.getType());
 
 		if (objectDefinition.isSystem()) {
@@ -617,6 +618,7 @@ public class DefaultObjectEntryManagerImpl
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				relatedObjectDefinition.getClassName(),
+				relatedObjectDefinition.getCompanyId(),
 				objectRelationship.getType());
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
@@ -970,6 +972,7 @@ public class DefaultObjectEntryManagerImpl
 				_objectRelatedModelsProviderRegistry.
 					getObjectRelatedModelsProvider(
 						objectDefinition2.getClassName(),
+						objectDefinition2.getCompanyId(),
 						objectRelationship.getType());
 
 			int count = objectRelatedModelsProvider.getRelatedModelsCount(

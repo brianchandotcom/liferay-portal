@@ -131,7 +131,8 @@ public class SystemRelatedModelsTableFDSView
 
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				objectDefinition.getClassName(), objectRelationship.getType());
+				objectDefinition.getClassName(),
+				objectDefinition.getCompanyId(), objectRelationship.getType());
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -190,7 +191,8 @@ public class SystemRelatedModelsTableFDSView
 
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				objectDefinition.getClassName(), objectRelationship.getType());
+				objectDefinition.getClassName(),
+				objectDefinition.getCompanyId(), objectRelationship.getType());
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(

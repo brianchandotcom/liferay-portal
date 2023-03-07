@@ -154,6 +154,7 @@ public class ObjectRelatedModelsProviderTest {
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				_objectDefinition2.getClassName(),
+				_objectDefinition2.getCompanyId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
 
 		Assert.assertNotNull(objectRelatedModelsProvider);
@@ -279,6 +280,7 @@ public class ObjectRelatedModelsProviderTest {
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				_objectDefinition2.getClassName(),
+				_objectDefinition2.getCompanyId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		Assert.assertNotNull(objectRelatedModelsProvider);
@@ -432,6 +434,7 @@ public class ObjectRelatedModelsProviderTest {
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				objectDefinition2.getClassName(),
+				objectDefinition2.getCompanyId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		Assert.assertNotNull(objectRelatedModelsProvider);
@@ -647,6 +650,7 @@ public class ObjectRelatedModelsProviderTest {
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				systemObjectDefinition.getClassName(),
+				systemObjectDefinition.getCompanyId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		Assert.assertNotNull(objectRelatedModelsProvider);
@@ -834,6 +838,7 @@ public class ObjectRelatedModelsProviderTest {
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				systemObjectDefinition.getClassName(),
+				systemObjectDefinition.getCompanyId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		Assert.assertNotNull(objectRelatedModelsProvider);
@@ -877,6 +882,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				_objectDefinition1.getClassName(),
+				_objectDefinition1.getCompanyId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		List<ObjectEntry> reverseObjectEntries =
@@ -914,6 +920,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				systemObjectDefinition.getClassName(),
+				systemObjectDefinition.getCompanyId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(

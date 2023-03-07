@@ -1,0 +1,65 @@
+.dotted-line:after {
+	background-image: linear-gradient(
+		90deg,
+		#a3a3a3,
+		#a3a3a3 30%,
+		transparent 30%,
+		transparent 100%
+	);
+	background-size: 8px 1px;
+	content: '';
+	height: 1px;
+	position: absolute;
+	right: 15px;
+	width: 91%;
+}
+
+.post-container {
+	align-items: center;
+	padding-left: 20px;
+	height: 100%;
+
+	a {
+		padding-left: 20px;
+		cursor: pointer;
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
+
+	a p {
+		color: rgba(39, 40, 51, 0.7);
+		text-decoration: none;
+		display: flex;
+		margin-bottom: 7px;
+		margin-top: 0px;
+		font-size: 0.75rem;
+		font-weight: normal;
+		font-family: 'Barlow', system-ui, -apple-system, blinkmacsystemfont,
+			'Segoe UI', roboto, oxygen-sans, ubuntu, cantarell, 'Helvetica Neue',
+			arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+			'Segoe UI Symbol';
+		padding-right: 30px;
+	}
+
+	a h2 {
+		color: #a8a8a8;
+		font-size: 0.65rem;
+		margin-bottom: 0.75rem;
+		text-transform: uppercase;
+	}
+
+	h5 {
+		color: rgba(53, 56, 69, 0.5);
+		font-size: 0.625rem;
+		font-style: italic;
+		font-weight: 500;
+		padding-bottom: 25px;
+		margin-bottom: 0 !important;
+	}
+}
+
+.post-container-unread {
+	background-color: #edf2ff;
+}

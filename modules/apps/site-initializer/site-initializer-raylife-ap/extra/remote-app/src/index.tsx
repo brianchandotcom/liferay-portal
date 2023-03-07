@@ -26,6 +26,7 @@ import NewApplication from './routes/applications/pages/NewApplication';
 import Claims from './routes/claims/pages/Claims';
 import ClaimsTable from './routes/claims/pages/ClaimsTable';
 import ProductPerformance from './routes/dashboard/ProductPerformance';
+import NotificationSidebar from './routes/dashboard/notification-sidebar/index';
 import RecentApplications from './routes/dashboard/pages/RecentApplications';
 import WhatsNewModal from './routes/dashboard/pages/SettingsModals';
 import Policies from './routes/policies/pages/Policies';
@@ -33,72 +34,40 @@ import PoliciesTable from './routes/policies/pages/PoliciesTable';
 import PolicyDetails from './routes/policies/pages/PolicyDetails';
 import Reports from './routes/reports/pages/Reports';
 
+export type RaylifeComponentsType = {
+	[key: string]: JSX.Element;
+};
+
+const NoRouteSelected = () => <div className="evp-app">No route selected</div>;
+
+const RaylifeComponents: RaylifeComponentsType = {
+	'application-details': <ApplicationDetails />,
+	'applications': <Applications />,
+	'applications-table': <ApplicationsTable />,
+	'claims': <Claims />,
+	'claims-table': <ClaimsTable />,
+	'new-application': (
+		<NewApplicationAutoContextProvider>
+			<NewApplication />
+		</NewApplicationAutoContextProvider>
+	),
+	'no-route-selected': <NoRouteSelected />,
+	'notification-sidebar': <NotificationSidebar />,
+	'policies': <Policies />,
+	'policies-table': <PoliciesTable />,
+	'policy-details': <PolicyDetails />,
+	'product-performance': <ProductPerformance />,
+	'recent-applications': <RecentApplications />,
+	'reports': <Reports />,
+	'whats-new-modal': <WhatsNewModal />,
+};
+
 type Props = {
 	route: any;
 };
 
 const DirectToCustomer: React.FC<Props> = ({route}) => {
-	const SearchParams = new URLSearchParams(window.location.search);
-
-	const routeEntry = SearchParams.get('raylife_dev_application') || route;
-
-	if (routeEntry === 'recent-applications') {
-		return <RecentApplications />;
-	}
-
-	if (routeEntry === 'product-performance') {
-		return <ProductPerformance />;
-	}
-
-	if (routeEntry === 'applications') {
-		return <Applications />;
-	}
-
-	if (routeEntry === 'applications-table') {
-		return <ApplicationsTable />;
-	}
-
-	if (routeEntry === 'policies') {
-		return <Policies />;
-	}
-
-	if (routeEntry === 'policies-table') {
-		return <PoliciesTable />;
-	}
-
-	if (routeEntry === 'claims') {
-		return <Claims />;
-	}
-
-	if (routeEntry === 'claims-table') {
-		return <ClaimsTable />;
-	}
-
-	if (routeEntry === 'reports') {
-		return <Reports />;
-	}
-
-	if (routeEntry === 'new-application') {
-		return (
-			<NewApplicationAutoContextProvider>
-				<NewApplication />
-			</NewApplicationAutoContextProvider>
-		);
-	}
-
-	if (routeEntry === 'whats-new-modal') {
-		return <WhatsNewModal />;
-	}
-
-	if (routeEntry === 'application-details') {
-		return <ApplicationDetails />;
-	}
-
-	if (routeEntry === 'policy-details') {
-		return <PolicyDetails />;
-	}
-
-	return <></>;
+	return RaylifeComponents[route];
 };
 
 class WebComponent extends HTMLElement {

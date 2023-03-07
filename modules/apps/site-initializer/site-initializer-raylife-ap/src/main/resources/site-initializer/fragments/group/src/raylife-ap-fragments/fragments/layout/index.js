@@ -19,6 +19,10 @@ const btnPolicies = fragmentElement.querySelector('.policies-menu');
 const btnClaims = fragmentElement.querySelector('.claims-menu');
 const btnReports = fragmentElement.querySelector('.reports-menu');
 const btnLogo = fragmentElement.querySelector('.top-bar');
+const btnNotification = fragmentElement.querySelector(
+	'.notification-container'
+);
+const notificationIcon = document.getElementById('panel-sidebar');
 
 const redirectUrl = (routeName) => {
 	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
@@ -30,6 +34,8 @@ const redirectUrl = (routeName) => {
 	window.location.href = `${origin}${siteName}/${routeName}`;
 };
 
+btnNotification.onclick = () =>
+	notificationIcon.classList.toggle('notification-open-side-bar');
 btnDashboard.onclick = () => redirectUrl('dashboard');
 btnApplications.onclick = () => redirectUrl('applications');
 btnPolicies.onclick = () => redirectUrl('policies');

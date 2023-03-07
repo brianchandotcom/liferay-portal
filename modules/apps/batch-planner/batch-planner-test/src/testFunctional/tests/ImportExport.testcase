@@ -103,6 +103,7 @@ definition {
 	@description = "Verify users can exclude fields from being exported in CSV format"
 	@priority = 3
 	test CanExcludeCSVFieldsFromExport {
+		property custom.properties = "feature.flag.LPS-173135=true";
 		property portal.acceptance = "true";
 
 		task ("Given several channels") {
@@ -260,6 +261,7 @@ definition {
 	@description = "Verify users can export entity data via CSV files"
 	@priority = 3
 	test CanExportCSVFiles {
+		property custom.properties = "feature.flag.LPS-173135=true";
 		property portal.acceptance = "true";
 
 		task ("Given several accounts") {
@@ -301,6 +303,7 @@ definition {
 	@description = "Verify users can export entity data via CSV files without headers"
 	@priority = 3
 	test CanExportCSVFileWithoutHeaders {
+		property custom.properties = "feature.flag.LPS-173135=true";
 		property portal.acceptance = "true";
 
 		task ("Given several accounts") {
@@ -425,6 +428,7 @@ definition {
 	@description = "Verify users can filter Import/Export executions by Action."
 	@priority = 3
 	test CanFilterExecutionsByAction {
+		property custom.properties = "feature.flag.LPS-173135=true";
 		property portal.acceptance = "true";
 
 		task ("Given an account import and export") {
@@ -930,6 +934,7 @@ definition {
 	@description = "Verify users can order Import/Export executions by Create Date."
 	@priority = 3
 	test CanOrderExecutionsByCreateDate {
+		property custom.properties = "feature.flag.LPS-173135=true";
 		property portal.acceptance = "true";
 
 		task ("Given an account import and export") {
@@ -1325,6 +1330,7 @@ definition {
 	@description = "Verify users can search Import/Exports templates by name and action."
 	@priority = 3
 	test CanSearchTemplates {
+		property custom.properties = "feature.flag.LPS-173135=true";
 		property portal.acceptance = "true";
 
 		task ("Given account import and export templates") {
@@ -1508,6 +1514,7 @@ definition {
 	@description = "Verify users receive a notification when an export is triggered."
 	@priority = 3
 	test CanViewExportNotifications {
+		property custom.properties = "feature.flag.LPS-173135=true";
 		property portal.acceptance = "true";
 
 		task ("Given a failed export") {

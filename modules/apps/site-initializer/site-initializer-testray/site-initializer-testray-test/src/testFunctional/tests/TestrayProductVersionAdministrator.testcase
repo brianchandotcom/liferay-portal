@@ -1,4 +1,4 @@
-@com@component-name = "portal-solutions"
+@component-name = "portal-solutions"
 definition {
 
 	property custom.properties = "feature.flag.LPS-163118=true";

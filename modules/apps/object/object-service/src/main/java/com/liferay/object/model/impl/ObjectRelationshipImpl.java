@@ -27,4 +27,5 @@ public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
 		return Objects.equals(
 			getObjectDefinitionId1(), getObjectDefinitionId2());
 	}
+
 }

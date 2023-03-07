@@ -2156,15 +2156,9 @@ public class ObjectEntryLocalServiceImpl
 					return column.eq(related ? primaryKey : 0L);
 				}
 			).and(
-				() -> {
-					if (objectRelationship.getObjectDefinitionId1() ==
-							objectRelationship.getObjectDefinitionId2()) {
-
-						return primaryKeyColumn.neq(primaryKey);
-					}
-
-					return null;
-				}
+				() ->
+					objectRelationship.isSelf() ?
+						primaryKeyColumn.neq(primaryKey) : null
 			).and(
 				() -> {
 					if (PermissionThreadLocal.getPermissionChecker() == null) {

@@ -24,8 +24,10 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -40,11 +42,13 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 	implements RelatedInfoItemCollectionProvider {
 
 	public BaseObjectRelationshipRelatedInfoCollectionProvider(
-			ObjectDefinition objectDefinition,
+			Language language, ObjectDefinition objectDefinition,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectEntryLocalService objectEntryLocalService,
 			ObjectRelationship objectRelationship)
 		throws PortalException {
+
+		_language = language;
 
 		this.objectEntryLocalService = objectEntryLocalService;
 		this.objectRelationship = objectRelationship;
@@ -94,7 +98,16 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _relatedObjectDefinition.getLabel(locale);
+		if (!objectRelationship.isSelf()) {
+			return _relatedObjectDefinition.getLabel(locale);
+		}
+
+		return StringBundler.concat(
+			_relatedObjectDefinition.getLabel(locale), StringPool.SPACE,
+			StringPool.OPEN_PARENTHESIS,
+			_language.get(
+				locale, objectRelationship.isReverse() ? "child" : "parent"),
+			StringPool.CLOSE_PARENTHESIS);
 	}
 
 	@Override
@@ -127,6 +140,7 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseObjectRelationshipRelatedInfoCollectionProvider.class);
 
+	private final Language _language;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinition _relatedObjectDefinition;
 

@@ -22,6 +22,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 
 /**
  * @author Jürgen Kappler
@@ -30,14 +31,14 @@ public class ManyToManyObjectRelationshipRelatedInfoCollectionProvider
 	extends BaseObjectRelationshipRelatedInfoCollectionProvider {
 
 	public ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-			ObjectDefinition objectDefinition,
+			Language language, ObjectDefinition objectDefinition,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectEntryLocalService objectEntryLocalService,
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
 		super(
-			objectDefinition, objectDefinitionLocalService,
+			language, objectDefinition, objectDefinitionLocalService,
 			objectEntryLocalService, objectRelationship);
 	}
 

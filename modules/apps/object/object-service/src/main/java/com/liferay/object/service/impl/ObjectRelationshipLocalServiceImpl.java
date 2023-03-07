@@ -51,6 +51,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -623,7 +624,7 @@ public class ObjectRelationshipLocalServiceImpl
 						ManyToManyObjectRelationshipRelatedInfoCollectionProvider
 							manyToManyObjectRelationshipRelatedInfoCollectionProvider =
 								new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-									objectDefinition,
+									_language, objectDefinition,
 									_objectDefinitionLocalService,
 									_objectEntryLocalService,
 									objectRelationship);
@@ -652,7 +653,7 @@ public class ObjectRelationshipLocalServiceImpl
 						ManyToManyObjectRelationshipRelatedInfoCollectionProvider
 							reverseManyToManyObjectRelationshipRelatedInfoCollectionProvider =
 								new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-									objectDefinition2,
+									_language, objectDefinition2,
 									_objectDefinitionLocalService,
 									_objectEntryLocalService,
 									reverseObjectRelationship);
@@ -681,7 +682,8 @@ public class ObjectRelationshipLocalServiceImpl
 					OneToManyObjectRelationshipRelatedInfoCollectionProvider
 						oneToManyObjectRelationshipRelatedInfoCollectionProvider =
 							new OneToManyObjectRelationshipRelatedInfoCollectionProvider(
-								objectDefinition, _objectDefinitionLocalService,
+								_language, objectDefinition,
+								_objectDefinitionLocalService,
 								_objectEntryLocalService, objectRelationship);
 
 					_serviceRegistrations.computeIfAbsent(
@@ -1152,6 +1154,9 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectRelationshipLocalServiceImpl.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

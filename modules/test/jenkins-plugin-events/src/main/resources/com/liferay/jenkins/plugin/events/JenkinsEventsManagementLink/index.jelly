@@ -32,6 +32,14 @@
                             <f:entry title="URL">
                                 <f:textbox name="url" value="${jenkinsPublishers.url}" />
                             </f:entry>
+                            <f:optionalBlock checked="${jenkinsPublishers.jmsRequest}" inline="false" name="jmsRequest" title="JMS Request">
+                                <f:entry title="Inbound JMS Queue Name">
+                                    <f:textbox name="inboundJMSQueueName" value="${jenkinsPublishers.inboundJMSQueueName}" />
+                                </f:entry>
+                                <f:entry title="Outbound JMS Queue Name">
+                                    <f:textbox name="outboundJMSQueueName" value="${jenkinsPublishers.outboundJMSQueueName}" />
+                                </f:entry>
+                            </f:optionalBlock>
                             <f:entry title="User Name">
                                 <f:textbox name="userName" value="${jenkinsPublishers.userName}" />
                             </f:entry>

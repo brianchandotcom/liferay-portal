@@ -14,13 +14,11 @@
 
 package com.liferay.portal.search.similar.results.web.internal.builder;
 
-import java.util.Optional;
-
 /**
  * @author André de Oliveira
  */
 public interface SimilarResultsContributorsRegistry {
 
-	public Optional<SimilarResultsRoute> detectRoute(String urlString);
+	public SimilarResultsRoute detectRoute(String urlString);
 
 }

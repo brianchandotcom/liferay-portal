@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.RouteHelper;
 
-import java.util.Optional;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -38,23 +36,23 @@ public class SimilarResultsContributorsRegistryImpl
 	implements SimilarResultsContributorsRegistry {
 
 	@Override
-	public Optional<SimilarResultsRoute> detectRoute(String urlString) {
+	public SimilarResultsRoute detectRoute(String urlString) {
 		if (Validator.isBlank(urlString)) {
-			return Optional.empty();
+			return null;
 		}
 
 		for (SimilarResultsContributor similarResultsContributor :
 				_serviceTrackerList) {
 
-			Optional<SimilarResultsRoute> similarResultsRouteOptional =
-				_detectRoute(similarResultsContributor, urlString);
+			SimilarResultsRoute similarResultsRoute = _detectRoute(
+				similarResultsContributor, urlString);
 
-			if (similarResultsRouteOptional.isPresent()) {
-				return similarResultsRouteOptional;
+			if (similarResultsRoute != null) {
+				return similarResultsRoute;
 			}
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	@Activate
@@ -68,7 +66,7 @@ public class SimilarResultsContributorsRegistryImpl
 		_serviceTrackerList.close();
 	}
 
-	private Optional<SimilarResultsRoute> _detectRoute(
+	private SimilarResultsRoute _detectRoute(
 		SimilarResultsContributor similarResultsContributor, String urlString) {
 
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
@@ -84,16 +82,16 @@ public class SimilarResultsContributorsRegistryImpl
 				_log.debug(runtimeException);
 			}
 
-			return Optional.empty();
+			return null;
 		}
 
 		if (routeBuilderImpl.hasNoAttributes()) {
-			return Optional.empty();
+			return null;
 		}
 
 		routeBuilderImpl.contributor(similarResultsContributor);
 
-		return Optional.of(routeBuilderImpl.build());
+		return routeBuilderImpl.build();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

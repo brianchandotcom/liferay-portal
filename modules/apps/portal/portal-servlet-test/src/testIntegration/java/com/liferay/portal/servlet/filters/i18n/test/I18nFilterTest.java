@@ -71,7 +71,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserEnglishSessionPathWithEnglishCookieAlgorithm3()
+	public void testEnglishUserEnglishSessionEnglishCookieWithoutVirtualHostAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -80,7 +80,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserEnglishSessionPathWithSpanishCookieAlgorithm3()
+	public void testEnglishUserEnglishSessionSpanishCookieWithoutVirtualHostAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -89,7 +89,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserEnglishSessionWithoutCookieAlgorithm3()
+	public void testEnglishUserEnglishSessionWithoutCookieVirtualHostAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -98,7 +98,17 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserSpanishSessionPathWithEnglishCookieAlgorithm3()
+	public void testEnglishUserSpanishCookieSpanishVirtualHostWithoutSessionAlgorithm3()
+		throws Exception {
+
+		Assert.assertNull(
+			_getPrependI18nLanguageId(
+				3, LocaleUtil.ENGLISH, null, LocaleUtil.SPAIN,
+				LocaleUtil.SPAIN));
+	}
+
+	@Test
+	public void testEnglishUserSpanishSessionEnglishCookieWithoutVirtualHostAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -108,27 +118,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserSpanishSessionWithoutCookieAlgorithm3()
-		throws Exception {
-
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-			_getPrependI18nLanguageId(
-				3, LocaleUtil.US, LocaleUtil.SPAIN, null, null));
-	}
-
-	@Test
-	public void testEnglishUserSpanishSessionWithSpanishCookieAlgorithm3()
-		throws Exception {
-
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-			_getPrependI18nLanguageId(
-				3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.SPAIN, null));
-	}
-
-	@Test
-	public void testEnglishUserSpanishVirtualHostSessionAndCookieAlgorithm3()
+	public void testEnglishUserSpanishSessionSpanishCookieSpanishVirtualHostAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -139,17 +129,27 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testEnglishUserSpanishVirtualHostWithSpanishCookieAlgorithm3()
+	public void testEnglishUserSpanishSessionSpanishCookieWithoutVirtualHostAlgorithm3()
 		throws Exception {
 
-		Assert.assertNull(
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
-				3, LocaleUtil.ENGLISH, null, LocaleUtil.SPAIN,
-				LocaleUtil.SPAIN));
+				3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.SPAIN, null));
 	}
 
 	@Test
-	public void testGuestEnglishSessionPathWithEnglishCookieAlgorithm3()
+	public void testEnglishUserSpanishSessionWithoutCookieVirtualHostAlgorithm3()
+		throws Exception {
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			_getPrependI18nLanguageId(
+				3, LocaleUtil.US, LocaleUtil.SPAIN, null, null));
+	}
+
+	@Test
+	public void testGuestEnglishSessionEnglishCookieWithoutVirtualHostAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -158,7 +158,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestEnglishSessionPathWithSpanishCookieAlgorithm3()
+	public void testGuestEnglishSessionSpanishCookieWithoutVirtualHostAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -167,7 +167,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestEnglishSessionWithoutCookieAlgorithm3()
+	public void testGuestEnglishSessionWithoutCookieVirtualHostAlgorithm3()
 		throws Exception {
 
 		Assert.assertNull(
@@ -175,7 +175,17 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestSpanishSessionPathWithEnglishCookieAlgorithm3()
+	public void testGuestSpanishCookieSpanishVirtualHostWithoutSessionAlgorithm3()
+		throws Exception {
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			_getPrependI18nLanguageId(
+				3, null, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN));
+	}
+
+	@Test
+	public void testGuestSpanishSessionEnglishCookieWithoutVirtualHostAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -185,26 +195,7 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestSpanishSessionWithoutCookieAlgorithm3()
-		throws Exception {
-
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-			_getPrependI18nLanguageId(3, null, LocaleUtil.SPAIN, null, null));
-	}
-
-	@Test
-	public void testGuestSpanishSessionWithSpanishCookieAlgorithm3()
-		throws Exception {
-
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-			_getPrependI18nLanguageId(
-				3, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN, null));
-	}
-
-	@Test
-	public void testGuestUserSpanishVirtualHostSessionAndCookieAlgorithm3()
+	public void testGuestSpanishSessionSpanishCookieSpanishVirtualHostAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
@@ -214,13 +205,22 @@ public class I18nFilterTest {
 	}
 
 	@Test
-	public void testGuestUserSpanishVirtualHostWithSpanishCookieAlgorithm3()
+	public void testGuestSpanishSessionSpanishCookieWithoutVirtualHostAlgorithm3()
 		throws Exception {
 
 		Assert.assertEquals(
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
-				3, null, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN));
+				3, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN, null));
+	}
+
+	@Test
+	public void testGuestSpanishSessionWithoutCookieVirtualHostAlgorithm3()
+		throws Exception {
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			_getPrependI18nLanguageId(3, null, LocaleUtil.SPAIN, null, null));
 	}
 
 	private String _getPrependI18nLanguageId(

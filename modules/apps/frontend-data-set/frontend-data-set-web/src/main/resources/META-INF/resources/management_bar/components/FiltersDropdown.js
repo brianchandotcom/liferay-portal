@@ -30,6 +30,7 @@ const FiltersDropdown = () => {
 
 	const onSearch = (query) => {
 		setQuery(query);
+
 		setFilters(
 			query
 				? initialFilters.filter(({label}) =>
@@ -77,6 +78,7 @@ const FiltersDropdown = () => {
 
 						{activeFilter.label}
 					</li>
+
 					<Filter {...activeFilter} />
 				</>
 			) : (

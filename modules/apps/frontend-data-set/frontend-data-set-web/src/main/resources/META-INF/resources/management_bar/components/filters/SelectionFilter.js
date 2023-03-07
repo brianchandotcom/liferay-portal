@@ -271,9 +271,11 @@ function SelectionFilter({
 							</div>
 						) : null}
 					</ClayDropDown.Caption>
+
 					<Divider />
 				</>
 			)}
+
 			<ClayDropDown.Caption className="pb-0">
 				<div className="row">
 					<div className="col">
@@ -291,7 +293,9 @@ function SelectionFilter({
 					</div>
 				</div>
 			</ClayDropDown.Caption>
+
 			<Divider />
+
 			<div className="pb-1 pl-3 pr-3 pt-1">
 				{items && !!items.length ? (
 					<ul
@@ -356,7 +360,9 @@ function SelectionFilter({
 					</div>
 				)}
 			</div>
+
 			<Divider />
+
 			<ClayDropDown.Caption>
 				<ClayButton
 					disabled={submitDisabled}

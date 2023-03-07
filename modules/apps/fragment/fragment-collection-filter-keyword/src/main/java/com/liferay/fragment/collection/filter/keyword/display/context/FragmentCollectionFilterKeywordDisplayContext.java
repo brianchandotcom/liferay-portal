@@ -34,7 +34,6 @@ public class FragmentCollectionFilterKeywordDisplayContext {
 
 		_configuration = configuration;
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
-
 		_fragmentRendererContext = fragmentRendererContext;
 
 		_fragmentEntryLink = fragmentRendererContext.getFragmentEntryLink();

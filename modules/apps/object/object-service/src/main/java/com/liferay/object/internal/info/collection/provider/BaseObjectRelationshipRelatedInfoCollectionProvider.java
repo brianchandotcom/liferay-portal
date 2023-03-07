@@ -21,7 +21,6 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -42,22 +41,18 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 	implements RelatedInfoItemCollectionProvider {
 
 	public BaseObjectRelationshipRelatedInfoCollectionProvider(
-			Language language, ObjectDefinition objectDefinition,
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			ObjectEntryLocalService objectEntryLocalService,
-			ObjectRelationship objectRelationship)
-		throws PortalException {
+		Language language, ObjectDefinition objectDefinition1,
+		ObjectDefinition objectDefinition2,
+		ObjectEntryLocalService objectEntryLocalService,
+		ObjectRelationship objectRelationship) {
 
 		_language = language;
 
 		this.objectEntryLocalService = objectEntryLocalService;
 		this.objectRelationship = objectRelationship;
 
-		_objectDefinition = objectDefinition;
-
-		_relatedObjectDefinition =
-			objectDefinitionLocalService.getObjectDefinition(
-				this.objectRelationship.getObjectDefinitionId2());
+		_objectDefinition1 = objectDefinition1;
+		_objectDefinition2 = objectDefinition2;
 	}
 
 	@Override
@@ -85,25 +80,25 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 
 	@Override
 	public String getCollectionItemClassName() {
-		return _relatedObjectDefinition.getClassName();
+		return _objectDefinition2.getClassName();
 	}
 
 	@Override
 	public String getKey() {
 		return StringBundler.concat(
 			RelatedInfoItemCollectionProvider.super.getKey(), "_",
-			_objectDefinition.getCompanyId(), "_", _objectDefinition.getName(),
-			"_", objectRelationship.getName());
+			_objectDefinition1.getCompanyId(), "_",
+			_objectDefinition1.getName(), "_", objectRelationship.getName());
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		if (!objectRelationship.isSelf()) {
-			return _relatedObjectDefinition.getLabel(locale);
+			return _objectDefinition2.getLabel(locale);
 		}
 
 		return StringBundler.concat(
-			_relatedObjectDefinition.getLabel(locale), StringPool.SPACE,
+			_objectDefinition2.getLabel(locale), StringPool.SPACE,
 			StringPool.OPEN_PARENTHESIS,
 			_language.get(
 				locale, objectRelationship.isReverse() ? "child" : "parent"),
@@ -112,13 +107,13 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 
 	@Override
 	public String getSourceItemClassName() {
-		return _objectDefinition.getClassName();
+		return _objectDefinition1.getClassName();
 	}
 
 	@Override
 	public boolean isAvailable() {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083") ||
-			(_objectDefinition.getCompanyId() !=
+			(_objectDefinition1.getCompanyId() !=
 				CompanyThreadLocal.getCompanyId())) {
 
 			return false;
@@ -141,7 +136,7 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 		BaseObjectRelationshipRelatedInfoCollectionProvider.class);
 
 	private final Language _language;
-	private final ObjectDefinition _objectDefinition;
-	private final ObjectDefinition _relatedObjectDefinition;
+	private final ObjectDefinition _objectDefinition1;
+	private final ObjectDefinition _objectDefinition2;
 
 }

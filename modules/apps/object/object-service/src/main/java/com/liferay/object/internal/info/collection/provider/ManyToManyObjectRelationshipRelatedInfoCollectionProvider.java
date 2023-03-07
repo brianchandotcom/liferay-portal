@@ -19,7 +19,6 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -31,14 +30,13 @@ public class ManyToManyObjectRelationshipRelatedInfoCollectionProvider
 	extends BaseObjectRelationshipRelatedInfoCollectionProvider {
 
 	public ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-			Language language, ObjectDefinition objectDefinition,
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			ObjectEntryLocalService objectEntryLocalService,
-			ObjectRelationship objectRelationship)
-		throws PortalException {
+		Language language, ObjectDefinition objectDefinition1,
+		ObjectDefinition objectDefinition2,
+		ObjectEntryLocalService objectEntryLocalService,
+		ObjectRelationship objectRelationship) {
 
 		super(
-			language, objectDefinition, objectDefinitionLocalService,
+			language, objectDefinition1, objectDefinition2,
 			objectEntryLocalService, objectRelationship);
 	}
 

@@ -604,11 +604,11 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Override
 	public void registerObjectRelationshipsRelatedInfoCollectionProviders(
-		ObjectDefinition objectDefinition) {
+		ObjectDefinition objectDefinition1) {
 
 		List<ObjectRelationship> objectRelationships =
 			objectRelationshipLocalService.getObjectRelationships(
-				objectDefinition.getObjectDefinitionId());
+				objectDefinition1.getObjectDefinitionId());
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			try {
@@ -627,8 +627,7 @@ public class ObjectRelationshipLocalServiceImpl
 					ManyToManyObjectRelationshipRelatedInfoCollectionProvider
 						manyToManyObjectRelationshipRelatedInfoCollectionProvider =
 							new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-								_language, objectDefinition,
-								_objectDefinitionLocalService,
+								_language, objectDefinition1, objectDefinition2,
 								_objectEntryLocalService, objectRelationship);
 
 					_serviceRegistrations.computeIfAbsent(
@@ -639,10 +638,10 @@ public class ObjectRelationshipLocalServiceImpl
 								manyToManyObjectRelationshipRelatedInfoCollectionProvider,
 								HashMapDictionaryBuilder.<String, Object>put(
 									"company.id",
-									objectDefinition.getCompanyId()
+									objectDefinition1.getCompanyId()
 								).put(
 									"item.class.name",
-									objectDefinition.getClassName()
+									objectDefinition1.getClassName()
 								).build()));
 
 					ObjectRelationship reverseObjectRelationship =
@@ -653,8 +652,7 @@ public class ObjectRelationshipLocalServiceImpl
 					ManyToManyObjectRelationshipRelatedInfoCollectionProvider
 						reverseManyToManyObjectRelationshipRelatedInfoCollectionProvider =
 							new ManyToManyObjectRelationshipRelatedInfoCollectionProvider(
-								_language, objectDefinition2,
-								_objectDefinitionLocalService,
+								_language, objectDefinition2, objectDefinition1,
 								_objectEntryLocalService,
 								reverseObjectRelationship);
 
@@ -679,8 +677,7 @@ public class ObjectRelationshipLocalServiceImpl
 					OneToManyObjectRelationshipRelatedInfoCollectionProvider
 						oneToManyObjectRelationshipRelatedInfoCollectionProvider =
 							new OneToManyObjectRelationshipRelatedInfoCollectionProvider(
-								_language, objectDefinition,
-								_objectDefinitionLocalService,
+								_language, objectDefinition1, objectDefinition2,
 								_objectEntryLocalService, objectRelationship);
 
 					_serviceRegistrations.computeIfAbsent(
@@ -691,10 +688,10 @@ public class ObjectRelationshipLocalServiceImpl
 								oneToManyObjectRelationshipRelatedInfoCollectionProvider,
 								HashMapDictionaryBuilder.<String, Object>put(
 									"company.id",
-									objectDefinition.getCompanyId()
+									objectDefinition1.getCompanyId()
 								).put(
 									"item.class.name",
-									objectDefinition.getClassName()
+									objectDefinition1.getClassName()
 								).build()));
 				}
 			}

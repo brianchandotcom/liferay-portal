@@ -382,6 +382,8 @@ public class RepositoryTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new ServiceContext());
 
+		inputStream = new UnsyncByteArrayInputStream(_TEST_CONTENT.getBytes());
+
 		FileEntry folderFileEntry = localRepository.addFileEntry(
 			null, TestPropsValues.getUserId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,

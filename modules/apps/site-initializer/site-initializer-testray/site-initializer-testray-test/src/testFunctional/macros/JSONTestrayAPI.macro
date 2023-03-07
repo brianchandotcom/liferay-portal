@@ -16,6 +16,7 @@ definition {
 		return ${objectId};
 	}
 
+	@summary = "This calls the JSON WS API to get the ID of a Option object"
 	macro _getOptionsId {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -32,6 +33,7 @@ definition {
 		return ${factorOptionsId};
 	}
 
+	@summary = "This calls the JSON WS API to get the ID of a Project"
 	macro _getProjectId {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -48,6 +50,7 @@ definition {
 		return ${projectId};
 	}
 
+	@summary = "This calls the JSON WS API to get the ID of a Team object"
 	macro _getTeamId {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -64,7 +67,7 @@ definition {
 		return ${teamId};
 	}
 
-	@summary = "create a build via API"
+	@summary = "This calls the JSON WS API to create a Build object"
 	macro createBuildAPI {
 		Variables.assertDefined(parameterList = "${buildName},${projectId},${routineId},${productVersionId}");
 
@@ -115,7 +118,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Case Result via API"
+	@summary = "This calls the JSON WS API to create a Case Results object"
 	macro createCaseResultAPI {
 		Variables.assertDefined(parameterList = "${buildId},${casesId},${componentId},${runId}");
 
@@ -141,7 +144,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Case Results For Subtask via API"
+	@summary = "This calls the JSON WS API to create a Case Results For Subtask object"
 	macro createCaseResultsForSubtaskAPI {
 		Variables.assertDefined(parameterList = "${name},${caseResultId},${subtaskId}");
 
@@ -166,7 +169,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Case via API"
+	@summary = "This calls the JSON WS API to create a Case object"
 	macro createCasesAPI {
 		Variables.assertDefined(parameterList = "${caseName},${caseTypeId},${projectId},${componentId}");
 
@@ -212,7 +215,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Case Type via API"
+	@summary = "This calls the JSON WS API to create a Case Type object"
 	macro createCaseTypeAPI {
 		Variables.assertDefined(parameterList = ${caseType});
 
@@ -235,7 +238,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Component via API"
+	@summary = "This calls the JSON WS API to create a Component object"
 	macro createComponentAPI {
 		Variables.assertDefined(parameterList = "${componentName},${projectId},${teamId}");
 
@@ -260,7 +263,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Environment Factors via API"
+	@summary = "This calls the JSON WS API to create a Environment Factors object"
 	macro createEnvironmentFactorsAPI {
 		Variables.assertDefined(parameterList = "${environmentFactorsName},${factorCategoryId},${factorOptionsId}");
 
@@ -286,7 +289,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Factor Categories via API"
+	@summary = "This calls the JSON WS API to create a Factor Categories object"
 	macro createFactorCategoriesAPI {
 		Variables.assertDefined(parameterList = ${categoryName});
 
@@ -309,7 +312,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Factor Options via API"
+	@summary = "This calls the JSON WS API to create a Factor Options object"
 	macro createFactorOptionsAPI {
 		Variables.assertDefined(parameterList = "${optionsName},${factorCategoryId}");
 
@@ -333,7 +336,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a product version via API"
+	@summary = "This calls the JSON WS API to create a Product Version object"
 	macro createProductVersionAPI {
 		Variables.assertDefined(parameterList = "${productVersion},${projectId}");
 
@@ -357,7 +360,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Project via API"
+	@summary = "This calls the JSON WS API to create a Project object"
 	macro createProjectAPI {
 		Variables.assertDefined(parameterList = "${projectName},${projectDescription}");
 
@@ -381,7 +384,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Requirements via API"
+	@summary = "This calls the JSON WS API to create a Requirement object"
 	macro createRequirementAPI {
 		Variables.assertDefined(parameterList = "${requirementName},${linkTitle},${componentId},${projectId}");
 
@@ -417,7 +420,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a routine via API"
+	@summary = "This calls the JSON WS API to create a Routine object"
 	macro createRoutineAPI {
 		Variables.assertDefined(parameterList = "${routineName},${projectId}");
 
@@ -441,7 +444,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Run via API"
+	@summary = "This calls the JSON WS API to create a Run object"
 	macro createRunAPI {
 		Variables.assertDefined(parameterList = "${runName},${buildId}");
 
@@ -465,7 +468,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Subtask via API"
+	@summary = "This calls the JSON WS API to create a Subtask object"
 	macro createSubtaskAPI {
 		Variables.assertDefined(parameterList = "${subtaskName},${taskId}");
 
@@ -499,7 +502,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Suite via API"
+	@summary = "This calls the JSON WS API to create a Suite object"
 	macro createSuiteAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -531,7 +534,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Task via API"
+	@summary = "This calls the JSON WS API to create a Task object"
 	macro createTaskAPI {
 		Variables.assertDefined(parameterList = "${taskName},${buildId}");
 
@@ -555,7 +558,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Team via API"
+	@summary = "This calls the JSON WS API to create a Team object"
 	macro createTeamAPI {
 		Variables.assertDefined(parameterList = "${teamName},${projectId}");
 
@@ -594,6 +597,7 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
+	@summary = "This calls the JSON WS API to delete a project"
 	macro deleteProject {
 		var portalURL = JSONCompany.getPortalURL();
 		var projectId = StringUtil.replace(${projectId}, " ", "%20");
@@ -610,6 +614,7 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
+	@summary = "This calls the JSON WS API to get the ID of a project"
 	macro getProject {
 		var portalURL = JSONCompany.getPortalURL();
 

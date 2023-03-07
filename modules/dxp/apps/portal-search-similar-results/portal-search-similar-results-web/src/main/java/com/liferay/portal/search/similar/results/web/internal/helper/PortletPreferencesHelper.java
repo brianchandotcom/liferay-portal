@@ -30,13 +30,7 @@ public class PortletPreferencesHelper {
 	}
 
 	public boolean getBoolean(String key, boolean defaultValue) {
-		String stringValue = _getStringValue(key);
-
-		if (stringValue == null) {
-			return defaultValue;
-		}
-
-		return GetterUtil.getBoolean(stringValue);
+		return GetterUtil.getBoolean(_getStringValue(key), defaultValue);
 	}
 
 	public Integer getInteger(String key) {

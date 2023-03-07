@@ -36,6 +36,7 @@ const PDFPreviewLimit = ({maxLimitSize, namespace, scopeLabel, value}) => {
 			</label>
 
 			<ClayInput
+				aria-label={Liferay.Language.get('maximum-number-of-pages')}
 				autoFocus
 				className="form-control"
 				min={0}

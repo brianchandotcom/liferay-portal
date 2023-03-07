@@ -68,9 +68,17 @@ public class EditPDFPreviewMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		try {
+			int maxNumberOfPages = ParamUtil.getInteger(
+				actionRequest, "maxNumberOfPages");
+
+			if (maxNumberOfPages < 0) {
+				throw new PDFPreviewException(
+					"Maximum number of pages limit must be a non-negative " +
+						"integer");
+			}
+
 			_pdfPreviewManagedServiceFactory.updatePDFPreview(
-				ParamUtil.getInteger(actionRequest, "maxNumberOfPages"), scope,
-				scopePK);
+				maxNumberOfPages, scope, scopePK);
 		}
 		catch (ConfigurationModelListenerException | PDFPreviewException
 					exception) {

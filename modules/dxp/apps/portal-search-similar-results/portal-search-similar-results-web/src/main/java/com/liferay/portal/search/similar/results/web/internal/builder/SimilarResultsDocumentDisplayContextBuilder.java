@@ -356,7 +356,17 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 			_getFieldValueString(Field.CREATE_DATE));
 
 		if (Validator.isNotNull(dateString)) {
-			Date date = _parseDateStringFieldValue(dateString);
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+
+			Date date = null;
+
+			try {
+				date = dateFormat.parse(dateString);
+			}
+			catch (Exception exception) {
+				throw new IllegalArgumentException(
+					"Unable to parse date string: " + dateString, exception);
+			}
 
 			if (date != null) {
 				similarResultsDocumentDisplayContext.setCreationDateString(
@@ -692,19 +702,6 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 			destinationBuilderImpl, destinationHelper);
 
 		return destinationBuilderImpl.build();
-	}
-
-	private Date _parseDateStringFieldValue(String dateStringFieldValue) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-
-		try {
-			return dateFormat.parse(dateStringFieldValue);
-		}
-		catch (Exception exception) {
-			throw new IllegalArgumentException(
-				"Unable to parse date string: " + dateStringFieldValue,
-				exception);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

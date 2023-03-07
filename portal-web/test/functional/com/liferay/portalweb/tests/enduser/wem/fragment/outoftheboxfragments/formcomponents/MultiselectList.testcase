@@ -60,6 +60,138 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-169936. The page designer can define the number of options of Multiselect List fragment."
+	@priority = 4
+	test DefineNumberOfOptions {
+		task ("Given a pages designer has a Mutiselect List fragment inside a mapped Form Container") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+		}
+
+		task ("When the page designer accesses to the General tab of Multiselect List fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Multiselect List");
+		}
+
+		task ("Then the page designer sees the default Number of Options is 5") {
+			AssertTextEquals(
+				key_text = "Number of Options",
+				locator1 = "TextInput#ANY",
+				value1 = 5);
+		}
+
+		task ("When the pages designer changes the Number of Options to 3") {
+			PageEditor.editInput(
+				fragmentName = "Multiselect List",
+				numberOfOptions = 3);
+		}
+
+		task ("Then the pages designer sees only 3 items shown on Multiselect List fragment") {
+			for (var fieldLabel : list "Apple,Banana,Peach") {
+				AssertElementPresent(
+					fieldLabel = ${fieldLabel},
+					index = 1,
+					locator1 = "Fragment#INPUT_FIELD_WITH_LABEL",
+					type = "checkbox");
+			}
+
+			AssertElementNotPresent(
+				fieldLabel = "Lemon",
+				index = 1,
+				locator1 = "Fragment#INPUT_FIELD_WITH_LABEL",
+				type = "checkbox");
+
+			PageEditor.publish();
+		}
+
+		task ("When the pages designer navigates to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the pages designer sees only 3 items shown on Multiselect List fragment") {
+			for (var fieldLabel : list "Apple,Banana,Peach") {
+				AssertElementPresent(
+					fieldLabel = ${fieldLabel},
+					index = 1,
+					locator1 = "Fragment#INPUT_FIELD_WITH_LABEL",
+					type = "checkbox");
+			}
+
+			AssertElementNotPresent(
+				fieldLabel = "Lemon",
+				index = 1,
+				locator1 = "Fragment#INPUT_FIELD_WITH_LABEL",
+				type = "checkbox");
+		}
+
+		task ("When the pages designer clicks the Show All button") {
+			Button.click(button = "Show All");
+		}
+
+		task ("Then the pages designer sees all items shown on Multiselect List fragment") {
+			for (var fieldLabel : list "Apple,Banana,Peach,Lemon,Pineapple,Watermelon") {
+				AssertElementPresent(
+					fieldLabel = ${fieldLabel},
+					index = 1,
+					locator1 = "Fragment#INPUT_FIELD_WITH_LABEL",
+					type = "checkbox");
+			}
+		}
+
+		task ("When the pages designer enables the Show All Options") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.editInput(
+				fragmentName = "Multiselect List",
+				showAllOptions = "true");
+		}
+
+		task ("Then the pages designer sees all items shown on Multiselect List fragment") {
+			for (var fieldLabel : list "Apple,Banana,Peach,Lemon,Pineapple,Watermelon") {
+				AssertElementPresent(
+					fieldLabel = ${fieldLabel},
+					index = 1,
+					locator1 = "Fragment#INPUT_FIELD_WITH_LABEL",
+					type = "checkbox");
+			}
+
+			PageEditor.publish();
+		}
+
+		task ("When the pages designer navigates to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the pages designer sees all items shown on Multiselect List fragment") {
+			for (var fieldLabel : list "Apple,Banana,Peach,Lemon,Pineapple,Watermelon") {
+				AssertElementPresent(
+					fieldLabel = ${fieldLabel},
+					index = 1,
+					locator1 = "Fragment#INPUT_FIELD_WITH_LABEL",
+					type = "checkbox");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-169936. The page designer can map Multiselect List fragment to multiselect picklist field."
 	@priority = 4
 	test MapMultiselectListToMultiselectField {
@@ -125,7 +257,7 @@ definition {
 
 		task ("Then the pages designer sees the asterisk symbol shown on the Multiselect List fragment") {
 			PageEditor.viewInputStyle(
-                label = "Preferences",
+				label = "Preferences",
 				markAsRequired = "true",
 				type = "multiselect-list");
 		}

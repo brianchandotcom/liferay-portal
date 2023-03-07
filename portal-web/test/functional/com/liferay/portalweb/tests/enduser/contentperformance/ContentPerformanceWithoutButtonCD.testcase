@@ -23,7 +23,7 @@ definition {
 
 		Navigator.openURL();
 
-		AnalyticsCloud.teardownAnalyticsCloud();
+		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();

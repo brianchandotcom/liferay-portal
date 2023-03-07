@@ -46,17 +46,4 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "An unexpected system error occurred.");
 	}
 
-	macro teardownAnalyticsCloud {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_DXP_BUTTON");
-
-		ClickNoError(locator1 = "AnalyticsCloudConnection#DISCONNECT_ANALYTICS_CLOUD_BUTTON");
-
-		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to disconnect your Analytics Cloud workspace from this DXP instance?");
-	}
-
 }

@@ -115,4 +115,10 @@ body.portlet {
 	.portlet-topper-toolbar {
 		display: none !important;
 	}
+
+	.portlet-topper {
+		.portlet-title-default {
+			display: none !important;
+		}
+	}
 }

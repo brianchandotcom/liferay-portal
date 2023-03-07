@@ -1,5 +1,5 @@
 import {AppCreationFlow} from './pages/AppCreationFlow/AppCreationFlow';
-import {DashboardPage} from './pages/DashboardPage/DashboardPage';
+import {PublishedAppsDashboardPage} from './pages/PublishedAppsDashboardPage/PublishedAppsDashboardPage';
 
 interface AppRoutesProps {
 	route: string;
@@ -9,5 +9,5 @@ export default function AppRoutes({route}: AppRoutesProps) {
 		return <AppCreationFlow />;
 	}
 
-	return <DashboardPage />;
+	return <PublishedAppsDashboardPage />;
 }

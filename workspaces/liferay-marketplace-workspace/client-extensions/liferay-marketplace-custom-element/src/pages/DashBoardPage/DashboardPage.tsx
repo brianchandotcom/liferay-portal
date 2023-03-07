@@ -14,7 +14,20 @@ import {initialDashboardNavigationItems} from './DashboardPageUtil';
 
 import './DashboardPage.scss';
 
-export function DashboardPage() {
+type DashBoardPageProps = {
+	buttonMessage: string, 
+	messages: {
+		description: string;
+		emptyStateMessage: {
+			description1: string,
+			description2: string,
+			title: string
+		},
+		title: string;
+	}
+};
+
+export function DashboardPage({buttonMessage, messages}: DashBoardPageProps) {
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
 	const [apps, setApps] = useState<AppProps[]>(Array<AppProps>());
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
@@ -57,18 +70,18 @@ export function DashboardPage() {
 						<div>
 							<div className="dashboard-page-body-header-container">
 								<Header
-									description="Manage and publish apps on the Marketplace"
-									title="Apps"
+									description={messages.description}
+									title={messages.title}
 								/>
 
 								<a href="/create-new-app">
 									<button className="dashboard-page-body-header-button">
-										+ New App
+										{buttonMessage}
 									</button>
 								</a>
 							</div>
 
-							<DashboardTable apps={apps} />
+							<DashboardTable apps={apps} emptyStateMessage={messages.emptyStateMessage}/>
 						</div>
 					)}
 				</div>

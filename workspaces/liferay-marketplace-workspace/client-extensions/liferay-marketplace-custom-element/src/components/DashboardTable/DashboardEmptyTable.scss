@@ -1,0 +1,24 @@
+.dashboard-empty-state {
+	border: 1px #e2e2e4 solid;
+	border-radius: 10px;
+	font-family: 'Source Sans Pro', sans-serif;
+	padding: 64px 468px;
+	text-align: center;
+
+	&-description {
+		color: #54555f;
+		white-space: pre-line;
+
+		&-first::after {
+			content: '\a';
+			white-space: pre;
+		}
+	}
+
+	&-title {
+		color: #282934;
+		font-weight: 600;
+		padding-bottom: 8px;
+		padding-top: 32px;
+	}
+}

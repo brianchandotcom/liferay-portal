@@ -6,7 +6,7 @@ import appsIcon from '../../assets/icons/apps-fill.svg';
 import membersIcon from '../../assets/icons/person-fill.svg';
 import salesIcon from '../../assets/icons/sales-icon.svg';
 import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
-import {AppProps} from './../../components/DashboardTable/DashboardTable';
+import {AppProps} from '../../components/DashboardTable/DashboardTable';
 
 export const appList: AppProps[] = [
 	{

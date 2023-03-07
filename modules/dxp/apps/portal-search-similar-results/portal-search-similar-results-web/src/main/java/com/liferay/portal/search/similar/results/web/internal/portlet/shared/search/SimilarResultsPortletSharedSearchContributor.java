@@ -74,9 +74,20 @@ public class SimilarResultsPortletSharedSearchContributor
 
 		optional.flatMap(
 			similarResultsRoute -> {
-				Criteria criteria = _getSimilarResultsInputOptional(
+				SimilarResultsContributor similarResultsContributor =
+					similarResultsRoute.getContributor();
+
+				CriteriaBuilderImpl criteriaBuilderImpl =
+					new CriteriaBuilderImpl();
+
+				CriteriaHelper criteriaHelper = new CriteriaHelperImpl(
 					getGroupId(portletSharedSearchSettings),
 					similarResultsRoute);
+
+				similarResultsContributor.resolveCriteria(
+					criteriaBuilderImpl, criteriaHelper);
+
+				Criteria criteria = criteriaBuilderImpl.build();
 
 				if (criteria != null) {
 					contribute(criteria, portletSharedSearchSettings);
@@ -221,23 +232,6 @@ public class SimilarResultsPortletSharedSearchContributor
 		_populate(moreLikeThisQuery, similarResultsPortletPreferences);
 
 		return moreLikeThisQuery;
-	}
-
-	private Criteria _getSimilarResultsInputOptional(
-		long groupId, SimilarResultsRoute similarResultsRoute) {
-
-		SimilarResultsContributor similarResultsContributor =
-			similarResultsRoute.getContributor();
-
-		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
-
-		CriteriaHelper criteriaHelper = new CriteriaHelperImpl(
-			groupId, similarResultsRoute);
-
-		similarResultsContributor.resolveCriteria(
-			criteriaBuilderImpl, criteriaHelper);
-
-		return criteriaBuilderImpl.build();
 	}
 
 	private String _getURLString(

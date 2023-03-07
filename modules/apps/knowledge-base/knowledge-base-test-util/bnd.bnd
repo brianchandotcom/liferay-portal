@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Knowledge Base Test Utilities
+Bundle-SymbolicName: com.liferay.knowledge.base.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.knowledge.base.test.util

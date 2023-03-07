@@ -15,17 +15,15 @@
 package com.liferay.jenkins.plugin.events;
 
 import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisher;
+import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisherUtil;
 
 import hudson.Extension;
 
-import hudson.model.Describable;
-import hudson.model.Descriptor;
-import hudson.model.RootAction;
+import hudson.model.ManagementLink;
+
+import hudson.security.Permission;
 
 import java.io.IOException;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 
@@ -41,28 +39,24 @@ import org.kohsuke.stapler.StaplerResponse;
  * @author Michael Hashimoto
  */
 @Extension
-public class JenkinsEventsRootAction
-	extends Descriptor<JenkinsEventsRootAction>
-	implements Describable<JenkinsEventsRootAction>, RootAction {
+public class JenkinsEventsManagementLink extends ManagementLink {
 
-	public JenkinsEventsRootAction() {
-		super(JenkinsEventsRootAction.class);
+	public JenkinsEventsManagementLink() {
+		jenkinsEventsDescriptor = new JenkinsEventsDescriptor();
 
-		jenkinsPublishers = new LinkedList<>();
-
-		load();
+		jenkinsEventsDescriptor.load();
 	}
 
 	public void doJenkinsEventsConfiguration(
 			StaplerRequest staplerRequest, StaplerResponse staplerResponse)
 		throws IOException, ServletException {
 
-		jenkinsPublishers.clear();
+		jenkinsEventsDescriptor.jenkinsPublishers.clear();
 
 		JSONObject jsonObject = new JSONObject(
 			staplerRequest.getParameter("json"));
 
-		Object jenkinsPublishersObject = jsonObject.get("jenkinsPublishers");
+		Object jenkinsPublishersObject = jsonObject.opt("jenkinsPublishers");
 
 		if (jenkinsPublishersObject instanceof JSONArray) {
 			JSONArray jenkinsPublishersJSONArray =
@@ -76,27 +70,33 @@ public class JenkinsEventsRootAction
 					continue;
 				}
 
-				jenkinsPublishers.add(
+				jenkinsEventsDescriptor.jenkinsPublishers.add(
 					new JenkinsPublisher(jenkinsPublisherJSONObject));
 			}
 		}
 		else if (jenkinsPublishersObject instanceof JSONObject) {
-			jenkinsPublishers.add(
+			jenkinsEventsDescriptor.jenkinsPublishers.add(
 				new JenkinsPublisher((JSONObject)jenkinsPublishersObject));
 		}
+		else {
+			jenkinsEventsDescriptor.jenkinsPublishers.clear();
+		}
 
-		save();
+		jenkinsEventsDescriptor.save();
+
+		JenkinsPublisherUtil.setJenkinsEventsDescriptor(
+			jenkinsEventsDescriptor);
 
 		Jenkins jenkins = Jenkins.getInstanceOrNull();
 
 		if (jenkins != null) {
-			staplerResponse.sendRedirect(jenkins.getRootUrl());
+			staplerResponse.sendRedirect(jenkins.getRootUrl() + "/manage");
 		}
 	}
 
 	@Override
-	public Descriptor<JenkinsEventsRootAction> getDescriptor() {
-		return this;
+	public String getDescription() {
+		return "Configure jenkins event listeners & publishers";
 	}
 
 	@Override
@@ -109,15 +109,16 @@ public class JenkinsEventsRootAction
 		return "clipboard.png";
 	}
 
-	public List<JenkinsPublisher> getJenkinsPublishers() {
-		return jenkinsPublishers;
+	@Override
+	public Permission getRequiredPermission() {
+		return Jenkins.ADMINISTER;
 	}
 
 	@Override
 	public String getUrlName() {
-		return "jenkins-events";
+		return "jenkins-events-configuration";
 	}
 
-	public List<JenkinsPublisher> jenkinsPublishers;
+	public JenkinsEventsDescriptor jenkinsEventsDescriptor;
 
 }

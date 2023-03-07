@@ -14,7 +14,7 @@
 
 package com.liferay.jenkins.plugin.events.publisher;
 
-import com.liferay.jenkins.plugin.events.JenkinsEventsRootAction;
+import com.liferay.jenkins.plugin.events.JenkinsEventsDescriptor;
 
 import hudson.model.Build;
 import hudson.model.Computer;
@@ -39,6 +39,10 @@ public class JenkinsPublisherUtil {
 	public static void publish(
 		JenkinsPublisher.EventTrigger eventTrigger, Object eventObject) {
 
+		if (_jenkinsEventsDescriptor == null) {
+			return;
+		}
+
 		Jenkins jenkins = Jenkins.getInstanceOrNull();
 
 		if (jenkins == null) {
@@ -61,11 +65,8 @@ public class JenkinsPublisherUtil {
 			"queueItem", _getQueueItemJSONObject(eventObject)
 		);
 
-		JenkinsEventsRootAction jenkinsEventsRootAction =
-			jenkins.getDescriptorByType(JenkinsEventsRootAction.class);
-
 		for (JenkinsPublisher jenkinsPublisher :
-				jenkinsEventsRootAction.getJenkinsPublishers()) {
+				_jenkinsEventsDescriptor.getJenkinsPublishers()) {
 
 			if (!jenkinsPublisher.containsEventTrigger(eventTrigger)) {
 				continue;
@@ -74,6 +75,12 @@ public class JenkinsPublisherUtil {
 			jenkinsPublisher.publish(
 				payloadJSONObject.toString(), eventTrigger);
 		}
+	}
+
+	public static void setJenkinsEventsDescriptor(
+		JenkinsEventsDescriptor jenkinsEventsDescriptor) {
+
+		_jenkinsEventsDescriptor = jenkinsEventsDescriptor;
 	}
 
 	private static Build _getBuild(Object eventObject) {
@@ -261,5 +268,7 @@ public class JenkinsPublisherUtil {
 
 		return jsonObject;
 	}
+
+	private static JenkinsEventsDescriptor _jenkinsEventsDescriptor;
 
 }

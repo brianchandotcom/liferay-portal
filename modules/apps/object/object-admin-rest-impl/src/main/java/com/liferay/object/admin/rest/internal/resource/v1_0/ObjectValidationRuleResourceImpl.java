@@ -15,7 +15,7 @@
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
-import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectValidationRuleDTOConverter;
+import com.liferay.object.admin.rest.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -227,8 +228,12 @@ public class ObjectValidationRuleResourceImpl
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@Reference
-	private ObjectValidationRuleDTOConverter _objectValidationRuleDTOConverter;
+	@Reference(
+		target = DTOConverterConstants.OBJECT_VALIDATION_RULE_DTO_CONVERTER
+	)
+	private DTOConverter
+		<com.liferay.object.model.ObjectValidationRule, ObjectValidationRule>
+			_objectValidationRuleDTOConverter;
 
 	@Reference
 	private ObjectValidationRuleService _objectValidationRuleService;

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.object.model.ObjectValidationRule",
-	service = {DTOConverter.class, ObjectValidationRuleDTOConverter.class}
+	service = DTOConverter.class
 )
 public class ObjectValidationRuleDTOConverter
 	implements DTOConverter

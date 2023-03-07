@@ -27,6 +27,10 @@ public class DTOConverterConstants {
 		"(component.name=com.liferay.object.admin.rest.internal.dto.v1_0." +
 			"converter.ObjectRelationshipDTOConverter)";
 
+	public static final String OBJECT_VALIDATION_RULE_DTO_CONVERTER =
+		"(component.name=com.liferay.object.admin.rest.internal.dto.v1_0." +
+			"converter.ObjectValidationRuleDTOConverter)";
+
 	public static final String OBJECT_VIEW_DTO_CONVERTER =
 		"(component.name=com.liferay.object.admin.rest.internal.dto.v1_0." +
 			"converter.ObjectViewDTOConverter)";

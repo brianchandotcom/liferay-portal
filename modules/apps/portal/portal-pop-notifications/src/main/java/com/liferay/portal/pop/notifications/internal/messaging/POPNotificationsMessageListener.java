@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -179,8 +178,8 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 		return inboxFolder;
 	}
 
-	private Store _getStore() throws MessagingException {
-		Session session = _mailService.getSession();
+	private Store _getStore(long companyId) throws MessagingException {
+		Session session = _mailService.getSession(companyId);
 
 		String storeProtocol = GetterUtil.getString(
 			session.getProperty("mail.store.protocol"));
@@ -248,14 +247,10 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 	}
 
 	private void _popNotifications(long companyId) throws MessagingException {
-		long originalCompanyId = CompanyThreadLocal.getCompanyId();
-
 		Store store = null;
 
 		try {
-			CompanyThreadLocal.setCompanyId(companyId);
-
-			store = _getStore();
+			store = _getStore(companyId);
 
 			Folder inboxFolder = _getInboxFolder(store);
 
@@ -287,8 +282,6 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 			if (store != null) {
 				store.close();
 			}
-
-			CompanyThreadLocal.setCompanyId(originalCompanyId);
 		}
 	}
 

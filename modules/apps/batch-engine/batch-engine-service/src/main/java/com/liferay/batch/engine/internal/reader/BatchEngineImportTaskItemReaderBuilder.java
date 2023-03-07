@@ -20,6 +20,7 @@ import com.liferay.batch.engine.internal.util.ZipInputStreamUtil;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,6 +76,14 @@ public class BatchEngineImportTaskItemReaderBuilder {
 		return this;
 	}
 
+	public BatchEngineImportTaskItemReaderBuilder fieldNames(
+		List<String> fieldNames) {
+
+		_fieldNames = fieldNames;
+
+		return this;
+	}
+
 	public BatchEngineImportTaskItemReaderBuilder inputStream(
 		InputStream inputStream) {
 
@@ -93,6 +102,7 @@ public class BatchEngineImportTaskItemReaderBuilder {
 
 	private BatchEngineTaskContentType _batchEngineTaskContentType;
 	private String _csvFileColumnDelimiter;
+	private List<String> _fieldNames;
 	private InputStream _inputStream;
 	private Map<String, Serializable> _parameters;
 

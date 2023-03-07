@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -132,12 +133,17 @@ public class BatchEngineImportTaskExecutorImpl
 			batchEngineImportTaskItemReaderBuilder =
 				new BatchEngineImportTaskItemReaderBuilder();
 
+		Map<String, Serializable> fieldNameMapping =
+			batchEngineImportTask.getFieldNameMapping();
+
 		return batchEngineImportTaskItemReaderBuilder.
 			batchEngineTaskContentType(
 				BatchEngineTaskContentType.valueOf(
 					batchEngineImportTask.getContentType())
 			).csvFileColumnDelimiter(
 				_getCSVFileColumnDelimiter(batchEngineImportTask.getCompanyId())
+			).fieldNames(
+				ListUtil.fromCollection(fieldNameMapping.keySet())
 			).inputStream(
 				inputStream
 			).parameters(

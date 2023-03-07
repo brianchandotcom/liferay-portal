@@ -39,6 +39,8 @@ public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 
 	public String getClassName();
 
+	public long getCompanyId();
+
 	public String getObjectRelationshipType();
 
 	public List<T> getRelatedModels(

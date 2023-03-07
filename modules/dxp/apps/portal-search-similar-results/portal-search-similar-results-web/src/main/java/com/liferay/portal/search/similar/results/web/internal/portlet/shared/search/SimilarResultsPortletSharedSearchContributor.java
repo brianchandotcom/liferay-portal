@@ -68,31 +68,28 @@ public class SimilarResultsPortletSharedSearchContributor
 	public void contribute(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		Optional<SimilarResultsRoute> optional =
+		SimilarResultsRoute similarResultsRoute =
 			similarResultsContributorsRegistry.detectRoute(
 				_getURLString(portletSharedSearchSettings));
 
-		optional.flatMap(
-			similarResultsRoute -> {
-				SimilarResultsContributor similarResultsContributor =
-					similarResultsRoute.getContributor();
+		if (similarResultsRoute != null) {
+			SimilarResultsContributor similarResultsContributor =
+				similarResultsRoute.getContributor();
 
-				CriteriaBuilderImpl criteriaBuilderImpl =
-					new CriteriaBuilderImpl();
+			CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
 
-				CriteriaHelper criteriaHelper = new CriteriaHelperImpl(
-					getGroupId(portletSharedSearchSettings),
-					similarResultsRoute);
+			CriteriaHelper criteriaHelper = new CriteriaHelperImpl(
+				getGroupId(portletSharedSearchSettings), similarResultsRoute);
 
-				similarResultsContributor.resolveCriteria(
-					criteriaBuilderImpl, criteriaHelper);
+			similarResultsContributor.resolveCriteria(
+				criteriaBuilderImpl, criteriaHelper);
 
-				Criteria criteria = criteriaBuilderImpl.build();
+			Criteria criteria = criteriaBuilderImpl.build();
 
-				if (criteria != null) {
-					contribute(criteria, portletSharedSearchSettings);
-				}
-			});
+			if (criteria != null) {
+				contribute(criteria, portletSharedSearchSettings);
+			}
+		}
 	}
 
 	protected void contribute(

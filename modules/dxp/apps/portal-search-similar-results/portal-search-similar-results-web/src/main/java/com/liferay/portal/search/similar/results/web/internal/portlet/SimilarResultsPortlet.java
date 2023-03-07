@@ -139,19 +139,13 @@ public class SimilarResultsPortlet extends MVCPortlet {
 
 		similarResultsDisplayContext.setDocuments(legacyDocuments);
 
-		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
-			renderRequest);
-
-		Optional<SimilarResultsRoute> optional =
-			similarResultsContributorsRegistry.detectRoute(
-				_portal.getCurrentURL(renderRequest));
-
-		SimilarResultsRoute similarResultsRoute = optional.orElse(null);
-
 		similarResultsDisplayContext.setSimilarResultsDocumentDisplayContexts(
 			_buildSimilarResultsDocumentDisplayContexts(
-				legacyDocuments, similarResultsRoute, renderRequest,
-				renderResponse, themeDisplay));
+				legacyDocuments,
+				similarResultsContributorsRegistry.detectRoute(
+					_portal.getCurrentURL(renderRequest)),
+				renderRequest, renderResponse,
+				portletSharedSearchResponse.getThemeDisplay(renderRequest)));
 
 		return similarResultsDisplayContext;
 	}

@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -136,11 +138,14 @@ public class PortalInstancesTest {
 	public void testGetVirtualHostLanguageId() throws Exception {
 		Group group = GroupTestUtil.addGroupToCompany(_company.getCompanyId());
 
+		String languageId = LanguageUtil.getLanguageId(LocaleUtil.SPAIN);
+
 		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
-		typeSettingsUnicodeProperties.setProperty(PropsKeys.LOCALES, "es_ES");
-		typeSettingsUnicodeProperties.setProperty("languageId", "es_ES");
+		typeSettingsUnicodeProperties.setProperty(
+			PropsKeys.LOCALES, languageId);
+		typeSettingsUnicodeProperties.setProperty("languageId", languageId);
 
 		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
@@ -160,9 +165,9 @@ public class PortalInstancesTest {
 		// Spanish virtual host language
 
 		_updateLayoutSetVirtualHostname(
-			"es_ES", group.getPublicLayoutSet(), hostname);
+			languageId, group.getPublicLayoutSet(), hostname);
 
-		_testGetVirtualHostLanguageId("es_ES", hostname);
+		_testGetVirtualHostLanguageId(languageId, hostname);
 	}
 
 	private void _testGetCompanyId(

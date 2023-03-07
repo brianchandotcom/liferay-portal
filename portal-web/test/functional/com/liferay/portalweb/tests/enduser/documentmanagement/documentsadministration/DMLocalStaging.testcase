@@ -1028,8 +1028,6 @@ definition {
 	@description = "This is a test for LPS-136822. It checks that a document type can be updated and published using the normal publication process."
 	@priority = 3
 	test CanPublishUpdatedDocumentType {
-		property osgi.modules.includes = "document-library-google-docs";
-
 		JSONLayout.addWidgetToPublicLayout(
 			column = 1,
 			groupName = "Site Name (Staging)",
@@ -1043,6 +1041,13 @@ definition {
 			groupName = "Site Name-staging",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpeg");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name-staging");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
@@ -1066,7 +1071,7 @@ definition {
 
 		DMDocument.editCP(
 			dmDocumentTitle = "Document_1.jpeg",
-			dmDocumentTypeEdit = "Google Drive Shortcut");
+			dmDocumentTypeEdit = "DM Document Type Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
@@ -1082,7 +1087,7 @@ definition {
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "Document_1.jpeg",
-			dmDocumentType = "Google Drive Shortcut");
+			dmDocumentType = "DM Document Type Name");
 	}
 
 	@description = "This is a test for LPS-136830. It checks that a shortcut can be updated and published."

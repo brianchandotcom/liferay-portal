@@ -33,6 +33,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -49,12 +50,10 @@ import java.text.Format;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -143,11 +142,6 @@ public class ObjectEntryRowInfoItemRenderer
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry);
 
-		Set<Map.Entry<String, Serializable>> entries = values.entrySet();
-
-		Stream<Map.Entry<String, Serializable>> entriesStream =
-			entries.stream();
-
 		Map<String, ObjectField> objectFieldsMap = new HashMap<>();
 
 		for (ObjectField objectField :
@@ -158,98 +152,128 @@ public class ObjectEntryRowInfoItemRenderer
 			objectFieldsMap.put(objectField.getName(), objectField);
 		}
 
-		return entriesStream.filter(
-			entry -> objectFieldsMap.containsKey(entry.getKey())
-		).sorted(
-			Map.Entry.comparingByKey()
-		).collect(
-			Collectors.toMap(
-				Map.Entry::getKey,
-				entry -> {
-					if (entry.getValue() == null) {
-						return StringPool.BLANK;
-					}
+		List<Map.Entry<String, Serializable>> entries = TransformUtil.transform(
+			values.entrySet(),
+			entry -> {
+				if (objectFieldsMap.containsKey(entry.getKey())) {
+					return entry;
+				}
 
-					ObjectField objectField = objectFieldsMap.get(
-						entry.getKey());
+				return null;
+			});
 
-					if (objectField.getListTypeDefinitionId() != 0) {
-						ListTypeEntry listTypeEntry =
-							_listTypeEntryLocalService.fetchListTypeEntry(
-								objectField.getListTypeDefinitionId(),
-								(String)entry.getValue());
+		Map<String, Serializable> stringSerializableMap = new LinkedHashMap<>(
+			entries.size());
 
-						return listTypeEntry.getName(
-							serviceContext.getLocale());
-					}
-					else if (Objects.equals(
-								objectField.getBusinessType(),
-								ObjectFieldConstants.
-									BUSINESS_TYPE_ATTACHMENT)) {
+		for (Map.Entry<String, Serializable> entry :
+				ListUtil.sort(entries, Map.Entry.comparingByKey())) {
 
-						long dlFileEntryId = GetterUtil.getLong(
-							values.get(objectField.getName()));
+			if (entry.getValue() == null) {
+				stringSerializableMap.put(entry.getKey(), StringPool.BLANK);
 
-						if (dlFileEntryId == GetterUtil.DEFAULT_LONG) {
-							return StringPool.BLANK;
-						}
+				continue;
+			}
 
-						DLFileEntry dlFileEntry =
-							_dlFileEntryLocalService.fetchDLFileEntry(
-								dlFileEntryId);
+			ObjectField objectField = objectFieldsMap.get(entry.getKey());
 
-						if (dlFileEntry == null) {
-							return StringPool.BLANK;
-						}
+			if (objectField.getListTypeDefinitionId() != 0) {
+				ListTypeEntry listTypeEntry =
+					_listTypeEntryLocalService.fetchListTypeEntry(
+						objectField.getListTypeDefinitionId(),
+						(String)entry.getValue());
 
-						return LinkUtil.toLink(
-							_dlAppService, dlFileEntry, _dlURLHelper,
-							objectDefinition.getExternalReferenceCode(),
-							objectEntry.getExternalReferenceCode(), _portal);
-					}
-					else if (Objects.equals(
-								objectField.getDBType(),
-								ObjectFieldConstants.DB_TYPE_DATE)) {
+				stringSerializableMap.put(
+					entry.getKey(),
+					listTypeEntry.getName(serviceContext.getLocale()));
 
-						Format dateFormat = FastDateFormatFactoryUtil.getDate(
-							serviceContext.getLocale());
+				continue;
+			}
 
-						return dateFormat.format(entry.getValue());
-					}
-					else if (Validator.isNotNull(
-								objectField.getRelationshipType())) {
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-						Object value = values.get(objectField.getName());
+				long dlFileEntryId = GetterUtil.getLong(
+					values.get(objectField.getName()));
 
-						if (GetterUtil.getLong(value) <= 0) {
-							return StringPool.BLANK;
-						}
+				if (dlFileEntryId == GetterUtil.DEFAULT_LONG) {
+					stringSerializableMap.put(entry.getKey(), StringPool.BLANK);
 
-						try {
-							ObjectRelationship objectRelationship =
-								_objectRelationshipLocalService.
-									fetchObjectRelationshipByObjectFieldId2(
-										objectField.getObjectFieldId());
+					continue;
+				}
 
-							return _objectEntryLocalService.getTitleValue(
-								objectRelationship.getObjectDefinitionId1(),
-								(Long)values.get(objectField.getName()));
-						}
-						catch (PortalException portalException) {
-							throw new RuntimeException(portalException);
-						}
-					}
+				DLFileEntry dlFileEntry =
+					_dlFileEntryLocalService.fetchDLFileEntry(dlFileEntryId);
 
-					Object value = entry.getValue();
+				if (dlFileEntry == null) {
+					stringSerializableMap.put(entry.getKey(), StringPool.BLANK);
 
-					if (value != null) {
-						return value;
-					}
+					continue;
+				}
 
-					return StringPool.BLANK;
-				},
-				(oldValue, newValue) -> oldValue, LinkedHashMap::new)
-		);
+				stringSerializableMap.put(
+					entry.getKey(),
+					LinkUtil.toLink(
+						_dlAppService, dlFileEntry, _dlURLHelper,
+						objectDefinition.getExternalReferenceCode(),
+						objectEntry.getExternalReferenceCode(), _portal));
+
+				continue;
+			}
+
+			if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_DATE)) {
+
+				Format dateFormat = FastDateFormatFactoryUtil.getDate(
+					serviceContext.getLocale());
+
+				stringSerializableMap.put(
+					entry.getKey(), dateFormat.format(entry.getValue()));
+
+				continue;
+			}
+
+			if (Validator.isNotNull(objectField.getRelationshipType())) {
+				Object value = values.get(objectField.getName());
+
+				if (GetterUtil.getLong(value) <= 0) {
+					stringSerializableMap.put(entry.getKey(), StringPool.BLANK);
+
+					continue;
+				}
+
+				try {
+					ObjectRelationship objectRelationship =
+						_objectRelationshipLocalService.
+							fetchObjectRelationshipByObjectFieldId2(
+								objectField.getObjectFieldId());
+
+					stringSerializableMap.put(
+						entry.getKey(),
+						_objectEntryLocalService.getTitleValue(
+							objectRelationship.getObjectDefinitionId1(),
+							(Long)values.get(objectField.getName())));
+
+					continue;
+				}
+				catch (PortalException portalException) {
+					throw new RuntimeException(portalException);
+				}
+			}
+
+			Object value = entry.getValue();
+
+			if (value != null) {
+				stringSerializableMap.put(entry.getKey(), (Serializable)value);
+
+				continue;
+			}
+
+			stringSerializableMap.put(entry.getKey(), StringPool.BLANK);
+		}
+
+		return stringSerializableMap;
 	}
 
 	private final AssetDisplayPageFriendlyURLProvider

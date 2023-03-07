@@ -212,7 +212,7 @@ const GenerateReport = () => {
 			{isLoading ? (
 				<LoadingIndicator />
 			) : (
-				<ClayForm>
+				<ClayForm className="mb-9">
 					<div className="row">
 						<div className="col">
 							<Form.DatePicker

@@ -2057,7 +2057,7 @@
 					{
 						"definition": {
 							"fragment": {
-								"key": "evp-data-money",
+								"key": "evp-homepage-data-money",
 								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {

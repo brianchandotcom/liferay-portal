@@ -115,8 +115,7 @@ public class WikiSimilarResultsContributorTest
 
 		Criteria criteria = criteraOptional.get();
 
-		Assert.assertEquals(
-			Optional.of("assetEntryClassName"), criteria.getTypeOptional());
+		Assert.assertEquals("assetEntryClassName", criteria.getType());
 		Assert.assertEquals("uid", criteria.getUID());
 	}
 

@@ -101,8 +101,7 @@ public class AssetPublisherSimilarResultsContributorTest
 
 		Criteria criteria = criteraOptional.get();
 
-		Assert.assertEquals(
-			Optional.of("assetEntryClassName"), criteria.getTypeOptional());
+		Assert.assertEquals("assetEntryClassName", criteria.getType());
 		Assert.assertEquals("assetEntryClassName_PORTLET_0", criteria.getUID());
 	}
 

@@ -122,8 +122,7 @@ public class MessageBoardsSimilarResultsContributorTest
 
 		Criteria criteria = criteraOptional.get();
 
-		Assert.assertEquals(
-			Optional.of("assetEntryClassName"), criteria.getTypeOptional());
+		Assert.assertEquals("assetEntryClassName", criteria.getType());
 		Assert.assertEquals(
 			"assetEntryClassName_PORTLET_1234", criteria.getUID());
 
@@ -158,9 +157,7 @@ public class MessageBoardsSimilarResultsContributorTest
 
 		criteria = criteraOptional.get();
 
-		Assert.assertEquals(
-			Optional.of(MBCategory.class.getName()),
-			criteria.getTypeOptional());
+		Assert.assertEquals(MBCategory.class.getName(), criteria.getType());
 		Assert.assertEquals(
 			MBCategory.class.getName() + "_PORTLET_1111", criteria.getUID());
 	}

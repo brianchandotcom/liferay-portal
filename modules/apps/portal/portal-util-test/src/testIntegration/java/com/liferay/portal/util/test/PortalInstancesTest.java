@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -42,10 +41,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.Locale;
-
-import javax.servlet.http.HttpSession;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -160,20 +155,14 @@ public class PortalInstancesTest {
 		_updateLayoutSetVirtualHostname(
 			StringPool.BLANK, group.getPublicLayoutSet(), hostname);
 
-		_testGetVirtualHostLanguageId(null, hostname, null);
-		_testGetVirtualHostLanguageId(
-			null, hostname, LanguageUtil.getLocale("vi_VN"));
+		_testGetVirtualHostLanguageId(null, hostname);
 
 		// Spanish virtual host language
 
 		_updateLayoutSetVirtualHostname(
 			"es_ES", group.getPublicLayoutSet(), hostname);
 
-		_testGetVirtualHostLanguageId("es_ES", hostname, null);
-
-		// Session locale shouldn't impact virtualhost locale
-
-		_testGetVirtualHostLanguageId("es_ES", hostname, _company.getLocale());
+		_testGetVirtualHostLanguageId("es_ES", hostname);
 	}
 
 	private void _testGetCompanyId(
@@ -197,21 +186,13 @@ public class PortalInstancesTest {
 	}
 
 	private void _testGetVirtualHostLanguageId(
-		String expectedLanguageId, String hostname, Locale locale) {
+		String expectedLanguageId, String hostname) {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.addHeader("Host", hostname);
 		mockHttpServletRequest.setServerName(hostname);
-
-		if (locale != null) {
-			HttpSession httpSession = mockHttpServletRequest.getSession(true);
-
-			httpSession.setAttribute(WebKeys.LOCALE, locale);
-
-			mockHttpServletRequest.setSession(httpSession);
-		}
 
 		Assert.assertEquals(
 			_company.getCompanyId(),

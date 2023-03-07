@@ -125,7 +125,7 @@ definition {
 			fieldValue = ${name},
 			token = ${token});
 
-		var objectId = JSONUtil.getWithJSONPath(${response}, "$.id");
+		var objectId = JSONPathUtil.getIdValue(response = ${response});
 
 		return ${objectId};
 	}
@@ -285,38 +285,11 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-<<<<<<< HEAD
-		var response = JSONCurlUtil.get(${curl});
-=======
 		if (isSet(token)) {
 			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
 		}
 
 		var response = JSONCurlUtil.get(${curl});
-
-		return ${response};
-	}
-
-	macro _getObjectEntryRelation {
-		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectId},${relationshipName}");
-
-		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectId}/${relationshipName} \
-				-H accept: application/json \
-				-u test@liferay.com:test
-		''';
-
-		var json = JSONCurlUtil.get(${curl});
-
-		return ${json};
-	}
-
-	macro _getObjectFirstnameById {
-		var objectFirstname = JSONUtil.getWithJSONPath(${responseToParse}, "$.items[?(@.id==${objectId})].firstname");
->>>>>>> LPS-171717 Add object tests with different scopes in multiple portal instances
 
 		return ${response};
 	}

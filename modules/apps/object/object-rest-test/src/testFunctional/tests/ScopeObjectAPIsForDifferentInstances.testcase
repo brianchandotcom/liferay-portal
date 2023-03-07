@@ -10,7 +10,7 @@ definition {
 		User.firstLoginUI();
 
 		task ("Given an OAuth application with headless scopes is created on default instance") {
-			OAuth2ForObject.addAuth2Application();
+			OAuth2ForObject.addOAuth2Application();
 
 			var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
 				resourceCheckList = "Liferay.Headless.Portal.Instances.everything,Liferay.Object.Admin.REST.everything",
@@ -26,7 +26,7 @@ definition {
 		}
 
 		task ("And Given an OAuth application with headless scopes is created on www.able.com") {
-			OAuth2ForObject.addAuth2Application(baseURL = "http://www.able.com:8080");
+			OAuth2ForObject.addOAuth2Application(baseURL = "http://www.able.com:8080");
 
 			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
 				baseURL = "http://www.able.com:8080",

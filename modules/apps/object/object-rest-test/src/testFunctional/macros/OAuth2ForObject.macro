@@ -1,6 +1,6 @@
 definition {
 
-	macro addAuth2Application {
+	macro addOAuth2Application {
 		if (isSet(baseURL)) {
 			SignIn.signInSpecificURL(url = ${baseURL});
 		}
@@ -40,16 +40,6 @@ definition {
 			portalURL = ${baseURL});
 
 		return ${accessToken};
-	}
-
-	macro setUpGlobalTokenForDefaultInstance {
-		var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
-			resourceCheckList = "Liferay.Headless.Portal.Instances.everything,Liferay.Object.Admin.REST.everything",
-			resourcePanels = "Liferay.Headless.Portal.Instances,Liferay.Object.Admin.REST");
-
-		static var staticDefaultInstanceToken = ${defaultInstanceToken};
-
-		return ${staticDefaultInstanceToken};
 	}
 
 }

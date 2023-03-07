@@ -1,5 +1,5 @@
 assemble:
-    - from: build
+    - from: build/
       include: "*.js"
       into: static
 liferay-learn-global-js:

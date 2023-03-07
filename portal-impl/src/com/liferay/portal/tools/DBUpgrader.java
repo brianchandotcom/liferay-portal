@@ -180,7 +180,7 @@ public class DBUpgrader {
 		System.out.println("Exiting DBUpgrader#main(String[]).");
 	}
 
-	public static void startUpgradeReportLogAppender() {
+	public static void startUpgradeLogAppender() {
 		if (_stopWatch == null) {
 			_initUpgradeStopwatch();
 		}
@@ -189,7 +189,7 @@ public class DBUpgrader {
 
 		serviceLatch.<Appender>waitFor(
 			StringBundler.concat(
-				"(&(appender.name=UpgradeReportLogAppender)(objectClass=",
+				"(&(appender.name=UpgradeLogAppender)(objectClass=",
 				Appender.class.getName(), "))"),
 			appender -> {
 				_appender = appender;
@@ -201,7 +201,7 @@ public class DBUpgrader {
 			});
 	}
 
-	public static void stopUpgradeReportLogAppender() {
+	public static void stopUpgradeLogAppender() {
 		if (_appender != null) {
 			_stopWatch.stop();
 

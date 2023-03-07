@@ -194,22 +194,22 @@
 </tr>
 <tr>
 	<td>PAGE_VARIATION</td>
-	<td>//a[contains(.,'${key_pageVariationName}')]</td>
+	<td>//button[contains(.,'${key_pageVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATION</td>
-	<td>//a[contains(@class,'layout-set-branch-selector')]</td>
+	<td>//button[contains(@class,'layout-set-branch-selector')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATION_DROPDOWN</td>
-	<td>//a[contains(@class,'staging-variation-selector') and contains(.,'${key_sitePagesVariationName}')]</td>
+	<td>//button[contains(@class,'staging-variation-selector') and contains(.,'${key_sitePagesVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_VARIATION_DROPDOWN</td>
-	<td>//a[contains(@class,'staging-variation-selector') and contains(.,'${key_pageVariationName}')]</td>
+	<td>//button[contains(@class,'staging-variation-selector') and contains(.,'${key_pageVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>DETAILS</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(@class,'dropdown-toggle')]/span[contains(.,'Details')]</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(@class,'dropdown-toggle')]/span[contains(.,'Details')] | //button[contains(@class,'dropdown-toggle')]/span[contains(.,'Details')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -109,7 +109,7 @@
 </tr>
 <tr>
 	<td>USER_AVATAR_ICON</td>
-	<td>//ul[contains(@class,'masterclass-navbar-user')]//a[@type='button']/img</td>
+	<td>//ul[contains(@class,'masterclass-navbar-user')]//button[@type='button']/img</td>
 	<td></td>
 </tr>
 </tbody>

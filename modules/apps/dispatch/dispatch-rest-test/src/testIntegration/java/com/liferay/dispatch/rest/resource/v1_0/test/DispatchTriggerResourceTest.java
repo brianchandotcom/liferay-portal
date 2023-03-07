@@ -17,7 +17,6 @@ package com.liferay.dispatch.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.rest.client.dto.v1_0.DispatchTrigger;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -25,7 +24,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Set;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,16 +34,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DispatchTriggerResourceTest
 	extends BaseDispatchTriggerResourceTestCase {
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(testGroup.getGroupId());
-	}
 
 	@Ignore
 	@Override
@@ -126,7 +114,7 @@ public class DispatchTriggerResourceTest
 
 		int index = 0;
 		int randomIndex = RandomTestUtil.randomInt(
-			0, dispatchTaskExecutorTypes.size());
+			0, dispatchTaskExecutorTypes.size() - 1);
 
 		for (String dispatchTaskExecutorType : dispatchTaskExecutorTypes) {
 			if (index++ == randomIndex) {

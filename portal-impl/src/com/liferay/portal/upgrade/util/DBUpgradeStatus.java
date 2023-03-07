@@ -18,6 +18,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.version.Version;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -92,14 +93,23 @@ public class DBUpgradeStatus {
 		return _upgradeProcessMessages;
 	}
 
+	public static String getUpgradeType() {
+		return _upgradeType;
+	}
+
 	public static Map<String, Map<String, Integer>> getWarningMessages() {
 		_filterMessages();
 
 		return _warningMessages;
 	}
 
+	public static void setNoUpgradesEnabled() {
+		_upgradeType = "Not enabled";
+	}
+
 	public static void upgradeFinished() {
 		_setFinalSchemaVersion();
+		_calculateTypeOfUpgrade();
 	}
 
 	private static void _browseReleaseTable(
@@ -144,6 +154,56 @@ public class DBUpgradeStatus {
 		}
 	}
 
+	private static void _calculateTypeOfUpgrade() {
+		String upgradeType = "No upgrade";
+
+		for (Map.Entry<String, ModuleSchemaVersions> servlet :
+				_moduleSchemaVersionsMap.entrySet()) {
+
+			ModuleSchemaVersions schemaVersions = servlet.getValue();
+
+			if (schemaVersions.getInitialSchemaVersion() == null) {
+				continue;
+			}
+
+			Version initialVersion = Version.parseVersion(
+				schemaVersions.getInitialSchemaVersion());
+			Version finalVersion = Version.parseVersion(
+				schemaVersions.getFinalSchemaVersion());
+
+			if (initialVersion.getMajor() < finalVersion.getMajor()) {
+				upgradeType = "Major";
+
+				break;
+			}
+
+			if (initialVersion.getMinor() < finalVersion.getMinor()) {
+				upgradeType = "Minor";
+
+				continue;
+			}
+
+			if (initialVersion.getMicro() < finalVersion.getMicro()) {
+				if (upgradeType.compareTo("Minor") != 0) {
+					upgradeType = "Micro";
+				}
+
+				continue;
+			}
+
+			String initialQualifier = initialVersion.getQualifier();
+			String finalQualifier = finalVersion.getQualifier();
+
+			if (!initialQualifier.isEmpty() && finalQualifier.isEmpty() &&
+				(upgradeType.compareTo("Minor") != 0)) {
+
+				upgradeType = "Micro";
+			}
+		}
+
+		_upgradeType = upgradeType;
+	}
+
 	private static void _filterMessages() {
 		if (!_filtered) {
 			for (String filteredClassName : _FILTERED_CLASS_NAMES) {
@@ -182,6 +242,7 @@ public class DBUpgradeStatus {
 		_moduleSchemaVersionsMap = new HashMap<>();
 	private static final Map<String, ArrayList<String>>
 		_upgradeProcessMessages = new ConcurrentHashMap<>();
+	private static String _upgradeType = "Not calculated";
 	private static final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 

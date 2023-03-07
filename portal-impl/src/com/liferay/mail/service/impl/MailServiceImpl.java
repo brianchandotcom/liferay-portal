@@ -77,8 +77,26 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 	@Override
 	public Session getSession() {
-		long companyId = CompanyThreadLocal.getCompanyId();
+		return getSession(CompanyThreadLocal.getCompanyId());
+	}
 
+	@Override
+	public Session getSession(Account account) {
+		Session session = Session.getInstance(_getProperties(account));
+
+		if (_log.isDebugEnabled()) {
+			session.setDebug(true);
+
+			Properties sessionProperties = session.getProperties();
+
+			sessionProperties.list(System.out);
+		}
+
+		return session;
+	}
+
+	@Override
+	public Session getSession(long companyId) {
 		Session session = _sessions.get(companyId);
 
 		if (session != null) {
@@ -220,21 +238,6 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		}
 
 		_sessions.put(companyId, session);
-
-		return session;
-	}
-
-	@Override
-	public Session getSession(Account account) {
-		Session session = Session.getInstance(_getProperties(account));
-
-		if (_log.isDebugEnabled()) {
-			session.setDebug(true);
-
-			Properties sessionProperties = session.getProperties();
-
-			sessionProperties.list(System.out);
-		}
 
 		return session;
 	}

@@ -16,22 +16,16 @@ package com.liferay.commerce.product.definitions.web.internal.messaging;
 
 import com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -39,48 +33,31 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration",
-	service = {}
+	service = SchedulerJobConfiguration.class
 )
-public class CheckCPInstanceMessageListener extends BaseMessageListener {
+public class CheckCPInstanceMessageListener
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		CPInstanceConfiguration cpInstanceConfiguration =
-			ConfigurableUtil.createConfigurable(
-				CPInstanceConfiguration.class, properties);
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			cpInstanceConfiguration.checkInterval(), TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> _cpInstanceLocalService.checkCPInstances(0);
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		_cpInstanceLocalService.checkCPInstances(0);
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_cpInstanceConfiguration.checkInterval(), TimeUnit.MINUTE);
 	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_cpInstanceConfiguration = ConfigurableUtil.createConfigurable(
+			CPInstanceConfiguration.class, properties);
+	}
+
+	private CPInstanceConfiguration _cpInstanceConfiguration;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

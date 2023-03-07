@@ -18,16 +18,11 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
@@ -35,7 +30,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -43,57 +37,40 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.configuration.CommerceOrderConfiguration",
-	service = {}
+	service = SchedulerJobConfiguration.class
 )
 public class CheckGuestCommerceOrdersMessageListener
-	extends BaseMessageListener {
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		Class<?> clazz = getClass();
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> {
+			int deleteInterval = _commerceOrderConfiguration.deleteInterval();
 
-		String className = clazz.getName();
+			Date createDate = new Date(
+				System.currentTimeMillis() - (deleteInterval * Time.MINUTE));
 
-		_commerceOrderConfiguration = ConfigurableUtil.createConfigurable(
-			CommerceOrderConfiguration.class, properties);
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			_commerceOrderConfiguration.checkInterval(), TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+			_commerceOrderLocalService.deleteCommerceOrdersByAccountId(
+				CommerceAccountConstants.ACCOUNT_ID_GUEST, createDate,
+				CommerceOrderConstants.ORDER_STATUS_OPEN);
+		};
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		int deleteInterval = _commerceOrderConfiguration.deleteInterval();
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_commerceOrderConfiguration.checkInterval(), TimeUnit.MINUTE);
+	}
 
-		Date createDate = new Date(
-			System.currentTimeMillis() - (deleteInterval * Time.MINUTE));
-
-		_commerceOrderLocalService.deleteCommerceOrdersByAccountId(
-			CommerceAccountConstants.ACCOUNT_ID_GUEST, createDate,
-			CommerceOrderConstants.ORDER_STATUS_OPEN);
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_commerceOrderConfiguration = ConfigurableUtil.createConfigurable(
+			CommerceOrderConfiguration.class, properties);
 	}
 
 	private volatile CommerceOrderConfiguration _commerceOrderConfiguration;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

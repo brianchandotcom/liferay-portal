@@ -16,16 +16,11 @@ package com.liferay.commerce.inventory.internal.messaging;
 
 import com.liferay.commerce.inventory.configuration.CommerceInventorySystemConfiguration;
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
@@ -33,7 +28,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -42,49 +36,40 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.inventory.configuration.CommerceInventorySystemConfiguration",
-	service = {}
+	service = SchedulerJobConfiguration.class
 )
 public class CheckCommerceInventoryAuditMessageListener
-	extends BaseMessageListener {
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		Class<?> clazz = getClass();
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> {
+			int deleteAuditMonthInterval =
+				_commerceInventorySystemConfiguration.
+					deleteAuditMonthInterval();
 
-		String className = clazz.getName();
+			Date date = new Date(
+				System.currentTimeMillis() -
+					(deleteAuditMonthInterval * Time.MONTH));
 
-		_commerceInventorySystemConfiguration =
-			ConfigurableUtil.createConfigurable(
-				CommerceInventorySystemConfiguration.class, properties);
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			_commerceInventorySystemConfiguration.
-				checkCommerceInventoryAuditQuantityInterval(),
-			TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+			_commerceInventoryAuditLocalService.checkCommerceInventoryAudit(
+				date);
+		};
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		int deleteAuditMonthInterval =
-			_commerceInventorySystemConfiguration.deleteAuditMonthInterval();
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_commerceInventorySystemConfiguration.
+				checkCommerceInventoryAuditQuantityInterval(),
+			TimeUnit.MINUTE);
+	}
 
-		Date date = new Date(
-			System.currentTimeMillis() -
-				(deleteAuditMonthInterval * Time.MONTH));
-
-		_commerceInventoryAuditLocalService.checkCommerceInventoryAudit(date);
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_commerceInventorySystemConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CommerceInventorySystemConfiguration.class, properties);
 	}
 
 	@Reference
@@ -93,11 +78,5 @@ public class CheckCommerceInventoryAuditMessageListener
 
 	private CommerceInventorySystemConfiguration
 		_commerceInventorySystemConfiguration;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

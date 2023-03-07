@@ -16,22 +16,16 @@ package com.liferay.commerce.product.definitions.web.internal.messaging;
 
 import com.liferay.commerce.product.definitions.web.internal.configuration.CPAttachmentFileEntryConfiguration;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -39,51 +33,35 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.product.definitions.web.internal.configuration.CPAttachmentFileEntryConfiguration",
-	service = {}
+	service = SchedulerJobConfiguration.class
 )
 public class CheckCPAttachmentFileEntryMessageListener
-	extends BaseMessageListener {
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		CPAttachmentFileEntryConfiguration cpAttachmentFileEntryConfiguration =
-			ConfigurableUtil.createConfigurable(
-				CPAttachmentFileEntryConfiguration.class, properties);
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			cpAttachmentFileEntryConfiguration.checkInterval(),
-			TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return _cpAttachmentFileEntryLocalService::checkCPAttachmentFileEntries;
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		_cpAttachmentFileEntryLocalService.checkCPAttachmentFileEntries();
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_cpAttachmentFileEntryConfiguration.checkInterval(),
+			TimeUnit.MINUTE);
 	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_cpAttachmentFileEntryConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CPAttachmentFileEntryConfiguration.class, properties);
+	}
+
+	private CPAttachmentFileEntryConfiguration
+		_cpAttachmentFileEntryConfiguration;
 
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

@@ -183,6 +183,10 @@ public class BatchEngineBundleTracker {
 				batchPath = batchPath.substring(1);
 			}
 
+			if (!StringUtil.endsWith(batchPath, StringPool.SLASH)) {
+				batchPath = batchPath.concat(StringPool.SLASH);
+			}
+
 			_batchEngineUnitProcessor.processBatchEngineUnits(
 				_getBatchEngineUnits(bundle, batchPath));
 		}

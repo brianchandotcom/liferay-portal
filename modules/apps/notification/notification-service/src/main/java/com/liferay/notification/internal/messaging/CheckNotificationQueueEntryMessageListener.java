@@ -19,15 +19,14 @@ import com.liferay.notification.internal.configuration.NotificationQueueConfigur
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
@@ -35,7 +34,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -43,54 +41,57 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	factory = "com.liferay.notification.internal.messaging.CheckNotificationQueueEntryMessageListener",
-	service = {}
+	service = SchedulerJobConfiguration.class
 )
 public class CheckNotificationQueueEntryMessageListener
-	extends BaseMessageListener {
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		Class<?> clazz = getClass();
+	@Override
+	public UnsafeConsumer<Long, Exception> getCompanyJobExecutor() {
+		return companyId -> {
+			NotificationType notificationType =
+				_notificationTypeServiceTracker.getNotificationType(
+					NotificationConstants.TYPE_EMAIL);
 
-		String className = StringBundler.concat(
-			clazz.getName(), StringPool.POUND, properties.get("companyId"));
+			notificationType.sendUnsentNotifications(companyId);
 
-		_notificationQueueConfiguration =
-			(NotificationQueueConfiguration)properties.get("configuration");
+			long deleteInterval =
+				_notificationQueueConfiguration.deleteInterval() * Time.MINUTE;
 
-		_schedulerEngineHelper.register(
-			this,
-			new SchedulerEntryImpl(
-				className,
-				_triggerFactory.createTrigger(
-					className, className, null, null,
-					_notificationQueueConfiguration.checkInterval(),
-					TimeUnit.MINUTE)),
-			DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+			_notificationQueueEntryLocalService.deleteNotificationQueueEntries(
+				companyId,
+				new Date(System.currentTimeMillis() - deleteInterval));
+		};
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		NotificationType notificationType =
-			_notificationTypeServiceTracker.getNotificationType(
-				NotificationConstants.TYPE_EMAIL);
-
-		long companyId = message.getLong("companyId");
-
-		notificationType.sendUnsentNotifications(companyId);
-
-		long deleteInterval =
-			_notificationQueueConfiguration.deleteInterval() * Time.MINUTE;
-
-		_notificationQueueEntryLocalService.deleteNotificationQueueEntries(
-			companyId, new Date(System.currentTimeMillis() - deleteInterval));
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public String getName() {
+		Class<?> clazz = getClass();
+
+		return StringBundler.concat(
+			clazz.getName(), StringPool.POUND, _companyId);
+	}
+
+	@Override
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_notificationQueueConfiguration.checkInterval(), TimeUnit.MINUTE);
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_companyId = GetterUtil.getLong(properties.get("companyId"));
+
+		_notificationQueueConfiguration =
+			(NotificationQueueConfiguration)properties.get("configuration");
+	}
+
+	private long _companyId;
 	private NotificationQueueConfiguration _notificationQueueConfiguration;
 
 	@Reference
@@ -99,11 +100,5 @@ public class CheckNotificationQueueEntryMessageListener
 
 	@Reference
 	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

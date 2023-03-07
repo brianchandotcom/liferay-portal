@@ -1,0 +1,38 @@
+{
+	"concurrencyPolicy": "Forbid",
+	"cpu": 4,
+	"env": {
+		"LIFERAY_LEARN_CRON_GITHUB_BRANCH": "master",
+		"LIFERAY_LEARN_CRON_GITHUB_DEPLOY_KEY": "@liferay-learn-github-deploy-key",
+		"LIFERAY_LEARN_CRON_GITHUB_REPO": "@liferay-learn-github-repo",
+		"LIFERAY_LEARN_CRON_LIFERAY_DATA_DEFINITION_KEY": "LEARN-ARTICLE",
+		"LIFERAY_LEARN_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN": "https://liferaylearnresources-exte5a2learn-extuat.lfr.cloud",
+		"LIFERAY_LEARN_CRON_LIFERAY_OAUTH_CLIENT_ID": "@liferay-oauth-client-id",
+		"LIFERAY_LEARN_CRON_LIFERAY_OAUTH_CLIENT_SECRET": "@liferay-oauth-client-secret",
+		"LIFERAY_LEARN_CRON_LIFERAY_SITE_FRIENDLY_URL_PATH": "guest",
+		"LIFERAY_LEARN_CRON_LIFERAY_URL": "@liferay-url",
+		"LIFERAY_LEARN_CRON_MARKDOWN_IMPORT_DIR": "../docs",
+		"LIFERAY_LEARN_CRON_SLACK_CHANNEL": "#is-sites-learn-devops",
+		"LIFERAY_LEARN_CRON_SLACK_ENDPOINT": "@slack-endpoint"
+	},
+	"environments": {
+		"extprd": {
+			"env": {
+				"LIFERAY_LEARN_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN": "https://resources.learn.liferay.com",
+				"LIFERAY_LEARN_CRON_SLACK_CHANNEL": "#is-sites-learn-devops-prd"
+			},
+			"schedule": "0 17 * * *"
+		},
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "liferaylearncron",
+	"kind": "CronJob",
+	"memory": 3000,
+	"scale": 1,
+	"schedule": "0 15 * * *",
+	"volumes": {
+		"publicHtml": "/public_html"
+	}
+}

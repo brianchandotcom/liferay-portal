@@ -103,6 +103,12 @@ public class DBUpgradeStatus {
 		return _warningMessages;
 	}
 
+	public static void setInitialSchemaVersion() {
+		_browseReleaseTable(
+			(moduleSchemaVersions, schemaVersion) ->
+				moduleSchemaVersions.setInitialSchemaVersion(schemaVersion));
+	}
+	
 	public static void setNoUpgradesEnabled() {
 		_upgradeType = "Not enabled";
 	}
@@ -221,12 +227,6 @@ public class DBUpgradeStatus {
 				moduleSchemaVersions.setFinalSchemaVersion(schemaVersion));
 	}
 
-	private static void _setInitialSchemaVersion() {
-		_browseReleaseTable(
-			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions.setInitialSchemaVersion(schemaVersion));
-	}
-
 	private static final String[] _FILTERED_CLASS_NAMES = {
 		"com.liferay.portal.search.elasticsearch7.internal.sidecar." +
 			"SidecarManager"
@@ -246,10 +246,6 @@ public class DBUpgradeStatus {
 	private static final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 
-	static {
-		_setInitialSchemaVersion();
-	}
-
 	private static class ModuleSchemaVersions {
 
 		public ModuleSchemaVersions(String initialSchemaVersion) {
@@ -268,8 +264,14 @@ public class DBUpgradeStatus {
 			_finalSchemaVersion = finalSchemaVersion;
 		}
 
-		public void setInitialSchemaVersion(String expectedSchemaVersion) {
-			_initialSchemaVersion = expectedSchemaVersion;
+		public void setInitialSchemaVersion(String initialSchemaVersion) {
+			if (initialSchemaVersion == null) {
+				_initialSchemaVersion = "0.0.0";
+
+				return;
+			}
+
+			_initialSchemaVersion = initialSchemaVersion;
 		}
 
 		private String _finalSchemaVersion;

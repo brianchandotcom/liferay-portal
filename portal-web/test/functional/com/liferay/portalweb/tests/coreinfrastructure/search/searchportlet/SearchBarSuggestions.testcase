@@ -430,6 +430,32 @@ definition {
 			searchAssetTitle = "Apple Web Content");
 	}
 
+	@description = "This is a use case for LPS-176871."
+	@priority = 4
+	test SearchSuggestionsInNonRootContext {
+		property portal.context = "liferay";
+		property search.environment.suite.exclude = "true";
+		property skip.clean-app-server-deploy-dir = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "SearchBarSuggestions#SearchSuggestionsInNonRootContext";
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content",
+			description = "WC WebContent Description",
+			groupName = "Guest",
+			title = "Apple");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple");
+
+		AssertJavaScriptErrors();
+	}
+
 	@priority = 4
 	test ShowHTMLAsPlainText {
 		JSONLayout.addPublicLayout(

@@ -14,6 +14,8 @@
 
 package com.liferay.jethr0;
 
+import com.liferay.jethr0.util.LiferayOAuthConfiguration;
+
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
 import com.nimbusds.jose.proc.JWSAlgorithmFamilyJWSKeySelector;
@@ -27,9 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +48,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Raymond Augé
@@ -93,15 +92,9 @@ public class Jethr0EnableWebSecurity {
 		NimbusJwtDecoder nimbusJwtDecoder = new NimbusJwtDecoder(
 			defaultJWTProcessor);
 
-		String clientId = _getClientId();
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Using client ID " + clientId);
-		}
-
 		nimbusJwtDecoder.setJwtValidator(
 			new DelegatingOAuth2TokenValidator<>(
-				new ClientIdOAuth2TokenValidator(clientId)));
+				new ClientIdOAuth2TokenValidator()));
 
 		return nimbusJwtDecoder;
 	}
@@ -140,69 +133,30 @@ public class Jethr0EnableWebSecurity {
 		return allowedOrigins;
 	}
 
-	private String _getClientId() throws Exception {
-		while (true) {
-			try {
-				return WebClient.create(
-					_liferayPortalURL + "/o/oauth2/application"
-				).get(
-				).uri(
-					uriBuilder -> uriBuilder.queryParam(
-						"externalReferenceCode",
-						_liferayOAuthApplicationExternalReferenceCode
-					).build()
-				).retrieve(
-				).bodyToMono(
-					ApplicationInfo.class
-				).block(
-				).client_id;
-			}
-			catch (Throwable throwable) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to get client ID: " + throwable.getMessage());
-				}
-
-				Thread.sleep(1000);
-			}
-		}
-	}
-
-	private static final Log _log = LogFactory.getLog(
-		Jethr0EnableWebSecurity.class);
-
 	@Value("${dxp.domains}")
 	private String _dxpDomains;
 
-	@Value("${liferay.oauth.application.external.reference.code}")
-	private String _liferayOAuthApplicationExternalReferenceCode;
+	@Autowired
+	private LiferayOAuthConfiguration _liferayOAuthConfiguration;
 
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;
 
-	private static class ApplicationInfo {
-
-		public String client_id;
-
-	}
-
 	private class ClientIdOAuth2TokenValidator
 		implements OAuth2TokenValidator<Jwt> {
 
-		public ClientIdOAuth2TokenValidator(String clientId) {
-			_clientId = clientId;
-		}
-
 		@Override
 		public OAuth2TokenValidatorResult validate(Jwt jwt) {
-			if (Objects.equals(jwt.getClaimAsString("client_id"), _clientId)) {
+			if (Objects.equals(
+					jwt.getClaimAsString("client_id"),
+					_liferayOAuthConfiguration.getClientID())) {
+
 				return OAuth2TokenValidatorResult.success();
 			}
 
 			return OAuth2TokenValidatorResult.failure(_oAuth2Error);
 		}
 
-		private final String _clientId;
 		private final OAuth2Error _oAuth2Error = new OAuth2Error(
 			"invalid_token", "The client_id does not match", null);
 

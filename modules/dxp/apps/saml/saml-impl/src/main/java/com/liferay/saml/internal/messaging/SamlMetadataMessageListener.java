@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -50,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.saml.runtime.configuration.SamlConfiguration",
 	service = {}
 )
-public class SamlMetadataMessageListener extends SamlMessageListener {
+public class SamlMetadataMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
@@ -127,29 +128,41 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 	}
 
 	private void _updateMetadata(long companyId) {
-		if (!_samlProviderConfigurationHelper.isEnabled()) {
-			return;
-		}
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		try {
-			if (_samlProviderConfigurationHelper.isRoleIdp()) {
-				_updateSpMetadata(companyId);
+			currentThread.setContextClassLoader(
+				SamlMetadataMessageListener.class.getClassLoader());
+
+			if (!_samlProviderConfigurationHelper.isEnabled()) {
+				return;
 			}
-			else if (_samlProviderConfigurationHelper.isRoleSp()) {
-				_updateIdpMetadata(companyId);
+
+			try {
+				if (_samlProviderConfigurationHelper.isRoleIdp()) {
+					_updateSpMetadata(companyId);
+				}
+				else if (_samlProviderConfigurationHelper.isRoleSp()) {
+					_updateIdpMetadata(companyId);
+				}
+			}
+			catch (Exception exception) {
+				String msg = StringBundler.concat(
+					"Unable to refresh metadata for company ", companyId, ": ",
+					exception.getMessage());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(msg, exception);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(msg);
+				}
 			}
 		}
-		catch (Exception exception) {
-			String msg = StringBundler.concat(
-				"Unable to refresh metadata for company ", companyId, ": ",
-				exception.getMessage());
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg, exception);
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn(msg);
-			}
+		finally {
+			currentThread.setContextClassLoader(classLoader);
 		}
 	}
 

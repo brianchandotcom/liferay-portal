@@ -15,6 +15,7 @@
 package com.liferay.saml.internal.messaging;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -40,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.saml.runtime.configuration.SamlConfiguration",
 	service = {}
 )
-public class SamlSpAuthRequestMessageListener extends SamlMessageListener {
+public class SamlSpAuthRequestMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
@@ -70,7 +71,19 @@ public class SamlSpAuthRequestMessageListener extends SamlMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_samlSpAuthRequestLocalService.deleteExpiredSamlSpAuthRequests();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(
+				SamlSpAuthRequestMessageListener.class.getClassLoader());
+
+			_samlSpAuthRequestLocalService.deleteExpiredSamlSpAuthRequests();
+		}
+		finally {
+			currentThread.setContextClassLoader(classLoader);
+		}
 	}
 
 	@Reference

@@ -3161,6 +3161,21 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (${showAllOptions} == "false") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Show All Options",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PageEditor.waitForAutoSave();
+		}
+		else if (${showAllOptions} == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show All Options",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (${showCharactersCount} == "false") {
 			Uncheck.uncheckToggleSwitch(
 				key_toggleSwitchLabel = "Show Characters Count",

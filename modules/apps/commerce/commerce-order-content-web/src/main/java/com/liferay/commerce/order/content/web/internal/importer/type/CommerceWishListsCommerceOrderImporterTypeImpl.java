@@ -36,6 +36,7 @@ import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -98,7 +99,8 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 
 	@Override
 	public List<CommerceOrderImporterItem> getCommerceOrderImporterItems(
-			CommerceOrder commerceOrder, Object object)
+			CommerceOrder commerceOrder, FDSPagination fdsPagination,
+			Object object)
 		throws Exception {
 
 		if ((object == null) || !(object instanceof CommerceWishList)) {
@@ -112,9 +114,19 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 		return CommerceOrderImporterTypeUtil.getCommerceOrderImporterItems(
 			_commerceContextFactory, commerceOrder,
 			_getCommerceOrderImporterItemImpls(
-				commerceChannel.getGroupId(), (CommerceWishList)object),
+				commerceChannel.getGroupId(), (CommerceWishList)object,
+				fdsPagination),
 			_commerceOrderItemService, _commerceOrderPriceCalculation,
 			_commerceOrderService, _userLocalService);
+	}
+
+	public int getCommerceOrderImporterItemsCount(Object object)
+		throws Exception {
+
+		CommerceWishList commerceWishList = (CommerceWishList)object;
+
+		return _commerceWishListItemService.getCommerceWishListItemsCount(
+			commerceWishList.getCommerceWishListId());
 	}
 
 	@Override
@@ -168,13 +180,21 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 	}
 
 	private CommerceOrderImporterItemImpl[] _getCommerceOrderImporterItemImpls(
-			long commerceChannelGroupId, CommerceWishList commerceWishList)
+			long commerceChannelGroupId, CommerceWishList commerceWishList,
+			FDSPagination fdsPagination)
 		throws Exception {
+
+		int start = QueryUtil.ALL_POS;
+		int end = QueryUtil.ALL_POS;
+
+		if (fdsPagination != null) {
+			start = fdsPagination.getStartPosition();
+			end = fdsPagination.getEndPosition();
+		}
 
 		return TransformUtil.transformToArray(
 			_commerceWishListItemService.getCommerceWishListItems(
-				commerceWishList.getCommerceWishListId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null),
+				commerceWishList.getCommerceWishListId(), start, end, null),
 			commerceWishListItem -> _toCommerceOrderImporterItemImpl(
 				commerceChannelGroupId, commerceWishListItem),
 			CommerceOrderImporterItemImpl.class);

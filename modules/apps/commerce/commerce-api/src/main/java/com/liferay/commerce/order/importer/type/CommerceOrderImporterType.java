@@ -16,6 +16,7 @@ package com.liferay.commerce.order.importer.type;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.importer.item.CommerceOrderImporterItem;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.IOException;
@@ -38,7 +39,11 @@ public interface CommerceOrderImporterType {
 	public String getCommerceOrderImporterItemParamName();
 
 	public List<CommerceOrderImporterItem> getCommerceOrderImporterItems(
-			CommerceOrder commerceOrder, Object object)
+			CommerceOrder commerceOrder, FDSPagination fdsPagination,
+			Object object)
+		throws Exception;
+
+	public int getCommerceOrderImporterItemsCount(Object object)
 		throws Exception;
 
 	public String getKey();

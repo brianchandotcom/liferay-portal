@@ -88,7 +88,7 @@ public class PreviewCommerceOrderItemFDSDataProvider
 
 		try {
 			_commerceOrderImporterItems = _getCommerceOrderImporterItems(
-				httpServletRequest);
+				httpServletRequest, fdsPagination);
 		}
 		finally {
 			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
@@ -161,15 +161,32 @@ public class PreviewCommerceOrderItemFDSDataProvider
 			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		int itemsCount = 0;
+		try {
+			CommerceOrderImporterType commerceOrderImporterType =
+				_commerceOrderImporterTypeRegistry.getCommerceOrderImporterType(
+					ParamUtil.getString(
+						httpServletRequest, "commerceOrderImporterTypeKey"));
 
-		if (_commerceOrderImporterItems != null) {
-			itemsCount = _commerceOrderImporterItems.size();
+			if (commerceOrderImporterType == null) {
+				return 0;
+			}
+
+			Object commerceOrderImporterItem =
+				commerceOrderImporterType.getCommerceOrderImporterItem(
+					httpServletRequest);
+
+			if (commerceOrderImporterItem == null) {
+				return 0;
+			}
+
+			return commerceOrderImporterType.getCommerceOrderImporterItemsCount(
+				commerceOrderImporterItem);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 
-		_commerceOrderImporterItems = null;
-
-		return itemsCount;
+		return 0;
 	}
 
 	private String _formatFinalPrice(
@@ -262,7 +279,7 @@ public class PreviewCommerceOrderItemFDSDataProvider
 	}
 
 	private List<CommerceOrderImporterItem> _getCommerceOrderImporterItems(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, FDSPagination fdsPagination) {
 
 		try {
 			CommerceOrderImporterType commerceOrderImporterType =
@@ -285,7 +302,7 @@ public class PreviewCommerceOrderItemFDSDataProvider
 			return commerceOrderImporterType.getCommerceOrderImporterItems(
 				_commerceOrderService.getCommerceOrder(
 					ParamUtil.getLong(httpServletRequest, "commerceOrderId")),
-				commerceOrderImporterItem);
+				fdsPagination, commerceOrderImporterItem);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

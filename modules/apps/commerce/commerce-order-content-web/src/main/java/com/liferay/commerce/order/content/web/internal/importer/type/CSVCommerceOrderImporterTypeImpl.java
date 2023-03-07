@@ -35,6 +35,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -58,6 +59,7 @@ import java.io.IOException;
 
 import java.nio.charset.Charset;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -111,7 +113,8 @@ public class CSVCommerceOrderImporterTypeImpl
 
 	@Override
 	public List<CommerceOrderImporterItem> getCommerceOrderImporterItems(
-			CommerceOrder commerceOrder, Object object)
+			CommerceOrder commerceOrder, FDSPagination fdsPagination,
+			Object object)
 		throws Exception {
 
 		if ((object == null) || !(object instanceof FileEntry)) {
@@ -122,13 +125,41 @@ public class CSVCommerceOrderImporterTypeImpl
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 				commerceOrder.getGroupId());
 
+		_commerceOrderImporterItemImpls = _getCommerceOrderImporterItemImpls(
+			commerceOrder.getCompanyId(), commerceChannel.getGroupId(),
+			(FileEntry)object);
+
+		int start = 0;
+		int end = _commerceOrderImporterItemImpls.length;
+
+		if (fdsPagination != null) {
+			start = fdsPagination.getStartPosition();
+
+			if (fdsPagination.getEndPosition() < end) {
+				end = fdsPagination.getEndPosition();
+			}
+		}
+
 		return CommerceOrderImporterTypeUtil.getCommerceOrderImporterItems(
 			_commerceContextFactory, commerceOrder,
-			_getCommerceOrderImporterItemImpls(
-				commerceOrder.getCompanyId(), commerceChannel.getGroupId(),
-				(FileEntry)object),
+			Arrays.copyOfRange(_commerceOrderImporterItemImpls, start, end),
 			_commerceOrderItemService, _commerceOrderPriceCalculation,
 			_commerceOrderService, _userLocalService);
+	}
+
+	@Override
+	public int getCommerceOrderImporterItemsCount(Object object)
+		throws Exception {
+
+		if (_commerceOrderImporterItemImpls == null) {
+			CSVParser csvParser = _getCSVParser((FileEntry)object);
+
+			List<CSVRecord> csvRecords = csvParser.getRecords();
+
+			return csvRecords.size();
+		}
+
+		return _commerceOrderImporterItemImpls.length;
 	}
 
 	@Override
@@ -329,6 +360,7 @@ public class CSVCommerceOrderImporterTypeImpl
 	@Reference
 	private CommerceContextFactory _commerceContextFactory;
 
+	private CommerceOrderImporterItemImpl[] _commerceOrderImporterItemImpls;
 	private volatile CommerceOrderImporterTypeConfiguration
 		_commerceOrderImporterTypeConfiguration;
 

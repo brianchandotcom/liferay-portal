@@ -197,7 +197,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 
 		List<CommerceOrderImporterItem> commerceOrderImporterItems =
 			commerceOrderImporterType.getCommerceOrderImporterItems(
-				commerceOrder,
+				commerceOrder, null,
 				commerceOrderImporterType.getCommerceOrderImporterItem(
 					_portal.getHttpServletRequest(actionRequest)));
 

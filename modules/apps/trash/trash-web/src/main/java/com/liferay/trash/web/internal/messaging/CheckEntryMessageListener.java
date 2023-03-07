@@ -14,21 +14,14 @@
 
 package com.liferay.trash.web.internal.messaging;
 
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.service.TrashEntryLocalService;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -40,43 +33,21 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Eudaldo Alonso
  */
-@Component(service = {})
-public class CheckEntryMessageListener extends BaseMessageListener {
+@Component(service = SchedulerJobConfiguration.class)
+public class CheckEntryMessageListener implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate() {
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			PropsValues.TRASH_ENTRY_CHECK_INTERVAL, TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return _trashEntryLocalService::checkEntries;
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		_trashEntryLocalService.checkEntries();
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			PropsValues.TRASH_ENTRY_CHECK_INTERVAL, TimeUnit.MINUTE);
 	}
 
 	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

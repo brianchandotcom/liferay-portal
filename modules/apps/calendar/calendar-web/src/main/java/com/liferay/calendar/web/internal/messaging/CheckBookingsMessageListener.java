@@ -16,64 +16,35 @@ package com.liferay.calendar.web.internal.messaging;
 
 import com.liferay.calendar.configuration.CalendarServiceConfigurationValues;
 import com.liferay.calendar.service.CalendarBookingLocalService;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Fabio Pezzutto
  * @author Eduardo Lundgren
  */
-@Component(service = CheckBookingsMessageListener.class)
-public class CheckBookingsMessageListener extends BaseMessageListener {
+@Component(service = SchedulerJobConfiguration.class)
+public class CheckBookingsMessageListener implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate() {
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			CalendarServiceConfigurationValues.
-				CALENDAR_NOTIFICATION_CHECK_INTERVAL,
-			TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return _calendarBookingLocalService::checkCalendarBookings;
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		_calendarBookingLocalService.checkCalendarBookings();
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			CalendarServiceConfigurationValues.
+				CALENDAR_NOTIFICATION_CHECK_INTERVAL,
+			TimeUnit.MINUTE);
 	}
 
 	@Reference
 	private CalendarBookingLocalService _calendarBookingLocalService;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import {createPortletURL, openSelectionModal, sub} from 'frontend-js-web';
+import {openSelectionModal, sub} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import AssetDisplayPageSelector from './AssetDisplayPageSelector';
@@ -140,14 +140,18 @@ export default function AssetDisplayPagePreview({
 
 			<PreviewButton
 				disabled={!assetDisplayPageSelected}
-				getPreviewURL={({classPK, version}) =>
-					createPortletURL(previewURL, {
-						classPK,
+				getPreviewURL={({classPK, version}) => {
+					const url = new URL(previewURL);
 
-						selPlid: assetDisplayPageSelected?.plid,
-						version,
-					}).toString()
-				}
+					url.searchParams.set('classPK', classPK);
+					url.searchParams.set(
+						'selPlid',
+						assetDisplayPageSelected?.plid
+					);
+					url.searchParams.set('version', version);
+
+					return url;
+				}}
 				namespace={namespace}
 				newArticle={newArticle}
 				saveAsDraftURL={saveAsDraftURL}

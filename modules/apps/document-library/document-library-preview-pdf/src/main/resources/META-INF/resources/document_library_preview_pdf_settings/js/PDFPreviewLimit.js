@@ -38,6 +38,7 @@ const PDFPreviewLimit = ({maxLimitSize, namespace, scopeLabel, value}) => {
 			<ClayInput
 				autoFocus
 				className="form-control"
+				min={0}
 				name={`${namespace}maxNumberOfPages`}
 				onChange={onChange}
 				type="number"

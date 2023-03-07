@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -48,36 +49,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ObjectFieldNotificationTemplateTermsMVCResourceCommand
 	extends BaseNotificationTemplateTermsMVCResourceCommand {
-
-	public enum AuthorTerm {
-
-		AUTHOR_EMAIL_ADDRESS("author-email-address", "AUTHOR_EMAIL_ADDRESS"),
-		AUTHOR_FIRST_NAME("author-first-name", "AUTHOR_FIRST_NAME"),
-		AUTHOR_ID("author-id", "AUTHOR_ID"),
-		AUTHOR_LAST_NAME("author-last-name", "AUTHOR_LAST_NAME"),
-		AUTHOR_MIDDLE_NAME("author-middle-name", "AUTHOR_MIDDLE_NAME"),
-		AUTHOR_PREFIX("author-prefix", "AUTHOR_PREFIX"),
-		AUTHOR_SUFFIX("author-suffix", "AUTHOR_SUFFIX");
-
-		public static Map<String, String> getTermMap() {
-			Map<String, String> map = new LinkedHashMap<>();
-
-			for (AuthorTerm authorTerm : values()) {
-				map.put(authorTerm._key, authorTerm._name);
-			}
-
-			return map;
-		}
-
-		private AuthorTerm(String key, String name) {
-			_key = key;
-			_name = name;
-		}
-
-		private final String _key;
-		private final String _name;
-
-	}
 
 	@Override
 	protected void doServeResource(
@@ -106,7 +77,7 @@ public class ObjectFieldNotificationTemplateTermsMVCResourceCommand
 			if (StringUtil.equals(objectField.getName(), "creator") &&
 				FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
 
-				termValues.putAll(AuthorTerm.getTermMap());
+				termValues.putAll(_authorTermNameSuffixes);
 			}
 			else {
 				termValues.put(
@@ -124,6 +95,22 @@ public class ObjectFieldNotificationTemplateTermsMVCResourceCommand
 			_objectDefinition.getShortName(), value);
 	}
 
+	private final Map<String, String> _authorTermNameSuffixes =
+		HashMapBuilder.put(
+			"author-email-address", "AUTHOR_EMAIL_ADDRESS"
+		).put(
+			"author-first-name", "AUTHOR_FIRST_NAME"
+		).put(
+			"author-id", "AUTHOR_ID"
+		).put(
+			"author-last-name", "AUTHOR_LAST_NAME"
+		).put(
+			"author-middle-name", "AUTHOR_MIDDLE_NAME"
+		).put(
+			"author-prefix", "AUTHOR_PREFIX"
+		).put(
+			"author-suffix", "AUTHOR_SUFFIX"
+		).build();
 	private ObjectDefinition _objectDefinition;
 
 	@Reference

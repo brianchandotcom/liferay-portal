@@ -1,5 +1,5 @@
 assemble:
-    - from: bootJar
+    - fromTask: bootJar
 sample-notification-type-1:
     name: Sample Notification Type 1
     oAuth2ApplicationExternalReferenceCode: sample-oauth-application-user-agent

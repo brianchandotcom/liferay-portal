@@ -441,24 +441,21 @@ public class ClientExtensionProjectConfigurator
 			copy -> assembleJsonNode.forEach(
 				copyJsonNode -> {
 					JsonNode fromJsonNode = copyJsonNode.get("from");
+					JsonNode fromTaskJsonNode = copyJsonNode.get("fromTask");
 					JsonNode includeJsonNode = copyJsonNode.get("include");
 					JsonNode intoJsonNode = copyJsonNode.get("into");
 
 					Object fromPath = null;
 
-					if (fromJsonNode != null) {
-						String from = fromJsonNode.asText();
-
+					if (fromTaskJsonNode != null) {
 						TaskContainer taskContainer = project.getTasks();
 
-						Task fromTask = taskContainer.findByName(from);
+						fromPath = taskContainer.findByName(
+							fromTaskJsonNode.asText());
+					}
 
-						if (fromTask != null) {
-							fromPath = fromTask;
-						}
-						else {
-							fromPath = fromJsonNode.asText();
-						}
+					if ((fromPath == null) && (fromJsonNode != null)) {
+						fromPath = fromJsonNode.asText();
 					}
 
 					copy.from(

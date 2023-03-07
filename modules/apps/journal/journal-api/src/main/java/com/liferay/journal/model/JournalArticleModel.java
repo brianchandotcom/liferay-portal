@@ -394,6 +394,20 @@ public interface JournalArticleModel
 	public void setUrlTitle(String urlTitle);
 
 	/**
+	 * Returns the ddm structure ID of this journal article.
+	 *
+	 * @return the ddm structure ID of this journal article
+	 */
+	public long getDDMStructureId();
+
+	/**
+	 * Sets the ddm structure ID of this journal article.
+	 *
+	 * @param DDMStructureId the ddm structure ID of this journal article
+	 */
+	public void setDDMStructureId(long DDMStructureId);
+
+	/**
 	 * Returns the ddm structure key of this journal article.
 	 *
 	 * @return the ddm structure key of this journal article

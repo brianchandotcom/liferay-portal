@@ -162,6 +162,8 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setUrlTitle(RandomTestUtil.randomString());
 
+		newJournalArticle.setDDMStructureId(RandomTestUtil.nextLong());
+
 		newJournalArticle.setDDMStructureKey(RandomTestUtil.randomString());
 
 		newJournalArticle.setDDMTemplateKey(RandomTestUtil.randomString());
@@ -253,6 +255,9 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(
 			existingJournalArticle.getUrlTitle(),
 			newJournalArticle.getUrlTitle());
+		Assert.assertEquals(
+			existingJournalArticle.getDDMStructureId(),
+			newJournalArticle.getDDMStructureId());
 		Assert.assertEquals(
 			existingJournalArticle.getDDMStructureKey(),
 			newJournalArticle.getDDMStructureKey());
@@ -741,9 +746,9 @@ public class JournalArticlePersistenceTest {
 			true, "modifiedDate", true, "externalReferenceCode", true,
 			"folderId", true, "classNameId", true, "classPK", true, "treePath",
 			true, "articleId", true, "version", true, "urlTitle", true,
-			"DDMStructureKey", true, "DDMTemplateKey", true,
-			"defaultLanguageId", true, "layoutUuid", true, "displayDate", true,
-			"expirationDate", true, "reviewDate", true, "indexable", true,
+			"DDMStructureId", true, "DDMStructureKey", true, "DDMTemplateKey",
+			true, "defaultLanguageId", true, "layoutUuid", true, "displayDate",
+			true, "expirationDate", true, "reviewDate", true, "indexable", true,
 			"smallImage", true, "smallImageId", true, "smallImageURL", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
@@ -1108,6 +1113,8 @@ public class JournalArticlePersistenceTest {
 		journalArticle.setVersion(RandomTestUtil.nextDouble());
 
 		journalArticle.setUrlTitle(RandomTestUtil.randomString());
+
+		journalArticle.setDDMStructureId(RandomTestUtil.nextLong());
 
 		journalArticle.setDDMStructureKey(RandomTestUtil.randomString());
 

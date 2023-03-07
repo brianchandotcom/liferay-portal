@@ -64,6 +64,7 @@ public class JournalArticleWrapper
 		attributes.put("articleId", getArticleId());
 		attributes.put("version", getVersion());
 		attributes.put("urlTitle", getUrlTitle());
+		attributes.put("DDMStructureId", getDDMStructureId());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("DDMTemplateKey", getDDMTemplateKey());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
@@ -199,6 +200,12 @@ public class JournalArticleWrapper
 
 		if (urlTitle != null) {
 			setUrlTitle(urlTitle);
+		}
+
+		Long DDMStructureId = (Long)attributes.get("DDMStructureId");
+
+		if (DDMStructureId != null) {
+			setDDMStructureId(DDMStructureId);
 		}
 
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
@@ -440,6 +447,16 @@ public class JournalArticleWrapper
 		getDDMStructure() {
 
 		return model.getDDMStructure();
+	}
+
+	/**
+	 * Returns the ddm structure ID of this journal article.
+	 *
+	 * @return the ddm structure ID of this journal article
+	 */
+	@Override
+	public long getDDMStructureId() {
+		return model.getDDMStructureId();
 	}
 
 	/**
@@ -1130,6 +1147,16 @@ public class JournalArticleWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the ddm structure ID of this journal article.
+	 *
+	 * @param DDMStructureId the ddm structure ID of this journal article
+	 */
+	@Override
+	public void setDDMStructureId(long DDMStructureId) {
+		model.setDDMStructureId(DDMStructureId);
 	}
 
 	/**

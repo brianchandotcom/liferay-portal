@@ -93,6 +93,7 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 				layoutSet.getTheme(), layoutSet.getColorScheme());
 
 			themeDisplay.setPlid(layout.getPlid());
+			themeDisplay.setScopeGroupId(layout.getGroupId());
 		}
 
 		if (!LayoutPermissionUtil.containsLayoutUpdatePermission(

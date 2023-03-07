@@ -182,20 +182,20 @@ public class DefaultSearchResultPermissionFilterTest {
 		return document;
 	}
 
-	private Hits _getHits(int start, int end) {
-		if (_permissionFilteredSearchResultAccurateCountThreshold > 0) {
-			return _getHitsWithPermissionFilteredSearchResultAccurateCountThreshold();
-		}
-
+	private Hits _getHits(int size) {
 		Hits hits = new HitsImpl();
 
-		int size = end - start;
+		if (_permissionFilteredSearchResultAccurateCountThreshold > size) {
+			size = _permissionFilteredSearchResultAccurateCountThreshold;
 
-		Document[] docs = new Document[size];
+			int maxDocSize = _PRIVATE_DOCUMENTS + _PUBLIC_DOCUMENTS;
 
-		for (int i = start; i < end; i++) {
-			docs[i] = _documents[i];
+			if (size > maxDocSize) {
+				size = maxDocSize;
+			}
 		}
+
+		Document[] documents = Arrays.copyOf(_documents, size);
 
 		float[] scores = new float[size];
 
@@ -203,31 +203,9 @@ public class DefaultSearchResultPermissionFilterTest {
 			scores[i] = i;
 		}
 
-		hits.setScores(scores);
-
-		hits.setDocs(docs);
-
+		hits.setDocs(documents);
 		hits.setLength(_documents.length);
-
-		return Mockito.spy(hits);
-	}
-
-	private Hits
-		_getHitsWithPermissionFilteredSearchResultAccurateCountThreshold() {
-
-		Hits hits = new HitsImpl();
-
-		float[] scores = new float[_documents.length];
-
-		for (int i = 0; i < _documents.length; i++) {
-			scores[i] = i;
-		}
-
 		hits.setScores(scores);
-
-		hits.setDocs(_documents);
-
-		hits.setLength(_documents.length);
 
 		return Mockito.spy(hits);
 	}
@@ -245,7 +223,7 @@ public class DefaultSearchResultPermissionFilterTest {
 		Mockito.when(
 			_searchFunction.apply(searchContext)
 		).thenReturn(
-			_getHits(0, end)
+			_getHits(end)
 		);
 
 		return searchContext;
@@ -308,20 +286,24 @@ public class DefaultSearchResultPermissionFilterTest {
 	}
 
 	private void _setUpDocuments() {
-		_documents = new Document[1 + 9];
+		_documents = new Document[_PRIVATE_DOCUMENTS + _PUBLIC_DOCUMENTS];
 
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < _PUBLIC_DOCUMENTS; i++) {
 			Document document = _getDocument("1", i);
 
 			_documents[i] = document;
 		}
 
-		for (int i = 9; i < _documents.length; i++) {
+		for (int i = _PUBLIC_DOCUMENTS; i < _documents.length; i++) {
 			Document document = _getDocument("0", i);
 
 			_documents[i] = document;
 		}
 	}
+
+	private static final int _PRIVATE_DOCUMENTS = 1;
+
+	private static final int _PUBLIC_DOCUMENTS = 9;
 
 	private static final long _USER_GROUP_ID = 1L;
 

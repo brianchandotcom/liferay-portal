@@ -17,7 +17,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {getOpener, sub} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo} from 'react';
 
 import './../css/tree.scss';
 
@@ -52,12 +52,9 @@ export function AssetCategoryTree({
 	multiSelection,
 	onItems,
 	onSelectedItemsCount,
-	selectedCategoryIds,
+	selectedKeys,
+	setSelectedKeys,
 }) {
-	const [selectedKeys, setSelectionChange] = useState(
-		new Set(selectedCategoryIds)
-	);
-
 	const filteredItems = useMemo(() => {
 		if (!filterQuery) {
 			return items;
@@ -180,7 +177,7 @@ export function AssetCategoryTree({
 			<ClayTreeView
 				items={filteredItems}
 				onItemsChange={(items) => onItems(items)}
-				onSelectionChange={(keys) => setSelectionChange(keys)}
+				onSelectionChange={(keys) => setSelectedKeys(keys)}
 				selectedKeys={selectedKeys}
 				selectionMode={
 					inheritSelection

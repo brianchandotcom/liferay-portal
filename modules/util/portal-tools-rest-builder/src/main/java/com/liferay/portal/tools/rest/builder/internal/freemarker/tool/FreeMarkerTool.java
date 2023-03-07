@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -42,6 +43,7 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 import com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -186,7 +188,10 @@ public class FreeMarkerTool {
 				}
 			}
 
-			if (!exists) {
+			if (!exists &&
+				!isQueryParameter(
+					javaMethodParameter, javaMethodSignature.getOperation())) {
+
 				javaMethodParameters.add(javaMethodParameter);
 			}
 		}
@@ -1012,7 +1017,21 @@ public class FreeMarkerTool {
 	public boolean isQueryParameter(
 		JavaMethodParameter javaMethodParameter, Operation operation) {
 
-		return isParameter(javaMethodParameter, operation, "query");
+		if (isParameter(javaMethodParameter, operation, "query") ||
+			(Objects.equals(
+				javaMethodParameter.getParameterName(), "pagination") &&
+			 Objects.equals(
+				 javaMethodParameter.getParameterType(),
+				 Pagination.class.getName())) ||
+			(Objects.equals(javaMethodParameter.getParameterName(), "sorts") &&
+			 Objects.equals(
+				 javaMethodParameter.getParameterType(),
+				 Sort[].class.getName()))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isReturnTypeRelatedSchema(

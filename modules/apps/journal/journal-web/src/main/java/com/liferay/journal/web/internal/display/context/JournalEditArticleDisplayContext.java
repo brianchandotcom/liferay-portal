@@ -150,7 +150,8 @@ public class JournalEditArticleDisplayContext {
 			"previewURL",
 			() -> {
 				String getPagePreviewURL = HttpComponentsUtil.addParameters(
-					_themeDisplay.getPathMain() + "/portal/get_page_preview",
+					_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
+						"/portal/get_page_preview",
 					"p_l_mode", Constants.PREVIEW, "className",
 					JournalArticle.class.getName());
 

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.Locale;
 
@@ -223,6 +224,15 @@ public class I18nFilterTest {
 			_getPrependI18nLanguageId(3, null, LocaleUtil.SPAIN, null, null));
 	}
 
+	@Test
+	public void testGuestSpanishVirtualHostWithoutSessionCookieAlgorithm3()
+		throws Exception {
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			_getPrependI18nLanguageId(3, null, null, null, LocaleUtil.SPAIN));
+	}
+
 	private String _getPrependI18nLanguageId(
 			int localePrependFriendlyURLStyle, Locale userLocale,
 			Locale sessionLocale, Locale cookieLocale, Locale virtualHostLocale)
@@ -244,6 +254,8 @@ public class I18nFilterTest {
 
 			_mockHttpServletRequest.addHeader("Host", layoutHostname);
 			_mockHttpServletRequest.setServerName(layoutHostname);
+
+			PortalInstances.getCompanyId(_mockHttpServletRequest);
 		}
 
 		if (sessionLocale != null) {

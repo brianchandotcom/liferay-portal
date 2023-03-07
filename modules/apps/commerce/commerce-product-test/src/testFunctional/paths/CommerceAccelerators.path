@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCOUNT_SELECTOR_ORDERS_LIST_ITEM</td>
+	<td>//div[contains(@class,'account-selector-dropdown')]//a[text()='${key_orderId}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCOUNT_SELECTOR_NO_ACCOUNTS_WERE_FOUND</td>
 	<td>//div[contains(@class,'account-selector-dropdown-menu')]//div[text()='No accounts were found.']</td>
 	<td></td>

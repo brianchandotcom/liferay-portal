@@ -31,10 +31,15 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.pop.notifications.internal.MessageListenerWrapper;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,42 +124,17 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 			com.liferay.portal.kernel.messaging.Message message)
 		throws MessagingException {
 
-		Store store = null;
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				if (!PrefsPropsUtil.getBoolean(
+						companyId, PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED,
+						PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED)) {
 
-		try {
-			store = _getStore();
-
-			Folder inboxFolder = _getInboxFolder(store);
-
-			if (inboxFolder == null) {
-				return;
-			}
-
-			try {
-				Message[] messages = inboxFolder.getMessages();
-
-				if (messages == null) {
 					return;
 				}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug("Deleting messages");
-				}
-
-				inboxFolder.setFlags(
-					messages, new Flags(Flags.Flag.DELETED), true);
-
-				_notifyMessageListeners(messages);
-			}
-			finally {
-				inboxFolder.close(true);
-			}
-		}
-		finally {
-			if (store != null) {
-				store.close();
-			}
-		}
+				_popNotifications(companyId);
+			});
 	}
 
 	private String _getEmailAddress(Address[] addresses) {
@@ -267,8 +247,56 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 		}
 	}
 
+	private void _popNotifications(long companyId) throws MessagingException {
+		long originalCompanyId = CompanyThreadLocal.getCompanyId();
+
+		Store store = null;
+
+		try {
+			CompanyThreadLocal.setCompanyId(companyId);
+
+			store = _getStore();
+
+			Folder inboxFolder = _getInboxFolder(store);
+
+			if (inboxFolder == null) {
+				return;
+			}
+
+			try {
+				Message[] messages = inboxFolder.getMessages();
+
+				if (messages == null) {
+					return;
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Deleting messages");
+				}
+
+				inboxFolder.setFlags(
+					messages, new Flags(Flags.Flag.DELETED), true);
+
+				_notifyMessageListeners(messages);
+			}
+			finally {
+				inboxFolder.close(true);
+			}
+		}
+		finally {
+			if (store != null) {
+				store.close();
+			}
+
+			CompanyThreadLocal.setCompanyId(originalCompanyId);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		POPNotificationsMessageListener.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private MailService _mailService;

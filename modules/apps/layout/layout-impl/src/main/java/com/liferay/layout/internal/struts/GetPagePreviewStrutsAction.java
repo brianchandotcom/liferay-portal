@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -153,8 +155,18 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 				layout.setType(LayoutConstants.TYPE_CONTENT);
 			}
 
-			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
+			ServiceContext cloneServiceContext =
+				(ServiceContext)serviceContext.clone();
+
+			cloneServiceContext.setPlid(layout.getPlid());
+			cloneServiceContext.setScopeGroupId(layout.getGroupId());
+
+			ServiceContextThreadLocal.pushServiceContext(cloneServiceContext);
+
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 			httpServletRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, themeDisplay);
 
@@ -192,6 +204,8 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 				WebKeys.PORTLET_DECORATE, currentPortletDecorate);
 			httpServletRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, currentThemeDisplay);
+
+			ServiceContextThreadLocal.popServiceContext();
 		}
 
 		return null;

@@ -46,7 +46,17 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_setUpResourceBundleUtil();
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
+
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(Mockito.any())
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
+		);
 	}
 
 	@Test(
@@ -162,20 +172,6 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 
 		_segmentsContextVocabularyConfigurationModelListener.onBeforeSave(
 			pid, properties);
-	}
-
-	private static void _setUpResourceBundleUtil() {
-		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
-			ResourceBundleLoader.class);
-
-		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
-			resourceBundleLoader);
-
-		Mockito.when(
-			resourceBundleLoader.loadResourceBundle(Mockito.any())
-		).thenReturn(
-			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
-		);
 	}
 
 	private void _setUpConfigurationAdmin(Configuration configuration)

@@ -71,12 +71,16 @@ public class DispatchTriggerUtil {
 	public static UnicodeProperties toSettingsUnicodeProperties(
 		Map<String, ?> parameters) {
 
+		if(parameters == null){
+			return UnicodePropertiesBuilder.create(
+				new HashMap<>(), true
+			).build();
+		}
+
 		Map<String, String> map = new HashMap<>();
 
-		if (parameters != null) {
-			for (Map.Entry<String, ?> entry : parameters.entrySet()) {
-				map.put(entry.getKey(), String.valueOf(entry.getValue()));
-			}
+		for (Map.Entry<String, ?> entry : parameters.entrySet()) {
+			map.put(entry.getKey(), String.valueOf(entry.getValue()));
 		}
 
 		return UnicodePropertiesBuilder.create(

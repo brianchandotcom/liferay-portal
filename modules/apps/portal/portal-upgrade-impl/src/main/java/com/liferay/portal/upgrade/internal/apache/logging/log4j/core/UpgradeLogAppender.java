@@ -43,10 +43,10 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  * @author Sam Ziemer
  */
 @Component(
-	immediate = true, property = "appender.name=UpgradeReportLogAppender",
+	immediate = true, property = "appender.name=UpgradeLogAppender",
 	service = Appender.class
 )
-public class UpgradeReportLogAppender implements Appender {
+public class UpgradeLogAppender implements Appender {
 
 	@Override
 	public void append(LogEvent logEvent) {
@@ -91,7 +91,7 @@ public class UpgradeReportLogAppender implements Appender {
 
 	@Override
 	public String getName() {
-		return "UpgradeReportLogAppender";
+		return "UpgradeLogAppender";
 	}
 
 	@Override

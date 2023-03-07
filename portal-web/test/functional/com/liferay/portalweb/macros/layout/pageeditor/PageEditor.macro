@@ -3135,6 +3135,19 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (isSet(numberOfOptions)) {
+			Type(
+				key_text = "Number of Options",
+				locator1 = "TextInput#ANY",
+				value1 = ${numberOfOptions});
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(placeholder)) {
 			Type(
 				key_text = "Placeholder",

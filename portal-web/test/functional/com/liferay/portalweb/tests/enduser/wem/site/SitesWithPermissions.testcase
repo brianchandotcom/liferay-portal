@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Site Administration";
+	property testray.main.component.name = "Sites Administration";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -29,7 +29,7 @@ definition {
 	@description = "This is for LPS-121422. The elements are still shown in edit mode after executing reset changes."
 	@priority = 3
 	test SitesTemplatePermissionPersistence {
-		property testray.component.names = "Permissions,Site Administration";
+		property testray.component.names = "Permissions,Sites Administration";
 
 		task ("Add a new site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");

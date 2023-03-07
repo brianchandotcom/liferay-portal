@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Site Administration";
+	property testray.main.component.name = "Sites Administration";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -189,7 +189,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SitesUseCase#AddOrganizationSitesAndDeactivate";
-		property testray.component.names = "Site Administration,Training,Users and Organizations";
+		property testray.component.names = "Sites Administration,Training,Users and Organizations";
 
 		task ("Enable Show Inactive Request Message in system settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -340,7 +340,7 @@ definition {
 	@priority = 3
 	test OnlySiteOwnersCanAssignSiteRolesToUserGroups {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Site Administration,User Groups";
+		property testray.component.names = "Sites Administration,User Groups";
 
 		task ("Get site name") {
 			var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -452,7 +452,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		task ("Get site name") {
 			var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -704,7 +704,7 @@ definition {
 	@priority = 3
 	test SiteFriendlyURLLayoutImporter {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -795,7 +795,7 @@ definition {
 	test SitesDeactivated {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "SitesUsecase#SitesDeactivated";
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		task ("Enable Show Inactive Request Message in system settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -904,7 +904,7 @@ definition {
 		property portal.release = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.name.skip.portal.instance = "SitesUsecase#SitesDemoSiteManagement";
-		property testray.component.names = "Site Administration,Page Administration";
+		property testray.component.names = "Sites Administration,Page Administration";
 
 		var portalURL = PropsUtil.get("portal.url");
 

@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Site Administration";
+	property testray.main.component.name = "Sites Administration";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -112,7 +112,7 @@ definition {
 	@priority = 5
 	test ExportImportSiteWithEmbeddedWCDInFragment {
 		property portal.acceptance = "true";
-		property testray.component.names = "Content Pages,Site Administration";
+		property testray.component.names = "Content Pages,Sites Administration";
 
 		task ("Add a fragment collection in site") {
 			JSONFragment.addFragmentCollection(

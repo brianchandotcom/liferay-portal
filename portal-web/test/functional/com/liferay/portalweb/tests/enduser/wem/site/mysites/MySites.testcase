@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Site Administration";
+	property testray.main.component.name = "Sites Administration";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -33,7 +33,7 @@ definition {
 	@description = "Assert that pagination is working for the MySites widget"
 	@priority = 3
 	test DisplayMySitesPagination {
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		task ("Add enough sites to allow pagination to occur") {
 			for (var index : list "01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23") {
@@ -65,7 +65,7 @@ definition {
 	@priority = 4
 	test JoinSiteOpen {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Site Administration,Users and Organizations";
+		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Create an open site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -112,7 +112,7 @@ definition {
 	test JoinSitePrivateNo {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Administration,Users and Organizations";
+		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Create a private site") {
 			JSONGroup.addGroup(
@@ -162,7 +162,7 @@ definition {
 	test JoinSiteRestricted {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Administration,Users and Organizations";
+		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Create a restricted site") {
 			JSONGroup.addGroup(
@@ -252,7 +252,7 @@ definition {
 	test LeaveSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Administration,Users and Organizations";
+		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Create a generic site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -305,7 +305,7 @@ definition {
 	@description = "Search for a site using MySites widget"
 	@priority = 4
 	test SearchSite {
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		task ("Create a site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -337,7 +337,7 @@ definition {
 	@priority = 3
 	test ViewMembershipAssignViaSiteCP {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Site Administration,Users and Organizations";
+		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Create a user and set its password") {
 			JSONUser.addUser(
@@ -410,7 +410,7 @@ definition {
 	@description = "Assert inactive sites are not searchable"
 	@priority = 3
 	test ViewNoInactiveSite {
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		task ("Create a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -446,7 +446,7 @@ definition {
 	@priority = 3
 	test ViewNoJoinOption {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Site Administration,Users and Organizations";
+		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Create a user and set its password") {
 			JSONUser.addUser(
@@ -509,7 +509,7 @@ definition {
 	@description = "Assert a user cannot leave a site with manual membership management disabled"
 	@priority = 3
 	test ViewNoLeaveOption {
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		task ("Add new site with manual membership disabled") {
 			JSONGroup.addGroup(
@@ -543,7 +543,7 @@ definition {
 	@priority = 3
 	test ViewSitePages {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		task ("Add a site with a public and private page") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -588,7 +588,7 @@ definition {
 	@description = "Assert that site tags appear in MySites widget"
 	@priority = 4
 	test ViewSiteWithTags {
-		property testray.component.names = "Site Administration,Tags";
+		property testray.component.names = "Sites Administration,Tags";
 
 		task ("Create a new site with tags") {
 			JSONGroup.addGroup(groupName = "Site Name");

@@ -34,7 +34,7 @@ definition {
 	@priority = 4
 	@uitest
 	test AddSiteTeam {
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		task ("Add a site team in new site") {
 			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
@@ -54,7 +54,7 @@ definition {
 	@description = "Able to assign user to site team."
 	@priority = 4
 	test AddSiteTeamAssignUser {
-		property testray.component.names = "Site Administration,Users and Organizations";
+		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Add a user") {
 			JSONUser.addUser(
@@ -102,7 +102,7 @@ definition {
 	@priority = 4
 	@uitest
 	test AddSiteTeamAssignUserGroup {
-		property testray.component.names = "Site Administration,User Groups";
+		property testray.component.names = "Sites Administration,User Groups";
 
 		task ("Add a site team in site") {
 			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
@@ -152,7 +152,7 @@ definition {
 	@priority = 5
 	test AddSiteTeamMultiple {
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		task ("Add a site page") {
 			JSONLayout.addPublicLayout(
@@ -196,7 +196,7 @@ definition {
 	@uitest
 	test AddSiteTeamRemoveUser {
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Administration,Users and Organizations";
+		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Add a user and assign it to the created site") {
 			JSONUser.addUser(
@@ -255,7 +255,7 @@ definition {
 	@priority = 4
 	@uitest
 	test AddSiteTeamRemoveUserGroup {
-		property testray.component.names = "Site Administration,User Groups";
+		property testray.component.names = "Sites Administration,User Groups";
 
 		task ("Add a site team in site") {
 			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
@@ -319,7 +319,7 @@ definition {
 	@description = "Able to find user group in site team."
 	@priority = 4
 	test AddSiteTeamSearchUserGroups {
-		property testray.component.names = "Site Administration,User Groups";
+		property testray.component.names = "Sites Administration,User Groups";
 
 		task ("Add 2 user groups andd assign them to the site") {
 			for (var n : list "1,2") {
@@ -369,7 +369,7 @@ definition {
 	@priority = 5
 	test AddSiteTeamSearchUsers {
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Administration,Users and Organizations";
+		property testray.component.names = "Sites Administration,Users and Organizations";
 
 		task ("Add 2 users and assign them to the created site") {
 			for (var n : list "1,2") {
@@ -425,7 +425,7 @@ definition {
 	@uitest
 	test DeleteSiteTeam {
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		task ("Add a site team and delete it") {
 			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
@@ -449,7 +449,7 @@ definition {
 	@uitest
 	test EditSiteTeam {
 		property portal.acceptance = "true";
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		task ("Add a site team and edit it") {
 			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
@@ -475,7 +475,7 @@ definition {
 	@priority = 4
 	test SiteTeamsPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Permissions,Site Administration";
+		property testray.component.names = "Permissions,Sites Administration";
 
 		task ("Add a site team and a public page basing on Search page template") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -629,7 +629,7 @@ definition {
 	@description = "Add site team name with XSS."
 	@priority = 4
 	test SiteTeamsXSS {
-		property testray.component.names = "Site Administration,XSS";
+		property testray.component.names = "Sites Administration,XSS";
 
 		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Site Name");

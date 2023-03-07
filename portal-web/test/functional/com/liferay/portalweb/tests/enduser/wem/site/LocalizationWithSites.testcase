@@ -37,7 +37,7 @@ definition {
 	@description = "Add site name translation in site settings."
 	@priority = 4
 	test AddSiteNameTranslations {
-		property testray.component.names = "Localization,Site Administration";
+		property testray.component.names = "Localization,Sites Administration";
 
 		task ("Add two localized site names") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-1");

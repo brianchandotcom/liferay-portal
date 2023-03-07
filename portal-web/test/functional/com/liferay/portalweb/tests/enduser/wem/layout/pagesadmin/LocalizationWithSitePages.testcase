@@ -31,7 +31,7 @@ definition {
 	@description = "Can add a translation to parent and child page."
 	@priority = 3
 	test AddTranslationToPageName {
-		property testray.component.names = "Localization,Site Administration,Site Localization";
+		property testray.component.names = "Localization,Sites Administration,Site Localization";
 
 		task ("Get portal URL") {
 			var portalURL = PropsUtil.get("portal.url");

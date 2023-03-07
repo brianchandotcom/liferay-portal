@@ -3,8 +3,8 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Site Administration";
-	property testray.main.component.name = "Site Administration";
+	property testray.component.names = "Sites Administration";
+	property testray.main.component.name = "Sites Administration";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -580,7 +580,7 @@ definition {
 	@description = "View Web Content Admin displayed in global site."
 	@priority = 4
 	test ViewDefaultGlobalScopeLandingPage {
-		property testray.component.names = "Site Administration";
+		property testray.component.names = "Sites Administration";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 

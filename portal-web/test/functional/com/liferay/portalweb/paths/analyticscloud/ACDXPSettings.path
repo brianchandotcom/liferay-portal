@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SECOND_AVAILABLE_PROPERTY</td>
+	<td>//tr[2]/td[@class='table-column-text-start']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SYNC_ANY_PROPERTIES</td>
 	<td>//tr[@data-testid='${key_propertyName}']//button[@role='assign-button']</td>
 	<td></td>

@@ -30,44 +30,38 @@ const PDFPreviewLimit = ({maxLimitSize, namespace, scopeLabel, value}) => {
 	};
 
 	return (
-		<>
-			<p className="text-muted">
-				{Liferay.Language.get('maximum-number-of-pages-help')}
-			</p>
+		<ClayForm.Group className={error ? 'has-error' : ''}>
+			<label htmlFor={`${namespace}maxNumberOfPages`}>
+				{Liferay.Language.get('maximum-number-of-pages')}
+			</label>
 
-			<ClayForm.Group className={error ? 'has-error' : ''}>
-				<label htmlFor={`${namespace}maxNumberOfPages`}>
-					{Liferay.Language.get('maximum-number-of-pages')}
-				</label>
+			<ClayInput
+				autoFocus
+				className="form-control"
+				name={`${namespace}maxNumberOfPages`}
+				onChange={onChange}
+				type="number"
+				value={inputValue}
+			/>
 
-				<ClayInput
-					autoFocus
-					className="form-control"
-					name={`${namespace}maxNumberOfPages`}
-					onChange={onChange}
-					type="number"
-					value={inputValue}
-				/>
+			{error && (
+				<ClayForm.FeedbackGroup>
+					<ClayForm.FeedbackItem>
+						<ClayForm.FeedbackIndicator symbol="info-circle" />
 
-				{error && (
-					<ClayForm.FeedbackGroup>
-						<ClayForm.FeedbackItem>
-							<ClayForm.FeedbackIndicator symbol="info-circle" />
-
-							<span>
-								{sub(
-									Liferay.Language.get(
-										'this-limit-is-higher-than-x-limit-enter-maximum-number-of-pages-x'
-									),
-									scopeLabel,
-									maxLimitSize
-								)}
-							</span>
-						</ClayForm.FeedbackItem>
-					</ClayForm.FeedbackGroup>
-				)}
-			</ClayForm.Group>
-		</>
+						<span>
+							{sub(
+								Liferay.Language.get(
+									'this-limit-is-higher-than-x-limit-enter-maximum-number-of-pages-x'
+								),
+								scopeLabel,
+								maxLimitSize
+							)}
+						</span>
+					</ClayForm.FeedbackItem>
+				</ClayForm.FeedbackGroup>
+			)}
+		</ClayForm.Group>
 	);
 };
 

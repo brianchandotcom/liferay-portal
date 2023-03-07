@@ -29,9 +29,13 @@ PDFPreviewConfigurationDisplayContext pdfPreviewConfigurationDisplayContext = (P
 		</liferay-ui:error>
 
 		<clay:sheet-header>
-			<h2>
+			<h2 class="sheet-title">
 				<liferay-ui:message key="pdf-preview-configuration-name" />
 			</h2>
+
+			<div class="sheet-text">
+				<liferay-ui:message key="maximum-number-of-pages-help" />
+			</div>
 		</clay:sheet-header>
 
 		<clay:sheet-section>

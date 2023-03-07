@@ -47,13 +47,12 @@ import java.io.Serializable;
 
 import java.text.Format;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -149,17 +148,15 @@ public class ObjectEntryRowInfoItemRenderer
 		Stream<Map.Entry<String, Serializable>> entriesStream =
 			entries.stream();
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectEntry.getObjectDefinitionId());
+		Map<String, ObjectField> objectFieldsMap = new HashMap<>();
 
-		objectFields = _objectFieldLocalService.getActiveObjectFields(
-			objectFields);
+		for (ObjectField objectField :
+				_objectFieldLocalService.getActiveObjectFields(
+					_objectFieldLocalService.getObjectFields(
+						objectEntry.getObjectDefinitionId()))) {
 
-		Stream<ObjectField> objectFieldsStream = objectFields.stream();
-
-		Map<String, ObjectField> objectFieldsMap = objectFieldsStream.collect(
-			Collectors.toMap(ObjectField::getName, Function.identity()));
+			objectFieldsMap.put(objectField.getName(), objectField);
+		}
 
 		return entriesStream.filter(
 			entry -> objectFieldsMap.containsKey(entry.getKey())

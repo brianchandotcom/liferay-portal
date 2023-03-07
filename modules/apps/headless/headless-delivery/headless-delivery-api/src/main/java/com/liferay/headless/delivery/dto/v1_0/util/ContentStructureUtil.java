@@ -165,13 +165,12 @@ public class ContentStructureUtil {
 									LocalizedValue localizedValue =
 										entry.getValue();
 
-									setLabel(_toString(localizedValue, locale));
-									setLabel_i18n(
-										LocalizedMapUtil.getI18nMap(
-											acceptAllLanguage,
-											localizedValue.getValues()));
+									label = _toString(localizedValue, locale);
+									label_i18n = LocalizedMapUtil.getI18nMap(
+										acceptAllLanguage,
+										localizedValue.getValues());
 
-									setValue(entry.getKey());
+									value = entry.getKey();
 								}
 							},
 							Option.class);

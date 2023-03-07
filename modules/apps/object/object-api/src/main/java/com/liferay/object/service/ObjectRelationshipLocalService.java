@@ -376,7 +376,8 @@ public interface ObjectRelationshipLocalService
 		throws PortalException;
 
 	public void registerObjectRelationshipsRelatedInfoCollectionProviders(
-		ObjectDefinition objectDefinition);
+		ObjectDefinition objectDefinition1,
+		ObjectDefinitionLocalService objectDefinitionLocalService);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectRelationship updateObjectRelationship(

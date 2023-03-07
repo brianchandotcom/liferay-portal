@@ -467,10 +467,11 @@ public class ObjectRelationshipLocalServiceUtil {
 
 	public static void
 		registerObjectRelationshipsRelatedInfoCollectionProviders(
-			com.liferay.object.model.ObjectDefinition objectDefinition) {
+			com.liferay.object.model.ObjectDefinition objectDefinition1,
+			ObjectDefinitionLocalService objectDefinitionLocalService) {
 
 		getService().registerObjectRelationshipsRelatedInfoCollectionProviders(
-			objectDefinition);
+			objectDefinition1, objectDefinitionLocalService);
 	}
 
 	public static ObjectRelationship updateObjectRelationship(

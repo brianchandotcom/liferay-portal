@@ -470,6 +470,11 @@ public class ObjectRelationshipWrapper
 	}
 
 	@Override
+	public boolean isSelf() {
+		return model.isSelf();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

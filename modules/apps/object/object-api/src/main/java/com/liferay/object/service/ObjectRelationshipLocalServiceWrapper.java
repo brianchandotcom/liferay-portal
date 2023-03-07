@@ -540,11 +540,12 @@ public class ObjectRelationshipLocalServiceWrapper
 
 	@Override
 	public void registerObjectRelationshipsRelatedInfoCollectionProviders(
-		com.liferay.object.model.ObjectDefinition objectDefinition) {
+		com.liferay.object.model.ObjectDefinition objectDefinition1,
+		ObjectDefinitionLocalService objectDefinitionLocalService) {
 
 		_objectRelationshipLocalService.
 			registerObjectRelationshipsRelatedInfoCollectionProviders(
-				objectDefinition);
+				objectDefinition1, objectDefinitionLocalService);
 	}
 
 	@Override

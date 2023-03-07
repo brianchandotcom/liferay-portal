@@ -26,8 +26,10 @@ import java.io.IOException;
 
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchScrollRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,8 +68,15 @@ public class SearchSearchRequestExecutorImpl
 			_log.trace("Search query: " + prettyPrintedRequestString);
 		}
 
-		SearchResponse searchResponse = getSearchResponse(
-			searchRequest, searchSearchRequest);
+		SearchResponse searchResponse = null;
+
+		if (searchSearchRequest.getScrollId() != null) {
+			searchResponse = _getScrollSearchResponse(searchSearchRequest);
+		}
+		else {
+			searchResponse = _getSearchResponse(
+				searchRequest, searchSearchRequest);
+		}
 
 		SearchSearchResponse searchSearchResponse = new SearchSearchResponse();
 
@@ -86,7 +95,44 @@ public class SearchSearchRequestExecutorImpl
 		return searchSearchResponse;
 	}
 
-	protected SearchResponse getSearchResponse(
+	private String _getPrettyPrintedRequestString(
+		SearchSourceBuilder searchSourceBuilder) {
+
+		try {
+			return JSONUtil.getPrettyPrintedJSONString(searchSourceBuilder);
+		}
+		catch (Exception exception) {
+			return exception.getMessage();
+		}
+	}
+
+	private SearchResponse _getScrollSearchResponse(
+		SearchSearchRequest searchSearchRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				searchSearchRequest.getConnectionId(),
+				searchSearchRequest.isPreferLocalCluster());
+
+		SearchScrollRequest searchScrollRequest = new SearchScrollRequest(
+			searchSearchRequest.getScrollId());
+
+		if (searchSearchRequest.getScrollKeepAliveMinutes() > 0) {
+			searchScrollRequest.scroll(
+				TimeValue.timeValueMinutes(
+					searchSearchRequest.getScrollKeepAliveMinutes()));
+		}
+
+		try {
+			return restHighLevelClient.scroll(
+				searchScrollRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private SearchResponse _getSearchResponse(
 		SearchRequest searchRequest, SearchSearchRequest searchSearchRequest) {
 
 		RestHighLevelClient restHighLevelClient =
@@ -100,17 +146,6 @@ public class SearchSearchRequestExecutorImpl
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
-		}
-	}
-
-	private String _getPrettyPrintedRequestString(
-		SearchSourceBuilder searchSourceBuilder) {
-
-		try {
-			return JSONUtil.getPrettyPrintedJSONString(searchSourceBuilder);
-		}
-		catch (Exception exception) {
-			return exception.getMessage();
 		}
 	}
 

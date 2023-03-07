@@ -14,9 +14,17 @@
 
 package com.liferay.object.model.impl;
 
+import java.util.Objects;
+
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
 public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
+
+	@Override
+	public boolean isSelf() {
+		return Objects.equals(
+			getObjectDefinitionId1(), getObjectDefinitionId2());
+	}
 }

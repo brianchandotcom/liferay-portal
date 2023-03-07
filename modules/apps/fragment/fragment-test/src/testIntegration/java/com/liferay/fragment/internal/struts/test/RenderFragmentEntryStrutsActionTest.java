@@ -92,6 +92,9 @@ public class RenderFragmentEntryStrutsActionTest {
 		PipingServletResponse pipingServletResponse = new PipingServletResponse(
 			mockHttpServletResponse, unsyncStringWriter);
 
+		mockHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
+
 		mockHttpServletRequest.setParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 

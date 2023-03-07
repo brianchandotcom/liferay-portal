@@ -216,7 +216,7 @@ definition {
 	}
 
 	macro createNewOrderFromAccountSelectorDropdown {
-		Click(locator1 = "Button#ANGLE_DOWN");
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
 		Button.click(button = "Create New Order");
 	}
@@ -349,9 +349,7 @@ definition {
 	}
 
 	macro selectAccountFromAccountSelector {
-		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
-
-		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_BACK_BUTTON");
+		CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
 
 		Click(
 			key_accountName = ${accountName},

@@ -110,6 +110,8 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));
 		boolean currentPortletDecorate = GetterUtil.getBoolean(
 			httpServletRequest.getAttribute(WebKeys.PORTLET_DECORATE));
+		Layout currentLayout = (Layout)httpServletRequest.getAttribute(
+			WebKeys.LAYOUT);
 
 		try {
 			long segmentsExperienceId = ParamUtil.getLong(
@@ -151,6 +153,8 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 				layout.setType(LayoutConstants.TYPE_CONTENT);
 			}
 
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
 			httpServletRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, themeDisplay);
 
@@ -183,6 +187,7 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			httpServletRequest.setAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
 				currentSegmentsExperienceIds);
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, currentLayout);
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DECORATE, currentPortletDecorate);
 			httpServletRequest.setAttribute(

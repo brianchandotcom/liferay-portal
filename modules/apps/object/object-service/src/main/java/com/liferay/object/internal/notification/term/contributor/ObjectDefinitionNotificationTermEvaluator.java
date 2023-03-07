@@ -71,6 +71,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 		Set<String> creatorTermNames = Collections.unmodifiableSet(
 			SetUtil.fromArray(
+				"[%" + prefix + "_CREATOR%]",
 				"[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]",
 				"[%" + prefix + "_AUTHOR_FIRST_NAME%]",
 				"[%" + prefix + "_AUTHOR_ID%]",
@@ -98,7 +99,8 @@ public class ObjectDefinitionNotificationTermEvaluator
 		}
 
 		if (user != null) {
-			Map<String, String> userTermValuesMap = _getUserTermValuesMap(user);
+			Map<String, String> userTermValuesMap = _getUserTermValuesMap(
+				context, user);
 
 			return userTermValuesMap.get(
 				StringUtil.removeSubstring(
@@ -174,10 +176,15 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return listType.getName();
 	}
 
-	private Map<String, String> _getUserTermValuesMap(User user)
+	private Map<String, String> _getUserTermValuesMap(
+			Context context, User user)
 		throws PortalException {
 
 		return HashMapBuilder.put(
+			"CREATOR",
+			() -> context.equals(Context.RECIPIENT) ?
+				String.valueOf(user.getUserId()) : user.getFullName(true, true)
+		).put(
 			"EMAIL_ADDRESS", user.getEmailAddress()
 		).put(
 			"FIRST_NAME", user.getFirstName()

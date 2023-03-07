@@ -50,7 +50,7 @@ definition {
 
 		WaitForElementNotPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
 
-		Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
+		Click(locator1 = "ACDXPSettings#CONNECT_BUTTON");
 	}
 
 	macro connectDXPtoAnalyticsCloud {
@@ -136,8 +136,8 @@ definition {
 	macro disconnectDXPFromAnalyticsCloud {
 		ACDXPSettings.goToInstanceSettingsAC();
 
-		if (IsElementNotPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED")) {
-			ClickNoError(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
+		if (IsElementPresent(locator1 = "ACDXPSettings#DISCONNECT_BUTTON")) {
+			ClickNoError(locator1 = "ACDXPSettings#DISCONNECT_BUTTON");
 
 			Click(locator1 = "ACSettings#DISCONNECT_CONFIRMATION_BUTTON");
 		}

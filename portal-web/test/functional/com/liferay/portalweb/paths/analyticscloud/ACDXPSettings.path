@@ -32,8 +32,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONNECT_DISCONNECT_BUTTON</td>
-	<td>//button[@type='button' and text()='Connect'] | //button[@type='button' and text()='Disconnect']</td>
+	<td>CONNECT_BUTTON</td>
+	<td>//button[@type='button' and text()='Connect']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISCONNECT_BUTTON</td>
+	<td>//button[@type='button' and text()='Disconnect']</td>
 	<td></td>
 </tr>
 <tr>

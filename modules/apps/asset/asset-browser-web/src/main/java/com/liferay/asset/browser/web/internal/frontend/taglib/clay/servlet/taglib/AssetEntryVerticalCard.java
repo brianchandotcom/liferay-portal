@@ -49,12 +49,11 @@ public class AssetEntryVerticalCard implements VerticalCard {
 		_renderRequest = renderRequest;
 		_assetBrowserDisplayContext = assetBrowserDisplayContext;
 
-		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_assetRenderer = assetEntry.getAssetRenderer();
 		_assetRendererFactory =
 			assetBrowserDisplayContext.getAssetRendererFactory();
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override

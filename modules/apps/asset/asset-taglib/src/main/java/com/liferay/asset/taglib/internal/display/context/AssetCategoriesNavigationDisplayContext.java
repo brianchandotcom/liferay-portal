@@ -59,14 +59,13 @@ public class AssetCategoriesNavigationDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_hidePortletWhenEmpty = GetterUtil.getBoolean(
 			(String)httpServletRequest.getAttribute(
 				"liferay-asset:asset-tags-navigation:hidePortletWhenEmpty"));
 		_vocabularyIds = (long[])httpServletRequest.getAttribute(
 			"liferay-asset:asset-tags-navigation:vocabularyIds");
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public long getCategoryId() {

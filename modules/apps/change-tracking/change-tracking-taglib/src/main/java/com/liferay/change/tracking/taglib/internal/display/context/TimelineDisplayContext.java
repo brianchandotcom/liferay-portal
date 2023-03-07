@@ -67,7 +67,6 @@ public class TimelineDisplayContext {
 		_classPK = classPK;
 
 		_classNameId = PortalUtil.getClassNameId(className);
-
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

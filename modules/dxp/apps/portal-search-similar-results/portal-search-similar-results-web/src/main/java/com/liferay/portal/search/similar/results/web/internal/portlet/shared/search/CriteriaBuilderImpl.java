@@ -57,8 +57,8 @@ public class CriteriaBuilderImpl implements CriteriaBuilder {
 		}
 
 		@Override
-		public Optional<String> getTypeOptional() {
-			return Optional.ofNullable(_className);
+		public String getType() {
+			return _className;
 		}
 
 		@Override

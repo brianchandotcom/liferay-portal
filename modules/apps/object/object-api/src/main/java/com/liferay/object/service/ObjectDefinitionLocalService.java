@@ -104,6 +104,14 @@ public interface ObjectDefinitionLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition addSystemObjectDefinition(
+			long userId, boolean enableComments, Map<Locale, String> labelMap,
+			boolean modifiable, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			String scope, List<ObjectField> objectFields)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectDefinition addSystemObjectDefinition(
 			long userId, String className, String dbTableName,
 			Map<Locale, String> labelMap, boolean modifiable, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
@@ -368,6 +376,10 @@ public interface ObjectDefinitionLocalService
 	public boolean hasObjectRelationship(long objectDefinitionId);
 
 	public ObjectDefinition publishCustomObjectDefinition(
+			long userId, long objectDefinitionId)
+		throws PortalException;
+
+	public ObjectDefinition publishSystemObjectDefinition(
 			long userId, long objectDefinitionId)
 		throws PortalException;
 

@@ -20,7 +20,7 @@ export default function fieldBlur({
 	formId,
 	formPageTitle,
 	properties,
-	title
+	title,
 }) {
 	return (dispatch) => {
 		const {fieldInstance} = properties;
@@ -34,7 +34,7 @@ export default function fieldBlur({
 			formId,
 			formPageTitle,
 			page: activePage,
-			title
+			title,
 		});
 	};
 }

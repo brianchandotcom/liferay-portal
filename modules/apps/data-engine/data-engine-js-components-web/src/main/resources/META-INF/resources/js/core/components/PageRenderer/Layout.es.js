@@ -93,9 +93,10 @@ export function Layout({components, editable, itemPath, rows, viewMode}) {
 														containerElement.current
 													)
 												),
-												formPageTitle: pages[activePage].title,
+												formPageTitle:
+													pages[activePage].title,
 												properties: event,
-												title
+												title,
 											})
 										)
 									}
@@ -116,9 +117,10 @@ export function Layout({components, editable, itemPath, rows, viewMode}) {
 														containerElement.current
 													)
 												),
-												formPageTitle: pages[activePage].title,
+												formPageTitle:
+													pages[activePage].title,
 												properties: event,
-												title
+												title,
 											})
 										)
 									}

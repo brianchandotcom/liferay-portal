@@ -14,7 +14,13 @@
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 
-export default function fieldFocus({activePage, formId, formPageTitle, properties, title}) {
+export default function fieldFocus({
+	activePage,
+	formId,
+	formPageTitle,
+	properties,
+	title,
+}) {
 	return (dispatch) => {
 		const {fieldInstance} = properties;
 
@@ -25,7 +31,7 @@ export default function fieldFocus({activePage, formId, formPageTitle, propertie
 			formId,
 			formPageTitle,
 			page: activePage,
-			title
+			title,
 		});
 	};
 }

@@ -41,7 +41,9 @@ export default function usePreviewURL() {
 
 		const setParameters = (parameters) => {
 			Object.entries(parameters).forEach(([key, value]) => {
-				url.searchParams.set(key, value);
+				if (value !== undefined) {
+					url.searchParams.set(key, value);
+				}
 			});
 		};
 

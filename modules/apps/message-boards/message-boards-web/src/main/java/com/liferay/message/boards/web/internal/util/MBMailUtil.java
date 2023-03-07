@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
@@ -66,7 +68,11 @@ public class MBMailUtil {
 		).put(
 			"[$MAILING_LIST_ADDRESS$]",
 			() -> {
-				if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
+				if (PrefsPropsUtil.getBoolean(
+						themeDisplay.getCompanyId(),
+						PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED,
+						PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED)) {
+
 					return LanguageUtil.get(
 						themeDisplay.getLocale(),
 						"the-email-address-of-the-mailing-list");
@@ -157,7 +163,11 @@ public class MBMailUtil {
 		).put(
 			"[$MAILING_LIST_ADDRESS$]",
 			() -> {
-				if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
+				if (PrefsPropsUtil.getBoolean(
+						themeDisplay.getCompanyId(),
+						PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED,
+						PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED)) {
+
 					return LanguageUtil.get(
 						themeDisplay.getLocale(),
 						"the-email-address-of-the-mailing-list");

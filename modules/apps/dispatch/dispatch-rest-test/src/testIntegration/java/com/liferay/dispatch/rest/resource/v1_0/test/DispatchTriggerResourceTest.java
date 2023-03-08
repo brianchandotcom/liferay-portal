@@ -17,14 +17,18 @@ package com.liferay.dispatch.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.rest.client.dto.v1_0.DispatchTrigger;
+import com.liferay.dispatch.rest.client.serdes.v1_0.DispatchTriggerSerDes;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Arrays;
 import java.util.Set;
 
-import org.junit.Ignore;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -35,10 +39,49 @@ import org.junit.runner.RunWith;
 public class DispatchTriggerResourceTest
 	extends BaseDispatchTriggerResourceTestCase {
 
-	@Ignore
 	@Override
 	@Test
 	public void testGraphQLGetDispatchTriggersPage() throws Exception {
+		DispatchTrigger dispatchTrigger1 =
+			testGraphQLGetDispatchTriggersPage_addDispatchTrigger();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"dispatchTriggers", new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject dispatchTriggersJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/dispatchTriggers");
+
+		long totalCount = dispatchTriggersJSONObject.getLong("totalCount");
+
+		DispatchTrigger dispatchTrigger2 =
+			testGraphQLGetDispatchTriggersPage_addDispatchTrigger();
+		DispatchTrigger dispatchTrigger3 =
+			testGraphQLGetDispatchTriggersPage_addDispatchTrigger();
+
+		dispatchTriggersJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/dispatchTriggers");
+
+		Assert.assertEquals(
+			totalCount + 2, dispatchTriggersJSONObject.getLong("totalCount"));
+
+		assertContains(
+			dispatchTrigger1,
+			Arrays.asList(
+				DispatchTriggerSerDes.toDTOs(
+					dispatchTriggersJSONObject.getString("items"))));
+		assertContains(
+			dispatchTrigger2,
+			Arrays.asList(
+				DispatchTriggerSerDes.toDTOs(
+					dispatchTriggersJSONObject.getString("items"))));
+		assertContains(
+			dispatchTrigger3,
+			Arrays.asList(
+				DispatchTriggerSerDes.toDTOs(
+					dispatchTriggersJSONObject.getString("items"))));
 	}
 
 	@Override
@@ -58,6 +101,11 @@ public class DispatchTriggerResourceTest
 		long dispatchId = dispatchTrigger.getId();
 
 		dispatchTriggerResource.postDispatchTriggerRun(dispatchId);
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"name", "dispatchTaskExecutorType"};
 	}
 
 	@Override

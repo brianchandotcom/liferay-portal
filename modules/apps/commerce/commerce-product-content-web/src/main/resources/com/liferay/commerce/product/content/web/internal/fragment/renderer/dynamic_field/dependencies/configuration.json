@@ -1,0 +1,132 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "sku",
+					"label": "field",
+					"name": "field",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "gtin",
+								"value": "gtin"
+							},
+							{
+								"label": "inventory",
+								"value": "availability.stockQuantity"
+							},
+							{
+								"label": "manufacturer-part-number",
+								"value": "manufacturerPartNumber"
+							},
+							{
+								"label": "sku",
+								"value": "sku"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": "",
+					"label": "label",
+					"name": "label",
+					"type": "text"
+				},
+				{
+					"defaultValue": "span",
+					"label": "label-element-type",
+					"name": "labelElementType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "div",
+								"value": "div"
+							},
+							{
+								"label": "h1",
+								"value": "h1"
+							},
+							{
+								"label": "h2",
+								"value": "h2"
+							},
+							{
+								"label": "h3",
+								"value": "h3"
+							},
+							{
+								"label": "h4",
+								"value": "h4"
+							},
+							{
+								"label": "h5",
+								"value": "h5"
+							},
+							{
+								"label": "h6",
+								"value": "h6"
+							},
+							{
+								"label": "p",
+								"value": "p"
+							},
+							{
+								"label": "span",
+								"value": "span"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": "span",
+					"label": "value-element-type",
+					"name": "valueElementType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "div",
+								"value": "div"
+							},
+							{
+								"label": "h1",
+								"value": "h1"
+							},
+							{
+								"label": "h2",
+								"value": "h2"
+							},
+							{
+								"label": "h3",
+								"value": "h3"
+							},
+							{
+								"label": "h4",
+								"value": "h4"
+							},
+							{
+								"label": "h5",
+								"value": "h5"
+							},
+							{
+								"label": "h6",
+								"value": "h6"
+							},
+							{
+								"label": "p",
+								"value": "p"
+							},
+							{
+								"label": "span",
+								"value": "span"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

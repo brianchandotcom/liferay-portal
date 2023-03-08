@@ -641,7 +641,7 @@ definition {
 		var attributesDescendingOrder2 = "birthday,agreedToTermsOfUse";
 		var attributesDataTypeAscending1 = '''
 			male,agreedToTermsOfUse,defaultUser,emailAddressVerified,
-			birthday,createDate,modifiedDate,createDate,modifiedDate,status,classNameId,classPK,contactId,
+			birthday,createDate,modifiedDate,createDate,modifiedDate,status,classNameId,classPK,companyId,contactId,
 			employeeStatusId,parentContactId,prefixListTypeId,suffixListTypeId,companyId,contactId,facebookId,
 			ldapServerId,portraitId,timeZoneId,userId,emailAddress,employeeNumber,facebookSn,firstName,hoursOfOperation,
 			jabberSn,jobClass,jobTitle,lastName,middleName,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,
@@ -650,9 +650,9 @@ definition {
 		var attributesDataTypeAscending2 = "screenName,uuid";
 		var attributesDataTypeDescending1 = '''
 			emailAddress,employeeNumber,facebookSn,firstName,hoursOfOperation,
-			jabberSn,jobClass,jobTitle,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,
+			jabberSn,jobClass,jobTitle,lastName,middleName,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,
 			firstName,googleUserId,greeting,jobTitle,languageId,lastName,middleName,openId,screenName,uuid,
-			classNameId,classPK,contactId,employeeStatusId,parentContactId,prefixListTypeId,suffixListTypeId,
+			classNameId,classPK,companyId,contactId,employeeStatusId,parentContactId,prefixListTypeId,suffixListTypeId,
 			companyId,contactId,facebookId,ldapServerId,portraitId,timeZoneId,userId,status,birthday,createDate,
 			modifiedDate,createDate,modifiedDate,male,agreedToTermsOfUse
 		''';

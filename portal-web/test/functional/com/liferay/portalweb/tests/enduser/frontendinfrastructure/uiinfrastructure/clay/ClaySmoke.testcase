@@ -52,19 +52,35 @@ definition {
 		task ("Change tabs and take a screenshot") {
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Badges");
 
+			takeScreenshot();
+
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Dropdowns");
+
+			takeScreenshot();
 
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Labels");
 
+			takeScreenshot();
+
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Links");
+
+			takeScreenshot();
 
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Navigation Bars");
 
+			takeScreenshot();
+
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Pagination Bars");
+
+			takeScreenshot();
 
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Progress Bars");
 
+			takeScreenshot();
+
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Stickers");
+
+			takeScreenshot();
 		}
 	}
 

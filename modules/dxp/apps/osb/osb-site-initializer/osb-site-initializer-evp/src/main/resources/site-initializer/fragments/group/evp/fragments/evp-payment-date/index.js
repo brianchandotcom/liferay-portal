@@ -45,18 +45,22 @@ const getPaymentDataFromRequest = async () => {
 
 		return null;
 	});
-
-	const paymentDate = new Date(paymentDataFromRequest[0].paymentDate);
-
-	const formattedPaymentDate =
-		paymentDate.getMonth() +
-		1 +
-		'/' +
-		paymentDate.getDate() +
-		'/' +
-		paymentDate.getFullYear();
-
-	text.innerHTML = formattedPaymentDate;
 };
 
-getPaymentDataFromRequest();
+let date = '';
+let year = '';
+let month = '';
+let day = '';
+
+const getPaymentDate = async () => {
+	await getPaymentDataFromRequest();
+
+	date = paymentDataFromRequest[0].paymentDate;
+	year = date.slice(0, 4);
+	month = date.slice(5, 7);
+	day = date.slice(8, 10);
+
+	text.innerHTML = Liferay.Util.escape(month + '/' + day + '/' + year);
+};
+
+getPaymentDate();

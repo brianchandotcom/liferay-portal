@@ -49,7 +49,7 @@ public class SearchStringUtil {
 	}
 
 	public static String[] splitAndUnquote(String s) {
-		if (Validator.isNull(s)) {
+		if (Validator.isBlank(s)) {
 			return new String[0];
 		}
 

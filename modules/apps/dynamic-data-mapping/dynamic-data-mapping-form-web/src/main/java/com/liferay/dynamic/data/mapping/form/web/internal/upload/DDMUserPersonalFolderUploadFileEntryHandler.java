@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.upload;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLValidator;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadFileEntryHandler;
@@ -71,12 +73,27 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 			_folderModelResourcePermission, themeDisplay.getPermissionChecker(),
 			themeDisplay.getScopeGroupId(), folderId, ActionKeys.ADD_DOCUMENT);
 
-		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
-		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
+		long fileEntryId = 0;
+
+		String parameterName = _ADD_PARAMETER_NAME;
+
+		String fileName = uploadPortletRequest.getFileName(parameterName);
+
+		if (Validator.isNull(fileName)) {
+			FileEntry fileEntry = _fetchFileEntry(uploadPortletRequest);
+
+			if (fileEntry != null) {
+				fileEntryId = fileEntry.getFileEntryId();
+				fileName = fileEntry.getFileName();
+				parameterName = _EDIT_PARAMETER_NAME;
+			}
+		}
+
+		long size = uploadPortletRequest.getSize(parameterName);
 
 		_dlValidator.validateFileSize(
 			themeDisplay.getScopeGroupId(), fileName,
-			uploadPortletRequest.getContentType(_PARAMETER_NAME), size);
+			uploadPortletRequest.getContentType(parameterName), size);
 
 		long objectFieldId = ParamUtil.getLong(
 			uploadPortletRequest, "objectFieldId");
@@ -86,20 +103,31 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 		}
 
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				_PARAMETER_NAME)) {
+				parameterName)) {
 
-			long repositoryId = ParamUtil.getLong(
-				uploadPortletRequest, "repositoryId");
+			if (fileEntryId == 0) {
+				long repositoryId = ParamUtil.getLong(
+					uploadPortletRequest, "repositoryId");
 
-			String uniqueFileName = _uniqueFileNameProvider.provide(
-				fileName,
-				curFileName -> _exists(repositoryId, folderId, curFileName));
+				String uniqueFileName = _uniqueFileNameProvider.provide(
+					fileName,
+					curFileName -> _exists(
+						repositoryId, folderId, curFileName));
 
-			return _dlAppService.addFileEntry(
-				null, repositoryId, folderId, uniqueFileName,
-				uploadPortletRequest.getContentType(_PARAMETER_NAME),
-				uniqueFileName, uniqueFileName,
-				_getDescription(uploadPortletRequest), StringPool.BLANK,
+				return _dlAppService.addFileEntry(
+					null, repositoryId, folderId, uniqueFileName,
+					uploadPortletRequest.getContentType(parameterName),
+					uniqueFileName, uniqueFileName,
+					_getDescription(uploadPortletRequest), StringPool.BLANK,
+					inputStream, size, null, null,
+					_getServiceContext(uploadPortletRequest));
+			}
+
+			return _dlAppService.updateFileEntry(
+				fileEntryId, fileName,
+				uploadPortletRequest.getContentType(parameterName), fileName,
+				fileName, _getDescription(uploadPortletRequest),
+				StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC,
 				inputStream, size, null, null,
 				_getServiceContext(uploadPortletRequest));
 		}
@@ -201,7 +229,9 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 		}
 	}
 
-	private static final String _PARAMETER_NAME = "imageSelectorFileName";
+	private static final String _ADD_PARAMETER_NAME = "imageSelectorFileName";
+
+	private static final String _EDIT_PARAMETER_NAME = "imageBlob";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMUserPersonalFolderUploadFileEntryHandler.class);

@@ -74,6 +74,25 @@ public class DDMUserPersonalFolderItemSelectorViewDisplayContext {
 			httpServletRequest);
 	}
 
+	public PortletURL getEditImageURL(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM
+		).setActionName(
+			"/dynamic_data_mapping_form/upload_ddm_user_personal_folder"
+		).setParameter(
+			"folderId",
+			_ddmUserPersonalFolderItemSelectorCriterion.getFolderId()
+		).setParameter(
+			"objectFieldId",
+			_ddmUserPersonalFolderItemSelectorCriterion.getObjectFieldId()
+		).setParameter(
+			"repositoryId",
+			_ddmUserPersonalFolderItemSelectorCriterion.getRepositoryId()
+		).buildPortletURL();
+	}
+
 	public long getFolderId() {
 		return _ddmUserPersonalFolderItemSelectorCriterion.getFolderId();
 	}

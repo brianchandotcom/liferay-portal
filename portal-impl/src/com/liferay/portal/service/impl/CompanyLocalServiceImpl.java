@@ -1363,7 +1363,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			userActionableDynamicQuery.setCompanyId(companyId);
 			userActionableDynamicQuery.setPerformActionMethod(
 				(User user) -> {
-					if (!user.isDefaultUser()) {
+					if (!(user.isDefaultUser() && user.isRegularUser())) {
 						_userLocalService.deleteUser(user.getUserId());
 					}
 				});

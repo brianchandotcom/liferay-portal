@@ -70,7 +70,7 @@ public class DataRecordExporter {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		Stream<DataRecord> stream = dataRecords.parallelStream();
+		Stream<DataRecord> stream = dataRecords.stream();
 
 		stream.map(
 			record -> _toJSON(dataDefinition, record)

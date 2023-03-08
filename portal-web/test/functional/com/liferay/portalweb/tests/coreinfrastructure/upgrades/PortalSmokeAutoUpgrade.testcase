@@ -21,7 +21,6 @@ definition {
 	test ViewPortalSmokeArchiveAutoUpgrade730 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.3.0";
 
 		Upgrade.viewUpgrade();
@@ -50,7 +49,6 @@ definition {
 	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10";
 
 		Upgrade.viewUpgrade();
@@ -59,7 +57,6 @@ definition {
 	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade7210 {
 		property data.archive.type = "data-archive-portal";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.2.10";
 		property test.run.environment = "EE";
 
@@ -69,7 +66,6 @@ definition {
 	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade7310 {
 		property data.archive.type = "data-archive-portal";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.3.10";
 		property test.run.environment = "EE";
 
@@ -98,7 +94,6 @@ definition {
 	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade70106 {
 		property data.archive.type = "data-archive-portal";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10.6";
 
 		Upgrade.viewUpgrade();
@@ -107,7 +102,6 @@ definition {
 	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade71103 {
 		property data.archive.type = "data-archive-portal";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10.3";
 
 		Upgrade.viewUpgrade();
@@ -116,7 +110,6 @@ definition {
 	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade621021 {
 		property data.archive.type = "data-archive-portal";
-		property portal.upstream = "quarantine";
 		property portal.version = "6.2.10.21";
 
 		Upgrade.viewUpgrade();

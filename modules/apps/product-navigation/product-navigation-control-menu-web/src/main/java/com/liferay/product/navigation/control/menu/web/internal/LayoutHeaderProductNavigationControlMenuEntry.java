@@ -87,7 +87,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Writer writer = httpServletResponse.getWriter();
 
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<div class=\"");
 		sb.append(_getCssClass(httpServletRequest));
@@ -103,12 +103,22 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		sb.append("\">");
 		sb.append(headerTitle);
+
+		if (_hasDraftLayout(httpServletRequest) &&
+			_hasEditPermission(httpServletRequest)) {
+
+			sb.append("<span class=\"sr-only\">");
+			sb.append(_language.get(httpServletRequest, "draft"));
+			sb.append("</span>");
+		}
+
 		sb.append("</h1>");
 
 		if (_hasDraftLayout(httpServletRequest) &&
 			_hasEditPermission(httpServletRequest)) {
 
-			sb.append("<sup class=\"flex-shrink-0 small\">*</sup>");
+			sb.append("<sup aria-hidden=\"true\"");
+			sb.append("class=\"flex-shrink-0 small\">*</sup>");
 		}
 
 		sb.append("</span>");

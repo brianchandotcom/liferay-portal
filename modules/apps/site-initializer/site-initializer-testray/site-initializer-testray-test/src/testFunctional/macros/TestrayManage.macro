@@ -208,14 +208,14 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	macro editNameCategory {
-		TestrayContextMenu.clickContextMenuProjects(name = "Environments_");
+	macro editCategoryTitle {
+		TestrayContextMenu.clickContextMenuProjects(name = ${category});
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${category});
+			value1 = ${categoryNewName});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}

@@ -136,7 +136,7 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 
 		if (companyId == 0) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Using default company ID for this site process");
+				_log.warn("Using default company ID");
 			}
 
 			Company company = _companyLocalService.getCompanyByWebId(
@@ -149,7 +149,7 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 
 		if (userId == 0) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Using default user ID for this site process");
+				_log.warn("Using default user ID");
 			}
 
 			userId = _userLocalService.getUserIdByScreenName(

@@ -150,7 +150,7 @@ definition {
 
 		static var assignedPropertyName = selenium.getText("ACDXPSettings#FIRST_AVAILABLE_PROPERTY");
 
-		if (${assignedPropertyName} == "Beryl Commerce"){
+		if (${assignedPropertyName} == "Beryl Commerce") {
 			static var assignedPropertyName = selenium.getText("ACDXPSettings#SECOND_AVAILABLE_PROPERTY");
 		}
 

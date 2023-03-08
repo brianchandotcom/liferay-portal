@@ -46,7 +46,7 @@ definition {
 	test AdminCanAddAndDeleteFactorOption {
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
-		}	
+		}
 
 		task ("When I create a new Option") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -84,7 +84,7 @@ definition {
 	test AdminCanAddCategory {
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
-		}	
+		}
 
 		task ("When I go to manage system Categories") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -93,6 +93,7 @@ definition {
 
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 		}
+
 		task ("Then I assert that the Category was created") {
 			Testray.assertItemName(text = ${categoryName});
 		}
@@ -103,7 +104,7 @@ definition {
 	test AdminCanAddOptions {
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
-		}	
+		}
 
 		task ("When I go to Options under Manage Sidebar and add a new Option") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -284,7 +285,7 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test AdminCanEditOptionName {
-		
+
 		// This test will be dropped as it is being covered in the above test
 
 	}
@@ -294,7 +295,7 @@ definition {
 	test AdminCanNotAddDuplicateFactorCategory {
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
-		}	
+		}
 
 		task ("When I try to add a new category with an existing title") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -316,7 +317,7 @@ definition {
 	test AdminCanNotAddDuplicateFactorOptions {
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
-		}	
+		}
 
 		task ("When I try the new duplicate Options") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -372,7 +373,7 @@ definition {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			TestrayLayout.clickManageOnSidebar();
-			
+
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory();

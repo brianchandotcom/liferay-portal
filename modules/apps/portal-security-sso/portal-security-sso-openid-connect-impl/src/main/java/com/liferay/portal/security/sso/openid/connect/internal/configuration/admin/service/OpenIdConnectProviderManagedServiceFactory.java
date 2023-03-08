@@ -22,6 +22,7 @@ import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -73,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
 @Deprecated
 public class OpenIdConnectProviderManagedServiceFactory
 	extends BasePortalInstanceLifecycleListener
-	implements ManagedServiceFactory {
+	implements EveryNodeEveryStartup, ManagedServiceFactory {
 
 	@Override
 	public void deleted(String pid) {

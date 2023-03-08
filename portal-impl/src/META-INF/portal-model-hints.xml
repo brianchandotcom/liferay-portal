@@ -354,7 +354,9 @@
 		<field name="version" type="String" />
 		<field name="size" type="long" />
 		<field name="checksum" type="String" />
-		<field name="storeUUID" type="String" />
+		<field name="storeUUID" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="expirationDate" type="Date">
 			<hint name="default-year-delta">1</hint>
 		</field>

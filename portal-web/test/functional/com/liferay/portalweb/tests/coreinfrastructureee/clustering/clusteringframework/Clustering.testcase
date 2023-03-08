@@ -236,6 +236,7 @@ definition {
 	@priority = 5
 	test CanCreateVirtualInstanceWithClustering {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Clustering#CanCreateVirtualInstanceWithClustering";
 
 		Clustering.viewClusterStatusInConsole();
@@ -248,6 +249,57 @@ definition {
 			category = "System",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			userEmailAddress = "test@www.able.com");
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "No default user was found for company",
+			nodePort = 8080);
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "No default user was found for company",
+			nodePort = 9080);
+	}
+
+	@priority = 5
+	test CanCreateVirtualInstanceWithClusteringSecondNode {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Clustering#CanCreateVirtualInstanceWithClusteringSecondNode";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = 8080);
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = 9080,
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Page.assertNodePortPG(nodePort = 9080);
+
+		PortalInstances.openVirtualInstancesAdmin(baseURL = "http://localhost:9080");
 
 		PortalInstances.addCP(
 			mailDomain = "www.able.com",

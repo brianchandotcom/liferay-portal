@@ -20,12 +20,13 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
-	@priority = 4
+	@priority = 5
 	test CanAddCompanyWithCluster {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
-		property custom.properties = "database.partition.schema.name.prefix=testPartition";
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property minimum.slave.ram = "24";
+		property portal.acceptance = "true";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithCluster";
 
@@ -104,8 +105,88 @@ definition {
 			webContentTitle = "WC WebContent Title");
 
 		SQL.assertDatabaseCount(
-			databaseFilter = "testPartition%",
-			databaseSubstring = "testPartition",
+			databaseFilter = "lpartition%",
+			databaseSubstring = "lpartition",
+			expectedCount = 1);
+	}
+
+	@priority = 5
+	test CanAddCompanyWithClusterSecondNode {
+		property app.server.bundles.size = "1";
+		property cluster.enabled = "true";
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property minimum.slave.ram = "24";
+		property portal.acceptance = "true";
+		property remote.elasticsearch.enabled = "true";
+		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithClusterSecondNode";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = 8080);
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = 9080,
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Page.assertNodePortPG(nodePort = 9080);
+
+		PortalInstances.openVirtualInstancesAdmin(baseURL = "http://localhost:9080");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			userEmailAddress = "test@www.able.com");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		SQL.assertDatabaseCount(
+			databaseFilter = "lpartition%",
+			databaseSubstring = "lpartition",
 			expectedCount = 1);
 	}
 

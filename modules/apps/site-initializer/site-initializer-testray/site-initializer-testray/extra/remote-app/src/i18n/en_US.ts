@@ -285,6 +285,7 @@ export default {
 	'projects': 'Projects',
 	'promote': 'Promote',
 	'reanalyze': 'Reanalyze',
+	'refresh': 'Refresh',
 	'remaining-estimated': 'Remaining Estimated',
 	'remove': 'Remove',
 	'reopen-test': 'Reopen Test',

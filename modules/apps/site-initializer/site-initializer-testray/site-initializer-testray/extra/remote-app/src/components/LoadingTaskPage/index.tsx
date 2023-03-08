@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect} from 'react';
 import {KeyedMutator} from 'swr';
@@ -59,11 +60,19 @@ const LoadingTaskPage: React.FC<LoadingTaskPageProps> = ({
 
 	return (
 		<div className="align-items-center container d-flex flex-column justify-content-center mt-5">
-			<span className="my-4">
+			<span className="my-3">
 				<ClayLoadingIndicator displayType="secondary" size="md" />
 			</span>
 
 			<LoadingProgressBar />
+
+			<ClayButton
+				className="mt-3"
+				displayType="secondary"
+				onClick={() => mutateTask(testrayTask)}
+			>
+				{i18n.translate('refresh')}
+			</ClayButton>
 
 			<p className="loading-progress-task-message my-5">
 				{i18n.translate('preparing-your-task')}

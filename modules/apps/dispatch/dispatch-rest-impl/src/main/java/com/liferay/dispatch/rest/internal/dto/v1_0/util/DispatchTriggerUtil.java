@@ -71,7 +71,7 @@ public class DispatchTriggerUtil {
 	public static UnicodeProperties toSettingsUnicodeProperties(
 		Map<String, ?> parameters) {
 
-		if(parameters == null){
+		if (parameters == null) {
 			return UnicodePropertiesBuilder.create(
 				new HashMap<>(), true
 			).build();

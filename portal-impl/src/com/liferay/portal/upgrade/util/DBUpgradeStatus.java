@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.util;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.util.DBUpgradeChecker;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.version.Version;
 
@@ -93,6 +94,10 @@ public class DBUpgradeStatus {
 		return _upgradeProcessMessages;
 	}
 
+	public static String getUpgradeStatus() {
+		return _upgradeStatus;
+	}
+
 	public static String getUpgradeType() {
 		return _upgradeType;
 	}
@@ -108,14 +113,24 @@ public class DBUpgradeStatus {
 			(moduleSchemaVersions, schemaVersion) ->
 				moduleSchemaVersions.setInitialSchemaVersion(schemaVersion));
 	}
-	
+
 	public static void setNoUpgradesEnabled() {
 		_upgradeType = "Not enabled";
+		_upgradeStatus = "Not enabled";
 	}
 
-	public static void upgradeFinished() {
+	public static void upgradeFinished(DBUpgradeChecker dbUpgradeChecker) {
 		_setFinalSchemaVersion();
+		_calculateUpgradeStatus(dbUpgradeChecker);
 		_calculateTypeOfUpgrade();
+	}
+
+	public static void upgradeStarted() {
+		_upgradeStatus = "Running";
+
+		_browseReleaseTable(
+			(moduleSchemaVersions, schemaVersion) ->
+				moduleSchemaVersions.setInitialSchemaVersion(schemaVersion));
 	}
 
 	private static void _browseReleaseTable(
@@ -210,6 +225,34 @@ public class DBUpgradeStatus {
 		_upgradeType = upgradeType;
 	}
 
+	private static void _calculateUpgradeStatus(
+		DBUpgradeChecker dbUpgradeChecker) {
+
+		if (dbUpgradeChecker == null) {
+			_log.error(
+				"Not possible to check upgrade successful completion. Please " +
+					"check manually.");
+
+			_upgradeStatus = "Failure";
+
+			return;
+		}
+
+		if (!_errorMessages.isEmpty() || !dbUpgradeChecker.check()) {
+			_upgradeStatus = "Failure";
+
+			return;
+		}
+
+		if (!_warningMessages.isEmpty()) {
+			_upgradeStatus = "Warning";
+
+			return;
+		}
+
+		_upgradeStatus = "Success";
+	}
+
 	private static void _filterMessages() {
 		if (!_filtered) {
 			for (String filteredClassName : _FILTERED_CLASS_NAMES) {
@@ -242,6 +285,7 @@ public class DBUpgradeStatus {
 		_moduleSchemaVersionsMap = new HashMap<>();
 	private static final Map<String, ArrayList<String>>
 		_upgradeProcessMessages = new ConcurrentHashMap<>();
+	private static String _upgradeStatus = "Pending";
 	private static String _upgradeType = "Not calculated";
 	private static final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();

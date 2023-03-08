@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.log.UpgradeLogContext;
-import com.liferay.portal.upgrade.util.DBUpgradeStatus;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -108,8 +107,6 @@ public class StartupHelperUtil {
 				LogContextRegistryUtil.registerLogContext(
 					UpgradeLogContext.getInstance());
 			}
-
-			DBUpgradeStatus.setInitialSchemaVersion();
 
 			DBUpgrader.startUpgradeLogAppender();
 		}

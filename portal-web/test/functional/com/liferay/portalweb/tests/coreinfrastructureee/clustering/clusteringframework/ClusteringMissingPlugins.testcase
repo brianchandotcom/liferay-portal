@@ -132,11 +132,11 @@ definition {
 		Pause(locator1 = 10000);
 
 		Clustering.viewTextNotPresentOnSpecificNode(
-			exceptionText = "Received message at",
+			exceptionText = "Run job at ",
 			nodePort = 8080);
 
 		Clustering.viewTextNotPresentOnSpecificNode(
-			exceptionText = "Received message at",
+			exceptionText = "Run job at ",
 			nodePort = 9080);
 
 		Clustering.deployClusteringModule(nodePort = 8080);
@@ -150,7 +150,7 @@ definition {
 		Pause(locator1 = 10000);
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Received message at",
+			expectedText = "Run job at ",
 			nodePort = 8080);
 
 		Clustering.shutdownSpecificServer(nodePort = 8080);
@@ -165,7 +165,7 @@ definition {
 		Pause(locator1 = 10000);
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Received message at",
+			expectedText = "Run job at ",
 			nodePort = 9080);
 	}
 
@@ -188,7 +188,7 @@ definition {
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_1.0.0");
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Received message at",
+			expectedText = "Run job at ",
 			nodePort = 8080);
 
 		Clustering.shutdownSpecificServer(nodePort = 8080);
@@ -203,7 +203,7 @@ definition {
 		Pause(locator1 = 10000);
 
 		Clustering.viewTextNotPresentOnSpecificNode(
-			exceptionText = "Received message at",
+			exceptionText = "Run job at ",
 			nodePort = 9080);
 
 		Clustering.deployClusteringModule(nodePort = 9080);
@@ -219,7 +219,7 @@ definition {
 			nodePort = 9080);
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Received message at",
+			expectedText = "Run job at ",
 			nodePort = 9080);
 	}
 

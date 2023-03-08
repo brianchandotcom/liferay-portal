@@ -15,10 +15,10 @@
 package com.liferay.redirect.internal.messaging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -82,7 +82,10 @@ public class CheckRedirectNotFoundEntriesMessageListenerTest {
 			redirectNotFoundEntries.toString(), 2,
 			redirectNotFoundEntries.size());
 
-		_checkRedirectNotFoundEntriesMessageListener.receive(new Message());
+		UnsafeRunnable<Exception> jobExecutor =
+			_schedulerJobConfiguration.getJobExecutor();
+
+		jobExecutor.run();
 
 		redirectNotFoundEntries =
 			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntries(
@@ -108,7 +111,10 @@ public class CheckRedirectNotFoundEntriesMessageListenerTest {
 			_redirectNotFoundEntryLocalService.getRedirectNotFoundEntriesCount(
 				_group.getGroupId()));
 
-		_checkRedirectNotFoundEntriesMessageListener.receive(new Message());
+		UnsafeRunnable<Exception> jobExecutor =
+			_schedulerJobConfiguration.getJobExecutor();
+
+		jobExecutor.run();
 
 		Assert.assertEquals(
 			1000,
@@ -129,16 +135,16 @@ public class CheckRedirectNotFoundEntriesMessageListenerTest {
 			redirectNotFoundEntry);
 	}
 
-	@Inject(
-		filter = "component.name=*.CheckRedirectNotFoundEntriesMessageListener"
-	)
-	private MessageListener _checkRedirectNotFoundEntriesMessageListener;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private RedirectNotFoundEntryLocalService
 		_redirectNotFoundEntryLocalService;
+
+	@Inject(
+		filter = "component.name=*.CheckRedirectNotFoundEntriesMessageListener"
+	)
+	private SchedulerJobConfiguration _schedulerJobConfiguration;
 
 }

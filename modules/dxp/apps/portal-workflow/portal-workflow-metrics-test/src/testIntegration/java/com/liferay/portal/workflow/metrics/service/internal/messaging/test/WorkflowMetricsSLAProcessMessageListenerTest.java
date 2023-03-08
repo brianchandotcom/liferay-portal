@@ -15,9 +15,9 @@
 package com.liferay.portal.workflow.metrics.service.internal.messaging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -110,7 +110,10 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			"instanceId", kaleoInstance.getKaleoInstanceId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId());
 
-		_workflowMetricsSLAProcessMessageListener.receive(new Message());
+		UnsafeRunnable<Exception> jobExecutor =
+			_schedulerJobConfiguration.getJobExecutor();
+
+		jobExecutor.run();
 
 		assertCount(
 			0,
@@ -141,7 +144,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			"instanceId", kaleoInstance.getKaleoInstanceId(), "processId",
 			workflowDefinition.getWorkflowDefinitionId());
 
-		_workflowMetricsSLAProcessMessageListener.receive(new Message());
+		jobExecutor.run();
 
 		assertCount(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
@@ -167,7 +170,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			workflowDefinition.getWorkflowDefinitionId(), "slaDefinitionId",
 			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
 
-		_workflowMetricsSLAProcessMessageListener.receive(new Message());
+		jobExecutor.run();
 
 		assertCount(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
@@ -191,6 +194,11 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 	private WorkflowMetricsIndexNameBuilder
 		_processWorkflowMetricsIndexNameBuilder;
 
+	@Inject(
+		filter = "component.name=*.WorkflowMetricsSLAProcessMessageListener"
+	)
+	private SchedulerJobConfiguration _schedulerJobConfiguration;
+
 	@Inject(filter = "workflow.metrics.index.entity.name=sla-instance-result")
 	private WorkflowMetricsIndexNameBuilder
 		_slaInstanceResultWorkflowMetricsIndexNameBuilder;
@@ -198,10 +206,5 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 	@Inject
 	private WorkflowMetricsSLADefinitionLocalService
 		_workflowMetricsSLADefinitionLocalService;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.portal.workflow.metrics.internal.messaging.WorkflowMetricsSLAProcessMessageListener))"
-	)
-	private MessageListener _workflowMetricsSLAProcessMessageListener;
 
 }

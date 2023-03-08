@@ -16,6 +16,8 @@ package com.liferay.calendar.test.util;
 
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -27,22 +29,31 @@ import java.util.Objects;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Adam Brandizzi
  */
 public class CheckBookingsMessageListenerTestUtil {
 
-	public static void setUp() {
+	public static void setUp() throws InvalidSyntaxException {
 		Bundle bundle = FrameworkUtil.getBundle(
 			CheckBookingsMessageListenerTestUtil.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		ServiceReference<?>[] serviceReferences =
+			bundleContext.getAllServiceReferences(
+				SchedulerJobConfiguration.class.getName(),
+				StringBundler.concat(
+					"(&(objectClass=",
+					SchedulerJobConfiguration.class.getName(),
+					")(component.name=com.liferay.calendar.web.internal.",
+					"messaging.CheckBookingsMessageListener))"));
+
 		_checkBookingMessageListener = bundleContext.getService(
-			bundleContext.getServiceReference(
-				"com.liferay.calendar.web.internal.messaging." +
-					"CheckBookingsMessageListener"));
+			serviceReferences[0]);
 
 		ReflectionTestUtil.setFieldValue(
 			_checkBookingMessageListener, "_calendarBookingLocalService",

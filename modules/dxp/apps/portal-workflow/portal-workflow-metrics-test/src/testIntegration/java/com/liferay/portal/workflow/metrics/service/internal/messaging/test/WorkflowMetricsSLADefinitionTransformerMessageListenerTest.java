@@ -15,9 +15,9 @@
 package com.liferay.portal.workflow.metrics.service.internal.messaging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -83,8 +83,10 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListenerTest
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "2.0");
 
-		_workflowMetricsSLADefinitionTransformerMessageListener.receive(
-			new Message());
+		UnsafeRunnable<Exception> jobExecutor =
+			_schedulerJobConfiguration.getJobExecutor();
+
+		jobExecutor.run();
 
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion =
@@ -150,8 +152,10 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListenerTest
 			workflowDefinition.getCompanyId(), "deleted", false, "processId",
 			workflowDefinition.getWorkflowDefinitionId(), "version", "2.0");
 
-		_workflowMetricsSLADefinitionTransformerMessageListener.receive(
-			new Message());
+		UnsafeRunnable<Exception> jobExecutor =
+			_schedulerJobConfiguration.getJobExecutor();
+
+		jobExecutor.run();
 
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion =
@@ -180,15 +184,14 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListenerTest
 	private WorkflowMetricsIndexNameBuilder
 		_processWorkflowMetricsIndexNameBuilder;
 
+	@Inject(
+		filter = "component.name=*.WorkflowMetricsSLADefinitionTransformerMessageListener"
+	)
+	private SchedulerJobConfiguration _schedulerJobConfiguration;
+
 	@Inject
 	private WorkflowMetricsSLADefinitionLocalService
 		_workflowMetricsSLADefinitionLocalService;
-
-	@Inject(
-		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.messaging.WorkflowMetricsSLADefinitionTransformerMessageListener))"
-	)
-	private MessageListener
-		_workflowMetricsSLADefinitionTransformerMessageListener;
 
 	@Inject
 	private WorkflowMetricsSLADefinitionVersionLocalService

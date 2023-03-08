@@ -42,6 +42,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
@@ -138,6 +139,14 @@ public class ObjectFieldLocalServiceImpl
 
 		_addOrUpdateObjectFieldSettings(
 			objectDefinition, objectField, null, objectFieldSettings);
+
+		if (localized && objectDefinition.isApproved()) {
+			runSQL(
+				DynamicObjectDefinitionLocalizationTable.
+					getAlterTableAddColumnSQL(
+						objectDefinition.getDBTableName(),
+						objectField.getDBColumnName(), dbType));
+		}
 
 		if (objectDefinition.isApproved() &&
 			!objectField.compareBusinessType(
@@ -963,6 +972,15 @@ public class ObjectFieldLocalServiceImpl
 
 			_alterTableDropColumn(
 				objectField.getDBTableName(), objectField.getDBColumnName());
+		}
+
+		if (objectDefinition.isEnableLocalization() &&
+			objectField.isLocalized() && objectDefinition.isApproved()) {
+
+			_alterTableDropColumn(
+				DynamicObjectDefinitionLocalizationTable.getTableName(
+					objectField.getDBTableName()),
+				objectField.getDBColumnName());
 		}
 
 		return objectField;

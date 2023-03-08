@@ -54,6 +54,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -453,6 +454,13 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 
 			_dropTable(objectDefinition.getDBTableName());
+
+			if (objectDefinition.isEnableLocalization()) {
+				_dropTable(
+					DynamicObjectDefinitionLocalizationTable.getTableName(
+						objectDefinition.getDBTableName()));
+			}
+
 			_dropTable(objectDefinition.getExtensionDBTableName());
 
 			undeployObjectDefinition(objectDefinition);
@@ -1073,6 +1081,26 @@ public class ObjectDefinitionLocalServiceImpl
 			"status", false, false);
 	}
 
+	private void _createLocalizedTable(
+		String dbTableName, ObjectDefinition objectDefinition) {
+
+		if (!objectDefinition.isEnableLocalization() ||
+			!FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+
+			return;
+		}
+
+		DynamicObjectDefinitionLocalizationTable
+			dynamicObjectDefinitionLocalizedTable =
+				new DynamicObjectDefinitionLocalizationTable(
+					objectDefinition,
+					_objectFieldPersistence.findByODI_L(
+						objectDefinition.getObjectDefinitionId(), true),
+					dbTableName);
+
+		runSQL(dynamicObjectDefinitionLocalizedTable.getCreateTableSQL());
+	}
+
 	private void _createTable(
 		String dbTableName, ObjectDefinition objectDefinition) {
 
@@ -1263,6 +1291,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
+		_createLocalizedTable(
+			objectDefinition.getDBTableName(), objectDefinition);
 		_createTable(objectDefinition.getDBTableName(), objectDefinition);
 		_createTable(
 			objectDefinition.getExtensionDBTableName(), objectDefinition);

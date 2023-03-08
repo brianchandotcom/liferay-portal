@@ -304,19 +304,21 @@ definition {
 
 	@summary = "Verify that a content is present in the MDF file"
 	macro viewExportedMDF {
-		for (var campaignName : list ${campaignNameList}) {
+		for (var fileContentItem : list ${fileContentList}) {
+
 			var directoryPath = PropsUtil.get("output.dir.name");
 
-			var fileContent = FileUtil.read("${directoryPath}/MDF Requests.csv");
+			var fileContent = FileUtil.read("${directoryPath}/${fileName}");
 
-			if (!(contains(${fileContent}, ${campaignName}))) {
+			if (!(contains(${fileContent}, ${fileContentItem}))) {
 				echo(${fileContent});
 
-				fail("MDF '${campaignName}' doesn't exist");
+				fail("The string '${fileContentItem}' doesn't exists on this file");
 			}
 			else {
-				echo("MDF '${campaignName}' exists");
+				echo("The string '${fileContentItem}' exists on this file");
 			}
+			
 		}
 	}
 

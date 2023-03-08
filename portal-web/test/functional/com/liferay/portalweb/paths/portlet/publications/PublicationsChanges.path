@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLICATIONS_CHANGE_CATEGORY</td>
+	<td>//tr[contains(@class,'table-divider')]/td[contains(.,'${key_changeCategory}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLICATIONS_CHANGE_DROPDOWN</td>
 	<td>//li[contains(.,'${key_changeTitle}') and contains(.,'${key_changeCategory}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

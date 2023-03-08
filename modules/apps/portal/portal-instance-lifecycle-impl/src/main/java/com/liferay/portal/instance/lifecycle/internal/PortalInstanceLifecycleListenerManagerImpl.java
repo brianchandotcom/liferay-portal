@@ -20,6 +20,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.io.Deserializer;
@@ -277,6 +278,10 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		if (portalInstanceLifecycleListener instanceof EveryNodeEveryStartup) {
 			runnable.run();
 
+			return;
+		}
+
+		if (!ClusterInvokeThreadLocal.isEnabled()) {
 			return;
 		}
 

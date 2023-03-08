@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.rest.internal.service.access.policy;
 
+import com.liferay.osgi.util.configuration.ConfigurationPersistenceUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,20 +33,53 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Sierra Andrés
  * @author Tomas Polesovsky
  */
-@Component(service = {})
-public class OAuth2RESTSAPEntryActivator {
+@Component(service = PortalInstanceLifecycleListener.class)
+public class OAuth2RESTSAPEntryPortalInstanceLifecycleListener
+	extends BasePortalInstanceLifecycleListener {
 
-	public void addSAPEntries(long companyId) throws PortalException {
+	@Override
+	public long getLastModifiedTime() {
+		return _lastModifiedTime;
+	}
+
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+		if (!_createSapEntriesOnStartup) {
+			return;
+		}
+
+		try {
+			_addSAPEntries(company.getCompanyId());
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to add service access policy entry for company " +
+					company.getCompanyId(),
+				portalException);
+		}
+	}
+
+	@Activate
+	protected void activate(
+			BundleContext bundleContext, Map<String, Object> properties)
+		throws Exception {
+
+		_createSapEntriesOnStartup = MapUtil.getBoolean(
+			properties, "oauth2.create.oauth2.sap.entries.on.startup", true);
+
+		_lastModifiedTime = ConfigurationPersistenceUtil.update(
+			this, properties);
+	}
+
+	private void _addSAPEntries(long companyId) throws PortalException {
 		for (String[] sapEntryObjectArray : _SAP_ENTRY_OBJECT_ARRAYS) {
 			String name = sapEntryObjectArray[0];
 
@@ -68,60 +102,20 @@ public class OAuth2RESTSAPEntryActivator {
 		}
 	}
 
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		boolean createSapEntriesOnStartup = MapUtil.getBoolean(
-			properties, "oauth2.create.oauth2.sap.entries.on.startup", true);
-
-		if (!createSapEntriesOnStartup) {
-			return;
-		}
-
-		_serviceRegistration = bundleContext.registerService(
-			PortalInstanceLifecycleListener.class,
-			new PolicyPortalInstanceLifecycleListener(), null);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
-	}
-
 	private static final String[][] _SAP_ENTRY_OBJECT_ARRAYS = {
 		{"AUTHORIZED_OAUTH2_SAP", "*"}
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OAuth2RESTSAPEntryActivator.class);
+		OAuth2RESTSAPEntryPortalInstanceLifecycleListener.class);
+
+	private boolean _createSapEntriesOnStartup;
+	private long _lastModifiedTime;
 
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;
 
-	private ServiceRegistration<PortalInstanceLifecycleListener>
-		_serviceRegistration;
-
 	@Reference
 	private UserLocalService _userLocalService;
-
-	private class PolicyPortalInstanceLifecycleListener
-		extends BasePortalInstanceLifecycleListener {
-
-		public void portalInstanceRegistered(Company company) throws Exception {
-			try {
-				addSAPEntries(company.getCompanyId());
-			}
-			catch (PortalException portalException) {
-				_log.error(
-					"Unable to add service access policy entry for company " +
-						company.getCompanyId(),
-					portalException);
-			}
-		}
-
-	}
 
 }

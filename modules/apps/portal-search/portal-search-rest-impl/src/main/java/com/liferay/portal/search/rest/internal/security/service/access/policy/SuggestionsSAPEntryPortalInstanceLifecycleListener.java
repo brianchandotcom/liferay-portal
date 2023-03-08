@@ -30,30 +30,26 @@ import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalSe
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
  */
-@Component(service = {})
-public class SuggestionsSAPEntryActivator {
+@Component(service = PortalInstanceLifecycleListener.class)
+public class SuggestionsSAPEntryPortalInstanceLifecycleListener
+	extends BasePortalInstanceLifecycleListener {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = bundleContext.registerService(
-			PortalInstanceLifecycleListener.class,
-			new SuggestionsPortalInstanceLifecycleListener(), null);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+		try {
+			_addSAPEntry(company.getCompanyId());
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to add service access policy entry for company " +
+					company.getCompanyId(),
+				portalException);
 		}
 	}
 
@@ -83,32 +79,12 @@ public class SuggestionsSAPEntryActivator {
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SuggestionsSAPEntryActivator.class);
+		SuggestionsSAPEntryPortalInstanceLifecycleListener.class);
 
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;
 
-	private ServiceRegistration<PortalInstanceLifecycleListener>
-		_serviceRegistration;
-
 	@Reference
 	private UserLocalService _userLocalService;
-
-	private class SuggestionsPortalInstanceLifecycleListener
-		extends BasePortalInstanceLifecycleListener {
-
-		public void portalInstanceRegistered(Company company) throws Exception {
-			try {
-				_addSAPEntry(company.getCompanyId());
-			}
-			catch (PortalException portalException) {
-				_log.error(
-					"Unable to add service access policy entry for company " +
-						company.getCompanyId(),
-					portalException);
-			}
-		}
-
-	}
 
 }

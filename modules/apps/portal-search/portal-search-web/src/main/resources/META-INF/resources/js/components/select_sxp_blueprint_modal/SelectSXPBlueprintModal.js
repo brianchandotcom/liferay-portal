@@ -76,7 +76,8 @@ const SelectSXPBlueprintModal = ({observer, onClose, onSubmit, selectedId}) => {
 		fetchRetry: {
 			attempts: 0,
 		},
-		link: `${window.location.origin}/o/search-experiences-rest/v1.0/sxp-blueprints`,
+		link: `${window.location.origin}${Liferay.ThemeDisplay.getPathContext()}
+		/o/search-experiences-rest/v1.0/sxp-blueprints`,
 		onNetworkStatusChange: (status) => {
 			setNetworkState({
 				error: status === 5,

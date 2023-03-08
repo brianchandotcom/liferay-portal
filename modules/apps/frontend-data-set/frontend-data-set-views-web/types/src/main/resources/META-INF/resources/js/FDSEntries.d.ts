@@ -23,11 +23,13 @@ declare type HeadlessResource = {
 };
 interface IFDSEntriesProps {
 	apiURL: string;
+	fdsViewsURL: string;
 	headlessResources: Array<HeadlessResource>;
 	namespace: string;
 }
 declare const FDSEntries: ({
 	apiURL,
+	fdsViewsURL,
 	headlessResources,
 	namespace,
 }: IFDSEntriesProps) => JSX.Element;

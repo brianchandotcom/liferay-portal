@@ -16,17 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<react:component
-	module="js/FDSEntries"
-	props='<%=
-		HashMapBuilder.<String, Object>put(
-			"apiURL", fdsViewsDisplayContext.getFDSEntriesAPIURL()
-		).put(
-			"fdsViewsURL", fdsViewsDisplayContext.getFDSViewsURL()
-		).put(
-			"headlessResources", fdsViewsDisplayContext.getHeadlessResourcesJSONArray()
-		).put(
-			"namespace", liferayPortletResponse.getNamespace()
-		).build()
-	%>'
-/>
+<%
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(fdsViewsDisplayContext.getFDSEntriesURL());
+
+renderResponse.setTitle(ParamUtil.getString(request, "fdsEntryLabel"));
+%>

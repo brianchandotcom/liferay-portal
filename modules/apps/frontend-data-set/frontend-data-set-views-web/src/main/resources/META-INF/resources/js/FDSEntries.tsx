@@ -20,7 +20,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {fetch, openModal} from 'frontend-js-web';
+import {fetch, navigate, openModal} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useRef, useState} from 'react';
 
@@ -165,12 +165,14 @@ const DropdownMenu = ({
 
 interface IFDSEntriesProps {
 	apiURL: string;
+	fdsViewsURL: string;
 	headlessResources: Array<HeadlessResource>;
 	namespace: string;
 }
 
 const FDSEntries = ({
 	apiURL,
+	fdsViewsURL,
 	headlessResources,
 	namespace,
 }: IFDSEntriesProps) => {
@@ -430,9 +432,25 @@ const FDSEntries = ({
 		],
 	};
 
+	const onViewClick = ({itemData}: any) => {
+		const url = new URL(fdsViewsURL);
+
+		url.searchParams.set(`${namespace}fdsEntryId`, itemData.id);
+		url.searchParams.set(`${namespace}fdsEntryLabel`, itemData.label);
+
+		navigate(url);
+	};
+
 	const views = [
 		{
 			contentRenderer: 'table',
+			itemsActions: [
+				{
+					icon: 'view',
+					label: Liferay.Language.get('view'),
+					onClick: onViewClick,
+				},
+			],
 			label: Liferay.Language.get('table'),
 			name: 'table',
 			schema: {

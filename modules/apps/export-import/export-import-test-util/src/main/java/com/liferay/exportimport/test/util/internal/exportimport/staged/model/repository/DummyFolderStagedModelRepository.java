@@ -149,7 +149,8 @@ public class DummyFolderStagedModelRepository
 	}
 
 	public List<DummyFolder> getDummyFolders(long groupId) {
-		return ListUtil.filter(_dummyFolders, d -> d.getGroupId() == groupId);
+		return ListUtil.filter(
+			_dummyFolders, dummyFolder -> dummyFolder.getGroupId() == groupId);
 	}
 
 	@Override
@@ -376,22 +377,22 @@ public class DummyFolderStagedModelRepository
 
 		public Predicate<DummyFolder> getPredicate(String expression) {
 			if (expression.startsWith("groupId=")) {
-				return d ->
-					d.getGroupId() == Long.valueOf(
+				return dummyFolder ->
+					dummyFolder.getGroupId() == Long.valueOf(
 						expression.substring("groupId=".length()));
 			}
 
 			if (expression.contains("id>-1")) {
-				return d -> d.getId() > -1;
+				return dummyFolder -> dummyFolder.getId() > -1;
 			}
 
 			if (expression.startsWith("companyId=")) {
-				return d ->
-					d.getCompanyId() == Long.valueOf(
+				return dummyFolder ->
+					dummyFolder.getCompanyId() == Long.valueOf(
 						expression.substring("companyId=".length()));
 			}
 
-			return d -> true;
+			return dummyFolder -> true;
 		}
 
 		@Override

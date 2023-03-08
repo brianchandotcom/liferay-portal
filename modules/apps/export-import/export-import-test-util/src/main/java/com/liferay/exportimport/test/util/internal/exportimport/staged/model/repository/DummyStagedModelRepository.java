@@ -368,22 +368,22 @@ public class DummyStagedModelRepository
 
 		public Predicate<Dummy> getPredicate(String expression) {
 			if (expression.startsWith("groupId=")) {
-				return d ->
-					d.getGroupId() == Long.valueOf(
+				return dummy ->
+					dummy.getGroupId() == Long.valueOf(
 						expression.substring("groupId=".length()));
 			}
 
 			if (expression.contains("id>-1")) {
-				return d -> d.getId() > -1;
+				return dummy -> dummy.getId() > -1;
 			}
 
 			if (expression.startsWith("companyId=")) {
-				return d ->
-					d.getCompanyId() == Long.valueOf(
+				return dummy ->
+					dummy.getCompanyId() == Long.valueOf(
 						expression.substring("companyId=".length()));
 			}
 
-			return d -> true;
+			return dummy -> true;
 		}
 
 		@Override

@@ -363,22 +363,22 @@ public class DummyReferenceStagedModelRepository
 
 		public Predicate<DummyReference> getPredicate(String expression) {
 			if (expression.startsWith("groupId=")) {
-				return d ->
-					d.getGroupId() == Long.valueOf(
+				return dummyReference ->
+					dummyReference.getGroupId() == Long.valueOf(
 						expression.substring("groupId=".length()));
 			}
 
 			if (expression.contains("id>-1")) {
-				return d -> d.getId() > -1;
+				return dummyReference -> dummyReference.getId() > -1;
 			}
 
 			if (expression.startsWith("companyId=")) {
-				return d ->
-					d.getCompanyId() == Long.valueOf(
+				return dummyReference ->
+					dummyReference.getCompanyId() == Long.valueOf(
 						expression.substring("companyId=".length()));
 			}
 
-			return d -> true;
+			return dummyReference -> true;
 		}
 
 		@Override

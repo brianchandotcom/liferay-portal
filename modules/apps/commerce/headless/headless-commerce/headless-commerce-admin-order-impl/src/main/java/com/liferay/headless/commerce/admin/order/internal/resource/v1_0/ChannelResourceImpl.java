@@ -27,8 +27,8 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleChannel;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel;
-import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.ChannelDTOConverter;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ChannelResource;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -114,8 +114,10 @@ public class ChannelResourceImpl
 				commerceChannelId, contextAcceptLanguage.getPreferredLocale()));
 	}
 
-	@Reference
-	private ChannelDTOConverter _channelDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.ChannelDTOConverter)"
+	)
+	private DTOConverter<CommerceChannel, Channel> _channelDTOConverter;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

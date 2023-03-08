@@ -27,6 +27,28 @@ public abstract class BaseProject implements Project {
 	}
 
 	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		Project.State state = getState();
+		Project.Type type = getType();
+
+		jsonObject.put(
+			"id", getID()
+		).put(
+			"name", getName()
+		).put(
+			"priority", getPriority()
+		).put(
+			"state", state.getJSONObject()
+		).put(
+			"type", type.getJSONObject()
+		);
+
+		return jsonObject;
+	}
+
+	@Override
 	public String getName() {
 		return _name;
 	}
@@ -63,21 +85,7 @@ public abstract class BaseProject implements Project {
 
 	@Override
 	public String toString() {
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put(
-			"id", getID()
-		).put(
-			"name", getName()
-		).put(
-			"priority", getPriority()
-		).put(
-			"state", getState()
-		).put(
-			"type", getType()
-		);
-
-		return jsonObject.toString();
+		return String.valueOf(getJSONObject());
 	}
 
 	protected BaseProject(JSONObject jsonObject) {

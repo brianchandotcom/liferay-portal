@@ -26,6 +26,8 @@ public interface Project {
 
 	public long getID();
 
+	public JSONObject getJSONObject();
+
 	public String getName();
 
 	public int getPriority();

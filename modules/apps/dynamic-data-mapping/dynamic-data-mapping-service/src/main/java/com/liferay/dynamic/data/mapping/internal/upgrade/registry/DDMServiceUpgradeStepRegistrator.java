@@ -74,6 +74,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -427,7 +428,9 @@ public class DDMServiceUpgradeStepRegistrator
 			"4.0.0", "4.1.0",
 			new DDMFieldUpgradeProcess(
 				_jsonFactory, _jsonDDMFormDeserializer,
-				_jsonDDMFormValuesDeserializer));
+				_jsonDDMFormValuesDeserializer),
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v4_1_0.
+				SchemaUpgradeProcess());
 
 		registry.register(
 			"4.1.0", "4.2.0",
@@ -460,7 +463,8 @@ public class DDMServiceUpgradeStepRegistrator
 			"4.3.3", "4.3.4",
 			new DDMStructureLinkDLFileEntryTypeUpgradeProcess(
 				_dlFileEntryTypeLocalService),
-			new DLFileEntryTypeDDMFieldAttributeUpgradeProcess());
+			new DLFileEntryTypeDDMFieldAttributeUpgradeProcess(
+				_companyLocalService));
 
 		registry.register(
 			"4.3.4", "4.3.5", new DDMTemplateVersionUpgradeProcess());
@@ -539,6 +543,9 @@ public class DDMServiceUpgradeStepRegistrator
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private CounterLocalService _counterLocalService;

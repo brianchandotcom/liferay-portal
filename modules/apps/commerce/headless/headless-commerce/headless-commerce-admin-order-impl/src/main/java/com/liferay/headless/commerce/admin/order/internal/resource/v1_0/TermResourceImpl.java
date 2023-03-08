@@ -23,7 +23,6 @@ import com.liferay.commerce.term.service.CommerceTermEntryRelService;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
-import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.TermDTOConverter;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.TermEntityModel;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.TermOrderTypeUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.TermResource;
@@ -39,6 +38,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -337,7 +337,9 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
 
-	@Reference
-	private TermDTOConverter _termDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.TermDTOConverter)"
+	)
+	private DTOConverter<CommerceTermEntry, Term> _termDTOConverter;
 
 }

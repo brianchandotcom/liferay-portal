@@ -29,10 +29,6 @@ public class PortletPreferencesHelper {
 		_portletPreferences = portletPreferences;
 	}
 
-	public boolean getBoolean(String key, boolean defaultValue) {
-		return GetterUtil.getBoolean(_getStringValue(key), defaultValue);
-	}
-
 	public Integer getInteger(String key) {
 		String stringValue = _getStringValue(key);
 

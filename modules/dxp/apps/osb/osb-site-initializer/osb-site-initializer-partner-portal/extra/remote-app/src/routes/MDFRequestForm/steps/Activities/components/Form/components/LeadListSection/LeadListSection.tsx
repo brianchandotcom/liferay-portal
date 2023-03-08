@@ -14,7 +14,6 @@ import {useFormikContext} from 'formik';
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
-import {TypeActivityKey} from '../../../../../../../../common/enums/TypeActivityKey';
 import {LiferayPicklistName} from '../../../../../../../../common/enums/liferayPicklistName';
 import MDFRequest from '../../../../../../../../common/interfaces/mdfRequest';
 import getBooleanEntries from '../../../../../../../../common/utils/getBooleanEntries';
@@ -26,11 +25,7 @@ interface IProps {
 	selectedTypeActivity?: string;
 }
 
-const LeadListSection = ({
-	currentActivityIndex,
-	fieldEntries,
-	selectedTypeActivity,
-}: IProps) => {
+const LeadListSection = ({currentActivityIndex, fieldEntries}: IProps) => {
 	const {setFieldValue, values} = useFormikContext<MDFRequest>();
 
 	const onLeadListOutcomeSelected = (
@@ -61,17 +56,15 @@ const LeadListSection = ({
 
 	return (
 		<PRMForm.Section title="Lead List">
-			{selectedTypeActivity !== TypeActivityKey.EVENT && (
-				<PRMFormik.Field
-					component={PRMForm.RadioGroup}
-					items={getBooleanEntries()}
-					label="Is a lead list an outcome of this activity?"
-					name={`activities[${currentActivityIndex}].activityDescription.leadGenerated`}
-					onChange={onLeadListOutcomeSelected}
-					required
-					small
-				/>
-			)}
+			<PRMFormik.Field
+				component={PRMForm.RadioGroup}
+				items={getBooleanEntries()}
+				label="Is a lead list an outcome of this activity?"
+				name={`activities[${currentActivityIndex}].activityDescription.leadGenerated`}
+				onChange={onLeadListOutcomeSelected}
+				required
+				small
+			/>
 
 			{values.activities[currentActivityIndex].activityDescription
 				?.leadGenerated === 'true' && (

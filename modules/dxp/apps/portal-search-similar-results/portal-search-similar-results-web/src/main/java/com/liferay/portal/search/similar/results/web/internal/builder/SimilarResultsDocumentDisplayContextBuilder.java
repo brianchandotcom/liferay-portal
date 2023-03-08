@@ -354,7 +354,7 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 		String dateString = SearchStringUtil.maybe(
 			_getFieldValueString(Field.CREATE_DATE));
 
-		if (Validator.isNotNull(dateString)) {
+		if (dateString != null) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
 			Date date = null;

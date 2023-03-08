@@ -25,7 +25,7 @@ definition {
 		}
 
 		task ("Read the intial portal build number") {
-			if (!(contains(${fileContent}, "Initial portal build number: 7413"))) {
+			if (!(contains(${fileContent}, "Portal initial build number: 7413"))) {
 				echo(${fileContent});
 
 				fail("Inital portal build number is not present in upgrade report.");
@@ -35,7 +35,7 @@ definition {
 		task ("Read the final portal build number") {
 			var finalBuildVersion = Upgrade.getBuildNumber();
 
-			if (!(contains(${fileContent}, "Final portal build number: ${finalBuildVersion}"))) {
+			if (!(contains(${fileContent}, "Portal final build number: ${finalBuildVersion}"))) {
 				echo(${fileContent});
 
 				fail("Final portal build number is not present in upgrade report.");
@@ -45,7 +45,7 @@ definition {
 		task ("Read the expected portal build number") {
 			var expectedBuildVersion = Upgrade.getBuildNumber();
 
-			if (!(contains(${fileContent}, "Expected portal build number: ${expectedBuildVersion}"))) {
+			if (!(contains(${fileContent}, "Portal expected build number: ${expectedBuildVersion}"))) {
 				echo(${fileContent});
 
 				fail("Expected portal build number is not present in upgrade report.");
@@ -70,7 +70,7 @@ definition {
 
 			var databaseVersion = PropsUtil.get("database.${databaseType}.version");
 
-			if (!(contains(${fileContent}, "Using ${databaseType} version ${databaseVersion}"))) {
+			if (!(contains(${fileContent}, "Database version: ${databaseType} ${databaseVersion}"))) {
 				echo(${fileContent});
 
 				fail("Database type and version is not present in upgrade report.");
@@ -88,7 +88,7 @@ definition {
 		}
 
 		task ("Read which Document Library Store is being used") {
-			if (!(contains(${fileContent}, "dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore"))) {
+			if (!(contains(${fileContent}, "Property dl.store.impl: com.liferay.portal.store.file.system.FileSystemStore"))) {
 				echo(${fileContent});
 
 				fail("Document library store is not present in upgrade report.");
@@ -96,7 +96,7 @@ definition {
 		}
 
 		task ("Read the size of document library storage") {
-			if (!(contains(${fileContent}, "The document library storage size is 750.03 KB"))) {
+			if (!(contains(${fileContent}, "Document library storage size: 750.03 KB"))) {
 				echo(${fileContent});
 
 				fail("Size of document library storage is not present in upgrade report.");
@@ -116,18 +116,22 @@ definition {
 			var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
 		}
 
-		task ("Read the content. Error expected") {
-			if (!(contains(${fileContent}, "Errors thrown during upgrade process"))) {
+		task ("Read the content. Check for error class name and message") {
+			if (!(contains(${fileContent}, "Errors"))) {
+				echo(${fileContent});
+
 				fail("Upgrade report does not contain expected errors.");
 			}
-		}
 
-		task ("Read the content. Check for class name and message") {
 			if (!(contains(${fileContent}, "Class name: com.liferay.portal.tools.DBUpgrader"))) {
+				echo(${fileContent});
+
 				fail("Upgrade report does not contain the error class name.");
 			}
 
-			if (!(contains(${fileContent}, "1 occurrences of the following errors: Unknown column 'servletContextName' in 'where clause'"))) {
+			if (!(contains(${fileContent}, "1 occurrences of the following event: Unknown column 'servletContextName' in 'where clause'"))) {
+				echo(${fileContent});
+
 				fail("Upgrade report does not contain the error message.");
 			}
 		}
@@ -143,7 +147,7 @@ definition {
 		}
 
 		task ("Read the processes list message") {
-			if (!(contains(${fileContent}, "Top 20 longest running upgrade processes"))) {
+			if (!(contains(${fileContent}, "Longest upgrade processes"))) {
 				echo(${fileContent});
 
 				fail("List with the 20 longest upgrade processes not found.");
@@ -192,7 +196,7 @@ definition {
 		}
 
 		task ("Check the total runtime is present") {
-			if (!(contains(${reportFileContent}, "Upgrade completed in"))) {
+			if (!(contains(${reportFileContent}, "Execution time: "))) {
 				echo(${reportFileContent});
 
 				fail("Total runtime is not present in upgrade report.");
@@ -200,7 +204,7 @@ definition {
 		}
 
 		task ("Check the intial portal build number") {
-			if (!(contains(${reportFileContent}, "Initial portal build number:"))) {
+			if (!(contains(${reportFileContent}, "Portal initial build number:"))) {
 				echo(${reportFileContent});
 
 				fail("Inital portal build number is not present in upgrade report.");
@@ -208,7 +212,7 @@ definition {
 		}
 
 		task ("Check the final portal build number") {
-			if (!(contains(${reportFileContent}, "Final portal build number:"))) {
+			if (!(contains(${reportFileContent}, "Portal final build number:"))) {
 				echo(${reportFileContent});
 
 				fail("Final portal build number is not present in upgrade report.");
@@ -216,7 +220,7 @@ definition {
 		}
 
 		task ("Check the expected portal build number") {
-			if (!(contains(${reportFileContent}, "Expected portal build number:"))) {
+			if (!(contains(${reportFileContent}, "Portal expected build number:"))) {
 				echo(${reportFileContent});
 
 				fail("Expected portal build number is not present in upgrade report.");
@@ -224,7 +228,7 @@ definition {
 		}
 
 		task ("Check the intial schema version") {
-			if (!(contains(${reportFileContent}, "Initial portal schema version:"))) {
+			if (!(contains(${reportFileContent}, "Portal initial schema version:"))) {
 				echo(${reportFileContent});
 
 				fail("Inital schema version is not present in upgrade report.");
@@ -232,7 +236,7 @@ definition {
 		}
 
 		task ("check the final schema version") {
-			if (!(contains(${reportFileContent}, "Final portal schema version:"))) {
+			if (!(contains(${reportFileContent}, "Portal final schema version:"))) {
 				echo(${reportFileContent});
 
 				fail("Final schema version is not present in upgrade report.");
@@ -240,7 +244,7 @@ definition {
 		}
 
 		task ("Check the expected schema version") {
-			if (!(contains(${reportFileContent}, "Expected portal schema version:"))) {
+			if (!(contains(${reportFileContent}, "Portal expected schema version:"))) {
 				echo(${reportFileContent});
 
 				fail("Expected schema version is not present in upgrade report.");
@@ -252,7 +256,7 @@ definition {
 
 			var databaseVersion = PropsUtil.get("database.${databaseType}.version");
 
-			if (!(contains(${reportFileContent}, "Using ${databaseType} version ${databaseVersion}"))) {
+			if (!(contains(${reportFileContent}, "Database version: ${databaseType} ${databaseVersion}"))) {
 				echo(${reportFileContent});
 
 				fail("Database type and version is not present in upgrade report.");
@@ -260,7 +264,7 @@ definition {
 		}
 
 		task ("Check the Document Library Store is present") {
-			if (!(contains(${reportFileContent}, "dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore"))) {
+			if (!(contains(${reportFileContent}, "Property dl.store.impl: com.liferay.portal.store.file.system.FileSystemStore"))) {
 				echo(${reportFileContent});
 
 				fail("Document library store is not present in upgrade report.");
@@ -268,7 +272,7 @@ definition {
 		}
 
 		task ("Check the size of document library storage is present") {
-			if (!(contains(${reportFileContent}, "The document library storage size is"))) {
+			if (!(contains(${reportFileContent}, "Document library storage size:"))) {
 				echo(${reportFileContent});
 
 				fail("Size of document library storage is not present in upgrade report.");
@@ -276,13 +280,13 @@ definition {
 		}
 
 		task ("Check the row counts references") {
-			if (!(contains(${reportFileContent}, "Rows (initial)"))) {
+			if (!(contains(${reportFileContent}, "Initial rows"))) {
 				echo(${reportFileContent});
 
 				fail("Initial rows numbers column not present in upgrade report.");
 			}
 
-			if (!(contains(${reportFileContent}, "Rows (final)"))) {
+			if (!(contains(${reportFileContent}, "Final rows"))) {
 				echo(${reportFileContent});
 
 				fail("Final rows numbers column not present in upgrade report.");
@@ -290,7 +294,7 @@ definition {
 		}
 
 		task ("Check the longest processes list is present") {
-			if (!(contains(${reportFileContent}, "Top 20 longest running upgrade processes"))) {
+			if (!(contains(${reportFileContent}, "Longest upgrade processes"))) {
 				echo(${reportFileContent});
 
 				fail("List with the 20 longest upgrade processes not found.");
@@ -298,13 +302,13 @@ definition {
 		}
 
 		task ("Check no errors are thrown") {
-			if (!(contains(${reportFileContent}, "No errors thrown during upgrade"))) {
+			if (!(contains(${reportFileContent}, "Errors: Nothing registered"))) {
 				fail("Upgrade report contains unexpected errors.");
 			}
 		}
 
 		task ("Check no warnings are thrown") {
-			if (!(contains(${reportFileContent}, "No warnings thrown during upgrade"))) {
+			if (!(contains(${reportFileContent}, "Warnings: Nothing registered"))) {
 				fail("Upgrade report contains unexpected warnings.");
 			}
 		}
@@ -320,7 +324,7 @@ definition {
 		}
 
 		task ("Read the new report. No upgrade processes are expected") {
-			if (!(contains(${upgradeReportNew}, "No upgrade processes registered"))) {
+			if (!(contains(${upgradeReportNew}, "Osgi status: There are no pending upgrades"))) {
 				echo(${upgradeReportNew});
 
 				fail("New upgrade report contains unexpected upgrades.");
@@ -359,7 +363,7 @@ definition {
 		}
 
 		task ("Read the report. All upgrade processes are expected") {
-			if (!(contains(${upgradeReportOriginal}, "Top 20 longest running upgrade processes:"))) {
+			if (!(contains(${upgradeReportOriginal}, "Longest upgrade processes"))) {
 				echo(${upgradeReportOriginal});
 
 				fail("Upgrade report does not contains expected upgrades.");
@@ -379,7 +383,7 @@ definition {
 		}
 
 		task ("Read the new report. No upgrade processes are expected") {
-			if (!(contains(${upgradeReportNew}, "No upgrade processes registered"))) {
+			if (!(contains(${upgradeReportNew}, "Osgi status: There are no pending upgrades"))) {
 				echo(${upgradeReportNew});
 
 				fail("New upgrade report contains unexpected upgrades.");
@@ -421,13 +425,13 @@ definition {
 		}
 
 		task ("Read the row counts references") {
-			if (!(contains(${fileContent}, "Rows (initial)"))) {
+			if (!(contains(${fileContent}, "Initial rows"))) {
 				echo(${fileContent});
 
 				fail("Initial rows numbers column not present in upgrade report.");
 			}
 
-			if (!(contains(${fileContent}, "Rows (final)"))) {
+			if (!(contains(${fileContent}, "Final rows"))) {
 				echo(${fileContent});
 
 				fail("Final rows numbers column not present in upgrade report.");
@@ -447,7 +451,7 @@ definition {
 		}
 
 		task ("Read the intial schema version") {
-			if (!(contains(${fileContent}, "Initial portal schema version: 13.1.1"))) {
+			if (!(contains(${fileContent}, "Portal initial schema version: 13.1.1"))) {
 				echo(${fileContent});
 
 				fail("Inital schema version is not present in upgrade report.");
@@ -457,7 +461,7 @@ definition {
 		task ("Read the final schema version") {
 			var finalSchemaVersion = Upgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';");
 
-			if (!(contains(${fileContent}, "Final portal schema version: ${finalSchemaVersion}"))) {
+			if (!(contains(${fileContent}, "Portal final schema version: ${finalSchemaVersion}"))) {
 				echo(${fileContent});
 
 				fail("Final schema version is not present in upgrade report.");
@@ -467,7 +471,7 @@ definition {
 		task ("Read the expected schema version") {
 			var expectedSchemaVersion = Upgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';");
 
-			if (!(contains(${fileContent}, "Expected portal schema version: ${expectedSchemaVersion}"))) {
+			if (!(contains(${fileContent}, "Portal expected schema version: ${expectedSchemaVersion}"))) {
 				echo(${fileContent});
 
 				fail("Expected schema version is not present in upgrade report.");
@@ -497,13 +501,13 @@ definition {
 		}
 
 		task ("Capture the upgrade runtime in upgrade Report") {
-			var upgradeRunTimeReport = RegexUtil.replace(${fileContentReport}, "Upgrade completed i\"?n \"?(.*[0-9])", 1);
+			var upgradeRunTimeReport = RegexUtil.replace(${fileContentReport}, "Execution time: (.*[0-9])", 1);
 
 			echo("Upgrade runtime reported by upgrade_report.info is ${upgradeRunTimeReport}");
 		}
 
 		task ("Read the total runtime to see if it's present") {
-			if (!(contains(${fileContentReport}, "Upgrade completed in ${upgradeRunTimeReport}"))) {
+			if (!(contains(${fileContentReport}, "Execution time: ${upgradeRunTimeReport}"))) {
 				echo(${fileContentReport});
 
 				fail("Total runtime is not present in upgrade report.");
@@ -511,7 +515,7 @@ definition {
 		}
 
 		task ("Read the total runtime comparing with the one got in the logs") {
-			if (!(contains(${fileContentReport}, "Upgrade completed in ${upgradeRunTimeLog}"))) {
+			if (!(contains(${fileContentReport}, "Execution time: ${upgradeRunTimeLog}"))) {
 				echo(${fileContentReport});
 
 				fail("Total runtime in upgrade report does not match the runtime in upgrade.log file.");
@@ -551,22 +555,20 @@ definition {
 			var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
 		}
 
-		task ("Read the content. Warnings expected") {
-			if (!(contains(${fileContent}, "Warnings thrown during upgrade process"))) {
+		task ("Read the content. Check for warning class name and message") {
+			if (!(contains(${fileContent}, "Warnings"))) {
 				echo(${fileContent});
 
 				fail("Upgrade report does not contain expected warnings.");
 			}
-		}
 
-		task ("Read the content. Check for class name and message") {
 			if (!(contains(${fileContent}, "Class name:"))) {
 				echo(${fileContent});
 
 				fail("Upgrade report does not contain the warning class name.");
 			}
 
-			if (!(contains(${fileContent}, "occurrences of the following warnings: "))) {
+			if (!(contains(${fileContent}, "1 occurrences of the following event: null"))) {
 				echo(${fileContent});
 
 				fail("Upgrade report does not contain the warning message.");

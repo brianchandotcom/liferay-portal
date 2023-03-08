@@ -392,6 +392,10 @@ public class FragmentEntryConfigurationParserImpl
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
+		if (themeDisplay == null) {
+			return fieldValue;
+		}
+
 		Group group = themeDisplay.getScopeGroup();
 
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(

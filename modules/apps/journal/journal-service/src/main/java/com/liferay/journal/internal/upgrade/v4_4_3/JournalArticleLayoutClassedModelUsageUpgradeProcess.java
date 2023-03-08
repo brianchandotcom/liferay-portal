@@ -186,12 +186,15 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		preparedStatement.setLong(10, containerType);
 		preparedStatement.setLong(11, plid);
 
-		if (!layoutClassedModelUsageTypes.containsKey(plid)) {
-			layoutClassedModelUsageTypes.put(
-				plid, _getLayoutClassedModelUsageType(plid));
+		Integer type = layoutClassedModelUsageTypes.get(plid);
+
+		if (type == null) {
+			type = _getLayoutClassedModelUsageType(plid);
+
+			layoutClassedModelUsageTypes.put(plid, type);
 		}
 
-		preparedStatement.setInt(12, layoutClassedModelUsageTypes.get(plid));
+		preparedStatement.setInt(12, type);
 
 		preparedStatement.addBatch();
 

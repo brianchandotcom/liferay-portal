@@ -12,9 +12,9 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given config file for client extension of type custom element created") {
-			// ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
 
-			// ClientExtension.checkConfigFileCreatedProperly();
+			//ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+			//ClientExtension.checkConfigFileCreatedProperly();
 
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}

@@ -14,8 +14,18 @@
 
 package com.liferay.jethr0;
 
+import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectDALO;
+import com.liferay.jethr0.project.comparator.ProjectComparator;
+import com.liferay.jethr0.project.comparator.ProjectComparatorDALO;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerDALO;
+import com.liferay.jethr0.project.queue.ProjectQueue;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author Michael Hashimoto
@@ -26,5 +36,55 @@ public class Jethr0SpringBootApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Jethr0SpringBootApplication.class, args);
 	}
+
+	@Bean
+	public ProjectQueue getProjectQueue(
+		ProjectComparatorDALO projectComparatorDALO, ProjectDALO projectDALO,
+		ProjectPrioritizerDALO projectPrioritizerDALO) {
+
+		ProjectQueue projectQueue = new ProjectQueue();
+
+		projectQueue.setProjectPrioritizer(
+			_getDefaultProjectPrioritizer(
+				projectComparatorDALO, projectPrioritizerDALO));
+
+		projectQueue.addProjects(projectDALO.retrieveProjects());
+
+		for (Project project : projectQueue.getProjects()) {
+			System.out.println(project);
+		}
+
+		return projectQueue;
+	}
+
+	private ProjectPrioritizer _getDefaultProjectPrioritizer(
+		ProjectComparatorDALO projectComparatorDALO,
+		ProjectPrioritizerDALO projectPrioritizerDALO) {
+
+		for (ProjectPrioritizer projectPrioritizer :
+				projectPrioritizerDALO.retrieveProjectPrioritizers()) {
+
+			String projectPrioritizerName = projectPrioritizer.getName();
+
+			if (projectPrioritizerName.equals(_liferayProjectPrioritizer)) {
+				return projectPrioritizer;
+			}
+		}
+
+		ProjectPrioritizer projectPrioritizer =
+			projectPrioritizerDALO.createProjectPrioritizer(
+				_liferayProjectPrioritizer);
+
+		projectComparatorDALO.createProjectComparator(
+			projectPrioritizer, 1, ProjectComparator.Type.PROJECT_PRIORITY,
+			null);
+		projectComparatorDALO.createProjectComparator(
+			projectPrioritizer, 2, ProjectComparator.Type.FIFO, null);
+
+		return projectPrioritizer;
+	}
+
+	@Value("${liferay.project.prioritizer}")
+	private String _liferayProjectPrioritizer;
 
 }

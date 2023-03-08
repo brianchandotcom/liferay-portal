@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>KEY</td>
-	<td>//div[@class='form-group']/label[contains(.,'Key')]/following-sibling::div/textarea[@type='text']</td>
+	<td>//div[@class='form-group']/label[contains(.,'Key')]/..//textarea</td>
 	<td></td>
 </tr>
 <tr>

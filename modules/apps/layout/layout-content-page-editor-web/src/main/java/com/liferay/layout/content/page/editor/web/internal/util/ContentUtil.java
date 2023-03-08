@@ -20,25 +20,27 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.util.DLURLHelperUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.info.display.url.provider.InfoEditURLProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.fragment.processor.PortletRegistryUtil;
-import com.liferay.layout.content.page.editor.web.internal.info.display.url.provider.InfoEditURLProviderUtil;
-import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceRegistryUtil;
-import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperRegistryUtil;
-import com.liferay.layout.content.page.editor.web.internal.layout.display.page.LayoutDisplayPageProviderRegistryUtil;
-import com.liferay.layout.content.page.editor.web.internal.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
+import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
+import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
+import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.model.LayoutClassedModelUsage;
-import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
+import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -50,10 +52,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -64,13 +66,13 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -95,6 +97,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
@@ -161,6 +164,113 @@ public class ContentUtil {
 				hiddenItemIds));
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLURLHelper(DLURLHelper dlURLHelper) {
+		_dlURLHelper = dlURLHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setFragmentEntryLinkLocalService(
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService) {
+
+		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setInfoEditURLProviderRegistry(
+		InfoEditURLProviderRegistry infoEditURLProviderRegistry) {
+
+		_infoEditURLProviderRegistry = infoEditURLProviderRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setInfoItemServiceRegistry(
+		InfoItemServiceRegistry infoItemServiceRegistry) {
+
+		_infoItemServiceRegistry = infoItemServiceRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setInfoSearchClassMapperRegistry(
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry) {
+
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLanguage(Language language) {
+		_language = language;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutClassedModelUsageLocalService(
+		LayoutClassedModelUsageLocalService
+			layoutClassedModelUsageLocalService) {
+
+		_layoutClassedModelUsageLocalService =
+			layoutClassedModelUsageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutContentModelResourcePermission(
+		LayoutContentModelResourcePermission
+			layoutContentModelResourcePermission) {
+
+		_layoutContentModelResourcePermission =
+			layoutContentModelResourcePermission;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutDisplayPageProviderRegistry(
+		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry) {
+
+		_layoutDisplayPageProviderRegistry = layoutDisplayPageProviderRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutListPermissionProviderRegistry(
+		LayoutListPermissionProviderRegistry
+			layoutListPermissionProviderRegistry) {
+
+		_layoutListPermissionProviderRegistry =
+			layoutListPermissionProviderRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutListRetrieverRegistry(
+		LayoutListRetrieverRegistry layoutListRetrieverRegistry) {
+
+		_layoutListRetrieverRegistry = layoutListRetrieverRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setListObjectReferenceFactoryRegistry(
+		ListObjectReferenceFactoryRegistry listObjectReferenceFactoryRegistry) {
+
+		_listObjectReferenceFactoryRegistry =
+			listObjectReferenceFactoryRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletRegistry(PortletRegistry portletRegistry) {
+		_portletRegistry = portletRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceActions(ResourceActions resourceActions) {
+		_resourceActions = resourceActions;
+	}
+
 	private static String _generateUniqueLayoutClassedModelUsageKey(
 		LayoutClassedModelUsage layoutClassedModelUsage) {
 
@@ -175,13 +285,14 @@ public class ContentUtil {
 
 		String className = layoutClassedModelUsage.getClassName();
 
-		boolean hasUpdatePermission = ModelResourcePermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), className,
-			layoutClassedModelUsage.getClassPK(), ActionKeys.UPDATE);
+		boolean hasUpdatePermission =
+			_layoutContentModelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), className,
+				layoutClassedModelUsage.getClassPK(), ActionKeys.UPDATE);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			LayoutDisplayPageProviderRegistryUtil.getLayoutDisplayPageProvider(
-				className);
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(className);
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
@@ -206,7 +317,7 @@ public class ContentUtil {
 						JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 				LiferayPortletResponse liferayPortletResponse =
-					PortalUtil.getLiferayPortletResponse(portletResponse);
+					_portal.getLiferayPortletResponse(portletResponse);
 
 				LiferayPortletURL portletURL =
 					liferayPortletResponse.createActionURL(
@@ -222,7 +333,7 @@ public class ContentUtil {
 					"fileEntryId", fileEntry.getFileEntryId()
 				).put(
 					"previewURL",
-					DLURLHelperUtil.getPreviewURL(
+					_dlURLHelper.getPreviewURL(
 						fileEntry, fileEntry.getFileVersion(), themeDisplay,
 						StringPool.BLANK)
 				);
@@ -234,15 +345,22 @@ public class ContentUtil {
 					return null;
 				}
 
-				return InfoEditURLProviderUtil.getURLEdit(
-					className,
+				InfoEditURLProvider<Object> infoEditURLProvider =
+					_infoEditURLProviderRegistry.getInfoEditURLProvider(
+						className);
+
+				if (infoEditURLProvider == null) {
+					return null;
+				}
+
+				return infoEditURLProvider.getURL(
 					layoutDisplayPageObjectProvider.getDisplayObject(),
 					httpServletRequest);
 			}
 		).put(
 			"permissionsURL",
 			() -> {
-				if (!ModelResourcePermissionUtil.contains(
+				if (!_layoutContentModelResourcePermission.contains(
 						themeDisplay.getPermissionChecker(), className,
 						layoutClassedModelUsage.getClassPK(),
 						ActionKeys.PERMISSIONS)) {
@@ -262,7 +380,7 @@ public class ContentUtil {
 		).put(
 			"viewUsagesURL",
 			() -> {
-				if (!ModelResourcePermissionUtil.contains(
+				if (!_layoutContentModelResourcePermission.contains(
 						themeDisplay.getPermissionChecker(), className,
 						layoutClassedModelUsage.getClassPK(),
 						ActionKeys.VIEW)) {
@@ -294,8 +412,7 @@ public class ContentUtil {
 
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(
-				InfoSearchClassMapperRegistryUtil.getSearchClassName(
-					className));
+				_infoSearchClassMapperRegistry.getSearchClassName(className));
 	}
 
 	private static List<String> _getChildrenItemIds(
@@ -322,7 +439,7 @@ public class ContentUtil {
 			return _fragmentEntryLinkClassNameId;
 		}
 
-		_fragmentEntryLinkClassNameId = PortalUtil.getClassNameId(
+		_fragmentEntryLinkClassNameId = _portal.getClassNameId(
 			FragmentEntryLink.class.getName());
 
 		return _fragmentEntryLinkClassNameId;
@@ -335,7 +452,7 @@ public class ContentUtil {
 		JSONObject editableValuesJSONObject = null;
 
 		try {
-			editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			editableValuesJSONObject = _jsonFactory.createJSONObject(
 				fragmentEntryLink.getEditableValues());
 		}
 		catch (JSONException jsonException) {
@@ -444,7 +561,7 @@ public class ContentUtil {
 			layoutDisplayPageObjectProviders = new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				groupId, plid);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
@@ -475,13 +592,10 @@ public class ContentUtil {
 				continue;
 			}
 
-			InfoItemServiceRegistry infoItemServiceRegistry =
-				InfoItemServiceRegistryUtil.getInfoItemServiceRegistry();
-
-			InfoPermissionProvider infoPermissionProvider =
-				infoItemServiceRegistry.getFirstInfoItemService(
+			InfoPermissionProvider<?> infoPermissionProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoPermissionProvider.class,
-					PortalUtil.getClassName(
+					_portal.getClassName(
 						formStyledLayoutStructureItem.getClassNameId()));
 
 			if ((infoPermissionProvider == null) ||
@@ -525,7 +639,7 @@ public class ContentUtil {
 			List<String> hiddenItemIds, long segmentsExperienceId)
 		throws PortalException {
 
-		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray mappedContentsJSONArray = _jsonFactory.createJSONArray();
 
 		Set<String> uniqueLayoutClassedModelUsageKeys = new HashSet<>();
 
@@ -533,7 +647,7 @@ public class ContentUtil {
 			layoutStructure, hiddenItemIds);
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
-			LayoutClassedModelUsageLocalServiceUtil.
+			_layoutClassedModelUsageLocalService.
 				getLayoutClassedModelUsagesByPlid(plid);
 
 		for (LayoutClassedModelUsage layoutClassedModelUsage :
@@ -550,12 +664,12 @@ public class ContentUtil {
 					_getFragmentEntryLinkClassNameId()) {
 
 				FragmentEntryLink fragmentEntryLink =
-					FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 						GetterUtil.getLong(
 							layoutClassedModelUsage.getContainerKey()));
 
 				if (fragmentEntryLink == null) {
-					LayoutClassedModelUsageLocalServiceUtil.
+					_layoutClassedModelUsageLocalService.
 						deleteLayoutClassedModelUsage(layoutClassedModelUsage);
 
 					continue;
@@ -592,8 +706,8 @@ public class ContentUtil {
 
 			try {
 				LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-					LayoutDisplayPageProviderRegistryUtil.
-						getLayoutDisplayPageProvider(
+					_layoutDisplayPageProviderRegistry.
+						getLayoutDisplayPageProviderByClassName(
 							layoutClassedModelUsage.getClassName());
 
 				LayoutDisplayPageObjectProvider<?>
@@ -605,7 +719,7 @@ public class ContentUtil {
 									layoutClassedModelUsage.getClassPK()));
 
 				if (layoutDisplayPageObjectProvider == null) {
-					LayoutClassedModelUsageLocalServiceUtil.
+					_layoutClassedModelUsageLocalService.
 						deleteLayoutClassedModelUsage(layoutClassedModelUsage);
 
 					continue;
@@ -657,11 +771,11 @@ public class ContentUtil {
 			return null;
 		}
 
-		String className = PortalUtil.getClassName(classNameId);
+		String className = _portal.getClassName(classNameId);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			LayoutDisplayPageProviderRegistryUtil.getLayoutDisplayPageProvider(
-				className);
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(className);
 
 		if (layoutDisplayPageProvider == null) {
 			return null;
@@ -752,7 +866,7 @@ public class ContentUtil {
 		Set<LayoutDisplayPageObjectProvider<?>>
 			layoutDisplayPageObjectProviders = new HashSet<>();
 
-		Set<Locale> locales = LanguageUtil.getAvailableLocales();
+		Set<Locale> locales = _language.getAvailableLocales();
 
 		for (Locale locale : locales) {
 			JSONObject localizableJSONObject = jsonObject.getJSONObject(
@@ -818,12 +932,12 @@ public class ContentUtil {
 			layoutDisplayPageObjectProvider.getTitle(themeDisplay.getLocale())
 		).put(
 			"type",
-			ResourceActionsUtil.getModelResource(
+			_resourceActions.getModelResource(
 				themeDisplay.getLocale(),
 				layoutClassedModelUsage.getClassName())
 		).put(
 			"usagesCount",
-			LayoutClassedModelUsageLocalServiceUtil.
+			_layoutClassedModelUsageLocalService.
 				getUniqueLayoutClassedModelUsagesCount(
 					layoutClassedModelUsage.getClassNameId(),
 					layoutClassedModelUsage.getClassPK())
@@ -835,8 +949,7 @@ public class ContentUtil {
 			return _portletClassNameId;
 		}
 
-		_portletClassNameId = PortalUtil.getClassNameId(
-			Portlet.class.getName());
+		_portletClassNameId = _portal.getClassNameId(Portlet.class.getName());
 
 		return _portletClassNameId;
 	}
@@ -867,18 +980,15 @@ public class ContentUtil {
 			}
 
 			FragmentEntryLink fragmentEntryLink =
-				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 					GetterUtil.getLong(entry.getKey()));
 
 			if ((fragmentEntryLink == null) || fragmentEntryLink.isDeleted()) {
 				continue;
 			}
 
-			PortletRegistry portletRegistry =
-				PortletRegistryUtil.getPortletRegistry();
-
 			for (String portletId :
-					portletRegistry.getFragmentEntryLinkPortletIds(
+					_portletRegistry.getFragmentEntryLinkPortletIds(
 						fragmentEntryLink)) {
 
 				List<String> itemIds = portletIds.computeIfAbsent(
@@ -994,7 +1104,28 @@ public class ContentUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(ContentUtil.class);
 
+	private static DLURLHelper _dlURLHelper;
 	private static Long _fragmentEntryLinkClassNameId;
+	private static FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private static InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
+	private static InfoItemServiceRegistry _infoItemServiceRegistry;
+	private static InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
+	private static JSONFactory _jsonFactory;
+	private static Language _language;
+	private static LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
+	private static LayoutContentModelResourcePermission
+		_layoutContentModelResourcePermission;
+	private static LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
+	private static LayoutListPermissionProviderRegistry
+		_layoutListPermissionProviderRegistry;
+	private static LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
+	private static ListObjectReferenceFactoryRegistry
+		_listObjectReferenceFactoryRegistry;
+	private static Portal _portal;
 	private static Long _portletClassNameId;
+	private static PortletRegistry _portletRegistry;
+	private static ResourceActions _resourceActions;
 
 }

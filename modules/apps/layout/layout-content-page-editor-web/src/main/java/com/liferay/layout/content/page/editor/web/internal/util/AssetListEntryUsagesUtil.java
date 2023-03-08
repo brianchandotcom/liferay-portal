@@ -20,11 +20,11 @@ import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryUsage;
-import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
-import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
@@ -32,10 +32,9 @@ import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
-import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceRegistryUtil;
-import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperRegistryUtil;
-import com.liferay.layout.content.page.editor.web.internal.security.permission.resource.ModelResourcePermissionUtil;
+import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -43,10 +42,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -54,13 +53,13 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -77,6 +76,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
@@ -91,12 +91,12 @@ public class AssetListEntryUsagesUtil {
 			List<String> hiddenItemIds)
 		throws PortalException {
 
-		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray mappedContentsJSONArray = _jsonFactory.createJSONArray();
 
 		Set<String> uniqueAssetListEntryUsagesKeys = new HashSet<>();
 
 		List<AssetListEntryUsage> assetListEntryUsages =
-			AssetListEntryUsageLocalServiceUtil.getAssetEntryListUsagesByPlid(
+			_assetListEntryUsageLocalService.getAssetEntryListUsagesByPlid(
 				plid);
 
 		String redirect = _getRedirect(httpServletRequest);
@@ -125,6 +125,70 @@ public class AssetListEntryUsagesUtil {
 		return mappedContentsJSONArray;
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetListEntryLocalService(
+		AssetListEntryLocalService assetListEntryLocalService) {
+
+		_assetListEntryLocalService = assetListEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetListEntryUsageLocalService(
+		AssetListEntryUsageLocalService assetListEntryUsageLocalService) {
+
+		_assetListEntryUsageLocalService = assetListEntryUsageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setFragmentEntryLinkLocalService(
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService) {
+
+		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setInfoItemServiceRegistry(
+		InfoItemServiceRegistry infoItemServiceRegistry) {
+
+		_infoItemServiceRegistry = infoItemServiceRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setInfoSearchClassMapperRegistry(
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry) {
+
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLanguage(Language language) {
+		_language = language;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutContentModelResourcePermission(
+		LayoutContentModelResourcePermission
+			layoutContentModelResourcePermission) {
+
+		_layoutContentModelResourcePermission =
+			layoutContentModelResourcePermission;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceActions(ResourceActions resourceActions) {
+		_resourceActions = resourceActions;
+	}
+
 	private static String _generateUniqueLayoutClassedModelUsageKey(
 		AssetListEntryUsage assetListEntryUsage) {
 
@@ -137,7 +201,7 @@ public class AssetListEntryUsagesUtil {
 	private static String _getAssetEntryListSubtypeLabel(
 		AssetListEntry assetListEntry, Locale locale) {
 
-		String typeLabel = ResourceActionsUtil.getModelResource(
+		String typeLabel = _resourceActions.getModelResource(
 			locale, assetListEntry.getAssetEntryType());
 
 		String subtypeLabel = _getSubtypeLabel(assetListEntry, locale);
@@ -153,7 +217,7 @@ public class AssetListEntryUsagesUtil {
 		AssetListEntry assetListEntry, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String redirect) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		String editURL = _getAssetListEntryEditURL(
 			assetListEntry, httpServletRequest, redirect);
@@ -201,7 +265,7 @@ public class AssetListEntryUsagesUtil {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		JSONArray addItemsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray addItemsJSONArray = _jsonFactory.createJSONArray();
 
 		List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
 			AssetHelperUtil.getAssetPublisherAddItemHolders(
@@ -261,7 +325,7 @@ public class AssetListEntryUsagesUtil {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (ModelResourcePermissionUtil.contains(
+		if (_layoutContentModelResourcePermission.contains(
 				themeDisplay.getPermissionChecker(),
 				AssetListEntry.class.getName(),
 				assetListEntry.getAssetListEntryId(), ActionKeys.PERMISSIONS)) {
@@ -325,8 +389,7 @@ public class AssetListEntryUsagesUtil {
 
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(
-				InfoSearchClassMapperRegistryUtil.getSearchClassName(
-					className));
+				_infoSearchClassMapperRegistry.getSearchClassName(className));
 	}
 
 	private static long _getCollectionStyledLayoutStructureItemClassNameId() {
@@ -335,7 +398,7 @@ public class AssetListEntryUsagesUtil {
 		}
 
 		_collectionStyledLayoutStructureItemClassNameId =
-			PortalUtil.getClassNameId(
+			_portal.getClassNameId(
 				CollectionStyledLayoutStructureItem.class.getName());
 
 		return _collectionStyledLayoutStructureItemClassNameId;
@@ -346,7 +409,7 @@ public class AssetListEntryUsagesUtil {
 			return _fragmentEntryLinkClassNameId;
 		}
 
-		_fragmentEntryLinkClassNameId = PortalUtil.getClassNameId(
+		_fragmentEntryLinkClassNameId = _portal.getClassNameId(
 			FragmentEntryLink.class.getName());
 
 		return _fragmentEntryLinkClassNameId;
@@ -356,7 +419,7 @@ public class AssetListEntryUsagesUtil {
 		InfoCollectionProvider<?> infoCollectionProvider,
 		HttpServletRequest httpServletRequest, String redirect) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		String viewItemsURL = _getInfoCollectionProviderViewItemsURL(
 			infoCollectionProvider, httpServletRequest, redirect);
@@ -381,18 +444,15 @@ public class AssetListEntryUsagesUtil {
 		if (!(infoCollectionProvider instanceof
 				SingleFormVariationInfoCollectionProvider)) {
 
-			return ResourceActionsUtil.getModelResource(locale, className);
+			return _resourceActions.getModelResource(locale, className);
 		}
 
-		InfoItemServiceRegistry infoItemServiceRegistry =
-			InfoItemServiceRegistryUtil.getInfoItemServiceRegistry();
-
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class, className);
 
 		if (infoItemFormVariationsProvider == null) {
-			return ResourceActionsUtil.getModelResource(locale, className);
+			return _resourceActions.getModelResource(locale, className);
 		}
 
 		SingleFormVariationInfoCollectionProvider<?>
@@ -407,10 +467,10 @@ public class AssetListEntryUsagesUtil {
 					getFormVariationKey());
 
 		if (infoItemFormVariation == null) {
-			return ResourceActionsUtil.getModelResource(locale, className);
+			return _resourceActions.getModelResource(locale, className);
 		}
 
-		return ResourceActionsUtil.getModelResource(locale, className) + " - " +
+		return _resourceActions.getModelResource(locale, className) + " - " +
 			infoItemFormVariation.getLabel(locale);
 	}
 
@@ -465,7 +525,7 @@ public class AssetListEntryUsagesUtil {
 		).put(
 			"icon", "list-ul"
 		).put(
-			"type", LanguageUtil.get(httpServletRequest, "collection")
+			"type", _language.get(httpServletRequest, "collection")
 		);
 
 		ThemeDisplay themeDisplay =
@@ -477,7 +537,7 @@ public class AssetListEntryUsagesUtil {
 				AssetListEntry.class.getName())) {
 
 			AssetListEntry assetListEntry =
-				AssetListEntryLocalServiceUtil.fetchAssetListEntry(
+				_assetListEntryLocalService.fetchAssetListEntry(
 					GetterUtil.getLong(assetListEntryUsage.getKey()));
 
 			if (assetListEntry != null) {
@@ -500,16 +560,13 @@ public class AssetListEntryUsagesUtil {
 				assetListEntryUsage.getClassName(),
 				InfoCollectionProvider.class.getName())) {
 
-			InfoItemServiceRegistry infoItemServiceRegistry =
-				InfoItemServiceRegistryUtil.getInfoItemServiceRegistry();
-
 			InfoCollectionProvider<?> infoCollectionProvider =
-				infoItemServiceRegistry.getInfoItemService(
+				_infoItemServiceRegistry.getInfoItemService(
 					InfoCollectionProvider.class, assetListEntryUsage.getKey());
 
 			if (infoCollectionProvider == null) {
 				infoCollectionProvider =
-					infoItemServiceRegistry.getInfoItemService(
+					_infoItemServiceRegistry.getInfoItemService(
 						RelatedInfoItemCollectionProvider.class,
 						assetListEntryUsage.getKey());
 			}
@@ -549,8 +606,8 @@ public class AssetListEntryUsagesUtil {
 
 		try {
 			return HttpComponentsUtil.setParameter(
-				PortalUtil.getLayoutRelativeURL(layout, themeDisplay),
-				"p_l_mode", Constants.EDIT);
+				_portal.getLayoutRelativeURL(layout, themeDisplay), "p_l_mode",
+				Constants.EDIT);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -614,7 +671,7 @@ public class AssetListEntryUsagesUtil {
 				assetListEntryUsage.getContainerKey());
 
 		if (layoutStructureItem == null) {
-			AssetListEntryUsageLocalServiceUtil.deleteAssetListEntryUsage(
+			_assetListEntryUsageLocalService.deleteAssetListEntryUsage(
 				assetListEntryUsage);
 
 			return true;
@@ -641,11 +698,11 @@ public class AssetListEntryUsagesUtil {
 		}
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				GetterUtil.getLong(assetListEntryUsage.getContainerKey()));
 
 		if (fragmentEntryLink == null) {
-			AssetListEntryUsageLocalServiceUtil.deleteAssetListEntryUsage(
+			_assetListEntryUsageLocalService.deleteAssetListEntryUsage(
 				assetListEntryUsage);
 
 			return true;
@@ -673,7 +730,19 @@ public class AssetListEntryUsagesUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetListEntryUsagesUtil.class);
 
+	private static AssetListEntryLocalService _assetListEntryLocalService;
+	private static AssetListEntryUsageLocalService
+		_assetListEntryUsageLocalService;
 	private static Long _collectionStyledLayoutStructureItemClassNameId;
 	private static Long _fragmentEntryLinkClassNameId;
+	private static FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private static InfoItemServiceRegistry _infoItemServiceRegistry;
+	private static InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
+	private static JSONFactory _jsonFactory;
+	private static Language _language;
+	private static LayoutContentModelResourcePermission
+		_layoutContentModelResourcePermission;
+	private static Portal _portal;
+	private static ResourceActions _resourceActions;
 
 }

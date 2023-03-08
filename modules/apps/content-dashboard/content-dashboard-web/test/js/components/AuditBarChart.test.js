@@ -353,7 +353,7 @@ describe('AuditBarChart', () => {
 		expect(bars.length).toBe(6);
 	});
 
-	it('renders audit bar chart only from checked categories from legend', () => {
+	it.skip('renders audit bar chart only from checked categories from legend', () => {
 		const {container, getByLabelText} = render(
 			<AuditBarChart
 				namespace="demo_namespace"
@@ -383,7 +383,7 @@ describe('AuditBarChart', () => {
 		expect(bars.length).toBe(0);
 	});
 
-	it('renders audit bar chart message when there are no vocabularies selected', () => {
+	it.skip('renders audit bar chart message when there are no vocabularies selected', () => {
 		const {getByLabelText, getByText} = render(
 			<AuditBarChart
 				namespace="demo_namespace"

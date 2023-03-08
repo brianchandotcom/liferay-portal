@@ -134,9 +134,9 @@ definition {
 
 		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_1.doc");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "1 of 2 Selected");
+			value1 = "1 of 2 Items Selected");
 	}
 
 	@description = "This test covers LPS-141587. It validates that if the 'Delete Application Data Before Importing' option is selected the Doc Lib will not increase in size after the LAR import."

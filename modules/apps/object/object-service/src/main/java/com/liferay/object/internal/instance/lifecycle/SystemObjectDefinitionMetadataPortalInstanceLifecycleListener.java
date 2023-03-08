@@ -19,7 +19,6 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
-import com.liferay.object.constants.ObjectSAPConstants;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermEvaluator;
@@ -52,14 +51,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.security.service.access.policy.model.SAPEntry;
-import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -80,16 +74,6 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	public void portalInstanceRegistered(Company company) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Registered portal instance " + company);
-		}
-
-		try {
-			_addSAPEntry(company.getCompanyId());
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to add service access policy entry for company " +
-					company.getCompanyId(),
-				portalException);
 		}
 
 		for (SystemObjectDefinitionMetadata systemObjectDefinitionMetadata :
@@ -114,24 +98,6 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerList.close();
-	}
-
-	private void _addSAPEntry(long companyId) throws PortalException {
-		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-			companyId, ObjectSAPConstants.SAP_ENTRY_NAME);
-
-		if (sapEntry != null) {
-			return;
-		}
-
-		_sapEntryLocalService.addSAPEntry(
-			_userLocalService.getDefaultUserId(companyId),
-			ObjectSAPConstants.ALLOWED_SERVICE_SIGNATURES, true, true,
-			ObjectSAPConstants.SAP_ENTRY_NAME,
-			ResourceBundleUtil.getLocalizationMap(
-				LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
-				"service-access-policy-entry-default-object-title"),
-			new ServiceContext());
 	}
 
 	private void _apply(
@@ -266,9 +232,6 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 		target = "(&(release.bundle.symbolic.name=com.liferay.object.service)(release.schema.version>=1.0.0))"
 	)
 	private Release _release;
-
-	@Reference
-	private SAPEntryLocalService _sapEntryLocalService;
 
 	private ServiceTrackerList<SystemObjectDefinitionMetadata>
 		_serviceTrackerList;

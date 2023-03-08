@@ -2009,7 +2009,7 @@ definition {
 	}
 
 	@description = "LPS-162190 - Verify that it's possible to update the layout of a System Object"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateLayoutInSystemObject {
 		task ("Given: A custom object with a Layout") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2045,7 +2045,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block Name",
-				columnsNumber = "2",
+				columnsNumber = 2,
 				fieldLabelName = "Custom Field",
 				tabName = "Field Tab");
 

@@ -19,6 +19,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
+import com.liferay.commerce.checkout.web.internal.display.context.AddressCommerceCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.internal.display.context.ShippingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
@@ -96,18 +97,20 @@ public class ShippingAddressCommerceCheckoutStep
 		throws Exception {
 
 		try {
-			AddressCommerceCheckoutStepUtil addressCommerceCheckoutStepUtil =
-				new AddressCommerceCheckoutStepUtil(
-					_commerceAccountLocalService,
-					CommerceAddressConstants.ADDRESS_TYPE_SHIPPING,
-					_commerceOrderService, _commerceAddressService,
-					_countryLocalService,
-					_commerceOrderModelResourcePermission);
+			AddressCommerceCheckoutStepDisplayContext
+				addressCommerceCheckoutStepDisplayContext =
+					new AddressCommerceCheckoutStepDisplayContext(
+						_commerceAccountLocalService,
+						CommerceAddressConstants.ADDRESS_TYPE_SHIPPING,
+						_commerceOrderService, _commerceAddressService,
+						_countryLocalService,
+						_commerceOrderModelResourcePermission);
 
 			CommerceOrder commerceOrder =
-				addressCommerceCheckoutStepUtil.updateCommerceOrderAddress(
-					actionRequest,
-					CommerceCheckoutWebKeys.SHIPPING_ADDRESS_PARAM_NAME);
+				addressCommerceCheckoutStepDisplayContext.
+					updateCommerceOrderAddress(
+						actionRequest,
+						CommerceCheckoutWebKeys.SHIPPING_ADDRESS_PARAM_NAME);
 
 			actionRequest.setAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);

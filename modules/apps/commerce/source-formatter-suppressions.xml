@@ -17,7 +17,6 @@
 		<suppress checks="BNDExportsCheck" files="commerce-service/bnd\.bnd" />
 		<suppress checks="BNDExportsCheck" files="commerce-shipping-web/bnd\.bnd" />
 		<suppress checks="JavaConfigurationCategoryCheck" files=".*" />
-		<suppress checks="JavaHelperUtilCheck" files="commerce-checkout-web/src/main/java/com/liferay/commerce/checkout/web/internal/util/AddressCommerceCheckoutStepUtil\.java" />
 		<suppress checks="JavaHelperUtilCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/cart/CommerceCartResourceUtil\.java" />
 		<suppress checks="JavaHelperUtilCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/search/util/CommerceSearchUtil\.java" />
 		<suppress checks="JavaHelperUtilCheck" files="commerce-product-asset-categories-web/src/main/java/com/liferay/commerce/product/asset/categories/web/internal/util/CPAssetCategoryWebPortletUtil\.java" />

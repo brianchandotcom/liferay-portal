@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.checkout.web.internal.util;
+package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
@@ -46,9 +46,9 @@ import javax.portlet.ActionRequest;
 /**
  * @author Luca Pellizzon
  */
-public class AddressCommerceCheckoutStepUtil {
+public class AddressCommerceCheckoutStepDisplayContext {
 
-	public AddressCommerceCheckoutStepUtil(
+	public AddressCommerceCheckoutStepDisplayContext(
 		CommerceAccountLocalService commerceAccountLocalService,
 		int commerceAddressType, CommerceOrderService commerceOrderService,
 		CommerceAddressService commerceAddressService,
@@ -65,7 +65,7 @@ public class AddressCommerceCheckoutStepUtil {
 			commerceOrderModelResourcePermission;
 	}
 
-	protected CommerceOrder updateCommerceOrderAddress(
+	public CommerceOrder updateCommerceOrderAddress(
 			ActionRequest actionRequest, String paramName)
 		throws Exception {
 

@@ -162,7 +162,7 @@ public class ObjectActionUtil {
 		for (Map.Entry<String, ?> entry : parameters.entrySet()) {
 			Object value = entry.getValue();
 
-			if (value instanceof ArrayList) {
+			if (value instanceof ArrayList || value instanceof Object[]) {
 				value = JSONFactoryUtil.looseSerialize(value);
 			}
 

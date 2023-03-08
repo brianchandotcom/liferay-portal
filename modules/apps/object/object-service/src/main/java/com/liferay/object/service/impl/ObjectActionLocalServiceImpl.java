@@ -575,7 +575,7 @@ public class ObjectActionLocalServiceImpl
 			else {
 				_validatePredefinedValues(
 					errorMessageKeys, objectActionExecutorKey,
-					objectDefinitionId,
+					objectDefinition.getObjectDefinitionId(),
 					_jsonFactory.createJSONArray(
 						parametersUnicodeProperties.get("predefinedValues")));
 			}

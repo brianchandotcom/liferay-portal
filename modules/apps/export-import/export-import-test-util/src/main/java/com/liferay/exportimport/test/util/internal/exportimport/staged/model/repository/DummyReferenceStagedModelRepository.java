@@ -124,17 +124,15 @@ public class DummyReferenceStagedModelRepository
 	public DummyReference fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		List<DummyReference> dummies = ListUtil.filter(
-			_dummyReferences,
-			dummyReference ->
-				Objects.equals(dummyReference.getUuid(), uuid) &&
-				(dummyReference.getGroupId() == groupId));
+		for (DummyReference dummyReference : _dummyReferences) {
+			if (Objects.equals(dummyReference.getUuid(), uuid) &&
+				(groupId == dummyReference.getGroupId())) {
 
-		if (dummies.isEmpty()) {
-			return null;
+				return dummyReference;
+			}
 		}
 
-		return dummies.get(0);
+		return null;
 	}
 
 	@Override
@@ -144,8 +142,8 @@ public class DummyReferenceStagedModelRepository
 		return ListUtil.filter(
 			_dummyReferences,
 			dummyReference ->
-				Objects.equals(dummyReference.getUuid(), uuid) &&
-				(dummyReference.getCompanyId() == companyId));
+				Objects.equals(uuid, dummyReference.getUuid()) &&
+				(companyId == dummyReference.getCompanyId()));
 	}
 
 	@Override

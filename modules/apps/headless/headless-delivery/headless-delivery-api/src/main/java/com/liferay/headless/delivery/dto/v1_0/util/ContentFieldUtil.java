@@ -60,8 +60,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.TimeZone;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.UriInfo;
@@ -329,21 +327,18 @@ public class ContentFieldUtil {
 						 ddmFormField.getType(),
 						 DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE)) {
 
-				List<String> list = JSONUtil.toStringList(
-					JSONFactoryUtil.createJSONArray(valueString));
-
 				DDMFormFieldOptions ddmFormFieldOptions =
 					ddmFormField.getDDMFormFieldOptions();
 
-				Stream<String> stream = list.stream();
+				List<String> values = TransformUtil.transform(
+					JSONUtil.toStringList(
+						JSONFactoryUtil.createJSONArray(valueString)),
+					value -> {
+						LocalizedValue localizedValue =
+							ddmFormFieldOptions.getOptionLabels(value);
 
-				List<String> values = stream.map(
-					ddmFormFieldOptions::getOptionLabels
-				).map(
-					localizedValue -> localizedValue.getString(locale)
-				).collect(
-					Collectors.toList()
-				);
+						return localizedValue.getString(locale);
+					});
 
 				return new ContentFieldValue() {
 					{

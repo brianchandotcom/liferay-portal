@@ -23,12 +23,12 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRule;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleChannel;
-import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderRuleChannelDTOConverter;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderRuleChannelResource;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -208,7 +208,10 @@ public class OrderRuleChannelResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private OrderRuleChannelDTOConverter _orderRuleChannelDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderRuleChannelDTOConverter)"
+	)
+	private DTOConverter<COREntryRel, OrderRuleChannel>
+		_orderRuleChannelDTOConverter;
 
 }

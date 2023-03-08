@@ -14,6 +14,7 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.NestableRuntimeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -143,7 +144,8 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (exception instanceof SegmentsEntryCriteriaException ||
+			else if (exception instanceof NestableRuntimeException ||
+					 exception instanceof SegmentsEntryCriteriaException ||
 					 exception instanceof SegmentsEntryKeyException ||
 					 exception instanceof SegmentsEntryNameException) {
 

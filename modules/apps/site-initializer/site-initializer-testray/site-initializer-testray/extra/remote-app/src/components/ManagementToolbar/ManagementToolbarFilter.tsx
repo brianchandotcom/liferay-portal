@@ -23,16 +23,15 @@ import {
 	useRef,
 	useState,
 } from 'react';
+import {ListViewContext, ListViewTypes} from '~/context/ListViewContext';
+import SearchBuilder from '~/core/SearchBuilder';
+import useFormActions from '~/hooks/useFormActions';
+import i18n from '~/i18n';
+import {FilterSchema} from '~/schema/filter';
 
-import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
-import SearchBuilder from '../../core/SearchBuilder';
-import useFormActions from '../../hooks/useFormActions';
-import i18n from '../../i18n';
-import {FilterSchema} from '../../schema/filter';
 import Form from '../Form';
 import {RendererFields} from '../Form/Renderer';
 import {FieldOptions} from '../Form/Renderer/Renderer';
-
 type ManagementToolbarFilterProps = {
 	filterSchema?: FilterSchema;
 };
@@ -97,6 +96,10 @@ const FilterBody = ({buttonRef, filterSchema, setPosition}: FilterBody) => {
 		});
 	};
 
+	const clearDisabled = Object.entries(form).every(
+		(value) => !value[1] || !value[1].length
+	);
+
 	const onApply = useCallback(() => {
 		const filterCleaned = SearchBuilder.removeEmptyFilter(form);
 
@@ -157,6 +160,7 @@ const FilterBody = ({buttonRef, filterSchema, setPosition}: FilterBody) => {
 
 				<ClayButton
 					className="ml-3"
+					disabled={clearDisabled}
 					displayType="secondary"
 					onClick={onClear}
 				>

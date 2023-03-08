@@ -1928,6 +1928,65 @@ definition {
 		ObjectAdmin.assertRequiredErrorPresent();
 	}
 
+	@description = "Verify if an error message appears when trying to save an Update an object Entry action with a Standalone trigger when using the invalid expression"
+	@priority = 4
+	test CannotSaveUpdateAnObjectEntryActions {
+		task ("Given: A custom object is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175620",
+				objectName = "CustomObject175620",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Custom Integer",
+				fieldName = "customInteger",
+				fieldType = "Integer",
+				isRequired = "true",
+				objectName = "CustomObject175620");
+		}
+
+		task ("When: The user adds an invalid expression to the Update an Object Entry action") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175620");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.gotoAddObjectAction();
+
+			ObjectAdmin.fillObjectAction(
+				actionLabel = "Action Label",
+				actionName = "ActionName",
+				active = "true",
+				errorMessage = "Error",
+				fieldName = "Custom Integer",
+				inputExpressionValue = "abc",
+				inputMethod = "false",
+				objectLabel = "Custom Object 175620",
+				thenAction = "Update an Object Entry",
+				whenAction = "Standalone");
+		}
+
+		task ("Then: An invalid error message appears") {
+			Button.clickSave();
+
+			AssertElementPresent(locator1 = "Message#ALERT_DISMISSIBLE");
+		}
+
+		task ("Then: The action is not created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175620");
+
+			ObjectAdmin.goToActionsTab();
+
+			AssertElementNotPresent(
+				key_actionLabel = "Action Label",
+				locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
+		}
+	}
+
 	@description = "LPS-156319 - Verify that the Expression Builder field is required"
 	@priority = 3
 	test CannotSaveWithoutExpressionBuilder {

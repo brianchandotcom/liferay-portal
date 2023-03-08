@@ -16,7 +16,9 @@ package com.liferay.fragment.collection.contributor.dialect;
 
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.PortletAliasRegistration;
+import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
+
+import javax.portlet.Portlet;
 
 import javax.servlet.ServletContext;
 
@@ -44,9 +46,9 @@ public class DialectFragmentCollectionContributor
 	}
 
 	@Reference(
-		target = "(com.liferay.fragment.entry.processor.portlet.alias=nav)"
+		target = "(javax.portlet.name=" + SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU + ")"
 	)
-	private PortletAliasRegistration _portletAliasRegistration;
+	private Portlet _portlet;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.fragment.collection.contributor.dialect)"

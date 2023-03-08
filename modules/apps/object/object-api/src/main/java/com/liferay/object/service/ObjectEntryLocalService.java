@@ -310,14 +310,11 @@ public interface ObjectEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectEntry> getObjectEntries(
-			long groupId, long objectDefinitionId, int start, int end)
-		throws PortalException;
+		long groupId, long objectDefinitionId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectEntry> getObjectEntries(
-			long groupId, long objectDefinitionId, int status, int start,
-			int end)
-		throws PortalException;
+		long groupId, long objectDefinitionId, int status, int start, int end);
 
 	/**
 	 * Returns all the object entries matching the UUID and company.

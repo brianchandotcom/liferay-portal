@@ -16,6 +16,7 @@
 
                 <div>
                     <h2>Jenkins Publishers</h2>
+
                     <p>The specified events occur, a POST wil be made the specified URLs provided.</p>
                 </div>
 

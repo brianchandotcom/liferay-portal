@@ -339,8 +339,16 @@ export default function propsTransformer({
 					buttonAddLabel: Liferay.Language.get('select'),
 					height: '70vh',
 					multiple: true,
-					onSelect() {},
-					selectedFileExtension: `${portletNamespace}FilterByExtensions`,
+					onSelect(selectedItem) {
+						if (selectedItem) {
+							const url = addParams(
+								`${portletNamespace}fileEntryExtensions=${selectedItem.join(',')}`,
+								viewFileEntryTypeURL
+							);
+							navigate(url);
+						}
+					},
+					selectEventName: `${portletNamespace}selectedFileExtension`,
 					size: 'md',
 					title: Liferay.Language.get('filter-by-extension'),
 					url: item?.data?.extensionsFilterURL,

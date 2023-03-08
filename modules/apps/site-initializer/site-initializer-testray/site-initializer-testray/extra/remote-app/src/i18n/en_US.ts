@@ -272,6 +272,7 @@ export default {
 	'please-select-at-least-two-subtasks-to-merge':
 		'Please select at least two subtasks to merge.',
 	'please-select-one-or-more-roles': 'Please, select one or more roles.',
+	'preparing-your-task': 'Preparing your task ...',
 	'priority': 'Priority',
 	'processing': 'Processing',
 	'product-version': 'Product Version',

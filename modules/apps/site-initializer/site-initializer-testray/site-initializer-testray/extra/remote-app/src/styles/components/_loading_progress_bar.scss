@@ -1,0 +1,33 @@
+.loading-progress-task {
+	background-color: #e3e9ee;
+	border: 1px solid #cdd3d8;
+	height: 10px;
+	width: 100%;
+
+	&-message {
+		color: #acbcc7;
+		font-size: 1.5rem;
+	}
+
+	&-bar {
+		animation: loading 15s linear infinite;
+		background-color: #373ecc;
+		height: 10px;
+		position: relative;
+		width: 0;
+	}
+
+	@keyframes loading {
+		0% {
+			width: 0;
+		}
+
+		90% {
+			width: 100%;
+		}
+
+		100% {
+			width: 100%;
+		}
+	}
+}

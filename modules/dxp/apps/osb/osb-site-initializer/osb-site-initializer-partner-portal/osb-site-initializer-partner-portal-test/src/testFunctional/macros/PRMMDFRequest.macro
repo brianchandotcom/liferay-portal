@@ -167,7 +167,7 @@ definition {
 	@summary = "Go to MDF"
 	macro goToMDF {
 		Click(
-			key_MDFName = ${campaignName},
+			key_campaignName = ${campaignName},
 			locator1 = "PRMMDFRequest#REQUEST_ID");
 	}
 

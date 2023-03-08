@@ -681,7 +681,7 @@ definition {
 				buttonLink = "mdf-requests",
 				buttonText = "MDF");
 
-			PRMMDFRequest.goToMDF(MDFName = "Campaign Name");
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
 			PRMMDFRequest.changeMDFStatus(
 				campaignName = "Campaign Name",

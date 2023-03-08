@@ -30,14 +30,15 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.Locale;
 
+import javax.servlet.Filter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
@@ -64,7 +65,6 @@ public class I18nFilterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_i18nFilter = new I18nFilter();
 		_mockHttpServletRequest = new MockHttpServletRequest();
 		_mockHttpServletResponse = new MockHttpServletResponse();
 
@@ -286,7 +286,11 @@ public class I18nFilterTest {
 		}
 
 		Assert.assertTrue(
-			_i18nFilter.isFilterEnabled(
+			ReflectionTestUtil.invoke(
+				_i18nFilter, "isFilterEnabled",
+				new Class<?>[] {
+					HttpServletRequest.class, HttpServletResponse.class
+				},
 				_mockHttpServletRequest, _mockHttpServletResponse));
 
 		return ReflectionTestUtil.invoke(
@@ -298,7 +302,8 @@ public class I18nFilterTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private I18nFilter _i18nFilter;
+	@Inject(filter = "servlet-filter-name=I18n Filter")
+	private Filter _i18nFilter;
 
 	@Inject
 	private Language _language;

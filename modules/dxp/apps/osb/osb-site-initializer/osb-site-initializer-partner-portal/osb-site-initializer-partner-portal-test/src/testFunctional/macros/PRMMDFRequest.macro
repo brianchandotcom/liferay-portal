@@ -109,10 +109,12 @@ definition {
 				value1 = ${campaignName});
 		}
 
-		Type(
-			key_fieldName = "overallCampaignDescription",
-			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = ${campaignDescription});
+		if (isSet(campaignDescription)) {
+			Type(
+				key_fieldName = "overallCampaignDescription",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${campaignDescription});
+		}
 
 		if (isSet(goalsOptions)) {
 			for (var goalsList : list ${goalsOptions}) {

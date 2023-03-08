@@ -487,7 +487,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_CLOB_TYPE_TEXT_ENTRY</td>
-		<td>//textarea[contains(@type,'text') and contains(text(),'${key_clobType}')]</td>
+		<td>//textarea[contains(@class,'ddm-field-text') and contains(text(),'${key_clobType}')]</td>
 		<td></td>
 	</tr>
 	<tr>

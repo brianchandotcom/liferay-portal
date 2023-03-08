@@ -241,7 +241,10 @@ public class AMImageScalerRegistryImplTest {
 	public void testAMImageScalerRegistryReturnsNullWhenNoThereIsNoDefaultImageScaler()
 		throws Exception {
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_ADAPTIVE_MEDIA_IMAGE_SCALER_TRACKER_IMPL,
+				LoggerTestUtil.WARN)) {
+
 			_disableAMDefaultImageScaler();
 
 			Assert.assertNull(
@@ -260,7 +263,10 @@ public class AMImageScalerRegistryImplTest {
 		ServiceRegistration<AMImageScaler> amImageScalerServiceRegistration =
 			null;
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_ADAPTIVE_MEDIA_IMAGE_SCALER_TRACKER_IMPL,
+				LoggerTestUtil.WARN)) {
+
 			_disableAMDefaultImageScaler();
 
 			AMImageScaler disabledAMImageScaler = new TestAMImageScaler(false);

@@ -19,7 +19,8 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
-import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderItemDTOConverter;
+import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -82,7 +83,7 @@ public class OrderItemHelper {
 	@Reference
 	private CommerceOrderService _commerceOrderService;
 
-	@Reference
-	private OrderItemDTOConverter _orderItemDTOConverter;
+	@Reference(target = DTOConverterConstants.ORDER_ITEM_DTO_CONVERTER)
+	private DTOConverter<CommerceOrderItem, OrderItem> _orderItemDTOConverter;
 
 }

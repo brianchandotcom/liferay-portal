@@ -27,7 +27,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
-import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderItemDTOConverter;
+import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.admin.order.internal.helper.v1_0.OrderItemHelper;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.OrderItemEntityModel;
@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -728,8 +729,8 @@ public class OrderItemResourceImpl
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
 
-	@Reference
-	private OrderItemDTOConverter _orderItemDTOConverter;
+	@Reference(target = DTOConverterConstants.ORDER_ITEM_DTO_CONVERTER)
+	private DTOConverter<CommerceOrderItem, OrderItem> _orderItemDTOConverter;
 
 	@Reference
 	private OrderItemHelper _orderItemHelper;

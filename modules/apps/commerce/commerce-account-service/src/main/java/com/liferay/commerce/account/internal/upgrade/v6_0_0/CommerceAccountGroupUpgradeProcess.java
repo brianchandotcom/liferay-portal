@@ -62,16 +62,16 @@ public class CommerceAccountGroupUpgradeProcess extends UpgradeProcess {
 					_accountGroupLocalService.createAccountGroup(
 						accountGroupId);
 
-				accountGroup.setCompanyId(resultSet.getLong("companyId"));
-				accountGroup.setCreateDate(
-					resultSet.getTimestamp("createDate"));
-				accountGroup.setDefaultAccountGroup(system);
 				accountGroup.setExternalReferenceCode(
 					resultSet.getString("externalReferenceCode"));
+				accountGroup.setCompanyId(resultSet.getLong("companyId"));
 				accountGroup.setUserId(resultSet.getLong("userId"));
 				accountGroup.setUserName(resultSet.getString("userName"));
+				accountGroup.setCreateDate(
+					resultSet.getTimestamp("createDate"));
 				accountGroup.setModifiedDate(
 					resultSet.getTimestamp("modifiedDate"));
+				accountGroup.setDefaultAccountGroup(system);
 				accountGroup.setName(resultSet.getString("name"));
 				accountGroup.setType(
 					CommerceAccountGroupImpl.toAccountGroupType(

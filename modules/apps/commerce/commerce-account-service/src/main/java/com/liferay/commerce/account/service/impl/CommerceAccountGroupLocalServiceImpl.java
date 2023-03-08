@@ -91,9 +91,9 @@ public class CommerceAccountGroupLocalServiceImpl
 		AccountGroup accountGroup = _accountGroupLocalService.addAccountGroup(
 			serviceContext.getUserId(), null, name);
 
+		accountGroup.setExternalReferenceCode(externalReferenceCode);
 		accountGroup.setDefaultAccountGroup(system);
 		accountGroup.setType(CommerceAccountGroupImpl.toAccountGroupType(type));
-		accountGroup.setExternalReferenceCode(externalReferenceCode);
 		accountGroup.setExpandoBridgeAttributes(serviceContext);
 
 		CommerceAccountGroup commerceAccountGroup =

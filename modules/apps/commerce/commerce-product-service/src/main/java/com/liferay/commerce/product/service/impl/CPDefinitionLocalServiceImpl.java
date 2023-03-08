@@ -2703,13 +2703,13 @@ public class CPDefinitionLocalServiceImpl
 
 			cpDefinitionLocalization.setCompanyId(companyId);
 			cpDefinitionLocalization.setCPDefinitionId(cpDefinitionId);
+			cpDefinitionLocalization.setLanguageId(languageId);
 			cpDefinitionLocalization.setName(name);
 			cpDefinitionLocalization.setShortDescription(shortDescription);
 			cpDefinitionLocalization.setDescription(description);
 			cpDefinitionLocalization.setMetaTitle(metaTitle);
 			cpDefinitionLocalization.setMetaDescription(metaDescription);
 			cpDefinitionLocalization.setMetaKeywords(metaKeywords);
-			cpDefinitionLocalization.setLanguageId(languageId);
 		}
 		else {
 			cpDefinitionLocalization.setName(name);

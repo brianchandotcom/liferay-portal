@@ -6,6 +6,7 @@ definition {
 	property database.types = "mysql";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property ci.retries.disabled = "true";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Database Partitioning";
 	property timeout.explicit.wait = "180";

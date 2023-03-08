@@ -182,7 +182,13 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		PrincipalThreadLocal.setName(userId);
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		File tempDir = _getTempDir(file);
+		File tempFile = FileUtil.createTempFile();
+
+		FileUtil.write(tempFile, new FileInputStream(file));
+
+		File tempDir = FileUtil.createTempFolder();
+
+		FileUtil.unzip(tempFile, tempDir);
 
 		SiteInitializer siteInitializer = _siteInitializerFactory.create(
 			new File(tempDir, "site-initializer"), file.getName());
@@ -191,6 +197,7 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 			siteInitializer.initialize(group.getGroupId());
 		}
 		finally {
+			FileUtil.delete(tempFile);
 			FileUtil.deltree(tempDir);
 			PermissionCacheUtil.clearCache(userId);
 			ServiceContextThreadLocal.popServiceContext();
@@ -209,20 +216,6 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 			return _jsonFactory.createJSONObject(
 				StringUtil.read(zipFile.getInputStream(zipEntry)));
 		}
-	}
-
-	private File _getTempDir(File file) throws Exception {
-		File tempFile = FileUtil.createTempFile();
-
-		FileUtil.write(tempFile, new FileInputStream(file));
-
-		File tempDir = FileUtil.createTempFolder();
-
-		FileUtil.unzip(tempFile, tempDir);
-
-		tempFile.delete();
-
-		return tempDir;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

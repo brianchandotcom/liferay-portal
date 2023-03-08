@@ -32,7 +32,6 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccount;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccountGroup;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleChannel;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleOrderType;
-import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderRuleDTOConverter;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.OrderRuleEntityModel;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.OrderRuleAccountGroupUtil;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.OrderRuleAccountUtil;
@@ -50,6 +49,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -395,8 +395,10 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private OrderRuleDTOConverter _orderRuleDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderRuleDTOConverter)"
+	)
+	private DTOConverter<COREntry, OrderRule> _orderRuleDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

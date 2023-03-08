@@ -27,6 +27,8 @@ public class CPContentWebKeys {
 	public static final String CP_CONTENT_LIST_ENTRY_RENDERER_KEYS =
 		"CP_CONTENT_LIST_ENTRY_RENDERER_KEYS";
 
+	public static final String CP_DEFINITION = "CP_DEFINITION";
+
 	public static final String CP_MEDIA = "CP_MEDIA";
 
 }

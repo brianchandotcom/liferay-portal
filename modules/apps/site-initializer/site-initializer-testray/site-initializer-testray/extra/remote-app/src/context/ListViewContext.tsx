@@ -20,7 +20,7 @@ import {CONSENT_TYPE} from '~/util/enum';
 import useStorage from '../hooks/useStorage';
 import {ActionMap, SortDirection, SortOption} from '../types';
 
-const testrayStorage = TestrayStorage.getInstance().getStorage('temporary');
+const testrayStorage = TestrayStorage.getInstance().getStorage('persisted');
 
 export type Sort = {
 	direction: SortDirection;
@@ -40,11 +40,13 @@ type ListViewFilter = {
 	};
 };
 
+type ListViewColumns = {
+	[key: string]: boolean;
+};
+
 export type InitialState = {
 	checkAll: boolean;
-	columns: {
-		[key: string]: boolean;
-	};
+	columns: ListViewColumns;
 	columnsFixed: string[];
 	filters: ListViewFilter;
 	id: string;
@@ -151,9 +153,19 @@ const reducer = (state: InitialState, action: AppActions) => {
 			};
 
 		case ListViewTypes.SET_COLUMNS:
+			const columns = action.payload.columns;
+			const storageColumnsName =
+				STORAGE_KEYS.LIST_VIEW_COLUMNS + state.id;
+
+			testrayStorage.setItem(
+				storageColumnsName,
+				JSON.stringify(columns),
+				CONSENT_TYPE.NECESSARY
+			);
+
 			return {
 				...state,
-				columns: action.payload.columns,
+				columns,
 			};
 
 		case ListViewTypes.SET_PAGE:
@@ -176,7 +188,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 
 			const pin = !state.pin;
 
-			const storageName = STORAGE_KEYS.LIST_VIEW + state.id;
+			const storageName = STORAGE_KEYS.LIST_VIEW_PIN + state.id;
 
 			if (pin) {
 				testrayStorage.setItem(
@@ -243,7 +255,12 @@ const ListViewContextProvider: React.FC<
 	ListViewContextProviderProps & {children: ReactNode; id: string}
 > = ({children, id, ...initialStateProps}) => {
 	const [filterPinnedStorage] = useStorage<ListViewFilter>(
-		(STORAGE_KEYS.LIST_VIEW + id) as STORAGE_KEYS,
+		(STORAGE_KEYS.LIST_VIEW_PIN + id) as STORAGE_KEYS,
+		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
+	);
+
+	const [columnsStorage] = useStorage<ListViewColumns>(
+		(STORAGE_KEYS.LIST_VIEW_COLUMNS + id) as STORAGE_KEYS,
 		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
 	);
 
@@ -254,6 +271,7 @@ const ListViewContextProvider: React.FC<
 			filters: filterPinnedStorage,
 			pin: !!filterPinnedStorage.entries.length,
 		}),
+		...(columnsStorage && {columns: columnsStorage}),
 		id,
 	});
 

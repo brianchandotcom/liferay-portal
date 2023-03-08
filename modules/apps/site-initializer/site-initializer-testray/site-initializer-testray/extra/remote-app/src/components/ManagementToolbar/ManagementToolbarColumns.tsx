@@ -66,7 +66,7 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 			</div>
 
 			<div className="body-toolbar">
-				<div className="mt-1 popover-filter-content">
+				<div className="popover-columns-content">
 					{columnsNotFixed.map((column, index) => {
 						return (
 							<Form.Checkbox

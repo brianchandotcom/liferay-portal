@@ -127,6 +127,11 @@ html {
 			overflow-y: auto !important;
 			padding: 0;
 		}
+		.popover-columns-content {
+			max-height: 350px;
+			min-height: 180px;
+			padding: 0 16px;
+		}
 	}
 
 	.popover-body {

@@ -421,7 +421,7 @@ export default {
 	'user-groups': 'User Groups',
 	'user-information': 'User Information',
 	'users': 'Users',
-	'view-associete-build': 'View Associete Build',
+	'view-associated-build': 'View Associated Build',
 	'view-case': 'View Case',
 	'view-in-jira': 'View in JIRA',
 	'view-page': 'View Page',

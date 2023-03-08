@@ -31,6 +31,8 @@ definition {
 
 	@summary = "Add a new MDF Request filling the goals and activity pages"
 	macro createNewRequest {
+		WaitForPageLoad();
+
 		PRMMDFRequest.fillGoalsPage(
 			accountName = ${accountName},
 			additionalOptions = ${additionalOptions},
@@ -63,6 +65,8 @@ definition {
 		Button.click(button = "Submit");
 
 		WaitForPageLoad();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Edit total MDF amount field"

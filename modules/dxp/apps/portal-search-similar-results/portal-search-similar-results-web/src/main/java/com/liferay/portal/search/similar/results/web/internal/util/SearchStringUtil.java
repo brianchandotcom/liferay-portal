@@ -36,20 +36,16 @@ public class SearchStringUtil {
 		return s;
 	}
 
-	public static String requireEquals(String expected, String actual) {
+	public static void requireEquals(String expected, String actual) {
 		if (!Objects.equals(expected, actual)) {
 			throw new RuntimeException(actual + " != " + expected);
 		}
-
-		return actual;
 	}
 
-	public static String requireStartsWith(String expected, String actual) {
+	public static void requireStartsWith(String expected, String actual) {
 		if (!StringUtil.startsWith(actual, expected)) {
 			throw new RuntimeException(actual + " /= " + expected);
 		}
-
-		return actual;
 	}
 
 	public static String[] splitAndUnquote(String s) {

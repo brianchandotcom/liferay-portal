@@ -21,10 +21,11 @@ import React from 'react';
 
 import LearnMessage from '../../../shared/LearnMessage';
 import {CONTRIBUTOR_TYPES} from '../../../utils/types/contributorTypes';
-import CharacterThresholdInput from '../inputs/CharacterThresholdInput';
-import DisplayGroupNameInput from '../inputs/DisplayGroupNameInput';
-import MinimumSearchesInput from '../inputs/MinimumSearchesInput';
-import SizeInput from '../inputs/SizeInput';
+import InputSetItemHeader from './InputSetItemHeader';
+import CharacterThresholdInput from './inputs/CharacterThresholdInput';
+import DisplayGroupNameInput from './inputs/DisplayGroupNameInput';
+import MinimumSearchesInput from './inputs/MinimumSearchesInput';
+import SizeInput from './inputs/SizeInput';
 
 function getSiteActivitiesContributorActivityOptions(learnMessages) {
 	return [
@@ -61,7 +62,7 @@ function getSiteActivitiesContributorActivityOptions(learnMessages) {
 	];
 }
 
-function SiteActivitiesInputs({
+function SiteActivities({
 	index,
 	learnMessages,
 	onBlur,
@@ -90,6 +91,26 @@ function SiteActivitiesInputs({
 
 	return (
 		<>
+			<InputSetItemHeader>
+				<InputSetItemHeader.Title>
+					{Liferay.Language.get(
+						'site-activities-suggestions-contributor'
+					)}
+				</InputSetItemHeader.Title>
+
+				<InputSetItemHeader.Description>
+					{Liferay.Language.get(
+						'site-activities-suggestions-contributor-help'
+					)}
+
+					<LearnMessage
+						className="ml-1"
+						learnMessages={learnMessages}
+						resourceKey="search-bar-suggestions-site-activities"
+					/>
+				</InputSetItemHeader.Description>
+			</InputSetItemHeader>
+
 			<div className="form-group-autofit">
 				<ClayInput.GroupItem>
 					<label>
@@ -220,4 +241,4 @@ function SiteActivitiesInputs({
 	);
 }
 
-export default SiteActivitiesInputs;
+export default SiteActivities;

@@ -17,16 +17,11 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
-import DisplayGroupNameInput from '../inputs/DisplayGroupNameInput';
-import SizeInput from '../inputs/SizeInput';
+import InputSetItemHeader from './InputSetItemHeader';
+import DisplayGroupNameInput from './inputs/DisplayGroupNameInput';
+import SizeInput from './inputs/SizeInput';
 
-function BasicAttributes({
-	index,
-	onBlur,
-	onInputSetItemChange,
-	touched,
-	value,
-}) {
+function Basic({index, onBlur, onInputSetItemChange, touched, value}) {
 	const _handleChangeAttribute = (property) => (event) => {
 		onInputSetItemChange(index, {
 			attributes: {
@@ -38,6 +33,16 @@ function BasicAttributes({
 
 	return (
 		<>
+			<InputSetItemHeader>
+				<InputSetItemHeader.Title>
+					{Liferay.Language.get('basic-suggestions-contributor')}
+				</InputSetItemHeader.Title>
+
+				<InputSetItemHeader.Description>
+					{Liferay.Language.get('basic-suggestions-contributor-help')}
+				</InputSetItemHeader.Description>
+			</InputSetItemHeader>
+
 			<div className="form-group-autofit">
 				<DisplayGroupNameInput
 					onBlur={onBlur('displayGroupName')}
@@ -49,8 +54,8 @@ function BasicAttributes({
 				<SizeInput
 					onBlur={onBlur('size')}
 					onChange={onInputSetItemChange(index, 'size')}
-					touched={touched.displayGroupName}
-					value={value.displayGroupName}
+					touched={touched.size}
+					value={value.size}
 				/>
 			</div>
 
@@ -85,4 +90,4 @@ function BasicAttributes({
 	);
 }
 
-export default BasicAttributes;
+export default Basic;

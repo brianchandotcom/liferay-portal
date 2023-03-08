@@ -150,7 +150,8 @@ function SearchBarConfigurationSuggestions({
 				displayGroupName: 'suggestions',
 				size: '5',
 			});
-		} else if (
+		}
+		else if (
 			contributorName === CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS ||
 			contributorName === CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS
 		) {
@@ -171,7 +172,8 @@ function SearchBarConfigurationSuggestions({
 						: '',
 				size: '3',
 			});
-		} else if (contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT) {
+		}
+		else if (contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT) {
 			onInputSetsAdd({
 				attributes: {
 					characterThreshold: '',

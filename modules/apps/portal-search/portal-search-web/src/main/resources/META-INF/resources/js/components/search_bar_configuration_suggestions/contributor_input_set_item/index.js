@@ -12,21 +12,13 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
-import LearnMessage from '../../../shared/LearnMessage';
 import {CONTRIBUTOR_TYPES} from '../../../utils/types/contributorTypes';
-import BasicAttributes from '../attributes/BasicAttributes';
-import SXPBlueprintAttributes from '../attributes/SXPBlueprintAttributes';
-import DisplayGroupNameInput from '../inputs/DisplayGroupNameInput';
-import SizeInput from '../inputs/SizeInput';
-import ContributorInputSetItemHeader from './ContributorInputSetItemHeader';
-import SiteActivitiesInputs from './SiteActivitiesInputs';
+import BasicAttributes from './Basic';
+import SXPBlueprintAttributes from './SXPBlueprint';
+import SiteActivitiesInputs from './SiteActivities';
 
 function ContributorInputSetItem({
 	index,
@@ -46,11 +38,6 @@ function ContributorInputSetItem({
 
 	return (
 		<ClayInput.GroupItem>
-			<ContributorInputSetItemHeader
-				contributorName={value.contributorName}
-				learnMessages={learnMessages}
-			/>
-
 			{(value.contributorName ===
 				CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS ||
 				value.contributorName ===
@@ -68,6 +55,7 @@ function ContributorInputSetItem({
 			{value.contributorName === CONTRIBUTOR_TYPES.BASIC && (
 				<BasicAttributes
 					index={index}
+					learnMessages={learnMessages}
 					onBlur={_handleBlur}
 					onInputSetItemChange={onInputSetItemChange}
 					touched={touched}
@@ -78,6 +66,7 @@ function ContributorInputSetItem({
 			{value.contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT && (
 				<SXPBlueprintAttributes
 					index={index}
+					learnMessages={learnMessages}
 					onBlur={_handleBlur}
 					onInputSetItemChange={onInputSetItemChange}
 					touched={touched}

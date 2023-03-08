@@ -23,12 +23,15 @@ import getCN from 'classnames';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import LearnMessage from '../../../shared/LearnMessage';
 import SelectSXPBlueprintModal from '../../select_sxp_blueprint_modal/SelectSXPBlueprintModal';
-import DisplayGroupNameInput from '../inputs/DisplayGroupNameInput';
-import SizeInput from '../inputs/SizeInput';
+import InputSetItemHeader from './InputSetItemHeader';
+import DisplayGroupNameInput from './inputs/DisplayGroupNameInput';
+import SizeInput from './inputs/SizeInput';
 
-function SXPBlueprintAttributes({
+function SXPBlueprint({
 	index,
+	learnMessages,
 	onBlur,
 	onInputSetItemChange,
 	touched,
@@ -53,6 +56,7 @@ function SXPBlueprintAttributes({
 	});
 
 	useEffect(() => {
+
 		// Fetch the blueprint title using sxpBlueprintId inside attributes, since
 		// title is not saved within initialSuggestionsContributorConfiguration.
 
@@ -125,6 +129,7 @@ function SXPBlueprintAttributes({
 	};
 
 	const _handleSXPBlueprintSelectorChange = (event) => {
+
 		// To use validation from 'required' field, keep the onChange and value
 		// properties but make its behavior resemble readOnly (input can only be
 		// changed with the selector modal).
@@ -168,6 +173,24 @@ function SXPBlueprintAttributes({
 				/>
 			)}
 
+			<InputSetItemHeader>
+				<InputSetItemHeader.Title>
+					{Liferay.Language.get('blueprint-suggestions-contributor')}
+				</InputSetItemHeader.Title>
+
+				<InputSetItemHeader.Description>
+					{Liferay.Language.get(
+						'blueprint-suggestions-contributor-help'
+					)}
+
+					<LearnMessage
+						className="ml-1"
+						learnMessages={learnMessages}
+						resourceKey="search-bar-suggestions-blueprints"
+					/>
+				</InputSetItemHeader.Description>
+			</InputSetItemHeader>
+
 			<div className="form-group-autofit">
 				<DisplayGroupNameInput
 					onBlur={onBlur('displayGroupName')}
@@ -179,8 +202,8 @@ function SXPBlueprintAttributes({
 				<SizeInput
 					onBlur={onBlur('size')}
 					onChange={onInputSetItemChange(index, 'size')}
-					touched={touched.displayGroupName}
-					value={value.displayGroupName}
+					touched={touched.size}
+					value={value.size}
 				/>
 			</div>
 
@@ -368,4 +391,4 @@ function SXPBlueprintAttributes({
 	);
 }
 
-export default SXPBlueprintAttributes;
+export default SXPBlueprint;

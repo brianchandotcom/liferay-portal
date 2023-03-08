@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.project;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,8 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public interface Project {
+
+	public Date getCreatedDate();
 
 	public long getID();
 

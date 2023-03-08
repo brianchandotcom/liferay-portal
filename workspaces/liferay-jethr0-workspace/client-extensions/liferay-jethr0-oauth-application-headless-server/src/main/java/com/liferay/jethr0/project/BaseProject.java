@@ -14,12 +14,22 @@
 
 package com.liferay.jethr0.project;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
+
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseProject implements Project {
+
+	@Override
+	public Date getCreatedDate() {
+		return _createdDate;
+	}
 
 	@Override
 	public long getID() {
@@ -34,6 +44,8 @@ public abstract class BaseProject implements Project {
 		Project.Type type = getType();
 
 		jsonObject.put(
+			"dateCreated", _simpleDateFormat.format(getCreatedDate())
+		).put(
 			"id", getID()
 		).put(
 			"name", getName()
@@ -89,6 +101,14 @@ public abstract class BaseProject implements Project {
 	}
 
 	protected BaseProject(JSONObject jsonObject) {
+		try {
+			_createdDate = _simpleDateFormat.parse(
+				jsonObject.getString("dateCreated"));
+		}
+		catch (ParseException parseException) {
+			throw new RuntimeException(parseException);
+		}
+
 		_id = jsonObject.getLong("id");
 		_name = jsonObject.getString("name");
 		_priority = jsonObject.optInt("priority");
@@ -96,6 +116,10 @@ public abstract class BaseProject implements Project {
 		_type = Type.get(jsonObject.getJSONObject("type"));
 	}
 
+	private static final SimpleDateFormat _simpleDateFormat =
+		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+	private final Date _createdDate;
 	private final long _id;
 	private String _name;
 	private int _priority;

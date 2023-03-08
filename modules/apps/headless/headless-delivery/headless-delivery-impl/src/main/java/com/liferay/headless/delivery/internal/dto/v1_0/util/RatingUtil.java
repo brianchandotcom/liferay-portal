@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Javier Gamarra
@@ -36,7 +35,7 @@ public class RatingUtil {
 			{
 				bestRating = 1D;
 				creator = CreatorUtil.toCreator(
-					portal, Optional.empty(),
+					portal, null,
 					userLocalService.fetchUser(ratingsEntry.getUserId()));
 				dateCreated = ratingsEntry.getCreateDate();
 				dateModified = ratingsEntry.getModifiedDate();

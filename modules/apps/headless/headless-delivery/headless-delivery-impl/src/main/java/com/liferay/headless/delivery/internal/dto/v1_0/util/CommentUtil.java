@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.Optional;
-
 /**
  * @author Javier Gamarra
  */
@@ -39,7 +37,7 @@ public class CommentUtil {
 		return new Comment() {
 			{
 				creator = CreatorUtil.toCreator(
-					portal, Optional.empty(), comment.getUser());
+					portal, null, comment.getUser());
 				dateCreated = comment.getCreateDate();
 				dateModified = comment.getModifiedDate();
 				externalReferenceCode = comment.getExternalReferenceCode();

@@ -83,7 +83,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					layout.getAvailableLanguageIds());
 				creator = CreatorUtil.toCreator(
-					_portal, dtoConverterContext.getUriInfoOptional(),
+					_portal, dtoConverterContext.getUriInfo(),
 					_userLocalService.fetchUser(layout.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),

@@ -37,7 +37,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Cristina González
@@ -67,7 +66,7 @@ public class ContentStructureUtil {
 						ddmStructure.getDDMFormField(fieldName), locale),
 					ContentStructureField.class);
 				creator = CreatorUtil.toCreator(
-					portal, Optional.empty(),
+					portal, null,
 					userLocalService.fetchUser(ddmStructure.getUserId()));
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();

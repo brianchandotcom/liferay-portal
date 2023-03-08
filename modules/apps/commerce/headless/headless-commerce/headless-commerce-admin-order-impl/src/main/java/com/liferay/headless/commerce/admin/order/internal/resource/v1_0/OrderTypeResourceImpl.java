@@ -24,7 +24,6 @@ import com.liferay.commerce.term.service.CommerceTermEntryRelService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleOrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
-import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderTypeDTOConverter;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.OrderTypeEntityModel;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -335,8 +335,10 @@ public class OrderTypeResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private OrderTypeDTOConverter _orderTypeDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderTypeDTOConverter)"
+	)
+	private DTOConverter<CommerceOrderType, OrderType> _orderTypeDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

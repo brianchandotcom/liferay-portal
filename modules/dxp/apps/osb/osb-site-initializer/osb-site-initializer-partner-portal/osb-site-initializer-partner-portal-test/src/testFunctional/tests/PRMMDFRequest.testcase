@@ -214,7 +214,9 @@ definition {
 		}
 
 		task ("Then the information of the visible MDF's will be inside the exported file") {
-			PRMMDFRequest.viewExportedMDF(campaignNameList = "Campaign Name 1,Campaign Name 2,Campaign Name 3");
+			PRMMDFRequest.viewExportedMDF(
+				fileName = "MDF Requests.csv",
+				fileContentList = "Campaign Name 1,Campaign Name 2,Campaign Name 3");
 		}
 	}
 

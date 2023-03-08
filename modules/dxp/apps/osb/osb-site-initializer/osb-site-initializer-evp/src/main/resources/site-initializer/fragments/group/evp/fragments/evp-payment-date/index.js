@@ -52,7 +52,7 @@ const getPaymentDataFromRequest = async () => {
 		paymentDate.getMonth() +
 		1 +
 		'/' +
-		(paymentDate.getDate() + 1) +
+		paymentDate.getDate() +
 		'/' +
 		paymentDate.getFullYear();
 

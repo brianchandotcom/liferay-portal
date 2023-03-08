@@ -1,102 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
 		<title>Events with assetId and title</title>
 
-		<style>
-			body {
-				background-color: #e5e5e5;
-				font-family: 'Courier New', Courier, monospace;
-				font-size: 14px;
-			}
-
-			.header {
-				margin-bottom: 2rem;
-				text-align: center;
-			}
-
-			.container {
-				display: grid;
-				grid-template-columns: repeat(3, 1fr);
-			}
-
-			.box {
-				background-color: #fff;
-				border: 1px solid black;
-				grid-column: span 1;
-				margin: 0.5rem;
-				padding: 1rem;
-				position: relative;
-			}
-
-			.box .box__title {
-				color: #0f7213;
-				margin-top: 0;
-			}
-
-			.box .box__title small {
-				color: #000;
-			}
-
-			.box .box__track {
-				background-color: #dfffe0;
-				padding: 1rem;
-			}
-
-			pre {
-				background-color: #f2f2f2;
-				margin: 1em 0;
-				overflow-x: auto;
-				padding: 1em;
-			}
-
-			.box .box__form input {
-				width: calc(100% - 8px);
-			}
-
-			.box .box__form .content {
-				margin-bottom: 1rem;
-			}
-
-			.events {
-				background-color: #f2f2f2;
-				line-height: 1.25rem;
-				padding: 1rem 2rem;
-			}
-
-			.btn-hidden {
-				all: unset;
-				background-color: #ffeb3b;
-				border: 1px solid;
-				cursor: pointer;
-				margin: 5px;
-				padding: 5px 10px;
-				position: absolute;
-				right: 0;
-				top: 0;
-				visibility: hidden;
-			}
-
-			.box:hover .btn-hidden {
-				visibility: visible;
-			}
-
-			.btns-header {
-				margin: 1rem 0;
-			}
-			.btns-header button {
-				all: unset;
-				background-color: #fff;
-				border: 1px solid;
-				cursor: pointer;
-				margin: 0 0.25rem;
-				padding: 5px 10px;
-			}
-		</style>
+		<link href="style.css" rel="stylesheet" />
 	</head>
+
 	<body>
 		<div class="header">
 			<h1 class="title">
@@ -106,11 +20,7 @@
 			<div>
 				Open console to see events in the Network tab or you can
 				download
-				<a
-					href="https://chrome.google.com/webstore/detail/ac-event-bucket/gghpanomgaddpgokmgjjemebmdkbpbck"
-					target="_blank"
-					>ac-event-bucket chrome extension</a
-				>
+			<a href="https://chrome.google.com/webstore/detail/ac-event-bucket/gghpanomgaddpgokmgjjemebmdkbpbck" target="_blank">ac-event-bucket chrome extension</a>
 			</div>
 
 			<div id="hiddenBoxes"></div>
@@ -124,15 +34,11 @@
 
 				<h2 class="box__title"><small>ApplicationId</small> Blog</h2>
 
-				<div
-					class="box__track"
-					data-analytics-asset-id="myBlogId"
-					data-analytics-asset-title="Blog Title"
-					data-analytics-asset-type="blog"
-				>
+				<div class="box__track" data-analytics-asset-id="myBlogId" data-analytics-asset-title="Blog Title" data-analytics-asset-type="blog">
 					<h3>
 						Bringing Ideas To Life: A Look Into Creative Writing
 					</h3>
+
 					<p>
 						This blog explores the ways in which we can use
 						creativity to bring our ideas to life. We will be
@@ -161,46 +67,19 @@
 
 				<div class="box__track">
 					<h3>List of the documents related to Analytics Cloud</h3>
+
 					<ul>
-						<li
-							data-analytics-asset-id="myDocumentA"
-							data-analytics-asset-title="Document A"
-							data-analytics-asset-type="document"
-							data-analytics-asset-action="preview"
-						>
-							<a data-analytics-asset-action="download" href="#"
-								>Document A</a
-							>
+					<li data-analytics-asset-action="preview" data-analytics-asset-id="myDocumentA" data-analytics-asset-title="Document A" data-analytics-asset-type="document">
+						<a data-analytics-asset-action="download" href="#">Document A</a>
 						</li>
-						<li
-							data-analytics-asset-id="myDocumentB"
-							data-analytics-asset-title="Document B"
-							data-analytics-asset-type="document"
-							data-analytics-asset-action="preview"
-						>
-							<a data-analytics-asset-action="download" href="#"
-								>Document B</a
-							>
+					<li data-analytics-asset-action="preview" data-analytics-asset-id="myDocumentB" data-analytics-asset-title="Document B" data-analytics-asset-type="document">
+						<a data-analytics-asset-action="download" href="#">Document B</a>
 						</li>
-						<li
-							data-analytics-asset-id="myDocumentC"
-							data-analytics-asset-title="Document C"
-							data-analytics-asset-type="document"
-							data-analytics-asset-action="preview"
-						>
-							<a data-analytics-asset-action="download" href="#"
-								>Document C</a
-							>
+					<li data-analytics-asset-action="preview" data-analytics-asset-id="myDocumentC" data-analytics-asset-title="Document C" data-analytics-asset-type="document">
+						<a data-analytics-asset-action="download" href="#">Document C</a>
 						</li>
-						<li
-							data-analytics-asset-id="myDocumentD"
-							data-analytics-asset-title="Document D"
-							data-analytics-asset-type="document"
-							data-analytics-asset-action="preview"
-						>
-							<a data-analytics-asset-action="download" href="#"
-								>Document D</a
-							>
+					<li data-analytics-asset-action="preview" data-analytics-asset-id="myDocumentD" data-analytics-asset-title="Document D" data-analytics-asset-type="document">
+						<a data-analytics-asset-action="download" href="#">Document D</a>
 						</li>
 					</ul>
 				</div>
@@ -220,15 +99,11 @@
 					<small>ApplicationId</small> WebContent
 				</h2>
 
-				<div
-					class="box__track"
-					data-analytics-asset-id="myWebContentId"
-					data-analytics-asset-title="Web Content Title"
-					data-analytics-asset-type="web-content"
-				>
+				<div class="box__track" data-analytics-asset-id="myWebContentId" data-analytics-asset-title="Web Content Title" data-analytics-asset-type="web-content">
 					<h3>
 						Bringing Ideas To Life: A Look Into Creative Writing
 					</h3>
+
 					<p>
 						This blog explores the ways in which we can use
 						creativity to bring our ideas to life. We will be
@@ -252,26 +127,24 @@
 
 				<h2 class="box__title"><small>ApplicationId</small> Form</h2>
 
-				<form
-					class="box__track box__form"
-					data-analytics-asset-id="myFormId"
-					data-analytics-asset-title="Form Title"
-					data-analytics-asset-type="form"
-				>
+			<form class="box__track box__form" data-analytics-asset-id="myFormId" data-analytics-asset-title="Form Title" data-analytics-asset-type="form">
 					<h3>Create new user</h3>
 
 					<div class="content">
 						<label for="name">Name</label>
+
 						<input id="name" type="text" />
 					</div>
 
 					<div class="content">
 						<label for="city">City</label>
+
 						<input id="city" type="text" />
 					</div>
 
 					<div class="content">
 						<label for="age">Age</label>
+
 						<input id="age" type="text" />
 					</div>
 
@@ -293,12 +166,7 @@
 
 				<h2 class="box__title"><small>ApplicationId</small> Custom</h2>
 
-				<div
-					class="box__track"
-					data-analytics-asset-id="myCustomId"
-					data-analytics-asset-title="Custom Title"
-					data-analytics-asset-type="custom"
-				>
+				<div class="box__track" data-analytics-asset-id="myCustomId" data-analytics-asset-title="Custom Title" data-analytics-asset-type="custom">
 					<h3>
 						Bringing Ideas To Life: A Look Into Creative Writing
 					</h3>
@@ -310,14 +178,10 @@
 
 					<ul>
 						<li>
-							<a data-analytics-asset-action="download" href="#"
-								>Custom Document A</a
-							>
+						<a data-analytics-asset-action="download" href="#">Custom Document A</a>
 						</li>
 						<li>
-							<a data-analytics-asset-action="download" href="#"
-								>Custom Document B</a
-							>
+						<a data-analytics-asset-action="download" href="#">Custom Document B</a>
 						</li>
 					</ul>
 
@@ -326,6 +190,7 @@
 
 						<div class="content">
 							<label for="name">Name</label>
+
 							<input id="name" type="text" />
 						</div>
 
@@ -345,6 +210,7 @@
 		</div>
 
 		<!-- AC Script -->
+
 		<script>
 			(function (u, c, a, m, o, l) {
 				(o = 'script'),

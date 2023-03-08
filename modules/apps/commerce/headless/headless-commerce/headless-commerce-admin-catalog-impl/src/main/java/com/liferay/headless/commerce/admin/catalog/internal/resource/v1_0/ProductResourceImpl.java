@@ -20,6 +20,8 @@ import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
@@ -27,6 +29,7 @@ import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -122,6 +125,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -902,8 +907,18 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		if (skus != null) {
 			for (Sku sku : skus) {
-				SkuUtil.addOrUpdateCPInstance(
+				CPInstance cpInstance = SkuUtil.addOrUpdateCPInstance(
 					_cpInstanceService, sku, cpDefinition, serviceContext);
+
+				SkuUtil.updateCommercePriceEntries(
+					_commercePriceEntryLocalService,
+					_commercePriceListLocalService, _configurationProvider,
+					cpInstance,
+					(BigDecimal)GetterUtil.get(
+						sku.getPrice(), cpInstance.getPrice()),
+					(BigDecimal)GetterUtil.get(
+						sku.getPromoPrice(), cpInstance.getPromoPrice()),
+					serviceContext);
 			}
 		}
 
@@ -1316,6 +1331,12 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
+
+	@Reference
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
+	@Reference
+	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

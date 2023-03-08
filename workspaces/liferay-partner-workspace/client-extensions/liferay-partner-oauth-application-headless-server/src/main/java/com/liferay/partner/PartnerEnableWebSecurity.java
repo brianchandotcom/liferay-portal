@@ -22,6 +22,12 @@ import com.nimbusds.jose.proc.JWSAlgorithmFamilyJWSKeySelector;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.proc.DefaultJWTProcessor;
 
+import com.sforce.async.AsyncApiException;
+import com.sforce.async.BulkConnection;
+import com.sforce.soap.partner.PartnerConnection;
+import com.sforce.ws.ConnectionException;
+import com.sforce.ws.ConnectorConfig;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -42,7 +48,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.AbstractOAuth2Token;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
@@ -160,11 +165,10 @@ public class PartnerEnableWebSecurity {
 		}
 
 		private String _getBearerToken() {
-			Authentication authentication = SecurityContextHolder.getContext(
-			).getAuthentication();
-
 			AbstractOAuth2Token token =
-				(AbstractOAuth2Token)authentication.getCredentials();
+				(AbstractOAuth2Token)SecurityContextHolder.getContext(
+				).getAuthentication(
+				).getCredentials();
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Using JWT Token " + token.getTokenValue());
@@ -175,6 +179,43 @@ public class PartnerEnableWebSecurity {
 
 		private final ObjectDefinitionResource.Builder
 			_objectDefinitionResourceBuilder;
+
+	}
+
+	@Configuration
+	public class SalesforceConfiguration {
+
+		@Bean
+		public BulkConnection bulkConnection()
+			throws AsyncApiException, ConnectionException {
+
+			ConnectorConfig partnerConfig = new ConnectorConfig();
+
+			partnerConfig.setUsername(_salesforceAuthUserName);
+			partnerConfig.setPassword(
+				_salesforceAuthPassword + _salesforceSecurityToken);
+			partnerConfig.setAuthEndpoint(
+				_salesforceAuthEndpoint + "/" + _salesforceApiVersion);
+
+			new PartnerConnection(partnerConfig);
+
+			ConnectorConfig config = new ConnectorConfig();
+
+			config.setSessionId(partnerConfig.getSessionId());
+
+			String soapEndpoint = partnerConfig.getServiceEndpoint();
+
+			String restEndpoint =
+				soapEndpoint.substring(0, soapEndpoint.indexOf("Soap/")) +
+					"async/" + _salesforceApiVersion;
+
+			config.setRestEndpoint(restEndpoint);
+
+			config.setCompression(true);
+			config.setTraceMessage(false);
+
+			return new BulkConnection(config);
+		}
 
 	}
 
@@ -245,6 +286,21 @@ public class PartnerEnableWebSecurity {
 
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;
+
+	@Value("${salesforce.api.version}")
+	private String _salesforceApiVersion;
+
+	@Value("${salesforce.auth.endpoint}")
+	private String _salesforceAuthEndpoint;
+
+	@Value("${salesforce.auth.password}")
+	private String _salesforceAuthPassword;
+
+	@Value("${salesforce.auth.userName}")
+	private String _salesforceAuthUserName;
+
+	@Value("${salesforce.security.token}")
+	private String _salesforceSecurityToken;
 
 	private static class ApplicationInfo {
 

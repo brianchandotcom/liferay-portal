@@ -15,6 +15,7 @@
 package com.liferay.partner;
 
 import com.liferay.partner.services.ObjectDefinitionService;
+import com.liferay.partner.services.SalesforceService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,6 +44,7 @@ public class PartnerRestController {
 
 		try {
 			_objectDefinitionService.getSalesforceObjectDefinitionsPage();
+			_salesforceService.getBulkObjects();
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -56,5 +58,8 @@ public class PartnerRestController {
 
 	@Autowired
 	private ObjectDefinitionService _objectDefinitionService;
+
+	@Autowired
+	private SalesforceService _salesforceService;
 
 }

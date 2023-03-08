@@ -32,9 +32,9 @@ function FilterResume(props) {
 		<ClayButton
 			className={classNames(
 				'filter-resume component-label tbar-label',
-				props.disabled && 'disabled',
 				open && 'active'
 			)}
+			disabled={props.disabled}
 			displayType="secondary"
 			size="sm"
 		>

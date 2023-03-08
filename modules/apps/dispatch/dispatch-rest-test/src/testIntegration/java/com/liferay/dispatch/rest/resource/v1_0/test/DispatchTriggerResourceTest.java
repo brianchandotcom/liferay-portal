@@ -17,18 +17,13 @@ package com.liferay.dispatch.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.rest.client.dto.v1_0.DispatchTrigger;
-import com.liferay.dispatch.rest.client.serdes.v1_0.DispatchTriggerSerDes;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.Arrays;
 import java.util.Set;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,9 +37,7 @@ public class DispatchTriggerResourceTest
 	@Override
 	@Test
 	public void testPostDispatchTrigger() throws Exception {
-		DispatchTrigger randomDispatchTrigger = randomDispatchTrigger();
-
-		_addDispatchTrigger(randomDispatchTrigger);
+		_addDispatchTrigger(randomDispatchTrigger());
 	}
 
 	@Override
@@ -53,9 +46,7 @@ public class DispatchTriggerResourceTest
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
 			randomDispatchTrigger());
 
-		long dispatchId = dispatchTrigger.getId();
-
-		dispatchTriggerResource.postDispatchTriggerRun(dispatchId);
+		dispatchTriggerResource.postDispatchTriggerRun(dispatchTrigger.getId());
 	}
 
 	@Override

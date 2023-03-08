@@ -17,6 +17,6 @@ export type PostType = {
 	id: number;
 	link?: string;
 	message?: string;
-	read?: Boolean;
+	read?: boolean;
 	title?: string;
 };

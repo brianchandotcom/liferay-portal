@@ -14,13 +14,15 @@
 
 import {axios} from './liferay/api';
 
-const headlessAPI = 'o/headless-user-notification/v1.0/my-user-notifications';
-const headlessAPIPUT = '/o/headless-user-notification/v1.0/user-notifications';
+const headlessAPI = 'o/headless-user-notification/v1.0';
 
 export function getUserNotification(pageSize: number, page: number) {
-	return axios.get(`${headlessAPI}/?&pageSize=${pageSize}&page=${page}`);
+	return axios.get(
+		`${headlessAPI}/my-user-notifications/?&pageSize=${pageSize}&page=${page}`
+	);
 }
-
 export function putUserNotificationRead(userNotificationId: number) {
-	return axios.put(`${headlessAPIPUT}/${userNotificationId}/read`);
+	return axios.put(
+		`${headlessAPI}/user-notifications/${userNotificationId}/read`
+	);
 }

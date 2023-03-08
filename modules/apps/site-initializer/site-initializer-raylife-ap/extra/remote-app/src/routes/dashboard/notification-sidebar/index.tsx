@@ -20,10 +20,10 @@ import './index.scss';
 import {
 	getUserNotification,
 	putUserNotificationRead,
-} from '../../../common/services/Notification';
+} from '../../../common/services/notification';
 import {PostType} from './postTypes';
 
-const initialItems = {page: 1, pageSize: 7, totalCount: 0};
+const initialItems = {page: 1, pageSize: 4, totalCount: 0};
 
 const NotificationSidebar: React.FC = () => {
 	const [posts, setPosts] = useState<PostType[]>([]);
@@ -32,11 +32,6 @@ const NotificationSidebar: React.FC = () => {
 	);
 	const [linkUrl, setLinkUrl] = useState<string>();
 	const [page, setPage] = useState<number>(initialItems.page);
-	const loremUrl =
-		'http://localhost:8080/group/raylife-ap/policy-details?externalReferenceCode=PO-56-334-5276';
-
-	const loremUrl2 =
-		'http://localhost:8080/group/raylife-ap/~/control_panel/manage?p_p_id=com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet&p_p_lifecycle=0&p_p_state=maximized&_com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet_mvcPath=%2Fedit_workflow_task.jsp&_com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet_workflowTaskId=50116';
 
 	useEffect(() => {
 		getNotifications();
@@ -45,10 +40,15 @@ const NotificationSidebar: React.FC = () => {
 
 	async function getNotifications() {
 		const response = await getUserNotification(initialItems.pageSize, page);
-		setTotalCount(response.data.totalCount);
-		setPosts((oldArray: PostType[]) => [
-			...oldArray,
-			...response.data.items,
+
+		const notifications = response?.data;
+
+		notifications?.totalCount;
+
+		setTotalCount(notifications?.totalCount);
+		setPosts((previousPostArray: PostType[]) => [
+			...previousPostArray,
+			...notifications?.items,
 		]);
 
 		return response;
@@ -66,47 +66,50 @@ const NotificationSidebar: React.FC = () => {
 	};
 
 	const redirectUrl = (post: PostType): void => {
-		if (post.message?.includes('Test')) {
-			setLinkUrl(loremUrl);
-		} else {
-			setLinkUrl(loremUrl2);
+		if (post.message?.includes('')) {
+			setLinkUrl('javascript:void(0)');
+		}
+		else {
+			setLinkUrl('javascript:void(0)');
 		}
 	};
 
 	return (
-		<div className="vh-100">
-			{posts.map((post: PostType) => (
-				<div
-					className={classNames({
-						'post-container-unread': !post.read,
-					})}
-					key={post.id}
-					onClick={() => {
-						markAsRead(post);
-						redirectUrl(post);
-					}}
-				>
-					<div className="dotted-line post-container">
-						<a href={linkUrl}>
-							<h2>title</h2>
+		<div className="notification-container">
+			<div className="vh-100">
+				{posts.map((post: PostType) => (
+					<div
+						className={classNames({
+							'post-container-unread': !post.read,
+						})}
+						key={post.id}
+						onClick={() => {
+							markAsRead(post);
+							redirectUrl(post);
+						}}
+					>
+						<div className="align-items-center dotted-line h-100 post-container">
+							<a href={linkUrl}>
+								<h2>title</h2>
 
-							<p className="mb-0 mt-0">{post.message}</p>
-						</a>
+								<p className="mt-0 my-0">{post.message}</p>
+							</a>
 
-						<h5>{post.dateCreated}</h5>
+							<h5 className="font-italic">{post.dateCreated}</h5>
+						</div>
 					</div>
-				</div>
-			))}
+				))}
 
-			{posts.length < totalCount ? (
-				<ClayButton
-					className="align-items-center mb-7 mt-9 pb-7 w-100"
-					displayType="link"
-					onClick={() => loadMore()}
-				>
-					Load More
-				</ClayButton>
-			) : null}
+				{posts.length < totalCount && (
+					<ClayButton
+						className="align-items-center mb-7 mt-9 pb-7 w-100"
+						displayType="link"
+						onClick={() => loadMore()}
+					>
+						Load More
+					</ClayButton>
+				)}
+			</div>
 		</div>
 	);
 };

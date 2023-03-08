@@ -431,7 +431,7 @@ create table DLFileVersion (
 	version VARCHAR(75) null,
 	size_ LONG,
 	checksum VARCHAR(75) null,
-	storeUUID VARCHAR(75) null,
+	storeUUID VARCHAR(255) null,
 	expirationDate DATE null,
 	reviewDate DATE null,
 	lastPublishDate DATE null,

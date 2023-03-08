@@ -193,6 +193,7 @@ definition {
 	@description = "This is a use case for LPS-160064."
 	@priority = 4
 	test CanAddCompanyWithHeadlessAPI {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithHeadlessAPI";
 
@@ -230,7 +231,7 @@ definition {
 
 	@priority = 5
 	test CanAddCompanyWithPortalInstancesAdminUI {
-		property custom.properties = "database.partition.schema.name.prefix=testPartition";
+		property custom.properties = "database.partition.schema.name.prefix=testPartition${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithPortalInstancesAdminUI";
@@ -271,7 +272,7 @@ definition {
 
 	@priority = 5
 	test CanDeleteCompany {
-		property custom.properties = "database.partition.schema.name.prefix=testPartition";
+		property custom.properties = "database.partition.schema.name.prefix=testPartition${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#CanDeleteCompany";
@@ -367,7 +368,7 @@ definition {
 
 	@priority = 4
 	test ExecuteSchemaValidator {
-		property custom.properties = "database.partition.schema.name.prefix=testPartition";
+		property custom.properties = "database.partition.schema.name.prefix=testPartition${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
 		property test.name.skip.portal.instance = "DatabasePartitioning#ExecuteSchemaValidator";
 
 		PortalInstances.openVirtualInstancesAdmin();
@@ -436,7 +437,7 @@ definition {
 
 	@priority = 3
 	test NewCompanyStillAccessibleAfterRestart {
-		property custom.properties = "database.partition.schema.name.prefix=testPartition";
+		property custom.properties = "database.partition.schema.name.prefix=testPartition${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#NewCompanyStillAccessibleAfterRestart";
 

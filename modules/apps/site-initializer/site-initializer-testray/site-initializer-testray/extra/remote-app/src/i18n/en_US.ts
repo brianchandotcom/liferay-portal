@@ -372,6 +372,7 @@ export default {
 	'test-history': 'Test History',
 	'test-lead-should-only-have-access-to-builds-test-plans-test-suites-and-test-cases-.-this-role-will-be-responsible-for-creating-builds-and-for-creating-test-plans-test-runs-the-people-assigned-to-these-would-be-our-current-product-leads':
 		'Test Lead should only have access to Builds, Test Plans, Test Suites and Test Cases. This role will be responsible for creating Builds and for creating Test Plans/Test Runs. The people assigned to these would be our current product leads.',
+	'test-type': 'Test Type',
 	'testers-carry-permissions-to-analyze-test-results-by-workflowing-results-or-collaborating-on-tasks':
 		'Testers carry permissions to analyze test results by workflowing results or collaborating on tasks',
 	'testflow': 'TestFlow',

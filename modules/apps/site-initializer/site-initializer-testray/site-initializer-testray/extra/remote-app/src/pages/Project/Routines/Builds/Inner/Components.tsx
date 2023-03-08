@@ -27,6 +27,7 @@ const Components = () => (
 					test_fix: false,
 					untested: false,
 				},
+				columnsFixed: ['name'],
 			}}
 			managementToolbarProps={{
 				filterSchema: 'buildComponents',

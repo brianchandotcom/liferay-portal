@@ -89,11 +89,6 @@ const FilterBody = ({buttonRef, filterSchema, setPosition}: FilterBody) => {
 
 	const onClear = () => {
 		setForm(initialFilters);
-
-		dispatch({
-			payload: null,
-			type: ListViewTypes.SET_CLEAR,
-		});
 	};
 
 	const clearDisabled = Object.entries(form).every(

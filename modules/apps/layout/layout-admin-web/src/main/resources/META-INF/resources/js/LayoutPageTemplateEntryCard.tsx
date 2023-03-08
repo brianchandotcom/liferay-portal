@@ -122,7 +122,9 @@ export default function LayoutPageTemplateEntryCard({
 								onClick={onPreviewClick}
 								size="sm"
 								symbol="view"
-								title={Liferay.Language.get('preview-page-template')}
+								title={Liferay.Language.get(
+									'preview-page-template'
+								)}
 							/>
 						</div>
 					</ClayCard.Row>
@@ -245,7 +247,8 @@ function PreviewModalContent({
 							size: 'md',
 							title: Liferay.Language.get('add-page'),
 							url: createPortletURL(addLayoutURL, {
-								layoutPageTemplateEntryId: initialLayoutPageTemplateEntryId,
+								layoutPageTemplateEntryId:
+									layoutPageTemplateEntry.layoutPageTemplateEntryId,
 							}),
 						});
 					}}

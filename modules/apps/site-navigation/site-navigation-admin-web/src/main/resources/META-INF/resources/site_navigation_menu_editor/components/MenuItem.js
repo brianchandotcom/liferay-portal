@@ -44,7 +44,7 @@ const DELETION_TYPES = {
 	single: 1,
 };
 
-export function MenuItem({className, item}) {
+export function MenuItem({item, onMenuItemRemoved}) {
 	const setItems = useSetItems();
 	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
@@ -79,6 +79,7 @@ export function MenuItem({className, item}) {
 				setItems(newItems);
 
 				setSidebarPanelId(null);
+				onMenuItemRemoved();
 			})
 			.catch(({error}) => {
 				openToast({
@@ -151,10 +152,7 @@ export function MenuItem({className, item}) {
 			<div
 				aria-label={`${title} (${type})`}
 				aria-level={itemPath.length}
-				className={classNames(
-					className,
-					'site_navigation_menu_editor_MenuItem'
-				)}
+				className="focusable-menu-item site_navigation_menu_editor_MenuItem"
 				data-item-id={item.siteNavigationMenuItemId}
 				data-parent-item-id={parentItemId}
 				onBlur={onBlur}

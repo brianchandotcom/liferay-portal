@@ -15,19 +15,15 @@
 package com.liferay.notifications.internal.messaging;
 
 import com.liferay.notifications.internal.configuration.UserNotificationConfiguration;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 
 import java.util.Map;
@@ -35,7 +31,6 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -43,79 +38,64 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.notifications.internal.configuration.UserNotificationConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
+	service = SchedulerJobConfiguration.class
 )
 public class UserNotificationEventCleanerMessageListener
-	extends BaseMessageListener {
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		UserNotificationConfiguration userNotificationConfiguration =
-			ConfigurableUtil.createConfigurable(
-				UserNotificationConfiguration.class, properties);
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> {
+			if (_userNotificationEventDaysLimit <= 0) {
+				return;
+			}
 
-		_userNotificationEventDaysLimit =
-			userNotificationConfiguration.userNotificationEventDaysLimit();
+			long timestamp =
+				System.currentTimeMillis() -
+					TimeUnit.DAY.toMillis(_userNotificationEventDaysLimit);
 
-		String className =
-			UserNotificationEventCleanerMessageListener.class.getName();
+			ActionableDynamicQuery actionableDynamicQuery =
+				_userNotificationEventLocalService.getActionableDynamicQuery();
 
-		int userNotificationEventCheckInterval =
-			userNotificationConfiguration.userNotificationEventCheckInterval();
+			actionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> {
+					Property archivedProperty = PropertyFactoryUtil.forName(
+						"archived");
 
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			userNotificationEventCheckInterval, TimeUnit.DAY);
+					dynamicQuery.add(archivedProperty.eq(true));
 
-		_schedulerEngineHelper.register(
-			this, new SchedulerEntryImpl(className, trigger),
-			DestinationNames.SCHEDULER_DISPATCH);
-	}
+					Property timestampProperty = PropertyFactoryUtil.forName(
+						"timestamp");
 
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+					dynamicQuery.add(timestampProperty.lt(timestamp));
+				});
+			actionableDynamicQuery.setPerformActionMethod(
+				(UserNotificationEvent userNotificationEvent) ->
+					_userNotificationEventLocalService.
+						deleteUserNotificationEvent(userNotificationEvent));
+
+			actionableDynamicQuery.performActions();
+		};
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		if (_userNotificationEventDaysLimit <= 0) {
-			return;
-		}
-
-		long timestamp =
-			System.currentTimeMillis() -
-				TimeUnit.DAY.toMillis(_userNotificationEventDaysLimit);
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			_userNotificationEventLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property archivedProperty = PropertyFactoryUtil.forName(
-					"archived");
-
-				dynamicQuery.add(archivedProperty.eq(true));
-
-				Property timestampProperty = PropertyFactoryUtil.forName(
-					"timestamp");
-
-				dynamicQuery.add(timestampProperty.lt(timestamp));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(UserNotificationEvent userNotificationEvent) ->
-				_userNotificationEventLocalService.deleteUserNotificationEvent(
-					userNotificationEvent));
-
-		actionableDynamicQuery.performActions();
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_userNotificationConfiguration.userNotificationEventCheckInterval(),
+			TimeUnit.DAY);
 	}
 
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_userNotificationConfiguration = ConfigurableUtil.createConfigurable(
+			UserNotificationConfiguration.class, properties);
 
-	@Reference
-	private TriggerFactory _triggerFactory;
+		_userNotificationEventDaysLimit =
+			_userNotificationConfiguration.userNotificationEventDaysLimit();
+	}
 
+	private UserNotificationConfiguration _userNotificationConfiguration;
 	private int _userNotificationEventDaysLimit;
 
 	@Reference

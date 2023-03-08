@@ -20,22 +20,16 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -43,51 +37,47 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
-	immediate = true, service = MessageListener.class
+	service = SchedulerJobConfiguration.class
 )
-public class BatchEngineTaskCleanerMessageListener extends BaseMessageListener {
+public class BatchEngineTaskCleanerMessageListener
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
-			ConfigurableUtil.createConfigurable(
-				BatchEngineTaskConfiguration.class, properties);
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> {
+			for (BatchEngineExportTask batchEngineExportTask :
+					_batchEngineExportTaskLocalService.
+						getBatchEngineExportTasks(
+							BatchEngineTaskExecuteStatus.COMPLETED.
+								toString())) {
 
-		String className =
-			BatchEngineTaskCleanerMessageListener.class.getName();
-		int scanInterval =
-			batchEngineTaskConfiguration.completedTasksCleanerScanInterval();
+				_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
+					batchEngineExportTask.getBatchEngineExportTaskId());
+			}
 
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, scanInterval, TimeUnit.DAY);
+			for (BatchEngineImportTask batchEngineImportTask :
+					_batchEngineImportTaskLocalService.
+						getBatchEngineImportTasks(
+							BatchEngineTaskExecuteStatus.COMPLETED.
+								toString())) {
 
-		_schedulerEngineHelper.register(
-			this, new SchedulerEntryImpl(className, trigger),
-			DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+				_batchEngineImportTaskLocalService.deleteBatchEngineImportTask(
+					batchEngineImportTask.getBatchEngineImportTaskId());
+			}
+		};
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		for (BatchEngineExportTask batchEngineExportTask :
-				_batchEngineExportTaskLocalService.getBatchEngineExportTasks(
-					BatchEngineTaskExecuteStatus.COMPLETED.toString())) {
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_batchEngineTaskConfiguration.completedTasksCleanerScanInterval(),
+			TimeUnit.DAY);
+	}
 
-			_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
-				batchEngineExportTask.getBatchEngineExportTaskId());
-		}
-
-		for (BatchEngineImportTask batchEngineImportTask :
-				_batchEngineImportTaskLocalService.getBatchEngineImportTasks(
-					BatchEngineTaskExecuteStatus.COMPLETED.toString())) {
-
-			_batchEngineImportTaskLocalService.deleteBatchEngineImportTask(
-				batchEngineImportTask.getBatchEngineImportTaskId());
-		}
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_batchEngineTaskConfiguration = ConfigurableUtil.createConfigurable(
+			BatchEngineTaskConfiguration.class, properties);
 	}
 
 	@Reference
@@ -98,10 +88,6 @@ public class BatchEngineTaskCleanerMessageListener extends BaseMessageListener {
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
 
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
+	private BatchEngineTaskConfiguration _batchEngineTaskConfiguration;
 
 }

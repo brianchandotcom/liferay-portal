@@ -16,18 +16,10 @@ package com.liferay.akismet.internal.messaging;
 
 import com.liferay.akismet.internal.configuration.AkismetServiceConfiguration;
 import com.liferay.akismet.service.AkismetEntryLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
-import com.liferay.portal.kernel.scheduler.StorageType;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
@@ -36,7 +28,6 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -44,72 +35,37 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.akismet.internal.configuration.AkismetServiceConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
+	service = SchedulerJobConfiguration.class
 )
-public class DeleteAkismetMessageListener extends BaseMessageListener {
+public class DeleteAkismetMessageListener implements SchedulerJobConfiguration {
+
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> {
+			int reportableTime =
+				_akismetServiceConfiguration.akismetReportableTime();
+
+			_akismetEntryLocalService.deleteAkismetEntry(
+				new Date(
+					System.currentTimeMillis() - (reportableTime * Time.DAY)));
+		};
+	}
+
+	@Override
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration("0 0 0 * * ?");
+	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
 			AkismetServiceConfiguration.class, properties);
-
-		String className = getClass().getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, "0 0 0 * * ?");
-
-		_schedulerEntryImpl = new SchedulerEntryImpl(
-			getClass().getName(), trigger);
-
-		_schedulerEngineHelper.register(
-			this, _schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		try {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unscheduling trigger");
-			}
-
-			Trigger trigger = _schedulerEntryImpl.getTrigger();
-
-			_schedulerEngineHelper.unschedule(
-				trigger.getJobName(), trigger.getGroupName(),
-				StorageType.MEMORY_CLUSTERED);
-		}
-		catch (SchedulerException schedulerException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to unschedule trigger", schedulerException);
-			}
-		}
-
-		_schedulerEngineHelper.unregister(this);
-	}
-
-	@Override
-	protected void doReceive(Message message) {
-		int reportableTime =
-			_akismetServiceConfiguration.akismetReportableTime();
-
-		_akismetEntryLocalService.deleteAkismetEntry(
-			new Date(System.currentTimeMillis() - (reportableTime * Time.DAY)));
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteAkismetMessageListener.class);
 
 	@Reference
 	private AkismetEntryLocalService _akismetEntryLocalService;
 
 	private AkismetServiceConfiguration _akismetServiceConfiguration;
-
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	private SchedulerEntryImpl _schedulerEntryImpl;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

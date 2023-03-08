@@ -14,20 +14,16 @@
 
 package com.liferay.segments.internal.messaging;
 
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.internal.constants.SegmentsDestinationNames;
 import com.liferay.segments.model.SegmentsEntry;
@@ -37,7 +33,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -45,53 +40,43 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.segments.configuration.SegmentsConfiguration",
-	service = {}
+	service = SchedulerJobConfiguration.class
 )
 public class SegmentsEntryRelIndexerMessageListener
-	extends BaseMessageListener {
+	implements SchedulerJobConfiguration {
+
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_segmentsEntryLocalService.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> {
+					Property activeProperty = PropertyFactoryUtil.forName(
+						"active");
+
+					dynamicQuery.add(activeProperty.eq(true));
+				});
+			actionableDynamicQuery.setPerformActionMethod(
+				(ActionableDynamicQuery.PerformActionMethod<SegmentsEntry>)
+					this::_reindex);
+
+			actionableDynamicQuery.performActions();
+		};
+	}
+
+	@Override
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_segmentsConfiguration.segmentsPreviewCheckInterval(),
+			TimeUnit.MINUTE);
+	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_segmentsConfiguration = ConfigurableUtil.createConfigurable(
 			SegmentsConfiguration.class, properties);
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			_segmentsConfiguration.segmentsPreviewCheckInterval(),
-			TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
-	}
-
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_segmentsEntryLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property activeProperty = PropertyFactoryUtil.forName("active");
-
-				dynamicQuery.add(activeProperty.eq(true));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(ActionableDynamicQuery.PerformActionMethod<SegmentsEntry>)
-				this::_reindex);
-
-		actionableDynamicQuery.performActions();
 	}
 
 	private void _reindex(SegmentsEntry segmentsEntry) {
@@ -108,15 +93,9 @@ public class SegmentsEntryRelIndexerMessageListener
 	@Reference
 	private MessageBus _messageBus;
 
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
 	private volatile SegmentsConfiguration _segmentsConfiguration;
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 }

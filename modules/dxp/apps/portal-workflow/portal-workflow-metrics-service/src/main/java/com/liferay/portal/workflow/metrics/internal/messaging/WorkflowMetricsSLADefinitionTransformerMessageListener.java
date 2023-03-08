@@ -14,20 +14,15 @@
 
 package com.liferay.portal.workflow.metrics.internal.messaging;
 
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.document.Document;
@@ -48,7 +43,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -56,50 +50,32 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetricsConfiguration",
-	immediate = true,
-	service = {
-		MessageListener.class,
-		WorkflowMetricsSLADefinitionTransformerMessageListener.class
-	}
+	service = SchedulerJobConfiguration.class
 )
 public class WorkflowMetricsSLADefinitionTransformerMessageListener
-	extends BaseMessageListener {
+	implements SchedulerJobConfiguration {
+
+	public UnsafeConsumer<Long, Exception> getCompanyJobExecutor() {
+		return companyId -> _transform(companyId);
+	}
+
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return () -> _companyLocalService.forEachCompanyId(
+			companyId -> _transform(companyId));
+	}
+
+	@Override
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_workflowMetricsConfiguration.checkSLADefinitionsJobInterval(),
+			TimeUnit.MINUTE);
+	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_workflowMetricsConfiguration = ConfigurableUtil.createConfigurable(
 			WorkflowMetricsConfiguration.class, properties);
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			_workflowMetricsConfiguration.checkSLADefinitionsJobInterval(),
-			TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
-	}
-
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		_companyLocalService.forEachCompanyId(
-			companyId -> _transform(companyId));
-	}
-
-	@Override
-	protected void doReceive(Message message, long companyId) {
-		_transform(companyId);
 	}
 
 	private BooleanQuery _createBooleanQuery(long companyId) {
@@ -178,16 +154,10 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 	private Queries _queries;
 
 	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
 	private SearchCapabilities _searchCapabilities;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
 
 	private volatile WorkflowMetricsConfiguration _workflowMetricsConfiguration;
 

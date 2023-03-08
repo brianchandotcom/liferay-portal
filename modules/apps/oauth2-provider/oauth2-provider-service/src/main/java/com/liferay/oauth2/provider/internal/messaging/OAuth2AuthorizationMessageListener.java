@@ -16,22 +16,16 @@ package com.liferay.oauth2.provider.internal.messaging;
 
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -39,49 +33,33 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration",
-	service = {}
+	service = SchedulerJobConfiguration.class
 )
-public class OAuth2AuthorizationMessageListener extends BaseMessageListener {
+public class OAuth2AuthorizationMessageListener
+	implements SchedulerJobConfiguration {
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		OAuth2ProviderConfiguration oAuth2ProviderConfiguration =
-			ConfigurableUtil.createConfigurable(
-				OAuth2ProviderConfiguration.class, properties);
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			oAuth2ProviderConfiguration.expiredAuthorizationsCheckInterval(),
-			TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+	@Override
+	public UnsafeRunnable<Exception> getJobExecutor() {
+		return _oAuth2AuthorizationLocalService::
+			deleteExpiredOAuth2Authorizations;
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		_oAuth2AuthorizationLocalService.deleteExpiredOAuth2Authorizations();
+	public TriggerConfiguration getTriggerConfiguration() {
+		return TriggerConfiguration.createTriggerConfiguration(
+			_oAuth2ProviderConfiguration.expiredAuthorizationsCheckInterval(),
+			TimeUnit.MINUTE);
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
+			OAuth2ProviderConfiguration.class, properties);
 	}
 
 	@Reference
 	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
-	@Reference
-	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	@Reference
-	private TriggerFactory _triggerFactory;
+	private OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
 
 }

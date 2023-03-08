@@ -833,16 +833,15 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public List<Build> getDownstreamBuilds(String result, String status) {
-		List<Build> filteredDownstreamBuilds = Collections.synchronizedList(
-			new ArrayList<Build>());
-
-		if ((result == null) && (status == null)) {
-			filteredDownstreamBuilds.addAll(downstreamBuilds);
-
-			return filteredDownstreamBuilds;
-		}
+		List<Build> filteredDownstreamBuilds = new ArrayList<>();
 
 		synchronized (downstreamBuilds) {
+			if ((result == null) && (status == null)) {
+				filteredDownstreamBuilds.addAll(downstreamBuilds);
+
+				return filteredDownstreamBuilds;
+			}
+
 			for (Build downstreamBuild : downstreamBuilds) {
 				if (((status == null) ||
 					 status.equals(downstreamBuild.getStatus())) &&
@@ -2194,51 +2193,50 @@ public abstract class BaseBuild implements Build {
 
 							setResult(result);
 						}
+					}
 
-						findDownstreamBuilds();
+					findDownstreamBuilds();
 
-						if ((result == null) || result.equals("SUCCESS")) {
-							return;
-						}
+					if ((result == null) || result.equals("SUCCESS")) {
+						return;
+					}
 
-						JenkinsSlave jenkinsSlave = getJenkinsSlave();
+					JenkinsSlave jenkinsSlave = getJenkinsSlave();
 
-						if (jenkinsSlave != null) {
-							jenkinsSlave.update();
+					if (jenkinsSlave != null) {
+						jenkinsSlave.update();
 
-							if (!fromArchive && !jenkinsSlave.isOffline()) {
-								for (SlaveOfflineRule slaveOfflineRule :
-										slaveOfflineRules) {
+						if (!fromArchive && !jenkinsSlave.isOffline()) {
+							for (SlaveOfflineRule slaveOfflineRule :
+									slaveOfflineRules) {
 
-									if (!slaveOfflineRule.matches(this)) {
-										continue;
-									}
-
-									takeSlaveOffline(slaveOfflineRule);
-
-									break;
+								if (!slaveOfflineRule.matches(this)) {
+									continue;
 								}
+
+								takeSlaveOffline(slaveOfflineRule);
+
+								break;
 							}
 						}
+					}
 
-						if (this instanceof AxisBuild ||
-							this instanceof BatchBuild ||
-							this instanceof TopLevelBuild || fromArchive ||
-							(badBuildNumbers.size() >=
-								REINVOCATIONS_SIZE_MAX)) {
+					if (this instanceof AxisBuild ||
+						this instanceof BatchBuild ||
+						this instanceof TopLevelBuild || fromArchive ||
+						(badBuildNumbers.size() >= REINVOCATIONS_SIZE_MAX)) {
 
-							return;
+						return;
+					}
+
+					for (ReinvokeRule reinvokeRule : reinvokeRules) {
+						if (!reinvokeRule.matches(this)) {
+							continue;
 						}
 
-						for (ReinvokeRule reinvokeRule : reinvokeRules) {
-							if (!reinvokeRule.matches(this)) {
-								continue;
-							}
+						reinvoke(reinvokeRule);
 
-							reinvoke(reinvokeRule);
-
-							break;
-						}
+						break;
 					}
 				}
 			}

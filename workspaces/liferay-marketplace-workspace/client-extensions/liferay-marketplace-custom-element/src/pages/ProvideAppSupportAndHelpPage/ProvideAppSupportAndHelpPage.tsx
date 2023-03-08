@@ -131,7 +131,7 @@ export function ProvideAppSupportAndHelpPage({
 						supportURL?.id,
 						'supportURL',
 						'Support URL',
-						supportURL?.value,
+						supportURL?.value
 					);
 
 					if (supportURLSpecificationId !== -1) {
@@ -161,7 +161,7 @@ export function ProvideAppSupportAndHelpPage({
 								publisherWebsiteURL?.id,
 								'publisherWebsiteURL',
 								'Publisher Web site URL',
-								publisherWebsiteURL?.value,
+								publisherWebsiteURL?.value
 							);
 
 						if (publisherWebsiteURLSpecificationId !== -1) {
@@ -191,7 +191,7 @@ export function ProvideAppSupportAndHelpPage({
 								appUsageTermsURL?.id,
 								'appUsageTermsURL',
 								'App Usage Terms URL',
-								appUsageTermsURL?.value,
+								appUsageTermsURL?.value
 							);
 
 						if (appUsageTermsURLSpecificationId !== -1) {
@@ -221,7 +221,7 @@ export function ProvideAppSupportAndHelpPage({
 								appDocumentationURL?.id,
 								'appDocumentationURL',
 								'App Documentation URL',
-								appDocumentationURL?.value,
+								appDocumentationURL?.value
 							);
 
 						if (appDocumentationURLSpecificationId !== -1) {
@@ -251,7 +251,7 @@ export function ProvideAppSupportAndHelpPage({
 								appInstallationGuideURL?.id,
 								'appInstallationGuideURL',
 								'App Installation Guide URL',
-								appInstallationGuideURL?.value,
+								appInstallationGuideURL?.value
 							);
 
 						if (appInstallationGuideURLSpecificationId !== -1) {

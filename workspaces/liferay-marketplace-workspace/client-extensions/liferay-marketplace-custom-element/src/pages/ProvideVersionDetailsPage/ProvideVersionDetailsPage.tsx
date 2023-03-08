@@ -76,7 +76,7 @@ export function ProvideVersionDetailsPage({
 						appVersion?.id,
 						'version',
 						'Version',
-						appVersion?.value,
+						appVersion?.value
 					);
 
 					if (versionSpecificationId !== -1) {
@@ -104,7 +104,7 @@ export function ProvideVersionDetailsPage({
 						appNotes?.id,
 						'notes',
 						'Notes',
-						appNotes?.value,
+						appNotes?.value
 					);
 
 					if (noteSpecificationId !== -1) {

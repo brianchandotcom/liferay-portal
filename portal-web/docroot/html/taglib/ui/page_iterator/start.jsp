@@ -158,7 +158,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<li class="page-item <%= (i == cur) ? "active" : StringPool.BLANK %>">
 							<c:choose>
 								<c:when test="<%= i == cur %>">
-									<a aria-current="page" class="page-link">
+									<a aria-current="page" class="page-link" tabindex="0">
 								</c:when>
 								<c:otherwise>
 									<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>">
@@ -175,7 +175,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				</c:when>
 				<c:when test="<%= cur == 1 %>">
 					<li class="active page-item">
-						<a aria-current="page" class="page-link"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>1</a>
+						<a aria-current="page" class="page-link" tabindex="0"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>1</a>
 					</li>
 					<li class="page-item">
 						<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 2, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, 2) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>2</a>
@@ -251,7 +251,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, pages - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, pages - 1) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= pages - 1 %></a>
 					</li>
 					<li class="active page-item">
-						<a aria-current="page" class="page-link"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= pages %></a>
+						<a aria-current="page" class="page-link" tabindex="0"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= pages %></a>
 					</li>
 				</c:when>
 				<c:otherwise>
@@ -296,7 +296,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 					</c:if>
 
 					<li class="active page-item">
-						<a aria-current="page" class="page-link"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= cur %></a>
+						<a aria-current="page" class="page-link" tabindex="0"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= cur %></a>
 					</li>
 
 					<c:if test="<%= (cur + 1) < pages %>">

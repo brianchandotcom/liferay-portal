@@ -1,10 +1,10 @@
 @component-name = "portal-database-upgrade-framework"
 definition {
 
+	property ci.retries.disabled = "true";
 	property data.archive.type = "data-archive-portal";
 	property database.types = "mysql";
 	property log.context.enabled = "true";
-	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property portal.version = "7.3.10";

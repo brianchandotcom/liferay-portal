@@ -37,13 +37,14 @@ import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 import getFlatItems from '../utils/getFlatItems';
 import getItemPath from '../utils/getItemPath';
 import {useDragItem, useDropTarget} from '../utils/useDragAndDrop';
+import useKeyboardNavigation from '../utils/useKeyboardNavigation';
 
 const DELETION_TYPES = {
 	bulk: 0,
 	single: 1,
 };
 
-export function MenuItem({item}) {
+export function MenuItem({className, item}) {
 	const setItems = useSetItems();
 	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
@@ -137,44 +138,57 @@ export function MenuItem({item}) {
 	const parentItemId =
 		itemPath.length > 1 ? itemPath[itemPath.length - 2] : '0';
 
+	const {
+		isTarget,
+		onBlur,
+		onFocus,
+		onKeyDown,
+		setElement,
+	} = useKeyboardNavigation();
+
 	return (
 		<>
 			<div
 				aria-label={`${title} (${type})`}
 				aria-level={itemPath.length}
+				className={classNames(
+					className,
+					'site_navigation_menu_editor_MenuItem'
+				)}
 				data-item-id={item.siteNavigationMenuItemId}
 				data-parent-item-id={parentItemId}
-				ref={targetRef}
+				onBlur={onBlur}
+				onClick={() => {
+					setSelectedMenuItemId(siteNavigationMenuItemId);
+					setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
+				}}
+				onFocus={onFocus}
+				onKeyDown={(event) => {
+					if (event.key === ' ' || event.key === 'Enter') {
+						setSelectedMenuItemId(siteNavigationMenuItemId);
+						setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
+					}
+
+					onKeyDown(event);
+				}}
+				ref={(ref) => {
+					targetRef(ref);
+					setElement(ref);
+				}}
 				role="menuitem"
+				tabIndex={isTarget ? '0' : '-1'}
 			>
 				<ClayCard
 					aria-label={sub(
 						Liferay.Language.get('select-x'),
 						`${title} (${type})`
 					)}
-					className={classNames(
-						'mb-3 site_navigation_menu_editor_MenuItem',
-						{
-							active: selected,
-							dragging: isDragging,
-						}
-					)}
-					onClick={() => {
-						setSelectedMenuItemId(siteNavigationMenuItemId);
-						setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
-					}}
-					onKeyDown={(event) => {
-						if (event.key === ' ' || event.key === 'Enter') {
-							setSelectedMenuItemId(siteNavigationMenuItemId);
-							setSidebarPanelId(
-								SIDEBAR_PANEL_IDS.menuItemSettings
-							);
-						}
-					}}
-					ref={handlerRef}
+					className={classNames('mb-3', {
+						active: selected,
+						dragging: isDragging,
+					})}
 					selectable
 					style={itemStyle}
-					tabIndex={0}
 				>
 					<ClayCard.Body className="px-0">
 						<div ref={handlerRef}>
@@ -234,6 +248,7 @@ export function MenuItem({item}) {
 										}
 										size="sm"
 										symbol="times-circle"
+										tabIndex={isTarget ? '0' : '-1'}
 									/>
 								</ClayLayout.ContentCol>
 							</ClayCard.Row>

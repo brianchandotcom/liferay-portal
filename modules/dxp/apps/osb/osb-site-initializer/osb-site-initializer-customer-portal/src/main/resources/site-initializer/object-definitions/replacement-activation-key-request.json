@@ -1,0 +1,127 @@
+{
+	"label": {
+		"en-US": "Replacement Activation Key Request"
+	},
+	"name": "ReplacementActivationKeyRequest",
+	"objectFields": [
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Acknowledgement"
+			},
+			"name": "acknowledgement",
+			"required": true
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Active Liferay Subscription?"
+			},
+			"name": "activeLiferaySubscription",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Company Name"
+			},
+			"name": "companyName",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Contact Email Address"
+			},
+			"name": "contactEmailAddress",
+			"required": true
+		},
+		{
+			"DBType": "Clob",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Please explain why you need a replacement activation key"
+			},
+			"name": "explainReplacementActivationKey",
+			"required": true
+		},
+		{
+			"DBType": "Clob",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Please provide the server information, as applicable, depending on your version of Liferay Portal or Liferay DXP"
+			},
+			"name": "serverInformation",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Clustered?"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Clustered$]",
+			"name": "clustered",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Support Region"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Support Region$]",
+			"name": "supportRegion",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Version of Liferay Software"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Version of Liferay Software$]",
+			"name": "versionOfLiferaySoftware",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Type of Server"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Type of Server$]",
+			"name": "typeOfServer",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Replacement Activation Key Requests"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

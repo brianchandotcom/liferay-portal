@@ -106,7 +106,9 @@ public class KBArticleViewDisplayContext {
 
 		Date expirationDate = kbArticle.getExpirationDate();
 
-		if (kbArticle.isExpired() || (expirationDate == null)) {
+		if (kbArticle.isDraft() || kbArticle.isExpired() ||
+			(expirationDate == null)) {
+
 			return false;
 		}
 

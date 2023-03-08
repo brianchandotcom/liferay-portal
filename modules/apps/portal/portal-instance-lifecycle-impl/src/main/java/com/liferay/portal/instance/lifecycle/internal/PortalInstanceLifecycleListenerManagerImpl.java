@@ -18,7 +18,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.instance.lifecycle.Clusterable;
+import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.instance.lifecycle.PortalInstanceLifecycleManager;
@@ -113,7 +113,8 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		Company company) {
 
-		if (!(portalInstanceLifecycleListener instanceof Clusterable) &&
+		if (!(portalInstanceLifecycleListener instanceof
+				EveryNodeEveryStartup) &&
 			!clusterMasterExecutor.isMaster()) {
 
 			if (_log.isDebugEnabled()) {
@@ -140,7 +141,8 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		Company company) {
 
-		if (!(portalInstanceLifecycleListener instanceof Clusterable) &&
+		if (!(portalInstanceLifecycleListener instanceof
+				EveryNodeEveryStartup) &&
 			!clusterMasterExecutor.isMaster()) {
 
 			if (_log.isDebugEnabled()) {
@@ -167,7 +169,8 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		Company company) {
 
-		if (!(portalInstanceLifecycleListener instanceof Clusterable) &&
+		if (!(portalInstanceLifecycleListener instanceof
+				EveryNodeEveryStartup) &&
 			!clusterMasterExecutor.isMaster()) {
 
 			if (_log.isDebugEnabled()) {
@@ -204,7 +207,8 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		Company company) {
 
-		if (!(portalInstanceLifecycleListener instanceof Clusterable) &&
+		if (!(portalInstanceLifecycleListener instanceof
+				EveryNodeEveryStartup) &&
 			!clusterMasterExecutor.isMaster()) {
 
 			if (_log.isDebugEnabled()) {
@@ -333,7 +337,8 @@ public class PortalInstanceLifecycleListenerManagerImpl
 
 			_bundleContext.ungetService(serviceReference);
 
-			if (!(portalInstanceLifecycleListener instanceof Clusterable) &&
+			if (!(portalInstanceLifecycleListener instanceof
+					EveryNodeEveryStartup) &&
 				!clusterMasterExecutor.isMaster()) {
 
 				if (_log.isDebugEnabled()) {

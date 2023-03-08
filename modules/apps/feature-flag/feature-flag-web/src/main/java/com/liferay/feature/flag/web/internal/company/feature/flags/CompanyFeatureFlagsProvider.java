@@ -14,7 +14,7 @@
 
 package com.liferay.feature.flag.web.internal.company.feature.flags;
 
-import com.liferay.portal.instance.lifecycle.Clusterable;
+import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	}
 )
 public class CompanyFeatureFlagsProvider
-	implements Clusterable, PortalInstanceLifecycleListener {
+	implements EveryNodeEveryStartup, PortalInstanceLifecycleListener {
 
 	public CompanyFeatureFlags getOrCreateCompanyFeatureFlags(long companyId) {
 		return _companyFeatureFlagsMap.computeIfAbsent(

@@ -17,5 +17,5 @@ package com.liferay.portal.instance.lifecycle;
 /**
  * @author Michael C. Han
  */
-public interface Clusterable {
+public interface EveryNodeEveryStartup {
 }

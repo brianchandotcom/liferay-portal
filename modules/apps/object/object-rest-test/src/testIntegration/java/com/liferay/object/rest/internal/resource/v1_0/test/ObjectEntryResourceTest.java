@@ -20,6 +20,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.util.ObjectDefinitionTestUtil;
@@ -50,6 +51,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.NotSupportedException;
 
@@ -113,32 +115,18 @@ public class ObjectEntryResourceTest {
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1,
-					false)));
+			_getDefaultObjectFieldsList(_OBJECT_FIELD_NAME_1));
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			_getDefaultObjectFieldsList(_OBJECT_FIELD_NAME_2));
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
-
-		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2,
-					false)));
-
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 
 		_siteScopedObjectDefinition1 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, true, null,
-						RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1,
-						false)),
+				_getDefaultObjectFieldsList(_OBJECT_FIELD_NAME_1),
 				ObjectDefinitionConstants.SCOPE_SITE);
 
 		_siteScopedObjectEntry1 = ObjectEntryTestUtil.addObjectEntry(
@@ -928,6 +916,15 @@ public class ObjectEntryResourceTest {
 		}
 
 		return jsonArray;
+	}
+
+	private List<ObjectField> _getDefaultObjectFieldsList(
+		String objectFieldName) {
+
+		return Collections.singletonList(
+			ObjectFieldUtil.createObjectField(
+				"Text", "String", true, true, null,
+				RandomTestUtil.randomString(), objectFieldName, false));
 	}
 
 	private void _postObjectEntryWithKeywords(String... keywords)

@@ -17,8 +17,9 @@ package com.liferay.object.rest.internal.manager.v1_0;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParser;
+import com.liferay.petra.function.transform.TransformUtil;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -43,18 +44,20 @@ public abstract class BaseObjectRelationshipElementsParserImpl<T>
 	}
 
 	protected List<T> parseMany(Object object) {
-		if (!(object instanceof List)) {
+		List<T> objects;
+
+		if (object instanceof Object[]) {
+			objects = (List<T>)Arrays.asList((Object[])object);
+		}
+		else if (object instanceof List) {
+			objects = (List<T>)object;
+		}
+		else {
 			throw new BadRequestException(
 				"Unable to create nested object entries");
 		}
 
-		List<T> list = new ArrayList<>();
-
-		for (Object curObject : (List<?>)object) {
-			list.add(parseOne(curObject));
-		}
-
-		return list;
+		return TransformUtil.transform(objects, this::parseOne);
 	}
 
 	protected abstract T parseOne(Object object);

@@ -44,6 +44,6 @@ export function PublishedAppsDashboardPage() {
 			items={apps}
 			messages={messages}
 			setDashboardNavigationItems={setDashboardNavigationItems}
-		></DashboardPage>
+		/>
 	);
 }

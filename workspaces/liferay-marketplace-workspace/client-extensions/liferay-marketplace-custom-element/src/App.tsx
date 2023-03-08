@@ -1,9 +1,9 @@
-import './App.scss';
-
 import {ClayIconSpriteContext} from '@clayui/icon';
 
 import AppRoutes from './Routes';
 import {getIconSpriteMap} from './liferay/constants';
+
+import './App.scss';
 
 interface AppProps {
 	route: string;

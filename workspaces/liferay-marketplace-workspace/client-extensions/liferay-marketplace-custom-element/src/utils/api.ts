@@ -184,6 +184,18 @@ export async function getOrders() {
 	return [];
 }
 
+export async function getChannelById(channelId: number) {
+	const channelResponse = await fetch(
+		`/o/headless-commerce-admin-channel/v1.0/channels/${channelId}`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return (await channelResponse.json()) as Channel;
+}
+
 export async function getProduct({appERC}: {appERC: string}) {
 	const response = await fetch(
 		`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${appERC}
@@ -230,7 +242,7 @@ export async function getProductSKU({appProductId}: {appProductId: number}) {
 		}
 	);
 
-	return await response.json();
+	return (await response.json()) as {items: SKU[]};
 }
 
 export async function getProductSpecifications({
@@ -264,4 +276,55 @@ export function patchAppByExternalReferenceCode({
 			method: 'PATCH',
 		}
 	);
+}
+
+export async function patchOrderByERC(erc: string, body: any) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/${erc}`,
+		{
+			body: JSON.stringify(body),
+			headers,
+			method: 'PATCH',
+		}
+	);
+
+	return response;
+}
+
+export async function postCartByChannelId({
+	cartBody,
+	channelId,
+}: {
+	cartBody: any;
+	channelId: number;
+}) {
+	const cartResponse = await fetch(
+		`/o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/carts`,
+		{
+			body: JSON.stringify(cartBody),
+			headers,
+			method: 'POST',
+		}
+	);
+
+	return (await cartResponse.json()) as PostCartResponse;
+}
+
+export async function postCheckoutCart({
+	body,
+	cartId,
+}: {
+	body?: any;
+	cartId: number;
+}) {
+	const response = await fetch(
+		`/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}/checkout`,
+		{
+			body: JSON.stringify(body),
+			headers,
+			method: 'POST',
+		}
+	);
+
+	return (await await response.json()) as PostCheckoutCartResponse;
 }

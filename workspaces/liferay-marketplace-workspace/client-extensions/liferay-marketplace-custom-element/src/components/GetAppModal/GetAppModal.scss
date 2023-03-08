@@ -1,0 +1,234 @@
+.get-app-modal {
+	&-body {
+		&-container {
+			display: flex;
+			flex-direction: column;
+			gap: 0.625rem;
+			padding: 1.063rem;
+			width: 34.5rem;
+		}
+
+		&-content {
+			&-alert {
+				&-icon {
+					filter: invert(31%) sepia(51%) saturate(769%)
+						hue-rotate(179deg) brightness(100%) contrast(98%);
+					height: 1rem;
+					margin-right: 0.75rem;
+					width: 1rem;
+				}
+
+				&-message {
+					color: #54555f;
+					font-family: 'Source Sans Pro', sans-serif;
+					font-size: 0.813rem;
+					font-weight: 400;
+					line-height: 1rem;
+				}
+			}
+
+			&-app-info {
+				&-container {
+					display: flex;
+					flex-direction: column;
+				}
+
+				&-name {
+					color: #282934;
+					font-family: 'Source Sans Pro', sans-serif;
+					font-size: 1rem;
+					font-weight: 600;
+					line-height: 1.5rem;
+				}
+
+				&-version {
+					color: #54555f;
+					font-family: 'Source Sans Pro', sans-serif;
+					font-size: 1rem;
+					font-weight: 400;
+					line-height: 1.5rem;
+				}
+			}
+
+			&-container {
+				align-items: center;
+				display: flex;
+				justify-content: space-between;
+			}
+
+			&-image {
+				height: 3.5rem;
+				width: 3.5rem;
+			}
+
+			&-left {
+				align-items: center;
+				display: flex;
+				gap: 1rem;
+				justify-content: center;
+			}
+
+			&-right {
+				align-items: end;
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+
+				&-price {
+					color: #282934;
+					font-family: 'Source Sans Pro', sans-serif;
+					font-size: 0.75rem;
+					font-weight: 600;
+					line-height: 1rem;
+				}
+
+				&-value {
+					color: #282934;
+					font-family: 'Source Sans Pro', sans-serif;
+					font-size: 1.125rem;
+					font-weight: 600;
+					line-height: 1.25rem;
+				}
+			}
+		}
+
+		&-card-container {
+			border: 1px solid #e2e2e4;
+			border-radius: 0.625rem;
+			height: 11.188rem;
+			width: 34.5rem;
+		}
+
+		&-card-header {
+			align-items: center;
+			background-color: #e2e2e4;
+			border-radius: 0.5rem 0.5rem 0 0;
+			display: flex;
+			height: 3.5rem;
+			justify-content: space-between;
+			padding: 1.25rem 1rem;
+			width: 34.5rem;
+
+			&-left-content {
+				color: #54555f;
+				font-family: 'Source Sans Pro', sans-serif;
+				font-size: 0.875rem;
+				font-weight: 600;
+				line-height: 1rem;
+			}
+
+			&-right-content {
+				&-account-info {
+					align-items: end;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+
+					&-email {
+						color: #54555f;
+						font-family: 'Source Sans Pro', sans-serif;
+						font-size: 0.688rem;
+						font-weight: 400;
+						line-height: 1rem;
+					}
+
+					&-icon {
+						height: 1.5rem;
+						width: 1.5rem;
+					}
+
+					&-name {
+						color: #282934;
+						font-family: 'Source Sans Pro', sans-serif;
+						font-size: 0.875rem;
+						font-weight: 600;
+						line-height: 1rem;
+					}
+				}
+
+				&-container {
+					align-items: center;
+					display: flex;
+					gap: 0.5rem;
+					justify-content: center;
+				}
+			}
+		}
+	}
+
+	&-button {
+		&-cancel {
+			background: none;
+			border: solid 2px #2b3a4b;
+			border-radius: 0.5rem;
+			color: #2b3a4b;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 1rem;
+			font-weight: 600;
+			height: 2.5rem;
+			line-height: 1.5rem;
+			width: 4.875rem;
+
+			&:hover {
+				background: #2b3a4b;
+				color: #fff;
+			}
+
+			transition: background 0.3s;
+			transition: color 0.3s;
+		}
+
+		&-get-this-app {
+			background-color: #0053f0;
+			border: none;
+			border-radius: 0.5rem;
+			color: #fff;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 1rem;
+			font-weight: 600;
+			height: 2.5rem;
+			line-height: 1.5rem;
+			width: 7.375rem;
+
+			&:hover {
+				background: #fff;
+				border: 2px solid #0053f0;
+				color: #0053f0;
+			}
+
+			transition: background 0.3s;
+			transition: border 0.3s;
+			transition: color 0.3s;
+		}
+	}
+
+	&-header {
+		&-container {
+			display: flex;
+			flex-direction: row;
+			gap: 0.25rem;
+			justify-content: space-between;
+			padding: 0.938rem 1.5rem;
+		}
+
+		&-description {
+			color: #6c6c75;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 0.813rem;
+			font-weight: 400;
+			line-height: 1rem;
+		}
+
+		&-left-content {
+			display: flex;
+			flex-direction: column;
+		}
+
+		&-title {
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 1.5rem;
+			font-weight: 700;
+			line-height: 2.5rem;
+		}
+	}
+}

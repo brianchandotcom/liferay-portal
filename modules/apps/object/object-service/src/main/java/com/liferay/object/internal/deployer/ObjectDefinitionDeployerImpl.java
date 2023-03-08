@@ -45,6 +45,7 @@ import com.liferay.object.internal.security.permission.resource.util.ObjectDefin
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayout;
+import com.liferay.object.notification.term.evaluator.handler.NotificationTermEvaluatorHandlerTracker;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
@@ -112,6 +113,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		GroupLocalService groupLocalService,
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ModelSearchRegistrarHelper modelSearchRegistrarHelper,
+		NotificationTermEvaluatorHandlerTracker
+			notificationTermEvaluatorHandlerTracker,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
@@ -144,6 +147,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_groupLocalService = groupLocalService;
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_modelSearchRegistrarHelper = modelSearchRegistrarHelper;
+		_notificationTermEvaluatorHandlerTracker =
+			notificationTermEvaluatorHandlerTracker;
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
@@ -270,8 +275,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				NotificationTermEvaluator.class,
 				new ObjectDefinitionNotificationTermEvaluator(
-					objectDefinition, _objectFieldLocalService,
-					_userLocalService),
+					_notificationTermEvaluatorHandlerTracker, objectDefinition),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"class.name", objectDefinition.getClassName()
 				).build()),
@@ -412,6 +416,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final GroupLocalService _groupLocalService;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
+	private final NotificationTermEvaluatorHandlerTracker
+		_notificationTermEvaluatorHandlerTracker;
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;

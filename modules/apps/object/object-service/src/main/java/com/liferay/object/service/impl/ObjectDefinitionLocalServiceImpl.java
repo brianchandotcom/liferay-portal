@@ -51,6 +51,7 @@ import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
+import com.liferay.object.notification.term.evaluator.handler.NotificationTermEvaluatorHandlerTracker;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -607,6 +608,7 @@ public class ObjectDefinitionLocalServiceImpl
 				_assetVocabularyLocalService, _bundleContext,
 				_dynamicQueryBatchIndexingActionableFactory, _groupLocalService,
 				_listTypeEntryLocalService, _modelSearchRegistrarHelper,
+				_notificationTermEvaluatorHandlerTracker,
 				_objectActionLocalService, this, _objectEntryLocalService,
 				_objectEntryManagerRegistry, _objectEntryService,
 				_objectFieldLocalService, _objectLayoutLocalService,
@@ -1659,6 +1661,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private MultiVMPool _multiVMPool;
+
+	@Reference
+	private NotificationTermEvaluatorHandlerTracker
+		_notificationTermEvaluatorHandlerTracker;
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;

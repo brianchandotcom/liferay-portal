@@ -15,17 +15,11 @@
 package com.liferay.object.internal.notification.term.contributor;
 
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
-import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.object.notification.term.evaluator.constants.NotificationTermEvaluatorConstants;
+import com.liferay.object.notification.term.evaluator.handler.NotificationTermEvaluatorHandler;
+import com.liferay.object.notification.term.evaluator.handler.NotificationTermEvaluatorHandlerTracker;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -36,13 +30,13 @@ public class ObjectDefinitionNotificationTermEvaluator
 	implements NotificationTermEvaluator {
 
 	public ObjectDefinitionNotificationTermEvaluator(
-		ObjectDefinition objectDefinition,
-		ObjectFieldLocalService objectFieldLocalService,
-		UserLocalService userLocalService) {
+		NotificationTermEvaluatorHandlerTracker
+			notificationTermEvaluatorHandlerTracker,
+		ObjectDefinition objectDefinition) {
 
+		_notificationTermEvaluatorHandlerTracker =
+			notificationTermEvaluatorHandlerTracker;
 		_objectDefinition = objectDefinition;
-		_objectFieldLocalService = objectFieldLocalService;
-		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -53,61 +47,30 @@ public class ObjectDefinitionNotificationTermEvaluator
 			return termName;
 		}
 
-		Map<String, Object> termValues = (Map<String, Object>)object;
+		Map<String, Object> variables = (Map<String, Object>)object;
 
-		if (termName.contains("_CREATOR")) {
-			if (context.equals(Context.RECIPIENT)) {
-				return String.valueOf(termValues.get("creator"));
+		NotificationTermEvaluatorHandler notificationTermEvaluatorHandler =
+			_notificationTermEvaluatorHandlerTracker.
+				getNotificationTermEvaluatorHandler(
+					NotificationTermEvaluatorConstants.CURRENT_USER);
+
+		while (notificationTermEvaluatorHandler != null) {
+			if (notificationTermEvaluatorHandler.isTermNameCriteriaMet(
+					_objectDefinition, termName)) {
+
+				return notificationTermEvaluatorHandler.evaluate(
+					variables, _objectDefinition, termName);
 			}
 
-			User user = _userLocalService.getUser(
-				GetterUtil.getLong(termValues.get("creator")));
-
-			return user.getFullName(true, true);
+			notificationTermEvaluatorHandler =
+				notificationTermEvaluatorHandler.getNext();
 		}
 
-		Map<String, Long> objectFieldIds =
-			_objectFieldIdsDCLSingleton.getSingleton(
-				this::_createObjectFieldIds);
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectFieldIds.get(termName));
-
-		if (objectField == null) {
-			return termName;
-		}
-
-		Object termValue = termValues.get(objectField.getName());
-
-		if (Validator.isNotNull(termValue)) {
-			return String.valueOf(termValue);
-		}
-
-		return String.valueOf(termValues.get(objectField.getDBColumnName()));
+		return termName;
 	}
 
-	private Map<String, Long> _createObjectFieldIds() {
-		Map<String, Long> objectFieldIds = HashMapBuilder.put(
-			"[%OBJECT_ENTRY_CREATOR%]", 0L
-		).build();
-
-		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId())) {
-
-			objectFieldIds.put(
-				ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-					_objectDefinition.getShortName(), objectField.getName()),
-				objectField.getObjectFieldId());
-		}
-
-		return objectFieldIds;
-	}
-
+	private final NotificationTermEvaluatorHandlerTracker
+		_notificationTermEvaluatorHandlerTracker;
 	private final ObjectDefinition _objectDefinition;
-	private final DCLSingleton<Map<String, Long>> _objectFieldIdsDCLSingleton =
-		new DCLSingleton<>();
-	private final ObjectFieldLocalService _objectFieldLocalService;
-	private final UserLocalService _userLocalService;
 
 }

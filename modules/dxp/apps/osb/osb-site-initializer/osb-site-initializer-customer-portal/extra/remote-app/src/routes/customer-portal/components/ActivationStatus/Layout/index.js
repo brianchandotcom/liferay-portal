@@ -53,10 +53,11 @@ const ActivationStatusLayout = ({
 							/>
 
 							<ClayCard.Description
-								className="col-8 h5 ml-2 px-0 text-truncate"
+								className="col-7 h5 ml-2 px-0"
 								displayType="title"
 								tag="h5"
 								title={project.name}
+								truncate={false}
 							>
 								{project.name}
 

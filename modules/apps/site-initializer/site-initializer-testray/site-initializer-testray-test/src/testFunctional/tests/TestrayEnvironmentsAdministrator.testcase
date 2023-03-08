@@ -8,6 +8,11 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
+	var categoryName = "Category 1";
+	var environmentFactorsName = "Environment Factors 1";
+	var optionsName = "Option 1";
+	var projectName = "Project 1";
+	var routineName = "Routine 1";
 	var testSiteName = "Testray 2";
 
 	setUp {
@@ -16,51 +21,43 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite(siteName = ${testSiteName});
-
-			Refresh();
-		}
-
-		task ("Go to Testray, go to Manage Sidebar") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			TestrayLayout.clickManageOnSidebar();
+			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		TestrayManage.deleteAllCategories();
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-		Testray.deleteAllProjects();
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "factorcategories",
+			objectName = "Category 1");
 
-		Testray.tearDownCP();
-
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "This is a test for LPS-157327 - Verify if As an Administrator I should be able to add and delete a Factor Option"
+	@description = "Story ID: LPS-159465 | Test Summary: Verify if As an Administrator I should be able to add and delete a Factor Option"
 	@priority = 5
 	test AdminCanAddAndDeleteFactorOption {
-		task ("Go to Categories and Add Factor Category") {
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+		task ("Given I create a new 'Category' via API") {
+			JSONTestray.addFactorCategory(categoryName = ${categoryName});
+		}	
 
-			TestrayManage.addNewCategory(category = "Environments_2 Factor Category");
-		}
+		task ("When I create a new Option") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-		task ("Go to Options on Manage Sidebar, Add Factor Option, change pagination and assert the Factor option has been created") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
 			TestrayManage.createNewOption(
-				category = "Environments_2 Factor Category",
-				option = "Environments_2 Factor Option");
+				category = ${categoryName},
+				option = ${optionsName});
 
 			Testray.changePaginationInModal(
 				numberItems = 20,
@@ -68,260 +65,245 @@ definition {
 
 			Testray.clickOnPageNumberModal(pageNumber = 2);
 
-			Testray.assertItemName(text = "Environments_2 Factor Option");
+			Testray.assertItemName(text = ${optionsName});
 		}
 
-		task ("Delete Factor Option and assert it deleted") {
+		task ("Then I should be able to delete the newly created option") {
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
-			TestrayManage.deleteOption(nameOptions = "Environments_2 Factor Option");
+			TestrayManage.deleteOption(nameOptions = ${optionsName});
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
-			Testray.assertItemNotPresent(text = "Environments_2 Factor Option");
+			Testray.assertItemNotPresent(text = ${optionsName});
 		}
 	}
 
-	@description = "This is a test for LPS-157231 - Verify if as an Administrator I am able to add Factor Categories"
+	@description = "Story ID: LPS-146939 | Test Summary: Verify if as an Administrator I am able to add Factor Categories"
 	@priority = 5
 	test AdminCanAddCategory {
-		task ("Go to Categories, add a category and check if the category was created") {
+		task ("Given I create a new 'Category' via API") {
+			JSONTestray.addFactorCategory(categoryName = ${categoryName});
+		}	
+
+		task ("When I go to manage system Categories") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			TestrayLayout.clickManageOnSidebar();
+
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
-
-			TestrayManage.addNewCategory(category = "Environments_1 Category");
-
-			Testray.assertItemName(text = "Environments_1 Category");
+		}
+		task ("Then I assert that the Category was created") {
+			Testray.assertItemName(text = ${categoryName});
 		}
 	}
 
-	@description = "This is a test for LPS-157309 - Verify if as an Administrator I am able to add Options"
+	@description = "Story ID: LPS-159465 | Test Summary: Verify if as an Administrator I am able to add Options"
 	@priority = 5
 	test AdminCanAddOptions {
-		task ("Go to Categories and Add Category") {
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+		task ("Given I create a new 'Category' via API") {
+			JSONTestray.addFactorCategory(categoryName = ${categoryName});
+		}	
 
-			TestrayManage.addNewCategory(category = "Environments_2 Category");
-		}
+		task ("When I go to Options under Manage Sidebar and add a new Option") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-		task ("Go to Options on Manage Sidebar, Add Options") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
 			TestrayManage.createNewOption(
-				category = "Environments_2 Category",
-				option = "Environments_2 Option");
+				category = ${categoryName},
+				option = ${optionsName});
 		}
 
-		task ("Change pagination and assert the new option has been created") {
+		task ("Then I should be able to see the created Option") {
 			Testray.changePaginationInModal(
 				numberItems = 20,
 				valuePagination = 150);
 
 			Testray.clickOnPageNumberModal(pageNumber = 2);
 
-			Testray.assertItemName(text = "Environments_2 Option");
+			Testray.assertItemName(text = ${optionsName});
 		}
 	}
 
-	@description = "This is a test for LPS-157321 - Verify if as an Administrator I am able to configure Default Environment Factors for a Routine"
+	@description = "Story ID: LPS-146939 | Test Summary: Verify if as an Administrator I am able to configure Default Environment Factors for a Routine"
 	@priority = 5
 	test AdminCanConfigureDefaultEnvironmentFactorsForRoutine {
-		task ("Go to Categories and Add two Category") {
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+		task ("Given I create a new 'Project', a new 'Routine' and new 'Environment Factors' via API") {
+			JSONTestray.addProject(
+				projectDescription = "Project Description 1",
+				projectName = ${projectName});
 
-			TestrayManage.addNewCategory(category = "Environments_1 Category A");
+			JSONTestray.addRoutine(
+				projectName = ${projectName},
+				routineName = ${routineName});
 
-			TestrayManage.addNewCategory(category = "Environments_1 Category B");
+			JSONTestray.addEnvironmentFactors(environmentFactorsName = ${environmentFactorsName});
 		}
 
-		task ("Go to Options on Manage Sidebar and Add New Option") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
-
-			TestrayManage.createNewOption(
-				category = "Environments_1 Category A",
-				option = "Option 1");
-
-			TestrayManage.createNewOption(
-				category = "Environments_1 Category A",
-				option = "Option 2");
-
-			TestrayManage.createNewOption(
-				category = "Environments_1 Category B",
-				option = "Option 3");
-
-			TestrayManage.closeModalInOptions();
-		}
-
-		task ("Create project, change pagination and create Routine") {
-			Testray.createProjectTestray(
-				description = "Projects_1 Description",
-				key_name = "Projects_1 Project");
+		task ("When I go to the Routine page") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+			TestrayContextMenu.clickContextMenuProjects(name = ${routineName});
 		}
 
-		task ("Add Environmental Factors and state that it is selected") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
+		task ("Then I assert affirm the Enviroment Factor created") {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
 
-			TestrayBuild.selectDefaultEnvironmentFactors(
-				label = "Environments_1 Category A",
-				label1 = "Environments_1 Category B",
-				listCategory = "Environments_1 Category A,Environments_1 Category B",
-				listOption = "Option 2",
-				listOption1 = "Option 3");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
-
-			TestrayBuild.verifyEnvironmentFactors(
-				label = "Environments_1 Category A",
-				label1 = "Environments_1 Category B",
-				listCategory = "Environments_1 Category A",
-				listCategory1 = "Environments_1 Category B",
-				listOption = "Option 2",
-				listOption1 = "Option 3");
+			TestrayBuild.verifySpecificEnvironmentFactors(
+				label = ${categoryName},
+				listCategory = ${categoryName},
+				listOption = ${optionsName});
 		}
 	}
 
-	@description = "This is a test for LPS-157237 - Verify if as an Administrator I am able to delete Factor Categories"
+	@description = "Story ID: LPS-146939 | Test Summary: Verify if as an Administrator I am able to delete Factor Categories"
 	@priority = 5
 	test AdminCanDeleteCategory {
-		task ("Go to Categories, add a category, Delete it, and check if the category has been deleted") {
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
-
-			TestrayManage.addNewCategory(category = "Environments_4 Category");
-
-			Testray.checkSuccessAlertAppearsAndDisappears();
+		task ("Given I create a new 'Category' via API") {
+			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 		}
 
-		task ("Delete category and check if the category has been deleted") {
-			TestrayManage.deleteCategory(
-				nameCategory = "Environments_4 Category",
-				selectCategories = "Categories");
+		task ("When I go to manage system Categories") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.assertItemNotPresent(text = "Environments_4 Category");
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+		}
+
+		task ("And I delete newly created category") {
+			TestrayManage.deleteCategory(
+				nameCategory = ${categoryName},
+				selectCategories = "Categories");
+		}
+
+		task ("Then I assert that the Category was deleted") {
+			Testray.assertItemNotPresent(text = ${categoryName});
 		}
 	}
 
-	@description = "This is a test for LPS-157307 - Verify if as an Administrator I am able to edit Factor Categories"
+	@description = "Story ID: LPS-146939 | Test Summary: Verify if as an Administrator I am able to edit Factor Categories"
 	@priority = 5
 	test AdminCanEditFactorCategories {
-		task ("Go to Categories, create the new category and then edit and state if the name has changed") {
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
-
-			TestrayManage.addNewCategory(category = "Environments_6 Category");
-
-			Testray.checkSuccessAlertAppearsAndDisappears();
+		task ("Given I create a new 'Category' via API") {
+			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 		}
 
-		task ("Edit a category and state if the name has edited") {
-			TestrayManage.editNameCategory(category = "Environments_6 Category Edited");
+		task ("When I go to manage system Categories") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.assertItemName(text = "Environments_6 Category Edited");
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+		}
+
+		task ("And I edit the category") {
+			TestrayManage.editCategoryTitle(
+				category = ${categoryName},
+				categoryNewName = "Category Edited");
+		}
+
+		task ("Then I should be able to say that the category title has been edited") {
+			Testray.assertItemName(text = "Category Edited");
+		}
+
+		task ("Delete object") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "factorcategories",
+				objectName = "Category Edited");
 		}
 	}
 
-	@description = "This is a test for LPS-157326 - Verify if as an Administrator I am able to edit the Option by changing the Category"
+	@description = "Story ID: LPS-159465 | Test Summary: Verify if as an Administrator I am able to edit the Option by changing the Category"
 	@priority = 5
 	test AdminCanEditOptionChangingCategory {
-		task ("Go to Categories and Add two Category") {
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
-
-			TestrayManage.addNewCategory(category = "Environments_8 Category A");
-
-			TestrayManage.addNewCategory(category = "Environments_8 Category B");
+		task ("Given I create a new 'Category' via API") {
+			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 		}
 
-		task ("Go to Options on Manage Sidebar and Add New Option") {
+		task ("When I create a new Option and a new category") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = "Category 2");
+
+			Testray.checkSuccessAlertAppearsAndDisappears();
+
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
 			TestrayManage.createNewOption(
-				category = "Environments_8 Category A",
-				option = "Environments_8 Option");
+				category = ${categoryName},
+				option = ${optionsName});
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
-		task ("Change pagination and edit new Option by changing the Category") {
+		task ("And then I edit it") {
 			Testray.changePaginationInModal(
 				numberItems = 20,
 				valuePagination = 150);
 
 			Testray.clickOnPageNumberModal(pageNumber = 2);
 
-			TestrayManage.editNewOptionName(
-				category = "Environments_8 Category B",
-				option = "Environments_8 Option");
+			TestrayManage.editOptionTitle(
+				category = "Category 2",
+				option = ${optionsName},
+				optionNewName = "Option Edited");
 		}
 
-		task ("Change the pagination and confirm that the option has been changed with a new category") {
-			Testray.assertItemName(text = "Environments_8 Category B");
+		task ("Then I should be able to say that the title of the option has changed") {
+			Testray.assertItemName(text = "Category 2");
 
-			Testray.assertItemNotPresent(text = "Environments_8 Category A");
+			Testray.assertItemNotPresent(text = ${categoryName});
 
-			Testray.assertItemName(text = "Environments_8 Option");
+			Testray.assertItemName(text = "Option Edited");
+		}
+
+		task ("Delete object") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "factorcategories",
+				objectName = "Category 2");
 		}
 	}
 
-	@description = "This is a test for LPS-157323 - Verify if as an Administrator I am able to edit the Option Name"
+	@description = "Story ID: LPS-159465 | Test Summary: Verify if as an Administrator I am able to edit the Option Name"
+	@ignore = "true"
 	@priority = 5
 	test AdminCanEditOptionName {
-		task ("Go to Categories and Add Category") {
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+		
+		// This test will be dropped as it is being covered in the above test
 
-			TestrayManage.addNewCategory(category = "Environments_7 Category");
-		}
-
-		task ("Go to Categories on Manage Sidebar and Create the new Options") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
-
-			TestrayManage.createNewOption(
-				category = "Environments_7 Category",
-				option = "Environments_7 Option");
-
-			Testray.checkSuccessAlertAppearsAndDisappears();
-		}
-
-		task ("Change the pagination and then edit and state if the name has Edited") {
-			Testray.changePaginationInModal(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.clickOnPageNumberModal(pageNumber = 2);
-
-			TestrayManage.editNewOptionName(
-				category = "Environments_7 Category",
-				option = "Environments_7 Option Edited");
-
-			Testray.assertItemName(text = "Environments_7 Option Edited");
-		}
 	}
 
-	@description = "This is a test for LPS-157328 - Verify if As an Administrator I should not be able to add a duplicate Factor Category"
+	@description = "Story ID: LPS-165582 | Test Summary: Verify if As an Administrator I should not be able to add a duplicate Factor Category"
 	@priority = 5
 	test AdminCanNotAddDuplicateFactorCategory {
-		task ("Go to Categories and Add Category duplicate") {
+		task ("Given I create a new 'Category' via API") {
+			JSONTestray.addFactorCategory(categoryName = ${categoryName});
+		}	
+
+		task ("When I try to add a new category with an existing title") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			TestrayLayout.clickManageOnSidebar();
+
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
-			TestrayManage.addNewCategory(category = "Environments_1 Category");
-
-			TestrayManage.addNewCategory(category = "Environments_1 Category");
+			TestrayManage.addNewCategory(category = ${categoryName});
 		}
 
 		task ("Then an error message is displayed") {
@@ -329,29 +311,27 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-166557 - Verify if As an Administrator I should not be able to add a duplicate Factor Options"
+	@description = "Story ID: LPS-165582 | Test Summary: Verify if As an Administrator I should not be able to add a duplicate Factor Options"
 	@priority = 5
 	test AdminCanNotAddDuplicateFactorOptions {
-		task ("Go to Categories and Add Category") {
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+		task ("Given I create a new 'Category' via API") {
+			JSONTestray.addFactorCategory(categoryName = ${categoryName});
+		}	
 
-			TestrayManage.addNewCategory(category = "Environments_1 Category");
+		task ("When I try the new duplicate Options") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.checkSuccessAlertAppearsAndDisappears();
-		}
-
-		task ("Go to Categories on Manage Sidebar and Create the new Options duplicate") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
 			TestrayManage.createNewOption(
-				category = "Environments_1 Category",
-				option = "Environments_1 Option");
+				category = ${categoryName},
+				option = ${optionsName});
 
 			TestrayManage.createNewOption(
-				category = "Environments_1 Category",
-				option = "Environments_1 Option");
+				category = ${categoryName},
+				option = ${optionsName});
 		}
 
 		task ("Then an error message is displayed") {
@@ -359,10 +339,14 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164136 - Verify that the user can not create a options if all the required fields are not filled in"
+	@description = "Story ID: LPS-159465 | Test Summary: Verify that the user can not create a options if all the required fields are not filled in"
 	@priority = 3
 	test AdminCanViewRequiredField {
-		task ("Go to Categories and Add Category without name") {
+		task ("Given I try to create Options without a title") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			TestrayLayout.clickManageOnSidebar();
+
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
 			TestrayManage.createNewOption(
@@ -370,7 +354,7 @@ definition {
 				option = "");
 		}
 
-		task ("Assert a required field message is displayed") {
+		task ("Then I assert that a required field message is displayed") {
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",
 				warningMessage = "This field is required.");
@@ -381,16 +365,20 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-162506 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name in Category"
+	@description = "Story ID: LPS-159465 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name in Category"
 	@priority = 3
 	test AdminCanViewWarningMessage {
-		task ("Go to Categories and Add Category") {
+		task ("Given I try to create Category without a title") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			TestrayLayout.clickManageOnSidebar();
+			
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory();
 		}
 
-		task ("Assert a warning message is displayed") {
+		task ("Then I assert that a required field message is displayed") {
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",
 				warningMessage = "name is a required field");

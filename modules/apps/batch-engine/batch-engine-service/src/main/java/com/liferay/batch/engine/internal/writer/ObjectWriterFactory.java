@@ -40,15 +40,10 @@ public class ObjectWriterFactory {
 			simpleFilterProvider.setFailOnUnknownId(false);
 		}
 		else {
-			Set<String> excludeFieldNames = new HashSet<>(allFieldNames);
-
-			excludeFieldNames.removeAll(includeFieldNames);
-
-			SimpleBeanPropertyFilter simpleBeanPropertyFilter =
-				SimpleBeanPropertyFilter.serializeAllExcept(excludeFieldNames);
-
 			simpleFilterProvider.addFilter(
-				"Liferay.Vulcan", simpleBeanPropertyFilter);
+				"Liferay.Vulcan",
+				SimpleBeanPropertyFilter.filterOutAllExcept(
+					new HashSet<>(includeFieldNames)));
 		}
 
 		return _objectMapper.writer(simpleFilterProvider);

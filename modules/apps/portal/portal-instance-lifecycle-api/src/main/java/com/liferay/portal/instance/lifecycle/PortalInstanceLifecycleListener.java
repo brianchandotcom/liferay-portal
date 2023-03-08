@@ -17,12 +17,26 @@ package com.liferay.portal.instance.lifecycle;
 import com.liferay.portal.kernel.model.Company;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Michael C. Han
  */
 @ProviderType
 public interface PortalInstanceLifecycleListener {
+
+	public default long getLastModifiedTime() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		return bundle.getLastModified();
+	}
+
+	public default String getName() {
+		Class<?> clazz = getClass();
+
+		return clazz.getName();
+	}
 
 	public default void portalInstancePreregistered(Company company)
 		throws Exception {

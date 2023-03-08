@@ -106,8 +106,8 @@ public class DummyFolderStagedModelRepository
 
 		_dummyFolders.removeIf(
 			dummyFolder ->
-				Objects.equals(dummyFolder.getUuid(), uuid) &&
-				(dummyFolder.getGroupId() == groupId));
+				Objects.equals(uuid, dummyFolder.getUuid()) &&
+				(groupId == dummyFolder.getGroupId()));
 	}
 
 	@Override
@@ -126,17 +126,15 @@ public class DummyFolderStagedModelRepository
 	public DummyFolder fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		List<DummyFolder> dummyFolders = ListUtil.filter(
-			_dummyFolders,
-			dummyFolder ->
-				Objects.equals(dummyFolder.getUuid(), uuid) &&
-				(dummyFolder.getGroupId() == groupId));
+		for (DummyFolder dummyFolder : _dummyFolders) {
+			if (Objects.equals(dummyFolder.getUuid(), uuid) &&
+				(groupId == dummyFolder.getGroupId())) {
 
-		if (dummyFolders.isEmpty()) {
-			return null;
+				return dummyFolder;
+			}
 		}
 
-		return dummyFolders.get(0);
+		return null;
 	}
 
 	@Override
@@ -304,14 +302,13 @@ public class DummyFolderStagedModelRepository
 	}
 
 	public DummyFolder getFolder(long folderId) {
-		List<DummyFolder> dummyFolders = ListUtil.filter(
-			_dummyFolders, f -> f.getId() == folderId);
-
-		if (dummyFolders.isEmpty()) {
-			throw new RuntimeException(new NoSuchModelException());
+		for (DummyFolder dummyFolder : _dummyFolders) {
+			if (folderId == dummyFolder.getId()) {
+				return dummyFolder;
+			}
 		}
 
-		return dummyFolders.get(0);
+		throw new RuntimeException(new NoSuchModelException());
 	}
 
 	@Override

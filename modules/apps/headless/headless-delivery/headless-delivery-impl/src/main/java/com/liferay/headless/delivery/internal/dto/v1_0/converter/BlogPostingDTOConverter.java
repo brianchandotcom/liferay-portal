@@ -179,7 +179,7 @@ public class BlogPostingDTOConverter
 					false);
 				contentValue = ContentValueUtil.toContentValue(
 					"image.contentValue", fileEntry::getContentStream,
-					dtoConverterContext.getUriInfoOptional());
+					dtoConverterContext.getUriInfo());
 				imageId = coverImageFileEntryId;
 			}
 		};

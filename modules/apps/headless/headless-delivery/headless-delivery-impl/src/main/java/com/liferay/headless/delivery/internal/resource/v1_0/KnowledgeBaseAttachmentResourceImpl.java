@@ -33,7 +33,6 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Map;
-import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
 
@@ -228,7 +227,7 @@ public class KnowledgeBaseAttachmentResourceImpl
 					false);
 				contentValue = ContentValueUtil.toContentValue(
 					"contentValue", fileEntry::getContentStream,
-					Optional.of(contextUriInfo));
+					contextUriInfo);
 				encodingFormat = fileEntry.getMimeType();
 				externalReferenceCode = fileEntry.getExternalReferenceCode();
 				fileExtension = fileEntry.getExtension();

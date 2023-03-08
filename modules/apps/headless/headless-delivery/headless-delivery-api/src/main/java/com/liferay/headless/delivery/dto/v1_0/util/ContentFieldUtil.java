@@ -151,8 +151,7 @@ public class ContentFieldUtil {
 		String valueString) {
 
 		try {
-			Optional<UriInfo> uriInfoOptional =
-				dtoConverterContext.getUriInfoOptional();
+			UriInfo uriInfo = dtoConverterContext.getUriInfo();
 
 			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType()) ||
 				Objects.equals("date", ddmFormField.getType())) {
@@ -181,7 +180,7 @@ public class ContentFieldUtil {
 						document = ContentDocumentUtil.toContentDocument(
 							dlURLHelper,
 							"contentFields.contentFieldValue.document",
-							fileEntry, uriInfoOptional);
+							fileEntry, uriInfo);
 					}
 				};
 			}
@@ -240,8 +239,7 @@ public class ContentFieldUtil {
 						image = ContentDocumentUtil.toContentDocument(
 							dlURLHelper,
 							"contentFields.contentFieldValue.image",
-							dlAppService.getFileEntry(fileEntryId),
-							uriInfoOptional);
+							dlAppService.getFileEntry(fileEntryId), uriInfo);
 
 						String alt = jsonObject.getString("alt");
 

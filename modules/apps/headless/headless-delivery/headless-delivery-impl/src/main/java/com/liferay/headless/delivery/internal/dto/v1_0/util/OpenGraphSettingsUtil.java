@@ -71,7 +71,7 @@ public class OpenGraphSettingsUtil {
 							"openGraphSettings.contentFieldValue.image",
 							dlAppService.getFileEntry(
 								openGraphImageFileEntryId),
-							dtoConverterContext.getUriInfoOptional());
+							dtoConverterContext.getUriInfo());
 					});
 			}
 		};

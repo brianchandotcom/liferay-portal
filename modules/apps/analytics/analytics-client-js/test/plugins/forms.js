@@ -23,7 +23,6 @@ describe('Forms Plugin', () => {
 	let duration;
 
 	beforeEach(() => {
-
 		// Force attaching DOM Content Loaded event
 
 		Object.defineProperty(document, 'readyState', {
@@ -172,6 +171,7 @@ describe('Forms Plugin', () => {
 					properties: {
 						fieldName: 'myField',
 						formId: 'formId',
+						title: 'Form Title',
 					},
 				}),
 			]);
@@ -214,6 +214,7 @@ describe('Forms Plugin', () => {
 						fieldName: 'myField',
 						focusDuration: expect.any(Number),
 						formId: 'formId',
+						title: 'Form Title',
 					}),
 				}),
 			]);

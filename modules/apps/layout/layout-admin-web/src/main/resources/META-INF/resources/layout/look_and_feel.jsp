@@ -128,9 +128,19 @@ else {
 >
 	<h3 class="sheet-subtitle"><liferay-ui:message key="theme" /></h3>
 
-	<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
+	<clay:radio
+		checked="<%= selLayout.isInheritLookAndFeel() %>"
+		label="<%= taglibLabel %>"
+		name='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'
+		value="true"
+	/>
 
-	<aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
+	<clay:radio
+		checked="<%= !selLayout.isInheritLookAndFeel() %>"
+		label='<%= LanguageUtil.get(request, "define-a-custom-theming-for-this-page") %>'
+		name='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'
+		value="false"
+	/>
 
 	<c:if test="<%= !group.isLayoutPrototype() %>">
 		<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">

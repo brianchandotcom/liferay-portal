@@ -96,7 +96,7 @@ public class JenkinsEventsManagementLink extends ManagementLink {
 
 	@Override
 	public String getDescription() {
-		return "Configure jenkins event listeners & publishers";
+		return "Configure Jenkins event listeners and publishers";
 	}
 
 	@Override

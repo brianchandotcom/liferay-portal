@@ -102,21 +102,15 @@ public class DDMIndexerImplTest {
 
 		String fieldValue = "Create New";
 
-		LocalizedValue localizedValue =
-			DDMFormValuesTestUtil.createLocalizedValue(
-				fieldValue, LocaleUtil.US);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				_FIELD_NAME, localizedValue);
-
-		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
-
-		DDMFormValues ddmFormValues = _createDDMFormValues(
-			ddmForm, ddmFormFieldValue);
-
 		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues, LocaleUtil.US);
+			_createDDMStructure(ddmForm),
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						fieldValue, LocaleUtil.US))),
+			LocaleUtil.US);
 
 		Assert.assertEquals(fieldValue, indexableAttributes);
 	}
@@ -130,21 +124,15 @@ public class DDMIndexerImplTest {
 
 		String fieldValue = StringPool.BLANK;
 
-		LocalizedValue localizedValue =
-			DDMFormValuesTestUtil.createLocalizedValue(
-				fieldValue, LocaleUtil.US);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				_FIELD_NAME, localizedValue);
-
-		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
-
-		DDMFormValues ddmFormValues = _createDDMFormValues(
-			ddmForm, ddmFormFieldValue);
-
 		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues, LocaleUtil.US);
+			_createDDMStructure(ddmForm),
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						fieldValue, LocaleUtil.US))),
+			LocaleUtil.US);
 
 		Assert.assertEquals(fieldValue, indexableAttributes);
 	}
@@ -163,21 +151,15 @@ public class DDMIndexerImplTest {
 
 		String fieldValue = StringPool.BLANK;
 
-		LocalizedValue localizedValue =
-			DDMFormValuesTestUtil.createLocalizedValue(
-				fieldValue, LocaleUtil.US);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				_FIELD_NAME, localizedValue);
-
-		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
-
-		DDMFormValues ddmFormValues = _createDDMFormValues(
-			ddmForm, ddmFormFieldValue);
-
 		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues, LocaleUtil.US);
+			_createDDMStructure(ddmForm),
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						fieldValue, LocaleUtil.US))),
+			LocaleUtil.US);
 
 		Assert.assertEquals(fieldValue, indexableAttributes);
 	}
@@ -191,21 +173,15 @@ public class DDMIndexerImplTest {
 
 		String fieldValue = "null";
 
-		LocalizedValue localizedValue =
-			DDMFormValuesTestUtil.createLocalizedValue(
-				fieldValue, LocaleUtil.US);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				_FIELD_NAME, localizedValue);
-
-		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
-
-		DDMFormValues ddmFormValues = _createDDMFormValues(
-			ddmForm, ddmFormFieldValue);
-
 		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues, LocaleUtil.US);
+			_createDDMStructure(ddmForm),
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						fieldValue, LocaleUtil.US))),
+			LocaleUtil.US);
 
 		Assert.assertEquals(fieldValue, indexableAttributes);
 	}

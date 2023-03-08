@@ -41,51 +41,6 @@ public class DispatchTriggerResourceTest
 
 	@Override
 	@Test
-	public void testGraphQLGetDispatchTriggersPage() throws Exception {
-		DispatchTrigger dispatchTrigger1 =
-			testGraphQLGetDispatchTriggersPage_addDispatchTrigger();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"dispatchTriggers", new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		JSONObject dispatchTriggersJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/dispatchTriggers");
-
-		long totalCount = dispatchTriggersJSONObject.getLong("totalCount");
-
-		DispatchTrigger dispatchTrigger2 =
-			testGraphQLGetDispatchTriggersPage_addDispatchTrigger();
-		DispatchTrigger dispatchTrigger3 =
-			testGraphQLGetDispatchTriggersPage_addDispatchTrigger();
-
-		dispatchTriggersJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/dispatchTriggers");
-
-		Assert.assertEquals(
-			totalCount + 2, dispatchTriggersJSONObject.getLong("totalCount"));
-
-		assertContains(
-			dispatchTrigger1,
-			Arrays.asList(
-				DispatchTriggerSerDes.toDTOs(
-					dispatchTriggersJSONObject.getString("items"))));
-		assertContains(
-			dispatchTrigger2,
-			Arrays.asList(
-				DispatchTriggerSerDes.toDTOs(
-					dispatchTriggersJSONObject.getString("items"))));
-		assertContains(
-			dispatchTrigger3,
-			Arrays.asList(
-				DispatchTriggerSerDes.toDTOs(
-					dispatchTriggersJSONObject.getString("items"))));
-	}
-
-	@Override
-	@Test
 	public void testPostDispatchTrigger() throws Exception {
 		DispatchTrigger randomDispatchTrigger = randomDispatchTrigger();
 

@@ -15,12 +15,14 @@
 package com.liferay.jethr0.project.prioritizer;
 
 import com.liferay.jethr0.object.ObjectDALO;
+import com.liferay.jethr0.project.comparator.ProjectComparatorDALO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -53,7 +55,14 @@ public class ProjectPrioritizerDALO extends ObjectDALO {
 		List<ProjectPrioritizer> projectPrioritizers = new ArrayList<>();
 
 		for (JSONObject jsonObject : retrieve()) {
-			projectPrioritizers.add(_newProjectPrioritizer(jsonObject));
+			ProjectPrioritizer projectPrioritizer =
+				new DefaultProjectPrioritizer(jsonObject);
+
+			projectPrioritizer.addProjectComparators(
+				_projectComparatorDALO.retrieveProjectComparators(
+					projectPrioritizer));
+
+			projectPrioritizers.add(projectPrioritizer);
 		}
 
 		return projectPrioritizers;
@@ -61,6 +70,13 @@ public class ProjectPrioritizerDALO extends ObjectDALO {
 
 	public ProjectPrioritizer updateProjectPrioritizer(
 		ProjectPrioritizer projectPrioritizer) {
+
+		projectPrioritizer = _newProjectPrioritizer(
+			update(projectPrioritizer.getJSONObject()));
+
+		projectPrioritizer.addProjectComparators(
+			_projectComparatorDALO.retrieveProjectComparators(
+				projectPrioritizer));
 
 		return _newProjectPrioritizer(
 			update(projectPrioritizer.getJSONObject()));
@@ -74,5 +90,8 @@ public class ProjectPrioritizerDALO extends ObjectDALO {
 	private ProjectPrioritizer _newProjectPrioritizer(JSONObject jsonObject) {
 		return new DefaultProjectPrioritizer(jsonObject);
 	}
+
+	@Autowired
+	private ProjectComparatorDALO _projectComparatorDALO;
 
 }

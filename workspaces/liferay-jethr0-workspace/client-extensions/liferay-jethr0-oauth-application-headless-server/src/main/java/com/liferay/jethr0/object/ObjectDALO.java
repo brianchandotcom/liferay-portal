@@ -140,6 +140,10 @@ public class ObjectDALO {
 	}
 
 	protected List<JSONObject> retrieve() {
+		return retrieve(_getObjectURLPath());
+	}
+
+	protected List<JSONObject> retrieve(String objectURLPath) {
 		List<JSONObject> jsonObjects = new ArrayList<>();
 
 		int currentPage = 1;
@@ -151,7 +155,7 @@ public class ObjectDALO {
 			for (int i = 0; i <= _RETRY_COUNT; i++) {
 				try {
 					String response = WebClient.create(
-						_liferayPortalURL + _getObjectURLPath()
+						_liferayPortalURL + objectURLPath
 					).get(
 					).uri(
 						uriBuilder -> uriBuilder.queryParam(

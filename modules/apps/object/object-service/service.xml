@@ -275,6 +275,10 @@
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="indexed" />
 		</finder>
+		<finder name="ODI_L" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="localized" />
+		</finder>
 		<finder name="ODI_N" return-type="ObjectDefinition">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="name" />

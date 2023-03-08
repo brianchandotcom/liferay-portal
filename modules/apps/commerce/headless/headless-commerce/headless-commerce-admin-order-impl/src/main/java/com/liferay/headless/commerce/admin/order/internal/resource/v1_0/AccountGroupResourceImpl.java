@@ -20,8 +20,8 @@ import com.liferay.commerce.order.rule.model.COREntryRel;
 import com.liferay.commerce.order.rule.service.COREntryRelService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.AccountGroup;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccountGroup;
-import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.AccountGroupDTOConverter;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.AccountGroupResource;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -67,8 +67,11 @@ public class AccountGroupResourceImpl
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 
-	@Reference
-	private AccountGroupDTOConverter _accountGroupDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.AccountGroupDTOConverter)"
+	)
+	private DTOConverter<CommerceAccountGroup, AccountGroup>
+		_accountGroupDTOConverter;
 
 	@Reference
 	private CommerceAccountGroupService _commerceAccountGroupService;

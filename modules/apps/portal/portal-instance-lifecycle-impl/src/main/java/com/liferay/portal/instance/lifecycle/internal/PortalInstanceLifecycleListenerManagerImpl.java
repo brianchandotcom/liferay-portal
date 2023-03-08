@@ -20,12 +20,14 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -64,8 +66,15 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(service = AopService.class)
 @Transactional(propagation = Propagation.REQUIRED)
 public class PortalInstanceLifecycleListenerManagerImpl
-	implements AopService, PortalInstanceLifecycleManager {
+	implements AopService, IdentifiableOSGiService,
+			   PortalInstanceLifecycleManager {
 
+	@Override
+	public String getOSGiServiceIdentifier() {
+		return PortalInstanceLifecycleListenerManagerImpl.class.getName();
+	}
+
+	@Clusterable
 	@Override
 	public void preregisterCompany(Company company) {
 		for (PortalInstanceLifecycleListener portalInstanceLifecycleListener :
@@ -75,6 +84,7 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		}
 	}
 
+	@Clusterable
 	@Override
 	public void preunregisterCompany(Company company) {
 		for (PortalInstanceLifecycleListener portalInstanceLifecycleListener :
@@ -84,6 +94,7 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		}
 	}
 
+	@Clusterable
 	@Override
 	public void registerCompany(Company company) {
 		_companies.add(company);
@@ -95,6 +106,7 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		}
 	}
 
+	@Clusterable
 	@Override
 	public void unregisterCompany(Company company) {
 		_companies.remove(company);

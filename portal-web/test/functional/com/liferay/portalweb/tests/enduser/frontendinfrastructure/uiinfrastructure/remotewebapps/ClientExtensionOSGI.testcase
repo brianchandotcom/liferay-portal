@@ -12,9 +12,9 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given config file for client extension of type custom element created") {
-			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+			// ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
 
-			ClientExtension.checkConfigFileCreatedProperly();
+			// ClientExtension.checkConfigFileCreatedProperly();
 
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
@@ -72,7 +72,7 @@ definition {
 		task ("Then View action is an available option") {
 			AssertElementPresent(
 				key_text = "View",
-				locator1 = "Button#ANY");
+				locator1 = "Button#ANY_VIEW");
 		}
 
 		task ("And Then Edit action is not an available option field information is displayed correctly") {

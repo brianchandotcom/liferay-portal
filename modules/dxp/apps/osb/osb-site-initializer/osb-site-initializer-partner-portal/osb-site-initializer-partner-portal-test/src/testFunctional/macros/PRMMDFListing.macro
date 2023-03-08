@@ -6,84 +6,84 @@ definition {
 
 		if (isSet(mdfID)) {
 			AssertVisible(
-				key_rowNumber = "Request ID",
+				key_rowNumber = 1,
 				key_rowValue = ${mdfID},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(mdfStatus)) {
 			AssertVisible(
-				key_rowNumber = "Status",
+				key_rowNumber = 2,
 				key_rowValue = ${mdfStatus},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(activityPeriod)) {
 			AssertVisible(
-				key_rowNumber = "Activity Period",
+				key_rowNumber = 3,
 				key_rowValue = ${activityPeriod},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(partnerName)) {
 			AssertVisible(
-				key_rowNumber = "Partner",
+				key_rowNumber = 4,
 				key_rowValue = ${partnerName},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(totalCost)) {
 			AssertVisible(
-				key_rowNumber = "Total Cost",
+				key_rowNumber = 5,
 				key_rowValue = ${totalCost},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(campaignName)) {
 			AssertVisible(
-				key_rowNumber = "Name",
+				key_rowNumber = 6,
 				key_rowValue = ${campaignName},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(requestedValue)) {
 			AssertVisible(
-				key_rowNumber = "Requested",
+				key_rowNumber = 7,
 				key_rowValue = ${requestedValue},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(amountClaimed)) {
 			AssertVisible(
-				key_rowNumber = "Amount Claimed",
+				key_rowNumber = 8,
 				key_rowValue = ${amountClaimed},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(approved)) {
 			AssertVisible(
-				key_rowNumber = "Approved",
+				key_rowNumber = 9,
 				key_rowValue = ${approved},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(paidValue)) {
 			AssertVisible(
-				key_rowNumber = "Paid",
+				key_rowNumber = 10,
 				key_rowValue = ${paidValue},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(submittedDate)) {
 			AssertVisible(
-				key_rowNumber = "Date Submitted",
+				key_rowNumber = 11,
 				key_rowValue = ${submittedDate},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}
 
 		if (isSet(lastModification)) {
 			AssertVisible(
-				key_rowNumber = "Last Modified",
+				key_rowNumber = 12,
 				key_rowValue = ${lastModification},
 				locator1 = "PRMMDFListing#LISTING_TABLE");
 		}

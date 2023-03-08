@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.commerce.order.rule.model.COREntryRel-AccountGroup",
-	service = {DTOConverter.class, OrderRuleAccountGroupDTOConverter.class}
+	service = DTOConverter.class
 )
 public class OrderRuleAccountGroupDTOConverter
 	implements DTOConverter<COREntryRel, OrderRuleAccountGroup> {

@@ -3365,6 +3365,56 @@ definition {
 		}
 	}
 
+	@description = "LPS-164948 - Verify that the Formula Field is not searchable"
+	@priority = 3
+	test FormulaFieldIsNotSearchable {
+		property custom.properties = "feature.flag.LPS-164948=true";
+
+		task ("Given: A Custom Object with two fields") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 176845",
+				objectName = "CustomObject176845",
+				pluralLabelName = "Custom Objects 176845");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Custom Integer 1",
+				fieldName = "customInteger1",
+				fieldType = "Integer",
+				isRequired = "false",
+				objectName = "CustomObject176845");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Formula",
+				fieldLabelName = "Custom Formula Field",
+				fieldName = "customFormulaField",
+				fieldType = "String",
+				formulaScript = "customInteger + customInteger1",
+				isRequired = "false",
+				objectName = "CustomObject176845",
+				outputOption = "Integer");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176845");
+		}
+
+		task ("When: An entry is added (via API) and the user searches for the Formula Field") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customInteger1",
+				objectName = "CustomObject176845",
+				value = 15);
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject176845");
+
+			Search.searchCP(searchTerm = 30);
+		}
+
+		task ("Then: The Formula Field is not searchable") {
+			AssertElementNotPresent(
+				fieldType = 30,
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_TYPE");
+		}
+	}
+
 	@description = "LPS-164948 - Verify that Formula fields can't be required"
 	@priority = 4
 	test FormulaFieldsIsNotMandatory {

@@ -72,14 +72,10 @@ public class ExecutePoshiElement extends PoshiElement {
 
 		String trimmedPoshiScript = poshiScript.trim();
 
-		Element element = getParent();
+		PoshiElement parentPoshiElement = (PoshiElement)getParent();
 
 		if (!trimmedPoshiScript.endsWith(";") &&
-			!(element instanceof AndPoshiElement ||
-			  element instanceof IfPoshiElement ||
-			  element instanceof NotPoshiElement)) {
-
-			PoshiElement parentPoshiElement = (PoshiElement)getParent();
+			!isConditionValidInParent(parentPoshiElement)) {
 
 			throw new PoshiScriptParserException(
 				"Missing semicolon", poshiScript, parentPoshiElement);

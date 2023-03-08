@@ -120,7 +120,9 @@ public class VarPoshiElement extends PoshiElement {
 	public void parsePoshiScript(String poshiScript)
 		throws PoshiScriptParserException {
 
-		checkSemicolon(poshiScript);
+		if (!(getParent() instanceof ExecutePoshiElement)) {
+			checkSemicolon(poshiScript);
+		}
 
 		if (poshiScript.startsWith("static var")) {
 			addAttribute("static", "true");
@@ -582,7 +584,7 @@ public class VarPoshiElement extends PoshiElement {
 
 	private static final String _VAR_VALUE_REGEX;
 
-	private static final String _VAR_VALUE_STRING_REGEX = "\".*?\"";
+	private static final String _VAR_VALUE_STRING_REGEX = "\".*\"";
 
 	private static final String _VAR_VALUE_VARIABLE_REGEX = "\\$\\{[\\w_-]+\\}";
 

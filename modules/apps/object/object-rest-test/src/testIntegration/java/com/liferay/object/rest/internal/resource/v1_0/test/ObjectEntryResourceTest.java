@@ -17,14 +17,13 @@ package com.liferay.object.rest.internal.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.util.ObjectEntryTestUtil;
+import com.liferay.object.rest.internal.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.internal.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -49,9 +48,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsUtil;
-
-import java.util.Collections;
-import java.util.List;
 
 import javax.ws.rs.NotSupportedException;
 
@@ -115,9 +111,11 @@ public class ObjectEntryResourceTest {
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			_getDefaultObjectFieldsList(_OBJECT_FIELD_NAME_1));
+			ObjectFieldTestUtil.createDefaultObjectFieldList(
+				_OBJECT_FIELD_NAME_1));
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			_getDefaultObjectFieldsList(_OBJECT_FIELD_NAME_2));
+			ObjectFieldTestUtil.createDefaultObjectFieldList(
+				_OBJECT_FIELD_NAME_2));
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
@@ -126,7 +124,8 @@ public class ObjectEntryResourceTest {
 
 		_siteScopedObjectDefinition1 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				_getDefaultObjectFieldsList(_OBJECT_FIELD_NAME_1),
+				ObjectFieldTestUtil.createDefaultObjectFieldList(
+					_OBJECT_FIELD_NAME_1),
 				ObjectDefinitionConstants.SCOPE_SITE);
 
 		_siteScopedObjectEntry1 = ObjectEntryTestUtil.addObjectEntry(
@@ -916,15 +915,6 @@ public class ObjectEntryResourceTest {
 		}
 
 		return jsonArray;
-	}
-
-	private List<ObjectField> _getDefaultObjectFieldsList(
-		String objectFieldName) {
-
-		return Collections.singletonList(
-			ObjectFieldUtil.createObjectField(
-				"Text", "String", true, true, null,
-				RandomTestUtil.randomString(), objectFieldName, false));
 	}
 
 	private void _postObjectEntryWithKeywords(String... keywords)

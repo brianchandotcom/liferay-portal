@@ -16,13 +16,13 @@ package com.liferay.object.rest.internal.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.util.ObjectEntryTestUtil;
+import com.liferay.object.rest.internal.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.internal.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -41,8 +41,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.Collections;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -66,10 +64,8 @@ public class RelatedObjectEntryResourceTest {
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
+			ObjectFieldTestUtil.createDefaultObjectFieldList(
+				_OBJECT_FIELD_NAME));
 
 		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);

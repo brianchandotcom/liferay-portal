@@ -17,11 +17,11 @@ package com.liferay.object.rest.internal.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.util.ObjectDefinitionTestUtil;
+import com.liferay.object.rest.internal.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.internal.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Collections;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -67,10 +66,8 @@ public class OpenAPIResourceTest {
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
+			ObjectFieldTestUtil.createDefaultObjectFieldList(
+				_OBJECT_FIELD_NAME));
 	}
 
 	@Test
@@ -87,10 +84,8 @@ public class OpenAPIResourceTest {
 		_user = UserTestUtil.addUser(_company);
 
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
+			ObjectFieldTestUtil.createDefaultObjectFieldList(
+				_OBJECT_FIELD_NAME),
 			ObjectDefinitionConstants.SCOPE_COMPANY, _user.getUserId());
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
@@ -164,10 +159,8 @@ public class OpenAPIResourceTest {
 		throws Exception {
 
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
+			ObjectFieldTestUtil.createDefaultObjectFieldList(
+				_OBJECT_FIELD_NAME));
 
 		ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(

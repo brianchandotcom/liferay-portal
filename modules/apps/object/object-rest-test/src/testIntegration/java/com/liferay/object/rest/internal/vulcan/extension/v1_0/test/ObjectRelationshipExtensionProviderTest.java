@@ -18,11 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.internal.util.ObjectFieldTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -75,10 +75,8 @@ public class ObjectRelationshipExtensionProviderTest {
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition = _publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
+			ObjectFieldTestUtil.createDefaultObjectFieldList(
+				_OBJECT_FIELD_NAME));
 
 		_objectEntry = _addObjectEntry(_OBJECT_FIELD_VALUE);
 

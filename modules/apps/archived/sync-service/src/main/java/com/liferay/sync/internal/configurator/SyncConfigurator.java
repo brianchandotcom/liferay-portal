@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.sync.internal.configuration.SyncServiceConfigurationValues;
-import com.liferay.sync.internal.messaging.SyncMaintenanceMessageListener;
+import com.liferay.sync.internal.scheduler.SyncMaintenanceSchedulerJobConfiguration;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
 import com.liferay.sync.util.SyncHelper;
 
@@ -70,7 +70,7 @@ public class SyncConfigurator extends BasePortalInstanceLifecycleListener {
 			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
 
 		_syncMaintenanceProcessorServiceRegistration = _registerMessageListener(
-			SyncMaintenanceMessageListener.DESTINATION_NAME);
+			SyncMaintenanceSchedulerJobConfiguration.DESTINATION_NAME);
 	}
 
 	@Deactivate

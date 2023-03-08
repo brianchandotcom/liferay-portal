@@ -185,7 +185,7 @@ public class OfflineOpenIdConnectSessionManager {
 			_schedulerJobConfigurationServiceRegistration =
 				bundleContext.registerService(
 					SchedulerJobConfiguration.class,
-					new TokensRefreshMessageListener(), null);
+					new TokensRefreshSchedulerJobConfiguration(), null);
 		}
 	}
 
@@ -418,7 +418,7 @@ public class OfflineOpenIdConnectSessionManager {
 
 	}
 
-	private class TokensRefreshMessageListener
+	private class TokensRefreshSchedulerJobConfiguration
 		implements SchedulerJobConfiguration {
 
 		@Override

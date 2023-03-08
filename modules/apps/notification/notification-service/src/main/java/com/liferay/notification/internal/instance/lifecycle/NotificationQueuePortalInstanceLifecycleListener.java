@@ -117,7 +117,7 @@ public class NotificationQueuePortalInstanceLifecycleListener
 		NotificationQueuePortalInstanceLifecycleListener.class);
 
 	@Reference(
-		target = "(component.factory=com.liferay.notification.internal.messaging.CheckNotificationQueueEntryMessageListener)"
+		target = "(component.factory=com.liferay.notification.internal.scheduler.CheckNotificationQueueEntrySchedulerJobConfiguration)"
 	)
 	private ComponentFactory<?> _componentFactory;
 

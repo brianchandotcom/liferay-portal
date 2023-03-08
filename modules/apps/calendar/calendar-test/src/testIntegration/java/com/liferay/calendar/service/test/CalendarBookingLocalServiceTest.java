@@ -31,7 +31,7 @@ import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarNotificationTemplateTestUtil;
 import com.liferay.calendar.test.util.CalendarStagingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
-import com.liferay.calendar.test.util.CheckBookingsMessageListenerTestUtil;
+import com.liferay.calendar.test.util.CheckBookingsSchedulerJobConfigurationTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RecurrenceUtil;
@@ -106,12 +106,12 @@ public class CalendarBookingLocalServiceTest {
 	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		CheckBookingsMessageListenerTestUtil.setUp();
+		CheckBookingsSchedulerJobConfigurationTestUtil.setUp();
 	}
 
 	@After
 	public void tearDown() {
-		CheckBookingsMessageListenerTestUtil.tearDown();
+		CheckBookingsSchedulerJobConfigurationTestUtil.tearDown();
 
 		CalendarStagingTestUtil.cleanUp();
 	}

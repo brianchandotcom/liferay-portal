@@ -215,7 +215,7 @@ definition {
 		WaitForConsoleTextPresent(value1 = "Cluster sample command is null");
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Scheduler job com.liferay.portal.cluster.multiple.sample.web.internal.messaging.ClusterSampleMessageListener.com.liferay.portal.cluster.multiple.sample.web.internal.messaging.ClusterSampleMessageListener already exists",
+			expectedText = "Scheduler job com.liferay.portal.cluster.multiple.sample.web.internal.scheduler.ClusterSampleSchedulerJobConfiguration.com.liferay.portal.cluster.multiple.sample.web.internal.scheduler.ClusterSampleSchedulerJobConfiguration already exists",
 			nodePort = 9080);
 
 		Clustering.viewTextPresentOnSpecificNode(

@@ -28,8 +28,8 @@ definition {
 				projectName = ${projectName});
 
 			JSONTestray.addTeam(
-				teamName = ${teamName},
-				projectName = ${projectName});
+				projectName = ${projectName},
+				teamName = ${teamName});
 		}
 	}
 
@@ -148,8 +148,8 @@ definition {
 	test AdminCanEditChangeComponent {
 		task ("Given that I create a new 'Team' and a new 'Component' via API") {
 			JSONTestray.addTeam(
-				teamName = "Team 2",
-				projectName = ${projectName}); 
+				projectName = ${projectName},
+				teamName = "Team 2");
 
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -204,9 +204,10 @@ definition {
 	test AdminCanEditComponent {
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addTeam(
-				teamName = ${teamName},
-				projectName = ${projectName}); 
+				projectName = ${projectName},
+				teamName = ${teamName});
 		}
+
 		task ("When I add a new Component without a Team") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -309,5 +310,5 @@ definition {
 				warningMessage = "name is a required field");
 		}
 	}
-	
+
 }

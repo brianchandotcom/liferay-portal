@@ -39,31 +39,27 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onAfterRemove(Group group) throws ModelListenerException {
-		try {
-			for (ObjectDefinition objectDefinition :
-					_objectDefinitionLocalService.getObjectDefinitions(
-						group.getCompanyId(), true, false,
-						WorkflowConstants.STATUS_APPROVED)) {
+		for (ObjectDefinition objectDefinition :
+			_objectDefinitionLocalService.getObjectDefinitions(
+				group.getCompanyId(), true, false,
+				WorkflowConstants.STATUS_APPROVED)) {
 
-				for (ObjectEntry objectEntry :
-						_objectEntryLocalService.getObjectEntries(
-							group.getGroupId(),
-							objectDefinition.getObjectDefinitionId(),
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+			for (ObjectEntry objectEntry :
+				_objectEntryLocalService.getObjectEntries(
+					group.getGroupId(),
+					objectDefinition.getObjectDefinitionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
-					try {
-						_objectEntryLocalService.deleteObjectEntry(objectEntry);
-					}
-					catch (PortalException portalException) {
-						_log.error(portalException);
-					}
+				try {
+					_objectEntryLocalService.deleteObjectEntry(objectEntry);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
 				}
 			}
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
 	}
+
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupModelListener.class);

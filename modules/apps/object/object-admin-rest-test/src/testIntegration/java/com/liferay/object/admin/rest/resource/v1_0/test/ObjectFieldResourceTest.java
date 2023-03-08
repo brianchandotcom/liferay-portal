@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
@@ -34,8 +36,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +50,22 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-146755", "true"
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-146755", "false"
+			).build());
+	}
+
 	@Before
 	@Override
 	public void setUp() throws Exception {
@@ -55,7 +75,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 
 		_objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), false, false,
+				TestPropsValues.getUserId(), false, true,
 				LocalizedMapUtil.getLocalizedMap(value), value, null, null,
 				LocalizedMapUtil.getLocalizedMap(value),
 				ObjectDefinitionConstants.SCOPE_COMPANY,

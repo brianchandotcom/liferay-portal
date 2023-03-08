@@ -191,7 +191,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 				plid, _getLayoutClassedModelUsageType(plid));
 		}
 
-		preparedStatement.setLong(12, layoutClassedModelUsageTypes.get(plid));
+		preparedStatement.setInt(12, layoutClassedModelUsageTypes.get(plid));
 
 		preparedStatement.addBatch();
 
@@ -244,7 +244,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 					preparedStatement.setLong(10, 0);
 					preparedStatement.setLong(11, 0);
 
-					preparedStatement.setLong(
+					preparedStatement.setInt(
 						12, LayoutClassedModelUsageConstants.TYPE_DEFAULT);
 
 					preparedStatement.addBatch();

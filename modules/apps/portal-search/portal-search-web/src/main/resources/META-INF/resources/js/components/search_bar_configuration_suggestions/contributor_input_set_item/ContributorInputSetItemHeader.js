@@ -14,15 +14,15 @@
 
 import React from 'react';
 
-import LearnMessage from '../../shared/LearnMessage';
-import {CONTRIBUTOR_TYPES} from '../../utils/types/contributorTypes';
+import LearnMessage from '../../../shared/LearnMessage';
+import {CONTRIBUTOR_TYPES} from '../../../utils/types/contributorTypes';
 
 function ContributorInputSetItemHeader({contributorName, learnMessages}) {
 	if (contributorName === CONTRIBUTOR_TYPES.BASIC) {
 		return (
 			<div className="contributor-input-set-item-header-root">
 				<h3 className="contributor-name sheet-subtitle">
-					{Liferay.Language.get('basic')}
+					{Liferay.Language.get('basic-suggestions-contributor')}
 				</h3>
 
 				<div className="contributor-description sheet-text">
@@ -36,7 +36,7 @@ function ContributorInputSetItemHeader({contributorName, learnMessages}) {
 		return (
 			<div className="contributor-input-set-item-header-root">
 				<h3 className="contributor-name sheet-subtitle">
-					{Liferay.Language.get('blueprint')}
+					{Liferay.Language.get('blueprint-suggestions-contributor')}
 				</h3>
 
 				<div className="contributor-description sheet-text">
@@ -48,6 +48,33 @@ function ContributorInputSetItemHeader({contributorName, learnMessages}) {
 						className="ml-1"
 						learnMessages={learnMessages}
 						resourceKey="search-bar-suggestions-blueprints"
+					/>
+				</div>
+			</div>
+		);
+	}
+
+	if (
+		contributorName === CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS ||
+		contributorName === CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS
+	) {
+		return (
+			<div className="contributor-input-set-item-header-root">
+				<h3 className="contributor-name sheet-subtitle">
+					{Liferay.Language.get(
+						'site-activities-suggestions-contributor'
+					)}
+				</h3>
+
+				<div className="contributor-description sheet-text">
+					{Liferay.Language.get(
+						'site-activities-suggestions-contributor-help'
+					)}
+
+					<LearnMessage
+						className="ml-1"
+						learnMessages={learnMessages}
+						resourceKey="search-bar-suggestions-site-activities"
 					/>
 				</div>
 			</div>

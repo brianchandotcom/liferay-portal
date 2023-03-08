@@ -17,10 +17,11 @@ import React, {useMemo} from 'react';
 
 import LearnMessage from '../../shared/LearnMessage';
 import InputSets, {useInputSets} from '../../shared/input_sets/index';
+import {ITEM_ID_PROPERTY} from '../../shared/input_sets/useInputSets';
 import cleanSuggestionsContributorConfiguration from '../../utils/clean_suggestions_contributor_configuration';
 import {CONTRIBUTOR_TYPES} from '../../utils/types/contributorTypes';
-import ContributorInputSetItem from './ContributorInputSetItem';
 import SuggestionContributorAddButton from './SuggestionContributorAddButton';
+import ContributorInputSetItem from './contributor_input_set_item/index';
 
 /**
  * Cleans up the fields array by removing those that do not have the required
@@ -31,16 +32,16 @@ import SuggestionContributorAddButton from './SuggestionContributorAddButton';
  */
 const removeEmptyFields = (fields) =>
 	fields.filter(({attributes, contributorName, displayGroupName, size}) => {
-		if (contributorName === CONTRIBUTOR_TYPES.BASIC) {
-			return displayGroupName && size;
+		if (contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT) {
+			return (
+				contributorName &&
+				displayGroupName &&
+				size &&
+				attributes?.sxpBlueprintId
+			);
 		}
 
-		return (
-			contributorName &&
-			displayGroupName &&
-			size &&
-			attributes?.sxpBlueprintId
-		);
+		return contributorName && displayGroupName && size;
 	});
 
 function SearchBarConfigurationSuggestions({
@@ -55,10 +56,12 @@ function SearchBarConfigurationSuggestions({
 		() =>
 			cleanSuggestionsContributorConfiguration(
 				initialSuggestionsContributorConfiguration,
+				isDXP,
 				isSearchExperiencesSupported
 			),
 		[
 			initialSuggestionsContributorConfiguration,
+			isDXP,
 			isSearchExperiencesSupported,
 		]
 	);
@@ -97,6 +100,24 @@ function SearchBarConfigurationSuggestions({
 			title: Liferay.Language.get('blueprint'),
 		};
 
+		const SITE_ACTIVITIES_OPTION = {
+			contributorName: CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
+			description: (
+				<>
+					{Liferay.Language.get(
+						'site-activities-suggestions-contributor-help'
+					)}
+
+					<LearnMessage
+						className="ml-1"
+						learnMessages={learnMessages}
+						resourceKey="search-bar-suggestions-site-activities"
+					/>
+				</>
+			),
+			title: Liferay.Language.get('site-activities'),
+		};
+
 		const options = [];
 
 		const basicContributorExists =
@@ -112,6 +133,10 @@ function SearchBarConfigurationSuggestions({
 			options.push(BLUEPRINT_OPTION);
 		}
 
+		if (isDXP) {
+			options.push(SITE_ACTIVITIES_OPTION);
+		}
+
 		return options;
 	}, [suggestionsContributorConfiguration.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -122,11 +147,31 @@ function SearchBarConfigurationSuggestions({
 					characterThreshold: '',
 				},
 				contributorName,
-				displayGroupName: '',
-				size: '',
+				displayGroupName: 'suggestions',
+				size: '5',
 			});
-		}
-		else if (contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT) {
+		} else if (
+			contributorName === CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS ||
+			contributorName === CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS
+		) {
+			onInputSetsAdd({
+				attributes: {
+					characterThreshold: '0',
+					count: '5',
+					matchDisplayLanguageId: true,
+				},
+				contributorName,
+				displayGroupName:
+					contributorName ===
+					CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS
+						? 'trending-searches'
+						: contributorName ===
+						  CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS
+						? 'top-searches'
+						: '',
+				size: '3',
+			});
+		} else if (contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT) {
 			onInputSetsAdd({
 				attributes: {
 					characterThreshold: '',
@@ -147,10 +192,10 @@ function SearchBarConfigurationSuggestions({
 			{removeEmptyFields(suggestionsContributorConfiguration).length ? (
 				removeEmptyFields(
 					suggestionsContributorConfiguration
-				).map(({id, ...item}) => (
+				).map(({[ITEM_ID_PROPERTY]: key, ...item}) => (
 					<input
 						hidden
-						key={id}
+						key={key}
 						name={`${namespace}${suggestionsContributorConfigurationName}`}
 						readOnly
 						value={JSON.stringify(item)}

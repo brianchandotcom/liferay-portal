@@ -110,6 +110,7 @@ export default function SearchBar({
 						? destinationFriendlyURL
 						: '/search',
 					groupId: Liferay.ThemeDisplay.getScopeGroupId(),
+					keywordsParameterName,
 					plid: Liferay.ThemeDisplay.getPlid(),
 					scope: scopeValue,
 					search: searchValue,
@@ -183,7 +184,6 @@ export default function SearchBar({
 		setInputValue(value);
 
 		if (value.trim().length >= _getLowestSuggestionsDisplayThreshold()) {
-
 			// Immediately show loading spinner unless the value hasn't changed.
 			// If the value hasn't changed, no new request will be made and the
 			// loading spinner will not be shown.
@@ -196,9 +196,7 @@ export default function SearchBar({
 
 			setActive(true);
 			setAutocompleteSearchValue(value.trim());
-		}
-		else {
-
+		} else {
 			// Hide dropdown when value is below threshold.
 
 			setActive(false);

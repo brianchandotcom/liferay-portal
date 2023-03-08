@@ -17,7 +17,16 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
-function BasicAttributes({index, onInputSetItemChange, value}) {
+import DisplayGroupNameInput from '../inputs/DisplayGroupNameInput';
+import SizeInput from '../inputs/SizeInput';
+
+function BasicAttributes({
+	index,
+	onBlur,
+	onInputSetItemChange,
+	touched,
+	value,
+}) {
 	const _handleChangeAttribute = (property) => (event) => {
 		onInputSetItemChange(index, {
 			attributes: {
@@ -28,33 +37,51 @@ function BasicAttributes({index, onInputSetItemChange, value}) {
 	};
 
 	return (
-		<div className="form-group-autofit">
-			<ClayInput.GroupItem>
-				<label>
-					{Liferay.Language.get('character-threshold')}
-
-					<ClayTooltipProvider>
-						<span
-							className="ml-2"
-							data-tooltip-align="top"
-							title={Liferay.Language.get(
-								'character-threshold-for-displaying-suggestions-contributor-help'
-							)}
-						>
-							<ClayIcon symbol="question-circle-full" />
-						</span>
-					</ClayTooltipProvider>
-				</label>
-
-				<ClayInput
-					aria-label={Liferay.Language.get('character-threshold')}
-					min="0"
-					onChange={_handleChangeAttribute('characterThreshold')}
-					type="number"
-					value={value.attributes?.characterThreshold || ''}
+		<>
+			<div className="form-group-autofit">
+				<DisplayGroupNameInput
+					onBlur={onBlur('displayGroupName')}
+					onChange={onInputSetItemChange(index, 'displayGroupName')}
+					touched={touched.displayGroupName}
+					value={value.displayGroupName}
 				/>
-			</ClayInput.GroupItem>
-		</div>
+
+				<SizeInput
+					onBlur={onBlur('size')}
+					onChange={onInputSetItemChange(index, 'size')}
+					touched={touched.displayGroupName}
+					value={value.displayGroupName}
+				/>
+			</div>
+
+			<div className="form-group-autofit">
+				<ClayInput.GroupItem>
+					<label>
+						{Liferay.Language.get('character-threshold')}
+
+						<ClayTooltipProvider>
+							<span
+								className="ml-2"
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'character-threshold-for-displaying-suggestions-contributor-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</ClayTooltipProvider>
+					</label>
+
+					<ClayInput
+						aria-label={Liferay.Language.get('character-threshold')}
+						min="0"
+						onChange={_handleChangeAttribute('characterThreshold')}
+						type="number"
+						value={value.attributes?.characterThreshold || ''}
+					/>
+				</ClayInput.GroupItem>
+			</div>
+		</>
 	);
 }
 

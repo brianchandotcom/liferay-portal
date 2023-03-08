@@ -13,6 +13,8 @@
  */
 
 export const CONTRIBUTOR_TYPES = {
+	ASAH_RECENT_SEARCH_KEYWORDS: 'asahRecentSearchKeywords',
+	ASAH_TOP_SEARCH_KEYWORDS: 'asahTopSearchKeywords',
 	BASIC: 'basic',
 	SXP_BLUEPRINT: 'sxpBlueprint',
 };

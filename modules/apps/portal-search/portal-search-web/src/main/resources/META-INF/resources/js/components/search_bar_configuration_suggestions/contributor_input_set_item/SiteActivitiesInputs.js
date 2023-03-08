@@ -1,0 +1,223 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import {ClayInput, ClaySelect} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
+import React from 'react';
+
+import LearnMessage from '../../../shared/LearnMessage';
+import {CONTRIBUTOR_TYPES} from '../../../utils/types/contributorTypes';
+import CharacterThresholdInput from '../inputs/CharacterThresholdInput';
+import DisplayGroupNameInput from '../inputs/DisplayGroupNameInput';
+import MinimumSearchesInput from '../inputs/MinimumSearchesInput';
+import SizeInput from '../inputs/SizeInput';
+
+function getSiteActivitiesContributorActivityOptions(learnMessages) {
+	return [
+		{
+			contributorName: CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
+			description: (
+				<>
+					{Liferay.Language.get('top-searches-help')}
+
+					<LearnMessage
+						className="ml-1"
+						learnMessages={learnMessages}
+						resourceKey="search-bar-suggestions-site-activities"
+					/>
+				</>
+			),
+			title: Liferay.Language.get('top-searches'),
+		},
+		{
+			contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
+			description: (
+				<>
+					{Liferay.Language.get('trending-searches-help')}
+
+					<LearnMessage
+						className="ml-1"
+						learnMessages={learnMessages}
+						resourceKey="search-bar-suggestions-site-activities"
+					/>
+				</>
+			),
+			title: Liferay.Language.get('trending-searches'),
+		},
+	];
+}
+
+function SiteActivitiesInputs({
+	index,
+	learnMessages,
+	onBlur,
+	onInputSetItemChange,
+	touched,
+	value,
+}) {
+	const SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS = getSiteActivitiesContributorActivityOptions(
+		learnMessages
+	);
+
+	const _handleChangeAttribute = (property) => (event) => {
+		onInputSetItemChange(index, {
+			attributes: {
+				...value.attributes,
+				[property]: event.target.value,
+			},
+		});
+	};
+
+	const _handleActivityInputClick = (contributorName) => () => {
+		onInputSetItemChange(index, {
+			contributorName,
+		});
+	};
+
+	return (
+		<>
+			<div className="form-group-autofit">
+				<ClayInput.GroupItem>
+					<label>
+						{Liferay.Language.get('activity')}
+
+						<span className="reference-mark">
+							<ClayIcon symbol="asterisk" />
+						</span>
+					</label>
+
+					<ClayDropDown
+						closeOnClick
+						menuWidth="sm"
+						trigger={
+							<ClayButton
+								aria-label={Liferay.Language.get(
+									'suggestion-contributor'
+								)}
+								className="form-control form-control-select"
+								displayType="unstyled"
+							>
+								{
+									SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS.find(
+										({contributorName}) =>
+											contributorName ===
+											value.contributorName
+									).title
+								}
+							</ClayButton>
+						}
+					>
+						<ClayDropDown.ItemList
+							items={SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS}
+						>
+							{(item) => (
+								<ClayDropDown.Item
+									active={
+										value.contributorName ===
+										item.contributorName
+									}
+									key={item.name}
+									onClick={_handleActivityInputClick(
+										item.contributorName
+									)}
+								>
+									<div>{item.title}</div>
+
+									<div className="text-2">
+										{item.description}
+									</div>
+								</ClayDropDown.Item>
+							)}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				</ClayInput.GroupItem>
+			</div>
+
+			<div className="form-group-autofit">
+				<DisplayGroupNameInput
+					onBlur={onBlur('displayGroupName')}
+					onChange={onInputSetItemChange(index, 'displayGroupName')}
+					touched={touched.displayGroupName}
+					value={value.displayGroupName}
+				/>
+
+				<SizeInput
+					onBlur={onBlur('size')}
+					onChange={onInputSetItemChange(index, 'size')}
+					touched={touched.size}
+					value={value.size}
+				/>
+			</div>
+
+			<div className="form-group-autofit">
+				<CharacterThresholdInput
+					onBlur={onBlur('characterThreshold')}
+					onChange={_handleChangeAttribute('characterThreshold')}
+					touched={touched['attributes.characterThreshold']}
+					value={value.attributes?.characterThreshold}
+				/>
+
+				<ClayInput.GroupItem>
+					<label>
+						{Liferay.Language.get('match-users-language')}
+
+						<ClayTooltipProvider>
+							<span
+								className="ml-2"
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'match-users-language-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</ClayTooltipProvider>
+					</label>
+
+					<ClaySelect
+						aria-label={Liferay.Language.get(
+							'match-users-language'
+						)}
+						onChange={_handleChangeAttribute(
+							'matchDisplayLanguageId'
+						)}
+						value={value.attributes?.matchDisplayLanguageId}
+					>
+						<ClaySelect.Option
+							label={Liferay.Language.get('true')}
+							value={true}
+						/>
+
+						<ClaySelect.Option
+							label={Liferay.Language.get('false')}
+							value={false}
+						/>
+					</ClaySelect>
+				</ClayInput.GroupItem>
+
+				<MinimumSearchesInput
+					onBlur={onBlur('attributes.count')}
+					onChange={_handleChangeAttribute('count')}
+					touched={touched['attributes.count']}
+					value={value.attributes?.count}
+				/>
+			</div>
+		</>
+	);
+}
+
+export default SiteActivitiesInputs;

@@ -14,7 +14,7 @@
 
 import {useMemo, useRef, useState} from 'react';
 
-const ITEM_ID_PROPERTY = '_inputSetItemId';
+export const ITEM_ID_PROPERTY = '_inputSetItemId';
 
 /**
  * Moves an item in an array. Does not mutate the original array.

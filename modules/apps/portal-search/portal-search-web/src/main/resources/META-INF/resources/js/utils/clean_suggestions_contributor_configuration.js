@@ -26,15 +26,26 @@ import {CONTRIBUTOR_TYPES} from './types/contributorTypes';
  */
 export default function cleanSuggestionsContributorConfiguration(
 	suggestionsContributorConfiguration,
+	isDXP,
 	isSearchExperiencesSupported = false
 ) {
 	return parseJSONString(suggestionsContributorConfiguration).filter(
 		(item) => {
-			if (isSearchExperiencesSupported) {
-				return true;
+			if (
+				!isSearchExperiencesSupported &&
+				item.contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT
+			) {
+				return false;
 			}
 
-			if (item.contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT) {
+			if (
+				!isDXP &&
+				(item.contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT ||
+					item.contributorName ===
+						CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS ||
+					item.contributorName ===
+						CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS)
+			) {
 				return false;
 			}
 

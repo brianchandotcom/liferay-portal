@@ -24,6 +24,8 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import SelectSXPBlueprintModal from '../../select_sxp_blueprint_modal/SelectSXPBlueprintModal';
+import DisplayGroupNameInput from '../inputs/DisplayGroupNameInput';
+import SizeInput from '../inputs/SizeInput';
 
 function SXPBlueprintAttributes({
 	index,
@@ -51,7 +53,6 @@ function SXPBlueprintAttributes({
 	});
 
 	useEffect(() => {
-
 		// Fetch the blueprint title using sxpBlueprintId inside attributes, since
 		// title is not saved within initialSuggestionsContributorConfiguration.
 
@@ -124,7 +125,6 @@ function SXPBlueprintAttributes({
 	};
 
 	const _handleSXPBlueprintSelectorChange = (event) => {
-
 		// To use validation from 'required' field, keep the onChange and value
 		// properties but make its behavior resemble readOnly (input can only be
 		// changed with the selector modal).
@@ -167,6 +167,22 @@ function SXPBlueprintAttributes({
 					selectedId={value.attributes?.sxpBlueprintId || ''}
 				/>
 			)}
+
+			<div className="form-group-autofit">
+				<DisplayGroupNameInput
+					onBlur={onBlur('displayGroupName')}
+					onChange={onInputSetItemChange(index, 'displayGroupName')}
+					touched={touched.displayGroupName}
+					value={value.displayGroupName}
+				/>
+
+				<SizeInput
+					onBlur={onBlur('size')}
+					onChange={onInputSetItemChange(index, 'size')}
+					touched={touched.displayGroupName}
+					value={value.displayGroupName}
+				/>
+			</div>
 
 			<div className="form-group-autofit">
 				<ClayInput.GroupItem

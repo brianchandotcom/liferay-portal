@@ -37,10 +37,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -54,22 +51,6 @@ public class I18nFilter extends BasePortalFilter {
 
 	public static final String SKIP_FILTER =
 		I18nFilter.class.getName() + "#SKIP_FILTER";
-
-	public static Set<String> getLanguageIds() {
-		return _languageIds;
-	}
-
-	public static void setLanguageIds(Set<String> languageIds) {
-		_languageIds = new HashSet<>();
-
-		for (String languageId : languageIds) {
-			languageId = languageId.substring(1);
-
-			_languageIds.add(languageId);
-		}
-
-		_languageIds = Collections.unmodifiableSet(_languageIds);
-	}
 
 	@Override
 	public boolean isFilterEnabled(
@@ -394,7 +375,5 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(I18nFilter.class);
-
-	private static Set<String> _languageIds;
 
 }

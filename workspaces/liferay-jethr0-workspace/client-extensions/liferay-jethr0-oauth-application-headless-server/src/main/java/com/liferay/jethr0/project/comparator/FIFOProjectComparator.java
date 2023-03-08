@@ -12,34 +12,32 @@
  * details.
  */
 
-package com.liferay.jethr0.project.prioritizer;
+package com.liferay.jethr0.project.comparator;
 
-import com.liferay.jethr0.project.comparator.ProjectComparator;
+import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 
-import java.util.List;
+import java.util.Date;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public interface ProjectPrioritizer {
+public class FIFOProjectComparator extends BaseProjectComparator {
 
-	public void addProjectComparator(ProjectComparator projectComparator);
+	@Override
+	public int compare(Project project1, Project project2) {
+		Date createdDate1 = project1.getCreatedDate();
+		Date createdDate2 = project2.getCreatedDate();
 
-	public void addProjectComparators(
-		List<ProjectComparator> projectComparators);
+		return createdDate1.compareTo(createdDate2);
+	}
 
-	public long getID();
+	protected FIFOProjectComparator(
+		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
 
-	public JSONObject getJSONObject();
-
-	public String getName();
-
-	public List<ProjectComparator> getProjectComparators();
-
-	public void removeProjectComparator(ProjectComparator projectComparator);
-
-	public void setName(String name);
+		super(projectPrioritizer, jsonObject);
+	}
 
 }

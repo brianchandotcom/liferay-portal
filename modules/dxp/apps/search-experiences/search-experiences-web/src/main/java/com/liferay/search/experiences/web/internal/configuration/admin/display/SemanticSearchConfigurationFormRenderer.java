@@ -44,10 +44,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -249,17 +246,17 @@ public class SemanticSearchConfigurationFormRenderer
 	}
 
 	private Map<String, String> _sortByValue(Map<String, String> map) {
-		Set<Map.Entry<String, String>> entrySet = map.entrySet();
+		Map<String, String> sortedValues = new LinkedHashMap<>();
 
-		Stream<Map.Entry<String, String>> stream = entrySet.stream();
+		for (Map.Entry<String, String> entry :
+				ListUtil.sort(
+					new ArrayList<>(map.entrySet()),
+					Map.Entry.comparingByValue())) {
 
-		return stream.sorted(
-			Map.Entry.comparingByValue()
-		).collect(
-			Collectors.toMap(
-				entry -> entry.getKey(), entry -> entry.getValue(),
-				(entry1, entry2) -> entry2, LinkedHashMap::new)
-		);
+			sortedValues.put(entry.getKey(), entry.getValue());
+		}
+
+		return sortedValues;
 	}
 
 	@Reference

@@ -203,19 +203,11 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	private int _getColumnIndex(
 		String tablesSQLContent, String tableName, String columnName) {
 
-		int x = tablesSQLContent.indexOf("create table " + tableName);
+		String tableSQL = _getTableSQL(tablesSQLContent, tableName);
 
-		if (x == -1) {
+		if (tableSQL == null) {
 			return -1;
 		}
-
-		int y = tablesSQLContent.indexOf(");", x);
-
-		if (y == -1) {
-			return -1;
-		}
-
-		String tableSQL = tablesSQLContent.substring(x, y + 1);
 
 		Pattern pattern = Pattern.compile(
 			StringBundler.concat(
@@ -243,6 +235,24 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private String _getTableSQL(String tablesSQLContent, String tableName) {
+		Pattern pattern = Pattern.compile("create table " + tableName + "_? ");
+
+		Matcher matcher = pattern.matcher(tablesSQLContent);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		int x = tablesSQLContent.indexOf(");", matcher.start());
+
+		if (x == -1) {
+			return null;
+		}
+
+		return tablesSQLContent.substring(matcher.start(), x + 1);
 	}
 
 	private String _getTablesSQLFileLocation(String packageName) {
@@ -295,19 +305,11 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	private boolean _isBooleanColumn(
 		String tablesSQLContent, String tableName, String columnName) {
 
-		int x = tablesSQLContent.indexOf("create table " + tableName);
+		String tableSQL = _getTableSQL(tablesSQLContent, tableName);
 
-		if (x == -1) {
+		if (tableSQL == null) {
 			return false;
 		}
-
-		int y = tablesSQLContent.indexOf(");", x);
-
-		if (y == -1) {
-			return false;
-		}
-
-		String tableSQL = tablesSQLContent.substring(x, y + 1);
 
 		Pattern pattern = Pattern.compile(
 			StringBundler.concat(

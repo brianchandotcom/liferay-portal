@@ -24,6 +24,7 @@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.search.experiences.web.internal.display.context.SemanticSearchCompanyConfigurationDisplayContext" %>
 
 <portlet:defineObjects />
+<portlet:renderURL var="redirectURL" />
 
 <%
 SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurationDisplayContext = (SemanticSearchCompanyConfigurationDisplayContext)request.getAttribute(SemanticSearchCompanyConfigurationDisplayContext.class.getName());
@@ -58,7 +59,7 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
-				"redirectURL", liferayPortletResponse.createRenderURL()
+				"redirectURL", redirectURL
 			).build()
 		%>'
 	/>

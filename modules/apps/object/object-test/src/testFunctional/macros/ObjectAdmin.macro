@@ -64,6 +64,7 @@ definition {
 			actionName = ${actionName},
 			active = ${active},
 			click = "save",
+			errorMessage = ${errorMessage},
 			fieldName = ${fieldName},
 			inputExpression = ${inputExpression},
 			inputMethod = ${inputMethod},
@@ -1076,6 +1077,12 @@ definition {
 			Type(
 				locator1 = "ObjectAdmin#ACTION_SECRET_FIELD",
 				value1 = ${secretAction});
+		}
+
+		if (IsElementPresent(locator1 = "ObjectAction#ADD_ERROR_MESSAGE_VALIDATION")) {
+			Type(
+				locator1 = "ObjectAction#ADD_ERROR_MESSAGE_VALIDATION",
+				value1 = ${errorMessage});
 		}
 
 		if (isSet(click)) {

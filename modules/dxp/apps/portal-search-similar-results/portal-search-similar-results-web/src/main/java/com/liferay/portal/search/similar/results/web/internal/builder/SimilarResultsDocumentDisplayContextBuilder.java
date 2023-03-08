@@ -354,23 +354,25 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 		String dateString = SearchStringUtil.maybe(
 			_getFieldValueString(Field.CREATE_DATE));
 
-		if (dateString != null) {
-			DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		if (dateString == null) {
+			return;
+		}
 
-			Date date = null;
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
-			try {
-				date = dateFormat.parse(dateString);
-			}
-			catch (Exception exception) {
-				throw new IllegalArgumentException(
-					"Unable to parse date string: " + dateString, exception);
-			}
+		Date date = null;
 
-			if (date != null) {
-				similarResultsDocumentDisplayContext.setCreationDateString(
-					_formatCreationDate(date));
-			}
+		try {
+			date = dateFormat.parse(dateString);
+		}
+		catch (Exception exception) {
+			throw new IllegalArgumentException(
+				"Unable to parse date string: " + dateString, exception);
+		}
+
+		if (date != null) {
+			similarResultsDocumentDisplayContext.setCreationDateString(
+				_formatCreationDate(date));
 		}
 	}
 

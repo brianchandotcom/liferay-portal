@@ -72,23 +72,25 @@ public class SimilarResultsPortletSharedSearchContributor
 			similarResultsContributorsRegistry.detectRoute(
 				_getURLString(portletSharedSearchSettings));
 
-		if (similarResultsRoute != null) {
-			SimilarResultsContributor similarResultsContributor =
-				similarResultsRoute.getContributor();
+		if (similarResultsRoute == null) {
+			return;
+		}
 
-			CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
+		SimilarResultsContributor similarResultsContributor =
+			similarResultsRoute.getContributor();
 
-			CriteriaHelper criteriaHelper = new CriteriaHelperImpl(
-				getGroupId(portletSharedSearchSettings), similarResultsRoute);
+		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
 
-			similarResultsContributor.resolveCriteria(
-				criteriaBuilderImpl, criteriaHelper);
+		CriteriaHelper criteriaHelper = new CriteriaHelperImpl(
+			getGroupId(portletSharedSearchSettings), similarResultsRoute);
 
-			Criteria criteria = criteriaBuilderImpl.build();
+		similarResultsContributor.resolveCriteria(
+			criteriaBuilderImpl, criteriaHelper);
 
-			if (criteria != null) {
-				contribute(criteria, portletSharedSearchSettings);
-			}
+		Criteria criteria = criteriaBuilderImpl.build();
+
+		if (criteria != null) {
+			contribute(criteria, portletSharedSearchSettings);
 		}
 	}
 

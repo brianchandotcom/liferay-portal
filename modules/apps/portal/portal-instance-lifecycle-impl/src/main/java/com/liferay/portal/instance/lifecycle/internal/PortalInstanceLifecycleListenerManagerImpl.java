@@ -336,15 +336,6 @@ public class PortalInstanceLifecycleListenerManagerImpl
 			PortalInstanceLifecycleListener portalInstanceLifecycleListener) {
 
 			_bundleContext.ungetService(serviceReference);
-
-			if (!(portalInstanceLifecycleListener instanceof
-					EveryNodeEveryStartup) &&
-				!clusterMasterExecutor.isMaster()) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Skipping " + portalInstanceLifecycleListener);
-				}
-			}
 		}
 
 	}

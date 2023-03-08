@@ -18,10 +18,13 @@ import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.exception.NoSuchInventoryBookedQuantityException;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantityTable;
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryBookedQuantityLocalServiceBaseImpl;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -110,20 +113,28 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 	@Override
 	public int getCommerceBookedQuantity(long companyId, String sku) {
-		List<CommerceInventoryBookedQuantity>
-			commerceInventoryBookedQuantities =
-				commerceInventoryBookedQuantityPersistence.findByC_S(
-					companyId, sku);
+		List<Integer> result = dslQuery(
+			DSLQueryFactoryUtil.select(
+				DSLFunctionFactoryUtil.sum(
+					CommerceInventoryBookedQuantityTable.INSTANCE.quantity
+				).as(
+					"SUM_VALUE"
+				)
+			).from(
+				CommerceInventoryBookedQuantityTable.INSTANCE
+			).where(
+				CommerceInventoryBookedQuantityTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					CommerceInventoryBookedQuantityTable.INSTANCE.sku.eq(sku)
+				)
+			));
 
-		int resultQuantity = 0;
-
-		for (CommerceInventoryBookedQuantity commerceInventoryBookedQuantity :
-				commerceInventoryBookedQuantities) {
-
-			resultQuantity += commerceInventoryBookedQuantity.getQuantity();
+		if (result.isEmpty()) {
+			return 0;
 		}
 
-		return resultQuantity;
+		return result.get(0);
 	}
 
 	@Override

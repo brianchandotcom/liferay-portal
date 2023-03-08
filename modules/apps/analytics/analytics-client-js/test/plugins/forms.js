@@ -23,6 +23,7 @@ describe('Forms Plugin', () => {
 	let duration;
 
 	beforeEach(() => {
+
 		// Force attaching DOM Content Loaded event
 
 		Object.defineProperty(document, 'readyState', {

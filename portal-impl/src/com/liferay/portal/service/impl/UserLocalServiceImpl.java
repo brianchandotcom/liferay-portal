@@ -1963,7 +1963,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Group group = null;
 
-		if (!user.isDefaultUser()) {
+		if (!(user.isDefaultUser() && user.isRegularUser())) {
 			group = user.getGroup();
 		}
 

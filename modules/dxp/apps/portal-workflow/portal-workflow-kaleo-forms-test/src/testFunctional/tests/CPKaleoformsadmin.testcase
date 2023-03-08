@@ -2812,8 +2812,6 @@ definition {
 			kfFieldSetName = "Field4",
 			kfProcessName = "Kaleo Forms Process");
 
-		KaleoFormsAdmin.viewNextFieldSetPage();
-
 		KaleoFormsAdmin.viewSelectedFieldSet(kfFieldSetName = "Field4");
 
 		KaleoFormsAdmin.chooseFieldSet(
@@ -2821,10 +2819,6 @@ definition {
 			kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.viewPreviousFieldSetPage();
-
-		KaleoFormsAdmin.viewSelectedFieldSet(kfFieldSetName = "Field1");
-
-		KaleoFormsAdmin.viewNextFieldSetPage();
 
 		KaleoFormsAdmin.viewSelectedFieldSet(kfFieldSetName = "Field1");
 

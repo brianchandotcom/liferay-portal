@@ -234,14 +234,14 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	macro editNewOptionName {
-		TestrayContextMenu.clickContextMenuProjects(name = "Environments_");
+	macro editOptionTitle {
+		TestrayContextMenu.clickContextMenuProjects(name = ${option});
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${option});
+			value1 = ${optionNewName});
 
 		Select(
 			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",

@@ -34,8 +34,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Lourdes Fernández Besada
@@ -57,9 +57,11 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			Portlet.class.getName());
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			Map<Long, Map<Long, Long>> resourcePrimKeysMap = new HashMap<>();
+			Map<Long, Map<Long, Long>> resourcePrimKeysMap =
+				new ConcurrentHashMap<>();
 
-			Map<Long, Integer> layoutClassedModelUsageTypes = new HashMap<>();
+			Map<Long, Integer> layoutClassedModelUsageTypes =
+				new ConcurrentHashMap<>();
 
 			_addJournalContentSearchLayoutClassedModelUsages(
 				journalArticleClassNameId, layoutClassedModelUsageTypes,
@@ -152,7 +154,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 
 					Map<Long, Long> companyResourcePrimKeysMap =
 						resourcePrimKeysMap.computeIfAbsent(
-							companyId, key -> new HashMap<>());
+							companyId, key -> new ConcurrentHashMap<>());
 
 					companyResourcePrimKeysMap.computeIfAbsent(
 						classPK, key -> groupId);
@@ -195,7 +197,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 
 		Map<Long, Long> companyResourcePrimKeysMap =
 			resourcePrimKeysMap.computeIfAbsent(
-				companyId, key -> new HashMap<>());
+				companyId, key -> new ConcurrentHashMap<>());
 
 		companyResourcePrimKeysMap.computeIfAbsent(classPK, key -> groupId);
 	}

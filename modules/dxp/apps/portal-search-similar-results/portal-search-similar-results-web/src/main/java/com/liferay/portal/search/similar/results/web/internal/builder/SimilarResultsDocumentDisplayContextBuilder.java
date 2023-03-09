@@ -360,19 +360,17 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
-		Date date = null;
-
 		try {
-			date = dateFormat.parse(dateString);
+			Date date = dateFormat.parse(dateString);
+
+			if (date != null) {
+				similarResultsDocumentDisplayContext.setCreationDateString(
+					_formatCreationDate(date));
+			}
 		}
 		catch (Exception exception) {
 			throw new IllegalArgumentException(
 				"Unable to parse date string: " + dateString, exception);
-		}
-
-		if (date != null) {
-			similarResultsDocumentDisplayContext.setCreationDateString(
-				_formatCreationDate(date));
 		}
 	}
 

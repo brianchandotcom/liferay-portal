@@ -71,12 +71,13 @@ public class ObjectFieldServiceTest {
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService);
 		_systemObjectDefinition =
-			_objectDefinitionLocalService.addSystemObjectDefinition(
+			ObjectDefinitionTestUtil.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), "Test", null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				false, "Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				_objectDefinitionLocalService,
 				Collections.<ObjectField>emptyList());
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =

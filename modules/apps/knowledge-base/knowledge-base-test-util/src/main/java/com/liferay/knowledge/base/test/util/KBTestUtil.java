@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 /**
  * @author Vy Bui
  */
-public class KBArticleTestUtil {
+public class KBTestUtil {
 
 	public static KBArticle addKBArticle(long groupId) throws PortalException {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);

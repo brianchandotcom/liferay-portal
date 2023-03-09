@@ -16,7 +16,7 @@ package com.liferay.knowledge.base.change.tracking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
-import com.liferay.knowledge.base.test.util.KBArticleTestUtil;
+import com.liferay.knowledge.base.test.util.KBTestUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -42,7 +42,7 @@ public class KBArticleTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		return KBArticleTestUtil.addKBArticle(group.getGroupId());
+		return KBTestUtil.addKBArticle(group.getGroupId());
 	}
 
 }

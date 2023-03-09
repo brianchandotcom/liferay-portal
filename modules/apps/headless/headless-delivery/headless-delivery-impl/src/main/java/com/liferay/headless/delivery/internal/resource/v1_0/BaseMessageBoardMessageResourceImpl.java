@@ -1447,7 +1447,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/message-board-messages/by-friendly-url-path/{friendlyUrlPath}"
+		"/sites/{siteId}/message-board-messages/by-friendly-url-path/{friendlyUrlPath : .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

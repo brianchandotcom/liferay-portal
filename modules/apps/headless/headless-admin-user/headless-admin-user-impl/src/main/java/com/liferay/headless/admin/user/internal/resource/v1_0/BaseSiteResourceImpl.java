@@ -136,7 +136,7 @@ public abstract class BaseSiteResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Site")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/sites/by-friendly-url-path/{friendlyUrlPath}")
+	@javax.ws.rs.Path("/sites/by-friendly-url-path/{friendlyUrlPath : .+}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Site getSiteByFriendlyUrlPath(

@@ -202,7 +202,7 @@ public abstract class BaseSitePageResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SitePage")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/sites/{siteId}/site-pages/{friendlyUrlPath}")
+	@javax.ws.rs.Path("/sites/{siteId}/site-pages/{friendlyUrlPath : .+}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public SitePage getSiteSitePage(
@@ -256,7 +256,7 @@ public abstract class BaseSitePageResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences"
+		"/sites/{siteId}/site-pages/{friendlyUrlPath : .+}/experiences"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -315,7 +315,7 @@ public abstract class BaseSitePageResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences/{experienceKey}"
+		"/sites/{siteId}/site-pages/{friendlyUrlPath : .+}/experiences/{experienceKey}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -378,7 +378,7 @@ public abstract class BaseSitePageResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences/{experienceKey}/rendered-page"
+		"/sites/{siteId}/site-pages/{friendlyUrlPath : .+}/experiences/{experienceKey}/rendered-page"
 	)
 	@javax.ws.rs.Produces("text/html")
 	@Override
@@ -437,7 +437,7 @@ public abstract class BaseSitePageResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/site-pages/{friendlyUrlPath}/rendered-page"
+		"/sites/{siteId}/site-pages/{friendlyUrlPath : .+}/rendered-page"
 	)
 	@javax.ws.rs.Produces("text/html")
 	@Override

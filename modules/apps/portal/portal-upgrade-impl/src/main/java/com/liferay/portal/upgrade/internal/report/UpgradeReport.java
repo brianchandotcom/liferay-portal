@@ -274,55 +274,6 @@ public class UpgradeReport {
 		return tableCounts;
 	}
 
-	private String _getDialectInfo() {
-		DB db = DBManagerUtil.getDB();
-
-		return StringBundler.concat(
-			db.getDBType(), StringPool.SPACE, db.getMajorVersion(),
-			StringPool.PERIOD, db.getMinorVersion());
-	}
-
-	private String _getDLStorageInfoNew() {
-		if (!StringUtil.endsWith(
-				PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
-
-			return "Check externally";
-		}
-
-		if (_rootDir == null) {
-			return "Unable to determine. \"rootDir\" was not set";
-		}
-
-		return _getDLStorageSize();
-	}
-
-	private String _getDLStorageSize() {
-		double bytes = 0;
-
-		try {
-			bytes = FileUtils.sizeOfDirectory(new File(_rootDir));
-		}
-		catch (Exception exception) {
-			return exception.getMessage();
-		}
-
-		String[] dictionary = {"bytes", "KB", "MB", "GB", "TB", "PB"};
-
-		int index = 0;
-
-		for (index = 0; index < dictionary.length; index++) {
-			if (bytes < 1024) {
-				break;
-			}
-
-			bytes = bytes / 1024;
-		}
-
-		return StringBundler.concat(
-			String.format("%." + 2 + "f", bytes), StringPool.SPACE,
-			dictionary[index]);
-	}
-
 	private String _getLogContextSectionKey(String section) {
 		return "upgrade.report." + section;
 	}
@@ -377,90 +328,76 @@ public class UpgradeReport {
 		return reducedMap;
 	}
 
-	private Map<String, String> _getPortalVersionInfo() {
-		return LinkedHashMapBuilder.put(
-			"expected.build.number",
-			() -> {
-				int expectedBuildNumber = ReleaseInfo.getBuildNumber();
-
-				if (expectedBuildNumber != 0) {
-					return String.valueOf(expectedBuildNumber);
-				}
-
-				return "Unable to determine";
-			}
-		).put(
-			"expected.schema.version",
-			() -> {
-				String expectedSchemaVersion = String.valueOf(
-					PortalUpgradeProcess.getLatestSchemaVersion());
-
-				if (expectedSchemaVersion != null) {
-					return expectedSchemaVersion;
-				}
-
-				return "Unable to determine";
-			}
-		).put(
-			"final.build.number",
-			() -> {
-				int finalBuildNumber = _getBuildNumber();
-
-				if (finalBuildNumber != 0) {
-					return String.valueOf(finalBuildNumber);
-				}
-
-				return "Unable to determine";
-			}
-		).put(
-			"final.schema.version",
-			() -> {
-				String finalSchemaVersion = _getSchemaVersion();
-
-				if (finalSchemaVersion != null) {
-					return finalSchemaVersion;
-				}
-
-				return "Unable to determine";
-			}
-		).put(
-			"initial.build.number",
-			(_initialBuildNumber != 0) ? String.valueOf(_initialBuildNumber) :
-				"Unable to determine"
-		).put(
-			"initial.schema.version",
-			(_initialSchemaVersion != null) ? _initialSchemaVersion :
-				"Unable to determine"
-		).build();
-	}
-
-	private Map<String, String> _getPropertiesInfo() {
-		_setRootDir();
-
-		return LinkedHashMapBuilder.put(
-			PropsKeys.DL_STORE_IMPL, PropsValues.DL_STORE_IMPL
-		).put(
-			"liferay.home", PropsValues.LIFERAY_HOME
-		).put(
-			"locales", Arrays.toString(PropsValues.LOCALES)
-		).put(
-			"locales.enabled", Arrays.toString(PropsValues.LOCALES_ENABLED)
-		).put(
-			"rootDir", (_rootDir != null) ? _rootDir : "Undefined"
-		).build();
-	}
-
 	private Map<String, Object> _getReportData(
 		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
 
 		return LinkedHashMapBuilder.<String, Object>put(
-			"property", _getPropertiesInfo()
+			"property",
+			() -> {
+				_setRootDir();
+
+				return LinkedHashMapBuilder.<String, Object>put(
+					PropsKeys.DL_STORE_IMPL, PropsValues.DL_STORE_IMPL
+				).put(
+					"liferay.home", PropsValues.LIFERAY_HOME
+				).put(
+					"locales", Arrays.toString(PropsValues.LOCALES)
+				).put(
+					"locales.enabled",
+					Arrays.toString(PropsValues.LOCALES_ENABLED)
+				).put(
+					"rootDir", (_rootDir != null) ? _rootDir : "Undefined"
+				).build();
+			}
 		).put(
 			"tables.initial.final.rows", _getDatabaseTableCounts()
 		).put(
-			"database.version", _getDialectInfo()
+			"database.version",
+			() -> {
+				DB db = DBManagerUtil.getDB();
+
+				return StringBundler.concat(
+					db.getDBType(), StringPool.SPACE, db.getMajorVersion(),
+					StringPool.PERIOD, db.getMinorVersion());
+			}
 		).put(
-			"document.library.storage.size", _getDLStorageInfoNew()
+			"document.library.storage.size",
+			() -> {
+				if (!StringUtil.endsWith(
+						PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
+
+					return "Check externally";
+				}
+
+				if (_rootDir == null) {
+					return "Unable to determine. \"rootDir\" was not set";
+				}
+
+				double bytes = 0;
+
+				try {
+					bytes = FileUtils.sizeOfDirectory(new File(_rootDir));
+				}
+				catch (Exception exception) {
+					return exception.getMessage();
+				}
+
+				String[] dictionary = {"bytes", "KB", "MB", "GB", "TB", "PB"};
+
+				int index = 0;
+
+				for (index = 0; index < dictionary.length; index++) {
+					if (bytes < 1024) {
+						break;
+					}
+
+					bytes = bytes / 1024;
+				}
+
+				return StringBundler.concat(
+					String.format("%." + 2 + "f", bytes), StringPool.SPACE,
+					dictionary[index]);
+			}
 		).put(
 			"errors", _getSortedLogEvents("errors")
 		).put(
@@ -497,7 +434,61 @@ public class UpgradeReport {
 				return check;
 			}
 		).put(
-			"portal", _getPortalVersionInfo()
+			"portal",
+			LinkedHashMapBuilder.put(
+				"expected.build.number",
+				() -> {
+					int expectedBuildNumber = ReleaseInfo.getBuildNumber();
+
+					if (expectedBuildNumber != 0) {
+						return String.valueOf(expectedBuildNumber);
+					}
+
+					return "Unable to determine";
+				}
+			).put(
+				"expected.schema.version",
+				() -> {
+					String expectedSchemaVersion = String.valueOf(
+						PortalUpgradeProcess.getLatestSchemaVersion());
+
+					if (expectedSchemaVersion != null) {
+						return expectedSchemaVersion;
+					}
+
+					return "Unable to determine";
+				}
+			).put(
+				"final.build.number",
+				() -> {
+					int finalBuildNumber = _getBuildNumber();
+
+					if (finalBuildNumber != 0) {
+						return String.valueOf(finalBuildNumber);
+					}
+
+					return "Unable to determine";
+				}
+			).put(
+				"final.schema.version",
+				() -> {
+					String finalSchemaVersion = _getSchemaVersion();
+
+					if (finalSchemaVersion != null) {
+						return finalSchemaVersion;
+					}
+
+					return "Unable to determine";
+				}
+			).put(
+				"initial.build.number",
+				(_initialBuildNumber != 0) ?
+					String.valueOf(_initialBuildNumber) : "Unable to determine"
+			).put(
+				"initial.schema.version",
+				(_initialSchemaVersion != null) ? _initialSchemaVersion :
+					"Unable to determine"
+			).build()
 		).put(
 			"warnings", _getSortedLogEvents("warnings")
 		).build();

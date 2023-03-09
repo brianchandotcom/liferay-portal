@@ -15,16 +15,20 @@
 package com.liferay.knowledge.base.test.util;
 
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Vy Bui
@@ -32,33 +36,45 @@ import com.liferay.portal.kernel.util.PortalUtil;
 public class KBTestUtil {
 
 	public static KBArticle addKBArticle(long groupId) throws PortalException {
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(groupId);
-
 		return KBArticleLocalServiceUtil.addKBArticle(
-			null, UserLocalServiceUtil.getDefaultUserId(group.getCompanyId()),
+			null, TestPropsValues.getUserId(),
 			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, null, null, null, serviceContext);
+			null, null, null, null,
+			ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
+	public static KBComment addKBComment(long kbArticleId)
+		throws PortalException {
+
+		KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
+			kbArticleId);
+
+		return KBCommentLocalServiceUtil.addKBComment(
+			kbArticle.getUserId(), kbArticle.getClassNameId(),
+			kbArticle.getClassPK(), StringUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(kbArticle.getGroupId()));
 	}
 
 	public static KBFolder addKBFolder(long groupId) throws PortalException {
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(groupId);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return KBFolderLocalServiceUtil.addKBFolder(
-			null, UserLocalServiceUtil.getDefaultUserId(group.getCompanyId()),
-			group.getGroupId(),
+			null, TestPropsValues.getUserId(), groupId,
 			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
+	}
+
+	public static KBTemplate addKBTemplate(long groupId)
+		throws PortalException {
+
+		return KBTemplateLocalServiceUtil.addKBTemplate(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 }

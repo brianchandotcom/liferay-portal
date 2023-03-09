@@ -61,7 +61,7 @@ definition {
 	}
 
 	macro viewEntryTitle {
-		LexiconList.viewListEntryTitle(listEntry = ${entry});
+		LexiconList.viewListEntryTitleLink(listEntry = ${entry});
 	}
 
 	macro viewEntryWorkflowStatus {

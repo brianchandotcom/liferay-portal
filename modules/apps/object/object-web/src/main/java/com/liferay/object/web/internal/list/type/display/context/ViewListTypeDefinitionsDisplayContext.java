@@ -108,7 +108,8 @@ public class ViewListTypeDefinitionsDisplayContext {
 					"/list_type_definitions/export_list_type_definition"
 				).buildString(),
 				"export", "export",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "export-as-json"),
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(), "export-as-json"),
 				"get", null, null),
 			new FDSActionDropdownItem(
 				_getPermissionsURL(), null, "permissions",

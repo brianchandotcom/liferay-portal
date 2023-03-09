@@ -544,7 +544,7 @@ public class UpgradeReport {
 
 		if (key.startsWith(_TABLES_KEY)) {
 			return String.format(
-				TableCounts.FORMAT, "Table name", "Initial rows", "Final rows");
+				TableCounts.FORMAT, "Table Name", "Initial Rows", "Final Rows");
 		}
 
 		return StringUtil.replace(

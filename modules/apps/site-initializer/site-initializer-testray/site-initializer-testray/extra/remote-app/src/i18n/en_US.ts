@@ -180,6 +180,7 @@ export default {
 	'failed': 'Failed',
 	'filter-results': 'Filter Results',
 	'filters-pinned-successfully': 'Filters pinned successfully.',
+	'filters-unpinned-successfully': 'Filters unpinned successfully.',
 	'first-name': 'First Name',
 	'git-hash': 'Git Hash',
 	'github-compare-urls': 'GitHub Compare URLs',

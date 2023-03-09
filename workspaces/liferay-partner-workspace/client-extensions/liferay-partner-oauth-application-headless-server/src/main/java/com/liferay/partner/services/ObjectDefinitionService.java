@@ -16,7 +16,6 @@ package com.liferay.partner.services;
 
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.pagination.Page;
-import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.partner.PartnerEnableWebSecurity.ResourceClientConfiguration;
 
@@ -37,7 +36,7 @@ public class ObjectDefinitionService {
 			_resourceClientConfiguration.getObjectDefinitionResource();
 
 		return objectDefinitionResource.getObjectDefinitionsPage(
-			null, null, "contains(name, 'SF')", Pagination.of(1, 9999), null);
+			null, null, "contains(name, 'SF')", null, null);
 	}
 
 	@Autowired

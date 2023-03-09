@@ -165,10 +165,7 @@ public class UpgradeReport {
 			String key = entry.getKey();
 			Object value = entry.getValue();
 
-			if (value instanceof Map<?, ?>) {
-				sb.append(_printContextMap(key, (Map<?, ?>)value));
-			}
-			else if (value instanceof List<?>) {
+			if (value instanceof List<?>) {
 				String header = _getReportHeaderFromKey(key);
 
 				sb.append(header);
@@ -193,6 +190,9 @@ public class UpgradeReport {
 						sb.append(StringPool.NEW_LINE);
 					}
 				}
+			}
+			else if (value instanceof Map<?, ?>) {
+				sb.append(_printContextMap(key, (Map<?, ?>)value));
 			}
 			else {
 				sb.append(_getReportSimpleValueLine(key, value));

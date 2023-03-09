@@ -133,7 +133,7 @@ const FilterBody = ({buttonRef, filterSchema, setPosition}: FilterBody) => {
 				<Form.Divider />
 			</div>
 
-			<div className="body-toolbar">
+			<div className="management-toolbar-body">
 				<div className="popover-filter-content">
 					<Form.Renderer
 						fieldOptions={fieldOptions}

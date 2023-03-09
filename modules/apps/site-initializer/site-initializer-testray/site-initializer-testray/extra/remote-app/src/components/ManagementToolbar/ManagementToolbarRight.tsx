@@ -69,7 +69,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	filterSchema,
 }) => {
 	const [{pin}, dispatch] = useContext(ListViewContext);
-	const [visible, setVisible] = useState(false);
+	const [columnsDropdownVisible, setColumnsDropdownVisible] = useState(false);
 
 	return (
 		<ClayManagementToolbar.ItemList>
@@ -97,8 +97,8 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 					alignPosition="bottom-right"
 					className="body-columns popover-management-toolbar"
 					closeOnClickOutside
-					onShowChange={setVisible}
-					show={visible}
+					onShowChange={setColumnsDropdownVisible}
+					show={columnsDropdownVisible}
 					trigger={
 						<ClayButton
 							className="d-flex nav-link"
@@ -119,7 +119,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 				>
 					<ManagementToolbarColumns
 						columns={columns}
-						onClose={() => setVisible(false)}
+						onClose={() => setColumnsDropdownVisible(false)}
 					/>
 				</ClayPopover>
 			)}

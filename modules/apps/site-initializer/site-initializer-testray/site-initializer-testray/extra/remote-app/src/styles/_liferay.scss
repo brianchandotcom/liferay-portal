@@ -127,6 +127,7 @@ html {
 			overflow-y: auto !important;
 			padding: 0;
 		}
+
 		.popover-columns-content {
 			max-height: 350px;
 			min-height: 180px;
@@ -141,7 +142,7 @@ html {
 		padding: 0;
 	}
 
-	.body-toolbar {
+	.management-toolbar-body {
 		max-height: 390px !important;
 		min-height: 180px !important;
 		overflow-y: none;

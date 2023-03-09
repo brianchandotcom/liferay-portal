@@ -25,7 +25,7 @@ type ManagementToolbarColumnsProps = {
 	onClose: () => void;
 };
 
-type CollumnsState = {
+type ColumnsState = {
 	[key: string]: boolean;
 };
 
@@ -41,17 +41,15 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 		({key}) => !columnsFixed.includes(key)
 	);
 
-	const [selectedColumns, setSelectedColumns] = useState<CollumnsState>(
-		() => {
-			const newColumns: CollumnsState = {};
+	const [selectedColumns, setSelectedColumns] = useState<ColumnsState>(() => {
+		const newColumns: ColumnsState = {};
 
-			columnsNotFixed.forEach(({key}) => {
-				newColumns[key] = contextColumns[key] ?? true;
-			});
+		columnsNotFixed.forEach(({key}) => {
+			newColumns[key] = contextColumns[key] ?? true;
+		});
 
-			return newColumns;
-		}
-	);
+		return newColumns;
+	});
 
 	const disabled = Object.values(selectedColumns).every(
 		(visible) => !visible
@@ -65,28 +63,26 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 				</p>
 			</div>
 
-			<div className="body-toolbar">
+			<div className="management-toolbar-body">
 				<div className="popover-columns-content">
-					{columnsNotFixed.map((column, index) => {
-						return (
-							<Form.Checkbox
-								checked={selectedColumns[column.key]}
-								key={index}
-								label={column.value}
-								onChange={(event) =>
-									setSelectedColumns({
-										...selectedColumns,
-										[column.key]: event.target.checked,
-									})
-								}
-								value={
-									(selectedColumns[
-										column.key
-									] as unknown) as string
-								}
-							/>
-						);
-					})}
+					{columnsNotFixed.map((column, index) => (
+						<Form.Checkbox
+							checked={selectedColumns[column.key]}
+							key={index}
+							label={column.value}
+							onChange={(event) =>
+								setSelectedColumns({
+									...selectedColumns,
+									[column.key]: event.target.checked,
+								})
+							}
+							value={
+								(selectedColumns[
+									column.key
+								] as unknown) as string
+							}
+						/>
+					))}
 				</div>
 			</div>
 

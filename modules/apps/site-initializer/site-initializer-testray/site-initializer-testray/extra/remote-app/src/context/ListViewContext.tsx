@@ -254,13 +254,12 @@ export type ListViewContextProviderProps = Partial<InitialState>;
 const ListViewContextProvider: React.FC<
 	ListViewContextProviderProps & {children: ReactNode; id: string}
 > = ({children, id, ...initialStateProps}) => {
-	const [filterPinnedStorage] = useStorage<ListViewFilter>(
-		(STORAGE_KEYS.LIST_VIEW_PIN + id) as STORAGE_KEYS,
-		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
-	);
-
 	const [columnsStorage] = useStorage<ListViewColumns>(
 		(STORAGE_KEYS.LIST_VIEW_COLUMNS + id) as STORAGE_KEYS,
+		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
+	);
+	const [filterPinnedStorage] = useStorage<ListViewFilter>(
+		(STORAGE_KEYS.LIST_VIEW_PIN + id) as STORAGE_KEYS,
 		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
 	);
 

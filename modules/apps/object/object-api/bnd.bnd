@@ -21,6 +21,8 @@ Export-Package:\
 	com.liferay.object.field.util,\
 	com.liferay.object.filter.util,\
 	com.liferay.object.model,\
+	com.liferay.object.notification.term.evaluator.constants,\
+	com.liferay.object.notification.term.evaluator.handler,\
 	com.liferay.object.related.models,\
 	com.liferay.object.relationship.util,\
 	com.liferay.object.rest.context.path,\

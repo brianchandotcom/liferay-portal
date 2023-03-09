@@ -127,7 +127,7 @@ public class DummyFolderStagedModelRepository
 		String uuid, long groupId) {
 
 		for (DummyFolder dummyFolder : _dummyFolders) {
-			if (Objects.equals(dummyFolder.getUuid(), uuid) &&
+			if (Objects.equals(uuid, dummyFolder.getUuid()) &&
 				(groupId == dummyFolder.getGroupId())) {
 
 				return dummyFolder;
@@ -144,13 +144,13 @@ public class DummyFolderStagedModelRepository
 		return ListUtil.filter(
 			_dummyFolders,
 			dummyFolder ->
-				Objects.equals(dummyFolder.getUuid(), uuid) &&
-				(dummyFolder.getCompanyId() == companyId));
+				Objects.equals(uuid, dummyFolder.getUuid()) &&
+				(companyId == dummyFolder.getCompanyId()));
 	}
 
 	public List<DummyFolder> getDummyFolders(long groupId) {
 		return ListUtil.filter(
-			_dummyFolders, dummyFolder -> dummyFolder.getGroupId() == groupId);
+			_dummyFolders, dummyFolder -> groupId == dummyFolder.getGroupId());
 	}
 
 	@Override

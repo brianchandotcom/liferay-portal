@@ -104,8 +104,8 @@ public class DummyReferenceStagedModelRepository
 
 		_dummyReferences.removeIf(
 			dummyReference ->
-				Objects.equals(dummyReference.getUuid(), uuid) &&
-				(dummyReference.getGroupId() == groupId));
+				Objects.equals(uuid, dummyReference.getUuid()) &&
+				(groupId == dummyReference.getGroupId()));
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class DummyReferenceStagedModelRepository
 		String uuid, long groupId) {
 
 		for (DummyReference dummyReference : _dummyReferences) {
-			if (Objects.equals(dummyReference.getUuid(), uuid) &&
+			if (Objects.equals(uuid, dummyReference.getUuid()) &&
 				(groupId == dummyReference.getGroupId())) {
 
 				return dummyReference;

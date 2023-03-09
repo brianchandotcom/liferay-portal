@@ -115,7 +115,8 @@ public class DummyStagedModelRepository
 	}
 
 	public List<Dummy> fetchDummiesByFolderId(long folderId) {
-		return ListUtil.filter(_dummies, d -> d.getFolderId() == folderId);
+		return ListUtil.filter(
+			_dummies, dummy -> folderId == dummy.getFolderId());
 	}
 
 	public Dummy fetchDummyById(long id) {
@@ -349,8 +350,7 @@ public class DummyStagedModelRepository
 
 				while (iterator.hasNext()) {
 					result = ListUtil.filter(
-						(List<Dummy>)result,
-						getPredicate(String.valueOf(iterator.next())));
+						result, getPredicate(String.valueOf(iterator.next())));
 				}
 			}
 			catch (Exception exception) {

@@ -14,12 +14,13 @@
 
 package com.liferay.headless.commerce.admin.inventory.internal.resource.v1_0;
 
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseChannel;
-import com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.ChannelDTOConverter;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.ChannelResource;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -51,8 +52,10 @@ public class ChannelResourceImpl
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 
-	@Reference
-	private ChannelDTOConverter _channelDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.ChannelDTOConverter)"
+	)
+	private DTOConverter<CommerceChannel, Channel> _channelDTOConverter;
 
 	@Reference
 	private CommerceChannelRelService _commerceChannelRelService;

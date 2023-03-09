@@ -442,13 +442,6 @@ const FDSEntries = ({
 	const views = [
 		{
 			contentRenderer: 'table',
-			itemsActions: [
-				{
-					icon: 'view',
-					label: Liferay.Language.get('view'),
-					onClick: onViewClick,
-				},
-			],
 			label: Liferay.Language.get('table'),
 			name: 'table',
 			schema: {
@@ -479,6 +472,13 @@ const FDSEntries = ({
 					provider: ProviderRenderer,
 				}}
 				id={`${namespace}FDSEntries`}
+				itemsActions={[
+					{
+						icon: 'view',
+						label: Liferay.Language.get('view'),
+						onClick: onViewClick,
+					},
+				]}
 				pagination={{
 					deltas: [
 						{label: 4},

@@ -69,6 +69,7 @@ type TItemsActions = {
 	icon?: string;
 	id?: string;
 	label?: string;
+	onClick?: Function;
 	target?: 'async' | 'headless' | 'link' | 'modal' | 'sidePanel' | 'event';
 };
 

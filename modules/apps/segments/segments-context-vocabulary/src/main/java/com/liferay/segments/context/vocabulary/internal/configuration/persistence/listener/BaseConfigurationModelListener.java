@@ -56,7 +56,8 @@ public abstract class BaseConfigurationModelListener
 
 		if (_isDefined(
 				String.valueOf(properties.get("assetVocabularyName")),
-				String.valueOf(properties.get("companyId")), entityFieldName)) {
+				String.valueOf(properties.get("companyId")), entityFieldName,
+				pid)) {
 
 			throw new DuplicatedSegmentsContextVocabularyConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
@@ -73,7 +74,7 @@ public abstract class BaseConfigurationModelListener
 
 	private boolean _isDefined(
 			String assetVocabularyName, String companyId,
-			String entityFieldName)
+			String entityFieldName, String pid)
 		throws ConfigurationModelListenerException {
 
 		try {
@@ -91,16 +92,15 @@ public abstract class BaseConfigurationModelListener
 				Dictionary<String, Object> properties =
 					configuration.getProperties();
 
-				if ((Objects.equals(
-						assetVocabularyName,
-						properties.get("assetVocabularyName")) &&
-					 Objects.equals(
-						 entityFieldName, properties.get("entityFieldName"))) ||
+				if (Objects.equals(
+						entityFieldName, properties.get("entityFieldName")) &&
+					!Objects.equals(pid, configuration.getPid()) &&
 					(Objects.equals(
 						companyId,
-						String.valueOf(properties.get("companyId"))) &&
+						String.valueOf(properties.get("companyId"))) ||
 					 Objects.equals(
-						 entityFieldName, properties.get("entityFieldName")))) {
+						 assetVocabularyName,
+						 properties.get("assetVocabularyName")))) {
 
 					return true;
 				}

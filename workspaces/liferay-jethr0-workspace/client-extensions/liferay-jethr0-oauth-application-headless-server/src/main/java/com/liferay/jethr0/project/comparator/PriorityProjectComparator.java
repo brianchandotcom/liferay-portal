@@ -24,15 +24,15 @@ import org.json.JSONObject;
  */
 public class PriorityProjectComparator extends BaseProjectComparator {
 
-	@Override
-	public int compare(Project project1, Project project2) {
-		return Integer.compare(project1.getPriority(), project2.getPriority());
-	}
-
-	protected PriorityProjectComparator(
+	public PriorityProjectComparator(
 		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
 
 		super(projectPrioritizer, jsonObject);
+	}
+
+	@Override
+	public int compare(Project project1, Project project2) {
+		return Integer.compare(project1.getPriority(), project2.getPriority());
 	}
 
 }

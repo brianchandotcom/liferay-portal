@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.jethr0.project;
+package com.liferay.jethr0.dalo;
 
-import com.liferay.jethr0.object.ObjectDALO;
+import com.liferay.jethr0.project.DefaultProject;
+import com.liferay.jethr0.project.Project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectDALO extends ObjectDALO {
+public class ProjectDALO extends BaseDALO {
 
 	public Project createProject(
 		String name, int priority, Project.State state, Project.Type type) {

@@ -14,12 +14,12 @@
 
 package com.liferay.jethr0;
 
+import com.liferay.jethr0.dalo.ProjectComparatorDALO;
+import com.liferay.jethr0.dalo.ProjectDALO;
+import com.liferay.jethr0.dalo.ProjectPrioritizerDALO;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.ProjectDALO;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
-import com.liferay.jethr0.project.comparator.ProjectComparatorDALO;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerDALO;
 import com.liferay.jethr0.project.queue.ProjectQueue;
 
 import org.springframework.beans.factory.annotation.Value;

@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.jethr0.project.comparator;
+package com.liferay.jethr0.dalo;
 
-import com.liferay.jethr0.object.ObjectDALO;
+import com.liferay.jethr0.project.comparator.FIFOProjectComparator;
+import com.liferay.jethr0.project.comparator.PriorityProjectComparator;
+import com.liferay.jethr0.project.comparator.ProjectComparator;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -29,7 +31,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectComparatorDALO extends ObjectDALO {
+public class ProjectComparatorDALO extends BaseDALO {
 
 	public ProjectComparator createProjectComparator(
 		ProjectPrioritizer projectPrioritizer, int position,

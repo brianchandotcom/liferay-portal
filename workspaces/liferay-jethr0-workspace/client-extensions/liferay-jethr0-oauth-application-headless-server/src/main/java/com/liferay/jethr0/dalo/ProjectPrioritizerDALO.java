@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.jethr0.project.prioritizer;
+package com.liferay.jethr0.dalo;
 
-import com.liferay.jethr0.object.ObjectDALO;
-import com.liferay.jethr0.project.comparator.ProjectComparatorDALO;
+import com.liferay.jethr0.project.prioritizer.DefaultProjectPrioritizer;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectPrioritizerDALO extends ObjectDALO {
+public class ProjectPrioritizerDALO extends BaseDALO {
 
 	public ProjectPrioritizer createProjectPrioritizer(String name) {
 		JSONObject requestJSONObject = new JSONObject();

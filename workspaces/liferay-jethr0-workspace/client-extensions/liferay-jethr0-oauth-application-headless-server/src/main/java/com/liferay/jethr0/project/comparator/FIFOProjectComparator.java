@@ -26,18 +26,18 @@ import org.json.JSONObject;
  */
 public class FIFOProjectComparator extends BaseProjectComparator {
 
+	public FIFOProjectComparator(
+		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
+
+		super(projectPrioritizer, jsonObject);
+	}
+
 	@Override
 	public int compare(Project project1, Project project2) {
 		Date createdDate1 = project1.getCreatedDate();
 		Date createdDate2 = project2.getCreatedDate();
 
 		return createdDate1.compareTo(createdDate2);
-	}
-
-	protected FIFOProjectComparator(
-		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
-
-		super(projectPrioritizer, jsonObject);
 	}
 
 }

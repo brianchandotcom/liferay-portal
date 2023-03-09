@@ -21,7 +21,7 @@ import org.json.JSONObject;
  */
 public class DefaultProjectPrioritizer extends BaseProjectPrioritizer {
 
-	protected DefaultProjectPrioritizer(JSONObject jsonObject) {
+	public DefaultProjectPrioritizer(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

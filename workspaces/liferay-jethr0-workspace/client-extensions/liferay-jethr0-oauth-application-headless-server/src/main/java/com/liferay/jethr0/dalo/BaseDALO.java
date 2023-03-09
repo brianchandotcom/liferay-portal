@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jethr0.object;
+package com.liferay.jethr0.dalo;
 
 import com.liferay.jethr0.util.LiferayOAuthConfiguration;
 import com.liferay.jethr0.util.StringUtil;
@@ -39,7 +39,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ObjectDALO {
+public class BaseDALO {
 
 	protected JSONObject create(JSONObject requestJSONObject) {
 		for (int i = 0; i <= _RETRY_COUNT; i++) {
@@ -299,7 +299,7 @@ public class ObjectDALO {
 
 	private static final long _RETRY_DELAY_DURATION = 1000;
 
-	private static final Log _log = LogFactory.getLog(ObjectDALO.class);
+	private static final Log _log = LogFactory.getLog(BaseDALO.class);
 
 	@Autowired
 	private LiferayOAuthConfiguration _liferayOAuthConfiguration;

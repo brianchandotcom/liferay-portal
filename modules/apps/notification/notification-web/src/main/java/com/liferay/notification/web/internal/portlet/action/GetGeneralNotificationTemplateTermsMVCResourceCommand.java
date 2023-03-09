@@ -37,7 +37,7 @@ public class GetGeneralNotificationTemplateTermsMVCResourceCommand
 	extends BaseNotificationTemplateTermsMVCResourceCommand {
 
 	@Override
-	protected Set<Map.Entry<String, String>> getEntrySet() {
+	protected Set<Map.Entry<String, String>> getTermNamesEntries() {
 		return _termNames.entrySet();
 	}
 

@@ -66,31 +66,31 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 	}
 
 	@Override
-	protected Set<Map.Entry<String, String>> getEntrySet() {
+	protected Set<Map.Entry<String, String>> getTermNamesEntries() {
+		Map<String, String> termNames = new LinkedHashMap<>();
+
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
 				_objectDefinition.getObjectDefinitionId());
-
-		Map<String, String> termValues = new LinkedHashMap<>();
 
 		for (ObjectField objectField : objectFields) {
 			if (StringUtil.equals(objectField.getName(), "creator") &&
 				FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
 
-				termValues.putAll(_authorTermNameSuffixes);
+				_authorTermNameSuffixes.forEach(
+					(key, value) -> termNames.put(key, _getTermName(value)));
 			}
 			else {
-				termValues.put(
+				termNames.put(
 					objectField.getLabel(user.getLocale()),
-					objectField.getName());
+					_getTermName(objectField.getName()));
 			}
 		}
 
-		return termValues.entrySet();
+		return termNames.entrySet();
 	}
 
-	@Override
-	protected String getTermName(String value) {
+	private String _getTermName(String value) {
 		return ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
 			_objectDefinition.getShortName(), value);
 	}

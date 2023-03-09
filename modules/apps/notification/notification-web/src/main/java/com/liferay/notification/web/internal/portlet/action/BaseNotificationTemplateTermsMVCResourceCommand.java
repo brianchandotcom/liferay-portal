@@ -47,12 +47,12 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 
 		user = userLocalService.getUser(PrincipalThreadLocal.getUserId());
 
-		for (Map.Entry<String, String> entry : getEntrySet()) {
+		for (Map.Entry<String, String> entry : getTermNamesEntries()) {
 			jsonArray.put(
 				JSONUtil.put(
 					"name", language.get(user.getLocale(), entry.getKey())
 				).put(
-					"term", getTermName(entry.getValue())
+					"term", entry.getValue()
 				));
 		}
 
@@ -60,11 +60,7 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 			resourceRequest, resourceResponse, jsonArray);
 	}
 
-	protected abstract Set<Map.Entry<String, String>> getEntrySet();
-
-	protected String getTermName(String value) {
-		return value;
-	}
+	protected abstract Set<Map.Entry<String, String>> getTermNamesEntries();
 
 	@Reference
 	protected JSONFactory jsonFactory;

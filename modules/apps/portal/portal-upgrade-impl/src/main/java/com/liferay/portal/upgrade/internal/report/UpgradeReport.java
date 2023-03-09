@@ -812,8 +812,8 @@ public class UpgradeReport {
 			_clazz = clazz;
 		}
 
-		public void addEvent(String message, int coincidences) {
-			_counts.add(new Counts(message, coincidences));
+		public void addEvent(String message, int occurrences) {
+			_counts.add(new Counts(message, occurrences));
 		}
 
 		@Override
@@ -842,23 +842,23 @@ public class UpgradeReport {
 
 		private class Counts {
 
-			public Counts(String message, int coincidences) {
+			public Counts(String message, int occurrences) {
 				_message = message;
-				_coincidences = coincidences;
+				_occurrences = occurrences;
 			}
 
 			@Override
 			public String toString() {
 				if (_logContext) {
-					return _coincidences + StringPool.COLON + _message;
+					return _occurrences + StringPool.COLON + _message;
 				}
 
 				return StringBundler.concat(
-					_coincidences, " occurrences of the following event: ",
+					_occurrences, " occurrences of the following event: ",
 					_message);
 			}
 
-			private final int _coincidences;
+			private final int _occurrences;
 			private final String _message;
 
 		}

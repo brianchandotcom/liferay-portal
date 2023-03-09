@@ -15,7 +15,9 @@
 package com.liferay.portal.security.ldap.internal.instance.lifecycle;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -32,10 +34,15 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(service = PortalInstanceLifecycleListener.class)
 public class LDAPPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
+	extends BasePortalInstanceLifecycleListener
+	implements EveryNodeEveryStartup {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		if (!_clusterMasterExecutor.isMaster()) {
+			return;
+		}
+
 		if (_ldapSettings.isImportOnStartup(company.getCompanyId())) {
 			try {
 				_userImporter.importUsers(company.getCompanyId());
@@ -55,6 +62,9 @@ public class LDAPPortalInstanceLifecycleListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPPortalInstanceLifecycleListener.class);
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private LDAPSettings _ldapSettings;

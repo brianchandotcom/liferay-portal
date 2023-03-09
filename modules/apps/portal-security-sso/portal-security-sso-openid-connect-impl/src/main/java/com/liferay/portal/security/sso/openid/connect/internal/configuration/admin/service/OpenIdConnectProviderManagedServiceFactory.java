@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -126,6 +127,10 @@ public class OpenIdConnectProviderManagedServiceFactory
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		if (!_clusterMasterExecutor.isMaster()) {
+			return;
+		}
+
 		_properties.forEach(
 			(pid, properties) -> {
 				if (GetterUtil.getLong(properties.get("companyId")) ==
@@ -558,6 +563,9 @@ public class OpenIdConnectProviderManagedServiceFactory
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdConnectProviderManagedServiceFactory.class);
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

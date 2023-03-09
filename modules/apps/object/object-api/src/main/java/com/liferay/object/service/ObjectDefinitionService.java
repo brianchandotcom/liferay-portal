@@ -65,7 +65,8 @@ public interface ObjectDefinitionService extends BaseService {
 		throws PortalException;
 
 	public ObjectDefinition addSystemObjectDefinition(
-			long userId, Map<Locale, String> labelMap, String name,
+			long userId, boolean enableComments, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
 			Map<Locale, String> pluralLabelMap, String scope,
 			List<ObjectField> objectFields)
 		throws PortalException;

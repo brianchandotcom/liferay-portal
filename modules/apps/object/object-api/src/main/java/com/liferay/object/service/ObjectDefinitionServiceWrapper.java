@@ -63,14 +63,17 @@ public class ObjectDefinitionServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectDefinition addSystemObjectDefinition(
-			long userId, java.util.Map<java.util.Locale, String> labelMap,
-			String name, java.util.Map<java.util.Locale, String> pluralLabelMap,
+			long userId, boolean enableComments,
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			String panelAppOrder, String panelCategoryKey,
+			java.util.Map<java.util.Locale, String> pluralLabelMap,
 			String scope,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.addSystemObjectDefinition(
-			userId, labelMap, name, pluralLabelMap, scope, objectFields);
+			userId, enableComments, labelMap, name, panelAppOrder,
+			panelCategoryKey, pluralLabelMap, scope, objectFields);
 	}
 
 	@Override

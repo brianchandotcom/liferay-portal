@@ -852,8 +852,8 @@ public class UpgradeReport {
 					_message);
 			}
 
-			private final int _occurrences;
 			private final String _message;
+			private final int _occurrences;
 
 		}
 

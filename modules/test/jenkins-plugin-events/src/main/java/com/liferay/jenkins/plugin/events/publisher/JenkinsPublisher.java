@@ -17,6 +17,7 @@ package com.liferay.jenkins.plugin.events.publisher;
 import com.liferay.jenkins.plugin.events.jms.JMSConnection;
 import com.liferay.jenkins.plugin.events.jms.JMSFactory;
 import com.liferay.jenkins.plugin.events.jms.JMSQueue;
+import com.liferay.jenkins.plugin.events.listener.JMSMessageListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -215,6 +216,15 @@ public class JenkinsPublisher {
 
 		if (queueItemLeft) {
 			_eventTriggers.add(EventTrigger.QUEUE_ITEM_LEFT);
+		}
+
+		if ((inboundJMSQueueName != null) && jmsRequest) {
+			JMSConnection jmsConnection = JMSFactory.newJMSConnection(url);
+
+			JMSQueue jmsQueue = JMSFactory.newJMSQueue(
+				jmsConnection, inboundJMSQueueName);
+
+			jmsQueue.subscribe(new JMSMessageListener());
 		}
 	}
 

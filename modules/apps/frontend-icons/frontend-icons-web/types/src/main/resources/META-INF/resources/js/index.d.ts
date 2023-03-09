@@ -12,5 +12,5 @@
  * details.
  */
 
-export declare function getSpritemap(): string;
 export declare function getControlPanelSpritemap(): string;
+export declare function getSpritemap(): string;

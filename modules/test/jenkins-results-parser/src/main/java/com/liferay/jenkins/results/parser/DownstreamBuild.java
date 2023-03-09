@@ -94,17 +94,29 @@ public class DownstreamBuild extends BaseBuild {
 	public long getAverageDuration() {
 		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
 
+		if (axisTestClassGroup == null) {
+			return 0L;
+		}
+
 		return axisTestClassGroup.getAverageDuration();
 	}
 
 	public long getAverageOverheadDuration() {
 		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
 
+		if (axisTestClassGroup == null) {
+			return 0L;
+		}
+
 		return axisTestClassGroup.getAverageOverheadDuration();
 	}
 
 	public long getAverageTotalTestDuration() {
 		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+		if (axisTestClassGroup == null) {
+			return 0L;
+		}
 
 		return axisTestClassGroup.getAverageTotalTestDuration();
 	}
@@ -744,82 +756,86 @@ public class DownstreamBuild extends BaseBuild {
 
 		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
 
-		List<TestClass> testClasses = axisTestClassGroup.getTestClasses();
+		if (axisTestClassGroup != null) {
+			List<TestClass> testClasses = axisTestClassGroup.getTestClasses();
 
-		for (int i = 0; i < testClasses.size(); i++) {
-			TestClass testClass = testClasses.get(i);
+			for (int i = 0; i < testClasses.size(); i++) {
+				TestClass testClass = testClasses.get(i);
 
-			TestClassResult testClassResult = null;
+				TestClassResult testClassResult = null;
 
-			String testClassName = null;
+				String testClassName = null;
 
-			long duration = 0L;
+				long duration = 0L;
 
-			if (testClass instanceof JUnitTestClass) {
-				JUnitTestClass jUnitTestClass = (JUnitTestClass)testClass;
+				if (testClass instanceof JUnitTestClass) {
+					JUnitTestClass jUnitTestClass = (JUnitTestClass)testClass;
 
-				testClassName = jUnitTestClass.getTestClassName();
+					testClassName = jUnitTestClass.getTestClassName();
 
-				testClassResult = getTestClassResult(testClassName);
+					testClassResult = getTestClassResult(testClassName);
 
-				if (testClassResult != null) {
-					duration = testClassResult.getDuration();
-				}
-			}
-			else if (testClass instanceof FunctionalTestClass) {
-				FunctionalTestClass functionalTestClass =
-					(FunctionalTestClass)testClass;
-
-				testClassName = functionalTestClass.getTestClassMethodName();
-
-				testClassResult = getTestClassResult(
-					"com.liferay.poshi.runner.PoshiRunner");
-
-				if (testClassResult != null) {
-					for (TestResult testResult :
-							testClassResult.getTestResults()) {
-
-						String testMethodName = "test[" + testClassName + "]";
-
-						if (!Objects.equals(
-								testMethodName, testResult.getTestName())) {
-
-							continue;
-						}
-
-						duration = testResult.getDuration();
-
-						break;
+					if (testClassResult != null) {
+						duration = testClassResult.getDuration();
 					}
 				}
+				else if (testClass instanceof FunctionalTestClass) {
+					FunctionalTestClass functionalTestClass =
+						(FunctionalTestClass)testClass;
+
+					testClassName =
+						functionalTestClass.getTestClassMethodName();
+
+					testClassResult = getTestClassResult(
+						"com.liferay.poshi.runner.PoshiRunner");
+
+					if (testClassResult != null) {
+						for (TestResult testResult :
+								testClassResult.getTestResults()) {
+
+							String testMethodName =
+								"test[" + testClassName + "]";
+
+							if (!Objects.equals(
+									testMethodName, testResult.getTestName())) {
+
+								continue;
+							}
+
+							duration = testResult.getDuration();
+
+							break;
+						}
+					}
+				}
+
+				Element durationValuesElement = Dom4JUtil.getNewElement("tr");
+
+				childStopWatchRows.add("test-duration-values-" + i);
+
+				durationValuesElement.addAttribute(
+					"id", hashCode() + "-test-duration-values-" + i);
+				durationValuesElement.addAttribute("style", "display: none;");
+
+				Element durationValuesDataElement = Dom4JUtil.getNewElement(
+					"td", durationValuesElement, testClassName);
+
+				durationValuesDataElement.addAttribute("style", style);
+
+				long averageDuration = testClass.getAverageDuration();
+
+				Dom4JUtil.getNewElement(
+					"td", durationValuesElement,
+					JenkinsResultsParserUtil.toDurationString(duration));
+				Dom4JUtil.getNewElement(
+					"td", durationValuesElement,
+					JenkinsResultsParserUtil.toDurationString(averageDuration));
+				Dom4JUtil.getNewElement(
+					"td", durationValuesElement,
+					getDiffDurationString(duration - averageDuration));
+
+				jenkinsReportTableRowElements.add(durationValuesElement);
 			}
-
-			Element durationValuesElement = Dom4JUtil.getNewElement("tr");
-
-			childStopWatchRows.add("test-duration-values-" + i);
-
-			durationValuesElement.addAttribute(
-				"id", hashCode() + "-test-duration-values-" + i);
-			durationValuesElement.addAttribute("style", "display: none;");
-
-			Element durationValuesDataElement = Dom4JUtil.getNewElement(
-				"td", durationValuesElement, testClassName);
-
-			durationValuesDataElement.addAttribute("style", style);
-
-			long averageDuration = testClass.getAverageDuration();
-
-			Dom4JUtil.getNewElement(
-				"td", durationValuesElement,
-				JenkinsResultsParserUtil.toDurationString(duration));
-			Dom4JUtil.getNewElement(
-				"td", durationValuesElement,
-				JenkinsResultsParserUtil.toDurationString(averageDuration));
-			Dom4JUtil.getNewElement(
-				"td", durationValuesElement,
-				getDiffDurationString(duration - averageDuration));
-
-			jenkinsReportTableRowElements.add(durationValuesElement);
 		}
 
 		testDurationsHeaderElement.addAttribute(

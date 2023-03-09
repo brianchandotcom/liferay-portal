@@ -16,7 +16,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayPopover from '@clayui/popover';
-import {ReactNode, useContext, useState} from 'react';
+import {ReactNode, useCallback, useContext, useState} from 'react';
 import {ListViewContext, ListViewTypes} from '~/context/ListViewContext';
 import {Liferay} from '~/services/liferay';
 
@@ -72,8 +72,10 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	const [{filters, pin}, dispatch] = useContext(ListViewContext);
 	const [columnsDropdownVisible, setColumnsDropdownVisible] = useState(false);
 
-	const pinSelectedFilters = () => {
-		if (filters.entries.length) {
+	const hasAppliedFilters = !!filters.entries.length;
+
+	const onPin = useCallback(() => {
+		if (hasAppliedFilters) {
 			dispatch({type: ListViewTypes.SET_PIN});
 
 			return Liferay.Util.openToast({
@@ -92,7 +94,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 			),
 			type: 'danger',
 		});
-	};
+	}, [dispatch, hasAppliedFilters, pin]);
 
 	return (
 		<ClayManagementToolbar.ItemList>
@@ -103,7 +105,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 							aria-label={i18n.translate('add-pin')}
 							className="nav-btn nav-btn-monospaced"
 							displayType="unstyled"
-							onClick={() => pinSelectedFilters()}
+							onClick={onPin}
 							symbol={i18n.translate(pin ? 'unpin' : 'pin')}
 							title={i18n.translate(pin ? 'unpin' : 'pin')}
 						/>

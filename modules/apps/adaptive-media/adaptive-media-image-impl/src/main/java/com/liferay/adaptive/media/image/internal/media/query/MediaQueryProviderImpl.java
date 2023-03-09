@@ -40,7 +40,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -213,22 +212,25 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		int originalWidth = _getWidth(originalAdaptiveMedia) * 2;
 		int originalHeight = _getHeight(originalAdaptiveMedia) * 2;
 
-		IntStream widthIntStream = IntStream.range(
-			originalWidth - 1, originalWidth + 2);
-
-		IntStream heightIntStream = IntStream.range(
-			originalHeight - 1, originalHeight + 2);
-
 		for (AdaptiveMedia<AMImageProcessor> adaptiveMedia : adaptiveMedias) {
-			boolean widthMatch = widthIntStream.anyMatch(
-				value -> value == _getWidth(adaptiveMedia));
+			int width = _getWidth(adaptiveMedia);
 
-			boolean heightMatch = heightIntStream.anyMatch(
-				value -> value == _getHeight(adaptiveMedia));
+			if ((width != (originalWidth - 1)) && (width != originalWidth) &&
+				(width != (originalWidth + 1))) {
 
-			if (widthMatch && heightMatch) {
-				return adaptiveMedia;
+				continue;
 			}
+
+			int height = _getHeight(adaptiveMedia);
+
+			if ((height != (originalHeight - 1)) &&
+				(height != originalHeight) &&
+				(height != (originalHeight + 1))) {
+
+				continue;
+			}
+
+			return adaptiveMedia;
 		}
 
 		return null;

@@ -28,7 +28,9 @@ import java.net.URISyntaxException;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -344,6 +346,13 @@ public class LiferayClient {
 	private String _getBearerToken()
 		throws ConnectionClientException, OAuth2AuthorizationClientException {
 
+		OAuthAccessToken oAuthAccessToken = _oAuthAccessTokenCache.get(
+			_hostURL + _authorizationIdentityId);
+
+		if ((oAuthAccessToken != null) && !oAuthAccessToken.isExpired()) {
+			return oAuthAccessToken.getAccessToken();
+		}
+
 		JsonObject authorizationJsonObject = _requestAuthorizationJsonObject();
 
 		String tokenType = authorizationJsonObject.getString("token_type");
@@ -353,7 +362,15 @@ public class LiferayClient {
 				"Unexpected token type received " + tokenType);
 		}
 
-		return authorizationJsonObject.getString("access_token");
+		String accessToken = authorizationJsonObject.getString("access_token");
+		int expiresIn = authorizationJsonObject.getInt("expires_in");
+
+		_oAuthAccessTokenCache.put(
+			_hostURL + _authorizationIdentityId,
+			new OAuthAccessToken(
+				accessToken, System.currentTimeMillis() + (expiresIn * 1000)));
+
+		return accessToken;
 	}
 
 	private ClientConfig _getClientConfig() {
@@ -484,6 +501,9 @@ public class LiferayClient {
 	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayClient.class);
 
+	private static final Map<String, OAuthAccessToken> _oAuthAccessTokenCache =
+		new ConcurrentHashMap<>();
+
 	private final String _authorizationIdentityId;
 	private final String _authorizationIdentitySecret;
 	private final Client _client;
@@ -496,5 +516,29 @@ public class LiferayClient {
 	private final String _proxyIdentitySecret;
 	private final int _readTimeoutMills;
 	private final ResponseHandler _responseHandler = new ResponseHandler();
+
+	private class OAuthAccessToken {
+
+		public String getAccessToken() {
+			return _accessToken;
+		}
+
+		public boolean isExpired() {
+			if (_expirationTime <= (System.currentTimeMillis() + (15 * 1000))) {
+				return true;
+			}
+
+			return false;
+		}
+
+		private OAuthAccessToken(String accessToken, long expirationTime) {
+			_accessToken = accessToken;
+			_expirationTime = expirationTime;
+		}
+
+		private final String _accessToken;
+		private final long _expirationTime;
+
+	}
 
 }

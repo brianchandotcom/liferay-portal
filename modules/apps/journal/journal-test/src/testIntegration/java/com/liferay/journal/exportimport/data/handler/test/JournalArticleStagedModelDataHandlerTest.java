@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -57,8 +58,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -755,6 +758,8 @@ public class JournalArticleStagedModelDataHandlerTest
 				articleResource.getResourcePrimKey(), article.getStatus(),
 				false);
 
+		_validateDDMStructureId(importedArticle, article);
+
 		validateAssets(importedArticle, stagedModelAssets, group);
 
 		validateComments(article, importedArticle, group);
@@ -792,5 +797,41 @@ public class JournalArticleStagedModelDataHandlerTest
 		Assert.assertEquals(
 			article.getSmallImageURL(), importedArticle.getSmallImageURL());
 	}
+
+	private void _validateDDMStructureId(
+			JournalArticle importedJournalArticle,
+			JournalArticle stagedJournalArticle)
+		throws Exception {
+
+		DDMStructure stagedDDMStructure =
+			_ddmStructureLocalService.getDDMStructure(
+				stagedJournalArticle.getDDMStructureId());
+
+		Assert.assertEquals(
+			stagedJournalArticle.getDDMStructureKey(),
+			stagedDDMStructure.getStructureKey());
+
+		Assert.assertEquals(
+			_portal.getSiteGroupId(stagedJournalArticle.getGroupId()),
+			stagedDDMStructure.getGroupId());
+
+		DDMStructure importedDDMStructure =
+			_ddmStructureLocalService.getDDMStructure(
+				importedJournalArticle.getDDMStructureId());
+
+		Assert.assertEquals(
+			importedJournalArticle.getDDMStructureKey(),
+			importedDDMStructure.getStructureKey());
+
+		Assert.assertEquals(
+			_portal.getSiteGroupId(importedJournalArticle.getGroupId()),
+			importedDDMStructure.getGroupId());
+	}
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

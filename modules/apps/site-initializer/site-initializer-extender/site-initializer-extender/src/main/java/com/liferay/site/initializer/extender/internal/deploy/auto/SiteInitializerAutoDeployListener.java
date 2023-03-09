@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -38,11 +39,14 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.site.initializer.SiteInitializer;
@@ -105,10 +109,12 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		}
 
 		try {
-			JSONObject jsonObject = _getClientExtensionConfigJSONObject(file);
+			UnicodeProperties unicodeProperties =
+				_getTypeSettingsUnicodeProperties(file);
 
-			if ((jsonObject != null) &&
-				Validator.isNotNull(jsonObject.getString("groupName"))) {
+			if ((unicodeProperties != null) &&
+				Validator.isNotNull(
+					unicodeProperties.getProperty("siteName"))) {
 
 				return true;
 			}
@@ -127,13 +133,15 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 					file.getName());
 		}
 
-		JSONObject jsonObject = _getClientExtensionConfigJSONObject(file);
+		UnicodeProperties unicodeProperties = _getTypeSettingsUnicodeProperties(
+			file);
 
-		if (jsonObject == null) {
+		if (unicodeProperties == null) {
 			throw new AutoDeployException();
 		}
 
-		long companyId = jsonObject.getLong("companyId");
+		long companyId = GetterUtil.getLong(
+			unicodeProperties.getProperty("companyId"));
 
 		if (companyId == 0) {
 			if (_log.isWarnEnabled()) {
@@ -146,7 +154,8 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 			companyId = company.getCompanyId();
 		}
 
-		long userId = jsonObject.getLong("userId");
+		long userId = GetterUtil.getLong(
+			unicodeProperties.getProperty("userId"));
 
 		if (userId == 0) {
 			if (_log.isWarnEnabled()) {
@@ -162,7 +171,7 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setUserId(userId);
 
-		String groupName = jsonObject.getString("groupName");
+		String groupName = unicodeProperties.getProperty("siteName");
 
 		Group group = _groupLocalService.addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0, 0,
@@ -205,7 +214,7 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		}
 	}
 
-	private JSONObject _getClientExtensionConfigJSONObject(File file)
+	private UnicodeProperties _getTypeSettingsUnicodeProperties(File file)
 		throws Exception {
 
 		try (ZipFile zipFile = new ZipFile(file)) {
@@ -222,8 +231,34 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 					continue;
 				}
 
-				return _jsonFactory.createJSONObject(
+				JSONObject jsonObject1 = _jsonFactory.createJSONObject(
 					StringUtil.read(zipFile.getInputStream(zipEntry)));
+
+				if (jsonObject1 == null) {
+					return null;
+				}
+
+				for (String key : jsonObject1.keySet()) {
+					JSONObject jsonObject2 = jsonObject1.getJSONObject(key);
+
+					JSONArray typeSettingsJSONArray = jsonObject2.getJSONArray(
+						"typeSettings");
+
+					if (typeSettingsJSONArray == null) {
+						continue;
+					}
+
+					String unicodePropertiesString = "";
+
+					for (int i = 0; i < typeSettingsJSONArray.length(); i++) {
+						unicodePropertiesString +=
+							typeSettingsJSONArray.getString(i) + "\n";
+					}
+
+					return UnicodePropertiesBuilder.fastLoad(
+						unicodePropertiesString
+					).build();
+				}
 			}
 		}
 

@@ -122,6 +122,7 @@
 	},
 	{
 		"actionIds": [
+			"UPDATE",
 			"VIEW"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",

@@ -20,8 +20,7 @@
 
 .headerTextModal {
 	margin-bottom: 0 !important;
-	max-width: 25ch;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+}
+.modal-title {
+	white-space: inherit !important;
 }

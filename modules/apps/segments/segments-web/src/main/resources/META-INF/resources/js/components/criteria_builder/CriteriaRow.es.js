@@ -22,12 +22,14 @@ import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 import ThemeContext from '../../ThemeContext.es';
 import {
 	PROPERTY_TYPES,
+	SUPPORTED_EVENT_OPERATORS,
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
 } from '../../utils/constants';
 import {DragTypes} from '../../utils/drag-types.es';
 import {
 	createNewGroup,
+	getSupportedOperatorsFromEvent,
 	getSupportedOperatorsFromType,
 	objectToFormData,
 } from '../../utils/utils.es';
@@ -98,11 +100,22 @@ function drop(props, monitor) {
 
 	const droppedCriterionValue = value || defaultValue;
 
-	const operators = getSupportedOperatorsFromType(
-		SUPPORTED_OPERATORS,
-		SUPPORTED_PROPERTY_TYPES,
-		type
-	);
+	let operators = [];
+
+	if (type === PROPERTY_TYPES.EVENT) {
+		operators = getSupportedOperatorsFromEvent(
+			SUPPORTED_EVENT_OPERATORS,
+			SUPPORTED_PROPERTY_TYPES,
+			'INTEGER'
+		);
+	}
+	else {
+		operators = getSupportedOperatorsFromType(
+			SUPPORTED_OPERATORS,
+			SUPPORTED_PROPERTY_TYPES,
+			type
+		);
+	}
 
 	const newCriterion = {
 		displayValue,

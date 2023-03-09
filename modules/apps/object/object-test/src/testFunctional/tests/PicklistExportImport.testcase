@@ -74,9 +74,23 @@ definition {
 	@description = "LPS-175645 - It's possible to export Picklist (download)"
 	@priority = 5
 	test CanExportPicklist {
+		property portal.acceptance = "true";
 
-		// TODO pending implementation
+		task ("Given a Picklist created") {
+			Picklist.addPicklistViaAPI(picklistName = "Export Picklist");
+		}
 
+		task ("When a picklist is exported") {
+			Picklist.gotoPicklists();
+
+			Picklist.optionsPicklist(
+				menuItem = "Export",
+				picklistName = "Export Picklist");
+		}
+
+		task ("Then Picklist is exported successfully") {
+			Picklist.assertDownloadedPicklist(downloadedFile = "ListType_*");
+		}
 	}
 
 	@description = "LPS-175645 - It's possible to import the Picklist"

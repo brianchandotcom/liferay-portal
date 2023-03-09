@@ -84,7 +84,7 @@ definition {
 
 		Button.click(button = "Submit for Publication");
 
-		SelectFrame(value1 = "relative=top");
+		WaitForElementNotPresent(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR_3",

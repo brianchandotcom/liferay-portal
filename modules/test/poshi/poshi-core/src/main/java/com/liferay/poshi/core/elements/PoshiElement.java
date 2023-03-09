@@ -306,11 +306,11 @@ public abstract class PoshiElement
 	protected void checkSemicolon(String poshiScript)
 		throws PoshiScriptParserException {
 
-		poshiScript = poshiScript.trim();
+		int index = 0;
 
 		Pattern statementPattern = getStatementPattern();
 
-		int index = 0;
+		poshiScript = poshiScript.trim();
 
 		Matcher matcher = statementPattern.matcher(poshiScript);
 

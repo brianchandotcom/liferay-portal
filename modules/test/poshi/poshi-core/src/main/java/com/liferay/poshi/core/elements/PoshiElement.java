@@ -1072,7 +1072,7 @@ public abstract class PoshiElement
 
 	protected static final String NONQUOTED_REGEX = "(\\$\\{.*\\}|\\d+)";
 
-	protected static final String PARAMETER_REGEX = "\\(.*?\\)";
+	protected static final String PARAMETER_REGEX = "\\(.*\\)";
 
 	protected static final String QUOTED_REGEX = "\".*\"";
 

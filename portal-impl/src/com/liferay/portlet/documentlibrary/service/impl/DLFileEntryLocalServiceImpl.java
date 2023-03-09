@@ -306,7 +306,7 @@ public class DLFileEntryLocalServiceImpl
 
 		// File version
 
-		_addFileVersion(
+		DLFileVersion dlFileVersion = _addFileVersion(
 			user, dlFileEntry, fileName, extension, mimeType, title,
 			description, changeLog, StringPool.BLANK, fileEntryTypeId,
 			ddmFormValuesMap, DLFileEntryConstants.VERSION_DEFAULT, size,
@@ -332,6 +332,8 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getSize()
 		).sourceFileName(
 			dlFileEntry.getFileName()
+		).versionLabel(
+			dlFileVersion.getStoreFileName()
 		).build();
 
 		if (file != null) {
@@ -429,15 +431,15 @@ public class DLFileEntryLocalServiceImpl
 
 		// File version
 
+		String oldStoreFileName = latestDLFileVersion.getStoreFileName();
+
 		latestDLFileVersion = _dlFileVersionPersistence.fetchByPrimaryKey(
 			latestDLFileVersion.getFileVersionId());
 
 		latestDLFileVersion.setChangeLog(changeLog);
 
-		String version = _getNextVersion(
-			dlFileEntry, computedDLVersionNumberIncrease);
-
-		latestDLFileVersion.setVersion(version);
+		latestDLFileVersion.setVersion(
+			_getNextVersion(dlFileEntry, computedDLVersionNumberIncrease));
 
 		latestDLFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
 
@@ -458,8 +460,8 @@ public class DLFileEntryLocalServiceImpl
 
 		DLStoreUtil.copyFileVersion(
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(),
-			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
+			dlFileEntry.getName(), oldStoreFileName,
+			latestDLFileVersion.getStoreFileName());
 
 		_registerPWCDeletionCallback(dlFileEntry);
 
@@ -506,20 +508,17 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion dlFileVersion =
 			_dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		String oldVersion = dlFileVersion.getVersion();
-
 		DLFileEntry dlFileEntry = _checkOutDLFileEntryModel(
 			userId, fileEntryId, fileEntryTypeId, owner, expirationTime,
 			serviceContext);
 
-		if (!oldVersion.equals(
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+		DLFileVersion latestDLFileVersion = dlFileEntry.getLatestFileVersion(
+			true);
 
-			DLStoreUtil.copyFileVersion(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), oldVersion,
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
-		}
+		DLStoreUtil.copyFileVersion(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName(),
+			latestDLFileVersion.getStoreFileName());
 
 		return dlFileEntry;
 	}
@@ -599,9 +598,11 @@ public class DLFileEntryLocalServiceImpl
 			title = fileName;
 		}
 
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
 		InputStream inputStream = DLStoreUtil.getFileAsStream(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName());
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
 
 		DLFileEntry newDLFileEntry = addFileEntry(
 			null, userId, groupId, repositoryId, destFolderId, sourceFileName,
@@ -610,8 +611,6 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getFileEntryTypeId(), null, null, inputStream,
 			dlFileEntry.getSize(), dlFileEntry.getExpirationDate(),
 			dlFileEntry.getReviewDate(), serviceContext);
-
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		DLFileVersion newDLFileVersion = newDLFileEntry.getFileVersion();
 
@@ -918,7 +917,7 @@ public class DLFileEntryLocalServiceImpl
 
 			_deleteFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), version);
+				dlFileEntry.getName(), dlFileVersion.getStoreFileName());
 		}
 		finally {
 			unlockFileEntry(fileEntryId);
@@ -1133,9 +1132,11 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry, increment);
 		}
 
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion(version);
+
 		return DLStoreUtil.getFileAsStream(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), version);
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
 	}
 
 	@Override
@@ -2494,12 +2495,13 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private void _deleteFile(
-			long companyId, long repositoryId, String name, String versionLabel)
+			long companyId, long repositoryId, String name,
+			String storeFileName)
 		throws PortalException {
 
-		DLStoreUtil.deleteFile(companyId, repositoryId, name, versionLabel);
+		DLStoreUtil.deleteFile(companyId, repositoryId, name, storeFileName);
 		DLStoreUtil.deleteFile(
-			companyId, repositoryId, name, versionLabel + ".index");
+			companyId, repositoryId, name, storeFileName + ".index");
 	}
 
 	private void _expireFileEntriesByCompanyId(
@@ -3199,13 +3201,12 @@ public class DLFileEntryLocalServiceImpl
 
 		_deleteFile(
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), lastDLFileVersion.getVersion());
+			dlFileEntry.getName(), lastDLFileVersion.getStoreFileName());
 
 		DLStoreUtil.copyFileVersion(
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(),
-			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-			lastDLFileVersion.getVersion());
+			dlFileEntry.getName(), latestDLFileVersion.getStoreFileName(),
+			lastDLFileVersion.getStoreFileName());
 
 		// Latest file version
 
@@ -3338,13 +3339,14 @@ public class DLFileEntryLocalServiceImpl
 
 			// File version
 
+			String oldStoreFileName = dlFileVersion.getStoreFileName();
 			String version = dlFileVersion.getVersion();
 
 			if (size == 0) {
 				size = dlFileVersion.getSize();
 			}
 
-			_updateFileVersion(
+			DLFileVersion updatedFileVersion = _updateFileVersion(
 				user, dlFileVersion, sourceFileName, fileName, extension,
 				mimeType, title, description, changeLog, extraSettings,
 				fileEntryTypeId, ddmFormValuesMap, version, size,
@@ -3367,19 +3369,21 @@ public class DLFileEntryLocalServiceImpl
 			if ((file != null) || (inputStream != null)) {
 				_deleteFile(
 					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-					dlFileEntry.getName(), version);
+					dlFileEntry.getName(), oldStoreFileName);
 
 				if (file != null) {
 					DLStoreUtil.updateFile(
 						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), dlFileEntry.getExtension(),
-						false, version, sourceFileName, file);
+						false, updatedFileVersion.getStoreFileName(),
+						sourceFileName, file);
 				}
 				else {
 					DLStoreUtil.updateFile(
 						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), dlFileEntry.getExtension(),
-						false, version, sourceFileName, inputStream);
+						false, updatedFileVersion.getStoreFileName(),
+						sourceFileName, inputStream);
 				}
 			}
 

@@ -47,7 +47,7 @@ public class DLFileVersionModelListener
 				DLStoreUtil.deleteFile(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					dlFileVersion.getVersion());
+					dlFileVersion.getStoreFileName());
 			}
 		}
 		catch (PortalException portalException) {

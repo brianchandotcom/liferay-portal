@@ -102,6 +102,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -1143,9 +1144,12 @@ public class FileEntryStagedModelDataHandler
 
 					DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-					String oldVersion = dlFileVersion.getVersion();
+					String oldStoreFileName = dlFileVersion.getStoreFileName();
 
 					dlFileVersion.setVersion(version);
+
+					dlFileVersion.setStoreUUID(
+						String.valueOf(UUID.randomUUID()));
 
 					_dlFileVersionLocalService.updateDLFileVersion(
 						dlFileVersion);
@@ -1158,12 +1162,13 @@ public class FileEntryStagedModelDataHandler
 					if (DLStoreUtil.hasFile(
 							dlFileEntry.getCompanyId(),
 							dlFileEntry.getDataRepositoryId(),
-							dlFileEntry.getName(), oldVersion)) {
+							dlFileEntry.getName(), oldStoreFileName)) {
 
 						DLStoreUtil.updateFileVersion(
 							dlFileEntry.getCompanyId(),
 							dlFileEntry.getDataRepositoryId(),
-							dlFileEntry.getName(), oldVersion, version);
+							dlFileEntry.getName(), oldStoreFileName,
+							dlFileVersion.getStoreFileName());
 					}
 
 					return _dlAppLocalService.getFileEntry(

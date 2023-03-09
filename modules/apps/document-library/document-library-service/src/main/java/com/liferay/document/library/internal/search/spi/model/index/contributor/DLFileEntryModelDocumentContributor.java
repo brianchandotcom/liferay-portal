@@ -288,8 +288,12 @@ public class DLFileEntryModelDocumentContributor
 		return text;
 	}
 
-	private String _getIndexVersionLabel(DLFileEntry dlFileEntry) {
-		return dlFileEntry.getVersion() + ".index";
+	private String _getIndexVersionLabel(DLFileEntry dlFileEntry)
+		throws PortalException {
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		return dlFileVersion.getStoreFileName() + ".index";
 	}
 
 	private InputStream _getInputStream(DLFileEntry dlFileEntry) {

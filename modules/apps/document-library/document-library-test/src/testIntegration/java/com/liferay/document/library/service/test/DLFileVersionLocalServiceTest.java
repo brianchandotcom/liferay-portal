@@ -16,6 +16,7 @@ package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -86,10 +87,12 @@ public class DLFileVersionLocalServiceTest {
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
 			fileEntry.getFileEntryId());
 
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion("1.0");
+
 		Assert.assertTrue(
 			DLStoreUtil.hasFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), "1.0"));
+				dlFileEntry.getName(), dlFileVersion.getStoreFileName()));
 
 		_dlFileEntryLocalService.deleteFileVersion(
 			TestPropsValues.getUserId(), fileEntry.getFileEntryId(), "1.0");
@@ -97,7 +100,7 @@ public class DLFileVersionLocalServiceTest {
 		Assert.assertFalse(
 			DLStoreUtil.hasFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), "1.0"));
+				dlFileEntry.getName(), dlFileVersion.getStoreFileName()));
 	}
 
 	@Inject

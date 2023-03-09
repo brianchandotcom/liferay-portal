@@ -167,7 +167,7 @@ export default function TabsPanel({
 													index <
 													INITIAL_EXPANDED_ITEM_COLLECTIONS
 												}
-												key={index}
+												key={collection.collectionId}
 											/>
 										)
 									)}

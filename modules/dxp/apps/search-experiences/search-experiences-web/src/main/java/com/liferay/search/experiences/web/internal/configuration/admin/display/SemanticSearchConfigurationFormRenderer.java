@@ -96,7 +96,7 @@ public class SemanticSearchConfigurationFormRenderer
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920")) {
 			PrintWriter writer = httpServletResponse.getWriter();
 
 			writer.print(

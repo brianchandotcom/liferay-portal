@@ -44,7 +44,7 @@ public class EmbeddingProviderValidationResultResourceImpl
 		postTextEmbeddingValidateProviderConfiguration(
 			EmbeddingProviderConfiguration embeddingProviderConfiguration) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920")) {
 			return null;
 		}
 

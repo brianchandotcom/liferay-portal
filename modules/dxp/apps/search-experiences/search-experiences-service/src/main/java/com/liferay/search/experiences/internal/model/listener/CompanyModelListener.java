@@ -71,7 +71,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		}
 
 		for (SXPElement sxpElement : _getSXPElements()) {
-			if ((!FeatureFlagManagerUtil.isEnabled("LPS-163688") &&
+			if ((!FeatureFlagManagerUtil.isEnabled("LPS-122920") &&
 				 Objects.equals(
 					 sxpElement.getExternalReferenceCode(),
 					 "RESCORE_BY_TEXT_EMBEDDING")) ||

@@ -48,7 +48,7 @@ public class MLModelResourceImpl extends BaseMLModelResourceImpl {
 			Integer limit, String pipelineTag, String query, String tag)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920")) {
 			return null;
 		}
 

@@ -58,7 +58,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	public EmbeddingProviderStatus getEmbeddingProviderStatus(
 		String embeddingProviderConfigurationJSON) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920")) {
 			return null;
 		}
 
@@ -115,7 +115,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 	@Override
 	public EmbeddingProviderStatus[] getEmbeddingProviderStatuses() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920")) {
 			return new EmbeddingProviderStatus[0];
 		}
 
@@ -136,7 +136,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 	@Override
 	public Double[] getTextEmbedding(String providerName, String text) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920")) {
 			return new Double[0];
 		}
 

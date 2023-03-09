@@ -115,7 +115,7 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 		ExceptionListener exceptionListener,
 		SemanticSearchConfiguration semanticSearchConfiguration) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920") ||
 			!semanticSearchConfiguration.textEmbeddingsEnabled()) {
 
 			return null;

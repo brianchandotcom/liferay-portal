@@ -159,7 +159,7 @@ public abstract class BaseTextEmbeddingModelDocumentContributor
 			semanticSearchConfigurationProvider.getCompanyConfiguration(
 				getCompanyId(baseModel));
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920") ||
 			!semanticSearchConfiguration.textEmbeddingsEnabled() ||
 			!_isIndexableStatus(baseModel)) {
 

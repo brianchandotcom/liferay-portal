@@ -1,10 +1,16 @@
 [#assign firstName = themeDisplay.getUser().getFirstName()]
+[#assign lastName = themeDisplay.getUser().getLastName()]
+[#assign languageId = themeDisplay.getLanguageId()]
 
 <div class="align-items-center customer-portal-welcome-banner d-flex position-relative">
 	<div class="customer-portal-text ml-3 pl-5 text-neutral-0">
 		<div class="mb-4 pb-2">
 			${languageUtil.get(locale, "welcome")},
-			<span class="font-weight-bold">${firstName}!</span>
+			[#if languageId == "ja_JP"]
+				<span class="font-weight-bold">${lastName}様!</span>
+			[#else]
+				<span class="font-weight-bold">${firstName}!</span>
+			[/#if]
 		</div>
 
 		<div>

@@ -108,11 +108,27 @@ public class KnowledgeBaseAttachmentResourceImpl
 
 		return _toKnowledgeBaseAttachment(
 			_portletFileRepository.addPortletFileEntry(
-				null, kbArticle.getGroupId(), contextUser.getUserId(),
+				_getKnowledgeBaseAttachmentExternalReferenceCode(multipartBody),
+				kbArticle.getGroupId(), contextUser.getUserId(),
 				KBArticle.class.getName(), kbArticle.getClassPK(),
 				KBConstants.SERVICE_NAME, kbArticle.getAttachmentsFolderId(),
 				binaryFile.getInputStream(), binaryFile.getFileName(),
 				binaryFile.getFileName(), false));
+	}
+
+	private String _getKnowledgeBaseAttachmentExternalReferenceCode(
+			MultipartBody multipartBody)
+		throws Exception {
+
+		KnowledgeBaseAttachment knowledgeBaseAttachment =
+			multipartBody.getValueAsInstance(
+				"knowledgeBaseAttachment", KnowledgeBaseAttachment.class);
+
+		if (knowledgeBaseAttachment == null) {
+			return null;
+		}
+
+		return knowledgeBaseAttachment.getExternalReferenceCode();
 	}
 
 	private KnowledgeBaseAttachment _toKnowledgeBaseAttachment(
@@ -128,6 +144,7 @@ public class KnowledgeBaseAttachmentResourceImpl
 					"contentValue", fileEntry::getContentStream,
 					Optional.of(contextUriInfo));
 				encodingFormat = fileEntry.getMimeType();
+				externalReferenceCode = fileEntry.getExternalReferenceCode();
 				fileExtension = fileEntry.getExtension();
 				id = fileEntry.getFileEntryId();
 				sizeInBytes = fileEntry.getSize();

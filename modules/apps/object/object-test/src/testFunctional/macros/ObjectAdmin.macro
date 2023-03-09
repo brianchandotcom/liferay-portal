@@ -64,6 +64,7 @@ definition {
 			actionName = ${actionName},
 			active = ${active},
 			click = "save",
+			errorMessage = ${errorMessage},
 			fieldName = ${fieldName},
 			inputExpression = ${inputExpression},
 			inputMethod = ${inputMethod},
@@ -956,6 +957,8 @@ definition {
 	}
 
 	macro fillObjectAction {
+		var key_text = "Message";
+
 		if (isSet(actionLabel)) {
 			Type(
 				locator1 = "ObjectAdmin#ACTION_LABEL_FIELD",
@@ -1020,6 +1023,12 @@ definition {
 					Type(
 						locator1 = "ObjectAction#INPUT_NEW_VALUE",
 						value1 = ${inputExpressionValue});
+				}
+
+				if (IsElementPresent(locator1 = "TextInput#ANY")) {
+					Type(
+						locator1 = "TextInput#ANY",
+						value1 = ${errorMessage});
 				}
 			}
 

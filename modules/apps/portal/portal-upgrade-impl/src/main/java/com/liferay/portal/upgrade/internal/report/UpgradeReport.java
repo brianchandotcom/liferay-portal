@@ -790,7 +790,7 @@ public class UpgradeReport {
 		}
 
 		public void addEvent(String message, int occurrences) {
-			_counts.add(new Counts(message, occurrences));
+			_counts.add(new Count(message, occurrences));
 		}
 
 		@Override
@@ -805,9 +805,9 @@ public class UpgradeReport {
 			sb.append(_clazz);
 			sb.append(StringPool.NEW_LINE);
 
-			for (Counts counter : _counts) {
+			for (Count count : _counts) {
 				sb.append(StringPool.TAB);
-				sb.append(counter.toString());
+				sb.append(count.toString());
 				sb.append(StringPool.NEW_LINE);
 			}
 
@@ -815,11 +815,11 @@ public class UpgradeReport {
 		}
 
 		private final String _clazz;
-		private final List<Counts> _counts = new ArrayList<>();
+		private final List<Count> _counts = new ArrayList<>();
 
-		private class Counts {
+		private class Count {
 
-			public Counts(String message, int occurrences) {
+			public Count(String message, int occurrences) {
 				_message = message;
 				_occurrences = occurrences;
 			}

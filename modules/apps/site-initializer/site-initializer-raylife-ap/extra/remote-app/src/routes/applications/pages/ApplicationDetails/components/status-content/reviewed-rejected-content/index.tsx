@@ -47,9 +47,7 @@ const UnderwritingContent = ({
 	externalReferenceCode,
 	id,
 }: UnderwriterApplicationType) => {
-	const [underwriterComment, setUnderwriterComment] = useState<String | null>(
-		null
-	);
+	const [underwriterComment, setUnderwriterComment] = useState<string>();
 
 	const handleUpdateApplicationStatus = () => {
 		updateRaylifeApplication(
@@ -78,14 +76,6 @@ const UnderwritingContent = ({
 		});
 	}, [id]);
 
-	const handleShowComment = () => {
-		if (underwriterComment !== null) {
-			return underwriterComment
-				? underwriterComment
-				: 'This is uninsurable';
-		}
-	};
-
 	return (
 		<div className="application-details-underwriter-content d-flex flex-column">
 			<div className="action-detail-title pt-3 px-5">
@@ -112,11 +102,15 @@ const UnderwritingContent = ({
 							accordingly.
 						</p>
 
-						<div className="application-reject mb-2 mt-6 text-neutral-7">
-							Underwriter Comments
-						</div>
+						{underwriterComment && (
+							<>
+								<div className="application-reject mb-2 mt-6 text-neutral-7">
+									Underwriter Comments
+								</div>
 
-						{handleShowComment()}
+								<div>{underwriterComment}</div>
+							</>
+						)}
 					</>
 				)}
 			</div>

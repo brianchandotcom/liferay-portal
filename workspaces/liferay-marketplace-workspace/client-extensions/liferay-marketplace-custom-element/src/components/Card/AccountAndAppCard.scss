@@ -1,0 +1,39 @@
+.card {
+	&-container {
+		align-items: center;
+		border: 1px solid #e2e2e4;
+		border-radius: 0.5rem;
+		display: flex;
+		max-width: 16.75rem;
+		padding: 1rem;
+		width: 100%;
+	}
+
+	&-logo {
+		margin-right: 1rem;
+		&-image {
+			height: 3.5rem;
+			width: 3.5rem;
+		}
+	}
+
+	&-info {
+		display: flex;
+		flex-direction: column;
+
+		&-text {
+			color: #282934;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 18px;
+			font-weight: 600;
+			line-height: 20px;
+		}
+
+		&-description {
+			color: #54555f;
+			font-size: 11px;
+			font-weight: 600;
+			line-height: 20px;
+		}
+	}
+}

@@ -54,6 +54,12 @@ components:
                 id:
                     format: int64
                     type: integer
+                keywords:
+                    description:
+                        A list of keywords describing the object entry.
+                    items:
+                        type: string
+                    type: array
                 properties:
                     additionalProperties:
                         type: object

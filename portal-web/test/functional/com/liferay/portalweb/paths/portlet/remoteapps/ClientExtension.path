@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_OPTIONS</td>
+	<td>//*[contains(@class,'dropdown-item') and contains(.,'${key_option}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOTE_TABLE_ELLIPSIS</td>
 	<td>//button[contains(@class,'component-action')]</td>
 	<td></td>

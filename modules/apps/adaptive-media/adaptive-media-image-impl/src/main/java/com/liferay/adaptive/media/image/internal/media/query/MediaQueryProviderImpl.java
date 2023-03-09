@@ -119,7 +119,8 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		Map<String, String> properties = HashMapBuilder.put(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH.getName(),
 			() -> {
-				Integer width = _getWidth(amImageConfigurationEntry);
+				Integer width = _getPropertiesValue(
+					amImageConfigurationEntry, "max-width");
 
 				if (width == null) {
 					return String.valueOf(0);
@@ -130,7 +131,8 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		).put(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT.getName(),
 			() -> {
-				Integer height = _getHeight(amImageConfigurationEntry);
+				Integer height = _getPropertiesValue(
+					amImageConfigurationEntry, "max-height");
 
 				if (height == null) {
 					return String.valueOf(0);
@@ -243,13 +245,6 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		return height;
 	}
 
-	private Integer _getHeight(
-		AMImageConfigurationEntry originalAMImageConfigurationEntry) {
-
-		return _getPropertiesValue(
-			originalAMImageConfigurationEntry, "max-height");
-	}
-
 	private MediaQuery _getMediaQuery(
 			AdaptiveMedia<AMImageProcessor> adaptiveMedia,
 			AdaptiveMedia<AMImageProcessor> previousAdaptiveMedia,
@@ -299,12 +294,6 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		}
 
 		return width;
-	}
-
-	private Integer _getWidth(
-		AMImageConfigurationEntry amImageConfigurationEntry) {
-
-		return _getPropertiesValue(amImageConfigurationEntry, "max-width");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

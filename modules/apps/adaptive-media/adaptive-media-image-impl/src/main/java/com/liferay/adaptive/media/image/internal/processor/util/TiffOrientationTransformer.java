@@ -30,7 +30,6 @@ import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -43,12 +42,11 @@ public class TiffOrientationTransformer {
 		throws PortalException {
 
 		try {
-			Optional<Integer> tiffOrientationValueOptional =
-				_getTiffOrientationValue(inputStreamSupplier);
+			Integer tiffOrientationValue = _getTiffOrientationValue(
+				inputStreamSupplier);
 
-			if (tiffOrientationValueOptional.isPresent()) {
-				return _transform(
-					inputStreamSupplier, tiffOrientationValueOptional.get());
+			if (tiffOrientationValue != null) {
+				return _transform(inputStreamSupplier, tiffOrientationValue);
 			}
 
 			return RenderedImageUtil.readImage(inputStreamSupplier.get());
@@ -58,7 +56,7 @@ public class TiffOrientationTransformer {
 		}
 	}
 
-	private static Optional<Integer> _getTiffOrientationValue(
+	private static Integer _getTiffOrientationValue(
 		Supplier<InputStream> inputStreamSupplier) {
 
 		try (InputStream inputStream = inputStreamSupplier.get()) {
@@ -71,11 +69,10 @@ public class TiffOrientationTransformer {
 				!exifIFD0Directory.containsTag(
 					ExifIFD0Directory.TAG_ORIENTATION)) {
 
-				return Optional.empty();
+				return null;
 			}
 
-			return Optional.of(
-				exifIFD0Directory.getInt(ExifIFD0Directory.TAG_ORIENTATION));
+			return exifIFD0Directory.getInt(ExifIFD0Directory.TAG_ORIENTATION);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -83,7 +80,7 @@ public class TiffOrientationTransformer {
 			}
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	private static RenderedImage _transform(

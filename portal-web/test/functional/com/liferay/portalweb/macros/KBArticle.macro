@@ -200,7 +200,20 @@ definition {
 			}
 
 			if (isSet(extendedMinutes)) {
-				var expirationDateTime = DateUtil.getDateOffsetByMinutes(${extendedMinutes}, "hh:mm a");
+				if (isSet(getExpirationDateByPortal)) {
+					var expirationDateHour = selenium.getAttribute("//input[contains(@id,'expirationDateHour')]@value");
+					var expirationDateAmpm = selenium.getAttribute("//input[contains(@id,'expirationDateAmPm')]@value");
+					var expirationDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
+					var expirationDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
+					var expirationDateMinute = selenium.getAttribute("//input[contains(@id,'expirationDateMinute')]@value");
+
+					var expirationDateMinuteFuture = ${expirationDateMinute} + ${extendedMinutes};
+
+					var expirationDateTime = "${expirationDateHour}:${expirationDateMinuteFuture} ${expirationDateAmpm}";
+				}
+				else {
+					var expirationDateTime = DateUtil.getDateOffsetByMinutes(${extendedMinutes}, "hh:mm a");
+				}
 
 				echo("## * expirationDateTime: ${expirationDateTime}");
 

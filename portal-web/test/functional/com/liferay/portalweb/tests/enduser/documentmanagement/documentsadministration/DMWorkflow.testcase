@@ -212,7 +212,7 @@ definition {
 
 		Workflow.gotoPreviewEdit();
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

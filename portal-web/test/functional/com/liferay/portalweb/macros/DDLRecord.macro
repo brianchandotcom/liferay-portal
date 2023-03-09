@@ -489,8 +489,8 @@ definition {
 		Click(locator1 = "DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO");
 	}
 
-	macro submitForPublication {
-		Button.clickSubmitForPublication();
+	macro submitForWorkflow {
+		Button.clickSubmitForWorkflow();
 
 		Alert.viewSuccessMessage();
 	}

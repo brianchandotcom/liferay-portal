@@ -337,7 +337,7 @@ definition {
 	macro addFrontPageWithWorkflowPG {
 		WikiPage._editEmptyFrontPage(wikiPageContent = ${wikiPageContent});
 
-		WikiPage.submitForPublication();
+		WikiPage.submitForWorkflow();
 	}
 
 	macro addInlineImage {
@@ -410,8 +410,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1153,10 +1153,10 @@ definition {
 			value1 = "Change Parent");
 	}
 
-	macro submitForPublication {
+	macro submitForWorkflow {
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 	}

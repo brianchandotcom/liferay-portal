@@ -194,8 +194,8 @@ definition {
 			locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT_SPECIFIC");
 	}
 
-	macro submitForPublication {
-		Button.clickSubmitForPublication();
+	macro submitForWorkflow {
+		Button.clickSubmitForWorkflow();
 
 		Alert.viewSuccessMessage();
 	}

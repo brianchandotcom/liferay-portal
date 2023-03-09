@@ -90,7 +90,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Test text");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -149,7 +149,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "123.123456");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -202,7 +202,7 @@ definition {
 			checkboxName = "Boolean",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -255,7 +255,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/2001");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -312,7 +312,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "1.54");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -365,7 +365,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = 123456789);
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -418,7 +418,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = 1234567891234567);
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -485,7 +485,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectPicklistObject(picklistItem = "Item Test 1");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -540,7 +540,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -615,7 +615,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "String text");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -668,7 +668,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Test text");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -725,7 +725,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/2001");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 

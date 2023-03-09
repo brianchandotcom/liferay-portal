@@ -841,7 +841,7 @@ definition {
 			endDateTime = " 8:00 PM",
 			startDateTime = " 7:00 PM");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 

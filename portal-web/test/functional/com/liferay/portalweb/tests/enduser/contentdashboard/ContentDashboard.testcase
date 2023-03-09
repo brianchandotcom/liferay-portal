@@ -2464,8 +2464,8 @@ definition {
 
 		task ("Assert the web content is opened in the web content editor") {
 			AssertVisible(
-				locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-				value1 = "Submit for Publication");
+				locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+				value1 = "Submit for Workflow");
 		}
 	}
 

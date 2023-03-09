@@ -39,9 +39,9 @@ definition {
 		}
 	}
 
-	@description = "Verify that the Basic Article status is Pending after Submit for Publication"
+	@description = "Verify that the Basic Article status is Pending after Submit for Workflow"
 	@priority = 4
-	test ArticleStatusIsPendingAfterSubmitForPublication {
+	test ArticleStatusIsPendingAfterSubmitForWorkflow {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -52,7 +52,7 @@ definition {
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowAction = "Submit for Publication");
+			kbWorkflowAction = "Submit for Workflow");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -77,7 +77,7 @@ definition {
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowAction = "Submit for Publication");
+			kbWorkflowAction = "Submit for Workflow");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -121,13 +121,13 @@ definition {
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowAction = "Submit for Publication");
+			kbWorkflowAction = "Submit for Workflow");
 
 		WorkflowKnowledgeBaseArticle.addChildArticle(
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbChildArticleContent = "Knowledge Base Child Article Content",
 			kbChildArticleTitle = "Knowledge Base Child Article Title",
-			submitForPublication = "true");
+			submitForWorkflow = "true");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -181,13 +181,13 @@ definition {
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowAction = "Submit for Publication");
+			kbWorkflowAction = "Submit for Workflow");
 
 		WorkflowKnowledgeBaseArticle.addChildArticle(
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbChildArticleContent = "Knowledge Base Child Article Content",
 			kbChildArticleTitle = "Knowledge Base Child Article Title",
-			submitForPublication = "true");
+			submitForWorkflow = "true");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -247,13 +247,13 @@ definition {
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowAction = "Submit for Publication");
+			kbWorkflowAction = "Submit for Workflow");
 
 		WorkflowKnowledgeBaseArticle.addChildArticle(
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbChildArticleContent = "Knowledge Base Child Article Content",
 			kbChildArticleTitle = "Knowledge Base Child Article Title",
-			submitForPublication = "true");
+			submitForWorkflow = "true");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -306,7 +306,7 @@ definition {
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowAction = "Submit for Publication");
+			kbWorkflowAction = "Submit for Workflow");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -348,7 +348,7 @@ definition {
 			kbArticleContentEdit = "Knowledge Base Article Content Edit",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbArticleTitleEdit = "Knowledge Base Article Title Edit",
-			submitForPublication = "true");
+			submitForWorkflow = "true");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content Edit",
@@ -374,7 +374,7 @@ definition {
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowAction = "Submit for Publication");
+			kbWorkflowAction = "Submit for Workflow");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -434,9 +434,9 @@ definition {
 			locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_TABLE_ARTICLE_STATUS");
 	}
 
-	@description = "Verify that the child Basic Article status is Pending after Submit for Publication"
+	@description = "Verify that the child Basic Article status is Pending after Submit for Workflow"
 	@priority = 4
-	test ChildArticleStatusIsPendingAfterSubmitForPublication {
+	test ChildArticleStatusIsPendingAfterSubmitForWorkflow {
 		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
@@ -449,13 +449,13 @@ definition {
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowAction = "Submit for Publication");
+			kbWorkflowAction = "Submit for Workflow");
 
 		WorkflowKnowledgeBaseArticle.addChildArticle(
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbChildArticleContent = "Knowledge Base Child Article Content",
 			kbChildArticleTitle = "Knowledge Base Child Article Title",
-			submitForPublication = "true");
+			submitForWorkflow = "true");
 
 		KBArticle.gotoViaKBAdminCP(
 			hasChildArticle = "true",
@@ -471,9 +471,9 @@ definition {
 			locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_TABLE_ARTICLE_STATUS");
 	}
 
-	@description = "Verify that when the Basic Article is saved as Draft the Submit for Publication button still available"
+	@description = "Verify that when the Basic Article is saved as Draft the Submit for Workflow button still available"
 	@priority = 3
-	test SubmitForPublicationButtonIsAvaliable {
+	test SubmitForWorkflowButtonIsAvaliable {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -493,7 +493,7 @@ definition {
 			rowEntry = "Knowledge Base Article Title");
 
 		AssertElementPresent(
-			key_text = "Submit for Publication",
+			key_text = "Submit for Workflow",
 			locator1 = "Button#ANY");
 	}
 

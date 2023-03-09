@@ -8,9 +8,9 @@ definition {
 			dmDocumentTitle = ${dmDocumentTitle},
 			workflowPngFile = ${workflowPngFile});
 
-		ScrollWebElementIntoView(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
+		ScrollWebElementIntoView(locator1 = "Button#SUBMIT_FOR_WORKFLOW");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
@@ -83,8 +83,8 @@ definition {
 		}
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 	}
 
 	macro editImageFileDocument {
@@ -157,7 +157,7 @@ definition {
 			}
 		}
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 	}
 
 	macro viewWorkflowInProcessMessage {

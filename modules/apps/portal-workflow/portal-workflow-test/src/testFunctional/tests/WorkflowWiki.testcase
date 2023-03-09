@@ -184,7 +184,7 @@ definition {
 		Workflow.viewDefaultMyWorkflowTasksCP();
 	}
 
-	@description = "This is a test for LRQA-69554. Verify that the user can Submit for Publication a Wiki Page with assigned Workflow."
+	@description = "This is a test for LRQA-69554. Verify that the user can Submit for Workflow a Wiki Page with assigned Workflow."
 	@priority = 5
 	test CanSubmitWikiPage {
 		ProductMenu.gotoPortlet(
@@ -201,7 +201,7 @@ definition {
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Name");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		WikiPage.viewNoPagePG(wikiPageTitle = "Wiki Page Name");
 
@@ -245,7 +245,7 @@ definition {
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Name");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -271,7 +271,7 @@ definition {
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Name");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Alert.viewErrorMessage(errorMessage = "There is already a page with the specified title.");
 
@@ -444,13 +444,13 @@ definition {
 			wikiFrontPageContent = "Wiki FrontPage Content",
 			wikiNodeName = "Main");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.gotoBack();
 
 		WikiPage.addChildPageViaEllipsis(wikiChildPageTitle = "Child Page Title");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");
 
@@ -496,13 +496,13 @@ definition {
 			wikiFrontPageContent = "Wiki FrontPage Content",
 			wikiNodeName = "Main");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.gotoBack();
 
 		WikiPage.addChildPageViaEllipsis(wikiChildPageTitle = "Child Page Title");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");
 
@@ -546,7 +546,7 @@ definition {
 			wikiFrontPageContent = "Wiki FrontPage Content",
 			wikiNodeName = "Main");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.gotoBack();
 
@@ -662,7 +662,7 @@ definition {
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Name");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

@@ -343,7 +343,7 @@ definition {
 
 		SelectFrameTop();
 
-		Click(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
+		Click(locator1 = "Button#SUBMIT_FOR_WORKFLOW");
 
 		Alert.viewSuccessMessage();
 	}
@@ -365,7 +365,7 @@ definition {
 
 		SelectFrameTop();
 
-		Click(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
+		Click(locator1 = "Button#SUBMIT_FOR_WORKFLOW");
 
 		Alert.viewSuccessMessage();
 	}

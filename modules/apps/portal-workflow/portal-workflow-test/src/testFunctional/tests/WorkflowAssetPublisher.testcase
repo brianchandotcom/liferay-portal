@@ -141,7 +141,7 @@ definition {
 
 		WorkflowAsset.createNewBasicWebContent(wcTitle = "Web Content Title");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
@@ -294,7 +294,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -326,7 +326,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			entryTitleEdit = "Blogs Entry Title Edit");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
@@ -361,7 +361,7 @@ definition {
 
 		WorkflowAsset.createNewBasicWebContent(wcTitle = "Web Content Title");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -449,7 +449,7 @@ definition {
 
 		WorkflowAsset.createNewBasicWebContent(wcTitle = "Web Content Title");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

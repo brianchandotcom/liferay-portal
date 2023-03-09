@@ -255,8 +255,8 @@ definition {
 		CalendarNavigator.gotoEditEvent(eventTitle = "Event Title Draft");
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 

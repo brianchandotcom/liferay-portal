@@ -71,7 +71,7 @@ definition {
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowAction = "Submit for Publication");
+			kbWorkflowAction = "Submit for Workflow");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -105,7 +105,7 @@ definition {
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowAction = "Submit for Publication");
+			kbWorkflowAction = "Submit for Workflow");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",

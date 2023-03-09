@@ -560,7 +560,7 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Page Templates");
 
-			PortletEntry.submitForPublication();
+			PortletEntry.submitForWorkflow();
 		}
 
 		task ("Preview the pending web content") {

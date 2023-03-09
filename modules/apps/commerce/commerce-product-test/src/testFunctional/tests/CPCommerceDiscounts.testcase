@@ -365,7 +365,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-10663. Single Approver workflow for Commerce Discounts is triggered once the user clicks on 'Submit for Publication'"
+	@description = "This is a test for COMMERCE-10663. Single Approver workflow for Commerce Discounts is triggered once the user clicks on 'Submit for Workflow'"
 	@priority = 3
 	test CanAssertCommerceDiscountSingleApproverWorkflowIsApplied {
 		property portal.acceptance = "false";
@@ -400,7 +400,7 @@ definition {
 
 		task ("When the user submits the discount for publication") {
 			Click(
-				key_text = "Submit for Publication",
+				key_text = "Submit for Workflow",
 				locator1 = "Button#ANY");
 		}
 

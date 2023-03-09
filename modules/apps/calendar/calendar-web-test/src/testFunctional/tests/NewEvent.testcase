@@ -901,7 +901,7 @@ definition {
 			endDateTime = " 8:00 PM",
 			startDateTime = " 7:00 PM");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		IFrame.closeFrame();
 
@@ -929,7 +929,7 @@ definition {
 			endDateTime = " 8:00 PM",
 			startDateTime = " 7:00 PM");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		IFrame.closeFrame();
 
@@ -1072,7 +1072,7 @@ definition {
 			endDateTime = " 8:00 PM",
 			startDateTime = " 7:00 PM");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		IFrame.closeFrame();
 

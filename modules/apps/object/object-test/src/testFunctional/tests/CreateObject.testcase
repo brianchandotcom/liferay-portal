@@ -2214,7 +2214,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Entry 1");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to submit an entry with a invalid value on the Relationship field"
@@ -3414,7 +3414,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Entry 1");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 
@@ -8964,7 +8964,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Entry Test");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Navigator.openURL();
 

@@ -390,7 +390,7 @@ definition {
 					id = "text",
 					text = "New editable fragment text");
 
-				PageEditor.submitForPublication();
+				PageEditor.submitForWorkflow();
 			}
 
 			task ("Approve latest modification") {
@@ -469,7 +469,7 @@ definition {
 					fragmentName = "Heading",
 					id = "text");
 
-				PageEditor.submitForPublication();
+				PageEditor.submitForWorkflow();
 			}
 
 			task ("Approve latest modification") {

@@ -660,7 +660,7 @@ definition {
 			dmDocumentTitle = "Untitled",
 			dmDocumentTitleEdit = "Edited Google Document With Workflow");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

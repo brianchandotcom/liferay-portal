@@ -792,7 +792,7 @@ definition {
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "contentapprover@liferay.com",

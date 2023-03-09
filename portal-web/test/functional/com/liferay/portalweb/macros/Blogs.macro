@@ -460,8 +460,8 @@ definition {
 		AlloyEditor.addContent(content = ${entryContent});
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		SelectFrame(value1 = "relative=top");
 	}

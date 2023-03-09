@@ -82,7 +82,7 @@ definition {
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
 
-		Button.click(button = "Submit for Publication");
+		Button.click(button = "Submit for Workflow");
 
 		SelectFrame(value1 = "relative=top");
 

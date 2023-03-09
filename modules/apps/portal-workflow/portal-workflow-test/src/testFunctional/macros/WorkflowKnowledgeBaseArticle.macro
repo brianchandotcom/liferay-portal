@@ -20,8 +20,8 @@ definition {
 
 		CKEditor.addContent(content = ${kbChildArticleContent});
 
-		if (${submitForPublication} == "true") {
-			PortletEntry.submitForPublication();
+		if (${submitForWorkflow} == "true") {
+			PortletEntry.submitForWorkflow();
 		}
 		else if (${saveAsDraft} == "true") {
 			PortletEntry.saveAsDraft();
@@ -67,8 +67,8 @@ definition {
 		if (${cancel} == "true") {
 			Button.clickCancel();
 		}
-		else if (${submitForPublication} == "true") {
-			PortletEntry.submitForPublication();
+		else if (${submitForWorkflow} == "true") {
+			PortletEntry.submitForWorkflow();
 		}
 		else if (${saveAsDraft} == "true") {
 			PortletEntry.saveAsDraft();

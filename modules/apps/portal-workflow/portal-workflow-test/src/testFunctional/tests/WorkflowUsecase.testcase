@@ -363,7 +363,7 @@ definition {
 			fieldFieldLabel = "Boolean",
 			fieldName = "Boolean");
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -530,7 +530,7 @@ definition {
 			categoryNameList = "legal",
 			vocabularyName = "Vocabulary Name");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Alert.viewSuccessMessage();
 
@@ -556,7 +556,7 @@ definition {
 			categoryNameList = "legal,other",
 			vocabularyName = "Vocabulary Name");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Alert.viewSuccessMessage();
 
@@ -582,7 +582,7 @@ definition {
 			categoryNameList = "other",
 			vocabularyName = "Vocabulary Name");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Alert.viewSuccessMessage();
 

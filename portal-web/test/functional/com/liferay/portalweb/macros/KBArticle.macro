@@ -210,12 +210,12 @@ definition {
 			}
 		}
 
-		if (${kbWorkflowAction} == "Submit for Publication") {
+		if (${kbWorkflowAction} == "Submit for Workflow") {
 			ProductMenuHelper.closeProductMenu();
 
 			AssertClick(
-				locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-				value1 = "Submit for Publication");
+				locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+				value1 = "Submit for Workflow");
 		}
 		else if (${saveAsDraft} == "true") {
 			Button.clickSaveAsDraft();

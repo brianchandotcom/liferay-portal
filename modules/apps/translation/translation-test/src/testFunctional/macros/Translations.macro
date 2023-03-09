@@ -343,7 +343,7 @@ definition {
 		}
 
 		if (${workflow} == "true") {
-			PortletEntry.submitForPublication();
+			PortletEntry.submitForWorkflow();
 		}
 		else if (${workflowResubmit} == "true") {
 			PortletEntry.saveAsDraft();

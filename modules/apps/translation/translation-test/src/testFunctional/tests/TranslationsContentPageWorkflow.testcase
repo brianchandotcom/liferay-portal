@@ -316,7 +316,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Translation of TranslationContentPage to es-ES");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Translations.viewTranslationEntry(
 			language = "es-ES",
@@ -407,7 +407,7 @@ definition {
 			fieldName = "element-text",
 			fragmentText = "これは見出しです");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Alert.viewSuccessMessage();
 
@@ -805,7 +805,7 @@ definition {
 			fieldName = "element-text",
 			fragmentText = "esta es la nueva experiencia");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Alert.viewSuccessMessage();
 
@@ -927,7 +927,7 @@ definition {
 			fieldName = "element-text",
 			fragmentText = "esta es la nueva experiencia");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Alert.viewSuccessMessage();
 

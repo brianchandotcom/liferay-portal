@@ -921,7 +921,7 @@ definition {
 				webContentContent = "Web Content Content Edit",
 				webContentTitle = "Web Content Title Edit");
 
-			Button.clickSubmitForPublication();
+			Button.clickSubmitForWorkflow();
 
 			Alert.viewSuccessMessage();
 		}

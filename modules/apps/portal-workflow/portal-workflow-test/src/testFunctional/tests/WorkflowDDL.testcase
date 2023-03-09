@@ -58,7 +58,7 @@ definition {
 			ddlPhoneMobile = 12345678,
 			ddlPhoneOffice = 12345678);
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -113,7 +113,7 @@ definition {
 			ddlPhoneMobile = 12345678,
 			ddlPhoneOffice = 12345678);
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 	}
@@ -155,7 +155,7 @@ definition {
 			ddlFirstNameEdit = "Test Edit",
 			ddlListName = "DDL List");
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 	}
@@ -227,7 +227,7 @@ definition {
 			ddlPhoneMobile = 12345678,
 			ddlPhoneOffice = 12345678);
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -317,7 +317,7 @@ definition {
 			ddlPhoneMobile = 12345678,
 			ddlPhoneOffice = 12345678);
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -345,7 +345,7 @@ definition {
 			ddlFirstNameEdit = "Test Edit",
 			ddlListName = "DDL List");
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 	}
@@ -403,7 +403,7 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -420,7 +420,7 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -495,7 +495,7 @@ definition {
 			ddlPhoneMobile = 12345678,
 			ddlPhoneOffice = 12345678);
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 
@@ -564,7 +564,7 @@ definition {
 			fieldFieldLabel = "Text Label",
 			fieldName = "TextName");
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -653,7 +653,7 @@ definition {
 			ddlPhoneMobile = 12345678,
 			ddlPhoneOffice = 12345678);
 
-		DDLRecord.submitForPublication();
+		DDLRecord.submitForWorkflow();
 
 		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 

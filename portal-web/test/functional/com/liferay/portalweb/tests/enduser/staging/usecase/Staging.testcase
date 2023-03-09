@@ -1324,7 +1324,7 @@ definition {
 
 			Portlet.addPG(portletName = "Web Content Display");
 
-			Staging.submitForPublicationPageRevision();
+			Staging.submitForWorkflowPageRevision();
 		}
 
 		User.logoutPG();
@@ -1376,7 +1376,7 @@ definition {
 
 			Portlet.addPG(portletName = "Asset Publisher");
 
-			Staging.submitForPublicationPageRevision();
+			Staging.submitForWorkflowPageRevision();
 		}
 
 		User.logoutPG();
@@ -1941,7 +1941,7 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -2886,7 +2886,7 @@ definition {
 
 		Page.viewWithWorkflowPG(workflowStatus = "Draft");
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
 		Navigator.openSitePage(
 			pageName = "Child Page A",

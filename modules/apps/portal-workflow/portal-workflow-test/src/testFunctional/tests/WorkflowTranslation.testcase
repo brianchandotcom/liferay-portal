@@ -53,7 +53,7 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "pt-BR");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		WorkflowTranslation.openTranslationProcessesAdmin();
 
@@ -109,7 +109,7 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "pt-BR");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -157,7 +157,7 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "pt-BR");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -232,7 +232,7 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "pt-BR");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -300,7 +300,7 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "pt-BR");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

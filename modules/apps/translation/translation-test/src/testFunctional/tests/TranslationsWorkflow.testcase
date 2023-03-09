@@ -75,7 +75,7 @@ definition {
 			webContentDescription = "WC WebContent Descripción",
 			webContentTitle = "WC WebContent Título");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Alert.viewSuccessMessage();
 
@@ -395,8 +395,8 @@ definition {
 			webContentTitle = "WC WebContent Título");
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 
@@ -480,8 +480,8 @@ definition {
 			webContentTitle = "WC WebContent Título");
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 
@@ -662,8 +662,8 @@ definition {
 			webContentTitle = "WC WebContent Título");
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 
@@ -726,8 +726,8 @@ definition {
 			webContentTitle = "wc webcontentタイトル");
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 
@@ -953,8 +953,8 @@ definition {
 			webContentTitle = "WC WebContent Título");
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 
@@ -972,8 +972,8 @@ definition {
 			webContentTitle = "WC WebContent 名称");
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 
@@ -1131,8 +1131,8 @@ definition {
 			webContentTitle = "WC WebContent Título");
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 
@@ -1170,8 +1170,8 @@ definition {
 			webContentTitle = "WC WebContent 名称");
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 
@@ -1183,7 +1183,7 @@ definition {
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "es-ES");
 
-		AssertElementPresent(locator1 = "Button#SUBMIT_FOR_PUBLICATION_DISABLED");
+		AssertElementPresent(locator1 = "Button#SUBMIT_FOR_WORKFLOW_DISABLED");
 	}
 
 	@description = "This ensures that a pending WC can be updated with a newly added translation once the translation is approved."
@@ -1219,8 +1219,8 @@ definition {
 			webContentTitle = "WC WebContent Título");
 
 		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
+			value1 = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 

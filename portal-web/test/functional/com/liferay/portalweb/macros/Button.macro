@@ -132,8 +132,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro clickSubmitForPublication {
-		Button.click(button = "Submit for Publication");
+	macro clickSubmitForWorkflow {
+		Button.click(button = "Submit for Workflow");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}

@@ -206,7 +206,7 @@ definition {
 			webContentSelectWcFile = "Depot WebContent Title",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 	}
 
 	@description = "This test covers LPS-113392. It ensures that an asset library WC article can be approved by the content reviewer."
@@ -499,7 +499,7 @@ definition {
 			dmDocumentFile = "Document_2.jpg",
 			dmDocumentTitle = "Document_2.jpg");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -676,7 +676,7 @@ definition {
 			webContentSelectWcFile = "Depot WebContent Title Edit",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 	}
 
 	@description = "This ensures that the resubmitted web content can be approved in an asset library."

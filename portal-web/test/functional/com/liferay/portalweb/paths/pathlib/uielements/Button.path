@@ -941,13 +941,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUBMIT_FOR_PUBLICATION</td>
-	<td>//button[contains(.,'Submit for Publication')]</td>
+	<td>SUBMIT_FOR_WORKFLOW</td>
+	<td>//button[contains(.,'Submit for Workflow')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SUBMIT_FOR_PUBLICATION_DISABLED</td>
-	<td>//div[contains(@class,'btn-group-item')]//button[@disabled and contains(.,'Submit for Publication')]</td>
+	<td>SUBMIT_FOR_WORKFLOW_DISABLED</td>
+	<td>//div[contains(@class,'btn-group-item')]//button[@disabled and contains(.,'Submit for Workflow')]</td>
 	<td></td>
 </tr>
 <tr>

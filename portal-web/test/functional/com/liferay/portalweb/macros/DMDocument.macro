@@ -820,7 +820,7 @@ definition {
 			dmDocumentFile = ${dmDocumentFile},
 			dmDocumentTitle = ${dmDocumentTitle});
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 

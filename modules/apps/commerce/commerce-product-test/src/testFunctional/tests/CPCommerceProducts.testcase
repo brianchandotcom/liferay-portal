@@ -577,7 +577,7 @@ definition {
 			productType = "Simple",
 			publishProduct = "false");
 
-		Button.click(button = "Submit for Publication");
+		Button.click(button = "Submit for Workflow");
 
 		AssertElementPresent(
 			key_status = "Pending (Created)",
@@ -1129,7 +1129,7 @@ definition {
 			productType = "Simple",
 			publishProduct = "false");
 
-		Button.click(button = "Submit for Publication");
+		Button.click(button = "Submit for Workflow");
 
 		AssertElementPresent(
 			key_status = "Pending (Created)",

@@ -4638,8 +4638,8 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		IFrame.selectTopFrame();
 	}
 
-	macro submitForPublication {
-		Button.click(button = "Submit for Publication");
+	macro submitForWorkflow {
+		Button.click(button = "Submit for Workflow");
 
 		Alert.viewSuccessMessage();
 	}

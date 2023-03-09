@@ -324,7 +324,7 @@ definition {
 
 		Portlet.addPG(portletName = "Blogs");
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

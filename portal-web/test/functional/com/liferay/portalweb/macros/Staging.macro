@@ -1286,14 +1286,14 @@ definition {
 		}
 	}
 
-	macro submitForPublicationPageRevision {
+	macro submitForWorkflowPageRevision {
 		if (IsTextEqual(locator1 = "Message#WORKFLOW_STATUS", value1 = "Draft")) {
 			AssertClick(
-				locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION",
-				value1 = "Submit for Publication");
+				locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_WORKFLOW",
+				value1 = "Submit for Workflow");
 		}
 
-		AssertElementNotPresent(locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION");
+		AssertElementNotPresent(locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_WORKFLOW");
 
 		if (IsTextEqual(locator1 = "Message#WORKFLOW_STATUS", value1 = "Pending (Created)")) {
 			AssertTextEquals(

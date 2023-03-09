@@ -260,7 +260,7 @@ definition {
 			threadReplyBody = "Message Boards Body Reply",
 			threadSubject = "Thread Message Subject");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Workflow.viewWorkflowStatus(status = "Pending");
 	}
@@ -373,7 +373,7 @@ definition {
 			threadReplyBody = "Message Boards Body Reply",
 			threadSubject = "Thread Message Subject");
 
-		Button.clickSubmitForPublication();
+		Button.clickSubmitForWorkflow();
 
 		Workflow.viewWorkflowStatus(status = "Pending");
 
@@ -438,7 +438,7 @@ definition {
 			threadBodyEdit = "Thread Message Body Edit",
 			threadSubjectEdit = "Thread Message Subject Edit");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		Workflow.viewWorkflowStatus(status = "Pending");
 	}

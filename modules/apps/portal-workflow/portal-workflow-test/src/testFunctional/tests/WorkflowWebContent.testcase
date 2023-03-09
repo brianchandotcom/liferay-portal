@@ -162,7 +162,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "EXAMPLE");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",
@@ -443,7 +443,7 @@ definition {
 			key_webContentTitle = "Web Content Title",
 			locator1 = "WC#ENTRY_LIST_TITLE");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "PENDING",

@@ -69,9 +69,9 @@ definition {
 		}
 	}
 
-	@description = "Verify that the Submit for Publication button is not available after the Page is submitted for publication"
+	@description = "Verify that the Submit for Workflow button is not available after the Page is submitted for publication"
 	@priority = 3
-	test ButtonNotAvailableAfterSubmitForPublication {
+	test ButtonNotAvailableAfterSubmitForWorkflow {
 		property portal.upstream = "quarantine";
 
 		Navigator.gotoStagedSitePage(
@@ -86,9 +86,9 @@ definition {
 			pageName = "Site Page Name",
 			workflowStatus = "Draft");
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
-		AssertElementNotPresent(locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION");
+		AssertElementNotPresent(locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_WORKFLOW");
 	}
 
 	@description = "Verify that, after approval, the Page status is Ready for Publish"
@@ -105,7 +105,7 @@ definition {
 			pageName = "Site Page Name",
 			portletName = "Blogs");
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -147,7 +147,7 @@ definition {
 			pageName = ${pageName},
 			siteName = ${siteName});
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
 		Navigator.gotoStagedSitePage(
 			pageName = ${pageName},
@@ -228,7 +228,7 @@ definition {
 			pageName = "Site Page Name",
 			portletName = "Blogs");
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -253,7 +253,7 @@ definition {
 
 	@description = "Verify that a Staging Area Page is Pending after it is submitted for publication"
 	@priority = 5
-	test StatusIsPendingAfterSubmitForPublication {
+	test StatusIsPendingAfterSubmitForWorkflow {
 		property portal.upstream = "quarantine";
 
 		Navigator.gotoStagedSitePage(
@@ -268,18 +268,18 @@ definition {
 			pageName = ${pageName},
 			workflowStatus = "Draft");
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
 		Page.viewWithWorkflowPG(
 			pageName = ${pageName},
 			workflowStatus = "Pending (Created)");
 	}
 
-	@description = "Verify that when the Approved page is edited the button Submit for Publication is displayed"
+	@description = "Verify that when the Approved page is edited the button Submit for Workflow is displayed"
 	@priority = 3
-	test SubmitForPublicationButtonIsDisplayedWhenPageIsEdited {
+	test SubmitForWorkflowButtonIsDisplayedWhenPageIsEdited {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "WorkflowPageRevision#SubmitForPublicationButtonIsDisplayedWhenPageIsEdited";
+		property test.name.skip.portal.instance = "WorkflowPageRevision#SubmitForWorkflowButtonIsDisplayedWhenPageIsEdited";
 
 		Navigator.gotoStagedSitePage(
 			pageName = ${pageName},
@@ -289,9 +289,9 @@ definition {
 			pageName = ${pageName},
 			portletName = "Blogs");
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
-		AssertElementNotPresent(locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION");
+		AssertElementNotPresent(locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_WORKFLOW");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -313,7 +313,7 @@ definition {
 			pageName = ${pageName},
 			portletName = "Message Boards");
 
-		AssertElementPresent(locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION");
+		AssertElementPresent(locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_WORKFLOW");
 	}
 
 	@description = "This is a use case for LPS-65319."
@@ -339,7 +339,7 @@ definition {
 			pageName = ${pageName},
 			siteName = ${siteName});
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
 		Navigator.gotoStagedSitePage(
 			pageName = ${pageName},
@@ -457,7 +457,7 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		Staging.submitForPublicationPageRevision();
+		Staging.submitForWorkflowPageRevision();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

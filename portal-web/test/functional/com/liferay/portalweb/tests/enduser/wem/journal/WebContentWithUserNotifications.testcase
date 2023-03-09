@@ -195,7 +195,7 @@ definition {
 
 				WebContent.addCP(webContentContent = "Where does it come from?");
 
-				PortletEntry.submitForPublication();
+				PortletEntry.submitForWorkflow();
 			}
 		}
 

@@ -361,8 +361,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_MENU_SUBMIT_FOR_PUBLICATION</td>
-	<td>//a[contains(@id,'submitLink') and contains(.,'Submit for Publication')]</td>
+	<td>STAGING_MENU_SUBMIT_FOR_WORKFLOW</td>
+	<td>//a[contains(@id,'submitLink') and contains(.,'Submit for Workflow')]</td>
 	<td></td>
 </tr>
 <tr>

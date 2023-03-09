@@ -30,6 +30,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.petra.sql.dsl.expression.OrderByExpressionUtil;
@@ -1244,12 +1245,20 @@ public class DefaultObjectEntryManagerImpl
 					objectField.getName(),
 					_toDate(locale, String.valueOf(value)));
 			}
-			else if ((objectField.getListTypeDefinitionId() != 0) &&
-					 (value instanceof Map)) {
+			else if (objectField.getListTypeDefinitionId() != 0) {
+				if (value instanceof Map) {
+					Map<String, String> map = (HashMap<String, String>)value;
 
-				Map<String, String> map = (HashMap<String, String>)value;
+					values.put(objectField.getName(), map.get("key"));
+				}
+				else if (value instanceof ListEntry) {
+					ListEntry listEntry = (ListEntry)value;
 
-				values.put(objectField.getName(), map.get("key"));
+					values.put(objectField.getName(), listEntry.getKey());
+				}
+				else {
+					values.put(objectField.getName(), (Serializable)value);
+				}
 			}
 			else {
 				values.put(objectField.getName(), (Serializable)value);

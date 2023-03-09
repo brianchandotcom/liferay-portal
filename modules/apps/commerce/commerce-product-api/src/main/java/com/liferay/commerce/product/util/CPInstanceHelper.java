@@ -24,6 +24,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
@@ -39,6 +40,14 @@ import java.util.Map;
 @ProviderType
 public interface CPInstanceHelper {
 
+	public CPInstance fetchCPInstance(long cpDefinitionId, JSONArray jsonArray)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCPInstance
+	 * 				(long, JSONArray)}
+	 */
+	@Deprecated
 	public CPInstance fetchCPInstance(
 			long cpDefinitionId, String serializedDDMFormValues)
 		throws PortalException;

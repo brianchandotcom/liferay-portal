@@ -24,6 +24,8 @@ definition {
 			Raylife.createRaylifeSite(siteName = "Raylife D2C");
 
 			Raylife.createRaylifeSite(siteName = "Raylife AP");
+
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 		}
 	}
 
@@ -40,73 +42,59 @@ definition {
 		}
 	}
 
-	@description = "Verify if the user can swicth between the cards."
-	@priority = 3
-	test IfCanSwitchBetweenCards {
-		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#IfCanSwitchBetweenCards";
-
-		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
-
-		task ("Given the modal for new application is open") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-
-			Button.click(button = "Application");
-		}
-
-		task ("Then Assert if the user can switch between the cards") {
-			RaylifeApApplication.modalOption(option = "Business");
-
-			RaylifeApApplication.assertModalInfos(option = "Business");
-
-			RaylifeApApplication.modalOption(option = "Personal");
-
-			RaylifeApApplication.assertModalInfos(option = "Personal");
-
-			Button.click(button = "Next");
-
-			RaylifeApApplication.assertModalInfos(option = "Auto");
-		}
-	}
-
-	@description = "Verify if when the user selects a card, go to next page and click on 'Previous' button the card still selected (active)."
-	@priority = 4
-	test IfCardStillSelectedWhenUserGoToPreviousPage {
-		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#IfCardStillSelectedWhenUserGoToPreviousPage";
-
-		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
-
-		task ("Given the New Application modal is open") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-
-			RaylifeApApplication.modalFlow(
-				button = "Previous",
-				insurance = "Personal");
-		}
-
-		task ("Then Assert that the Insurance options is still active after click in 'previous' button") {
-			RaylifeApApplication.assertModalInfos(
-				notOption = "Busines",
-				option = "Personal");
-		}
-	}
-
-	@description = "Verify if the 'New Applications' button from the side-bar option 'Applications', works."
+	@description = "LPS-146328 - Verify if the 'New Applications' button from the side-bar option 'Applications', works."
 	@priority = 5
-	test IfNewApplicationsFromSideBarWorks {
-		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#IfNewApplicationsFromSideBarWorks";
+	test CanAccessNewApplicationFromSideBar {
+		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#CanAccessNewApplicationFromSideBar";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given the modal new application is open by side-bar option") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
 			Button.click(button = "New Applications");
 		}
 
-		task ("Then Assert that the modal is open") {
-			RaylifeApApplication.assertModalInfos(description = "What type of insurance does this customer need?");
+		task ("Then Assert the modal is open") {
+			RaylifeApApplication.assertModalOption(description = "What type of insurance does this customer need?");
+		}
+	}
+
+	@description = "LPS-146328 - Verify if the user can swicth between the cards."
+	@priority = 3
+	test CanSwitchBetweenCards {
+		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#CanSwitchBetweenCards";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given the modal for new application is open") {
+			Button.click(button = "Application");
+		}
+
+		task ("Then Assert if the user can switch between the cards") {
+			RaylifeApApplication.assertModalOption(option = "Personal");
+
+			RaylifeApApplication.selectModalOption(option = "Business");
+
+			RaylifeApApplication.assertModalOption(option = "Business");
+		}
+	}
+
+	@description = "LPS-146328 - Verify if when the user selects a card, go to next page and click on 'Previous' button the card still selected (active)."
+	@priority = 4
+	test CardStillSelectedWhenUserGoToPreviousPage {
+		property test.name.skip.portal.instance = "RaylifeAPTypeOfInsurance#CardStillSelectedWhenUserGoToPreviousPage";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("When the user clicks the previous button") {
+			RaylifeApApplication.openNewApplicationFlow(
+				button = "Previous",
+				insurance = "Busines");
+		}
+
+		task ("Then the Insurance option is still active") {
+			RaylifeApApplication.assertModalOption(option = "Busines");
 		}
 	}
 

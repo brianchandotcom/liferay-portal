@@ -825,6 +825,39 @@ definition {
 			locator1 = "TextInput#ANY");
 	}
 
+	@description = "LPS-177999. Verify that URL, description, type and source code url fields are present."
+	@priority = 5
+	test ThemeSvgTypeCanDisplayProperFields {
+		property custom.properties = "feature.flag.LPS-166479=true";
+		property portal.acceptance = "true";
+
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When Create a Theme svg extensions") {
+			ClientExtensionGeneral.addType(type = "Theme SVG Spritemap");
+		}
+
+		task ("Then URL, description, type and source code url fields are present") {
+			ClientExtensionGeneral.assertContentField(
+				entryField = "Name",
+				entryInformation = "");
+
+			ClientExtensionGeneral.assertContentField(
+				entryField = "description",
+				entryInformation = "");
+
+			ClientExtensionGeneral.assertContentField(
+				entryField = "URL",
+				entryInformation = "");
+
+			ClientExtensionGeneral.assertContentField(
+				entryField = "Source Code URL",
+				entryInformation = "");
+		}
+	}
+
 	@description = "Verify that the UI label is present when a client extension is not created through osgi"
 	@priority = 3
 	test UILabelIsPresent {

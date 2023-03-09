@@ -54,7 +54,8 @@ public class ObjectDefinitionNotificationTermEvaluator
 						FIRST_HANDLER_TYPE);
 
 		return notificationTermEvaluatorHandler.handle(
-			(Map<String, Object>)object, _objectDefinition, termName);
+			context.name(), (Map<String, Object>)object, _objectDefinition,
+			termName);
 	}
 
 	private final NotificationTermEvaluatorHandlerTracker

@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal.notification.term.contributor.handler;
 
+import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.notification.term.evaluator.constants.NotificationTermEvaluatorHandlerConstants;
 import com.liferay.object.notification.term.evaluator.handler.NotificationTermEvaluatorHandler;
@@ -48,16 +49,27 @@ public class AuthorNotificationTermEvaluatorHandler
 
 	@Override
 	public String evaluate(
-			Map<String, Object> variables, ObjectDefinition objectDefinition,
-			String termName)
+			String contextName, Map<String, Object> variables,
+			ObjectDefinition objectDefinition, String termName)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(
-			GetterUtil.getLong(variables.get("currentUser")));
+			GetterUtil.getLong(variables.get("creator")));
 
 		String prefix = StringUtil.toUpperCase(objectDefinition.getShortName());
 
 		Map<String, String> termValues = HashMapBuilder.put(
+			"[%" + prefix + "_CREATOR%]",
+			() -> {
+				if (contextName.equals(
+						NotificationTermEvaluator.Context.RECIPIENT)) {
+
+					return String.valueOf(user.getUserId());
+				}
+
+				return user.getFullName(true, true);
+			}
+		).put(
 			"[%" + prefix + "EMAIL_ADDRESS%]", user.getEmailAddress()
 		).put(
 			"[%" + prefix + "FIRST_NAME%]", user.getFirstName()

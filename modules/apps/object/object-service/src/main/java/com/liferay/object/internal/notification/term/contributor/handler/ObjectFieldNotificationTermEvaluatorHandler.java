@@ -44,8 +44,8 @@ public class ObjectFieldNotificationTermEvaluatorHandler
 
 	@Override
 	public String evaluate(
-			Map<String, Object> variables, ObjectDefinition objectDefinition,
-			String termName)
+			String contextName, Map<String, Object> variables,
+			ObjectDefinition objectDefinition, String termName)
 		throws PortalException {
 
 		Map<String, Long> objectFieldIds =

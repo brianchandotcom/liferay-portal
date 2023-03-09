@@ -25,8 +25,8 @@ import java.util.Map;
 public interface NotificationTermEvaluatorHandler {
 
 	public String evaluate(
-			Map<String, Object> variables, ObjectDefinition objectDefinition,
-			String termName)
+			String contextName, Map<String, Object> variables,
+			ObjectDefinition objectDefinition, String termName)
 		throws PortalException;
 
 	public default String getNext() {
@@ -34,8 +34,8 @@ public interface NotificationTermEvaluatorHandler {
 	}
 
 	public String handle(
-			Map<String, Object> variables, ObjectDefinition objectDefinition,
-			String termName)
+			String contextName, Map<String, Object> variables,
+			ObjectDefinition objectDefinition, String termName)
 		throws PortalException;
 
 	public boolean isTermNameCriteriaMet(

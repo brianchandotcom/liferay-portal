@@ -31,12 +31,12 @@ public abstract class BaseNotificationTermEvaluatorHandler
 
 	@Override
 	public String handle(
-			Map<String, Object> variables, ObjectDefinition objectDefinition,
-			String termName)
+			String contextName, Map<String, Object> variables,
+			ObjectDefinition objectDefinition, String termName)
 		throws PortalException {
 
 		if (isTermNameCriteriaMet(objectDefinition, termName)) {
-			return evaluate(variables, objectDefinition, termName);
+			return evaluate(contextName, variables, objectDefinition, termName);
 		}
 
 		if (getNext() == null) {
@@ -48,7 +48,7 @@ public abstract class BaseNotificationTermEvaluatorHandler
 				getNotificationTermEvaluatorHandler(getNext());
 
 		return notificationTermEvaluatorHandler.handle(
-			variables, objectDefinition, termName);
+			contextName, variables, objectDefinition, termName);
 	}
 
 	@Reference

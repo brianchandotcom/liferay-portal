@@ -170,11 +170,17 @@ definition {
 		}
 
 		task ("Cancel to exit the wizard") {
-			ACDXPSettings.cancelWizardConfiguration();
+			ACDXPSettings.goToInstanceSettingsAC();
 		}
 
-		task ("Go to the people page in the sidebar") {
-			ACDXPSettings.navToSyncedContactDataMenu();
+		task ("Go to the properties page in the sidebar") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Click on Select Contacts > Click on sync contacts by groups") {
@@ -776,11 +782,17 @@ definition {
 		}
 
 		task ("Cancel to exit the wizard") {
-			ACDXPSettings.cancelWizardConfiguration();
+			ACDXPSettings.goToInstanceSettingsAC();
 		}
 
-		task ("Go to the people page in the sidebar") {
-			ACDXPSettings.navToSyncedContactDataMenu();
+		task ("Go to the properties page in the sidebar") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Click on sync by account groups") {
@@ -886,11 +898,17 @@ definition {
 		}
 
 		task ("Cancel to exit the wizard") {
-			ACDXPSettings.cancelWizardConfiguration();
+			ACDXPSettings.goToInstanceSettingsAC();
 		}
 
-		task ("Go to the people page in the sidebar") {
-			ACDXPSettings.navToSyncedContactDataMenu();
+		task ("Go to the properties page in the sidebar") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Click on sync by organizations") {
@@ -1000,11 +1018,17 @@ definition {
 		}
 
 		task ("Cancel to exit the wizard") {
-			ACDXPSettings.cancelWizardConfiguration();
+			ACDXPSettings.goToInstanceSettingsAC();
 		}
 
-		task ("Go to the people page in the sidebar") {
-			ACDXPSettings.navToSyncedContactDataMenu();
+		task ("Go to the properties page in the sidebar") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Click on Select Contacts > Click on sync contacts by groups") {
@@ -1120,11 +1144,17 @@ definition {
 		}
 
 		task ("Cancel to exit the wizard") {
-			ACDXPSettings.cancelWizardConfiguration();
+			ACDXPSettings.goToInstanceSettingsAC();
 		}
 
-		task ("Go to the people page in the sidebar") {
-			ACDXPSettings.navToSyncedContactDataMenu();
+		task ("Go to the properties page in the sidebar") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Click on Select Contacts > Click on sync contacts by groups") {

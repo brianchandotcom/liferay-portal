@@ -15,10 +15,6 @@ definition {
 			locator1 = "ACUtils#TOGGLE_ICON_ON_OFF");
 	}
 
-	macro cancelWizardConfiguration {
-		Click(locator1 = "Button#CANCEL");
-	}
-
 	macro changeAssignModalPagination {
 		Click(locator1 = "ACDXPSettings#ASSIGN_MODAL_PAGINATION");
 

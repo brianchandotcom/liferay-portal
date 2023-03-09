@@ -127,11 +127,17 @@ definition {
 		}
 
 		task ("Cancel to exit the wizard") {
-			ACDXPSettings.cancelWizardConfiguration();
+			ACDXPSettings.goToInstanceSettingsAC();
 		}
 
 		task ("Go to the properties page in the sidebar") {
-			ACDXPSettings.navToSyncedSitesMenu();
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Click on the Assign button") {
@@ -417,7 +423,7 @@ definition {
 		}
 
 		task ("Click next page") {
-			Click(locator1 = "ACDXPSettings#ASSIGN_MODAL_NEXT_PAGE");
+			ACUtils.checkAnyPage(pageNumber = 2);
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 6 to 6 of 6 entries.");
 		}
@@ -441,7 +447,7 @@ definition {
 		}
 
 		task ("Click next page") {
-			Click(locator1 = "ACDXPSettings#ASSIGN_MODAL_NEXT_PAGE");
+			ACUtils.checkAnyPage(pageNumber = 2);
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 6 to 6 of 6 entries.");
 		}
@@ -451,11 +457,13 @@ definition {
 		}
 
 		task ("Cancel to exit the wizard") {
-			ACDXPSettings.cancelWizardConfiguration();
+			ACDXPSettings.goToInstanceSettingsAC();
 		}
 
 		task ("Go to the properties page in the sidebar") {
-			ACDXPSettings.navToSyncedSitesMenu();
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Toggle Commerce On > Click on the Assign button") {
@@ -475,7 +483,7 @@ definition {
 		}
 
 		task ("Click next page") {
-			Click(locator1 = "ACDXPSettings#ASSIGN_MODAL_NEXT_PAGE");
+			ACUtils.checkAnyPage(pageNumber = 2);
 
 			ACDXPSettings.viewAssignModalResultsMessage(results = "Showing 6 to 6 of 6 entries.");
 		}
@@ -665,11 +673,13 @@ definition {
 		}
 
 		task ("Cancel to exit the wizard") {
-			ACDXPSettings.cancelWizardConfiguration();
+			ACDXPSettings.goToInstanceSettingsAC();
 		}
 
 		task ("Go to the properties page in the sidebar") {
-			ACDXPSettings.navToSyncedSitesMenu();
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Click on the Assign button") {

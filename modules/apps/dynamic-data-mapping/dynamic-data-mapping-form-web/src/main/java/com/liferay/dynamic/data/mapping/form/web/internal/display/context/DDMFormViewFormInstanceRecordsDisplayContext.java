@@ -603,22 +603,17 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 				StringUtil.split(renderedFormFieldValue, CharPool.COMMA));
 		}
 
-		return ListUtil.toList(
-			TransformUtil.transform(values, String::trim),
-			new Function<String, String>() {
+		return TransformUtil.transform(
+			values,
+			value -> {
+				LocalizedValue optionLabel =
+					ddmFormFieldOptions.getOptionLabels(value.trim());
 
-				@Override
-				public String apply(String formFieldValue) {
-					LocalizedValue optionLabel =
-						ddmFormFieldOptions.getOptionLabels(formFieldValue);
-
-					if (optionLabel == null) {
-						return formFieldValue;
-					}
-
-					return optionLabel.getString(_renderRequest.getLocale());
+				if (optionLabel == null) {
+					return value;
 				}
 
+				return optionLabel.getString(_renderRequest.getLocale());
 			});
 	}
 

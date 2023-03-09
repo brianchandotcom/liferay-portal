@@ -118,12 +118,6 @@ public class Dom4jUtil {
 		xml = StringUtil.replace(xml, "]]>", "]]]]><![CDATA[>");
 		xml = StringUtil.replace(xml, "[$SPECIAL_CHARACTER$]", "]]><");
 
-		// This is only supposed to format your xml, however, it will also
-		// unwantingly change &#169; and other characters like it into their
-		// respective readable versions
-
-		xml = StringUtil.replace(xml, "&#", "[$SPECIAL_CHARACTER$]");
-
 		XMLReader xmlReader = null;
 
 		if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider() !=
@@ -136,8 +130,7 @@ public class Dom4jUtil {
 
 		Document document = saxReader.read(new UnsyncStringReader(xml));
 
-		return StringUtil.replace(
-			toString(document, indent), "[$SPECIAL_CHARACTER$]", "&#");
+		return toString(document, indent);
 	}
 
 }

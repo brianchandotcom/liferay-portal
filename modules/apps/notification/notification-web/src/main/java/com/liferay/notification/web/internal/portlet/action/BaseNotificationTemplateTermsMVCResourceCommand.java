@@ -50,9 +50,9 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 		for (Map.Entry<String, String> entry : getTermNamesEntries()) {
 			jsonArray.put(
 				JSONUtil.put(
-					"name", language.get(user.getLocale(), entry.getKey())
+					"termLabel", language.get(user.getLocale(), entry.getKey())
 				).put(
-					"term", entry.getValue()
+					"termName", entry.getValue()
 				));
 		}
 

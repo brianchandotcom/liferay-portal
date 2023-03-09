@@ -152,11 +152,11 @@ export function DefinitionOfTerms({
 								schema: {
 									fields: [
 										{
-											fieldName: 'name',
-											label: Liferay.Language.get('name'),
+											fieldName: 'termLabel',
+											label: Liferay.Language.get('label'),
 										},
 										{
-											fieldName: 'term',
+											fieldName: 'termName',
 											label: Liferay.Language.get('term'),
 										},
 									],

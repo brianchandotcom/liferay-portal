@@ -61,8 +61,6 @@ public class DDMFormInstanceSubmissionLimitStatusUtil {
 				getFormInstanceRecordVersions(
 					user.getUserId(), ddmFormInstance.getFormInstanceId());
 
-		boolean submissionLimitReached = false;
-
 		for (DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion :
 				ddmFormInstanceRecordVersions) {
 
@@ -71,13 +69,11 @@ public class DDMFormInstanceSubmissionLimitStatusUtil {
 				(ddmFormInstanceRecordVersion.getStatus() !=
 					WorkflowConstants.STATUS_PENDING)) {
 
-				submissionLimitReached = true;
-
-				break;
+				return true;
 			}
 		}
 
-		return submissionLimitReached;
+		return false;
 	}
 
 }

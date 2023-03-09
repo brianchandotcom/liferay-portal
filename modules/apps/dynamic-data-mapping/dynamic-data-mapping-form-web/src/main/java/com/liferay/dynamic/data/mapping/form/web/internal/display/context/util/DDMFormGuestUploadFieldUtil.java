@@ -91,20 +91,16 @@ public class DDMFormGuestUploadFieldUtil {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		boolean guestUploadField = false;
-
 		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
 			if (Objects.equals(ddmFormField.getType(), "document_library") &&
 				GetterUtil.getBoolean(
 					ddmFormField.getProperty("allowGuestUsers"))) {
 
-				guestUploadField = true;
-
-				break;
+				return true;
 			}
 		}
 
-		return guestUploadField;
+		return false;
 	}
 
 	@Reference(unbind = "-")

@@ -37,9 +37,7 @@ function MinimumSearchesInput({onBlur, onChange, touched, value}) {
 					<span
 						className="ml-2"
 						data-tooltip-align="top"
-						title={Liferay.Language.get(
-							'minimum-searches-suggestion-help'
-						)}
+						title={Liferay.Language.get('minimum-searches-help')}
 					>
 						<ClayIcon symbol="question-circle-full" />
 					</span>

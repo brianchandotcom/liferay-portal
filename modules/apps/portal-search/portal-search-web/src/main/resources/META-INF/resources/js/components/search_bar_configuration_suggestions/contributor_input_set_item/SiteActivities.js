@@ -194,14 +194,14 @@ function SiteActivities({
 
 				<ClayInput.GroupItem>
 					<label>
-						{Liferay.Language.get('match-users-language')}
+						{Liferay.Language.get('match-display-language')}
 
 						<ClayTooltipProvider>
 							<span
 								className="ml-2"
 								data-tooltip-align="top"
 								title={Liferay.Language.get(
-									'match-users-language-help'
+									'match-display-language-help'
 								)}
 							>
 								<ClayIcon symbol="question-circle-full" />
@@ -211,7 +211,7 @@ function SiteActivities({
 
 					<ClaySelect
 						aria-label={Liferay.Language.get(
-							'match-users-language'
+							'match-display-language'
 						)}
 						onChange={_handleChangeAttribute(
 							'matchDisplayLanguageId'

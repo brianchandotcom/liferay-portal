@@ -1374,6 +1374,7 @@ definition {
 	}
 
 	@description = "LPS-175196 - Verify if is possible create a validation using the oldValue function using the Picklist field"
+	@priority = 5
 	test CanCreateValidationUsingOldValueFunctionWithPicklistField {
 		task ("Given: A picklist with two items is created (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Status");

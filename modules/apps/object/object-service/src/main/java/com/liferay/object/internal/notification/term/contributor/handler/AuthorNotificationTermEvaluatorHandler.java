@@ -59,6 +59,20 @@ public class AuthorNotificationTermEvaluatorHandler
 		String prefix = StringUtil.toUpperCase(objectDefinition.getShortName());
 
 		Map<String, String> termValues = HashMapBuilder.put(
+			"[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]", user.getEmailAddress()
+		).put(
+			"[%" + prefix + "_AUTHOR_FIRST_NAME%]", user.getFirstName()
+		).put(
+			"[%" + prefix + "_AUTHOR_ID%]", String.valueOf(user.getUserId())
+		).put(
+			"[%" + prefix + "_AUTHOR_LAST_NAME%]", user.getLastName()
+		).put(
+			"[%" + prefix + "_AUTHOR_MIDDLE_NAME%]", user.getMiddleName()
+		).put(
+			"[%" + prefix + "_AUTHOR_PREFIX%]", _getListTypeName(true, user)
+		).put(
+			"[%" + prefix + "_AUTHOR_SUFFIX%]", _getListTypeName(false, user)
+		).put(
 			"[%" + prefix + "_CREATOR%]",
 			() -> {
 				if (contextName.equals(
@@ -69,20 +83,6 @@ public class AuthorNotificationTermEvaluatorHandler
 
 				return user.getFullName(true, true);
 			}
-		).put(
-			"[%" + prefix + "EMAIL_ADDRESS%]", user.getEmailAddress()
-		).put(
-			"[%" + prefix + "FIRST_NAME%]", user.getFirstName()
-		).put(
-			"[%" + prefix + "ID%]", String.valueOf(user.getUserId())
-		).put(
-			"[%" + prefix + "LAST_NAME%]", user.getLastName()
-		).put(
-			"[%" + prefix + "MIDDLE_NAME%]", user.getMiddleName()
-		).put(
-			"[%" + prefix + "PREFIX%]", _getListTypeName(true, user)
-		).put(
-			"[%" + prefix + "SUFFIX%]", _getListTypeName(false, user)
 		).build();
 
 		return termValues.get(termName);
@@ -101,14 +101,14 @@ public class AuthorNotificationTermEvaluatorHandler
 
 		Set<String> termNames = Collections.unmodifiableSet(
 			SetUtil.fromArray(
-				"[%" + prefix + "_CREATOR%]",
 				"[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]",
 				"[%" + prefix + "_AUTHOR_FIRST_NAME%]",
 				"[%" + prefix + "_AUTHOR_ID%]",
 				"[%" + prefix + "_AUTHOR_LAST_NAME%]",
 				"[%" + prefix + "_AUTHOR_MIDDLE_NAME%]",
 				"[%" + prefix + "_AUTHOR_PREFIX%]",
-				"[%" + prefix + "_AUTHOR_SUFFIX%]"));
+				"[%" + prefix + "_AUTHOR_SUFFIX%]",
+				"[%" + prefix + "_CREATOR%]"));
 
 		return termNames.contains(termName);
 	}

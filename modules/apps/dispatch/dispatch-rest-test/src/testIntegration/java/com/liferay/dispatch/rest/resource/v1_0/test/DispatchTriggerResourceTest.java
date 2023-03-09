@@ -51,7 +51,7 @@ public class DispatchTriggerResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"name", "dispatchTaskExecutorType"};
+		return new String[] {"dispatchTaskExecutorType", "name"};
 	}
 
 	@Override

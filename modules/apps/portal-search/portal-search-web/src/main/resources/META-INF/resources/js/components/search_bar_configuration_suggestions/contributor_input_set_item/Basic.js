@@ -12,12 +12,10 @@
  * details.
  */
 
-import {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
 import InputSetItemHeader from './InputSetItemHeader';
+import CharacterThresholdInput from './inputs/CharacterThresholdInput';
 import DisplayGroupNameInput from './inputs/DisplayGroupNameInput';
 import SizeInput from './inputs/SizeInput';
 
@@ -60,31 +58,12 @@ function Basic({index, onBlur, onInputSetItemChange, touched, value}) {
 			</div>
 
 			<div className="form-group-autofit">
-				<ClayInput.GroupItem>
-					<label>
-						{Liferay.Language.get('character-threshold')}
-
-						<ClayTooltipProvider>
-							<span
-								className="ml-2"
-								data-tooltip-align="top"
-								title={Liferay.Language.get(
-									'character-threshold-for-displaying-suggestions-contributor-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</ClayTooltipProvider>
-					</label>
-
-					<ClayInput
-						aria-label={Liferay.Language.get('character-threshold')}
-						min="0"
-						onChange={_handleChangeAttribute('characterThreshold')}
-						type="number"
-						value={value.attributes?.characterThreshold || ''}
-					/>
-				</ClayInput.GroupItem>
+				<CharacterThresholdInput
+					onBlur={onBlur('attributes.characterThreshold')}
+					onChange={_handleChangeAttribute('characterThreshold')}
+					touched={touched['attributes.characterThreshold']}
+					value={value.attributes?.characterThreshold}
+				/>
 			</div>
 		</>
 	);

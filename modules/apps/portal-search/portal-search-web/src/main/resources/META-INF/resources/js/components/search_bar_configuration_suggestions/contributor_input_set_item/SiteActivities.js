@@ -186,7 +186,7 @@ function SiteActivities({
 
 			<div className="form-group-autofit">
 				<CharacterThresholdInput
-					onBlur={onBlur('characterThreshold')}
+					onBlur={onBlur('attributes.characterThreshold')}
 					onChange={_handleChangeAttribute('characterThreshold')}
 					touched={touched['attributes.characterThreshold']}
 					value={value.attributes?.characterThreshold}

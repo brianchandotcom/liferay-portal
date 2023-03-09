@@ -53,7 +53,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -275,19 +274,6 @@ public class UpgradeReport {
 		return tableCounts;
 	}
 
-	private String _getDate() {
-		Calendar calendar = Calendar.getInstance();
-
-		Date date = calendar.getTime();
-
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"EEE, MMM dd, yyyy hh:mm:ss z");
-
-		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-		return simpleDateFormat.format(date);
-	}
-
 	private String _getDialectInfo() {
 		DB db = DBManagerUtil.getDB();
 
@@ -478,9 +464,20 @@ public class UpgradeReport {
 		).put(
 			"errors", _getSortedLogEvents("errors")
 		).put(
-			"execution.date", _getDate()
+			"execution.date",
+			() -> {
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					"EEE, MMM dd, yyyy hh:mm:ss z");
+
+				simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+				Calendar calendar = Calendar.getInstance();
+
+				return simpleDateFormat.format(calendar.getTime());
+			}
 		).put(
-			"execution.time", _getUpgradeExecutionTime()
+			"execution.time",
+			(DBUpgrader.getUpgradeTime() / Time.SECOND) + " seconds"
 		).put(
 			"longest.upgrade.processes",
 			_getLongestRunningUpgradeProcessesList()
@@ -685,11 +682,6 @@ public class UpgradeReport {
 
 			return null;
 		}
-	}
-
-	private String _getUpgradeExecutionTime() {
-		return String.format(
-			"%s seconds", DBUpgrader.getUpgradeTime() / Time.SECOND);
 	}
 
 	private String _printContextMap(String key, Map<?, ?> map) {

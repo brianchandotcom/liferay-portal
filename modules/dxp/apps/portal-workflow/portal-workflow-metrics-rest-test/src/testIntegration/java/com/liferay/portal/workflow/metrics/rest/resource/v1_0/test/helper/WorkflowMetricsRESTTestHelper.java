@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper;
 
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -86,9 +87,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -139,21 +138,23 @@ public class WorkflowMetricsRESTTestHelper {
 
 		Creator creator = instance.getCreator();
 
+		Date dateCreated = instance.getDateCreated();
+
+		if (dateCreated == null) {
+			dateCreated = new Date();
+		}
+
+		Date dateModified = instance.getDateModified();
+
+		if (dateModified == null) {
+			dateModified = new Date();
+		}
+
 		_instanceWorkflowMetricsIndexer.addInstance(
 			_createLocalizationMap(instance.getAssetTitle()),
 			_createLocalizationMap(instance.getAssetType()), StringPool.BLANK,
 			GetterUtil.getLong(instance.getClassPK()), companyId, null,
-			Optional.ofNullable(
-				instance.getDateCreated()
-			).orElseGet(
-				Date::new
-			),
-			instance.getId(),
-			Optional.ofNullable(
-				instance.getDateModified()
-			).orElseGet(
-				Date::new
-			),
+			dateCreated, instance.getId(), dateModified,
 			instance.getProcessId(), instance.getProcessVersion(),
 			creator.getId(), creator.getName());
 
@@ -202,23 +203,33 @@ public class WorkflowMetricsRESTTestHelper {
 
 		AddNodeRequest.Builder builder = new AddNodeRequest.Builder();
 
+		Date dateCreated = node.getDateCreated();
+
+		if (dateCreated == null) {
+			dateCreated = new Date();
+		}
+
+		Date dateModified = node.getDateModified();
+
+		if (dateModified == null) {
+			dateModified = new Date();
+		}
+
+		String type = node.getType();
+
+		if (type == null) {
+			type = "TASK";
+		}
+
 		_nodeWorkflowMetricsIndexer.addNode(
 			builder.companyId(
 				companyId
 			).createDate(
-				Optional.ofNullable(
-					node.getDateCreated()
-				).orElseGet(
-					Date::new
-				)
+				dateCreated
 			).initial(
 				false
 			).modifiedDate(
-				Optional.ofNullable(
-					node.getDateModified()
-				).orElseGet(
-					Date::new
-				)
+				dateModified
 			).name(
 				node.getName()
 			).nodeId(
@@ -230,11 +241,7 @@ public class WorkflowMetricsRESTTestHelper {
 			).terminal(
 				false
 			).type(
-				Optional.ofNullable(
-					node.getType()
-				).orElse(
-					"TASK"
-				)
+				type
 			).build());
 
 		_assertCount(
@@ -348,29 +355,35 @@ public class WorkflowMetricsRESTTestHelper {
 
 		AddProcessRequest.Builder builder = new AddProcessRequest.Builder();
 
+		Boolean active = process.getActive();
+
+		if (active == null) {
+			active = Boolean.TRUE;
+		}
+
+		Date dateCreated = process.getDateCreated();
+
+		if (dateCreated == null) {
+			dateCreated = new Date();
+		}
+
+		Date dateModified = process.getDateModified();
+
+		if (dateModified == null) {
+			dateModified = new Date();
+		}
+
 		_processWorkflowMetricsIndexer.addProcess(
 			builder.active(
-				Optional.ofNullable(
-					process.getActive()
-				).orElseGet(
-					() -> Boolean.TRUE
-				)
+				active
 			).companyId(
 				companyId
 			).createDate(
-				Optional.ofNullable(
-					process.getDateCreated()
-				).orElseGet(
-					Date::new
-				)
+				dateCreated
 			).description(
 				process.getDescription()
 			).modifiedDate(
-				Optional.ofNullable(
-					process.getDateModified()
-				).orElseGet(
-					Date::new
-				)
+				dateModified
 			).name(
 				process.getName()
 			).processId(
@@ -903,24 +916,27 @@ public class WorkflowMetricsRESTTestHelper {
 	public void completeInstance(long companyId, Instance instance)
 		throws Exception {
 
+		Date dateCompletion = instance.getDateCompletion();
+
+		if (dateCompletion == null) {
+			dateCompletion = new Date();
+		}
+
+		Long duration = instance.getDuration();
+
+		if (duration == null) {
+			duration = 1000L;
+		}
+
+		Date dateModified = instance.getDateModified();
+
+		if (dateModified == null) {
+			dateModified = new Date();
+		}
+
 		_instanceWorkflowMetricsIndexer.completeInstance(
-			companyId,
-			Optional.ofNullable(
-				instance.getDateCompletion()
-			).orElseGet(
-				Date::new
-			),
-			Optional.ofNullable(
-				instance.getDuration()
-			).orElse(
-				1000L
-			),
-			instance.getId(),
-			Optional.ofNullable(
-				instance.getDateModified()
-			).orElseGet(
-				Date::new
-			));
+			companyId, dateCompletion, duration, instance.getId(),
+			dateModified);
 
 		_assertCount(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
@@ -1020,17 +1036,10 @@ public class WorkflowMetricsRESTTestHelper {
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
 
-		return Stream.of(
-			searchSearchResponse.getSearchHits()
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).toArray(
-			Document[]::new
-		);
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		return TransformUtil.transformToArray(
+			searchHits.getSearchHits(), SearchHit::getDocument, Document.class);
 	}
 
 	public void restoreProcess(Document document) throws Exception {
@@ -1306,37 +1315,26 @@ public class WorkflowMetricsRESTTestHelper {
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
 
-		Stream.of(
-			searchSearchResponse
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).map(
-			_documentBuilderFactory::builder
-		).map(
-			documentBuilder -> {
-				documentBuilder.setValue("deleted", true);
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-				return documentBuilder.build();
-			}
-		).forEach(
-			document -> {
-				UpdateDocumentRequest updateDocumentRequest =
-					new UpdateDocumentRequest(
-						indexName, document.getString("uid"), document);
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			DocumentBuilder documentBuilder = _documentBuilderFactory.builder(
+				searchHit.getDocument());
 
-				updateDocumentRequest.setRefresh(true);
-				updateDocumentRequest.setType(indexType);
-				updateDocumentRequest.setUpsert(true);
+			documentBuilder = documentBuilder.setValue("deleted", true);
 
-				_searchEngineAdapter.execute(updateDocumentRequest);
-			}
-		);
+			Document document = documentBuilder.build();
+
+			UpdateDocumentRequest updateDocumentRequest =
+				new UpdateDocumentRequest(
+					indexName, document.getString("uid"), document);
+
+			updateDocumentRequest.setRefresh(true);
+			updateDocumentRequest.setType(indexType);
+			updateDocumentRequest.setUpsert(true);
+
+			_searchEngineAdapter.execute(updateDocumentRequest);
+		}
 
 		_assertCount(
 			searchSearchResponse.getCount(), indexName,
@@ -1500,9 +1498,8 @@ public class WorkflowMetricsRESTTestHelper {
 
 		Document document = documentBuilder.setValue(
 			"slaResults",
-			Stream.of(
-				slaResults
-			).map(
+			TransformUtil.transform(
+				slaResults,
 				slaResult -> HashMapBuilder.put(
 					"onTime", String.valueOf(slaResult.getOnTime())
 				).put(
@@ -1514,8 +1511,8 @@ public class WorkflowMetricsRESTTestHelper {
 					"slaDefinitionId", String.valueOf(slaResult.getId())
 				).put(
 					"status", slaResult.getStatusAsString()
-				).build()
-			).toArray()
+				).build(),
+				Object.class)
 		).setString(
 			"uid",
 			_digest("WorkflowMetricsInstance", companyId, instance.getId())

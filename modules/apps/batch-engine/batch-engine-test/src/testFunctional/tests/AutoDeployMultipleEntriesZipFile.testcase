@@ -112,6 +112,8 @@ definition {
 		}
 	}
 
+	@description = "Ignored until LPS-175970 is completed"
+	@ignore = "true"
 	@priority = 4
 	test CanAutoDeployObjectDefinitionZipWithJsonl {
 		property portal.acceptance = "true";

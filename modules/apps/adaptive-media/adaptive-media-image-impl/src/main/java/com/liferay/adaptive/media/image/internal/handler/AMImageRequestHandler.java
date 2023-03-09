@@ -124,13 +124,6 @@ public class AMImageRequestHandler
 				return adaptiveMedia;
 			}
 
-			adaptiveMedia = _findClosestAdaptiveMedia(
-				fileVersion, amImageConfigurationEntry);
-
-			if (adaptiveMedia != null) {
-				return adaptiveMedia;
-			}
-
 			return _createRawAdaptiveMedia(fileVersion);
 		}
 		catch (PortalException portalException) {
@@ -191,7 +184,8 @@ public class AMImageRequestHandler
 				).done());
 
 		if (adaptiveMedias.isEmpty()) {
-			return null;
+			return _findClosestAdaptiveMedia(
+				fileVersion, amImageConfigurationEntry);
 		}
 
 		return adaptiveMedias.get(0);

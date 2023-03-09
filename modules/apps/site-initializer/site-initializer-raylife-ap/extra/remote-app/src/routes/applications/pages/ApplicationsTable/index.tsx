@@ -23,7 +23,7 @@ import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import Header from '../../../../common/components/header';
-import Table from '../../../../common/components/table';
+import Table, {TableRowContentType} from '../../../../common/components/table';
 import {
 	deleteApplicationByExternalReferenceCode,
 	getAllApplications,
@@ -115,24 +115,16 @@ type TableItemType = {
 	value: string;
 };
 
-type TableRowContentType = {[keys: string]: string};
-
-type itemsApplications = {
-	[keys: string]: string;
-};
-
 type itemsApplicationsFilter = {
 	applicationStatus: {name: string};
 	productName: string;
 };
 
-type itemsProducts = {
-	[keys: string]: string;
-};
+type itemsApplications = TableContent;
 
-type itemsPicklists = {
-	[keys: string]: string;
-};
+type itemsProducts = TableContent;
+
+type itemsPicklists = TableContent;
 
 type StateSortType = {
 	[keys: string]: boolean;
@@ -457,7 +449,7 @@ const ApplicationsTable = () => {
 		rowContent: TableRowContentType
 	) => {
 		if (item.clickable && item.key === 'email') {
-			handleRedirectToGmail(rowContent[item.key]);
+			handleRedirectToGmail(rowContent[item.key] as string);
 		}
 
 		if (
@@ -467,7 +459,7 @@ const ApplicationsTable = () => {
 				item.key === 'applicationCreateDate')
 		) {
 			handleRedirectToDetailsPages(
-				rowContent['externalReferenceCode'],
+				rowContent['externalReferenceCode'] as string,
 				'app-details'
 			);
 		}
@@ -578,8 +570,7 @@ const ApplicationsTable = () => {
 					);
 				})
 			);
-		}
-		else {
+		} else {
 			setFilterProductCheck(
 				filterProductCheck.filter((productName: string) => {
 					return productName !== `'${currentFilterName}'`;

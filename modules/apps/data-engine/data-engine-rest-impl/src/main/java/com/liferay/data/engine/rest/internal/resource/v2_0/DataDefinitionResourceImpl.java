@@ -600,6 +600,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		_addDataDefinitionFieldLinks(
 			dataDefinitionId, ddmForm.getDDMFormFields(), id);
 
+		_sortNestedDDMFormFields(ddmForm.getDDMFormFields());
+
 		return _updateDataDefinition(dataDefinition, dataDefinitionId, ddmForm);
 	}
 
@@ -977,6 +979,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		_validate(dataDefinition, dataDefinitionContentType, ddmForm);
 
+		_sortNestedDDMFormFields(ddmForm.getDDMFormFields());
+
 		DDMFormSerializerSerializeRequest.Builder builder =
 			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
 
@@ -1245,6 +1249,68 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
 		ddmFormFieldValue.setValue(new UnlocalizedValue(type));
+	}
+
+	private void _sortNestedDDMFormFields(List<DDMFormField> ddmFormFields)
+		throws Exception {
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			if (!StringUtil.equals(
+					ddmFormField.getType(),
+					DDMFormFieldTypeConstants.FIELDSET)) {
+
+				continue;
+			}
+
+			JSONArray rowsJSONArray = null;
+
+			if (ddmFormField.getProperty("rows") instanceof String) {
+				rowsJSONArray = _jsonFactory.createJSONArray(
+					GetterUtil.getString(ddmFormField.getProperty("rows")));
+			}
+			else {
+				rowsJSONArray = _jsonFactory.createJSONArray(
+					_jsonFactory.looseSerializeDeep(
+						ddmFormField.getProperty("rows")));
+			}
+
+			Map<String, DDMFormField> nestedDDMFormFieldsMap =
+				ddmFormField.getNestedDDMFormFieldsMap();
+
+			List<DDMFormField> sortedNestedDDMFormFields = new ArrayList<>();
+
+			for (int i = 0; i < rowsJSONArray.length(); i++) {
+				JSONObject rowJSONObject = rowsJSONArray.getJSONObject(i);
+
+				JSONArray columnsJSONArray = rowJSONObject.getJSONArray(
+					"columns");
+
+				for (int j = 0; j < columnsJSONArray.length(); j++) {
+					JSONObject columnJSONObject =
+						columnsJSONArray.getJSONObject(j);
+
+					for (String fieldName :
+							JSONUtil.toStringList(
+								columnJSONObject.getJSONArray("fields"))) {
+
+						DDMFormField nestedDDMFormField =
+							nestedDDMFormFieldsMap.get(fieldName);
+
+						if (StringUtil.equals(
+								nestedDDMFormField.getType(),
+								DDMFormFieldTypeConstants.FIELDSET)) {
+
+							_sortNestedDDMFormFields(
+								ListUtil.toList(nestedDDMFormField));
+						}
+
+						sortedNestedDDMFormFields.add(nestedDDMFormField);
+					}
+				}
+			}
+
+			ddmFormField.setNestedDDMFormFields(sortedNestedDDMFormFields);
+		}
 	}
 
 	private DataDefinition _toDataDefinition(DDMStructure ddmStructure)

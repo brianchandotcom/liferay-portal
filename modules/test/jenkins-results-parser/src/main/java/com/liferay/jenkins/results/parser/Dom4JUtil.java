@@ -315,16 +315,26 @@ public class Dom4JUtil {
 				org.w3c.dom.Document orgW3CDomDocument = null;
 
 				try {
-					String documentTypeDefinition =
-						"<!DOCTYPE definition [" + _getEntities() + "]>\n";
+					String processedXML = JenkinsResultsParserUtil.combine(
+						"<!DOCTYPE definition [", _getEntities(), "]>\n",
+						xml.replaceAll("<\\?xml[^\\n]+\\n", ""));
 
 					orgW3CDomDocument = documentBuilder.parse(
-						new InputSource(
-							new StringReader(documentTypeDefinition + xml)));
+						new InputSource(new StringReader(processedXML)));
 				}
 				catch (Exception exception2) {
-					orgW3CDomDocument = documentBuilder.parse(
-						new InputSource(new StringReader(xml)));
+					try {
+						String processedXML = JenkinsResultsParserUtil.combine(
+							"<!DOCTYPE definition [", _getEntities(), "]>\n",
+							xml);
+
+						orgW3CDomDocument = documentBuilder.parse(
+							new InputSource(new StringReader(processedXML)));
+					}
+					catch (Exception exception3) {
+						orgW3CDomDocument = documentBuilder.parse(
+							new InputSource(new StringReader(xml)));
+					}
 				}
 
 				return domReader.read(orgW3CDomDocument);

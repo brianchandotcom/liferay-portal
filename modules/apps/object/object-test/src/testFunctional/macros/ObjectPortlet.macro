@@ -202,7 +202,7 @@ definition {
 
 	macro assertMenuItemColumn {
 		AssertElementPresent(
-			key_dropdowntItem = ${dropdowntItem},
+			key_dropdownItem = ${dropdownItem},
 			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
 	}
 
@@ -264,7 +264,7 @@ definition {
 		Click(locator1 = "ObjectPortlet#ARROW_DOWN_ICON");
 
 		Click(
-			key_dropdowntItem = ${dropdowntItem},
+			key_dropdownItem = ${dropdownItem},
 			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
 	}
 

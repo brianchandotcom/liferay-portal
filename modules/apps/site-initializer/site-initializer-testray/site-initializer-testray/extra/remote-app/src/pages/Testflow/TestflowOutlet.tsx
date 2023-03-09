@@ -128,7 +128,11 @@ const TestflowOutlet = () => {
 		return null;
 	}
 
-	if (testrayTask.dueStatus.key === TaskStatuses.PROCESSING) {
+	if (
+		[TaskStatuses.PROCESSING, TaskStatuses.OPEN].includes(
+			testrayTask.dueStatus.key as TaskStatuses
+		)
+	) {
 		return (
 			<LoadingTaskPage
 				mutateTask={mutateTask}

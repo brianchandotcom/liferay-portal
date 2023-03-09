@@ -73,14 +73,12 @@ definition {
 			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList},${autoGeneratePropertyName}");
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
 		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+			ACDXPSettings.navToSyncedSitesMenu();
 		}
 
 		task ("Change the pagination to 5") {
@@ -139,14 +137,12 @@ definition {
 			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
 		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+			ACDXPSettings.navToSyncedSitesMenu();
 		}
 
 		task ("Create a new property from the list of available properties") {
@@ -206,14 +202,12 @@ definition {
 			ACUtils.viewGenericText(textValueList = "No properties were found.");
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
 		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+			ACDXPSettings.navToSyncedSitesMenu();
 		}
 
 		task ("Search by property name") {
@@ -303,14 +297,12 @@ definition {
 				itemValueList = ${propertyNameListByAvailablePropertiesDown});
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
 		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+			ACDXPSettings.navToSyncedSitesMenu();
 		}
 
 		task ("Search for a common term in property names so only manually created properties appear") {
@@ -529,14 +521,12 @@ definition {
 				expected = ${propertyName1});
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
 		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+			ACDXPSettings.navToSyncedSitesMenu();
 		}
 
 		task ("Create a new property from the list of available properties and get the first property name from the list") {

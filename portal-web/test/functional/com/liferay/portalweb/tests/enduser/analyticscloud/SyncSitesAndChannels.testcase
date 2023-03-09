@@ -126,18 +126,12 @@ definition {
 			ACUtils.viewGenericText(textValueList = "No sites were found.");
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
 		task ("Go to the people page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+			ACDXPSettings.navToSyncedContactDataMenu();
 		}
 
 		task ("Click on the Assign button") {
@@ -456,14 +450,12 @@ definition {
 			ACDXPSettings.viewGenericListItem(itemValueList = ${secondSitesPageList});
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
 		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+			ACDXPSettings.navToSyncedSitesMenu();
 		}
 
 		task ("Toggle Commerce On > Click on the Assign button") {
@@ -672,14 +664,12 @@ definition {
 				itemValueList = ${sitesPageListDown});
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
 		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+			ACDXPSettings.navToSyncedSitesMenu();
 		}
 
 		task ("Click on the Assign button") {

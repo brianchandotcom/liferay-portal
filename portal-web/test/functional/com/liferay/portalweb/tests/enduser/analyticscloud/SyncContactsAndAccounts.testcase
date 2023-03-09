@@ -169,18 +169,12 @@ definition {
 			ACUtils.viewGenericText(textValueList = "No user groups were found.");
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
-		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+		task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
 		}
 
 		task ("Click on Select Contacts > Click on sync contacts by groups") {
@@ -781,18 +775,12 @@ definition {
 				itemValueList = ${accountGroupPageListDown});
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
-		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+		task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
 		}
 
 		task ("Click on sync by account groups") {
@@ -897,18 +885,12 @@ definition {
 				itemValueList = ${orgNamePageListDown});
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
-		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+		task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
 		}
 
 		task ("Click on sync by organizations") {
@@ -1017,18 +999,12 @@ definition {
 				itemValueList = ${userGroupPageListDown});
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
-		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+		task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
 		}
 
 		task ("Click on Select Contacts > Click on sync contacts by groups") {
@@ -1143,18 +1119,12 @@ definition {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
 		}
 
-		task ("Cancel to exit the wizard") {
-			ACDXPSettings.goToInstanceSettingsAC();
+		task ("Complete the wizard configuration") {
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
-		task ("Go to the properties page in the sidebar") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
+		task ("Go to the people page in the sidebar") {
+			ACDXPSettings.navToSyncedContactDataMenu();
 		}
 
 		task ("Click on Select Contacts > Click on sync contacts by groups") {

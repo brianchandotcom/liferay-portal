@@ -37,6 +37,19 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro completeWizardConfiguration {
+		if (IsElementPresent(key_text="Next",locator1 = "Button#ANY")) {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+		}
+		else if (IsElementPresent(key_text="Finish",locator1 = "Button#ANY")) {
+			Click(
+				key_text = "Finish",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	macro connectAnalyticsCloud {
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 

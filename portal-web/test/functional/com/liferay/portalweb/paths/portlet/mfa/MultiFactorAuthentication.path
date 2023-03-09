@@ -43,7 +43,7 @@
 </tr>
 <tr>
 	<td>EMAIL_OTP_CONFIG_TEXT</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[contains(@id,'fieldDetails')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@id,'fieldHelp')]</td>
 	<td></td>
 </tr>
 <tr>

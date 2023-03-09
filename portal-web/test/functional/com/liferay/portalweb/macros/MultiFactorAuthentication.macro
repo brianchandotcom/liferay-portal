@@ -9,27 +9,27 @@ definition {
 		AssertTextEquals(
 			key_fieldName = "otpSize",
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_TEXT",
-			value1 = "One-Time Password Length Set the length of a one-time password.");
+			value1 = "Set the length of a one-time password.");
 
 		AssertTextEquals(
 			key_fieldName = "resendEmailTimeout",
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_TEXT",
-			value1 = "Resend Email Timeout Set the allowed time in seconds between one-time password requests.");
+			value1 = "Set the allowed time in seconds between one-time password requests.");
 
 		AssertTextEquals(
 			key_fieldName = "emailFromAddress",
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_TEXT",
-			value1 = "Template for Email \"From\" Field Set the sender address on the one-time password email.");
+			value1 = "Set the sender address on the one-time password email.");
 
 		AssertTextEquals(
 			key_fieldName = "failedAttemptsAllowed",
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_TEXT",
-			value1 = "Set the number of allowed failed attempts. Set the number of verification attempts allowed before blocking for the retry timeout.");
+			value1 = "Set the number of verification attempts allowed before blocking for the retry timeout.");
 
 		AssertTextEquals(
 			key_fieldName = "retryTimeout",
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_TEXT",
-			value1 = "Retry Timeout Set the time in seconds to block requests after reaching the limit for failed attempts allowed.");
+			value1 = "Set the time in seconds to block requests after reaching the limit for failed attempts allowed.");
 	}
 
 	macro canAdminDisableBasicAuthentication {

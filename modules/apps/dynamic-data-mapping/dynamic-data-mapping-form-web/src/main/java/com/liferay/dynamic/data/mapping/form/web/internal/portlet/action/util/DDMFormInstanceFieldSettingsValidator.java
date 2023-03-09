@@ -227,7 +227,7 @@ public class DDMFormInstanceFieldSettingsValidator {
 			return Collections.emptySet();
 		}
 
-		Set<String> ddmFormFieldList = new HashSet<>();
+		Set<String> ddmFormFields = new HashSet<>();
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			fieldDDMForm.getDDMFormFieldsMap(true);
@@ -242,11 +242,11 @@ public class DDMFormInstanceFieldSettingsValidator {
 				DDMFormField propertyFormField = ddmFormFieldsMap.get(
 					ddmFormFieldContextKey.getName());
 
-				ddmFormFieldList.add(_getFieldLabel(propertyFormField, locale));
+				ddmFormFields.add(_getFieldLabel(propertyFormField, locale));
 			}
 		}
 
-		return ddmFormFieldList;
+		return ddmFormFields;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

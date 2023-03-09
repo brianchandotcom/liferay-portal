@@ -190,6 +190,22 @@ public class ResourceOpenAPIParser {
 					"})");
 		}
 
+		for (JavaMethodParameter pathJavaMethodParameter :
+				javaMethodSignature.getPathJavaMethodParameters()) {
+
+			String parameterName = pathJavaMethodParameter.getParameterName();
+
+			if (parameterName.endsWith("Path") &&
+				Objects.equals(
+					pathJavaMethodParameter.getParameterType(),
+					"java.lang.String")) {
+
+				path = StringUtil.replace(
+					path, "{" + parameterName + "}",
+					"{" + parameterName + " : .+}");
+			}
+		}
+
 		methodAnnotations.add("@javax.ws.rs.Path(\"" + path + "\")");
 
 		String annotationString = StringUtil.toUpperCase(

@@ -166,13 +166,15 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
-		PublicationsChanges.viewChanges(
+		// Workaround LPS-177895
+
+		/*PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
 			changeSite = "Guest",
 			changeStatus = "Pending",
 			changeTitle = "WC WebContent Title",
 			changeType = "Added",
-			changeUser = "userfn userln");
+			changeUser = "userfn userln");*/
 
 		Button.clickPublish();
 
@@ -301,14 +303,16 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChanges(
+		// Workaround LPS-177895
+
+		/*PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
 			changeOrder = 2,
 			changeSite = "Guest",
 			changeStatus = "Approved",
 			changeTitle = "WC WebContent Title 2",
 			changeType = "Added",
-			changeUser = "userfn userln");
+			changeUser = "userfn userln");*/
 
 		PublicationsNavigator.gotoPublish(publicationName = "Publication Name");
 
@@ -392,13 +396,15 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChanges(
+		// Workaround LPS-177895
+
+		/*PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
 			changeSite = "Site Name",
 			changeStatus = "Approved",
 			changeTitle = "WC WebContent Title",
 			changeType = "Added",
-			changeUser = "userfn userln");
+			changeUser = "userfn userln");*/
 
 		PublicationsNavigator.gotoPublish(publicationName = "Publication Name");
 

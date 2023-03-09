@@ -339,6 +339,10 @@ public abstract class BaseObjectEntryResourceImpl
 				objectEntry.getExternalReferenceCode());
 		}
 
+		if (objectEntry.getKeywords() != null) {
+			existingObjectEntry.setKeywords(objectEntry.getKeywords());
+		}
+
 		if (objectEntry.getProperties() != null) {
 			existingObjectEntry.setProperties(objectEntry.getProperties());
 		}
@@ -535,6 +539,10 @@ public abstract class BaseObjectEntryResourceImpl
 		if (objectEntry.getExternalReferenceCode() != null) {
 			existingObjectEntry.setExternalReferenceCode(
 				objectEntry.getExternalReferenceCode());
+		}
+
+		if (objectEntry.getKeywords() != null) {
+			existingObjectEntry.setKeywords(objectEntry.getKeywords());
 		}
 
 		if (objectEntry.getProperties() != null) {
@@ -757,6 +765,10 @@ public abstract class BaseObjectEntryResourceImpl
 		if (objectEntry.getExternalReferenceCode() != null) {
 			existingObjectEntry.setExternalReferenceCode(
 				objectEntry.getExternalReferenceCode());
+		}
+
+		if (objectEntry.getKeywords() != null) {
+			existingObjectEntry.setKeywords(objectEntry.getKeywords());
 		}
 
 		if (objectEntry.getProperties() != null) {

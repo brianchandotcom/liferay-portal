@@ -235,6 +235,36 @@ public class ObjectEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema(description = "A list of keywords describing the object entry.")
+	public String[] getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String[] keywords) {
+		this.keywords = keywords;
+	}
+
+	@JsonIgnore
+	public void setKeywords(
+		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
+
+		try {
+			keywords = keywordsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "A list of keywords describing the object entry."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] keywords;
+
 	@JsonAnyGetter
 	@Schema
 	@Valid
@@ -424,6 +454,30 @@ public class ObjectEntry implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		if (keywords != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"keywords\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < keywords.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(keywords[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < keywords.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (properties != null) {

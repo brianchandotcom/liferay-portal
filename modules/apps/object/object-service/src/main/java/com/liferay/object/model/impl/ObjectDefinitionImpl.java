@@ -131,4 +131,13 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		return false;
 	}
 
+	@Override
+	public boolean isUnmodifiableSystemObject() {
+		if (!isModifiable() && isSystem()) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

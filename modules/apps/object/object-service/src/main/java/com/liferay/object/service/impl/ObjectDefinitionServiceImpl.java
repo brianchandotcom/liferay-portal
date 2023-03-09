@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
@@ -77,7 +78,8 @@ public class ObjectDefinitionServiceImpl
 
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
-			long userId, Map<Locale, String> labelMap, String name,
+			long userId, boolean enableComments, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
 			Map<Locale, String> pluralLabelMap, String scope,
 			List<ObjectField> objectFields)
 		throws PortalException {
@@ -87,8 +89,9 @@ public class ObjectDefinitionServiceImpl
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.addSystemObjectDefinition(
-			userId, null, null, labelMap, true, name, null, null,
-			pluralLabelMap, scope, null, 1, objectFields);
+			userId, null, null, enableComments, labelMap, true, name,
+			panelAppOrder, panelCategoryKey, null, null, pluralLabelMap, scope,
+			null, 1, WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
 	@Override

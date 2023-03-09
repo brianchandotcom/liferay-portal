@@ -235,14 +235,15 @@ public class ObjectDefinitionLocalServiceImpl
 
 			return addSystemObjectDefinition(
 				userId, systemObjectDefinitionMetadata.getModelClassName(),
-				table.getTableName(),
+				table.getTableName(), false,
 				systemObjectDefinitionMetadata.getLabelMap(), false,
-				systemObjectDefinitionMetadata.getName(),
+				systemObjectDefinitionMetadata.getName(), null, null,
 				primaryKeyColumn.getName(), primaryKeyColumn.getName(),
 				systemObjectDefinitionMetadata.getPluralLabelMap(),
 				systemObjectDefinitionMetadata.getScope(),
 				systemObjectDefinitionMetadata.getTitleObjectFieldName(),
 				systemObjectDefinitionMetadata.getVersion(),
+				WorkflowConstants.STATUS_APPROVED,
 				systemObjectDefinitionMetadata.getObjectFields());
 		}
 
@@ -302,20 +303,20 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
 			long userId, String className, String dbTableName,
-			Map<Locale, String> labelMap, boolean modifiable, String name,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, String scope,
-			String titleObjectFieldName, int version,
+			boolean enableComments, Map<Locale, String> labelMap,
+			boolean modifiable, String name, String panelAppOrder,
+			String panelCategoryKey, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			String scope, String titleObjectFieldName, int version, int status,
 			List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, className, dbTableName, false, labelMap, modifiable, name,
-			null, null, pkObjectFieldDBColumnName, pkObjectFieldName,
-			pluralLabelMap, scope,
+			userId, className, dbTableName, enableComments, labelMap,
+			modifiable, name, panelAppOrder, panelCategoryKey,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
-			titleObjectFieldName, version, WorkflowConstants.STATUS_APPROVED,
-			objectFields);
+			titleObjectFieldName, version, status, objectFields);
 	}
 
 	@Override

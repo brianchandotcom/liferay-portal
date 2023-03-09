@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_TEXT</td>
-	<td>//span[contains(@id,'fieldDetails')][contains(.,'${key_settingsText}')]</td>
+	<td>//div[contains(@id,'fieldHelp')][contains(.,'${key_settingsText}')]</td>
 	<td></td>
 </tr>
 

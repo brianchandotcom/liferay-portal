@@ -51,6 +51,7 @@ import com.liferay.site.initializer.SiteInitializerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -104,7 +105,7 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		}
 
 		try {
-			JSONObject jsonObject = _getJSONObject(file);
+			JSONObject jsonObject = _getClientExtensionConfigJSONObject(file);
 
 			if ((jsonObject != null) &&
 				Validator.isNotNull(jsonObject.getString("groupName"))) {
@@ -126,7 +127,7 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 					file.getName());
 		}
 
-		JSONObject jsonObject = _getJSONObject(file);
+		JSONObject jsonObject = _getClientExtensionConfigJSONObject(file);
 
 		if (jsonObject == null) {
 			throw new AutoDeployException();
@@ -204,18 +205,29 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		}
 	}
 
-	private JSONObject _getJSONObject(File file) throws Exception {
+	private JSONObject _getClientExtensionConfigJSONObject(File file)
+		throws Exception {
+
 		try (ZipFile zipFile = new ZipFile(file)) {
-			ZipEntry zipEntry = zipFile.getEntry(
-				"site-initializer/config.json");
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
-			if ((zipEntry == null) || zipEntry.isDirectory()) {
-				return null;
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (zipEntry.isDirectory() ||
+					!name.endsWith("client-extension-config.json")) {
+
+					continue;
+				}
+
+				return _jsonFactory.createJSONObject(
+					StringUtil.read(zipFile.getInputStream(zipEntry)));
 			}
-
-			return _jsonFactory.createJSONObject(
-				StringUtil.read(zipFile.getInputStream(zipEntry)));
 		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

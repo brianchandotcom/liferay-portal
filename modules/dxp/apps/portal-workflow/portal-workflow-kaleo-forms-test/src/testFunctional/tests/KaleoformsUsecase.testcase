@@ -508,11 +508,6 @@ definition {
 
 		Role.add(roleTitle = "KaleoRegRole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
@@ -525,11 +520,6 @@ definition {
 				roleTitle = "KaleoRegRole Name");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		for (var resourceActionIndex : list "COMPLETE_FORM,DELETE,PERMISSIONS,SUBMIT,UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = ${resourceActionIndex},
@@ -537,22 +527,12 @@ definition {
 				roleTitle = "KaleoRegRole Name");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		for (var resourceActionIndex : list "ADD_PROCESS,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.portal.workflow.kaleo.forms",
 				roleTitle = "KaleoRegRole Name");
 		}
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
 
 		for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
@@ -657,20 +637,10 @@ definition {
 	test AssignRolePermissionsApprovePG {
 		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsApprovePG";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet",
 			roleTitle = "Portal Content Reviewer");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "UPDATE",
@@ -817,20 +787,10 @@ definition {
 
 	@priority = 4
 	test AssignRolePermissionsCompleteFormPG {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet",
 			roleTitle = "Portal Content Reviewer");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "COMPLETE_FORM",
@@ -982,20 +942,10 @@ definition {
 	test AssignRolePermissionsRejectPG {
 		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsRejectPG";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet",
 			roleTitle = "Portal Content Reviewer");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "UPDATE",
@@ -1153,30 +1103,15 @@ definition {
 
 		Role.add(roleTitle = "KaleoRegRole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet",
 			roleTitle = "KaleoRegRole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "SUBMIT",
 			resourceName = "com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			roleTitle = "KaleoRegRole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
@@ -1336,11 +1271,6 @@ definition {
 			portlet = "Roles");
 
 		Role.add(roleTitle = "KaleoRegRole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",

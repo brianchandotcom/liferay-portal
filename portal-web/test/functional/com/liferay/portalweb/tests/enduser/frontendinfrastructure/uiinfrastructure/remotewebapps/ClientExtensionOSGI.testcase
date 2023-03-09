@@ -13,8 +13,8 @@ definition {
 
 		task ("Given config file for client extension of type custom element created") {
 
-			//ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
-			//ClientExtension.checkConfigFileCreatedProperly();
+			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+			ClientExtension.checkConfigFileCreatedProperly();
 
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
@@ -71,12 +71,14 @@ definition {
 
 		task ("Then View action is an available option") {
 			AssertElementPresent(
-				key_text = "View",
-				locator1 = "Button#ANY_VIEW");
+				key_option = "View",
+				locator1 = "ClientExtension#DROPDOWN_OPTIONS");
 		}
 
 		task ("And Then Edit action is not an available option field information is displayed correctly") {
-			MenuItem.viewNotPresent(menuItem = "Edit");
+			AssertElementNotPresent(
+				key_option = "Edit",
+				locator1 = "ClientExtension#DROPDOWN_OPTIONS");
 		}
 	}
 
@@ -102,9 +104,11 @@ definition {
 		property test.name.skip.portal.instance = "ClientExtensionOSGI#ViewActionCanDisplayFieldsAsNotEditable";
 
 		task ("When select view action") {
+			Click(locator1 = "ClientExtension#REMOTE_TABLE_ELLIPSIS");
+
 			Click(
-				key_text = "View",
-				locator1 = "Button#ANY");
+				key_option = "View",
+				locator1 = "ClientExtension#DROPDOWN_OPTIONS");
 		}
 
 		task ("Then field information is displayed correctly") {

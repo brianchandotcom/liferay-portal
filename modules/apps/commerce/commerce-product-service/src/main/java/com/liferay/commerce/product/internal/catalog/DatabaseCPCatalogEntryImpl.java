@@ -17,7 +17,9 @@ package com.liferay.commerce.product.internal.catalog;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -35,9 +37,11 @@ public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 
 	public DatabaseCPCatalogEntryImpl(
 		CPDefinition cpDefinition,
+		CPDefinitionOptionRelLocalService cpDefinitionOptionRelLocalService,
 		CPInstanceLocalService cpInstanceLocalService, Locale locale) {
 
 		_cpDefinition = cpDefinition;
+		_cpDefinitionOptionRelLocalService = cpDefinitionOptionRelLocalService;
 		_cpInstanceLocalService = cpInstanceLocalService;
 
 		_languageId = LanguageUtil.getLanguageId(locale);
@@ -46,6 +50,12 @@ public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 	@Override
 	public long getCPDefinitionId() {
 		return _cpDefinition.getCPDefinitionId();
+	}
+
+	@Override
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
+		return _cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
@@ -131,6 +141,8 @@ public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 	}
 
 	private final CPDefinition _cpDefinition;
+	private final CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 	private final CPInstanceLocalService _cpInstanceLocalService;
 	private final String _languageId;
 

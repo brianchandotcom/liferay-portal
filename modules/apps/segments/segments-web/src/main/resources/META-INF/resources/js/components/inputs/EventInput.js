@@ -61,6 +61,22 @@ function EventInput({
 		(operator) => operator.name === criterion.operatorName
 	)?.name;
 
+	const onDateOperatorChange = (event) => {
+		if (event.target.value === DATE_OPERATORS.EVER) {
+			onChange({
+				day: undefined,
+			});
+		}
+		else {
+			onChange({
+				day: {
+					...(criterion.day || {}),
+					operatorName: event.target.value,
+				},
+			});
+		}
+	};
+
 	return (
 		<div className="ml-2" style={{flexGrow: 1}}>
 			<div className="align-items-center d-flex mb-2">
@@ -129,21 +145,14 @@ function EventInput({
 					)}`}
 					className="criterion-input form-control"
 					disabled={disabledInput}
-					onChange={(event) =>
-						onChange({
-							day: {
-								...criterion.day,
-								operatorName: event.target.value,
-							},
-						})
-					}
+					onChange={onDateOperatorChange}
 					options={SUPPORTED_EVENT_DATE_OPERATORS.map(
 						({label, name: value}) => ({label, value})
 					)}
 					value={criterion.day?.operatorName || DATE_OPERATORS.EVER}
 				/>
 
-				{criterion.day?.operatorName !== DATE_OPERATORS.EVER ? (
+				{criterion.day ? (
 					<DateTimeInput
 						onChange={({value}) =>
 							onChange({
@@ -153,10 +162,10 @@ function EventInput({
 						propertyLabel={propertyLabel}
 						propertyType={PROPERTY_TYPES.DATE}
 						range={
-							criterion.day?.operatorName ===
+							criterion.day.operatorName ===
 							DATE_OPERATORS.BETWEEN
 						}
-						value={criterion.day?.value}
+						value={criterion.day.value}
 					/>
 				) : null}
 			</div>

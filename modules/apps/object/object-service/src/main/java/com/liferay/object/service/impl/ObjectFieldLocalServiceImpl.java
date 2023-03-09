@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectFieldExternalReferenceCodeException;
+import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectFieldDBTypeException;
 import com.liferay.object.exception.ObjectFieldLabelException;
@@ -1047,7 +1048,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		if (!objectDefinition.isEnableLocalization()) {
-			throw new ObjectFieldLocalizedException(
+			throw new ObjectDefinitionEnableLocalizationException(
 				"Object definition must be localized");
 		}
 	}

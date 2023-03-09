@@ -52,6 +52,7 @@ const ListItem = ({item, schema}) => {
 	const {
 		itemsActions,
 		selectItems,
+		selectable,
 		selectedItemsKey,
 		selectedItemsValue,
 		selectionType,
@@ -61,23 +62,25 @@ const ListItem = ({item, schema}) => {
 
 	return (
 		<ClayList.Item flex>
-			<ClayList.ItemField className="justify-content-center">
-				{selectionType === 'single' ? (
-					<ClayRadio
-						checked={selectedItemsValue
-							.map((element) => String(element))
-							.includes(String(item[selectedItemsKey]))}
-						onChange={() => selectItems(item[selectedItemsKey])}
-					/>
-				) : (
-					<ClayCheckbox
-						checked={selectedItemsValue
-							.map((element) => String(element))
-							.includes(String(item[selectedItemsKey]))}
-						onChange={() => selectItems(item[selectedItemsKey])}
-					/>
-				)}
-			</ClayList.ItemField>
+			{selectable && (
+				<ClayList.ItemField className="justify-content-center">
+					{selectionType === 'single' ? (
+						<ClayRadio
+							checked={selectedItemsValue
+								.map((element) => String(element))
+								.includes(String(item[selectedItemsKey]))}
+							onChange={() => selectItems(item[selectedItemsKey])}
+						/>
+					) : (
+						<ClayCheckbox
+							checked={selectedItemsValue
+								.map((element) => String(element))
+								.includes(String(item[selectedItemsKey]))}
+							onChange={() => selectItems(item[selectedItemsKey])}
+						/>
+					)}
+				</ClayList.ItemField>
+			)}
 
 			{image && item[image] ? (
 				<ClayList.ItemField>

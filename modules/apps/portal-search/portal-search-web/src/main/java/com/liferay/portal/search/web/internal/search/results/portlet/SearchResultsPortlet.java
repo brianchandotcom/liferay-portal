@@ -50,15 +50,12 @@ import com.liferay.portal.search.web.internal.result.display.context.SearchResul
 import com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultSummaryDisplayContextBuilder;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
-import com.liferay.portal.search.web.search.result.SearchResultImageContributor;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -71,8 +68,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author André de Oliveira
@@ -127,16 +122,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void addSearchResultImageContributor(
-		SearchResultImageContributor searchResultImageContributor) {
-
-		_searchResultImageContributors.add(searchResultImageContributor);
-	}
-
 	protected String getCurrentURL(RenderRequest renderRequest) {
 		return _portal.getCurrentURL(renderRequest);
 	}
@@ -188,12 +173,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 		}
 
 		return false;
-	}
-
-	protected void removeSearchResultImageContributor(
-		SearchResultImageContributor searchResultImageContributor) {
-
-		_searchResultImageContributors.remove(searchResultImageContributor);
 	}
 
 	@Reference
@@ -400,8 +379,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 			getHttpServletRequest(renderRequest)
 		).setResourceActions(
 			resourceActions
-		).setSearchResultImageContributorsStream(
-			_searchResultImageContributors.stream()
 		).setSearchResultPreferences(
 			searchResultPreferences
 		).setSummaryBuilderFactory(
@@ -492,8 +469,5 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
-
-	private final Set<SearchResultImageContributor>
-		_searchResultImageContributors = new HashSet<>();
 
 }

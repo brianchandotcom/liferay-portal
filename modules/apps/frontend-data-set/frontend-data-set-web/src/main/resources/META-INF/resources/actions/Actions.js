@@ -168,14 +168,10 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 			};
 
 			if (onClick) {
-				event.preventDefault();
-
 				onClick(exposedProps);
 			}
 
 			if (onActionDropdownItemClick) {
-				event.preventDefault();
-
 				onActionDropdownItemClick(exposedProps);
 			}
 		};

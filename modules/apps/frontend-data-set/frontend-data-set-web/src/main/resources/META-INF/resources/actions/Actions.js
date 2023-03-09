@@ -128,6 +128,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 				event.preventDefault();
 
 				highlightItems([itemId]);
+
 				openSidePanel({
 					size: 'lg',
 					title,

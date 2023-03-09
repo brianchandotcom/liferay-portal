@@ -70,12 +70,14 @@ function ActionsDropdown({
 
 	const inlineEditingAvailable =
 		inlineEditingSettings && itemData.actions?.update;
+
 	const inlineEditingAlwaysOn =
 		inlineEditingAvailable && inlineEditingSettings.alwaysOn;
 
 	const isMounted = useIsMounted();
 
 	const editModeActive = !!itemsChanges[itemId];
+
 	const itemChanges =
 		editModeActive && Object.keys(itemsChanges[itemId]).length
 			? itemsChanges[itemId]
@@ -128,6 +130,7 @@ function ActionsDropdown({
 		actions.length === 1
 	) {
 		const [action] = actions;
+
 		const {data: actionData} = action;
 
 		if (actionData?.id && !action?.href) {

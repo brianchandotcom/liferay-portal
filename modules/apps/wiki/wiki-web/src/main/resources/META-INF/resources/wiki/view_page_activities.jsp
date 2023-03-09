@@ -44,6 +44,8 @@ portletURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/view_page_history");
 portletURL.setParameter("redirect", currentURL);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "history"), portletURL.toString());
+
+WikiSocialActivityHelper wikiSocialActivityHelper = new WikiSocialActivityHelper(wikiRequestHelper);
 %>
 
 <div class="page-activities">
@@ -61,10 +63,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "history
 				"title", wikiPage.getTitle()
 			).buildPortletURL()
 		%>'
-		total="<%= SocialActivityLocalServiceUtil.getActivitiesCount(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey()) %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= SocialActivityLocalServiceUtil.getActivities(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey(), searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= wikiSocialActivityHelper.getApprovedSocialActivities(wikiPage, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -75,8 +76,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "history
 		>
 
 			<%
-			WikiSocialActivityHelper wikiSocialActivityHelper = new WikiSocialActivityHelper(wikiRequestHelper);
-
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(socialActivity.getExtraData());
 
 			double version = extraDataJSONObject.getDouble("version", 0);

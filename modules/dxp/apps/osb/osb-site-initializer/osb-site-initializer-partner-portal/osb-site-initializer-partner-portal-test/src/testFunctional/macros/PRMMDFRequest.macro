@@ -20,13 +20,6 @@ definition {
 			value1 = ${key_claimMessage});
 	}
 
-	@summary = "Verify that the state manager is present on MDF Request detail page"
-	macro viewStateManager {
-		AssertElementPresent(
-			key_statusButton = "Approve",
-			locator1 = "PRMMDFRequest#STATUS_BUTTON");
-	}
-
 	@summary = "Cannot view Manager Status Button on MDF Request detail page"
 	macro CanNotViewStateManager {
 		AssertElementNotPresent(
@@ -333,12 +326,6 @@ definition {
 			}
 		}
 	}
-	@summary = "View MDF actual Status on MDF Request detail page "
-	macro viewMDFStatus {
-		AssertElementPresent(
-			key_value = ${key_status},
-			locator1 = "PRMMDFRequest#STATUS_INFO");
-	}
 
 	@summary = "Verify the fills done by the user on the Campaign Information"
 	macro viewMDFActivityDetails {
@@ -425,6 +412,20 @@ definition {
 			key_fieldName = "Target Audience/Role",
 			key_nameValue = ${targetRolesOptions},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+	}
+
+	@summary = "View MDF actual Status on MDF Request detail page "
+	macro viewMDFStatus {
+		AssertElementPresent(
+			key_value = ${key_status},
+			locator1 = "PRMMDFRequest#STATUS_INFO");
+	}
+
+	@summary = "Verify that the state manager is present on MDF Request detail page"
+	macro viewStateManager {
+		AssertElementPresent(
+			key_statusButton = "Approve",
+			locator1 = "PRMMDFRequest#STATUS_BUTTON");
 	}
 
 }

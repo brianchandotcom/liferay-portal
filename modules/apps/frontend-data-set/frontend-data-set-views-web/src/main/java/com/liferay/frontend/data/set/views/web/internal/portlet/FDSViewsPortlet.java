@@ -20,9 +20,11 @@ import com.liferay.frontend.data.set.views.web.internal.display.context.FDSViews
 import com.liferay.frontend.data.set.views.web.internal.resource.FDSHeadlessResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
@@ -116,15 +118,15 @@ public class FDSViewsPortlet extends MVCPortlet {
 			long companyId, Locale locale, long userId)
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
+		ObjectDefinition fdsEntryObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				companyId, "C_FDSEntry");
 
-		if (objectDefinition != null) {
+		if (fdsEntryObjectDefinition != null) {
 			return;
 		}
 
-		objectDefinition =
+		fdsEntryObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				userId, false, LocalizedMapUtil.getLocalizedMap("FDS Entry"),
 				"FDSEntry", "100", null,
@@ -142,7 +144,39 @@ public class FDSViewsPortlet extends MVCPortlet {
 						"entityClassName", "entityClassName", true)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			userId, objectDefinition.getObjectDefinitionId());
+			userId, fdsEntryObjectDefinition.getObjectDefinitionId());
+
+		ObjectDefinition fdsViewObjectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				userId, false, LocalizedMapUtil.getLocalizedMap("FDS View"),
+				"FDSView", "200", null,
+				LocalizedMapUtil.getLocalizedMap("FDS Views"),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "name"), "label", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "symbol"), "symbol", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "description"), "description",
+						false)));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			userId, fdsViewObjectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			userId, fdsEntryObjectDefinition.getObjectDefinitionId(),
+			fdsViewObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("FDS Views of FDS Entry"),
+			"fdsViews", ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -153,6 +187,9 @@ public class FDSViewsPortlet extends MVCPortlet {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	private ServiceTrackerList<FDSHeadlessResource> _serviceTrackerList;
 

@@ -55,6 +55,10 @@ public class FDSViewsDisplayContext {
 		).buildString();
 	}
 
+	public String getFDSViewsAPIURL() {
+		return "/o/c/fdsviews";
+	}
+
 	public String getFDSViewsURL() {
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(

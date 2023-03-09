@@ -2731,6 +2731,125 @@ definition {
 		}
 	}
 
+	@description = "LPS-169994 - Verify that a permitted user can manually trigger a standalone action"
+	@priority = 5
+	test CanTriggerStandaloneActionWithPermission {
+		property portal.acceptance = "true";
+
+		task ("Given: an object with a standalone action") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 185",
+				objectName = "CustomObject185",
+				pluralLabelName = "Custom Objects 185");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject185");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject185");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 185");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Action Label",
+				actionName = "ActionName",
+				active = "true",
+				errorMessage = "Error Message",
+				inputMethod = "true",
+				inputValue = "New Entry Test",
+				objectLabel = "Custom Object 185",
+				thenAction = "Add an Object Entry",
+				whenAction = "Standalone");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject185",
+				value = "Entry Test");
+		}
+
+		task ("And: given a new user is added") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("When: the user is given permission to trigger a standalone action") {
+			JSONRole.addRegularRole(roleTitle = "Regular Role");
+
+			Role.openRolesAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Regular Role");
+
+			Navigator.gotoNavItem(navItem = "Define Permissions");
+
+			ObjectAdmin.searchInDefinePermissions(search = "Custom Objects 185");
+
+			Click(
+				key_wikiPageVersionNew = "action.ActionName",
+				locator1 = "WikiTable#SELECT_VERSION_NEW_VERSION_CHECKBOX");
+
+			PortletEntry.save();
+
+			var objectId = JSONObject.getObjectId(objectName = "CustomObject185");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = 90,
+				roleTitle = "Regular Role",
+				roleType = "regular");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
+				roleTitle = "Regular Role",
+				roleType = "regular");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
+				roleTitle = "Regular Role",
+				roleType = "regular");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}",
+				roleTitle = "Regular Role",
+				roleType = "regular");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regular Role",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Then: the user can manually trigger the standalone action in the drop-down list") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject185");
+
+			Click(
+				key_entry = "Entry Test",
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
+			Click(
+				key_dropdownItem = "Action Label",
+				locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
+
+			ObjectPortlet.viewEntry(entry = "New Entry Test");
+		}
+	}
+
 	@description = "LPS-139008 - Verify it is possible to update an Action"
 	@priority = 4
 	test CanUpdateAction {

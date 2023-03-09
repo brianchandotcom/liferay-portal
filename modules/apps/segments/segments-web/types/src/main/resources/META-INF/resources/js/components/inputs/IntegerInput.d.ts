@@ -17,7 +17,7 @@
 interface Props {
 	disabled?: boolean;
 	onChange: (payload: {value: string}) => void;
-	options: Array<{
+	options?: Array<{
 		disabled: boolean;
 		label: string;
 		value: string;

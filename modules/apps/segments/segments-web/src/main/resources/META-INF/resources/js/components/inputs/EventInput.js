@@ -130,6 +130,7 @@ class EventInput extends Component {
 						data-testid="integer-number"
 						disabled={disabledInput}
 						onChange={onChange}
+						propertyLabel={propertyLabel}
 						type="number"
 						value={value}
 					/>

@@ -18,16 +18,22 @@ import React, {ChangeEvent} from 'react';
 interface Props {
 	disabled?: boolean;
 	onChange: (payload: {value: string}) => void;
-	options: Array<{
+	options?: Array<{
 		disabled: boolean;
 		label: string;
 		value: string;
 	}>;
-
+	propertyLabel?: string;
 	value?: number | string;
 }
 
-function IntegerInput({disabled, onChange, options, value}: Props) {
+function IntegerInput({
+	disabled,
+	onChange,
+	options,
+	propertyLabel,
+	value,
+}: Props) {
 	const handleIntegerChange = (
 		event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
@@ -51,6 +57,9 @@ function IntegerInput({disabled, onChange, options, value}: Props) {
 		/>
 	) : (
 		<input
+			aria-label={`${propertyLabel}: ${Liferay.Language.get(
+				'input-a-value'
+			)}`}
 			className="criterion-input form-control"
 			data-testid="integer-number"
 			disabled={disabled}

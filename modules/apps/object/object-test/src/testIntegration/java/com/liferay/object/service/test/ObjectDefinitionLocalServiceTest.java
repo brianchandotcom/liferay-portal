@@ -19,6 +19,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectFieldException;
+import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
@@ -64,21 +65,19 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.sql.Connection;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
-
-import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Marco Leo
@@ -447,6 +446,8 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, objectDefinition.getStatus());
+
+		_testAddObjectDefinitionWithAccountEntryRestricted(objectDefinition);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
@@ -1686,6 +1687,73 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition2);
 		}
+	}
+	private void
+	_testAddObjectDefinitionWithAccountEntryRestricted(
+		ObjectDefinition objectDefinition2)
+		throws Exception {
+
+		//Criando uma restricao entre AccountEntry e um object definition
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				"AccountEntry");
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectDefinitionLocalService.enableAccountEntryRestricted(
+			objectDefinition2.getObjectDefinitionId(), objectRelationship);
+
+		Assert.assertFalse(objectDefinition2.isAccountEntryRestricted());
+		Assert.assertEquals(
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+			objectDefinition2.getStorageType());
+		Assert.assertFalse(objectDefinition2.isSystem());
+
+		//Negative test - trying to create a constraint between two custom objects
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+		User user = TestPropsValues.getUser();
+
+		ObjectDefinition objectDefinition3 =
+			_objectDefinitionLocalService.addObjectDefinition(
+				externalReferenceCode, user.getUserId());
+
+		 objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				objectDefinition2.getObjectDefinitionId(),
+				objectDefinition3.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		 try {
+			 _objectDefinitionLocalService.enableAccountEntryRestricted(
+				 objectDefinition3.getObjectDefinitionId(), objectRelationship);
+
+			 Assert.fail();
+		 }
+		 catch (ObjectDefinitionAccountEntryRestrictedException
+			 objectDefinitionAccountEntryRestrictedException) {
+
+			 Assert.assertEquals(
+				 "It is only possible to restrict custom object " +
+				 "definitions with account entry",
+				 objectDefinitionAccountEntryRestrictedException.getMessage());
+
+			 _objectDefinitionLocalService.deleteObjectDefinition(
+				 objectDefinition3);
+		 }
 	}
 
 	@Inject

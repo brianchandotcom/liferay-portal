@@ -393,13 +393,28 @@ public class UpgradeReport {
 
 	private Map<String, String> _getPortalVersionInfo() {
 		return LinkedHashMapBuilder.put(
-			"initial.build.number",
-			(_initialBuildNumber != 0) ? String.valueOf(_initialBuildNumber) :
-				"Unable to determine"
+			"expected.build.number",
+			() -> {
+				int expectedBuildNumber = ReleaseInfo.getBuildNumber();
+
+				if (expectedBuildNumber != 0) {
+					return String.valueOf(expectedBuildNumber);
+				}
+
+				return "Unable to determine";
+			}
 		).put(
-			"initial.schema.version",
-			(_initialSchemaVersion != null) ? _initialSchemaVersion :
-				"Unable to determine"
+			"expected.schema.version",
+			() -> {
+				String expectedSchemaVersion = String.valueOf(
+					PortalUpgradeProcess.getLatestSchemaVersion());
+
+				if (expectedSchemaVersion != null) {
+					return expectedSchemaVersion;
+				}
+
+				return "Unable to determine";
+			}
 		).put(
 			"final.build.number",
 			() -> {
@@ -423,28 +438,13 @@ public class UpgradeReport {
 				return "Unable to determine";
 			}
 		).put(
-			"expected.build.number",
-			() -> {
-				int expectedBuildNumber = ReleaseInfo.getBuildNumber();
-
-				if (expectedBuildNumber != 0) {
-					return String.valueOf(expectedBuildNumber);
-				}
-
-				return "Unable to determine";
-			}
+			"initial.build.number",
+			(_initialBuildNumber != 0) ? String.valueOf(_initialBuildNumber) :
+				"Unable to determine"
 		).put(
-			"expected.schema.version",
-			() -> {
-				String expectedSchemaVersion = String.valueOf(
-					PortalUpgradeProcess.getLatestSchemaVersion());
-
-				if (expectedSchemaVersion != null) {
-					return expectedSchemaVersion;
-				}
-
-				return "Unable to determine";
-			}
+			"initial.schema.version",
+			(_initialSchemaVersion != null) ? _initialSchemaVersion :
+				"Unable to determine"
 		).build();
 	}
 
@@ -452,13 +452,13 @@ public class UpgradeReport {
 		_setRootDir();
 
 		return LinkedHashMapBuilder.put(
+			PropsKeys.DL_STORE_IMPL, PropsValues.DL_STORE_IMPL
+		).put(
 			"liferay.home", PropsValues.LIFERAY_HOME
 		).put(
 			"locales", Arrays.toString(PropsValues.LOCALES)
 		).put(
 			"locales.enabled", Arrays.toString(PropsValues.LOCALES_ENABLED)
-		).put(
-			PropsKeys.DL_STORE_IMPL, PropsValues.DL_STORE_IMPL
 		).put(
 			"rootDir", (_rootDir != null) ? _rootDir : "Undefined"
 		).build();
@@ -468,26 +468,22 @@ public class UpgradeReport {
 		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
 
 		return LinkedHashMapBuilder.<String, Object>put(
+			_PROPERTY_KEY, _getPropertiesInfo()
+		).put(
+			_TABLES_KEY + ".initial.final.rows", _getDatabaseTableCounts()
+		).put(
+			"database.version", _getDialectInfo()
+		).put(
+			"document.library.storage.size", _getDLStorageInfoNew()
+		).put(
+			"errors", _getSortedLogEvents("errors")
+		).put(
 			"execution.date", _getDate()
 		).put(
 			"execution.time", _getUpgradeExecutionTime()
 		).put(
-			"portal", _getPortalVersionInfo()
-		).put(
-			"database.version", _getDialectInfo()
-		).put(
-			_PROPERTY_KEY, _getPropertiesInfo()
-		).put(
-			"document.library.storage.size", _getDLStorageInfoNew()
-		).put(
-			_TABLES_KEY + ".initial.final.rows", _getDatabaseTableCounts()
-		).put(
 			"longest.upgrade.processes",
 			_getLongestRunningUpgradeProcessesList()
-		).put(
-			"errors", _getSortedLogEvents("errors")
-		).put(
-			"warnings", _getSortedLogEvents("warnings")
 		).put(
 			"osgi.status",
 			() -> {
@@ -503,6 +499,10 @@ public class UpgradeReport {
 
 				return check;
 			}
+		).put(
+			"portal", _getPortalVersionInfo()
+		).put(
+			"warnings", _getSortedLogEvents("warnings")
 		).build();
 	}
 

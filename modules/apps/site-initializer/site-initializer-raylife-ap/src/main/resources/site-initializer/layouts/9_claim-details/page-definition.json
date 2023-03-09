@@ -21,14 +21,21 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {"key": "layout", "siteKey": "Ap"},
-							"fragmentConfig": {"layoutName": "Details"},
-							"fragmentFields": [],
+							"fragment": {
+								"key": "layout",
+								"siteKey": "Ap"
+							},
+							"fragmentConfig": {
+								"layoutName": "Details"
+							},
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -36,11 +43,11 @@
 												"key": "DIALECT-dialect-button"
 											},
 											"fragmentConfig": {
-												"uppercase": false,
+												"buttonSize": "",
+												"inverted": false,
 												"style": "primary",
 												"type": "ghost",
-												"inverted": false,
-												"buttonSize": ""
+												"uppercase": false
 											},
 											"fragmentFields": [
 												{
@@ -71,7 +78,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -82,7 +90,8 @@
 											"fragmentConfig": {
 												"parameterName": "id"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -90,9 +99,14 @@
 								],
 								"type": "FragmentDropZone"
 							},
-							{"definition": {}, "type": "FragmentDropZone"},
 							{
-								"definition": {},
+								"definition": {
+								},
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {

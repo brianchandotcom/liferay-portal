@@ -570,7 +570,8 @@ const ApplicationsTable = () => {
 					);
 				})
 			);
-		} else {
+		}
+		else {
 			setFilterProductCheck(
 				filterProductCheck.filter((productName: string) => {
 					return productName !== `'${currentFilterName}'`;

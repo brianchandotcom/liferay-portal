@@ -192,14 +192,14 @@ const ClaimDetails = () => {
 			)}
 
 			<div className="claim-detail-content d-flex py-4 row">
-				<div className="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-3 d-flex mb-4">
-					{!isClaimSettled && (
-						<Summary dataSummary={summaryClaimData} />
-					)}
-
-					{isClaimSettled && (
-						<Summary dataSummary={summaryClaimDataSettled} />
-					)}
+				<div className="col-xl-3 d-flex mb-4">
+					<Summary
+						dataSummary={
+							isClaimSettled
+								? summaryClaimDataSettled
+								: summaryClaimData
+						}
+					/>
 				</div>
 			</div>
 		</div>

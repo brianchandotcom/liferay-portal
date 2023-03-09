@@ -38,7 +38,9 @@ export type RaylifeComponentsType = {
 	[key: string]: JSX.Element;
 };
 
-const NoRouteSelected = () => <div className="evp-app">No route selected</div>;
+const NoRouteSelected = () => (
+	<div className="raylife-app">No route selected</div>
+);
 
 const RaylifeComponents: RaylifeComponentsType = {
 	'application-details': <ApplicationDetails />,

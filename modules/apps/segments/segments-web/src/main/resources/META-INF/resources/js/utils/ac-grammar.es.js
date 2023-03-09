@@ -36,8 +36,11 @@ function buildDateQueryString(day) {
  * and formatting the query differently for certain types like collection.
  * @returns An AC grammar query string built from the criteria object.
  */
-function buildEventQueryString({items}) {
-	const [{assetId, day, operatorName, propertyName, value}] = items;
+function buildEventQueryString(criteria) {
+	if (!criteria) {
+		return '';
+	}
+	const [{assetId, day, operatorName, propertyName, value}] = criteria.items;
 
 	const dateSubquery = day ? buildDateQueryString(day) : '';
 
@@ -45,7 +48,7 @@ function buildEventQueryString({items}) {
 
 	let query = `activities.filterByCount(filter='${filter}',operator='${operatorName}',value=${value})`;
 
-	query = items[0]?.operatorNot ? `((not ${query}))` : `(${query})`;
+	query = criteria.items[0]?.operatorNot ? `((not ${query}))` : `(${query})`;
 
 	return query;
 }

@@ -15,10 +15,9 @@
 
 import {ReactNode, createContext, useReducer} from 'react';
 import TestrayStorage, {STORAGE_KEYS} from '~/core/Storage';
+import useStorage from '~/hooks/useStorage';
+import {ActionMap, SortDirection, SortOption} from '~/types';
 import {CONSENT_TYPE} from '~/util/enum';
-
-import useStorage from '../hooks/useStorage';
-import {ActionMap, SortDirection, SortOption} from '../types';
 
 const testrayStorage = TestrayStorage.getInstance().getStorage('persisted');
 

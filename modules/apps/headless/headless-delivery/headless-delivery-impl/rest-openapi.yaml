@@ -2376,6 +2376,10 @@ components:
                         The file's media type (e.g., application/pdf, etc.).
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    description:
+                        The attachment's external reference code.
+                    type: string
                 fileExtension:
                     description:
                         The file's extension.
@@ -10200,7 +10204,7 @@ paths:
                                 file:
                                     format: binary
                                     type: string
-                                knowledgeBaseAttachment:
+                                messageBoardAttachment:
                                     $ref: "#/components/schemas/MessageBoardAttachment"
                             type: object
             responses:
@@ -12376,6 +12380,142 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
             tags: ["KnowledgeBaseArticle"]
+    "/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{knowledgeBaseArticleExternalReferenceCode}/knowledge-base-attachments/by-external-reference-code/{externalReferenceCode}":
+        get:
+            # @review
+            description:
+                Retrieves the knowledge base article attachment by external reference code.
+            operationId: getKnowledgeBaseArticleAttachmentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: knowledgeBaseArticleExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+            tags: ["KnowledgeBaseAttachment"]
+        post:
+            # @review
+            description:
+                Creates the knowledge base article attachment by external reference code with the information sent in
+                the request body. The request body must be `multipart/form-data` with two parts, the file's bytes
+                (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.
+            operationId: postKnowledgeBaseArticleAttachmentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: knowledgeBaseArticleExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                                knowledgeBaseAttachment:
+                                    $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+            tags: ["KnowledgeBaseAttachment"]
+        put:
+            # @review
+            description:
+                Replaces the knowledge base article attachment by external reference code with the information sent in
+                the request body. Any missing fields are deleted, unless they are required. The request body must be
+                `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string
+                (`knowledgeBaseAttachment`) with the metadata.
+            operationId: putKnowledgeBaseArticleAttachmentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: knowledgeBaseArticleExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                                knowledgeBaseAttachment:
+                                    $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+            tags: ["KnowledgeBaseAttachment"]
     "/sites/{siteId}/knowledge-base-articles/permissions":
         get:
             operationId: getSiteKnowledgeBaseArticlePermissionsPage

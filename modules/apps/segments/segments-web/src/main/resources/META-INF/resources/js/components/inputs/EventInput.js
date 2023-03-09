@@ -20,6 +20,8 @@ import {
 	DATE_OPERATORS,
 	HAS_OPERATORS,
 	PROPERTY_TYPES,
+	RELATIONAL_OPERATORS,
+	SINCE_VALUES,
 	SUPPORTED_EVENT_DATE_OPERATORS,
 	SUPPORTED_EVENT_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
@@ -28,6 +30,25 @@ import {getSupportedOperatorsFromEvent} from '../../utils/utils.es';
 import DateTimeInput from './DateTimeInput';
 import IntegerInput from './IntegerInput';
 import SelectEventEntityInput from './SelectEventEntityInput.es';
+
+const DEFAULT_SINCE_VALUE = 'last24Hours';
+
+const SINCE_OPTIONS = Object.entries(SINCE_VALUES).map(([value, label]) => ({
+	label,
+	value,
+}));
+
+const SINCE_OPERATOR = {
+	label: Liferay.Language.get('since'),
+	value: 'since',
+};
+
+const DATE_OPERATOR_OPTIONS = SUPPORTED_EVENT_DATE_OPERATORS.map(
+	({label, name}) => ({
+		label,
+		value: name,
+	})
+).concat([SINCE_OPERATOR]);
 
 function EventInput({
 	criterion = {},
@@ -61,20 +82,48 @@ function EventInput({
 		(operator) => operator.name === criterion.operatorName
 	)?.name;
 
+	const isSinceOperator = Boolean(
+		criterion.day?.operatorName === RELATIONAL_OPERATORS.GT &&
+			criterion.day?.value in SINCE_VALUES
+	);
+
 	const onDateOperatorChange = (event) => {
 		if (event.target.value === DATE_OPERATORS.EVER) {
-			onChange({
-				day: undefined,
-			});
+			onChange({day: undefined});
+
+			return;
 		}
-		else {
-			onChange({
-				day: {
-					...(criterion.day || {}),
-					operatorName: event.target.value,
-				},
-			});
+
+		const currentOperatorName = criterion.day?.operatorName;
+		let nextOperatorName = event.target.value;
+		let nextValue = criterion.day?.value;
+
+		if (nextOperatorName === SINCE_OPERATOR.value) {
+			nextOperatorName = RELATIONAL_OPERATORS.GT;
+			nextValue = DEFAULT_SINCE_VALUE;
 		}
+		else if (isSinceOperator) {
+			nextValue = undefined;
+		}
+
+		if (nextOperatorName === DATE_OPERATORS.BETWEEN) {
+			nextValue = nextValue
+				? {
+						end: nextValue,
+						start: nextValue,
+				  }
+				: nextValue;
+		}
+		else if (currentOperatorName === DATE_OPERATORS.BETWEEN) {
+			nextValue = nextValue?.start || nextValue?.end || nextValue;
+		}
+
+		onChange({
+			day: {
+				operatorName: nextOperatorName,
+				value: nextValue,
+			},
+		});
 	};
 
 	return (
@@ -146,27 +195,49 @@ function EventInput({
 					className="criterion-input form-control"
 					disabled={disabledInput}
 					onChange={onDateOperatorChange}
-					options={SUPPORTED_EVENT_DATE_OPERATORS.map(
-						({label, name: value}) => ({label, value})
-					)}
-					value={criterion.day?.operatorName || DATE_OPERATORS.EVER}
+					options={DATE_OPERATOR_OPTIONS}
+					value={
+						isSinceOperator
+							? SINCE_OPERATOR.value
+							: criterion.day?.operatorName || DATE_OPERATORS.EVER
+					}
 				/>
 
 				{criterion.day ? (
-					<DateTimeInput
-						onChange={({value}) =>
-							onChange({
-								day: {...criterion.day, value},
-							})
-						}
-						propertyLabel={propertyLabel}
-						propertyType={PROPERTY_TYPES.DATE}
-						range={
-							criterion.day.operatorName ===
-							DATE_OPERATORS.BETWEEN
-						}
-						value={criterion.day.value}
-					/>
+					isSinceOperator ? (
+						<ClaySelectWithOption
+							aria-label={`${propertyLabel}: ${Liferay.Language.get(
+								'select-since-value-option'
+							)}`}
+							className="criterion-input form-control"
+							disabled={disabledInput}
+							onChange={(event) =>
+								onChange({
+									day: {
+										...criterion.day,
+										value: event.target.value,
+									},
+								})
+							}
+							options={SINCE_OPTIONS}
+							value={criterion.day.value || DEFAULT_SINCE_VALUE}
+						/>
+					) : (
+						<DateTimeInput
+							onChange={({value}) =>
+								onChange({
+									day: {...criterion.day, value},
+								})
+							}
+							propertyLabel={propertyLabel}
+							propertyType={PROPERTY_TYPES.DATE}
+							range={
+								criterion.day.operatorName ===
+								DATE_OPERATORS.BETWEEN
+							}
+							value={criterion.day.value}
+						/>
+					)
 				) : null}
 			</div>
 		</div>

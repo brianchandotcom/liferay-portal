@@ -81,7 +81,7 @@ public class SearchContainerColumnTextTag<R>
 				index = searchEntries.size();
 			}
 
-			if (resultRow.isRestricted()) {
+			if (resultRow.isRestricted() || Validator.isBlank(_value)) {
 				_href = null;
 			}
 

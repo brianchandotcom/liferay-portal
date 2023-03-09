@@ -26,6 +26,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "org.glassfish.jersey.core", name: "jersey-common", version: "2.26"
+	testCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.4.10"
 	testCompile group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
 }

@@ -29,6 +29,8 @@ import java.net.URI;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.cxf.jaxrs.impl.UriBuilderImpl;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -39,6 +41,7 @@ import org.mockito.Mockito;
 
 /**
  * @author Carlos Correa
+ * @author Raymond Augé
  */
 public class UriInfoUtilTest {
 
@@ -54,103 +57,105 @@ public class UriInfoUtilTest {
 		portalUtil.setPortal(_portal);
 
 		PropsUtil.setProps(_props);
-	}
-
-	@Test
-	public void testGetBaseUriBuilder() {
-		Mockito.when(
-			_uriInfo.getBaseUriBuilder()
-		).thenReturn(
-			_uriBuilder
-		);
-
-		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
-
-		Mockito.verify(
-			_uriInfo
-		).getBaseUriBuilder();
-	}
-
-	@Test
-	public void testGetBaseUriBuilderHttps() {
-		Mockito.when(
-			_uriBuilder.scheme(Mockito.anyString())
-		).thenReturn(
-			_uriBuilder
-		);
 
 		Mockito.when(
 			_uriInfo.getBaseUriBuilder()
 		).thenReturn(
 			_uriBuilder
 		);
+	}
+
+	@Test
+	public void testGetBaseUriBuilderHostNoScheme() throws Exception {
+		_uriBuilder.host("localhost");
+
+		_assertUriBuilder(
+			0, "", 0, 0, _uriBuilder, _uriInfo, "localhost/test-path");
+	}
+
+	@Test
+	public void testGetBaseUriBuilderHostScheme() throws Exception {
+		_uriBuilder.host("localhost");
+		_uriBuilder.scheme("http");
+
+		_assertUriBuilder(
+			0, "", 0, 0, _uriBuilder, _uriInfo, "http://localhost/test-path");
+	}
+
+	@Test
+	public void testGetBaseUriBuilderHttpsHostNoScheme() throws Exception {
+		_uriBuilder.host("localhost");
 
 		_setProtocol(Http.HTTPS);
 
-		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
-
-		Mockito.verify(
-			_uriBuilder
-		).scheme(
-			Http.HTTPS
-		);
-
-		Mockito.verify(
-			_uriInfo
-		).getBaseUriBuilder();
+		_assertUriBuilder(
+			0, "", 0, 1, _uriBuilder, _uriInfo, "https://localhost/test-path");
 	}
 
 	@Test
-	public void testGetBaseUriBuilderPathContext() {
+	public void testGetBaseUriBuilderHttpsHostScheme() throws Exception {
+		_uriBuilder.host("localhost");
+		_uriBuilder.scheme("http");
+
+		_setProtocol(Http.HTTPS);
+
+		_assertUriBuilder(
+			0, "", 0, 1, _uriBuilder, _uriInfo, "https://localhost/test-path");
+	}
+
+	@Test
+	public void testGetBaseUriBuilderHttpsNoHostNoScheme() throws Exception {
+		_setProtocol(Http.HTTPS);
+
+		_assertUriBuilder(0, "", 0, 0, _uriBuilder, _uriInfo, "/test-path");
+	}
+
+	@Test
+	public void testGetBaseUriBuilderNoHostNoScheme() throws Exception {
+		_assertUriBuilder(0, "", 0, 0, _uriBuilder, _uriInfo, "/test-path");
+	}
+
+	@Test
+	public void testGetBaseUriBuilderPathContext() throws Exception {
 		String path = StringPool.SLASH + RandomTestUtil.randomString();
-
-		Mockito.when(
-			_uri.getPath()
-		).thenReturn(
-			path
-		);
-
-		Mockito.when(
-			_uriBuilder.build()
-		).thenReturn(
-			_uri
-		);
-
-		Mockito.when(
-			_uriBuilder.replacePath(Mockito.anyString())
-		).thenReturn(
-			_uriBuilder
-		);
-
-		Mockito.when(
-			_uriInfo.getBaseUriBuilder()
-		).thenReturn(
-			_uriBuilder
-		);
 
 		String pathContext = StringPool.SLASH + RandomTestUtil.randomString();
 
 		_setPathContext(path, pathContext);
 
-		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
+		_assertUriBuilder(
+			1, pathContext + path, 1, 0, _uriBuilder, _uriInfo,
+			pathContext + path);
+	}
+
+	private void _assertUriBuilder(
+			int buildTimes, String path, int replacePathTimes, int schemeTimes,
+			UriBuilder uriBuilder, UriInfo uriInfo, String uriString)
+		throws Exception {
+
+		Assert.assertSame(uriBuilder, UriInfoUtil.getBaseUriBuilder(uriInfo));
 
 		Mockito.verify(
-			_uri
-		).getPath();
-
-		Mockito.verify(
-			_uriBuilder
+			uriBuilder, Mockito.times(buildTimes)
 		).build();
 
 		Mockito.verify(
-			_uriBuilder
+			uriBuilder, Mockito.times(replacePathTimes)
 		).replacePath(
-			pathContext + path
+			path
 		);
 
 		Mockito.verify(
-			_uriInfo
+			uriBuilder, Mockito.times(schemeTimes)
+		).scheme(
+			Http.HTTPS
+		);
+
+		Mockito.verify(
+			uriInfo
 		).getBaseUriBuilder();
+
+		Assert.assertEquals(new URI(uriString), uriBuilder.build());
 	}
 
 	private void _setPathContext(String path, String pathContext) {
@@ -177,8 +182,11 @@ public class UriInfoUtilTest {
 
 	private final Portal _portal = Mockito.mock(Portal.class);
 	private final Props _props = Mockito.mock(Props.class);
-	private final URI _uri = Mockito.mock(URI.class);
-	private final UriBuilder _uriBuilder = Mockito.mock(UriBuilder.class);
+	private final UriBuilder _uriBuilder = Mockito.spy(
+		new UriBuilderImpl(
+		).path(
+			"/test-path"
+		));
 	private final UriInfo _uriInfo = Mockito.mock(UriInfo.class);
 
 }

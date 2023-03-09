@@ -15,12 +15,15 @@
 package com.liferay.document.library.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Set;
+import java.util.UUID;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -47,6 +50,19 @@ public class DLTest {
 		Assert.assertTrue(
 			allMediaGalleryMimeTypes.toString(),
 			allMediaGalleryMimeTypes.contains(ContentTypes.IMAGE_SVG_XML));
+	}
+
+	@Test
+	public void testIsValidVersion() {
+		Assert.assertTrue(DLUtil.isValidVersion("1.1"));
+		Assert.assertTrue(
+			DLUtil.isValidVersion(
+				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION));
+		Assert.assertTrue(DLUtil.isValidVersion("1.1~" + UUID.randomUUID()));
+		Assert.assertTrue(
+			DLUtil.isValidVersion(
+				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION +
+					StringPool.TILDE + UUID.randomUUID()));
 	}
 
 }

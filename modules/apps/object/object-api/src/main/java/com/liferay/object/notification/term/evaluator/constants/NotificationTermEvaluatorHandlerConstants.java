@@ -17,12 +17,15 @@ package com.liferay.object.notification.term.evaluator.constants;
 /**
  * @author Paulo Albuquerque
  */
-public class NotificationTermEvaluatorConstants {
+public class NotificationTermEvaluatorHandlerConstants {
 
-	public static final String AUTHOR = "Author";
+	public static final String FIRST_HANDLER_TYPE =
+		NotificationTermEvaluatorHandlerConstants.TYPE_CURRENT_USER;
 
-	public static final String CURRENT_USER = "CurrentUser";
+	public static final String TYPE_AUTHOR = "Author";
 
-	public static final String OBJECT_FIELD = "ObjectField";
+	public static final String TYPE_CURRENT_USER = "CurrentUser";
+
+	public static final String TYPE_OBJECT_FIELD = "ObjectField";
 
 }

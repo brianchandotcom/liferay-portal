@@ -15,9 +15,8 @@
 package com.liferay.object.internal.notification.term.contributor.handler;
 
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.notification.term.evaluator.constants.NotificationTermEvaluatorConstants;
+import com.liferay.object.notification.term.evaluator.constants.NotificationTermEvaluatorHandlerConstants;
 import com.liferay.object.notification.term.evaluator.handler.NotificationTermEvaluatorHandler;
-import com.liferay.object.notification.term.evaluator.handler.NotificationTermEvaluatorHandlerTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
@@ -41,11 +40,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Paulo Albuquerque
  */
 @Component(
-	property = "notification.term.evaluator.handler=" + NotificationTermEvaluatorConstants.AUTHOR,
+	property = "notification.term.evaluator.handler.type=" + NotificationTermEvaluatorHandlerConstants.TYPE_AUTHOR,
 	service = NotificationTermEvaluatorHandler.class
 )
 public class AuthorNotificationTermEvaluatorHandler
-	implements NotificationTermEvaluatorHandler {
+	extends BaseNotificationTermEvaluatorHandler {
 
 	@Override
 	public String evaluate(
@@ -78,10 +77,8 @@ public class AuthorNotificationTermEvaluatorHandler
 	}
 
 	@Override
-	public NotificationTermEvaluatorHandler getNext() {
-		return _notificationTermEvaluatorHandlerTracker.
-			getNotificationTermEvaluatorHandler(
-				NotificationTermEvaluatorConstants.OBJECT_FIELD);
+	public String getNext() {
+		return NotificationTermEvaluatorHandlerConstants.TYPE_OBJECT_FIELD;
 	}
 
 	@Override
@@ -128,10 +125,6 @@ public class AuthorNotificationTermEvaluatorHandler
 
 	@Reference
 	private ListTypeService _listTypeService;
-
-	@Reference
-	private NotificationTermEvaluatorHandlerTracker
-		_notificationTermEvaluatorHandlerTracker;
 
 	@Reference
 	private UserLocalService _userLocalService;

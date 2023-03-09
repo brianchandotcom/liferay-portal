@@ -17,7 +17,7 @@ package com.liferay.object.internal.notification.term.contributor.handler;
 import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.notification.term.evaluator.constants.NotificationTermEvaluatorConstants;
+import com.liferay.object.notification.term.evaluator.constants.NotificationTermEvaluatorHandlerConstants;
 import com.liferay.object.notification.term.evaluator.handler.NotificationTermEvaluatorHandler;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.concurrent.DCLSingleton;
@@ -36,11 +36,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Paulo Albuquerque
  */
 @Component(
-	property = "notification.term.evaluator.handler=" + NotificationTermEvaluatorConstants.AUTHOR,
+	property = "notification.term.evaluator.handler.type=" + NotificationTermEvaluatorHandlerConstants.TYPE_OBJECT_FIELD,
 	service = NotificationTermEvaluatorHandler.class
 )
 public class ObjectFieldNotificationTermEvaluatorHandler
-	implements NotificationTermEvaluatorHandler {
+	extends BaseNotificationTermEvaluatorHandler {
 
 	@Override
 	public String evaluate(
@@ -66,11 +66,6 @@ public class ObjectFieldNotificationTermEvaluatorHandler
 		}
 
 		return String.valueOf(variables.get(objectField.getDBColumnName()));
-	}
-
-	@Override
-	public NotificationTermEvaluatorHandler getNext() {
-		return null;
 	}
 
 	@Override

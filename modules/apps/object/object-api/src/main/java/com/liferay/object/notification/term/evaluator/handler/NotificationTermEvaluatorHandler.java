@@ -29,7 +29,14 @@ public interface NotificationTermEvaluatorHandler {
 			String termName)
 		throws PortalException;
 
-	public NotificationTermEvaluatorHandler getNext();
+	public default String getNext() {
+		return null;
+	}
+
+	public String handle(
+			Map<String, Object> variables, ObjectDefinition objectDefinition,
+			String termName)
+		throws PortalException;
 
 	public boolean isTermNameCriteriaMet(
 		ObjectDefinition objectDefinition, String termName);

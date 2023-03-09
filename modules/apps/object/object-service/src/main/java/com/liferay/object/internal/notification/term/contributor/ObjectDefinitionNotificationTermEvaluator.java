@@ -16,7 +16,7 @@ package com.liferay.object.internal.notification.term.contributor;
 
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.notification.term.evaluator.constants.NotificationTermEvaluatorConstants;
+import com.liferay.object.notification.term.evaluator.constants.NotificationTermEvaluatorHandlerConstants;
 import com.liferay.object.notification.term.evaluator.handler.NotificationTermEvaluatorHandler;
 import com.liferay.object.notification.term.evaluator.handler.NotificationTermEvaluatorHandlerTracker;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,26 +47,14 @@ public class ObjectDefinitionNotificationTermEvaluator
 			return termName;
 		}
 
-		Map<String, Object> variables = (Map<String, Object>)object;
-
 		NotificationTermEvaluatorHandler notificationTermEvaluatorHandler =
 			_notificationTermEvaluatorHandlerTracker.
 				getNotificationTermEvaluatorHandler(
-					NotificationTermEvaluatorConstants.CURRENT_USER);
+					NotificationTermEvaluatorHandlerConstants.
+						FIRST_HANDLER_TYPE);
 
-		while (notificationTermEvaluatorHandler != null) {
-			if (notificationTermEvaluatorHandler.isTermNameCriteriaMet(
-					_objectDefinition, termName)) {
-
-				return notificationTermEvaluatorHandler.evaluate(
-					variables, _objectDefinition, termName);
-			}
-
-			notificationTermEvaluatorHandler =
-				notificationTermEvaluatorHandler.getNext();
-		}
-
-		return termName;
+		return notificationTermEvaluatorHandler.handle(
+			(Map<String, Object>)object, _objectDefinition, termName);
 	}
 
 	private final NotificationTermEvaluatorHandlerTracker

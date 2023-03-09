@@ -117,8 +117,8 @@ public class AMImageRequestHandler
 				return null;
 			}
 
-			AdaptiveMedia<AMImageProcessor> adaptiveMedia =
-				_findExactAdaptiveMedia(fileVersion, amImageConfigurationEntry);
+			AdaptiveMedia<AMImageProcessor> adaptiveMedia = _findAdaptiveMedia(
+				fileVersion, amImageConfigurationEntry);
 
 			if (adaptiveMedia != null) {
 				return adaptiveMedia;
@@ -129,6 +129,27 @@ public class AMImageRequestHandler
 		catch (PortalException portalException) {
 			throw new AMRuntimeException(portalException);
 		}
+	}
+
+	private AdaptiveMedia<AMImageProcessor> _findAdaptiveMedia(
+			FileVersion fileVersion,
+			AMImageConfigurationEntry amImageConfigurationEntry)
+		throws PortalException {
+
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			_amImageFinder.getAdaptiveMedias(
+				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
+					fileVersion
+				).forConfiguration(
+					amImageConfigurationEntry.getUUID()
+				).done());
+
+		if (adaptiveMedias.isEmpty()) {
+			return _findClosestAdaptiveMedia(
+				fileVersion, amImageConfigurationEntry);
+		}
+
+		return adaptiveMedias.get(0);
 	}
 
 	private AdaptiveMedia<AMImageProcessor> _findClosestAdaptiveMedia(
@@ -168,27 +189,6 @@ public class AMImageRequestHandler
 		catch (PortalException portalException) {
 			throw new AMRuntimeException(portalException);
 		}
-	}
-
-	private AdaptiveMedia<AMImageProcessor> _findExactAdaptiveMedia(
-			FileVersion fileVersion,
-			AMImageConfigurationEntry amImageConfigurationEntry)
-		throws PortalException {
-
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			_amImageFinder.getAdaptiveMedias(
-				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
-					fileVersion
-				).forConfiguration(
-					amImageConfigurationEntry.getUUID()
-				).done());
-
-		if (adaptiveMedias.isEmpty()) {
-			return _findClosestAdaptiveMedia(
-				fileVersion, amImageConfigurationEntry);
-		}
-
-		return adaptiveMedias.get(0);
 	}
 
 	private Comparator<AdaptiveMedia<AMImageProcessor>> _getComparator(

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -169,8 +168,7 @@ public class AMImageRequestHandler
 				return null;
 			}
 
-			Collections.sort(
-				adaptiveMedias, _getComparator(configurationWidth));
+			adaptiveMedias.sort(_getComparator(configurationWidth));
 
 			return adaptiveMedias.get(0);
 		}

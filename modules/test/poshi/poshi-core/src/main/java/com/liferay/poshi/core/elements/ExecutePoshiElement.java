@@ -70,17 +70,6 @@ public class ExecutePoshiElement extends PoshiElement {
 
 		checkSemicolon(poshiScript);
 
-		String trimmedPoshiScript = poshiScript.trim();
-
-		PoshiElement parentPoshiElement = (PoshiElement)getParent();
-
-		if (!trimmedPoshiScript.endsWith(";") &&
-			!isConditionValidInParent(parentPoshiElement)) {
-
-			throw new PoshiScriptParserException(
-				"Missing semicolon", poshiScript, parentPoshiElement);
-		}
-
 		String poshiScriptParentheticalContent = getParentheticalContent(
 			poshiScript);
 		String fileExtension = getFileExtension();

@@ -566,7 +566,7 @@ definition {
 				webContentContent = "WC WebContent Content New Company",
 				webContentTitle = "WC WebContent Title New Company");
 
-			WebContent.increaseDisplayDate(minuteIncrease = 5);
+			WebContent.increaseDisplayDate(minuteIncrease = 4);
 
 			PortletEntry.publish();
 
@@ -601,9 +601,9 @@ definition {
 
 		task ("View WebContent Article Publish on default Company") {
 
-			// Pausing 150 seconds due to LRQA-75909
+			// Pausing 120 seconds due to LRQA-75909
 
-			Pause(locator1 = 150000);
+			Pause(locator1 = 120000);
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
@@ -618,9 +618,9 @@ definition {
 		task ("New Company publish it's WebContent Article") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-			// Pausing 230 seconds due to LRQA-75909
+			// Pausing 120 seconds due to LRQA-75909
 
-			Pause(locator1 = 230000);
+			Pause(locator1 = 120000);
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",

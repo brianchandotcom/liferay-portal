@@ -20,7 +20,6 @@ import {ReactNode, useContext} from 'react';
 import {ListViewContext, ListViewTypes} from '~/context/ListViewContext';
 import {Liferay} from '~/services/liferay';
 
-import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
 import i18n from '../../i18n';
 import {FilterSchema} from '../../schema/filter';
 import ManagementToolbarFilter from './ManagementToolbarFilter';
@@ -85,7 +84,14 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 			});
 		}
 
+		Liferay.Util.openToast({
+			message: i18n.translate(
+				'you-must-select-one-or-more-filters-before-pinning'
+			),
+			type: 'danger',
+		});
 	};
+
 	return (
 		<ClayManagementToolbar.ItemList>
 			{filterSchema?.fields?.length && (
@@ -95,9 +101,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 							aria-label={i18n.translate('add-pin')}
 							className="nav-btn nav-btn-monospaced"
 							displayType="unstyled"
-							onClick={() => {
-								pinSelectedFilters();
-							}}
+							onClick={() => pinSelectedFilters()}
 							symbol={i18n.translate(pin ? 'unpin' : 'pin')}
 							title={i18n.translate(pin ? 'unpin' : 'pin')}
 						/>

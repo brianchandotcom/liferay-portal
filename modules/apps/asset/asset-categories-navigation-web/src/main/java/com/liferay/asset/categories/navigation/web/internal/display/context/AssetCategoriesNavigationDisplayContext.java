@@ -33,14 +33,12 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -154,22 +152,17 @@ public class AssetCategoriesNavigationDisplayContext {
 
 		Arrays.sort(assetVocabularyIds);
 
-		Set<Long> availableAssetVocabularyIdsSet = SetUtil.fromArray(
-			getAvailableAssetVocabularyIds());
-
 		List<KeyValuePair> vocabularyNames = TransformUtil.transform(
-			availableAssetVocabularyIdsSet,
-			assetVocabularyId -> {
+			getAssetVocabularies(),
+			assetVocabulary -> {
 				int index = Arrays.binarySearch(
-					assetVocabularyIds, assetVocabularyId);
+					assetVocabularyIds, assetVocabulary.getVocabularyId());
 
 				if (index >= 0) {
 					return null;
 				}
 
-				return _toKeyValuePair(
-					AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-						assetVocabularyId));
+				return _toKeyValuePair(assetVocabulary);
 			});
 
 		vocabularyNames.sort(new KeyValuePairComparator(false, true));

@@ -331,8 +331,6 @@ public class DummyReferenceStagedModelRepository
 		extends BaseLocalServiceImpl {
 
 		public List<DummyReference> dynamicQuery(DynamicQuery dynamicQuery) {
-			List<DummyReference> result = _dummyReferences;
-
 			try {
 				Object detachedCriteria = ReflectionTestUtil.getFieldValue(
 					dynamicQuery, "_detachedCriteria");
@@ -343,16 +341,23 @@ public class DummyReferenceStagedModelRepository
 				Iterator<?> iterator = ReflectionTestUtil.invoke(
 					criteriaImpl, "iterateExpressionEntries", new Class<?>[0]);
 
-				while (iterator.hasNext()) {
-					result = ListUtil.filter(
-						result, getPredicate(String.valueOf(iterator.next())));
+				if (!iterator.hasNext()) {
+					return _dummyReferences;
 				}
+
+				Predicate<DummyReference> predicate = getPredicate(
+					String.valueOf(iterator.next()));
+
+				while (iterator.hasNext()) {
+					predicate = predicate.and(
+						getPredicate(String.valueOf(iterator.next())));
+				}
+
+				return ListUtil.filter(_dummyReferences, predicate);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
 			}
-
-			return result;
 		}
 
 		public long dynamicQueryCount(

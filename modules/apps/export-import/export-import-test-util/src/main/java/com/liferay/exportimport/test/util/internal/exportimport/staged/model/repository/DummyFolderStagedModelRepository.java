@@ -345,8 +345,6 @@ public class DummyFolderStagedModelRepository
 	public class DummyFolderBaseLocalServiceImpl extends BaseLocalServiceImpl {
 
 		public List<DummyFolder> dynamicQuery(DynamicQuery dynamicQuery) {
-			List<DummyFolder> result = _dummyFolders;
-
 			try {
 				Object detachedCriteria = ReflectionTestUtil.getFieldValue(
 					dynamicQuery, "_detachedCriteria");
@@ -357,16 +355,23 @@ public class DummyFolderStagedModelRepository
 				Iterator<?> iterator = ReflectionTestUtil.invoke(
 					criteriaImpl, "iterateExpressionEntries", new Class<?>[0]);
 
-				while (iterator.hasNext()) {
-					result = ListUtil.filter(
-						result, getPredicate(String.valueOf(iterator.next())));
+				if (!iterator.hasNext()) {
+					return _dummyFolders;
 				}
+
+				Predicate<DummyFolder> predicate = getPredicate(
+					String.valueOf(iterator.next()));
+
+				while (iterator.hasNext()) {
+					predicate = predicate.and(
+						getPredicate(String.valueOf(iterator.next())));
+				}
+
+				return ListUtil.filter(_dummyFolders, predicate);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
 			}
-
-			return result;
 		}
 
 		public long dynamicQueryCount(

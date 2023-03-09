@@ -17,7 +17,7 @@ package org.outerj.daisy.diff.helper;
 
 import java.io.IOException;
 
-import org.cyberneko.html.parsers.SAXParser;
+import net.sourceforge.htmlunit.cyberneko.parsers.SAXParser;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
@@ -135,3 +135,4 @@ public class NekoHtmlParser {
     }
 
 }
+/* @generated */

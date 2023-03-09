@@ -112,7 +112,13 @@ definition {
 			CKEditor.addContent(kbArticleContentEdit = ${kbArticleContent});
 		}
 		else {
-			CKEditor.addContent(content = ${kbArticleContent});
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = ${kbArticleContent});
+
+			SelectFrame(value1 = "relative=top");
 		}
 
 		if (isSet(embedVideo)) {

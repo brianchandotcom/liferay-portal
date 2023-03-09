@@ -202,8 +202,6 @@ const updateStatusActivities = async (status) => {
 			}
 		})
 	);
-
-	return;
 };
 
 const updateButtons = (mdfRequestStatusKey) => {

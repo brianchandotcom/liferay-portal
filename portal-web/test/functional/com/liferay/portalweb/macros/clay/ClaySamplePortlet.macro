@@ -11,6 +11,8 @@ definition {
 			locator1 = "ClaySamplePortlet#CLAY_SECTION",
 			value1 = "liferay-portal/portal-web/test/functional/com/liferay/portalweb/dependencies/ocular/baseline/clay_smoke/can_render_ui/${tabName}.png",
 			value2 = 70);
+
+		takeScreenshot();
 	}
 
 }

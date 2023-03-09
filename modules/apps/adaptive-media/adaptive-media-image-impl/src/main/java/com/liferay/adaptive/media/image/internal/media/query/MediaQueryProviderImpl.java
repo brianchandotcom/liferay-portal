@@ -41,7 +41,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,13 +63,12 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		AdaptiveMedia<AMImageProcessor> previousAdaptiveMedia = null;
 
 		for (AdaptiveMedia<AMImageProcessor> adaptiveMedia : adaptiveMedias) {
-			Optional<AdaptiveMedia<AMImageProcessor>> hdAdaptiveMediaOptional =
+			AdaptiveMedia<AMImageProcessor> hdAdaptiveMedia =
 				_getHDAdaptiveMedia(adaptiveMedia, adaptiveMedias);
 
 			mediaQueries.add(
 				_getMediaQuery(
-					adaptiveMedia, previousAdaptiveMedia,
-					hdAdaptiveMediaOptional));
+					adaptiveMedia, previousAdaptiveMedia, hdAdaptiveMedia));
 
 			previousAdaptiveMedia = adaptiveMedia;
 		}
@@ -78,7 +76,7 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		return mediaQueries;
 	}
 
-	private Optional<AdaptiveMedia<AMImageProcessor>> _findAdaptiveMedia(
+	private AdaptiveMedia<AMImageProcessor> _findAdaptiveMedia(
 		FileEntry fileEntry,
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
@@ -92,17 +90,17 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 					).done());
 
 			if (adaptiveMedias.isEmpty()) {
-				return Optional.empty();
+				return null;
 			}
 
-			return Optional.of(adaptiveMedias.get(0));
+			return adaptiveMedias.get(0);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
 
-			return Optional.empty();
+			return null;
 		}
 	}
 
@@ -111,28 +109,34 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 			FileEntry fileEntry,
 			AMImageConfigurationEntry amImageConfigurationEntry) {
 
-		Optional<AdaptiveMedia<AMImageProcessor>> adaptiveMediaOptional =
-			_findAdaptiveMedia(fileEntry, amImageConfigurationEntry);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia = _findAdaptiveMedia(
+			fileEntry, amImageConfigurationEntry);
 
-		if (adaptiveMediaOptional.isPresent()) {
-			return adaptiveMediaOptional.get();
+		if (adaptiveMedia != null) {
+			return adaptiveMedia;
 		}
 
 		Map<String, String> properties = HashMapBuilder.put(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH.getName(),
 			() -> {
-				Optional<Integer> widthOptional = _getWidth(
-					amImageConfigurationEntry);
+				Integer width = _getWidth(amImageConfigurationEntry);
 
-				return String.valueOf(widthOptional.orElse(0));
+				if (width == null) {
+					return String.valueOf(0);
+				}
+
+				return String.valueOf(width);
 			}
 		).put(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT.getName(),
 			() -> {
-				Optional<Integer> heightOptional = _getHeight(
-					amImageConfigurationEntry);
+				Integer height = _getHeight(amImageConfigurationEntry);
 
-				return String.valueOf(heightOptional.orElse(0));
+				if (height == null) {
+					return String.valueOf(0);
+				}
+
+				return String.valueOf(height);
 			}
 		).build();
 
@@ -200,7 +204,7 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		}
 	}
 
-	private Optional<AdaptiveMedia<AMImageProcessor>> _getHDAdaptiveMedia(
+	private AdaptiveMedia<AMImageProcessor> _getHDAdaptiveMedia(
 		AdaptiveMedia<AMImageProcessor> originalAdaptiveMedia,
 		Collection<AdaptiveMedia<AMImageProcessor>> adaptiveMedias) {
 
@@ -221,11 +225,11 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 				value -> value == _getHeight(adaptiveMedia));
 
 			if (widthMatch && heightMatch) {
-				return Optional.of(adaptiveMedia);
+				return adaptiveMedia;
 			}
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	private Integer _getHeight(AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
@@ -239,7 +243,7 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		return height;
 	}
 
-	private Optional<Integer> _getHeight(
+	private Integer _getHeight(
 		AMImageConfigurationEntry originalAMImageConfigurationEntry) {
 
 		return _getPropertiesValue(
@@ -249,7 +253,7 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 	private MediaQuery _getMediaQuery(
 			AdaptiveMedia<AMImageProcessor> adaptiveMedia,
 			AdaptiveMedia<AMImageProcessor> previousAdaptiveMedia,
-			Optional<AdaptiveMedia<AMImageProcessor>> hdAdaptiveMediaOptional)
+			AdaptiveMedia<AMImageProcessor> hdAdaptiveMedia)
 		throws PortalException {
 
 		StringBundler sb = new StringBundler(4);
@@ -259,33 +263,30 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 
 		sb.append(adaptiveMedia.getURI());
 
-		hdAdaptiveMediaOptional.ifPresent(
-			hdAdaptiveMedia -> {
-				sb.append(", ");
-				sb.append(hdAdaptiveMedia.getURI());
-				sb.append(" 2x");
-			});
+		if (hdAdaptiveMedia != null) {
+			sb.append(", ");
+			sb.append(hdAdaptiveMedia.getURI());
+			sb.append(" 2x");
+		}
 
 		return new MediaQuery(conditions, sb.toString());
 	}
 
-	private Optional<Integer> _getPropertiesValue(
+	private Integer _getPropertiesValue(
 		AMImageConfigurationEntry amImageConfigurationEntry, String name) {
 
 		try {
 			Map<String, String> properties =
 				amImageConfigurationEntry.getProperties();
 
-			Integer height = Integer.valueOf(properties.get(name));
-
-			return Optional.of(height);
+			return Integer.valueOf(properties.get(name));
 		}
 		catch (NumberFormatException numberFormatException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(numberFormatException);
 			}
 
-			return Optional.empty();
+			return null;
 		}
 	}
 
@@ -300,7 +301,7 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		return width;
 	}
 
-	private Optional<Integer> _getWidth(
+	private Integer _getWidth(
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
 		return _getPropertiesValue(amImageConfigurationEntry, "max-width");

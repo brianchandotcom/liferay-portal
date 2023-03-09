@@ -130,7 +130,7 @@ definition {
 			ACDXPSettings.goToInstanceSettingsAC();
 		}
 
-		task ("Go to the properties page in the sidebar") {
+		task ("Go to the people page in the sidebar") {
 			Click(
 				key_text = "Next",
 				locator1 = "Button#ANY");

@@ -69,17 +69,19 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 		List<PortletPreferences> portletPreferencesList =
 			_portletPreferencesLocalService.getPortletPreferencesByPlid(plid);
 
-		portletPreferencesList = ListUtil.filter(
-			portletPreferencesList,
-			portletPreferences -> {
-				String portletId = portletPreferences.getPortletId();
+		_portletPreferencesMap.put(
+			plid,
+			ListUtil.filter(
+				portletPreferencesList,
+				portletPreferences -> {
+					String portletId = portletPreferences.getPortletId();
 
-				return portletId.contains(_INSTANCE_SEPARATOR) &&
-					   (portletId.contains(_SEGMENTS_EXPERIENCE_SEPARATOR_1) ||
-						portletId.contains(_SEGMENTS_EXPERIENCE_SEPARATOR_2));
-			});
-
-		_portletPreferencesMap.put(plid, portletPreferencesList);
+					return portletId.contains(_INSTANCE_SEPARATOR) &&
+						   (portletId.contains(
+							   _SEGMENTS_EXPERIENCE_SEPARATOR_1) ||
+							portletId.contains(
+								_SEGMENTS_EXPERIENCE_SEPARATOR_2));
+				}));
 
 		return _portletPreferencesMap.get(plid);
 	}
@@ -88,10 +90,9 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 		String newNamespace, String oldNamespace, long plid,
 		long segmentsExperienceId) {
 
-		List<PortletPreferences> portletPreferencesList =
-			_getPortletPreferencesByPlid(plid);
+		for (PortletPreferences portletPreferences :
+				_getPortletPreferencesByPlid(plid)) {
 
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
 			String portletId = portletPreferences.getPortletId();
 
 			if (!portletId.contains(oldNamespace) ||
@@ -104,18 +105,17 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 				continue;
 			}
 
-			String newPortletId = StringUtil.replace(
-				portletId,
-				new String[] {
-					oldNamespace,
-					_SEGMENTS_EXPERIENCE_SEPARATOR_1 + segmentsExperienceId,
-					_SEGMENTS_EXPERIENCE_SEPARATOR_2 + segmentsExperienceId
-				},
-				new String[] {
-					newNamespace, StringPool.BLANK, StringPool.BLANK
-				});
-
-			portletPreferences.setPortletId(newPortletId);
+			portletPreferences.setPortletId(
+				StringUtil.replace(
+					portletId,
+					new String[] {
+						oldNamespace,
+						_SEGMENTS_EXPERIENCE_SEPARATOR_1 + segmentsExperienceId,
+						_SEGMENTS_EXPERIENCE_SEPARATOR_2 + segmentsExperienceId
+					},
+					new String[] {
+						newNamespace, StringPool.BLANK, StringPool.BLANK
+					}));
 
 			_portletPreferencesLocalService.updatePortletPreferences(
 				portletPreferences);

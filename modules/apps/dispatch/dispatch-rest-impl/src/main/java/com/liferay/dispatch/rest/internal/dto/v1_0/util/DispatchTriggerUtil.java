@@ -72,9 +72,7 @@ public class DispatchTriggerUtil {
 		Map<String, ?> parameters) {
 
 		if (parameters == null) {
-			return UnicodePropertiesBuilder.create(
-				new HashMap<>(), true
-			).build();
+			return new UnicodeProperties();
 		}
 
 		Map<String, String> map = new HashMap<>();

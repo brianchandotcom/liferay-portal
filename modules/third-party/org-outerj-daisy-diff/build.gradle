@@ -16,6 +16,7 @@ patch {
 	}
 
 	fileNames "org/outerj/daisy/diff/helper/CleanBrokenAttributeQNamesHandler.java"
+	fileNames "org/outerj/daisy/diff/helper/NekoHtmlParser.java"
 
 	originalLibModuleName = "daisydiff"
 	originalLibSrcBaseUrl = "https://packages.atlassian.com/3rdparty/org/outerj/daisy/"

@@ -23,14 +23,18 @@ definition {
 		Variables.assertDefined(parameterList = "${groupKey},${portalInstanceName}");
 
 		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
+		var creatorEmailAddress = "test@${portalInstanceName}";
 
-		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+		if (${portalInstanceName} == "liferay.com") {
+			var portalURL = "http://localhost:8080";
+		}
+		else {
+			var portalURL = "http://${portalInstanceName}:8080";
 		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/group/get-groups \
-				-u test@liferay.com:test \
+				-u ${creatorEmailAddress}:test \
 				-d companyId=${companyId} \
 				-d parentGroupId=0 \
 				-d site=true \

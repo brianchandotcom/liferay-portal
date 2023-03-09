@@ -276,11 +276,7 @@ public class DBTest {
 
 	@Test
 	public void testGetPrimaryKeyColumnNames() throws Exception {
-		_db.runSQL(
-			StringBundler.concat(
-				"create table ", _TABLE_NAME_2,
-				" (id1 LONG not null, id2 LONG not null, primary key (id1, ",
-				"id2))"));
+		_db.runSQL(_SQL_CREATE_TABLE_2);
 
 		Assert.assertArrayEquals(
 			new String[] {"id1", "id2"},
@@ -289,11 +285,7 @@ public class DBTest {
 
 	@Test
 	public void testGetPrimaryKeyColumnNamesIncorrectOrder() throws Exception {
-		_db.runSQL(
-			StringBundler.concat(
-				"create table ", _TABLE_NAME_2,
-				" (id1 LONG not null, id2 LONG not null, primary key (id1, ",
-				"id2))"));
+		_db.runSQL(_SQL_CREATE_TABLE_2);
 
 		Assert.assertFalse(
 			Arrays.equals(
@@ -333,6 +325,10 @@ public class DBTest {
 	}
 
 	private static final String _INDEX_NAME = "IX_TEMP";
+
+	private static final String _SQL_CREATE_TABLE_2 =
+		"create table " + DBTest._TABLE_NAME_2 +
+			" (id1 LONG not null, id2 LONG not null, primary key (id1, id2))";
 
 	private static final String _TABLE_NAME_1 = "DBTest1";
 

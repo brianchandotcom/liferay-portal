@@ -502,7 +502,7 @@ public class ObjectEntryInfoItemFormProvider
 			_getAttachmentObjectDefinitionInfoFieldSetEntries(
 				objectDefinitionId)
 		).infoFieldSetEntries(
-			_getObjectRelationshipsInfoFieldSets(objectDefinitionId)
+			_getParentsInfoFieldSets(objectDefinitionId)
 		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(modelClassName)
 		).infoFieldSetEntry(
@@ -618,59 +618,6 @@ public class ObjectEntryInfoItemFormProvider
 		).build();
 	}
 
-	private List<InfoFieldSetEntry> _getObjectRelationshipsInfoFieldSets(
-			long objectDefinitionId)
-		throws NoSuchFormVariationException {
-
-		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
-
-		if (objectDefinitionId == 0) {
-			return infoFieldSetEntries;
-		}
-
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.getAllObjectRelationships(
-				objectDefinitionId);
-
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			if (!Objects.equals(
-					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
-
-				continue;
-			}
-
-			long relatedObjectDefinitionId =
-				objectRelationship.getObjectDefinitionId1();
-
-			ObjectDefinition relatedObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					relatedObjectDefinitionId);
-
-			if (relatedObjectDefinition == null) {
-				_log.error(
-					new NoSuchObjectDefinitionException(
-						String.valueOf(relatedObjectDefinitionId)));
-
-				continue;
-			}
-
-			if (relatedObjectDefinition.isSystem()) {
-				continue;
-			}
-
-			infoFieldSetEntries.add(
-				_getObjectDefinitionInfoFieldSet(
-					StringBundler.concat(
-						ObjectRelationship.class.getSimpleName(),
-						StringPool.POUND, relatedObjectDefinition.getName(),
-						StringPool.POUND, objectRelationship.getName()),
-					relatedObjectDefinition));
-		}
-
-		return infoFieldSetEntries;
-	}
-
 	private List<SelectInfoFieldType.Option> _getOptions(
 		ObjectField objectField) {
 
@@ -690,6 +637,51 @@ public class ObjectEntryInfoItemFormProvider
 		}
 
 		return options;
+	}
+
+	private List<InfoFieldSetEntry> _getParentsInfoFieldSets(
+			long objectDefinitionId2)
+		throws NoSuchFormVariationException {
+
+		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
+
+		if (objectDefinitionId2 == 0) {
+			return infoFieldSetEntries;
+		}
+
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.getObjectRelationships(
+				objectDefinitionId2,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectDefinition objectDefinition1 =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			if (objectDefinition1 == null) {
+				_log.error(
+					new NoSuchObjectDefinitionException(
+						String.valueOf(
+							objectRelationship.getObjectDefinitionId1())));
+
+				continue;
+			}
+
+			if (objectDefinition1.isSystem()) {
+				continue;
+			}
+
+			infoFieldSetEntries.add(
+				_getObjectDefinitionInfoFieldSet(
+					StringBundler.concat(
+						ObjectRelationship.class.getSimpleName(),
+						StringPool.POUND, objectDefinition1.getName(),
+						StringPool.POUND, objectRelationship.getName()),
+					objectDefinition1));
+		}
+
+		return infoFieldSetEntries;
 	}
 
 	private String _getRelationshipLabelFieldName(ObjectField objectField) {

@@ -94,96 +94,17 @@ public class DDMIndexerImplTest {
 	}
 
 	@Test
-	public void testExtractAttributesUsingForm() {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+	public void testExtractIndexableAttributes() {
+		_testExtractIndexableAttributes(
+			_createDDMFormField(), StringPool.BLANK);
+		_testExtractIndexableAttributes(_createDDMFormField(), "Create New");
+		_testExtractIndexableAttributes(_createDDMFormField(), "null");
 
-		ddmForm.addDDMFormField(_createDDMFormField());
+		DDMFormField ddmFormField = _createDDMFormField();
 
-		String fieldValue = "Create New";
+		ddmFormField.setRepeatable(true);
 
-		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
-			_createDDMStructure(ddmForm),
-			_createDDMFormValues(
-				ddmForm,
-				DDMFormValuesTestUtil.createDDMFormFieldValue(
-					_FIELD_NAME,
-					DDMFormValuesTestUtil.createLocalizedValue(
-						fieldValue, LocaleUtil.US))),
-			LocaleUtil.US);
-
-		Assert.assertEquals(fieldValue, indexableAttributes);
-	}
-
-	@Test
-	public void testExtractAttributesUsingFormWithAnEmptyField() {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
-
-		ddmForm.addDDMFormField(_createDDMFormField());
-
-		String fieldValue = StringPool.BLANK;
-
-		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
-			_createDDMStructure(ddmForm),
-			_createDDMFormValues(
-				ddmForm,
-				DDMFormValuesTestUtil.createDDMFormFieldValue(
-					_FIELD_NAME,
-					DDMFormValuesTestUtil.createLocalizedValue(
-						fieldValue, LocaleUtil.US))),
-			LocaleUtil.US);
-
-		Assert.assertEquals(fieldValue, indexableAttributes);
-	}
-
-	@Test
-	public void testExtractAttributesUsingFormWithAnEmptyRepeatableField() {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
-
-		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
-			_FIELD_NAME, true, true, true);
-
-		ddmFormField.setIndexType("text");
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		String fieldValue = StringPool.BLANK;
-
-		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
-			_createDDMStructure(ddmForm),
-			_createDDMFormValues(
-				ddmForm,
-				DDMFormValuesTestUtil.createDDMFormFieldValue(
-					_FIELD_NAME,
-					DDMFormValuesTestUtil.createLocalizedValue(
-						fieldValue, LocaleUtil.US))),
-			LocaleUtil.US);
-
-		Assert.assertEquals(fieldValue, indexableAttributes);
-	}
-
-	@Test
-	public void testExtractAttributesUsingFormWithANullLiteralFieldValue() {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
-
-		ddmForm.addDDMFormField(_createDDMFormField());
-
-		String fieldValue = "null";
-
-		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
-			_createDDMStructure(ddmForm),
-			_createDDMFormValues(
-				ddmForm,
-				DDMFormValuesTestUtil.createDDMFormFieldValue(
-					_FIELD_NAME,
-					DDMFormValuesTestUtil.createLocalizedValue(
-						fieldValue, LocaleUtil.US))),
-			LocaleUtil.US);
-
-		Assert.assertEquals(fieldValue, indexableAttributes);
+		_testExtractIndexableAttributes(ddmFormField, StringPool.BLANK);
 	}
 
 	@Test
@@ -401,6 +322,27 @@ public class DDMIndexerImplTest {
 	private void _setUpPropsUtil() {
 		PropsTestUtil.setProps(
 			PropsKeys.INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH, "255");
+	}
+
+	private void _testExtractIndexableAttributes(
+		DDMFormField ddmFormField, String fieldValue) {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		Assert.assertEquals(
+			fieldValue,
+			_ddmIndexer.extractIndexableAttributes(
+				_createDDMStructure(ddmForm),
+				_createDDMFormValues(
+					ddmForm,
+					DDMFormValuesTestUtil.createDDMFormFieldValue(
+						_FIELD_NAME,
+						DDMFormValuesTestUtil.createLocalizedValue(
+							fieldValue, LocaleUtil.US))),
+				LocaleUtil.US));
 	}
 
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();

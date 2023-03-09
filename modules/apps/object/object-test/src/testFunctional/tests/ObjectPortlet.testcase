@@ -757,7 +757,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject245");
 
-		ObjectPortlet.checkUncheckColumnsDisplayed(dropdowntItem = "ID");
+		ObjectPortlet.checkUncheckColumnsDisplayed(dropdownItem = "ID");
 
 		ObjectPortlet.assertEntryColumnNotPresent(column = "ID");
 	}
@@ -1612,7 +1612,7 @@ definition {
 
 		ObjectPortlet.searchColumn(columnName = "Field");
 
-		ObjectPortlet.assertMenuItemColumn(dropdowntItem = "Field");
+		ObjectPortlet.assertMenuItemColumn(dropdownItem = "Field");
 	}
 
 	@description = "LPS-140082 - Verify it is possible to search for a partial Object entry on the Relationship field"

@@ -17,6 +17,8 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ReactNode, useContext} from 'react';
+import {ListViewContext, ListViewTypes} from '~/context/ListViewContext';
+import {Liferay} from '~/services/liferay';
 
 import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
 import i18n from '../../i18n';
@@ -67,8 +69,23 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	disabled,
 	filterSchema,
 }) => {
-	const [{pin}, dispatch] = useContext(ListViewContext);
+	const [{filters, pin}, dispatch] = useContext(ListViewContext);
 
+	const pinSelectedFilters = () => {
+		if (filters.entries.length) {
+			dispatch({type: ListViewTypes.SET_PIN});
+
+			return Liferay.Util.openToast({
+				message: i18n.translate(
+					pin
+						? 'filters-unpinned-successfully'
+						: 'filters-pinned-successfully'
+				),
+				type: 'success',
+			});
+		}
+
+	};
 	return (
 		<ClayManagementToolbar.ItemList>
 			{filterSchema?.fields?.length && (
@@ -78,9 +95,9 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 							aria-label={i18n.translate('add-pin')}
 							className="nav-btn nav-btn-monospaced"
 							displayType="unstyled"
-							onClick={() =>
-								dispatch({type: ListViewTypes.SET_PIN})
-							}
+							onClick={() => {
+								pinSelectedFilters();
+							}}
 							symbol={i18n.translate(pin ? 'unpin' : 'pin')}
 							title={i18n.translate(pin ? 'unpin' : 'pin')}
 						/>

@@ -179,6 +179,7 @@ export default {
 	'export-csv': 'Export CSV',
 	'failed': 'Failed',
 	'filter-results': 'Filter Results',
+	'filters-pinned-successfully': 'Filters pinned successfully.',
 	'first-name': 'First Name',
 	'git-hash': 'Git Hash',
 	'github-compare-urls': 'GitHub Compare URLs',

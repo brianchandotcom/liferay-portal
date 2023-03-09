@@ -23,12 +23,12 @@ import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseOrderType;
-import com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.WarehouseOrderTypeDTOConverter;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseOrderTypeResource;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -235,7 +235,10 @@ public class WarehouseOrderTypeResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private WarehouseOrderTypeDTOConverter _warehouseOrderTypeDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.WarehouseOrderTypeDTOConverter)"
+	)
+	private DTOConverter<CommerceInventoryWarehouseRel, WarehouseOrderType>
+		_warehouseOrderTypeDTOConverter;
 
 }

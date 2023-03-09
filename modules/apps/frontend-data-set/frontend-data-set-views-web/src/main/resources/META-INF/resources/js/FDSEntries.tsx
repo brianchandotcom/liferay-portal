@@ -15,7 +15,6 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
@@ -25,6 +24,8 @@ import fuzzy from 'fuzzy';
 import React, {useRef, useState} from 'react';
 
 import '../css/FDSEntries.scss';
+import {PAGINATION_PROPS} from './Constants';
+import RequiredMark from './RequiredMark';
 
 const FUZZY_OPTIONS = {
 	post: '</strong>',
@@ -87,17 +88,6 @@ const HeadlessResourceItem = ({
 		</ClayLayout.ContentRow>
 	);
 };
-
-const RequiredMark = () => (
-	<>
-		<span className="inline-item-after reference-mark text-warning">
-			<ClayIcon symbol="asterisk" />
-		</span>
-		<span className="hide-accessible sr-only">
-			{Liferay.Language.get('required')}
-		</span>
-	</>
-);
 
 interface IDropdownMenuProps {
 	headlessResources: Array<HeadlessResource>;
@@ -442,7 +432,6 @@ const FDSEntries = ({
 	const views = [
 		{
 			contentRenderer: 'table',
-			label: Liferay.Language.get('table'),
 			name: 'table',
 			schema: {
 				fields: [
@@ -459,7 +448,6 @@ const FDSEntries = ({
 					},
 				],
 			},
-			thumbnail: 'table',
 		},
 	];
 
@@ -479,18 +467,9 @@ const FDSEntries = ({
 						onClick: onViewClick,
 					},
 				]}
-				pagination={{
-					deltas: [
-						{label: 4},
-						{label: 8},
-						{label: 20},
-						{label: 40},
-						{label: 60},
-					],
-					initialDelta: 10,
-				}}
 				style="fluid"
 				views={views}
+				{...PAGINATION_PROPS}
 			/>
 		</>
 	);

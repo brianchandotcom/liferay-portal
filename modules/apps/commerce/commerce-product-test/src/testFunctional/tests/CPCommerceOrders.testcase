@@ -2222,6 +2222,120 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10829. As a user with permissions, I can add/edit Commerce Order Notes via API and verify the result in order notes section of the placed order's details page."
+	@priority = 5
+	test CanUserWithPermissionsAddCommerceOrderNotesViaAPI {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Operations Manager",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And a payment method is activated") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And an order is placed") {
+			var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "MIN93015:1",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 0);
+		}
+
+		task ("When a new note added via API call to the order by buyer user without permissions") {
+			var requestStatus = CommerceJSONOrdersAPI.getOrderNotePostRequestField(
+				content = "This is a Commerce Order Test Note.",
+				field = "status",
+				orderId = ${orderId},
+				restricted = "true",
+				userEmail = "buyer");
+		}
+
+		task ("Then a FORBIDDEN error is thrown") {
+			TestUtils.assertEquals(
+				actual = ${requestStatus},
+				expected = "FORBIDDEN");
+		}
+
+		task ("When Manage Order Note and Manage Order Restricted Notes permissions are given to Buyer User") {
+			for (var notePermission : list "MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES,MANAGE_COMMERCE_ORDER_NOTES") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${notePermission},
+					resourceName = "com.liferay.commerce.order",
+					roleTitle = "Operations Manager");
+			}
+		}
+
+		task ("And a new note added via API call to the order by buyer user") {
+			var orderNoteId = CommerceJSONOrdersAPI.getOrderNotePostRequestField(
+				content = "This is a Commerce Order Test Note.",
+				field = "id",
+				orderId = ${orderId},
+				restricted = "true",
+				userEmail = "buyer");
+		}
+
+		task ("And buyer user logs in and goes to the Notes section of the placed orders details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			Button.click(button = "View");
+
+			Click.javaScriptClick(locator1 = "CommerceFrontStore#ORDER_PAGES_NOTES_BUTTON");
+		}
+
+		task ("Then the note is shown correctly") {
+			CommerceOrders.viewCommerceOrderNote(
+				commerceOrderNoteAuthor = "Buyer User",
+				commerceOrderNoteBody = "This is a Commerce Order Test Note.");
+		}
+
+		task ("When the note is updated via API call by buyer user") {
+			CommerceJSONOrdersAPI._patchCommerceOrderNote(
+				content = "This is a Patched Commerce Order Test Note.",
+				orderNoteId = ${orderNoteId},
+				userEmail = "buyer");
+		}
+
+		task ("Then the note is shown correctly") {
+			Refresh();
+
+			CommerceOrders.viewCommerceOrderNote(
+				commerceOrderNoteAuthor = "Buyer User",
+				commerceOrderNoteBody = "This is a Patched Commerce Order Test Note.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-5843. Deactivate Currency"
 	@priority = 3
 	test DeactivateCurrency {

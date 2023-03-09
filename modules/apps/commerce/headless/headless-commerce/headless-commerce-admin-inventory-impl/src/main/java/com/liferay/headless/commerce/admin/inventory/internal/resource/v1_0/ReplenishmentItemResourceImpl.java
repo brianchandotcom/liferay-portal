@@ -20,10 +20,10 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.ReplenishmentItem;
-import com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.ReplenishmentItemDTOConverter;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.ReplenishmentItemResource;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -247,7 +247,10 @@ public class ReplenishmentItemResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private ReplenishmentItemDTOConverter _replenishmentItemDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.ReplenishmentItemDTOConverter)"
+	)
+	private DTOConverter<CommerceInventoryReplenishmentItem, ReplenishmentItem>
+		_replenishmentItemDTOConverter;
 
 }

@@ -68,7 +68,7 @@ const RequirementCaseLinkModal: React.FC<RequirementCaseLinkModalProps> = ({
 						);
 					},
 				}}
-				tableProps={{navigateTo: undefined, rowSelectable: true}}
+				tableProps={{rowSelectable: true}}
 				variables={{
 					filter: SearchBuilder.eq('projectId', projectId),
 				}}

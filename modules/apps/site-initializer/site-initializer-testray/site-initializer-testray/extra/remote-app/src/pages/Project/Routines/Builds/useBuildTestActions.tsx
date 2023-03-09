@@ -39,7 +39,6 @@ const useBuildTestActions = () => {
 						<UserListView
 							listViewProps={{
 								managementToolbarProps: {
-									addButton: undefined,
 									display: {columns: false},
 								},
 							}}

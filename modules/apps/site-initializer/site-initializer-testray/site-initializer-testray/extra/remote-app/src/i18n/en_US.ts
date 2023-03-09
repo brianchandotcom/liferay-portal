@@ -133,7 +133,7 @@ export default {
 	'current-subcomponents': 'Current Sub Components',
 	'current-teams': 'Current Teams',
 	'database': 'Database',
-	'date-created': 'Date  Created',
+	'date-created': 'Date Created',
 	'date-last-modified': 'Date Last Modified',
 	'date-modified': 'Date Modified',
 	'dates': 'Dates',

@@ -45,8 +45,7 @@ const transformData = (isSmartSuite: boolean) => (
 			},
 			id: testrayCase.id,
 		}));
-	}
-	else {
+	} else {
 		items = (items as any[]).map((suiteCase) => ({
 			...suiteCase,
 			case: suiteCase.r_caseToSuitesCases_c_case
@@ -58,11 +57,7 @@ const transformData = (isSmartSuite: boolean) => (
 				  }
 				: undefined,
 			id: suiteCase.id,
-			suite: suiteCase.r_suiteToSuitesCases_c_suite
-				? {
-						...suiteCase.r_suiteToSuitesCases_c_suite,
-				  }
-				: undefined,
+			suite: suiteCase.r_suiteToSuitesCases_c_suite,
 		}));
 	}
 

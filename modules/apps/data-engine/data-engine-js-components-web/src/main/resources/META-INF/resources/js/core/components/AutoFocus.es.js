@@ -34,19 +34,8 @@ export function AutoFocus({children}) {
 				setTimeout(() => setIncrement((value) => value + 1), 5);
 			}
 			else {
-				if (
-					!document.activeElement ||
-					(document.activeElement.querySelector('input') &&
-						document.activeElement.querySelector('input').type ===
-							'hidden')
-				) {
-					const currentPage = childRef.current.closest(
-						'.ddm-form-page'
-					);
-					const firstInput = currentPage.querySelector(
-						'input:first-of-type'
-					);
-
+				if (!document.activeElement) {
+					const firstInput = childRef.current.querySelector('input');
 					const sidebarOpen = document.querySelector(
 						'.ddm-form-builder--sidebar-open'
 					);
@@ -62,10 +51,7 @@ export function AutoFocus({children}) {
 						) &&
 						(sidebarOpen || userViewContent)
 					) {
-						firstInput.focus({
-							behavior: 'instant',
-							preventScroll: false,
-						});
+						firstInput.focus();
 
 						if (firstInput.select) {
 							firstInput.select();

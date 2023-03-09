@@ -338,7 +338,7 @@ public class UpgradeReport {
 	}
 
 	private String _getLogContextSectionKey(String section) {
-		return _LOG_CONTEXT_PREFIX + section;
+		return "upgrade.report." + section;
 	}
 
 	private List<RunningProcess> _getLongestRunningUpgradeProcessesList() {
@@ -468,9 +468,9 @@ public class UpgradeReport {
 		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
 
 		return LinkedHashMapBuilder.<String, Object>put(
-			_PROPERTY_KEY, _getPropertiesInfo()
+			"property", _getPropertiesInfo()
 		).put(
-			_TABLES_KEY + ".initial.final.rows", _getDatabaseTableCounts()
+			"tables.initial.final.rows", _getDatabaseTableCounts()
 		).put(
 			"database.version", _getDialectInfo()
 		).put(
@@ -537,12 +537,12 @@ public class UpgradeReport {
 	}
 
 	private String _getReportHeaderFromKey(String key) {
-		if (key.startsWith(_PROPERTY_KEY)) {
+		if (key.startsWith("property.")) {
 			return StringUtil.replaceFirst(
 				StringUtil.upperCaseFirstLetter(key), '.', ' ');
 		}
 
-		if (key.startsWith(_TABLES_KEY)) {
+		if (key.startsWith("tables.")) {
 			return String.format(
 				TableCounts.FORMAT, "Table Name", "Initial Rows", "Final Rows");
 		}
@@ -781,12 +781,6 @@ public class UpgradeReport {
 		"com.liferay.portal.search.elasticsearch7.internal.sidecar." +
 			"SidecarManager"
 	};
-
-	private static final String _LOG_CONTEXT_PREFIX = "upgrade.report.";
-
-	private static final String _PROPERTY_KEY = "property";
-
-	private static final String _TABLES_KEY = "tables";
 
 	private static final int _UPGRADE_PROCESSES_COUNT = 20;
 

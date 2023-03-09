@@ -17,6 +17,11 @@ package com.liferay.wiki.web.internal.display.context.helper;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,13 +35,16 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
+import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.social.WikiActivityKeys;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -46,6 +54,51 @@ public class WikiSocialActivityHelper {
 
 	public WikiSocialActivityHelper(WikiRequestHelper wikiRequestHelper) {
 		_wikiRequestHelper = wikiRequestHelper;
+	}
+
+	public List<SocialActivity> getApprovedSocialActivities(
+			WikiPage wikiPage, int start, int end)
+		throws PortalException {
+
+		WikiPage latestWikiPage = WikiPageLocalServiceUtil.getLatestPage(
+			wikiPage.getResourcePrimKey(), WorkflowConstants.STATUS_ANY, false);
+
+		if (latestWikiPage.getPageId() == wikiPage.getPageId()) {
+			return SocialActivityLocalServiceUtil.getActivities(
+				0, WikiPage.class.getName(), wikiPage.getResourcePrimKey(),
+				start, end);
+		}
+
+		DynamicQuery dynamicQuery =
+			SocialActivityLocalServiceUtil.dynamicQuery();
+
+		Property classPKProperty = PropertyFactoryUtil.forName("classPK");
+
+		dynamicQuery.add(classPKProperty.eq(wikiPage.getResourcePrimKey()));
+
+		Property extraDataProperty = PropertyFactoryUtil.forName("extraData");
+
+		Property typeProperty = PropertyFactoryUtil.forName("type");
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.or(
+				RestrictionsFactoryUtil.not(
+					extraDataProperty.like(
+						"%version\":" + wikiPage.getVersion() + ",%")),
+				RestrictionsFactoryUtil.not(
+					typeProperty.in(
+						new int[] {
+							SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+							SocialActivityConstants.
+								TYPE_MOVE_ATTACHMENT_TO_TRASH,
+							SocialActivityConstants.
+								TYPE_RESTORE_ATTACHMENT_FROM_TRASH
+						}))));
+
+		dynamicQuery.addOrder(OrderFactoryUtil.desc("createDate"));
+
+		return SocialActivityLocalServiceUtil.dynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	public String getSocialActivityActionJSP(

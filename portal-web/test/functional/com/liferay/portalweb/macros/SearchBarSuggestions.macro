@@ -30,6 +30,11 @@ definition {
 				key_suggestionContributor = ${suggestionContributor},
 				key_suggestionContributorOrder = ${suggestionContributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SELECT");
+
+			AssertTextEquals(
+				key_suggestionContributorOrder = ${suggestionContributorOrder},
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR",
+				value1 = ${suggestionContributor});
 		}
 
 		if (isSet(suggestionContributorBlueprint)) {

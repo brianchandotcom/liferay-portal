@@ -89,18 +89,21 @@ public class DDMFormBuilderContextFactoryHelper {
 	}
 
 	public Map<String, Object> create() {
-		Map<String, Object> context = null;
+		if (_ddmStructure != null) {
+			Map<String, Object> context = _createFormContext(_ddmStructure);
+
+			if (context != null) {
+				return context;
+			}
+		}
 
 		if (_ddmStructureVersion != null) {
-			context = _createFormContext(_ddmStructureVersion);
-		}
+			Map<String, Object> context = _createFormContext(
+				_ddmStructureVersion);
 
-		if (_ddmStructure != null) {
-			context = _createFormContext(_ddmStructure);
-		}
-
-		if (context != null) {
-			return context;
+			if (context != null) {
+				return context;
+			}
 		}
 
 		return _createEmptyStateContext();

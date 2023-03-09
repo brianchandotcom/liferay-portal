@@ -74,17 +74,17 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 		for (Map.Entry<String, DDMFormField> entry :
 				ddmFormFieldsMap.entrySet()) {
 
-			Boolean anyMatch = false;
+			boolean match = false;
 
 			for (String key : values.keySet()) {
 				if (StringUtil.startsWith(key, entry.getKey())) {
-					anyMatch = true;
+					match = true;
 
 					break;
 				}
 			}
 
-			if (anyMatch) {
+			if (match) {
 				continue;
 			}
 

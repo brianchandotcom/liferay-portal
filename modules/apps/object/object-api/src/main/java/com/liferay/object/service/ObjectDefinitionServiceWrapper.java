@@ -62,6 +62,18 @@ public class ObjectDefinitionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectDefinition addSystemObjectDefinition(
+			long userId, java.util.Map<java.util.Locale, String> labelMap,
+			String name, java.util.Map<java.util.Locale, String> pluralLabelMap,
+			String scope,
+			java.util.List<com.liferay.object.model.ObjectField> objectFields)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.addSystemObjectDefinition(
+			userId, labelMap, name, pluralLabelMap, scope, objectFields);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectDefinition deleteObjectDefinition(
 			long objectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -145,6 +157,15 @@ public class ObjectDefinitionServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.publishCustomObjectDefinition(
+			objectDefinitionId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition
+			publishSystemObjectDefinition(long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.publishSystemObjectDefinition(
 			objectDefinitionId);
 	}
 

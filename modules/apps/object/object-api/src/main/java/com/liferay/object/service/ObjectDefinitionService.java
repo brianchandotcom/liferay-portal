@@ -64,6 +64,12 @@ public interface ObjectDefinitionService extends BaseService {
 	public ObjectDefinition addObjectDefinition(String externalReferenceCode)
 		throws PortalException;
 
+	public ObjectDefinition addSystemObjectDefinition(
+			long userId, Map<Locale, String> labelMap, String name,
+			Map<Locale, String> pluralLabelMap, String scope,
+			List<ObjectField> objectFields)
+		throws PortalException;
+
 	public ObjectDefinition deleteObjectDefinition(long objectDefinitionId)
 		throws PortalException;
 
@@ -102,6 +108,10 @@ public interface ObjectDefinitionService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public ObjectDefinition publishCustomObjectDefinition(
+			long objectDefinitionId)
+		throws PortalException;
+
+	public ObjectDefinition publishSystemObjectDefinition(
 			long objectDefinitionId)
 		throws PortalException;
 

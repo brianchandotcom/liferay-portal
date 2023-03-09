@@ -59,6 +59,16 @@ public class ObjectDefinitionServiceUtil {
 		return getService().addObjectDefinition(externalReferenceCode);
 	}
 
+	public static ObjectDefinition addSystemObjectDefinition(
+			long userId, Map<java.util.Locale, String> labelMap, String name,
+			Map<java.util.Locale, String> pluralLabelMap, String scope,
+			List<com.liferay.object.model.ObjectField> objectFields)
+		throws PortalException {
+
+		return getService().addSystemObjectDefinition(
+			userId, labelMap, name, pluralLabelMap, scope, objectFields);
+	}
+
 	public static ObjectDefinition deleteObjectDefinition(
 			long objectDefinitionId)
 		throws PortalException {
@@ -124,6 +134,13 @@ public class ObjectDefinitionServiceUtil {
 		throws PortalException {
 
 		return getService().publishCustomObjectDefinition(objectDefinitionId);
+	}
+
+	public static ObjectDefinition publishSystemObjectDefinition(
+			long objectDefinitionId)
+		throws PortalException {
+
+		return getService().publishSystemObjectDefinition(objectDefinitionId);
 	}
 
 	public static ObjectDefinition updateCustomObjectDefinition(

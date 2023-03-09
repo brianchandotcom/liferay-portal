@@ -460,6 +460,14 @@ public class ObjectDefinitionLocalServiceUtil {
 			userId, objectDefinitionId);
 	}
 
+	public static ObjectDefinition publishSystemObjectDefinition(
+			long userId, long objectDefinitionId)
+		throws PortalException {
+
+		return getService().publishSystemObjectDefinition(
+			userId, objectDefinitionId);
+	}
+
 	public static void undeployObjectDefinition(
 		ObjectDefinition objectDefinition) {
 

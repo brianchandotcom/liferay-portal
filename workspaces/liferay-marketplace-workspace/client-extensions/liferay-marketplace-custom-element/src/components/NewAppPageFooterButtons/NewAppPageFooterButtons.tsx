@@ -1,6 +1,7 @@
 import './NewAppPageFooterButtons.scss';
 
 interface NewAppPageFooterButtonsProps {
+	backButtonText?: string;
 	continueButtonText?: string;
 	disableContinueButton?: boolean;
 	onClickBack?: () => void;
@@ -9,7 +10,8 @@ interface NewAppPageFooterButtonsProps {
 }
 
 export function NewAppPageFooterButtons({
-	continueButtonText = 'Continue',
+	backButtonText,
+	continueButtonText,
 	disableContinueButton,
 	onClickBack,
 	onClickContinue,
@@ -22,7 +24,7 @@ export function NewAppPageFooterButtons({
 					className="new-app-page-footer-button-back"
 					onClick={() => onClickBack && onClickBack()}
 				>
-					Back
+					{backButtonText ?? 'Back'}
 				</button>
 			)}
 
@@ -31,7 +33,7 @@ export function NewAppPageFooterButtons({
 				disabled={disableContinueButton}
 				onClick={() => onClickContinue()}
 			>
-				{continueButtonText}
+				{continueButtonText ?? 'Continue'}
 			</button>
 		</div>
 	);

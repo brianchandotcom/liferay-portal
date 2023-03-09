@@ -29,10 +29,6 @@ import org.dom4j.Node;
 public class ConditionPoshiElement extends ExecutePoshiElement {
 
 	@Override
-	public void checkSemicolon(String poshiScript) {
-	}
-
-	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
 			return new ConditionPoshiElement(element);
@@ -51,6 +47,10 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 		}
 
 		return null;
+	}
+
+	@Override
+	public void validateSemicolon(String poshiScript) {
 	}
 
 	protected ConditionPoshiElement() {

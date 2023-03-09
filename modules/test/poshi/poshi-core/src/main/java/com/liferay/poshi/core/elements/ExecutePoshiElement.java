@@ -68,7 +68,7 @@ public class ExecutePoshiElement extends PoshiElement {
 	public void parsePoshiScript(String poshiScript)
 		throws PoshiScriptParserException {
 
-		checkSemicolon(poshiScript);
+		validateSemicolon(poshiScript);
 
 		String poshiScriptParentheticalContent = getParentheticalContent(
 			poshiScript);

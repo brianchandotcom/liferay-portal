@@ -53,7 +53,7 @@ public class EchoPoshiElement extends PoshiElement {
 	public void parsePoshiScript(String poshiScript)
 		throws PoshiScriptParserException {
 
-		checkSemicolon(poshiScript);
+		validateSemicolon(poshiScript);
 
 		String trimmedPoshiScript = poshiScript.trim();
 

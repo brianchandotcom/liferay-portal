@@ -121,7 +121,7 @@ public class VarPoshiElement extends PoshiElement {
 		throws PoshiScriptParserException {
 
 		if (!(getParent() instanceof ExecutePoshiElement)) {
-			checkSemicolon(poshiScript);
+			validateSemicolon(poshiScript);
 		}
 
 		if (poshiScript.startsWith("static var")) {

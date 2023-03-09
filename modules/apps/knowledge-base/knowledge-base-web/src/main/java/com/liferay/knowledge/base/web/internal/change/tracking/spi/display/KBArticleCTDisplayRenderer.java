@@ -65,10 +65,10 @@ public class KBArticleCTDisplayRenderer
 	}
 
 	@Override
-	public String getTitle(Locale locale, KBArticle model)
+	public String getTitle(Locale locale, KBArticle kbArticle)
 		throws PortalException {
 
-		return model.getTitle();
+		return kbArticle.getTitle();
 	}
 
 	@Override

@@ -36,10 +36,10 @@ public class KBFolderCTDisplayRenderer extends BaseCTDisplayRenderer<KBFolder> {
 	}
 
 	@Override
-	public String getTitle(Locale locale, KBFolder model)
+	public String getTitle(Locale locale, KBFolder kbFolder)
 		throws PortalException {
 
-		return model.getName();
+		return kbFolder.getName();
 	}
 
 	@Override

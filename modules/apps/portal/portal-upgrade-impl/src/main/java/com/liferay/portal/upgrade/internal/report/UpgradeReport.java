@@ -233,12 +233,12 @@ public class UpgradeReport {
 			return null;
 		}
 
+		List<TableCounts> tableCounts = new ArrayList<>();
+
 		List<String> tableNames = new ArrayList<>();
 
 		tableNames.addAll(_initialTableCounts.keySet());
 		tableNames.addAll(finalTableCounts.keySet());
-
-		List<TableCounts> tableCounts = new ArrayList<>();
 
 		ListUtil.distinct(
 			tableNames,
@@ -291,12 +291,9 @@ public class UpgradeReport {
 	private String _getDialectInfo() {
 		DB db = DBManagerUtil.getDB();
 
-		String dbType = String.valueOf(db.getDBType());
-
-		String dbVersion =
-			db.getMajorVersion() + StringPool.PERIOD + db.getMinorVersion();
-
-		return dbType + StringPool.SPACE + dbVersion;
+		return StringBundler.concat(
+			db.getDBType(), StringPool.SPACE, db.getMajorVersion(),
+			StringPool.PERIOD, db.getMinorVersion());
 	}
 
 	private String _getDLStorageInfoNew() {

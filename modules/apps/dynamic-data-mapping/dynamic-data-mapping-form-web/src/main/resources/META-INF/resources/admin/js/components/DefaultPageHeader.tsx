@@ -44,15 +44,10 @@ const DefaultPageHeader: React.FC<IProps> = ({
 				</ClayButton>
 			)}
 			<div className="lfr-ddm__default-page-header">
-				<h1 className="lfr-ddm__default-page-header-title" tabIndex={0}>
-					{title}
-				</h1>
+				<h1 className="lfr-ddm__default-page-header-title">{title}</h1>
 
 				{description && (
-					<span
-						className="lfr-ddm__default-page-header-description"
-						tabIndex={0}
-					>
+					<span className="lfr-ddm__default-page-header-description">
 						{description}
 					</span>
 				)}

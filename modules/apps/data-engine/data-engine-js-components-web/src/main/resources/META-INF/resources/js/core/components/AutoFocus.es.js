@@ -39,33 +39,13 @@ export function AutoFocus({children}) {
 					(!Liferay.ThemeDisplay.isControlPanel() &&
 						document.activeElement.querySelector('input') &&
 						document.activeElement.querySelector('input').type ===
-							'hidden') ||
-					containerElement.current.parentNode.className.includes(
-						'ddm-form-builder-app'
-					)
+							'hidden')
 				) {
-					removeTabs();
-
-					const currentTitle = containerElement?.current.parentNode.getElementsByClassName(
-						'lfr-ddm__default-page-header-title'
-					)[0];
-
-					scrollComponentToTop(currentTitle);
-
-					const componentTitle = currentTitle?.innerHTML;
-
-					const currentDescription = containerElement?.current.parentNode.getElementsByClassName(
-						'.lfr-ddm__default-page-header-description'
-					)[0];
-
-					const componentDescription = currentDescription?.innerHTML;
-
-					const currentPage = document.activeElement.querySelector(
-						'.ddm-layout-builder:not(.hide)'
+					const currentPage = childRef.current.closest(
+						'.ddm-form-page'
 					);
-
-					const firstInput = currentPage?.querySelector(
-						'input:not([type="hidden"])'
+					const firstInput = currentPage.querySelector(
+						'input:first-of-type'
 					);
 
 					const sidebarOpen = document.querySelector(
@@ -76,11 +56,7 @@ export function AutoFocus({children}) {
 						'.ddm-user-view-content'
 					);
 
-					const defaultTitle = Liferay.Language.get('untitled-form');
-
 					if (
-						(!componentTitle || componentTitle === defaultTitle) &&
-						!componentDescription &&
 						firstInput &&
 						!containerElement.current.contains(
 							document.activeElement
@@ -88,7 +64,7 @@ export function AutoFocus({children}) {
 						(sidebarOpen || userViewContent)
 					) {
 						firstInput.focus({
-							behavior: 'smooth',
+							behavior: 'instant',
 							preventScroll: false,
 						});
 
@@ -96,8 +72,6 @@ export function AutoFocus({children}) {
 							firstInput.select();
 						}
 					}
-
-					scrollComponentToTop(currentTitle);
 				}
 			}
 		}
@@ -108,32 +82,4 @@ export function AutoFocus({children}) {
 			childRef.current = node;
 		},
 	});
-}
-
-function scrollComponentToTop(currentTitle) {
-	const containerPosition = currentTitle.getBoundingClientRect();
-
-	const menuSize = document.querySelector('.control-menu-container')
-		?.clientHeight;
-
-	window.scroll(
-		containerPosition.x - menuSize,
-		containerPosition.y - menuSize
-	);
-}
-
-function removeTabs() {
-	const firstPageComponent = document.querySelector(
-		'div[class^="lfr-layout-structure-item'
-	);
-
-	const formPortlet = firstPageComponent?.querySelector('.portlet-forms');
-
-	if (!formPortlet) {
-		document
-			.querySelectorAll(
-				'.lfr-ddm__default-page-header-title,.lfr-ddm__default-page-header-description,.lfr-ddm-form-page-title,.lfr-ddm-form-page-description'
-			)
-			?.forEach((element) => element.removeAttribute('tabindex'));
-	}
 }

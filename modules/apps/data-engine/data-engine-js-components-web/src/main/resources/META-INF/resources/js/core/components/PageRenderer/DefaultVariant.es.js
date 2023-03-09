@@ -148,15 +148,9 @@ Page.displayName = 'DefaultVariant.Page';
 export function PageHeader({description, title}) {
 	return (
 		<>
-			{title && (
-				<h2 className="lfr-ddm-form-page-title" tabIndex={0}>
-					{title}
-				</h2>
-			)}
+			{title && <h2 className="lfr-ddm-form-page-title">{title}</h2>}
 			{description && (
-				<h3 className="lfr-ddm-form-page-description" tabIndex={0}>
-					{description}
-				</h3>
+				<h3 className="lfr-ddm-form-page-description">{description}</h3>
 			)}
 		</>
 	);

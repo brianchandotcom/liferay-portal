@@ -51,12 +51,12 @@ public class BatchEngineExportTaskItemWriterBuilder {
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
 			return new JSONBatchEngineExportTaskItemWriterImpl(
-				fieldsMap.keySet(), _fieldNames, _outputStream);
+				_fieldNames, _outputStream);
 		}
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
 			return new JSONLBatchEngineExportTaskItemWriterImpl(
-				fieldsMap.keySet(), _fieldNames, _outputStream);
+				_fieldNames, _outputStream);
 		}
 
 		if ((_batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
@@ -83,8 +83,7 @@ public class BatchEngineExportTaskItemWriterBuilder {
 			batchEngineUnitConfiguration.setParameters(_parameters);
 
 			return new JSONTBatchEngineExportTaskItemWriterImpl(
-				fieldsMap.keySet(), batchEngineUnitConfiguration, _fieldNames,
-				_outputStream);
+				batchEngineUnitConfiguration, _fieldNames, _outputStream);
 		}
 
 		throw new IllegalArgumentException(

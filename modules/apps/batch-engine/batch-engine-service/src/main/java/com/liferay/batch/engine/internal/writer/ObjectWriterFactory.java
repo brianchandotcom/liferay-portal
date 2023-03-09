@@ -24,16 +24,13 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Ivica Cardic
  */
 public class ObjectWriterFactory {
 
-	public static ObjectWriter getObjectWriter(
-		Set<String> allFieldNames, List<String> includeFieldNames) {
-
+	public static ObjectWriter getObjectWriter(List<String> includeFieldNames) {
 		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
 
 		if (includeFieldNames.isEmpty()) {

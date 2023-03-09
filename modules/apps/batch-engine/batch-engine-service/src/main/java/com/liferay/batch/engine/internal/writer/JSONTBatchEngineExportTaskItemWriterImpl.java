@@ -26,7 +26,6 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Igor Beslic
@@ -35,13 +34,11 @@ public class JSONTBatchEngineExportTaskItemWriterImpl
 	implements BatchEngineExportTaskItemWriter {
 
 	public JSONTBatchEngineExportTaskItemWriterImpl(
-			Set<String> allFieldNames,
 			BatchEngineUnitConfiguration batchEngineUnitConfiguration,
 			List<String> includeFieldNames, OutputStream outputStream)
 		throws IOException {
 
-		_objectWriter = ObjectWriterFactory.getObjectWriter(
-			allFieldNames, includeFieldNames);
+		_objectWriter = ObjectWriterFactory.getObjectWriter(includeFieldNames);
 
 		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
 

@@ -124,8 +124,8 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 		try (JSONTBatchEngineExportTaskItemWriterImpl
 				jsontBatchEngineExportTaskItemWriterImpl =
 					new JSONTBatchEngineExportTaskItemWriterImpl(
-						fieldsMap.keySet(), batchEngineUnitConfiguration,
-						fieldNames, unsyncByteArrayOutputStream)) {
+						batchEngineUnitConfiguration, fieldNames,
+						unsyncByteArrayOutputStream)) {
 
 			for (Item[] items : getItemGroups()) {
 				jsontBatchEngineExportTaskItemWriterImpl.write(

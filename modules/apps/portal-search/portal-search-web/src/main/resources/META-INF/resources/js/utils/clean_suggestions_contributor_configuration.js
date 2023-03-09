@@ -21,6 +21,7 @@ import {CONTRIBUTOR_TYPES} from './types/contributorTypes';
  * are not supported.
  * @param {string} suggestionsContributorConfiguration Stringified array of
  * suggestion contributor configurations.
+ * @param {boolean} isDXP
  * @param {boolean} isSearchExperiencesSupported
  * @return {Array} The cleaned up list of suggestion contributor configurations.
  */

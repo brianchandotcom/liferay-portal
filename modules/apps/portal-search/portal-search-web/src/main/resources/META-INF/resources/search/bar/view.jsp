@@ -30,6 +30,7 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.ReleaseInfo" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortlet" %><%@
@@ -89,6 +90,8 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 										"destinationFriendlyURL", searchBarPortletDisplayContext.getDestinationFriendlyURL()
 									).put(
 										"emptySearchEnabled", searchBarPortletDisplayContext.isEmptySearchEnabled()
+									).put(
+										"isDXP", ReleaseInfo.isDXP()
 									).put(
 										"isSearchExperiencesSupported", searchBarPortletDisplayContext.isSearchExperiencesSupported()
 									).put(

@@ -28,6 +28,7 @@ import cleanSuggestionsContributorConfiguration from '../utils/clean_suggestions
 export default function SearchBar({
 	destinationFriendlyURL,
 	emptySearchEnabled,
+	isDXP = true,
 	isSearchExperiencesSupported = true,
 	keywords = '',
 	keywordsParameterName = 'q',
@@ -72,6 +73,7 @@ export default function SearchBar({
 	const _getLowestSuggestionsDisplayThreshold = useCallback(() => {
 		const characterThresholdArray = cleanSuggestionsContributorConfiguration(
 			suggestionsContributorConfiguration,
+			isDXP,
 			isSearchExperiencesSupported
 		).map((config) =>
 			config.attributes?.characterThreshold
@@ -81,9 +83,10 @@ export default function SearchBar({
 
 		return Math.min(...characterThresholdArray);
 	}, [
+		isDXP,
+		isSearchExperiencesSupported,
 		suggestionsContributorConfiguration,
 		suggestionsDisplayThreshold,
-		isSearchExperiencesSupported,
 	]);
 
 	/**
@@ -95,10 +98,15 @@ export default function SearchBar({
 			JSON.stringify(
 				cleanSuggestionsContributorConfiguration(
 					suggestionsContributorConfiguration,
+					isDXP,
 					isSearchExperiencesSupported
 				)
 			),
-		[isSearchExperiencesSupported, suggestionsContributorConfiguration]
+		[
+			isDXP,
+			isSearchExperiencesSupported,
+			suggestionsContributorConfiguration,
+		]
 	);
 
 	const _fetchSuggestions = (searchValue, scopeValue) => {

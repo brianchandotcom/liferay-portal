@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Files;
-
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -137,7 +137,8 @@ public class BuildDatabaseUtil {
 				try {
 					Files.copy(
 						buildDatabaseFile.toPath(),
-						defaultBuildDatabaseFile.toPath());
+						defaultBuildDatabaseFile.toPath(),
+						StandardCopyOption.REPLACE_EXISTING);
 				}
 				catch (IOException ioException) {
 					throw new RuntimeException(ioException);

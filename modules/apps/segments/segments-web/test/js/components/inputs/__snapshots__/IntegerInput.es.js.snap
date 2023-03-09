@@ -3,6 +3,7 @@
 exports[`IntegerInput renders type integer number 1`] = `
 <DocumentFragment>
   <input
+    aria-label="undefined: input-a-value"
     class="criterion-input form-control"
     data-testid="integer-number"
     type="number"

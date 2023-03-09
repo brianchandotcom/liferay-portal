@@ -22,12 +22,14 @@ interface Props {
 		label: string;
 		value: string;
 	}>;
+	propertyLabel?: string;
 	value?: number | string;
 }
 declare function IntegerInput({
 	disabled,
 	onChange,
 	options,
+	propertyLabel,
 	value,
 }: Props): JSX.Element;
 export default IntegerInput;

@@ -19,15 +19,6 @@
 <%
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
-
-Theme selTheme = null;
-
-if (selLayout != null) {
-	selTheme = selLayout.getTheme();
-}
-else {
-	selTheme = selLayoutSet.getTheme();
-}
 %>
 
 <p class="h4 mb-3 mt-3"><liferay-ui:message key="current-theme" /></p>
@@ -37,31 +28,3 @@ else {
 </div>
 
 <aui:input label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" placeholder="css" type="textarea" value="<%= (selLayout != null) ? selLayout.getCssText() : selLayoutSet.getCss() %>" />
-
-<aui:button id="changeTheme" value="change-current-theme" />
-
-<portlet:renderURL var="selectThemeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/select_theme.jsp" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:renderURL>
-
-<portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="lookAndFeelDetailURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcPath" value="/look_and_feel_theme_details.jsp" />
-</portlet:renderURL>
-
-<liferay-frontend:component
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"changeThemeButtonId", liferayPortletResponse.getNamespace() + "changeTheme"
-		).put(
-			"initialSelectedThemeId", selTheme.getThemeId()
-		).put(
-			"lookAndFeelDetailURL", lookAndFeelDetailURL
-		).put(
-			"selectThemeURL", selectThemeURL
-		).put(
-			"themeContainerId", liferayPortletResponse.getNamespace() + "currentThemeContainer"
-		).build()
-	%>'
-	module="js/LookAndFeelThemeEdit"
-/>

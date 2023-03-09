@@ -64,32 +64,133 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 		size="6"
 		sm="4"
 	>
-		<div class="card card-type-asset image-card">
-			<div class="aspect-ratio card-item-first card-item-last">
-				<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" />
-			</div>
-		</div>
+		<clay:image-card
+			imageAlt='<%= Validator.isNotNull(selTheme.getName()) ? HtmlUtil.escapeAttribute(selTheme.getName()) : "" %>'
+			imageSrc='<%= themeDisplay.getCDNBaseURL() + HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) + HtmlUtil.escapeAttribute(selTheme.getImagesPath()) + "/thumbnail.png" %>'
+			subtitle='<%= ((selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor())) ? HtmlUtil.escape(selPluginPackage.getAuthor()) : "" %>'
+			title='<%= Validator.isNotNull(selTheme.getName()) ? HtmlUtil.escapeAttribute(selTheme.getName()) : "" %>'
+		/>
 	</clay:col>
 
 	<clay:col
 		size="6"
 		sm="8"
 	>
-		<c:if test="<%= Validator.isNotNull(selTheme.getName()) %>">
-			<h2 class="h4"><liferay-ui:message key="name" /></h2>
 
-			<p class="text-default">
-				<%= HtmlUtil.escape(selTheme.getName()) %>
-			</p>
+		<%
+		Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSettings();
+		%>
+
+		<c:if test="<%= !configurableSettings.isEmpty() %>">
+			<h2 class="h4"><liferay-ui:message key="settings" /></h2>
+
+			<%
+			ServletContext servletContext = ServletContextPool.get(selTheme.getServletContextName());
+
+			ResourceBundle selThemeResourceBundle = ResourceBundleUtil.getBundle("content.Language", servletContext.getClassLoader());
+
+			ResourceBundle aggregateResourceBundle = new AggregateResourceBundle(resourceBundle, selThemeResourceBundle);
+
+			for (Map.Entry<String, ThemeSetting> entry : configurableSettings.entrySet()) {
+				String name = LanguageUtil.get(aggregateResourceBundle, entry.getKey());
+
+				ThemeSetting themeSetting = entry.getValue();
+
+				String type = GetterUtil.getString(themeSetting.getType(), "text");
+
+				String value = StringPool.BLANK;
+
+				if (useDefaultThemeSettings) {
+					value = selTheme.getSetting(entry.getKey());
+				}
+				else {
+					if (selLayout != null) {
+						value = selLayout.getThemeSetting(entry.getKey(), "regular");
+					}
+					else {
+						value = selLayoutSet.getThemeSetting(entry.getKey(), "regular");
+					}
+				}
+
+				String propertyName = HtmlUtil.escapeAttribute("regularThemeSettingsProperties--" + entry.getKey() + StringPool.DOUBLE_DASH);
+			%>
+
+				<c:choose>
+					<c:when test='<%= type.equals("checkbox") %>'>
+						<div>
+							<react:component
+								module="js/layout/look_and_feel/SelectCustomThemeSettings"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"label", HtmlUtil.escape(name)
+									).put(
+										"propertyName", propertyName
+									).put(
+										"value", value
+									).build()
+								%>'
+							/>
+						</div>
+					</c:when>
+					<c:when test='<%= type.equals("text") || type.equals("textarea") %>'>
+						<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />
+					</c:when>
+					<c:when test='<%= type.equals("select") %>'>
+						<aui:select label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>">
+
+							<%
+							for (String option : themeSetting.getOptions()) {
+							%>
+
+								<aui:option label="<%= HtmlUtil.escape(option) %>" selected="<%= option.equals(value) %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</c:when>
+				</c:choose>
+
+				<c:if test="<%= Validator.isNotNull(themeSetting.getScript()) %>">
+					<aui:script position="inline">
+						<%= StringUtil.replace(themeSetting.getScript(), "[@NAMESPACE@]", liferayPortletResponse.getNamespace()) %>;
+					</aui:script>
+				</c:if>
+
+			<%
+			}
+			%>
+
 		</c:if>
 
-		<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor()) %>">
-			<h2 class="h4"><liferay-ui:message key="author" /></h2>
+		<aui:button id="changeTheme" value="change-current-theme" />
 
-			<p class="text-default">
-				<aui:a href="<%= HtmlUtil.escapeHREF(selPluginPackage.getPageURL()) %>" target="_blank"><%= HtmlUtil.escape(selPluginPackage.getAuthor()) %></aui:a>
-			</p>
-		</c:if>
+		<portlet:renderURL var="selectThemeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcPath" value="/select_theme.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:renderURL>
+
+		<portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="lookAndFeelDetailURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+			<portlet:param name="mvcPath" value="/look_and_feel_theme_details.jsp" />
+		</portlet:renderURL>
+
+		<liferay-frontend:component
+			context='<%=
+				HashMapBuilder.<String, Object>put(
+					"changeThemeButtonId", liferayPortletResponse.getNamespace() + "changeTheme"
+				).put(
+					"initialSelectedThemeId", selTheme.getThemeId()
+				).put(
+					"lookAndFeelDetailURL", lookAndFeelDetailURL
+				).put(
+					"selectThemeURL", selectThemeURL
+				).put(
+					"themeContainerId", liferayPortletResponse.getNamespace() + "currentThemeContainer"
+				).build()
+			%>'
+			module="js/LookAndFeelThemeEdit"
+		/>
 	</clay:col>
 </clay:row>
 
@@ -143,80 +244,6 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 
 		</clay:row>
 	</div>
-</c:if>
-
-<%
-Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSettings();
-%>
-
-<c:if test="<%= !configurableSettings.isEmpty() %>">
-	<h2 class="h4"><liferay-ui:message key="settings" /></h2>
-
-	<%
-	ServletContext servletContext = ServletContextPool.get(selTheme.getServletContextName());
-
-	ResourceBundle selThemeResourceBundle = ResourceBundleUtil.getBundle("content.Language", servletContext.getClassLoader());
-
-	ResourceBundle aggregateResourceBundle = new AggregateResourceBundle(resourceBundle, selThemeResourceBundle);
-
-	for (Map.Entry<String, ThemeSetting> entry : configurableSettings.entrySet()) {
-		String name = LanguageUtil.get(aggregateResourceBundle, entry.getKey());
-
-		ThemeSetting themeSetting = entry.getValue();
-
-		String type = GetterUtil.getString(themeSetting.getType(), "text");
-
-		String value = StringPool.BLANK;
-
-		if (useDefaultThemeSettings) {
-			value = selTheme.getSetting(entry.getKey());
-		}
-		else {
-			if (selLayout != null) {
-				value = selLayout.getThemeSetting(entry.getKey(), "regular");
-			}
-			else {
-				value = selLayoutSet.getThemeSetting(entry.getKey(), "regular");
-			}
-		}
-
-		String propertyName = HtmlUtil.escapeAttribute("regularThemeSettingsProperties--" + entry.getKey() + StringPool.DOUBLE_DASH);
-	%>
-
-		<c:choose>
-			<c:when test='<%= type.equals("checkbox") %>'>
-				<aui:input inlineLabel="right" label="<%= HtmlUtil.escape(name) %>" labelCssClass="simple-toggle-switch" name="<%= propertyName %>" type="toggle-switch" value="<%= value %>" />
-			</c:when>
-			<c:when test='<%= type.equals("text") || type.equals("textarea") %>'>
-				<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />
-			</c:when>
-			<c:when test='<%= type.equals("select") %>'>
-				<aui:select label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>">
-
-					<%
-					for (String option : themeSetting.getOptions()) {
-					%>
-
-						<aui:option label="<%= HtmlUtil.escape(option) %>" selected="<%= option.equals(value) %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
-			</c:when>
-		</c:choose>
-
-		<c:if test="<%= Validator.isNotNull(themeSetting.getScript()) %>">
-			<aui:script position="inline">
-				<%= StringUtil.replace(themeSetting.getScript(), "[@NAMESPACE@]", liferayPortletResponse.getNamespace()) %>;
-			</aui:script>
-		</c:if>
-
-	<%
-	}
-	%>
-
 </c:if>
 
 <c:if test="<%= !colorSchemes.isEmpty() %>">

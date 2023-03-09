@@ -53,9 +53,7 @@ public class GridDDMFormFieldValueRequestParameterRetriever
 		}
 
 		if (parameterValues.length == 1) {
-			if (getJSONObject(_log, parameterValues[0]) != null) {
-				jsonObject = getJSONObject(_log, parameterValues[0]);
-			}
+			jsonObject = getJSONObject(_log, parameterValues[0]);
 		}
 
 		for (String parameterValue : parameterValues) {

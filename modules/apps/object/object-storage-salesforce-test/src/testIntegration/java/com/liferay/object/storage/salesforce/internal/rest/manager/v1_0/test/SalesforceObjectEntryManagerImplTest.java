@@ -138,8 +138,9 @@ public class SalesforceObjectEntryManagerImplTest {
 		_objectFieldLocalService.updateCustomObjectField(
 			"Title__c", objectField.getObjectFieldId(), 0,
 			objectField.getBusinessType(), objectField.getDBType(), null, false,
-			false, null, objectField.getLabelMap(), objectField.getName(),
-			false, false, objectField.getObjectFieldSettings());
+			false, null, objectField.getLabelMap(), false,
+			objectField.getName(), false, false,
+			objectField.getObjectFieldSettings());
 
 		_objectDefinition.setExternalReferenceCode("Ticket__c");
 		_objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());

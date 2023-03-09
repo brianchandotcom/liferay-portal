@@ -960,7 +960,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 			ObjectFieldConstants.DB_TYPE_LONG, null, true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), false, false,
+			false, StringUtil.randomId(), false, false,
 			Arrays.asList(
 				_createObjectFieldSetting("acceptedFileExtensions", "jpg"),
 				_createObjectFieldSetting("fileSource", "documentsAndMedia"),
@@ -980,7 +980,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), false, false,
+			false, StringUtil.randomId(), false, false,
 			_getObjectFieldSettings("Text"));
 
 		Assert.assertNull(
@@ -998,7 +998,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), false, false,
+			false, StringUtil.randomId(), false, false,
 			Arrays.asList(
 				_createObjectFieldSetting("maxLength", "10"),
 				_createObjectFieldSetting("showCounter", "true")));
@@ -1013,7 +1013,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), false, false,
+			false, StringUtil.randomId(), false, false,
 			Collections.singletonList(
 				_createObjectFieldSetting("showCounter", "false")));
 
@@ -1148,7 +1148,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER, StringPool.BLANK, false, true,
 			StringPool.BLANK, LocalizedMapUtil.getLocalizedMap("charlie"),
-			"charlie", false, false,
+			false, "charlie", false, false,
 			_getObjectFieldSettings(ObjectFieldConstants.BUSINESS_TYPE_TEXT));
 
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
@@ -1394,6 +1394,7 @@ public class ObjectFieldLocalServiceTest {
 				expectedObjectField.isIndexedAsKeyword(),
 				expectedObjectField.getIndexedLanguageId(),
 				expectedObjectField.getLabelMap(),
+				expectedObjectField.isLocalized(),
 				expectedObjectField.getName(), expectedObjectField.isRequired(),
 				expectedObjectField.isState(),
 				expectedObjectField.getObjectFieldSettings());
@@ -1462,8 +1463,8 @@ public class ObjectFieldLocalServiceTest {
 				objectField.getDefaultValue(), objectField.isIndexed(),
 				objectField.isIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(), objectField.getLabelMap(),
-				"able", objectField.isRequired(), objectField.isState(),
-				Collections.emptyList());
+				objectField.isLocalized(), "able", objectField.isRequired(),
+				objectField.isState(), Collections.emptyList());
 
 			Assert.fail();
 		}

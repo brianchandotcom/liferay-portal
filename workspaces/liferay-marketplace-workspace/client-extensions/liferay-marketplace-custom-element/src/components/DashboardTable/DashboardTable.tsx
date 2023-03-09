@@ -21,15 +21,15 @@ export type AppProps = {
 interface DashboardTableProps {
 	apps: AppProps[];
 	emptyStateMessage: {
-		description1: string,
-		description2: string,
-		title: string
+		description1: string;
+		description2: string;
+		title: string;
 	};
 }
 
 export function DashboardTable({apps, emptyStateMessage}: DashboardTableProps) {
 	const {description1, description2, title} = emptyStateMessage;
-	
+
 	if (!apps.length) {
 		return (
 			<DashboardEmptyTable

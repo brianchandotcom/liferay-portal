@@ -15,16 +15,16 @@ import {initialDashboardNavigationItems} from './DashboardPageUtil';
 import './DashboardPage.scss';
 
 type DashBoardPageProps = {
-	buttonMessage: string, 
+	buttonMessage: string;
 	messages: {
 		description: string;
 		emptyStateMessage: {
-			description1: string,
-			description2: string,
-			title: string
-		},
+			description1: string;
+			description2: string;
+			title: string;
+		};
 		title: string;
-	}
+	};
 };
 
 export function DashboardPage({buttonMessage, messages}: DashBoardPageProps) {
@@ -81,7 +81,10 @@ export function DashboardPage({buttonMessage, messages}: DashBoardPageProps) {
 								</a>
 							</div>
 
-							<DashboardTable apps={apps} emptyStateMessage={messages.emptyStateMessage}/>
+							<DashboardTable
+								apps={apps}
+								emptyStateMessage={messages.emptyStateMessage}
+							/>
 						</div>
 					)}
 				</div>

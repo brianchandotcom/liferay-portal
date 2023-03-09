@@ -15,7 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useRef} from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
@@ -23,6 +23,8 @@ import {config} from '../../../app/config/index';
 import {useSessionState} from '../../../common/hooks/useSessionState';
 import useKeyboardNavigation from '../hooks/useKeyboardNavigation';
 import TabItem from './TabItem';
+
+const HIGHLIGHTED_COLLECTION_ID = 'highlighted';
 
 export default function TabCollection({
 	collection,
@@ -35,8 +37,30 @@ export default function TabCollection({
 		initialOpen
 	);
 
+	const onRemoveHighlighted = (itemIndex) => {
+		if (collection.collectionId !== HIGHLIGHTED_COLLECTION_ID) {
+			return;
+		}
+
+		const items = collapseRef.current?.querySelectorAll('li');
+
+		if (items.length === 1) {
+			const nextCollapse = collapseRef.current.nextSibling;
+			const nextHeader = nextCollapse.querySelector('button');
+
+			nextHeader.focus();
+		}
+
+		const nextIndex = itemIndex === 0 ? 1 : itemIndex - 1;
+
+		items[nextIndex]?.focus();
+	};
+
+	const collapseRef = useRef();
+
 	return (
 		<TabCollectionCollapse
+			collapseRef={collapseRef}
 			open={open || isSearchResult}
 			setOpen={setOpen}
 			title={collection.label}
@@ -57,12 +81,15 @@ export default function TabCollection({
 				className={`list-unstyled page-editor__fragments-widgets__tab-collection-${displayStyle} pb-2 w-100`}
 				role="menu"
 			>
-				{collection.children.map((item) => (
+				{collection.children.map((item, index) => (
 					<React.Fragment key={item.itemId}>
 						<TabItem
 							displayStyle={displayStyle}
 							item={item}
 							key={item.itemId}
+							onRemoveHighlighted={() =>
+								onRemoveHighlighted(index)
+							}
 						/>
 
 						{item.portletItems?.length && (
@@ -110,7 +137,7 @@ TabPortletItems.proptypes = {
 	type: PropTypes.string,
 };
 
-function TabCollectionCollapse({children, open, setOpen, title}) {
+function TabCollectionCollapse({children, collapseRef, open, setOpen, title}) {
 	const handleOpen = (nextOpen) => {
 		setOpen(nextOpen);
 	};
@@ -123,6 +150,7 @@ function TabCollectionCollapse({children, open, setOpen, title}) {
 	return (
 		<li
 			className="page-editor__collapse panel-group panel-group-flush"
+			ref={collapseRef}
 			role="none"
 		>
 			<button

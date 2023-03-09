@@ -76,6 +76,22 @@ public class ObjectDefinitionServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition addSystemObjectDefinition(
+			long userId, Map<Locale, String> labelMap, String name,
+			Map<Locale, String> pluralLabelMap, String scope,
+			List<ObjectField> objectFields)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			ObjectActionKeys.ADD_OBJECT_DEFINITION);
+
+		return objectDefinitionLocalService.addSystemObjectDefinition(
+			userId, null, null, labelMap, true, name, null, null,
+			pluralLabelMap, scope, null, 1, objectFields);
+	}
+
+	@Override
 	public ObjectDefinition deleteObjectDefinition(long objectDefinitionId)
 		throws PortalException {
 

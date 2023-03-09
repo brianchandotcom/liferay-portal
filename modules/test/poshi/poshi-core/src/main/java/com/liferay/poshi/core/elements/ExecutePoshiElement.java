@@ -413,6 +413,16 @@ public class ExecutePoshiElement extends PoshiElement {
 
 	@Override
 	protected Pattern getStatementPattern() {
+		String poshiScript = getPoshiScript();
+
+		poshiScript = poshiScript.trim();
+
+		if (poshiScript.startsWith("var") &&
+			isVarAssignedToMacroInvocation(getPoshiScript())) {
+
+			return varInvocationAssignmentStatementPattern;
+		}
+
 		return _statementPattern;
 	}
 
@@ -426,7 +436,8 @@ public class ExecutePoshiElement extends PoshiElement {
 		}
 
 		if ((isVarAssignedToMacroInvocation(poshiScript) ||
-			 isValidPoshiScriptStatement(_statementPattern, poshiScript)) &&
+			 isValidPoshiScriptStatement(
+				 _partialStatementPattern, poshiScript)) &&
 			!isValidPoshiScriptStatement(
 				_utilityInvocationStatementPattern, poshiScript)) {
 
@@ -440,6 +451,9 @@ public class ExecutePoshiElement extends PoshiElement {
 
 	private static final String _FUNCTION_PARAMETER_REGEX =
 		QUOTED_REGEX + "|\\$\\{\\S+\\}|\\d*";
+
+	private static final String _INVOCATION_REGEX =
+		INVOCATION_START_REGEX + "\\(.*?\\)(;|)";
 
 	private static final String _UNQUOTED_PARAMETER_REGEX =
 		"\\w*\\s*=\\s\"(\\$\\{[\\w_-]+\\}|\\d+)\"";
@@ -456,9 +470,11 @@ public class ExecutePoshiElement extends PoshiElement {
 		"locator1", "locator2", "value1", "value2", "value3");
 	private static final Pattern _functionParameterPattern = Pattern.compile(
 		_FUNCTION_PARAMETER_REGEX);
+	private static final Pattern _partialStatementPattern = Pattern.compile(
+		"^" + INVOCATION_REGEX + VAR_STATEMENT_END_REGEX, Pattern.DOTALL);
 	private static final Pattern _statementPattern = Pattern.compile(
-		"^" + INVOCATION_REGEX, Pattern.DOTALL);
+		"^" + _INVOCATION_REGEX, Pattern.DOTALL);
 	private static final Pattern _utilityInvocationStatementPattern =
-		Pattern.compile("^" + _UTILITY_INVOCATION_REGEX + STATEMENT_END_REGEX);
+		Pattern.compile("^" + _UTILITY_INVOCATION_REGEX);
 
 }

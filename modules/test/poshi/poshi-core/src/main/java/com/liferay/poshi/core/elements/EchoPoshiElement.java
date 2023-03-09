@@ -155,14 +155,17 @@ public class EchoPoshiElement extends PoshiElement {
 	}
 
 	private boolean _isElementType(String poshiScript) {
-		return isValidPoshiScriptStatement(_statementPattern, poshiScript);
+		return isValidPoshiScriptStatement(
+			_partialStatementPattern, poshiScript);
 	}
 
 	private static final String _ELEMENT_NAME = "echo";
 
 	private static final String _POSHI_SCRIPT_KEYWORD = _ELEMENT_NAME;
 
-	private static final Pattern _statementPattern = Pattern.compile(
+	private static final Pattern _partialStatementPattern = Pattern.compile(
 		"^" + _POSHI_SCRIPT_KEYWORD + PARAMETER_REGEX);
+	private static final Pattern _statementPattern = Pattern.compile(
+		"^" + _POSHI_SCRIPT_KEYWORD + PARAMETER_REGEX + "(;|)$");
 
 }

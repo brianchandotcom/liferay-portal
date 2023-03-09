@@ -71,6 +71,11 @@ public class PropertyPoshiElement extends VarPoshiElement {
 		super(_ELEMENT_NAME, parentPoshiElement, poshiScript);
 	}
 
+	@Override
+	protected Pattern getStatementPattern() {
+		return _statementPattern;
+	}
+
 	private boolean _isElementType(String poshiScript) {
 		return isValidPoshiScriptStatement(_statementPattern, poshiScript);
 	}

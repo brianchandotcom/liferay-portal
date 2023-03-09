@@ -984,7 +984,7 @@ public abstract class PoshiElement
 		String value = getValueFromAssignment(poshiScript);
 
 		if (isValidPoshiScriptStatement(
-				_varInvocationAssignmentStatementPattern, poshiScript) &&
+				varInvocationAssignmentStatementPattern, poshiScript) &&
 			isValidMacroFileName(value)) {
 
 			return true;
@@ -1097,6 +1097,8 @@ public abstract class PoshiElement
 
 	protected static final String INVOCATION_REGEX;
 
+	protected static final String INVOCATION_START_REGEX = "[\\s]*[\\w\\.]*";
+
 	protected static final String NONQUOTED_REGEX = "(\\$\\{.*\\}|\\d+)";
 
 	protected static final String PARAMETER_REGEX = "\\(.*\\)";
@@ -1116,6 +1118,16 @@ public abstract class PoshiElement
 			Pattern.DOTALL);
 	protected static final Pattern poshiScriptBlockPattern = Pattern.compile(
 		"^[^{]*\\{[\\s\\S]*\\}$");
+	protected static final Pattern varInvocationAssignmentStatementPattern;
+
+	static {
+		INVOCATION_REGEX = INVOCATION_START_REGEX + PARAMETER_REGEX;
+
+		varInvocationAssignmentStatementPattern = Pattern.compile(
+			"^" + VAR_NAME_REGEX + ASSIGNMENT_REGEX + INVOCATION_REGEX +
+				VAR_STATEMENT_END_REGEX,
+			Pattern.DOTALL);
+	}
 
 	private void _addAttributes(Element element) {
 		for (Attribute attribute :
@@ -1189,18 +1201,8 @@ public abstract class PoshiElement
 		"(\\|{2}|\\&{2})");
 	private static final Pattern _poshiScriptCommentPattern = Pattern.compile(
 		"^[\\s]*(\\/\\/.*?(\\n|$)|\\/\\*.*?\\*\\/)", Pattern.DOTALL);
-	private static final Pattern _varInvocationAssignmentStatementPattern;
 	private static final Pattern _varNamePattern = Pattern.compile(
 		VAR_NAME_REGEX);
-
-	static {
-		INVOCATION_REGEX = "[\\s]*[\\w\\.]*" + PARAMETER_REGEX;
-
-		_varInvocationAssignmentStatementPattern = Pattern.compile(
-			"^" + VAR_NAME_REGEX + ASSIGNMENT_REGEX + INVOCATION_REGEX +
-				VAR_STATEMENT_END_REGEX,
-			Pattern.DOTALL);
-	}
 
 	private String _poshiScript;
 

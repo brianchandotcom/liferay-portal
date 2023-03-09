@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -89,6 +90,7 @@ import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -136,6 +138,7 @@ import java.net.UnknownHostException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -1360,7 +1363,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			userActionableDynamicQuery.setCompanyId(companyId);
 			userActionableDynamicQuery.setPerformActionMethod(
 				(User user) -> {
-					if (!user.isDefaultUser()) {
+					if (!(user.isDefaultUser() && user.isRegularUser())) {
 						_userLocalService.deleteUser(user.getUserId());
 					}
 				});
@@ -1807,6 +1810,31 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	}
 
+	private User _addDefaultServiceAccountUser(Company company)
+		throws PortalException {
+
+		Role adminRole = _roleLocalService.getRole(
+			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		String userName = "default-service-account";
+
+		User defaultServiceAccountUser = _userLocalService.addUser(
+			UserConstants.USER_ID_DEFAULT, company.getCompanyId(), false,
+			PropsValues.DEFAULT_ADMIN_PASSWORD,
+			PropsValues.DEFAULT_ADMIN_PASSWORD, false, userName,
+			userName + StringPool.AT + company.getMx(),
+			LocaleUtil.fromLanguageId(PropsValues.COMPANY_DEFAULT_LOCALE),
+			userName, StringPool.BLANK, userName, 0, 0, true, Calendar.JANUARY,
+			1, 1970, StringPool.BLANK, UserConstants.TYPE_SERVICE_ACCOUNT, null,
+			null, new long[] {adminRole.getRoleId()}, null, false,
+			new ServiceContext());
+
+		defaultServiceAccountUser.setDefaultUser(true);
+		defaultServiceAccountUser.setEmailAddressVerified(true);
+
+		return _userLocalService.updateUser(defaultServiceAccountUser);
+	}
+
 	private User _addDefaultUser(Company company) throws PortalException {
 		Date date = new Date();
 
@@ -1840,6 +1868,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		defaultUser.setLoginDate(date);
 		defaultUser.setFailedLoginAttempts(0);
 		defaultUser.setAgreedToTermsOfUse(true);
+		defaultUser.setType(UserConstants.TYPE_USER);
 		defaultUser.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		// Invoke updateImpl so that we do not trigger model listeners. See
@@ -1925,8 +1954,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			// Default user
 
-			User defaultUser = _userPersistence.fetchByC_DU(
-				company.getCompanyId(), true);
+			User defaultUser = _userPersistence.fetchByC_DU_T(
+				company.getCompanyId(), true, UserConstants.TYPE_USER);
 
 			if (defaultUser != null) {
 				if (!defaultUser.isAgreedToTermsOfUse()) {
@@ -1979,6 +2008,16 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					PropsValues.DEFAULT_ADMIN_FIRST_NAME,
 					PropsValues.DEFAULT_ADMIN_MIDDLE_NAME,
 					PropsValues.DEFAULT_ADMIN_LAST_NAME);
+			}
+
+			// Default service account
+
+			User defaultServiceAccountUser = _userPersistence.fetchByC_DU_T(
+				company.getCompanyId(), true,
+				UserConstants.TYPE_SERVICE_ACCOUNT);
+
+			if (defaultServiceAccountUser == null) {
+				_addDefaultServiceAccountUser(company);
 			}
 
 			// Portlets

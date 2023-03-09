@@ -186,6 +186,8 @@ public class AutocompleteUserMVCResourceCommandTest {
 
 		return stream.filter(
 			user -> !user.isDefaultUser()
+		).filter(
+			user -> !user.isServiceAccountUser()
 		).count();
 	}
 

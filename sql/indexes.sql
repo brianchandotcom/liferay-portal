@@ -584,6 +584,7 @@ create index IX_A09EEAB5 on User_ (companyId, createDate, modifiedDate, ctCollec
 create index IX_53E4FDAC on User_ (companyId, ctCollectionId);
 create index IX_DBE0B8AC on User_ (companyId, defaultUser, ctCollectionId);
 create index IX_16583D92 on User_ (companyId, defaultUser, status, ctCollectionId);
+create index IX_F8268025 on User_ (companyId, defaultUser, type_, ctCollectionId);
 create unique index IX_6C9F41D8 on User_ (companyId, emailAddress[$COLUMN_LENGTH:254$], ctCollectionId);
 create unique index IX_210A2A8D on User_ (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_F0BD8F61 on User_ (companyId, facebookId, ctCollectionId);

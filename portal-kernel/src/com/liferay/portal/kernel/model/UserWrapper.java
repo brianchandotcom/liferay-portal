@@ -86,6 +86,7 @@ public class UserWrapper
 		attributes.put("lockoutDate", getLockoutDate());
 		attributes.put("agreedToTermsOfUse", isAgreedToTermsOfUse());
 		attributes.put("emailAddressVerified", isEmailAddressVerified());
+		attributes.put("type", getType());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -357,6 +358,12 @@ public class UserWrapper
 
 		if (emailAddressVerified != null) {
 			setEmailAddressVerified(emailAddressVerified);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -1216,6 +1223,16 @@ public class UserWrapper
 		return model.getTimeZoneId();
 	}
 
+	/**
+	 * Returns the type of this user.
+	 *
+	 * @return the type of this user
+	 */
+	@Override
+	public int getType() {
+		return model.getType();
+	}
+
 	@Override
 	public Date getUnlockDate()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1413,8 +1430,18 @@ public class UserWrapper
 	}
 
 	@Override
+	public boolean isRegularUser() {
+		return model.isRegularUser();
+	}
+
+	@Override
 	public boolean isReminderQueryComplete() {
 		return model.isReminderQueryComplete();
+	}
+
+	@Override
+	public boolean isServiceAccountUser() {
+		return model.isServiceAccountUser();
 	}
 
 	@Override
@@ -1875,6 +1902,16 @@ public class UserWrapper
 	@Override
 	public void setTimeZoneId(String timeZoneId) {
 		model.setTimeZoneId(timeZoneId);
+	}
+
+	/**
+	 * Sets the type of this user.
+	 *
+	 * @param type the type of this user
+	 */
+	@Override
+	public void setType(int type) {
+		model.setType(type);
 	}
 
 	/**

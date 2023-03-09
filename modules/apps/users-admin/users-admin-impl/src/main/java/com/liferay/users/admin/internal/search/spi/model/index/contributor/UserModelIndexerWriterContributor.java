@@ -42,7 +42,7 @@ public class UserModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(User user) -> {
-				if (!user.isDefaultUser()) {
+				if (!(user.isDefaultUser() && !user.isServiceAccountUser())) {
 					batchIndexingActionable.addDocuments(
 						modelIndexerWriterDocumentHelper.getDocument(user));
 				}

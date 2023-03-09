@@ -1049,6 +1049,7 @@
 				(SocialRelation.type_ [$SOCIAL_RELATION_TYPE_COMPARATOR$] ?) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
+				(User_.type_ = 0) AND
 				(User_.status = ?)
 		]]>
 	</sql>
@@ -1074,7 +1075,8 @@
 				AnnouncementsDelivery ON
 					(AnnouncementsDelivery.userId = User_.userId) AND
 					(AnnouncementsDelivery.type_ = ?) AND
-					(User_.defaultUser = [$FALSE$])
+					(User_.defaultUser = [$FALSE$]) AND
+					(User_.type_ = 0)
 			WHERE
 				AnnouncementsDelivery.userId IS NULL
 		]]>
@@ -1092,6 +1094,7 @@
 					(Group_.classPK = User_.userId)
 			WHERE
 				(defaultUser = [$FALSE$]) AND
+				(User_.type_ = 0) AND
 				(Group_.classPK IS NULL)
 		]]>
 	</sql>
@@ -1109,6 +1112,7 @@
 				(SocialRelation.type_ [$SOCIAL_RELATION_TYPE_COMPARATOR$] ?) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
+				(User_.type_ = 0) AND
 				(User_.status = ?)
 		]]>
 	</sql>
@@ -1125,6 +1129,7 @@
 				(Users_Groups.groupId IN [$GROUP_ID$]) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
+				(User_.type_ = 0) AND
 				(User_.status = ?)
 		]]>
 	</sql>
@@ -1144,6 +1149,7 @@
 				(Groups_Orgs.groupId IN [$GROUP_ID$]) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
+				(User_.type_ = 0) AND
 				(User_.status = ?)
 		]]>
 	</sql>
@@ -1163,6 +1169,7 @@
 				(Group_.groupId IN [$GROUP_ID$]) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
+				(User_.type_ = 0) AND
 				(User_.status = ?)
 		]]>
 	</sql>
@@ -1179,6 +1186,7 @@
 				(Users_Orgs.organizationId = ?) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
+				(User_.type_ = 0) AND
 				(User_.userId > ?)
 			ORDER BY
 				User_.userId ASC
@@ -1200,6 +1208,7 @@
 				(Groups_UserGroups.groupId IN [$GROUP_ID$]) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
+				(User_.type_ = 0) AND
 				(User_.status = ?)
 		]]>
 	</sql>
@@ -1216,6 +1225,7 @@
 				(Users_UserGroups.userGroupId = ?) AND
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
+				(User_.type_ = 0) AND
 				(User_.userId > ?)
 			ORDER BY
 				User_.userId ASC
@@ -1232,6 +1242,7 @@
 				[$WHERE$]
 				(User_.companyId = ?) AND
 				(User_.defaultUser = ?) AND
+				(User_.type_ = 0) AND
 				(
 					(LOWER(User_.firstName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(LOWER(User_.middleName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

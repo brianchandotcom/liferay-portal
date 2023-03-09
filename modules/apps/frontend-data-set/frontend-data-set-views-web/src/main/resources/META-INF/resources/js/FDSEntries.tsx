@@ -187,13 +187,11 @@ const FDSEntries = ({
 
 	type FDSEntry = {
 		entityClassName: string;
+		id: string;
+		label: string;
 	};
 
-	interface IProviderRendererProps {
-		itemData: FDSEntry;
-	}
-
-	const ProviderRenderer = ({itemData}: IProviderRendererProps) => {
+	const ProviderRenderer = ({itemData}: {itemData: FDSEntry}) => {
 		const headlessResource = headlessResourcesMapRef.current.get(
 			itemData.entityClassName
 		);
@@ -432,7 +430,7 @@ const FDSEntries = ({
 		],
 	};
 
-	const onViewClick = ({itemData}: any) => {
+	const onViewClick = ({itemData}: {itemData: FDSEntry}) => {
 		const url = new URL(fdsViewsURL);
 
 		url.searchParams.set(`${namespace}fdsEntryId`, itemData.id);

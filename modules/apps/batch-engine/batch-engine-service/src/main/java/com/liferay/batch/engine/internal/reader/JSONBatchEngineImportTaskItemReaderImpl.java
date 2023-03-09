@@ -23,7 +23,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author Ivica Cardic
@@ -31,8 +33,13 @@ import java.util.Map;
 public class JSONBatchEngineImportTaskItemReaderImpl
 	implements BatchEngineImportTaskItemReader {
 
-	public JSONBatchEngineImportTaskItemReaderImpl(InputStream inputStream)
+	public JSONBatchEngineImportTaskItemReaderImpl(
+			List<String> includeFieldNames, InputStream inputStream)
 		throws IOException {
+
+		if (!includeFieldNames.isEmpty()) {
+			_fieldNameFilter = new FieldNameFilterFunction(includeFieldNames);
+		}
 
 		_inputStream = inputStream;
 
@@ -55,10 +62,11 @@ public class JSONBatchEngineImportTaskItemReaderImpl
 	@Override
 	public Map<String, Object> read() throws Exception {
 		if (_jsonParser.nextToken() == JsonToken.START_OBJECT) {
-			return _objectMapper.readValue(
-				_jsonParser,
-				new TypeReference<Map<String, Object>>() {
-				});
+			return _fieldNameFilter.apply(
+				_objectMapper.readValue(
+					_jsonParser,
+					new TypeReference<Map<String, Object>>() {
+					}));
 		}
 
 		return null;
@@ -67,6 +75,8 @@ public class JSONBatchEngineImportTaskItemReaderImpl
 	private static final JsonFactory _jsonFactory = new JsonFactory();
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
+	private Function<Map<String, Object>, Map<String, Object>>
+		_fieldNameFilter = m -> m;
 	private final InputStream _inputStream;
 	private final JsonParser _jsonParser;
 

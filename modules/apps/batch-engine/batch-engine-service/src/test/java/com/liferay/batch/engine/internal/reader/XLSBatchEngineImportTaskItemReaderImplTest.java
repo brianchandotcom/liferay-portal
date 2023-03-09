@@ -389,6 +389,7 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 		throws IOException {
 
 		return new XLSBatchEngineImportTaskItemReaderImpl(
+			Collections.emptyList(),
 			new ByteArrayInputStream(_getContent(cellNames, rowValues)));
 	}
 

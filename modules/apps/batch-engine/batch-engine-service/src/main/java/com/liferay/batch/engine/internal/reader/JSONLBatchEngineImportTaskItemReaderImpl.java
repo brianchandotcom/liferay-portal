@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author Ivica Cardic
@@ -31,7 +33,13 @@ import java.util.Map;
 public class JSONLBatchEngineImportTaskItemReaderImpl
 	implements BatchEngineImportTaskItemReader {
 
-	public JSONLBatchEngineImportTaskItemReaderImpl(InputStream inputStream) {
+	public JSONLBatchEngineImportTaskItemReaderImpl(
+		List<String> includeFieldNames, InputStream inputStream) {
+
+		if (!includeFieldNames.isEmpty()) {
+			_fieldNameFilter = new FieldNameFilterFunction(includeFieldNames);
+		}
+
 		_inputStream = inputStream;
 
 		_unsyncBufferedReader = new UnsyncBufferedReader(
@@ -51,14 +59,17 @@ public class JSONLBatchEngineImportTaskItemReaderImpl
 			return null;
 		}
 
-		return _objectMapper.readValue(
-			line,
-			new TypeReference<Map<String, Object>>() {
-			});
+		return _fieldNameFilter.apply(
+			_objectMapper.readValue(
+				line,
+				new TypeReference<Map<String, Object>>() {
+				}));
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
+	private Function<Map<String, Object>, Map<String, Object>>
+		_fieldNameFilter = m -> m;
 	private final InputStream _inputStream;
 	private final UnsyncBufferedReader _unsyncBufferedReader;
 

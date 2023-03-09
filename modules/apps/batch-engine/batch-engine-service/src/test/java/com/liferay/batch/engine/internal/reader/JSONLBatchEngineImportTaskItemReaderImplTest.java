@@ -355,6 +355,7 @@ public class JSONLBatchEngineImportTaskItemReaderImplTest
 			String[] columnNames, Object[][] rowValues) {
 
 		return new JSONLBatchEngineImportTaskItemReaderImpl(
+			Collections.emptyList(),
 			new ByteArrayInputStream(_getContent(columnNames, rowValues)));
 	}
 

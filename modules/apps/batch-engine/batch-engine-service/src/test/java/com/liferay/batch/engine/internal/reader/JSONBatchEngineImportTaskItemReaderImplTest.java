@@ -359,6 +359,7 @@ public class JSONBatchEngineImportTaskItemReaderImplTest
 		throws IOException {
 
 		return new JSONBatchEngineImportTaskItemReaderImpl(
+			Collections.emptyList(),
 			new ByteArrayInputStream(_getContent(columnNames, rowValues)));
 	}
 

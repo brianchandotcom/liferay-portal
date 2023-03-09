@@ -33,60 +33,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @Transactional(rollbackFor = {PortalException.class, SystemException.class})
 public interface DLStore {
 
-	public default void addFile(DLStoreRequest dlStoreRequest, byte[] bytes)
-		throws PortalException {
-
-		addFile(
-			dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
-			dlStoreRequest.getFileName(),
-			dlStoreRequest.isValidateFileExtension(), bytes);
-	}
-
-	public default void addFile(DLStoreRequest dlStoreRequest, File file)
-		throws PortalException {
-
-		addFile(
-			dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
-			dlStoreRequest.getFileName(),
-			dlStoreRequest.isValidateFileExtension(), file);
-	}
-
-	public default void addFile(
-			DLStoreRequest dlStoreRequest, InputStream inputStream)
-		throws PortalException {
-
-		addFile(
-			dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
-			dlStoreRequest.getFileName(),
-			dlStoreRequest.isValidateFileExtension(), inputStream);
-	}
-
-	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			boolean validateFileExtension, byte[] bytes)
+	public void addFile(DLStoreRequest dlStoreRequest, byte[] bytes)
 		throws PortalException;
 
-	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			boolean validateFileExtension, File file)
+	public void addFile(DLStoreRequest dlStoreRequest, File file)
 		throws PortalException;
 
-	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			boolean validateFileExtension, InputStream inputStream)
-		throws PortalException;
-
-	public void addFile(
-			long companyId, long repositoryId, String fileName, byte[] bytes)
-		throws PortalException;
-
-	public void addFile(
-			long companyId, long repositoryId, String fileName, File file)
-		throws PortalException;
-
-	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			InputStream inputStream)
+	public void addFile(DLStoreRequest dlStoreRequest, InputStream inputStream)
 		throws PortalException;
 
 	public void copyFileVersion(

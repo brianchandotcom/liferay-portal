@@ -42,7 +42,7 @@ public class NotificationTermEvaluatorHandlerTrackerImpl
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, NotificationTermEvaluatorHandler.class,
-			"notification.term.evaluator.handler");
+			"notification.term.evaluator.handler.type");
 	}
 
 	@Deactivate

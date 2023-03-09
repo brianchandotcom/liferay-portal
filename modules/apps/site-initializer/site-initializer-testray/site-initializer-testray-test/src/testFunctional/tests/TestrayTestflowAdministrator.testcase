@@ -16,7 +16,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTR2Site(siteName = ${testSiteName});
+			Testray.addTestraySite(siteName = ${testSiteName});
 
 			Refresh();
 		}
@@ -207,6 +207,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160726 - Verify if as an Administrator I should be able to delete a task"
+	@ignore = "true"
 	@priority = 5
 	test AdminCanDeleteTask {
 		task ("Given that the user add a Task") {

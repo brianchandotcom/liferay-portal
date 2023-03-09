@@ -55,10 +55,11 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 	public List<MediaQuery> getMediaQueries(FileEntry fileEntry)
 		throws PortalException {
 
+		List<MediaQuery> mediaQueries = new ArrayList<>();
+
 		Collection<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
 			_getAdaptiveMedias(fileEntry);
 
-		List<MediaQuery> mediaQueries = new ArrayList<>();
 		AdaptiveMedia<AMImageProcessor> previousAdaptiveMedia = null;
 
 		for (AdaptiveMedia<AMImageProcessor> adaptiveMedia : adaptiveMedias) {
@@ -148,12 +149,12 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 			FileEntry fileEntry)
 		throws PortalException {
 
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			new ArrayList<>();
+
 		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
 			_amImageConfigurationHelper.getAMImageConfigurationEntries(
 				fileEntry.getCompanyId());
-
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			new ArrayList<>();
 
 		for (AMImageConfigurationEntry amImageConfigurationEntry :
 				amImageConfigurationEntries) {

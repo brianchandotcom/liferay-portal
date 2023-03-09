@@ -190,7 +190,8 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 
 		registry.register(
 			"4.4.0", "4.5.0",
-			new CTModelUpgradeProcess("KBArticle", "KBFolder"));
+			new CTModelUpgradeProcess(
+				"KBArticle", "KBComment", "KBFolder", "KBTemplate"));
 	}
 
 	@Reference

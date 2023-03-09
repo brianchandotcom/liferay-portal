@@ -212,14 +212,10 @@ public class DBTest {
 		_db.alterColumnName(
 			_connection, _TABLE_NAME_1, "id", "idTest LONG not null");
 
-		String[] primaryKeyColumnNames = ReflectionTestUtil.invoke(
-			_db, "getPrimaryKeyColumnNames",
-			new Class<?>[] {Connection.class, String.class}, _connection,
-			_TABLE_NAME_1);
-
 		Assert.assertTrue(
 			ArrayUtil.contains(
-				primaryKeyColumnNames, _dbInspector.normalizeName("idTest")));
+				_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_1),
+				_dbInspector.normalizeName("idTest")));
 	}
 
 	@Test

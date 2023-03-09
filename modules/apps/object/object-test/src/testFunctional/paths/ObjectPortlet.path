@@ -22,7 +22,7 @@
 	</tr>
 	<tr>
 		<td>CHECK_UNCHECK_DROPDOWN_ITEM</td>
-		<td>//button[contains(@class,'dropdown-item')][contains(text(),'${key_dropdowntItem}')]</td>
+		<td>//button[contains(@class,'dropdown-item')][contains(text(),'${key_dropdownItem}')]</td>
 		<td></td>
 	</tr>
 	<tr>

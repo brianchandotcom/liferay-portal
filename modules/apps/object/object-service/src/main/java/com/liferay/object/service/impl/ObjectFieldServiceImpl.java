@@ -107,9 +107,10 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 	public ObjectField updateObjectField(
 			String externalReferenceCode, long objectFieldId,
 			long listTypeDefinitionId, String businessType, String dbType,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			boolean state, List<ObjectFieldSetting> objectFieldSettings)
+			boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<Locale, String> labelMap,
+			boolean localized, String name, boolean required, boolean state,
+			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
@@ -124,9 +125,8 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 			listTypeDefinitionId, objectField.getObjectDefinitionId(),
 			businessType, objectField.getDBColumnName(),
 			objectField.getDBTableName(), dbType, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap,
-			objectField.isLocalized(), name, required, state,
-			objectField.isSystem(), objectFieldSettings);
+			indexedAsKeyword, indexedLanguageId, labelMap, localized, name,
+			required, state, objectField.isSystem(), objectFieldSettings);
 	}
 
 	@Reference(

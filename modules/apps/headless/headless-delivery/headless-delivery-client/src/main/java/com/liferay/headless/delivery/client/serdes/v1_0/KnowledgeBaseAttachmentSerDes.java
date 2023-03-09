@@ -99,6 +99,21 @@ public class KnowledgeBaseAttachmentSerDes {
 			sb.append("\"");
 		}
 
+		if (knowledgeBaseAttachment.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(knowledgeBaseAttachment.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (knowledgeBaseAttachment.getFileExtension() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -195,6 +210,16 @@ public class KnowledgeBaseAttachmentSerDes {
 				String.valueOf(knowledgeBaseAttachment.getEncodingFormat()));
 		}
 
+		if (knowledgeBaseAttachment.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(
+					knowledgeBaseAttachment.getExternalReferenceCode()));
+		}
+
 		if (knowledgeBaseAttachment.getFileExtension() == null) {
 			map.put("fileExtension", null);
 		}
@@ -264,6 +289,14 @@ public class KnowledgeBaseAttachmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseAttachment.setEncodingFormat(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseAttachment.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}

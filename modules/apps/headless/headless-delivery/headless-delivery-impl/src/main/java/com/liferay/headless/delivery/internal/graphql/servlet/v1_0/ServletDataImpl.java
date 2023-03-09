@@ -723,6 +723,16 @@ public class ServletDataImpl implements ServletData {
 							KnowledgeBaseAttachmentResourceImpl.class,
 							"deleteKnowledgeBaseAttachmentBatch"));
 					put(
+						"mutation#createSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							KnowledgeBaseAttachmentResourceImpl.class,
+							"postSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode"));
+					put(
+						"mutation#updateSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							KnowledgeBaseAttachmentResourceImpl.class,
+							"putSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode"));
+					put(
 						"mutation#deleteKnowledgeBaseFolder",
 						new ObjectValuePair<>(
 							KnowledgeBaseFolderResourceImpl.class,
@@ -1740,6 +1750,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							KnowledgeBaseAttachmentResourceImpl.class,
 							"getKnowledgeBaseAttachment"));
+					put(
+						"query#knowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							KnowledgeBaseAttachmentResourceImpl.class,
+							"getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode"));
 					put(
 						"query#knowledgeBaseFolder",
 						new ObjectValuePair<>(

@@ -2052,6 +2052,62 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Creates the knowledge base article attachment by external reference code with the information sent in the request body. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
+	)
+	@GraphQLName(
+		description = "Creates the knowledge base article attachment by external reference code with the information sent in the request body. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.",
+		value = "postSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeSiteIdKnowledgeBaseArticleExternalReferenceCodeExternalReferenceCodeMultipartBody"
+	)
+	public KnowledgeBaseAttachment
+			createSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("knowledgeBaseArticleExternalReferenceCode") String
+					knowledgeBaseArticleExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.
+					postSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
+						Long.valueOf(siteKey),
+						knowledgeBaseArticleExternalReferenceCode,
+						externalReferenceCode, multipartBody));
+	}
+
+	@GraphQLField(
+		description = "Replaces the knowledge base article attachment by external reference code with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
+	)
+	@GraphQLName(
+		description = "Replaces the knowledge base article attachment by external reference code with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.",
+		value = "putSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeSiteIdKnowledgeBaseArticleExternalReferenceCodeExternalReferenceCodeMultipartBody"
+	)
+	public KnowledgeBaseAttachment
+			updateSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("knowledgeBaseArticleExternalReferenceCode") String
+					knowledgeBaseArticleExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_knowledgeBaseAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseAttachmentResource ->
+				knowledgeBaseAttachmentResource.
+					putSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
+						Long.valueOf(siteKey),
+						knowledgeBaseArticleExternalReferenceCode,
+						externalReferenceCode, multipartBody));
+	}
+
+	@GraphQLField(
 		description = "Deletes the knowledge base folder and returns a 204 if the operation succeeds."
 	)
 	public boolean deleteKnowledgeBaseFolder(

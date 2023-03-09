@@ -1,0 +1,11 @@
+apiDir: "../headless-sites-api/src/main/java"
+apiPackagePath: "com.liferay.headless.sites"
+application:
+    baseURI: "/headless-sites"
+    className: "HeadlessSitesApplication"
+    name: "Liferay.Headless.Sites"
+author: "Rubén Pulido"
+clientDir: "../headless-sites-client/src/main/java"
+forcePredictableOperationId: true
+generateBatch: false
+generateGraphQL: false

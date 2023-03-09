@@ -632,7 +632,8 @@ definition {
 
 				Site.addSiteTemplateCP(
 					siteName = "Site Name",
-					siteTemplateName = "Site Template Name");
+					siteTemplateName = "Site Template Name",
+					siteTemplateTab = "Custom Site Templates");
 			}
 
 			task ("Delete the Button fragment of master template") {
@@ -1895,7 +1896,8 @@ definition {
 
 				Site.addSiteTemplateCP(
 					siteName = "Test Site Name 2",
-					siteTemplateName = "Site Template Name");
+					siteTemplateName = "Site Template Name",
+					siteTemplateTab = "Custom Site Templates");
 			}
 
 			task ("Add another page based on master page in the site template") {

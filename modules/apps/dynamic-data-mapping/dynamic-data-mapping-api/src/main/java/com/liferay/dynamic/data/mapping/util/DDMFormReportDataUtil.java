@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -70,17 +72,14 @@ public class DDMFormReportDataUtil {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		for (Map.Entry<String, DDMFormField> entry :
-				ddmFormFieldsMap.entrySet()) {
+		return JSONUtil.toJSONArray(
+			ddmFormFieldsMap.values(),
+			ddmFormField -> {
+				if (StringUtil.equals("fieldset", ddmFormField.getType())) {
+					return null;
+				}
 
-			DDMFormField ddmFormField = entry.getValue();
-
-			if (StringUtil.equals("fieldset", ddmFormField.getType())) {
-				continue;
-			}
-
-			fieldsJSONArray.put(
-				JSONUtil.put(
+				return JSONUtil.put(
 					"columns",
 					_getPropertyLabelsJSONObject(ddmFormField, "columns")
 				).put(
@@ -95,10 +94,9 @@ public class DDMFormReportDataUtil {
 					"rows", _getPropertyLabelsJSONObject(ddmFormField, "rows")
 				).put(
 					"type", ddmFormField.getType()
-				));
-		}
-
-		return fieldsJSONArray;
+				);
+			},
+			_log);
 	}
 
 	public static JSONArray getFieldValuesJSONArray(
@@ -263,5 +261,8 @@ public class DDMFormReportDataUtil {
 
 		return value.getString(value.getDefaultLocale());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormReportDataUtil.class.getName());
 
 }

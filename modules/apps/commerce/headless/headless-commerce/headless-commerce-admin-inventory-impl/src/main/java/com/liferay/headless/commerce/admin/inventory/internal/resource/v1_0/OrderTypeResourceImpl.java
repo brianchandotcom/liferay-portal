@@ -16,10 +16,11 @@ package com.liferay.headless.commerce.admin.inventory.internal.resource.v1_0;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelService;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseOrderType;
-import com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.OrderTypeDTOConverter;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.OrderTypeResource;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -56,7 +57,9 @@ public class OrderTypeResourceImpl
 	private CommerceInventoryWarehouseRelService
 		_commerceInventoryWarehouseRelService;
 
-	@Reference
-	private OrderTypeDTOConverter _orderTypeDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.OrderTypeDTOConverter)"
+	)
+	private DTOConverter<CommerceOrderType, OrderType> _orderTypeDTOConverter;
 
 }

@@ -306,28 +306,55 @@ public abstract class PoshiElement
 	protected void checkSemicolon(String poshiScript)
 		throws PoshiScriptParserException {
 
+		poshiScript = poshiScript.trim();
+
 		Pattern statementPattern = getStatementPattern();
+
+		int index = 0;
 
 		Matcher matcher = statementPattern.matcher(poshiScript);
 
-		String errorMessage = "Missing semicolon";
-
 		if (matcher.find()) {
-			for (int i = matcher.end(); i < poshiScript.length(); i++) {
-				char c = poshiScript.charAt(i);
+			if (matcher.end() == poshiScript.length()) {
+				index = matcher.end();
+			}
+			else {
+				StringBuilder sb = new StringBuilder();
 
-				if (Character.isWhitespace(c)) {
-					continue;
-				}
+				sb.append(matcher.group());
 
-				if (c != ';') {
-					throw new PoshiScriptParserException(
-						errorMessage, poshiScript, (PoshiElement)getParent());
+				for (int i = matcher.end(); i < poshiScript.length(); i++) {
+					sb.append(poshiScript.charAt(i));
+
+					String balanced = sb.toString();
+
+					matcher = statementPattern.matcher(balanced);
+
+					if (PoshiScriptParserUtil.isBalancedPoshiScript(balanced) &&
+						matcher.find()) {
+
+						index = i + 1;
+
+						break;
+					}
 				}
 			}
 		}
 
-		poshiScript = poshiScript.trim();
+		String errorMessage = "Missing semicolon";
+
+		for (int i = index; i < poshiScript.length(); i++) {
+			char c = poshiScript.charAt(i);
+
+			if (Character.isWhitespace(c)) {
+				continue;
+			}
+
+			if (c != ';') {
+				throw new PoshiScriptParserException(
+					errorMessage, poshiScript, (PoshiElement)getParent());
+			}
+		}
 
 		if (!poshiScript.endsWith(";")) {
 			throw new PoshiScriptParserException(

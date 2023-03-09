@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -128,6 +129,15 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 	@Override
 	public String getIcon() {
 		return DLUtil.getFileIcon(getExtension());
+	}
+
+	@Override
+	public String getStoreFileName() {
+		if (Validator.isNull(getStoreUUID())) {
+			return getVersion();
+		}
+
+		return getVersion() + StringPool.TILDE + getStoreUUID();
 	}
 
 	@Override

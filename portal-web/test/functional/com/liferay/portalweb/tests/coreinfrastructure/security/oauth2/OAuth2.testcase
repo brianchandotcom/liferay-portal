@@ -818,14 +818,6 @@ definition {
 				checkboxUncheckList = "Authorization Code");
 		}
 
-		task ("Verify resource scopes are shown") {
-			Navigator.gotoNavItem(navItem = "Scopes");
-
-			Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
-
-			OAuth2.viewResourcePanelCollapsed(scopeList = "Analytics,Liferay.Bulk.REST,Liferay.Data.Engine.REST,Liferay.Headless.Admin.Content");
-		}
-
 		task ("Edit OAuth application scopes and check the permission to read the userprofile") {
 			Navigator.gotoBack();
 
@@ -1735,6 +1727,90 @@ definition {
 				OAuth2.expandGlobalPanel(globalPanel = ${globalPanel});
 			}
 		}
+
+		task ("Restart the portal server") {
+			Clustering.shutdownSpecificServer(nodePort = 8080);
+
+			Clustering.startSpecificServer(
+				deleteLiferayHome = "false",
+				keepCachedAppServerData = "true",
+				nodePort = 8080);
+		}
+
+		task ("Assert the global scope entries still present") {
+			OAuth2.openOAuth2Admin();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Analytics Cloud");
+
+			Navigator.gotoNavItem(navItem = "Scopes");
+
+			Navigator.gotoNavUnderline(navUnderline = "Global scopes");
+
+			for (var globalPanel : list "analytics.read,analytics.write,everything.write,everything.read,everything") {
+				OAuth2.expandGlobalPanel(globalPanel = ${globalPanel});
+			}
+		}
+	}
+
+	@description = "Verify that panels under resource scopes can be expanded."
+	@priority = 4
+	test PanelsShouldBeExpandableOnResourceScopes {
+		property test.name.skip.portal.instance = "OAuth2#PanelsShouldBeExpandableOnResourceScopes";
+
+		task ("Delete OSGi JAX-RS Default configuration") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_factory_instances");
+
+			SystemSettings.gotoConfigurationEntry(configurationEntry = "Default");
+
+			SystemSettings.deleteConfiguration();
+		}
+
+		task ("Go to the scopes of an OAuth 2 application entry navbar") {
+			OAuth2.openOAuth2Admin();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Analytics Cloud");
+
+			Navigator.gotoNavItem(navItem = "Scopes");
+		}
+
+		task ("Expand resource panels in resource scopes") {
+			Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
+
+			OAuth2.viewResourcePanelNotCollapsed(scopeList = "Analytics");
+
+			OAuth2.viewResourcePanelCollapsed(scopeList = "Liferay.Bulk.REST,Liferay.Data.Engine.REST,Liferay.Headless.Admin.Content");
+		}
+
+		task ("Restart the portal server") {
+			Clustering.shutdownSpecificServer(nodePort = 8080);
+
+			Clustering.startSpecificServer(
+				deleteLiferayHome = "false",
+				keepCachedAppServerData = "true",
+				nodePort = 8080);
+		}
+
+		task ("Assert the resource scope entries still present") {
+			OAuth2.openOAuth2Admin();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Analytics Cloud");
+
+			Navigator.gotoNavItem(navItem = "Scopes");
+
+			Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
+
+			OAuth2.viewResourcePanelNotCollapsed(scopeList = "Analytics");
+
+			OAuth2.viewResourcePanelCollapsed(scopeList = "Liferay.Bulk.REST,Liferay.Data.Engine.REST,Liferay.Headless.Admin.Content");
+		}
 	}
 
 	@description = "This is a use case for LRQA-57134. Refresh token can expire and can be renewed."
@@ -2016,6 +2092,28 @@ definition {
 		}
 
 		task ("View installed QA app in scope mapping") {
+			OAuth2.openOAuth2Admin();
+
+			OAuth2.viewScopeMappings(
+				applicationName = "Analytics Cloud",
+				globalScopeLinkValue = "This resource scope MUST be assigned via a global scope.",
+				resourcePanels = "Sample QA app",
+				scopeAliasList = "everything,everything.read,everything.write",
+				scopeTranslation = "Example scope 1 + Example scope 2");
+
+			OAuth2.viewSimpleQAAppInScopeMappings();
+		}
+
+		task ("Restart the portal server") {
+			Clustering.shutdownSpecificServer(nodePort = 8080);
+
+			Clustering.startSpecificServer(
+				deleteLiferayHome = "false",
+				keepCachedAppServerData = "true",
+				nodePort = 8080);
+		}
+
+		task ("Assert the installed QA app still present in scope mapping") {
 			OAuth2.openOAuth2Admin();
 
 			OAuth2.viewScopeMappings(

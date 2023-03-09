@@ -10,7 +10,7 @@
  */
 
 const getRecipientType = (assignments) => {
-	if (!assignments) {
+	if (!assignments || !assignments.assignmentType) {
 		return 'assetCreator';
 	}
 

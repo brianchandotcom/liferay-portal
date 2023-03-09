@@ -16,6 +16,7 @@ export type ConstantListType = {[keys: string]: string};
 
 type ConstantsType = {
 	APPLICATION_STATUS: {[keys: string]: {INDEX: number; NAME: string}};
+	CLAIM_STATUS: {[keys: string]: {INDEX: number; NAME: string}};
 	DEVICES: ConstantListType;
 	MONTHS_ABREVIATIONS: string[];
 	US_STATES: ConstantListType[];
@@ -32,6 +33,17 @@ export const CONSTANTS: ConstantsType = {
 		rejected: {INDEX: 5, NAME: 'rejected'},
 		reviewed: {INDEX: 4, NAME: 'reviewed'},
 		underwriting: {INDEX: 3, NAME: 'underwriting'},
+	},
+
+	CLAIM_STATUS: {
+		approved: {INDEX: 3, NAME: 'approved'},
+		claimSubmitted: {INDEX: 0, NAME: 'claimSubmitted'},
+		declined: {INDEX: 7, NAME: 'declined'},
+		inEstimation: {INDEX: 2, NAME: 'inEstimation'},
+		inInvestigation: {INDEX: 1, NAME: 'inInvestigation'},
+		pendingSettlement: {INDEX: 5, NAME: 'pendingSettlement'},
+		repair: {INDEX: 4, NAME: 'repair'},
+		settled: {INDEX: 6, NAME: 'settled'},
 	},
 
 	DEVICES: {

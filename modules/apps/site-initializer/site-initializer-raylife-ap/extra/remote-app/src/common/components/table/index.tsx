@@ -22,9 +22,9 @@ type sort = {
 	[keys: string]: boolean;
 };
 
-type TableRowContentType = {[keys: string]: string};
+export type TableRowContentType = {[keys: string]: string | number};
 
-type TableHeaders = {
+export type TableHeaders = {
 	bold?: boolean;
 	centered?: boolean;
 	clickable?: boolean;

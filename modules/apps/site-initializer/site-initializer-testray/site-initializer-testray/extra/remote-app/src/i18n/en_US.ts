@@ -447,6 +447,8 @@ export default {
 		'You do not have permissions to access this app. Contact the app administrator to request the access.',
 	'you-must-have-at-least-one-column-selected':
 		'You must have at least one column selected',
+	'you-must-select-one-or-more-filters-before-pinning':
+		'You must select one or more filters before pinning.',
 	'your-request-completed-successfully':
 		'Your request completed successfully',
 };

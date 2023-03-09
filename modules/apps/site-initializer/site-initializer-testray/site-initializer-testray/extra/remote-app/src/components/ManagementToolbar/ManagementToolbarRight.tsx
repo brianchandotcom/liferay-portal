@@ -85,6 +85,13 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 				type: 'success',
 			});
 		}
+
+		Liferay.Util.openToast({
+			message: i18n.translate(
+				'you-must-select-one-or-more-filters-before-pinning'
+			),
+			type: 'danger',
+		});
 	};
 
 	return (
@@ -96,9 +103,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 							aria-label={i18n.translate('add-pin')}
 							className="nav-btn nav-btn-monospaced"
 							displayType="unstyled"
-							onClick={() => {
-								pinSelectedFilters();
-							}}
+							onClick={() => pinSelectedFilters()}
 							symbol={i18n.translate(pin ? 'unpin' : 'pin')}
 							title={i18n.translate(pin ? 'unpin' : 'pin')}
 						/>

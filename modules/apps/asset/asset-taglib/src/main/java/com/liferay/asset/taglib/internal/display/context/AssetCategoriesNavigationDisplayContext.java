@@ -184,8 +184,7 @@ public class AssetCategoriesNavigationDisplayContext {
 		).put(
 			"id", category.getCategoryId()
 		).put(
-			"name",
-			HtmlUtil.escape(category.getTitle(_themeDisplay.getLocale()))
+			"name", category.getTitle(_themeDisplay.getLocale())
 		).put(
 			"url", _getPortletURL(category.getCategoryId())
 		).put(
@@ -246,9 +245,7 @@ public class AssetCategoriesNavigationDisplayContext {
 				).put(
 					"id", vocabulary.getVocabularyId()
 				).put(
-					"name",
-					HtmlUtil.escape(
-						vocabulary.getTitle(_themeDisplay.getLocale()))
+					"name", vocabulary.getTitle(_themeDisplay.getLocale())
 				));
 		}
 

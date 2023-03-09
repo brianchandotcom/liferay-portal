@@ -295,7 +295,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		String tablesSQLContent = FileUtil.read(file);
 
 		return _isBooleanColumn(
-			tablesSQLContent, getterObjectName, variableTypeName);
+			tablesSQLContent, variableTypeName, getterObjectName);
 	}
 
 	private boolean _isBooleanColumn(

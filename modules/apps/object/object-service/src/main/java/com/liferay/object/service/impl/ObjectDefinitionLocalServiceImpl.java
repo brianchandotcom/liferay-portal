@@ -743,9 +743,10 @@ public class ObjectDefinitionLocalServiceImpl
 			long descriptionObjectFieldId, long titleObjectFieldId,
 			boolean accountEntryRestricted, boolean active,
 			boolean enableCategorization, boolean enableComments,
-			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			boolean portlet, Map<Locale, String> pluralLabelMap, String scope)
+			boolean enableLocalization, boolean enableObjectEntryHistory,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, boolean portlet,
+			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -760,9 +761,9 @@ public class ObjectDefinitionLocalServiceImpl
 			externalReferenceCode, objectDefinition,
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 			titleObjectFieldId, accountEntryRestricted, active, null,
-			enableCategorization, enableComments, enableObjectEntryHistory,
-			labelMap, name, panelAppOrder, panelCategoryKey, portlet, null,
-			null, pluralLabelMap, scope);
+			enableCategorization, enableComments, enableLocalization,
+			enableObjectEntryHistory, labelMap, name, panelAppOrder,
+			panelCategoryKey, portlet, null, null, pluralLabelMap, scope);
 	}
 
 	@Override
@@ -1268,11 +1269,11 @@ public class ObjectDefinitionLocalServiceImpl
 			long descriptionObjectFieldId, long titleObjectFieldId,
 			boolean accountEntryRestricted, boolean active, String dbTableName,
 			boolean enableCategorization, boolean enableComments,
-			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			boolean portlet, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			String scope)
+			boolean enableLocalization, boolean enableObjectEntryHistory,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, boolean portlet,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
 
 		boolean originalActive = objectDefinition.isActive();
@@ -1374,6 +1375,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateScope(scope);
 
 		objectDefinition.setDBTableName(dbTableName);
+		objectDefinition.setEnableLocalization(enableLocalization);
 		objectDefinition.setName(name);
 		objectDefinition.setPKObjectFieldDBColumnName(
 			pkObjectFieldDBColumnName);

@@ -465,6 +465,7 @@ public class ObjectDefinitionResourceImpl
 				GetterUtil.getBoolean(
 					objectDefinition.getEnableCategorization(), true),
 				GetterUtil.getBoolean(objectDefinition.getEnableComments()),
+				GetterUtil.getBoolean(objectDefinition.getEnableLocalization()),
 				GetterUtil.getBoolean(
 					objectDefinition.getEnableObjectEntryHistory()),
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),

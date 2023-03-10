@@ -67,7 +67,7 @@ public class FilterUtil {
 					StringPool.COMMA),
 				StringPool.CLOSE_BRACKET);
 		}
-		else {
+		else if (!(value instanceof Boolean) && !(value instanceof Long)) {
 			String valueString = String.valueOf(value);
 
 			if (Validator.isBlank(valueString)) {

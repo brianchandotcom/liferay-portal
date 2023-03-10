@@ -16,7 +16,7 @@ import {
 } from '../../../../../../../../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../../../../../../../../common/utils/getDateCustomFormat';
 
-export default function getRows(accountSubscriptionsStatus, orderItems) {
+export default function getRows(orderItems) {
 	return orderItems?.map(({options, quantity, reducedCustomFields}) => {
 		const datesDisplay = `${getDateCustomFormat(
 			options?.startDate,
@@ -35,7 +35,7 @@ export default function getRows(accountSubscriptionsStatus, orderItems) {
 				<StatusTag
 					currentStatus={
 						SLA_STATUS_TYPES[
-							accountSubscriptionsStatus.toLowerCase()
+							reducedCustomFields?.status.toLowerCase()
 						]
 					}
 				/>

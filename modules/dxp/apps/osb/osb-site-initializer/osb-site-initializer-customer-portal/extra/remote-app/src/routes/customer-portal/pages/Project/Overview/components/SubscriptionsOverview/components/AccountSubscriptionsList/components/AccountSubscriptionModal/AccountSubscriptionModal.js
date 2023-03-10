@@ -21,7 +21,6 @@ import getColumns from './utils/getColumns';
 import getRows from './utils/getRows';
 
 const AccountSubscriptionModal = ({
-	accountSubscriptionsStatus,
 	externalReferenceCode,
 	isProvisioned,
 	observer,
@@ -66,10 +65,7 @@ const AccountSubscriptionModal = ({
 						setActivePage,
 						totalCount,
 					}}
-					rows={getRows(
-						accountSubscriptionsStatus,
-						data?.orderItems.items
-					)}
+					rows={getRows(data?.orderItems.items)}
 					tableVerticalAlignment="middle"
 				/>
 			</div>

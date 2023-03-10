@@ -144,17 +144,9 @@ public class AMImageRequestHandler
 					amImageConfigurationEntry.getUUID()
 				).done());
 
-		if (adaptiveMedias.isEmpty()) {
-			return _findClosestAdaptiveMedia(
-				fileVersion, amImageConfigurationEntry);
+		if (!adaptiveMedias.isEmpty()) {
+			return adaptiveMedias.get(0);
 		}
-
-		return adaptiveMedias.get(0);
-	}
-
-	private AdaptiveMedia<AMImageProcessor> _findClosestAdaptiveMedia(
-		FileVersion fileVersion,
-		AMImageConfigurationEntry amImageConfigurationEntry) {
 
 		Map<String, String> properties =
 			amImageConfigurationEntry.getProperties();
@@ -166,17 +158,16 @@ public class AMImageRequestHandler
 			properties.get("max-height"));
 
 		try {
-			List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-				_amImageFinder.getAdaptiveMedias(
-					amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
-						fileVersion
-					).with(
-						AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH,
-						configurationWidth
-					).with(
-						AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT,
-						configurationHeight
-					).done());
+			adaptiveMedias = _amImageFinder.getAdaptiveMedias(
+				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
+					fileVersion
+				).with(
+					AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH,
+					configurationWidth
+				).with(
+					AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT,
+					configurationHeight
+				).done());
 
 			if (adaptiveMedias.isEmpty()) {
 				return null;

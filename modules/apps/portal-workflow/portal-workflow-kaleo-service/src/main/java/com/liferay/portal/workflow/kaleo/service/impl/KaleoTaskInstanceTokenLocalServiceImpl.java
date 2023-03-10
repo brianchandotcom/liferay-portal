@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -69,8 +70,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -824,18 +823,20 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 			start, end, orderByComparator, serviceContext);
 
 		return new BaseModelSearchResult<>(
-			Stream.of(
-				hits.getDocs()
-			).map(
-				document -> GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK))
-			).map(
-				kaleoTaskInstanceTokenPersistence::fetchByPrimaryKey
-			).filter(
-				Objects::nonNull
-			).collect(
-				Collectors.toList()
-			),
+			(List<KaleoTaskInstanceToken>)TransformUtil.transformToList(
+				hits.getDocs(),
+				document -> {
+					KaleoTaskInstanceToken kaleoTaskInstanceToken =
+						kaleoTaskInstanceTokenPersistence.fetchByPrimaryKey(
+							GetterUtil.getLong(
+								document.get(Field.ENTRY_CLASS_PK)));
+
+					if (kaleoTaskInstanceToken == null) {
+						return null;
+					}
+
+					return kaleoTaskInstanceToken;
+				}),
 			hits.getLength());
 	}
 
@@ -970,9 +971,8 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 			return null;
 		}
 
-		return Stream.of(
-			orderByComparator.getOrderByFields()
-		).map(
+		return TransformUtil.transform(
+			orderByComparator.getOrderByFields(),
 			orderByFieldName -> {
 				String fieldName = _fieldNameOrderByCols.getOrDefault(
 					orderByFieldName, orderByFieldName);
@@ -990,10 +990,8 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 				}
 
 				return new Sort(fieldName, sortType, !ascending);
-			}
-		).toArray(
-			Sort[]::new
-		);
+			},
+			Sort.class);
 	}
 
 	private String[] _getTaskNames(String taskName) {

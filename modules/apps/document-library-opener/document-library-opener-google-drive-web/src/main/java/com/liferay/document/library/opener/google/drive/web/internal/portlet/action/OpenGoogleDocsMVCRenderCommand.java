@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
-import java.util.Optional;
-
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -61,12 +59,11 @@ public class OpenGoogleDocsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			Optional<OAuth2State> oAuth2StateOptional =
-				OAuth2StateUtil.getOAuth2StateOptional(
-					_portal.getOriginalServletRequest(
-						_portal.getHttpServletRequest(renderRequest)));
+			OAuth2State oAuth2State = OAuth2StateUtil.getOAuth2State(
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(renderRequest)));
 
-			if (!oAuth2StateOptional.isPresent()) {
+			if (oAuth2State == null) {
 				_googleDrivePortletRequestAuthorizationHelper.
 					performAuthorizationFlow(renderRequest, renderResponse);
 			}

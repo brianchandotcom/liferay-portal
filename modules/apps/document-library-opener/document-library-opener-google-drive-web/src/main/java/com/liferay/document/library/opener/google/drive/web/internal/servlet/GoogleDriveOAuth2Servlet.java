@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
-import java.util.Optional;
-
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -59,13 +57,13 @@ public class GoogleDriveOAuth2Servlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		Optional<OAuth2State> oAuth2StateOptional =
-			OAuth2StateUtil.getOAuth2StateOptional(
-				_portal.getOriginalServletRequest(httpServletRequest));
+		OAuth2State oAuth2State = OAuth2StateUtil.getOAuth2State(
+			_portal.getOriginalServletRequest(httpServletRequest));
 
-		OAuth2State oAuth2State = oAuth2StateOptional.orElseThrow(
-			() -> new IllegalStateException(
-				"Authorization oAuth2State not initialized"));
+		if (oAuth2State == null) {
+			throw new IllegalStateException(
+				"Authorization oAuth2State not initialized");
+		}
 
 		if (!OAuth2StateUtil.isValid(oAuth2State, httpServletRequest)) {
 			OAuth2StateUtil.cleanUp(httpServletRequest);

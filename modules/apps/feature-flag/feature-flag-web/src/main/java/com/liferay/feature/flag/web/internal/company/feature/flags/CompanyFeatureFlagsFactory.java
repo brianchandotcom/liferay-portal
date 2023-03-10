@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
@@ -55,12 +54,6 @@ public class CompanyFeatureFlagsFactory {
 	public CompanyFeatureFlags create(long companyId) {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
-
-			if (!GetterUtil.getBoolean(
-					PropsUtil.get(FeatureFlagConstants.getKey("LPS-167698")))) {
-
-				return new CompanyFeatureFlags(Collections.emptyMap());
-			}
 
 			Map<String, FeatureFlag> featureFlagsMap = new HashMap<>();
 

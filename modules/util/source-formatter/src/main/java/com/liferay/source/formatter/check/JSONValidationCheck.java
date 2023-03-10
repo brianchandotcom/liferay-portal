@@ -35,6 +35,8 @@ public class JSONValidationCheck extends BaseFileCheck {
 			return content;
 		}
 
+		content = _removeJSONComments(content);
+
 		try {
 			if (StringUtil.startsWith(
 					StringUtil.trim(content), StringPool.OPEN_BRACKET)) {
@@ -47,6 +49,22 @@ public class JSONValidationCheck extends BaseFileCheck {
 		}
 		catch (JSONException jsonException) {
 			addMessage(fileName, jsonException.getMessage());
+		}
+
+		return content;
+	}
+
+	private String _removeJSONComments(String content) {
+		content = content.replaceAll("\\/\\*.*?\\*\\/", "");
+
+		String[] lines = content.split("\\r?\\n");
+
+		for (String line : lines) {
+			String trimedLine = line.trim();
+
+			if (trimedLine.startsWith("//")) {
+				content = content.replace(line, "");
+			}
 		}
 
 		return content;

@@ -28,16 +28,12 @@ import com.sforce.async.JobStateEnum;
 import com.sforce.async.OperationEnum;
 import com.sforce.async.QueryResultList;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.json.CDL;
 import org.json.JSONArray;
+import org.json.JSONTokener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -135,16 +131,11 @@ public class SalesforceService {
 		JSONArray jsonArray = new JSONArray();
 
 		for (String resultId : queryResults) {
-			InputStreamReader inputStreamReader = new InputStreamReader(
+			JSONTokener jsonTokener = new JSONTokener(
 				connection.getQueryResultStream(
 					job.getId(), batchInfo.getId(), resultId));
 
-			Stream<String> bufferedReaderLines = new BufferedReader(
-				inputStreamReader
-			).lines();
-
-			jsonArray = CDL.toJSONArray(
-				bufferedReaderLines.collect(Collectors.joining("\n")));
+			jsonArray = CDL.toJSONArray(jsonTokener);
 		}
 
 		return jsonArray;

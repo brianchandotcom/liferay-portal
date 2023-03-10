@@ -14,20 +14,18 @@
 
 package com.liferay.portal.workflow.kaleo.internal.search.spi.model.index.contributor;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,25 +58,23 @@ public class KaleoInstanceModelDocumentContributor
 			"completionDate", kaleoInstance.getCompletionDate());
 		document.addKeywordSortable(
 			"currentKaleoNodeName",
-			Stream.of(
+			(String[])TransformUtil.transformToArray(
 				_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
-					kaleoInstance.getKaleoInstanceId())
-			).flatMap(
-				List::stream
-			).map(
-				KaleoInstanceToken::getCurrentKaleoNodeId
-			).map(
-				_kaleoNodeLocalService::fetchKaleoNode
-			).filter(
-				Objects::nonNull
-			).filter(
-				kaleoNode -> !Objects.equals(
-					kaleoNode.getType(), NodeType.FORK.name())
-			).map(
-				KaleoNode::getName
-			).toArray(
-				String[]::new
-			));
+					kaleoInstance.getKaleoInstanceId()),
+				kaleoInstanceToken -> {
+					KaleoNode kaleoNode = _kaleoNodeLocalService.fetchKaleoNode(
+						kaleoInstanceToken.getCurrentKaleoNodeId());
+
+					if ((kaleoNode == null) ||
+						Objects.equals(
+							kaleoNode.getType(), NodeType.FORK.name())) {
+
+						return null;
+					}
+
+					return kaleoNode.getName();
+				},
+				String.class));
 		document.addKeyword(
 			"kaleoDefinitionName", kaleoInstance.getKaleoDefinitionName());
 		document.addKeyword(

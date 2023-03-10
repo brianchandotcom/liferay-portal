@@ -559,12 +559,20 @@ public class WikiListPagesDisplayContext {
 				1);
 		}
 		else if (navigation.equals("history")) {
-			searchContainer.setResultsAndTotal(
-				() -> WikiPageLocalServiceUtil.getPages(
-					page.getNodeId(), page.getTitle(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, new PageVersionComparator()),
-				WikiPageLocalServiceUtil.getPagesCount(
-					page.getNodeId(), page.getTitle()));
+			if (_canViewPendingStatus(themeDisplay, page)) {
+				searchContainer.setResultsAndTotal(
+					() -> WikiPageLocalServiceUtil.getPages(
+						page.getNodeId(), page.getTitle(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, new PageVersionComparator()),
+					WikiPageLocalServiceUtil.getPagesCount(
+						page.getNodeId(), page.getTitle()));
+			}
+			else {
+				searchContainer.setResultsAndTotal(
+					WikiPageLocalServiceUtil.getPages(
+						page.getResourcePrimKey(), page.getNodeId(),
+						WorkflowConstants.STATUS_APPROVED));
+			}
 		}
 		else if (navigation.equals("incoming-links")) {
 			searchContainer.setResultsAndTotal(
@@ -588,6 +596,40 @@ public class WikiListPagesDisplayContext {
 				WikiPageServiceUtil.getRecentChangesCount(
 					themeDisplay.getScopeGroupId(), _wikiNode.getNodeId()));
 		}
+	}
+
+	private boolean _canViewPendingStatus(
+		ThemeDisplay themeDisplay, WikiPage page) {
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isContentReviewer(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+
+			return true;
+		}
+
+		WikiPage lastPage = null;
+
+		try {
+			lastPage = WikiPageLocalServiceUtil.getPage(
+				page.getResourcePrimKey(), false);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		if ((lastPage == null) ||
+			(page.getVersion() >= lastPage.getVersion()) ||
+			(themeDisplay.getUserId() == lastPage.getStatusByUserId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _hasSubscribePermission(WikiPage wikiPage)

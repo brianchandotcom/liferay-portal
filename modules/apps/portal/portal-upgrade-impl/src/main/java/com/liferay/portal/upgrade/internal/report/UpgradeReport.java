@@ -225,112 +225,8 @@ public class UpgradeReport {
 		return 0;
 	}
 
-	private List<TableCounts> _getDatabaseTableCounts() {
-		Map<String, Integer> finalTableRowsMap = _getTableCounts();
-
-		if ((_initialTableRowsMap == null) || (finalTableRowsMap == null)) {
-			return null;
-		}
-
-		List<TableCounts> tableCountsList = new ArrayList<>();
-
-		List<String> tableNamesList = new ArrayList<>();
-
-		tableNamesList.addAll(_initialTableRowsMap.keySet());
-		tableNamesList.addAll(finalTableRowsMap.keySet());
-
-		ListUtil.distinct(
-			tableNamesList,
-			(tableNameA, tableNameB) -> {
-				int countA = _initialTableRowsMap.getOrDefault(tableNameA, 0);
-				int countB = _initialTableRowsMap.getOrDefault(tableNameB, 0);
-
-				if (countA != countB) {
-					return countB - countA;
-				}
-
-				return tableNameA.compareTo(tableNameB);
-			});
-
-		for (String tableName : tableNamesList) {
-			int initialCount = _initialTableRowsMap.getOrDefault(tableName, -1);
-			int finalCount = finalTableRowsMap.getOrDefault(tableName, -1);
-
-			if ((initialCount <= 0) && (finalCount <= 0)) {
-				continue;
-			}
-
-			String initialRows =
-				(initialCount >= 0) ? String.valueOf(initialCount) :
-					StringPool.DASH;
-
-			String finalRows =
-				(finalCount >= 0) ? String.valueOf(finalCount) :
-					StringPool.DASH;
-
-			tableCountsList.add(
-				new TableCounts(tableName, initialRows, finalRows));
-		}
-
-		return tableCountsList;
-	}
-
 	private String _getLogContextSectionKey(String section) {
 		return "upgrade.report." + section;
-	}
-
-	private List<RunningUpgradeProcess>
-		_getLongestRunningUpgradeProcessesList() {
-
-		List<String> messages = _eventMessages.get(
-			UpgradeProcess.class.getName());
-
-		if (ListUtil.isEmpty(messages)) {
-			return new ArrayList<>();
-		}
-
-		Map<String, Integer> upgradeProcessDurationMap = new HashMap<>();
-
-		for (String message : messages) {
-			int startIndex = message.indexOf("com.");
-
-			int endIndex = message.indexOf(StringPool.SPACE, startIndex);
-
-			String className = message.substring(startIndex, endIndex);
-
-			if (className.equals(PortalUpgradeProcess.class.getName())) {
-				continue;
-			}
-
-			startIndex = message.indexOf(StringPool.SPACE, endIndex + 1);
-
-			endIndex = message.indexOf(StringPool.SPACE, startIndex + 1);
-
-			upgradeProcessDurationMap.put(
-				className,
-				GetterUtil.getInteger(message.substring(startIndex, endIndex)));
-		}
-
-		ArrayList<RunningUpgradeProcess> longestUpgradesList =
-			new ArrayList<>();
-
-		int count = 0;
-
-		for (Map.Entry<String, Integer> entry :
-				_sort(upgradeProcessDurationMap)) {
-
-			longestUpgradesList.add(
-				new RunningUpgradeProcess(
-					entry.getKey(), String.valueOf(entry.getValue())));
-
-			count++;
-
-			if (count >= _UPGRADE_PROCESSES_COUNT) {
-				break;
-			}
-		}
-
-		return longestUpgradesList;
 	}
 
 	private Map<String, Object> _getReportData(
@@ -339,7 +235,27 @@ public class UpgradeReport {
 		return LinkedHashMapBuilder.<String, Object>put(
 			"property",
 			() -> {
-				_setRootDir();
+				if (StringUtil.equals(
+						PropsValues.DL_STORE_IMPL,
+						"com.liferay.portal.store.file.system." +
+							"AdvancedFileSystemStore")) {
+
+					_rootDir = _getRootDir(
+						_CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE);
+				}
+				else if (StringUtil.equals(
+							PropsValues.DL_STORE_IMPL,
+							"com.liferay.portal.store.file.system." +
+								"FileSystemStore")) {
+
+					_rootDir = _getRootDir(
+						_CONFIGURATION_PID_FILE_SYSTEM_STORE);
+
+					if (_rootDir == null) {
+						_rootDir =
+							PropsValues.LIFERAY_HOME + "/data/document_library";
+					}
+				}
 
 				return LinkedHashMapBuilder.<String, Object>put(
 					PropsKeys.DL_STORE_IMPL, PropsValues.DL_STORE_IMPL
@@ -355,7 +271,62 @@ public class UpgradeReport {
 				).build();
 			}
 		).put(
-			"tables.initial.final.rows", _getDatabaseTableCounts()
+			"tables.initial.final.rows",
+			() -> {
+				Map<String, Integer> finalTableRowsMap = _getTableCounts();
+
+				if ((_initialTableRowsMap == null) ||
+					(finalTableRowsMap == null)) {
+
+					return null;
+				}
+
+				List<TableCounts> tableCountsList = new ArrayList<>();
+
+				List<String> tableNamesList = new ArrayList<>();
+
+				tableNamesList.addAll(_initialTableRowsMap.keySet());
+				tableNamesList.addAll(finalTableRowsMap.keySet());
+
+				ListUtil.distinct(
+					tableNamesList,
+					(tableNameA, tableNameB) -> {
+						int countA = _initialTableRowsMap.getOrDefault(
+							tableNameA, 0);
+						int countB = _initialTableRowsMap.getOrDefault(
+							tableNameB, 0);
+
+						if (countA != countB) {
+							return countB - countA;
+						}
+
+						return tableNameA.compareTo(tableNameB);
+					});
+
+				for (String tableName : tableNamesList) {
+					int initialCount = _initialTableRowsMap.getOrDefault(
+						tableName, -1);
+					int finalCount = finalTableRowsMap.getOrDefault(
+						tableName, -1);
+
+					if ((initialCount <= 0) && (finalCount <= 0)) {
+						continue;
+					}
+
+					String initialRows =
+						(initialCount >= 0) ? String.valueOf(initialCount) :
+							StringPool.DASH;
+
+					String finalRows =
+						(finalCount >= 0) ? String.valueOf(finalCount) :
+							StringPool.DASH;
+
+					tableCountsList.add(
+						new TableCounts(tableName, initialRows, finalRows));
+				}
+
+				return tableCountsList;
+			}
 		).put(
 			"database.version",
 			() -> {
@@ -422,7 +393,64 @@ public class UpgradeReport {
 			(DBUpgrader.getUpgradeTime() / Time.SECOND) + " seconds"
 		).put(
 			"longest.upgrade.processes",
-			_getLongestRunningUpgradeProcessesList()
+			() -> {
+				List<String> messages = _eventMessages.get(
+					UpgradeProcess.class.getName());
+
+				if (ListUtil.isEmpty(messages)) {
+					return new ArrayList<>();
+				}
+
+				Map<String, Integer> upgradeProcessDurationMap =
+					new HashMap<>();
+
+				for (String message : messages) {
+					int startIndex = message.indexOf("com.");
+
+					int endIndex = message.indexOf(
+						StringPool.SPACE, startIndex);
+
+					String className = message.substring(startIndex, endIndex);
+
+					if (className.equals(
+							PortalUpgradeProcess.class.getName())) {
+
+						continue;
+					}
+
+					startIndex = message.indexOf(
+						StringPool.SPACE, endIndex + 1);
+
+					endIndex = message.indexOf(
+						StringPool.SPACE, startIndex + 1);
+
+					upgradeProcessDurationMap.put(
+						className,
+						GetterUtil.getInteger(
+							message.substring(startIndex, endIndex)));
+				}
+
+				ArrayList<RunningUpgradeProcess> longestUpgradesList =
+					new ArrayList<>();
+
+				int count = 0;
+
+				for (Map.Entry<String, Integer> entry :
+						_sort(upgradeProcessDurationMap)) {
+
+					longestUpgradesList.add(
+						new RunningUpgradeProcess(
+							entry.getKey(), String.valueOf(entry.getValue())));
+
+					count++;
+
+					if (count >= _UPGRADE_PROCESSES_COUNT) {
+						break;
+					}
+				}
+
+				return longestUpgradesList;
+			}
 		).put(
 			"osgi.status",
 			() -> {
@@ -727,27 +755,6 @@ public class UpgradeReport {
 
 			ThreadContext.put(
 				key + StringPool.PERIOD + innerKey.toString(), value);
-		}
-	}
-
-	private void _setRootDir() {
-		if (StringUtil.equals(
-				PropsValues.DL_STORE_IMPL,
-				"com.liferay.portal.store.file.system." +
-					"AdvancedFileSystemStore")) {
-
-			_rootDir = _getRootDir(
-				_CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE);
-		}
-		else if (StringUtil.equals(
-					PropsValues.DL_STORE_IMPL,
-					"com.liferay.portal.store.file.system.FileSystemStore")) {
-
-			_rootDir = _getRootDir(_CONFIGURATION_PID_FILE_SYSTEM_STORE);
-
-			if (_rootDir == null) {
-				_rootDir = PropsValues.LIFERAY_HOME + "/data/document_library";
-			}
 		}
 	}
 

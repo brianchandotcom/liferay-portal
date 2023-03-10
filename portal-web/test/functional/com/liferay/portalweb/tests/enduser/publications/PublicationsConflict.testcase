@@ -255,6 +255,66 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-175305. As a publication admin, I would like to know log the conflicts that happened."
+	@priority = 4
+	test CanSeeConflictsInTheLog {
+		task ("Add Log level and Web Content") {
+			ServerAdministration.openServerAdmin();
+
+			ServerAdministration.addCategoryLogLevels(
+				categoryLevel = "INFO",
+				categoryName = "com.liferay.change.tracking.web.internal.display.context");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content content",
+				groupName = "Guest",
+				title = "Web Content Title");
+		}
+
+		task ("Create Publication 1, delete WC, create Publication 2 and Modify WC") {
+			JSONPublications.addPublication(publicationName = "Publication 1");
+
+			JSONPublications.selectPublication(publicationName = "Publication 1");
+
+			JSONWebcontent.deleteWebContent(
+				groupName = "Guest",
+				title = "Web Content Title");
+
+			JSONPublications.addPublication(publicationName = "Publication 2");
+
+			JSONPublications.selectPublication(publicationName = "Publication 2");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit",
+				webContentTitle = "Web Content Title",
+				webContentTitleEdit = "Web Content Title Edit");
+		}
+
+		task ("Publish Publication 1 and attempt to publish Publication 2") {
+			JSONPublications.selectPublication(publicationName = "Publication 1");
+
+			JSONPublications.publishPublication(publicationName = "Publication 1");
+
+			Publications.viewPublicationPublished(publicationName = "Publication 1");
+
+			JSONPublications.selectPublication(publicationName = "Publication 2");
+
+			Refresh();
+
+			PublicationsNavigator.gotoPublish(publicationName = "Publication 2");
+
+			Click(locator1 = "Publications#PUBLISH_BUTTON");
+
+			Alert.viewWarningSpecificNotPresent(warningMessage = "Your request completed successfully.");
+
+			AssertConsoleTextPresent(value1 = "Unresolved conflict with change tracking entry ID");
+		}
+	}
+
 	@priority = 5
 	test ConflictingPublicationsAutomaticallyResolved {
 

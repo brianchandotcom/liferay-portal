@@ -4,46 +4,45 @@
 	font-size: 18px;
 }
 
-.legend-container {
+.tr-legend-container {
 	list-style: none;
 
-	.legend-color-block {
-		height: 14px;
-		margin-top: 5px;
-		width: 14px;
-	}
-
-	.legend-item {
+	&__item {
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-start;
 		margin-bottom: 10px;
 
-		&-label {
-			color: $color-gray;
-			font-size: 11px;
-			font-weight: 500;
-			line-height: 1em;
-			padding-top: 5px;
-			text-transform: uppercase;
-		}
-
-		.legend-item-key {
+		&__metrics {
 			margin-left: 5px;
 			margin-right: 10px;
-		}
 
-		.legend-item-numbers {
-			.primary {
-				font-size: 1.1em;
-				font-weight: $font-header-weight;
-				line-height: 1;
+			&__metric {
+				&--value {
+					font-size: 1.1em;
+					font-weight: $font-header-weight;
+					line-height: 1;
+				}
+
+				&--percent {
+					margin-left: 2px;
+				}
+			}
+
+			&__label {
+				color: $color-gray;
+				font-size: 11px;
+				font-weight: 500;
+				line-height: 1em;
+				padding-top: 5px;
+				text-transform: uppercase;
 			}
 		}
-	}
-}
 
-.tooltip-container-chart {
-	background-color: rgba(255, 255, 255, 0.95);
-	padding: 20px;
+		&__square {
+			height: 14px;
+			margin-top: 5px;
+			width: 14px;
+		}
+	}
 }

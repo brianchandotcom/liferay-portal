@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.internal.util.RoleUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
@@ -58,8 +58,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -447,15 +445,12 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		sb.append("AND (KaleoTaskAssignmentInstance.assigneeClassPK IN (");
 
-		sb.append(
-			Stream.of(
-				assigneeClassPKs
-			).map(
-				String::valueOf
-			).collect(
-				Collectors.joining(StringPool.COMMA_AND_SPACE)
-			));
+		for (Long assigneeClassPK : assigneeClassPKs) {
+			sb.append(String.valueOf(assigneeClassPK));
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
 
+		sb.setIndex(sb.index() - 1);
 		sb.append("))");
 
 		return sb.toString();
@@ -521,15 +516,12 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		sb.append("AND (KaleoTaskInstanceToken.kaleoInstanceId IN (");
 
-		sb.append(
-			Stream.of(
-				kaleoInstanceIds
-			).map(
-				String::valueOf
-			).collect(
-				Collectors.joining(StringPool.COMMA_AND_SPACE)
-			));
+		for (Long kaleoInstanceId : kaleoInstanceIds) {
+			sb.append(String.valueOf(kaleoInstanceId));
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
 
+		sb.setIndex(sb.index() - 1);
 		sb.append("))");
 
 		return sb.toString();
@@ -738,15 +730,15 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return StringPool.BLANK;
 		}
 
-		taskNames = Stream.of(
-			taskNames
-		).map(
-			taskName -> _customSQL.keywords(taskName, false)
-		).flatMap(
-			Stream::of
-		).toArray(
-			String[]::new
-		);
+		List<String> taskNameList = new ArrayList<>();
+
+		for (String taskName : taskNames) {
+			for (String keyword : _customSQL.keywords(taskName, false)) {
+				taskNameList.add(keyword);
+			}
+		}
+
+		taskNames = taskNameList.toArray(new String[0]);
 
 		if (ArrayUtil.isEmpty(taskNames)) {
 			return StringPool.BLANK;
@@ -916,15 +908,15 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return;
 		}
 
-		taskNames = Stream.of(
-			taskNames
-		).map(
-			taskName -> _customSQL.keywords(taskName, false)
-		).flatMap(
-			Stream::of
-		).toArray(
-			String[]::new
-		);
+		List<String> taskNameList = new ArrayList<>();
+
+		for (String taskName : taskNames) {
+			for (String keyword : _customSQL.keywords(taskName, false)) {
+				taskNameList.add(keyword);
+			}
+		}
+
+		taskNames = taskNameList.toArray(new String[0]);
 
 		if (ArrayUtil.isEmpty(taskNames)) {
 			return;

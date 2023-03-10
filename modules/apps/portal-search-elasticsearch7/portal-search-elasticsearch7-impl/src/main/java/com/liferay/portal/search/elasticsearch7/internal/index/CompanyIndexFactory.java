@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -35,10 +37,8 @@ import com.liferay.portal.search.spi.settings.IndexSettingsHelper;
 import java.io.IOException;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiConsumer;
 
 import org.elasticsearch.action.ActionResponse;
@@ -51,6 +51,7 @@ import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.xcontent.XContentType;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -130,19 +131,13 @@ public class CompanyIndexFactory
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(BundleContext bundleContext) {
+		_indexContributorServiceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, IndexContributor.class);
+
 		_elasticsearchConfigurationWrapper.register(this);
 
 		_createCompanyIndexes();
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addIndexContributor(IndexContributor indexContributor) {
-		_indexContributors.add(indexContributor);
 	}
 
 	@Reference(
@@ -190,6 +185,10 @@ public class CompanyIndexFactory
 
 	@Deactivate
 	protected void deactivate() {
+		if (_indexContributorServiceTrackerList != null) {
+			_indexContributorServiceTrackerList.close();
+		}
+
 		_elasticsearchConfigurationWrapper.unregister(this);
 	}
 
@@ -222,10 +221,6 @@ public class CompanyIndexFactory
 		liferayDocumentTypeFactory.addTypeMappings(
 			indexName,
 			_elasticsearchConfigurationWrapper.additionalTypeMappings());
-	}
-
-	protected void removeIndexContributor(IndexContributor indexContributor) {
-		_indexContributors.remove(indexContributor);
 	}
 
 	protected void removeIndexSettingsContributor(
@@ -324,13 +319,17 @@ public class CompanyIndexFactory
 	}
 
 	private void _executeIndexContributorsAfterCreate(String indexName) {
-		for (IndexContributor indexContributor : _indexContributors) {
+		for (IndexContributor indexContributor :
+				_indexContributorServiceTrackerList) {
+
 			_executeIndexContributorAfterCreate(indexContributor, indexName);
 		}
 	}
 
 	private void _executeIndexContributorsBeforeRemove(String indexName) {
-		for (IndexContributor indexContributor : _indexContributors) {
+		for (IndexContributor indexContributor :
+				_indexContributorServiceTrackerList) {
+
 			_executeIndexContributorBeforeRemove(indexContributor, indexName);
 		}
 	}
@@ -480,8 +479,8 @@ public class CompanyIndexFactory
 	private volatile ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private final List<IndexContributor> _indexContributors =
-		new CopyOnWriteArrayList<>();
+	private ServiceTrackerList<IndexContributor>
+		_indexContributorServiceTrackerList;
 	private IndexNameBuilder _indexNameBuilder;
 	private final Set<IndexSettingsContributor> _indexSettingsContributors =
 		ConcurrentHashMap.newKeySet();

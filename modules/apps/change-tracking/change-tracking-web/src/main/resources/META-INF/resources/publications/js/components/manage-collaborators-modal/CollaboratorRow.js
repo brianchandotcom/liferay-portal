@@ -59,7 +59,7 @@ const CollaboratorRow = ({
 	}
 	else {
 		for (let i = 0; i < roles.length; i++) {
-			if (roles[i].value === user.roleValue) {
+			if (roles[i].value === Number.parseInt(user.roleValue, 10)) {
 				activeRole = roles[i];
 
 				break;

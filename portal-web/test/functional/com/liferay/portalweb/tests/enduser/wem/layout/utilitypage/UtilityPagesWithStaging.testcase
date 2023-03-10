@@ -51,6 +51,10 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",

@@ -48,6 +48,10 @@ definition {
 		task ("Then the page designer can add a 404 error utility page") {
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -115,6 +119,10 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "First 404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -123,6 +131,10 @@ definition {
 			PageEditor.publish();
 
 			PagesAdmin.addUtilityPage(pageName = "Second 404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -189,6 +201,10 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -225,6 +241,10 @@ definition {
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -272,6 +292,10 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -284,6 +308,11 @@ definition {
 			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
 				menuItem = "Edit",
 				pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Paragraph",
@@ -327,6 +356,10 @@ definition {
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -422,6 +455,10 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -477,6 +514,11 @@ definition {
 				menuItem = "Edit",
 				pageName = "404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Paragraph",
 				id = "element-text",
@@ -514,6 +556,10 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -546,6 +592,10 @@ definition {
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",

@@ -49,6 +49,33 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159528 LPS-156982 | Test Summary: Verify if as an Administrator I am able to add Components"
+	@priority = 5
+	test AdminCanAddComponent {
+		task ("Given that I create a new 'Component' via API") {
+			JSONTestray.addComponent(
+				componentName = ${componentName},
+				projectName = ${projectName},
+				teamName = ${teamName});
+		}
+
+		task ("When I go to Manage Component") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+		}
+
+		task ("Then the component should appear on the list") {
+			Testray.assertItemName(text = ${componentName});
+		}
+	}
+
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to add a component that does not have a team"
 	@priority = 5
 	test AdminCanAddComponentWithoutTeam {
@@ -75,8 +102,82 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159528 | Test Summary: Verify that as an Administrator I am able to edit Components while connecting a Team"
+	@priority = 5
+	test AdminCanAddTeamToComponent {
+		task ("Given that I create a new 'Component' via API") {
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
+		}
+
+		task ("When I add a new Component without a Team") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(componentName = ${componentName});
+
+			Testray.assertItemName(text = ${componentName});
+		}
+
+		task ("Then I should be able to edit the component and add a Team") {
+			Testray.editComponent(
+				componentName = ${componentName},
+				newComponentName = "Component 1 Edited",
+				newTeamName = ${teamName});
+
+			Testray.assertItemName(text = "Component 1 Edited");
+
+			Testray.assertItemName(text = ${teamName});
+		}
+	}
+
+	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an administrator I can change the team assigned to the Component"
+	@priority = 4
+	test AdminCanChangeTeamToComponent {
+		task ("Given that I create a new 'Team' and a new 'Component' via API") {
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = "Team 2");
+
+			JSONTestray.addComponent(
+				componentName = ${componentName},
+				projectName = ${projectName},
+				teamName = ${teamName});
+		}
+
+		task ("And I go to the Manage Components") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+		}
+
+		task ("When I change the component team") {
+			Testray.changeTeamToComponent(
+				currentTeam = ${teamName},
+				newTeamName = "Team 2");
+		}
+
+		task ("Then I assert that the Team has been changed") {
+			Testray.assertItemName(text = "Team 2");
+		}
+	}
+
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to delete a component that does not have a team"
-	@priority = "4"
+	@priority = 4
 	test AdminCanDeleteComponentWithoutTeam {
 		task ("Given I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -142,71 +243,6 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-159528 LPS-156982 | Test Summary: Verify if as an Administrator I am able to add Components"
-	@priority = 5
-	test AdminCanAddComponent {
-		task ("Given that I create a new 'Component' via API") {
-			JSONTestray.addComponent(
-				componentName = ${componentName},
-				projectName = ${projectName},
-				teamName = ${teamName});
-		}
-
-		task ("When I go to Manage Component") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-		}
-
-		task ("Then the component should appear on the list") {
-			Testray.assertItemName(text = ${componentName});
-		}
-	}
-
-	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an administrator I can change the team assigned to the Component"
-	@priority = "4"
-	test AdminCanChangeTeamToComponent {
-		task ("Given that I create a new 'Team' and a new 'Component' via API") {
-			JSONTestray.addTeam(
-				projectName = ${projectName},
-				teamName = "Team 2");
-
-			JSONTestray.addComponent(
-				componentName = ${componentName},
-				projectName = ${projectName},
-				teamName = ${teamName});
-		}
-
-		task ("And I go to the Manage Components") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-		}
-
-		task ("When I change the component team") {
-			Testray.changeTeamToComponent(
-				currentTeam = ${teamName},
-				newTeamName = "Team 2");
-		}
-
-		task ("Then I assert that the Team has been changed"){
-			Testray.assertItemName(text = "Team 2");
-		}
-	
-	}
-
 	@description = "Story ID: LPS-159528 | Test Summary: Verify that as an Administrator I can edit Components"
 	@priority = 4
 	test AdminCanEditComponent {
@@ -247,43 +283,6 @@ definition {
 
 		task ("Then I assert that the component was edited") {
 			Testray.assertItemName(text = "Component Edited");
-		}
-	}
-
-	@description = "Story ID: LPS-159528 | Test Summary: Verify that as an Administrator I am able to edit Components while connecting a Team"
-	@priority = 5
-	test AdminCanAddTeamToComponent {
-		task ("Given that I create a new 'Component' via API") {
-			JSONTestray.addTeam(
-				projectName = ${projectName},
-				teamName = ${teamName});
-		}
-
-		task ("When I add a new Component without a Team") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-
-			Testray.addNewComponent(componentName = ${componentName});
-
-			Testray.assertItemName(text = ${componentName});
-		}
-
-		task ("Then I should be able to edit the component and add a Team") {
-			Testray.editComponent(
-				componentName = ${componentName},
-				newComponentName = "Component 1 Edited",
-				newTeamName = ${teamName});
-
-			Testray.assertItemName(text = "Component 1 Edited");
-
-			Testray.assertItemName(text = ${teamName});
 		}
 	}
 

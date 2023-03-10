@@ -123,6 +123,19 @@ definition {
 			locator1 = "Testray#ITEMS_PER_PAGE_SELECT");
 	}
 
+	macro changeTeamToComponent {
+		TestrayContextMenu.clickContextMenuProjects(name = ${currentTeam});
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+		Select(
+			key_fieldLabel = "Team",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = ${newTeamName});
+
+		Button.clickSave();
+	}
+
 	macro checkSuccessAlertAppearsAndDisappears {
 		WaitForElementPresent(locator1 = "Message#SUCCESS");
 
@@ -215,19 +228,6 @@ definition {
 		TestrayContextMenu.clickContextMenuProjects(name = ${nameProject});
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-	}
-
-	macro changeTeamToComponent{
-		TestrayContextMenu.clickContextMenuProjects(name = ${currentTeam});
-
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
-
-		Select(
-				key_fieldLabel = "Team",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${newTeamName});
-
-		Button.clickSave();
 	}
 
 	macro editComponent {

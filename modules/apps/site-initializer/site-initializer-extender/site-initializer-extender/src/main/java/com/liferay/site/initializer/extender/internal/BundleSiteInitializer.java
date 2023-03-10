@@ -1271,7 +1271,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 							localServiceObjectDefinition.getShortName());
 
 			_objectDefinitionLocalService.enableAccountEntryRestricted(
-				localServiceObjectDefinition.getObjectDefinitionId(),
 				objectRelationship);
 		}
 

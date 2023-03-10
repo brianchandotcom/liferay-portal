@@ -481,7 +481,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public ObjectDefinition enableAccountEntryRestricted(
-			long objectDefinitionId, ObjectRelationship objectRelationship)
+			ObjectRelationship objectRelationship)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition1 = getObjectDefinition(
@@ -494,10 +494,9 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		ObjectDefinition objectDefinition2 = getObjectDefinition(
-			objectDefinitionId);
+			objectRelationship.getObjectDefinitionId2());
 
-		if (objectDefinition2.isAccountEntryRestricted() ||
-			objectDefinition2.isSystem()) {
+		if (objectDefinition2.isAccountEntryRestricted()) {
 
 			return objectDefinition2;
 		}

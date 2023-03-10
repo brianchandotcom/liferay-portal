@@ -235,9 +235,11 @@ definition {
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${newComponentName});
+		if (isSet(newComponentName)) {
+			Type(
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = ${newComponentName});
+		}
 
 		if (isSet(newTeamName)) {
 			Select(

@@ -1389,6 +1389,179 @@ definition {
 		}
 	}
 
+	@description = "LPS-176844 - Verify that the user is able to add the Formula Field when managing Custom Layout"
+	@priority = 4
+	test CanManageFormulaFieldWithLayout {
+		property custom.properties = "feature.flag.LPS-164948=true";
+
+		task ("Given: An object with a Formula Field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 176844",
+				objectName = "CustomObject176844",
+				pluralLabelName = "Custom Objects 176844");
+
+			Navigator.openURL();
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 176844");
+
+			ObjectAdmin.goToFieldsTab();
+
+			for (var valueField : list "1,2") {
+				ObjectAdmin.addObjectFieldViaUI(
+					fieldLabel = "Custom Integer Field ${valueField}",
+					fieldType = "Integer");
+			}
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Formula Field",
+				fieldType = "Formula",
+				formulaFieldOption = "Integer");
+
+			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field");
+
+			ObjectField.insertScriptOnFormulaField(scriptFormulaField = "customIntegerField1 + customIntegerField2");
+
+			Button.clickSave();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176844");
+		}
+
+		task ("Given: a layout to the object is created") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObject176844");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 176844");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = 1,
+				fieldList = "Custom Integer Field 1,Custom Integer Field 2,Custom Formula Field",
+				tabName = "Tab Test");
+
+			Button.clickSave();
+		}
+
+		task ("When: the value of the fields is added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject176844");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectAdmin.addEntryField(
+				entry = 1,
+				fieldLabel = "customIntegerField1");
+
+			ObjectAdmin.addEntryField(
+				entry = 2,
+				fieldLabel = "customIntegerField2");
+
+			PortletEntry.save();
+		}
+
+		task ("Then: the value of Formula Field should be automatically updated") {
+			AssertTextEquals(
+				key_fieldLabel = "customFormulaField",
+				locator1 = "ObjectField#OBJECT_FIELD_LABEL",
+				value1 = 3);
+		}
+	}
+
+	@description = "LPS-177428 - Verify that the user is able to add the Formula Field when managing Custom View"
+	@priority = 4
+	test CanManageFormulaFieldWithView {
+		property custom.properties = "feature.flag.LPS-164948=true";
+
+		task ("Given: An object with a Formula Field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 177428",
+				objectName = "CustomObject177428",
+				pluralLabelName = "Custom Objects 177428");
+
+			Navigator.openURL();
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 177428");
+
+			ObjectAdmin.goToFieldsTab();
+
+			for (var valueField : list "1,2") {
+				ObjectAdmin.addObjectFieldViaUI(
+					fieldLabel = "Custom Integer Field ${valueField}",
+					fieldType = "Integer");
+			}
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Formula Field",
+				fieldType = "Formula",
+				formulaFieldOption = "Integer");
+
+			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field");
+
+			ObjectField.insertScriptOnFormulaField(scriptFormulaField = "customIntegerField1 + customIntegerField2");
+
+			Button.clickSave();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject177428");
+		}
+
+		task ("Given: a view to the object is created") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "View Name");
+
+			ObjectCustomViews.goToViewsDetails(label = "View Name");
+
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Integer Field 1,Custom Integer Field 2,Custom Formula Field");
+
+			PortletEntry.save();
+		}
+
+		task ("When: the value of the fields is added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject177428");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectAdmin.addEntryField(
+				entry = 1,
+				fieldLabel = "customIntegerField1");
+
+			ObjectAdmin.addEntryField(
+				entry = 2,
+				fieldLabel = "customIntegerField2");
+
+			PortletEntry.save();
+		}
+
+		task ("Then: the value of Formula Field should be automatically updated") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject177428");
+
+			task ("Then: the value of Formula Field should be automatically updated") {
+				AssertTextEquals(
+					key_column = 3,
+					key_line = 1,
+					locator1 = "ObjectField#VIEW_TABLE_CONTENT",
+					value1 = 3);
+			}
+		}
+	}
+
 	@description = "LPS-176851 - Verify that formula fields can be mapped on the page builder framework"
 	@priority = 4
 	test CanMappedFormulaFieldOnPages {
@@ -1481,95 +1654,6 @@ definition {
 				key_column = 2,
 				key_line = 1,
 				locator1 = "ObjectField#VIEW_TABLE_CONTENT",
-				value1 = 3);
-		}
-	}
-
-	@description = "LPS-176844 - Verify that the user is able to add the Formula Field when managing Custom Layout"
-	@priority = 4
-	test CanManageFormulaFieldWithLayout {
-		property custom.properties = "feature.flag.LPS-164948=true";
-
-		task ("Given: An object with a Formula Field is created") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 176844",
-				objectName = "CustomObject176844",
-				pluralLabelName = "Custom Objects 176844");
-
-			Navigator.openURL();
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 176844");
-
-			ObjectAdmin.goToFieldsTab();
-
-			for (var valueField : list "1,2") {
-				ObjectAdmin.addObjectFieldViaUI(
-					fieldLabel = "Custom Integer Field ${valueField}",
-					fieldType = "Integer");
-			}
-
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Custom Formula Field",
-				fieldType = "Formula",
-				formulaFieldOption = "Integer");
-
-			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field");
-
-			ObjectField.insertScriptOnFormulaField(scriptFormulaField = "customIntegerField1 + customIntegerField2");
-
-			Button.clickSave();
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176844");
-		}
-
-		task ("Given: a layout to the object is created") {
-			ObjectAdmin.addObjectLayoutViaAPI(
-				layoutName = "Layout Name",
-				objectName = "CustomObject176844");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 176844");
-
-			ObjectAdmin.goToLayoutsTab();
-
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
-
-			ObjectAdmin.markLayoutAsDefault();
-
-			ObjectAdmin.goToLayoutTabOnLayouts();
-
-			ObjectAdmin.addTabFieldsOnLayout(
-				blockName = "Block 1",
-				columnsNumber = 1,
-				fieldList = "Custom Integer Field 1,Custom Integer Field 2,Custom Formula Field",
-				tabName = "Tab Test");
-
-			Button.clickSave();
-		}
-
-		task ("When: the value of the fields is added") {
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject176844");
-
-			LexiconEntry.gotoAdd();
-
-			ObjectAdmin.addEntryField(
-				entry = 1,
-				fieldLabel = "customIntegerField1");
-
-			ObjectAdmin.addEntryField(
-				entry = 2,
-				fieldLabel = "customIntegerField2");
-
-			PortletEntry.save();
-		}
-
-		task ("Then: the value of Formula Field should be automatically updated") {
-			AssertTextEquals(
-				key_fieldLabel = "customFormulaField",
-				locator1 = "ObjectField#OBJECT_FIELD_LABEL",
 				value1 = 3);
 		}
 	}

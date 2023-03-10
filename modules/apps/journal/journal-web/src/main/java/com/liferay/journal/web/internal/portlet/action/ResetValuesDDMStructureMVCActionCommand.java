@@ -46,11 +46,11 @@ public class ResetValuesDDMStructureMVCActionCommand
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
-		String ddmStructureKey = ParamUtil.getString(
-			actionRequest, "ddmStructureKey");
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
 
 		_journalArticleService.deleteArticleDefaultValues(
-			groupId, articleId, ddmStructureKey);
+			groupId, articleId, ddmStructureId);
 	}
 
 	@Reference

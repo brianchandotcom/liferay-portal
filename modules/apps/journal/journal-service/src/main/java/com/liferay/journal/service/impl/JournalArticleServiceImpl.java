@@ -507,19 +507,17 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	@Override
 	public void deleteArticleDefaultValues(
-			long groupId, String articleId, String ddmStructureKey)
+			long groupId, String articleId, long ddmStructureId)
 		throws PortalException {
 
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
-			groupId,
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			ddmStructureKey, true);
+			ddmStructureId);
 
 		_ddmStructureModelResourcePermission.contains(
 			getPermissionChecker(), ddmStructure, ActionKeys.UPDATE);
 
 		journalArticleLocalService.deleteArticleDefaultValues(
-			groupId, articleId, ddmStructureKey);
+			groupId, articleId, ddmStructureId);
 	}
 
 	/**

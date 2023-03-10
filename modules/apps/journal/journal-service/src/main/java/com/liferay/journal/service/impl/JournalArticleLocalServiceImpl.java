@@ -1528,12 +1528,12 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public void deleteArticleDefaultValues(
-			long groupId, String articleId, String ddmStructureKey)
+			long groupId, String articleId, long ddmStructureId)
 		throws PortalException {
 
 		// Dynamic data mapping
 
-		_deleteDDMStructurePredefinedValues(groupId, ddmStructureKey);
+		_deleteDDMStructurePredefinedValues(ddmStructureId);
 
 		journalArticleLocalService.deleteArticle(groupId, articleId, null);
 	}
@@ -8678,14 +8678,11 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	private void _deleteDDMStructurePredefinedValues(
-			long groupId, String ddmStructureKey)
+	private void _deleteDDMStructurePredefinedValues(long ddmStructureId)
 		throws PortalException {
 
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-			groupId,
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			ddmStructureKey, true);
+			ddmStructureId);
 
 		if (ddmStructure == null) {
 			return;

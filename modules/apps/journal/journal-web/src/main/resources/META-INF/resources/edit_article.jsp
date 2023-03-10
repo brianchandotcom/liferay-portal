@@ -95,7 +95,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="groupId" value="<%= String.valueOf(journalEditArticleDisplayContext.getGroupId()) %>" />
 								<portlet:param name="articleId" value="<%= journalEditArticleDisplayContext.getArticleId() %>" />
-								<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
+								<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
 							</portlet:actionURL>
 
 							<aui:button cssClass="btn-sm mr-3" data-url="<%= resetValuesDDMStructureURL %>" name="resetValuesButton" value="reset-values" />

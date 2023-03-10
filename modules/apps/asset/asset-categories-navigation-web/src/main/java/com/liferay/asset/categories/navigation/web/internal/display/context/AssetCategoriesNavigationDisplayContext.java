@@ -113,15 +113,8 @@ public class AssetCategoriesNavigationDisplayContext {
 			return _availableAssetVocabularyIds;
 		}
 
-		List<AssetVocabulary> assetVocabularies = getAssetVocabularies();
-
-		_availableAssetVocabularyIds = new long[assetVocabularies.size()];
-
-		for (int i = 0; i < assetVocabularies.size(); i++) {
-			AssetVocabulary assetVocabulary = assetVocabularies.get(i);
-
-			_availableAssetVocabularyIds[i] = assetVocabulary.getVocabularyId();
-		}
+		_availableAssetVocabularyIds = TransformUtil.transformToLongArray(
+			getAssetVocabularies(), AssetVocabulary::getVocabularyId);
 
 		return _availableAssetVocabularyIds;
 	}

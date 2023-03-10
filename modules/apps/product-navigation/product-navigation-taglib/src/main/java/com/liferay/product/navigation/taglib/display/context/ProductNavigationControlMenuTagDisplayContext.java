@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -206,10 +207,12 @@ public class ProductNavigationControlMenuTagDisplayContext {
 			boolean useList, Writer writer)
 		throws Exception {
 
+		HttpServletResponse httpServletResponse =
+			PipingServletResponseFactory.createPipingServletResponse(
+				_pageContext);
+
 		if (productNavigationControlMenuEntry.includeIcon(
-				_httpServletRequest,
-				PipingServletResponseFactory.createPipingServletResponse(
-					_pageContext))) {
+				_httpServletRequest, httpServletResponse)) {
 
 			return;
 		}
@@ -246,7 +249,8 @@ public class ProductNavigationControlMenuTagDisplayContext {
 		iconTag.setUrl(
 			productNavigationControlMenuEntry.getURL(_httpServletRequest));
 
-		writer.append(iconTag.doTagAsString(_pageContext));
+		writer.append(
+			iconTag.doTagAsString(_httpServletRequest, httpServletResponse));
 
 		if (useList) {
 			writer.append("</li>");

@@ -360,7 +360,8 @@ public class UpgradeReport {
 				}
 
 				if (_rootDir == null) {
-					return "Unable to determine. \"rootDir\" was not set";
+					return "Unable to determine. Document library " +
+						"\"rootDir\" was not set";
 				}
 
 				double bytes = 0;

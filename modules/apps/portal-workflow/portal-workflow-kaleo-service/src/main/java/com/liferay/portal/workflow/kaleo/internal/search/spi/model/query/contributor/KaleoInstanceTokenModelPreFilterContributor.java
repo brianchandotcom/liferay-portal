@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -34,8 +35,6 @@ import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenQ
 import java.text.Format;
 
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,18 +84,11 @@ public class KaleoInstanceTokenModelPreFilterContributor
 			Field.CLASS_NAME_ID);
 
 		classNameIdsTermsFilter.addValues(
-			Stream.of(
-				WorkflowHandlerRegistryUtil.getWorkflowHandlers()
-			).flatMap(
-				List::stream
-			).map(
-				workflowHandler -> portal.getClassNameId(
-					workflowHandler.getClassName())
-			).map(
-				String::valueOf
-			).toArray(
-				String[]::new
-			));
+			TransformUtil.transformToArray(
+				WorkflowHandlerRegistryUtil.getWorkflowHandlers(),
+				workflowHandler -> String.valueOf(
+					portal.getClassNameId(workflowHandler.getClassName())),
+				String.class));
 
 		booleanFilter.add(classNameIdsTermsFilter, BooleanClauseOccur.MUST);
 	}

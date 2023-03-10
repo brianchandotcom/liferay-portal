@@ -2336,6 +2336,8 @@ public class SXPBlueprintSearchResultTest {
 			_searchRequestBuilderFactory.builder(
 			).companyId(
 				TestPropsValues.getCompanyId()
+			).emptySearchEnabled(
+				true
 			).queryString(
 				_keywords
 			).withSearchContext(
@@ -2367,6 +2369,8 @@ public class SXPBlueprintSearchResultTest {
 			_searchRequestBuilderFactory.builder(
 			).companyId(
 				TestPropsValues.getCompanyId()
+			).emptySearchEnabled(
+				true
 			).queryString(
 				_keywords
 			).withSearchContext(

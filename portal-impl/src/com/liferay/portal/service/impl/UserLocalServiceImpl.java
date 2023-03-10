@@ -323,8 +323,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
 			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+			UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds,
+			userGroupIds, sendEmail, serviceContext);
 
 		if (autoPassword) {
 			defaultAdminUser.setReminderQueryAnswer(
@@ -679,9 +680,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, locale, firstName,
 				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-				birthdayMonth, birthdayDay, birthdayYear, jobTitle, new long[0],
-				new long[0], new long[0], new long[0], sendEmail,
-				serviceContext);
+				birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+				UserConstants.TYPE_REGULAR, new long[0], new long[0],
+				new long[0], new long[0], sendEmail, serviceContext);
 
 			user.setExternalReferenceCode(externalReferenceCode);
 

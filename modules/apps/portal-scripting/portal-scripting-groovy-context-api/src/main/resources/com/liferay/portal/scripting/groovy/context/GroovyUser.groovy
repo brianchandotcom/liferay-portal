@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
@@ -116,10 +117,10 @@ class GroovyUser {
 		user = UserLocalServiceUtil.addUser(
 			groovyScriptingContext.defaultUserId,
 			groovyScriptingContext.companyId, false, password, password, true,
-			null, emailAddress, 0, null, LocaleUtil.getDefault(), firstName,
-			null, lastName, -1, -1, true, 1, 1, 1977, jobTitle, new long[0],
-			new long[0], new long[0], new long[0], false,
-			groovyScriptingContext.serviceContext);
+			null, emailAddress, LocaleUtil.getDefault(), firstName, null,
+			lastName, -1, -1, true, 1, 1, 1977, jobTitle,
+			UserConstants.TYPE_REGULAR, new long[0], new long[0], new long[0],
+			new long[0], false, groovyScriptingContext.serviceContext);
 
 		if (resetPassword) {
 			updatePasswordReset(resetPassword);

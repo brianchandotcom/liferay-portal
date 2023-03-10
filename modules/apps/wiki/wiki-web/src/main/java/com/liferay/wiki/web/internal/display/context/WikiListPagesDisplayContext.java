@@ -20,10 +20,8 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,6 +56,7 @@ import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
+import com.liferay.wiki.model.WikiPageTable;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
@@ -559,33 +558,25 @@ public class WikiListPagesDisplayContext {
 						_wikiNode.getNodeId(), wikiPageStatus));
 			}
 			else {
-				DynamicQuery dynamicQuery =
-					WikiPageLocalServiceUtil.dynamicQuery();
-
-				Property groupIdProperty = PropertyFactoryUtil.forName(
-					"groupId");
-
-				dynamicQuery.add(
-					groupIdProperty.eq(themeDisplay.getScopeGroupId()));
-
-				Property statusByUserIdProperty = PropertyFactoryUtil.forName(
-					"statusByUserId");
-
-				dynamicQuery.add(
-					statusByUserIdProperty.eq(wikiPageDraftUserId));
-
-				Property nodeIdProperty = PropertyFactoryUtil.forName("nodeId");
-
-				dynamicQuery.add(nodeIdProperty.eq(_wikiNode.getNodeId()));
-
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				dynamicQuery.add(statusProperty.eq(wikiPageStatus));
-
 				searchContainer.setResultsAndTotal(
-					WikiPageLocalServiceUtil.dynamicQuery(
-						dynamicQuery, searchContainer.getStart(),
-						searchContainer.getEnd()));
+					(List<WikiPage>)WikiPageLocalServiceUtil.dslQuery(
+						DSLQueryFactoryUtil.select(
+							WikiPageTable.INSTANCE
+						).from(
+							WikiPageTable.INSTANCE
+						).where(
+							WikiPageTable.INSTANCE.groupId.eq(
+								themeDisplay.getScopeGroupId()
+							).and(
+								WikiPageTable.INSTANCE.statusByUserId.eq(
+									wikiPageDraftUserId)
+							).and(
+								WikiPageTable.INSTANCE.nodeId.eq(
+									_wikiNode.getNodeId())
+							).and(
+								WikiPageTable.INSTANCE.status.eq(wikiPageStatus)
+							)
+						)));
 			}
 		}
 		else if (navigation.equals("frontpage")) {

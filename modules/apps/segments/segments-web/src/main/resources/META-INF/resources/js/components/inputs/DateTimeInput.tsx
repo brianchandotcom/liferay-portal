@@ -14,7 +14,7 @@
 
 import ClayDatePicker from '@clayui/date-picker';
 import {format, isValid, parse} from 'date-fns';
-import {default as React, useRef, useState} from 'react';
+import {default as React, useEffect, useRef, useState} from 'react';
 
 import {PROPERTY_TYPES} from '../../utils/constants';
 
@@ -41,15 +41,25 @@ function DateTimeInput({
 	propertyLabel,
 	propertyType,
 	range,
-	value: initialValue,
+	value,
 }: Props) {
 	const [expanded, setExpanded] = useState(false);
 
 	const [displayDate, setDisplayDate] = useState<DateRange | string>(() =>
-		transformDate(initialValue || new Date().toISOString(), toDisplayDate)
+		transformDate(value || new Date().toISOString(), toDisplayDate)
 	);
 
 	const previousDisplayDateRef = useRef(displayDate);
+
+	useEffect(() => {
+		const nextDisplayDate = transformDate(
+			value || new Date().toISOString(),
+			toDisplayDate
+		);
+
+		previousDisplayDateRef.current = nextDisplayDate;
+		setDisplayDate(nextDisplayDate);
+	}, [value]);
 
 	const saveDateTimeValue = () => {
 		const internalDate = transformDate(

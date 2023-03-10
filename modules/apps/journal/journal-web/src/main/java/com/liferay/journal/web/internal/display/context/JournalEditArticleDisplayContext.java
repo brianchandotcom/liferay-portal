@@ -478,12 +478,14 @@ public class JournalEditArticleDisplayContext {
 			return _ddmStructureKey;
 		}
 
-		_ddmStructureKey = ParamUtil.getString(
+		String ddmStructureKey = ParamUtil.getString(
 			_httpServletRequest, "ddmStructureKey");
 
-		if (Validator.isNull(_ddmStructureKey) && (_article != null)) {
-			_ddmStructureKey = _article.getDDMStructureKey();
+		if (Validator.isNull(ddmStructureKey) && (_article != null)) {
+			ddmStructureKey = _article.getDDMStructureKey();
 		}
+
+		_ddmStructureKey = ddmStructureKey;
 
 		return _ddmStructureKey;
 	}

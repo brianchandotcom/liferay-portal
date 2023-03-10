@@ -31,16 +31,47 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isModulesApp(absolutePath, false) || !_hasBNDFile(absolutePath) ||
-			GradleSourceUtil.isSpringBootExecutable(content)) {
-
-			return content;
-		}
-
 		List<String> blocks = GradleSourceUtil.getDependenciesBlocks(content);
 
 		for (String dependencies : blocks) {
-			content = _formatDependencies(content, dependencies);
+			if (isModulesApp(absolutePath, false) &&
+				_hasBNDFile(absolutePath) &&
+				!GradleSourceUtil.isSpringBootExecutable(content)) {
+
+				content = _formatDependencies(content, dependencies);
+			}
+
+			if (absolutePath.contains("/third-party/")) {
+				content = _fixTransitive(content, dependencies);
+			}
+		}
+
+		return content;
+	}
+
+	private String _fixTransitive(String content, String dependencies) {
+		int x = dependencies.indexOf("\n");
+		int y = dependencies.lastIndexOf("\n");
+
+		if (x == y) {
+			return content;
+		}
+
+		dependencies = dependencies.substring(x, y + 1);
+
+		for (String oldDependency : StringUtil.splitLines(dependencies)) {
+			String configuration = GradleSourceUtil.getConfiguration(
+				oldDependency);
+			String newDependency = oldDependency;
+
+			if (configuration.equals("compileOnly") &&
+				!oldDependency.contains("transitive: false")) {
+
+				newDependency = oldDependency + ", transitive: false";
+
+				content = StringUtil.replaceFirst(
+					content, oldDependency, newDependency);
+			}
 		}
 
 		return content;

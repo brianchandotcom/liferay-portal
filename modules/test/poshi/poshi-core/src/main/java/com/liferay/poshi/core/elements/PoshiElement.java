@@ -1101,7 +1101,7 @@ public abstract class PoshiElement
 
 	protected static final String NONQUOTED_REGEX = "(\\$\\{.*\\}|\\d+)";
 
-	protected static final String PARAMETER_REGEX = "\\(.*\\)";
+	protected static final String PARAMETER_REGEX = "\\((.*?|.*)\\)";
 
 	protected static final String QUOTED_REGEX = "\".*\"";
 
@@ -1126,7 +1126,7 @@ public abstract class PoshiElement
 		varInvocationAssignmentStatementPattern = Pattern.compile(
 			"^" + VAR_NAME_REGEX + ASSIGNMENT_REGEX + INVOCATION_REGEX +
 				VAR_STATEMENT_END_REGEX,
-			Pattern.DOTALL);
+			Pattern.DOTALL | Pattern.MULTILINE);
 	}
 
 	private void _addAttributes(Element element) {

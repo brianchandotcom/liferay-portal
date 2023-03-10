@@ -62,9 +62,6 @@ public class PartnerEnableWebSecurity {
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
-		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource =
-			new UrlBasedCorsConfigurationSource();
-
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 
 		corsConfiguration.setAllowedHeaders(
@@ -73,6 +70,9 @@ public class PartnerEnableWebSecurity {
 			Arrays.asList(
 				"DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"));
 		corsConfiguration.setAllowedOrigins(_getAllowedOrigins());
+
+		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource =
+			new UrlBasedCorsConfigurationSource();
 
 		urlBasedCorsConfigurationSource.registerCorsConfiguration(
 			"/**", corsConfiguration);

@@ -35,6 +35,7 @@ const pageApplicationId = PAGE;
  */
 
 function dxp(analytics) {
+	const Liferay = window.Liferay;
 
 	/**
 	 * Sends view duration information on the window unload event
@@ -88,7 +89,7 @@ function dxp(analytics) {
 		return mode === PARAM_VIEW_MODE;
 	}
 
-	if (window.Liferay) {
+	if (Liferay) {
 		const searchParams = getSearchParams();
 
 		if (
@@ -99,7 +100,7 @@ function dxp(analytics) {
 			return analytics._disposeInternal();
 		}
 
-		if (window.Liferay.SPA) {
+		if (Liferay.SPA) {
 			const loadingStartMarks = window.performance.getEntriesByName(
 				MARK_LOAD_EVENT_START
 			);
@@ -113,14 +114,14 @@ function dxp(analytics) {
 				);
 
 				createMark(MARK_LOAD_EVENT_START);
-				window.Liferay.on('beforeNavigate', createLoadMark);
+				Liferay.on('beforeNavigate', createLoadMark);
 			}
 
 			if (document.readyState === 'complete') {
 				sendLoadEvent();
 			}
 
-			window.Liferay.once('beforeNavigate', sendUnloadEvent);
+			Liferay.once('beforeNavigate', sendUnloadEvent);
 		}
 	}
 }

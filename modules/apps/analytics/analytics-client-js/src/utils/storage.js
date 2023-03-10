@@ -15,9 +15,22 @@
 import ProcessLock from 'browser-tabs-lock';
 
 const getItem = (key) => {
+	const Liferay = window.Liferay;
 	let data;
-	const item = localStorage.getItem(key);
+
 	try {
+		let item;
+
+		if (Liferay && Liferay.Util && Liferay.Util.LocalStorage) {
+			item = Liferay.Util.LocalStorage.getItem(
+				key,
+				Liferay.Util.LocalStorage.TYPES.PERSONALIZATION
+			);
+		}
+		else {
+			item = localStorage.getItem(key);
+		}
+
 		data = JSON.parse(item);
 	}
 	catch (error) {
@@ -28,8 +41,38 @@ const getItem = (key) => {
 };
 
 const setItem = (key, value) => {
+	const Liferay = window.Liferay;
+
 	try {
-		localStorage.setItem(key, JSON.stringify(value));
+		if (Liferay && Liferay.Util && Liferay.Util.LocalStorage) {
+			Liferay.Util.LocalStorage.setItem(
+				key,
+				JSON.stringify(value),
+				Liferay.Util.LocalStorage.TYPES.PERSONALIZATION
+			);
+		}
+		else {
+			localStorage.setItem(key, JSON.stringify(value));
+		}
+	}
+	catch (error) {
+		return;
+	}
+};
+
+const removeItem = (key) => {
+	const Liferay = window.Liferay;
+
+	try {
+		if (Liferay && Liferay.Util && Liferay.Util.LocalStorage) {
+			Liferay.Util.LocalStorage.removeItem(
+				key,
+				Liferay.Util.LocalStorage.TYPES.PERSONALIZATION
+			);
+		}
+		else {
+			localStorage.removeItem(key);
+		}
 	}
 	catch (error) {
 		return;
@@ -79,4 +122,10 @@ const verifyStorageLimitForKey = (storageKey, limit) => {
 	});
 };
 
-export {getItem, getStorageSizeInKb, setItem, verifyStorageLimitForKey};
+export {
+	getItem,
+	getStorageSizeInKb,
+	removeItem,
+	setItem,
+	verifyStorageLimitForKey,
+};

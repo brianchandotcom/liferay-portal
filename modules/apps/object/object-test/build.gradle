@@ -1,10 +1,12 @@
 dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "org.apache.commons", name: "commons-lang3", version: "3.11"
 	testIntegrationCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationCompile project(":apps:account:account-api")
 	testIntegrationCompile project(":apps:asset:asset-api")
 	testIntegrationCompile project(":apps:depot:depot-api")
 	testIntegrationCompile project(":apps:frontend-taglib:frontend-taglib")
+	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:list-type:list-type-api")
 	testIntegrationCompile project(":apps:notification:notification-api")
 	testIntegrationCompile project(":apps:object:object-admin-rest-api")

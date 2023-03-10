@@ -69,8 +69,6 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -355,16 +353,15 @@ public class SiteNavigationMenuItemDisplayPageTest {
 		Locale defaultLocale = _portal.getSiteDefaultLocale(
 			_group.getGroupId());
 
-		Set<Locale> locales = LanguageUtil.getAvailableLocales();
+		Locale nondefaultLocale = null;
 
-		Stream<Locale> stream = locales.stream();
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			if (!Objects.equals(defaultLocale, locale)) {
+				nondefaultLocale = locale;
 
-		Locale nondefaultLocale = stream.filter(
-			locale -> !Objects.equals(defaultLocale, locale)
-		).findFirst(
-		).orElse(
-			null
-		);
+				break;
+			}
+		}
 
 		Assert.assertNotNull(nondefaultLocale);
 
@@ -396,16 +393,15 @@ public class SiteNavigationMenuItemDisplayPageTest {
 		Locale defaultLocale = _portal.getSiteDefaultLocale(
 			_group.getGroupId());
 
-		Set<Locale> locales = LanguageUtil.getAvailableLocales();
+		Locale nontranslatedLocale = null;
 
-		Stream<Locale> stream = locales.stream();
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			if (!Objects.equals(defaultLocale, locale)) {
+				nontranslatedLocale = locale;
 
-		Locale nontranslatedLocale = stream.filter(
-			locale -> !Objects.equals(defaultLocale, locale)
-		).findFirst(
-		).orElse(
-			null
-		);
+				break;
+			}
+		}
 
 		Assert.assertNotNull(nontranslatedLocale);
 

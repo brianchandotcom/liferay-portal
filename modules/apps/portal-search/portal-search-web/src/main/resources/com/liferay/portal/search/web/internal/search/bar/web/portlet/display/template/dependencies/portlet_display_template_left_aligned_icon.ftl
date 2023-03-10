@@ -43,6 +43,7 @@
 
 			<@liferay_aui.input
 				autoFocus=true
+				autocomplete="off"
 				cssClass="search-bar-keywords-input"
 				data=data
 				label=""
@@ -57,6 +58,7 @@
 		<#else>
 			<div class="input-group-item search-bar-keywords-input-wrapper">
 				<input
+					autocomplete="off"
 					class="form-control input-group-inset input-group-inset-before search-bar-keywords-input"
 					data-qa-id="searchInput"
 					id="${namespace + stringUtil.randomId()}"

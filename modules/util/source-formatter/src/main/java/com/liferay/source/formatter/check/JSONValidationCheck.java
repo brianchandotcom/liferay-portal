@@ -55,7 +55,7 @@ public class JSONValidationCheck extends BaseFileCheck {
 	}
 
 	private String _removeJSONComments(String content) {
-		content = content.replaceAll("\\/\\*.*?\\*\\/", "");
+		content = content.replaceAll("\\/\\*\\s+.+\\s+\\*\\/", "");
 
 		String[] lines = content.split("\\r?\\n");
 

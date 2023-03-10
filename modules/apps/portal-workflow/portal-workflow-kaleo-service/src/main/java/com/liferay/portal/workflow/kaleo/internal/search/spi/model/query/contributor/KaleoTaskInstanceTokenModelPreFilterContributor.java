@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -66,8 +67,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -165,18 +164,11 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			Field.CLASS_NAME_ID);
 
 		classNameIdsTermsFilter.addValues(
-			Stream.of(
-				WorkflowHandlerRegistryUtil.getWorkflowHandlers()
-			).flatMap(
-				List::stream
-			).map(
-				workflowHandler -> portal.getClassNameId(
-					workflowHandler.getClassName())
-			).map(
-				String::valueOf
-			).toArray(
-				String[]::new
-			));
+			TransformUtil.transformToArray(
+				WorkflowHandlerRegistryUtil.getWorkflowHandlers(),
+				workflowHandler -> String.valueOf(
+					portal.getClassNameId(workflowHandler.getClassName())),
+				String.class));
 
 		booleanFilter.add(classNameIdsTermsFilter, BooleanClauseOccur.MUST);
 	}
@@ -234,13 +226,8 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			Field.CLASS_PK);
 
 		assetPrimaryKeyTermsFilter.addValues(
-			Stream.of(
-				assetPrimaryKeys
-			).map(
-				String::valueOf
-			).toArray(
-				String[]::new
-			));
+			TransformUtil.transform(
+				assetPrimaryKeys, String::valueOf, String.class));
 
 		booleanFilter.add(assetPrimaryKeyTermsFilter, BooleanClauseOccur.MUST);
 	}
@@ -303,13 +290,8 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS);
 
 		assigneeClassPKsTermsFilter.addValues(
-			Stream.of(
-				assigneeClassPKs
-			).map(
-				String::valueOf
-			).toArray(
-				String[]::new
-			));
+			TransformUtil.transform(
+				assigneeClassPKs, String::valueOf, String.class));
 
 		booleanFilter.add(assigneeClassPKsTermsFilter);
 	}
@@ -379,13 +361,8 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			KaleoTaskInstanceTokenField.KALEO_INSTANCE_ID);
 
 		kaleoInstanceIdsTermsFilter.addValues(
-			Stream.of(
-				kaleoInstanceIds
-			).map(
-				String::valueOf
-			).toArray(
-				String[]::new
-			));
+			TransformUtil.transform(
+				kaleoInstanceIds, String::valueOf, String.class));
 
 		booleanFilter.add(kaleoInstanceIdsTermsFilter, BooleanClauseOccur.MUST);
 	}
@@ -411,15 +388,8 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS);
 
 		assigneeClassPKsTermsFilter.addValues(
-			Stream.of(
-				roleIds
-			).flatMap(
-				List::stream
-			).map(
-				String::valueOf
-			).toArray(
-				String[]::new
-			));
+			TransformUtil.transformToArray(
+				roleIds, String::valueOf, String.class));
 
 		booleanFilter.add(assigneeClassPKsTermsFilter, BooleanClauseOccur.MUST);
 	}
@@ -553,15 +523,8 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS);
 
 		assigneeClassPKsTermsFilter.addValues(
-			Stream.of(
-				roleIds
-			).flatMap(
-				List::stream
-			).map(
-				String::valueOf
-			).toArray(
-				String[]::new
-			));
+			TransformUtil.transformToArray(
+				roleIds, String::valueOf, String.class));
 
 		roleClassPKBooleanFilter.add(assigneeClassPKsTermsFilter);
 
@@ -587,15 +550,8 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 					KaleoTaskInstanceTokenField.ASSIGNEE_GROUP_IDS);
 
 				assigneeGroupIdsTermsFilter.addValues(
-					Stream.of(
-						entry.getValue()
-					).flatMap(
-						Set::stream
-					).map(
-						String::valueOf
-					).toArray(
-						String[]::new
-					));
+					TransformUtil.transformToArray(
+						entry.getValue(), String::valueOf, String.class));
 
 				roleIdGroupIdsBooleanFilter.add(
 					assigneeGroupIdsTermsFilter, BooleanClauseOccur.MUST);
@@ -665,13 +621,7 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 					roleLocalService.getGroupRoles(group.getGroupId()));
 			}
 
-			Stream<Role> stream = roles.parallelStream();
-
-			return stream.map(
-				Role::getRoleId
-			).collect(
-				Collectors.toList()
-			);
+			return TransformUtil.transform(roles, Role::getRoleId);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

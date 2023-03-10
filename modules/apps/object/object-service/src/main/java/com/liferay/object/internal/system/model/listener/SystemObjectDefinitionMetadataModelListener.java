@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -107,9 +108,15 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 	@Override
 	public void onBeforeRemove(T baseModel) throws ModelListenerException {
 		try {
+			boolean active = CacheRegistryUtil.isActive();
+
+			CacheRegistryUtil.setActive(false);
+
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 					_getCompanyId(baseModel), _modelClass.getName());
+
+			CacheRegistryUtil.setActive(active);
 
 			if (objectDefinition == null) {
 				return;

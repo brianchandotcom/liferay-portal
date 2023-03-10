@@ -132,7 +132,7 @@ definition {
 				parameter = "restrictFields",
 				parameterValue = "actions,assetLibraryKey,assetTypes,availableLanguages,creator,dateCreated,dateModified,description,externalReferenceCode,id,numberOfTaxonomyCategories");
 
-			var taxonomyVocabularyName = JSONUtil.getWithJSONPath(${response}, "$.name");
+			var taxonomyVocabularyName = JSONUtil.getWithJSONPath(${response}, "$..name");
 		}
 
 		task ("Then in a response I receive a with name field values only") {

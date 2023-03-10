@@ -18,16 +18,14 @@ import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.util.comparator.DataProviderInstanceNameComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -39,7 +37,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -64,7 +61,7 @@ public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 	protected void doGet(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException {
+		throws IOException {
 
 		JSONArray dataProviderInstancesJSONArray =
 			_getDataProviderInstancesJSONArray(httpServletRequest);
@@ -85,77 +82,64 @@ public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 	private JSONArray _getDataProviderInstancesJSONArray(
 		HttpServletRequest httpServletRequest) {
 
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			String languageId = ParamUtil.getString(
-				httpServletRequest, "languageId", themeDisplay.getLanguageId());
+		String languageId = ParamUtil.getString(
+			httpServletRequest, "languageId", themeDisplay.getLanguageId());
 
-			Locale locale = LocaleUtil.fromLanguageId(languageId);
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			long scopeGroupId = ParamUtil.getLong(
-				httpServletRequest, "scopeGroupId",
-				themeDisplay.getScopeGroupId());
+		long scopeGroupId = ParamUtil.getLong(
+			httpServletRequest, "scopeGroupId", themeDisplay.getScopeGroupId());
 
-			Group scopeGroup = themeDisplay.getScopeGroup();
+		Group scopeGroup = themeDisplay.getScopeGroup();
 
-			if (scopeGroup.isStagingGroup()) {
-				scopeGroupId = scopeGroup.getLiveGroupId();
-			}
+		if (scopeGroup.isStagingGroup()) {
+			scopeGroupId = scopeGroup.getLiveGroupId();
+		}
 
-			long[] groupIds = _portal.getCurrentAndAncestorSiteGroupIds(
-				scopeGroupId);
+		int start = ParamUtil.getInteger(
+			httpServletRequest, "start", QueryUtil.ALL_POS);
+		int end = ParamUtil.getInteger(
+			httpServletRequest, "end", QueryUtil.ALL_POS);
 
-			int start = ParamUtil.getInteger(
-				httpServletRequest, "start", QueryUtil.ALL_POS);
-			int end = ParamUtil.getInteger(
-				httpServletRequest, "end", QueryUtil.ALL_POS);
+		DataProviderInstanceNameComparator dataProviderInstanceNameComparator =
+			new DataProviderInstanceNameComparator(true);
 
-			DataProviderInstanceNameComparator
-				dataProviderInstanceNameComparator =
-					new DataProviderInstanceNameComparator(true);
-
-			List<DDMDataProviderInstance> ddmDataProviderInstances =
+		List<DDMDataProviderInstance> ddmDataProviderInstances =
+			ListUtil.concat(
 				_ddmDataProviderInstanceService.search(
-					themeDisplay.getCompanyId(), groupIds, null, start, end,
-					dataProviderInstanceNameComparator);
+					themeDisplay.getCompanyId(), new long[] {scopeGroupId},
+					null, start, end, dataProviderInstanceNameComparator),
+				_ddmDataProviderInstanceService.search(
+					themeDisplay.getCompanyId(),
+					_portal.getAncestorSiteGroupIds(scopeGroupId), null, start,
+					end, dataProviderInstanceNameComparator));
 
-			JSONArray dataProviderInstancesJSONArray =
-				_jsonFactory.createJSONArray();
+		JSONArray dataProviderInstancesJSONArray =
+			_jsonFactory.createJSONArray();
 
-			for (DDMDataProviderInstance ddmDataProviderInstance :
-					ddmDataProviderInstances) {
+		for (DDMDataProviderInstance ddmDataProviderInstance :
+				ddmDataProviderInstances) {
 
-				JSONObject dataProviderInstanceJSONObject =
-					_jsonFactory.createJSONObject();
+			JSONObject dataProviderInstanceJSONObject =
+				_jsonFactory.createJSONObject();
 
-				dataProviderInstanceJSONObject.put(
-					"id", ddmDataProviderInstance.getDataProviderInstanceId()
-				).put(
-					"name", ddmDataProviderInstance.getName(locale)
-				).put(
-					"uuid", ddmDataProviderInstance.getUuid()
-				);
+			dataProviderInstanceJSONObject.put(
+				"id", ddmDataProviderInstance.getDataProviderInstanceId()
+			).put(
+				"name", ddmDataProviderInstance.getName(locale)
+			).put(
+				"uuid", ddmDataProviderInstance.getUuid()
+			);
 
-				dataProviderInstancesJSONArray.put(
-					dataProviderInstanceJSONObject);
-			}
-
-			return dataProviderInstancesJSONArray;
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
+			dataProviderInstancesJSONArray.put(dataProviderInstanceJSONObject);
 		}
 
-		return null;
+		return dataProviderInstancesJSONArray;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMDataProviderInstancesServlet.class);
 
 	private static final long serialVersionUID = 1L;
 

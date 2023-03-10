@@ -316,6 +316,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162766. The page designer can edit the default 404 error utility page."
+	@priority = 3
+	test EditDefault404ErrorUtilityPage {
+		task ("Given a page designer navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+		}
+
+		task ("When the page designer edits the default 404 error utility page") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "404 Error");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "Status Code: 404");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page designer sees the changes persisted") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.openSitePage(
+				pageName = "Non Exist Page",
+				siteName = "Test Site Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Status Code: 404");
+		}
+	}
+
 	@description = "This is a test for LPS-162765. The page designer could mark a 404 error type of utility page as default."
 	@priority = 5
 	test Mark404ErrorUtilityPageAsDefault {

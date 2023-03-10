@@ -30,8 +30,8 @@ interface DefinitionOfTermsProps {
 }
 
 export interface Item {
-	name: string;
-	term: string;
+	termLabel: string;
+	termName: string;
 }
 
 export function DefinitionOfTerms({
@@ -68,7 +68,7 @@ export function DefinitionOfTerms({
 	};
 
 	const copyObjectFieldTerm = ({itemData}: {itemData: Item}) => {
-		navigator.clipboard.writeText(itemData.term);
+		navigator.clipboard.writeText(itemData.termName);
 
 		openToast({
 			message: Liferay.Language.get('term-copied-successfully'),
@@ -153,7 +153,9 @@ export function DefinitionOfTerms({
 									fields: [
 										{
 											fieldName: 'termLabel',
-											label: Liferay.Language.get('label'),
+											label: Liferay.Language.get(
+												'label'
+											),
 										},
 										{
 											fieldName: 'termName',

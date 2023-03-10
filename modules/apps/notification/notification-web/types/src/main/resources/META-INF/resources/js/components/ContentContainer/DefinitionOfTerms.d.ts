@@ -19,8 +19,8 @@ interface DefinitionOfTermsProps {
 	objectDefinitions: ObjectDefinition[];
 }
 export interface Item {
-	name: string;
-	term: string;
+	termLabel: string;
+	termName: string;
 }
 export declare function DefinitionOfTerms({
 	baseResourceURL,

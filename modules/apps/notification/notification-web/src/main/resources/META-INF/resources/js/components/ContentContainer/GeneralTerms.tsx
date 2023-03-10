@@ -31,7 +31,7 @@ export function GeneralTerms({baseResourceURL}: GeneralTermsProps) {
 	const [generalTermsItems, setGeneralTermsItems] = useState<Item[]>([]);
 
 	const copyGeneralTerm = ({itemData}: {itemData: Item}) => {
-		navigator.clipboard.writeText(itemData.term);
+		navigator.clipboard.writeText(itemData.termName);
 
 		openToast({
 			message: Liferay.Language.get('term-copied-successfully'),

@@ -1,10 +1,10 @@
-.testray-progress-bar {
+.tr-progress-bar {
 	display: flex;
 	height: 15px;
 	margin: 10px 0;
 	white-space: nowrap;
 
-	.progress-bar-item {
+	&__item {
 		&.blocked {
 			background-color: $color-yellow;
 		}
@@ -34,14 +34,17 @@
 		}
 	}
 
-	.legend-item-label {
+	&__legend-item-label {
 		color: $label-color;
+		font-family: sans-serif;
 		font-size: 12px;
 		font-weight: $font-header-weight;
+		margin-top: 0.25rem;
 		text-transform: uppercase;
 	}
 
-	.legend-bar-item {
+	&__legend-bar-item {
+		font-family: sans-serif;
 		height: 16px;
 		width: 16px;
 

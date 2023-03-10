@@ -50,7 +50,7 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 
 	return (
 		<>
-			<div className="testray-progress-bar">
+			<div className="tr-progress-bar">
 				{items.map((item, index) => {
 					const [label, value] = item;
 
@@ -65,7 +65,7 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 					return (
 						<div
 							className={classNames(
-								'progress-bar-item',
+								'tr-progress-bar__item',
 								taskbarClassNames[label]
 							)}
 							key={index}
@@ -77,7 +77,7 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 			</div>
 
 			{legend && (
-				<div className="d-flex testray-progress-bar">
+				<div className="tr-progress-bar">
 					{displayTotalCompleted && (
 						<div className="justify-content-between mr-5">
 							<div className="align-items-center d-flex">
@@ -92,7 +92,7 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 								</span>
 							</div>
 
-							<span className="font-family-sans-serif legend-item-label text-neutral-6">
+							<span className="tr-progress-bar__legend-item-label">
 								{i18n.translate('total-completed')}
 							</span>
 						</div>
@@ -115,7 +115,7 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 								<div className="align-items-center d-flex mr-5">
 									<div
 										className={classNames(
-											'legend-bar-item font-family-sans-serif',
+											'tr-progress-bar__legend-bar-item',
 											taskbarClassNames[label]
 										)}
 										title={percentTitle}
@@ -129,7 +129,7 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 									</span>
 								</div>
 
-								<span className="legend-item-label mt-1 text-neutral-6">
+								<span className="tr-progress-bar__legend-item-label">
 									{label.toUpperCase()}
 								</span>
 							</div>

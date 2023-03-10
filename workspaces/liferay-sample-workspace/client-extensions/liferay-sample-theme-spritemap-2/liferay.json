@@ -1,0 +1,8 @@
+{
+	"build": {
+		"options": {
+			"extendClay": false
+		},
+		"type": "themeSpritemap"
+	}
+}

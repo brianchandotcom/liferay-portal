@@ -1,0 +1,13 @@
+{
+	"dependencies": {
+		"@liferay/dxp-7.4": "*"
+	},
+	"description": "Liferay Sample Theme Spritemap 3",
+	"name": "liferay-sample-theme-spritemap-3",
+	"scripts": {
+		"build": "liferay build",
+		"clean": "liferay clean",
+		"deploy": "liferay deploy"
+	},
+	"version": "1.0.0"
+}

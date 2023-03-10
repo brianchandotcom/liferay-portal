@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -188,8 +189,9 @@ public class UserTestUtil {
 			autoPassword, password1, password2, autoScreenName, screenName,
 			emailAddress, locale, firstName, middleName, lastName,
 			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendMail, serviceContext);
+			birthdayDay, birthdayYear, jobTitle, UserConstants.TYPE_REGULAR,
+			groupIds, organizationIds, roleIds, userGroupIds, sendMail,
+			serviceContext);
 	}
 
 	public static User addUser(Company company) throws Exception {
@@ -283,8 +285,9 @@ public class UserTestUtil {
 			userId, companyId, autoPassword, password1, password2,
 			Validator.isNull(screenName), screenName, emailAddress, locale,
 			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId,
-			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
+			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+			UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds,
+			userGroupIds, sendMail, serviceContext);
 	}
 
 	public static User addUser(

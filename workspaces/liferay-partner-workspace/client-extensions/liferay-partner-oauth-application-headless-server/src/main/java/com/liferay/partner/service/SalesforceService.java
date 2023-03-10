@@ -14,7 +14,7 @@
 
 package com.liferay.partner.service;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import com.sforce.async.AsyncApiException;
@@ -70,11 +70,7 @@ public class SalesforceService {
 			BatchInfo batchInfoStatus = connection.getBatchInfo(
 				job.getId(), batchInfo.getId());
 
-			System.out.println(batchInfoStatus);
-
 			if (batchInfoStatus.getState() == BatchStateEnum.Completed) {
-				System.out.println("Batch Completed");
-
 				break;
 			}
 
@@ -95,8 +91,6 @@ public class SalesforceService {
 		job.setState(JobStateEnum.Closed);
 
 		connection.updateJob(job);
-
-		System.out.println("Job Closed");
 	}
 
 	private BatchInfo _createBatch(
@@ -149,9 +143,8 @@ public class SalesforceService {
 				inputStreamReader
 			).lines();
 
-			jsonArray.put(
-				CDL.toJSONArray(
-					bufferedReaderLines.collect(Collectors.joining("\n"))));
+			jsonArray = CDL.toJSONArray(
+				bufferedReaderLines.collect(Collectors.joining("\n")));
 		}
 
 		return jsonArray;

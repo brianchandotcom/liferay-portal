@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -209,6 +210,18 @@ public class ObjectEntryResourceTest {
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-161364", "false"
 			).build());
+	}
+
+	@Test
+	public void testGetObjectEntryFilteredByKeywords() throws Exception {
+		_postObjectEntryWithKeywords("tag1");
+		_postObjectEntryWithKeywords("tag1", "tag2");
+		_postObjectEntryWithKeywords("tag1", "tag2", "tag3");
+
+		_assertFilteredObjectEntries(3, "keywords/any(k:k eq 'tag1')");
+		_assertFilteredObjectEntries(2, "keywords/any(k:k eq 'tag2')");
+		_assertFilteredObjectEntries(1, "keywords/any(k:k eq 'tag3')");
+		_assertFilteredObjectEntries(0, "keywords/any(k:k eq '1234')");
 	}
 
 	@Test
@@ -839,6 +852,21 @@ public class ObjectEntryResourceTest {
 		return objectRelationship;
 	}
 
+	private void _assertFilteredObjectEntries(
+			int expectedObjectEntryCount, String filter)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null,
+			_objectDefinition1.getRESTContextPath() + "?filter=" +
+				URLCodec.encodeURL(filter),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(expectedObjectEntryCount, itemsJSONArray.length());
+	}
+
 	private void _assertObjectEntryField(
 		JSONObject objectEntryJSONObject, String objectFieldName,
 		String objectFieldValue) {
@@ -872,6 +900,18 @@ public class ObjectEntryResourceTest {
 		}
 
 		return jsonArray;
+	}
+
+	private void _postObjectEntryWithKeywords(String... keywords)
+		throws Exception {
+
+		HTTPTestUtil.invoke(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"keywords", JSONUtil.putAll(keywords)
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 	}
 
 	private void _testFilterByRelatedObjectDefinitionSystemObjectField(

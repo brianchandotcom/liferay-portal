@@ -21,6 +21,7 @@ import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -29,6 +30,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SalesforceConfiguration {
 
+	@Bean
 	public BulkConnection bulkConnection()
 		throws AsyncApiException, ConnectionException {
 

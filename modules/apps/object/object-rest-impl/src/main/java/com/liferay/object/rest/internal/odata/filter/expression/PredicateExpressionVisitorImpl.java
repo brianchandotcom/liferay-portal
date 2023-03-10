@@ -14,6 +14,9 @@
 
 package com.liferay.object.rest.internal.odata.filter.expression;
 
+import com.liferay.asset.kernel.model.AssetEntries_AssetTagsTable;
+import com.liferay.asset.kernel.model.AssetEntryTable;
+import com.liferay.asset.kernel.model.AssetTagTable;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
@@ -29,6 +32,7 @@ import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
@@ -538,6 +542,28 @@ public class PredicateExpressionVisitorImpl
 			predicate = Predicate.or(
 				Predicate.withParentheses((Predicate)left),
 				Predicate.withParentheses((Predicate)right));
+		}
+		else if (Objects.equals(left, "keywords")) {
+			return _getColumn(
+				"id", objectDefinitionId
+			).in(
+				DSLQueryFactoryUtil.select(
+					AssetEntryTable.INSTANCE.classPK
+				).from(
+					AssetEntryTable.INSTANCE
+				).innerJoinON(
+					AssetEntries_AssetTagsTable.INSTANCE,
+					AssetEntryTable.INSTANCE.entryId.eq(
+						AssetEntries_AssetTagsTable.INSTANCE.entryId)
+				).innerJoinON(
+					AssetTagTable.INSTANCE,
+					AssetTagTable.INSTANCE.tagId.eq(
+						AssetEntries_AssetTagsTable.INSTANCE.tagId
+					).and(
+						AssetTagTable.INSTANCE.name.eq((String)right)
+					)
+				)
+			);
 		}
 		else {
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(

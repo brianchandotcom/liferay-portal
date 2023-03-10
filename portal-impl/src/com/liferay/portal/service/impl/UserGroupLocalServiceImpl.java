@@ -1294,16 +1294,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		for (Map.Entry<Long, List<UserGroup>> entry : map.entrySet()) {
-			long companyId = entry.getKey();
-
-			List<Long> userGroupIds = TransformUtil.transform(
-				entry.getValue(), UserGroup::getUserGroupId);
-
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
 					Set<Long> userIdsSet = new LinkedHashSet<>();
 
-					for (long userGroupId : userGroupIds) {
+					for (long userGroupId :
+							TransformUtil.transform(
+								entry.getValue(), UserGroup::getUserGroupId)) {
+
 						for (long userId : getUserPrimaryKeys(userGroupId)) {
 							userIdsSet.add(userId);
 						}
@@ -1311,7 +1309,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 					if (!userIdsSet.isEmpty()) {
 						reindex(
-							companyId,
+							entry.getKey(),
 							ArrayUtil.toArray(userIdsSet.toArray(new Long[0])));
 					}
 

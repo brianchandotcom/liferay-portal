@@ -164,6 +164,103 @@ definition {
 
 	}
 
+	@description = "COMMERCE-10841. Verify that using the impersonate feature the context is saved on Minium"
+	@priority = 3
+	test CanAssertImpersonatingOnMiniumMaintainsContext {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium Site is created") {
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
+
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a user is created with the Administrator role") {
+			JSONUser.addUser(
+				userEmailAddress = "administrator@liferay.com",
+				userFirstName = "Administrator",
+				userLastName = "Administrator",
+				userScreenName = "Administrator");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "administrator@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "administrator@liferay.com");
+		}
+
+		task ("And the user Administrator logs on Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "administrator@liferay.com");
+		}
+
+		task ("Then the user present on the minium sidebar is Administrator Administrator") {
+			AssertElementPresent(
+				key_userName = "Administrator Administrator",
+				locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_NAME");
+		}
+
+		task ("But if the admin user Test Test login and reach Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Then the user present on the minium sidebar is Test Test") {
+			AssertElementPresent(
+				key_userName = "Test Test",
+				locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_NAME");
+		}
+
+		task ("When the user Test Test goes into User and Organizations") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+		}
+
+		task ("And impersonates the user Administrator") {
+			User.impersonateCP(userName = "Administrator");
+
+			SelectWindow(locator1 = "title=Home - ${siteName}");
+		}
+
+		task ("And navigates on Minium") {
+			ScrollWebElementIntoView(
+				key_dropdownItem = "My Sites",
+				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
+
+			Click(
+				key_dropdownItem = "My Sites",
+				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Navigator.gotoNavItem(navItem = "All Sites");
+
+			SiteSelector.selectSite(site = "Minium");
+		}
+
+		task ("Then the user present on the minium sidebar is Administrator Administrator") {
+			AssertElementPresent(
+				key_userName = "Administrator Administrator",
+				locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_NAME");
+
+			Close.closeWindow(locator1 = "title=Users and Organizations - ${siteName}");
+		}
+	}
+
 	@description = "COMMERCE-9427 CanSortAccountEntriesUsingReverseSortDirectionButton"
 	@priority = 3
 	test CanSortAccountEntriesUsingReverseSortDirectionButton {

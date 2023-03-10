@@ -2143,6 +2143,85 @@ definition {
 		}
 	}
 
+	@description = "LPS-164948 - Verify that is possible to use Formula Field on System Object related with Custom Object"
+	@priority = 4
+	test CanSystemAndCustomObjectRelatedWithFormulaField {
+		property custom.properties = "feature.flag.LPS-164948=true";
+
+		task ("Given: Add a custom object with a custom field, and create a one-to-many relationship with the User object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "User",
+				objectName_2 = "CustomObject",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("And: Add a Formula field to the User object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "User");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Formula Field",
+				fieldType = "Formula",
+				formulaFieldOption = "Decimal");
+		}
+
+		task ("And: Add an expression with concat function in field details") {
+			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field");
+
+			ObjectField.insertScriptOnFormulaField(scriptFormulaField = "concat(id)");
+
+			ObjectField.save();
+		}
+
+		task ("And: Define ID as a title field on the object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "User");
+
+			CreateObject.selectTitleField(fieldLabel = "ID");
+
+			CreateObject.saveObject();
+		}
+
+		task ("When: Go to Custom Object and add the relationship field entry") {
+			var userId = JSONUserAPI._getUserIds();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.selectRelationshipFieldEntry(
+				entry = "",
+				newEntry = ${userId});
+		}
+
+		task ("Then: Assert the custom object entry is added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntry(entry = ${userId});
+		}
+	}
+
 	@description = "LPS-135404 - Verify that it's possible to update created custom fields in a System Object"
 	@priority = 4
 	test CanUpdateCustomFieldInSystemObject {

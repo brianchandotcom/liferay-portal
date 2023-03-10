@@ -48,6 +48,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -124,33 +125,6 @@ public class BatchEngineImportTaskExecutorImpl
 				_batchEngineTaskMethodRegistry, null, null, null);
 	}
 
-	private BatchEngineImportTaskItemReader _batchEngineImportTaskItemReader(
-			BatchEngineImportTask batchEngineImportTask,
-			InputStream inputStream, Map<String, Serializable> parameters)
-		throws Exception {
-
-		BatchEngineImportTaskItemReaderBuilder
-			batchEngineImportTaskItemReaderBuilder =
-				new BatchEngineImportTaskItemReaderBuilder();
-
-		Map<String, Serializable> fieldNameMapping =
-			batchEngineImportTask.getFieldNameMapping();
-
-		return batchEngineImportTaskItemReaderBuilder.
-			batchEngineTaskContentType(
-				BatchEngineTaskContentType.valueOf(
-					batchEngineImportTask.getContentType())
-			).csvFileColumnDelimiter(
-				_getCSVFileColumnDelimiter(batchEngineImportTask.getCompanyId())
-			).fieldNames(
-				ListUtil.fromCollection(fieldNameMapping.keySet())
-			).inputStream(
-				inputStream
-			).parameters(
-				parameters
-			).build();
-	}
-
 	private void _commitItems(
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemDelegateExecutor
@@ -176,6 +150,37 @@ public class BatchEngineImportTaskExecutorImpl
 
 				return null;
 			});
+	}
+
+	private BatchEngineImportTaskItemReader _getBatchEngineImportTaskItemReader(
+			BatchEngineImportTask batchEngineImportTask,
+			InputStream inputStream, Map<String, Serializable> parameters)
+		throws Exception {
+
+		BatchEngineImportTaskItemReaderBuilder
+			batchEngineImportTaskItemReaderBuilder =
+				new BatchEngineImportTaskItemReaderBuilder();
+
+		Map<String, Serializable> fieldNameMapping =
+			batchEngineImportTask.getFieldNameMapping();
+
+		if (fieldNameMapping == null) {
+			fieldNameMapping = Collections.emptyMap();
+		}
+
+		return batchEngineImportTaskItemReaderBuilder.
+			batchEngineTaskContentType(
+				BatchEngineTaskContentType.valueOf(
+					batchEngineImportTask.getContentType())
+			).csvFileColumnDelimiter(
+				_getCSVFileColumnDelimiter(batchEngineImportTask.getCompanyId())
+			).fieldNames(
+				ListUtil.fromCollection(fieldNameMapping.keySet())
+			).inputStream(
+				inputStream
+			).parameters(
+				parameters
+			).build();
 	}
 
 	private String _getCSVFileColumnDelimiter(long companyId) throws Exception {
@@ -229,7 +234,7 @@ public class BatchEngineImportTaskExecutorImpl
 			batchEngineImportTask);
 
 		try (BatchEngineImportTaskItemReader batchEngineImportTaskItemReader =
-				_batchEngineImportTaskItemReader(
+				_getBatchEngineImportTaskItemReader(
 					batchEngineImportTask,
 					_batchEngineImportTaskLocalService.openContentInputStream(
 						batchEngineImportTask.getBatchEngineImportTaskId()),

@@ -163,7 +163,7 @@ public class LayoutReportsIssueTest {
 	}
 
 	@Test
-	public void testToJSONObject() {
+	public void testToJSONObject() throws Exception {
 		LayoutReportsIssue layoutReportsIssue = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(

@@ -20,12 +20,6 @@ import com.nimbusds.jose.proc.JWSAlgorithmFamilyJWSKeySelector;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.proc.DefaultJWTProcessor;
 
-import com.sforce.async.AsyncApiException;
-import com.sforce.async.BulkConnection;
-import com.sforce.soap.partner.PartnerConnection;
-import com.sforce.ws.ConnectionException;
-import com.sforce.ws.ConnectorConfig;
-
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -137,43 +131,6 @@ public class PartnerEnableWebSecurity {
 		).oauth2ResourceServer(
 			OAuth2ResourceServerConfigurer::jwt
 		).build();
-	}
-
-	@Configuration
-	public class SalesforceConfiguration {
-
-		@Bean
-		public BulkConnection bulkConnection()
-			throws AsyncApiException, ConnectionException {
-
-			ConnectorConfig partnerConfig = new ConnectorConfig();
-
-			partnerConfig.setUsername(_salesforceAuthUserName);
-			partnerConfig.setPassword(
-				_salesforceAuthPassword + _salesforceSecurityToken);
-			partnerConfig.setAuthEndpoint(
-				_salesforceAuthEndpoint + "/" + _salesforceApiVersion);
-
-			new PartnerConnection(partnerConfig);
-
-			ConnectorConfig config = new ConnectorConfig();
-
-			config.setSessionId(partnerConfig.getSessionId());
-
-			String soapEndpoint = partnerConfig.getServiceEndpoint();
-
-			String restEndpoint =
-				soapEndpoint.substring(0, soapEndpoint.indexOf("Soap/")) +
-					"async/" + _salesforceApiVersion;
-
-			config.setRestEndpoint(restEndpoint);
-
-			config.setCompression(true);
-			config.setTraceMessage(false);
-
-			return new BulkConnection(config);
-		}
-
 	}
 
 	@Configuration

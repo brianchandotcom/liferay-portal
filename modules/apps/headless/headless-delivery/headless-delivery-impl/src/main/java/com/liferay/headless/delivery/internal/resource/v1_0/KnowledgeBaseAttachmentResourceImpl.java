@@ -18,16 +18,19 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.dto.v1_0.util.ContentValueUtil;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
+import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
@@ -65,6 +68,14 @@ public class KnowledgeBaseAttachmentResourceImpl
 			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
 		return Page.of(
+			HashMapBuilder.<String, Map<String, String>>put(
+				"createBatch",
+				addAction(
+					KBActionKeys.ADD_KB_ARTICLE, kbArticle.getResourcePrimKey(),
+					"postKnowledgeBaseArticleKnowledgeBaseAttachmentBatch",
+					kbArticle.getUserId(), KBConstants.RESOURCE_NAME_ADMIN,
+					kbArticle.getGroupId())
+			).build(),
 			transform(
 				kbArticle.getAttachmentsFileEntries(),
 				this::_toKnowledgeBaseAttachment));

@@ -217,6 +217,19 @@ definition {
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
 	}
 
+	macro changeTeamToComponent{
+		TestrayContextMenu.clickContextMenuProjects(name = ${currentTeam});
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+		Select(
+				key_fieldLabel = "Team",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${newTeamName});
+
+		Button.clickSave();
+	}
+
 	macro editComponent {
 		TestrayContextMenu.clickContextMenuProjects(name = ${componentName});
 

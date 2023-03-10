@@ -12,38 +12,34 @@
  * details.
  */
 
-package com.liferay.partner.services;
+package com.liferay.partner.service;
+
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.client.pagination.Page;
+import com.liferay.object.admin.rest.client.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.partner.util.configuration.ResourceClientConfiguration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Jair Medeiros
  * @author Thaynam Lázaro
  */
 @Service
-public class ObjectEntryService {
+public class ObjectDefinitionService {
 
-	public void postObjectEntryBatch(
-		String objectDefinitionName, Object[] objects) {
+	public Page<ObjectDefinition> getSalesforceObjectDefinitionsPage()
+		throws Exception {
 
-		WebClient.RequestBodyUriSpec requestBodyUriSpec = _webClient.post();
+		ObjectDefinitionResource objectDefinitionResource =
+			_resourceClientConfiguration.getObjectDefinitionResource();
 
-		WebClient.RequestBodySpec requestBodySpec = requestBodyUriSpec.uri(
-			uriBuilder -> uriBuilder.path(
-				"/o/c/" + objectDefinitionName + "/batch"
-			).queryParam(
-				"createStrategy", "UPSERT"
-			).build());
-
-		WebClient.RequestHeadersSpec<?> requestHeadersSpec =
-			requestBodySpec.bodyValue(objects);
-
-		requestHeadersSpec.retrieve();
+		return objectDefinitionResource.getObjectDefinitionsPage(
+			null, null, "contains(name, 'SF')", null, null);
 	}
 
 	@Autowired
-	private WebClient _webClient;
+	private ResourceClientConfiguration _resourceClientConfiguration;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v3_1_1;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -25,7 +26,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * @author Rafael Praxedes
@@ -48,16 +48,19 @@ public class KaleoNotificationUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			while (resultSet.next()) {
-				String[] notificationTypes = Stream.of(
-					StringUtil.split(resultSet.getString("notificationTypes"))
-				).filter(
-					notificationType -> !Objects.equals(notificationType, "im")
-				).filter(
-					notificationType -> !Objects.equals(
-						notificationType, "private-message")
-				).toArray(
-					String[]::new
-				);
+				String[] notificationTypes = TransformUtil.transform(
+					StringUtil.split(resultSet.getString("notificationTypes")),
+					notificationType -> {
+						if (Objects.equals(notificationType, "im") ||
+							Objects.equals(
+								notificationType, "private-message")) {
+
+							return null;
+						}
+
+						return notificationType;
+					},
+					String.class);
 
 				if (ArrayUtil.isEmpty(notificationTypes)) {
 					notificationTypes = new String[] {

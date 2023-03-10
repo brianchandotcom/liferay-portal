@@ -123,7 +123,10 @@ public class JournalArticleExpandoGeolocationSearchTest {
 						_EXPANDO_COLUMN_GEOLOCATION_FULL_NAME,
 						geoBuilders.geoLocationPoint(34.01, -117.42),
 						geoBuilders.geoDistance(1000))
-				).build()),
+				).build()
+			).emptySearchEnabled(
+				true
+			),
 			"[Software Engineer]");
 		assertSearch(
 			searchRequestBuilder -> searchRequestBuilder.addComplexQueryPart(
@@ -135,7 +138,10 @@ public class JournalArticleExpandoGeolocationSearchTest {
 						_EXPANDO_COLUMN_GEOLOCATION_FULL_NAME,
 						geoBuilders.geoLocationPoint(34.01, -117.42),
 						geoBuilders.geoDistance(100))
-				).build()),
+				).build()
+			).emptySearchEnabled(
+				true
+			),
 			"[]");
 	}
 

@@ -278,6 +278,8 @@ public class JournalArticleIndexVersionsTest {
 		SearchResponse searchResponse = _searcher.search(
 			_searchRequestBuilderFactory.builder(
 				searchContext
+			).emptySearchEnabled(
+				true
 			).modelIndexerClasses(
 				JournalArticle.class
 			).build());

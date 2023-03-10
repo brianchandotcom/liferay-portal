@@ -513,6 +513,10 @@ public class WikiListPagesDisplayContext {
 		else if (navigation.equals("draft-pages") ||
 				 navigation.equals("pending-pages")) {
 
+			if (!themeDisplay.isSignedIn()) {
+				return;
+			}
+
 			long draftUserId = themeDisplay.getUserId();
 
 			PermissionChecker permissionChecker =

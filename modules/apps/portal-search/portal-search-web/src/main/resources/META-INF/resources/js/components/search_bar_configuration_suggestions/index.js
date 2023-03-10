@@ -133,7 +133,7 @@ function SearchBarConfigurationSuggestions({
 			options.push(BLUEPRINT_OPTION);
 		}
 
-		if (isDXP) {
+		if (isDXP && Liferay.FeatureFlags['LPS-159643']) {
 			options.push(SITE_ACTIVITIES_OPTION);
 		}
 

@@ -32,47 +32,45 @@ public class SalesforceConfiguration {
 	public BulkConnection bulkConnection()
 		throws AsyncApiException, ConnectionException {
 
-		ConnectorConfig partnerConfig = new ConnectorConfig();
+		ConnectorConfig connectorConfig1 = new ConnectorConfig();
 
-		partnerConfig.setUsername(_salesforceAuthUserName);
-		partnerConfig.setPassword(
-			_salesforceAuthPassword + _salesforceSecurityToken);
-		partnerConfig.setAuthEndpoint(
-			_salesforceAuthEndpoint + "/" + _salesforceApiVersion);
+		connectorConfig1.setAuthEndpoint(
+			_salesforceApiEndpoint + "/" + _salesforceApiVersion);
+		connectorConfig1.setPassword(
+			_salesforceApiPassword + _salesforceApiKey);
+		connectorConfig1.setUsername(_salesforceApiLogin);
 
-		new PartnerConnection(partnerConfig);
+		new PartnerConnection(connectorConfig1);
 
-		ConnectorConfig config = new ConnectorConfig();
-
-		config.setSessionId(partnerConfig.getSessionId());
-
-		String soapEndpoint = partnerConfig.getServiceEndpoint();
+		String serviceEndpoint = connectorConfig1.getServiceEndpoint();
 
 		String restEndpoint =
-			soapEndpoint.substring(0, soapEndpoint.indexOf("Soap/")) +
+			serviceEndpoint.substring(0, serviceEndpoint.indexOf("Soap/")) +
 				"async/" + _salesforceApiVersion;
 
-		config.setRestEndpoint(restEndpoint);
+		ConnectorConfig connectorConfig2 = new ConnectorConfig();
 
-		config.setCompression(true);
-		config.setTraceMessage(false);
+		connectorConfig2.setCompression(true);
+		connectorConfig2.setRestEndpoint(restEndpoint);
+		connectorConfig2.setSessionId(connectorConfig1.getSessionId());
+		connectorConfig2.setTraceMessage(false);
 
-		return new BulkConnection(config);
+		return new BulkConnection(connectorConfig2);
 	}
+
+	@Value("${salesforce.api.endpoint}")
+	private String _salesforceApiEndpoint;
+
+	@Value("${salesforce.api.key}")
+	private String _salesforceApiKey;
+
+	@Value("${salesforce.api.login}")
+	private String _salesforceApiLogin;
+
+	@Value("${salesforce.api.password}")
+	private String _salesforceApiPassword;
 
 	@Value("${salesforce.api.version}")
 	private String _salesforceApiVersion;
-
-	@Value("${salesforce.auth.endpoint}")
-	private String _salesforceAuthEndpoint;
-
-	@Value("${salesforce.auth.password}")
-	private String _salesforceAuthPassword;
-
-	@Value("${salesforce.auth.userName}")
-	private String _salesforceAuthUserName;
-
-	@Value("${salesforce.security.token}")
-	private String _salesforceSecurityToken;
 
 }

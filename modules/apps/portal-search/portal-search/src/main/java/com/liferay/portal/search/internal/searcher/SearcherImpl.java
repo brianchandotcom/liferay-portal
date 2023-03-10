@@ -80,7 +80,7 @@ public class SearcherImpl implements Searcher {
 		SearchRequestImpl searchRequestImpl = (SearchRequestImpl)searchRequest;
 
 		SearchResponseBuilder searchResponseBuilder =
-			searchResponseBuilderFactory.builder(
+			_searchResponseBuilderFactory.builder(
 				searchRequestImpl.getSearchContext());
 
 		SearchContext searchContext = searchRequestImpl.getSearchContext();
@@ -132,17 +132,23 @@ public class SearcherImpl implements Searcher {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
+		_indexerRegistry = indexerRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSearchResponseBuilderFactory(
+		SearchResponseBuilderFactory searchResponseBuilderFactory) {
+
+		_searchResponseBuilderFactory = searchResponseBuilderFactory;
+	}
+
 	@Reference
 	protected FacetedSearcherManager facetedSearcherManager;
 
 	@Reference
-	protected IndexerRegistry indexerRegistry;
-
-	@Reference
 	protected IndexSearcherHelper indexSearcherHelper;
-
-	@Reference
-	protected SearchResponseBuilderFactory searchResponseBuilderFactory;
 
 	private void _federatedSearches(
 		SearchRequest searchRequest,
@@ -268,7 +274,8 @@ public class SearcherImpl implements Searcher {
 		String singleIndexerClassName, SearchRequestImpl searchRequestImpl,
 		SearchResponseBuilder searchResponseBuilder) {
 
-		Indexer<?> indexer = indexerRegistry.getIndexer(singleIndexerClassName);
+		Indexer<?> indexer = _indexerRegistry.getIndexer(
+			singleIndexerClassName);
 
 		SearchContext searchContext = searchRequestImpl.getSearchContext();
 
@@ -323,6 +330,8 @@ public class SearcherImpl implements Searcher {
 		return new RuntimeException(searchException);
 	}
 
+	private IndexerRegistry _indexerRegistry;
+	private SearchResponseBuilderFactory _searchResponseBuilderFactory;
 	private ServiceTrackerMap<String, List<SearchRequestContributor>>
 		_serviceTrackerMap;
 

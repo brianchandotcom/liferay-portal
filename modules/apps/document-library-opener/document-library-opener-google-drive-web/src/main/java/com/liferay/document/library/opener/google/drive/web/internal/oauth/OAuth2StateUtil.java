@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -38,14 +36,13 @@ public class OAuth2StateUtil {
 			_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE);
 	}
 
-	public static Optional<OAuth2State> getOAuth2StateOptional(
+	public static OAuth2State getOAuth2State(
 		HttpServletRequest httpServletRequest) {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		return Optional.ofNullable(
-			(OAuth2State)httpSession.getAttribute(
-				_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE));
+		return (OAuth2State)httpSession.getAttribute(
+			_SESSION_ATTRIBUTE_NAME_GOOGLE_OAUTH2_STATE);
 	}
 
 	public static String getRedirectURI(String portalURL) {

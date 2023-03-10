@@ -67,6 +67,12 @@ definition {
 		Click(locator1 = "ObjectField#MODAL_CLOSE_BUTTON");
 	}
 
+	macro insertScriptOnFormulaField {
+		Type(
+			locator1 = "ObjectField#SCRIPT_ON_FORMULA_FIELD",
+			value1 = ${scriptFormulaField});
+	}
+
 	macro save {
 		Click(locator1 = "ObjectField#SAVE_BUTTON");
 

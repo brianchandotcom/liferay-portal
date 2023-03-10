@@ -45,11 +45,11 @@ type CaseItemsProps = {
 	cases: TestrayCase[];
 };
 
-const RequirementTable = ({
-	requirements,
-}: {
+type RequirementTableProps = {
 	requirements: TestrayRequirement[];
-}) => (
+};
+
+const RequirementTable: React.FC<RequirementTableProps> = ({requirements}) => (
 	<ClayTable>
 		<ClayTable.Head>
 			<ClayTable.Row>
@@ -68,117 +68,107 @@ const RequirementTable = ({
 		</ClayTable.Head>
 
 		<ClayTable.Body>
-			{requirements.map(
-				(requirement: TestrayRequirement, index: number) => (
-					<ClayTable.Row key={index}>
-						<ClayTable.Cell headingTitle>
-							{requirement?.key}
-						</ClayTable.Cell>
+			{requirements.map((requirement, index) => (
+				<ClayTable.Row key={index}>
+					<ClayTable.Cell headingTitle>
+						{requirement?.key}
+					</ClayTable.Cell>
 
-						<ClayTable.Cell>
-							<a
-								className="cursor-pointer"
-								onClick={() =>
-									window.open(requirement?.linkURL, '_blank')
-								}
-							>
-								{requirement?.linkURL}
-							</a>
-						</ClayTable.Cell>
+					<ClayTable.Cell>
+						<a
+							className="cursor-pointer"
+							onClick={() =>
+								window.open(requirement?.linkURL, '_blank')
+							}
+						>
+							{requirement?.linkURL}
+						</a>
+					</ClayTable.Cell>
 
-						<ClayTable.Cell>{requirement?.summary}</ClayTable.Cell>
-					</ClayTable.Row>
-				)
-			)}
+					<ClayTable.Cell>{requirement?.summary}</ClayTable.Cell>
+				</ClayTable.Row>
+			))}
 		</ClayTable.Body>
 	</ClayTable>
 );
 
-const CaseItems: React.FC<CaseItemsProps> = ({caseWithRequirements, cases}) => {
-	return (
-		<div>
-			<h5>{i18n.translate('case')}</h5>
+const CaseItems: React.FC<CaseItemsProps> = ({caseWithRequirements, cases}) => (
+	<div>
+		<h5>{i18n.translate('case')}</h5>
 
-			{cases?.map((Case, index) => {
-				const requirements = caseWithRequirements[Case?.id] || [];
+		{cases?.map((Case, index) => {
+			const requirements = caseWithRequirements[Case?.id] || [];
 
-				return (
-					<div className="mt-3" key={index}>
-						<Container>
-							<h5>{Case.name}</h5>
+			return (
+				<div className="mt-3" key={index}>
+					<Container>
+						<h5>{Case.name}</h5>
 
-							<QATable
-								items={[
-									{
-										title: i18n.translate('project-name'),
-										value: Case?.project?.name,
-									},
+						<QATable
+							items={[
+								{
+									title: i18n.translate('project-name'),
+									value: Case?.project?.name,
+								},
 
-									{
-										title: i18n.translate('type'),
-										value: Case?.caseType?.name,
-									},
-									{
-										title: i18n.translate('priority'),
-										value: Case?.priority,
-									},
-									{
-										title: i18n.translate('team'),
-										value: Case?.component?.team?.name,
-									},
-									{
-										title: i18n.translate('main-component'),
-										value: Case?.component?.name,
-									},
-									{
-										title: i18n.translate('description'),
-										value: (
-											<MarkdownPreview
-												markdown={Case.description}
-											/>
-										),
-									},
-									{
-										title: i18n.translate(
-											'estimated-duration'
-										),
-										value: Case?.estimatedDuration,
-									},
-									{
-										title: i18n.translate('steps'),
-										value: Case?.steps,
-									},
-									{
-										title: i18n.translate(
-											'date-last-modified'
-										),
-										value: dayjs(Case?.dateModified).format(
-											'lll'
-										),
-									},
-									{
-										title: i18n.translate(
-											'all-issues-found'
-										),
-										value: Case?.name,
-									},
-									{
-										title: i18n.translate('requirements'),
-										value: requirements?.length && (
-											<RequirementTable
-												requirements={requirements}
-											/>
-										),
-									},
-								]}
-							/>
-						</Container>
-					</div>
-				);
-			})}
-		</div>
-	);
-};
+								{
+									title: i18n.translate('type'),
+									value: Case?.caseType?.name,
+								},
+								{
+									title: i18n.translate('priority'),
+									value: Case?.priority,
+								},
+								{
+									title: i18n.translate('team'),
+									value: Case?.component?.team?.name,
+								},
+								{
+									title: i18n.translate('main-component'),
+									value: Case?.component?.name,
+								},
+								{
+									title: i18n.translate('description'),
+									value: (
+										<MarkdownPreview
+											markdown={Case.description}
+										/>
+									),
+								},
+								{
+									title: i18n.translate('estimated-duration'),
+									value: Case?.estimatedDuration,
+								},
+								{
+									title: i18n.translate('steps'),
+									value: Case?.steps,
+								},
+								{
+									title: i18n.translate('date-last-modified'),
+									value: dayjs(Case?.dateModified).format(
+										'lll'
+									),
+								},
+								{
+									title: i18n.translate('all-issues-found'),
+									value: Case?.name,
+								},
+								{
+									title: i18n.translate('requirements'),
+									value: requirements?.length && (
+										<RequirementTable
+											requirements={requirements}
+										/>
+									),
+								},
+							]}
+						/>
+					</Container>
+				</div>
+			);
+		})}
+	</div>
+);
 
 const ExportCaseContainer: React.FC<CaseItemsProps> = ({
 	caseWithRequirements,
@@ -275,12 +265,15 @@ const Export = () => {
 
 	const {data: requirementCasesData} = useFetch<
 		APIResponse<TestrayRequirementCase>
-	>(loading ? null : '/requirementscaseses', {
+	>('/requirementscaseses', {
 		params: {
 			filter: SearchBuilder.in('caseId', caseIds),
 			nestedFields: 'case.component,requirement,team',
 			nestedFieldsDepth: 3,
 			pageSize: 1000,
+		},
+		swrConfig: {
+			shouldFetch: !loading,
 		},
 		transformData: (response) =>
 			testrayCaseRequirementsImpl.transformDataFromList(response),
@@ -302,8 +295,7 @@ const Export = () => {
 
 			if (requirement && casesWithRequirement[caseId]) {
 				casesWithRequirement[caseId].push(requirement);
-			}
-			else {
+			} else {
 				casesWithRequirement[caseId] = [requirement];
 			}
 		});
@@ -316,7 +308,7 @@ const Export = () => {
 	}
 
 	return (
-		<div className="export-case-container p-3">
+		<div className="tr-export-case">
 			<div>
 				<CaseItems
 					caseWithRequirements={casesWithRequirements}

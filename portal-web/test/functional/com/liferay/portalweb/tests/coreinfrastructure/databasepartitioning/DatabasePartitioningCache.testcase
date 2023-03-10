@@ -153,21 +153,15 @@ definition {
 	test NullCacheDoesNotBreakSiteFromAnotherPartition {
 		property test.name.skip.portal.instance = "DatabasePartitioningCache#NullCacheDoesNotBreakSiteFromAnotherPartition";
 
-		PortalInstances.openVirtualInstancesAdmin();
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
 
-		PortalInstances.addCP(
-			mailDomain = "www.able.com",
-			virtualHost = "www.able.com",
-			webId = "www.able.com");
-
-		PortalInstances.openVirtualInstancesAdmin();
-
-		User.firstLoginUI(
+		User.firstLoginPG(
 			password = "test",
-			specificURL = "http://www.able.com:8080",
-			userEmailAddress = "test@www.able.com");
-
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",

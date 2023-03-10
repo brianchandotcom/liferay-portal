@@ -200,6 +200,11 @@ public class ObjectEntryEntityModel implements EntityModel {
 			).put(
 				"id", new IdEntityField("id", locale -> "id", String::valueOf)
 			).put(
+				"keywords",
+				new CollectionEntityField(
+					new StringEntityField(
+						"keywords", locale -> "assetTagNames.raw"))
+			).put(
 				"objectDefinitionId",
 				new IntegerEntityField(
 					"objectDefinitionId", locale -> "objectDefinitionId")

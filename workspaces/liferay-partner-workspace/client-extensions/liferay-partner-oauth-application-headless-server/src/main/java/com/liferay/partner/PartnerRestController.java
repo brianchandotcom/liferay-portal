@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Jair Medeiros
  * @author Thaynam Lázaro
- * @author Raymond Augé
  */
 @RestController
 public class PartnerRestController {

@@ -20,7 +20,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author Jair Medeiros
  * @author Thaynam Lázaro
- * @author Raymond Augé
  */
 @SpringBootApplication
 public class PartnerSpringBootApplication {

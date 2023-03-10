@@ -42,6 +42,10 @@ definition {
 				key_suggestionContributorOrder = ${suggestionContributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SELECT_BLUEPRINT");
 
+			WaitForElementPresent(
+				blueprintTitle = ${suggestionContributorBlueprint},
+				locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_SELECT_BLUEPRINT");
+
 			Click(
 				blueprintTitle = ${suggestionContributorBlueprint},
 				locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_SELECT_BLUEPRINT");

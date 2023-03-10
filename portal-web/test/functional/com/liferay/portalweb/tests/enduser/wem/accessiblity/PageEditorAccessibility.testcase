@@ -105,7 +105,11 @@ definition {
 		}
 
 		task ("Then the focus goes to the Product Menu") {
-			TestUtils.assertElementFocused(element = "//div[contains(@id,'productMenuSidebar')]//button[contains(@aria-label,'Close')]");
+			KeyPress(
+				locator1 = "//div[@aria-label='Product Menu']",
+				value1 = "\TAB");
+
+			TestUtils.assertElementFocused(element = "//button[contains(@aria-label,'Go to Other Site or Library')]");
 		}
 	}
 

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.net.URI;
 
@@ -58,8 +57,23 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 
 		List<MediaQuery> mediaQueries = new ArrayList<>();
 
-		Collection<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			_getAdaptiveMedias(fileEntry);
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			TransformUtil.transform(
+				_amImageConfigurationHelper.getAMImageConfigurationEntries(
+					fileEntry.getCompanyId()),
+				amImageConfigurationEntry -> {
+					AdaptiveMedia<AMImageProcessor> adaptiveMedia =
+						_getAdaptiveMediaFromConfigurationEntry(
+							fileEntry, amImageConfigurationEntry);
+
+					if (_getWidth(adaptiveMedia) <= 0) {
+						return null;
+					}
+
+					return adaptiveMedia;
+				});
+
+		adaptiveMedias.sort(_comparator);
 
 		AdaptiveMedia<AMImageProcessor> previousAdaptiveMedia = null;
 
@@ -146,28 +160,6 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		return new AMImage(
 			() -> null, AMImageAttributeMapping.fromProperties(properties),
 			_getFileEntryURL(fileEntry, amImageConfigurationEntry));
-	}
-
-	private Collection<AdaptiveMedia<AMImageProcessor>> _getAdaptiveMedias(
-			FileEntry fileEntry)
-		throws PortalException {
-
-		return ListUtil.sort(
-			TransformUtil.transform(
-				_amImageConfigurationHelper.getAMImageConfigurationEntries(
-					fileEntry.getCompanyId()),
-				amImageConfigurationEntry -> {
-					AdaptiveMedia<AMImageProcessor> adaptiveMedia =
-						_getAdaptiveMediaFromConfigurationEntry(
-							fileEntry, amImageConfigurationEntry);
-
-					if (_getWidth(adaptiveMedia) <= 0) {
-						return null;
-					}
-
-					return adaptiveMedia;
-				}),
-			_comparator);
 	}
 
 	private List<Condition> _getConditions(

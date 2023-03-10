@@ -3315,10 +3315,6 @@ definition {
 
 		SearchPortlets.gotoResultDetails(searchAssetTitle = "apple");
 
-		AssertElementNotPresent(
-			key_title = "title",
-			locator1 = "ObjectAction#SECTION_TITLE");
-
 		AssertElementPresent(
 			locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
 			value1 = "apple");

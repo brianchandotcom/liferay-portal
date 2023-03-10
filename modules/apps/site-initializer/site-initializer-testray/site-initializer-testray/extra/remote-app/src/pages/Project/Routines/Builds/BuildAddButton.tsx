@@ -122,7 +122,7 @@ const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 									}}
 								>
 									<div className="align-items-center d-flex testray-sidebar-item text-dark">
-										<span className="ml-1 testray-sidebar-text">
+										<span className="ml-1 tr-sidebar__text">
 											{label}
 										</span>
 									</div>

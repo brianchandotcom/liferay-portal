@@ -65,7 +65,7 @@ const Header = () => {
 	);
 
 	return (
-		<header className="d-flex flex-column header-container pt-4">
+		<header className="tr-header-container">
 			<div className="d-flex">
 				<div className="align-items-center d-flex justify-content-center mx-3">
 					{dropdown.length ? (
@@ -94,7 +94,7 @@ const Header = () => {
 							return (
 								<span
 									className={classNames(
-										'd-flex flex-column header-item',
+										'tr-header-container__item',
 										{
 											'cursor-pointer': isClickable,
 										}
@@ -116,7 +116,7 @@ const Header = () => {
 
 									<div className="d-flex flex-row">
 										<p
-											className="header-title text-nowrap text-paragraph-xl"
+											className="tr-header-container__item__title"
 											title={header.title}
 										>
 											{header.title}
@@ -145,7 +145,7 @@ const Header = () => {
 				</div>
 			</div>
 
-			<ClayTabs className="header-container-tabs ml-3">
+			<ClayTabs className="tr-header-container__tabs">
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={tab.active}

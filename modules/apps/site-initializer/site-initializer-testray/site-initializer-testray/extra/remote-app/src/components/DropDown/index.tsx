@@ -85,7 +85,7 @@ const DropDown: React.FC<DropDownProps> = ({
 													/>
 												)}
 
-												<span className="ml-1 testray-sidebar-text">
+												<span className="ml-1 tr-sidebar__text">
 													{label}
 												</span>
 											</div>

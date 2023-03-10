@@ -82,7 +82,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 					<dl>
 						<dd>{i18n.sub('x-minutes', '0')}</dd>
 
-						<dd className="small-heading">
+						<dd className="tr-small-heading">
 							{i18n.translate('total-estimated-time')}
 						</dd>
 					</dl>
@@ -90,7 +90,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 					<dl className="ml-3">
 						<dd>{i18n.sub('x-minutes', '0')}</dd>
 
-						<dd className="small-heading">
+						<dd className="tr-small-heading">
 							{i18n.translate('total-estimated-time')}
 						</dd>
 					</dl>
@@ -98,7 +98,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 					<dl className="ml-3">
 						<dd>{i18n.sub('x-minutes', '0')}</dd>
 
-						<dd className="small-heading">
+						<dd className="tr-small-heading">
 							{i18n.sub('time-x-total-issues', '0')}
 						</dd>
 					</dl>
@@ -111,7 +111,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 				title={i18n.translate('total-test-cases')}
 			>
 				<div className="row">
-					{Boolean(totalTestCasesGroup.ready) && (
+					{totalTestCasesGroup.ready && (
 						<div className="col-2">
 							<ClayChart
 								data={{

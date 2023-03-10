@@ -35,7 +35,7 @@ const TableChart: React.FC<TableChartProps> = ({
 	const [horizontalColumns, verticalColumns] = columns;
 
 	return (
-		<table className="table table-borderless table-chart table-sm">
+		<table className="table table-borderless table-sm tr-table-chart">
 			<thead>
 				<tr>
 					<td className="border-0 pb-2" colSpan={6}>
@@ -73,7 +73,7 @@ const TableChart: React.FC<TableChartProps> = ({
 							return (
 								<td
 									className={classNames(
-										'border py-2 table-chart-data-area text-right',
+										'border py-2 tr-table-chart__data-area text-right',
 										colors[verticalColumnIndex][
 											horizontalColumnIndex
 										]

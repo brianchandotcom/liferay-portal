@@ -112,7 +112,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 					{
 						key: 'errors',
 						render: (errors: string) =>
-							errors && <Code italicText={false}>{errors}</Code>,
+							errors && <Code>{errors}</Code>,
 						size: 'xl',
 						value: i18n.translate('errors'),
 					},

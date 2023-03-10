@@ -41,11 +41,11 @@ export type IItem = {
 	type?:
 		| 'checkbox'
 		| 'contextual'
+		| 'divider'
 		| 'group'
 		| 'item'
 		| 'radio'
-		| 'radiogroup'
-		| 'divider';
+		| 'radiogroup';
 	value?: string;
 };
 
@@ -124,7 +124,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 					show={columnsDropdownVisible}
 					trigger={
 						<ClayButton
-							className="d-flex nav-link"
+							className="d-flex management-toolbar-buttons nav-link"
 							displayType="unstyled"
 						>
 							<span className="navbar-breakpoint-down-d-none">

@@ -1,4 +1,4 @@
-.header-container {
+.tr-header-container {
 	-o-transition: $transition;
 	-webkit-transition: $transition;
 	background-color: $color-white;
@@ -6,6 +6,7 @@
 	box-shadow: 0 2px 4px 0 rgb(38 47 87 / 5%);
 	display: flex;
 	flex-wrap: wrap;
+	flex-direction: column;
 	height: fit-content;
 	padding: 20px 20px 0;
 	position: sticky;
@@ -13,7 +14,8 @@
 	transition: $transition;
 	z-index: 1;
 
-	.header-container-tabs {
+	&__tabs {
+		margin-left: 16px;
 		.nav-item button {
 			color: $color-gray;
 			font-size: 16px;
@@ -41,14 +43,16 @@
 		}
 	}
 
-	.header-item {
+	&__item {
 		&.cursor-pointer:hover {
 			.header-title {
 				text-decoration: underline;
 			}
 		}
 
-		.header-title:not(:last-child) {
+		&__title:not(:last-child) {
+			display: flex;
+			flex-direction: column;
 			max-width: 250px;
 			min-width: 1.2em;
 			overflow: hidden;

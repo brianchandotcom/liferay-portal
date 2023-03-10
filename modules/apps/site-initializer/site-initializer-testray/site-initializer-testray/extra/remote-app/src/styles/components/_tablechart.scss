@@ -1,23 +1,24 @@
-.table-chart {
+.tr-table-chart {
 	max-width: 500px;
 	table-layout: fixed;
-	.passed {
-		background-color: $passed-color;
+
+	.blocked {
+		background-color: $blocked-color;
 	}
 
 	.failed {
 		background-color: $failed-color;
 	}
 
-	.blocked {
-		background-color: $blocked-color;
+	.passed {
+		background-color: $passed-color;
 	}
 
 	.test-fix {
 		background-color: $test-fix-color;
 	}
 
-	.table-chart-data-area {
+	&__data-area {
 		border-color: $color-gray-light !important;
 		opacity: 0.3;
 

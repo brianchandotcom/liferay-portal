@@ -20,11 +20,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -49,19 +47,17 @@ public class CommerceQualifierMetadataRegistryImpl
 	public CommerceQualifierMetadata getCommerceQualifierMetadataByClassName(
 		String className) {
 
-		Collection<CommerceQualifierMetadata> commerceQualifierMetadatas =
-			_serviceTrackerMap.values();
+		for (CommerceQualifierMetadata commerceQualifierMetadata :
+				_serviceTrackerMap.values()) {
 
-		Stream<CommerceQualifierMetadata> stream =
-			commerceQualifierMetadatas.stream();
+			if (Objects.equals(
+					className, commerceQualifierMetadata.getModelClassName())) {
 
-		return stream.filter(
-			commerceQualifierMetadata -> Objects.equals(
-				commerceQualifierMetadata.getModelClassName(), className)
-		).findAny(
-		).orElse(
-			null
-		);
+				return commerceQualifierMetadata;
+			}
+		}
+
+		return null;
 	}
 
 	@Override

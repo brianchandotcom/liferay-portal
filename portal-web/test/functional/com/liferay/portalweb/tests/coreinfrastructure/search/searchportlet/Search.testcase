@@ -3282,8 +3282,9 @@ definition {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
+			panelCategoryKey = "site_administration.content",
 			pluralLabelName = "Custom Objects",
-			scope = "company");
+			scope = "site");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -3303,14 +3304,12 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+		JSONObject.addObjectSingleFieldEntryViaJSONAPI(
 			fieldName = "title",
 			objectName = "CustomObject",
 			value = "apple");
 
 		Search.openSearchPage();
-
-		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 

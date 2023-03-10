@@ -294,6 +294,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 			<div class="article-content-content">
 				<liferay-data-engine:data-layout-renderer
 					containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" %>'
+					contentType="journal"
 					dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 					dataRecordValues="<%= journalEditArticleDisplayContext.getValues(ddmStructure) %>"
 					defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"

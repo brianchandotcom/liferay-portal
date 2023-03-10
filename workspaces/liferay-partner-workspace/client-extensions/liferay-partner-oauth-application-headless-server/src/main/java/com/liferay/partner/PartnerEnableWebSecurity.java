@@ -201,21 +201,6 @@ public class PartnerEnableWebSecurity {
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;
 
-	@Value("${salesforce.api.version}")
-	private String _salesforceApiVersion;
-
-	@Value("${salesforce.auth.endpoint}")
-	private String _salesforceAuthEndpoint;
-
-	@Value("${salesforce.auth.password}")
-	private String _salesforceAuthPassword;
-
-	@Value("${salesforce.auth.userName}")
-	private String _salesforceAuthUserName;
-
-	@Value("${salesforce.security.token}")
-	private String _salesforceSecurityToken;
-
 	private static class ApplicationInfo {
 
 		public String client_id;

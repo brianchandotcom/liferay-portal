@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.partner.util;
+package com.liferay.partner.util.configuration;
 
 import com.sforce.async.AsyncApiException;
 import com.sforce.async.BulkConnection;

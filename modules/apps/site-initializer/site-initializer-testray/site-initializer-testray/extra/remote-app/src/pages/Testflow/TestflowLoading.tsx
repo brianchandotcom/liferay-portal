@@ -23,12 +23,12 @@ import {TestrayTask} from '~/services/rest';
 
 const POOLING_INTERVAL = 15000;
 
-type LoadingTaskPageProps = {
+type TestflowLoadingProps = {
 	mutateTask: KeyedMutator<TestrayTask>;
 	testrayTask: TestrayTask;
 };
 
-const LoadingTaskPage: React.FC<LoadingTaskPageProps> = ({
+const TestflowLoading: React.FC<TestflowLoadingProps> = ({
 	mutateTask,
 	testrayTask,
 }) => {
@@ -54,13 +54,13 @@ const LoadingTaskPage: React.FC<LoadingTaskPageProps> = ({
 	}, [mutateTask, testrayTask]);
 
 	return (
-		<Container className="tr-loading-progress-task">
+		<Container className="tr-testflow-loading">
 			<span className="my-3">
 				<ClayLoadingIndicator displayType="secondary" size="md" />
 			</span>
 
-			<span className="tr-loading-progress-task__processing">
-				<div className="tr-loading-progress-task__processing__bar" />
+			<span className="tr-testflow-loading__processing">
+				<div className="tr-testflow-loading__processing__bar" />
 			</span>
 
 			<ClayButton
@@ -71,11 +71,11 @@ const LoadingTaskPage: React.FC<LoadingTaskPageProps> = ({
 				{i18n.translate('refresh')}
 			</ClayButton>
 
-			<p className="tr-loading-progress-task__message">
+			<p className="tr-testflow-loading__message">
 				{i18n.translate('preparing-your-task')}
 			</p>
 		</Container>
 	);
 };
 
-export default LoadingTaskPage;
+export default TestflowLoading;

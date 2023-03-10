@@ -31,7 +31,6 @@ import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersisten
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -136,21 +135,23 @@ public class SamlIdpSpSessionLocalServiceImpl
 			samlIdpSpSessionPersistence.findBySamlIdpSsoSessionId(
 				samlIdpSsoSessionId);
 
-		Stream<SamlIdpSpSession> stream = samlIdpSsoSessions.stream();
+		if (samlIdpSsoSessions.isEmpty()) {
+			return null;
+		}
 
-		return stream.filter(
-			samlIdpSsoSession -> {
-				SamlPeerBinding samlPeerBinding =
-					_samlPeerBindingLocalService.fetchSamlPeerBinding(
-						samlIdpSsoSession.getSamlPeerBindingId());
+		for (SamlIdpSpSession samlIdpSsoSession : samlIdpSsoSessions) {
+			SamlPeerBinding samlPeerBinding =
+				_samlPeerBindingLocalService.fetchSamlPeerBinding(
+					samlIdpSsoSession.getSamlPeerBindingId());
 
-				return Objects.equals(
-					samlSpEntityId, samlPeerBinding.getSamlPeerEntityId());
+			if (Objects.equals(
+					samlSpEntityId, samlPeerBinding.getSamlPeerEntityId())) {
+
+				return samlIdpSsoSession;
 			}
-		).findFirst(
-		).orElse(
-			null
-		);
+		}
+
+		return null;
 	}
 
 	@Reference

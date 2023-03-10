@@ -853,6 +853,51 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		reindex(userIds);
 	}
 
+	/**
+	 * Adds a user.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user including
+	 * its resources, metadata, and internal data structures. It is not
+	 * necessary to make subsequent calls to any methods to setup default
+	 * groups, resources, etc.
+	 * </p>
+	 *
+	 * @param  creatorUserId the primary key of the creator
+	 * @param  companyId the primary key of the user's company
+	 * @param  autoPassword whether a password should be automatically generated
+	 *         for the user
+	 * @param  password1 the user's password
+	 * @param  password2 the user's password confirmation
+	 * @param  autoScreenName whether a screen name should be automatically
+	 *         generated for the user
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  prefixListTypeId the user's name prefix ID
+	 * @param  suffixListTypeId the user's name suffix ID
+	 * @param  male whether the user is male
+	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
+	 *         January)
+	 * @param  birthdayDay the user's birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  jobTitle the user's job title
+	 * @param  type the user's type
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the roles this user possesses
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  sendEmail whether to send the user an email notification about
+	 *         their new account
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
+	 *         attribute), asset category IDs, asset tag names, and expando
+	 *         bridge attributes for the user.
+	 * @return the new user
+	 */
 	@Override
 	public User addUser(
 			long creatorUserId, long companyId, boolean autoPassword,
@@ -893,72 +938,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
-	}
-
-	/**
-	 * Adds a user.
-	 *
-	 * <p>
-	 * This method handles the creation and bookkeeping of the user including
-	 * its resources, metadata, and internal data structures. It is not
-	 * necessary to make subsequent calls to any methods to setup default
-	 * groups, resources, etc.
-	 * </p>
-	 *
-	 * @param  creatorUserId the primary key of the creator
-	 * @param  companyId the primary key of the user's company
-	 * @param  autoPassword whether a password should be automatically generated
-	 *         for the user
-	 * @param  password1 the user's password
-	 * @param  password2 the user's password confirmation
-	 * @param  autoScreenName whether a screen name should be automatically
-	 *         generated for the user
-	 * @param  screenName the user's screen name
-	 * @param  emailAddress the user's email address
-	 * @param  locale the user's locale
-	 * @param  firstName the user's first name
-	 * @param  middleName the user's middle name
-	 * @param  lastName the user's last name
-	 * @param  prefixListTypeId the user's name prefix ID
-	 * @param  suffixListTypeId the user's name suffix ID
-	 * @param  male whether the user is male
-	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
-	 *         January)
-	 * @param  birthdayDay the user's birthday day
-	 * @param  birthdayYear the user's birthday year
-	 * @param  jobTitle the user's job title
-	 * @param  groupIds the primary keys of the user's groups
-	 * @param  organizationIds the primary keys of the user's organizations
-	 * @param  roleIds the primary keys of the roles this user possesses
-	 * @param  userGroupIds the primary keys of the user's user groups
-	 * @param  sendEmail whether to send the user an email notification about
-	 *         their new account
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
-	 *         attribute), asset category IDs, asset tag names, and expando
-	 *         bridge attributes for the user.
-	 * @return the new user
-	 */
-	@Override
-	public User addUser(
-			long creatorUserId, long companyId, boolean autoPassword,
-			String password1, String password2, boolean autoScreenName,
-			String screenName, String emailAddress, Locale locale,
-			String firstName, String middleName, String lastName,
-			long prefixListTypeId, long suffixListTypeId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
-			String jobTitle, long[] groupIds, long[] organizationIds,
-			long[] roleIds, long[] userGroupIds, boolean sendEmail,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			UserConstants.TYPE_USER, groupIds, organizationIds, roleIds,
-			userGroupIds, sendEmail, serviceContext);
 	}
 
 	/**
@@ -1029,6 +1008,50 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		reindex(userIds);
 	}
 
+	/**
+	 * Adds a user with workflow.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user including
+	 * its resources, metadata, and internal data structures. It is not
+	 * necessary to make subsequent calls to any methods to setup default
+	 * groups, resources, etc.
+	 * </p>
+	 *
+	 * @param  creatorUserId the primary key of the creator
+	 * @param  companyId the primary key of the user's company
+	 * @param  autoPassword whether a password should be automatically generated
+	 *         for the user
+	 * @param  password1 the user's password
+	 * @param  password2 the user's password confirmation
+	 * @param  autoScreenName whether a screen name should be automatically
+	 *         generated for the user
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  prefixListTypeId the user's name prefix ID
+	 * @param  suffixListTypeId the user's name suffix ID
+	 * @param  male whether the user is male
+	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
+	 *         January)
+	 * @param  birthdayDay the user's birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  jobTitle the user's job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the roles this user possesses
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  sendEmail whether to send the user an email notification about
+	 *         their new account
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
+	 *         attribute), asset category IDs, asset tag names, and expando
+	 *         bridge attributes for the user.
+	 * @return the new user
+	 */
 	@Override
 	public User addUserWithWorkflow(
 			long creatorUserId, long companyId, boolean autoPassword,
@@ -1320,72 +1343,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		return user;
-	}
-
-	/**
-	 * Adds a user with workflow.
-	 *
-	 * <p>
-	 * This method handles the creation and bookkeeping of the user including
-	 * its resources, metadata, and internal data structures. It is not
-	 * necessary to make subsequent calls to any methods to setup default
-	 * groups, resources, etc.
-	 * </p>
-	 *
-	 * @param  creatorUserId the primary key of the creator
-	 * @param  companyId the primary key of the user's company
-	 * @param  autoPassword whether a password should be automatically generated
-	 *         for the user
-	 * @param  password1 the user's password
-	 * @param  password2 the user's password confirmation
-	 * @param  autoScreenName whether a screen name should be automatically
-	 *         generated for the user
-	 * @param  screenName the user's screen name
-	 * @param  emailAddress the user's email address
-	 * @param  locale the user's locale
-	 * @param  firstName the user's first name
-	 * @param  middleName the user's middle name
-	 * @param  lastName the user's last name
-	 * @param  prefixListTypeId the user's name prefix ID
-	 * @param  suffixListTypeId the user's name suffix ID
-	 * @param  male whether the user is male
-	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
-	 *         January)
-	 * @param  birthdayDay the user's birthday day
-	 * @param  birthdayYear the user's birthday year
-	 * @param  jobTitle the user's job title
-	 * @param  groupIds the primary keys of the user's groups
-	 * @param  organizationIds the primary keys of the user's organizations
-	 * @param  roleIds the primary keys of the roles this user possesses
-	 * @param  userGroupIds the primary keys of the user's user groups
-	 * @param  sendEmail whether to send the user an email notification about
-	 *         their new account
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
-	 *         attribute), asset category IDs, asset tag names, and expando
-	 *         bridge attributes for the user.
-	 * @return the new user
-	 */
-	@Override
-	public User addUserWithWorkflow(
-			long creatorUserId, long companyId, boolean autoPassword,
-			String password1, String password2, boolean autoScreenName,
-			String screenName, String emailAddress, Locale locale,
-			String firstName, String middleName, String lastName,
-			long prefixListTypeId, long suffixListTypeId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
-			String jobTitle, long[] groupIds, long[] organizationIds,
-			long[] roleIds, long[] userGroupIds, boolean sendEmail,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addUserWithWorkflow(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			UserConstants.TYPE_USER, groupIds, organizationIds, roleIds,
-			userGroupIds, sendEmail, serviceContext);
 	}
 
 	@Override

@@ -103,12 +103,14 @@ if (portletTitleBasedNavigation) {
 							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "orphan-pages"));
 						});
 
-					add(
-						navigationItem -> {
-							navigationItem.setActive(wikiVisualizationHelper.isViewDraftPagesNavItemSelected());
-							navigationItem.setHref(wikiURLHelper.getViewDraftPagesURL(node));
-							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "draft-pages"));
-						});
+					if (themeDisplay.isSignedIn()) {
+						add(
+							navigationItem -> {
+								navigationItem.setActive(wikiVisualizationHelper.isViewDraftPagesNavItemSelected());
+								navigationItem.setHref(wikiURLHelper.getViewDraftPagesURL(node));
+								navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "draft-pages"));
+							});
+					}
 				}
 			}
 		%>'

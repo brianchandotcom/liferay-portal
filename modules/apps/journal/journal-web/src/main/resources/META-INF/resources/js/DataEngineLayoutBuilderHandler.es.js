@@ -87,7 +87,7 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 					Liferay.Language.get(
 						'please-enter-a-valid-title-for-the-default-language-x'
 					),
-					defaultLanguageId.replace('_', '-')
+					defaultLanguageId.replaceAll('_', '-')
 				),
 				title: Liferay.Language.get('error'),
 				type: 'danger',

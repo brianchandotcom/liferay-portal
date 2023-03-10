@@ -15,7 +15,7 @@ describe('renameKeys', () => {
 	it('replaces the string for locale', () => {
 		expect(
 			renameKeys({'en-US': 'Hello', 'zh-CN': 'Ni Hao'}, (str) =>
-				str.replace('-', '_')
+				str.replaceAll('-', '_')
 			)
 		).toEqual({en_US: 'Hello', zh_CN: 'Ni Hao'});
 	});

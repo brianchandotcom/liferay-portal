@@ -16,7 +16,7 @@ export function getAvailableLocalesObject(displayNames, languageIds) {
 			displayName: displayNames[index],
 			id,
 			label: id,
-			symbol: id.toLowerCase().replace('_', '-'),
+			symbol: id.toLowerCase().replaceAll('_', '-'),
 		};
 	});
 }

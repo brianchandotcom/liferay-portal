@@ -39,7 +39,7 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 	const [transitions, setTransitions] = useState([]);
 	const [visitedNodes, setVisitedNodes] = useState([]);
 
-	const languageId = themeDisplay.getLanguageId().replace('_', '-');
+	const languageId = themeDisplay.getLanguageId().replaceAll('_', '-');
 
 	useEffect(() => {
 		fetch(

@@ -163,7 +163,7 @@ export default function _JournalPortlet({
 					Liferay.Language.get(
 						'please-enter-a-valid-title-for-the-default-language-x'
 					),
-					defaultLanguageId.replace('_', '-')
+					defaultLanguageId.replaceAll('_', '-')
 				)
 			);
 		}
@@ -217,7 +217,7 @@ export default function _JournalPortlet({
 						Liferay.Language.get(
 							'please-enter-a-valid-title-for-the-default-language-x'
 						),
-						defaultLanguageId.replace('_', '-')
+						defaultLanguageId.replaceAll('_', '-')
 					)
 				);
 			}

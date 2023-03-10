@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 function getLanguage(id) {
-	const text = id.replace('_', '-');
+	const text = id.replaceAll('_', '-');
 	const icon = text.toLowerCase();
 
 	return {

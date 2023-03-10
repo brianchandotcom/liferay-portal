@@ -26,7 +26,7 @@ function SelectTypes({
 	const {locale} = useContext(ThemeContext);
 
 	const searchableTypesSorted = searchableTypes.sort((a, b) =>
-		a.displayName.localeCompare(b.displayName, locale.replace('_', '-'))
+		a.displayName.localeCompare(b.displayName, locale.replaceAll('_', '-'))
 	);
 
 	const _handleDelete = (type) => () => {

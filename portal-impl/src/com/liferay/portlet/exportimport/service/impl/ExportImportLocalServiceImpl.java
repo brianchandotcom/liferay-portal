@@ -612,6 +612,28 @@ public class ExportImportLocalServiceImpl
 	}
 
 	@Override
+	public long mergeLayoutSetPrototypeInBackground(
+			long userId, long groupId,
+			ExportImportConfiguration exportImportConfiguration)
+		throws PortalException {
+
+		BackgroundTask backgroundTask =
+			BackgroundTaskManagerUtil.addBackgroundTask(
+				userId, groupId, exportImportConfiguration.getName(),
+				BackgroundTaskExecutorNames.
+					LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR,
+				HashMapBuilder.<String, Serializable>put(
+					BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
+				).put(
+					"exportImportConfigurationId",
+					exportImportConfiguration.getExportImportConfigurationId()
+				).build(),
+				new ServiceContext());
+
+		return backgroundTask.getBackgroundTaskId();
+	}
+
+	@Override
 	public MissingReferences validateImportLayoutsFile(
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException {

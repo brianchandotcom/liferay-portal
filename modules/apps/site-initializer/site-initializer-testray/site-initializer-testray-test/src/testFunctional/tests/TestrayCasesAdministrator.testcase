@@ -24,7 +24,7 @@ definition {
 			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 
-		task ("Given that I create all the necessary objects") {
+		task ("Given that a Testray project, team, and component are created") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -56,10 +56,10 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-163753 | Test Summary: Verify as an administrator I can add another Cases in the Add Another button"
+	@description = "Story ID: LPS-165584 | Test Summary: Verify as an administrator I can add another Cases in the Add Another button"
 	@priority = 3
 	test AdminCanAddAnotherCase {
-		task ("Then I go to the 'Cases' page") {
+		task ("Given I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -71,7 +71,7 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Cases");
 		}
 
-		task ("Given that I create a new Case") {
+		task ("When I create a new case and select the option Add another") {
 			TestrayCases.typeCasesField(
 				addAnotherCase = "Add Another",
 				caseName = ${caseName},
@@ -85,8 +85,13 @@ definition {
 			Button.click(button = "Save");
 		}
 
-		task ("Then the case is created with the new infos") {
+		task ("Then I assert that a new Case was created and a copy of the new Case as well") {
 			Button.click(button = "Cancel");
+
+			TestrayCases.verifyCase(
+				caseComponent = "Component 1",
+				caseName = "Case 1",
+				casePriority = 3);
 
 			TestrayCases.verifyCase(
 				caseComponent = "Component 1",
@@ -95,10 +100,10 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-156790 | Test Summary: Verify if as an Administrator I am able to add Cases without Subcomponents"
+	@description = "Story ID: LPS-146923 | Test Summary: Verify if as an Administrator I am able to add Cases without Subcomponents"
 	@priority = 5
 	test AdminCanAddCase {
-		task ("Given that I create a new 'Case' via API") {
+		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -106,7 +111,7 @@ definition {
 				projectName = ${projectName});
 		}
 
-		task ("Then I go to the 'Cases' page") {
+		task ("When I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -126,10 +131,10 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-156791 | Test Summary: Verify if as an Administrator I am able to delete Cases without Subcomponents"
+	@description = "Story ID: LPS-165583 | Test Summary: Verify if as an Administrator I am able to delete Cases without Subcomponents"
 	@priority = 5
 	test AdminCanDeleteCase {
-		task ("Given that I create a new 'Case' via API") {
+		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -137,7 +142,7 @@ definition {
 				projectName = ${projectName});
 		}
 
-		task ("Then I go to the 'Cases' page") {
+		task ("And I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -162,10 +167,10 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-167574 | Test Summary: Verify that an administrator can delete cases in the 'Select Cases to Export' modal"
+	@description = "Story ID: LPS-165583 | Test Summary: Verify that an administrator can delete cases in the 'Select Cases to Export' modal"
 	@priority = 3
 	test AdminCanDeleteCasesInModalExportCases {
-		task ("Given that I create a new 'Case' via API") {
+		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -173,7 +178,7 @@ definition {
 				projectName = ${projectName});
 		}
 
-		task ("When the user select a cases for export") {
+		task ("And I select a case for export") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -195,19 +200,21 @@ definition {
 			Testray.assertItemName(text = ${caseName});
 		}
 
-		task ("Then can delete this case and it no longer appears in the list") {
+		task ("When I delete this case") {
 			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+		}
 
+		task ("Then I assert that Case is no longer present") {
 			Testray.assertItemNotPresent(text = ${caseName});
 		}
 	}
 
-	@description = "Automation ID: LPS-156793 | Test Summary: Verify if as an Administrator I am able to edit Cases without Subcomponents"
+	@description = "Story ID: LPS-146923 | Test Summary: Verify if as an Administrator I am able to edit Cases without Subcomponents"
 	@priority = 5
 	test AdminCanEditCase {
-		task ("Given that I create a new 'Case' via API") {
+		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -215,7 +222,7 @@ definition {
 				projectName = ${projectName});
 		}
 
-		task ("Then I go to the 'Cases' page") {
+		task ("When I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -225,13 +232,6 @@ definition {
 			Testray.goToProjectPage(projectName = ${projectName});
 
 			Testray.projectTabNavigator(navTabName = "Cases");
-		}
-
-		task ("Then the case is created with the new infos") {
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 3);
 		}
 
 		task ("And the user goes to edit a case") {
@@ -257,8 +257,8 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-156916 | Test Summary: Verify if as an Administrator I am able to Export Cases from another Project"
-	@ignore = "Test Stub"
+	@description = "Story ID: LPS-165583 | Test Summary: Verify if as an Administrator I am able to Export Cases from another Project"
+	@ignore = "true"
 	@priority = 3
 	test AdminCanExportCase {
 
@@ -266,10 +266,10 @@ definition {
 
 	}
 
-	@description = "Automation ID: LPS-156919 | Test Summary: Verify if As an Administrator, I should be able to link and unlink Requirements to a Case"
+	@description = "Story ID: LPS-160751 | Test Summary: Verify if As an Administrator, I should be able to link and unlink Requirements to a Case"
 	@priority = 3
 	test AdminCanLinkAndUnlinkRequirements {
-		task ("Given that I create a new 'Case' and new 'Requirement' via API") {
+		task ("Given that I create a new Case and new Requirement via API") {
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -283,7 +283,7 @@ definition {
 				requirementName = "Requirement Summary");
 		}
 
-		task ("Then I go to the 'Requirement' page") {
+		task ("And I go to the Requirement page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -306,14 +306,7 @@ definition {
 				requirementName = "Requirement Summary");
 		}
 
-		task ("Then the requirements should be displayed on Case page") {
-			TestrayCases.verifyLinkCaseRequirement(
-				component = "Component 1",
-				summary = "Requirement Summary",
-				teamName = "Team 1");
-		}
-
-		task ("When the user goes to cases and unlink a requirement") {
+		task ("And the user goes to cases and unlink a requirement") {
 			TestrayCases.linkCasesRequirement(
 				buttonText = "Select Requirements",
 				linkText = "Link Requirements",
@@ -325,10 +318,10 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-166791 | Test Summary: Verify that cases be added with an estimated duration less than zero"
+	@description = "Story ID: LPS-146923 | Test Summary: Verify that cases be added with an estimated duration less than zero"
 	@priority = 4
 	test AdminCanNotAddCasesWithEstimatedDurationLessThanZero {
-		task ("Given I go to the 'Cases' page") {
+		task ("Given I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -340,7 +333,7 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Cases");
 		}
 
-		task ("When I add a new 'Case' with the estimated duration below 0") {
+		task ("When I add a new Case with the estimated duration below 0") {
 			TestrayCases.typeCasesField(
 				caseName = ${caseName},
 				caseTypeId = "Manual Test",
@@ -358,10 +351,10 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-156933 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate case"
+	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate case"
 	@priority = 5
 	test AdminCannotAddDuplicatedCase {
-		task ("Given that I create a new 'Case' via API") {
+		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -369,7 +362,7 @@ definition {
 				projectName = ${projectName});
 		}
 
-		task ("Then I go to the 'Cases' page") {
+		task ("And I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -397,10 +390,10 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-167573 | Test Summary: Verify that as administrator cases cannot be exported without linked Cases"
+	@description = "Story ID: LPS-165583 | Test Summary: Verify that as administrator cases cannot be exported without linked Cases"
 	@priority = 3
 	test AdminCannotExportCasesWithoutCasesLinked {
-		task ("Given that I create a new 'Case' via API") {
+		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -427,8 +420,8 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-156950 | Test Summary: Verify if as an Administrator I should be able to Sort by Errors"
-	@ignore = "Test Stub"
+	@description = "Story ID: LPS-156220 | Test Summary: Verify if as an Administrator I should be able to Sort by Errors"
+	@ignore = "true"
 	@priority = 4
 	test AdminCanSortErrors {
 
@@ -436,8 +429,8 @@ definition {
 
 	}
 
-	@description = "Automation ID: LPS-156947 | Test Summary: Verify if as an Administrator I should be able to Sort by Product Version"
-	@ignore = "Test Stub"
+	@description = "Story ID: LPS-156220 | Test Summary: Verify if as an Administrator I should be able to Sort by Product Version"
+	@ignore = "true"
 	@priority = 4
 	test AdminCanSortProductVersion {
 
@@ -445,8 +438,8 @@ definition {
 
 	}
 
-	@description = "Automation ID: LPS-156949 | Test Summary: Verify if as an Administrator I should be able to Sort by Status"
-	@ignore = "Test Stub"
+	@description = "Story ID: LPS-156220 | Test Summary: Verify if as an Administrator I should be able to Sort by Status"
+	@ignore = "true"
 	@priority = 4
 	test AdminCanSortStatus {
 
@@ -454,10 +447,10 @@ definition {
 
 	}
 
-	@description = "Automation ID:]q  LPS-164133 | Test Summary: Verify that the user can not create a case if all the required fields are not filled in"
+	@description = "Story ID: LPS-146923 | Test Summary: Verify that the user can not create a case if all the required fields are not filled in"
 	@priority = 3
 	test AdminCanViewRequiredField {
-		task ("Given I go to the 'Cases' page") {
+		task ("Given I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(

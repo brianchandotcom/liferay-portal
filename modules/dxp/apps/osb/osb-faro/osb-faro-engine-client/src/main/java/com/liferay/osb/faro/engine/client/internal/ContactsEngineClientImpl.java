@@ -1198,9 +1198,17 @@ public class ContactsEngineClientImpl
 
 		FilterBuilder filterBuilder = new FilterBuilder();
 
-		filterBuilder.addFilter(
-			"channelId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
-			channelIds);
+		if (ListUtil.isNotNull(channelIds)) {
+			FilterBuilder channelIdsFilterBuilder = new FilterBuilder();
+
+			for (String channelId : channelIds) {
+				channelIdsFilterBuilder.addFilter(
+					"channelId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
+					channelId, false);
+			}
+
+			filterBuilder.addFilter(channelIdsFilterBuilder, true);
+		}
 
 		uriVariables.put("filter", filterBuilder.build());
 

@@ -44,15 +44,18 @@ const FloatingBox: React.FC<FloatingBoxProps> = ({
 }) => {
 	return (
 		<div
-			className={classNames('floating-box', {
-				'box-hidden': !isVisible,
-				'box-visible': isVisible,
+			className={classNames('tr-floating-box', {
+				' tr-floating-box--hidden': !isVisible,
+				' tr-floating-box--visible': isVisible,
 			})}
 		>
 			<>
-				<div className="box-alerts">
+				<div className="tr-floating-box__alert">
 					{alerts.map(({header, text}, index) => (
-						<div className="box-alert" key={index}>
+						<div
+							className="tr-floating-box__alert__items"
+							key={index}
+						>
 							<ClayAlert
 								displayType="danger"
 								key={index}
@@ -66,8 +69,8 @@ const FloatingBox: React.FC<FloatingBoxProps> = ({
 				</div>
 
 				<div className="align-items d-flex justify-content-between m-3">
-					<div className="box-label-selected d-flex">
-						<span className="mr-2 selected-count">
+					<div className="tr-floating-box__label">
+						<span className="tr-floating-box__label__count">
 							{selectedCount}
 						</span>
 

@@ -77,7 +77,8 @@ public class PropertyPoshiElement extends VarPoshiElement {
 	}
 
 	private boolean _isElementType(String poshiScript) {
-		return isValidPoshiScriptStatement(_statementPattern, poshiScript);
+		return isValidPoshiScriptStatement(
+			_partialStatementPattern, poshiScript);
 	}
 
 	private static final String _ELEMENT_NAME = "property";
@@ -87,6 +88,10 @@ public class PropertyPoshiElement extends VarPoshiElement {
 	private static final String _PROPERTY_VALUE_REGEX = StringUtil.combine(
 		"(", "\".*\"", "|", "'''.*?'''", ")");
 
+	private static final Pattern _partialStatementPattern = Pattern.compile(
+		"^" + _POSHI_SCRIPT_KEYWORD + "[\\s]+[\\w\\.-]+" + ASSIGNMENT_REGEX +
+			_PROPERTY_VALUE_REGEX,
+		Pattern.DOTALL);
 	private static final Pattern _statementPattern = Pattern.compile(
 		"^" + _POSHI_SCRIPT_KEYWORD + "[\\s]+[\\w\\.-]+" + ASSIGNMENT_REGEX +
 			_PROPERTY_VALUE_REGEX + "(;|)$",

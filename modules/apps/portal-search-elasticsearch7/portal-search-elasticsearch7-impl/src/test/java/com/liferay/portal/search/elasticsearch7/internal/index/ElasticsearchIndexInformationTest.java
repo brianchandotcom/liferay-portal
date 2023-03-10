@@ -28,6 +28,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -71,6 +72,11 @@ public class ElasticsearchIndexInformationTest {
 
 		_elasticsearchIndexInformation = _createElasticsearchIndexInformation(
 			_elasticsearchConnectionFixture);
+	}
+
+	@After
+	public void tearDown() {
+		_companyIndexFactoryFixture.tearDown();
 	}
 
 	@Test

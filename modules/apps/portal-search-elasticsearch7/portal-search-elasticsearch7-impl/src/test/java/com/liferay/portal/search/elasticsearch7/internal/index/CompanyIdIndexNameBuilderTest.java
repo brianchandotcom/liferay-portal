@@ -17,6 +17,8 @@ package com.liferay.portal.search.elasticsearch7.internal.index;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
@@ -38,6 +40,8 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author André de Oliveira
@@ -65,6 +69,13 @@ public class CompanyIdIndexNameBuilderTest {
 	@After
 	public void tearDown() throws Exception {
 		_elasticsearchFixture.tearDown();
+
+		if (_companyIndexFactory != null) {
+			ReflectionTestUtil.invoke(
+				_companyIndexFactory, "deactivate", new Class<?>[0]);
+
+			_companyIndexFactory = null;
+		}
 	}
 
 	@Test
@@ -138,24 +149,31 @@ public class CompanyIdIndexNameBuilderTest {
 	protected void createIndices(String indexNamePrefix, long companyId)
 		throws Exception {
 
-		final CompanyIdIndexNameBuilder companyIdIndexNameBuilder =
+		CompanyIdIndexNameBuilder companyIdIndexNameBuilder =
 			new CompanyIdIndexNameBuilder();
 
 		companyIdIndexNameBuilder.setIndexNamePrefix(indexNamePrefix);
 
-		CompanyIndexFactory companyIndexFactory = new CompanyIndexFactory() {
-			{
-				setElasticsearchConfigurationWrapper(
-					createElasticsearchConfigurationWrapper());
-				setIndexNameBuilder(companyIdIndexNameBuilder);
-				setJsonFactory(new JSONFactoryImpl());
-			}
-		};
+		_companyIndexFactory = new CompanyIndexFactory();
+
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactory, "_elasticsearchConfigurationWrapper",
+			createElasticsearchConfigurationWrapper());
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactory, "_indexNameBuilder",
+			companyIdIndexNameBuilder);
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactory, "_jsonFactory", new JSONFactoryImpl());
+
+		ReflectionTestUtil.invoke(
+			_companyIndexFactory, "activate",
+			new Class<?>[] {BundleContext.class},
+			SystemBundleUtil.getBundleContext());
 
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchFixture.getRestHighLevelClient();
 
-		companyIndexFactory.createIndices(
+		_companyIndexFactory.createIndices(
 			restHighLevelClient.indices(), companyId);
 	}
 
@@ -176,6 +194,7 @@ public class CompanyIdIndexNameBuilderTest {
 			new String[] {expectedIndexName}, getIndexResponse.getIndices());
 	}
 
+	private CompanyIndexFactory _companyIndexFactory;
 	private ElasticsearchFixture _elasticsearchFixture;
 
 }

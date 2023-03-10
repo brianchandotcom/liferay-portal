@@ -123,7 +123,8 @@ definition {
 			en_US_plural_label = ${en_US_plural_label},
 			fieldName = "name",
 			fieldValue = ${name},
-			token = ${token});
+			token = ${token},
+			virtualHost = ${virtualHost});
 
 		var objectId = JSONPathUtil.getIdValue(response = ${response});
 

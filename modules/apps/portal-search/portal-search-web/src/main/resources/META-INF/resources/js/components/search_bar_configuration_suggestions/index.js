@@ -13,6 +13,7 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
+import getCN from 'classnames';
 import React, {useMemo} from 'react';
 
 import LearnMessage from '../../shared/LearnMessage';
@@ -232,22 +233,28 @@ function SearchBarConfigurationSuggestions({
 					)}
 
 					{!!contributorOptions.length && (
-						<SuggestionContributorAddButton>
-							{contributorOptions.map((option, index) => (
-								<ClayDropDown.Item
-									key={index}
-									onClick={_handleInputSetAdd(
-										option.contributorName
-									)}
-								>
-									<div>{option.title}</div>
+						<div
+							className={getCN({
+								'mt-4': !suggestionsContributorConfiguration.length,
+							})}
+						>
+							<SuggestionContributorAddButton>
+								{contributorOptions.map((option, index) => (
+									<ClayDropDown.Item
+										key={index}
+										onClick={_handleInputSetAdd(
+											option.contributorName
+										)}
+									>
+										<div>{option.title}</div>
 
-									<div className="text-2">
-										{option.description}
-									</div>
-								</ClayDropDown.Item>
-							))}
-						</SuggestionContributorAddButton>
+										<div className="text-2">
+											{option.description}
+										</div>
+									</ClayDropDown.Item>
+								))}
+							</SuggestionContributorAddButton>
+						</div>
 					)}
 				</InputSets>
 			</div>

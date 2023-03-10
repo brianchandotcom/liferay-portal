@@ -92,11 +92,11 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 
 	return (
 		<div
-			className={classNames('compare-runs-popover', {
-				'box-hidden': !visible && !expanded,
-				'box-hidden-expanded': !visible && expanded,
-				'box-visible': visible && !expanded,
-				'box-visible-expanded': visible && expanded,
+			className={classNames('tr-compare-runs-popover', {
+				'hidden': !visible && !expanded,
+				'hidden--expanded': !visible && expanded,
+				'visible': visible && !expanded,
+				'visible--expanded': visible && expanded,
 			})}
 			onBlur={() => setVisible(false)}
 			ref={ref}

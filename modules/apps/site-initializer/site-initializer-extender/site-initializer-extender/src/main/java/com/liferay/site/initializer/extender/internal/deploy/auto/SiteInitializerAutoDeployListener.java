@@ -108,9 +108,16 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 			return false;
 		}
 
-		try {
+		try (ZipFile zipFile = new ZipFile(file)) {
+
+			ZipEntry zipEntry = zipFile.getEntry("site-initializer/");
+
+			if(zipEntry == null){
+				return false;
+			}
+
 			UnicodeProperties typeSettingsUnicodeProperties =
-				_getTypeSettingsUnicodeProperties(file);
+				_getTypeSettingsUnicodeProperties(zipFile);
 
 			if ((typeSettingsUnicodeProperties != null) &&
 				Validator.isNotNull(
@@ -133,8 +140,12 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 					file.getName());
 		}
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			_getTypeSettingsUnicodeProperties(file);
+		UnicodeProperties typeSettingsUnicodeProperties = null;
+
+		try(ZipFile zipFile = new ZipFile(file)){
+			typeSettingsUnicodeProperties =
+				_getTypeSettingsUnicodeProperties(zipFile);
+		}
 
 		if (typeSettingsUnicodeProperties == null) {
 			throw new AutoDeployException();
@@ -215,10 +226,8 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		}
 	}
 
-	private UnicodeProperties _getTypeSettingsUnicodeProperties(File file)
+	private UnicodeProperties _getTypeSettingsUnicodeProperties(ZipFile zipFile)
 		throws Exception {
-
-		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 			while (enumeration.hasMoreElements()) {
@@ -261,7 +270,6 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 					).build();
 				}
 			}
-		}
 
 		return null;
 	}

@@ -45,7 +45,7 @@ public class BaseDALO {
 		for (int i = 0; i <= _RETRY_COUNT; i++) {
 			try {
 				String response = WebClient.create(
-					_liferayPortalURL + _getObjectURLPath()
+					_liferayPortalURL + _getObjectDefinitionURLPath()
 				).post(
 				).accept(
 					MediaType.APPLICATION_JSON
@@ -70,7 +70,7 @@ public class BaseDALO {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringUtil.combine(
-							"Created ", getObjectName(), " ",
+							"Created ", getObjectDefinitionName(), " ",
 							responseJSONObject.getLong("id")));
 				}
 
@@ -80,7 +80,7 @@ public class BaseDALO {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringUtil.combine(
-							"Unable to create ", getObjectName(),
+							"Unable to create ", getObjectDefinitionName(),
 							"s. Retry in ", _RETRY_DELAY_DURATION, "ms: ",
 							exception.getMessage()));
 				}
@@ -92,8 +92,8 @@ public class BaseDALO {
 		return null;
 	}
 
-	protected void delete(long objectID) {
-		if (objectID <= 0) {
+	protected void delete(long objectEntryID) {
+		if (objectEntryID <= 0) {
 			return;
 		}
 
@@ -101,7 +101,8 @@ public class BaseDALO {
 			try {
 				WebClient.create(
 					StringUtil.combine(
-						_liferayPortalURL, _getObjectURLPath(), "/", objectID)
+						_liferayPortalURL,
+						_getObjectEntryURLPath(objectEntryID))
 				).delete(
 				).accept(
 					MediaType.APPLICATION_JSON
@@ -116,7 +117,8 @@ public class BaseDALO {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringUtil.combine(
-							"Deleted ", getObjectName(), " ", objectID));
+							"Deleted ", getObjectDefinitionName(), " ",
+							objectEntryID));
 				}
 
 				break;
@@ -125,9 +127,9 @@ public class BaseDALO {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringUtil.combine(
-							"Unable to delete ", getObjectName(), " ", objectID,
-							". Retry in ", _RETRY_DELAY_DURATION, "ms: ",
-							exception.getMessage()));
+							"Unable to delete ", getObjectDefinitionName(), " ",
+							objectEntryID, ". Retry in ", _RETRY_DELAY_DURATION,
+							"ms: ", exception.getMessage()));
 				}
 
 				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
@@ -135,12 +137,12 @@ public class BaseDALO {
 		}
 	}
 
-	protected String getObjectName() {
+	protected String getObjectDefinitionName() {
 		throw new UnsupportedOperationException();
 	}
 
 	protected List<JSONObject> retrieve() {
-		return retrieve(_getObjectURLPath());
+		return retrieve(_getObjectDefinitionURLPath());
 	}
 
 	protected List<JSONObject> retrieve(String objectURLPath) {
@@ -196,8 +198,9 @@ public class BaseDALO {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringUtil.combine(
-								"Unable to retrieve ", getObjectName(),
-								"s. Retry in ", _RETRY_DELAY_DURATION, "ms: ",
+								"Unable to retrieve ",
+								getObjectDefinitionName(), "s. Retry in ",
+								_RETRY_DELAY_DURATION, "ms: ",
 								exception.getMessage()));
 					}
 
@@ -215,22 +218,22 @@ public class BaseDALO {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringUtil.combine(
-					"Retrieved ", jsonObjects.size(), " ", getObjectName(),
-					"s"));
+					"Retrieved ", jsonObjects.size(), " ",
+					getObjectDefinitionName(), "s"));
 		}
 
 		return jsonObjects;
 	}
 
 	protected JSONObject update(JSONObject requestJSONObject) {
-		long requestObjectID = requestJSONObject.getLong("id");
+		long requestObjectEntryID = requestJSONObject.getLong("id");
 
 		for (int i = 0; i <= _RETRY_COUNT; i++) {
 			try {
 				String response = WebClient.create(
 					StringUtil.combine(
-						_liferayPortalURL, _getObjectURLPath(), "/",
-						requestObjectID)
+						_liferayPortalURL,
+						_getObjectEntryURLPath(requestObjectEntryID))
 				).put(
 				).accept(
 					MediaType.APPLICATION_JSON
@@ -252,19 +255,22 @@ public class BaseDALO {
 
 				JSONObject responseJSONObject = new JSONObject(response);
 
-				long responseObjectID = responseJSONObject.getLong("id");
+				long responseObjectEntryID = responseJSONObject.getLong("id");
 
-				if (!Objects.equals(responseObjectID, requestObjectID)) {
+				if (!Objects.equals(
+						responseObjectEntryID, requestObjectEntryID)) {
+
 					throw new RuntimeException(
 						StringUtil.combine(
-							"Updated wrong ", getObjectName(), " ",
-							responseObjectID));
+							"Updated wrong ", getObjectDefinitionName(), " ",
+							responseObjectEntryID));
 				}
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringUtil.combine(
-							"Updated ", getObjectName(), " ", requestObjectID));
+							"Updated ", getObjectDefinitionName(), " ",
+							requestObjectEntryID));
 				}
 
 				return responseJSONObject;
@@ -273,8 +279,8 @@ public class BaseDALO {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringUtil.combine(
-							"Unable to update ", getObjectName(), " ",
-							requestObjectID, ". Retry in ",
+							"Unable to update ", getObjectDefinitionName(), " ",
+							requestObjectEntryID, ". Retry in ",
 							_RETRY_DELAY_DURATION, "ms: ",
 							exception.getMessage()));
 				}
@@ -286,13 +292,18 @@ public class BaseDALO {
 		return null;
 	}
 
-	private String _getObjectURLPath() {
-		String objectNamePath = getObjectName();
+	private String _getObjectDefinitionURLPath() {
+		String objectDefinitionName = getObjectDefinitionName();
 
-		objectNamePath = objectNamePath.replaceAll("\\s+", "");
-		objectNamePath = StringUtil.toLowerCase(objectNamePath);
+		objectDefinitionName = objectDefinitionName.replaceAll("\\s+", "");
+		objectDefinitionName = StringUtil.toLowerCase(objectDefinitionName);
 
-		return StringUtil.combine("/o/c/", objectNamePath, "s");
+		return StringUtil.combine("/o/c/", objectDefinitionName, "s");
+	}
+
+	private String _getObjectEntryURLPath(long objectEntryID) {
+		return StringUtil.combine(
+			_getObjectDefinitionURLPath(), "/", objectEntryID);
 	}
 
 	private static final long _RETRY_COUNT = 3;

@@ -76,7 +76,7 @@ public class ProjectDALO extends BaseDALO {
 		return _newProject(project.getJSONObject());
 	}
 
-	protected String getObjectName() {
+	protected String getObjectDefinitionName() {
 		return "Project";
 	}
 

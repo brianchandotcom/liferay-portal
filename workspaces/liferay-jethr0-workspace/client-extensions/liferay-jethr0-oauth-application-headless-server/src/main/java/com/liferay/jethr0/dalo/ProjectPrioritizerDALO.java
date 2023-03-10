@@ -83,7 +83,7 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 	}
 
 	@Override
-	protected String getObjectName() {
+	protected String getObjectDefinitionName() {
 		return "Project Prioritizer";
 	}
 

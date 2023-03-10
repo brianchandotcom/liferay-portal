@@ -92,7 +92,7 @@ public class ProjectComparatorDALO extends BaseDALO {
 	}
 
 	@Override
-	protected String getObjectName() {
+	protected String getObjectDefinitionName() {
 		return "Project Comparator";
 	}
 

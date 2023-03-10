@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.partner.services;
+package com.liferay.partner.service;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;

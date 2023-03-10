@@ -671,7 +671,8 @@ public class JournalArticleLocalServiceImpl
 		if (_classNameLocalService.getClassNameId(DDMStructure.class) !=
 				classNameId) {
 
-			updateDDMLinks(id, groupId, ddmStructureKey, ddmTemplateKey, true);
+			updateDDMLinks(
+				id, groupId, article.getDDMStructureId(), ddmTemplateKey, true);
 		}
 
 		// Email
@@ -1233,7 +1234,7 @@ public class JournalArticleLocalServiceImpl
 		updateDDMFields(newArticle, copyArticleImages(oldArticle, newArticle));
 
 		updateDDMLinks(
-			id, groupId, oldArticle.getDDMStructureKey(),
+			id, groupId, oldArticle.getDDMStructureId(),
 			oldArticle.getDDMTemplateKey(), true);
 
 		return newArticle;
@@ -5921,8 +5922,8 @@ public class JournalArticleLocalServiceImpl
 				article.getClassNameId()) {
 
 			updateDDMLinks(
-				article.getId(), groupId, ddmStructureKey, ddmTemplateKey,
-				addNewVersion);
+				article.getId(), groupId, article.getDDMStructureId(),
+				ddmTemplateKey, addNewVersion);
 		}
 
 		// Small image
@@ -6586,7 +6587,7 @@ public class JournalArticleLocalServiceImpl
 
 		if (incrementVersion) {
 			updateDDMLinks(
-				article.getId(), groupId, oldArticle.getDDMStructureKey(),
+				article.getId(), groupId, oldArticle.getDDMStructureId(),
 				oldArticle.getDDMTemplateKey(), true);
 		}
 
@@ -7696,11 +7697,11 @@ public class JournalArticleLocalServiceImpl
 		return articleVersionStatusOVPs;
 	}
 
-	protected long getClassTypeId(JournalArticle article) {
-		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-			_portal.getSiteGroupId(article.getGroupId()),
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
+	protected long getClassTypeId(JournalArticle article)
+		throws PortalException {
+
+		DDMStructure ddmStructure = ddmStructureLocalService.getDDMStructure(
+			article.getDDMStructureId());
 
 		return ddmStructure.getStructureId();
 	}
@@ -7938,9 +7939,7 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-			_portal.getSiteGroupId(article.getGroupId()),
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
+			article.getDDMStructureId());
 
 		if (ddmStructure != null) {
 			subscriptionSender.addPersistedSubscribers(
@@ -8198,9 +8197,7 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException {
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			_portal.getSiteGroupId(article.getGroupId()),
-			_portal.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
+			article.getDDMStructureId());
 
 		_ddmFieldLocalService.updateDDMFormValues(
 			ddmStructure.getStructureId(), article.getId(), ddmFormValues);
@@ -8226,14 +8223,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void updateDDMLinks(
-			long id, long groupId, String ddmStructureKey,
-			String ddmTemplateKey, boolean incrementVersion)
+			long id, long groupId, long ddmStructureId, String ddmTemplateKey,
+			boolean incrementVersion)
 		throws PortalException {
 
 		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			_portal.getSiteGroupId(groupId),
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			ddmStructureKey, true);
+			ddmStructureId);
 
 		DDMTemplate ddmTemplate = ddmTemplateLocalService.fetchTemplate(
 			_portal.getSiteGroupId(groupId),

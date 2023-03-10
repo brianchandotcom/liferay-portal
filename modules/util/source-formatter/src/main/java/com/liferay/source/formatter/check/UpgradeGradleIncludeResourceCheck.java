@@ -15,18 +15,17 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.BNDSettings;
+import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.upgrade.GradleBuildFile;
 import com.liferay.source.formatter.upgrade.GradleDependency;
-import com.liferay.source.formatter.util.FileUtil;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Nícolas Moura
@@ -51,9 +50,9 @@ public class UpgradeGradleIncludeResourceCheck extends BaseFileCheck {
 		fileName = StringUtil.replace(
 			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-		String[] jars = _getIncludeResourceJars(fileName);
+		List<String> includeResourceJars = _getIncludeResourceJars(fileName);
 
-		if (jars == null) {
+		if (ListUtil.isEmpty(includeResourceJars)) {
 			return content;
 		}
 
@@ -67,26 +66,24 @@ public class UpgradeGradleIncludeResourceCheck extends BaseFileCheck {
 		while (iterator.hasNext()) {
 			GradleDependency gradleDependency = iterator.next();
 
-			boolean has = false;
+			boolean hasDependency = false;
 
-			for (String dependency : jars) {
+			for (String includeResourceJar : includeResourceJars) {
 				String dependencyConfiguration =
 					gradleDependency.getConfiguration();
 
-				if (dependency.contains(gradleDependency.getName()) &&
+				if (includeResourceJar.contains(gradleDependency.getName()) &&
 					!dependencyConfiguration.equals("compileInclude")) {
 
-					has = true;
+					hasDependency = true;
 
 					break;
 				}
 			}
 
-			if (has) {
-				continue;
+			if (!hasDependency) {
+				iterator.remove();
 			}
-
-			iterator.remove();
 		}
 
 		if (gradleDependencies.isEmpty()) {
@@ -107,39 +104,25 @@ public class UpgradeGradleIncludeResourceCheck extends BaseFileCheck {
 			"\n\nliferayOSGi {\n\texpandCompileInclude = true\n}");
 	}
 
-	private String[] _getIncludeResourceJars(String fileName)
+	private List<String> _getIncludeResourceJars(String fileName)
 		throws IOException {
 
-		String bndFileName = StringUtil.replace(
-			fileName, "build.gradle", "bnd.bnd");
+		BNDSettings bndSettings = getBNDSettings(fileName);
 
-		File file = new File(bndFileName);
-
-		String bndContent = FileUtil.read(file);
-
-		if (bndContent == null) {
+		if (bndSettings == null) {
 			return null;
 		}
 
-		Matcher matcher1 = _includeResourcePattern.matcher(bndContent);
+		String bndSettingsContent = bndSettings.getContent();
 
-		if (!matcher1.find()) {
-			return null;
-		}
+		List<String> includeResourceJars = BNDSourceUtil.getDefinitionValues(
+			bndSettingsContent, "-includeresource");
 
-		String includeResources = matcher1.group();
+		includeResourceJars.addAll(
+			BNDSourceUtil.getDefinitionValues(
+				bndSettingsContent, "Include-Resource"));
 
-		String jarDependencies = StringUtil.removeSubstring(
-			includeResources, "Include-Resource:\\");
-
-		jarDependencies = StringUtil.removeSubstring(jarDependencies, "\n");
-		jarDependencies = StringUtil.removeSubstring(jarDependencies, "\t");
-
-		return StringUtil.split(jarDependencies, "\\");
+		return includeResourceJars;
 	}
-
-	private static final Pattern _includeResourcePattern = Pattern.compile(
-		"^(-includeresource|Include-Resource):[\\s\\S]*?([^\\\\]\n|\\Z)",
-		Pattern.MULTILINE);
 
 }

@@ -242,6 +242,14 @@ public class ObjectEntryResourceTest {
 		_assertFilteredObjectEntries(3, "keywords/any(k:k le 'tag1')");
 		_assertFilteredObjectEntries(3, "keywords/any(k:k le 'tag2')");
 		_assertFilteredObjectEntries(3, "keywords/any(k:k le 'tag3')");
+
+		_assertFilteredObjectEntries(3, "keywords/any(k:startswith(k,'t'))");
+		_assertFilteredObjectEntries(3, "keywords/any(k:startswith(k,'ta'))");
+		_assertFilteredObjectEntries(3, "keywords/any(k:startswith(k,'tag'))");
+		_assertFilteredObjectEntries(3, "keywords/any(k:startswith(k,'tag1'))");
+		_assertFilteredObjectEntries(2, "keywords/any(k:startswith(k,'tag2'))");
+		_assertFilteredObjectEntries(1, "keywords/any(k:startswith(k,'tag3'))");
+		_assertFilteredObjectEntries(0, "keywords/any(k:startswith(k,'1234'))");
 	}
 
 	@Test

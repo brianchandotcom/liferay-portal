@@ -676,6 +676,30 @@ public class PredicateExpressionVisitorImpl
 	private Predicate _startsWith(
 		Object fieldName, Object fieldValue, long objectDefinitionId) {
 
+		if (fieldName.equals("keywords")) {
+			return _getColumn(
+				"id", objectDefinitionId
+			).in(
+				DSLQueryFactoryUtil.select(
+					AssetEntryTable.INSTANCE.classPK
+				).from(
+					AssetEntryTable.INSTANCE
+				).innerJoinON(
+					AssetEntries_AssetTagsTable.INSTANCE,
+					AssetEntryTable.INSTANCE.entryId.eq(
+						AssetEntries_AssetTagsTable.INSTANCE.entryId)
+				).innerJoinON(
+					AssetTagTable.INSTANCE,
+					AssetTagTable.INSTANCE.tagId.eq(
+						AssetEntries_AssetTagsTable.INSTANCE.tagId
+					).and(
+						AssetTagTable.INSTANCE.name.like(
+							fieldValue + StringPool.PERCENT)
+					)
+				)
+			);
+		}
+
 		Column<?, Object> column = _getColumn(fieldName, objectDefinitionId);
 
 		return column.like(

@@ -1323,13 +1323,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	protected void reindexUsers(long[] userGroupIds) throws PortalException {
-		List<UserGroup> list = new ArrayList<>(userGroupIds.length);
-
-		for (long userGroupId : userGroupIds) {
-			list.add(getUserGroup(userGroupId));
-		}
-
-		reindexUsers(list);
+		reindexUsers(
+			TransformUtil.transformToList(userGroupIds, this::getUserGroup));
 	}
 
 	protected void reindexUsers(UserGroup userGroup) throws PortalException {

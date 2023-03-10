@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -393,18 +394,20 @@ public class KaleoInstanceLocalServiceImpl
 			orderByComparator, serviceContext);
 
 		return new BaseModelSearchResult<>(
-			Stream.of(
-				hits.getDocs()
-			).map(
-				document -> GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK))
-			).map(
-				kaleoInstancePersistence::fetchByPrimaryKey
-			).filter(
-				Objects::nonNull
-			).collect(
-				Collectors.toList()
-			),
+			(List<KaleoInstance>)TransformUtil.transformToList(
+				hits.getDocs(),
+				document -> {
+					KaleoInstance kaleoInstance =
+						kaleoInstancePersistence.fetchByPrimaryKey(
+							GetterUtil.getLong(
+								document.get(Field.ENTRY_CLASS_PK)));
+
+					if (kaleoInstance == null) {
+						return null;
+					}
+
+					return kaleoInstance;
+				}),
 			hits.getLength());
 	}
 

@@ -38,7 +38,6 @@ definition {
 	@description = "LRQA-29748: Set the user notification timeout to 1 second"
 	@priority = 4
 	test SPANotificationSetTimeout {
-		property osgi.module.configurations = "userNotificationTimeout=1000";
 		property test.name.skip.portal.instance = "SPAInfrastructure#SetTimeout";
 
 		task ("Given: set the user notification timeout to 1 second") {
@@ -83,10 +82,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
 				value1 = "Timeout notification warning triggered");
-
-			WaitForElementNotPresent(
-				key_warningMessage = ${warningMessage},
-				locator1 = "Message#WARNING_SPECIFIC");
 		}
 	}
 

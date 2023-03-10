@@ -192,6 +192,11 @@
 		<td>//label[contains(.,'Default Value')]//..//div[contains(@aria-controls,'clay-dropdown-menu')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>SCRIPT_ON_FORMULA_FIELD</td>
+		<td>//input[contains(@placeholder,'Type "${" to use the autocomplete feature.') and (@class='form-control')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -12,22 +12,17 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useModal} from '@clayui/modal';
-import ClayMultiSelect from '@clayui/multi-select';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import getCN from 'classnames';
-import {fetch} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import LearnMessage from '../../../shared/LearnMessage';
-import SelectSXPBlueprintModal from '../../select_sxp_blueprint_modal/SelectSXPBlueprintModal';
 import InputSetItemHeader from './InputSetItemHeader';
 import CharacterThresholdInput from './inputs/CharacterThresholdInput';
 import DisplayGroupNameInput from './inputs/DisplayGroupNameInput';
+import FieldsInput from './inputs/FieldsInput';
+import SXPBlueprintSelectorInput from './inputs/SXPBlueprintSelectorInput';
 import SizeInput from './inputs/SizeInput';
 
 function SXPBlueprint({
@@ -38,67 +33,6 @@ function SXPBlueprint({
 	touched,
 	value,
 }) {
-	const [showModal, setShowModal] = useState(false);
-	const [sxpBlueprint, setSXPBlueprint] = useState({
-		loading: false,
-		title: '',
-	});
-
-	const [multiSelectValue, setMultiSelectValue] = useState('');
-	const [multiSelectItems, setMultiSelectItems] = useState(
-		(value.attributes?.fields || []).map((field) => ({
-			label: field,
-			value: field,
-		}))
-	);
-
-	const {observer, onClose} = useModal({
-		onClose: () => setShowModal(false),
-	});
-
-	useEffect(() => {
-
-		// Fetch the blueprint title using sxpBlueprintId inside attributes, since
-		// title is not saved within initialSuggestionsContributorConfiguration.
-
-		if (value.attributes?.sxpBlueprintId) {
-			setSXPBlueprint({loading: true, title: ''});
-
-			fetch(
-				`/o/search-experiences-rest/v1.0/sxp-blueprints/${value.attributes?.sxpBlueprintId}`,
-				{
-					headers: new Headers({
-						'Accept': 'application/json',
-						'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-						'Content-Type': 'application/json',
-					}),
-					method: 'GET',
-				}
-			)
-				.then((response) =>
-					response.json().then((data) => ({
-						data,
-						ok: response.ok,
-					}))
-				)
-				.then(({data, ok}) => {
-					setSXPBlueprint({
-						loading: false,
-						title:
-							!ok || data.status === 'NOT_FOUND'
-								? `${value.attributes?.sxpBlueprintId}`
-								: data.title,
-					});
-				})
-				.catch(() => {
-					setSXPBlueprint({
-						loading: false,
-						title: `${value.attributes?.sxpBlueprintId}`,
-					});
-				});
-		}
-	}, []); //eslint-disable-line
-
 	const _handleChangeAttribute = (property) => (event) => {
 		onInputSetItemChange(index, {
 			attributes: {
@@ -108,72 +42,23 @@ function SXPBlueprint({
 		});
 	};
 
-	const _handleSXPBlueprintSelectorSubmit = (id, title) => {
+	const _handleChangeFields = (fields) => {
+		onInputSetItemChange(index, {
+			attributes: {...value.attributes, fields},
+		});
+	};
+
+	const _handleChangeSXPBlueprint = (id) => {
 		onInputSetItemChange(index, {
 			attributes: {
 				...value.attributes,
 				sxpBlueprintId: id,
 			},
 		});
-
-		setSXPBlueprint({loading: false, title});
-	};
-
-	const _handleSXPBlueprintSelectorClickRemove = () => {
-		_handleSXPBlueprintSelectorSubmit('', '');
-
-		onBlur('sxpBlueprintId')();
-	};
-
-	const _handleSXPBlueprintSelectorClickSelect = () => {
-		setShowModal(true);
-	};
-
-	const _handleSXPBlueprintSelectorChange = (event) => {
-
-		// To use validation from 'required' field, keep the onChange and value
-		// properties but make its behavior resemble readOnly (input can only be
-		// changed with the selector modal).
-
-		event.preventDefault();
-	};
-
-	const _handleMultiSelectBlur = () => {
-		if (multiSelectValue) {
-			_handleMultiSelectChange([
-				...multiSelectItems,
-				{
-					label: multiSelectValue,
-					value: multiSelectValue,
-				},
-			]);
-
-			setMultiSelectValue('');
-		}
-	};
-
-	const _handleMultiSelectChange = (newValue) => {
-		onInputSetItemChange(index, {
-			attributes: {
-				...value.attributes,
-				fields: newValue.map((item) => item.value),
-			},
-		});
-
-		setMultiSelectItems(newValue);
 	};
 
 	return (
 		<>
-			{showModal && (
-				<SelectSXPBlueprintModal
-					observer={observer}
-					onClose={onClose}
-					onSubmit={_handleSXPBlueprintSelectorSubmit}
-					selectedId={value.attributes?.sxpBlueprintId || ''}
-				/>
-			)}
-
 			<InputSetItemHeader>
 				<InputSetItemHeader.Title>
 					{Liferay.Language.get('blueprint-suggestions-contributor')}
@@ -209,56 +94,12 @@ function SXPBlueprint({
 			</div>
 
 			<div className="form-group-autofit">
-				<ClayInput.GroupItem
-					className={getCN({
-						'has-error':
-							!value.attributes?.sxpBlueprintId &&
-							touched.sxpBlueprintId,
-					})}
-				>
-					<label>
-						{Liferay.Language.get('blueprint')}
-
-						<span className="reference-mark">
-							<ClayIcon symbol="asterisk" />
-						</span>
-					</label>
-
-					<div className="select-sxp-blueprint">
-						{sxpBlueprint.loading ? (
-							<div className="form-control" readOnly>
-								<ClayLoadingIndicator small />
-							</div>
-						) : (
-							<ClayInput
-								onBlur={onBlur('sxpBlueprintId')}
-								onChange={_handleSXPBlueprintSelectorChange}
-								required
-								type="text"
-								value={sxpBlueprint.title}
-							/>
-						)}
-
-						{sxpBlueprint.title && (
-							<ClayButton
-								aria-label={Liferay.Language.get('remove')}
-								className="remove-sxp-blueprint"
-								displayType="secondary"
-								onClick={_handleSXPBlueprintSelectorClickRemove}
-								small
-							>
-								<ClayIcon symbol="times-circle" />
-							</ClayButton>
-						)}
-
-						<ClayButton
-							displayType="secondary"
-							onClick={_handleSXPBlueprintSelectorClickSelect}
-						>
-							{Liferay.Language.get('select')}
-						</ClayButton>
-					</div>
-				</ClayInput.GroupItem>
+				<SXPBlueprintSelectorInput
+					onBlur={onBlur('attributes.sxpBlueprintId')}
+					onSubmit={_handleChangeSXPBlueprint}
+					sxpBlueprintId={value.attributes?.sxpBlueprintId}
+					touched={touched['attributes.sxpBlueprintId']}
+				/>
 			</div>
 
 			<div className="form-group-autofit">
@@ -343,31 +184,12 @@ function SXPBlueprint({
 			</div>
 
 			<div className="form-group-autofit">
-				<ClayInput.GroupItem>
-					<label>
-						{Liferay.Language.get('fields')}
-
-						<ClayTooltipProvider>
-							<span
-								className="ml-2"
-								data-tooltip-align="top"
-								title={Liferay.Language.get(
-									'fields-suggestion-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</ClayTooltipProvider>
-					</label>
-
-					<ClayMultiSelect
-						items={multiSelectItems}
-						onBlur={_handleMultiSelectBlur}
-						onChange={setMultiSelectValue}
-						onItemsChange={_handleMultiSelectChange}
-						value={multiSelectValue}
-					/>
-				</ClayInput.GroupItem>
+				<FieldsInput
+					fields={value.attributes?.fields}
+					onBlur={onBlur('attributes.fields')}
+					onChange={_handleChangeFields}
+					touched={touched['attributes.fields']}
+				/>
 			</div>
 		</>
 	);

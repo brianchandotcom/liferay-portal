@@ -54,6 +54,8 @@ renderResponse.setTitle((accountGroupDisplay.getAccountGroupId() == 0) ? Languag
 		<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 			<aui:input name="description" type="textarea" value="<%= accountGroupDisplay.getDescription() %>" />
 		</aui:field-wrapper>
+
+		<liferay-util:include page="/account_groups_admin/account_group/custom_fields.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

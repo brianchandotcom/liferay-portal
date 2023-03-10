@@ -2,7 +2,7 @@ assemble:
     - from: assets
       include: "**/*"
       into: static
-sample-theme-spritemap:
-    name: Sample Theme Spritemap
+sample-theme-spritemap-1:
+    name: Sample Theme Spritemap 1
     type: themeSpritemap
     url: spritemap.svg

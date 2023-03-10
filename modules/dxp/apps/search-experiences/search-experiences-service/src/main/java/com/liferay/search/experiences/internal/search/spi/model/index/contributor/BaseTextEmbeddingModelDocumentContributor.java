@@ -16,40 +16,35 @@ package com.liferay.search.experiences.internal.search.spi.model.index.contribut
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CompanyModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
+import com.liferay.search.experiences.configuration.SemanticSearchConfigurationProvider;
 import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.function.BiFunction;
 
-import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
  */
 public abstract class BaseTextEmbeddingModelDocumentContributor
 	<T extends BaseModel<T>> {
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		semanticSearchConfiguration = ConfigurableUtil.createConfigurable(
-			SemanticSearchConfiguration.class, properties);
-	}
 
 	protected void addLocalizedTextEmbeddings(
 		T baseModel, BiFunction<String, String, Double[]> biFunction,
@@ -121,6 +116,16 @@ public abstract class BaseTextEmbeddingModelDocumentContributor
 		}
 	}
 
+	protected long getCompanyId(T baseModel) {
+		if (baseModel instanceof CompanyModel) {
+			CompanyModel companyModel = (CompanyModel)baseModel;
+
+			return companyModel.getCompanyId();
+		}
+
+		return CompanyThreadLocal.getCompanyId();
+	}
+
 	protected String getText(T baseModel) {
 		return StringPool.BLANK;
 	}
@@ -129,7 +134,9 @@ public abstract class BaseTextEmbeddingModelDocumentContributor
 		return StringPool.BLANK;
 	}
 
-	protected volatile SemanticSearchConfiguration semanticSearchConfiguration;
+	@Reference
+	protected SemanticSearchConfigurationProvider
+		semanticSearchConfigurationProvider;
 
 	private void _addTextEmbeddingField(
 		Document document, String languageId, Double[] textEmbedding) {
@@ -147,6 +154,10 @@ public abstract class BaseTextEmbeddingModelDocumentContributor
 
 	private EmbeddingProviderConfiguration _getEmbeddingProviderConfiguration(
 		T baseModel) {
+
+		SemanticSearchConfiguration semanticSearchConfiguration =
+			semanticSearchConfigurationProvider.getCompanyConfiguration(
+				getCompanyId(baseModel));
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688") ||
 			!semanticSearchConfiguration.textEmbeddingsEnabled() ||

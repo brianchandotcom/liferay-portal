@@ -73,7 +73,7 @@ public class UpgradeReport {
 	public UpgradeReport() {
 		_initialBuildNumber = _getBuildNumber();
 		_initialSchemaVersion = _getSchemaVersion();
-		_initialTableCounts = _getTableCounts();
+		_initialTableRowsMap = _getTableCounts();
 	}
 
 	public void addErrorMessage(String loggerName, String message) {
@@ -226,24 +226,24 @@ public class UpgradeReport {
 	}
 
 	private List<TableCounts> _getDatabaseTableCounts() {
-		Map<String, Integer> finalTableCounts = _getTableCounts();
+		Map<String, Integer> finalTableRowsMap = _getTableCounts();
 
-		if ((_initialTableCounts == null) || (finalTableCounts == null)) {
+		if ((_initialTableRowsMap == null) || (finalTableRowsMap == null)) {
 			return null;
 		}
 
-		List<TableCounts> tableCounts = new ArrayList<>();
+		List<TableCounts> tableCountsList = new ArrayList<>();
 
-		List<String> tableNames = new ArrayList<>();
+		List<String> tableNamesList = new ArrayList<>();
 
-		tableNames.addAll(_initialTableCounts.keySet());
-		tableNames.addAll(finalTableCounts.keySet());
+		tableNamesList.addAll(_initialTableRowsMap.keySet());
+		tableNamesList.addAll(finalTableRowsMap.keySet());
 
 		ListUtil.distinct(
-			tableNames,
+			tableNamesList,
 			(tableNameA, tableNameB) -> {
-				int countA = _initialTableCounts.getOrDefault(tableNameA, 0);
-				int countB = _initialTableCounts.getOrDefault(tableNameB, 0);
+				int countA = _initialTableRowsMap.getOrDefault(tableNameA, 0);
+				int countB = _initialTableRowsMap.getOrDefault(tableNameB, 0);
 
 				if (countA != countB) {
 					return countB - countA;
@@ -252,9 +252,9 @@ public class UpgradeReport {
 				return tableNameA.compareTo(tableNameB);
 			});
 
-		for (String tableName : tableNames) {
-			int initialCount = _initialTableCounts.getOrDefault(tableName, -1);
-			int finalCount = finalTableCounts.getOrDefault(tableName, -1);
+		for (String tableName : tableNamesList) {
+			int initialCount = _initialTableRowsMap.getOrDefault(tableName, -1);
+			int finalCount = finalTableRowsMap.getOrDefault(tableName, -1);
 
 			if ((initialCount <= 0) && (finalCount <= 0)) {
 				continue;
@@ -268,17 +268,20 @@ public class UpgradeReport {
 				(finalCount >= 0) ? String.valueOf(finalCount) :
 					StringPool.DASH;
 
-			tableCounts.add(new TableCounts(tableName, initialRows, finalRows));
+			tableCountsList.add(
+				new TableCounts(tableName, initialRows, finalRows));
 		}
 
-		return tableCounts;
+		return tableCountsList;
 	}
 
 	private String _getLogContextSectionKey(String section) {
 		return "upgrade.report." + section;
 	}
 
-	private List<RunningProcess> _getLongestRunningUpgradeProcessesList() {
+	private List<RunningUpgradeProcess>
+		_getLongestRunningUpgradeProcessesList() {
+
 		List<String> messages = _eventMessages.get(
 			UpgradeProcess.class.getName());
 
@@ -286,7 +289,7 @@ public class UpgradeReport {
 			return new ArrayList<>();
 		}
 
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Integer> upgradeProcessDurationMap = new HashMap<>();
 
 		for (String message : messages) {
 			int startIndex = message.indexOf("com.");
@@ -303,20 +306,22 @@ public class UpgradeReport {
 
 			endIndex = message.indexOf(StringPool.SPACE, startIndex + 1);
 
-			map.put(
+			upgradeProcessDurationMap.put(
 				className,
 				GetterUtil.getInteger(message.substring(startIndex, endIndex)));
 		}
 
-		ArrayList<RunningProcess> reducedMap = new ArrayList<>();
+		ArrayList<RunningUpgradeProcess> longestUpgradesList =
+			new ArrayList<>();
 
 		int count = 0;
 
-		for (Map.Entry<String, Integer> entry : _sort(map)) {
-			String key = entry.getKey();
-			int value = entry.getValue();
+		for (Map.Entry<String, Integer> entry :
+				_sort(upgradeProcessDurationMap)) {
 
-			reducedMap.add(new RunningProcess(key, String.valueOf(value)));
+			longestUpgradesList.add(
+				new RunningUpgradeProcess(
+					entry.getKey(), String.valueOf(entry.getValue())));
 
 			count++;
 
@@ -325,7 +330,7 @@ public class UpgradeReport {
 			}
 		}
 
-		return reducedMap;
+		return longestUpgradesList;
 	}
 
 	private Map<String, Object> _getReportData(
@@ -587,46 +592,47 @@ public class UpgradeReport {
 	}
 
 	private List<EventMessage> _getSortedLogEvents(String type) {
-		List<Map.Entry<String, Map<String, Integer>>> entries =
+		List<Map.Entry<String, Map<String, Integer>>> events =
 			new ArrayList<>();
 
 		if (type.equals("errors")) {
-			entries.addAll(_errorMessages.entrySet());
+			events.addAll(_errorMessages.entrySet());
 		}
 		else {
-			entries.addAll(_warningMessages.entrySet());
+			events.addAll(_warningMessages.entrySet());
 		}
 
 		ListUtil.sort(
-			entries,
+			events,
 			Collections.reverseOrder(
 				Map.Entry.comparingByValue(
 					Comparator.comparingInt(Map::size))));
 
-		Map<String, Map<String, Integer>> sortedEvents = new LinkedHashMap<>(
-			entries.size());
+		Map<String, Map<String, Integer>> sortedEventsMap = new LinkedHashMap<>(
+			events.size());
 
-		for (Map.Entry<String, Map<String, Integer>> entry : entries) {
-			sortedEvents.put(entry.getKey(), entry.getValue());
+		for (Map.Entry<String, Map<String, Integer>> event : events) {
+			sortedEventsMap.put(event.getKey(), event.getValue());
 		}
 
-		List<EventMessage> list = new ArrayList<>();
+		List<EventMessage> eventMessages = new ArrayList<>();
 
-		for (Map.Entry<String, Map<String, Integer>> entry :
-				sortedEvents.entrySet()) {
+		for (Map.Entry<String, Map<String, Integer>> event :
+				sortedEventsMap.entrySet()) {
 
-			EventMessage event = new EventMessage(entry.getKey());
+			EventMessage eventMessage = new EventMessage(event.getKey());
 
-			list.add(event);
+			eventMessages.add(eventMessage);
 
-			Map<String, Integer> value = entry.getValue();
+			Map<String, Integer> value = event.getValue();
 
 			for (Map.Entry<String, Integer> innerEvent : value.entrySet()) {
-				event.addEvent(innerEvent.getKey(), innerEvent.getValue());
+				eventMessage.addEvent(
+					innerEvent.getKey(), innerEvent.getValue());
 			}
 		}
 
-		return list;
+		return eventMessages;
 	}
 
 	private Map<String, Integer> _getTableCounts() {
@@ -777,7 +783,7 @@ public class UpgradeReport {
 		new ConcurrentHashMap<>();
 	private final int _initialBuildNumber;
 	private final String _initialSchemaVersion;
-	private final Map<String, Integer> _initialTableCounts;
+	private final Map<String, Integer> _initialTableRowsMap;
 	private PersistenceManager _persistenceManager;
 	private String _rootDir;
 	private final Map<String, Map<String, Integer>> _warningMessages =
@@ -842,9 +848,9 @@ public class UpgradeReport {
 
 	}
 
-	private class RunningProcess {
+	private class RunningUpgradeProcess {
 
-		public RunningProcess(String process, String time) {
+		public RunningUpgradeProcess(String process, String time) {
 			_process = process;
 			_time = time;
 		}

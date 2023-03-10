@@ -257,7 +257,7 @@ public class ObjectFieldLocalServiceTest {
 			).build());
 
 		_testAddCustomObjectField(
-			"Object definition must be localized",
+			"To have localized fields the object definition must be localized",
 			new ObjectFieldBuilder(
 			).businessType(
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT

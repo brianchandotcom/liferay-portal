@@ -109,12 +109,12 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		}
 
 		try {
-			UnicodeProperties unicodeProperties =
+			UnicodeProperties typeSettingsUnicodeProperties =
 				_getTypeSettingsUnicodeProperties(file);
 
-			if ((unicodeProperties != null) &&
+			if ((typeSettingsUnicodeProperties != null) &&
 				Validator.isNotNull(
-					unicodeProperties.getProperty("siteName"))) {
+					typeSettingsUnicodeProperties.getProperty("siteName"))) {
 
 				return true;
 			}
@@ -133,15 +133,15 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 					file.getName());
 		}
 
-		UnicodeProperties unicodeProperties = _getTypeSettingsUnicodeProperties(
-			file);
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_getTypeSettingsUnicodeProperties(file);
 
-		if (unicodeProperties == null) {
+		if (typeSettingsUnicodeProperties == null) {
 			throw new AutoDeployException();
 		}
 
 		long companyId = GetterUtil.getLong(
-			unicodeProperties.getProperty("companyId"));
+			typeSettingsUnicodeProperties.getProperty("companyId"));
 
 		if (companyId == 0) {
 			if (_log.isWarnEnabled()) {
@@ -155,7 +155,7 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		}
 
 		long userId = GetterUtil.getLong(
-			unicodeProperties.getProperty("userId"));
+			typeSettingsUnicodeProperties.getProperty("userId"));
 
 		if (userId == 0) {
 			if (_log.isWarnEnabled()) {
@@ -171,7 +171,8 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setUserId(userId);
 
-		String groupName = unicodeProperties.getProperty("siteName");
+		String groupName = typeSettingsUnicodeProperties.getProperty(
+			"siteName");
 
 		Group group = _groupLocalService.addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0, 0,
@@ -248,15 +249,15 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 						continue;
 					}
 
-					String unicodePropertiesString = "";
+					String typeSettings = "";
 
 					for (int i = 0; i < typeSettingsJSONArray.length(); i++) {
-						unicodePropertiesString +=
+						typeSettings +=
 							typeSettingsJSONArray.getString(i) + "\n";
 					}
 
 					return UnicodePropertiesBuilder.fastLoad(
-						unicodePropertiesString
+						typeSettings
 					).build();
 				}
 			}

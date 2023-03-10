@@ -263,27 +263,6 @@ public class UserLocalServiceWrapper
 		_userLocalService.addTeamUsers(teamId, userIds);
 	}
 
-	@Override
-	public User addUser(
-			long creatorUserId, long companyId, boolean autoPassword,
-			String password1, String password2, boolean autoScreenName,
-			String screenName, String emailAddress, java.util.Locale locale,
-			String firstName, String middleName, String lastName,
-			long prefixListTypeId, long suffixListTypeId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
-			String jobTitle, int type, long[] groupIds, long[] organizationIds,
-			long[] roleIds, long[] userGroupIds, boolean sendEmail,
-			ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.addUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, type, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
-	}
-
 	/**
 	 * Adds a user.
 	 *
@@ -316,6 +295,7 @@ public class UserLocalServiceWrapper
 	 * @param birthdayDay the user's birthday day
 	 * @param birthdayYear the user's birthday year
 	 * @param jobTitle the user's job title
+	 * @param type the user's type
 	 * @param groupIds the primary keys of the user's groups
 	 * @param organizationIds the primary keys of the user's organizations
 	 * @param roleIds the primary keys of the roles this user possesses
@@ -336,7 +316,7 @@ public class UserLocalServiceWrapper
 			String firstName, String middleName, String lastName,
 			long prefixListTypeId, long suffixListTypeId, boolean male,
 			int birthdayMonth, int birthdayDay, int birthdayYear,
-			String jobTitle, long[] groupIds, long[] organizationIds,
+			String jobTitle, int type, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, boolean sendEmail,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -345,7 +325,7 @@ public class UserLocalServiceWrapper
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
 			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, type, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
@@ -392,27 +372,6 @@ public class UserLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_userLocalService.addUserGroupUsers(userGroupId, userIds);
-	}
-
-	@Override
-	public User addUserWithWorkflow(
-			long creatorUserId, long companyId, boolean autoPassword,
-			String password1, String password2, boolean autoScreenName,
-			String screenName, String emailAddress, java.util.Locale locale,
-			String firstName, String middleName, String lastName,
-			long prefixListTypeId, long suffixListTypeId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
-			String jobTitle, int type, long[] groupIds, long[] organizationIds,
-			long[] roleIds, long[] userGroupIds, boolean sendEmail,
-			ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.addUserWithWorkflow(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, type, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
 	/**
@@ -467,7 +426,7 @@ public class UserLocalServiceWrapper
 			String firstName, String middleName, String lastName,
 			long prefixListTypeId, long suffixListTypeId, boolean male,
 			int birthdayMonth, int birthdayDay, int birthdayYear,
-			String jobTitle, long[] groupIds, long[] organizationIds,
+			String jobTitle, int type, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, boolean sendEmail,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -476,7 +435,7 @@ public class UserLocalServiceWrapper
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
 			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, type, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 

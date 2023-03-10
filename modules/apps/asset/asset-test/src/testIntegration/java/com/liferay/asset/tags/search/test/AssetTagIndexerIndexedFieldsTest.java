@@ -129,6 +129,8 @@ public class AssetTagIndexerIndexedFieldsTest {
 				searchRequestBuilderFactory.builder(
 				).companyId(
 					_group.getCompanyId()
+				).emptySearchEnabled(
+					true
 				).groupIds(
 					_group.getGroupId()
 				).fields(

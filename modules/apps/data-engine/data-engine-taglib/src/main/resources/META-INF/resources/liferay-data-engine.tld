@@ -98,6 +98,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>contentType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>dataDefinitionId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

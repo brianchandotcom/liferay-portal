@@ -187,13 +187,8 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 			return string;
 		}
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(StringPool.OPEN_BRACKET);
-		sb.append(string);
-		sb.append(StringPool.CLOSE_BRACKET);
-
-		return sb.toString();
+		return StringBundler.concat(
+			StringPool.OPEN_BRACKET, string, StringPool.CLOSE_BRACKET);
 	}
 
 	private String _convertOperands(

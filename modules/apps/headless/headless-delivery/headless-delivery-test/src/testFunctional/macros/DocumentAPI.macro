@@ -10,6 +10,9 @@ definition {
 
 			var api = "asset-libraries/${assetLibraryId}/documents";
 		}
+		else if (isSet(documentFolderId)) {
+			var api = "document-folders/${documentFolderId}/documents";
+		}
 		else {
 			var api = "sites/${siteId}/documents";
 		}
@@ -178,6 +181,17 @@ definition {
 
 		var response = DocumentAPI._addDocument(
 			depotName = ${depotName},
+			externalReferenceCode = ${externalReferenceCode},
+			filePath = ${filePath});
+
+		return ${response};
+	}
+
+	macro addDocumentWithFileInDocumentFolder {
+		Variables.assertDefined(parameterList = "${documentFolderId},${filePath}");
+
+		var response = DocumentAPI._addDocument(
+			documentFolderId = ${documentFolderId},
 			externalReferenceCode = ${externalReferenceCode},
 			filePath = ${filePath});
 

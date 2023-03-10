@@ -461,6 +461,33 @@ public class PredicateExpressionVisitorImpl
 		);
 	}
 
+	private Predicate _getKeywordsPredicate(
+		long objectDefinitionId,
+		com.liferay.petra.sql.dsl.expression.Expression<Boolean>
+			valueExpression) {
+
+		return _getColumn(
+			"id", objectDefinitionId
+		).in(
+			DSLQueryFactoryUtil.select(
+				AssetEntryTable.INSTANCE.classPK
+			).from(
+				AssetEntryTable.INSTANCE
+			).innerJoinON(
+				AssetEntries_AssetTagsTable.INSTANCE,
+				AssetEntryTable.INSTANCE.entryId.eq(
+					AssetEntries_AssetTagsTable.INSTANCE.entryId)
+			).innerJoinON(
+				AssetTagTable.INSTANCE,
+				AssetTagTable.INSTANCE.tagId.eq(
+					AssetEntries_AssetTagsTable.INSTANCE.tagId
+				).and(
+					valueExpression
+				)
+			)
+		);
+	}
+
 	private EntityModel _getObjectDefinitionEntityModel(
 		long objectDefinitionId) {
 
@@ -543,28 +570,10 @@ public class PredicateExpressionVisitorImpl
 				Predicate.withParentheses((Predicate)right));
 		}
 		else if (Objects.equals(left, "keywords")) {
-			return _getColumn(
-				"id", objectDefinitionId
-			).in(
-				DSLQueryFactoryUtil.select(
-					AssetEntryTable.INSTANCE.classPK
-				).from(
-					AssetEntryTable.INSTANCE
-				).innerJoinON(
-					AssetEntries_AssetTagsTable.INSTANCE,
-					AssetEntryTable.INSTANCE.entryId.eq(
-						AssetEntries_AssetTagsTable.INSTANCE.entryId)
-				).innerJoinON(
-					AssetTagTable.INSTANCE,
-					AssetTagTable.INSTANCE.tagId.eq(
-						AssetEntries_AssetTagsTable.INSTANCE.tagId
-					).and(
-						_getExpressionPredicate(
-							AssetTagTable.INSTANCE.name, operation,
-							(String)right)
-					)
-				)
-			);
+			return _getKeywordsPredicate(
+				objectDefinitionId,
+				_getExpressionPredicate(
+					AssetTagTable.INSTANCE.name, operation, (String)right));
 		}
 		else {
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
@@ -677,27 +686,10 @@ public class PredicateExpressionVisitorImpl
 		Object fieldName, Object fieldValue, long objectDefinitionId) {
 
 		if (fieldName.equals("keywords")) {
-			return _getColumn(
-				"id", objectDefinitionId
-			).in(
-				DSLQueryFactoryUtil.select(
-					AssetEntryTable.INSTANCE.classPK
-				).from(
-					AssetEntryTable.INSTANCE
-				).innerJoinON(
-					AssetEntries_AssetTagsTable.INSTANCE,
-					AssetEntryTable.INSTANCE.entryId.eq(
-						AssetEntries_AssetTagsTable.INSTANCE.entryId)
-				).innerJoinON(
-					AssetTagTable.INSTANCE,
-					AssetTagTable.INSTANCE.tagId.eq(
-						AssetEntries_AssetTagsTable.INSTANCE.tagId
-					).and(
-						AssetTagTable.INSTANCE.name.like(
-							fieldValue + StringPool.PERCENT)
-					)
-				)
-			);
+			return _getKeywordsPredicate(
+				objectDefinitionId,
+				AssetTagTable.INSTANCE.name.like(
+					fieldValue + StringPool.PERCENT));
 		}
 
 		Column<?, Object> column = _getColumn(fieldName, objectDefinitionId);

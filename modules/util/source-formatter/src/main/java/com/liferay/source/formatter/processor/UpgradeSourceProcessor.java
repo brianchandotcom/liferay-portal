@@ -14,13 +14,8 @@
 
 package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.SourceFormatterArgs;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
-
-import java.io.File;
 import java.io.IOException;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,17 +25,6 @@ public class UpgradeSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws IOException {
-		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
-
-		File upgradeInputDataDirectory = SourceFormatterUtil.getFile(
-			sourceFormatterArgs.getBaseDirName(),
-			SourceFormatterUtil.UPGRADE_INPUT_DATA_DIRECTORY_NAME,
-			sourceFormatterArgs.getMaxDirLevel());
-
-		if (upgradeInputDataDirectory == null) {
-			return Collections.emptyList();
-		}
-
 		return getFileNames(new String[0], getIncludes());
 	}
 
@@ -49,6 +33,8 @@ public class UpgradeSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = {"**/*.java"};
+	private static final String[] _INCLUDES = {
+		"**/*.bnd", "**/*.gradle", "**/*.java"
+	};
 
 }

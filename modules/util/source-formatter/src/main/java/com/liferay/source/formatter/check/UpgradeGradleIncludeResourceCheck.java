@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 /**
  * @author Nícolas Moura
  */
-public class GradleUpgradeIncludeResourceCheck extends BaseFileCheck {
+public class UpgradeGradleIncludeResourceCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

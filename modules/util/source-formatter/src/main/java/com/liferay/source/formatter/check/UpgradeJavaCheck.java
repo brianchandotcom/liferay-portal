@@ -36,6 +36,10 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (!fileName.endsWith(".java")) {
+			return content;
+		}
+
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
 		return _fixImports(javaClass, content);

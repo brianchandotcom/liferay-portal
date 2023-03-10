@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 /**
  * @author Nícolas Moura
  */
-public class BNDUpgradeIncludeResourceCheck extends BaseFileCheck {
+public class UpgradeBNDIncludeResourceCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

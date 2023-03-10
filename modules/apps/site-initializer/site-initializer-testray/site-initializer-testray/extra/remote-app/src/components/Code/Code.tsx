@@ -13,34 +13,15 @@
  */
 
 import classNames from 'classnames';
-import {ReactNode} from 'react';
 
-type CodeProps = {
-	children: ReactNode;
-	className?: string;
-	italicText?: boolean;
-};
+type CodeProps = React.HTMLAttributes<HTMLElement>;
 
-const Code: React.FC<CodeProps> = ({
-	children,
-	className,
-	italicText = true,
-}) => {
+const Code: React.FC<CodeProps> = ({children, className}) => {
 	if (!children) {
 		return null;
 	}
 
-	return (
-		<code
-			className={classNames(
-				'bg-light break-text p-2 text-secondary w-100',
-				className,
-				{'font-italic': italicText}
-			)}
-		>
-			{children}
-		</code>
-	);
+	return <code className={classNames('tr-code', className)}>{children}</code>;
 };
 
 export default Code;

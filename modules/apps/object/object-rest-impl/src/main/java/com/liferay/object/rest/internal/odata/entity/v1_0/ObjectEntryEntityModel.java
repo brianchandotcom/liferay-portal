@@ -201,9 +201,15 @@ public class ObjectEntryEntityModel implements EntityModel {
 				"id", new IdEntityField("id", locale -> "id", String::valueOf)
 			).put(
 				"keywords",
-				new CollectionEntityField(
-					new StringEntityField(
-						"keywords", locale -> "assetTagNames.raw"))
+				() -> {
+					if (FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+						return new CollectionEntityField(
+							new StringEntityField(
+								"keywords", locale -> "assetTagNames.raw"));
+					}
+
+					return null;
+				}
 			).put(
 				"objectDefinitionId",
 				new IntegerEntityField(

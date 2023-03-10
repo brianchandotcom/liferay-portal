@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -569,7 +570,9 @@ public class PredicateExpressionVisitorImpl
 				Predicate.withParentheses((Predicate)left),
 				Predicate.withParentheses((Predicate)right));
 		}
-		else if (Objects.equals(left, "keywords")) {
+		else if (Objects.equals(left, "keywords") &&
+				 FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+
 			return _getKeywordsPredicate(
 				objectDefinitionId,
 				_getExpressionPredicate(
@@ -685,7 +688,9 @@ public class PredicateExpressionVisitorImpl
 	private Predicate _startsWith(
 		Object fieldName, Object fieldValue, long objectDefinitionId) {
 
-		if (fieldName.equals("keywords")) {
+		if (fieldName.equals("keywords") &&
+			FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+
 			return _getKeywordsPredicate(
 				objectDefinitionId,
 				AssetTagTable.INSTANCE.name.like(

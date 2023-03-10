@@ -245,6 +245,160 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-12938 | Automation ID: LRAC-13010 | Test Summary: Check that event not being sent when desynchronized sites"
+	@priority = 4
+	test CheckEventNotBeingSentWhenDesynchronizedSites {
+		property proxy.server.enabled = "true";
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Sync channels and sites") {
+			ACDXPSettings.syncChannel(
+				channelName = "Minium Demo Portal",
+				propertyName = ${assignedPropertyName});
+
+			for (var siteName : list "Site Name,Minium Demo") {
+				ACDXPSettings.syncSites(
+					propertyName = ${assignedPropertyName},
+					siteName = ${siteName});
+			}
+		}
+
+		task ("Sync contacts and accounts, sync the attributes, save and finish") {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			ACDXPSettings.syncContactsAndAccountstData();
+
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Finish",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Go to the Site Name and see that the events are being sent") {
+			task ("Go to the site page") {
+				ACUtils.navigateToSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+
+			task ("Start Har recording") {
+				ProxyUtil.startHarRecording("pageEvents");
+			}
+
+			task ("Refresh the page") {
+				Refresh();
+			}
+
+			task ("Wait for sending requests") {
+				ACUtils.waitForSendingRequest();
+			}
+
+			task ("View the pageViewed event triggered") {
+				ACUtils.assertEventPresent(
+					applicationId = "Page",
+					eventId = "pageViewed");
+			}
+		}
+
+		task ("Go to the Minium site and see that the events are being sent") {
+			task ("Go to the site") {
+				ApplicationsMenu.gotoSite(site = "Minium Demo");
+			}
+
+			task ("Start Har recording") {
+				ProxyUtil.startHarRecording("pageEvents");
+			}
+
+			task ("Refresh the page") {
+				Refresh();
+			}
+
+			task ("Wait for sending requests") {
+				ACUtils.waitForSendingRequest();
+			}
+
+			task ("View the pageViewed event triggered") {
+				ACUtils.assertEventPresent(
+					applicationId = "Page",
+					eventId = "pageViewed");
+			}
+		}
+
+		task ("Go to instance settings > Analytics Cloud > Properties") {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Deselect the sites that were selected before") {
+			for (var sites : list "Site Name,Minium Demo") {
+				ACDXPSettings.syncSites(
+					siteName = ${site},
+					propertyName = ${assignedPropertyName});
+			}
+		}
+
+		task ("Go to the site and assert that the events are not being sent") {
+			task ("Go to the site page") {
+				ACUtils.navigateToSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+
+			task ("Start Har recording") {
+				ProxyUtil.startHarRecording("pageEvents");
+			}
+
+			task ("Refresh the page") {
+				Refresh();
+			}
+
+			task ("Wait for sending requests") {
+				ACUtils.waitForSendingRequest();
+			}
+
+			task ("View that the pageViewed event is not triggered") {
+				ACUtils.assertEventNotPresent(
+					applicationId = "Page",
+					eventId = "pageViewed");
+			}
+		}
+
+		task ("Go to the minium site and assert that the events are not being sent") {
+			task ("Go to the minium site page") {
+				ApplicationsMenu.gotoSite(site = "Minium Demo");
+			}
+
+			task ("Start Har recording") {
+				ProxyUtil.startHarRecording("pageEvents");
+			}
+
+			task ("Refresh the page") {
+				Refresh();
+			}
+
+			task ("Wait for sending requests") {
+				ACUtils.waitForSendingRequest();
+			}
+
+			task ("View that the pageViewed event is not triggered") {
+				ACUtils.assertEventNotPresent(
+					applicationId = "Page",
+					eventId = "pageViewed");
+			}
+		}
+	}
+
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12576 | Test Summary: Check that it is possible to enable toggle commerce for two different properties"
 	@priority = 5
 	test CheckIsPossibleEnableToggleCommerceForTwoDifferentProperties {
@@ -748,5 +902,4 @@ definition {
 				itemValueList = ${sitesPageListDown});
 		}
 	}
-
 }

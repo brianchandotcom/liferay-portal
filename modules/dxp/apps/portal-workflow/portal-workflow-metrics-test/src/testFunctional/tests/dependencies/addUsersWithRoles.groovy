@@ -2,6 +2,7 @@
 //Example: 1user user1 with Role 1 role
 
 import com.liferay.portal.kernel.dao.orm.*
+import com.liferay.portal.kernel.service.ServiceContext
 import com.liferay.portal.kernel.util.*
 import com.liferay.portal.kernel.workflow.*
 import com.liferay.portal.kernel.model.*
@@ -42,9 +43,10 @@ long[] groudIds = [groupId];
 groupUser = com.liferay.portal.kernel.service.UserLocalServiceUtil.addUser(
 	0L, companyId, autoPassword, password, password,
 	false, screenName, emailAddress, java.util.Locale.US, firstName,
-	middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-	birthdayDay, birthdayYear, jobTitle, groudIds,organizationIds,
-	roleIds, userGroupIds, sendMail, serviceContext);
+	middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+	birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+	com.liferay.portal.kernel.model.UserConstants.TYPE_REGULAR, groudIds,
+	organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
 
 role = com.liferay.portal.kernel.service.RoleLocalServiceUtil.getRole(companyId, "Administrator");
 

@@ -26,6 +26,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -373,8 +374,9 @@ public class ExpandoSearchTest {
 			password1, password2, autoScreenName, screenName, emailAddress,
 			locale, firstName, middleName, lastName, prefixListTypeId,
 			suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear,
-			jobTitle, new long[] {TestPropsValues.getGroupId()},
-			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
+			jobTitle, UserConstants.TYPE_REGULAR,
+			new long[] {TestPropsValues.getGroupId()}, organizationIds, roleIds,
+			userGroupIds, sendMail, serviceContext);
 
 		_users.add(user);
 

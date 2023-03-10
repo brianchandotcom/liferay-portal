@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -108,8 +109,8 @@ public class OnDemandAdminTicketGeneratorImpl
 			requestorUser.getLocale(), requestorUser.getFirstName(),
 			requestorUser.getMiddleName(), requestorUser.getLastName(), 0, 0,
 			requestorUser.getMale(), date.getMonth(), date.getDay(),
-			date.getYear(), null, null, null, new long[] {role.getRoleId()},
-			null, false, new ServiceContext());
+			date.getYear(), null, UserConstants.TYPE_REGULAR, null, null,
+			new long[] {role.getRoleId()}, null, false, new ServiceContext());
 
 		String screenName = _getScreenName(
 			requestorUser.getUserId(), user.getUserId());

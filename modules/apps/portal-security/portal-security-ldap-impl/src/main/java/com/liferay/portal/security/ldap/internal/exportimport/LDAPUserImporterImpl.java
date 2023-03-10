@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.exportimport.UserGroupImportTransactionThreadLocal;
@@ -680,7 +681,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ldapUser.getEmailAddress(), ldapUser.getLocale(),
 			ldapUser.getFirstName(), ldapUser.getMiddleName(),
 			ldapUser.getLastName(), 0, 0, ldapUser.isMale(), birthdayMonth,
-			birthdayDay, birthdayYear, StringPool.BLANK, ldapUser.getGroupIds(),
+			birthdayDay, birthdayYear, StringPool.BLANK,
+			UserConstants.TYPE_REGULAR, ldapUser.getGroupIds(),
 			ldapUser.getOrganizationIds(), ldapUser.getRoleIds(),
 			ldapUser.getUserGroupIds(), ldapUser.isSendEmail(),
 			ldapUser.getServiceContext());

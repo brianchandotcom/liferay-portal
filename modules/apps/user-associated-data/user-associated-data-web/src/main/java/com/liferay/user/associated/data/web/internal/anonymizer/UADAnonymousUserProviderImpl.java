@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
@@ -110,8 +111,8 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 			creatorUserId, companyId, false, randomString, randomString, false,
 			screenName, emailAddress, locale, firstName, middleName, lastName,
 			prefixListTypeId, suffixListTypeId, true, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, null, null, null, null, false,
-			null);
+			birthdayDay, birthdayYear, jobTitle, UserConstants.TYPE_REGULAR,
+			null, null, null, null, false, null);
 
 		anonymousUser.setComments(
 			StringBundler.concat(

@@ -1,0 +1,23 @@
+#userIdContainer {
+	display: none;
+}
+
+.funds-row {
+	margin-bottom: 0px;
+	font-weight: bold;
+}
+
+.hours-row {
+	font-weight: bold;
+}
+
+#available-funds {
+	margin-bottom: 0px;
+	margin-left: 5px;
+	font-weight: normal;
+}
+
+#available-hours {
+	font-weight: normal;
+	margin-left: 5px;
+}

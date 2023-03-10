@@ -35,14 +35,11 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.io.IOException;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -61,8 +58,7 @@ public class AMImageRequestHandler
 
 	@Override
 	public AdaptiveMedia<AMImageProcessor> handleRequest(
-			HttpServletRequest httpServletRequest)
-		throws IOException, ServletException {
+		HttpServletRequest httpServletRequest) {
 
 		Tuple<FileVersion, AMImageAttributeMapping> interpretedPath =
 			_interpretPath(httpServletRequest.getPathInfo());

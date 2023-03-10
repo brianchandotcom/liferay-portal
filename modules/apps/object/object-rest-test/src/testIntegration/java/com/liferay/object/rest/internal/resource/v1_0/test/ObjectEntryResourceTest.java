@@ -204,6 +204,46 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetObjectEntryWithKeywords() throws Exception {
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, "value"
+			).put(
+				"keywords", JSONUtil.putAll("tag1", "tag2")
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+				jsonObject.getString("id"),
+			Http.Method.GET);
+
+		JSONArray keywordsJSONArray = jsonObject.getJSONArray("keywords");
+
+		Assert.assertEquals("tag1", keywordsJSONArray.get(0));
+		Assert.assertEquals("tag2", keywordsJSONArray.get(1));
+
+		jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"keywords", JSONUtil.putAll("tag1", "tag2", "tag3")
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+				jsonObject.getString("id"),
+			Http.Method.GET);
+
+		keywordsJSONArray = jsonObject.getJSONArray("keywords");
+
+		Assert.assertEquals("tag1", keywordsJSONArray.get(0));
+		Assert.assertEquals("tag2", keywordsJSONArray.get(1));
+		Assert.assertEquals("tag3", keywordsJSONArray.get(2));
+	}
+
+	@Test
 	public void testGetObjectRelationshipERCFieldNameInOneToManyRelationship()
 		throws Exception {
 

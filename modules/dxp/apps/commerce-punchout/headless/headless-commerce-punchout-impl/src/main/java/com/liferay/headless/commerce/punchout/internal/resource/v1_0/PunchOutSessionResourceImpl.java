@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -243,9 +244,9 @@ public class PunchOutSessionResourceImpl
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, email, locale, firstName, middleName,
 			lastName, prefixListTypeId, suffixListTypeId, false, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, new long[] {groupId},
-			organizationIds, roleIds, userGroupIds, sendEmail,
-			_serviceContextHelper.getServiceContext(groupId));
+			birthdayDay, birthdayYear, jobTitle, UserConstants.TYPE_REGULAR,
+			new long[] {groupId}, organizationIds, roleIds, userGroupIds,
+			sendEmail, _serviceContextHelper.getServiceContext(groupId));
 
 		user = _userLocalService.updateLastLogin(
 			user.getUserId(), user.getLoginIP());

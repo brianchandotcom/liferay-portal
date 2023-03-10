@@ -26,12 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	service = {
-		StyleBookServiceUpgradeStepRegistrator.class,
-		UpgradeStepRegistrator.class
-	}
-)
+@Component(service = UpgradeStepRegistrator.class)
 public class StyleBookServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

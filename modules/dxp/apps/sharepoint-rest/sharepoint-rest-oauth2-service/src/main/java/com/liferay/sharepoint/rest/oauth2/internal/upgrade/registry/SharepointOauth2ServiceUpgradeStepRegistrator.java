@@ -22,12 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alberto Chaparro
  */
-@Component(
-	service = {
-		SharepointOauth2ServiceUpgradeStepRegistrator.class,
-		UpgradeStepRegistrator.class
-	}
-)
+@Component(service = UpgradeStepRegistrator.class)
 public class SharepointOauth2ServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

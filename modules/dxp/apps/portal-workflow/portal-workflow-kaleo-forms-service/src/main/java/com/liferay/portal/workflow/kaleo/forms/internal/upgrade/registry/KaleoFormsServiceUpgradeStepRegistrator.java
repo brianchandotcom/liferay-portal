@@ -39,12 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	service = {
-		KaleoFormsServiceUpgradeStepRegistrator.class,
-		UpgradeStepRegistrator.class
-	}
-)
+@Component(service = UpgradeStepRegistrator.class)
 public class KaleoFormsServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

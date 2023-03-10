@@ -34,12 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Kocsis
  */
-@Component(
-	service = {
-		ExportImportServiceUpgradeStepRegistrator.class,
-		UpgradeStepRegistrator.class
-	}
-)
+@Component(service = UpgradeStepRegistrator.class)
 public class ExportImportServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

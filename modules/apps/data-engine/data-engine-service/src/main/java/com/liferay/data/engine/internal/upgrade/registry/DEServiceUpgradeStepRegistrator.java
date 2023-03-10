@@ -27,11 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	service = {
-		DEServiceUpgradeStepRegistrator.class, UpgradeStepRegistrator.class
-	}
-)
+@Component(service = UpgradeStepRegistrator.class)
 public class DEServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Override

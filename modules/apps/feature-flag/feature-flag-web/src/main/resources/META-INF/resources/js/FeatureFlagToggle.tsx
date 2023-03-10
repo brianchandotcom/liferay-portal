@@ -25,35 +25,45 @@ interface IProps {
 }
 
 const FeatureFlagToggle = ({
-	disabled,
+	disabled: initialDisabled,
 	featureFlagKey,
 	inputName,
 	labelOff,
 	labelOn,
 	toggled: initialToggled,
 }: IProps) => {
+	const [disabled, setDisabled] = useState(initialDisabled);
 	const [toggled, setToggled] = useState(initialToggled);
 
 	async function updateToggled(newToggled: boolean) {
-		const response = await Liferay.Util.fetch(
-			'/o/com-liferay-feature-flag-web/set-enabled',
-			{
-				body: Liferay.Util.objectToFormData({
-					enabled: newToggled,
-					key: featureFlagKey,
-				}),
-				method: 'POST',
-			}
-		);
+		setDisabled(true);
 
-		if (response.ok) {
-			setToggled(newToggled);
+		try {
+			const response = await Liferay.Util.fetch(
+				'/o/com-liferay-feature-flag-web/set-enabled',
+				{
+					body: Liferay.Util.objectToFormData({
+						enabled: newToggled,
+						key: featureFlagKey,
+					}),
+					method: 'POST',
+				}
+			);
+
+			if (response.ok) {
+				setToggled(newToggled);
+			}
+			else {
+				Liferay.Util.openToast({
+					message: Liferay.Language.get(
+						'could-not-update-feature-flag'
+					),
+					type: 'danger',
+				});
+			}
 		}
-		else {
-			Liferay.Util.openToast({
-				message: Liferay.Language.get('could-not-update-feature-flag'),
-				type: 'danger',
-			});
+		finally {
+			setDisabled(false);
 		}
 	}
 

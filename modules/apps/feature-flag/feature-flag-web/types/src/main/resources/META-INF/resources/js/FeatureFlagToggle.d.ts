@@ -23,7 +23,7 @@ interface IProps {
 	toggled: boolean;
 }
 declare const FeatureFlagToggle: ({
-	disabled,
+	disabled: initialDisabled,
 	featureFlagKey,
 	inputName,
 	labelOff,

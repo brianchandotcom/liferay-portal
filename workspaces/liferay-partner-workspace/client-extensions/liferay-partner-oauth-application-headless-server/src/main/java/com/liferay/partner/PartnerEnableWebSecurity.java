@@ -14,8 +14,6 @@
 
 package com.liferay.partner;
 
-import com.liferay.object.admin.rest.client.resource.v1_0.ObjectDefinitionResource;
-
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
 import com.nimbusds.jose.proc.JWSAlgorithmFamilyJWSKeySelector;
@@ -28,7 +26,6 @@ import com.sforce.soap.partner.PartnerConnection;
 import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -48,8 +45,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.AbstractOAuth2Token;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
@@ -142,44 +137,6 @@ public class PartnerEnableWebSecurity {
 		).oauth2ResourceServer(
 			OAuth2ResourceServerConfigurer::jwt
 		).build();
-	}
-
-	@Configuration
-	public class ResourceClientConfiguration {
-
-		public ResourceClientConfiguration() {
-			_objectDefinitionResourceBuilder =
-				ObjectDefinitionResource.builder();
-		}
-
-		public ObjectDefinitionResource getObjectDefinitionResource()
-			throws MalformedURLException {
-
-			URL url = new URL(_liferayPortalURL);
-
-			return _objectDefinitionResourceBuilder.header(
-				"Authorization", _getBearerToken()
-			).endpoint(
-				url.getHost(), url.getPort(), url.getProtocol()
-			).build();
-		}
-
-		private String _getBearerToken() {
-			AbstractOAuth2Token token =
-				(AbstractOAuth2Token)SecurityContextHolder.getContext(
-				).getAuthentication(
-				).getCredentials();
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Using JWT Token " + token.getTokenValue());
-			}
-
-			return "Bearer ".concat(token.getTokenValue());
-		}
-
-		private final ObjectDefinitionResource.Builder
-			_objectDefinitionResourceBuilder;
-
 	}
 
 	@Configuration

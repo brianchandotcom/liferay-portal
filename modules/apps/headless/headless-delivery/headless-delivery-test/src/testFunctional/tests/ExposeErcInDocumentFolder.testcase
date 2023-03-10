@@ -1,0 +1,378 @@
+@component-name = "portal-lima"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Lima Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given with postSiteDocumentFolder and siteId to create a document folder") {
+			var response = DocumentFolderAPI.addDocumentFolder(
+				groupName = "Guest",
+				name = "Document Folder Name");
+
+			DocumentFolderAPI.staticDoucmentFolderId(response = ${response});
+
+			DocumentFolderAPI.staticDoucmentFolderErc(response = ${response});
+		}
+	}
+
+	tearDown {
+		for (var documentFolderName : list "Document%20Folder%20Name,Document%20Folder%20Name_1") {
+			DocumentFolderAPI.deleteDocumentFolderByName(
+				documentFolderName = ${documentFolderName},
+				groupName = "Guest");
+		}
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanCreateDocumentFolderByPutNonexistentErc {
+		property portal.acceptance = "true";
+
+		task ("When I make a PUT request by siteId and nonexistent erc with a name and another erc in the body") {
+			var response = DocumentFolderAPI.updateDocumentFolderBySiteIdAndErc(
+				externalReferenceCode = "customErc",
+				externalReferenceCodeInBody = "customErcInBody",
+				groupName = "Guest",
+				name = "Document Folder Name_1");
+		}
+
+		task ("Then its erc equals to the value of the nonexistent one") {
+			var actualExternalReferenceCode = JSONPathUtil.getErcValue(response = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${actualExternalReferenceCode},
+				expected = "customErc");
+		}
+
+		task ("And Then a document folder is being created") {
+			DocumentFolderAPI.assertProperDocumentFolderTotalCount(
+				expectedDocumentTotalCount = 1,
+				groupName = "Guest",
+				parameter = "filter",
+				parameterValue = "name%20eq%20%27Document%20Folder%20Name_1%27");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanCreateDocumentFolderWithCustomErcInAnotherDocumentFolder {
+		property portal.acceptance = "true";
+
+		task ("When with postDocumentFolderDocumentFolder and parentDocumentFolderId to create a new folder with a custom erc") {
+			var response = DocumentFolderAPI.addDocumentFolder(
+				externalReferenceCode = "customErc",
+				name = "Document Sub Folder Name",
+				parentDocumentFolderId = ${staticDoucmentFolderId});
+		}
+
+		task ("Then I can see the custom external reference code in response") {
+			var actualExternalReferenceCode = JSONPathUtil.getErcValue(response = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${actualExternalReferenceCode},
+				expected = "customErc");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanCreateDocumentFolderWithErcWithoutErcInTheBody {
+		property portal.acceptance = "true";
+
+		task ("Then I can see external reference code in response") {
+			var response = DocumentFolderAPI.getDocumentFolders(groupName = "Guest");
+
+			var expectExternalReferenceCode = JSONUtil.getWithJSONPath(${response}, "$.items[?(@.name=='Document Folder Name')].externalReferenceCode");
+
+			TestUtils.assertEquals(
+				actual = ${expectExternalReferenceCode},
+				expected = ${staticDoucmentFolderErc});
+		}
+	}
+
+	@priority = 4
+	test CanDeleteChildDocumentFolderByErc {
+		property portal.acceptance = "true";
+
+		task ("And Given with postDocumentFolderDocumentFolder and parentDocumentFolderId to create a new folder with a custom erc") {
+			var response = DocumentFolderAPI.addDocumentFolder(
+				externalReferenceCode = "customErc",
+				name = "Document Sub Folder Name",
+				parentDocumentFolderId = ${staticDoucmentFolderId});
+		}
+
+		task ("And Given with postDocumentFolderDocument and documentFolderId to create a document in the child document folder") {
+			var documentFolderId = JSONPathUtil.getIdValue(response = ${response});
+			var externalReferenceCode = JSONPathUtil.getErcValue(response = ${response});
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			DocumentAPI.addDocumentWithFileInDocumentFolder(
+				documentFolderId = ${documentFolderId},
+				filePath = ${filePath});
+		}
+
+		task ("When I make a DELETE request by siteId and erc of the child document folder") {
+			DocumentFolderAPI.deleteDocumentFolderBySiteIdAndErc(
+				externalReferenceCode = ${externalReferenceCode},
+				groupName = "Guest");
+		}
+
+		task ("Then the child document folder is deleted successfully") {
+			DocumentFolderAPI.assertProperDocumentFolderTotalCount(
+				expectedDocumentTotalCount = 0,
+				groupName = "Guest",
+				parameter = "filter",
+				parameterValue = "name%20eq%20%27Document%20Sub%20Folder%20Name%27");
+		}
+
+		task ("And Then the parent document folder still exists") {
+			DocumentFolderAPI.assertProperDocumentFolderTotalCount(
+				expectedDocumentTotalCount = 1,
+				groupName = "Guest",
+				parameter = "filter",
+				parameterValue = "name%20eq%20%27Document%20Folder%20Name%27");
+		}
+	}
+
+	@priority = 3
+	test CanDeleteParentDocumentFolderByErc {
+		property portal.acceptance = "true";
+
+		task ("And Given with postDocumentFolderDocumentFolder and parentDocumentFolderId to create a new folder with a custom erc") {
+			var response = DocumentFolderAPI.addDocumentFolder(
+				externalReferenceCode = "customErc",
+				name = "Document Sub Folder Name",
+				parentDocumentFolderId = ${staticDoucmentFolderId});
+		}
+
+		task ("And Given with postDocumentFolderDocument and documentFolderId to create a document in the child document folder") {
+			var documentFolderId = JSONPathUtil.getIdValue(response = ${response});
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			var responseToParse = DocumentAPI.addDocumentWithFileInDocumentFolder(
+				documentFolderId = ${documentFolderId},
+				filePath = ${filePath});
+
+			var documentId = JSONPathUtil.getIdValue(response = ${responseToParse});
+		}
+
+		task ("When I make a DELETE request by siteId and erc of the parent document folder") {
+			DocumentFolderAPI.deleteDocumentFolderBySiteIdAndErc(
+				externalReferenceCode = ${staticDoucmentFolderErc},
+				groupName = "Guest");
+		}
+
+		task ("Then the document folders are deleted successfully") {
+			DocumentFolderAPI.assertProperDocumentFolderTotalCount(
+				expectedDocumentTotalCount = 0,
+				groupName = "Guest",
+				parameter = "filter",
+				parameterValue = "name%20eq%20%27Document%20Folder%20Name%27");
+		}
+
+		task ("And Then the document in the document folder is deleted") {
+			var response = DocumentAPI.getDocumentsByDifferentParameters(documentId = ${documentId});
+
+			var actualMessage = JSONUtil.getWithJSONPath(${response}, "$.title");
+
+			TestUtils.assertPartialEquals(
+				actual = ${actualMessage},
+				expected = "No FileEntry exists with the key");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanGetDocumentFolderByErc {
+		property portal.acceptance = "true";
+
+		task ("When with GET request, siteId and external reference code to retrieve the document folder") {
+			var response = DocumentFolderAPI.getDocumentFolderBySiteIdAndErc(
+				externalReferenceCode = ${staticDoucmentFolderErc},
+				groupName = "Guest");
+		}
+
+		task ("Then I can see the correct details of the document folder") {
+			var actualExternalReferenceCode = JSONPathUtil.getErcValue(response = ${response});
+			var actualDoucmentFolderId = JSONPathUtil.getIdValue(response = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${actualDoucmentFolderId},
+				expected = ${staticDoucmentFolderId});
+
+			TestUtils.assertEquals(
+				actual = ${actualExternalReferenceCode},
+				expected = ${staticDoucmentFolderErc});
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetDocumentFolderInAntoherFolderByErc {
+		property portal.acceptance = "true";
+
+		task ("And Given with postDocumentFolderDocumentFolder and parentDocumentFolderId to create a new folder with a custom erc") {
+			var responseFromPost = DocumentFolderAPI.addDocumentFolder(
+				externalReferenceCode = "customErc",
+				name = "Document Sub Folder Name",
+				parentDocumentFolderId = ${staticDoucmentFolderId});
+		}
+
+		task ("When with GET request, siteId and external reference code to retrieve the document folder") {
+			var responseFromGet = DocumentFolderAPI.getDocumentFolderBySiteIdAndErc(
+				externalReferenceCode = "customErc",
+				groupName = "Guest");
+		}
+
+		task ("Then I can see the correct details of the document folder") {
+			var actualExternalReferenceCode = JSONPathUtil.getErcValue(response = ${responseFromGet});
+			var actualDoucmentFolderId = JSONPathUtil.getIdValue(response = ${responseFromGet});
+			var expectedDoucmentFolderId = JSONPathUtil.getIdValue(response = ${responseFromPost});
+
+			TestUtils.assertEquals(
+				actual = ${actualDoucmentFolderId},
+				expected = ${expectedDoucmentFolderId});
+
+			TestUtils.assertEquals(
+				actual = ${actualExternalReferenceCode},
+				expected = "customErc");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CannotCreateDocumentFolderWithExistingErc {
+		property portal.acceptance = "true";
+
+		task ("When with postSiteDocumentFolder and siteId to create a document folder with an existing erc") {
+			var actualMessage = DocumentFolderAPI.addDocumentFolder(
+				externalReferenceCode = ${staticDoucmentFolderErc},
+				groupName = "Guest",
+				name = "Document Folder Name_1");
+		}
+
+		task ("Then I receive duplicate external reference code response") {
+			TestUtils.assertPartialEquals(
+				actual = ${actualMessage},
+				expected = "Duplicate document library folder with external reference code ${staticDoucmentFolderErc}");
+		}
+
+		task ("And Then another folder with same erc is not being created") {
+			DocumentFolderAPI.assertProperDocumentFolderTotalCount(
+				expectedDocumentTotalCount = 0,
+				groupName = "Guest",
+				parameter = "filter",
+				parameterValue = "name%20eq%20%27Document%20Folder%20Name_1%27");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CannotUpdateDocumentFolderErcByErc {
+		property portal.acceptance = "true";
+
+		task ("When I make a PUT request by siteId and erc with a erc modified in the body") {
+			var response = DocumentFolderAPI.updateDocumentFolderBySiteIdAndErc(
+				externalReferenceCode = ${staticDoucmentFolderErc},
+				externalReferenceCodeInBody = "customErc",
+				groupName = "Guest",
+				name = "Document Folder Name");
+		}
+
+		task ("Then the erc in the response body is not changed") {
+			var actualExternalReferenceCode = JSONPathUtil.getErcValue(response = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${actualExternalReferenceCode},
+				expected = ${staticDoucmentFolderErc});
+		}
+
+		task ("And Then another document folder with an erc being the modified value is not being created") {
+			DocumentFolderAPI.assertProperDocumentFolderTotalCount(
+				expectedDocumentTotalCount = 1,
+				groupName = "Guest",
+				parameter = "filter",
+				parameterValue = "name%20eq%20%27Document%20Folder%20Name%27");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanReturnErrorWithGetDocumentFolderByNonexistentErc {
+		property portal.acceptance = "true";
+
+		task ("When with GET request, siteId and nonexistent external reference code to retrieve the document folder") {
+			var response = DocumentFolderAPI.getDocumentFolderBySiteIdAndErc(
+				externalReferenceCode = "customErc",
+				groupName = "Guest");
+		}
+
+		task ("Then I receive no DLFolder exists error message in response") {
+			var actualMessage = JSONUtil.getWithJSONPath(${response}, "$.title");
+
+			TestUtils.assertPartialEquals(
+				actual = ${actualMessage},
+				expected = "No DLFolder exists with the key");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateDocumentFolderNameByErc {
+		property portal.acceptance = "true";
+
+		task ("When I make a PUT request by siteId and erc with a name modified in the body") {
+			var response = DocumentFolderAPI.updateDocumentFolderBySiteIdAndErc(
+				externalReferenceCode = ${staticDoucmentFolderErc},
+				groupName = "Guest",
+				name = "Document Folder Name_1");
+		}
+
+		task ("Then I receive a correct body response with updated name") {
+			var actualName = JSONUtil.getWithJSONPath(${response}, "$.name");
+
+			TestUtils.assertEquals(
+				actual = ${actualName},
+				expected = "Document Folder Name_1");
+		}
+
+		task ("And Then the document folder is correctly updated") {
+			DocumentFolderAPI.assertProperDocumentFolderTotalCount(
+				expectedDocumentTotalCount = 1,
+				groupName = "Guest",
+				parameter = "filter",
+				parameterValue = "name%20eq%20%27Document%20Folder%20Name_1%27");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test DocumentFolderDeletionImpossibleByNonexistentErc {
+		property portal.acceptance = "true";
+
+		task ("When I make a DELETE request by siteId and on-existent erc") {
+			DocumentFolderAPI.deleteDocumentFolderBySiteIdAndErc(
+				externalReferenceCode = "customErc",
+				groupName = "Guest");
+		}
+
+		task ("Then the document folder created earlier still exists") {
+			DocumentFolderAPI.assertProperDocumentFolderTotalCount(
+				expectedDocumentTotalCount = 1,
+				groupName = "Guest",
+				parameter = "filter",
+				parameterValue = "name%20eq%20%27Document%20Folder%20Name%27");
+		}
+	}
+
+}

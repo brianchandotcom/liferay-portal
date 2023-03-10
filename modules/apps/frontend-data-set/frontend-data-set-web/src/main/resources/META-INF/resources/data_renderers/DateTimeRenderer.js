@@ -19,7 +19,7 @@ function DateTimeRenderer({options, value}) {
 		return null;
 	}
 
-	const locale = themeDisplay.getLanguageId().replace('_', '-');
+	const locale = themeDisplay.getLanguageId().replaceAll('_', '-');
 	const dateOptions = options?.format || {
 		day: 'numeric',
 		hour: 'numeric',

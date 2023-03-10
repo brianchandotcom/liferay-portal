@@ -139,8 +139,8 @@ class EventScreen extends HtmlScreen {
 	evaluateStyles(surfaces) {
 		const currentLanguageId = document
 			.querySelector('html')
-			.lang.replace('-', '_');
-		const languageId = this.virtualDocument.lang.replace('-', '_');
+			.lang.replaceAll('-', '_');
+		const languageId = this.virtualDocument.lang.replaceAll('-', '_');
 
 		if (currentLanguageId !== languageId) {
 			this.stylesPermanentSelector_ =

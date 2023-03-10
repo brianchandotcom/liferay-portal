@@ -401,7 +401,7 @@ AUI.add(
 					const locales = instance.get('items').map((languageId) => {
 						const displayName = availableLocales[languageId];
 
-						const label = languageId.replace(/_/, '-');
+						const label = languageId.replaceAll(/_/g, '-');
 
 						return {
 							displayName,
@@ -415,7 +415,7 @@ AUI.add(
 						.get('translatedLanguages')
 						.values()
 						.reduce((accumulator, item) => {
-							const language = item.replace(/_/, '-');
+							const language = item.replaceAll(/_/g, '-');
 
 							if (!accumulator[language]) {
 								accumulator[language] = language;
@@ -669,7 +669,7 @@ AUI.add(
 					if (languageStatusNode) {
 						languageStatusNode.setHTML(
 							A.Lang.sub(instance.TRANSLATION_STATUS_TEMPLATE, {
-								languageId: languageId.replace(/_/, '-'),
+								languageId: languageId.replaceAll(/_/g, '-'),
 								translationAriaLabel,
 								translationStatus,
 								translationStatusCssClass,
@@ -690,7 +690,7 @@ AUI.add(
 							'currentlySelected'
 						];
 
-					languageId = languageId.replace('_', '-');
+					languageId = languageId.replaceAll('_', '-');
 
 					const triggerContent = A.Lang.sub(
 						instance.TRIGGER_TEMPLATE,

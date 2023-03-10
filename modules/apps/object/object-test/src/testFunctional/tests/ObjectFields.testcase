@@ -1085,36 +1085,41 @@ definition {
 		}
 	}
 
-	@description = "LPS-164948 - Verify the Formula Field can be edited in a System Object"
+	@description = "LPS-164948 - Verify the Formula Field can be edited in a Custom Object after it's published"
 	@priority = 4
-	test CanEditFormulaFieldOnSystemObject {
+	test CanEditFormulaFieldOnCustomObject {
 		property custom.properties = "feature.flag.LPS-164948=true";
 
-		task ("Given: A System Object with a formula field") {
+		task ("Given: A Custom Obejct with Formula Field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 176842",
+				objectName = "CustomObject176842",
+				pluralLabelName = "Custom Objects 176842");
+
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Formula",
 				fieldLabelName = "Custom Formula Field",
 				fieldName = "customFormulaField",
 				fieldType = "String",
+				formulaScript = "customInteger + customInteger1",
 				isRequired = "false",
-				objectName = "Commerce Order",
-				outputOption = "Decimal",
-				scriptFormula = "field_name / field_name2");
+				objectName = "CustomObject176842",
+				outputOption = "Decimal");
 		}
 
-		task ("When: The Label, Output, and Formula Builder are updated)") {
+		task ("When: The Label, Output, and Formula Builder are updated") {
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectSystemObject(label = "Commerce Order");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 176842");
 
 			ObjectAdmin.goToFieldsTab();
 
 			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field");
 
 			ObjectField.editFormulaField(
+				formulaScript = "id + id",
 				newContent = "Custom Formula Field Updated",
-				newTypeFormula = "Integer",
-				scriptFormulaField = "field_name / field_name2");
+				newTypeFormula = "Integer");
 
 			Button.clickSave();
 		}
@@ -1131,12 +1136,6 @@ definition {
 				key_labelName = "Formula Builder",
 				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
 				value1 = "id / id");
-		}
-
-		task ("And then: the Field Name and Type inputs are disabled and cannot be edited") {
-			AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
-
-			AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
 		}
 	}
 

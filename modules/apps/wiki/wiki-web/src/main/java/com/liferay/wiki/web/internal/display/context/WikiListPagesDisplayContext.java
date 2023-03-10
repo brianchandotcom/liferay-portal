@@ -440,9 +440,12 @@ public class WikiListPagesDisplayContext {
 								searchContainer.getOrderByCol(),
 								searchContainer.getOrderByType())),
 						curPage -> {
-							if (!permissionChecker.isContentReviewer(
+							boolean contentReviewer =
+								permissionChecker.isContentReviewer(
 									_wikiRequestHelper.getCompanyId(),
-									_wikiRequestHelper.getScopeGroupId()) &&
+									_wikiRequestHelper.getScopeGroupId());
+
+							if (!contentReviewer &&
 								!WikiPagePermission.contains(
 									permissionChecker, curPage,
 									ActionKeys.UPDATE)) {
@@ -467,7 +470,10 @@ public class WikiListPagesDisplayContext {
 
 							if ((lastPage != null) &&
 								(curPage.getVersion() <
-									lastPage.getVersion())) {
+									lastPage.getVersion()) &&
+								(contentReviewer ||
+								 (lastPage.getStatusByUserId() ==
+									 permissionChecker.getUserId()))) {
 
 								return lastPage;
 							}

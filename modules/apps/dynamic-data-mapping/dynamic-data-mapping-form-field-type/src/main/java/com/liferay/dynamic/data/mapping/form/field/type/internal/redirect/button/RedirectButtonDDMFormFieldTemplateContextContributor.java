@@ -96,22 +96,21 @@ public class RedirectButtonDDMFormFieldTemplateContextContributor
 						parameters[0], new String[] {parameters[1]});
 				}
 
+				parameterMap.put(
+					"mvcRenderCommandName",
+					new String[] {
+						GetterUtil.getString(
+							((Object[])ddmFormField.getProperty(
+								"mvcRenderCommandName"))[0])
+					});
+
 				return PortletURLBuilder.create(
 					requestBackedPortletURLFactory.createActionURL(
 						GetterUtil.getString(
 							((Object[])ddmFormField.getProperty("portletId"))
 								[0]))
 				).setParameters(
-					HashMapBuilder.putAll(
-						parameterMap
-					).put(
-						"mvcRenderCommandName",
-						new String[] {
-							GetterUtil.getString(
-								((Object[])ddmFormField.getProperty(
-									"mvcRenderCommandName"))[0])
-						}
-					).build()
+					parameterMap
 				).buildString();
 			}
 		).put(

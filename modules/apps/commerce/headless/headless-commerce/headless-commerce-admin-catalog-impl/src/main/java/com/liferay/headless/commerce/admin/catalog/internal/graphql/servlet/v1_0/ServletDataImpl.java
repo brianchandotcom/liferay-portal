@@ -42,6 +42,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.Produc
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductTaxConfigurationResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.RelatedProductResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SkuResourceImpl;
+import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SkuSubscriptionConfigurationResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SpecificationResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
@@ -69,6 +70,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSubscrip
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductTaxConfigurationResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.RelatedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuSubscriptionConfigurationResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SpecificationResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -202,6 +204,8 @@ public class ServletDataImpl implements ServletData {
 			_relatedProductResourceComponentServiceObjects);
 		Query.setSkuResourceComponentServiceObjects(
 			_skuResourceComponentServiceObjects);
+		Query.setSkuSubscriptionConfigurationResourceComponentServiceObjects(
+			_skuSubscriptionConfigurationResourceComponentServiceObjects);
 		Query.setSpecificationResourceComponentServiceObjects(
 			_specificationResourceComponentServiceObjects);
 	}
@@ -1207,6 +1211,16 @@ public class ServletDataImpl implements ServletData {
 						"query#sku",
 						new ObjectValuePair<>(SkuResourceImpl.class, "getSku"));
 					put(
+						"query#skuByExternalReferenceCodeSkuSubscriptionConfiguration",
+						new ObjectValuePair<>(
+							SkuSubscriptionConfigurationResourceImpl.class,
+							"getSkuByExternalReferenceCodeSkuSubscriptionConfiguration"));
+					put(
+						"query#idSkuSubscriptionConfiguration",
+						new ObjectValuePair<>(
+							SkuSubscriptionConfigurationResourceImpl.class,
+							"getIdSkuSubscriptionConfiguration"));
+					put(
 						"query#specifications",
 						new ObjectValuePair<>(
 							SpecificationResourceImpl.class,
@@ -1326,5 +1340,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<LinkedProductResource>
 		_linkedProductResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SkuSubscriptionConfigurationResource>
+		_skuSubscriptionConfigurationResourceComponentServiceObjects;
 
 }

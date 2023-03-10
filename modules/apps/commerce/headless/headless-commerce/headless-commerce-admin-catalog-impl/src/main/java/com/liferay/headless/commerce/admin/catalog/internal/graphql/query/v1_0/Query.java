@@ -40,6 +40,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSubscriptionC
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuSubscriptionConfiguration;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
@@ -67,6 +68,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSubscrip
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductTaxConfigurationResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.RelatedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuSubscriptionConfigurationResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SpecificationResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -309,6 +311,15 @@ public class Query {
 
 		_skuResourceComponentServiceObjects =
 			skuResourceComponentServiceObjects;
+	}
+
+	public static void
+		setSkuSubscriptionConfigurationResourceComponentServiceObjects(
+			ComponentServiceObjects<SkuSubscriptionConfigurationResource>
+				skuSubscriptionConfigurationResourceComponentServiceObjects) {
+
+		_skuSubscriptionConfigurationResourceComponentServiceObjects =
+			skuSubscriptionConfigurationResourceComponentServiceObjects;
 	}
 
 	public static void setSpecificationResourceComponentServiceObjects(
@@ -1660,7 +1671,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuByExternalReferenceCode(externalReferenceCode: ___){cost, customFields, depth, discontinued, discontinuedDate, displayDate, expirationDate, externalReferenceCode, gtin, height, id, inventoryLevel, manufacturerPartNumber, neverExpire, price, productId, productName, promoPrice, published, purchasable, replacementSkuExternalReferenceCode, replacementSkuId, sku, skuOptions, unspsc, weight, width}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuByExternalReferenceCode(externalReferenceCode: ___){cost, customFields, depth, discontinued, discontinuedDate, displayDate, expirationDate, externalReferenceCode, gtin, height, id, inventoryLevel, manufacturerPartNumber, neverExpire, price, productId, productName, promoPrice, published, purchasable, replacementSkuExternalReferenceCode, replacementSkuId, sku, skuOptions, skuSubscriptionConfiguration, unspsc, weight, width}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Sku skuByExternalReferenceCode(
@@ -1676,13 +1687,52 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sku(id: ___){cost, customFields, depth, discontinued, discontinuedDate, displayDate, expirationDate, externalReferenceCode, gtin, height, id, inventoryLevel, manufacturerPartNumber, neverExpire, price, productId, productName, promoPrice, published, purchasable, replacementSkuExternalReferenceCode, replacementSkuId, sku, skuOptions, unspsc, weight, width}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sku(id: ___){cost, customFields, depth, discontinued, discontinuedDate, displayDate, expirationDate, externalReferenceCode, gtin, height, id, inventoryLevel, manufacturerPartNumber, neverExpire, price, productId, productName, promoPrice, published, purchasable, replacementSkuExternalReferenceCode, replacementSkuId, sku, skuOptions, skuSubscriptionConfiguration, unspsc, weight, width}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Sku sku(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_skuResourceComponentServiceObjects, this::_populateResourceContext,
 			skuResource -> skuResource.getSku(id));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuByExternalReferenceCodeSkuSubscriptionConfiguration(externalReferenceCode: ___){deliverySubscriptionEnable, deliverySubscriptionLength, deliverySubscriptionNumberOfLength, deliverySubscriptionType, deliverySubscriptionTypeSettings, enable, length, numberOfLength, overrideSubscriptionInfo, subscriptionType, subscriptionTypeSettings}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SkuSubscriptionConfiguration
+			skuByExternalReferenceCodeSkuSubscriptionConfiguration(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_skuSubscriptionConfigurationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			skuSubscriptionConfigurationResource ->
+				skuSubscriptionConfigurationResource.
+					getSkuByExternalReferenceCodeSkuSubscriptionConfiguration(
+						externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {idSkuSubscriptionConfiguration(id: ___){deliverySubscriptionEnable, deliverySubscriptionLength, deliverySubscriptionNumberOfLength, deliverySubscriptionType, deliverySubscriptionTypeSettings, enable, length, numberOfLength, overrideSubscriptionInfo, subscriptionType, subscriptionTypeSettings}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SkuSubscriptionConfiguration idSkuSubscriptionConfiguration(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_skuSubscriptionConfigurationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			skuSubscriptionConfigurationResource ->
+				skuSubscriptionConfigurationResource.
+					getIdSkuSubscriptionConfiguration(id));
 	}
 
 	/**
@@ -1859,6 +1909,34 @@ public class Query {
 						getProductByExternalReferenceCodeProductChannelsPage(
 							_catalog.getExternalReferenceCode(),
 							Pagination.of(page, pageSize))));
+		}
+
+		private Catalog _catalog;
+
+	}
+
+	@GraphQLTypeExtension(Catalog.class)
+	public class
+		GetSkuByExternalReferenceCodeSkuSubscriptionConfigurationTypeExtension {
+
+		public GetSkuByExternalReferenceCodeSkuSubscriptionConfigurationTypeExtension(
+			Catalog catalog) {
+
+			_catalog = catalog;
+		}
+
+		@GraphQLField
+		public SkuSubscriptionConfiguration
+				skuByExternalReferenceCodeSkuSubscriptionConfiguration()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_skuSubscriptionConfigurationResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				skuSubscriptionConfigurationResource ->
+					skuSubscriptionConfigurationResource.
+						getSkuByExternalReferenceCodeSkuSubscriptionConfiguration(
+							_catalog.getExternalReferenceCode()));
 		}
 
 		private Catalog _catalog;
@@ -3477,6 +3555,41 @@ public class Query {
 
 	}
 
+	@GraphQLName("SkuSubscriptionConfigurationPage")
+	public class SkuSubscriptionConfigurationPage {
+
+		public SkuSubscriptionConfigurationPage(
+			Page skuSubscriptionConfigurationPage) {
+
+			actions = skuSubscriptionConfigurationPage.getActions();
+
+			items = skuSubscriptionConfigurationPage.getItems();
+			lastPage = skuSubscriptionConfigurationPage.getLastPage();
+			page = skuSubscriptionConfigurationPage.getPage();
+			pageSize = skuSubscriptionConfigurationPage.getPageSize();
+			totalCount = skuSubscriptionConfigurationPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<SkuSubscriptionConfiguration> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("SpecificationPage")
 	public class SpecificationPage {
 
@@ -3926,6 +4039,26 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			SkuSubscriptionConfigurationResource
+				skuSubscriptionConfigurationResource)
+		throws Exception {
+
+		skuSubscriptionConfigurationResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		skuSubscriptionConfigurationResource.setContextCompany(_company);
+		skuSubscriptionConfigurationResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		skuSubscriptionConfigurationResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		skuSubscriptionConfigurationResource.setContextUriInfo(_uriInfo);
+		skuSubscriptionConfigurationResource.setContextUser(_user);
+		skuSubscriptionConfigurationResource.setGroupLocalService(
+			_groupLocalService);
+		skuSubscriptionConfigurationResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			SpecificationResource specificationResource)
 		throws Exception {
 
@@ -3993,6 +4126,8 @@ public class Query {
 		_relatedProductResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SkuResource>
 		_skuResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SkuSubscriptionConfigurationResource>
+		_skuSubscriptionConfigurationResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SpecificationResource>
 		_specificationResourceComponentServiceObjects;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.partner.util;
+package com.liferay.partner.util.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

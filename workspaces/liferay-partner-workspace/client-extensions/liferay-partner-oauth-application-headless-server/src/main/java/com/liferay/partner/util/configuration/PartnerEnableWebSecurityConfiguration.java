@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.partner;
+package com.liferay.partner.util.configuration;
 
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
@@ -58,7 +58,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @Configuration
 @EnableWebSecurity
-public class PartnerEnableWebSecurity {
+public class PartnerEnableWebSecurityConfiguration {
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
@@ -164,7 +164,7 @@ public class PartnerEnableWebSecurity {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		PartnerEnableWebSecurity.class);
+		PartnerEnableWebSecurityConfiguration.class);
 
 	@Value("${dxp.domains}")
 	private String _dxpDomains;

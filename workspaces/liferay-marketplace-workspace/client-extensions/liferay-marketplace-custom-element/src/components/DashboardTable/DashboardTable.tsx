@@ -19,7 +19,7 @@ export type AppProps = {
 	version: string;
 };
 interface DashboardTableProps {
-	apps: AppProps[];
+	items: AppProps[];
 	emptyStateMessage: {
 		description1: string;
 		description2: string;
@@ -27,10 +27,13 @@ interface DashboardTableProps {
 	};
 }
 
-export function DashboardTable({apps, emptyStateMessage}: DashboardTableProps) {
+export function DashboardTable({
+	emptyStateMessage,
+	items,
+}: DashboardTableProps) {
 	const {description1, description2, title} = emptyStateMessage;
 
-	if (!apps.length) {
+	if (!items.length) {
 		return (
 			<DashboardEmptyTable
 				description1={description1}
@@ -89,8 +92,8 @@ export function DashboardTable({apps, emptyStateMessage}: DashboardTableProps) {
 				</ClayTable.Head>
 
 				<ClayTable.Body>
-					{apps.map((app) => (
-						<DashboardTableRow app={app} key={app.name} />
+					{items.map((item) => (
+						<DashboardTableRow item={item} key={item.name} />
 					))}
 				</ClayTable.Body>
 			</ClayTable>

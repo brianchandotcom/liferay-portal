@@ -11,10 +11,10 @@ import starFill from '../../assets/icons/star-fill.svg';
 import {AppProps} from './DashboardTable';
 
 interface DashboardTableRowProps {
-	app: AppProps;
+	item: AppProps;
 }
 
-export function DashboardTableRow({app}: DashboardTableRowProps) {
+export function DashboardTableRow({item}: DashboardTableRowProps) {
 	const {
 		image,
 		name,
@@ -25,7 +25,7 @@ export function DashboardTableRow({app}: DashboardTableRowProps) {
 		updatedDate,
 		updatedResponsible,
 		version,
-	} = app;
+	} = item;
 
 	return (
 		<ClayTable.Row>

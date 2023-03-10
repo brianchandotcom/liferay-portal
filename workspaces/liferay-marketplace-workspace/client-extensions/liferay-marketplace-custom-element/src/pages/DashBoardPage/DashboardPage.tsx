@@ -1,6 +1,5 @@
-import {useEffect, useState} from 'react';
+import {Dispatch, SetStateAction, useState} from 'react';
 
-import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {
 	AppProps,
@@ -8,14 +7,25 @@ import {
 } from '../../components/DashboardTable/DashboardTable';
 import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
-import {getProducts} from '../../utils/api';
 import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';
-import {initialDashboardNavigationItems} from './DashboardPageUtil';
 
 import './DashboardPage.scss';
 
+export interface DashboardListItems {
+	itemIcon: string;
+	itemName: string;
+	itemSelected: boolean;
+	itemTitle: string;
+	items?: AppProps[];
+}
+
 type DashBoardPageProps = {
+	accountAppsNumber: string;
+	accountLogo: string;
+	accountTitle: string;
 	buttonMessage: string;
+	dashboardNavigationItems: DashboardListItems[];
+	items: AppProps[];
 	messages: {
 		description: string;
 		emptyStateMessage: {
@@ -25,34 +35,29 @@ type DashBoardPageProps = {
 		};
 		title: string;
 	};
+	setDashboardNavigationItems: Dispatch<SetStateAction<DashboardListItems[]>>;
 };
 
-export function DashboardPage({buttonMessage, messages}: DashBoardPageProps) {
+export function DashboardPage({
+	accountAppsNumber,
+	accountLogo,
+	accountTitle,
+	buttonMessage,
+	dashboardNavigationItems,
+	items,
+	messages,
+	setDashboardNavigationItems,
+}: DashBoardPageProps) {
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
-	const [apps, setApps] = useState<AppProps[]>(Array<AppProps>());
-	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
-		initialDashboardNavigationItems
-	);
-
-	useEffect(() => {
-		(async () => {
-			const products = await getProducts();
-
-			const liferayApps = products.items.map((product: any) => ({
-				name: product.name.en_US,
-			}));
-			setApps(liferayApps);
-		})();
-	}, []);
 
 	return (
 		<div className="dashboard-page-container">
 			<div>
 				<div className="dashboard-page-body-container">
 					<DashboardNavigation
-						accountAppsNumber="4"
+						accountAppsNumber={accountAppsNumber}
 						accountIcon={accountLogo}
-						accountTitle="Acme Co"
+						accountTitle={accountTitle}
 						dashboardNavigationItems={dashboardNavigationItems}
 						onSelectAppChange={setSelectedApp}
 						setDashboardNavigationItems={
@@ -82,8 +87,8 @@ export function DashboardPage({buttonMessage, messages}: DashBoardPageProps) {
 							</div>
 
 							<DashboardTable
-								apps={apps}
 								emptyStateMessage={messages.emptyStateMessage}
+								items={items}
 							/>
 						</div>
 					)}

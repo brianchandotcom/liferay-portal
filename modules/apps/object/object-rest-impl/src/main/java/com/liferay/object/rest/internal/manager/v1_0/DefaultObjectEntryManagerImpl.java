@@ -770,7 +770,9 @@ public class DefaultObjectEntryManagerImpl
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		if (Validator.isNotNull(objectEntry.getKeywords())) {
+		if (Validator.isNotNull(objectEntry.getKeywords()) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+
 			serviceContext.setAssetTagNames(objectEntry.getKeywords());
 		}
 

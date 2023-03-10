@@ -87,6 +87,10 @@ public class ObjectEntryResourceTest {
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-164801", "true"
 			).build());
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-176651", "true"
+			).build());
 	}
 
 	@AfterClass
@@ -98,6 +102,10 @@ public class ObjectEntryResourceTest {
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-164801", "false"
+			).build());
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-176651", "false"
 			).build());
 	}
 

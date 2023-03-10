@@ -367,11 +367,15 @@ public class ObjectEntryDTOConverter
 				dateModified = objectEntry.getModifiedDate();
 				externalReferenceCode = objectEntry.getExternalReferenceCode();
 				id = objectEntry.getObjectEntryId();
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						objectDefinition.getClassName(),
-						objectEntry.getObjectEntryId()),
-					AssetTag.NAME_ACCESSOR);
+
+				if (FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+					keywords = ListUtil.toArray(
+						_assetTagLocalService.getTags(
+							objectDefinition.getClassName(),
+							objectEntry.getObjectEntryId()),
+						AssetTag.NAME_ACCESSOR);
+				}
+
 				properties = _toProperties(
 					dtoConverterContext, nestedFieldsDepth, objectDefinition,
 					objectEntry);

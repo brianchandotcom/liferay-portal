@@ -94,15 +94,9 @@ public class PartnerEnableWebSecurity {
 		NimbusJwtDecoder nimbusJwtDecoder = new NimbusJwtDecoder(
 			defaultJWTProcessor);
 
-		String clientId = _getClientId();
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Using client ID " + clientId);
-		}
-
 		nimbusJwtDecoder.setJwtValidator(
 			new DelegatingOAuth2TokenValidator<>(
-				new ClientIdOAuth2TokenValidator(clientId)));
+				new ClientIdOAuth2TokenValidator(_getClientId())));
 
 		return nimbusJwtDecoder;
 	}

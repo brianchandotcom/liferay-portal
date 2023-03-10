@@ -275,7 +275,7 @@ public class DBTest {
 		_db.runSQL(_SQL_CREATE_TABLE_2);
 
 		Assert.assertArrayEquals(
-			new String[] {"id1", "id2"},
+			new String[] {"id2", "id1"},
 			_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_2));
 	}
 
@@ -285,7 +285,7 @@ public class DBTest {
 
 		Assert.assertFalse(
 			Arrays.equals(
-				new String[] {"id2", "id1"},
+				new String[] {"id1", "id2"},
 				_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_2)));
 	}
 
@@ -324,7 +324,7 @@ public class DBTest {
 
 	private static final String _SQL_CREATE_TABLE_2 =
 		"create table " + DBTest._TABLE_NAME_2 +
-			" (id1 LONG not null, id2 LONG not null, primary key (id1, id2))";
+			" (id1 LONG not null, id2 LONG not null, primary key (id2, id1))";
 
 	private static final String _TABLE_NAME_1 = "DBTest1";
 

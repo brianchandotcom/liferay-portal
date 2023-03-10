@@ -424,9 +424,8 @@ public class PredicateExpressionVisitorImpl
 		return entityModel.getEntityFieldsMap();
 	}
 
-	private Predicate _getExpressionPredicate(
-		Column<?, Object> column, BinaryExpression.Operation operation,
-		Object value) {
+	private <T> Predicate _getExpressionPredicate(
+		Column<?, T> column, BinaryExpression.Operation operation, T value) {
 
 		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
 			return column.eq(value);
@@ -560,7 +559,9 @@ public class PredicateExpressionVisitorImpl
 					AssetTagTable.INSTANCE.tagId.eq(
 						AssetEntries_AssetTagsTable.INSTANCE.tagId
 					).and(
-						AssetTagTable.INSTANCE.name.eq((String)right)
+						_getExpressionPredicate(
+							AssetTagTable.INSTANCE.name, operation,
+							(String)right)
 					)
 				)
 			);

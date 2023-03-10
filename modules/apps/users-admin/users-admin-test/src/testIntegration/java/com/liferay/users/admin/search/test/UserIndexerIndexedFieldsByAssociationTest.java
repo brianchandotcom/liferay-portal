@@ -252,7 +252,9 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 		);
 
 		SearchResponse searchResponse1 = _searcher.search(
-			searchRequestBuilder.query(
+			searchRequestBuilder.emptySearchEnabled(
+				true
+			).query(
 				_queries.term(Field.USER_ID, TestPropsValues.getUserId())
 			).build());
 
@@ -317,6 +319,8 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 		SearchResponse searchResponse = _searcher.search(
 			getSearchRequestBuilder(
 				user.getCompanyId()
+			).emptySearchEnabled(
+				true
 			).fields(
 				fieldNames
 			).modelIndexerClasses(

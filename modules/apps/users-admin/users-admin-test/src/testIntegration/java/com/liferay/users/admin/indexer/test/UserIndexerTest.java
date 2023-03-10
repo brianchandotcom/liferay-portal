@@ -804,6 +804,8 @@ public class UserIndexerTest {
 			searchRequestBuilderFactory.builder(
 			).companyId(
 				_group.getCompanyId()
+			).emptySearchEnabled(
+				true
 			).fields(
 				StringPool.STAR
 			).groupIds(

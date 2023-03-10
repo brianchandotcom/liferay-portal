@@ -314,6 +314,8 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 		return _searcher.search(
 			getSearchRequestBuilder(
 				group.getCompanyId()
+			).emptySearchEnabled(
+				true
 			).fields(
 				Field.USER_ID
 			).modelIndexerClasses(

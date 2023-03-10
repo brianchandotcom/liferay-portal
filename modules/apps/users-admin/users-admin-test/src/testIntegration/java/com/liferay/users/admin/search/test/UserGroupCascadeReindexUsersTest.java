@@ -265,6 +265,8 @@ public class UserGroupCascadeReindexUsersTest {
 		return _searcher.search(
 			getSearchRequestBuilder(
 				group.getCompanyId()
+			).emptySearchEnabled(
+				true
 			).fields(
 				Field.GROUP_ID
 			).modelIndexerClasses(
@@ -278,6 +280,8 @@ public class UserGroupCascadeReindexUsersTest {
 		return _searcher.search(
 			getSearchRequestBuilder(
 				userGroup.getCompanyId()
+			).emptySearchEnabled(
+				true
 			).fields(
 				"userGroupIds"
 			).modelIndexerClasses(

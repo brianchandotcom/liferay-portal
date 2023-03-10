@@ -166,6 +166,8 @@ public class OrganizationIndexerTest {
 			searchRequestBuilderFactory.builder(
 			).companyId(
 				TestPropsValues.getCompanyId()
+			).emptySearchEnabled(
+				true
 			).fields(
 				Field.NAME
 			).modelIndexerClasses(

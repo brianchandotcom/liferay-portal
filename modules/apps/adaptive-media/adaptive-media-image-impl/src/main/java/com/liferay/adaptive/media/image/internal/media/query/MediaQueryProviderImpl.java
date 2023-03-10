@@ -26,12 +26,14 @@ import com.liferay.adaptive.media.image.media.query.MediaQueryProvider;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.url.AMImageURLFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.net.URI;
 
@@ -150,28 +152,22 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 			FileEntry fileEntry)
 		throws PortalException {
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			new ArrayList<>();
+		return ListUtil.sort(
+			TransformUtil.transform(
+				_amImageConfigurationHelper.getAMImageConfigurationEntries(
+					fileEntry.getCompanyId()),
+				amImageConfigurationEntry -> {
+					AdaptiveMedia<AMImageProcessor> adaptiveMedia =
+						_getAdaptiveMediaFromConfigurationEntry(
+							fileEntry, amImageConfigurationEntry);
 
-		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
-			_amImageConfigurationHelper.getAMImageConfigurationEntries(
-				fileEntry.getCompanyId());
+					if (_getWidth(adaptiveMedia) <= 0) {
+						return null;
+					}
 
-		for (AMImageConfigurationEntry amImageConfigurationEntry :
-				amImageConfigurationEntries) {
-
-			AdaptiveMedia<AMImageProcessor> adaptiveMedia =
-				_getAdaptiveMediaFromConfigurationEntry(
-					fileEntry, amImageConfigurationEntry);
-
-			if (_getWidth(adaptiveMedia) > 0) {
-				adaptiveMedias.add(adaptiveMedia);
-			}
-		}
-
-		adaptiveMedias.sort(_comparator);
-
-		return adaptiveMedias;
+					return adaptiveMedia;
+				}),
+			_comparator);
 	}
 
 	private List<Condition> _getConditions(

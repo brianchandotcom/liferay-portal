@@ -80,11 +80,16 @@ public class WikiSocialActivityHelper {
 
 		Property typeProperty = PropertyFactoryUtil.forName("type");
 
+		String version = String.valueOf(wikiPage.getVersion());
+
+		if (Math.floor(wikiPage.getVersion()) == wikiPage.getVersion()) {
+			version = String.valueOf((int)wikiPage.getVersion());
+		}
+
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.or(
 				RestrictionsFactoryUtil.not(
-					extraDataProperty.like(
-						"%version\":" + wikiPage.getVersion() + ",%")),
+					extraDataProperty.like("%version\":" + version + ",%")),
 				RestrictionsFactoryUtil.not(
 					typeProperty.in(
 						new int[] {

@@ -9,6 +9,7 @@ liferay-remote-app-testray {
 	@import 'typography';
 
 	@import 'components/avatar';
+	@import 'components/avatar/assign_to_me';
 	@import 'components/breadcrumb_finder';
 	@import 'components/chart';
 	@import 'components/code';
@@ -16,7 +17,6 @@ liferay-remote-app-testray {
 	@import 'components/export_case';
 	@import 'components/floating_box';
 	@import 'components/layout';
-	@import 'components/layout/notification_popover';
 	@import 'components/layout/sidebar_task';
 	@import 'components/loading_progress_bar';
 	@import 'components/progress_bar';

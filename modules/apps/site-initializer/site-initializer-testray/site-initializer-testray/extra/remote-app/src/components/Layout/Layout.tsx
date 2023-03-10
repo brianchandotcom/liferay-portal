@@ -19,15 +19,15 @@ import Sidebar from '../Sidebar';
 import Header from './Header';
 
 const Layout = () => (
-	<main className="testray-main">
-		<div className="testray-body">
+	<main className="tr-main">
+		<div className="tr-main__body">
 			<Sidebar />
 
-			<div className="testray-page">
+			<div className="tr-main__body__page">
 				<HeaderContextProvider>
 					<Header />
 
-					<section className="testray-content">
+					<section className="tr-main__body__page__content">
 						<Outlet />
 					</section>
 				</HeaderContextProvider>

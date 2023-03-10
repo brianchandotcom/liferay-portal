@@ -527,7 +527,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	private static boolean _originalUpgradeLogContextEnabled;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
-	private static UnsyncStringWriter _unsyncStringWriter =
+	private static final UnsyncStringWriter _unsyncStringWriter =
 		new UnsyncStringWriter();
 	private static Logger _upgradeReportLogger;
 

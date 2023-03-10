@@ -8,6 +8,14 @@ definition {
 		MissingSemicolon.validMacro();
 	}
 
+	macro missingSemicolonFail {
+    		var variable = "variable text";
+
+    		fail("Missing semicolon")
+
+    		MissingSemicolon.validMacro();
+    	}
+
 	macro missingSemicolonExecute {
 		var variable = "variable text";
 
@@ -15,6 +23,14 @@ definition {
 
 		MissingSemicolon.validMacro();
 	}
+
+	macro missingSemicolonUtil {
+    		var variable = "variable text";
+
+    		StringUtil.contains("missing semicolon", "missing")
+
+    		MissingSemicolon.validMacro();
+    	}
 
 	macro missingSemicolonVar {
 		var variable = "variable text";
@@ -24,9 +40,78 @@ definition {
 		MissingSemicolon.validMacro();
 	}
 
+	macro missingSemicolonMultiline {
+    		var variable = "variable text";
+
+    		var missingSemicolon = '''missing
+    		semicolon'''
+
+    		MissingSemicolon.validMacro();
+    	}
+
+    macro missingSemicolonVarMacro {
+    		var variable = "variable text";
+
+    		var siteName = MissingSemicolon.returnPassedVariable(variable = ${variable})
+
+    		MissingSemicolon.validMacro();
+    	}
+
+	macro missingSemicolonMath {
+		var variable = "variable text";
+
+		var missingSemicolon = 5 + 5
+
+		MissingSemicolon.validMacro();
+	}
+
+	macro missingSemicolonInteger {
+    		var variable = "variable text";
+
+    		var missingSemicolon = 10
+
+    		MissingSemicolon.validMacro();
+    	}
+
+    macro missingSemicolonVarReference {
+    		var variable = "variable text";
+
+    		var missingSemicolon = ${variable}
+
+    		MissingSemicolon.validMacro();
+    	}
+
+    macro missingSemicolonLastExecute {
+    		var variable = "variable text";
+
+    		var semicolon = "semicolon";
+
+    		MissingSemicolon.validMacro()
+    	}
+
+    	 macro missingSemicolonLastVar {
+            		var variable = "variable text";
+
+            		MissingSemicolon.validMacro();
+
+            		var missingSemicolon = "missing semicolon"
+            	}
+
+          macro missingSemicolonLastEcho {
+                     		var variable = "variable text";
+
+                     		MissingSemicolon.validMacro();
+
+                     		echo("missing semicolon")
+                     	}
+
 	macro validMacro {
 		var variable = "variable text";
 
+		return ${variable};
+	}
+
+	macro returnPassedVariable {
 		return ${variable};
 	}
 

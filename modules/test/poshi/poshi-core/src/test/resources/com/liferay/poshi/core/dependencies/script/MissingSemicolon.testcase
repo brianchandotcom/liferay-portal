@@ -1,0 +1,7 @@
+definition {
+	property fake.property = "missing semicolon"
+
+	test missingSemicolon {
+		var test = "test";
+	}
+}

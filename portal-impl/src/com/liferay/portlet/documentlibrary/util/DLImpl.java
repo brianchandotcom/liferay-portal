@@ -754,6 +754,10 @@ public class DLImpl implements DL {
 
 	@Override
 	public boolean isValidVersion(String version) {
+		if (version.endsWith(".index")) {
+			version = StringUtil.removeLast(version, ".index");
+		}
+
 		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 			return true;
 		}

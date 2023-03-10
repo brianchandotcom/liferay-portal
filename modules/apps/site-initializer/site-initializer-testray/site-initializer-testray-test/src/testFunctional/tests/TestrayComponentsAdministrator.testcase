@@ -74,9 +74,34 @@ definition {
 			Testray.assertItemNotPresent(text = ${teamName});
 		}
 
-		task ("Then I should be able to delete the component") {
-			Testray.deleteComponent(itemName = ${componentName});
+	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to delete a component that does not have a team"
+	@priority = "4"
+	test AdminCanDeleteComponentWithoutTeam {
+		task ("Given I go to Manage Component") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+		}
+
+		task ("When I add a new component without adding a team") {
+			Testray.addNewComponent(componentName = ${componentName});
+
+			Testray.assertItemName(text = ${componentName});
+
+			Testray.assertItemNotPresent(text = ${teamName});
+		}
+
+		task ("And I should be able to delete the component") {
+			Testray.deleteComponent(itemName = ${componentName});
+		}
+
+		task ("Then I assert that the component was deleted") {
 			Testray.assertItemNotPresent(itemName = ${componentName});
 		}
 	}

@@ -1,7 +1,7 @@
 assemble:
     - from: assets
       into: static
-liferay-sample-theme-spritemap:
-    name: Liferay Sample Theme Spritemap
+liferay-sample-theme-spritemap-1:
+    name: Liferay Sample Theme Spritemap 1
     type: themeSpritemap
     url: spritemap.svg

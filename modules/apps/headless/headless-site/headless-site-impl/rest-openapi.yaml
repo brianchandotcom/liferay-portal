@@ -1,0 +1,80 @@
+components:
+    schemas:
+        Site:
+            # @review
+            description:
+                Represents the site being created.
+            properties:
+                friendlyUrlPath:
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                key:
+                    readOnly: true
+                    type: string
+                membershipType:
+                    description:
+                        The default value is open.
+                    enum:
+                        - open
+                        - private
+                        - restricted
+                    type: string
+                    writeOnly: true
+                name:
+                    type: string
+                parentSiteKey:
+                    type: string
+                    writeOnly: true
+                templateKey:
+                    type: string
+                    writeOnly: true
+                templateType:
+                    enum:
+                        - site-initializer
+                        - site-template
+                    type: string
+                    writeOnly: true
+            required:
+                - name
+            type: object
+info:
+    description:
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        'com.liferay.headless.site.client', and version '1.0.0'."
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Liferay Sites Headless API
+    version: v1.0
+openapi: 3.0.1
+paths:
+    /sites:
+        post:
+            description:
+                Adds a new site
+            operationId: postSite
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Site"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Site"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                    description:
+                        default response
+            # @review
+            tags: ["Site"]

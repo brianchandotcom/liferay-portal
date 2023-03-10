@@ -17,9 +17,10 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React from 'react';
+import React, {useContext} from 'react';
 
 import LearnMessage from '../../../shared/LearnMessage';
+import SearchContext from '../../../shared/SearchContext';
 import {CONTRIBUTOR_TYPES} from '../../../utils/types/contributorTypes';
 import InputSetItemHeader from './InputSetItemHeader';
 import CharacterThresholdInput from './inputs/CharacterThresholdInput';
@@ -62,14 +63,9 @@ function getSiteActivitiesContributorActivityOptions(learnMessages) {
 	];
 }
 
-function SiteActivities({
-	index,
-	learnMessages,
-	onBlur,
-	onInputSetItemChange,
-	touched,
-	value,
-}) {
+function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
+	const {learnMessages} = useContext(SearchContext);
+
 	const SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS = getSiteActivitiesContributorActivityOptions(
 		learnMessages
 	);

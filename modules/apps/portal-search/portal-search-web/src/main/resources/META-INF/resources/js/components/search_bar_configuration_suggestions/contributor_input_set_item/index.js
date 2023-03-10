@@ -20,12 +20,7 @@ import BasicAttributes from './Basic';
 import SXPBlueprintAttributes from './SXPBlueprint';
 import SiteActivitiesInputs from './SiteActivities';
 
-function ContributorInputSetItem({
-	index,
-	learnMessages,
-	onInputSetItemChange,
-	value = {},
-}) {
+function ContributorInputSetItem({index, onInputSetItemChange, value = {}}) {
 	const [touched, setTouched] = useState({
 		displayGroupName: false,
 		size: false,
@@ -44,7 +39,6 @@ function ContributorInputSetItem({
 					CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS) && (
 				<SiteActivitiesInputs
 					index={index}
-					learnMessages={learnMessages}
 					onBlur={_handleBlur}
 					onInputSetItemChange={onInputSetItemChange}
 					touched={touched}
@@ -55,7 +49,6 @@ function ContributorInputSetItem({
 			{value.contributorName === CONTRIBUTOR_TYPES.BASIC && (
 				<BasicAttributes
 					index={index}
-					learnMessages={learnMessages}
 					onBlur={_handleBlur}
 					onInputSetItemChange={onInputSetItemChange}
 					touched={touched}
@@ -66,7 +59,6 @@ function ContributorInputSetItem({
 			{value.contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT && (
 				<SXPBlueprintAttributes
 					index={index}
-					learnMessages={learnMessages}
 					onBlur={_handleBlur}
 					onInputSetItemChange={onInputSetItemChange}
 					touched={touched}

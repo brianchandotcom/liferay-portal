@@ -16,6 +16,7 @@ import ClayDropDown from '@clayui/drop-down';
 import React, {useMemo} from 'react';
 
 import LearnMessage from '../../shared/LearnMessage';
+import SearchContext from '../../shared/SearchContext';
 import InputSets, {useInputSets} from '../../shared/input_sets/index';
 import {ITEM_ID_PROPERTY} from '../../shared/input_sets/useInputSets';
 import cleanSuggestionsContributorConfiguration from '../../utils/clean_suggestions_contributor_configuration';
@@ -190,65 +191,67 @@ function SearchBarConfigurationSuggestions({
 	};
 
 	return (
-		<div className="search-bar-configuration-suggestions-root">
-			{removeEmptyFields(suggestionsContributorConfiguration).length ? (
-				removeEmptyFields(
-					suggestionsContributorConfiguration
-				).map(({[ITEM_ID_PROPERTY]: key, ...item}) => (
+		<SearchContext.Provider value={{learnMessages}}>
+			<div className="search-bar-configuration-suggestions-root">
+				{removeEmptyFields(suggestionsContributorConfiguration)
+					.length ? (
+					removeEmptyFields(
+						suggestionsContributorConfiguration
+					).map(({[ITEM_ID_PROPERTY]: key, ...item}) => (
+						<input
+							hidden
+							key={key}
+							name={`${namespace}${suggestionsContributorConfigurationName}`}
+							readOnly
+							value={JSON.stringify(item)}
+						/>
+					))
+				) : (
 					<input
 						hidden
-						key={key}
 						name={`${namespace}${suggestionsContributorConfigurationName}`}
 						readOnly
-						value={JSON.stringify(item)}
+						value=""
 					/>
-				))
-			) : (
-				<input
-					hidden
-					name={`${namespace}${suggestionsContributorConfigurationName}`}
-					readOnly
-					value=""
-				/>
-			)}
-
-			<InputSets>
-				{suggestionsContributorConfiguration.map(
-					(valueItem, valueIndex) => (
-						// eslint-disable-next-line react/jsx-key
-						<InputSets.Item
-							{...getInputSetItemProps(valueItem, valueIndex)}
-						>
-							<ContributorInputSetItem
-								index={valueIndex}
-								learnMessages={learnMessages}
-								onInputSetItemChange={onInputSetItemChange}
-								value={valueItem}
-							/>
-						</InputSets.Item>
-					)
 				)}
 
-				{!!contributorOptions.length && (
-					<SuggestionContributorAddButton>
-						{contributorOptions.map((option, index) => (
-							<ClayDropDown.Item
-								key={index}
-								onClick={_handleInputSetAdd(
-									option.contributorName
-								)}
+				<InputSets>
+					{suggestionsContributorConfiguration.map(
+						(valueItem, valueIndex) => (
+							// eslint-disable-next-line react/jsx-key
+							<InputSets.Item
+								{...getInputSetItemProps(valueItem, valueIndex)}
 							>
-								<div>{option.title}</div>
+								<ContributorInputSetItem
+									index={valueIndex}
+									onInputSetItemChange={onInputSetItemChange}
+									value={valueItem}
+								/>
+							</InputSets.Item>
+						)
+					)}
 
-								<div className="text-2">
-									{option.description}
-								</div>
-							</ClayDropDown.Item>
-						))}
-					</SuggestionContributorAddButton>
-				)}
-			</InputSets>
-		</div>
+					{!!contributorOptions.length && (
+						<SuggestionContributorAddButton>
+							{contributorOptions.map((option, index) => (
+								<ClayDropDown.Item
+									key={index}
+									onClick={_handleInputSetAdd(
+										option.contributorName
+									)}
+								>
+									<div>{option.title}</div>
+
+									<div className="text-2">
+										{option.description}
+									</div>
+								</ClayDropDown.Item>
+							))}
+						</SuggestionContributorAddButton>
+					)}
+				</InputSets>
+			</div>
+		</SearchContext.Provider>
 	);
 }
 

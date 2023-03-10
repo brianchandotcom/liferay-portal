@@ -112,7 +112,7 @@ const FilterBody = ({buttonRef, filterSchema, setPosition}: FilterBody) => {
 
 		dispatch({
 			payload: {filters: {entries, filter: filterCleaned}},
-			type: ListViewTypes.SET_UPDATE_FILTERS_AND_SORT,
+			type: ListViewTypes.SET_FILTERS,
 		});
 	}, [dispatch, fields, form]);
 

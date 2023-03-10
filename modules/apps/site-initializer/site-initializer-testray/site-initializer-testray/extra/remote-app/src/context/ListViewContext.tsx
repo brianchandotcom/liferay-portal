@@ -17,7 +17,9 @@ import {ReactNode, createContext, useReducer} from 'react';
 import TestrayStorage, {STORAGE_KEYS} from '~/core/Storage';
 import useStorage from '~/hooks/useStorage';
 import {ActionMap, SortDirection, SortOption} from '~/types';
+import {safeJSONParse} from '~/util';
 import {CONSENT_TYPE} from '~/util/enum';
+import isDeepEqual from '~/util/object';
 
 const testrayStorage = TestrayStorage.getInstance().getStorage('persisted');
 
@@ -79,13 +81,13 @@ export enum ListViewTypes {
 	SET_CHECKED_ROW = 'SET_CHECKED_ROW',
 	SET_CLEAR = 'SET_CLEAR',
 	SET_COLUMNS = 'SET_COLUMNS',
+	SET_FILTERS = 'SET_FILTERS',
 	SET_PAGE = 'SET_PAGE',
 	SET_PAGE_SIZE = 'SET_PAGE_SIZE',
 	SET_PIN = 'SET_PIN',
 	SET_REMOVE_FILTER = 'SET_REMOVE_FILTER',
 	SET_SEARCH = 'SET_SEARCH',
 	SET_SORT = 'SET_SORT',
-	SET_UPDATE_FILTERS_AND_SORT = 'SET_UPDATE_FILTERS_AND_SORT',
 }
 
 type ListViewPayload = {
@@ -93,13 +95,13 @@ type ListViewPayload = {
 	[ListViewTypes.SET_CHECKED_ROW]: number | number[];
 	[ListViewTypes.SET_CLEAR]: null;
 	[ListViewTypes.SET_COLUMNS]: {columns: any};
+	[ListViewTypes.SET_FILTERS]: {filters?: any; pin?: any};
 	[ListViewTypes.SET_PAGE]: number;
 	[ListViewTypes.SET_PAGE_SIZE]: number;
 	[ListViewTypes.SET_PIN]: undefined;
 	[ListViewTypes.SET_REMOVE_FILTER]: string;
 	[ListViewTypes.SET_SEARCH]: string;
 	[ListViewTypes.SET_SORT]: Sort;
-	[ListViewTypes.SET_UPDATE_FILTERS_AND_SORT]: {filters?: any};
 };
 
 export type AppActions = ActionMap<ListViewPayload>[keyof ActionMap<
@@ -109,6 +111,17 @@ export type AppActions = ActionMap<ListViewPayload>[keyof ActionMap<
 export const ListViewContext = createContext<
 	[InitialState, (param: AppActions) => void]
 >([initialState, () => null]);
+
+const getPinState = (state: InitialState, newFilter: ListViewFilter) => {
+	const appliedFilters = testrayStorage.getItem(
+		(STORAGE_KEYS.LIST_VIEW_PIN + state.id) as STORAGE_KEYS,
+		CONSENT_TYPE.NECESSARY
+	);
+
+	const appliedFilterJSON = safeJSONParse(appliedFilters, {});
+
+	return isDeepEqual(newFilter, appliedFilterJSON);
+};
 
 const reducer = (state: InitialState, action: AppActions) => {
 	switch (action.type) {
@@ -216,12 +229,15 @@ const reducer = (state: InitialState, action: AppActions) => {
 				({name}) => name !== filterKey
 			);
 
+			const filters = {
+				entries: filterEntries,
+				filter: updatedFilters.filter,
+			};
+
 			return {
 				...state,
-				filters: {
-					entries: filterEntries,
-					filter: updatedFilters.filter,
-				},
+				filters,
+				pin: getPinState(state, filters),
 			};
 		}
 
@@ -238,12 +254,15 @@ const reducer = (state: InitialState, action: AppActions) => {
 				sort: action.payload,
 			};
 
-		case ListViewTypes.SET_UPDATE_FILTERS_AND_SORT:
+		case ListViewTypes.SET_FILTERS: {
+			state.pin = getPinState(state, action.payload.filters);
+
 			return {
 				...state,
 				filters: action.payload.filters || state.filters,
 				page: 1,
 			};
+		}
 
 		default:
 			return state;

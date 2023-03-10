@@ -30,8 +30,6 @@ import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersisten
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -173,6 +171,8 @@ public class SamlSpSessionLocalServiceImpl
 		String nameIdSPNameQualifier, String nameIdValue,
 		String samlIdpEntityId) {
 
+		List<SamlSpSession> samlSpSessions = new ArrayList<>();
+
 		List<SamlPeerBinding> samlPeerBindings = new ArrayList<>();
 
 		samlPeerBindings.addAll(
@@ -184,21 +184,13 @@ public class SamlSpSessionLocalServiceImpl
 				companyId, true, nameIdFormat, nameIdNameQualifier, nameIdValue,
 				samlIdpEntityId));
 
-		Stream<SamlPeerBinding> stream = samlPeerBindings.stream();
+		for (SamlPeerBinding samlPeerBinding : samlPeerBindings) {
+			samlSpSessions.addAll(
+				samlSpSessionPersistence.findBySamlPeerBindingId(
+					samlPeerBinding.getSamlPeerBindingId()));
+		}
 
-		return stream.map(
-			SamlPeerBinding::getSamlPeerBindingId
-		).flatMap(
-			samlPeerBindingId -> {
-				List<SamlSpSession> samlSpSessions =
-					samlSpSessionPersistence.findBySamlPeerBindingId(
-						samlPeerBindingId);
-
-				return samlSpSessions.stream();
-			}
-		).collect(
-			Collectors.toList()
-		);
+		return samlSpSessions;
 	}
 
 	@Override

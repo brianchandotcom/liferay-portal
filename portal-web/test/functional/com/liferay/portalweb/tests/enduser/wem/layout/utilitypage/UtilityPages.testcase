@@ -37,6 +37,8 @@ definition {
 	@description = "This is a test for LPS-162765. The page designer could add a 404 error type of utility page."
 	@priority = 5
 	test Add404ErrorUtilityPage {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer navigates to the Pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 		}
@@ -285,6 +287,8 @@ definition {
 	@description = "This is a test for LPS-162765. The page designer could edit a 404 error type of utility page."
 	@priority = 5
 	test Edit404ErrorUtilityPage {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer has a 404 error utility page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -348,6 +352,7 @@ definition {
 	@description = "This is a test for LPS-162765. The page designer could mark a 404 error type of utility page as default."
 	@priority = 5
 	test Mark404ErrorUtilityPageAsDefault {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "UtilityPages#Mark404ErrorUtilityPageAsDefault";
 
 		task ("Given a page designer has a 404 error utility page before enabling private pages") {
@@ -448,6 +453,8 @@ definition {
 	@description = "This is a test for LPS-162765. The page designer could preview a 404 error type of utility page."
 	@priority = 5
 	test Preview404ErrorUtilityPage {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer has a draft 404 error utility page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 

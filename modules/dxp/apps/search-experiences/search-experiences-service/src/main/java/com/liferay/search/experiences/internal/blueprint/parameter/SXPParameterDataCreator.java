@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinitionProvider;
+import com.liferay.search.experiences.configuration.SemanticSearchConfigurationProvider;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.ContextSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.IpstackSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.MLSXPParameterContributor;
@@ -140,7 +141,8 @@ public class SXPParameterDataCreator
 			new ContextSXPParameterContributor(_groupLocalService, _language),
 			new IpstackSXPParameterContributor(_configurationProvider),
 			new MLSXPParameterContributor(
-				_configurationProvider, _language, _textEmbeddingRetriever),
+				_language, _semanticSearchConfigurationProvider,
+				_textEmbeddingRetriever),
 			new OpenWeatherMapSXPParameterContributor(_configurationProvider),
 			new TimeSXPParameterContributor(),
 			new UserSXPParameterContributor(
@@ -733,6 +735,10 @@ public class SXPParameterDataCreator
 
 	@Reference
 	private SegmentsEntryRetriever _segmentsEntryRetriever;
+
+	@Reference
+	private SemanticSearchConfigurationProvider
+		_semanticSearchConfigurationProvider;
 
 	private SXPParameterContributor[] _sxpParameterContributors;
 

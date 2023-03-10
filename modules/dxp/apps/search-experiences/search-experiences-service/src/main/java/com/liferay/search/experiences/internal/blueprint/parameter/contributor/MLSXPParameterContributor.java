@@ -18,13 +18,12 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
+import com.liferay.search.experiences.configuration.SemanticSearchConfigurationProvider;
 import com.liferay.search.experiences.internal.blueprint.parameter.DoubleArraySXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.IntegerSXPParameter;
 import com.liferay.search.experiences.internal.web.cache.TextEmbeddingProviderWebCacheItem;
@@ -46,11 +45,13 @@ import java.util.Set;
 public class MLSXPParameterContributor implements SXPParameterContributor {
 
 	public MLSXPParameterContributor(
-		ConfigurationProvider configurationProvider, Language language,
+		Language language,
+		SemanticSearchConfigurationProvider semanticSearchConfigurationProvider,
 		TextEmbeddingRetriever textEmbeddingRetriever) {
 
-		_configurationProvider = configurationProvider;
 		_language = language;
+		_semanticSearchConfigurationProvider =
+			semanticSearchConfigurationProvider;
 		_textEmbeddingRetriever = textEmbeddingRetriever;
 	}
 
@@ -150,13 +151,8 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 	private SemanticSearchConfiguration _getSemanticSearchConfiguration(
 		long companyId) {
 
-		try {
-			return _configurationProvider.getCompanyConfiguration(
-				SemanticSearchConfiguration.class, companyId);
-		}
-		catch (ConfigurationException configurationException) {
-			return ReflectionUtil.throwException(configurationException);
-		}
+		return _semanticSearchConfigurationProvider.getCompanyConfiguration(
+			companyId);
 	}
 
 	private List<SXPParameterContributorDefinition>
@@ -187,8 +183,9 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 				"ml.text_embeddings.keywords_embedding"));
 	}
 
-	private final ConfigurationProvider _configurationProvider;
 	private final Language _language;
+	private final SemanticSearchConfigurationProvider
+		_semanticSearchConfigurationProvider;
 	private final TextEmbeddingRetriever _textEmbeddingRetriever;
 
 }

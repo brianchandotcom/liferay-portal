@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -703,8 +702,7 @@ public class DLStoreImpl implements DLStore {
 	private void _validateVersionLabel(String versionLabel)
 		throws PortalException {
 
-		DLValidatorUtil.validateVersionLabel(
-			StringUtil.removeLast(versionLabel, ".index"));
+		DLValidatorUtil.validateVersionLabel(versionLabel);
 	}
 
 	private static volatile Store _store =

@@ -44,7 +44,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author Jair Medeiros
- * @author Thaynam Lázaro
  */
 @Service
 public class SalesforceService {

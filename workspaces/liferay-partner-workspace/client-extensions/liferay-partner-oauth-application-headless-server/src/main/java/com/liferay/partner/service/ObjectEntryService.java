@@ -20,7 +20,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Jair Medeiros
- * @author Thaynam Lázaro
  */
 @Service
 public class ObjectEntryService {

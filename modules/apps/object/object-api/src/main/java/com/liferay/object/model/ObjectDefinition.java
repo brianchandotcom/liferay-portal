@@ -77,4 +77,6 @@ public interface ObjectDefinition
 
 	public boolean isDefaultStorageType();
 
+	public boolean isUnmodifiableSystemObject();
+
 }

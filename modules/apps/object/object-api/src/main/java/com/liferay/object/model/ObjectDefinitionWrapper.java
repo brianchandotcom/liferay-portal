@@ -922,6 +922,11 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
+	public boolean isUnmodifiableSystemObject() {
+		return model.isUnmodifiableSystemObject();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

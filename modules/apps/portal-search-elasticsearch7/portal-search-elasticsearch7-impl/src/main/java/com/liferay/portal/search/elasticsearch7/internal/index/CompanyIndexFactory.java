@@ -229,30 +229,6 @@ public class CompanyIndexFactory
 		_indexSettingsContributors.remove(indexSettingsContributor);
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchConfigurationWrapper(
-		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper) {
-
-		_elasticsearchConfigurationWrapper = elasticsearchConfigurationWrapper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setIndexNameBuilder(IndexNameBuilder indexNameBuilder) {
-		_indexNameBuilder = indexNameBuilder;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJsonFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	private void _addLiferayDocumentTypeMappings(
 		CreateIndexRequest createIndexRequest,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
@@ -476,14 +452,24 @@ public class CompanyIndexFactory
 		CompanyIndexFactory.class);
 
 	private final Set<Long> _companyIds = new HashSet<>();
+
+	@Reference
 	private volatile ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
+
+	@Reference
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
+
 	private ServiceTrackerList<IndexContributor>
 		_indexContributorServiceTrackerList;
+
+	@Reference
 	private IndexNameBuilder _indexNameBuilder;
+
 	private final Set<IndexSettingsContributor> _indexSettingsContributors =
 		ConcurrentHashMap.newKeySet();
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 }

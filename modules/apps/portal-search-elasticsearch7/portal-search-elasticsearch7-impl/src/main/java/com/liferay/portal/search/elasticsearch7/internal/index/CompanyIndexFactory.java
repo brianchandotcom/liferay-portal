@@ -25,7 +25,6 @@ import com.liferay.portal.search.elasticsearch7.internal.configuration.Elasticse
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionNotInitializedException;
 import com.liferay.portal.search.elasticsearch7.internal.helper.SearchLogHelperUtil;
-import com.liferay.portal.search.elasticsearch7.internal.index.contributor.IndexContributorReceiver;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.search.index.IndexNameBuilder;
@@ -63,15 +62,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(service = {IndexContributorReceiver.class, IndexFactory.class})
+@Component(service = IndexFactory.class)
 public class CompanyIndexFactory
-	implements ElasticsearchConfigurationObserver, IndexContributorReceiver,
-			   IndexFactory {
-
-	@Override
-	public void addIndexContributor(IndexContributor indexContributor) {
-		_indexContributors.add(indexContributor);
-	}
+	implements ElasticsearchConfigurationObserver, IndexFactory {
 
 	@Override
 	public int compareTo(
@@ -132,11 +125,6 @@ public class CompanyIndexFactory
 	}
 
 	@Override
-	public void removeIndexContributor(IndexContributor indexContributor) {
-		_indexContributors.remove(indexContributor);
-	}
-
-	@Override
 	public synchronized void unregisterCompanyId(long companyId) {
 		_companyIds.remove(companyId);
 	}
@@ -146,6 +134,15 @@ public class CompanyIndexFactory
 		_elasticsearchConfigurationWrapper.register(this);
 
 		_createCompanyIndexes();
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addIndexContributor(IndexContributor indexContributor) {
+		_indexContributors.add(indexContributor);
 	}
 
 	@Reference(
@@ -225,6 +222,10 @@ public class CompanyIndexFactory
 		liferayDocumentTypeFactory.addTypeMappings(
 			indexName,
 			_elasticsearchConfigurationWrapper.additionalTypeMappings());
+	}
+
+	protected void removeIndexContributor(IndexContributor indexContributor) {
+		_indexContributors.remove(indexContributor);
 	}
 
 	protected void removeIndexSettingsContributor(

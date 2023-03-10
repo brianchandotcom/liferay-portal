@@ -15,11 +15,11 @@
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import Avatar from '~/components/Avatar';
-import AssignToMe from '~/components/Avatar/AssigneToMe';
+import AssignToMe from '~/components/Avatar/AssignToMe/AssignToMe';
 import Code from '~/components/Code';
 import JiraLink from '~/components/JiraLink';
 import Container from '~/components/Layout/Container';
-import ListViewRest from '~/components/ListView';
+import ListView from '~/components/ListView';
 import StatusBadge from '~/components/StatusBadge';
 import {StatusBadgeType} from '~/components/StatusBadge/StatusBadge';
 import useMutate from '~/hooks/useMutate';
@@ -61,7 +61,7 @@ const Build = () => {
 
 	return (
 		<Container className="mt-4">
-			<ListViewRest
+			<ListView
 				initialContext={{
 					columns: {environment: false},
 				}}

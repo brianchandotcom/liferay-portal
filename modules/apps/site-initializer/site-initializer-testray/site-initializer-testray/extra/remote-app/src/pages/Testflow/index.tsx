@@ -166,7 +166,7 @@ const TestFlow = () => {
 											url: image,
 										})
 									)}
-									groupSize={3}
+									groupSize={5}
 								/>
 							),
 							value: i18n.translate('assigned-users'),

@@ -99,7 +99,7 @@ const useBuildTestActions = () => {
 				testrayCaseResultImpl
 					.remove(id)
 					.then(() => removeItemFromList(mutate, id))
-					.then(form.onSave)
+					.then(form.onSuccess)
 					.catch(form.onError),
 			icon: 'trash',
 			name: i18n.translate('delete'),

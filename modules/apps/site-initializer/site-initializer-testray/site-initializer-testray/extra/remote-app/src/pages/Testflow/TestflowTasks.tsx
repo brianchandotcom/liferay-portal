@@ -17,7 +17,7 @@ import {Dispatch, useContext} from 'react';
 import {Link, useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import Avatar from '~/components/Avatar';
-import AssignToMe from '~/components/Avatar/AssigneToMe';
+import AssignToMe from '~/components/Avatar/AssignToMe';
 import Code from '~/components/Code';
 import FloatingBox from '~/components/FloatingBox/index';
 import Container from '~/components/Layout/Container';
@@ -188,7 +188,7 @@ const TestFlowTasks = () => {
 													name,
 													url: image,
 												}))}
-											groupSize={3}
+											groupSize={5}
 										/>
 									),
 								},

@@ -85,7 +85,7 @@ const useCaseResultGroupBy = (buildId: number = 0) => {
 						Number(prevValue) + Number(currentValue)
 				),
 		},
-		ready: !loading && statuses.size,
+		ready: !loading && statuses.size > 0,
 		statuses: Object.values(CaseResultStatuses),
 	};
 };

@@ -14,7 +14,6 @@
 
 import {useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
-import LoadingTaskPage from '~/components/LoadingTaskPage';
 
 import SearchBuilder from '../../core/SearchBuilder';
 import {useFetch} from '../../hooks/useFetch';
@@ -33,6 +32,7 @@ import {
 } from '../../services/rest';
 import {testrayTaskCaseTypesImpl} from '../../services/rest/TestrayTaskCaseTypes';
 import {SubTaskStatuses, TaskStatuses} from '../../util/statuses';
+import TestflowLoading from './TestflowLoading';
 
 const TestflowNavigationOutlet = () => {
 	const {pathname} = useLocation();
@@ -134,7 +134,7 @@ const TestflowOutlet = () => {
 		)
 	) {
 		return (
-			<LoadingTaskPage
+			<TestflowLoading
 				mutateTask={mutateTask}
 				testrayTask={testrayTask}
 			/>

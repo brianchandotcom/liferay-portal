@@ -233,11 +233,11 @@ public class DDMFormInstanceFieldSettingsValidator {
 			fieldDDMForm.getDDMFormFieldsMap(true);
 
 		for (Map.Entry<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
-				entrySet : ddmFormFieldsPropertyChanges.entrySet()) {
+				entry : ddmFormFieldsPropertyChanges.entrySet()) {
 
-			if (!MapUtil.getBoolean(entrySet.getValue(), "valid", true)) {
+			if (!MapUtil.getBoolean(entry.getValue(), "valid", true)) {
 				DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey =
-					entrySet.getKey();
+					entry.getKey();
 
 				DDMFormField propertyFormField = ddmFormFieldsMap.get(
 					ddmFormFieldContextKey.getName());

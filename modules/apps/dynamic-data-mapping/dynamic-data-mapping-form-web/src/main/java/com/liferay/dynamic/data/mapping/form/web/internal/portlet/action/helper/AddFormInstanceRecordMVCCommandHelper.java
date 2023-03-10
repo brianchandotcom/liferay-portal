@@ -205,16 +205,12 @@ public class AddFormInstanceRecordMVCCommandHelper {
 					getDDMFormFieldsPropertyChanges();
 
 		for (Map.Entry<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
-				ddmFormFieldsPropertyChange :
-					ddmFormFieldsPropertyChanges.entrySet()) {
+				entry : ddmFormFieldsPropertyChanges.entrySet()) {
 
-			if (MapUtil.getBoolean(
-					ddmFormFieldsPropertyChange.getValue(), "readOnly") ||
-				!MapUtil.getBoolean(
-					ddmFormFieldsPropertyChange.getValue(), "visible", true)) {
+			if (MapUtil.getBoolean(entry.getValue(), "readOnly") ||
+				!MapUtil.getBoolean(entry.getValue(), "visible", true)) {
 
-				DDMFormEvaluatorFieldContextKey key =
-					ddmFormFieldsPropertyChange.getKey();
+				DDMFormEvaluatorFieldContextKey key = entry.getKey();
 
 				nonevaluableFieldNames.add(key.getName());
 			}

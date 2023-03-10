@@ -280,7 +280,8 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 
 		return StringUtil.merge(
 			TransformUtil.transformToArray(
-				Arrays.asList(columnValues.split(StringPool.COMMA_AND_SPACE)),
+				Arrays.asList(
+					StringUtil.split(columnValues, StringPool.COMMA_AND_SPACE)),
 				value -> LanguageUtil.get(
 					themeDisplay.getLocale(), value.toLowerCase()),
 				String.class),

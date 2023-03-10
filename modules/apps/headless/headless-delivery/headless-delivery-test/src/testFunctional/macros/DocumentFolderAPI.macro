@@ -10,21 +10,56 @@ definition {
 
 			var api = "asset-libraries/${assetLibraryId}";
 		}
+		else if (isSet(documentFolderId)) {
+			var api = "document-folders/${documentFolderId}";
+		}
+		else if (isSet(parentDocumentFolderId)) {
+			var api = "document-folders/${parentDocumentFolderId}/document-folders";
+		}
 		else {
 			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 				groupName = ${groupName},
 				site = "true");
 
-			var api = "sites/${siteId}";
+			if (isSet(externalReferenceCode)) {
+				var api = "sites/${siteId}/documents-folder/by-external-reference-code/${externalReferenceCode}";
+			}
+			else {
+				var api = "sites/${siteId}/document-folders";
+			}
+		}
+
+		if (isSet(parameter)) {
+			var api = StringUtil.add(${api}, "?${parameter}=${parameterValue}", "");
 		}
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/${api}/document-folders \
+			${portalURL}/o/headless-delivery/v1.0/${api} \
 				-u test@liferay.com:test \
 				-H Content-Type: application/json \
 		''';
 
 		return ${curl};
+	}
+
+	macro addDocumentFolder {
+		Variables.assertDefined(parameterList = ${name});
+
+		var body = '''"name": "${name}"''';
+
+		if (isSet(externalReferenceCode)) {
+			var body = '''"name": "${name}","externalReferenceCode": "${externalReferenceCode}"''';
+		}
+
+		var curlWithoutBody = DocumentFolderAPI._curlDocumentFolders(
+			groupName = ${groupName},
+			parentDocumentFolderId = ${parentDocumentFolderId});
+
+		var curl = StringUtil.add(${curlWithoutBody}, "-d {${body}}", " ");
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
 	}
 
 	macro assertProperBatchInActionBlock {
@@ -66,12 +101,112 @@ definition {
 		}
 	}
 
+	macro assertProperDocumentFolderTotalCount {
+		Variables.assertDefined(parameterList = "${expectedDocumentTotalCount},${groupName},${parameter},${parameterValue}");
+
+		var response = DocumentFolderAPI.getDocumentFoldersWithDifferentPameter(
+			groupName = ${groupName},
+			parameter = ${parameter},
+			parameterValue = ${parameterValue});
+
+		var actualDocumentTotalCount = JSONUtil.getWithJSONPath(${response}, "$..['totalCount']");
+
+		TestUtils.assertEquals(
+			actual = ${actualDocumentTotalCount},
+			expected = ${expectedDocumentTotalCount});
+	}
+
+	macro deleteDocumentFolderByName {
+		Variables.assertDefined(parameterList = "${documentFolderName},${groupName}");
+
+		var response = DocumentFolderAPI.getDocumentFoldersWithDifferentPameter(
+			groupName = ${groupName},
+			parameter = "filter",
+			parameterValue = "name%20eq%20%27${documentFolderName}%27");
+
+		var documentFolderId = JSONPathUtil.getProperty(
+			property = "$..items[0].id",
+			response = ${response});
+
+		var curl = DocumentFolderAPI._curlDocumentFolders(documentFolderId = ${documentFolderId});
+
+		JSONCurlUtil.delete(${curl});
+	}
+
+	macro deleteDocumentFolderBySiteIdAndErc {
+		Variables.assertDefined(parameterList = "${externalReferenceCode},${groupName}");
+
+		var curl = DocumentFolderAPI._curlDocumentFolders(
+			externalReferenceCode = ${externalReferenceCode},
+			groupName = ${groupName});
+
+		JSONCurlUtil.delete(${curl});
+	}
+
+	macro getDocumentFolderBySiteIdAndErc {
+		Variables.assertDefined(parameterList = "${externalReferenceCode},${groupName}");
+
+		var curl = DocumentFolderAPI._curlDocumentFolders(
+			externalReferenceCode = ${externalReferenceCode},
+			groupName = ${groupName});
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
 	macro getDocumentFolders {
 		var curl = DocumentFolderAPI._curlDocumentFolders(
 			depotName = ${depotName},
 			groupName = ${groupName});
 
 		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+	macro getDocumentFoldersWithDifferentPameter {
+		var curl = DocumentFolderAPI._curlDocumentFolders(
+			groupName = ${groupName},
+			parameter = ${parameter},
+			parameterValue = ${parameterValue});
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+	macro staticDoucmentFolderErc {
+		Variables.assertDefined(parameterList = ${response});
+
+		var externalReferenceCode = JSONPathUtil.getErcValue(response = ${response});
+
+		static var staticDoucmentFolderErc = ${externalReferenceCode};
+
+		return ${staticDoucmentFolderErc};
+	}
+
+	macro staticDoucmentFolderId {
+		Variables.assertDefined(parameterList = ${response});
+
+		var documentFolderId = JSONPathUtil.getIdValue(response = ${response});
+
+		static var staticDoucmentFolderId = ${documentFolderId};
+
+		return ${staticDoucmentFolderId};
+	}
+
+	macro updateDocumentFolderBySiteIdAndErc {
+		Variables.assertDefined(parameterList = "${groupName},${externalReferenceCode}");
+
+		var curlWithoutBody = DocumentFolderAPI._curlDocumentFolders(
+			externalReferenceCode = ${externalReferenceCode},
+			groupName = ${groupName});
+		var body = '''"name": "${name}","externalReferenceCode": "${externalReferenceCodeInBody}"''';
+
+		var curl = StringUtil.add(${curlWithoutBody}, "-d {${body}}", " ");
+
+		var response = JSONCurlUtil.put(${curl});
 
 		return ${response};
 	}

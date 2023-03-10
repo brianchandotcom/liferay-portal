@@ -119,8 +119,8 @@ const PolicyActiveClaims = ({dataJSON, id}: PolicyItems) => {
 	return (
 		<div>
 			{isLoading && (
-				<div className="bg-neutral policy-active-claims-container rounded">
-					<div className="bg-neutral-0 policy-active-claims-title pt-3 px-5 rounded-top">
+				<div className="bg-neutral p-6 policy-active-claims-container policy-detail-content rounded w-100">
+					<div className="bg-neutral-0 policy-active-claims-title pt-3 px-5 rounded-top w-100">
 						<h5 className="m-0">Active Claims</h5>
 					</div>
 
@@ -136,7 +136,7 @@ const PolicyActiveClaims = ({dataJSON, id}: PolicyItems) => {
 							<ClayTable.Row>
 								{HEADERS.map((header, index) => (
 									<ClayTable.Cell
-										className="border-bottom py-0 text-paragraph-sm"
+										className="border-bottom px-5 py-0 text-paragraph-sm"
 										headingCell
 										key={index}
 									>
@@ -153,7 +153,7 @@ const PolicyActiveClaims = ({dataJSON, id}: PolicyItems) => {
 										<ClayTable.Row key={rowIndex}>
 											{HEADERS.map((item, index) => (
 												<ClayTable.Cell
-													className="border-0"
+													className="border-0 px-5"
 													key={index}
 												>
 													<span>

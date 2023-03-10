@@ -124,7 +124,7 @@ const Table: React.FC<TableProps> = ({
 		<>
 			<ClayTable
 				borderless
-				className="testray-table"
+				className="tr-table"
 				hover
 				responsive={responsive}
 				tableVerticalAlignment={bodyVerticalAlignment}
@@ -169,10 +169,11 @@ const Table: React.FC<TableProps> = ({
 								rowIndex === contextMenuState.rowIndex &&
 								contextMenuState.visible
 							}
-							className={classNames('table-row', {
-								'highligth-bar': highlight && highlight(item),
+							className={classNames('tr-table__row', {
 								'text-nowrap': !rowWrap,
 								'text-wrap': rowWrap,
+								'tr-table__row--highligth':
+									highlight && highlight(item),
 							})}
 							key={rowIndex}
 							onContextMenu={(event) => {

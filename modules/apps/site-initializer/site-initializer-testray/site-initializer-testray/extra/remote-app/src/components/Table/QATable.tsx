@@ -37,7 +37,7 @@ const QATable: React.FC<QATableProps> = ({
 	items,
 	orientation = Orientation.HORIZONTAL,
 }) => (
-	<table className="qa w-100">
+	<table className="tr-qa-table">
 		<tbody>
 			{items
 				.filter(({visible = true}) => visible)
@@ -51,7 +51,7 @@ const QATable: React.FC<QATableProps> = ({
 							key={index}
 						>
 							<th
-								className={classNames('small-heading', {
+								className={classNames('tr-qa-table__header', {
 									'd-flex': item.flexHeading,
 								})}
 							>

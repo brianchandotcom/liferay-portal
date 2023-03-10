@@ -153,7 +153,9 @@ public class ObjectEntryRowInfoItemRenderer
 		}
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
-			if (!objectFieldsMap.containsKey(entry.getKey())) {
+			ObjectField objectField = objectFieldsMap.get(entry.getKey());
+
+			if (objectField == null) {
 				continue;
 			}
 
@@ -162,8 +164,6 @@ public class ObjectEntryRowInfoItemRenderer
 
 				continue;
 			}
-
-			ObjectField objectField = objectFieldsMap.get(entry.getKey());
 
 			if (objectField.getListTypeDefinitionId() != 0) {
 				ListTypeEntry listTypeEntry =

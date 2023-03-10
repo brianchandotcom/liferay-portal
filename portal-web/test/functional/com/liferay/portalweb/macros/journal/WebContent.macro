@@ -1666,7 +1666,7 @@ definition {
 
 	macro removeDuplicatedFieldsGroup {
 		Click(
-			key_fieldName = "FieldsGroup",
+			key_fieldName = "Field",
 			key_index = ${index},
 			locator1 = "FormFields#FIELD_REMOVE");
 	}

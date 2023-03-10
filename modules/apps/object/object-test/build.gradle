@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationCompile project(":apps:account:account-api")
 	testIntegrationCompile project(":apps:asset:asset-api")
 	testIntegrationCompile project(":apps:depot:depot-api")
+	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:frontend-taglib:frontend-taglib")
 	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:list-type:list-type-api")

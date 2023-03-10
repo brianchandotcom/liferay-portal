@@ -308,8 +308,6 @@ definition {
 	@description = "This is a test for LPS-149725 and LPS-173849. The pages designer should see alert message when the characters count exceeds text field."
 	@priority = 4
 	test ViewAlertMessageWhenCharactersCountExceedMaximum {
-		property custom.properties = "feature.flag.LPS-161631=true";
-
 		var inputText = "The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characterss";
 
 		task ("Given a pages designer has a Text Input fragment within published content page") {
@@ -474,8 +472,6 @@ definition {
 	@description = "This is a test for LPS-151402 and LPS-173849. The user could see error message when submit a form with value exceeding the customized length of field."
 	@priority = 4
 	test ViewErrorMessageWhenSubmitFormWithValueExceedingTheCustomizedLengthOfField {
-		property custom.properties = "feature.flag.LPS-161631=true";
-
 		task ("Given a user has a content page where a Text Input and Submit Button fragments are inside a Form Container") {
 			task ("Change the Maximum Number of Characters of Region field to 20") {
 				ObjectAdmin.openObjectAdmin();

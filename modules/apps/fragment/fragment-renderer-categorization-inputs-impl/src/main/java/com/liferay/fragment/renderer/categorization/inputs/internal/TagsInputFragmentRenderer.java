@@ -35,7 +35,6 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -92,15 +91,6 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 		return JSONUtil.put(
 			"fieldTypes", JSONUtil.putAll("categorization")
 		).toString();
-	}
-
-	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-161631")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

@@ -45,7 +45,6 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -671,8 +670,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		}
 
 		if (infoFieldType instanceof TextInfoFieldType) {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-161631") &&
-				GetterUtil.getBoolean(
+			if (GetterUtil.getBoolean(
 					infoField.getAttribute(TextInfoFieldType.MULTILINE))) {
 
 				return "INPUTS-textarea";

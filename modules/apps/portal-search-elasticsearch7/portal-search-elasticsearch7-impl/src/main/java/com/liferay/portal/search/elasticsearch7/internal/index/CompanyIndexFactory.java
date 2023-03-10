@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
@@ -38,7 +39,6 @@ import java.io.IOException;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
 import org.elasticsearch.action.ActionResponse;
@@ -52,13 +52,11 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.xcontent.XContentType;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -135,25 +133,49 @@ public class CompanyIndexFactory
 		_indexContributorServiceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, IndexContributor.class);
 
+		_indexSettingsContributorServiceTrackerList =
+			ServiceTrackerListFactory.open(
+				bundleContext, IndexSettingsContributor.class, null,
+				new EagerServiceTrackerCustomizer
+					<IndexSettingsContributor, IndexSettingsContributor>() {
+
+					@Override
+					public IndexSettingsContributor addingService(
+						ServiceReference<IndexSettingsContributor>
+							serviceReference) {
+
+						IndexSettingsContributor indexSettingsContributor =
+							bundleContext.getService(serviceReference);
+
+						_processContributions(
+							(indexName, liferayDocumentTypeFactory) ->
+								indexSettingsContributor.contribute(
+									indexName, liferayDocumentTypeFactory));
+
+						return indexSettingsContributor;
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<IndexSettingsContributor>
+							serviceReference,
+						IndexSettingsContributor indexSettingsContributor) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<IndexSettingsContributor>
+							serviceReference,
+						IndexSettingsContributor indexSettingsContributor) {
+
+						bundleContext.ungetService(serviceReference);
+					}
+
+				});
+
 		_elasticsearchConfigurationWrapper.register(this);
 
 		_createCompanyIndexes();
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addIndexSettingsContributor(
-		IndexSettingsContributor indexSettingsContributor) {
-
-		_indexSettingsContributors.add(indexSettingsContributor);
-
-		_processContributions(
-			(indexName, liferayDocumentTypeFactory) ->
-				indexSettingsContributor.contribute(
-					indexName, liferayDocumentTypeFactory));
 	}
 
 	protected void createIndex(String indexName, IndicesClient indicesClient) {
@@ -189,6 +211,10 @@ public class CompanyIndexFactory
 			_indexContributorServiceTrackerList.close();
 		}
 
+		if (_indexSettingsContributorServiceTrackerList != null) {
+			_indexSettingsContributorServiceTrackerList.close();
+		}
+
 		_elasticsearchConfigurationWrapper.unregister(this);
 	}
 
@@ -221,12 +247,6 @@ public class CompanyIndexFactory
 		liferayDocumentTypeFactory.addTypeMappings(
 			indexName,
 			_elasticsearchConfigurationWrapper.additionalTypeMappings());
-	}
-
-	protected void removeIndexSettingsContributor(
-		IndexSettingsContributor indexSettingsContributor) {
-
-		_indexSettingsContributors.remove(indexSettingsContributor);
 	}
 
 	private void _addLiferayDocumentTypeMappings(
@@ -340,7 +360,7 @@ public class CompanyIndexFactory
 			(setting, value) -> builder.put(setting, value);
 
 		for (IndexSettingsContributor indexSettingsContributor1 :
-				_indexSettingsContributors) {
+				_indexSettingsContributorServiceTrackerList) {
 
 			indexSettingsContributor1.populate(indexSettingsHelper);
 		}
@@ -362,7 +382,7 @@ public class CompanyIndexFactory
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
 
 		for (IndexSettingsContributor indexSettingsContributor :
-				_indexSettingsContributors) {
+				_indexSettingsContributorServiceTrackerList) {
 
 			indexSettingsContributor.contribute(
 				indexName, liferayDocumentTypeFactory);
@@ -466,8 +486,8 @@ public class CompanyIndexFactory
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
-	private final Set<IndexSettingsContributor> _indexSettingsContributors =
-		ConcurrentHashMap.newKeySet();
+	private ServiceTrackerList<IndexSettingsContributor>
+		_indexSettingsContributorServiceTrackerList;
 
 	@Reference
 	private JSONFactory _jsonFactory;

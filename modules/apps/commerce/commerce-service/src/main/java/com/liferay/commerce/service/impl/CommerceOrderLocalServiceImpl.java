@@ -59,6 +59,7 @@ import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
+import com.liferay.commerce.util.CommerceOrderThreadLocal;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.commerce.util.CommerceUtil;
@@ -473,42 +474,53 @@ public class CommerceOrderLocalServiceImpl
 	public CommerceOrder deleteCommerceOrder(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		// Commerce order items
+		boolean deleteInProcess = CommerceOrderThreadLocal.isDeleteInProcess();
 
-		_commerceOrderItemLocalService.deleteCommerceOrderItems(
-			commerceOrder.getCommerceOrderId());
+		try {
+			CommerceOrderThreadLocal.setDeleteInProcess(true);
 
-		// Commerce order notes
+			// Commerce order items
 
-		_commerceOrderNoteLocalService.deleteCommerceOrderNotes(
-			commerceOrder.getCommerceOrderId());
+			_commerceOrderItemLocalService.deleteCommerceOrderItems(
+				commerceOrder.getCommerceOrderId());
 
-		// Commerce order payments
+			// Commerce order notes
 
-		_commerceOrderPaymentLocalService.deleteCommerceOrderPayments(
-			commerceOrder.getCommerceOrderId());
+			_commerceOrderNoteLocalService.deleteCommerceOrderNotes(
+				commerceOrder.getCommerceOrderId());
 
-		// Commerce addresses
+			// Commerce order payments
 
-		_commerceAddressLocalService.deleteCommerceAddresses(
-			commerceOrder.getModelClassName(),
-			commerceOrder.getCommerceOrderId());
+			_commerceOrderPaymentLocalService.deleteCommerceOrderPayments(
+				commerceOrder.getCommerceOrderId());
 
-		// Commerce order
+			// Commerce addresses
 
-		commerceOrderPersistence.remove(commerceOrder);
+			_commerceAddressLocalService.deleteCommerceAddresses(
+				commerceOrder.getModelClassName(),
+				commerceOrder.getCommerceOrderId());
 
-		// Expando
+			// Commerce order
 
-		_expandoRowLocalService.deleteRows(commerceOrder.getCommerceOrderId());
+			commerceOrderPersistence.remove(commerceOrder);
 
-		// Workflow
+			// Expando
 
-		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-			commerceOrder.getCompanyId(), commerceOrder.getScopeGroupId(),
-			CommerceOrder.class.getName(), commerceOrder.getCommerceOrderId());
+			_expandoRowLocalService.deleteRows(
+				commerceOrder.getCommerceOrderId());
 
-		return commerceOrder;
+			// Workflow
+
+			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+				commerceOrder.getCompanyId(), commerceOrder.getScopeGroupId(),
+				CommerceOrder.class.getName(),
+				commerceOrder.getCommerceOrderId());
+
+			return commerceOrder;
+		}
+		finally {
+			CommerceOrderThreadLocal.setDeleteInProcess(deleteInProcess);
+		}
 	}
 
 	@Override

@@ -82,7 +82,7 @@ class EventInput extends Component {
 
 					<ClaySelectWithOption
 						aria-label={`${propertyLabel}: ${Liferay.Language.get(
-							'select-has-operator-option'
+							'select-option'
 						)}`}
 						className="criterion-input form-control operator-input"
 						data-testid="select-has-operator"
@@ -112,7 +112,7 @@ class EventInput extends Component {
 				<div className="align-items-center d-flex">
 					<ClaySelectWithOption
 						aria-label={`${propertyLabel}: ${Liferay.Language.get(
-							'select-count-operator-option'
+							'select-option'
 						)}`}
 						className="criterion-input form-control operator-input"
 						data-testid="integer-operator"

@@ -15,13 +15,9 @@
 package com.liferay.wiki.web.internal.display.context.helper;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -38,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
+import com.liferay.social.kernel.model.SocialActivityTable;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -69,41 +66,31 @@ public class WikiSocialActivityHelper {
 				start, end);
 		}
 
-		DynamicQuery dynamicQuery =
-			SocialActivityLocalServiceUtil.dynamicQuery();
-
-		Property classPKProperty = PropertyFactoryUtil.forName("classPK");
-
-		dynamicQuery.add(classPKProperty.eq(wikiPage.getResourcePrimKey()));
-
-		Property extraDataProperty = PropertyFactoryUtil.forName("extraData");
-
-		Property typeProperty = PropertyFactoryUtil.forName("type");
-
 		String version = String.valueOf(wikiPage.getVersion());
 
 		if (Math.floor(wikiPage.getVersion()) == wikiPage.getVersion()) {
 			version = String.valueOf((int)wikiPage.getVersion());
 		}
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.or(
-				RestrictionsFactoryUtil.not(
-					extraDataProperty.like("%version\":" + version + ",%")),
-				RestrictionsFactoryUtil.not(
-					typeProperty.in(
-						new int[] {
+		return SocialActivityLocalServiceUtil.dslQuery(
+			DSLQueryFactoryUtil.select(
+				SocialActivityTable.INSTANCE
+			).from(
+				SocialActivityTable.INSTANCE
+			).where(
+				SocialActivityTable.INSTANCE.extraData.notLike(
+					"%version\":" + version + ",%"
+				).or(
+					SocialActivityTable.INSTANCE.type.notIn(
+						new Integer[] {
 							SocialActivityConstants.TYPE_ADD_ATTACHMENT,
 							SocialActivityConstants.
 								TYPE_MOVE_ATTACHMENT_TO_TRASH,
 							SocialActivityConstants.
 								TYPE_RESTORE_ATTACHMENT_FROM_TRASH
-						}))));
-
-		dynamicQuery.addOrder(OrderFactoryUtil.desc("createDate"));
-
-		return SocialActivityLocalServiceUtil.dynamicQuery(
-			dynamicQuery, start, end);
+						})
+				)
+			));
 	}
 
 	public String getSocialActivityActionJSP(

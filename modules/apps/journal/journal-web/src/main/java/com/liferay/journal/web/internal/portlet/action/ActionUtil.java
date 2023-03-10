@@ -167,12 +167,7 @@ public class ActionUtil {
 
 			DDMStructure ddmStructure = null;
 
-			if (Validator.isNotNull(ddmStructureKey)) {
-				ddmStructure = DDMStructureServiceUtil.fetchStructure(
-					groupId, PortalUtil.getClassNameId(JournalArticle.class),
-					ddmStructureKey, true);
-			}
-			else if (ddmStructureId > 0) {
+			if (ddmStructureId > 0) {
 				try {
 					ddmStructure = DDMStructureServiceUtil.getStructure(
 						ddmStructureId);
@@ -182,6 +177,11 @@ public class ActionUtil {
 						_log.debug(exception);
 					}
 				}
+			}
+			else if (Validator.isNotNull(ddmStructureKey)) {
+				ddmStructure = DDMStructureServiceUtil.fetchStructure(
+					groupId, PortalUtil.getClassNameId(JournalArticle.class),
+					ddmStructureKey, true);
 			}
 
 			if (ddmStructure == null) {

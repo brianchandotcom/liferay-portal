@@ -785,4 +785,86 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-174284. Verify that If just one claim was made, so the message 'You can submit up to 1 claim' appears"
+	@priority = 5
+	test VerifyMessageWhenOneClaimWasMade {
+		task ("Given that a partner submit a new MDF Request") {
+			var campaignName = "Campaign Name";
+
+			PRMMarketing.gotoAddNewMDF();
+
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
+				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+				campaignDescription = "Campaign Description",
+				campaignName = ${campaignName},
+				countryName = "Global",
+				followUpStrategy = "test",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetMarketOptions = "Education,Energy",
+				targetOfLeads = "test",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When a manager approves the submitted MDF") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf-requests",
+				buttonText = "MDF");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFRequest.changeMDFStatus(
+				campaignName = "Campaign Name",
+				key_statusButton = "Approve");
+		}
+
+		task ("And a partner makes a claim") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
+
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf-requests",
+				buttonText = "MDF");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+		}
+
+		task ("When I go back to the MDF listing page") {
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf-requests",
+				buttonText = "MDF");
+		}
+
+		task ("And I go to MDF claim listing page") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then I can see the message 'You can submit up to 1 claim(s)'") {
+			PRMMDFRequest.assertClaimMessage(key_claimMessage = "You can submit up to 1 claim(s).");
+		}
+	}
+
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.xml;
 
-import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.CDATA;
@@ -25,8 +24,6 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.Text;
 import com.liferay.portal.kernel.xml.Visitor;
-
-import java.io.IOException;
 
 import java.util.Iterator;
 import java.util.List;
@@ -359,23 +356,6 @@ public class ElementImpl extends BranchImpl implements Element {
 		org.dom4j.Element element = elementImpl.getWrappedElement();
 
 		return _element.equals(element);
-	}
-
-	@Override
-	public String formattedString() throws IOException {
-		return Dom4jUtil.toString(_element);
-	}
-
-	@Override
-	public String formattedString(String indent) throws IOException {
-		return Dom4jUtil.toString(_element, indent);
-	}
-
-	@Override
-	public String formattedString(String indent, boolean expandEmptyElements)
-		throws IOException {
-
-		return Dom4jUtil.toString(_element, indent, expandEmptyElements);
 	}
 
 	@Override

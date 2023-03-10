@@ -206,6 +206,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINIUM_SIDEBAR_USER_NAME</td>
+	<td>//div[contains(@class,'minium-user-nav__name') and contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_LOADED</td>
 	<td>//div[contains(@class,'portlet-title-default') and contains(.,'${key_portletName}')]/../../../div[@data-qa-id='app-loaded']/span</td>
 	<td></td>

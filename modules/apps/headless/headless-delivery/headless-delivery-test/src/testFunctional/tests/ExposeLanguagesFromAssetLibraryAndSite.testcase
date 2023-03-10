@@ -6,7 +6,7 @@ definition {
 	property testray.main.component.name = "Echo Headless";
 
 	setUp {
-		TestCase.setUpPortalInstanceNoSelenium();
+		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 	}

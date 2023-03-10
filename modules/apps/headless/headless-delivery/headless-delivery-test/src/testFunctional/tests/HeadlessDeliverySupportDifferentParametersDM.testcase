@@ -6,9 +6,7 @@ definition {
 	property testray.main.component.name = "Lima Headless";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
+		TestCase.setUpPortalInstanceNoSelenium();
 
 		JSONDepot.addDepot(depotName = "Test Depot Name");
 	}
@@ -17,12 +15,13 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
+			PortalInstances.tearDownCPNoSelenium();
 		}
 
 		JSONDepot.deleteDepot(depotName = "Test Depot Name");
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanReceiveIdFieldValuesOnlyInResponseForIndividualElement {
 		property portal.acceptance = "true";
@@ -52,6 +51,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanReceiveTitleFieldValuesOnlyInResponseForIndividualElement {
 		property portal.acceptance = "true";

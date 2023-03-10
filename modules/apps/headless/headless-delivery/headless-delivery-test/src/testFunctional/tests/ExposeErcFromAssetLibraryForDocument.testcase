@@ -6,9 +6,7 @@ definition {
 	property testray.main.component.name = "Lima Headless";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
+		TestCase.setUpPortalInstanceNoSelenium();
 
 		task ("Given an asset library is created") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
@@ -19,7 +17,7 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
+			PortalInstances.tearDownCPNoSelenium();
 		}
 		else {
 			JSONDepot.deleteDepot(depotName = "Test Depot Name");
@@ -27,6 +25,7 @@ definition {
 	}
 
 	@description = "Document is deleted in an asset library by custom erc"
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanDeleteDocumentInAssetLibraryByAssetLibraryIdAndCustomErc {
 		property portal.acceptance = "true";
@@ -55,6 +54,7 @@ definition {
 	}
 
 	@description = "Document is deleted in an asset library by default erc"
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanDeleteDocumentInAssetLibraryByAssetLibraryIdAndDefaultErc {
 		property portal.acceptance = "true";
@@ -82,6 +82,7 @@ definition {
 	}
 
 	@description = "Get document in asset library by existing custom erc"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanGetDocumentInAssetLibraryByExistingCustomErc {
 		property portal.acceptance = "true";
@@ -109,6 +110,7 @@ definition {
 	}
 
 	@description = "Get document in asset library by existing uuid as erc"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanGetDocumentInAssetLibraryByExistingUuidAsErc {
 		property portal.acceptance = "true";
@@ -137,6 +139,7 @@ definition {
 	}
 
 	@description = "Document is not able to create with an existing erc in asset library"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CannotCreateDocumentInAssetLibraryWithExistingErc {
 		property portal.acceptance = "true";
@@ -174,6 +177,7 @@ definition {
 	}
 
 	@description = "Document erc is not able to update with put request in asset library"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CannotUpdateDocumentErcInAssetLibraryByErc {
 		property portal.acceptance = "true";
@@ -210,6 +214,7 @@ definition {
 	}
 
 	@description = "Unable to get document by nonexistent assetLibraryId"
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanReturnErrorWithGetDocumentInAssetLibraryByNonexistentAssetLibraryId {
 		property portal.acceptance = "true";
@@ -232,6 +237,7 @@ definition {
 	}
 
 	@description = "Unable to get document by nonexistent erc"
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanReturnErrorWithGetDocumentInAssetLibraryByNonexistentErc {
 		property portal.acceptance = "true";
@@ -250,6 +256,7 @@ definition {
 	}
 
 	@description = "Document is updated by asset library id and erc"
+	@disable-webdriver = "true"
 	@priority = 5
 	test CanUpdateDocumentTitleInAssetLibraryByErc {
 		property portal.acceptance = "true";
@@ -287,6 +294,7 @@ definition {
 	}
 
 	@description = "Document is not able to delete in an asset library by nonexistent erc"
+	@disable-webdriver = "true"
 	@priority = 3
 	test DocumentDeletionImpossibleByAssetLibraryIdAndNonexistentErc {
 		property portal.acceptance = "true";
@@ -315,6 +323,7 @@ definition {
 	}
 
 	@description = "Document is created by nonexistent erc in asset with put request"
+	@disable-webdriver = "true"
 	@priority = 5
 	test DocumentIsCreatedInAssetLibraryByPutNonexistentErc {
 		property portal.acceptance = "true";
@@ -343,6 +352,7 @@ definition {
 	}
 
 	@description = "Document is created by nonexistent erc with existing erc in body by put request"
+	@disable-webdriver = "true"
 	@priority = 5
 	test DocumentIsCreatedInAssetLibraryByPutNonexistentErcWithErcInBody {
 		property portal.acceptance = "true";
@@ -382,6 +392,7 @@ definition {
 	}
 
 	@description = "Document is created in an asset library with custom erc"
+	@disable-webdriver = "true"
 	@priority = 5
 	test DocumentIsCreatedInAssetLibraryWithCustomErc {
 		property portal.acceptance = "true";
@@ -403,6 +414,7 @@ definition {
 	}
 
 	@description = "Document is created in an asset library with previous document id as erc"
+	@disable-webdriver = "true"
 	@priority = 5
 	test DocumentIsCreatedInAssetLibraryWithDocumentIdAsErc {
 		property portal.acceptance = "true";
@@ -440,6 +452,7 @@ definition {
 	}
 
 	@description = "Document is created in an asset library with erc by default"
+	@disable-webdriver = "true"
 	@priority = 5
 	test DocumentIsCreatedInAssetLibraryWithErcByDefault {
 		property portal.acceptance = "true";

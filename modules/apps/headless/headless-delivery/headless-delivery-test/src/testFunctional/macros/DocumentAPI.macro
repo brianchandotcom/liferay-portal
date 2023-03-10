@@ -6,7 +6,9 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(depotName)) {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(
+				depotName = ${depotName},
+				noSelenium = "true");
 
 			var api = "asset-libraries/${assetLibraryId}/documents";
 		}
@@ -40,7 +42,9 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(depotName)) {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(
+				depotName = ${depotName},
+				noSelenium = "true");
 
 			var api = "asset-libraries/${assetLibraryId}/documents/by-external-reference-code/${externalReferenceCode}";
 		}
@@ -62,7 +66,9 @@ definition {
 	macro _filterDocumentInAssetLibrary {
 		Variables.assertDefined(parameterList = "${depotName},${filtervalue}");
 
-		var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+		var assetLibraryId = JSONGroupAPI._getDepotIdByName(
+			depotName = ${depotName},
+			noSelenium = "true");
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''

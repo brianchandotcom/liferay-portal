@@ -35,7 +35,7 @@ definition {
 		ObjectFieldAPI.deleteObjectField();
 
 		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCPNoSelenium();
+			PortalInstances.tearDownCP();
 		}
 	}
 

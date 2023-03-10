@@ -9,6 +9,10 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("Given an asset library is created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+		}
 	}
 
 	tearDown {
@@ -17,17 +21,14 @@ definition {
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
-
-		JSONDepot.deleteDepot(depotName = "Test Depot Name");
+		else {
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+		}
 	}
 
 	@priority = 4
 	test CanReceiveABodyWithAssetLibraryKeyOnlyInResponse {
 		property portal.acceptance = "true";
-
-		task ("Given an asset library is created") {
-			JSONDepot.addDepot(depotName = "Test Depot Name");
-		}
 
 		task ("Given a content structure created in asset library") {
 			WebContentNavigator.openWebContentStructuresAdmin(depotName = "Test Depot Name");
@@ -70,10 +71,6 @@ definition {
 	@priority = 4
 	test CanReceiveCorrectValueWithProfileURLFieldInResponse {
 		property portal.acceptance = "true";
-
-		task ("Given an asset library is created") {
-			JSONDepot.addDepot(depotName = "Test Depot Name");
-		}
 
 		task ("Given a Web Content Folder created") {
 			HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(

@@ -562,9 +562,7 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionStatusException();
 		}
 
-		_publishObjectDefinition(userId, objectDefinition);
-
-		return objectDefinition;
+		return _publishObjectDefinition(userId, objectDefinition);
 	}
 
 	@Override
@@ -575,9 +573,7 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		_publishObjectDefinition(userId, objectDefinition);
-
-		return objectDefinition;
+		return _publishObjectDefinition(userId, objectDefinition);
 	}
 
 	@Override

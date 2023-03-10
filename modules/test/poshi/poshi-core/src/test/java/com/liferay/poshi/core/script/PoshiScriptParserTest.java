@@ -69,7 +69,7 @@ public class PoshiScriptParserTest extends TestCase {
 	}
 
 	@Test
-	public void testMissingSemicolon() {
+	public void testMissingSemicolonMacro() {
 		String fileName = "MissingSemicolon.macro";
 
 		_preparePoshiContext(fileName);
@@ -87,6 +87,54 @@ public class PoshiScriptParserTest extends TestCase {
 
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 22, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 30, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 38, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 46, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 55, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 63, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 71, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 79, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 89, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 97, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 105, _getFilePath(fileName));
+
+		_assertExceptions(
+			PoshiScriptParserException.getExceptions(), actualExceptions);
+	}
+
+	@Test
+	public void testMissingSemicolonTestcase() {
+		String fileName = "MissingSemicolon.testcase";
+
+		_preparePoshiContext(fileName);
+
+		List<PoshiScriptParserException> actualExceptions = new ArrayList<>(
+			PoshiScriptParserException.getExceptions());
+
+		PoshiScriptParserException.clear();
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 2, _getFilePath(fileName));
 
 		_assertExceptions(
 			PoshiScriptParserException.getExceptions(), actualExceptions);

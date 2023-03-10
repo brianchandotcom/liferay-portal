@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	enabled = false,
 	property = "indexer.class.name=com.liferay.journal.model.JournalArticle",
 	service = ModelDocumentContributor.class

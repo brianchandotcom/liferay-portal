@@ -32,6 +32,6 @@ declare function DateTimeInput({
 	propertyLabel,
 	propertyType,
 	range,
-	value: initialValue,
+	value,
 }: Props): JSX.Element;
 export default DateTimeInput;

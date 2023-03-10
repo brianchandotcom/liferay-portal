@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.impl;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -56,9 +57,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -585,9 +583,8 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 			return null;
 		}
 
-		return Stream.of(
-			orderByComparator.getOrderByFields()
-		).map(
+		return TransformUtil.transform(
+			orderByComparator.getOrderByFields(),
 			orderByFieldName -> {
 				String fieldName = _fieldNameOrderByCols.getOrDefault(
 					orderByFieldName, orderByFieldName);
@@ -597,10 +594,8 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 					_fieldNameSortTypes.getOrDefault(
 						fieldName, Sort.STRING_TYPE),
 					!orderByComparator.isAscending());
-			}
-		).toArray(
-			Sort[]::new
-		);
+			},
+			Sort.class);
 	}
 
 	private List<KaleoLog> _search(
@@ -616,18 +611,18 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 					companyId, searchAttributes, start, end,
 					orderByComparator));
 
-			return Stream.of(
-				hits.getDocs()
-			).map(
-				document -> GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK))
-			).map(
-				kaleoLogPersistence::fetchByPrimaryKey
-			).filter(
-				Objects::nonNull
-			).collect(
-				Collectors.toList()
-			);
+			return TransformUtil.transformToList(
+				hits.getDocs(),
+				document -> {
+					KaleoLog kaleoLog = kaleoLogPersistence.fetchByPrimaryKey(
+						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+
+					if (kaleoLog == null) {
+						return null;
+					}
+
+					return kaleoLog;
+				});
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

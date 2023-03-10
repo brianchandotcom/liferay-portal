@@ -3604,7 +3604,7 @@ public class ObjectEntryLocalServiceImpl
 					_listTypeEntryLocalService.getListTypeEntries(
 						objectField.getListTypeDefinitionId())) {
 
-				if (Objects.equals(curListTypeEntry.getKey(), value)) {
+				if (Objects.equals(value, curListTypeEntry.getKey())) {
 					listTypeEntry = curListTypeEntry;
 
 					break;

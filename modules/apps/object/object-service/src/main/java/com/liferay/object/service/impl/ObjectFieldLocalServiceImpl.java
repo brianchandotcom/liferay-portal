@@ -760,12 +760,10 @@ public class ObjectFieldLocalServiceImpl
 				}
 			}
 
-			if (objectFieldSetting != null) {
-				continue;
+			if (objectFieldSetting == null) {
+				_objectFieldSettingLocalService.deleteObjectFieldSetting(
+					oldObjectFieldSetting.getObjectFieldSettingId());
 			}
-
-			_objectFieldSettingLocalService.deleteObjectFieldSetting(
-				oldObjectFieldSetting.getObjectFieldSettingId());
 		}
 
 		objectFieldBusinessType.predefineObjectFieldSettings(

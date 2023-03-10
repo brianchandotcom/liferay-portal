@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class PartnerRestController {
 
 	@GetMapping("/")
-	public ResponseEntity<String> trigger() {
-		return new ResponseEntity<>("Hello World", HttpStatus.OK);
+	public ResponseEntity<String> home() {
+		return new ResponseEntity<>("Liferay Partner Portal", HttpStatus.OK);
 	}
 
 }

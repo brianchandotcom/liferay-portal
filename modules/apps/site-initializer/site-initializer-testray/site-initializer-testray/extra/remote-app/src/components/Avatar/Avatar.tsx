@@ -36,22 +36,21 @@ type AvatarGroupProps = {
 	groupSize: number;
 };
 
-function getInitials(name: string): string {
-	return name
+const backgroundAccentColorsRegex = {
+	'bg-accent-1': /^[A-Fa-f]/g,
+	'bg-accent-2': /^[G-Lg-l]/g,
+	'bg-accent-3': /^[M-Tm-t]/g,
+	'bg-accent-4': /^[U-Zu-z]/g,
+};
+
+const getInitials = (name: string) =>
+	name
 		.split(' ')
 		.map((value) => value.charAt(0))
 		.join('')
 		.toLocaleUpperCase();
-}
 
-function getRandomColor(name: string) {
-	const backgroundAccentColorsRegex = {
-		'bg-accent-1': /^[A-Fa-f]/g,
-		'bg-accent-2': /^[G-Lg-l]/g,
-		'bg-accent-3': /^[M-Tm-t]/g,
-		'bg-accent-4': /^[U-Zu-z]/g,
-	};
-
+const getRandomColor = (name: string) => {
 	for (const bgAccent in backgroundAccentColorsRegex) {
 		const value = (backgroundAccentColorsRegex as any)[bgAccent];
 
@@ -59,7 +58,7 @@ function getRandomColor(name: string) {
 			return bgAccent;
 		}
 	}
-}
+};
 
 const Avatar: React.FC<AvatarProps> & {Group: React.FC<AvatarGroupProps>} = ({
 	className,
@@ -76,12 +75,13 @@ const Avatar: React.FC<AvatarProps> & {Group: React.FC<AvatarGroupProps>} = ({
 		: React.Fragment;
 
 	return (
-		<div className="align-items-center d-flex">
+		<div className="tr-avatar">
 			<TooltipWrapper>
 				<ClaySticker
 					className={classNames(
 						className,
 						'text-brand-secondary-lighten-6',
+						'tr-avatar__sticker',
 						getRandomColor(getInitials(name))
 					)}
 					shape="circle"
@@ -94,6 +94,7 @@ const Avatar: React.FC<AvatarProps> & {Group: React.FC<AvatarGroupProps>} = ({
 					{url ? (
 						<ClaySticker.Image
 							alt={name}
+							className="tr-avatar__sticker__image"
 							loading="lazy"
 							src={url}
 						/>
@@ -105,13 +106,9 @@ const Avatar: React.FC<AvatarProps> & {Group: React.FC<AvatarGroupProps>} = ({
 
 			{displayName && (
 				<span
-					className={classNames(
-						className,
-						'ml-2 testray-avatar-dropdown-text',
-						{
-							'testray-avatar-dropdown-text-expanded': expanded,
-						}
-					)}
+					className={classNames(className, 'tr-avatar__text ml-2', {
+						'tr-avatar__text--expanded': expanded,
+					})}
 				>
 					{name}
 				</span>
@@ -125,13 +122,13 @@ Avatar.Group = ({assignedUsers, groupSize}) => {
 
 	return (
 		<div className="d-flex">
-			<div className="align-items-center avatar-group d-flex justify-content-end p-0">
+			<div className="tr-avatar-group">
 				{assignedUsers
 					.filter((_, index) => index < groupSize)
 					.map((user, index) => (
-						<div className="avatar-group-item" key={index}>
+						<div className="tr-avatar-group__item" key={index}>
 							<Avatar
-								className="avatar avatar-skeleton-loader shadow-lg"
+								className="tr-avatar-group__item__avatar"
 								name={user.name}
 								url={user.url}
 							/>
@@ -141,7 +138,7 @@ Avatar.Group = ({assignedUsers, groupSize}) => {
 
 			<ClayTooltipProvider>
 				<div
-					className="align-items-center avatar-plus d-flex justify-content-center p-0 pl-4 pr-2 text-nowrap"
+					className="align-items-center d-flex justify-content-center p-0 pl-4 pr-2 text-nowrap"
 					data-tooltip-align="bottom"
 					title={assignedUsers
 						.filter((_, index) => index >= groupSize)

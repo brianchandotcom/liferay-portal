@@ -17,6 +17,7 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.petra.concurrent-*.jar!/com/liferay/petra/concurrent/ConcurrentMapperHashMap.class,\
 	@com.liferay.petra.concurrent-*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap.class,\
 	@com.liferay.petra.concurrent-*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap$*.class,\
+	@com.liferay.petra.function-*.jar!/com/liferay/petra/function/transform/TransformUtil.class,\
 	@com.liferay.petra.memory-*.jar!/com/liferay/petra/memory/EqualityPhantomReference.class,\
 	@com.liferay.petra.memory-*.jar!/com/liferay/petra/memory/EqualitySoftReference.class,\
 	@com.liferay.petra.memory-*.jar!/com/liferay/petra/memory/EqualityWeakReference.class,\

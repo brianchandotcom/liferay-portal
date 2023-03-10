@@ -55,6 +55,10 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 
 			dataLayoutRendererContext.setContainerId(getContainerId());
 
+			if (Validator.isNotNull(getContentType())) {
+				dataLayoutRendererContext.setContentType(getContentType());
+			}
+
 			HttpServletRequest httpServletRequest = getRequest();
 
 			if (Validator.isNotNull(getDataRecordId())) {

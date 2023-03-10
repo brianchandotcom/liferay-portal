@@ -84,6 +84,11 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		if (Validator.isNotNull(dataLayoutRendererContext.getContentType())) {
+			ddmFormRenderingContext.addProperty(
+				"contentType", dataLayoutRendererContext.getContentType());
+		}
+
 		if (Validator.isNotNull(
 				dataLayoutRendererContext.getDefaultLanguageId())) {
 

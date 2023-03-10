@@ -151,8 +151,7 @@ public class DefaultObjectEntryManagerImpl
 					groupId, dtoConverterContext.getUserId(), objectDefinition,
 					objectEntry, 0L, dtoConverterContext.getLocale()),
 				_createServiceContext(
-					objectEntry.getProperties(),
-					dtoConverterContext.getUserId()));
+					objectEntry, dtoConverterContext.getUserId()));
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-153117")) {
 			_addOrUpdateNestedObjectEntries(
@@ -193,7 +192,7 @@ public class DefaultObjectEntryManagerImpl
 		long groupId = getGroupId(objectDefinition, scopeKey);
 
 		ServiceContext serviceContext = _createServiceContext(
-			objectEntry.getProperties(), dtoConverterContext.getUserId());
+			objectEntry, dtoConverterContext.getUserId());
 
 		serviceContext.setCompanyId(companyId);
 
@@ -659,7 +658,7 @@ public class DefaultObjectEntryManagerImpl
 				serviceBuilderObjectEntry.getObjectEntryId(),
 				dtoConverterContext.getLocale()),
 			_createServiceContext(
-				objectEntry.getProperties(), dtoConverterContext.getUserId()));
+				objectEntry, dtoConverterContext.getUserId()));
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-153117")) {
 			_addOrUpdateNestedObjectEntries(
@@ -764,12 +763,18 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private ServiceContext _createServiceContext(
-		Map<String, Object> properties, long userId) {
+		ObjectEntry objectEntry, long userId) {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+
+		if (Validator.isNotNull(objectEntry.getKeywords())) {
+			serviceContext.setAssetTagNames(objectEntry.getKeywords());
+		}
+
+		Map<String, Object> properties = objectEntry.getProperties();
 
 		if (properties.get("categoryIds") != null) {
 			serviceContext.setAssetCategoryIds(

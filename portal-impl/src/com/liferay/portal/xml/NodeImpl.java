@@ -15,8 +15,8 @@
 package com.liferay.portal.xml;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
@@ -116,19 +116,19 @@ public class NodeImpl implements Node {
 
 	@Override
 	public String formattedString() throws IOException {
-		return Dom4jUtil.toString(_node);
+		return formattedString(StringPool.TAB);
 	}
 
 	@Override
 	public String formattedString(String indent) throws IOException {
-		return Dom4jUtil.toString(_node, indent);
+		return formattedString(indent, false);
 	}
 
 	@Override
 	public String formattedString(String indent, boolean expandEmptyElements)
 		throws IOException {
 
-		return Dom4jUtil.toString(_node, indent, expandEmptyElements);
+		return formattedString(indent, expandEmptyElements, true);
 	}
 
 	@Override
@@ -136,7 +136,46 @@ public class NodeImpl implements Node {
 			String indent, boolean expandEmptyElements, boolean trimText)
 		throws IOException {
 
-		return Dom4jUtil.toString(_node, indent, expandEmptyElements, trimText);
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
+
+		outputFormat.setExpandEmptyElements(expandEmptyElements);
+		outputFormat.setIndent(indent);
+		outputFormat.setLineSeparator(StringPool.NEW_LINE);
+		outputFormat.setTrimText(trimText);
+
+		XMLWriter xmlWriter = new XMLWriter(
+			unsyncByteArrayOutputStream, outputFormat);
+
+		xmlWriter.write(_node);
+
+		String content = unsyncByteArrayOutputStream.toString(StringPool.UTF8);
+
+		// LEP-4257
+
+		//content = StringUtil.replace(content, "\n\n\n", "\n\n");
+
+		if (content.endsWith("\n\n")) {
+			content = content.substring(0, content.length() - 2);
+		}
+
+		if (content.endsWith("\n")) {
+			content = content.substring(0, content.length() - 1);
+		}
+
+		while (content.contains(" \n")) {
+			content = StringUtil.replace(content, " \n", "\n");
+		}
+
+		if (content.startsWith("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")) {
+			content = StringUtil.replaceFirst(
+				content, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+				"<?xml version=\"1.0\"?>");
+		}
+
+		return content;
 	}
 
 	@Override

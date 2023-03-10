@@ -22,6 +22,8 @@ import com.liferay.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
 import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expression.Alias;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.JoinStep;
@@ -58,13 +60,11 @@ public class BlogsStatsUserLocalServiceImpl
 	public List<BlogsStatsUser> getGroupsStatsUsers(
 		long companyId, long groupId, int start, int end) {
 
+		Predicate companyIdEquals = _companyIdAlias.eq(companyId);
+
 		return _getBlogsStatsUsers(
 			UnaryOperator.identity(),
-			BlogsEntryTable.INSTANCE.companyId.eq(
-				companyId
-			).and(
-				BlogsEntryTable.INSTANCE.groupId.eq(groupId)
-			),
+			companyIdEquals.and(_groupIdAlias.eq(groupId)),
 			_entryCountExpression.descending(), start, end);
 	}
 
@@ -72,13 +72,11 @@ public class BlogsStatsUserLocalServiceImpl
 	public List<BlogsStatsUser> getGroupStatsUsers(
 		long groupId, int start, int end) {
 
+		Predicate groupIdEquals = _groupIdAlias.eq(groupId);
+
 		return _getBlogsStatsUsers(
 			UnaryOperator.identity(),
-			BlogsEntryTable.INSTANCE.groupId.eq(
-				groupId
-			).and(
-				_entryCountExpression.neq(0L)
-			),
+			groupIdEquals.and(_entryCountExpression.neq(0L)),
 			_lastPostDateExpression.descending(), start, end);
 	}
 
@@ -89,8 +87,7 @@ public class BlogsStatsUserLocalServiceImpl
 		return _getBlogsStatsUsers(
 			joinStep -> joinStep.innerJoinON(
 				Users_OrgsTable.INSTANCE,
-				Users_OrgsTable.INSTANCE.userId.eq(
-					BlogsEntryTable.INSTANCE.userId)),
+				Users_OrgsTable.INSTANCE.userId.eq(_userIdAlias)),
 			Users_OrgsTable.INSTANCE.organizationId.eq(organizationId),
 			_lastPostDateExpression.descending(), start, end);
 	}
@@ -99,13 +96,11 @@ public class BlogsStatsUserLocalServiceImpl
 	public BlogsStatsUser getStatsUser(long groupId, long userId)
 		throws PortalException {
 
+		Predicate groupIdEquals = _groupIdAlias.eq(groupId);
+
 		List<BlogsStatsUser> blogsStatsUsers = _getBlogsStatsUsers(
 			UnaryOperator.identity(),
-			BlogsEntryTable.INSTANCE.groupId.eq(
-				groupId
-			).and(
-				BlogsEntryTable.INSTANCE.userId.eq(userId)
-			),
+			groupIdEquals.and(_userIdAlias.eq(userId)),
 			_groupIdExpression.descending(), 0, 1);
 
 		if (blogsStatsUsers.isEmpty()) {
@@ -120,8 +115,7 @@ public class BlogsStatsUserLocalServiceImpl
 		OrderByExpression orderByExpression, int start, int end) {
 
 		JoinStep joinStep = DSLQueryFactoryUtil.select(
-			_entryCountExpression, BlogsEntryTable.INSTANCE.groupId,
-			_lastPostDateExpression,
+			_entryCountExpression, _groupIdAlias, _lastPostDateExpression,
 			DSLFunctionFactoryUtil.countDistinct(
 				RatingsEntryTable.INSTANCE.entryId
 			).as(
@@ -137,14 +131,14 @@ public class BlogsStatsUserLocalServiceImpl
 			).as(
 				"ratingsTotalScore"
 			),
-			BlogsEntryTable.INSTANCE.userId
+			_userIdAlias, _companyIdAlias, _groupIdExpression
 		).from(
 			BlogsEntryTable.INSTANCE
 		);
 
 		joinStep = unaryOperator.apply(joinStep);
 
-		OrderByStep orderByStep = joinStep.leftJoinOn(
+		Table innerTable = joinStep.leftJoinOn(
 			RatingsEntryTable.INSTANCE,
 			RatingsEntryTable.INSTANCE.classNameId.eq(
 				_classNameLocalService.getClassNameId(
@@ -153,10 +147,17 @@ public class BlogsStatsUserLocalServiceImpl
 				RatingsEntryTable.INSTANCE.classPK.eq(
 					BlogsEntryTable.INSTANCE.entryId)
 			)
+		).groupBy(
+			_groupIdAlias, _userIdAlias, _companyIdAlias
+		).as(
+			"innerTable"
+		);
+
+		OrderByStep orderByStep = DSLQueryFactoryUtil.select(
+		).from(
+			innerTable
 		).where(
 			predicate
-		).groupBy(
-			BlogsEntryTable.INSTANCE.groupId, BlogsEntryTable.INSTANCE.userId
 		);
 
 		LimitStep limitStep = orderByStep;
@@ -190,12 +191,16 @@ public class BlogsStatsUserLocalServiceImpl
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
+	private final Alias<Long> _companyIdAlias =
+		BlogsEntryTable.INSTANCE.companyId.as("blogsEntryCompanyId");
 	private final Expression<Long> _entryCountExpression =
 		DSLFunctionFactoryUtil.countDistinct(
 			BlogsEntryTable.INSTANCE.entryId
 		).as(
 			"entryCount"
 		);
+	private final Alias<Long> _groupIdAlias =
+		BlogsEntryTable.INSTANCE.groupId.as("blogsEntryGroupId");
 	private final Expression<Long> _groupIdExpression =
 		DSLFunctionFactoryUtil.max(
 			BlogsEntryTable.INSTANCE.groupId
@@ -208,5 +213,7 @@ public class BlogsStatsUserLocalServiceImpl
 		).as(
 			"lastPostDate"
 		);
+	private final Alias<Long> _userIdAlias = BlogsEntryTable.INSTANCE.userId.as(
+		"blogsEntryUserId");
 
 }

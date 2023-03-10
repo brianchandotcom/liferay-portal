@@ -77,4 +77,9 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {4, 5});
 	}
 
+	@Test
+	public void testRemoveJSONComments() throws Exception {
+		test("RemoveJSONComments.testjson");
+	}
+
 }

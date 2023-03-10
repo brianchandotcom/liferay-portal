@@ -63,7 +63,7 @@ public class JSONValidationCheck extends BaseFileCheck {
 			String trimedLine = line.trim();
 
 			if (trimedLine.startsWith("//")) {
-				content = content.replace(line, "");
+				content = StringUtil.removeSubstring(content, line);
 			}
 		}
 

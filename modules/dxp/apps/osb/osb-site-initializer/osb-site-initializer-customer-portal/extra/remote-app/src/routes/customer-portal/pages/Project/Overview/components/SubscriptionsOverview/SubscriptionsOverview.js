@@ -86,6 +86,8 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 					/>
 
 					<AccountSubscriptionsList
+						accountKey={koroneikiAccount?.accountKey}
+						accountSubscriptionGroup={lastAccountSubcriptionGroup}
 						accountSubscriptions={accountSubscriptions}
 						loading={accountSubscriptionsLoading}
 						selectedAccountSubscriptionGroup={

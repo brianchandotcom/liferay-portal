@@ -11,16 +11,23 @@
 
 import ClayModal from '@clayui/modal';
 import {memo} from 'react';
+
 import i18n from '../../../../../../../../../../../common/I18n';
 import {
 	Button,
 	Table,
 } from '../../../../../../../../../../../common/components';
+
+import {useGetAccountSubscriptionUsage} from '../../../../../../../../../../../common/services/liferay/graphql/account-subscription-usage';
+import UsageChart from './components/UsageChart';
 import useOrderItems from './hooks/useOrderItems';
 import getColumns from './utils/getColumns';
 import getRows from './utils/getRows';
 
 const AccountSubscriptionModal = ({
+	accountKey,
+	accountSubscriptionGroup,
+	accountSubscriptionProductKey,
 	externalReferenceCode,
 	isProvisioned,
 	observer,
@@ -33,7 +40,17 @@ const AccountSubscriptionModal = ({
 		{data, loading},
 	] = useOrderItems(externalReferenceCode);
 
+	const {
+		data: accountSubscriptionUsageData,
+		loading: accountSubscriptionUsageLoading,
+	} = useGetAccountSubscriptionUsage(
+		accountKey,
+		accountSubscriptionProductKey
+	);
+
 	const totalCount = data?.orderItems.totalCount;
+
+	const accountSubscriptionGroupNames = ['DXP', 'Portal'];
 
 	return (
 		<ClayModal center observer={observer} size="lg">
@@ -54,6 +71,21 @@ const AccountSubscriptionModal = ({
 						onClick={onClose}
 					/>
 				</div>
+
+				<h5 className="mb-4">
+					{i18n.translate('active-subscriptions')}
+				</h5>
+
+				{accountSubscriptionGroupNames.includes(
+					accountSubscriptionGroup.name
+				) && (
+					<UsageChart
+						data={
+							accountSubscriptionUsageData?.getAccountSubscriptionUsage
+						}
+						loading={accountSubscriptionUsageLoading}
+					/>
+				)}
 
 				<Table
 					columns={getColumns(isProvisioned)}

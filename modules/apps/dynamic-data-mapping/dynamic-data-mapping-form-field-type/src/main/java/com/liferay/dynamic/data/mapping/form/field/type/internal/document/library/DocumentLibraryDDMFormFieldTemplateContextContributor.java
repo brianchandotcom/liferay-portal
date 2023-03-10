@@ -308,8 +308,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 			User user = _getDDMFormDefaultUser(companyId);
 
-			folder = _createDDMFormFolder(
-				user.getUserId(), repositoryId, httpServletRequest);
+			if (user != null) {
+				folder = _createDDMFormFolder(
+					user.getUserId(), repositoryId, httpServletRequest);
+			}
 		}
 
 		if (folder == null) {

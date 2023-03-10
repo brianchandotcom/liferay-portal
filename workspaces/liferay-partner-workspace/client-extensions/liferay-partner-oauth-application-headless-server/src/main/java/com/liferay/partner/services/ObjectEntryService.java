@@ -26,22 +26,21 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ObjectEntryService {
 
 	public void postObjectEntryBatch(
-			String objectDefinitionName, Object[] objects)
-		throws Exception {
+		String objectDefinitionName, Object[] objects) {
 
-		_webClient.post(
-		).uri(
+		WebClient.RequestBodyUriSpec requestBodyUriSpec = _webClient.post();
+
+		WebClient.RequestBodySpec requestBodySpec = requestBodyUriSpec.uri(
 			uriBuilder -> uriBuilder.path(
 				"/o/c/" + objectDefinitionName + "/batch"
 			).queryParam(
 				"createStrategy", "UPSERT"
-			).build()
-		).bodyValue(
-			objects
-		).retrieve(
-		).bodyToMono(
-			Void.class
-		).block();
+			).build());
+
+		WebClient.RequestHeadersSpec<?> requestHeadersSpec =
+			requestBodySpec.bodyValue(objects);
+
+		requestHeadersSpec.retrieve();
 	}
 
 	@Autowired

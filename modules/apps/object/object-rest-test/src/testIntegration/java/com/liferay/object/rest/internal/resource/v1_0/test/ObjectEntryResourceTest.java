@@ -222,6 +222,26 @@ public class ObjectEntryResourceTest {
 		_assertFilteredObjectEntries(2, "keywords/any(k:k eq 'tag2')");
 		_assertFilteredObjectEntries(1, "keywords/any(k:k eq 'tag3')");
 		_assertFilteredObjectEntries(0, "keywords/any(k:k eq '1234')");
+
+		_assertFilteredObjectEntries(2, "keywords/any(k:k ne 'tag1')");
+		_assertFilteredObjectEntries(3, "keywords/any(k:k ne 'tag2')");
+		_assertFilteredObjectEntries(3, "keywords/any(k:k ne 'tag3')");
+
+		_assertFilteredObjectEntries(2, "keywords/any(k:k gt 'tag1')");
+		_assertFilteredObjectEntries(1, "keywords/any(k:k gt 'tag2')");
+		_assertFilteredObjectEntries(0, "keywords/any(k:k gt 'tag3')");
+
+		_assertFilteredObjectEntries(3, "keywords/any(k:k ge 'tag1')");
+		_assertFilteredObjectEntries(2, "keywords/any(k:k ge 'tag2')");
+		_assertFilteredObjectEntries(1, "keywords/any(k:k ge 'tag3')");
+
+		_assertFilteredObjectEntries(0, "keywords/any(k:k lt 'tag1')");
+		_assertFilteredObjectEntries(3, "keywords/any(k:k lt 'tag2')");
+		_assertFilteredObjectEntries(3, "keywords/any(k:k lt 'tag3')");
+
+		_assertFilteredObjectEntries(3, "keywords/any(k:k le 'tag1')");
+		_assertFilteredObjectEntries(3, "keywords/any(k:k le 'tag2')");
+		_assertFilteredObjectEntries(3, "keywords/any(k:k le 'tag3')");
 	}
 
 	@Test

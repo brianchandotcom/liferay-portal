@@ -140,6 +140,8 @@ public class DLViewDisplayContext {
 			_renderResponse
 		).setActionName(
 			"/document_library/edit_entry"
+		).setRedirect(
+			_getRedirect()
 		).buildString();
 	}
 

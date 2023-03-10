@@ -77,16 +77,14 @@ export default function DocumentLibrary({
 	}
 
 	function _moveSingleElement(newFolderId, parameterName, parameterValue) {
-		const redirectUrl = form.elements[`${namespace}redirect`].value;
-
 		const newForm = document.createElement('div');
 
 		newForm.appendChild(
 			buildFragment(
-				`<form action="${editEntryUrl}" class="hide" method="POST"><input name="${namespace}cmd" value="move"/>
+				`<form action="${editEntryUrl}" class="hide" method="POST">
+					<input name="${namespace}cmd" value="move"/>
 					<input name="${namespace}newFolderId" value="${newFolderId}"/>
 					<input name="${namespace}${parameterName}" value="${parameterValue}"/>
-					<input name="${namespace}redirect" value="${redirectUrl}"/>
 				</form>`
 			)
 		);

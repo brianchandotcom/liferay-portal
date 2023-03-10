@@ -3277,6 +3277,7 @@ definition {
 			searchTerm = "WC Title");
 	}
 
+	@description = "This is a use case for LPS-141138."
 	@priority = 4
 	test SearchResultsShowObjectDisplayPageTemplate {
 		ObjectAdmin.addObjectViaAPI(

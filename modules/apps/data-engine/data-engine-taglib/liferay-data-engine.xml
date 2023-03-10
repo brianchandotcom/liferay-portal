@@ -102,6 +102,12 @@
 				<required>true</required>
 			</attribute>
 			<attribute>
+				<name>contentType</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
 				<name>dataDefinitionId</name>
 				<inputType>java.lang.Long</inputType>
 				<outputType>java.lang.Long</outputType>

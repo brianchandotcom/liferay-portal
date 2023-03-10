@@ -1295,18 +1295,16 @@ public class Mutation {
 		description = "null",
 		value = "postUserAccountImageUserAccountIdMultipartBody"
 	)
-	public boolean createUserAccountImage(
+	public Response createUserAccountImage(
 			@GraphQLName("userAccountId") Long userAccountId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			userAccountResource -> userAccountResource.postUserAccountImage(
 				userAccountId, multipartBody));
-
-		return true;
 	}
 
 	@GraphQLField

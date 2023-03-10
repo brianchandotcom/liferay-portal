@@ -1416,15 +1416,18 @@ public abstract class BaseUserAccountResourceImpl
 	@javax.ws.rs.Consumes("multipart/form-data")
 	@javax.ws.rs.Path("/user-accounts/{userAccountId}/image")
 	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void postUserAccountImage(
+	public Response postUserAccountImage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("userAccountId")
 			Long userAccountId,
 			MultipartBody multipartBody)
 		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
 	}
 
 	@Override

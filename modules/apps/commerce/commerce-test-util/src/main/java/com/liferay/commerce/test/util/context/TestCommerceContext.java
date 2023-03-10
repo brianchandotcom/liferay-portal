@@ -43,6 +43,15 @@ public class TestCommerceContext implements CommerceContext {
 	}
 
 	@Override
+	public long fetchCommerceChannelGroupId() throws PortalException {
+		if (_commerceChannel == null) {
+			return 0;
+		}
+
+		return _commerceChannel.getGroupId();
+	}
+
+	@Override
 	public String[] getAccountEntryAllowedTypes() throws PortalException {
 		return new String[0];
 	}

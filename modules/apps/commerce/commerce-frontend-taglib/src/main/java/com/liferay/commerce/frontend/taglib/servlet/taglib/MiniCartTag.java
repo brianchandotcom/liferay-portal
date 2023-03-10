@@ -81,7 +81,18 @@ public class MiniCartTag extends IncludeTag {
 			}
 
 			_commerceChannelGroupId =
-				commerceContext.getCommerceChannelGroupId();
+				commerceContext.fetchCommerceChannelGroupId();
+
+			if (_commerceChannelGroupId == 0) {
+				_commerceChannelId = 0;
+				_checkoutURL = StringPool.BLANK;
+				_itemsQuantity = 0;
+				_orderDetailURL = StringPool.BLANK;
+				_orderId = 0;
+
+				return super.doStartTag();
+			}
+
 			_commerceChannelId = commerceContext.getCommerceChannelId();
 
 			CommerceCurrency commerceCurrency =

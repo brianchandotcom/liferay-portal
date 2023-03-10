@@ -85,6 +85,11 @@ public class BaseCommerceContext implements CommerceContext {
 	}
 
 	@Override
+	public long fetchCommerceChannelGroupId() throws PortalException {
+		return _commerceChannelGroupId;
+	}
+
+	@Override
 	public String[] getAccountEntryAllowedTypes() throws PortalException {
 		if (_accountEntryAllowedTypes != null) {
 			return _accountEntryAllowedTypes;

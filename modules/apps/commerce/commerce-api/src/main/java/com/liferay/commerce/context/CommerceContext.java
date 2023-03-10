@@ -27,6 +27,8 @@ import java.io.Serializable;
  */
 public interface CommerceContext extends Serializable {
 
+	public long fetchCommerceChannelGroupId() throws PortalException;
+
 	public String[] getAccountEntryAllowedTypes() throws PortalException;
 
 	public CommerceAccount getCommerceAccount() throws PortalException;

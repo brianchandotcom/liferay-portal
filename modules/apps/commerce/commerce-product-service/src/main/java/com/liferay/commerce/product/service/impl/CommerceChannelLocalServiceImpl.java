@@ -284,6 +284,27 @@ public class CommerceChannelLocalServiceImpl
 	}
 
 	@Override
+	public long fetchCommerceChannelGroupIdBySiteGroupId(long siteGroupId)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			commerceChannelPersistence.fetchBySiteGroupId(siteGroupId);
+
+		if (commerceChannel == null) {
+			return 0;
+		}
+
+		Group group = commerceChannelLocalService.fetchCommerceChannelGroup(
+			commerceChannel.getCommerceChannelId());
+
+		if (group == null) {
+			return 0;
+		}
+
+		return group.getGroupId();
+	}
+
+	@Override
 	public CommerceChannel getCommerceChannelByGroupId(long groupId)
 		throws PortalException {
 

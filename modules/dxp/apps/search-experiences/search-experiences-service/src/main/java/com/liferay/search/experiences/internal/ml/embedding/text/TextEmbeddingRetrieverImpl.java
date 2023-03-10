@@ -16,15 +16,16 @@ package com.liferay.search.experiences.internal.ml.embedding.text;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.ml.embedding.EmbeddingProviderInformation;
 import com.liferay.portal.search.ml.embedding.EmbeddingProviderStatus;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
+import com.liferay.search.experiences.configuration.SemanticSearchConfigurationProvider;
 import com.liferay.search.experiences.ml.embedding.text.TextEmbeddingRetriever;
 import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
 
@@ -36,12 +37,12 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
  */
 @Component(
-	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	enabled = false,
 	service = {EmbeddingProviderInformation.class, TextEmbeddingRetriever.class}
 )
@@ -122,8 +123,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 			new ArrayList<>();
 
 		for (String textEmbeddingProviderConfigurationJSON :
-				_semanticSearchConfiguration.
-					textEmbeddingProviderConfigurationJSONs()) {
+				_getTextEmbeddingProviderConfigurationJSONs()) {
 
 			embeddingProviderStatuses.add(
 				getEmbeddingProviderStatus(
@@ -168,9 +168,6 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	protected void activate(
 		Map<String, Object> properties, BundleContext bundleContext) {
 
-		_semanticSearchConfiguration = ConfigurableUtil.createConfigurable(
-			SemanticSearchConfiguration.class, properties);
-
 		_textEmbeddingProviderServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, TextEmbeddingProvider.class,
@@ -186,8 +183,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 		String providerName) {
 
 		for (String textEmbeddingProviderConfigurationJSON :
-				_semanticSearchConfiguration.
-					textEmbeddingProviderConfigurationJSONs()) {
+				_getTextEmbeddingProviderConfigurationJSONs()) {
 
 			EmbeddingProviderConfiguration embeddingProviderConfiguration =
 				EmbeddingProviderConfiguration.toDTO(
@@ -203,10 +199,22 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 		return null;
 	}
 
+	private String[] _getTextEmbeddingProviderConfigurationJSONs() {
+		SemanticSearchConfiguration semanticSearchConfiguration =
+			_semanticSearchConfigurationProvider.getCompanyConfiguration(
+				CompanyThreadLocal.getCompanyId());
+
+		return semanticSearchConfiguration.
+			textEmbeddingProviderConfigurationJSONs();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		TextEmbeddingRetrieverImpl.class);
 
-	private volatile SemanticSearchConfiguration _semanticSearchConfiguration;
+	@Reference
+	private SemanticSearchConfigurationProvider
+		_semanticSearchConfigurationProvider;
+
 	private ServiceTrackerMap<String, TextEmbeddingProvider>
 		_textEmbeddingProviderServiceTrackerMap;
 

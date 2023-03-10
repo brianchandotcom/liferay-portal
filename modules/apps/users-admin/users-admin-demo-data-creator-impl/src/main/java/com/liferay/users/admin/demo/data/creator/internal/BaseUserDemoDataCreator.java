@@ -204,9 +204,9 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 			UserConstants.USER_ID_DEFAULT, companyId, autoPassword, password1,
 			password2, autoScreenName, screenName, emailAddress, locale,
 			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId,
-			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendMail,
-			new ServiceContext());
+			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+			UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds,
+			userGroupIds, sendMail, new ServiceContext());
 	}
 
 	private Date _getBirthDate(Date birthDate, JSONObject userJSONObject) {

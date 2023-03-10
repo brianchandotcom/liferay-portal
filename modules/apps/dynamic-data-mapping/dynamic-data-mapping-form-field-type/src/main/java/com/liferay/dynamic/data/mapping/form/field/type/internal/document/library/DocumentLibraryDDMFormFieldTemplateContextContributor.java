@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -210,9 +211,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, locale, firstName,
 				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-				organizationIds, roleIds, userGroupIds, sendEmail,
-				serviceContext);
+				birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+				UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds,
+				userGroupIds, sendEmail, serviceContext);
 
 			_userLocalService.updateStatus(
 				user.getUserId(), WorkflowConstants.STATUS_INACTIVE,

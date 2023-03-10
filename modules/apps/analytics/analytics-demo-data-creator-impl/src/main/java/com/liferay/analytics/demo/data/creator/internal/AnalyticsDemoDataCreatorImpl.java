@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -354,7 +355,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 			GetterUtil.getInteger(csvRecord.get("birthdayMonth")) - 1,
 			GetterUtil.getInteger(csvRecord.get("birthdayDay")),
 			GetterUtil.getInteger(csvRecord.get("birthdayYear")),
-			csvRecord.get("jobTitle"), null,
+			csvRecord.get("jobTitle"), UserConstants.TYPE_REGULAR, null,
 			_addEntries(csvRecord, "organizations"),
 			_addEntries(csvRecord, "roles"),
 			_addEntries(csvRecord, "userGroups"), false, new ServiceContext());

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
@@ -161,8 +162,9 @@ public class AccountChannelEntryResourceTest
 			RandomTestUtil.randomString() + "@liferay.com",
 			LocaleUtil.getSiteDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0, 0,
-			true, 1, 1, 2022, RandomTestUtil.randomString(), null, null, null,
-			null, false, serviceContext);
+			true, 1, 1, 2022, RandomTestUtil.randomString(),
+			UserConstants.TYPE_REGULAR, null, null, null, null, false,
+			serviceContext);
 
 		Role role = RoleLocalServiceUtil.getRole(
 			testCompany.getCompanyId(), RoleConstants.ADMINISTRATOR);

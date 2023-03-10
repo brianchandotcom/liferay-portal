@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -213,9 +214,9 @@ public class DefaultUserFieldExpressionHandler
 			newUser.getFirstName(), newUser.getMiddleName(),
 			newUser.getLastName(), prefixListTypeId, suffixListTypeId, male,
 			birthdayMonth, birthdayDay, birthdayYear, newUser.getJobTitle(),
-			newUser.getGroupIds(), newUser.getOrganizationIds(),
-			newUser.getRoleIds(), newUser.getUserGroupIds(), sendEmail,
-			serviceContext);
+			UserConstants.TYPE_REGULAR, newUser.getGroupIds(),
+			newUser.getOrganizationIds(), newUser.getRoleIds(),
+			newUser.getUserGroupIds(), sendEmail, serviceContext);
 
 		user = _userLocalService.updateEmailAddressVerified(
 			user.getUserId(), true);

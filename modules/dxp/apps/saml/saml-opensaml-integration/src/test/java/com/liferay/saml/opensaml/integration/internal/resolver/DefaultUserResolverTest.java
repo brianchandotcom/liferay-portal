@@ -505,10 +505,10 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				Mockito.any(Integer.class), Mockito.any(Integer.class),
 				Mockito.anyBoolean(), Mockito.any(Integer.class),
 				Mockito.any(Integer.class), Mockito.any(Integer.class),
-				Mockito.nullable(String.class), Mockito.any(long[].class),
+				Mockito.nullable(String.class), Mockito.any(Integer.class),
 				Mockito.any(long[].class), Mockito.any(long[].class),
-				Mockito.any(long[].class), Mockito.anyBoolean(),
-				Mockito.any(ServiceContext.class))
+				Mockito.any(long[].class), Mockito.any(long[].class),
+				Mockito.anyBoolean(), Mockito.any(ServiceContext.class))
 		).thenReturn(
 			null
 		);
@@ -671,10 +671,10 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				Mockito.nullable(String.class), Mockito.eq("test"),
 				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyBoolean(),
 				Mockito.anyInt(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.nullable(String.class), Mockito.nullable(long[].class),
+				Mockito.nullable(String.class), Mockito.any(Integer.class),
 				Mockito.nullable(long[].class), Mockito.nullable(long[].class),
-				Mockito.nullable(long[].class), Mockito.eq(false),
-				Mockito.any(ServiceContext.class))
+				Mockito.nullable(long[].class), Mockito.nullable(long[].class),
+				Mockito.eq(false), Mockito.any(ServiceContext.class))
 		).thenAnswer(
 			(Answer<User>)invocationOnMock -> {
 				if (autoScreenName &&

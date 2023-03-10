@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -173,8 +174,9 @@ public class CommerceUsersImporter {
 				creatorUserId, companyId, autoPassword, password, password,
 				autoScreenName, screenName, emailAddress, locale, firstName,
 				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-				organizationIds, roleIds, userGroupIds, false, serviceContext);
+				birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+				UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds,
+				userGroupIds, false, serviceContext);
 		}
 		else {
 			groupIds = ArrayUtil.append(user.getGroupIds(), groupIds);

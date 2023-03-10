@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -400,8 +401,8 @@ public class OrganizationLocalServiceImpl
 				StringPool.BLANK, StringPool.BLANK, true, StringPool.BLANK,
 				emailAddress, serviceContext.getLocale(), emailAddress,
 				StringPool.BLANK, emailAddress, 0, 0, true, 1, 1, 1970,
-				StringPool.BLANK, groupIds, null, null, null, true,
-				serviceContext);
+				StringPool.BLANK, UserConstants.TYPE_REGULAR, groupIds, null,
+				null, null, true, serviceContext);
 		}
 
 		addUserOrganization(user.getUserId(), organizationId);

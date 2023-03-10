@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -314,8 +315,8 @@ public class OIDCUserInfoProcessor {
 			birthday[2], birthday[0],
 			_getClaimString(
 				"jobTitle", userMapperJSONObject, userInfoJSONObject),
-			groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
-			serviceContext);
+			UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds,
+			userGroupIds, sendEmail, serviceContext);
 
 		return _userLocalService.updatePasswordReset(user.getUserId(), false);
 	}

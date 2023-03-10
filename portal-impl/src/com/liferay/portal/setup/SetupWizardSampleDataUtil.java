@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
@@ -303,8 +304,8 @@ public class SetupWizardSampleDataUtil {
 					0, defaultUser.getCompanyId(), false, "test", "test", false,
 					screenName, emailAddress, LocaleUtil.getDefault(), "Test",
 					null, lastName, 0, 0, true, Calendar.JANUARY, 1, 1970, null,
-					groupIds, organizationIds, null, null, false,
-					new ServiceContext());
+					UserConstants.TYPE_REGULAR, groupIds, organizationIds, null,
+					null, false, new ServiceContext());
 
 				user.setPasswordReset(false);
 				user.setAgreedToTermsOfUse(true);

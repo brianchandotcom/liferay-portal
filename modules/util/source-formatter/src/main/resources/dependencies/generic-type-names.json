@@ -445,18 +445,6 @@
 			"name": "com.liferay.osgi.service.tracker.collections.ServiceReferenceServiceTuple"
 		},
 		{
-			"genericTypeCount": 4,
-			"name": "com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Collector"
-		},
-		{
-			"genericTypeCount": 4,
-			"name": "com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Mapper"
-		},
-		{
-			"genericTypeCount": 2,
-			"name": "com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Selector"
-		},
-		{
 			"genericTypeCount": 1,
 			"name": "com.liferay.osgi.service.tracker.collections.internal.ServiceReferenceServiceTupleComparator"
 		},

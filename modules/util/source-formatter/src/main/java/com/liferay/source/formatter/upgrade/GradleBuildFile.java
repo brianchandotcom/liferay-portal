@@ -15,9 +15,9 @@
 package com.liferay.source.formatter.upgrade;
 
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -108,17 +108,10 @@ public class GradleBuildFile {
 
 		GradleBuildFileVisitor gradleBuildFileVisitor = _walkAST();
 
-		List<GradleDependency> buildScriptDependencies =
-			gradleBuildFileVisitor.getBuildScriptDependencies();
-
-		Stream<GradleDependency> stream = buildScriptDependencies.stream();
-
-		return stream.filter(
+		return ListUtil.filter(
+			gradleBuildFileVisitor.getBuildScriptDependencies(),
 			gradleDependency -> Objects.equals(
-				configuration, gradleDependency.getConfiguration())
-		).collect(
-			Collectors.toList()
-		);
+				configuration, gradleDependency.getConfiguration()));
 	}
 
 	public List<GradleDependency> getGradleDependencies() {

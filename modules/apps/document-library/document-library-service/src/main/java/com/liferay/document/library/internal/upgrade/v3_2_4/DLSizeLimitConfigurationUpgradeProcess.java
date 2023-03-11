@@ -28,9 +28,9 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeDLSizeLimitConfiguration extends UpgradeProcess {
+public class DLSizeLimitConfigurationUpgradeProcess extends UpgradeProcess {
 
-	public UpgradeDLSizeLimitConfiguration(
+	public DLSizeLimitConfigurationUpgradeProcess(
 		ConfigurationAdmin configurationAdmin) {
 
 		_configurationAdmin = configurationAdmin;

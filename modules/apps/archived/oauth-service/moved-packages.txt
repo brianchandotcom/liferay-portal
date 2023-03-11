@@ -1,3 +1,0 @@
-com.liferay.oauth.model.impl
-com.liferay.oauth.service.permission
-com.liferay.oauth.service.util

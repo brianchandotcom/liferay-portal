@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Sync Web
-Bundle-SymbolicName: com.liferay.sync.web
-Bundle-Version: 5.0.25
--dsannotations-options: inherit

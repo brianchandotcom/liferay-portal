@@ -1,4 +1,0 @@
-Bundle-Name: Liferay OAuth Web
-Bundle-SymbolicName: com.liferay.oauth.web
-Bundle-Version: 5.0.40
-Liferay-Releng-Module-Group-Title: OAuth Provider

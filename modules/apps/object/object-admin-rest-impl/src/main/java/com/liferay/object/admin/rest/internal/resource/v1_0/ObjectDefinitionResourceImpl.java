@@ -436,7 +436,7 @@ public class ObjectDefinitionResourceImpl
 				titleServiceBuilderObjectField.getObjectFieldId();
 		}
 
-		if (serviceBuilderObjectDefinition.isSystem()) {
+		if (serviceBuilderObjectDefinition.isUnmodifiableSystemObject()) {
 			return _toObjectDefinition(
 				_objectDefinitionService.updateSystemObjectDefinition(
 					objectDefinition.getExternalReferenceCode(),

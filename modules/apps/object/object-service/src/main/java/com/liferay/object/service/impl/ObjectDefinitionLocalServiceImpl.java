@@ -671,7 +671,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public void undeployObjectDefinition(ObjectDefinition objectDefinition) {
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			return;
 		}
 
@@ -719,7 +719,7 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			throw new ObjectDefinitionStatusException(
 				"Object definition " + objectDefinition);
 		}
@@ -843,7 +843,8 @@ public class ObjectDefinitionLocalServiceImpl
 		storageType = Validator.isNotNull(storageType) ? storageType :
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT;
 
-		_validateEnableComments(enableComments, storageType, system);
+		_validateEnableComments(
+			enableComments, modifiable, storageType, system);
 
 		_validateLabel(labelMap);
 		_validateName(0, user.getCompanyId(), modifiable, name, system);
@@ -1247,16 +1248,17 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 		_validateActive(objectDefinition, active);
 		_validateEnableCategorization(
-			enableCategorization, objectDefinition.getStorageType(),
-			objectDefinition.isSystem());
+			enableCategorization, objectDefinition.isModifiable(),
+			objectDefinition.getStorageType(), objectDefinition.isSystem());
 		_validateEnableComments(
-			enableComments, objectDefinition.getStorageType(),
-			objectDefinition.isSystem());
+			enableComments, objectDefinition.isModifiable(),
+			objectDefinition.getStorageType(), objectDefinition.isSystem());
 		_validateEnableObjectEntryHistory(
 			objectDefinition.isApproved(),
 			objectDefinition.isEnableObjectEntryHistory() !=
 				enableObjectEntryHistory,
-			objectDefinition.getStorageType(), objectDefinition.isSystem());
+			objectDefinition.isModifiable(), objectDefinition.getStorageType(),
+			objectDefinition.isSystem());
 		_validateLabel(labelMap);
 		_validatePluralLabel(pluralLabelMap);
 
@@ -1453,10 +1455,13 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _validateEnableCategorization(
-			boolean enableCategorization, String storageType, boolean system)
+			boolean enableCategorization, boolean modifiable,
+			String storageType, boolean system)
 		throws PortalException {
 
-		if (enableCategorization && system) {
+		if (enableCategorization &&
+			_isUnmodifiableSystemObject(modifiable, system)) {
+
 			throw new ObjectDefinitionEnableCategorizationException(
 				"Enable categorization is not allowed for system object " +
 					"definitions");
@@ -1473,10 +1478,11 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _validateEnableComments(
-			boolean enableComments, String storageType, boolean system)
+			boolean enableComments, boolean modifiable, String storageType,
+			boolean system)
 		throws PortalException {
 
-		if (enableComments && system) {
+		if (enableComments && _isUnmodifiableSystemObject(modifiable, system)) {
 			throw new ObjectDefinitionEnableCommentsException(
 				"Enable comments is not allowed for system object definitions");
 		}
@@ -1493,14 +1499,14 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private void _validateEnableObjectEntryHistory(
 			boolean approved, boolean enableObjectEntryHistoryChanged,
-			String storageType, boolean system)
+			boolean modifiable, String storageType, boolean system)
 		throws PortalException {
 
 		if (!enableObjectEntryHistoryChanged) {
 			return;
 		}
 
-		if (system) {
+		if (_isUnmodifiableSystemObject(modifiable, system)) {
 			throw new ObjectDefinitionEnableObjectEntryHistoryException(
 				"Enable object entry history is not allowed for system " +
 					"object definitions");

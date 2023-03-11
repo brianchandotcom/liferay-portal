@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.source.formatter</artifactId>
-	<version>1.0.1285</version>
+	<version>1.0.1286</version>
 	<goalPrefix>source-formatter</goalPrefix>
 	<mojos>
 		<mojo>
@@ -111,6 +111,13 @@
 				</parameter>
 				<parameter>
 					<name>includeSubrepositories</name>
+					<type>boolean</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>javaParserEnabled</name>
 					<type>boolean</type>
 					<required>false</required>
 					<editable>true</editable>

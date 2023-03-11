@@ -56,7 +56,6 @@ public class MVCContextImpl implements MvcContext {
 		_configuration = configuration;
 		_encoders = encoders;
 		_portletContext = portletContext;
-
 		_portletRequest = portletRequest;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(

@@ -3,7 +3,8 @@
 		"outDir": "./out-tsc/spec",
 		"types": [
 			"jasmine"
-		]
+		],
+		"url//": "http://www.abc.com"
 	},
 	"extends": "./tsconfig.json",
 	"include": [

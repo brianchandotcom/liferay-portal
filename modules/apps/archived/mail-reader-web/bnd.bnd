@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Mail Reader Web
-Bundle-SymbolicName: com.liferay.mail.reader.web
-Bundle-Version: 5.0.34
-Web-ContextPath: /mail-reader-web

@@ -212,8 +212,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_addSystemObjectFields(
 			ObjectEntryTable.INSTANCE.getTableName(), objectDefinition,
-			ObjectEntryTable.INSTANCE.objectEntryId.getName(),
-			objectDefinition.isSystem(), userId);
+			ObjectEntryTable.INSTANCE.objectEntryId.getName(), userId);
 
 		return _updateTitleObjectFieldId(objectDefinition, null);
 	}
@@ -899,12 +898,13 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		_addSystemObjectFields(
-			dbTableName, objectDefinition, pkObjectFieldName, system, userId);
+			dbTableName, objectDefinition, pkObjectFieldName, userId);
 
 		if (objectFields != null) {
 			for (ObjectField objectField : objectFields) {
 				if (objectDefinition.isUnmodifiableSystemObject() ||
 					objectField.isSystem()) {
+
 					_objectFieldLocalService.addOrUpdateSystemObjectField(
 						userId, objectDefinition.getObjectDefinitionId(),
 						objectField.getBusinessType(),
@@ -936,7 +936,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition = _updateTitleObjectFieldId(
 			objectDefinition, titleObjectFieldName);
 
-		if (_isUnmodifiableSystemObject(modifiable, system)) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			_createTable(
 				objectDefinition.getExtensionDBTableName(), objectDefinition);
 		}
@@ -946,7 +946,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private void _addSystemObjectFields(
 			String dbTableName, ObjectDefinition objectDefinition,
-			String pkObjectFieldName, boolean system, long userId)
+			String pkObjectFieldName, long userId)
 		throws PortalException {
 
 		_objectFieldLocalService.addSystemObjectField(
@@ -980,9 +980,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		String dbColumnName = ObjectEntryTable.INSTANCE.objectEntryId.getName();
 
-		if (_isUnmodifiableSystemObject(
-				objectDefinition.isModifiable(), system)) {
-
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			dbColumnName = pkObjectFieldName;
 		}
 

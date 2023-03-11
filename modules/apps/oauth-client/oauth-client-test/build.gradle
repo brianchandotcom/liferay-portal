@@ -3,6 +3,5 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testIntegrationCompile project(":apps:oauth-client:oauth-client-api")
 	testIntegrationCompile project(":apps:oauth2-provider:oauth2-provider-api")
-	testIntegrationCompile project(":apps:petra:petra-xml")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

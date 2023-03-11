@@ -34,10 +34,15 @@ import com.liferay.source.formatter.util.FileUtil;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.StringReader;
 
 import java.net.URL;
 import java.net.URLConnection;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -107,6 +112,20 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private static boolean _isGenerateVulnerableLibrariesCacheFile() {
+		if (Validator.isNull(System.getenv("JENKINS_HOME"))) {
+			return false;
+		}
+
+		String jobName = System.getenv("JOB_NAME");
+
+		if (Validator.isNull(jobName)) {
+			return false;
+		}
+
+		return jobName.contains("liferay-binaries-cache-upstream");
 	}
 
 	private void _checkGradleLibraryVulnerabilities(
@@ -439,11 +458,38 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			}
 		}
 
-		_cachedVulnerableVersionMap.put(
-			securityAdvisoryEcosystemEnum + ":" + packageName,
+		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
 			_getSecurityVulnerabilityNodes(
 				packageName, null, securityAdvisoryEcosystemEnum, severities,
-				_githubAccessToken));
+				_githubAccessToken);
+
+		_cachedVulnerableVersionMap.put(
+			securityAdvisoryEcosystemEnum + ":" + packageName,
+			securityVulnerabilityNodes);
+
+		if (!_isGenerateVulnerableLibrariesCacheFile()) {
+			return;
+		}
+
+		for (SecurityVulnerabilityNode securityVulnerabilityNode :
+				securityVulnerabilityNodes) {
+
+			String[] items = {
+				securityAdvisoryEcosystemEnum.toString(), packageName,
+				String.valueOf(securityVulnerabilityNode.getVersionRange()),
+				securityVulnerabilityNode.getSummary(),
+				securityVulnerabilityNode.getPermalink()
+			};
+
+			String vulnerabilityContent =
+				StringUtil.merge(items, StringPool.SEMICOLON) + "\n";
+
+			synchronized (this) {
+				_write(
+					new File(getPortalDir(), "vulnerable_libraries.txt"),
+					vulnerabilityContent);
+			}
+		}
 	}
 
 	private synchronized String _getCachedKnownVulnerabilities()
@@ -627,6 +673,15 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		}
 
 		return Collections.emptyList();
+	}
+
+	private void _write(File file, String content) throws Exception {
+		try (OutputStream outputStream = Files.newOutputStream(
+				Paths.get(file.toURI()), StandardOpenOption.CREATE,
+				StandardOpenOption.APPEND)) {
+
+			outputStream.write(content.getBytes());
+		}
 	}
 
 	private static final String _CI_PROPERTIES_URL =

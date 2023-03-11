@@ -32,13 +32,14 @@ import java.sql.Connection;
 /**
  * @author Roberto Díaz
  */
-public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
+public class DiscussionSubscriptionClassNameUpgradeProcess
+	extends UpgradeProcess {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */
 	@Deprecated
-	public UpgradeDiscussionSubscriptionClassName(
+	public DiscussionSubscriptionClassNameUpgradeProcess(
 		AssetEntryLocalService assetEntryLocalService,
 		ClassNameLocalService classNameLocalService,
 		SubscriptionLocalService subscriptionLocalService,
@@ -49,7 +50,7 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 			oldSubscriptionClassName, deletionMode);
 	}
 
-	public UpgradeDiscussionSubscriptionClassName(
+	public DiscussionSubscriptionClassNameUpgradeProcess(
 		ClassNameLocalService classNameLocalService,
 		SubscriptionLocalService subscriptionLocalService,
 		String oldSubscriptionClassName, DeletionMode deletionMode) {
@@ -59,7 +60,7 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 			oldSubscriptionClassName, deletionMode, null);
 	}
 
-	public UpgradeDiscussionSubscriptionClassName(
+	public DiscussionSubscriptionClassNameUpgradeProcess(
 		ClassNameLocalService classNameLocalService,
 		SubscriptionLocalService subscriptionLocalService,
 		String oldSubscriptionClassName,
@@ -75,7 +76,7 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public UpgradeDiscussionSubscriptionClassName(
+	public DiscussionSubscriptionClassNameUpgradeProcess(
 		SubscriptionLocalService subscriptionLocalService,
 		String oldSubscriptionClassName, DeletionMode deletionMode) {
 
@@ -106,7 +107,7 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		}
 	}
 
-	private UpgradeDiscussionSubscriptionClassName(
+	private DiscussionSubscriptionClassNameUpgradeProcess(
 		ClassNameLocalService classNameLocalService,
 		SubscriptionLocalService subscriptionLocalService,
 		String oldSubscriptionClassName, DeletionMode deletionMode,

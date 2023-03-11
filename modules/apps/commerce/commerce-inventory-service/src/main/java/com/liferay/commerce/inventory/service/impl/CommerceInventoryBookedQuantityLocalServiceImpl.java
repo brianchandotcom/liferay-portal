@@ -130,7 +130,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 				)
 			));
 
-		if (result.isEmpty()) {
+		if (result.get(0) == null) {
 			return 0;
 		}
 

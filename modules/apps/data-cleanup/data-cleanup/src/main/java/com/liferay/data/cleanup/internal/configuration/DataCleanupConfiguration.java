@@ -49,6 +49,13 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpCurrencyConverterModuleData();
 
 	@Meta.AD(
+		deflt = "false",
+		name = "clean-up-document-library-file-rank-module-data",
+		required = false
+	)
+	public boolean cleanUpDocumentLibraryFileRankModuleData();
+
+	@Meta.AD(
 		deflt = "false", name = "clean-up-dictionary-module-data",
 		required = false
 	)
@@ -71,6 +78,12 @@ public interface DataCleanupConfiguration {
 		required = false
 	)
 	public boolean cleanUpHelloWorldModuleData();
+
+	@Meta.AD(
+		deflt = "false", name = "clean-up-html-preview-module-data",
+		required = false
+	)
+	public boolean cleanUpHTMLPreviewModuleData();
 
 	@Meta.AD(
 		deflt = "false", name = "clean-up-image-editor-module-data",
@@ -103,6 +116,11 @@ public interface DataCleanupConfiguration {
 	public boolean cleanUpNetworkUtilitiesModuleData();
 
 	@Meta.AD(
+		deflt = "false", name = "clean-up-oauth-module-data", required = false
+	)
+	public boolean cleanUpOAuthModuleData();
+
+	@Meta.AD(
 		deflt = "false", name = "clean-up-open-social-module-data",
 		required = false
 	)
@@ -113,6 +131,13 @@ public interface DataCleanupConfiguration {
 		required = false
 	)
 	public boolean cleanUpPasswordGeneratorModuleData();
+
+	@Meta.AD(
+		deflt = "false",
+		name = "clean-up-portal-security-wedeploy-auth-module-data",
+		required = false
+	)
+	public boolean cleanUpPortalSecurityWedeployAuthModuleData();
 
 	@Meta.AD(
 		deflt = "false", name = "clean-up-private-messaging-module-data",
@@ -167,6 +192,11 @@ public interface DataCleanupConfiguration {
 		required = false
 	)
 	public boolean cleanUpShoppingModuleData();
+
+	@Meta.AD(
+		deflt = "false", name = "clean-up-sync-module-data", required = false
+	)
+	public boolean cleanUpSyncModuleData();
 
 	@Meta.AD(
 		deflt = "false", name = "clean-up-translator-module-data",

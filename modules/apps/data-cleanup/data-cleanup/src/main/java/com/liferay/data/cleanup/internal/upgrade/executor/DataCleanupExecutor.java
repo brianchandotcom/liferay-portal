@@ -20,14 +20,18 @@ import com.liferay.data.cleanup.internal.upgrade.ChatUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.CurrenctConverterUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DictionaryUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DirectoryUpgradeProcess;
+import com.liferay.data.cleanup.internal.upgrade.DocumentLibraryFileRankServiceUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.GoogleMapsUpgradeProcess;
+import com.liferay.data.cleanup.internal.upgrade.HTMLPreviewServiceUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.ImageEditorUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.InvitationUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.LoanCalculatorUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.MailReaderUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.NetworkUtilitiesUpgradeProcess;
+import com.liferay.data.cleanup.internal.upgrade.OAuthUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.OpenSocialUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.PasswordGeneratorUpgradeProcess;
+import com.liferay.data.cleanup.internal.upgrade.PortalSecurityWedeployAuthUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.PrivateMessagingUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.QuickNoteUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.RecentDocumentsUpgradeProcess;
@@ -37,6 +41,7 @@ import com.liferay.data.cleanup.internal.upgrade.SocialGroupStatisticsUpgradePro
 import com.liferay.data.cleanup.internal.upgrade.SocialRequestUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.SocialUserStatisticsUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess;
+import com.liferay.data.cleanup.internal.upgrade.SyncUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.TranslatorUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.TwitterUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.UnitConverterUpgradeProcess;
@@ -98,6 +103,10 @@ public class DataCleanupExecutor {
 			dataCleanupConfiguration::cleanUpChatModuleData,
 			"com.liferay.chat.service", ChatUpgradeProcess::new);
 		_cleanUpModuleData(
+			dataCleanupConfiguration::cleanUpDocumentLibraryFileRankModuleData,
+			"com.liferay.document.library.file.rank.service",
+			DocumentLibraryFileRankServiceUpgradeProcess::new);
+		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpDictionaryModuleData,
 			"com.liferay.dictionary.web", DictionaryUpgradeProcess::new);
 		_cleanUpModuleData(
@@ -118,6 +127,10 @@ public class DataCleanupExecutor {
 			dataCleanupConfiguration::cleanUpHelloWorldModuleData,
 			"com.liferay.hello.world.web", UpgradeHelloWorld::new);
 		_cleanUpModuleData(
+			dataCleanupConfiguration::cleanUpHTMLPreviewModuleData,
+			"com.liferay.html.preview.service",
+			HTMLPreviewServiceUpgradeProcess::new);
+		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpInvitationModuleData,
 			"com.liferay.invitation.web", InvitationUpgradeProcess::new);
 		_cleanUpModuleData(
@@ -132,9 +145,17 @@ public class DataCleanupExecutor {
 			"com.liferay.network.utilities.web",
 			NetworkUtilitiesUpgradeProcess::new);
 		_cleanUpModuleData(
+			dataCleanupConfiguration::cleanUpOAuthModuleData,
+			"com.liferay.oauth.service", OAuthUpgradeProcess::new);
+		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpPasswordGeneratorModuleData,
 			"com.liferay.password.generator.web",
 			PasswordGeneratorUpgradeProcess::new);
+		_cleanUpModuleData(
+			dataCleanupConfiguration::
+				cleanUpPortalSecurityWedeployAuthModuleData,
+			"com.liferay.portal.security.wedeploy.auth.service",
+			PortalSecurityWedeployAuthUpgradeProcess::new);
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpQuickNoteModuleData,
 			"com.liferay.quick.note.web", QuickNoteUpgradeProcess::new);
@@ -172,6 +193,9 @@ public class DataCleanupExecutor {
 			() -> new SoftwareCatalogUpgradeProcess(
 				_imageLocalService, _mbMessageLocalService,
 				_ratingsStatsLocalService, _subscriptionLocalService));
+		_cleanUpModuleData(
+			dataCleanupConfiguration::cleanUpSyncModuleData,
+			"com.liferay.sync.service", SyncUpgradeProcess::new);
 		_cleanUpModuleData(
 			dataCleanupConfiguration::cleanUpTranslatorModuleData,
 			"com.liferay.translator.web", TranslatorUpgradeProcess::new);

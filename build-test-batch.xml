@@ -7833,10 +7833,6 @@ information. Make sure to commit in all build services results.
 	<target name="subrepository-unit-jdk8">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
-		<gradle-execute dir="${project.dir}/modules/apps/petra" task="deploy">
-			<arg value="-Dportal.build=true" />
-		</gradle-execute>
-
 		<if>
 			<equals arg1="${subrepository.validation}" arg2="true" />
 			<then>

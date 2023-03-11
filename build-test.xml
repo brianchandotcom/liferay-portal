@@ -4759,10 +4759,6 @@ tell application "Safari" to quit
 							<gradle-execute dir="${project.dir}/modules/core" task="deploy">
 								<arg value="-Dportal.build=true" />
 							</gradle-execute>
-
-							<gradle-execute dir="${project.dir}/modules/apps/petra" task="deploy">
-								<arg value="-Dportal.build=true" />
-							</gradle-execute>
 						</then>
 						<else>
 							<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-tomcat" />

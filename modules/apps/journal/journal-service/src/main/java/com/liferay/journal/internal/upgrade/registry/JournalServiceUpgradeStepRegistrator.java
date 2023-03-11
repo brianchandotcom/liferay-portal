@@ -19,7 +19,7 @@ import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServic
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
+import com.liferay.comment.upgrade.DiscussionSubscriptionClassNameUpgradeProcess;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
@@ -223,10 +223,11 @@ public class JournalServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.1.6", "1.1.7",
-			new UpgradeDiscussionSubscriptionClassName(
+			new DiscussionSubscriptionClassNameUpgradeProcess(
 				_classNameLocalService, _subscriptionLocalService,
 				JournalArticle.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
+				DiscussionSubscriptionClassNameUpgradeProcess.DeletionMode.
+					UPDATE));
 
 		registry.register(
 			"1.1.7", "1.1.8",

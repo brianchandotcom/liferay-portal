@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.internal.upgrade.registry;
 
-import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
+import com.liferay.comment.upgrade.DiscussionSubscriptionClassNameUpgradeProcess;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
@@ -64,10 +64,11 @@ public class WikiServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.1.0", "1.1.1",
-			new UpgradeDiscussionSubscriptionClassName(
+			new DiscussionSubscriptionClassNameUpgradeProcess(
 				_classNameLocalService, _subscriptionLocalService,
 				WikiPage.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.ADD_NEW));
+				DiscussionSubscriptionClassNameUpgradeProcess.DeletionMode.
+					ADD_NEW));
 
 		registry.register(
 			"1.1.1", "2.0.0",

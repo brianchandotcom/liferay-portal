@@ -20,7 +20,7 @@ import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsEntryTable;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsStatsUserTable;
 import com.liferay.blogs.internal.upgrade.v2_2_0.BlogsEntryExternalReferenceCodeUpgradeProcess;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
+import com.liferay.comment.upgrade.DiscussionSubscriptionClassNameUpgradeProcess;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
@@ -76,7 +76,7 @@ public class BlogsServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.1.2", "1.1.3",
-			new UpgradeDiscussionSubscriptionClassName(
+			new DiscussionSubscriptionClassNameUpgradeProcess(
 				_classNameLocalService, _subscriptionLocalService,
 				BlogsEntry.class.getName(),
 				_getUpgradeDiscussionSubscriptionClassNameUnsafeBiFunction()));

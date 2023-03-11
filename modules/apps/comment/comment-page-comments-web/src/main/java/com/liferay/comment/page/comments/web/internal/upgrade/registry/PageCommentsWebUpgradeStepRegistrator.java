@@ -15,7 +15,7 @@
 package com.liferay.comment.page.comments.web.internal.upgrade.registry;
 
 import com.liferay.comment.page.comments.web.internal.constants.PageCommentsPortletKeys;
-import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
+import com.liferay.comment.upgrade.DiscussionSubscriptionClassNameUpgradeProcess;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
@@ -52,17 +52,18 @@ public class PageCommentsWebUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.0", "1.0.1",
-			new UpgradeDiscussionSubscriptionClassName(
+			new DiscussionSubscriptionClassNameUpgradeProcess(
 				_classNameLocalService, _subscriptionLocalService,
 				Layout.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
+				DiscussionSubscriptionClassNameUpgradeProcess.DeletionMode.
+					UPDATE));
 
 		registry.register(
 			"1.0.1", "2.0.0",
-			new UpgradeDiscussionSubscriptionClassName(
+			new DiscussionSubscriptionClassNameUpgradeProcess(
 				_classNameLocalService, _subscriptionLocalService,
 				Layout.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.
+				DiscussionSubscriptionClassNameUpgradeProcess.DeletionMode.
 					DELETE_OLD));
 	}
 

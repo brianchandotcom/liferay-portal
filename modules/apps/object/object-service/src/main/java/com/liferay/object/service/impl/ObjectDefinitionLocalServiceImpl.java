@@ -47,6 +47,7 @@ import com.liferay.object.exception.RequiredObjectDefinitionException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
+import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
@@ -1081,9 +1082,7 @@ public class ObjectDefinitionLocalServiceImpl
 			"status", false, false);
 	}
 
-	private void _createLocalizedTable(
-		String dbTableName, ObjectDefinition objectDefinition) {
-
+	private void _createLocalizedTable(ObjectDefinition objectDefinition) {
 		if (!objectDefinition.isEnableLocalization() ||
 			!FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
 
@@ -1092,11 +1091,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizedTable =
-				new DynamicObjectDefinitionLocalizationTable(
-					objectDefinition,
-					_objectFieldPersistence.findByODI_L(
-						objectDefinition.getObjectDefinitionId(), true),
-					dbTableName);
+				_dynamicObjectDefinitionLocalizationTableFactory.create(
+					objectDefinition);
 
 		runSQL(dynamicObjectDefinitionLocalizedTable.getCreateTableSQL());
 	}
@@ -1291,8 +1287,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
-		_createLocalizedTable(
-			objectDefinition.getDBTableName(), objectDefinition);
+		_createLocalizedTable(objectDefinition);
 		_createTable(objectDefinition.getDBTableName(), objectDefinition);
 		_createTable(
 			objectDefinition.getExtensionDBTableName(), objectDefinition);
@@ -1817,6 +1812,10 @@ public class ObjectDefinitionLocalServiceImpl
 				"creator", "createDate", "externalReferenceCode", "id",
 				"modifiedDate", "status"
 			});
+
+	@Reference
+	private DynamicObjectDefinitionLocalizationTableFactory
+		_dynamicObjectDefinitionLocalizationTableFactory;
 
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory

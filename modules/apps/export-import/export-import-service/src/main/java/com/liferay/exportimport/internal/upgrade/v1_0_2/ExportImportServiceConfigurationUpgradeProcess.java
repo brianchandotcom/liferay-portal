@@ -29,9 +29,10 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Tamas Molnar
  */
-public class UpgradeExportImportServiceConfiguration extends UpgradeProcess {
+public class ExportImportServiceConfigurationUpgradeProcess
+	extends UpgradeProcess {
 
-	public UpgradeExportImportServiceConfiguration(
+	public ExportImportServiceConfigurationUpgradeProcess(
 		ConfigurationAdmin configurationAdmin,
 		ConfigurationProvider configurationProvider) {
 

@@ -282,7 +282,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 	private SafeCloseable _registerVerifyProcess(
 		boolean initialDeployment, boolean runOnPortalUpgrade) {
 
-		ServiceRegistration<VerifyProcess> verifyProcessRegistration =
+		ServiceRegistration<VerifyProcess> verifyProcessServiceRegistration =
 			_bundleContext.registerService(
 				VerifyProcess.class, _verifyProcess,
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -291,7 +291,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 					"run.on.portal.upgrade", runOnPortalUpgrade
 				).build());
 
-		return verifyProcessRegistration::unregister;
+		return verifyProcessServiceRegistration::unregister;
 	}
 
 	private void _simulateUpgradeProcessExecution() {

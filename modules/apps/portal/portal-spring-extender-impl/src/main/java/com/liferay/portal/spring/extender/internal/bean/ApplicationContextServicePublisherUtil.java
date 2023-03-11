@@ -94,10 +94,10 @@ public class ApplicationContextServicePublisherUtil {
 		List<ServiceRegistration<?>> serviceRegistrations) {
 
 		if (serviceRegistrations != null) {
-			for (ServiceRegistration<?> serviceReference :
+			for (ServiceRegistration<?> serviceRegistration :
 					serviceRegistrations) {
 
-				serviceReference.unregister();
+				serviceRegistration.unregister();
 			}
 
 			serviceRegistrations.clear();

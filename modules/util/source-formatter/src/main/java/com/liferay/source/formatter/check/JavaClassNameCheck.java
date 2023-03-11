@@ -115,7 +115,7 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, String className,
 		List<String> extendedClassNames) {
 
-		if (extendedClassNames.isEmpty()) {
+		if (className.startsWith("Base") || extendedClassNames.isEmpty()) {
 			return;
 		}
 

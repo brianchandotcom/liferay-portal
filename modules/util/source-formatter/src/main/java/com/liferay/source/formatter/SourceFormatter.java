@@ -326,6 +326,14 @@ public class SourceFormatter {
 			_validateCommitMessages();
 		}
 
+		if (!_sourceFormatterArgs.isJavaParserEnabled()) {
+			System.out.println(
+				StringBundler.concat(
+					"WARNING: Setting property 'java.parser.enabled' to ",
+					"'false' may prevent certain Java/JSP checks from working ",
+					"properly."));
+		}
+
 		_sourceProcessors.add(new BNDRunSourceProcessor());
 		_sourceProcessors.add(new BNDSourceProcessor());
 		_sourceProcessors.add(new CodeownersSourceProcessor());

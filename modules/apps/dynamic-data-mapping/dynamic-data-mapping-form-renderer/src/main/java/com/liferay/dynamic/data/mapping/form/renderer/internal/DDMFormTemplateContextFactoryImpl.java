@@ -29,9 +29,10 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.SettingsDDMFormFieldsUtil;
-import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
@@ -153,16 +154,12 @@ public class DDMFormTemplateContextFactoryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap =
-			ServiceTrackerMapBuilder.SelectorFactory.newSelector(
-				bundleContext, DDMValidation.class
-			).map(
-				"ddm.validation.data.type"
-			).collectMultiValue(
-				Collections.reverseOrder(
-					new PropertyServiceReferenceComparator<>(
-						"ddm.validation.ranking"))
-			).build();
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, DDMValidation.class, null,
+			new PropertyServiceReferenceMapper<>("ddm.validation.data.type"),
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator<>(
+					"ddm.validation.ranking")));
 	}
 
 	@Deactivate

@@ -14,6 +14,7 @@
 
 package com.liferay.depot.web.internal.application.list;
 
+import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.io.IOException;
@@ -175,7 +177,7 @@ public class DepotPanelAppController {
 
 	}
 
-	private class PanelAppWrapper implements PanelApp {
+	private class PanelAppWrapper extends BasePanelApp {
 
 		@Override
 		public String getKey() {
@@ -240,6 +242,17 @@ public class DepotPanelAppController {
 		@Override
 		public void setPortlet(Portlet portlet) {
 			_panelApp.setPortlet(portlet);
+		}
+
+		@Override
+		public void setPortletLocalService(
+			PortletLocalService portletLocalService) {
+
+			if (_panelApp instanceof BasePanelApp) {
+				BasePanelApp basePanelApp = (BasePanelApp)_panelApp;
+
+				basePanelApp.setPortletLocalService(portletLocalService);
+			}
 		}
 
 		private PanelAppWrapper(PanelApp panelApp) {

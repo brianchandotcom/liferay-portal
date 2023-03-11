@@ -178,6 +178,12 @@ public abstract class BasePanelApp implements PanelApp {
 		_portlet = portlet;
 	}
 
+	public void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
 	protected ControlPanelEntry getControlPanelEntry() {
 		Portlet portlet = getPortlet();
 
@@ -213,12 +219,6 @@ public abstract class BasePanelApp implements PanelApp {
 		}
 
 		return groupProvider.getGroup(httpServletRequest);
-	}
-
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
 	}
 
 	protected void setUserNotificationEventLocalService(

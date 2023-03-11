@@ -1436,8 +1436,8 @@ definition {
 
 		task ("Then the user is unable to filter by ERC") {
 			AssertElementNotPresent(
-				key_picklistOption = "External Reference Code",
-				locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+				key_menuItem = "External Reference Code",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 	}
 

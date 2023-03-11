@@ -399,12 +399,19 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		for (String line :
 				StringUtil.splitLines(_getCachedKnownVulnerabilities())) {
 
-			String[] parts = StringUtil.split(line);
+			String[] parts = StringUtil.split(line, StringPool.SEMICOLON);
+
+			VersionRange versionRange = VersionRange.createFromVersionSpec(
+				parts[2]);
+
+			DefaultArtifactVersion defaultArtifactVersion =
+				new DefaultArtifactVersion(version);
 
 			if ((parts.length != 5) ||
 				!Objects.equals(
 					securityAdvisoryEcosystemEnum.name(), parts[0]) ||
-				!packageName.equals(parts[1]) || version.equals(parts[2])) {
+				!packageName.equals(parts[1]) ||
+				versionRange.containsVersion(defaultArtifactVersion)) {
 
 				continue;
 			}
@@ -501,8 +508,16 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 		_cachedKnownVulnerabilities = StringPool.BLANK;
 
-		// TODO: Read from cached known vulnerabilities from
-		// liferay-binaries-cache-2020
+		if (!_isGenerateVulnerableLibrariesCacheFile()) {
+			File vulnerableLibrariesFile = new File(
+				getPortalDir(),
+				"../liferay-binaries-cache-2020/vulnerable_libraries.txt");
+
+			if (vulnerableLibrariesFile.exists()) {
+				_cachedKnownVulnerabilities = FileUtil.read(
+					vulnerableLibrariesFile);
+			}
+		}
 
 		return _cachedKnownVulnerabilities;
 	}

@@ -83,6 +83,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1161,11 +1162,15 @@ public class ObjectDefinitionLocalServiceImpl
 	private boolean _isUnmodifiableSystemObject(
 		boolean modifiable, boolean system) {
 
-		if (!modifiable && system) {
-			return true;
+		if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+			if (!modifiable && system) {
+				return true;
+			}
+
+			return false;
 		}
 
-		return false;
+		return system;
 	}
 
 	private ObjectDefinition _publishObjectDefinition(

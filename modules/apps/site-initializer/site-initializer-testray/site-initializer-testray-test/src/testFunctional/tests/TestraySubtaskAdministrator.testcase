@@ -137,7 +137,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-169401 - Verify if, as an Administrator, can cancel merge subtasks"
+	@description = "This is a test for LPS-166230 - Verify if, as an Administrator, can cancel merge subtasks"
 	@priority = 3
 	test AdminCanCancelMergeSubtask {
 		task ("Given that the user trying merge subtasks") {
@@ -148,7 +148,7 @@ definition {
 			Testray.selectUsers(listUserName = "Test Test");
 		}
 
-		task ("Then can clear the merge") {
+		task ("When can clear the merge") {
 			TestraySubtask.mergeSubtasks(
 				buttonClear = "true",
 				wcsubtaskName = "Subtask_1,Subtask_2");
@@ -156,8 +156,8 @@ definition {
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
 		}
 
-		task ("Then can clear the merge") {
-			TestraySubtask.assertNotMergedSubtasks(wcsubtaskName = "Subtask_2");
+		task ("Then can not see the merged subtask") {
+			TestraySubtask.assertNotMergedSubtasks(subtask = "Subtask_2");
 		}
 	}
 

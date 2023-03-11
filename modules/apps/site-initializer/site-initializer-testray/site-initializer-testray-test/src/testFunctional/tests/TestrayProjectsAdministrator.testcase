@@ -39,7 +39,7 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-160539| Test Summary: Verify if as an Administrator I am able to add a Project"
+	@description = "Story ID: LPS-165583 | Test Summary: Verify if as an Administrator I am able to add a Project"
 	@priority = 5
 	test AdminCanAddProject {
 		task ("When the user Create a Project") {

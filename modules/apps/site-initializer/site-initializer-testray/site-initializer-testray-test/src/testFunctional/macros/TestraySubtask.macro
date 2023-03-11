@@ -8,6 +8,12 @@ definition {
 		}
 	}
 
+	macro assertNotMergedSubtasks {
+			AssertElementNotPresent(
+				key_subtaskMerged = ${subtask},
+				locator1 = "TestraySubtask#VERIFY_SUBTASK_MERGED");
+	}
+
 	macro goToSubtask {
 		Click(
 			key_projectName = ${subtaskName},
@@ -21,8 +27,11 @@ definition {
 				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 		}
 
-		if (isSet(cancel)) {
-			Button.click(button = ${cancel});
+		if (isSet(buttonClear)) {
+			Click(
+				key_indexNumber = 2,
+				key_text = "Clear",
+				locator1 = "Button#ANY_N");
 		}
 
 		Button.click(button = "Merge Subtasks");

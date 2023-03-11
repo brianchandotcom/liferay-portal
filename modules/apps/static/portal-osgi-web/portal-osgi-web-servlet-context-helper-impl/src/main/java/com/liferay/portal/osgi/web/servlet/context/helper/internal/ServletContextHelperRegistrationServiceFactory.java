@@ -45,7 +45,8 @@ public class ServletContextHelperRegistrationServiceFactory
 	@Override
 	public ServletContextHelperRegistration getService(
 		Bundle bundle,
-		ServiceRegistration<ServletContextHelperRegistration> registration) {
+		ServiceRegistration<ServletContextHelperRegistration>
+			serviceRegistration) {
 
 		return new ServletContextHelperRegistrationImpl(
 			bundle, _jspServletFactory, _saxParserFactory, _properties,
@@ -55,7 +56,8 @@ public class ServletContextHelperRegistrationServiceFactory
 	@Override
 	public void ungetService(
 		Bundle bundle,
-		ServiceRegistration<ServletContextHelperRegistration> registration,
+		ServiceRegistration<ServletContextHelperRegistration>
+			serviceRegistration,
 		ServletContextHelperRegistration servletContextHelperRegistration) {
 
 		servletContextHelperRegistration.close();

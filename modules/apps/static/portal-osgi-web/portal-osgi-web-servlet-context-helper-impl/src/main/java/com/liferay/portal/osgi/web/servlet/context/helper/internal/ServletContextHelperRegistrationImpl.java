@@ -149,7 +149,7 @@ public class ServletContextHelperRegistrationImpl
 	@Override
 	public void close() {
 		try {
-			_servletContextRegistration.unregister();
+			_servletContextServiceRegistration.unregister();
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
@@ -598,7 +598,7 @@ public class ServletContextHelperRegistrationImpl
 				"osgi.web.version", _bundle.getVersion()
 			).build();
 
-		_servletContextRegistration = _bundleContext.registerService(
+		_servletContextServiceRegistration = _bundleContext.registerService(
 			ServletContext.class, servletContext, properties);
 	}
 
@@ -654,7 +654,8 @@ public class ServletContextHelperRegistrationImpl
 	private final ServiceRegistration<ServletContextListener>
 		_servletContextListenerServiceRegistration;
 	private final String _servletContextName;
-	private ServiceRegistration<ServletContext> _servletContextRegistration;
+	private ServiceRegistration<ServletContext>
+		_servletContextServiceRegistration;
 	private final boolean _wabShapedBundle;
 	private final WebXMLDefinition _webXMLDefinition;
 

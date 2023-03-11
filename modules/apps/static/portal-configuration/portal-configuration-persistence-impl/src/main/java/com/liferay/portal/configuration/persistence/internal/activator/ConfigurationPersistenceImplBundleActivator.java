@@ -74,7 +74,7 @@ public class ConfigurationPersistenceImplBundleActivator
 					ConfigurationPersistenceManager.class.getName()
 				).build());
 
-		_configurationUpgradeStepFactoryRegistration =
+		_configurationUpgradeStepFactoryServiceRegistration =
 			bundleContext.registerService(
 				ConfigurationUpgradeStepFactory.class,
 				new ConfigurationUpgradeStepFactoryImpl(
@@ -84,8 +84,8 @@ public class ConfigurationPersistenceImplBundleActivator
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		if (_configurationUpgradeStepFactoryRegistration != null) {
-			_configurationUpgradeStepFactoryRegistration.unregister();
+		if (_configurationUpgradeStepFactoryServiceRegistration != null) {
+			_configurationUpgradeStepFactoryServiceRegistration.unregister();
 		}
 
 		if (_configurationPersistenceManagerServiceRegistration != null) {
@@ -103,7 +103,7 @@ public class ConfigurationPersistenceImplBundleActivator
 	private ServiceRegistration<?>
 		_configurationPersistenceManagerServiceRegistration;
 	private ServiceRegistration<ConfigurationUpgradeStepFactory>
-		_configurationUpgradeStepFactoryRegistration;
+		_configurationUpgradeStepFactoryServiceRegistration;
 	private ServiceReference<DataSource> _serviceReference;
 
 }

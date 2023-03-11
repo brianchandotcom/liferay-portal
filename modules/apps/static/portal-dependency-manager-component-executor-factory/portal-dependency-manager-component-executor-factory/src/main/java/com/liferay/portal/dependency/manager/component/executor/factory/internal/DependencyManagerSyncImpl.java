@@ -34,12 +34,12 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 
 	public DependencyManagerSyncImpl(
 		ExecutorService executorService,
-		ServiceRegistration<?> componentExecutorFactoryRegistration,
+		ServiceRegistration<?> componentExecutorFactoryServiceRegistration,
 		long syncTimeout) {
 
 		_executorService = executorService;
-		_componentExecutorFactoryRegistration =
-			componentExecutorFactoryRegistration;
+		_componentExecutorFactoryServiceRegistration =
+			componentExecutorFactoryServiceRegistration;
 		_syncTimeout = syncTimeout;
 	}
 
@@ -75,9 +75,9 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 			return;
 		}
 
-		if (_componentExecutorFactoryRegistration != null) {
+		if (_componentExecutorFactoryServiceRegistration != null) {
 			try {
-				_componentExecutorFactoryRegistration.unregister();
+				_componentExecutorFactoryServiceRegistration.unregister();
 			}
 			catch (IllegalStateException illegalStateException) {
 				if (_log.isDebugEnabled()) {
@@ -132,7 +132,8 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DependencyManagerSyncImpl.class);
 
-	private final ServiceRegistration<?> _componentExecutorFactoryRegistration;
+	private final ServiceRegistration<?>
+		_componentExecutorFactoryServiceRegistration;
 	private final ExecutorService _executorService;
 	private final DefaultNoticeableFuture<Void> _syncDefaultNoticeableFuture =
 		new DefaultNoticeableFuture<>();

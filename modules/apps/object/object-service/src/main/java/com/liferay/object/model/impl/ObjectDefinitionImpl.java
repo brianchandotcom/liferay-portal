@@ -48,7 +48,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public String getExtensionDBTableName() {
-		if (isSystem()) {
+		if (isUnmodifiableSystemObject()) {
 			String extensionDBTableName = getDBTableName();
 
 			if (extensionDBTableName.endsWith("_")) {
@@ -78,7 +78,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public String getPortletId() {
-		if (isSystem()) {
+		if (isUnmodifiableSystemObject()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -88,7 +88,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public String getResourceName() {
-		if (isSystem()) {
+		if (isUnmodifiableSystemObject()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -97,7 +97,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public String getRESTContextPath() {
-		if (isSystem()) {
+		if (isUnmodifiableSystemObject()) {
 			throw new UnsupportedOperationException();
 		}
 

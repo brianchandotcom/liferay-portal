@@ -112,7 +112,7 @@ public class BaseBatchEngineTaskExecutorTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_batchEngineTaskItemDelegateRegistration =
+		_batchEngineTaskItemDelegateServiceRegistration =
 			bundleContext.registerService(
 				BatchEngineTaskItemDelegate.class.getName(),
 				new TestBlogPostingBatchEngineTaskItemDelegate(),
@@ -123,7 +123,7 @@ public class BaseBatchEngineTaskExecutorTest {
 	public void tearDown() throws Exception {
 		blogsEntryLocalService.deleteEntries(group.getGroupId());
 
-		_batchEngineTaskItemDelegateRegistration.unregister();
+		_batchEngineTaskItemDelegateServiceRegistration.unregister();
 	}
 
 	public static class BlogPostingEntityModel implements EntityModel {
@@ -446,7 +446,8 @@ public class BaseBatchEngineTaskExecutorTest {
 	@DeleteAfterTestRun
 	protected User user;
 
-	private ServiceRegistration<?> _batchEngineTaskItemDelegateRegistration;
+	private ServiceRegistration<?>
+		_batchEngineTaskItemDelegateServiceRegistration;
 
 	@Inject
 	private BlogsEntryService _blogsEntryService;

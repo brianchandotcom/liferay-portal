@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Petra XML
-Bundle-SymbolicName: com.liferay.petra.xml
-Bundle-Version: 7.0.2
-Export-Package: com.liferay.petra.xml

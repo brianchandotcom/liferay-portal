@@ -63,16 +63,16 @@ public class ImageRequestAuthVerifierPublisher {
 			authVerifierProperties.put(key, entry.getValue());
 		}
 
-		_authVerifierRegistration = bundleContext.registerService(
+		_authVerifierServiceRegistration = bundleContext.registerService(
 			AuthVerifier.class, authVerifier, authVerifierProperties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (_authVerifierRegistration != null) {
-			_authVerifierRegistration.unregister();
+		if (_authVerifierServiceRegistration != null) {
+			_authVerifierServiceRegistration.unregister();
 
-			_authVerifierRegistration = null;
+			_authVerifierServiceRegistration = null;
 		}
 	}
 
@@ -90,6 +90,6 @@ public class ImageRequestAuthVerifierPublisher {
 		return authVerifierPropertyName + key;
 	}
 
-	private ServiceRegistration<AuthVerifier> _authVerifierRegistration;
+	private ServiceRegistration<AuthVerifier> _authVerifierServiceRegistration;
 
 }

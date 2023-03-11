@@ -1081,9 +1081,7 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _createLocalizedTable(ObjectDefinition objectDefinition) {
-		if (!objectDefinition.isEnableLocalization() ||
-			!FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
-
+		if (!objectDefinition.isEnableLocalization()) {
 			return;
 		}
 

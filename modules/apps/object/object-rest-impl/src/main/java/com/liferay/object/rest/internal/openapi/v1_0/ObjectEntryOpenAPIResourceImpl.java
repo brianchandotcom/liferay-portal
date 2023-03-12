@@ -34,6 +34,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -273,6 +274,22 @@ public class ObjectEntryOpenAPIResourceImpl
 					objectDefinition.getObjectDefinitionId())) {
 
 			dtoProperties.add(_getDTOProperty(objectField));
+
+			if (objectField.isLocalized() &&
+				FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+
+				dtoProperties.add(
+					new DTOProperty(
+						Collections.singletonMap("x-parent-map", "properties"),
+						objectField.getName() +
+							ObjectFieldConstants.I18N_SUFFIX,
+						Map.class.getSimpleName()) {
+
+						{
+							setRequired(objectField.isRequired());
+						}
+					});
+			}
 
 			if (Objects.equals(
 					objectField.getRelationshipType(),

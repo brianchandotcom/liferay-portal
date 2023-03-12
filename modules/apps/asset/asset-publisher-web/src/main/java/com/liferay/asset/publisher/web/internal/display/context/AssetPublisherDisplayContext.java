@@ -364,8 +364,9 @@ public class AssetPublisherDisplayContext {
 
 			if (assetListEntry != null) {
 				assetEntries = _assetListAssetEntryProvider.getAssetEntries(
-					assetListEntry, _getSegmentsEntryIds(assetListEntry),
-					_getSegmentsAnonymousUserId());
+					assetListEntry, _getSegmentsEntryIds(assetListEntry), null,
+					null, StringPool.BLANK, _getSegmentsAnonymousUserId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			}
 			else {
 				if (Validator.isNull(getInfoListProviderKey())) {

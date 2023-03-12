@@ -22,6 +22,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -80,7 +81,8 @@ public class AssetHelperUtil {
 				_segmentsEntryRetriever.getSegmentsEntryIds(
 					_portal.getScopeGroupId(httpServletRequest),
 					_portal.getUserId(httpServletRequest),
-					_requestContextMapper.map(httpServletRequest)));
+					_requestContextMapper.map(httpServletRequest)),
+				StringPool.BLANK);
 
 		long[] allTagIds = assetEntryQuery.getAllTagIds();
 

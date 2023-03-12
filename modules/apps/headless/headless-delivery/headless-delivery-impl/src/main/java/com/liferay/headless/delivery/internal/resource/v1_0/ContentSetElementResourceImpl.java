@@ -20,6 +20,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -156,12 +157,14 @@ public class ContentSetElementResourceImpl
 		return Page.of(
 			transform(
 				_assetListAssetEntryProvider.getAssetEntries(
-					assetListEntry, segmentsEntryIds,
+					assetListEntry, segmentsEntryIds, null, null,
+					StringPool.BLANK, StringPool.BLANK,
 					pagination.getStartPosition(), pagination.getEndPosition()),
 				this::_toContentSetElement),
 			pagination,
 			_assetListAssetEntryProvider.getAssetEntriesCount(
-				assetListEntry, segmentsEntryIds));
+				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
+				StringPool.BLANK));
 	}
 
 	private ContentSetElement _toContentSetElement(AssetEntry assetEntry) {

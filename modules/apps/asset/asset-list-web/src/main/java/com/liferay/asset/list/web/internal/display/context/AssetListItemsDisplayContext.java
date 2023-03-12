@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -62,10 +63,12 @@ public class AssetListItemsDisplayContext {
 
 		searchContainer.setResultsAndTotal(
 			() -> _assetListAssetEntryProvider.getAssetEntries(
-				getAssetListEntry(), getSegmentsEntryId(),
+				getAssetListEntry(), new long[] {getSegmentsEntryId()}, null,
+				null, StringPool.BLANK, StringPool.BLANK,
 				searchContainer.getStart(), searchContainer.getEnd()),
 			_assetListAssetEntryProvider.getAssetEntriesCount(
-				getAssetListEntry(), getSegmentsEntryId()));
+				getAssetListEntry(), new long[] {getSegmentsEntryId()}, null,
+				null, StringPool.BLANK, StringPool.BLANK));
 
 		_assetListContentSearchContainer = searchContainer;
 

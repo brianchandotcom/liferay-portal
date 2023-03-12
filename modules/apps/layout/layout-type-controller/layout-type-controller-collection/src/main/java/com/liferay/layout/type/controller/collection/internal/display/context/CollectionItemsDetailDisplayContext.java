@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.util.List;
 import java.util.Objects;
@@ -163,7 +164,8 @@ public class CollectionItemsDetailDisplayContext {
 		}
 
 		return _assetListAssetEntryProvider.getAssetEntriesCount(
-			assetListEntry, 0);
+			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+			null, null, StringPool.BLANK, StringPool.BLANK);
 	}
 
 	private long _getInfoCollectionProviderItemCount(String collectionPK) {

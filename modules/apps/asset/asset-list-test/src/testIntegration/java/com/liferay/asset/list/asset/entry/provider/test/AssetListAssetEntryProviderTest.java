@@ -138,7 +138,8 @@ public class AssetListAssetEntryProviderTest {
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
-				assetListEntry, segmentsEntryIds);
+				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
+				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
 
@@ -191,7 +192,8 @@ public class AssetListAssetEntryProviderTest {
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
-				assetListEntry, segmentsEntryIds);
+				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
+				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
 
@@ -226,6 +228,7 @@ public class AssetListAssetEntryProviderTest {
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -233,7 +236,7 @@ public class AssetListAssetEntryProviderTest {
 
 		assetEntries = _assetListAssetEntryProvider.getAssetEntries(
 			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-			new long[0][], "title1",
+			new long[0][], null, "title1",
 			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
@@ -279,6 +282,7 @@ public class AssetListAssetEntryProviderTest {
 					{assetCategory1.getCategoryId()},
 					{assetCategory2.getCategoryId()}
 				},
+				null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -322,6 +326,7 @@ public class AssetListAssetEntryProviderTest {
 						assetCategory2.getCategoryId()
 					}
 				},
+				null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -359,9 +364,9 @@ public class AssetListAssetEntryProviderTest {
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-				new long[][] {{assetCategory1.getCategoryId()}},
-				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				new long[][] {{assetCategory1.getCategoryId()}}, null,
+				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(assetEntries.toString(), 1, assetEntries.size());
 	}
@@ -400,9 +405,9 @@ public class AssetListAssetEntryProviderTest {
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-				new long[][] {{assetCategory4.getCategoryId()}},
-				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				new long[][] {{assetCategory4.getCategoryId()}}, null,
+				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(assetEntries.toString(), 0, assetEntries.size());
 	}
@@ -448,6 +453,7 @@ public class AssetListAssetEntryProviderTest {
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -503,6 +509,7 @@ public class AssetListAssetEntryProviderTest {
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -510,7 +517,7 @@ public class AssetListAssetEntryProviderTest {
 
 		assetEntries = _assetListAssetEntryProvider.getAssetEntries(
 			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-			new long[0][], "title1",
+			new long[0][], null, "title1",
 			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
@@ -576,6 +583,7 @@ public class AssetListAssetEntryProviderTest {
 					{assetCategory1.getCategoryId()},
 					{assetCategory2.getCategoryId()}
 				},
+				null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -645,6 +653,7 @@ public class AssetListAssetEntryProviderTest {
 						assetCategory2.getCategoryId()
 					}
 				},
+				null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -708,9 +717,9 @@ public class AssetListAssetEntryProviderTest {
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-				new long[][] {{assetCategory1.getCategoryId()}},
-				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				new long[][] {{assetCategory1.getCategoryId()}}, null,
+				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(assetEntries.toString(), 1, assetEntries.size());
 	}
@@ -770,9 +779,9 @@ public class AssetListAssetEntryProviderTest {
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-				new long[][] {{assetCategory4.getCategoryId()}},
-				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				new long[][] {{assetCategory4.getCategoryId()}}, null,
+				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(assetEntries.toString(), 0, assetEntries.size());
 	}
@@ -824,7 +833,8 @@ public class AssetListAssetEntryProviderTest {
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
-				assetListEntry, segmentsEntryIds);
+				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
+				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
 

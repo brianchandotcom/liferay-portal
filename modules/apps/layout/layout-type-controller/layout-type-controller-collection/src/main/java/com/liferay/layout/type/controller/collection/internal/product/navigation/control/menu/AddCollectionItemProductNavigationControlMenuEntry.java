@@ -24,6 +24,7 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.type.controller.collection.internal.constants.CollectionPageLayoutTypeControllerWebKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -115,7 +116,7 @@ public class AddCollectionItemProductNavigationControlMenuEntry
 
 			AssetEntryQuery assetEntryQuery =
 				_assetListAssetEntryProvider.getAssetEntryQuery(
-					assetListEntry, segmentEntryIds);
+					assetListEntry, segmentEntryIds, StringPool.BLANK);
 
 			long[] allTagIds = assetEntryQuery.getAllTagIds();
 

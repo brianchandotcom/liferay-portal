@@ -140,17 +140,19 @@ public class ObjectFieldLocalServiceImpl
 		_addOrUpdateObjectFieldSettings(
 			objectDefinition, objectField, null, objectFieldSettings);
 
-		if (localized && objectDefinition.isApproved()) {
+		if (!objectDefinition.isApproved()) {
+			return objectField;
+		}
+
+		if (localized) {
 			runSQL(
 				DynamicObjectDefinitionLocalizationTable.
 					getAlterTableAddColumnSQL(
 						objectDefinition.getDBTableName(),
 						objectField.getDBColumnName(), dbType));
 		}
-
-		if (objectDefinition.isApproved() &&
-			!objectField.compareBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
+		else if (!objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
 			!objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 

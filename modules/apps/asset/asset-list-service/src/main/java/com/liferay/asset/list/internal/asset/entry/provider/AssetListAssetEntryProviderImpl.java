@@ -97,63 +97,6 @@ public class AssetListAssetEntryProviderImpl
 
 	@Override
 	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long segmentsEntryId) {
-
-		return getAssetEntries(
-			assetListEntry, segmentsEntryId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long segmentsEntryId, int start,
-		int end) {
-
-		return getAssetEntries(
-			assetListEntry, new long[] {segmentsEntryId}, start, end);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
-
-		return getAssetEntries(
-			assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, int start,
-		int end) {
-
-		return getAssetEntries(
-			assetListEntry, segmentsEntryIds, StringPool.BLANK, start, end);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String userId, int start, int end) {
-
-		return getAssetEntries(
-			assetListEntry, segmentsEntryIds, assetCategoryIds,
-			StringPool.BLANK, userId, start, end);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String keywords, String userId, int start,
-		int end) {
-
-		return getAssetEntries(
-			assetListEntry, segmentsEntryIds, assetCategoryIds, null, keywords,
-			userId, start, end);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
 		String userId, int start, int end) {
@@ -170,61 +113,6 @@ public class AssetListAssetEntryProviderImpl
 		return _getDynamicAssetEntries(
 			assetListEntry, segmentsEntryIds, assetCategoryIds, assetTagNames,
 			keywords, userId, start, end);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
-
-		return getAssetEntries(
-			assetListEntry, segmentsEntryIds, userId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId,
-		int start, int end) {
-
-		return getAssetEntries(
-			assetListEntry, segmentsEntryIds, new long[0][], userId, start,
-			end);
-	}
-
-	@Override
-	public int getAssetEntriesCount(
-		AssetListEntry assetListEntry, long segmentsEntryId) {
-
-		return getAssetEntriesCount(
-			assetListEntry, new long[] {segmentsEntryId});
-	}
-
-	@Override
-	public int getAssetEntriesCount(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
-
-		return getAssetEntriesCount(
-			assetListEntry, segmentsEntryIds, StringPool.BLANK);
-	}
-
-	@Override
-	public int getAssetEntriesCount(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String userId) {
-
-		return getAssetEntriesCount(
-			assetListEntry, segmentsEntryIds, assetCategoryIds,
-			StringPool.BLANK, userId);
-	}
-
-	@Override
-	public int getAssetEntriesCount(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String keywords, String userId) {
-
-		return getAssetEntriesCount(
-			assetListEntry, segmentsEntryIds, assetCategoryIds, null, keywords,
-			userId);
 	}
 
 	@Override
@@ -245,30 +133,6 @@ public class AssetListAssetEntryProviderImpl
 		return _getDynamicAssetEntriesCount(
 			assetListEntry, segmentsEntryIds, assetCategoryIds, assetTagNames,
 			keywords, userId);
-	}
-
-	@Override
-	public int getAssetEntriesCount(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
-
-		return getAssetEntriesCount(
-			assetListEntry, segmentsEntryIds, new long[0][], userId);
-	}
-
-	@Override
-	public AssetEntryQuery getAssetEntryQuery(
-		AssetListEntry assetListEntry, long segmentsEntryId) {
-
-		return getAssetEntryQuery(
-			assetListEntry, segmentsEntryId, StringPool.BLANK);
-	}
-
-	@Override
-	public AssetEntryQuery getAssetEntryQuery(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
-
-		return getAssetEntryQuery(
-			assetListEntry, segmentsEntryIds, StringPool.BLANK);
 	}
 
 	@Override

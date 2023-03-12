@@ -26,81 +26,16 @@ import java.util.List;
 public interface AssetListAssetEntryProvider {
 
 	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long segmentsEntryId);
-
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long segmentsEntryId, int start,
-		int end);
-
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds);
-
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, int start,
-		int end);
-
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String userId, int start, int end);
-
-	public List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String keywords, String userId, int start,
-		int end);
-
-	public List<AssetEntry> getAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
 		String userId, int start, int end);
-
-	public default List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
-
-		return getAssetEntries(assetListEntry, segmentsEntryIds);
-	}
-
-	public default List<AssetEntry> getAssetEntries(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId,
-		int start, int end) {
-
-		return getAssetEntries(assetListEntry, segmentsEntryIds, start, end);
-	}
-
-	public int getAssetEntriesCount(
-		AssetListEntry assetListEntry, long segmentsEntryId);
-
-	public int getAssetEntriesCount(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds);
-
-	public int getAssetEntriesCount(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String userId);
-
-	public int getAssetEntriesCount(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String keywords, String userId);
 
 	public int getAssetEntriesCount(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
 		String userId);
 
-	public default int getAssetEntriesCount(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
-
-		return getAssetEntriesCount(assetListEntry, segmentsEntryIds);
-	}
-
 	public AssetEntryQuery getAssetEntryQuery(
-		AssetListEntry assetListEntry, long segmentsEntryId);
-
-	public AssetEntryQuery getAssetEntryQuery(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds);
-
-	public default AssetEntryQuery getAssetEntryQuery(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
-
-		return getAssetEntryQuery(assetListEntry, segmentsEntryIds);
-	}
+		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId);
 
 }

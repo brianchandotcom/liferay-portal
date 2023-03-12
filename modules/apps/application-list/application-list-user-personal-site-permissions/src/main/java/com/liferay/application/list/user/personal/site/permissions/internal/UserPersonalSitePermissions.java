@@ -94,9 +94,9 @@ public class UserPersonalSitePermissions {
 		_bundleContext = bundleContext;
 
 		String filter = StringBundler.concat(
-			"(&(!(depot.panel.app.wrapper=*))(objectClass=",
-			PanelApp.class.getName(), ")(panel.category.key=",
-			PanelCategoryKeys.SITE_ADMINISTRATION, "*))");
+			"(&(objectClass=", PanelApp.class.getName(),
+			")(panel.category.key=", PanelCategoryKeys.SITE_ADMINISTRATION,
+			"*))");
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, filter, new PanelAppServiceTrackerCustomizer());

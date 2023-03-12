@@ -39,6 +39,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -130,7 +133,14 @@ public class PanelAppRegistry {
 			panelApps,
 			panelApp -> {
 				try {
-					return panelApp.isShow(permissionChecker, group);
+					PanelAppShowFilter panelAppShowFilter = _panelAppShowFilter;
+
+					if (panelAppShowFilter == null) {
+						return panelApp.isShow(permissionChecker, group);
+					}
+
+					return panelAppShowFilter.isShow(
+						panelApp, permissionChecker, group);
 				}
 				catch (PortalException portalException) {
 					_log.error(portalException);
@@ -159,8 +169,7 @@ public class PanelAppRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, PanelApp.class,
-			"(panel.category.key=*)(depot.panel.app.wrapper=true)",
+			bundleContext, PanelApp.class, "(panel.category.key=*)",
 			new PropertyServiceReferenceMapper<>("panel.category.key"),
 			new ServiceTrackerCustomizer<PanelApp, PanelApp>() {
 
@@ -228,6 +237,13 @@ public class PanelAppRegistry {
 
 	@Reference
 	private GroupProvider _groupProvider;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile PanelAppShowFilter _panelAppShowFilter;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

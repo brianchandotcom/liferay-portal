@@ -166,28 +166,6 @@ public class AssetListAssetEntryProviderImpl
 			assetListEntry, userId, unicodeProperties);
 	}
 
-	protected AssetEntryQuery getAssetEntryQuery(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId,
-		int end, int start) {
-
-		List<String> typeSettings = TransformUtil.transformToList(
-			segmentsEntryIds,
-			segmentsEntryId -> assetListEntry.getTypeSettings(segmentsEntryId));
-
-		AssetEntryQuery assetEntryQuery = _createAssetEntryQuery(
-			assetListEntry, userId,
-			UnicodePropertiesBuilder.create(
-				true
-			).setProperty(
-				"anyAssetType", StringUtil.merge(typeSettings, StringPool.COMMA)
-			).build());
-
-		assetEntryQuery.setEnd(end);
-		assetEntryQuery.setStart(start);
-
-		return assetEntryQuery;
-	}
-
 	private AssetEntryQuery _createAssetEntryQuery(
 		AssetListEntry assetListEntry, String userId,
 		UnicodeProperties unicodeProperties) {

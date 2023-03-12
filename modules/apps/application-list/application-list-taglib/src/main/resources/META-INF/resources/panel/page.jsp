@@ -189,16 +189,14 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 	</li>
 
 	<%
-	for (PanelApp panelApp : panelAppRegistry.getPanelApps(panelCategory.getKey())) {
+	for (PanelApp panelApp : panelAppRegistry.getPanelApps(panelCategory.getKey(), permissionChecker, themeDisplay.getScopeGroup())) {
 	%>
 
-		<c:if test="<%= panelApp.isShow(permissionChecker, themeDisplay.getScopeGroup()) %>">
-			<li class="list-group" role="none">
-				<div class="list-group-heading panel-app-root panel-header <%= PanelAppUtil.isActive(request, panelApp) ? "active" : StringPool.BLANK %>">
-					<%@ include file="/panel/panel_app.jspf" %>
-				</div>
-			</li>
-		</c:if>
+		<li class="list-group" role="none">
+			<div class="list-group-heading panel-app-root panel-header <%= PanelAppUtil.isActive(request, panelApp) ? "active" : StringPool.BLANK %>">
+				<%@ include file="/panel/panel_app.jspf" %>
+			</div>
+		</li>
 
 	<%
 	}

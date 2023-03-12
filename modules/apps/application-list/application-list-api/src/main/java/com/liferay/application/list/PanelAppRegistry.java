@@ -56,20 +56,14 @@ public class PanelAppRegistry {
 		String parentPanelCategoryKey, PermissionChecker permissionChecker,
 		Group group) {
 
-		List<PanelApp> panelApps = getPanelApps(parentPanelCategoryKey);
+		List<PanelApp> panelApps = getPanelApps(
+			parentPanelCategoryKey, permissionChecker, group);
 
-		for (PanelApp panelApp : panelApps) {
-			try {
-				if (panelApp.isShow(permissionChecker, group)) {
-					return panelApp;
-				}
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
+		if (panelApps.isEmpty()) {
+			return null;
 		}
 
-		return null;
+		return panelApps.get(0);
 	}
 
 	public List<PanelApp> getPanelApps(PanelCategory parentPanelCategory) {
@@ -152,19 +146,11 @@ public class PanelAppRegistry {
 
 		int count = 0;
 
-		for (PanelApp panelApp : getPanelApps(parentPanelCategoryKey)) {
-			int notificationsCount = panelApp.getNotificationsCount(user);
+		for (PanelApp panelApp :
+				getPanelApps(
+					parentPanelCategoryKey, permissionChecker, group)) {
 
-			try {
-				if ((notificationsCount > 0) &&
-					panelApp.isShow(permissionChecker, group)) {
-
-					count += notificationsCount;
-				}
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
+			count += panelApp.getNotificationsCount(user);
 		}
 
 		return count;

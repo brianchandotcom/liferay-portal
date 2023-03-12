@@ -79,17 +79,8 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 	public Collection<PanelApp> getPanelApps(PanelCategory panelCategory)
 		throws PortalException {
 
-		Collection<PanelApp> panelApps = new ArrayList<>();
-
-		for (PanelApp panelApp :
-				_panelAppRegistry.getPanelApps(panelCategory.getKey())) {
-
-			if (panelApp.isShow(_permissionChecker, _group)) {
-				panelApps.add(panelApp);
-			}
-		}
-
-		return panelApps;
+		return _panelAppRegistry.getPanelApps(
+			panelCategory.getKey(), _permissionChecker, _group);
 	}
 
 	public Iterable<PanelCategory> getPanelCategories() throws PortalException {

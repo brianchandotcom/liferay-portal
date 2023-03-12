@@ -441,8 +441,7 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	private List<AssetListEntryAssetEntryRel> _getAssetListEntryAssetEntryRels(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds, int start,
-		int end) {
+		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
 
 		if (_assetListConfiguration.combineAssetsFromAllSegmentsManual()) {
 			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
@@ -473,7 +472,7 @@ public class AssetListAssetEntryProviderImpl
 				new long[] {
 					_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds)
 				},
-				start, end);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	private String[] _getAssetTagNames(UnicodeProperties unicodeProperties) {
@@ -830,9 +829,7 @@ public class AssetListAssetEntryProviderImpl
 		int start, int end) {
 
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_getAssetListEntryAssetEntryRels(
-				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+			_getAssetListEntryAssetEntryRels(assetListEntry, segmentsEntryIds);
 
 		if (ListUtil.isEmpty(assetListEntryAssetEntryRels)) {
 			return Collections.emptyList();
@@ -872,9 +869,7 @@ public class AssetListAssetEntryProviderImpl
 		long[][] assetCategoryIds, String[][] assetTagNames, String keywords) {
 
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_getAssetListEntryAssetEntryRels(
-				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+			_getAssetListEntryAssetEntryRels(assetListEntry, segmentsEntryIds);
 
 		if (ListUtil.isEmpty(assetListEntryAssetEntryRels)) {
 			return 0;

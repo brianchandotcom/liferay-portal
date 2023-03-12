@@ -68,8 +68,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.util.ArrayList;
@@ -1148,11 +1146,5 @@ public class AssetListAssetEntryProviderImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

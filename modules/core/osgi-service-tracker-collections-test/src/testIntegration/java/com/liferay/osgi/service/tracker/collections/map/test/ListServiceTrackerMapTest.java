@@ -601,8 +601,13 @@ public class ListServiceTrackerMapTest {
 	protected ServiceTrackerMap<String, List<TrackedOne>>
 		createServiceTrackerMap(BundleContext bundleContext) {
 
-		return ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, TrackedOne.class, "target");
+		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, TrackedOne.class, "target");
+
+		serviceTrackerMap.keySet();
+
+		return serviceTrackerMap;
 	}
 
 	protected ServiceTrackerMap<String, List<TrackedOne>>
@@ -610,9 +615,14 @@ public class ListServiceTrackerMapTest {
 			BundleContext bundleContext,
 			Comparator<ServiceReference<TrackedOne>> comparator) {
 
-		return ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, TrackedOne.class, null,
-			new PropertyServiceReferenceMapper<>("target"), comparator);
+		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, TrackedOne.class, null,
+				new PropertyServiceReferenceMapper<>("target"), comparator);
+
+		serviceTrackerMap.keySet();
+
+		return serviceTrackerMap;
 	}
 
 	protected ServiceTrackerMap<String, List<TrackedOne>>
@@ -620,10 +630,15 @@ public class ListServiceTrackerMapTest {
 			ServiceTrackerMapListener<String, TrackedOne, List<TrackedOne>>
 				serviceTrackerMapListener) {
 
-		return ServiceTrackerMapFactory.openMultiValueMap(
-			_bundleContext, TrackedOne.class, null,
-			new PropertyServiceReferenceMapper<>("target"),
-			serviceTrackerMapListener);
+		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				_bundleContext, TrackedOne.class, null,
+				new PropertyServiceReferenceMapper<>("target"),
+				serviceTrackerMapListener);
+
+		serviceTrackerMap.keySet();
+
+		return serviceTrackerMap;
 	}
 
 	protected ServiceRegistration<TrackedOne> registerService(

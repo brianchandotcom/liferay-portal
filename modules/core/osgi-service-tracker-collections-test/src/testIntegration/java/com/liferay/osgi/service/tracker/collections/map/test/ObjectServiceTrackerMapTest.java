@@ -727,6 +727,8 @@ public class ObjectServiceTrackerMapTest {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, TrackedOne.class, "target");
 
+		_serviceTrackerMap.keySet();
+
 		return _serviceTrackerMap;
 	}
 

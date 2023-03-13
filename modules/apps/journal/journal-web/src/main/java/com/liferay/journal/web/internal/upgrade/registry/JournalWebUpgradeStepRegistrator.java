@@ -14,10 +14,14 @@
 
 package com.liferay.journal.web.internal.upgrade.registry;
 
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
+import com.liferay.journal.web.internal.upgrade.v1_1_0.MenuFavItemPortalPreferenceValuesUpgradeProcess;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,9 +54,23 @@ public class JournalWebUpgradeStepRegistrator
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.journal.web.configuration.JournalWebConfiguration",
 				JournalWebConfiguration.class.getName()));
+
+		registry.register(
+			"1.0.1", "1.1.0",
+			new MenuFavItemPortalPreferenceValuesUpgradeProcess(
+				_classNameLocalService, _ddmStructureLocalService, _portal));
 	}
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

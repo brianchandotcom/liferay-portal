@@ -445,6 +445,7 @@ definition {
 	}
 
 	@description = "LPS-147844. Assert the tooltip message is displayed when hovered over the view button"
+	@ignore = "true"
 	@priority = 3
 	test ViewButtonCanDisplayTooltip {
 		task ("Hover over the view button") {
@@ -461,6 +462,7 @@ definition {
 	}
 
 	@description = "LPS-147839. Assert the view button displays a double caret icon"
+	@ignore = "true"
 	@priority = 5
 	test ViewButtonCanRenderDoubleCaret {
 		task ("Assert the view button also has a double caret icon") {

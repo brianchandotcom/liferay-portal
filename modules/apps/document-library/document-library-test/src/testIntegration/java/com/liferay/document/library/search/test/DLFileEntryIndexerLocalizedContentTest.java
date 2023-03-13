@@ -49,7 +49,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -92,18 +91,8 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		List<String> contentStrings = new ArrayList<>(
 			Collections.singletonList("content_ja_JP"));
 
-		String word1 = "新規";
-		String word2 = "作成";
-
-		Stream.of(
-			word1, word2
-		).forEach(
-			searchTerm -> {
-				Document document = _search(searchTerm, LocaleUtil.JAPAN);
-
-				assertLocalization(contentStrings, document);
-			}
-		);
+		assertLocalization(contentStrings, _search("新規", LocaleUtil.JAPAN));
+		assertLocalization(contentStrings, _search("作成", LocaleUtil.JAPAN));
 	}
 
 	@Test
@@ -118,18 +107,8 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		List<String> contentStrings = new ArrayList<>(
 			Collections.singletonList("content_ja_JP"));
 
-		String word1 = "新規";
-		String word2 = "作成";
-
-		Stream.of(
-			word1, word2
-		).forEach(
-			searchTerm -> {
-				Document document = _search(searchTerm, LocaleUtil.JAPAN);
-
-				assertLocalization(contentStrings, document);
-			}
-		);
+		assertLocalization(contentStrings, _search("新規", LocaleUtil.JAPAN));
+		assertLocalization(contentStrings, _search("作成", LocaleUtil.JAPAN));
 	}
 
 	@Test

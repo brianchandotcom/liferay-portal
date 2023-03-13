@@ -1,0 +1,14 @@
+[
+	{
+		"active": true,
+		"externalReferenceCode": "MDF Request Total Amount Template",
+		"label": {
+			"en_US": "Notification Request Template Action"
+		},
+		"name": "NotificationRequestTemplateAction",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterAdd",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]",
+		"conditionExpression": "totalMDFRequestAmount > 15000"
+	}
+]

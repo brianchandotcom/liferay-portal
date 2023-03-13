@@ -1,0 +1,23 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"name": "MDF Request Total Amount Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "partner-portal-admin@liferay.com",
+			"fromName": {
+				"en-US": "Partner Portal"
+			},
+			"to": {
+				"en-US": "liferay@liferay.com"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "MDF Request needs the Marketing Director's Attention"
+	},
+	"type": "email"
+}

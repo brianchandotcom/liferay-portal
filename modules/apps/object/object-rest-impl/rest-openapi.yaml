@@ -71,6 +71,22 @@ components:
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
+                taxonomyCategoryBriefs:
+                    description:
+                        The categories associated with this object entry.
+                    items:
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    # @review
+                    description:
+                        A write-only field that adds `TaxonomyCategory` instances to the object entry.
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
             type: object
         Status:
             properties:
@@ -82,6 +98,34 @@ components:
                     type: string
                 label_i18n:
                     type: string
+            type: object
+        TaxonomyCategoryBrief:
+            properties:
+                embeddedTaxonomyCategory:
+                    # @review
+                    description:
+                        Optional field with the embedded taxonomy category, can be embedded with nestedFields
+                    readOnly: true
+                    type: object
+                taxonomyCategoryId:
+                    description:
+                        The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                taxonomyCategoryName:
+                    description:
+                        The category's name.
+                    readOnly: true
+                    type: string
+                taxonomyCategoryName_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized category's names.
+                    readOnly: true
+                    type: object
             type: object
 info:
     license:

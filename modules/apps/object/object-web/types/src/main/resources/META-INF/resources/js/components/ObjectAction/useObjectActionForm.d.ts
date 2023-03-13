@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 import {ActionError} from './index';
 interface UseObjectActionFormProps {
 	initialValues: Partial<ObjectAction>;

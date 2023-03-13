@@ -1305,21 +1305,10 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			var projectDir = PropsUtil.get("project.dir");
-
-			var fileContent = FileUtil.read("${projectDir}/portal-impl/src/portal.properties");
-
-			if (contains(${fileContent}, "feature.flag.LPS-162765")) {
-				AssertTextEquals(
-					locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-					value1 = "Not Found");
-			}
-			else {
-				ContentPages.viewFragmentText(
-					fragmentName = "heading",
-					id = "element-text",
-					text = 404);
-			}
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = 404);
 		}
 	}
 

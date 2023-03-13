@@ -494,6 +494,17 @@ public class DLFileEntryLocalServiceTest {
 		Assert.assertNotNull(storeUUID2);
 		Assert.assertNotEquals(storeUUID1, storeUUID2);
 
+		byte[] bytes = RandomTestUtil.randomBytes();
+
+		DLFileEntryLocalServiceUtil.updateFileEntry(
+			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.NONE,
+			dlFileEntry.getFileEntryTypeId(), Collections.emptyMap(), null,
+			new ByteArrayInputStream(bytes), bytes.length, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
 		DLFileEntryLocalServiceUtil.checkInFileEntry(
 			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
 			DLVersionNumberIncrease.NONE, StringPool.BLANK,
@@ -524,11 +535,15 @@ public class DLFileEntryLocalServiceTest {
 			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
 			dlFileEntry.getFileEntryTypeId(), serviceContext);
 
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+
+		Assert.assertEquals(
+			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
+			dlFileVersion.getVersion());
 		Assert.assertTrue(
 			DLStoreUtil.hasFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(),
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION));
+				dlFileEntry.getName(), dlFileVersion.getStoreFileName()));
 	}
 
 	@Test

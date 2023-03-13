@@ -17,6 +17,7 @@ package com.liferay.document.library.internal.upgrade.v3_2_6.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -165,6 +166,17 @@ public class DeleteStalePWCVersionsUpgradeProcessTest {
 
 	private boolean _hasPWCVersion(FileEntry fileEntry) throws PortalException {
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+
+		if (Objects.equals(
+				dlFileVersion.getVersion(),
+				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+
+			return DLStoreUtil.hasFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
+				dlFileEntry.getName(), dlFileVersion.getStoreFileName());
+		}
 
 		return DLStoreUtil.hasFile(
 			dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),

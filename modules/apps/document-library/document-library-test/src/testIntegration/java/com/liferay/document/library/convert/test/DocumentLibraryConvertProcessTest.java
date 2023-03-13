@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.content.service.DLContentLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -152,11 +153,13 @@ public class DocumentLibraryConvertProcessTest {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
 		_dlContentLocalService.getContent(
 			dlFileEntry.getCompanyId(),
 			DLFolderConstants.getDataRepositoryId(
 				dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
-			dlFileEntry.getName(), Store.VERSION_DEFAULT);
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
 	}
 
 	@Test
@@ -176,11 +179,13 @@ public class DocumentLibraryConvertProcessTest {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
 		_dlContentLocalService.getContent(
 			dlFileEntry.getCompanyId(),
 			DLFolderConstants.getDataRepositoryId(
 				dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
-			dlFileEntry.getName(), Store.VERSION_DEFAULT);
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
 	}
 
 	@Test
@@ -194,11 +199,13 @@ public class DocumentLibraryConvertProcessTest {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
 		_dlContentLocalService.getContent(
 			dlFileEntry.getCompanyId(),
 			DLFolderConstants.getDataRepositoryId(
 				dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
-			dlFileEntry.getName(), Store.VERSION_DEFAULT);
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
 	}
 
 	@Test
@@ -319,35 +326,42 @@ public class DocumentLibraryConvertProcessTest {
 
 		DLFileEntry rootDLFileEntry = (DLFileEntry)rootFileEntry.getModel();
 
+		DLFileVersion rootDLFileVersion = rootDLFileEntry.getFileVersion();
+
 		Assert.assertNotEquals(
 			delete,
 			_fileSystemStore.hasFile(
 				rootDLFileEntry.getCompanyId(),
 				rootDLFileEntry.getDataRepositoryId(),
-				rootDLFileEntry.getName(), Store.VERSION_DEFAULT));
+				rootDLFileEntry.getName(),
+				rootDLFileVersion.getStoreFileName()));
 
 		DLFileEntry folderDLFileEntry = (DLFileEntry)folderFileEntry.getModel();
+
+		DLFileVersion folderDLFileVersion = folderDLFileEntry.getFileVersion();
 
 		Assert.assertNotEquals(
 			delete,
 			_fileSystemStore.hasFile(
 				folderDLFileEntry.getCompanyId(),
 				folderDLFileEntry.getDataRepositoryId(),
-				folderDLFileEntry.getName(), Store.VERSION_DEFAULT));
+				folderDLFileEntry.getName(),
+				folderDLFileVersion.getStoreFileName()));
 
 		_dlContentLocalService.getContent(
 			folderDLFileEntry.getCompanyId(),
 			DLFolderConstants.getDataRepositoryId(
 				folderDLFileEntry.getRepositoryId(),
 				folderDLFileEntry.getFolderId()),
-			folderDLFileEntry.getName(), Store.VERSION_DEFAULT);
+			folderDLFileEntry.getName(),
+			folderDLFileVersion.getStoreFileName());
 
 		_dlContentLocalService.getContent(
 			rootDLFileEntry.getCompanyId(),
 			DLFolderConstants.getDataRepositoryId(
 				rootDLFileEntry.getRepositoryId(),
 				rootDLFileEntry.getFolderId()),
-			rootDLFileEntry.getName(), Store.VERSION_DEFAULT);
+			rootDLFileEntry.getName(), rootDLFileVersion.getStoreFileName());
 	}
 
 	private static final String _CLASS_NAME_DB_STORE =

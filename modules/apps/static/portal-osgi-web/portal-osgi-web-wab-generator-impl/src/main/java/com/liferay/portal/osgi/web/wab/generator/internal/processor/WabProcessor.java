@@ -82,6 +82,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -126,7 +127,8 @@ public class WabProcessor {
 		Properties pluginPackageProperties = _getPluginPackageProperties();
 
 		if (Objects.equals(fileExtension, "zip")) {
-			_pluginDir = _convertToClientExtensionBundleDir();
+			_pluginDir = _convertToClientExtensionBundleDir(
+				pluginPackageProperties);
 		}
 		else {
 			_pluginDir = _autoDeploy();
@@ -269,13 +271,39 @@ public class WabProcessor {
 		return autoDeploymentContext;
 	}
 
-	private File _convertToClientExtensionBundleDir() {
+	private File _convertToClientExtensionBundleDir(
+		Properties pluginPackageProperties) {
+
 		Path clientExtensionBundlePath = null;
+
+		boolean batchDetected = false;
+
+		String batchPath = pluginPackageProperties.getProperty(
+			_LIFERAY_CLIENT_EXTENSION_BATCH);
+
+		if (batchPath == null) {
+			batchPath = "batch/";
+		}
+
+		String batchPathRegex = "^".concat(batchPath);
+
+		boolean staticDetected = false;
+
+		String staticPath = pluginPackageProperties.getProperty(
+			_LIFERAY_CLIENT_EXTENSION_STATIC);
+
+		if (staticPath == null) {
+			staticPath = "static/";
+		}
+
+		String staticPathRegex = "^".concat(staticPath);
 
 		try (ZipFile zipFile = new ZipFile(_file)) {
 			clientExtensionBundlePath = Files.createTempDirectory(
 				"clientextension");
 
+			Path metatInfBatchPath = _createPath(
+				clientExtensionBundlePath, "META-INF/batch");
 			Path metatInfResourcesPath = _createPath(
 				clientExtensionBundlePath, "META-INF/resources");
 			Path osgiInfConfiguratorPath = _createPath(
@@ -289,10 +317,19 @@ public class WabProcessor {
 				String name = zipEntry.getName();
 
 				if (zipEntry.isDirectory()) {
-					if (name.startsWith("static/")) {
+					if (name.startsWith(batchPath)) {
+						Files.createDirectories(
+							metatInfBatchPath.resolve(
+								name.replaceFirst(batchPathRegex, "")));
+
+						batchDetected = true;
+					}
+					else if (name.startsWith(staticPath)) {
 						Files.createDirectories(
 							metatInfResourcesPath.resolve(
-								name.replaceAll("^static/", "")));
+								name.replaceFirst(staticPathRegex, "")));
+
+						staticDetected = true;
 					}
 				}
 				else {
@@ -303,13 +340,40 @@ public class WabProcessor {
 							zipFile.getInputStream(zipEntry),
 							osgiInfConfiguratorPath.resolve(name));
 					}
-					else if (name.startsWith("static/")) {
+					else if (name.startsWith(batchPath)) {
+						Files.copy(
+							zipFile.getInputStream(zipEntry),
+							metatInfBatchPath.resolve(
+								name.replaceFirst(batchPathRegex, "")));
+
+						batchDetected = true;
+					}
+					else if (name.startsWith(staticPath)) {
 						Files.copy(
 							zipFile.getInputStream(zipEntry),
 							metatInfResourcesPath.resolve(
-								name.replaceAll("^static/", "")));
+								name.replaceFirst(staticPathRegex, "")));
+
+						staticDetected = true;
 					}
 				}
+			}
+
+			if (batchDetected) {
+				pluginPackageProperties.setProperty(
+					_LIFERAY_CLIENT_EXTENSION_BATCH, "META-INF/batch");
+			}
+			else {
+				pluginPackageProperties.remove(_LIFERAY_CLIENT_EXTENSION_BATCH);
+			}
+
+			if (staticDetected) {
+				pluginPackageProperties.setProperty(
+					_LIFERAY_CLIENT_EXTENSION_STATIC, "META-INF/resources");
+			}
+			else {
+				pluginPackageProperties.remove(
+					_LIFERAY_CLIENT_EXTENSION_STATIC);
 			}
 		}
 		catch (IOException ioException) {
@@ -1555,6 +1619,12 @@ public class WabProcessor {
 	private static final String[] _KNOWN_PROPERTY_KEYS = {
 		"jdbc.driverClassName"
 	};
+
+	private static final String _LIFERAY_CLIENT_EXTENSION_BATCH =
+		"Liferay-Client-Extension-Batch";
+
+	private static final String _LIFERAY_CLIENT_EXTENSION_STATIC =
+		"Liferay-Client-Extension-Static";
 
 	private static final String _REQUIRE_CAPABILITY_CDI = StringBundler.concat(
 		"osgi.cdi.extension;filter:='(osgi.cdi.extension=aries.cdi.http)',",

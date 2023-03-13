@@ -41,14 +41,6 @@ const ResultsBar = ({
 		resultsBarRef.current?.focus();
 	}, [searchValue]);
 
-	const handleClick = (event) => {
-		event.preventDefault();
-
-		searchContainerRef.current?.fire('clearFilter');
-
-		window.location.href = clearResultsURL;
-	};
-
 	return (
 		<>
 			<ManagementToolbar.ResultsBar>
@@ -109,7 +101,13 @@ const ResultsBar = ({
 							searchValue
 						)}
 						className="component-link tbar-link"
-						onClick={(event) => handleClick(event)}
+						onClick={(event) => {
+							event.preventDefault();
+
+							searchContainerRef.current?.fire('clearFilter');
+
+							navigate(clearResultsURL);
+						}}
 					>
 						{Liferay.Language.get('clear')}
 					</ClayLink>

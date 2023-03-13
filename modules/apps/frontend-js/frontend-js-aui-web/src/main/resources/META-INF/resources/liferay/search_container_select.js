@@ -25,9 +25,9 @@ AUI.add(
 
 		const STR_ACTIONS_WILDCARD = '*';
 
-		const STR_CHECKBOX_ENABLED_SELECTOR = 'input[type=checkbox]:enabled';
-
 		const STR_CHECKBOX_SELECTOR = 'input[type="checkbox"]';
+
+		const STR_CHECKBOX_ENABLED_SELECTOR = `${STR_CHECKBOX_SELECTOR}:enabled`;
 
 		const STR_CHECKED = 'checked';
 
@@ -90,7 +90,7 @@ AUI.add(
 						'dd[data-selectable="true"],li[data-selectable="true"],tr[data-selectable="true"]',
 				},
 
-				searchContainerId: {
+				sessionStorageItemKey: {
 					validator: Lang.isString,
 					value: '',
 				},
@@ -156,11 +156,11 @@ AUI.add(
 				_clearSessionStorage() {
 					const instance = this;
 
-					sessionStorage.removeItem(
-						instance.get('searchContainerId') +
-							Liferay.ThemeDisplay.getUserId() +
-							'_selections'
+					const sessionStorageItemKey = instance.get(
+						'sessionStorageItemKey'
 					);
+
+					sessionStorage.removeItem(sessionStorageItemKey);
 				},
 
 				_getActions(elements) {
@@ -275,21 +275,15 @@ AUI.add(
 				_restoreFromSessionStorage(host) {
 					const instance = this;
 
-					if (
-						sessionStorage.getItem(
-							instance.get('searchContainerId') +
-								Liferay.ThemeDisplay.getUserId() +
-								'_selections'
-						)
-					) {
+					const sessionStorageItemKey = instance.get(
+						'sessionStorageItemKey'
+					);
+
+					if (sessionStorage.getItem(sessionStorageItemKey)) {
 						const container = A.one(host._getNodeToParse());
 
 						const selections = sessionStorage
-							.getItem(
-								instance.get('searchContainerId') +
-									Liferay.ThemeDisplay.getUserId() +
-									'_selections'
-							)
+							.getItem(sessionStorageItemKey)
 							.split(',');
 
 						const itemName = host
@@ -327,24 +321,20 @@ AUI.add(
 				_updateSessionWithSelections() {
 					const instance = this;
 
+					const sessionStorageItemKey = instance.get(
+						'sessionStorageItemKey'
+					);
+
 					let selectedItems = [];
 
 					if (instance.getAllSelectedElements().size() > 0) {
 						selectedItems = instance.getAllSelectedElements().val();
 					}
 
-					if (
-						sessionStorage.getItem(
-							instance.get('searchContainerId') +
-								Liferay.ThemeDisplay.getUserId() +
-								'_selections'
-						)
-					) {
+					if (sessionStorage.getItem(sessionStorageItemKey)) {
 						if (selectedItems.length) {
 							sessionStorage.setItem(
-								instance.get('searchContainerId') +
-									Liferay.ThemeDisplay.getUserId() +
-									'_selections',
+								sessionStorageItemKey,
 								selectedItems
 							);
 						}
@@ -354,9 +344,7 @@ AUI.add(
 					}
 					else if (selectedItems.length) {
 						sessionStorage.setItem(
-							instance.get('searchContainerId') +
-								Liferay.ThemeDisplay.getUserId() +
-								'_selections',
+							sessionStorageItemKey,
 							selectedItems
 						);
 					}
@@ -398,7 +386,12 @@ AUI.add(
 						hostContentBox.getData('bulkSelection')
 					);
 
-					instance.set('searchContainerId', host.get('id'));
+					instance.set(
+						'sessionStorageItemKey',
+						`${host.get(
+							'id'
+						)}${themeDisplay.getUserId()}_selections`
+					);
 
 					const toggleRowFn = A.bind(
 						'_onClickRowSelector',
@@ -453,8 +446,7 @@ AUI.add(
 							if (
 								document
 									.getElementById(
-										instance.get('searchContainerId') +
-											'PageIteratorBottom'
+										host.get('id') + 'PageIteratorBottom'
 									)
 									.contains(document.activeElement)
 							) {

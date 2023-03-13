@@ -103,11 +103,16 @@ public class EPNManager {
 					locale, "enterprise-product-notification-body[" + key + "]",
 					new String[] {
 						String.format(
-							"<a class=\"text-decoration-underline\" " +
-								"href=\"%s\" target=\"_blank\">",
+							StringBundler.concat(
+								"<a class=\"lfr-portal-tooltip ",
+								"text-decoration-underline\" data-title=\"",
+								_language.get(locale, "opens-new-window"),
+								"\" href=\"%s\" target=\"_blank\">"),
 							"https://learn.liferay.com/" +
 								keyValuePair.getValue()),
-						"</a>",
+						"<span class=\"sr-only\">" +
+							_language.get(locale, "opens-new-window") +
+								"</span></a>",
 						"<a class=\"text-decoration-underline\" " +
 							"href=\"mailto:sales@liferay.com\">" +
 								"sales@liferay.com</a>"

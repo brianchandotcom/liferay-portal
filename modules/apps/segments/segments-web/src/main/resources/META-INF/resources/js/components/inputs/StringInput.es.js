@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import propTypes from 'prop-types';
 import React from 'react';
 
-import {unescapeSingleQuotes} from '../../utils/odata.es';
+import {unescapeSingleQuotes} from '../../utils/odata';
 class StringInput extends React.Component {
 	static propTypes = {
 		disabled: propTypes.bool,

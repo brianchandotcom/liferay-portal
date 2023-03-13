@@ -12,12 +12,24 @@
  * details.
  */
 
+import type {Conjunction, PropertyType} from "../js/utils/constants";
+
+export interface Property {
+	label: string;
+	name: string;
+	type: PropertyType;
+}
+
 export interface CriteriaItem {
+	displayValue?: string;
 	operatorName: string;
 	propertyName: string;
+	type?: PropertyType;
 	value: string;
 }
 
 export interface Criteria {
-	items: CriteriaItem[];
+	conjunctionName: Conjunction;
+	groupId: string,
+	items: Array<Criteria | CriteriaItem>;
 }

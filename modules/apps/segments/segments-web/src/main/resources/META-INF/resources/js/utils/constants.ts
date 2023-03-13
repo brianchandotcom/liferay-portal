@@ -21,6 +21,8 @@ export const CONJUNCTIONS = {
 	OR: 'or',
 } as const;
 
+export type Conjunction = typeof CONJUNCTIONS[keyof typeof CONJUNCTIONS];
+
 export const FUNCTIONAL_OPERATORS = {
 	CONTAINS: 'contains',
 } as const;
@@ -52,6 +54,8 @@ export const PROPERTY_TYPES = {
 	INTEGER: 'integer',
 	STRING: 'string',
 } as const;
+
+export type PropertyType = typeof PROPERTY_TYPES[keyof typeof PROPERTY_TYPES];
 
 /**
  * Constants for CriteriaBuilder component.

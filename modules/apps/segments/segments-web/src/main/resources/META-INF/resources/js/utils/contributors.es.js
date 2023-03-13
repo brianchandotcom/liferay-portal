@@ -13,7 +13,7 @@
  */
 
 import {CONJUNCTIONS, SUPPORTED_CONJUNCTIONS} from './constants';
-import {buildQueryString} from './odata.es';
+import {buildQueryString} from './odata';
 
 /**
  * Produces a list of Contributors

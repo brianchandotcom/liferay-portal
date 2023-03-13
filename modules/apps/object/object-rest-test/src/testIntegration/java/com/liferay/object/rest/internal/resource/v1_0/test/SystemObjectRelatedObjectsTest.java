@@ -263,7 +263,7 @@ public class SystemObjectRelatedObjectsTest {
 		JSONObject objectEntryJSONObject = jsonObject.put(
 			objectRelationship.getName(),
 			_createObjectEntriesJSONArray(
-				_OBJECT_FIELD_NAME,
+				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME,
 				new String[] {
 					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
 				}));
@@ -271,10 +271,11 @@ public class SystemObjectRelatedObjectsTest {
 		jsonObject = HTTPTestUtil.invoke(
 			objectEntryJSONObject.toString(), _getLocation(), Http.Method.POST);
 
-		String objectEntryId = jsonObject.getString("id");
+		String systemObjectEntryId = jsonObject.getString("id");
 
 		jsonObject = HTTPTestUtil.invoke(
-			null, _getLocation(objectEntryId, objectRelationship.getName()),
+			null,
+			_getLocation(systemObjectEntryId, objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
@@ -311,7 +312,9 @@ public class SystemObjectRelatedObjectsTest {
 			objectRelationship.getName(),
 			JSONFactoryUtil.createJSONObject(
 				JSONUtil.put(
-					"externalReferenceCode", _ERC_VALUE
+					_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
 				).toString()));
 
 		jsonObject = HTTPTestUtil.invoke(
@@ -332,7 +335,11 @@ public class SystemObjectRelatedObjectsTest {
 					StringUtil.replaceLast(
 						_objectDefinition.getPKObjectFieldName(), "Id",
 						"ERC"))),
-			_ERC_VALUE);
+			_ERC_VALUE_1);
+
+		_assertObjectEntryField(
+			_getObjectEntryByExternalReferenceCodeJSONObject(_ERC_VALUE_1),
+			_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1);
 	}
 
 	@Test
@@ -353,7 +360,7 @@ public class SystemObjectRelatedObjectsTest {
 		JSONObject objectEntryJSONObject = jsonObject.put(
 			objectRelationship.getName(),
 			_createObjectEntriesJSONArray(
-				_OBJECT_FIELD_NAME,
+				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME,
 				new String[] {
 					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
 				}));
@@ -361,10 +368,11 @@ public class SystemObjectRelatedObjectsTest {
 		jsonObject = HTTPTestUtil.invoke(
 			objectEntryJSONObject.toString(), _getLocation(), Http.Method.POST);
 
-		String objectEntryId = jsonObject.getString("id");
+		String systemObjectEntryId = jsonObject.getString("id");
 
 		jsonObject = HTTPTestUtil.invoke(
-			null, _getLocation(objectEntryId, objectRelationship.getName()),
+			null,
+			_getLocation(systemObjectEntryId, objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
@@ -413,6 +421,192 @@ public class SystemObjectRelatedObjectsTest {
 			postJSONObject.getString("status"));
 	}
 
+	@Test
+	public void testPutCustomObjectEntryWithNestedCustomObjectEntriesInManyToManyRelationship()
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_userSystemObjectDefinition, _objectDefinition,
+				_user.getUserId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		UserAccount userAccount = _randomUserAccount();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userAccount.toString());
+
+		JSONObject objectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			_createObjectEntriesJSONArray(
+				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME,
+				new String[] {
+					RandomTestUtil.randomString(), RandomTestUtil.randomString()
+				}));
+
+		jsonObject = HTTPTestUtil.invoke(
+			objectEntryJSONObject.toString(), _getLocation(), Http.Method.POST);
+
+		String systemObjectEntryId = jsonObject.getString("id");
+
+		UserAccount newUserAccount = _randomUserAccount();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			newUserAccount.toString());
+
+		JSONObject newObjectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			_createObjectEntriesJSONArray(
+				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME,
+				new String[] {
+					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
+				}));
+
+		HTTPTestUtil.invoke(
+			newObjectEntryJSONObject.toString(),
+			StringBundler.concat(
+				_getLocation(), StringPool.SLASH, systemObjectEntryId),
+			Http.Method.PUT);
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			_getLocation(systemObjectEntryId, objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+			objectRelationship.getName());
+
+		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
+
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(1), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_2);
+	}
+
+	@Test
+	public void testPutCustomObjectEntryWithNestedCustomObjectEntriesInManyToOneRelationship()
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition, _userSystemObjectDefinition,
+				_user.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationships.add(objectRelationship);
+
+		UserAccount userAccount = _randomUserAccount();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userAccount.toString());
+
+		JSONObject objectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			JSONFactoryUtil.createJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				).toString()));
+
+		jsonObject = HTTPTestUtil.invoke(
+			objectEntryJSONObject.toString(), _getLocation(), Http.Method.POST);
+
+		String systemObjectEntryId = jsonObject.getString("id");
+
+		UserAccount newUserAccount = _randomUserAccount();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			newUserAccount.toString());
+
+		JSONObject newObjectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			JSONFactoryUtil.createJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				).toString()));
+
+		HTTPTestUtil.invoke(
+			newObjectEntryJSONObject.toString(),
+			StringBundler.concat(
+				_getLocation(), StringPool.SLASH, systemObjectEntryId),
+			Http.Method.PUT);
+
+		_assertObjectEntryField(
+			_getObjectEntryByExternalReferenceCodeJSONObject(_ERC_VALUE_1),
+			_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1);
+	}
+
+	@Test
+	public void testPutCustomObjectEntryWithNestedCustomObjectEntriesInOneToManyRelationship()
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_userSystemObjectDefinition, _objectDefinition,
+				_user.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		UserAccount userAccount = _randomUserAccount();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			userAccount.toString());
+
+		JSONObject objectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			_createObjectEntriesJSONArray(
+				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME,
+				new String[] {
+					RandomTestUtil.randomString(), RandomTestUtil.randomString()
+				}));
+
+		jsonObject = HTTPTestUtil.invoke(
+			objectEntryJSONObject.toString(), _getLocation(), Http.Method.POST);
+
+		String systemObjectEntryId = jsonObject.getString("id");
+
+		UserAccount newUserAccount = _randomUserAccount();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			newUserAccount.toString());
+
+		JSONObject newObjectEntryJSONObject = jsonObject.put(
+			objectRelationship.getName(),
+			_createObjectEntriesJSONArray(
+				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME,
+				new String[] {
+					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
+				}));
+
+		HTTPTestUtil.invoke(
+			newObjectEntryJSONObject.toString(),
+			StringBundler.concat(
+				_getLocation(), StringPool.SLASH, systemObjectEntryId),
+			Http.Method.PUT);
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			_getLocation(systemObjectEntryId, objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+			objectRelationship.getName());
+
+		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
+
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(1), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_2);
+	}
+
 	private ObjectRelationship _addObjectRelationship(
 			ObjectDefinition objectDefinition,
 			ObjectDefinition relatedObjectDefinition, long primaryKey1,
@@ -459,15 +653,18 @@ public class SystemObjectRelatedObjectsTest {
 	}
 
 	private JSONArray _createObjectEntriesJSONArray(
-			String objectFieldName, String[] objectFieldValues)
+			String[] externalReferenceCodeValues, String objectFieldName,
+			String[] objectFieldValues)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (String objectFieldValue : objectFieldValues) {
+		for (int i = 0; i < objectFieldValues.length; i++) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				JSONUtil.put(
-					objectFieldName, objectFieldValue
+					objectFieldName, objectFieldValues[i]
+				).put(
+					"externalReferenceCode", externalReferenceCodeValues[i]
 				).toString());
 
 			jsonArray.put(jsonObject);
@@ -493,6 +690,18 @@ public class SystemObjectRelatedObjectsTest {
 		return StringBundler.concat(
 			_getLocation(), StringPool.SLASH, userId, "?nestedFields=",
 			objectRelationshipName);
+	}
+
+	private JSONObject _getObjectEntryByExternalReferenceCodeJSONObject(
+			String externalReferenceCode)
+		throws Exception {
+
+		return HTTPTestUtil.invoke(
+			null,
+			com.liferay.portal.kernel.util.StringBundler.concat(
+				_objectDefinition.getRESTContextPath(),
+				"/by-external-reference-code/", externalReferenceCode),
+			Http.Method.GET);
 	}
 
 	private UserAccount _randomUserAccount() throws Exception {
@@ -547,7 +756,7 @@ public class SystemObjectRelatedObjectsTest {
 			objectRelationship.getName(),
 			JSONFactoryUtil.createJSONObject(
 				JSONUtil.put(
-					"externalReferenceCode", _ERC_VALUE
+					"externalReferenceCode", _ERC_VALUE_1
 				).toString()));
 
 		jsonObject = HTTPTestUtil.invoke(
@@ -569,7 +778,7 @@ public class SystemObjectRelatedObjectsTest {
 		JSONObject objectEntryJSONObject = jsonObject.put(
 			objectRelationship.getName(),
 			_createObjectEntriesJSONArray(
-				_OBJECT_FIELD_NAME,
+				new String[] {_ERC_VALUE_1, _ERC_VALUE_2}, _OBJECT_FIELD_NAME,
 				new String[] {
 					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
 				}));
@@ -594,7 +803,7 @@ public class SystemObjectRelatedObjectsTest {
 			objectRelationship.getName(),
 			JSONFactoryUtil.createJSONObject(
 				JSONUtil.put(
-					"externalReferenceCode", _ERC_VALUE
+					"externalReferenceCode", _ERC_VALUE_1
 				).toString()));
 
 		jsonObject = HTTPTestUtil.invoke(
@@ -603,7 +812,9 @@ public class SystemObjectRelatedObjectsTest {
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 	}
 
-	private static final String _ERC_VALUE = RandomTestUtil.randomString();
+	private static final String _ERC_VALUE_1 = RandomTestUtil.randomString();
+
+	private static final String _ERC_VALUE_2 = RandomTestUtil.randomString();
 
 	private static final String _NEW_OBJECT_FIELD_VALUE_1 =
 		"x" + RandomTestUtil.randomString();

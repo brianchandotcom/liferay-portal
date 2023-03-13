@@ -95,20 +95,21 @@ export function MenuItem({item, onMenuItemRemoved}) {
 			});
 	};
 
-	const updateMenuItemParent = (itemId, parentId) => {
-		const order = items
-			.filter((item) => item.parentSiteNavigationMenuItemId === parentId)
-			.findIndex((item) => item.siteNavigationMenuItemId === itemId);
 
-		fetch(editSiteNavigationMenuItemParentURL, {
-			body: objectToFormData({
-				[`${portletNamespace}siteNavigationMenuItemId`]: itemId,
-				[`${portletNamespace}parentSiteNavigationMenuItemId`]: parentId,
-				[`${portletNamespace}order`]: order,
-			}),
-			method: 'POST',
+	const updateMenuItemParent = (itemId, parentId) => {
+		const order = getOrder({
+			items,
+			parentSiteNavigationMenuItemId: parentId,
+			siteNavigationMenuItemId: itemId,
+		});
+
+		updateMenuItem({
+			editSiteNavigationMenuItemParentURL,
+			itemId,
+			order,
+			parentId,
+			portletNamespace,
 		})
-			.then((response) => response.json())
 			.then(({siteNavigationMenuItems}) => {
 				const newItems = getFlatItems(siteNavigationMenuItems);
 
@@ -347,4 +348,32 @@ function DeletionModal({
 			/>
 		</ClayModal>
 	);
+}
+
+function updateMenuItem({
+	editSiteNavigationMenuItemParentURL,
+	itemId,
+	order,
+	parentId,
+	portletNamespace,
+}) {
+	return fetch(editSiteNavigationMenuItemParentURL, {
+		body: objectToFormData({
+			[`${portletNamespace}siteNavigationMenuItemId`]: itemId,
+			[`${portletNamespace}parentSiteNavigationMenuItemId`]: parentId,
+			[`${portletNamespace}order`]: order,
+		}),
+		method: 'POST',
+	})
+		.then((response) => response.json())
+		.catch(({error}) => {
+			openToast({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
+
+			if (process.env.NODE_ENV === 'development') {
+				console.error(error);
+			}
+		});
 }

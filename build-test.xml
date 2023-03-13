@@ -11203,11 +11203,17 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</or>
 			<then>
 				<get-testcase-property property.name="aws.store.enabled" />
+				<get-testcase-property property.name="store.migration.test" />
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${aws.store.enabled}" arg2="true" />
+			<and>
+				<equals arg1="${aws.store.enabled}" arg2="true" />
+				<not>
+					<equals arg1="${store.migration.test}" arg2="true" />
+				</not>
+			</and>
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
@@ -14963,6 +14969,7 @@ mail.send.blacklist=</echo>
 		</if>
 
 		<get-testcase-property property.name="aws.store.enabled" />
+		<get-testcase-property property.name="store.migration.test" />
 
 		<if>
 			<equals arg1="${aws.store.enabled}" arg2="true" />
@@ -14975,7 +14982,14 @@ mail.send.blacklist=</echo>
 
 				<ant antfile="build-test-aws-s3.xml" target="create-s3-bucket" />
 
-				<prepare-aws-s3-configuration />
+				<if>
+					<not>
+						<equals arg1="${store.migration.test}" arg2="true" />
+					</not>
+					<then>
+						<prepare-aws-s3-configuration />
+					</then>
+				</if>
 			</then>
 		</if>
 

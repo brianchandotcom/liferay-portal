@@ -70,6 +70,85 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.io.IOException");
 	}
 
+	@description = "Verify a data migration can be executed from the default store to AWS S3 store."
+	@priority = 3
+	test AWSS3StoreDataMigration {
+		property store.migration.test = "true";
+		property test.name.skip.portal.instance = "AWSStore#AWSS3StoreDataMigration";
+
+		task ("Given a document is added to the default store") {
+			var bucketId = PropsUtil.get("aws.bucket.id");
+			var companyId = JSONCompany.getCompanyId();
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Test Site Name",
+				site = "true");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+
+			AntCommands.runCommand("build-test-aws-s3.xml", "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+		}
+
+		task ("And given the user cannot migrate data to AWS S3 store without setting up a connection configuration") {
+			ServerAdministration.openServerAdmin();
+
+			Navigator.gotoNavItem(navItem = "Data Migration");
+
+			AssertElementNotPresent(
+				key_fieldLabel = "dl.store.impl",
+				key_value = "com.liferay.portal.store.s3.S3Store",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+		}
+
+		task ("When the user adds the configuration") {
+			AntCommands.runCommand("build-test.xml", "prepare-aws-s3-configuration -Daws.bucket.id=${bucketId}");
+
+			OSGiConfig.waitForOSGiConfig();
+
+			Refresh();
+		}
+
+		task ("Then the user can now migrate data over to the AWS S3 bucket") {
+			SelectField.select(
+				selectFieldLabel = "dl.store.impl",
+				selectFieldValue = "com.liferay.portal.store.s3.S3Store");
+		}
+
+		task ("When the user executes the data migration") {
+			Button.click(button = "Execute");
+
+			AssertTextPresent(
+				locator1 = "//body",
+				value1 = "Executing com.liferay.document.library.internal.convert.document.library.DocumentLibraryConvertProcess");
+
+			WaitForConsoleTextPresent(value1 = "Please set dl.store.impl in your portal-ext.properties to use com.liferay.portal.store.s3.S3Store");
+
+			WaitForConsoleTextPresent(value1 = "Finished conversion for com.liferay.document.library.internal.convert.document.library.DocumentLibraryConvertProcess");
+		}
+
+		task ("Then the document is migrated over from the default store to the AWS S3 store") {
+			AntCommands.runCommand("build-test-aws-s3.xml", "assert-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+		}
+
+		task ("And the user can configure the portal to use AWS S3 store without issue") {
+			Portlet.shutdownServer();
+
+			var newProperty = "dl.store.impl=com.liferay.portal.store.s3.S3Store";
+
+			AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=${newProperty}");
+
+			Portlet.startServer(deleteLiferayHome = "false");
+
+			User.firstLoginPG();
+
+			Smoke.viewWelcomeContentPage();
+		}
+	}
+
 	@priority = 5
 	test AWSS3StoreSmoke {
 		property test.name.skip.portal.instance = "AWSStore#AWSS3StoreSmoke";

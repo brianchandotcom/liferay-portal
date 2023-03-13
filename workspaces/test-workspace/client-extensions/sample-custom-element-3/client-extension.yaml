@@ -1,0 +1,18 @@
+assemble:
+    - from: dist
+      include: sample-custom-element-3/
+      into: static/
+sample-custom-element-3:
+    cssURLs:
+        - sample-custom-element-3/styles.*.css
+    friendlyURLMapping: sample-custom-element-3
+    htmlElementName: sample-custom-element-3
+    instanceable: false
+    name: Sample Custom Element 3
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - sample-custom-element-3/main.*.js
+        - sample-custom-element-3/polyfills.*.js
+        - sample-custom-element-3/runtime.*.js
+    useESM: true

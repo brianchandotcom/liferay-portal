@@ -1,0 +1,12 @@
+sample-iframe-baseball:
+    name: Baseball
+    type: iframe
+    url: https://en.wikipedia.org/wiki/Baseball
+sample-iframe-football:
+    name: Football
+    type: iframe
+    url: https://en.wikipedia.org/wiki/Football
+sample-iframe-hockey:
+    name: Hockey
+    type: iframe
+    url: https://en.wikipedia.org/wiki/Hockey

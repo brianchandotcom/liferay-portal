@@ -1,0 +1,9 @@
+// TODO Remove this file when LPS-172471 is fixed
+
+dockerDeploy {
+	destinationDir = file("${gradle.liferayWorkspace.dockerDir}/deploy")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/deploy")
+}

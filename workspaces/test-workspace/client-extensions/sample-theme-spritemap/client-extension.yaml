@@ -1,0 +1,8 @@
+assemble:
+    - from: assets
+      include: "**/*"
+      into: static
+sample-theme-spritemap:
+    name: Sample Theme Spritemap
+    type: themeSpritemap
+    url: spritemap.svg

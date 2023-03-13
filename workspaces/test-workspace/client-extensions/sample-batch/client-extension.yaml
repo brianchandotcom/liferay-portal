@@ -1,0 +1,2 @@
+assemble:
+    - include: "batch/*"

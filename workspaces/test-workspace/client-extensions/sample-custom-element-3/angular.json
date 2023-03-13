@@ -1,0 +1,101 @@
+{
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"newProjectRoot": "projects",
+	"projects": {
+		"sample-custom-element-3": {
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:browser",
+					"configurations": {
+						"development": {
+							"buildOptimizer": false,
+							"extractLicenses": false,
+							"namedChunks": true,
+							"optimization": false,
+							"sourceMap": true,
+							"vendorChunk": true
+						},
+						"production": {
+							"budgets": [
+								{
+									"maximumError": "1mb",
+									"maximumWarning": "500kb",
+									"type": "initial"
+								},
+								{
+									"maximumError": "4kb",
+									"maximumWarning": "2kb",
+									"type": "anyComponentStyle"
+								}
+							],
+							"outputHashing": "all"
+						}
+					},
+					"defaultConfiguration": "production",
+					"options": {
+						"assets": [
+							"src/favicon.ico",
+							"src/assets"
+						],
+						"index": "src/index.html",
+						"main": "src/main.ts",
+						"outputPath": "dist/sample-custom-element-3",
+						"polyfills": [
+							"zone.js"
+						],
+						"scripts": [
+						],
+						"styles": [
+							"src/styles.css"
+						],
+						"tsConfig": "tsconfig.app.json"
+					}
+				},
+				"extract-i18n": {
+					"builder": "@angular-devkit/build-angular:extract-i18n",
+					"options": {
+						"browserTarget": "sample-custom-element-3:build"
+					}
+				},
+				"serve": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"configurations": {
+						"development": {
+							"browserTarget": "sample-custom-element-3:build:development"
+						},
+						"production": {
+							"browserTarget": "sample-custom-element-3:build:production"
+						}
+					},
+					"defaultConfiguration": "development"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"assets": [
+							"src/favicon.ico",
+							"src/assets"
+						],
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						],
+						"scripts": [
+						],
+						"styles": [
+							"src/styles.css"
+						],
+						"tsConfig": "tsconfig.spec.json"
+					}
+				}
+			},
+			"prefix": "app",
+			"projectType": "application",
+			"root": "",
+			"schematics": {
+			},
+			"sourceRoot": "src"
+		}
+	},
+	"version": 1
+}

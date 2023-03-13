@@ -272,6 +272,51 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
 	}
 
+	@description = "This is a use case for LPS-177882. Can apply blueprint to blueprint options widget in a non-root portal context."
+	@priority = 4
+	test ApplyBlueprintViaBlueprintsOptionsInNonRootContext {
+		property portal.context = "liferay";
+		property search.environment.suite.exclude = "true";
+		property skip.clean-app-server-deploy-dir = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "Blueprints#ApplyBlueprintViaBlueprintsOptionsInNonRootContext";
+
+		JSONBlog.addEntry(
+			entryContent = "",
+			entryTitle = "apple apple apple");
+
+		JSONWebcontent.addWebContent(
+			content = "apple",
+			groupName = "Guest",
+			title = "WC Title");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Asset Type");
+
+		Blueprints.configureElementDropdown(
+			dropdownName = "Asset Type",
+			option = "Web Content Article");
+
+		Type(
+			elementName = "Boost Asset Type",
+			fieldLabel = "Boost",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 1000);
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchWidget(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
+	}
+
 	test ApplyBlueprintWithDefaultElement {
 		Blueprints.openBlueprintsAdmin();
 

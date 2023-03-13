@@ -132,7 +132,7 @@ public class CommerceThemeMiniumHttpHelper {
 		}
 
 		for (Layout layout : layouts) {
-			if (Objects.equals(layout.getFriendlyURL(), friendlyURL)) {
+			if (Objects.equals(friendlyURL, layout.getFriendlyURL())) {
 				return _portal.getLayoutURL(layout, themeDisplay);
 			}
 		}

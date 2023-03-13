@@ -19,7 +19,7 @@ definition {
 	var suiteName = "Suite 1";
 	var teamName = "Team 1";
 	var runName = "Option 1";
-	var taskName = "Task_1";
+	var caseResultName = "case result 1";
 	var testSiteName = "Testray 2";
 
 	setUp {
@@ -31,7 +31,7 @@ definition {
 			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
-		task ("Setup for SubtaskAPI") {
+		task ("Setup for TaskAPI") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -79,12 +79,6 @@ definition {
 				caseResultName = ${caseResultName},
 				componentName = ${componentName},
 				runName = ${runName});
-
-			JSONTestray.addTask(
-				buildName = ${buildName},
-				key = "INANALYSIS",
-				statusTask = "In Analysis",
-				taskName = ${taskName});
 		}
 
 		task ("Go to Testray Site") {
@@ -105,15 +99,13 @@ definition {
 
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "tasks",
-			objectName = ${taskName});
+			objectName = "Task_1");
 
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "routines",
 			objectName = ${routineName});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "projects",
-			objectName = ${projectName});
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
 
@@ -122,7 +114,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160724 - Verify if as an Administrator I should be able to add a task with user groups"
+	@description = "Story ID: LPS-162695 | Test Summary: Verify if as an Administrator I should be able to add a task with user groups"
 	@priority = 5
 	test AdminCanAddTaskWithUserGroups {
 		task ("Given the user add a user and UserGroups") {
@@ -149,9 +141,9 @@ definition {
 			Click(locator1 = "Button#PLUS");
 
 			TestrayTestflow.editBreadcrumb(
-				build = "Builds_1 Project",
-				project = "Projects_1 Project",
-				routine = "Routines_1 Routine");
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName});
 
 			Button.click(button = "Analyze");
 
@@ -188,15 +180,15 @@ definition {
 			WaitForPageLoad();
 
 			TestrayTestflow.assertTaskDetails(
-				build = "Builds_1 Project",
-				project = "Projects_1 Project",
-				routine = "Routines_1 Routine",
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName},
 				status = "In Analysis",
 				taskName = "Task_1");
 		}
 	}
 
-	@description = "This is a test for LPS-160726 - Verify if as an Administrator I should be able to delete a task"
+	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to delete a task"
 	@ignore = "true"
 	@priority = 5
 	test AdminCanDeleteTask {
@@ -205,18 +197,18 @@ definition {
 
 			TestrayTestflow.addTask(
 				checkCaseType = "Compile",
-				selectBuild = "Builds_1 Project",
-				selectProject = "Projects_1 Project",
-				selectRoutine = "Routines_1 Routine",
+				selectBuild = ${buildName},
+				selectProject = ${projectName},
+				selectRoutine = ${routineName},
 				taskName = "Task_1",
 				userName = "Test Test");
 
 			WaitForPageLoad();
 
 			TestrayTestflow.assertTaskDetails(
-				build = "Builds_1 Project",
-				project = "Projects_1 Project",
-				routine = "Routines_1 Routine",
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName},
 				status = "In Analysis",
 				taskName = "Task_1");
 
@@ -234,7 +226,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-171777 - Verify if as an Administrator I should be able to delete a task through the Context Menu"
+	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to delete a task through the Context Menu"
 	@priority = 5
 	test AdminCanDeleteTaskContextMenu {
 		task ("Given that the user add a Task") {
@@ -242,18 +234,18 @@ definition {
 
 			TestrayTestflow.addTask(
 				checkCaseType = "Compile",
-				selectBuild = "Builds_1 Project",
-				selectProject = "Projects_1 Project",
-				selectRoutine = "Routines_1 Routine",
+				selectBuild = ${buildName},
+				selectProject = ${projectName},
+				selectRoutine = ${routineName},
 				taskName = "Task_1",
 				userName = "Test Test");
 
 			WaitForPageLoad();
 
 			TestrayTestflow.assertTaskDetails(
-				build = "Builds_1 Project",
-				project = "Projects_1 Project",
-				routine = "Routines_1 Routine",
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName},
 				status = "In Analysis",
 				taskName = "Task_1");
 
@@ -273,7 +265,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160727 - Verify if as an Administrator I should be able to edit a task"
+	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to edit a task"
 	@priority = 5
 	test AdminCanEditTask {
 		task ("Given that the user add a Task") {
@@ -281,18 +273,18 @@ definition {
 
 			TestrayTestflow.addTask(
 				checkCaseType = "Compile",
-				selectBuild = "Builds_1 Project",
-				selectProject = "Projects_1 Project",
-				selectRoutine = "Routines_1 Routine",
+				selectBuild = ${buildName},
+				selectProject = ${projectName},
+				selectRoutine = ${routineName},
 				taskName = "Task_1",
 				userName = "Test Test");
 
 			WaitForPageLoad();
 
 			TestrayTestflow.assertTaskDetails(
-				build = "Builds_1 Project",
-				project = "Projects_1 Project",
-				routine = "Routines_1 Routine",
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName},
 				status = "In Analysis",
 				taskName = "Task_1");
 		}
@@ -308,26 +300,26 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-166561 - Verify if as an Administrator I should not be able to add a duplicate Task"
+	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Task"
 	@priority = 5
 	test AdminCanNotAddDuplicateTestflow {
-		task ("Given the user try to add a duplicate Task") {
+		task ("When the user try to add a duplicate Task") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.addTask(
 				checkCaseType = "Compile",
-				selectBuild = "Builds_1 Project",
-				selectProject = "Projects_1 Project",
-				selectRoutine = "Routines_1 Routine",
+				selectBuild = ${buildName},
+				selectProject = ${projectName},
+				selectRoutine = ${routineName},
 				taskName = "Task_1",
 				userName = "Test Test");
 
 			WaitForPageLoad();
 
 			TestrayTestflow.assertTaskDetails(
-				build = "Builds_1 Project",
-				project = "Projects_1 Project",
-				routine = "Routines_1 Routine",
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName},
 				status = "In Analysis",
 				taskName = "Task_1");
 
@@ -336,9 +328,9 @@ definition {
 			Click(locator1 = "Button#PLUS");
 
 			TestrayTestflow.editBreadcrumb(
-				build = "Builds_1 Project",
-				project = "Projects_1 Project",
-				routine = "Routines_1 Routine");
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName});
 
 			Button.click(button = "Analyze");
 		}
@@ -348,7 +340,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-171778 - Verify that as an administrator I can reanalyze an complete task"
+	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an administrator I can reanalyze an complete task"
 	@priority = 5
 	test AdminCanReanalyzeCompleteTask {
 		task ("Given that the user add a Task") {
@@ -356,18 +348,18 @@ definition {
 
 			TestrayTestflow.addTask(
 				checkCaseType = "Compile",
-				selectBuild = "Builds_1 Project",
-				selectProject = "Projects_1 Project",
-				selectRoutine = "Routines_1 Routine",
+				selectBuild = ${buildName},
+				selectProject = ${projectName},
+				selectRoutine = ${routineName},
 				taskName = "Task_1",
 				userName = "Test Test");
 
 			WaitForPageLoad();
 
 			TestrayTestflow.assertTaskDetails(
-				build = "Builds_1 Project",
-				project = "Projects_1 Project",
-				routine = "Routines_1 Routine",
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName},
 				status = "In Analysis",
 				taskName = "Task_1");
 		}
@@ -389,7 +381,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-161404 - Verify if as an Administrator I should be able to update a task's status to complete"
+	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to update a task's status to complete"
 	@priority = 5
 	test AdminCanUpdateTaskStatusToComplete {
 		task ("Given that the user add a Task") {
@@ -397,18 +389,18 @@ definition {
 
 			TestrayTestflow.addTask(
 				checkCaseType = "Compile",
-				selectBuild = "Builds_1 Project",
-				selectProject = "Projects_1 Project",
-				selectRoutine = "Routines_1 Routine",
+				selectBuild = ${buildName},
+				selectProject = ${projectName},
+				selectRoutine = ${routineName},
 				taskName = "Task_1",
 				userName = "Test Test");
 
 			WaitForPageLoad();
 
 			TestrayTestflow.assertTaskDetails(
-				build = "Builds_1 Project",
-				project = "Projects_1 Project",
-				routine = "Routines_1 Routine",
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName},
 				status = "In Analysis",
 				taskName = "Task_1");
 		}
@@ -424,7 +416,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-171780 - Verify that as an Administrator I should see the build that is associated with the task"
+	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an Administrator I should see the build that is associated with the task"
 	@priority = 4
 	test AdminCanViewAssociatedBuildInTask {
 		task ("Given that the user add a Task") {
@@ -432,18 +424,18 @@ definition {
 
 			TestrayTestflow.addTask(
 				checkCaseType = "Compile",
-				selectBuild = "Builds_1 Project",
-				selectProject = "Projects_1 Project",
-				selectRoutine = "Routines_1 Routine",
+				selectBuild = ${buildName},
+				selectProject = ${projectName},
+				selectRoutine = ${routineName},
 				taskName = "Task_1",
 				userName = "Test Test");
 
 			WaitForPageLoad();
 
 			TestrayTestflow.assertTaskDetails(
-				build = "Builds_1 Project",
-				project = "Projects_1 Project",
-				routine = "Routines_1 Routine",
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName},
 				status = "In Analysis",
 				taskName = "Task_1");
 		}
@@ -453,25 +445,25 @@ definition {
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Task_1");
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "View Associete Build");
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "View Associated Build");
 		}
 
 		task ("Then the user can redirect to the build associated with the task") {
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Builds_1 Project");
+			TestrayHeader.assertBreadcrumbTitle(key_value = ${buildName});
 		}
 	}
 
-	@description = "This is a test for LPS-168093 - Verify that the user cannot create a task without assign users"
+	@description = "Story ID: LPS-162695 | Test Summary: Verify that the user cannot create a task without assign users"
 	@priority = 4
 	test AdminCanViewRequiredAssignUsers {
-		task ("Given the user try to add a Task without User") {
+		task ("When the user try to add a Task without User") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.addTask(
 				checkCaseType = "Compile",
-				selectBuild = "Builds_1 Project",
-				selectProject = "Projects_1 Project",
-				selectRoutine = "Routines_1 Routine",
+				selectBuild = ${buildName},
+				selectProject = ${projectName},
+				selectRoutine = ${routineName},
 				taskName = "Task_1");
 		}
 
@@ -480,16 +472,16 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164153 - Verify that the user cannot create a task without Case Type"
+	@description = "Story ID: LPS-162693 | Test Summary: Verify that the user cannot create a task without Case Type"
 	@priority = 4
 	test AdminCanViewRequiredCaseType {
-		task ("Given the user try to add a Task without case type") {
+		task ("When the user try to add a Task without case type") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.addTask(
-				selectBuild = "Builds_1 Project",
-				selectProject = "Projects_1 Project",
-				selectRoutine = "Routines_1 Routine",
+				selectBuild = ${buildName},
+				selectProject = ${projectName},
+				selectRoutine = ${routineName},
 				taskName = "Task_1",
 				userName = "Test Test");
 		}
@@ -499,7 +491,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-169349 - Verify if as an Administrator I should be able view task in analysis"
+	@description = "Story ID: LPS-162693 | Test Summary: Verify if as an Administrator I should be able view task in analysis"
 	@priority = 4
 	test AdminCanViewTaskInAnalysis {
 		task ("Given the user add a Task in a different flow") {
@@ -509,11 +501,11 @@ definition {
 				numberItems = 20,
 				valuePagination = 150);
 
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 
 			Button.click(button = "Analyze");
 
@@ -539,7 +531,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-163863 - Verify that As an administrator can remove users from the context menu"
+	@description = "Story ID: LPS-162693 | Test Summary: Verify that As an administrator can remove users from the context menu"
 	@priority = 4
 	test CanRemoveUser {
 		task ("Given the user add a Task") {
@@ -548,9 +540,9 @@ definition {
 			Click(locator1 = "Button#PLUS");
 
 			TestrayTestflow.editBreadcrumb(
-				build = "Builds_1 Project",
-				project = "Projects_1 Project",
-				routine = "Routines_1 Routine");
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName});
 
 			Button.click(button = "Analyze");
 
@@ -582,16 +574,16 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-163862 - Verify that the user can not create a task without name"
+	@description = "Story ID: LPS-162693 | Test Summary: Verify that the user can not create a task without name"
 	@priority = 3
 	test CanViewFieldNameRequired {
-		task ("Given the user try to add a Task without name") {
+		task ("When the user try to add a Task without name") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.addTask(
-				selectBuild = "Builds_1 Project",
-				selectProject = "Projects_1 Project",
-				selectRoutine = "Routines_1 Routine");
+				selectBuild = ${buildName},
+				selectProject = ${projectName},
+				selectRoutine = ${routineName});
 		}
 
 		task ("Then the required field message is displayed") {

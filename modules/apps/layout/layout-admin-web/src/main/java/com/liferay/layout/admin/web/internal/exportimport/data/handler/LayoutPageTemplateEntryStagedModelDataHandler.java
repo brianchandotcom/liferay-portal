@@ -379,7 +379,9 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
-		if (layoutPageTemplateEntry.isDefaultTemplate()) {
+		if (!ExportImportThreadLocal.isStagingInProcess() &&
+			layoutPageTemplateEntry.isDefaultTemplate()) {
+
 			LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.
 					fetchDefaultLayoutPageTemplateEntry(

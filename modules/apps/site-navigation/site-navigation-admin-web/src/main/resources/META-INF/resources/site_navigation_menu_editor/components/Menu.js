@@ -35,6 +35,7 @@ export function Menu() {
 
 	return (
 		<div
+			aria-orientation="vertical"
 			className="container ml-lg-auto ml-sm-0 p-3 pt-4"
 			ref={menuRef}
 			role="menubar"

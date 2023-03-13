@@ -15,18 +15,16 @@
 package com.liferay.notification.internal.scheduler;
 
 import com.liferay.notification.constants.NotificationConstants;
+import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.internal.configuration.NotificationQueueConfiguration;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
@@ -55,7 +53,9 @@ public class CheckNotificationQueueEntrySchedulerJobConfiguration
 				_notificationTypeServiceTracker.getNotificationType(
 					NotificationConstants.TYPE_EMAIL);
 
-			notificationType.sendUnsentNotifications();
+			notificationType.resendNotifications(
+				NotificationQueueEntryConstants.STATUS_FAILED,
+				NotificationConstants.TYPE_EMAIL);
 
 			long deleteInterval =
 				_notificationQueueConfiguration.deleteInterval() * Time.MINUTE;
@@ -71,28 +71,17 @@ public class CheckNotificationQueueEntrySchedulerJobConfiguration
 	}
 
 	@Override
-	public String getName() {
-		Class<?> clazz = getClass();
-
-		return StringBundler.concat(
-			clazz.getName(), StringPool.POUND, _companyId);
-	}
-
-	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
 		return TriggerConfiguration.createTriggerConfiguration(
-			_notificationQueueConfiguration.checkInterval(), TimeUnit.MINUTE);
+			15, TimeUnit.MINUTE);
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_companyId = GetterUtil.getLong(properties.get("companyId"));
-
 		_notificationQueueConfiguration =
 			(NotificationQueueConfiguration)properties.get("configuration");
 	}
 
-	private long _companyId;
 	private NotificationQueueConfiguration _notificationQueueConfiguration;
 
 	@Reference

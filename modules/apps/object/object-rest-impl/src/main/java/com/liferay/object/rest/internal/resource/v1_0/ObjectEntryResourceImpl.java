@@ -480,10 +480,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		existingObjectEntry.setProperties(
 			() -> {
-				ObjectEntry getObjectEntry = getByExternalReferenceCode(
-					existingObjectEntry.getExternalReferenceCode());
-
-				Map<String, Object> properties = getObjectEntry.getProperties();
+				Map<String, Object> properties =
+					existingObjectEntry.getProperties();
 
 				properties.putAll(objectEntry.getProperties());
 

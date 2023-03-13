@@ -442,6 +442,26 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPatchSiteScopedObject() throws Exception {
+		String newObjectFieldValue = RandomTestUtil.randomString();
+
+		JSONObject objectEntryJSONObject = JSONUtil.put(
+			_OBJECT_FIELD_NAME_1, newObjectFieldValue);
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			objectEntryJSONObject.toString(),
+			StringBundler.concat(
+				_siteScopedObjectDefinition1.getRESTContextPath(), "/scopes/",
+				String.valueOf(TestPropsValues.getGroupId()),
+				"/by-external-reference-code/",
+				_siteScopedObjectEntry1.getExternalReferenceCode()),
+			Http.Method.PATCH);
+
+		Assert.assertEquals(
+			jsonObject.getString(_OBJECT_FIELD_NAME_1), newObjectFieldValue);
+	}
+
+	@Test
 	public void testPostCustomObjectEntryWithInvalidNestedCustomObjectEntries()
 		throws Exception {
 

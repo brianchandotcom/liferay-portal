@@ -78,7 +78,8 @@ public class BatchEngineBundleTrackerTest {
 		_testProcessBatchEngineBundle("batch8", 3);
 	}
 
-	private void _testProcessBatchEngineBundle(String dirName, int expectedCount)
+	private void _testProcessBatchEngineBundle(
+			String dirName, int expectedCount)
 		throws Exception {
 
 		Bundle bundle = _bundleContext.installBundle(

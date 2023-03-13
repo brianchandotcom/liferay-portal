@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.form.web.internal.upload;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLValidator;
@@ -73,8 +72,6 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 			_folderModelResourcePermission, themeDisplay.getPermissionChecker(),
 			themeDisplay.getScopeGroupId(), folderId, ActionKeys.ADD_DOCUMENT);
 
-		long fileEntryId = 0;
-
 		String parameterName = _ADD_PARAMETER_NAME;
 
 		String fileName = uploadPortletRequest.getFileName(parameterName);
@@ -83,7 +80,6 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 			FileEntry fileEntry = _fetchFileEntry(uploadPortletRequest);
 
 			if (fileEntry != null) {
-				fileEntryId = fileEntry.getFileEntryId();
 				fileName = fileEntry.getFileName();
 				parameterName = _EDIT_PARAMETER_NAME;
 			}
@@ -105,29 +101,18 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				parameterName)) {
 
-			if (fileEntryId == 0) {
-				long repositoryId = ParamUtil.getLong(
-					uploadPortletRequest, "repositoryId");
+			long repositoryId = ParamUtil.getLong(
+				uploadPortletRequest, "repositoryId");
 
-				String uniqueFileName = _uniqueFileNameProvider.provide(
-					fileName,
-					curFileName -> _exists(
-						repositoryId, folderId, curFileName));
+			String uniqueFileName = _uniqueFileNameProvider.provide(
+				fileName,
+				curFileName -> _exists(repositoryId, folderId, curFileName));
 
-				return _dlAppService.addFileEntry(
-					null, repositoryId, folderId, uniqueFileName,
-					uploadPortletRequest.getContentType(parameterName),
-					uniqueFileName, uniqueFileName,
-					_getDescription(uploadPortletRequest), StringPool.BLANK,
-					inputStream, size, null, null,
-					_getServiceContext(uploadPortletRequest));
-			}
-
-			return _dlAppService.updateFileEntry(
-				fileEntryId, fileName,
-				uploadPortletRequest.getContentType(parameterName), fileName,
-				fileName, _getDescription(uploadPortletRequest),
-				StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC,
+			return _dlAppService.addFileEntry(
+				null, repositoryId, folderId, uniqueFileName,
+				uploadPortletRequest.getContentType(parameterName),
+				uniqueFileName, uniqueFileName,
+				_getDescription(uploadPortletRequest), StringPool.BLANK,
 				inputStream, size, null, null,
 				_getServiceContext(uploadPortletRequest));
 		}

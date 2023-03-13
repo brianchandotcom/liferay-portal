@@ -17,14 +17,12 @@ package com.liferay.segments.asah.connector.internal.criteria.contributor;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.asah.connector.internal.criteria.mapper.SegmentsCriteriaJSONObjectMapperImpl;
@@ -39,11 +37,7 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -52,7 +46,14 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Cristina González
  */
-@Component(service = {})
+@Component(
+	enabled = false,
+	property = {
+		"segments.criteria.contributor.key=" + EventSegmentsCriteriaContributor.KEY,
+		"segments.criteria.contributor.model.class.name=*"
+	},
+	service = SegmentsCriteriaContributor.class
+)
 public class EventSegmentsCriteriaContributor
 	implements SegmentsCriteriaContributor {
 
@@ -132,27 +133,6 @@ public class EventSegmentsCriteriaContributor
 		return Criteria.Type.ANALYTICS;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-171722")) {
-			_serviceRegistration = bundleContext.registerService(
-				SegmentsCriteriaContributor.class, this,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"segments.criteria.contributor.key",
-					EventSegmentsCriteriaContributor.KEY
-				).put(
-					"segments.criteria.contributor.model.class.name", "*"
-				).build());
-		}
-	}
-
-	@Deactivate
-	protected void deactivate(BundleContext bundleContext) {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
-	}
-
 	private Field.SelectEntity _getSelectEntity(PortletRequest portletRequest) {
 		try {
 			FileItemSelectorCriterion fileItemSelectorCriterion =
@@ -199,8 +179,5 @@ public class EventSegmentsCriteriaContributor
 
 	@Reference
 	private Portal _portal;
-
-	private volatile ServiceRegistration<SegmentsCriteriaContributor>
-		_serviceRegistration;
 
 }

@@ -29,7 +29,6 @@ import com.sforce.async.OperationEnum;
 import com.sforce.async.QueryResultList;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 
 import org.json.CDL;
 import org.json.JSONArray;
@@ -45,7 +44,7 @@ import org.springframework.stereotype.Service;
 public class SalesforceService {
 
 	public JSONArray getBulkObjects(String objectType, String[] objectFields)
-		throws AsyncApiException, InterruptedException, IOException {
+		throws Exception {
 
 		JobInfo job = _createJob(objectType, _bulkConnection);
 
@@ -60,7 +59,7 @@ public class SalesforceService {
 
 	private void _awaitCompletion(
 			BulkConnection connection, JobInfo job, BatchInfo batchInfo)
-		throws AsyncApiException, InterruptedException {
+		throws Exception {
 
 		while (true) {
 			BatchInfo batchInfoStatus = connection.getBatchInfo(
@@ -79,7 +78,7 @@ public class SalesforceService {
 	}
 
 	private void _closeJob(BulkConnection connection, String jobId)
-		throws AsyncApiException {
+		throws Exception {
 
 		JobInfo job = new JobInfo();
 
@@ -92,7 +91,7 @@ public class SalesforceService {
 	private BatchInfo _createBatch(
 			String objectType, String[] objectFields, BulkConnection connection,
 			JobInfo jobInfo)
-		throws AsyncApiException, IOException {
+		throws Exception {
 
 		String query = StringBundler.concat(
 			"SELECT ", StringUtil.merge(objectFields, ", "), " FROM ",
@@ -107,7 +106,7 @@ public class SalesforceService {
 	}
 
 	private JobInfo _createJob(String objectType, BulkConnection connection)
-		throws AsyncApiException {
+		throws Exception {
 
 		JobInfo job = new JobInfo();
 
@@ -121,7 +120,7 @@ public class SalesforceService {
 
 	private JSONArray _getResultJSONArray(
 			BulkConnection connection, JobInfo job, BatchInfo batchInfo)
-		throws AsyncApiException {
+		throws Exception {
 
 		QueryResultList queryResultList = connection.getQueryResultList(
 			job.getId(), batchInfo.getId());

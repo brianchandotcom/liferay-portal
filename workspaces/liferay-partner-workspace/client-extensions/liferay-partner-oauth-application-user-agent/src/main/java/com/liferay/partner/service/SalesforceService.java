@@ -17,7 +17,6 @@ package com.liferay.partner.service;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import com.sforce.async.AsyncApiException;
 import com.sforce.async.BatchInfo;
 import com.sforce.async.BatchStateEnum;
 import com.sforce.async.BulkConnection;
@@ -84,7 +83,8 @@ public class SalesforceService {
 			}
 
 			if (batchInfoStatus.getState() == BatchStateEnum.Failed) {
-				throw new AsyncApiException();
+				throw new Exception(
+					"Batch ID " + batchInfo.getId() + " has failed");
 			}
 
 			Thread.sleep(1000);

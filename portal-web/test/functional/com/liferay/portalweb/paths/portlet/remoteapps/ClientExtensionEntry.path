@@ -75,6 +75,11 @@
 	<td>//div[contains(@class, 'alert alert-dismissible alert-danger') and contains(.,'${text}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WARNING_SPECIFIC</td>
+	<td>//div[contains(@class, 'form-feedback-item') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

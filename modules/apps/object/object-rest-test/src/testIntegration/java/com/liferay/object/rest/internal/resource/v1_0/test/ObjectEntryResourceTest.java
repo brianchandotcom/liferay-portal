@@ -15,6 +15,10 @@
 package com.liferay.object.rest.internal.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -33,10 +37,13 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -92,6 +99,21 @@ public class ObjectEntryResourceTest {
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-176651", "true"
 			).build());
+
+		TaxonomyCategoryResource.Builder builder =
+			TaxonomyCategoryResource.builder();
+
+		_taxonomyCategoryResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		_assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
+			UserLocalServiceUtil.getDefaultUserId(
+				TestPropsValues.getCompanyId()),
+			TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
+			new ServiceContext());
 	}
 
 	@AfterClass
@@ -293,6 +315,47 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetObjectEntryWithTaxonomyCategories() throws Exception {
+		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
+		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory();
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, "value"
+			).put(
+				"taxonomyCategoryIds",
+				JSONUtil.putAll(
+					taxonomyCategory1.getId(), taxonomyCategory2.getId())
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+				jsonObject.getString("id"),
+			Http.Method.GET);
+
+		Assert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"taxonomyCategoryId",
+					Long.valueOf(taxonomyCategory1.getId())
+				).put(
+					"taxonomyCategoryName", taxonomyCategory1.getName()
+				),
+				JSONUtil.put(
+					"taxonomyCategoryId",
+					Long.valueOf(taxonomyCategory2.getId())
+				).put(
+					"taxonomyCategoryName", taxonomyCategory2.getName()
+				)
+			).toString(),
+			jsonObject.getJSONArray(
+				"taxonomyCategoryBriefs"
+			).toString());
+	}
+
+	@Test
 	public void testGetObjectRelationshipERCFieldNameInOneToManyRelationship()
 		throws Exception {
 
@@ -409,6 +472,60 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals("tag1", keywordsJSONArray.get(0));
 		Assert.assertEquals("tag2", keywordsJSONArray.get(1));
 		Assert.assertEquals("tag3", keywordsJSONArray.get(2));
+	}
+
+	@Test
+	public void testPatchObjectEntryWithTaxonomyCategories() throws Exception {
+		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
+		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory();
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, "value"
+			).put(
+				"taxonomyCategoryIds",
+				JSONUtil.putAll(
+					taxonomyCategory1.getId(), taxonomyCategory2.getId())
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		TaxonomyCategory taxonomyCategory3 = _addTaxonomyCategory();
+
+		jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"taxonomyCategoryIds",
+				JSONUtil.putAll(
+					taxonomyCategory1.getId(), taxonomyCategory2.getId(),
+					taxonomyCategory3.getId())
+			).toString(),
+			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+				jsonObject.getString("id"),
+			Http.Method.PATCH);
+
+		Assert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"taxonomyCategoryId",
+					Long.valueOf(taxonomyCategory1.getId())
+				).put(
+					"taxonomyCategoryName", taxonomyCategory1.getName()
+				),
+				JSONUtil.put(
+					"taxonomyCategoryId",
+					Long.valueOf(taxonomyCategory2.getId())
+				).put(
+					"taxonomyCategoryName", taxonomyCategory2.getName()
+				),
+				JSONUtil.put(
+					"taxonomyCategoryId",
+					Long.valueOf(taxonomyCategory3.getId())
+				).put(
+					"taxonomyCategoryName", taxonomyCategory3.getName()
+				)
+			).toString(),
+			jsonObject.getJSONArray(
+				"taxonomyCategoryBriefs"
+			).toString());
 	}
 
 	@Test
@@ -880,6 +997,28 @@ public class ObjectEntryResourceTest {
 		return objectRelationship;
 	}
 
+	private TaxonomyCategory _addTaxonomyCategory() throws Exception {
+		return _taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+			_assetVocabulary.getVocabularyId(),
+			new TaxonomyCategory() {
+				{
+					dateCreated = RandomTestUtil.nextDate();
+					dateModified = RandomTestUtil.nextDate();
+					description = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+					externalReferenceCode = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+					id = StringUtil.toLowerCase(RandomTestUtil.randomString());
+					name = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+					numberOfTaxonomyCategories = RandomTestUtil.randomInt();
+					siteId = TestPropsValues.getGroupId();
+					taxonomyCategoryUsageCount = RandomTestUtil.randomInt();
+					taxonomyVocabularyId = RandomTestUtil.randomLong();
+				}
+			});
+	}
+
 	private void _assertFilteredObjectEntries(
 			int expectedObjectEntryCount, String filter)
 		throws Exception {
@@ -1204,6 +1343,9 @@ public class ObjectEntryResourceTest {
 
 	private static final String _OBJECT_FIELD_VALUE_2 =
 		RandomTestUtil.randomString();
+
+	private static AssetVocabulary _assetVocabulary;
+	private static TaxonomyCategoryResource _taxonomyCategoryResource;
 
 	private ObjectDefinition _objectDefinition1;
 	private ObjectDefinition _objectDefinition2;

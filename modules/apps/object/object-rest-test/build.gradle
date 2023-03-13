@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.4.10"
 	testIntegrationCompile project(":apps:account:account-api")
 	testIntegrationCompile project(":apps:document-library:document-library-api")
+	testIntegrationCompile project(":apps:headless:headless-admin-taxonomy:headless-admin-taxonomy-client")
 	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-api")
 	testIntegrationCompile project(":apps:list-type:list-type-api")
 	testIntegrationCompile project(":apps:object:object-api")

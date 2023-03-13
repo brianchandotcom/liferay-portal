@@ -200,7 +200,7 @@ export default function PredefinedValuesTable({
 		};
 
 		const deletePredefinedValueField = ({itemData}: {itemData: Item}) => {
-			const name = itemData.name;
+			const {name} = itemData;
 
 			if (objectFieldsMap.get(name)?.required) {
 				openToast({

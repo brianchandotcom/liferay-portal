@@ -203,7 +203,7 @@ export function sub(langKey, args, join = true) {
 
 export function dateToInternationalHuman(
 	ISOString,
-	localeKey = navigator.language
+	localeKey = Liferay.ThemeDisplay.getBCP47LanguageId()
 ) {
 	const date = new Date(ISOString);
 

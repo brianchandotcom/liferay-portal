@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.headless.delivery.dto.v1_0.Experience;
+import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
@@ -233,8 +234,11 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 	@Reference
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
-	@Reference
-	private PageDefinitionDTOConverter _pageDefinitionDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.delivery.internal.dto.v1_0.converter.PageDefinitionDTOConverter)"
+	)
+	private DTOConverter<LayoutStructure, PageDefinition>
+		_pageDefinitionDTOConverter;
 
 	@Reference
 	private Portal _portal;

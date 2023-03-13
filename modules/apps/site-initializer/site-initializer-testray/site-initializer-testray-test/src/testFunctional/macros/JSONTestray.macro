@@ -23,8 +23,8 @@ definition {
 		var runId = JSONTestraySetter.getRunId(runName = ${runName});
 
 		var caseResultId = JSONTestrayAPI.createCaseResultAPI(
-			caseResultName = ${caseResultName},
 			buildId = ${buildId},
+			caseResultName = ${caseResultName},
 			casesId = ${casesId},
 			componentId = ${componentId},
 			runId = ${runId});

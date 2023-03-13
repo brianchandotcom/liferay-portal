@@ -9,9 +9,9 @@ definition {
 	}
 
 	macro assertNotMergedSubtasks {
-			AssertElementNotPresent(
-				key_subtaskMerged = ${subtask},
-				locator1 = "TestraySubtask#VERIFY_SUBTASK_MERGED");
+		AssertElementNotPresent(
+			key_subtaskMerged = ${subtask},
+			locator1 = "TestraySubtask#VERIFY_SUBTASK_MERGED");
 	}
 
 	macro goToSubtask {

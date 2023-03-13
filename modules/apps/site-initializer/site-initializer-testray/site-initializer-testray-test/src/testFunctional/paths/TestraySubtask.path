@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>SUBTASK_DETAILS</td>
-	<td>//span[contains (text(), '${key_status}')]//following::span[contains(@class,'sticker-overlay')]//following::span[contains(text(),'${key_userName}')]//following::td[text()='${key_updated}']//following::a[text()='${key_issues}']//following::td[text()='${key_comment}']//following::td[text()='${key_score}']</td>
+	<td>//span[contains (text(), '${key_status}')]//following::span[contains(@class,'sticker-overlay')]//following::span[contains(text(),'${key_userName}')]//following::td[text()='${key_updated}']//following::a[text()='${key_issues}']//following::cite[text()='${key_comment}']//following::td[text()='${key_score}']</td>
 	<td></td>
 </tr>
 </tbody>

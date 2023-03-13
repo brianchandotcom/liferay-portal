@@ -50,6 +50,10 @@ public class MenuFavItemPortalPreferenceValuesUpgradeProcess
 		Map<String, Map<Long, Long>> ddmStructureKeysMap =
 			new ConcurrentHashMap<>();
 
+		String keyPrefix = "journal-add-menu-fav-items-";
+
+		int keyPrefixLength = keyPrefix.length();
+
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
 
@@ -60,8 +64,7 @@ public class MenuFavItemPortalPreferenceValuesUpgradeProcess
 						"select portalPreferenceValueId, key_, smallValue ",
 						"from PortalPreferenceValue where ",
 						"CAST_TEXT(namespace) = '", JournalPortletKeys.JOURNAL,
-						"' and CAST_TEXT(key_) like ",
-						"'journal-add-menu-fav-items-%'")),
+						"' and CAST_TEXT(key_) like '", keyPrefix, "%'")),
 				"update PortalPreferenceValue set smallValue = ? where " +
 					"portalPreferenceValueId = ?",
 				resultSet -> new Object[] {
@@ -73,7 +76,8 @@ public class MenuFavItemPortalPreferenceValuesUpgradeProcess
 					String key = (String)values[1];
 					String ddmStructureKey = (String)values[2];
 
-					String groupIdFolderIdSuffix = key.substring(27);
+					String groupIdFolderIdSuffix = key.substring(
+						keyPrefixLength);
 
 					String[] strings = groupIdFolderIdSuffix.split(
 						StringPool.DASH);

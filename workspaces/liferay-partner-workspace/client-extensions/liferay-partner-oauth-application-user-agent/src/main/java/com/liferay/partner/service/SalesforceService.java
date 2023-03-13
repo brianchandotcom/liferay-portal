@@ -46,15 +46,22 @@ public class SalesforceService {
 	public JSONArray getBulkObjects(String objectType, String[] objectFields)
 		throws Exception {
 
-		JobInfo job = _createJob(objectType, _bulkConnection);
+		JobInfo jobInfo = new JobInfo();
+
+		jobInfo.setOperation(OperationEnum.query);
+		jobInfo.setObject(objectType);
+		jobInfo.setConcurrencyMode(ConcurrencyMode.Parallel);
+		jobInfo.setContentType(ContentType.CSV);
+
+		jobInfo = _bulkConnection.createJob(jobInfo);
 
 		BatchInfo batchInfo = _createBatch(
-			objectType, objectFields, _bulkConnection, job);
+			objectType, objectFields, _bulkConnection, jobInfo);
 
-		_closeJob(_bulkConnection, job.getId());
-		_awaitCompletion(_bulkConnection, job, batchInfo);
+		_closeJob(_bulkConnection, jobInfo.getId());
+		_awaitCompletion(_bulkConnection, jobInfo, batchInfo);
 
-		return _getResultJSONArray(_bulkConnection, job, batchInfo);
+		return _getResultJSONArray(_bulkConnection, jobInfo, batchInfo);
 	}
 
 	private void _awaitCompletion(
@@ -103,19 +110,6 @@ public class SalesforceService {
 			return connection.createBatchFromStream(
 				jobInfo, byteArrayInputStream);
 		}
-	}
-
-	private JobInfo _createJob(String objectType, BulkConnection connection)
-		throws Exception {
-
-		JobInfo job = new JobInfo();
-
-		job.setOperation(OperationEnum.query);
-		job.setObject(objectType);
-		job.setConcurrencyMode(ConcurrencyMode.Parallel);
-		job.setContentType(ContentType.CSV);
-
-		return connection.createJob(job);
 	}
 
 	private JSONArray _getResultJSONArray(

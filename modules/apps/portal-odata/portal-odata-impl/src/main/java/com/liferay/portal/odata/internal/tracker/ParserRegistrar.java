@@ -25,8 +25,11 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -85,11 +88,11 @@ public class ParserRegistrar {
 			try {
 				parserServiceRegistrations.register(
 					_bundleContext, FilterParser.class,
-					_filterParserProvider.provide(entityModel));
+					() -> _filterParserProvider.provide(entityModel));
 
 				parserServiceRegistrations.register(
 					_bundleContext, SortParser.class,
-					_sortParserProvider.provide(entityModel));
+					() -> _sortParserProvider.provide(entityModel));
 			}
 			catch (Throwable throwable) {
 				parserServiceRegistrations.unregister();
@@ -146,11 +149,30 @@ public class ParserRegistrar {
 	private static class ParserServiceRegistrations {
 
 		public <T> void register(
-			BundleContext bundleContext, Class<T> clazz, T parser) {
+			BundleContext bundleContext, Class<T> clazz,
+			Supplier<T> parserSupplier) {
 
 			ServiceRegistration<?> serviceRegistration =
 				bundleContext.registerService(
-					clazz, parser,
+					clazz,
+					new ServiceFactory<T>() {
+
+						@Override
+						public T getService(
+							Bundle bundle,
+							ServiceRegistration<T> serviceRegistration) {
+
+							return parserSupplier.get();
+						}
+
+						@Override
+						public void ungetService(
+							Bundle bundle,
+							ServiceRegistration<T> serviceRegistration,
+							T service) {
+						}
+
+					},
 					HashMapDictionaryBuilder.<String, Object>put(
 						"entity.model.name", _entityModelName
 					).build());

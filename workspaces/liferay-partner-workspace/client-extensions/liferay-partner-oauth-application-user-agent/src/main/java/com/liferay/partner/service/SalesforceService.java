@@ -46,14 +46,14 @@ public class SalesforceService {
 	public JSONArray getBulkObjects(String objectType, String[] objectFields)
 		throws Exception {
 
-		JobInfo jobInfo = new JobInfo();
+		JobInfo jobInfo1 = new JobInfo();
 
-		jobInfo.setOperation(OperationEnum.query);
-		jobInfo.setObject(objectType);
-		jobInfo.setConcurrencyMode(ConcurrencyMode.Parallel);
-		jobInfo.setContentType(ContentType.CSV);
+		jobInfo1.setOperation(OperationEnum.query);
+		jobInfo1.setObject(objectType);
+		jobInfo1.setConcurrencyMode(ConcurrencyMode.Parallel);
+		jobInfo1.setContentType(ContentType.CSV);
 
-		jobInfo = _bulkConnection.createJob(jobInfo);
+		jobInfo1 = _bulkConnection.createJob(jobInfo1);
 
 		String query = StringBundler.concat(
 			"SELECT ", StringUtil.merge(objectFields, ", "), " FROM ",
@@ -65,22 +65,29 @@ public class SalesforceService {
 				new ByteArrayInputStream(query.getBytes())) {
 
 			batchInfo = _bulkConnection.createBatchFromStream(
-				jobInfo, byteArrayInputStream);
+				jobInfo1, byteArrayInputStream);
 		}
 
-		_closeJob(_bulkConnection, jobInfo.getId());
-		_awaitCompletion(_bulkConnection, jobInfo, batchInfo);
+		JobInfo jobInfo2 = new JobInfo();
 
-		return _getResultJSONArray(_bulkConnection, jobInfo, batchInfo);
+		jobInfo2.setId(jobInfo1.getId());
+		jobInfo2.setState(JobStateEnum.Closed);
+
+		_bulkConnection.updateJob(jobInfo2);
+
+		_awaitCompletion(_bulkConnection, jobInfo2.getId(), batchInfo);
+
+		return _getResultJSONArray(
+			_bulkConnection, jobInfo2.getId(), batchInfo);
 	}
 
 	private void _awaitCompletion(
-			BulkConnection connection, JobInfo job, BatchInfo batchInfo)
+			BulkConnection connection, String jobId, BatchInfo batchInfo)
 		throws Exception {
 
 		while (true) {
 			BatchInfo batchInfoStatus = connection.getBatchInfo(
-				job.getId(), batchInfo.getId());
+				jobId, batchInfo.getId());
 
 			if (batchInfoStatus.getState() == BatchStateEnum.Completed) {
 				break;
@@ -94,23 +101,12 @@ public class SalesforceService {
 		}
 	}
 
-	private void _closeJob(BulkConnection connection, String jobId)
-		throws Exception {
-
-		JobInfo job = new JobInfo();
-
-		job.setId(jobId);
-		job.setState(JobStateEnum.Closed);
-
-		connection.updateJob(job);
-	}
-
 	private JSONArray _getResultJSONArray(
-			BulkConnection connection, JobInfo job, BatchInfo batchInfo)
+			BulkConnection connection, String jobId, BatchInfo batchInfo)
 		throws Exception {
 
 		QueryResultList queryResultList = connection.getQueryResultList(
-			job.getId(), batchInfo.getId());
+			jobId, batchInfo.getId());
 
 		String[] queryResults = queryResultList.getResult();
 
@@ -119,7 +115,7 @@ public class SalesforceService {
 		for (String resultId : queryResults) {
 			JSONTokener jsonTokener = new JSONTokener(
 				connection.getQueryResultStream(
-					job.getId(), batchInfo.getId(), resultId));
+					jobId, batchInfo.getId(), resultId));
 
 			jsonArray = CDL.toJSONArray(jsonTokener);
 		}

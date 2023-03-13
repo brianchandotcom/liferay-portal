@@ -56,7 +56,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}

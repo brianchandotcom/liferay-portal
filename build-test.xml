@@ -10850,6 +10850,10 @@ ${update.properties}</echo>
 		</if>
 	</target>
 
+	<target name="prepare-aws-s3-configuration">
+		<prepare-aws-s3-configuration />
+	</target>
+
 	<target name="prepare-database-upgrade-configuration">
 		<prepare-database-upgrade-configuration />
 	</target>

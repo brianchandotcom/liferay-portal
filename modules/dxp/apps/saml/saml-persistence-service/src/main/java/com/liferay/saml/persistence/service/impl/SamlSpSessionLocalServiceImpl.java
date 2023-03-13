@@ -173,22 +173,21 @@ public class SamlSpSessionLocalServiceImpl
 
 		List<SamlSpSession> samlSpSessions = new ArrayList<>();
 
-		List<SamlPeerBinding> samlPeerBindings =
-			_samlPeerBindingLocalService.getSamlPeerBindings(
-				companyId, false, nameIdFormat, nameIdNameQualifier,
-				nameIdValue, samlIdpEntityId);
+		for (SamlPeerBinding samlPeerBinding :
+				_samlPeerBindingLocalService.getSamlPeerBindings(
+					companyId, false, nameIdFormat, nameIdNameQualifier,
+					nameIdValue, samlIdpEntityId)) {
 
-		for (SamlPeerBinding samlPeerBinding : samlPeerBindings) {
 			samlSpSessions.addAll(
 				samlSpSessionPersistence.findBySamlPeerBindingId(
 					samlPeerBinding.getSamlPeerBindingId()));
 		}
 
-		samlPeerBindings = _samlPeerBindingLocalService.getSamlPeerBindings(
-			companyId, true, nameIdFormat, nameIdNameQualifier, nameIdValue,
-			samlIdpEntityId);
+		for (SamlPeerBinding samlPeerBinding :
+				_samlPeerBindingLocalService.getSamlPeerBindings(
+					companyId, true, nameIdFormat, nameIdNameQualifier,
+					nameIdValue, samlIdpEntityId)) {
 
-		for (SamlPeerBinding samlPeerBinding : samlPeerBindings) {
 			samlSpSessions.addAll(
 				samlSpSessionPersistence.findBySamlPeerBindingId(
 					samlPeerBinding.getSamlPeerBindingId()));

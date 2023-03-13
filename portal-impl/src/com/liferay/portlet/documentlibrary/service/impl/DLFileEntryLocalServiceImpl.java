@@ -2286,8 +2286,8 @@ public class DLFileEntryLocalServiceImpl
 					existingDLFileVersion.getChangeLog(),
 					existingDLFileVersion.getExtraSettings(),
 					existingDLFileVersion.getFileEntryTypeId(), null,
-					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-					existingDLFileVersion.getSize(),
+					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, null,
+					null, existingDLFileVersion.getSize(),
 					existingDLFileVersion.getExpirationDate(),
 					existingDLFileVersion.getReviewDate(),
 					WorkflowConstants.STATUS_DRAFT,
@@ -3349,8 +3349,8 @@ public class DLFileEntryLocalServiceImpl
 			DLFileVersion updatedFileVersion = _updateFileVersion(
 				user, dlFileVersion, sourceFileName, fileName, extension,
 				mimeType, title, description, changeLog, extraSettings,
-				fileEntryTypeId, ddmFormValuesMap, version, size,
-				expirationDate, reviewDate, dlFileVersion.getStatus(),
+				fileEntryTypeId, ddmFormValuesMap, version, file, inputStream,
+				size, expirationDate, reviewDate, dlFileVersion.getStatus(),
 				serviceContext.getModifiedDate(date), serviceContext);
 
 			// Folder
@@ -3419,8 +3419,9 @@ public class DLFileEntryLocalServiceImpl
 			String fileName, String extension, String mimeType, String title,
 			String description, String changeLog, String extraSettings,
 			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
-			String version, long size, Date expirationDate, Date reviewDate,
-			int status, Date statusDate, ServiceContext serviceContext)
+			String version, File file, InputStream inputStream, long size,
+			Date expirationDate, Date reviewDate, int status, Date statusDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		dlFileVersion.setUserId(user.getUserId());
@@ -3440,7 +3441,11 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setSize(size);
-		dlFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
+
+		if ((file != null) || (inputStream != null)) {
+			dlFileVersion.setStoreUUID(String.valueOf(UUID.randomUUID()));
+		}
+
 		dlFileVersion.setExpirationDate(expirationDate);
 		dlFileVersion.setReviewDate(reviewDate);
 		dlFileVersion.setStatus(status);

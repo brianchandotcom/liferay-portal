@@ -190,24 +190,11 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		int originalHeight = _getHeight(originalAdaptiveMedia) * 2;
 
 		for (AdaptiveMedia<AMImageProcessor> adaptiveMedia : adaptiveMedias) {
-			int width = _getWidth(adaptiveMedia);
+			if ((Math.abs(originalWidth - _getWidth(adaptiveMedia)) <= 1) &&
+				(Math.abs(originalHeight - _getHeight(adaptiveMedia)) <= 1)) {
 
-			if ((width != (originalWidth - 1)) && (width != originalWidth) &&
-				(width != (originalWidth + 1))) {
-
-				continue;
+				return adaptiveMedia;
 			}
-
-			int height = _getHeight(adaptiveMedia);
-
-			if ((height != (originalHeight - 1)) &&
-				(height != originalHeight) &&
-				(height != (originalHeight + 1))) {
-
-				continue;
-			}
-
-			return adaptiveMedia;
 		}
 
 		return null;

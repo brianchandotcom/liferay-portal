@@ -52,6 +52,74 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testChangeDefaultLayoutUtilityPageEntry() throws Exception {
+		initExport();
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry1 =
+			_addLayoutUtilityPageEntry(true, stagingGroup);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, layoutUtilityPageEntry1);
+
+		initImport();
+
+		LayoutUtilityPageEntry exportedLayoutUtilityPageEntry1 =
+			(LayoutUtilityPageEntry)readExportedStagedModel(
+				layoutUtilityPageEntry1);
+
+		LayoutUtilityPageEntry importedLayoutUtilityPageEntry1 =
+			_getImportedLayoutUtilityPageEntry(
+				exportedLayoutUtilityPageEntry1, liveGroup,
+				layoutUtilityPageEntry1);
+
+		Assert.assertTrue(
+			importedLayoutUtilityPageEntry1.isDefaultLayoutUtilityPageEntry());
+
+		initExport();
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry2 =
+			_addLayoutUtilityPageEntry(true, stagingGroup);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, layoutUtilityPageEntry2);
+
+		// We changed the default utility page entry, so we have to export
+		// the model again
+
+		layoutUtilityPageEntry1 =
+			_layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntry(
+				layoutUtilityPageEntry1.getLayoutUtilityPageEntryId());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, layoutUtilityPageEntry1);
+
+		initImport();
+
+		exportedLayoutUtilityPageEntry1 =
+			(LayoutUtilityPageEntry)readExportedStagedModel(
+				layoutUtilityPageEntry1);
+
+		importedLayoutUtilityPageEntry1 = _getImportedLayoutUtilityPageEntry(
+			exportedLayoutUtilityPageEntry1, liveGroup,
+			layoutUtilityPageEntry1);
+
+		Assert.assertFalse(
+			importedLayoutUtilityPageEntry1.isDefaultLayoutUtilityPageEntry());
+
+		LayoutUtilityPageEntry exportedLayoutUtilityPageEntry2 =
+			(LayoutUtilityPageEntry)readExportedStagedModel(
+				layoutUtilityPageEntry2);
+
+		LayoutUtilityPageEntry importedLayoutUtilityPageEntry2 =
+			_getImportedLayoutUtilityPageEntry(
+				exportedLayoutUtilityPageEntry2, liveGroup,
+				layoutUtilityPageEntry2);
+
+		Assert.assertTrue(
+			importedLayoutUtilityPageEntry2.isDefaultLayoutUtilityPageEntry());
+	}
+
+	@Test
 	public void testDefaultLayoutUtilityPageEntryAfterUpdate()
 		throws Exception {
 

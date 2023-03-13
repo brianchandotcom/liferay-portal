@@ -145,6 +145,12 @@
 	<td>//span//*[name()='svg'][contains(@class,'lexicon-icon-order-list-down')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CHANGES_CHECK_BOX</td>
+	<td>//tr[contains(@class,'table-divider') and contains(.,'${key_changeCategory}')]//following-sibling::tr[${changeOrder}]/td[4][contains(.,'${key_changeTitle}')]//preceding-sibling::td//input[@type='checkbox']
+	</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -728,6 +728,58 @@ definition {
 		}
 	}
 
+	@description = "Verify users can import JSON file with create strategy create only"
+	@priority = 3
+	test CanImportJSONFileWithCreateStrategyCreateOnly {
+		property portal.acceptance = "true";
+
+		task ("Given the user is importing a JSON file") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadDependencyFile.uploadFile(fileName = "json_account_import.json");
+
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
+		}
+
+		task ("When choosing Only Add New Records as Import Strategy and importing the file") {
+			ImportExport.selectImportStrategy(strategyType = "Only Add New Records");
+
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
+		}
+
+		task ("Then the import process should complete successfully") {
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+
+			Account.openAccountsAdmin();
+
+			Account.viewAccountDetails(
+				accountDescription = "Test Business Account Description",
+				accountName = "Test Business Account",
+				accountType = "Business",
+				externalReferenceCode = 101);
+
+			Navigator.gotoBack();
+
+			Account.viewAccountDetails(
+				accountDescription = "Test Guest Account Description",
+				accountName = "Test Guest Account",
+				accountType = "Guest",
+				externalReferenceCode = 102);
+
+			Navigator.gotoBack();
+
+			Account.viewAccountDetails(
+				accountDescription = "Test Person Account Description",
+				accountName = "Test Person Account",
+				accountType = "Person",
+				externalReferenceCode = 103);
+		}
+	}
+
 	@description = "Verify users can import entities via JSONL files"
 	@priority = 3
 	test CanImportJSONLFiles {

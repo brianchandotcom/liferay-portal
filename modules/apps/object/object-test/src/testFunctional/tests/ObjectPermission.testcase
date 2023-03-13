@@ -1053,13 +1053,13 @@ definition {
 
 		Picklist.gotoPicklists();
 
-		CreateObject.viewObject(labelName = "Picklist Test");
+		Picklist.viewPicklist(picklistName = "Picklist Test");
 
 		Picklist.assertDisabledPicklistName();
 
 		Picklist.assertDisabledSaveButton();
 
-		CreateObject.viewObject(labelName = "Picklist Item");
+		Picklist.viewPicklist(picklistName = "Picklist Item");
 
 		Picklist.assertDisabledPicklistItem(keyName = "ItemTest");
 
@@ -1561,7 +1561,7 @@ definition {
 
 		Picklist.gotoPicklists();
 
-		CreateObject.viewObject(labelName = "Picklist Test");
+		Picklist.viewPicklist(picklistName = "Picklist Test");
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 
@@ -1902,7 +1902,7 @@ definition {
 
 		Picklist.gotoPicklists();
 
-		CreateObject.viewObject(labelName = "Custom Picklist 148939");
+		Picklist.viewPicklist(picklistName = "Custom Picklist 148939");
 
 		Picklist.updatePicklistName(picklistName = "Update Custom Picklist");
 
@@ -1960,7 +1960,7 @@ definition {
 
 		Picklist.assertPicklist(picklistName = "Picklist Test");
 
-		CreateObject.viewObject(labelName = "Picklist Test");
+		Picklist.viewPicklist(picklistName = "Picklist Test");
 
 		Picklist.updatePicklistName(picklistName = "Update Picklist");
 

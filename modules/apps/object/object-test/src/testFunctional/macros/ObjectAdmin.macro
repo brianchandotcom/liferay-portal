@@ -311,12 +311,16 @@ definition {
 	}
 
 	macro addObjectSingleFieldEntryViaAPI {
-		JSONObject.addObjectSingleFieldEntry(
+		var objectEntryId = JSONObject.addObjectSingleFieldEntry(
 			fieldName = ${fieldName},
 			objectName = ${objectName},
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword},
 			value = ${value});
+
+		return ${objectEntryId};
+
+		echo(${objectEntryId});
 	}
 
 	macro addObjectStringFieldEntryViaUI {

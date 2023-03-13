@@ -28,7 +28,7 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
+	message='<%= LanguageUtil.format(request, "show-more-options-for-x",  HtmlUtil.escape(segmentsEntry.getName(locale))) %>'
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= segmentsDisplayContext.isShowUpdateAction(segmentsEntry) %>">

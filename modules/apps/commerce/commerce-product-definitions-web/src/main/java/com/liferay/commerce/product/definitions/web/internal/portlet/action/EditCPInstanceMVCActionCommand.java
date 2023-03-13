@@ -329,6 +329,8 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			CPInstance.class.getName(), actionRequest);
 
 		if (cpInstanceId > 0) {
+			cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
+
 			cpInstance = _cpInstanceService.updateCPInstance(
 				externalReferenceCode, cpInstanceId, sku, gtin,
 				manufacturerPartNumber, purchasable, width, height, depth,
@@ -336,9 +338,20 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, unspsc, discontinued, replacementCPInstanceUuid,
-				replacementCProductId, discontinuedDateMonth,
-				discontinuedDateDay, discontinuedDateYear, serviceContext);
+				neverExpire, cpInstance.isOverrideSubscriptionInfo(),
+				cpInstance.isSubscriptionEnabled(),
+				cpInstance.getSubscriptionLength(),
+				cpInstance.getSubscriptionType(),
+				cpInstance.getSubscriptionTypeSettingsProperties(),
+				cpInstance.getMaxSubscriptionCycles(),
+				cpInstance.isDeliverySubscriptionEnabled(),
+				cpInstance.getDeliverySubscriptionLength(),
+				cpInstance.getDeliverySubscriptionType(),
+				cpInstance.getDeliverySubscriptionTypeSettingsProperties(),
+				cpInstance.getDeliveryMaxSubscriptionCycles(), unspsc,
+				discontinued, replacementCPInstanceUuid, replacementCProductId,
+				discontinuedDateMonth, discontinuedDateDay,
+				discontinuedDateYear, serviceContext);
 		}
 		else {
 			long cpDefinitionId = ParamUtil.getLong(

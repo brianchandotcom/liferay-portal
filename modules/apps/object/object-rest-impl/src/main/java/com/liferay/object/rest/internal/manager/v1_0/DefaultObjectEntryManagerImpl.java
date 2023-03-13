@@ -773,6 +773,14 @@ public class DefaultObjectEntryManagerImpl
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
+		if (Validator.isNotNull(objectEntry.getTaxonomyCategoryIds()) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toArray(objectEntry.getTaxonomyCategoryIds()));
+			serviceContext.setAssetTagNames(objectEntry.getKeywords());
+		}
+
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		if (properties.get("categoryIds") != null) {

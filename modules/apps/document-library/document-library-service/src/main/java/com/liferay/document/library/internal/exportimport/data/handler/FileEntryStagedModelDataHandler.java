@@ -58,6 +58,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -101,8 +102,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -1201,17 +1200,11 @@ public class FileEntryStagedModelDataHandler
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		List<FriendlyURLEntry> friendlyURLEntries =
+		List<String> urlTitles = TransformUtil.transform(
 			_friendlyURLEntryLocalService.getFriendlyURLEntries(
 				fileEntry.getGroupId(), _portal.getClassNameId(FileEntry.class),
-				fileEntry.getFileEntryId());
-
-		Stream<FriendlyURLEntry> stream = friendlyURLEntries.stream();
-
-		Stream<String> urlTitlesStream = stream.map(
+				fileEntry.getFileEntryId()),
 			FriendlyURLEntry::getUrlTitle);
-
-		List<String> urlTitles = urlTitlesStream.collect(Collectors.toList());
 
 		List<FriendlyURLEntry> importedFriendlyURLEntries =
 			_friendlyURLEntryLocalService.getFriendlyURLEntries(

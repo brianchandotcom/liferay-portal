@@ -773,6 +773,10 @@ public class AssetListAssetEntryProviderImpl
 			return SegmentsEntryConstants.ID_DEFAULT;
 		}
 
+		if (segmentsEntryIds.length == 1) {
+			return segmentsEntryIds[0];
+		}
+
 		List<AssetListEntrySegmentsEntryRel>
 			sortedAssetListEntrySegmentsEntryRels = ListUtil.sort(
 				TransformUtil.transformToList(

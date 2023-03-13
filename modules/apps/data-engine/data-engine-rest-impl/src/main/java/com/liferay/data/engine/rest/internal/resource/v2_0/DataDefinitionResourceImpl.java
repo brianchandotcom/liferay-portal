@@ -1282,6 +1282,11 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			for (int i = 0; i < rowsJSONArray.length(); i++) {
 				JSONObject rowJSONObject = rowsJSONArray.getJSONObject(i);
 
+				if (rowJSONObject == null) {
+					rowJSONObject = _jsonFactory.createJSONObject(
+						(String)rowsJSONArray.get(i));
+				}
+
 				JSONArray columnsJSONArray = rowJSONObject.getJSONArray(
 					"columns");
 

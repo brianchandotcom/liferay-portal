@@ -77,10 +77,10 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 			ServiceReferenceMapperFactory.create(
 				bundleContext,
 				(actionExecutor, emitter) -> {
-					for (String actionExecutorLanguage :
+					for (String actionExecutorKey :
 							actionExecutor.getActionExecutorKeys()) {
 
-						emitter.emit(actionExecutorLanguage);
+						emitter.emit(actionExecutorKey);
 					}
 				}));
 	}

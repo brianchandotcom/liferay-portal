@@ -30,6 +30,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuOption;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuSubscriptionConfiguration;
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.petra.string.StringPool;
@@ -44,6 +45,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -133,6 +136,86 @@ public class SkuUtil {
 
 		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
 
+		SkuSubscriptionConfiguration skuSubscriptionConfiguration =
+			sku.getSkuSubscriptionConfiguration();
+
+		boolean deliverySubscriptionEnable = false;
+		int deliverySubscriptionLength = 1;
+		long deliverySubscriptionMaxSubscriptionCycles = 0;
+		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties =
+			null;
+		String deliverySubscriptionTypeValue = StringPool.BLANK;
+		boolean overrideSubscriptionInfo = false;
+		boolean subscriptionEnable = false;
+		int subscriptionLength = 1;
+		long subscriptionMaxSubscriptionCycles = 0;
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties = null;
+		String subscriptionTypeValue = StringPool.BLANK;
+
+		if (skuSubscriptionConfiguration != null) {
+			deliverySubscriptionEnable = GetterUtil.getBoolean(
+				skuSubscriptionConfiguration.getDeliverySubscriptionEnable(),
+				deliverySubscriptionEnable);
+			deliverySubscriptionLength = GetterUtil.getInteger(
+				skuSubscriptionConfiguration.getDeliverySubscriptionLength(),
+				deliverySubscriptionLength);
+			deliverySubscriptionMaxSubscriptionCycles = GetterUtil.getLong(
+				skuSubscriptionConfiguration.
+					getDeliverySubscriptionNumberOfLength(),
+				deliverySubscriptionMaxSubscriptionCycles);
+
+			if (Validator.isNotNull(
+					skuSubscriptionConfiguration.
+						getDeliverySubscriptionTypeSettings())) {
+
+				deliverySubscriptionTypeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.create(
+						skuSubscriptionConfiguration.
+							getDeliverySubscriptionTypeSettings(),
+						true
+					).build();
+			}
+
+			SkuSubscriptionConfiguration.DeliverySubscriptionType
+				deliverySubscriptionType =
+					skuSubscriptionConfiguration.getDeliverySubscriptionType();
+
+			if (deliverySubscriptionType != null) {
+				deliverySubscriptionTypeValue =
+					deliverySubscriptionType.getValue();
+			}
+
+			overrideSubscriptionInfo = GetterUtil.getBoolean(
+				skuSubscriptionConfiguration.getOverrideSubscriptionInfo(),
+				overrideSubscriptionInfo);
+			subscriptionEnable = GetterUtil.getBoolean(
+				skuSubscriptionConfiguration.getEnable(), subscriptionEnable);
+			subscriptionLength = GetterUtil.getInteger(
+				skuSubscriptionConfiguration.getLength(), subscriptionLength);
+			subscriptionMaxSubscriptionCycles = GetterUtil.getLong(
+				skuSubscriptionConfiguration.getNumberOfLength(),
+				subscriptionMaxSubscriptionCycles);
+
+			if (Validator.isNotNull(
+					skuSubscriptionConfiguration.
+						getSubscriptionTypeSettings())) {
+
+				subscriptionTypeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.create(
+						skuSubscriptionConfiguration.
+							getSubscriptionTypeSettings(),
+						true
+					).build();
+			}
+
+			SkuSubscriptionConfiguration.SubscriptionType subscriptionType =
+				skuSubscriptionConfiguration.getSubscriptionType();
+
+			if (subscriptionType != null) {
+				subscriptionTypeValue = subscriptionType.getValue();
+			}
+		}
+
 		return cpInstanceService.addOrUpdateCPInstance(
 			sku.getExternalReferenceCode(), cpDefinition.getCPDefinitionId(),
 			cpDefinition.getGroupId(), sku.getSku(), sku.getGtin(),
@@ -154,7 +237,13 @@ public class SkuUtil {
 			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
 			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
-			GetterUtil.get(sku.getNeverExpire(), false), sku.getUnspsc(),
+			GetterUtil.get(sku.getNeverExpire(), false),
+			overrideSubscriptionInfo, subscriptionEnable, subscriptionLength,
+			subscriptionTypeValue, subscriptionTypeSettingsUnicodeProperties,
+			subscriptionMaxSubscriptionCycles, deliverySubscriptionEnable,
+			deliverySubscriptionLength, deliverySubscriptionTypeValue,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
+			deliverySubscriptionMaxSubscriptionCycles, sku.getUnspsc(),
 			GetterUtil.get(sku.getDiscontinued(), false),
 			replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateConfig.getMonth(), discontinuedDateConfig.getDay(),

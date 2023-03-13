@@ -1,5 +1,62 @@
 definition {
 
+	macro _addCommerceOption {
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(facetable))) {
+			var facetable = "false";
+		}
+
+		if (!(isSet(required))) {
+			var required = "false";
+		}
+
+		if (!(isSet(skuContributor))) {
+			var skuContributor = "false";
+		}
+
+		var optionValues = '''
+		{
+			"key": "${key_value1}",
+			"name": {
+				"en_US": "value1"
+			}
+		},
+		{
+			"key": "${key_value2}",
+			"name": {
+				"en_US": "value2"
+			}
+		}
+		''';
+
+		var payload = '''	
+		{
+			"facetable": "${facetable}",   
+			"fieldType": "${fieldType}", 
+			"key": "${optionKey}",                          
+			"name": {
+			"en_US": "${optionName}"
+			},
+			"optionValues": [${optionValues}],
+			"required": "${required}",
+    		"skuContributor": "${skuContributor}"
+		}
+        ''';
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/options \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '${payload}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro _addCommerceProductsWithOptionValues {
 		var baseURL = ${baseURL};
 
@@ -76,6 +133,34 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '${payload}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro _assignOptionToCommerceProduct {
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
+		var optionId = CommerceJSONOptionsAPI._getCommerceOptionIdByKey(optionKey = ${optionKey});
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '[
+				{
+					"fieldType": "${fieldType}",
+					"key": "${optionKey}",
+					"name": {
+						"en_US": "${optionName}"
+					},
+					"optionId": ${optionId}
+				}
+			]'
 		''';
 
 		JSONCurlUtil.post(${curl});

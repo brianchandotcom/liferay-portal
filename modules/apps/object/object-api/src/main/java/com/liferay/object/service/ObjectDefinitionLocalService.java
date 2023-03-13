@@ -246,7 +246,7 @@ public interface ObjectDefinitionLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	public ObjectDefinition enableAccountEntryRestricted(
-			long objectDefinitionId, ObjectRelationship objectRelationship)
+			ObjectRelationship objectRelationship)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

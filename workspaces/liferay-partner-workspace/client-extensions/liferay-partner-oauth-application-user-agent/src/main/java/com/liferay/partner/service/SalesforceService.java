@@ -43,7 +43,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SalesforceService {
 
-	public JSONArray getBulkObjects(String objectType, String[] objectFields)
+	public JSONArray getBulkObjects(String[] objectFields, String objectType)
 		throws Exception {
 
 		JobInfo jobInfo1 = new JobInfo();
@@ -90,30 +90,20 @@ public class SalesforceService {
 			Thread.sleep(1000);
 		}
 
-		return _getResultJSONArray(
-			_bulkConnection, jobInfo1.getId(), batchInfo);
-	}
-
-	private JSONArray _getResultJSONArray(
-			BulkConnection connection, String jobId, BatchInfo batchInfo)
-		throws Exception {
-
-		QueryResultList queryResultList = connection.getQueryResultList(
-			jobId, batchInfo.getId());
+		QueryResultList queryResultList = _bulkConnection.getQueryResultList(
+			jobInfo1.getId(), batchInfo.getId());
 
 		String[] queryResults = queryResultList.getResult();
 
-		JSONArray jsonArray = new JSONArray();
-
-		for (String resultId : queryResults) {
+		if ((queryResults != null) && (queryResults.length == 1)) {
 			JSONTokener jsonTokener = new JSONTokener(
-				connection.getQueryResultStream(
-					jobId, batchInfo.getId(), resultId));
+				_bulkConnection.getQueryResultStream(
+					jobInfo1.getId(), batchInfo.getId(), queryResults[0]));
 
-			jsonArray = CDL.toJSONArray(jsonTokener);
+			return CDL.toJSONArray(jsonTokener);
 		}
 
-		return jsonArray;
+		return new JSONArray();
 	}
 
 	@Autowired

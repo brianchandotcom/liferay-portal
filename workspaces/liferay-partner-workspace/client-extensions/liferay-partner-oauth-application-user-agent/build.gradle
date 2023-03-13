@@ -27,6 +27,8 @@ dependencies {
 	compile group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.3"
 	compile group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.3"
 	compile group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.3"
+
+	runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.89.Final:osx-aarch_64")
 }
 
 repositories {

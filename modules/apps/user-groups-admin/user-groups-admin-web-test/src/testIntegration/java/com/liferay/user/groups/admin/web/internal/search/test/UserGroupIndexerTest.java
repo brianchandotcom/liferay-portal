@@ -124,7 +124,9 @@ public class UserGroupIndexerTest {
 			companyId);
 
 		SearchResponse searchResponse2 = searcher.search(
-			searchRequestBuilder2.size(
+			searchRequestBuilder2.emptySearchEnabled(
+				true
+			).size(
 				0
 			).build());
 

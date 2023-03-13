@@ -19,6 +19,10 @@ package com.liferay.object.constants;
  */
 public class ObjectFieldSettingConstants {
 
+	public static final String NAME_DEFAULT_VALUE = "defaultValue";
+
+	public static final String NAME_DEFAULT_VALUE_TYPE = "defaultValueType";
+
 	public static final String NAME_FILTERS = "filters";
 
 	public static final String NAME_OBJECT_DEFINITION_1_SHORT_NAME =
@@ -28,5 +32,7 @@ public class ObjectFieldSettingConstants {
 		"objectRelationshipERCObjectFieldName";
 
 	public static final String NAME_STATE_FLOW = "stateFlow";
+
+	public static final String VALUE_INPUT_AS_VALUE = "inputAsValue";
 
 }

@@ -256,6 +256,10 @@ public class ObjectEntryResourceTest {
 		_assertFilteredObjectEntries(2, "keywords/any(k:contains(k,'ag2'))");
 		_assertFilteredObjectEntries(1, "keywords/any(k:contains(k,'ag3'))");
 		_assertFilteredObjectEntries(0, "keywords/any(k:contains(k,'1234'))");
+
+		_assertFilteredObjectEntries(3, "keywords/any(k:k in ('tag1','tag2'))");
+		_assertFilteredObjectEntries(2, "keywords/any(k:k in ('tag2','tag3'))");
+		_assertFilteredObjectEntries(0, "keywords/any(k:k in ('1234','5678'))");
 	}
 
 	@Test

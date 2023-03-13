@@ -460,6 +460,14 @@ public class PredicateExpressionVisitorImpl
 	private Predicate _getInPredicate(
 		Object left, long objectDefinitionId, List<Object> rights) {
 
+		if (_isKeywords(left)) {
+			return _getKeywordsPredicate(
+				objectDefinitionId,
+				AssetTagTable.INSTANCE.name.in(
+					TransformUtil.transformToArray(
+						rights, String::valueOf, Object.class)));
+		}
+
 		return _getColumn(
 			left, objectDefinitionId
 		).in(

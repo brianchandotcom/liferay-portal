@@ -67,7 +67,7 @@ public class AMImageRequestHandler
 			return null;
 		}
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = _findAdaptiveMedia(
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia = _getAdaptiveMedia(
 			interpretedPath.first, interpretedPath.second);
 
 		if (adaptiveMedia != null) {
@@ -91,40 +91,6 @@ public class AMImageRequestHandler
 				}
 			},
 			AMImageAttributeMapping.fromFileVersion(fileVersion), null);
-	}
-
-	private AdaptiveMedia<AMImageProcessor> _findAdaptiveMedia(
-		FileVersion fileVersion,
-		AMImageAttributeMapping amImageAttributeMapping) {
-
-		try {
-			String configurationUuid = amImageAttributeMapping.getValue(
-				AMAttribute.getConfigurationUuidAMAttribute());
-
-			if (configurationUuid == null) {
-				return null;
-			}
-
-			AMImageConfigurationEntry amImageConfigurationEntry =
-				_amImageConfigurationHelper.getAMImageConfigurationEntry(
-					fileVersion.getCompanyId(), configurationUuid);
-
-			if (amImageConfigurationEntry == null) {
-				return null;
-			}
-
-			AdaptiveMedia<AMImageProcessor> adaptiveMedia = _findAdaptiveMedia(
-				fileVersion, amImageConfigurationEntry);
-
-			if (adaptiveMedia != null) {
-				return adaptiveMedia;
-			}
-
-			return _createRawAdaptiveMedia(fileVersion);
-		}
-		catch (PortalException portalException) {
-			throw new AMRuntimeException(portalException);
-		}
 	}
 
 	private AdaptiveMedia<AMImageProcessor> _findAdaptiveMedia(
@@ -172,6 +138,40 @@ public class AMImageRequestHandler
 			adaptiveMedias.sort(_getComparator(configurationWidth));
 
 			return adaptiveMedias.get(0);
+		}
+		catch (PortalException portalException) {
+			throw new AMRuntimeException(portalException);
+		}
+	}
+
+	private AdaptiveMedia<AMImageProcessor> _getAdaptiveMedia(
+		FileVersion fileVersion,
+		AMImageAttributeMapping amImageAttributeMapping) {
+
+		try {
+			String configurationUuid = amImageAttributeMapping.getValue(
+				AMAttribute.getConfigurationUuidAMAttribute());
+
+			if (configurationUuid == null) {
+				return null;
+			}
+
+			AMImageConfigurationEntry amImageConfigurationEntry =
+				_amImageConfigurationHelper.getAMImageConfigurationEntry(
+					fileVersion.getCompanyId(), configurationUuid);
+
+			if (amImageConfigurationEntry == null) {
+				return null;
+			}
+
+			AdaptiveMedia<AMImageProcessor> adaptiveMedia = _findAdaptiveMedia(
+				fileVersion, amImageConfigurationEntry);
+
+			if (adaptiveMedia != null) {
+				return adaptiveMedia;
+			}
+
+			return _createRawAdaptiveMedia(fileVersion);
 		}
 		catch (PortalException portalException) {
 			throw new AMRuntimeException(portalException);

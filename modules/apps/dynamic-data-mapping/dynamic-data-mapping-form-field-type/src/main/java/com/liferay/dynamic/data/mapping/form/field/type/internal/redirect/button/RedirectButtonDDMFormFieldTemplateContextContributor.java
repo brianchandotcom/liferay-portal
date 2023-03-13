@@ -83,20 +83,20 @@ public class RedirectButtonDDMFormFieldTemplateContextContributor
 					RequestBackedPortletURLFactoryUtil.create(
 						ddmFormFieldRenderingContext.getHttpServletRequest());
 
-				Map<String, String[]> parameterMap = new HashMap<>();
+				Map<String, String[]> parameters = new HashMap<>();
 
 				for (Object object :
 						(Object[])ddmFormField.getProperty("parameters")) {
 
 					String parameter = (String)object;
 
-					String[] parameters = parameter.split(StringPool.EQUAL);
+					String[] parameterPair = parameter.split(StringPool.EQUAL);
 
-					parameterMap.put(
-						parameters[0], new String[] {parameters[1]});
+					parameters.put(
+						parameterPair[0], new String[] {parameterPair[1]});
 				}
 
-				parameterMap.put(
+				parameters.put(
 					"mvcRenderCommandName",
 					new String[] {
 						GetterUtil.getString(
@@ -110,7 +110,7 @@ public class RedirectButtonDDMFormFieldTemplateContextContributor
 							((Object[])ddmFormField.getProperty("portletId"))
 								[0]))
 				).setParameters(
-					parameterMap
+					parameters
 				).buildString();
 			}
 		).put(

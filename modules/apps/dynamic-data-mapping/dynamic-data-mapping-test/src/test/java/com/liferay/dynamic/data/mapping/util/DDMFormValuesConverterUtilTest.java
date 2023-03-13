@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Set;
 
 import org.hamcrest.CoreMatchers;
 
@@ -72,15 +72,15 @@ public class DDMFormValuesConverterUtilTest extends BaseDDMTestCase {
 			nestedDDMFormFieldValues.toString(), 2,
 			nestedDDMFormFieldValues.size());
 
-		Stream<DDMFormFieldValue> stream = nestedDDMFormFieldValues.stream();
+		Set<String> names = new HashSet<>();
 
-		Assert.assertThat(
-			stream.map(
-				DDMFormFieldValue::getName
-			).collect(
-				Collectors.toSet()
-			),
-			CoreMatchers.hasItems("Text1", "Text2"));
+		for (DDMFormFieldValue nestedDDMFormFieldValue :
+				nestedDDMFormFieldValues) {
+
+			names.add(nestedDDMFormFieldValue.getName());
+		}
+
+		Assert.assertThat(names, CoreMatchers.hasItems("Text1", "Text2"));
 
 		Assert.assertEquals(
 			nestedDDMFormFieldValues.get(0), textDDMFormFieldValue);

@@ -449,8 +449,6 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, objectDefinition.getStatus());
 
-		_testAddObjectDefinitionWithAccountEntryRestricted(objectDefinition);
-
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
@@ -1437,15 +1435,22 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
-	private void _testAddObjectDefinitionWithAccountEntryRestricted(
-			ObjectDefinition objectDefinition2)
+	@Test
+	public void testEnableAccountEntryRestricted()
 		throws Exception {
 
-		// Creating a constraint between AccountEntry and an object definition
+		// Creating an account restriction between AccountEntry
+		// and an object definition
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
 				"AccountEntry");
+
+		User user = TestPropsValues.getUser();
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.addObjectDefinition(
+				RandomTestUtil.randomString(), user.getUserId());
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -1457,24 +1462,18 @@ public class ObjectDefinitionLocalServiceTest {
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_objectDefinitionLocalService.enableAccountEntryRestricted(
-			objectDefinition2.getObjectDefinitionId(), objectRelationship);
+		objectDefinition2 = _objectDefinitionLocalService.enableAccountEntryRestricted(
+			objectRelationship);
 
-		Assert.assertFalse(objectDefinition2.isAccountEntryRestricted());
-		Assert.assertEquals(
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			objectDefinition2.getStorageType());
+		Assert.assertTrue(objectDefinition2.isAccountEntryRestricted());
 		Assert.assertFalse(objectDefinition2.isSystem());
 
-		// Negative test - trying to create a constraint between two
+		// Negative test - trying to create an account restriction between two
 		// custom objects
-
-		String externalReferenceCode = RandomTestUtil.randomString();
-		User user = TestPropsValues.getUser();
 
 		ObjectDefinition objectDefinition3 =
 			_objectDefinitionLocalService.addObjectDefinition(
-				externalReferenceCode, user.getUserId());
+				RandomTestUtil.randomString(), user.getUserId());
 
 		objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -1488,7 +1487,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		try {
 			_objectDefinitionLocalService.enableAccountEntryRestricted(
-				objectDefinition3.getObjectDefinitionId(), objectRelationship);
+				objectRelationship);
 
 			Assert.fail();
 		}
@@ -1496,8 +1495,8 @@ public class ObjectDefinitionLocalServiceTest {
 					objectDefinitionAccountEntryRestrictedException) {
 
 			Assert.assertEquals(
-				"It is only possible to restrict custom object definition " +
-					"definition with account entry",
+				"It is only possible to restrict custom object definitions " +
+					"with account entry",
 				objectDefinitionAccountEntryRestrictedException.getMessage());
 
 			_objectDefinitionLocalService.deleteObjectDefinition(

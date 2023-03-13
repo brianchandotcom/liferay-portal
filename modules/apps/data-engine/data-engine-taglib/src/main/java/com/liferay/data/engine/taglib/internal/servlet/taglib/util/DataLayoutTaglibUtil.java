@@ -89,7 +89,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -623,38 +622,46 @@ public class DataLayoutTaglibUtil {
 	}
 
 	private void _setFieldIndexTypeNone(JSONObject jsonObject) {
-		_stream(
-			"rows",
-			rowJSONObject -> _stream(
-				"fields", null, _stream(rowJSONObject.getJSONArray("columns"))),
-			_stream(jsonObject.getJSONArray("pages"))
-		).filter(
-			fieldJSONObject -> Objects.equals(
-				fieldJSONObject.getString("fieldName"), "indexType")
-		).findFirst(
-		).ifPresent(
-			fieldJSONObject -> fieldJSONObject.put("value", "none")
-		);
-	}
+		JSONArray pageJSONArray = jsonObject.getJSONArray("pages");
 
-	private Stream<JSONObject> _stream(JSONArray jsonArray) {
-		return StreamSupport.stream(jsonArray.spliterator(), true);
-	}
+		Stream<JSONObject> stream = StreamSupport.stream(
+			pageJSONArray.spliterator(), false);
 
-	private Stream<JSONObject> _stream(
-		String key, Function<JSONObject, Stream<JSONObject>> function,
-		Stream<JSONObject> stream) {
+		stream.flatMap(
+			pageJSONObject -> {
+				JSONArray rowJSONArray = jsonObject.getJSONArray("rows");
 
-		return stream.flatMap(
-			jsonObject -> {
-				Stream<JSONObject> nestedStream = _stream(
-					jsonObject.getJSONArray(key));
+				Stream<JSONObject> rowsStream = StreamSupport.stream(
+					rowJSONArray.spliterator(), false);
 
-				if (function == null) {
-					return nestedStream;
-				}
+				return rowsStream.flatMap(
+					rowJSONObject -> {
+						JSONArray columnJSONArray = jsonObject.getJSONArray(
+							"columns");
 
-				return nestedStream.flatMap(function);
+						Stream<JSONObject> columnsStream = StreamSupport.stream(
+							columnJSONArray.spliterator(), false);
+
+						return columnsStream.flatMap(
+							columnJSONObject -> {
+								JSONArray fieldJSONArray =
+									jsonObject.getJSONArray("fields");
+
+								Stream<JSONObject> fieldsStream =
+									StreamSupport.stream(
+										fieldJSONArray.spliterator(), false);
+
+								return fieldsStream.filter(
+									fieldJSONObject -> Objects.equals(
+										fieldJSONObject.getString("fieldName"),
+										"indexType")
+								).findFirst(
+								).ifPresent(
+									fieldJSONObject -> fieldJSONObject.put(
+										"value", "none")
+								);
+							});
+					});
 			});
 	}
 

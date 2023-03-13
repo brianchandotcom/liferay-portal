@@ -377,4 +377,10 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro viewPicklist {
+		Click(
+			key_picklistName = ${picklistName},
+			locator1 = "Picklist#VIEW_PICKLIST");
+	}
+
 }

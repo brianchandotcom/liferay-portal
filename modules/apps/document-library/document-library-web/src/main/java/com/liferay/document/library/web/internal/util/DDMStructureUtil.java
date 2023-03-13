@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -28,8 +29,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Alejandro Tardín
@@ -42,25 +41,14 @@ public class DDMStructureUtil {
 		Set<Locale> locales = LanguageUtil.getAvailableLocales(
 			themeDisplay.getSiteGroupId());
 
-		Stream<Locale> stream = locales.stream();
-
-		return stream.map(
-			LanguageUtil::getLanguageId
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(locales, LanguageUtil::getLanguageId);
 	}
 
 	public static List<Long> getDDMStructureIds(
 		List<DDMStructure> ddmStructures) {
 
-		Stream<DDMStructure> stream = ddmStructures.stream();
-
-		return stream.map(
-			DDMStructure::getStructureId
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			ddmStructures, DDMStructure::getStructureId);
 	}
 
 	public static List<String> getTranslatedLanguageIds(

@@ -142,72 +142,75 @@ export function AggregationFormBase({
 		makeFetch();
 	}, [objectDefinitionExternalReferenceCode]);
 
-	useEffect(() => {
-		if (editingField && objectRelationships) {
-			const makeFetch = async () => {
-				const settings = normalizeFieldSettings(objectFieldSettings);
+	
+useEffect(() => {
+    if (editingField && objectRelationships) {
+	const makeFetch = async () => {
+		const settings = normalizeFieldSettings(objectFieldSettings);
 
-				const currentRelatedObjectRelationship = objectRelationships.find(
-					(relationship) =>
-						relationship.name === settings.objectRelationshipName
-				) as ObjectRelationship;
+		const currentRelatedObjectRelationship = objectRelationships.find(
+			(relationship) =>
+				relationship.name === settings.objectRelationshipName
+		) as ObjectRelationship;
 
-				const currentFunction = aggregationFunctions.find(
-					(aggregationFunction) =>
-						aggregationFunction.value === settings.function
-				);
+		const currentFunction = aggregationFunctions.find(
+			(aggregationFunction) =>
+				aggregationFunction.value === settings.function
+		);
 
-				const relatedFields = await API.getObjectFieldsByExternalReferenceCode(
+		if(currentRelatedObjectRelationship) {					
+			const relatedFields = await API.getObjectFieldsByExternalReferenceCode(
+				currentRelatedObjectRelationship.objectDefinitionExternalReferenceCode2
+			);
+
+			const currentSummarizeField = relatedFields.find(
+				(relatedField) =>
+					relatedField.name === settings.objectFieldName
+			) as ObjectField;
+
+			if (onRelationshipChange) {
+				onRelationshipChange(
 					currentRelatedObjectRelationship.objectDefinitionExternalReferenceCode2
 				);
+			}
 
-				const currentSummarizeField = relatedFields.find(
-					(relatedField) =>
-						relatedField.name === settings.objectFieldName
-				) as ObjectField;
+			setObjectRelationshipFields(
+				relatedFields.filter(
+					(objectField) =>
+						objectField.businessType === 'Integer' ||
+						objectField.businessType === 'LongInteger' ||
+						objectField.businessType === 'Decimal' ||
+						objectField.businessType === 'PrecisionDecimal'
+				)
+			);
 
-				if (onRelationshipChange) {
-					onRelationshipChange(
-						currentRelatedObjectRelationship.objectDefinitionExternalReferenceCode2
-					);
-				}
+			setSelectRelatedObjectRelationship(
+				currentRelatedObjectRelationship
+			);
 
-				setObjectRelationshipFields(
-					relatedFields.filter(
-						(objectField) =>
-							objectField.businessType === 'Integer' ||
-							objectField.businessType === 'LongInteger' ||
-							objectField.businessType === 'Decimal' ||
-							objectField.businessType === 'PrecisionDecimal'
+			setSelectedAggregationFunction(currentFunction);
+
+			if (currentSummarizeField) {
+				setSelectedSummarizeField(
+					getLocalizableLabel(
+						creationLanguageId2 as Liferay.Language.Locale,
+						currentSummarizeField.label,
+						currentSummarizeField.name
 					)
 				);
-
-				setSelectRelatedObjectRelationship(
-					currentRelatedObjectRelationship
-				);
-
-				setSelectedAggregationFunction(currentFunction);
-
-				if (currentSummarizeField) {
-					setSelectedSummarizeField(
-						getLocalizableLabel(
-							creationLanguageId2 as Liferay.Language.Locale,
-							currentSummarizeField.label,
-							currentSummarizeField.name
-						)
-					);
-				}
-			};
-
-			makeFetch();
+			}
 		}
-	}, [
-		creationLanguageId2,
-		editingField,
-		objectRelationships,
-		objectFieldSettings,
-		onRelationshipChange,
-	]);
+	};
+
+	makeFetch();
+    }
+}, [
+    creationLanguageId2,
+    editingField,
+    objectRelationships,
+    objectFieldSettings,
+    onRelationshipChange,
+]);
 
 	const handleChangeRelatedObjectRelationship = async (
 		objectRelationship: TObjectRelationship

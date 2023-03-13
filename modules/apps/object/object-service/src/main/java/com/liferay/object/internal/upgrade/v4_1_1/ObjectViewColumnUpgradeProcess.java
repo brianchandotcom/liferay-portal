@@ -14,14 +14,7 @@
 
 package com.liferay.object.internal.upgrade.v4_1_1;
 
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
-import java.util.Map;
 
 /**
  * @author Julián Vela
@@ -30,15 +23,13 @@ public class ObjectViewColumnUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		
 		runSQL(
 			"update ObjectViewColumn set objectFieldName = 'createDate' " +
-			"where objectFieldName = 'dateCreated'");
-		
+				"where objectFieldName = 'dateCreated'");
+
 		runSQL(
 			"update ObjectViewColumn set objectFieldName = 'modifiedDate' " +
-			"where objectFieldName = 'dateModified'");
-		
+				"where objectFieldName = 'dateModified'");
 	}
 
 }

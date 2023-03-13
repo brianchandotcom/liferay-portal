@@ -120,8 +120,6 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONTestrayAPI.deleteProject(projectName = ${projectName});
-
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
 			objectName = ${caseType});
@@ -129,6 +127,26 @@ definition {
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "factorcategories",
 			objectName = "Category 1");
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "subtasks",
+			objectName = "Subtask_1");
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "subtasks",
+			objectName = "Subtask_2");
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "tasks",
+			objectName = ${taskName});
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "routines",
+			objectName = ${routineName});
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "projects",
+			objectName = ${projectName});
 
 		Testray.testrayApisTearDown();
 

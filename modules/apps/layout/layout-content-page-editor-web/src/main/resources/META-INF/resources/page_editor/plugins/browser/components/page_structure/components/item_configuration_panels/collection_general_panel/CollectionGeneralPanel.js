@@ -158,13 +158,7 @@ export function CollectionGeneralPanel({item}) {
 				symbolLeft: 'filter',
 			},
 		];
-	}, [
-		collection,
-		collectionConfiguration,
-		editConfigurationURL,
-		previewItem,
-		setFilterConfigurationVisible,
-	]);
+	}, [collection, editConfigurationURL, previewItem]);
 
 	const handleCollectionSelect = (collection = {}) => {
 		dispatch(

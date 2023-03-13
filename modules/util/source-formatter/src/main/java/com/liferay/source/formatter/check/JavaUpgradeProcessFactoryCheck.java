@@ -254,7 +254,7 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 	private static final Pattern _methodCallPattern = Pattern.compile(
 		"UpgradeProcessFactory\\.(\\w+)\\([^;]+?\\)(?=,|\\))");
 	private static final Pattern _methodCallsPattern = Pattern.compile(
-		"([ \\t]*UpgradeProcessFactory\\.(\\w+)\\([^;]+?\\)(,|\\))\\s*){2,}");
+		"([ \\t]*UpgradeProcessFactory\\.\\w+\\([^;]+?\\)(,|\\))\\s*){2,}");
 
 	private List<Element> _serviceXMLElements;
 

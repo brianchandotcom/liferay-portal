@@ -58,7 +58,7 @@ export function NextStepPage({
 					</div>
 
 					<NewAppPageFooterButtons
-						backButtonText="Go back to  Dashboard"
+						backButtonText="Go Back to Dashboard"
 						continueButtonText="Continue Configuration"
 						onClickBack={() => {}}
 						onClickContinue={() => {}}

@@ -685,6 +685,10 @@ public class PredicateExpressionVisitorImpl
 		return false;
 	}
 
+	private Predicate _startsWith(Column<?, ?> column, Object value) {
+		return column.like(value + StringPool.PERCENT);
+	}
+
 	private Predicate _startsWith(
 		Object fieldName, Object fieldValue, long objectDefinitionId) {
 
@@ -693,15 +697,12 @@ public class PredicateExpressionVisitorImpl
 
 			return _getKeywordsPredicate(
 				objectDefinitionId,
-				AssetTagTable.INSTANCE.name.like(
-					fieldValue + StringPool.PERCENT));
+				_startsWith(AssetTagTable.INSTANCE.name, fieldValue));
 		}
 
-		Column<?, Object> column = _getColumn(fieldName, objectDefinitionId);
-
-		return column.like(
-			_getValue(fieldName, objectDefinitionId, fieldValue) +
-				StringPool.PERCENT);
+		return _startsWith(
+			_getColumn(fieldName, objectDefinitionId),
+			_getValue(fieldName, objectDefinitionId, fieldValue));
 	}
 
 	private Predicate _visitCollectionPropertyExpression(

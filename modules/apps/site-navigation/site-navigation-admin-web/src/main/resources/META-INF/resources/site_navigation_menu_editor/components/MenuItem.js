@@ -45,7 +45,13 @@ const DELETION_TYPES = {
 	single: 1,
 };
 
-export function MenuItem({item, onMenuItemRemoved}) {
+export function MenuItem({
+	isMovementEnabled,
+	item,
+	onMenuItemRemoved,
+	setIsMovementEnabled,
+	setMovementText,
+}) {
 	const setItems = useSetItems();
 	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
@@ -164,8 +170,6 @@ export function MenuItem({item, onMenuItemRemoved}) {
 		setElement,
 	} = useKeyboardNavigation();
 
-	const [isMovementEnabled, setIsMovementEnabled] = useState(false);
-
 	return (
 		<>
 			<div
@@ -252,12 +256,14 @@ export function MenuItem({item, onMenuItemRemoved}) {
 											event.preventDefault();
 											event.stopPropagation();
 
+											const eventKey = event.key;
+
 											if (
-												event.key === 'ArrowDown' ||
-												event.key === 'ArrowUp'
+												eventKey === 'ArrowDown' ||
+												eventKey === 'ArrowUp'
 											) {
 												const computeFunction =
-													event.key === 'ArrowDown'
+													eventKey === 'ArrowDown'
 														? getDownPosition
 														: getUpPosition;
 
@@ -289,6 +295,20 @@ export function MenuItem({item, onMenuItemRemoved}) {
 														);
 
 														setItems(newItems);
+
+														setMovementText(
+															sub(
+																eventKey ===
+																	'ArrowDown'
+																	? Liferay.Language.get(
+																			'x-moved-down'
+																	  )
+																	: Liferay.Language.get(
+																			'x-moved-up'
+																	  ),
+																`${title} (${type})`
+															)
+														);
 													}
 												);
 											}

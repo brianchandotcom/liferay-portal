@@ -12,12 +12,16 @@
  * details.
  */
 
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {useItems} from '../contexts/ItemsContext';
+import KeyboardMovementText from './KeyboardMovementText';
 import {MenuItem} from './MenuItem';
 
 export function Menu() {
+	const [movementText, setMovementText] = useState('');
+	const [isMovementEnabled, setIsMovementEnabled] = useState(false);
+
 	const items = useItems();
 	const menuRef = useRef();
 
@@ -40,11 +44,19 @@ export function Menu() {
 			ref={menuRef}
 			role="menubar"
 		>
+			<KeyboardMovementText
+				setText={setMovementText}
+				text={movementText}
+			/>
+
 			{items.map((item, index) => (
 				<MenuItem
+					isMovementEnabled={isMovementEnabled}
 					item={item}
 					key={item.siteNavigationMenuItemId}
 					onMenuItemRemoved={() => onMenuItemRemoved(index)}
+					setIsMovementEnabled={setIsMovementEnabled}
+					setMovementText={setMovementText}
 				/>
 			))}
 		</div>

@@ -394,4 +394,12 @@ definition {
 			value1 = ${entityType});
 	}
 
+	macro selectImportStrategy {
+		WaitForElementPresent(locator1 = "ImportExport#IMPORT_STRATEGY");
+
+		Select(
+			locator1 = "ImportExport#IMPORT_STRATEGY",
+			value1 = ${strategyType});
+	}
+
 }

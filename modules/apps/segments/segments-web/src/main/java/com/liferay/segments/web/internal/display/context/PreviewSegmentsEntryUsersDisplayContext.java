@@ -16,6 +16,7 @@ package com.liferay.segments.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -75,7 +76,9 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 
 		SearchContainer<User> userSearchContainer = new SearchContainer(
 			_renderRequest, _getPortletURL(), null,
-			"no-users-have-been-assigned-to-this-segment");
+			LanguageUtil.get(
+				_httpServletRequest,
+				"no-users-have-been-assigned-to-this-segment"));
 
 		userSearchContainer.setId("segmentsEntryUsers");
 

@@ -352,15 +352,22 @@ public class PredicateExpressionVisitorImpl
 			objectRelatedModelsPredicateProviderRegistry;
 	}
 
+	private Predicate _contains(Column<?, ?> column, Object value) {
+		return column.like(StringPool.PERCENT + value + StringPool.PERCENT);
+	}
+
 	private Predicate _contains(
 		Object fieldName, Object fieldValue, long objectDefinitionId) {
 
-		Column<?, Object> column = _getColumn(fieldName, objectDefinitionId);
+		if (_isKeywords(fieldName)) {
+			return _getKeywordsPredicate(
+				objectDefinitionId,
+				_contains(AssetTagTable.INSTANCE.name, fieldValue));
+		}
 
-		return column.like(
-			StringPool.PERCENT +
-				_getValue(fieldName, objectDefinitionId, fieldValue) +
-					StringPool.PERCENT);
+		return _contains(
+			_getColumn(fieldName, objectDefinitionId),
+			_getValue(fieldName, objectDefinitionId, fieldValue));
 	}
 
 	private EntityModel _createEntityModel(long objectDefinitionId) {

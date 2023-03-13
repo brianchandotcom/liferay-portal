@@ -131,49 +131,33 @@ export function CollectionGeneralPanel({item}) {
 	const previewItem = useDisplayPagePreviewItem();
 
 	const optionsMenuItems = useMemo(() => {
-		if (Liferay.FeatureFlags['LPS-166036']) {
-			if (!editConfigurationURL) {
-				return [];
-			}
+		if (!editConfigurationURL) {
+			return [];
+		}
 
-			const url = new URL(editConfigurationURL);
+		const url = new URL(editConfigurationURL);
 
+		url.searchParams.set(`${config.portletNamespace}type`, collection.type);
+
+		if (previewItem) {
 			url.searchParams.set(
-				`${config.portletNamespace}type`,
-				collection.type
+				`${config.portletNamespace}classNameId`,
+				previewItem.data.classNameId
 			);
 
-			if (previewItem) {
-				url.searchParams.set(
-					`${config.portletNamespace}classNameId`,
-					previewItem.data.classNameId
-				);
-
-				url.searchParams.set(
-					`${config.portletNamespace}classPK`,
-					previewItem.data.classPK
-				);
-			}
-
-			return [
-				{
-					href: url.href,
-					label: Liferay.Language.get('filter-collection'),
-					symbolLeft: 'filter',
-				},
-			];
+			url.searchParams.set(
+				`${config.portletNamespace}classPK`,
+				previewItem.data.classPK
+			);
 		}
-		else {
-			return collectionConfiguration
-				? [
-						{
-							label: Liferay.Language.get('prefilter-collection'),
-							onClick: () => setFilterConfigurationVisible(true),
-							symbolLeft: 'filter',
-						},
-				  ]
-				: [];
-		}
+
+		return [
+			{
+				href: url.href,
+				label: Liferay.Language.get('filter-collection'),
+				symbolLeft: 'filter',
+			},
+		];
 	}, [
 		collection,
 		collectionConfiguration,

@@ -35,6 +35,7 @@ import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRelModel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
+import com.liferay.asset.list.util.comparator.AssetListEntrySegmentsEntryRelPriorityComparator;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -777,20 +778,14 @@ public class AssetListAssetEntryProviderImpl
 			return segmentsEntryIds[0];
 		}
 
-		List<AssetListEntrySegmentsEntryRel>
-			sortedAssetListEntrySegmentsEntryRels = ListUtil.sort(
-				TransformUtil.transformToList(
-					segmentsEntryIds,
-					segmentsEntryId ->
-						_assetListEntrySegmentsEntryRelLocalService.
-							fetchAssetListEntrySegmentsEntryRel(
-								assetListEntry.getAssetListEntryId(),
-								segmentsEntryId)),
-				Comparator.comparing(
-					AssetListEntrySegmentsEntryRel::getPriority));
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			_assetListEntrySegmentsEntryRelLocalService.
+				getAssetListEntrySegmentsEntryRels(
+					assetListEntry.getAssetListEntryId(), segmentsEntryIds, 0,
+					1, new AssetListEntrySegmentsEntryRelPriorityComparator());
 
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			sortedAssetListEntrySegmentsEntryRels.get(0);
+			assetListEntrySegmentsEntryRels.get(0);
 
 		return assetListEntrySegmentsEntryRel.getSegmentsEntryId();
 	}

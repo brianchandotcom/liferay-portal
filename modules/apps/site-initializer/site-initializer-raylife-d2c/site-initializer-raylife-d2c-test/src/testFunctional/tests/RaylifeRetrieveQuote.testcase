@@ -66,6 +66,8 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
+		RaylifeIndustry.typeIndustry();
+
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
 		RaylifeContactInfo.viewBasicsInfo();

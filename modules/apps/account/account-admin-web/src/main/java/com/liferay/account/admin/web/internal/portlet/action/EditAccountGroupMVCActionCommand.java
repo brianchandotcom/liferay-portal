@@ -16,7 +16,6 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupService;
@@ -124,7 +123,8 @@ public class EditAccountGroupMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		AccountGroup accountGroup = _accountGroupService.addAccountGroup(
-			themeDisplay.getUserId(), description, name, ServiceContextFactory.getInstance(
+			themeDisplay.getUserId(), description, name,
+			ServiceContextFactory.getInstance(
 				AccountGroup.class.getName(), actionRequest));
 
 		return _accountGroupLocalService.updateExternalReferenceCode(
@@ -142,7 +142,8 @@ public class EditAccountGroupMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		AccountGroup accountGroup = _accountGroupService.updateAccountGroup(
-			accountGroupId, description, name, ServiceContextFactory.getInstance(
+			accountGroupId, description, name,
+			ServiceContextFactory.getInstance(
 				AccountGroup.class.getName(), actionRequest));
 
 		_accountGroupService.updateExternalReferenceCode(

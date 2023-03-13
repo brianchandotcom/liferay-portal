@@ -53,7 +53,8 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 
 	@Override
 	public AccountGroup addAccountGroup(
-		long userId, String description, String name, ServiceContext serviceContext)
+			long userId, String description, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portalPermission.check(
@@ -108,7 +109,8 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 
 	@Override
 	public AccountGroup updateAccountGroup(
-		long accountGroupId, String description, String name, ServiceContext serviceContext)
+			long accountGroupId, String description, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_accountGroupModelResourcePermission.check(

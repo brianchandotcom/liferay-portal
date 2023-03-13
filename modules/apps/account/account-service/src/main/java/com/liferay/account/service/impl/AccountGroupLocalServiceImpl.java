@@ -287,7 +287,8 @@ public class AccountGroupLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AccountGroup updateAccountGroup(
-		long accountGroupId, String description, String name) throws PortalException {
+			long accountGroupId, String description, String name)
+		throws PortalException {
 
 		return updateAccountGroup(accountGroupId, description, name, null);
 	}

@@ -273,7 +273,7 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"4.1.0", "4.1.1",
 			new com.liferay.object.internal.upgrade.v4_1_1.
-				ObjectViewColumnUpgradeProcess());
+				ObjectViewUpgradeProcess());
 	}
 
 	@Reference

@@ -6533,7 +6533,7 @@ public class JournalArticleLocalServiceImpl
 				userId, article.getGroupId(), article.getCreateDate(),
 				article.getModifiedDate(), JournalArticle.class.getName(),
 				article.getPrimaryKey(), article.getUuid(),
-				getClassTypeId(article), assetCategoryIds, assetTagNames,
+				article.getDDMStructureId(), assetCategoryIds, assetTagNames,
 				isListable(article), false, null, null, null,
 				article.getExpirationDate(), ContentTypes.TEXT_HTML, title,
 				description, description, null, article.getLayoutUuid(), 0, 0,
@@ -6554,7 +6554,7 @@ public class JournalArticleLocalServiceImpl
 				userId, article.getGroupId(), article.getCreateDate(),
 				article.getModifiedDate(), JournalArticle.class.getName(),
 				journalArticleResource.getResourcePrimKey(),
-				journalArticleResource.getUuid(), getClassTypeId(article),
+				journalArticleResource.getUuid(), article.getDDMStructureId(),
 				assetCategoryIds, assetTagNames, isListable(article), visible,
 				null, null, publishDate, article.getExpirationDate(),
 				ContentTypes.TEXT_HTML, title, description, description, null,
@@ -6716,7 +6716,7 @@ public class JournalArticleLocalServiceImpl
 								article.getModifiedDate(),
 								JournalArticle.class.getName(),
 								article.getResourcePrimKey(), article.getUuid(),
-								getClassTypeId(article), assetCategoryIds,
+								article.getDDMStructureId(), assetCategoryIds,
 								assetTagNames, isListable(article), false, null,
 								null, null, null, ContentTypes.TEXT_HTML, title,
 								description, description, null,
@@ -7595,15 +7595,6 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return articleVersionStatusOVPs;
-	}
-
-	protected long getClassTypeId(JournalArticle article)
-		throws PortalException {
-
-		DDMStructure ddmStructure = ddmStructureLocalService.getDDMStructure(
-			article.getDDMStructureId());
-
-		return ddmStructure.getStructureId();
 	}
 
 	protected JournalArticle getFirstArticle(

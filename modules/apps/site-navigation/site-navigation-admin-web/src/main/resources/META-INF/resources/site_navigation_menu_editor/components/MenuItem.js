@@ -169,6 +169,16 @@ export function MenuItem({item, onMenuItemRemoved}) {
 	return (
 		<>
 			<div
+				aria-description={
+					item.icon
+						? sub(
+								Liferay.Language.get(
+									'x-does-not-have-a-display-page-available'
+								),
+								`${title} (${type})`
+						  )
+						: null
+				}
 				aria-label={`${title} (${type})`}
 				aria-level={itemPath.length}
 				className="focusable-menu-item site_navigation_menu_editor_MenuItem"
@@ -212,6 +222,10 @@ export function MenuItem({item, onMenuItemRemoved}) {
 							<ClayCard.Row>
 								<ClayLayout.ContentCol gutters>
 									<ClayButtonWithIcon
+										aria-label={sub(
+											Liferay.Language.get('move-x'),
+											`${title} (${type})`
+										)}
 										displayType="unstyled"
 										monospaced={false}
 										onBlur={() =>

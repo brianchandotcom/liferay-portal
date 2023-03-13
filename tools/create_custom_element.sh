@@ -182,8 +182,23 @@ function create_vue_2_app {
 	sed -i -e "s|#app|${CUSTOM_ELEMENT_NAME}|g" ${CUSTOM_ELEMENT_NAME}/src/main.js
 }
 
-function create_vue_3_app {
-	echo ""
+function create_vite_vue_3_app {
+	check_utils yarn
+
+	npm create vite@latest ${CUSTOM_ELEMENT_NAME} -- --template vue
+
+	cd ${CUSTOM_ELEMENT_NAME}
+
+	sed -i -e "s|<div id=\"app\"></div>|<${CUSTOM_ELEMENT_NAME}></${CUSTOM_ELEMENT_NAME}>|g" index.html
+	sed -i -e "s|mount('#app')|mount('${CUSTOM_ELEMENT_NAME}')|g" src/main.js
+	sed -i -e "s|"/vite.svg"|"https://github.com/vitejs.png"|g" src/App.vue
+	sed -i -e "s|"./assets/vue.svg"|"https://github.com/vuejs.png"|g" src/App.vue
+	sed -i -e "s|display: flex;|display: block;|g" src/style.css
+	sed -i -e "s|#app|${CUSTOM_ELEMENT_NAME}|g" src/style.css
+
+	rm -f index.html-e src/main.js-e src/App.vue-e src/style.css-e
+
+	yarn
 }
 
 function main {
@@ -209,9 +224,9 @@ function main {
 	elif [ "${2}" == "vue2" ]
 	then
 		create_vue_2_app
-	elif [ "${2}" == "vue3" ]
+	elif [ "${2}" == "vite-vue3" ]
 	then
-		create_vue_3_app
+		create_vite_vue_3_app
 	else
 		echo "Unknown JavaScript framework: ${2}."
 

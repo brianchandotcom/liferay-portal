@@ -8,6 +8,7 @@ Import-Package:\
 	!org.apache.log4j.*,\
 	!org.apache.xml.resolver.*,\
 	\
+	!org.brotli.dec.*,\
 	!org.conscrypt.*,\
 	\
 	!sun.io,\

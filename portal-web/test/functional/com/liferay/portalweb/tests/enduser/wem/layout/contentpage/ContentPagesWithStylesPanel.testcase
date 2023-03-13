@@ -39,6 +39,8 @@ definition {
 	@priority = 4
 	test AddCustomValuesToSpacing {
 		task ("Given a page creator has a Button fragment on a content page") {
+			TestUtils.maximizeWindow();
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");

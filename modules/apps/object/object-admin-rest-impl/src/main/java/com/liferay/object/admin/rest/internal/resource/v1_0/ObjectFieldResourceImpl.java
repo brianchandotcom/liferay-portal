@@ -143,6 +143,10 @@ public class ObjectFieldResourceImpl
 			throw new ObjectFieldLocalizedException();
 		}
 
+		com.liferay.object.model.ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
 				objectField.getExternalReferenceCode(),
@@ -158,7 +162,9 @@ public class ObjectFieldResourceImpl
 				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
-				GetterUtil.getBoolean(objectField.getLocalized()),
+				GetterUtil.getBoolean(
+					objectField.getLocalized(),
+					objectDefinition.isEnableLocalization()),
 				objectField.getName(), objectField.getRequired(),
 				GetterUtil.getBoolean(objectField.getState()),
 				transformToList(

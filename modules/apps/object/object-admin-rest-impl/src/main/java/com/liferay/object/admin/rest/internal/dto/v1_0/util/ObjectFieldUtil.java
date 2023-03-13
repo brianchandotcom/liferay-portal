@@ -142,6 +142,7 @@ public class ObjectFieldUtil {
 	}
 
 	public static com.liferay.object.model.ObjectField toObjectField(
+		boolean enableLocalization,
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
 		ObjectField objectField,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -191,7 +192,8 @@ public class ObjectFieldUtil {
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
 			serviceBuilderObjectField.setLocalized(
-				GetterUtil.getBoolean(objectField.getLocalized()));
+				GetterUtil.getBoolean(
+					objectField.getLocalized(), enableLocalization));
 		}
 
 		serviceBuilderObjectField.setName(objectField.getName());

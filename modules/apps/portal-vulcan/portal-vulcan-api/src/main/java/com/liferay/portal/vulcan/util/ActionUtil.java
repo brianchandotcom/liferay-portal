@@ -261,7 +261,8 @@ public class ActionUtil {
 					clazz.getSuperclass(), methodName
 				).resolveTemplates(
 					_getParameterMap(
-						clazz, parameterId, methodName, siteId, uriInfo)
+						clazz, parameterId, methodName, siteId, uriInfo),
+					false
 				).toTemplate();
 			}
 		).put(

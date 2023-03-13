@@ -115,13 +115,18 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		layoutUtilityPageEntry.setPlid(plid);
 
 		layoutUtilityPageEntry.setPreviewFileEntryId(previewFileEntryId);
-		layoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(
-			defaultLayoutUtilityPageEntry);
 		layoutUtilityPageEntry.setName(name);
 		layoutUtilityPageEntry.setType(type);
 
 		layoutUtilityPageEntry = layoutUtilityPageEntryPersistence.update(
 			layoutUtilityPageEntry);
+
+		if (defaultLayoutUtilityPageEntry) {
+			layoutUtilityPageEntry =
+				layoutUtilityPageEntryLocalService.
+					setDefaultLayoutUtilityPageEntry(
+						layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+		}
 
 		_resourceLocalService.addResources(
 			layoutUtilityPageEntry.getCompanyId(),

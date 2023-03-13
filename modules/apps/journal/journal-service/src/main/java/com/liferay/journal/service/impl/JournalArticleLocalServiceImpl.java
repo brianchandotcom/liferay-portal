@@ -586,7 +586,15 @@ public class JournalArticleLocalServiceImpl
 	 *         whether to add the default guest and group permissions.
 	 * @return the web content article
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 					#addArticle(String, long, long, long, long, long,
+	 * 					String, boolean, double, Map, Map, Map, String, long,
+	 * 					String, String, int, int, int, int, int, int, int, int,
+	 * 					int, int, boolean, int, int, int, int, int, boolean,
+	 * 					boolean, boolean, String, File, Map, String,
+	 * 					ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticle addArticle(
 			String externalReferenceCode, long userId, long groupId,
@@ -685,8 +693,12 @@ public class JournalArticleLocalServiceImpl
 	 *         title, and workflow actions for the web content article. Can also
 	 *         set whether to add the default guest and group permissions.
 	 * @return the web content article
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a portal exception occurred	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 						#addArticle(String, long, long, long, Map, Map,
+	 * 						String, long, String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticle addArticle(
 			String externalReferenceCode, long userId, long groupId,
@@ -858,6 +870,16 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.findByPrimaryKey(article.getId());
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 								#addArticleDefaultValues(long, long, long,
+	 * 								long, Map, Map, String, long, String,
+	 * 								String, int, int, int, int, int, int, int,
+	 * 								int, int, int, boolean, int, int, int, int,
+	 * 								int, boolean, boolean, boolean, String,
+	 * 								File, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public JournalArticle addArticleDefaultValues(
 			long userId, long groupId, long classNameId, long classPK,
@@ -5941,9 +5963,16 @@ public class JournalArticleLocalServiceImpl
 	 *         content update activity; otherwise it is considered a web content
 	 *         add activity.
 	 * @return the updated web content article
-	 * @throws PortalException if a portal exception occurred
-	 *
+	 * @throws PortalException if a portal exception occurred	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 								#updateArticle(long, long, long, String,
+	 * 								double, Map, Map, Map, String, String,
+	 * 								String, int, int, int, int, int, int, int,
+	 * 								int, int, int, boolean, int, int, int, int,
+	 * 								int, boolean, boolean, boolean, String,
+	 * 								File, Map, String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
@@ -6249,8 +6278,14 @@ public class JournalArticleLocalServiceImpl
 	 *         content update activity; otherwise it is considered a web content
 	 *         add activity.
 	 * @return the updated web content article
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a portal exception occurred	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 			#updateArticle(long, long, long, String, double, Map, Map,
+	 * 			String, String, String, int, int, int, int, int, int, int, int,
+	 * 			int, int, boolean, int, int, int, int, int, boolean, boolean,
+	 * 			boolean, String, File, Map, String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
@@ -6478,6 +6513,15 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.findByPrimaryKey(article.getId());
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 					#updateArticleDefaultValues(long, long, String, Map,
+	 * 					Map, String, String, String, int, int, int, int, int,
+	 * 					int, int, int, int, int, boolean, int, int, int, int,
+	 * 					int, boolean, boolean, boolean, String, File,
+	 * 					ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public JournalArticle updateArticleDefaultValues(
 			long userId, long groupId, String articleId,

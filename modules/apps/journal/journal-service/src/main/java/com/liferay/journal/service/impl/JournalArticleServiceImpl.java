@@ -192,7 +192,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         set whether to add the default guest and group permissions.
 	 * @return the web content article
 	 * @throws PortalException if a portal exception occurred
+	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 				#addArticle(String, long, long, long, long, String,
+	 * 				boolean, Map, Map, Map, String, long, String, String, int,
+	 * 				int, int, int, int, int, int, int, int, int, boolean, int,
+	 * 				int, int, int, int, boolean, boolean, boolean, String,
+	 * 				File, Map, String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticle addArticle(
 			String externalReferenceCode, long groupId, long folderId,
@@ -274,7 +282,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         set whether to add the default guest and group permissions.
 	 * @return the web content article
 	 * @throws PortalException if a portal exception occurred
+	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 							#addArticle(String, long, long, Map, Map,
+	 * 							String, long, String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticle addArticle(
 			String externalReferenceCode, long groupId, long folderId,
@@ -326,6 +339,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			smallImage, smallImageURL, smallImageFile, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 						#addArticleDefaultValues(long, long, long, Map, Map,
+	 * 						String, long, String, String, int, int, int, int,
+	 * 						int, int, int, int, int, int, boolean, int, int,
+	 * 						int, int, int, boolean, boolean, boolean, String,
+	 * 						File, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public JournalArticle addArticleDefaultValues(
 			long groupId, long classNameId, long classPK,
@@ -2624,7 +2646,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         it is considered a web content add activity.
 	 * @return the updated web content article
 	 * @throws PortalException if a portal exception occurred
+	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 						#updateArticle(long, long, String, double, Map, Map,
+	 * 						Map, String, String, String, int, int, int, int, int,
+	 * 						int, int, int, int, int, boolean, int, int, int, int,
+	 * 						int, boolean, boolean, boolean, String, File, Map,
+	 * 						String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticle updateArticle(
 			long groupId, long folderId, String articleId, double version,
@@ -2771,7 +2801,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         it is considered a web content add activity.
 	 * @return the updated web content article
 	 * @throws PortalException if a portal exception occurred
+	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 						#updateArticle(long, long, String, double, Map, Map,
+	 * 						String, String, String, int, int, int, int, int, int,
+	 * 						int, int, int, int, boolean, int, int, int, int, int,
+	 * 						boolean, boolean, boolean, String, File, Map, String,
+	 * 						ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticle updateArticle(
 			long groupId, long folderId, String articleId, double version,
@@ -2899,6 +2937,14 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			smallImageFile, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 						#updateArticleDefaultValues(long, String, Map, Map,
+	 * 						String, String, String, int, int, int, int, int, int,
+	 * 						int, int, int, int, boolean, int, int, int, int, int,
+	 * 						boolean, boolean, boolean, String, File, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public JournalArticle updateArticleDefaultValues(
 			long groupId, String articleId, Map<Locale, String> titleMap,

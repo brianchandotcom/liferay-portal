@@ -72,6 +72,22 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 			_folderModelResourcePermission, themeDisplay.getPermissionChecker(),
 			themeDisplay.getScopeGroupId(), folderId, ActionKeys.ADD_DOCUMENT);
 
+		FileEntry fileEntry = null;
+
+		long fileEntryId = GetterUtil.getLong(
+			uploadPortletRequest.getParameter("fileEntryId"));
+
+		if (fileEntryId > 0) {
+			try {
+				fileEntry = _dlAppService.getFileEntry(fileEntryId);
+			}
+			catch (NoSuchFileEntryException noSuchFileEntryException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchFileEntryException);
+				}
+			}
+		}
+
 		String fileName = uploadPortletRequest.getFileName(
 			"imageSelectorFileName");
 
@@ -80,25 +96,25 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 					"imageSelectorFileName")) {
 
 				return _addFileEntry(
-					fileName, folderId, inputStream, "imageSelectorFileName",
-					themeDisplay, uploadPortletRequest);
+					fileEntry, fileName, folderId, inputStream,
+					"imageSelectorFileName", themeDisplay,
+					uploadPortletRequest);
 			}
 		}
 
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				"imageBlob")) {
 
-			FileEntry fileEntry = _fetchFileEntry(uploadPortletRequest);
-
 			return _addFileEntry(
-				fileEntry.getFileName(), folderId, inputStream, "imageBlob",
-				themeDisplay, uploadPortletRequest);
+				fileEntry, fileEntry.getFileName(), folderId, inputStream,
+				"imageBlob", themeDisplay, uploadPortletRequest);
 		}
 	}
 
 	private FileEntry _addFileEntry(
-			String fileName, long folderId, InputStream inputStream,
-			String parameterName, ThemeDisplay themeDisplay,
+			FileEntry fileEntry, String fileName, long folderId,
+			InputStream inputStream, String parameterName,
+			ThemeDisplay themeDisplay,
 			UploadPortletRequest uploadPortletRequest)
 		throws PortalException {
 
@@ -122,12 +138,29 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 			fileName,
 			curFileName -> _exists(repositoryId, folderId, curFileName));
 
+		String description = StringPool.BLANK;
+
+		if (fileEntry != null) {
+			description = fileEntry.getDescription();
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileEntry.class.getName(), uploadPortletRequest);
+
+		if ((fileEntry != null) &&
+			(fileEntry.getModel() instanceof DLFileEntry)) {
+
+			ExpandoBridge expandoBridge = fileEntry.getExpandoBridge();
+
+			serviceContext.setExpandoBridgeAttributes(
+				expandoBridge.getAttributes());
+		}
+
 		return _dlAppService.addFileEntry(
 			null, repositoryId, folderId, uniqueFileName,
 			uploadPortletRequest.getContentType(parameterName), uniqueFileName,
-			uniqueFileName, _getDescription(uploadPortletRequest),
-			StringPool.BLANK, inputStream, size, null, null,
-			_getServiceContext(uploadPortletRequest));
+			uniqueFileName, description, StringPool.BLANK, inputStream, size,
+			null, null, serviceContext);
 	}
 
 	private boolean _exists(long repositoryId, long folderId, String fileName) {
@@ -147,64 +180,6 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 
 			return false;
 		}
-	}
-
-	private FileEntry _fetchFileEntry(UploadPortletRequest uploadPortletRequest)
-		throws PortalException {
-
-		try {
-			long fileEntryId = GetterUtil.getLong(
-				uploadPortletRequest.getParameter("fileEntryId"));
-
-			if (fileEntryId == 0) {
-				return null;
-			}
-
-			return _dlAppService.getFileEntry(fileEntryId);
-		}
-		catch (NoSuchFileEntryException noSuchFileEntryException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFileEntryException);
-			}
-
-			return null;
-		}
-	}
-
-	private String _getDescription(UploadPortletRequest uploadPortletRequest)
-		throws PortalException {
-
-		FileEntry fileEntry = _fetchFileEntry(uploadPortletRequest);
-
-		if (fileEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		return fileEntry.getDescription();
-	}
-
-	private ServiceContext _getServiceContext(
-			UploadPortletRequest uploadPortletRequest)
-		throws PortalException {
-
-		FileEntry fileEntry = _fetchFileEntry(uploadPortletRequest);
-
-		if ((fileEntry == null) ||
-			!(fileEntry.getModel() instanceof DLFileEntry)) {
-
-			return ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), uploadPortletRequest);
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileEntry.class.getName(), uploadPortletRequest);
-
-		ExpandoBridge expandoBridge = fileEntry.getExpandoBridge();
-
-		serviceContext.setExpandoBridgeAttributes(
-			expandoBridge.getAttributes());
-
-		return serviceContext;
 	}
 
 	private void _validateAttachmentObjectField(

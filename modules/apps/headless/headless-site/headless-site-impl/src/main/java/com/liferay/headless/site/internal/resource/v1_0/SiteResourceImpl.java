@@ -102,63 +102,73 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
+		Group group = null;
 
-		if (Validator.isNotNull(site.getParentSiteKey())) {
-			Group parentGroup = _groupLocalService.getGroup(
-				contextCompany.getCompanyId(), site.getParentSiteKey());
+		try {
+			long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
 
-			parentGroupId = parentGroup.getGroupId();
-		}
+			if (Validator.isNotNull(site.getParentSiteKey())) {
+				Group parentGroup = _groupLocalService.getGroup(
+					contextCompany.getCompanyId(), site.getParentSiteKey());
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		if (Validator.isNotNull(site.getName())) {
-			nameMap.put(LocaleUtil.getDefault(), site.getName());
-		}
-
-		int type = GroupConstants.TYPE_SITE_OPEN;
-
-		Site.MembershipType membershipType = site.getMembershipType();
-
-		if (membershipType != null) {
-			String value = membershipType.getValue();
-
-			if (value.equals(GroupConstants.TYPE_SITE_PRIVATE_LABEL)) {
-				type = GroupConstants.TYPE_SITE_PRIVATE;
-			}
-			else if (value.equals(GroupConstants.TYPE_SITE_RESTRICTED_LABEL)) {
-				type = GroupConstants.TYPE_SITE_RESTRICTED;
-			}
-		}
-
-		Group group = _groupService.addGroup(
-			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null,
-			type, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null,
-			true, false, true, serviceContext);
-
-		LiveUsers.joinGroup(
-			contextCompany.getCompanyId(), group.getGroupId(),
-			contextUser.getUserId());
-
-		if (Objects.equals(
-				Site.TemplateType.SITE_TEMPLATE, site.getTemplateType())) {
-
-			_sites.updateLayoutSetPrototypesLinks(
-				group, GetterUtil.getLongStrict(site.getTemplateKey()), 0L,
-				true, false);
-		}
-		else {
-			String siteInitializerKey = "blank-site-initializer";
-
-			if (Validator.isNotNull(site.getTemplateKey())) {
-				siteInitializerKey = site.getTemplateKey();
+				parentGroupId = parentGroup.getGroupId();
 			}
 
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(siteInitializerKey);
+			Map<Locale, String> nameMap = new HashMap<>();
 
-			siteInitializer.initialize(group.getGroupId());
+			if (Validator.isNotNull(site.getName())) {
+				nameMap.put(LocaleUtil.getDefault(), site.getName());
+			}
+
+			int type = GroupConstants.TYPE_SITE_OPEN;
+
+			Site.MembershipType membershipType = site.getMembershipType();
+
+			if (membershipType != null) {
+				String value = membershipType.getValue();
+
+				if (value.equals(GroupConstants.TYPE_SITE_PRIVATE_LABEL)) {
+					type = GroupConstants.TYPE_SITE_PRIVATE;
+				}
+				else if (value.equals(
+							GroupConstants.TYPE_SITE_RESTRICTED_LABEL)) {
+
+					type = GroupConstants.TYPE_SITE_RESTRICTED;
+				}
+			}
+
+			group = _groupService.addGroup(
+				parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
+				null, type, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+				null, true, false, true, serviceContext);
+
+			LiveUsers.joinGroup(
+				contextCompany.getCompanyId(), group.getGroupId(),
+				contextUser.getUserId());
+
+			if (Objects.equals(
+					Site.TemplateType.SITE_TEMPLATE, site.getTemplateType())) {
+
+				_sites.updateLayoutSetPrototypesLinks(
+					group, GetterUtil.getLongStrict(site.getTemplateKey()), 0L,
+					true, false);
+			}
+			else {
+				String siteInitializerKey = "blank-site-initializer";
+
+				if (Validator.isNotNull(site.getTemplateKey())) {
+					siteInitializerKey = site.getTemplateKey();
+				}
+
+				SiteInitializer siteInitializer =
+					_siteInitializerRegistry.getSiteInitializer(
+						siteInitializerKey);
+
+				siteInitializer.initialize(group.getGroupId());
+			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
 		}
 
 		return group;

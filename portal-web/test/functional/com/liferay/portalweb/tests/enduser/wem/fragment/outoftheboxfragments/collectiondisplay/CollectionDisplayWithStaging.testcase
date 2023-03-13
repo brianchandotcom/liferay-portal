@@ -392,8 +392,6 @@ definition {
 	@description = "This is a use case for LPS-166039. The page creator can see Items with same categories from a staging site."
 	@priority = 4
 	test ViewItemsWithSameCategoriesInStagingSite {
-		property custom.properties = "feature.flag.LPS-166036=true";
-
 		task ("Given a page creator has a Collection Display on a content page") {
 			for (var vocabularyName : list "Release Date,Company,Engine") {
 				JSONCategory.addVocabulary(

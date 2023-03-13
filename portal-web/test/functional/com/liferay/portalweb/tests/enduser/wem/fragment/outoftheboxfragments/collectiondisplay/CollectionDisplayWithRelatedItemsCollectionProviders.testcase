@@ -899,8 +899,6 @@ definition {
 	@description = "This is a use case for LPS-166039. The page creator can filter the categories."
 	@priority = 4
 	test PrefilterCollectionOnItemWithSameCategories {
-		property custom.properties = "feature.flag.LPS-166036=true";
-
 		task ("Given a page creator has a Collection Display with Item With Same Categories on a content page") {
 			for (var vocabularyName : list "Release Date,Company,Engine") {
 				JSONCategory.addVocabulary(
@@ -2291,8 +2289,6 @@ definition {
 	@description = "This is a use case for LPS-166039. The page creator can see items with same categories from a content page."
 	@priority = 4
 	test ViewItemsWithSameCategoriesOnContentPage {
-		property custom.properties = "feature.flag.LPS-166036=true";
-
 		task ("Given a page creator has a Collection Display on a content page") {
 			for (var vocabularyName : list "Release Date,Company,Engine") {
 				JSONCategory.addVocabulary(
@@ -2436,8 +2432,6 @@ definition {
 	@description = "This is a use case for LPS-166039. The page creator can see Items with same categories from a Knowledge Base Article Display Page Template."
 	@priority = 3
 	test ViewKBArticleWithSameCategoriesOnDisplayPageTemplateForKBArticle {
-		property custom.properties = "feature.flag.LPS-166036=true";
-
 		task ("Given a page creator has a Collection Display on a display page template for Knowledge Base Article") {
 			for (var vocabularyName : list "Release Date,Company,Engine") {
 				JSONCategory.addVocabulary(

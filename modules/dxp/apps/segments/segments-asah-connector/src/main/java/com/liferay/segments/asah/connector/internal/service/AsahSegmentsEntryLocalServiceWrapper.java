@@ -65,18 +65,10 @@ public class AsahSegmentsEntryLocalServiceWrapper
 		SegmentsEntry segmentsEntry = super.recalculateSegmentsEntry(
 			segmentsEntryId);
 
-		try {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-172194") ||
-				!_analyticsSettingsManager.isAnalyticsEnabled(
-					segmentsEntry.getCompanyId()) ||
-				!SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND.equals(
-					segmentsEntry.getSource())) {
-
-				return segmentsEntry;
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-172194") ||
+			!_isAnalyticsEnabled(segmentsEntry.getCompanyId()) ||
+			!SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND.equals(
+				segmentsEntry.getSource())) {
 
 			return segmentsEntry;
 		}
@@ -120,21 +112,29 @@ public class AsahSegmentsEntryLocalServiceWrapper
 		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.getSegmentsEntry(segmentsEntryId);
 
-		IndividualSegment individualSegment =
-			_asahFaroBackendClient.getIndividualSegment(
-				segmentsEntry.getCompanyId(),
-				segmentsEntry.getSegmentsEntryKey());
+		if (FeatureFlagManagerUtil.isEnabled("LPS-172194") &&
+			_isAnalyticsEnabled(segmentsEntry.getCompanyId()) &&
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND.equals(
+				segmentsEntry.getSource())) {
 
-		individualSegment.setFilter(criteria);
-		individualSegment.setName(
-			nameMap.get(
-				_portal.getSiteDefaultLocale(
-					serviceContext.getScopeGroupId())));
+			IndividualSegment individualSegment =
+				_asahFaroBackendClient.getIndividualSegment(
+					segmentsEntry.getCompanyId(),
+					segmentsEntry.getSegmentsEntryKey());
 
-		_asahFaroBackendClient.updateIndividualSegment(
-			segmentsEntry.getCompanyId(), individualSegment);
+			individualSegment.setFilter(criteria);
+			individualSegment.setName(
+				nameMap.get(
+					_portal.getSiteDefaultLocale(
+						serviceContext.getScopeGroupId())));
 
-		return recalculateSegmentsEntry(segmentsEntryId);
+			_asahFaroBackendClient.updateIndividualSegment(
+				segmentsEntry.getCompanyId(), individualSegment);
+		}
+
+		return super.updateSegmentsEntry(
+			segmentsEntryId, segmentsEntryKey, nameMap, descriptionMap, active,
+			criteria, serviceContext);
 	}
 
 	@Activate
@@ -162,6 +162,17 @@ public class AsahSegmentsEntryLocalServiceWrapper
 		serviceContext.setUserId(user.getUserId());
 
 		return serviceContext;
+	}
+
+	private boolean _isAnalyticsEnabled(long companyId) {
+		try {
+			return _analyticsSettingsManager.isAnalyticsEnabled(companyId);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return false;
 	}
 
 	private String _serialize(Criteria criteria) {

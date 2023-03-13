@@ -89,8 +89,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -622,47 +620,32 @@ public class DataLayoutTaglibUtil {
 	}
 
 	private void _setFieldIndexTypeNone(JSONObject jsonObject) {
-		JSONArray pageJSONArray = jsonObject.getJSONArray("pages");
+		for (JSONObject pageJSONObject :
+				(Iterable<JSONObject>)jsonObject.getJSONArray("pages")) {
 
-		Stream<JSONObject> stream = StreamSupport.stream(
-			pageJSONArray.spliterator(), false);
+			for (JSONObject rowJSONObject :
+					(Iterable<JSONObject>)pageJSONObject.getJSONArray("rows")) {
 
-		stream.flatMap(
-			pageJSONObject -> {
-				JSONArray rowJSONArray = jsonObject.getJSONArray("rows");
+				for (JSONObject columnJSONObject :
+						(Iterable<JSONObject>)rowJSONObject.getJSONArray(
+							"columns")) {
 
-				Stream<JSONObject> rowsStream = StreamSupport.stream(
-					rowJSONArray.spliterator(), false);
+					for (JSONObject fieldJSONObject :
+							(Iterable<JSONObject>)columnJSONObject.getJSONArray(
+								"fields")) {
 
-				return rowsStream.flatMap(
-					rowJSONObject -> {
-						JSONArray columnJSONArray = jsonObject.getJSONArray(
-							"columns");
+						if (Objects.equals(
+								fieldJSONObject.getString("fieldName"),
+								"indexType")) {
 
-						Stream<JSONObject> columnsStream = StreamSupport.stream(
-							columnJSONArray.spliterator(), false);
+							fieldJSONObject.put("value", "none");
 
-						return columnsStream.flatMap(
-							columnJSONObject -> {
-								JSONArray fieldJSONArray =
-									jsonObject.getJSONArray("fields");
-
-								Stream<JSONObject> fieldsStream =
-									StreamSupport.stream(
-										fieldJSONArray.spliterator(), false);
-
-								return fieldsStream.filter(
-									fieldJSONObject -> Objects.equals(
-										fieldJSONObject.getString("fieldName"),
-										"indexType")
-								).findFirst(
-								).ifPresent(
-									fieldJSONObject -> fieldJSONObject.put(
-										"value", "none")
-								);
-							});
-					});
-			});
+							return;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

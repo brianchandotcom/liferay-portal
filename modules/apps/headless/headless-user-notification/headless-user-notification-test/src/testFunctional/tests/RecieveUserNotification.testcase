@@ -77,21 +77,20 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
+
+		JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+		Navigator.gotoNotifications();
+
+		Notifications.deleteNotification(contentBody = "The entry name is Student Name.");
+
+		UserNotificationAPI.deleteNotificationTemplate();
+
+		ObjectAdmin.deleteObjectViaAPI(objectName = "Student");
+
 		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONUser.deleteUserByUserId(userId = ${staticUserAccountId});
-
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
-
-			Navigator.gotoNotifications();
-
-			Notifications.deleteNotification(contentBody = "The entry name is Student Name.");
-
-			UserNotificationAPI.deleteNotificationTemplate();
-
-			ObjectAdmin.deleteObjectViaAPI(objectName = "Student");
+			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 

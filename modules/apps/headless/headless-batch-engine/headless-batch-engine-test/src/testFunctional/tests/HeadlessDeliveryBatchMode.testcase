@@ -10,7 +10,13 @@ definition {
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		BlogPostingAPI.deleteAllBlogPostings();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
 	}
 
 	@disable-webdriver = "true"

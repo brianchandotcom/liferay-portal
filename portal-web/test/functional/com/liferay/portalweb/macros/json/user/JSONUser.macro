@@ -297,12 +297,10 @@ definition {
 	}
 
 	macro tearDownNonAdminUsersNoSelenium {
-		var userIds = JSONUserAPI._getUserIdsNoSelenium(authenticationMethod = ${authenticationMethod});
+		var userIds = JSONUserAPI._getUserIdsNoSelenium();
 
 		for (var userId : list ${userIds}) {
-			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(
-				authenticationMethod = ${authenticationMethod},
-				userId = ${userId});
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userId});
 
 			if (${currentEmailAddress} != "test@liferay.com") {
 				JSONUser.deleteUserByUserId(

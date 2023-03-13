@@ -14,19 +14,18 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		BlogPostingAPI.deleteAllBlogPostings();
+
+		var response = HeadlessWebcontentAPI.returnAllstructuredContentId();
+
+		HeadlessWebcontentAPI.deleteAllStructuredContent(structuredContentId = ${response});
+
+		JSONCategory.deleteVocabulary(
+			groupName = "Guest",
+			vocabularyName = "Vocabulary Name");
+
 		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			BlogPostingAPI.deleteAllBlogPostings();
-
-			var response = HeadlessWebcontentAPI.returnAllstructuredContentId();
-
-			HeadlessWebcontentAPI.deleteAllStructuredContent(structuredContentId = ${response});
-
-			JSONCategory.deleteVocabulary(
-				groupName = "Guest",
-				vocabularyName = "Vocabulary Name");
+			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 

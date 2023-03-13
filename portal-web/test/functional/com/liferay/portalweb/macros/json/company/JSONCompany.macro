@@ -94,17 +94,7 @@ definition {
 		}
 
 		if (!(isSet(creatorEmailAddress))) {
-			if (${authenticationMethod} == "By Screen Name") {
-				if (!(isSet(userScreenName))) {
-					var creatorEmailAddress = "test";
-				}
-				else {
-					var creatorEmailAddress = ${userScreenName};
-				}
-			}
-			else {
-				var creatorEmailAddress = "test@liferay.com";
-			}
+			var creatorEmailAddress = "test@liferay.com";
 		}
 
 		if (!(isSet(creatorPassword))) {

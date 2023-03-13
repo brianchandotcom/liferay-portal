@@ -9,18 +9,19 @@ definition {
 		TestCase.setUpPortalInstanceNoSelenium();
 
 		task ("Given an object definition is created") {
-			ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
+			ObjectDefinitionAPI.staticUniversityObjectId();
+
+			ObjectDefinitionAPI.staticSubjectObjectId();
 		}
 	}
 
 	tearDown {
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			ObjectAdmin.deleteObjectViaAPI(objectName = "University");
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-			ObjectAdmin.deleteObjectViaAPI(objectName = "Subject");
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 
@@ -75,7 +76,7 @@ definition {
 		task ("Then the actions block include the information for the updatebatch, deleteBatch action endpoint") {
 			ObjectDefinitionAPI.assertBatchActionsWithGetObjectSchemas(
 				batchActions = "updateBatch,deleteBatch",
-				objectDefinitionId = ${staticObjectId1},
+				objectDefinitionId = ${staticUniversityObjectId},
 				objectSchemas = ${objectSchemas});
 		}
 	}
@@ -131,7 +132,7 @@ definition {
 		task ("Then the actions block include the information for the createBatch action endpoint") {
 			ObjectDefinitionAPI.assertBatchActionsWithGetObjectSchemas(
 				batchActions = "createBatch",
-				objectDefinitionId = ${staticObjectId1},
+				objectDefinitionId = ${staticUniversityObjectId},
 				objectSchemas = ${objectSchemas});
 		}
 	}

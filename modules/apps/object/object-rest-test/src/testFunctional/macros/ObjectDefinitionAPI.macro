@@ -895,25 +895,6 @@ definition {
 		return ${response};
 	}
 
-	macro setUpGlobalobjectDefinitionId {
-		var objectId1 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
-			en_US_label = "university",
-			en_US_plural_label = "universities",
-			name = "University",
-			requiredStringFieldName = "name");
-		var objectId2 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
-			en_US_label = "subject",
-			en_US_plural_label = "subjects",
-			name = "Subject",
-			requiredStringFieldName = "name");
-		static var staticObjectId1 = ${objectId1};
-		static var staticObjectId2 = ${objectId2};
-
-		return ${staticObjectId1};
-
-		return ${staticObjectId2};
-	}
-
 	macro setUpGlobalObjectDefinitionIdWithName {
 		Variables.assertDefined(parameterList = ${objectName});
 
@@ -959,6 +940,42 @@ definition {
 		static var staticUniversityId = ${universityId};
 
 		return ${staticUniversityId};
+	}
+
+	macro staticStudentObjectId {
+		var objectId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			en_US_label = "student",
+			en_US_plural_label = "students",
+			name = "Student",
+			requiredStringFieldName = "name");
+
+		static var staticStudentObjectId = ${objectId};
+
+		return ${staticStudentObjectId};
+	}
+
+	macro staticSubjectObjectId {
+		var objectId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			en_US_label = "subject",
+			en_US_plural_label = "subjects",
+			name = "Subject",
+			requiredStringFieldName = "name");
+
+		static var staticSubjectObjectId = ${objectId};
+
+		return ${staticSubjectObjectId};
+	}
+
+	macro staticUniversityObjectId {
+		var objectId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			en_US_label = "university",
+			en_US_plural_label = "universities",
+			name = "University",
+			requiredStringFieldName = "name");
+
+		static var staticUniversityObjectId = ${objectId};
+
+		return ${staticUniversityObjectId};
 	}
 
 	macro updateEmployee {

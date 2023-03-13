@@ -24,19 +24,12 @@ definition {
 	macro _getUserByIdCurlNoSelenium {
 		Variables.assertDefined(parameterList = ${userId});
 
-		var companyId = JSONCompany.getCompanyIdNoSelenium(authenticationMethod = ${authenticationMethod});
+		var companyId = JSONCompany.getCompanyIdNoSelenium();
 		var portalURL = JSONCompany.getPortalURL();
-
-		if (${authenticationMethod} == "By Screen Name") {
-			var userName = "test";
-		}
-		else {
-			var userName = "test@liferay.com";
-		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
-				-u ${userName}:test \
+				-u test@liferay.com:test \
 		''';
 
 		return ${curl};
@@ -57,11 +50,11 @@ definition {
 	macro getEmailAddressNoSelenium {
 		Variables.assertDefined(parameterList = ${userId});
 
-		var curl = JSONUserGetter._getUserByIdCurlNoSelenium(
-			authenticationMethod = ${authenticationMethod},
-			userId = ${userId});
+		var curl = JSONUserGetter._getUserByIdCurlNoSelenium(userId = ${userId});
 
-		var userEmailAddress = JSONCurlUtil.get(${curl}, "$['emailAddress']");
+		var response = JSONCurlUtil.get(${curl});
+
+		var userEmailAddress = JSONUtil.getWithJSONPath(${response}, "$..emailAddress");
 
 		return ${userEmailAddress};
 	}

@@ -30,11 +30,11 @@ definition {
 	}
 
 	tearDown {
-		JSONUser.deleteUserByUserId(userId = ${staticUserAccountId});
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
 
 		ObjectFieldAPI.deleteObjectField();
-
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();

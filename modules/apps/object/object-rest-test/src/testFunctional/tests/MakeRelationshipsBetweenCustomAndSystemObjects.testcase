@@ -11,7 +11,9 @@ definition {
 		TestCase.setUpPortalInstanceNoSelenium();
 
 		task ("Given University and Subject object definitions created") {
-			ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
+			ObjectDefinitionAPI.staticUniversityObjectId();
+
+			ObjectDefinitionAPI.staticSubjectObjectId();
 		}
 
 		task ("And Given manyToMany universitiesAccounts relationship created") {
@@ -21,7 +23,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "UniversitiesAccounts",
 				name = "universitiesAccounts",
-				objectDefinitionId1 = ${staticObjectId1},
+				objectDefinitionId1 = ${staticUniversityObjectId},
 				objectDefinitionId2 = ${staticObjectId},
 				type = "manyToMany");
 		}
@@ -32,7 +34,7 @@ definition {
 				en_US_label = "AccountSubjects",
 				name = "accountSubjects",
 				objectDefinitionId1 = ${staticObjectId},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "oneToMany");
 		}
 
@@ -46,13 +48,11 @@ definition {
 	}
 
 	tearDown {
-		for (var objectName : list "University,Subject") {
-			ObjectAdmin.deleteObjectViaAPI(objectName = ${objectName});
-		}
-
-		AccountAPI.deleteAccount(accountId = ${staticAccountId});
-
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();
@@ -63,7 +63,6 @@ definition {
 	@priority = 5
 	test CanCreateMultipleManyToManyRelationshipsBetweenTwoObjects {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "MakeRelationshipWithSystemObject#CanCreateMultipleManyToManyRelationshipsBetweenTwoObjects";
 
 		task ("And Given manyToMany accountsUniversities relationship created") {
 			ObjectDefinitionAPI.createRelationship(
@@ -71,7 +70,7 @@ definition {
 				en_US_label = "AccountsUniversities",
 				name = "accountsUniversities",
 				objectDefinitionId1 = ${staticObjectId},
-				objectDefinitionId2 = ${staticObjectId1},
+				objectDefinitionId2 = ${staticUniversityObjectId},
 				type = "manyToMany");
 		}
 
@@ -103,7 +102,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "SubjectAccounts",
 				name = "subjectAccounts",
-				objectDefinitionId1 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticSubjectObjectId},
 				objectDefinitionId2 = ${staticObjectId},
 				type = "oneToMany");
 		}

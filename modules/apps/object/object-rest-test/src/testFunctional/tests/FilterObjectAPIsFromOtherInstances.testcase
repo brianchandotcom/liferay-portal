@@ -41,9 +41,9 @@ definition {
 	}
 
 	tearDown {
-		ObjectAdmin.deleteObjectViaAPI(objectName = "Subject");
-
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteObjectViaAPI(objectName = "Subject");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();

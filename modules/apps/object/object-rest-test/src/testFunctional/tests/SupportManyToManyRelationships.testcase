@@ -9,23 +9,24 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstanceNoSelenium();
 
-		ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
+		ObjectDefinitionAPI.staticStudentObjectId();
+
+		ObjectDefinitionAPI.staticSubjectObjectId();
+
+		ObjectDefinitionAPI.staticUniversityObjectId();
 	}
 
 	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectDefinitionAPI.modifyRelationship(
+			deletionType = "cascade",
+			objectName = "University");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();	
+
 		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			ObjectDefinitionAPI.modifyRelationship(
-				deletionType = "cascade",
-				objectName = "University");
-
-			ObjectAdmin.deleteObjectViaAPI(objectName = "University");
-
-			ObjectAdmin.deleteObjectViaAPI(objectName = "Subject");
-
-			ObjectAdmin.deleteObjectViaAPI(objectName = "Student");
+			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 
@@ -40,8 +41,8 @@ definition {
 				deletionType = "disassociate",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -111,8 +112,8 @@ definition {
 				deletionType = "disassociate",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -185,8 +186,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -236,8 +237,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -293,8 +294,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -350,8 +351,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -407,8 +408,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -464,8 +465,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -533,8 +534,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -598,11 +599,7 @@ definition {
 		property test.name.skip.portal.instance = "SupportManyToManyRelationships#CanGetMultipleManyToManyRelationshipDetailsAsNestedFields";
 
 		task ("Given active student object definition created") {
-			var objectDefinitionId3 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "student",
-				en_US_plural_label = "students",
-				name = "Student",
-				requiredStringFieldName = "name");
+			var objectDefinitionId3 = ${staticStudentObjectId};
 		}
 
 		task ("Given manyToMany relationship universitySubjects created") {
@@ -610,8 +607,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -622,7 +619,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesStudents",
 				name = "universitiesStudents",
-				objectDefinitionId1 = ${staticObjectId1},
+				objectDefinitionId1 = ${staticUniversityObjectId},
 				objectDefinitionId2 = ${objectDefinitionId2},
 				type = "manyToMany");
 		}
@@ -691,11 +688,7 @@ definition {
 		property test.name.skip.portal.instance = "SupportManyToManyRelationships#CanGetObjectEntiresRelatedByManyToManyWhenDifferentRelationshipTypesCreated";
 
 		task ("Given active student object definition created") {
-			var objectDefinitionId3 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "student",
-				en_US_plural_label = "students",
-				name = "Student",
-				requiredStringFieldName = "name");
+			var objectDefinitionId3 = ${staticStudentObjectId};
 		}
 
 		task ("Given manyToMany relationship universitySubjects created") {
@@ -703,8 +696,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -715,7 +708,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesStudents",
 				name = "universitiesStudents",
-				objectDefinitionId1 = ${staticObjectId1},
+				objectDefinitionId1 = ${staticUniversityObjectId},
 				objectDefinitionId2 = ${objectDefinitionId2},
 				type = "oneToMany");
 		}
@@ -776,11 +769,7 @@ definition {
 		property test.name.skip.portal.instance = "SupportManyToManyRelationships#CanGetObjectEntiresRelatedByOneToManyWhenDifferentRelationshipTypesCreated";
 
 		task ("Given active student object definition created") {
-			var objectDefinitionId3 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "student",
-				en_US_plural_label = "students",
-				name = "Student",
-				requiredStringFieldName = "name");
+			var objectDefinitionId3 = ${staticStudentObjectId};
 		}
 
 		task ("Given manyToMany relationship universitySubjects created") {
@@ -788,8 +777,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -800,7 +789,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "subjectsStudents",
 				name = "subjectsStudents",
-				objectDefinitionId1 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticSubjectObjectId},
 				objectDefinitionId2 = ${objectDefinitionId2},
 				type = "oneToMany");
 		}
@@ -865,8 +854,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -916,8 +905,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -987,8 +976,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -1066,8 +1055,8 @@ definition {
 				deletionType = "prevent",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -1124,8 +1113,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = ${staticObjectId1},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId1 = ${staticUniversityObjectId},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -1150,7 +1139,7 @@ definition {
 		}
 
 		task ("Given I delete the subject object definition") {
-			ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = ${staticObjectId1});
+			ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = ${staticUniversityObjectId});
 
 			ObjectAdmin.deleteObjectViaAPI(objectName = "Subject");
 		}

@@ -66,15 +66,19 @@ definition {
 	}
 
 	tearDown {
-		for (var objectName : list "Foundation,SecondFoundation") {
-			ObjectAdmin.deleteObjectViaAPI(objectName = ${objectName});
-		}
-
-		for (var userId : list "${staticUserAccountId1},${staticUserAccountId2}") {
-			JSONUser.deleteUserByUserId(userId = ${userId});
-		}
-
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectDefinitionAPI.deleteRelationship(
+			name = "SecondFoundation",
+			relationshipName = "secondFoundationOfUsers");
+
+		ObjectDefinitionAPI.deleteRelationship(
+			name = "Foundation",
+			relationshipName = "foundationOfUsers");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();

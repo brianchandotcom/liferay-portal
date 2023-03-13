@@ -7,7 +7,7 @@ definition {
 	property testray.main.component.name = "Headless";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstanceNoSelenium();
 
 		User.firstLoginPG();
 
@@ -21,18 +21,18 @@ definition {
 		}
 
 		task ("Given a custom object definition is created with post request") {
-			ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
+			ObjectDefinitionAPI.staticUniversityObjectId();
+
+			ObjectDefinitionAPI.staticSubjectObjectId();
 		}
 	}
 
 	tearDown {
-		for (var objectName : list "University,Subject") {
-			ObjectAdmin.deleteObjectViaAPI(objectName = ${objectName});
-		}
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
 		ObjectFieldAPI.deleteObjectField();
-
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();
@@ -49,7 +49,7 @@ definition {
 				en_US_label = "UsersSubjects",
 				name = "usersSubjects",
 				objectDefinitionId1 = ${staticObjectId},
-				objectDefinitionId2 = ${staticObjectId2},
+				objectDefinitionId2 = ${staticSubjectObjectId},
 				type = "manyToMany");
 		}
 
@@ -83,7 +83,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "UniversityUsers",
 				name = "universityUsers",
-				objectDefinitionId1 = ${staticObjectId1},
+				objectDefinitionId1 = ${staticUniversityObjectId},
 				objectDefinitionId2 = ${staticObjectId},
 				type = "oneToMany");
 		}

@@ -12,22 +12,6 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "User Id"
-			},
-			"name": "userId",
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Integer"
-		},
-		{
-			"DBType": "Integer",
-			"businessType": "Integer",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
 				"en_US": "Funds Available"
 			},
 			"name": "fundsAvailable",

@@ -1,0 +1,10 @@
+Bundle-Name: Sample Service Builder Spring API
+Bundle-SymbolicName: com.example.spring.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.example.spring.exception,\
+	com.example.spring.model,\
+	com.example.spring.service,\
+	com.example.spring.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../sample-service-builder-spring-service/service.xml

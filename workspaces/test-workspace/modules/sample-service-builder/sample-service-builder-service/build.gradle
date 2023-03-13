@@ -1,0 +1,10 @@
+buildService {
+	apiDir = "../sample-service-builder-api/src/main/java"
+	testDir = "../sample-service-builder-test/src/testIntegration/java"
+}
+
+dependencies {
+	compile project(":modules:sample-service-builder:sample-service-builder-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+}

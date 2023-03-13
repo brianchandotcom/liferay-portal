@@ -1,0 +1,9 @@
+buildService {
+	apiDir = "../sample-service-builder-spring-api/src/main/java"
+}
+
+dependencies {
+	compile project(":modules:sample-service-builder-spring:sample-service-builder-spring-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+}

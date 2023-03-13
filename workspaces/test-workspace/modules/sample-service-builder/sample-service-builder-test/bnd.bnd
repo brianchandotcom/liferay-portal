@@ -1,0 +1,3 @@
+Bundle-Name: Sample Service Builder Test
+Bundle-SymbolicName: com.example.sample.test
+Bundle-Version: 1.0.0

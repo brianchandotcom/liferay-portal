@@ -10854,6 +10854,10 @@ ${update.properties}</echo>
 		<prepare-aws-s3-configuration />
 	</target>
 
+	<target name="prepare-azure-store-configuration">
+		<prepare-azure-store-configuration />
+	</target>
+
 	<target name="prepare-database-upgrade-configuration">
 		<prepare-database-upgrade-configuration />
 	</target>
@@ -11198,6 +11202,8 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</then>
 		</if>
 
+		<get-testcase-property property.name="store.migration.test" />
+
 		<if>
 			<or>
 				<equals arg1="aws.store.enabled" arg2="" />
@@ -11207,7 +11213,6 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</or>
 			<then>
 				<get-testcase-property property.name="aws.store.enabled" />
-				<get-testcase-property property.name="store.migration.test" />
 			</then>
 		</if>
 
@@ -11238,7 +11243,12 @@ dl.store.impl=com.liferay.portal.store.s3.S3Store</echo>
 		</if>
 
 		<if>
-			<equals arg1="${azure.store.enabled}" arg2="true" />
+			<and>
+				<equals arg1="${azure.store.enabled}" arg2="true" />
+				<not>
+					<equals arg1="${store.migration.test}" arg2="true" />
+				</not>
+			</and>
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
@@ -14972,8 +14982,9 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="aws.store.enabled" />
 		<get-testcase-property property.name="store.migration.test" />
+
+		<get-testcase-property property.name="aws.store.enabled" />
 
 		<if>
 			<equals arg1="${aws.store.enabled}" arg2="true" />
@@ -15008,7 +15019,14 @@ mail.send.blacklist=</echo>
 
 				<ant antfile="build-test-azure.xml" target="create-azure-container" />
 
-				<prepare-azure-store-configuration />
+				<if>
+					<not>
+						<equals arg1="${store.migration.test}" arg2="true" />
+					</not>
+					<then>
+						<prepare-azure-store-configuration-configuration />
+					</then>
+				</if>
 			</then>
 		</if>
 

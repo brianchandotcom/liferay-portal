@@ -18,7 +18,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -44,20 +45,35 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					group.getCompanyId(), true, false,
 					WorkflowConstants.STATUS_APPROVED)) {
 
-			for (ObjectEntry objectEntry :
-					_objectEntryLocalService.getObjectEntries(
-						group.getGroupId(),
-						objectDefinition.getObjectDefinitionId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-				try {
-					_objectEntryLocalService.deleteObjectEntry(objectEntry);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
-				}
+			try {
+				_deleteObjectEntries(
+					group.getGroupId(),
+					objectDefinition.getObjectDefinitionId());
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
 			}
 		}
+	}
+
+	private void _deleteObjectEntries(long groupId, long objectDefinitionId)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_objectEntryLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.and(
+					RestrictionsFactoryUtil.eq("groupId", groupId),
+					RestrictionsFactoryUtil.eq(
+						"objectDefinitionId", objectDefinitionId))));
+
+		actionableDynamicQuery.setPerformActionMethod(
+			objectEntry -> _objectEntryLocalService.deleteObjectEntry(
+				(ObjectEntry)objectEntry));
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

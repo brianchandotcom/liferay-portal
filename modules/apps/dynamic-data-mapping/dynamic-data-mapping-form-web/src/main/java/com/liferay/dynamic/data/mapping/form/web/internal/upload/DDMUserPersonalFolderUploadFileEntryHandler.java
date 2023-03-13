@@ -72,18 +72,35 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 			_folderModelResourcePermission, themeDisplay.getPermissionChecker(),
 			themeDisplay.getScopeGroupId(), folderId, ActionKeys.ADD_DOCUMENT);
 
-		String parameterName = _ADD_PARAMETER_NAME;
+		String fileName = uploadPortletRequest.getFileName(
+			"imageSelectorFileName");
 
-		String fileName = uploadPortletRequest.getFileName(parameterName);
+		if (Validator.isNotNull(fileName)) {
+			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					"imageSelectorFileName")) {
 
-		if (Validator.isNull(fileName)) {
-			FileEntry fileEntry = _fetchFileEntry(uploadPortletRequest);
-
-			if (fileEntry != null) {
-				fileName = fileEntry.getFileName();
-				parameterName = _EDIT_PARAMETER_NAME;
+				return _addFileEntry(
+					fileName, folderId, inputStream, "imageSelectorFileName",
+					themeDisplay, uploadPortletRequest);
 			}
 		}
+
+		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				"imageBlob")) {
+
+			FileEntry fileEntry = _fetchFileEntry(uploadPortletRequest);
+
+			return _addFileEntry(
+				fileEntry.getFileName(), folderId, inputStream, "imageBlob",
+				themeDisplay, uploadPortletRequest);
+		}
+	}
+
+	private FileEntry _addFileEntry(
+			String fileName, long folderId, InputStream inputStream,
+			String parameterName, ThemeDisplay themeDisplay,
+			UploadPortletRequest uploadPortletRequest)
+		throws PortalException {
 
 		long size = uploadPortletRequest.getSize(parameterName);
 
@@ -98,24 +115,19 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 			_validateAttachmentObjectField(fileName, objectFieldId);
 		}
 
-		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				parameterName)) {
+		long repositoryId = ParamUtil.getLong(
+			uploadPortletRequest, "repositoryId");
 
-			long repositoryId = ParamUtil.getLong(
-				uploadPortletRequest, "repositoryId");
+		String uniqueFileName = _uniqueFileNameProvider.provide(
+			fileName,
+			curFileName -> _exists(repositoryId, folderId, curFileName));
 
-			String uniqueFileName = _uniqueFileNameProvider.provide(
-				fileName,
-				curFileName -> _exists(repositoryId, folderId, curFileName));
-
-			return _dlAppService.addFileEntry(
-				null, repositoryId, folderId, uniqueFileName,
-				uploadPortletRequest.getContentType(parameterName),
-				uniqueFileName, uniqueFileName,
-				_getDescription(uploadPortletRequest), StringPool.BLANK,
-				inputStream, size, null, null,
-				_getServiceContext(uploadPortletRequest));
-		}
+		return _dlAppService.addFileEntry(
+			null, repositoryId, folderId, uniqueFileName,
+			uploadPortletRequest.getContentType(parameterName), uniqueFileName,
+			uniqueFileName, _getDescription(uploadPortletRequest),
+			StringPool.BLANK, inputStream, size, null, null,
+			_getServiceContext(uploadPortletRequest));
 	}
 
 	private boolean _exists(long repositoryId, long folderId, String fileName) {
@@ -213,10 +225,6 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 				FileUtil.getExtension(fileName), fileName);
 		}
 	}
-
-	private static final String _ADD_PARAMETER_NAME = "imageSelectorFileName";
-
-	private static final String _EDIT_PARAMETER_NAME = "imageBlob";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMUserPersonalFolderUploadFileEntryHandler.class);

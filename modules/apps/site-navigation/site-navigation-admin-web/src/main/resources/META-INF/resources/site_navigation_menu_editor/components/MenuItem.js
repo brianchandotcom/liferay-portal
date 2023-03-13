@@ -164,6 +164,8 @@ export function MenuItem({item, onMenuItemRemoved}) {
 		setElement,
 	} = useKeyboardNavigation();
 
+	const [isMovementEnabled, setIsMovementEnabled] = useState(false);
+
 	return (
 		<>
 			<div
@@ -209,7 +211,74 @@ export function MenuItem({item, onMenuItemRemoved}) {
 						<div ref={handlerRef}>
 							<ClayCard.Row>
 								<ClayLayout.ContentCol gutters>
-									<ClayIcon symbol="drag" />
+									<ClayButtonWithIcon
+										displayType="unstyled"
+										monospaced={false}
+										onBlur={() =>
+											setIsMovementEnabled(false)
+										}
+										onKeyDown={(event) => {
+											if (event.key === 'Enter') {
+												setIsMovementEnabled(
+													(
+														previousIsMovementEnabled
+													) =>
+														!previousIsMovementEnabled
+												);
+											}
+
+											if (!isMovementEnabled) {
+												return;
+											}
+
+											event.preventDefault();
+											event.stopPropagation();
+
+											if (
+												event.key === 'ArrowDown' ||
+												event.key === 'ArrowUp'
+											) {
+												const computeFunction =
+													event.key === 'ArrowDown'
+														? getDownPosition
+														: getUpPosition;
+
+												const result = computeFunction({
+													items,
+													order,
+													parentSiteNavigationMenuItemId:
+														item.parentSiteNavigationMenuItemId,
+												});
+
+												if (!result) {
+													return;
+												}
+
+												updateMenuItem({
+													editSiteNavigationMenuItemParentURL,
+													itemId:
+														item.siteNavigationMenuItemId,
+													order: result.order,
+													parentId:
+														result.parentSiteNavigationMenuItemId,
+													portletNamespace,
+												}).then(
+													({
+														siteNavigationMenuItems,
+													}) => {
+														const newItems = getFlatItems(
+															siteNavigationMenuItems
+														);
+
+														setItems(newItems);
+													}
+												);
+											}
+										}}
+										size="sm"
+										symbol="drag"
+										tabIndex={isTarget ? '0' : '-1'}
+									/>
 								</ClayLayout.ContentCol>
 
 								<ClayLayout.ContentCol expand>
@@ -392,4 +461,124 @@ function updateMenuItem({
 				console.error(error);
 			}
 		});
+}
+
+function getDownPosition({items, order, parentSiteNavigationMenuItemId}) {
+	const parent = items.find(
+		(item) =>
+			item.siteNavigationMenuItemId === parentSiteNavigationMenuItemId
+	);
+
+	const siblings = parent
+		? parent.children
+		: items.filter(
+				(item) =>
+					item.parentSiteNavigationMenuItemId ===
+					parentSiteNavigationMenuItemId
+		  );
+
+	const sibling = siblings[order + 1];
+
+	// If there aren't any sibling, the menu is placed as the sibling of the parent.
+
+	if (!sibling) {
+
+		// If there aren't any sibling and the parentSiteNavigationMenuItemId is 0,
+		// there is no movement possible.
+
+		if (parentSiteNavigationMenuItemId === '0') {
+			return;
+		}
+
+		const parentOrder = getOrder({
+			items,
+			parentSiteNavigationMenuItemId:
+				parent.parentSiteNavigationMenuItemId,
+			siteNavigationMenuItemId: parent.siteNavigationMenuItemId,
+		});
+
+		return {
+			order: parentOrder + 1,
+			parentSiteNavigationMenuItemId:
+				parent.parentSiteNavigationMenuItemId,
+		};
+	}
+
+	// If there aren't any sibling, the menu is placed as its child.
+
+	return {
+		order: 0,
+		parentSiteNavigationMenuItemId: sibling.siteNavigationMenuItemId,
+	};
+}
+
+function getUpPosition({items, order, parentSiteNavigationMenuItemId}) {
+
+	// The first menu cannot be moved upwards
+
+	if (order === 0 && parentSiteNavigationMenuItemId === '0') {
+		return null;
+	}
+
+	const parent = items.find(
+		(item) =>
+			item.siteNavigationMenuItemId === parentSiteNavigationMenuItemId
+	);
+
+	const siblings = parent
+		? parent.children
+		: items.filter(
+				(item) =>
+					item.parentSiteNavigationMenuItemId ===
+					parentSiteNavigationMenuItemId
+		  );
+
+	// When the menu is the first child, the menu is placed as the sibling of the parent.
+
+	if (order === 0) {
+		const nextOrder = getOrder({
+			items,
+			parentSiteNavigationMenuItemId:
+				parent.parentSiteNavigationMenuItemId,
+			siteNavigationMenuItemId: parent.siteNavigationMenuItemId,
+		});
+
+		return {
+			order: nextOrder,
+			parentSiteNavigationMenuItemId:
+				parent.parentSiteNavigationMenuItemId,
+		};
+	}
+
+	// If the previous sibling doesn't have children, place it inside.
+
+	const sibling = siblings[order - 1];
+
+	// If the previous sibling has children,
+	// get the deeper child and place the menu as a child of it.
+
+	const getDeeperChild = (item) => {
+		if (!item.children.length) {
+			return item;
+		}
+
+		return getDeeperChild(item.children.at(-1));
+	};
+
+	const deeperChild = getDeeperChild(sibling);
+
+	if (deeperChild.children.length) {
+		return {
+			order: deeperChild.children.length,
+			parentSiteNavigationMenuItemId:
+				deeperChild.siteNavigationMenuItemId,
+		};
+	}
+	else {
+		return {
+			order: 0,
+			parentSiteNavigationMenuItemId:
+				deeperChild.siteNavigationMenuItemId,
+		};
+	}
 }

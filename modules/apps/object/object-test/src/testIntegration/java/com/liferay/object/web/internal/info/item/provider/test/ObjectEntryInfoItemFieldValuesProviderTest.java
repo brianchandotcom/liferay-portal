@@ -53,7 +53,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -82,6 +81,35 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			).build());
 
 		_group = GroupTestUtil.addGroup();
+
+		_objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					new AttachmentObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"attachmentObjectFieldName"
+					).objectFieldSettings(
+						Arrays.asList(
+							_createObjectFieldSetting(
+								"acceptedFileExtensions", "txt"),
+							_createObjectFieldSetting(
+								"fileSource", "documentsAndMedia"),
+							_createObjectFieldSetting("maximumFileSize", "100"))
+					).build()));
+
+		_objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId());
 	}
 
 	@After
@@ -96,101 +124,55 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 	public void testObjectEntryInfoItemFieldValuesProviderWithAttachment()
 		throws Exception {
 
-		ObjectField attachmentObjectField = _getAttachmentObjectField(
-			"attachment",
-			Arrays.asList(
-				_createObjectFieldSetting("acceptedFileExtensions", "txt"),
-				_createObjectFieldSetting("fileSource", "documentsAndMedia"),
-				_createObjectFieldSetting("maximumFileSize", "100")));
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.txt",
+			ContentTypes.TEXT, RandomTestUtil.randomBytes(), null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		ObjectDefinition objectDefinition = null;
+		InfoItemFieldValuesProvider<ObjectEntry> infoItemFieldValuesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				_objectDefinition.getClassName());
 
-		try {
-			objectDefinition = _addAndPublishObjectDefinition(
-				attachmentObjectField);
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(
+				_objectEntryLocalService.addObjectEntry(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					_objectDefinition.getObjectDefinitionId(),
+					HashMapBuilder.<String, Serializable>put(
+						"attachmentObjectFieldName", fileEntry.getFileEntryId()
+					).build(),
+					ServiceContextTestUtil.getServiceContext()));
 
-			FileEntry fileEntry = _addFileEntry(_group, "test.txt");
+		Assert.assertNotNull(infoItemFieldValues);
 
-			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				objectDefinition.getObjectDefinitionId(),
-				HashMapBuilder.<String, Serializable>put(
-					attachmentObjectField.getName(), fileEntry.getFileEntryId()
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			_objectDefinition.getObjectDefinitionId(),
+			"attachmentObjectFieldName");
 
-			InfoItemFieldValuesProvider<ObjectEntry>
-				infoItemFieldValuesProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemFieldValuesProvider.class,
-						objectDefinition.getClassName());
+		InfoFieldValue<Object> downloadURLInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue(
+				objectField.getObjectFieldId() + "#downloadURL");
 
-			InfoItemFieldValues infoItemFieldValues =
-				infoItemFieldValuesProvider.getInfoItemFieldValues(objectEntry);
+		Assert.assertEquals(
+			HttpComponentsUtil.removeParameter(
+				_dlURLHelper.getDownloadURL(
+					fileEntry, fileEntry.getFileVersion(), null,
+					StringPool.BLANK),
+				_TIMESTAMP_PARAMETER),
+			HttpComponentsUtil.removeParameter(
+				String.valueOf(downloadURLInfoFieldValue.getValue()),
+				_TIMESTAMP_PARAMETER));
 
-			Assert.assertNotNull(infoItemFieldValues);
-
-			ObjectField persistedAttachmentObjectField =
-				_objectFieldLocalService.fetchObjectField(
-					objectDefinition.getObjectDefinitionId(),
-					attachmentObjectField.getName());
-
-			String expectedURL = _dlURLHelper.getDownloadURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
-
-			InfoFieldValue<Object> downloadURLInfoFieldValue =
-				infoItemFieldValues.getInfoFieldValue(
-					persistedAttachmentObjectField.getObjectFieldId() +
-						"#downloadURL");
-
-			Assert.assertEquals(
-				HttpComponentsUtil.removeParameter(expectedURL, "t"),
-				HttpComponentsUtil.removeParameter(
-					String.valueOf(downloadURLInfoFieldValue.getValue()), "t"));
-
-			_assertInfoFieldValue(
-				"#fileName", infoItemFieldValues,
-				persistedAttachmentObjectField, fileEntry.getFileName());
-			_assertInfoFieldValue(
-				"#mimeType", infoItemFieldValues,
-				persistedAttachmentObjectField, fileEntry.getMimeType());
-			_assertInfoFieldValue(
-				"#size", infoItemFieldValues, persistedAttachmentObjectField,
-				fileEntry.getSize());
-		}
-		finally {
-			if (objectDefinition != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
-			}
-		}
-	}
-
-	private ObjectDefinition _addAndPublishObjectDefinition(
-			ObjectField attachmentObjectField)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_SITE,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Arrays.asList(attachmentObjectField));
-
-		return _objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId());
-	}
-
-	private FileEntry _addFileEntry(Group group, String name) throws Exception {
-		return _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, ContentTypes.TEXT,
-			RandomTestUtil.randomBytes(), null, null,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		_assertInfoFieldValue(
+			"#fileName", infoItemFieldValues, objectField,
+			fileEntry.getFileName());
+		_assertInfoFieldValue(
+			"#mimeType", infoItemFieldValues, objectField,
+			fileEntry.getMimeType());
+		_assertInfoFieldValue(
+			"#size", infoItemFieldValues, objectField, fileEntry.getSize());
 	}
 
 	private void _assertInfoFieldValue(
@@ -216,18 +198,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		return objectFieldSetting;
 	}
 
-	private ObjectField _getAttachmentObjectField(
-		String name, List<ObjectFieldSetting> objectFieldSettings) {
-
-		return new AttachmentObjectFieldBuilder(
-		).labelMap(
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-		).name(
-			name
-		).objectFieldSettings(
-			objectFieldSettings
-		).build();
-	}
+	private static final String _TIMESTAMP_PARAMETER = "t";
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
@@ -240,6 +211,9 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

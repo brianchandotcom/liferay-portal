@@ -26,8 +26,8 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -37,7 +37,6 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -64,6 +63,35 @@ public class ObjectEntryInfoItemFormProviderTest {
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-176083", "true"
 			).build());
+
+		_objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					new AttachmentObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"attachmentObjectFieldName"
+					).objectFieldSettings(
+						Arrays.asList(
+							_createObjectFieldSetting(
+								"acceptedFileExtensions", "txt"),
+							_createObjectFieldSetting(
+								"fileSource", "documentsAndMedia"),
+							_createObjectFieldSetting("maximumFileSize", "100"))
+					).build()));
+
+		_objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId());
 	}
 
 	@After
@@ -78,79 +106,33 @@ public class ObjectEntryInfoItemFormProviderTest {
 	public void testObjectEntryInfoItemFormProviderWithAttachment()
 		throws Exception {
 
-		ObjectField attachmentObjectField = _getAttachmentObjectField(
-			"attachment",
-			Arrays.asList(
-				_createObjectFieldSetting("acceptedFileExtensions", "txt"),
-				_createObjectFieldSetting("fileSource", "documentsAndMedia"),
-				_createObjectFieldSetting("maximumFileSize", "100")));
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, _objectDefinition.getClassName());
 
-		ObjectDefinition objectDefinition = null;
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			String.valueOf(_objectDefinition.getObjectDefinitionId()));
 
-		try {
-			objectDefinition = _addAndPublishObjectDefinition(
-				attachmentObjectField);
+		Assert.assertNotNull(infoForm);
 
-			InfoItemFormProvider<?> infoItemFormProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFormProvider.class,
-					objectDefinition.getClassName());
+		Assert.assertNotNull(
+			infoForm.getInfoField("attachmentObjectFieldName"));
 
-			InfoForm infoForm = infoItemFormProvider.getInfoForm(
-				String.valueOf(objectDefinition.getObjectDefinitionId()));
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			_objectDefinition.getObjectDefinitionId(),
+			"attachmentObjectFieldName");
 
-			Assert.assertNotNull(infoForm);
-
-			Assert.assertNotNull(
-				infoForm.getInfoField(attachmentObjectField.getName()));
-
-			ObjectField persistedAttachmentObjectField =
-				_objectFieldLocalService.getObjectField(
-					objectDefinition.getObjectDefinitionId(),
-					attachmentObjectField.getName());
-
-			Assert.assertNotNull(
-				infoForm.getInfoField(
-					persistedAttachmentObjectField.getObjectFieldId() +
-						"#downloadURL"));
-			Assert.assertNotNull(
-				infoForm.getInfoField(
-					persistedAttachmentObjectField.getObjectFieldId() +
-						"#fileName"));
-			Assert.assertNotNull(
-				infoForm.getInfoField(
-					persistedAttachmentObjectField.getObjectFieldId() +
-						"#mimeType"));
-			Assert.assertNotNull(
-				infoForm.getInfoField(
-					persistedAttachmentObjectField.getObjectFieldId() +
-						"#size"));
-		}
-		finally {
-			if (objectDefinition != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
-			}
-		}
-	}
-
-	private ObjectDefinition _addAndPublishObjectDefinition(
-			ObjectField attachmentObjectField)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_SITE,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Arrays.asList(attachmentObjectField));
-
-		return _objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId());
+		Assert.assertNotNull(
+			infoForm.getInfoField(
+				objectField.getObjectFieldId() + "#downloadURL"));
+		Assert.assertNotNull(
+			infoForm.getInfoField(
+				objectField.getObjectFieldId() + "#fileName"));
+		Assert.assertNotNull(
+			infoForm.getInfoField(
+				objectField.getObjectFieldId() + "#mimeType"));
+		Assert.assertNotNull(
+			infoForm.getInfoField(objectField.getObjectFieldId() + "#size"));
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(
@@ -165,21 +147,11 @@ public class ObjectEntryInfoItemFormProviderTest {
 		return objectFieldSetting;
 	}
 
-	private ObjectField _getAttachmentObjectField(
-		String name, List<ObjectFieldSetting> objectFieldSettings) {
-
-		return new AttachmentObjectFieldBuilder(
-		).labelMap(
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-		).name(
-			name
-		).objectFieldSettings(
-			objectFieldSettings
-		).build();
-	}
-
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

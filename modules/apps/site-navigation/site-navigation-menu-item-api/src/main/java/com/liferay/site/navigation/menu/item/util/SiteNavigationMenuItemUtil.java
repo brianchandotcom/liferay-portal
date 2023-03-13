@@ -154,14 +154,11 @@ public class SiteNavigationMenuItemUtil {
 		for (Locale locale : availableLocales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			if (Validator.isNotNull(
-					typeSettingsUnicodeProperties.getProperty(
-						name + "_" + languageId))) {
+			String value = typeSettingsUnicodeProperties.getProperty(
+				name + "_" + languageId);
 
-				map.put(
-					languageId,
-					typeSettingsUnicodeProperties.getProperty(
-						name + "_" + languageId));
+			if (Validator.isNotNull(value)) {
+				map.put(languageId, value);
 			}
 		}
 

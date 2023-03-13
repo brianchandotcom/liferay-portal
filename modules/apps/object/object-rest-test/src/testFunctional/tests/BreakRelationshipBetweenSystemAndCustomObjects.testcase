@@ -64,14 +64,6 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ObjectDefinitionAPI.deleteRelationship(
-			name = "SecondFoundation",
-			relationshipName = "usersSecondFoundations");
-
-		ObjectDefinitionAPI.deleteRelationship(
-			name = "Foundation",
-			relationshipName = "userFoundations");
-
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
 		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
@@ -81,6 +73,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test CanBreakManyToManyRelationship {
 		property portal.acceptance = "true";

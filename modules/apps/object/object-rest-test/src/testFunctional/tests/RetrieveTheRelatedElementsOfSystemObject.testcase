@@ -68,14 +68,6 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ObjectDefinitionAPI.deleteRelationship(
-			name = "SecondFoundation",
-			relationshipName = "usersSecondFoundations");
-
-		ObjectDefinitionAPI.deleteRelationship(
-			name = "Foundation",
-			relationshipName = "userFoundations");
-
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
 		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});

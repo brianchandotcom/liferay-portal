@@ -66,6 +66,15 @@ public class AccountGroupLocalServiceUtil {
 		return getService().addAccountGroup(userId, description, name);
 	}
 
+	public static AccountGroup addAccountGroup(
+			long userId, String description, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addAccountGroup(
+			userId, description, name, serviceContext);
+	}
+
 	public static AccountGroup checkGuestAccountGroup(long companyId)
 		throws PortalException {
 
@@ -422,6 +431,15 @@ public class AccountGroupLocalServiceUtil {
 
 		return getService().updateAccountGroup(
 			accountGroupId, description, name);
+	}
+
+	public static AccountGroup updateAccountGroup(
+			long accountGroupId, String description, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateAccountGroup(
+			accountGroupId, description, name, serviceContext);
 	}
 
 	public static AccountGroup updateExternalReferenceCode(

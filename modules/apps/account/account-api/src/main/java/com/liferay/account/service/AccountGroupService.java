@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -55,6 +56,11 @@ public interface AccountGroupService extends BaseService {
 			long userId, String description, String name)
 		throws PortalException;
 
+	public AccountGroup addAccountGroup(
+			long userId, String description, String name,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public AccountGroup deleteAccountGroup(long accountGroupId)
 		throws PortalException;
 
@@ -76,6 +82,11 @@ public interface AccountGroupService extends BaseService {
 
 	public AccountGroup updateAccountGroup(
 			long accountGroupId, String description, String name)
+		throws PortalException;
+
+	public AccountGroup updateAccountGroup(
+			long accountGroupId, String description, String name,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public AccountGroup updateExternalReferenceCode(

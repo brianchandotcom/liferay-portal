@@ -64,6 +64,16 @@ public class AccountGroupLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountGroup addAccountGroup(
+			long userId, String description, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupLocalService.addAccountGroup(
+			userId, description, name, serviceContext);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountGroup checkGuestAccountGroup(
 			long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -492,6 +502,16 @@ public class AccountGroupLocalServiceWrapper
 
 		return _accountGroupLocalService.updateAccountGroup(
 			accountGroupId, description, name);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountGroup updateAccountGroup(
+			long accountGroupId, String description, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupLocalService.updateAccountGroup(
+			accountGroupId, description, name, serviceContext);
 	}
 
 	@Override

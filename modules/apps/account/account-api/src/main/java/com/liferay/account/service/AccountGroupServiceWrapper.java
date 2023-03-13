@@ -43,6 +43,16 @@ public class AccountGroupServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountGroup addAccountGroup(
+			long userId, String description, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupService.addAccountGroup(
+			userId, description, name, serviceContext);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountGroup deleteAccountGroup(
 			long accountGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -86,6 +96,16 @@ public class AccountGroupServiceWrapper
 
 		return _accountGroupService.updateAccountGroup(
 			accountGroupId, description, name);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountGroup updateAccountGroup(
+			long accountGroupId, String description, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupService.updateAccountGroup(
+			accountGroupId, description, name, serviceContext);
 	}
 
 	@Override

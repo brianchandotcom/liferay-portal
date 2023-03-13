@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -84,6 +85,12 @@ public interface AccountGroupLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountGroup addAccountGroup(
 			long userId, String description, String name)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AccountGroup addAccountGroup(
+			long userId, String description, String name,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public AccountGroup checkGuestAccountGroup(long companyId)
@@ -360,6 +367,12 @@ public interface AccountGroupLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountGroup updateAccountGroup(
 			long accountGroupId, String description, String name)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AccountGroup updateAccountGroup(
+			long accountGroupId, String description, String name,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -75,7 +75,7 @@ public class JaxRsLinkUtil {
 		URI methodURI = UriBuilder.fromMethod(
 			clazz, methodName
 		).build(
-			values
+			values, false
 		);
 
 		return baseURIString + resourceURI.toString() + methodURI.toString();

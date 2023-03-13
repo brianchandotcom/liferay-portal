@@ -280,7 +280,7 @@ function SelectVocabularies({
 				Promise.all(
 					siteBriefs.map((site) =>
 						fetch(
-							`/o/headless-admin-taxonomy/v1.0/sites/${site.id}/taxonomy-vocabularies`,
+							`/o/headless-admin-taxonomy/v1.0/sites/${site.id}/taxonomy-vocabularies?page=0&pageSize=0`,
 							CONFIGURATION
 						).then((response) => response.json())
 					)

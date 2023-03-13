@@ -35,7 +35,6 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -154,15 +153,6 @@ public class
 	@Override
 	public Class<?> getSourceItemClass() {
 		return AssetEntry.class;
-	}
-
-	@Override
-	public boolean isAvailable() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-166036")) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private long[] _getAssetCategories(

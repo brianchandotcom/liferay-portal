@@ -40,7 +40,6 @@ import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -265,15 +264,6 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 	@Override
 	public Class<?> getSourceItemClass() {
 		return AssetEntry.class;
-	}
-
-	@Override
-	public boolean isAvailable() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-166036")) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private BooleanFilter

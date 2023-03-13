@@ -127,12 +127,14 @@ public class EditSegmentsEntryDisplayContext {
 		return _data;
 	}
 
-	public long getGroupId() {
+	public long getGroupId() throws PortalException {
 		if (_groupId != null) {
 			return _groupId;
 		}
 
-		_groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
+		_groupId = BeanParamUtil.getLong(
+			_getSegmentsEntry(), _httpServletRequest, "groupId",
+			_getInitialGroupId());
 
 		return _groupId;
 	}
@@ -238,7 +240,7 @@ public class EditSegmentsEntryDisplayContext {
 		Map<String, String> availableLocales = new HashMap<>();
 
 		for (Locale availableLocale :
-				LanguageUtil.getAvailableLocales(_getGroupId())) {
+				LanguageUtil.getAvailableLocales(getGroupId())) {
 
 			String availableLanguageId = LocaleUtil.toLanguageId(
 				availableLocale);
@@ -310,7 +312,7 @@ public class EditSegmentsEntryDisplayContext {
 		Locale siteDefaultLocale = null;
 
 		try {
-			siteDefaultLocale = PortalUtil.getSiteDefaultLocale(_getGroupId());
+			siteDefaultLocale = PortalUtil.getSiteDefaultLocale(getGroupId());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -329,15 +331,9 @@ public class EditSegmentsEntryDisplayContext {
 	}
 
 	private String _getGroupDescriptiveName() throws Exception {
-		Group group = _groupLocalService.getGroup(_getGroupId());
+		Group group = _groupLocalService.getGroup(getGroupId());
 
 		return group.getDescriptiveName(_locale);
-	}
-
-	private long _getGroupId() throws PortalException {
-		return BeanParamUtil.getLong(
-			_getSegmentsEntry(), _httpServletRequest, "groupId",
-			_getInitialGroupId());
 	}
 
 	private long _getInitialGroupId() throws PortalException {
@@ -417,7 +413,7 @@ public class EditSegmentsEntryDisplayContext {
 		).put(
 			"formId", _renderResponse.getNamespace() + "editSegmentFm"
 		).put(
-			"groupId", _getGroupId()
+			"groupId", getGroupId()
 		).put(
 			"hasUpdatePermission", _hasUpdatePermission()
 		).put(

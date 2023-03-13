@@ -533,10 +533,14 @@ definition {
 				menuItem = "Preview",
 				pageName = "404 Error Utility Page");
 
+			SelectWindow.selectPopUp(locator1 = "null");
+
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
 				text = "Resource Not Found");
+
+			Close.closeWindow();
 		}
 
 		task ("When the page designer publishes the utility page") {
@@ -556,10 +560,14 @@ definition {
 				menuItem = "Preview",
 				pageName = "404 Error Utility Page");
 
+			SelectWindow.selectPopUp(locator1 = "null");
+
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
 				text = "Resource Not Found");
+
+			Close.closeWindow();
 		}
 
 		task ("When the page designer makes some changes on the utility page") {
@@ -590,6 +598,8 @@ definition {
 			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
 				menuItem = "Preview",
 				pageName = "404 Error Utility Page");
+
+			SelectWindow.selectPopUp(locator1 = "null");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",

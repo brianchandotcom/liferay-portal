@@ -232,6 +232,7 @@ function DisplayPageItemContextualSidebar({
 						<ClayAlert
 							className="mt-1"
 							displayType="warning"
+							role={null}
 							title={Liferay.Language.get('no-display-page')}
 							variant="feedback"
 						/>

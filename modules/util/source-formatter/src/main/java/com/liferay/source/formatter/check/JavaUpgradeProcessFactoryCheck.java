@@ -232,10 +232,10 @@ public class JavaUpgradeProcessFactoryCheck extends BaseJavaTermCheck {
 					}
 				}
 
+				previousColumnName = columnName;
 				previousMatch = match;
 				previousMethodName = methodName;
 				previousTableName = tableName;
-				previousColumnName = columnName;
 			}
 		}
 

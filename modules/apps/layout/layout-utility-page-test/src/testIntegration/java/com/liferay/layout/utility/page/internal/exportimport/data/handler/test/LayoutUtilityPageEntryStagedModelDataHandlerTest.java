@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
@@ -56,15 +57,8 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 
 		initExport();
 
-		long userId = TestPropsValues.getUserId();
-
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, userId, stagingGroup.getGroupId(), 0, 0, false,
-				"Test Entry", LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND,
-				0,
-				ServiceContextTestUtil.getServiceContext(
-					stagingGroup.getGroupId(), userId));
+			_addLayoutUtilityPageEntry(false, stagingGroup);
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layoutUtilityPageEntry);
@@ -75,12 +69,10 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 			(LayoutUtilityPageEntry)readExportedStagedModel(
 				layoutUtilityPageEntry);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedLayoutUtilityPageEntry);
-
 		LayoutUtilityPageEntry importedLayoutUtilityPageEntry =
-			(LayoutUtilityPageEntry)getStagedModel(
-				layoutUtilityPageEntry.getUuid(), liveGroup);
+			_getImportedLayoutUtilityPageEntry(
+				exportedLayoutUtilityPageEntry, liveGroup,
+				layoutUtilityPageEntry);
 
 		Assert.assertFalse(
 			importedLayoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
@@ -101,11 +93,8 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 			(LayoutUtilityPageEntry)readExportedStagedModel(
 				layoutUtilityPageEntry);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedLayoutUtilityPageEntry);
-
-		importedLayoutUtilityPageEntry = (LayoutUtilityPageEntry)getStagedModel(
-			layoutUtilityPageEntry.getUuid(), liveGroup);
+		importedLayoutUtilityPageEntry = _getImportedLayoutUtilityPageEntry(
+			exportedLayoutUtilityPageEntry, liveGroup, layoutUtilityPageEntry);
 
 		Assert.assertTrue(
 			importedLayoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
@@ -160,6 +149,30 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			layoutUtilityPageEntry.getType(),
 			importLayoutUtilityPageEntry.getType());
+	}
+
+	private LayoutUtilityPageEntry _addLayoutUtilityPageEntry(
+			boolean defaultLayoutUtilityPageEntry, Group group)
+		throws Exception {
+
+		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(), 0, 0,
+			defaultLayoutUtilityPageEntry, RandomTestUtil.randomString(),
+			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	private LayoutUtilityPageEntry _getImportedLayoutUtilityPageEntry(
+			LayoutUtilityPageEntry exportedLayoutUtilityPageEntry, Group group,
+			LayoutUtilityPageEntry layoutUtilityPageEntry)
+		throws Exception {
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedLayoutUtilityPageEntry);
+
+		return (LayoutUtilityPageEntry)getStagedModel(
+			layoutUtilityPageEntry.getUuid(), group);
 	}
 
 	@Inject

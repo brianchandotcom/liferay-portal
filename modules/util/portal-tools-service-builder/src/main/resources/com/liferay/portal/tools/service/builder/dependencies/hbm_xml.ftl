@@ -75,7 +75,11 @@
 					class="${class}"
 
 					<#if stringUtil.equals(class, "sequence")>
+						<#if serviceBuilder.isVersionGTE_7_4_0()>
+							><param name="sequence_name">${entityColumn.idParam}</param>
+						<#else>
 							><param name="sequence">${entityColumn.idParam}</param>
+						</#if>
 						</generator>
 					<#else>
 						/>

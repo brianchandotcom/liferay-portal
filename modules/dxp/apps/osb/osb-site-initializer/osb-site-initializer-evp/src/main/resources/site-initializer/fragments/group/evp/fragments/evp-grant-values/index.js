@@ -116,7 +116,12 @@ const availableServiceHours = [];
 const getAvailableFunds = async () => {
 	await Promise.all([getFundsRequestByUserId(), getFundsLimit()]);
 
+	if (fundsLimit[0] - totalFundsRequestedById[0] < 0) {
+		availableFunds.push(0);
+	}
+
 	availableFunds.push(fundsLimit[0] - totalFundsRequestedById[0]);
+
 	document.querySelector('#available-funds').innerHTML =
 		' R$ ' + availableFunds[0];
 };
@@ -126,9 +131,14 @@ getAvailableFunds();
 const getAvailableHours = async () => {
 	await Promise.all([getServiceHoursByUserId(), getServiceHoursLimit()]);
 
+	if (serviceHoursLimit[0] - totalHoursRequestedByUserId[0] < 0) {
+		availableServiceHours.push(0);
+	}
+
 	availableServiceHours.push(
 		serviceHoursLimit[0] - totalHoursRequestedByUserId[0]
 	);
+
 	document.querySelector('#available-hours').innerHTML =
 		availableServiceHours[0] + 'h';
 };

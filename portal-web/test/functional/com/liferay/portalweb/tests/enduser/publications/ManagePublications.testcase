@@ -34,6 +34,61 @@ definition {
 			value1 = "Publication Name");
 	}
 
+	@priority = 5
+	test CanMoveChangeBetweenPublications {
+		property custom.properties = "feature.flag.LPS-171364=true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		JSONPublications.addPublication(publicationName = "Publication 1 Name");
+
+		JSONPublications.addPublication(publicationName = "Publication 2 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "Edited in Publication 2 Name",
+			webContentTitle = "Test Web Content",
+			webContentTitleEdit = "Edited in Publication 2 Name");
+
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication 2 Name");
+
+		PublicationsChanges.moveChangeToAnotherPublication(
+			changeCategory = "Web Content Article",
+			changeOrder = 1,
+			changeTitle = "Edited in Publication 2 Name",
+			targetPublicationName = "Publication 1 Name");
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 1 Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Article",
+			changeSite = "Guest",
+			changeTitle = "Edited in Publication 2 Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Translation",
+			changeSite = "Guest",
+			changeTitle = "Edited in Publication 2 Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+	}
+
 	@priority = 3
 	test CreateNewPublicationWithLongName {
 		PublicationsNavigator.openPublicationsAdmin();

@@ -333,6 +333,14 @@ public class CommerceChannelLocalServiceWrapper
 	}
 
 	@Override
+	public long fetchCommerceChannelGroupIdBySiteGroupId(long siteGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelLocalService.
+			fetchCommerceChannelGroupIdBySiteGroupId(siteGroupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

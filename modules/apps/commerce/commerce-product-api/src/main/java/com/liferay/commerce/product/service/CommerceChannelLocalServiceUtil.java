@@ -301,6 +301,14 @@ public class CommerceChannelLocalServiceUtil {
 		return getService().fetchCommerceChannelGroup(commerceChannelId);
 	}
 
+	public static long fetchCommerceChannelGroupIdBySiteGroupId(
+			long siteGroupId)
+		throws PortalException {
+
+		return getService().fetchCommerceChannelGroupIdBySiteGroupId(
+			siteGroupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

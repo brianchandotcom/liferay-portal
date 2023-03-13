@@ -175,12 +175,7 @@ public class ObjectServiceUpgradeStepRegistrator
 			new com.liferay.object.internal.upgrade.v3_18_0.
 				ObjectFieldUpgradeProcess(_portalUUID));
 
-		registry.register(
-			"3.18.0", "3.18.1",
-			new com.liferay.object.internal.upgrade.v3_18_1.
-				ObjectViewColumnUpgradeProcess());
-
-		registry.register("3.18.1", "3.19.0", ObjectFilterTable.create());
+		registry.register("3.18.0", "3.19.0", ObjectFilterTable.create());
 
 		registry.register(
 			"3.19.0", "3.19.1",
@@ -274,6 +269,11 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"4.0.0", "4.1.0", new ObjectDefinitionUpgradeProcess());
+		
+		registry.register(
+				"4.1.0", "4.1.1",
+				new com.liferay.object.internal.upgrade.v4_1_1.
+					ObjectViewColumnUpgradeProcess());
 	}
 
 	@Reference

@@ -151,13 +151,11 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> titleMap = _localization.getLocalizationMap(
 			actionRequest, "titleMapAsXML");
 
-		String ddmStructureKey = ParamUtil.getString(
-			uploadPortletRequest, "ddmStructureKey");
+		long ddmStructureId = ParamUtil.getLong(
+			uploadPortletRequest, "ddmStructureId");
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			_portal.getSiteGroupId(groupId),
-			_portal.getClassNameId(JournalArticle.class), ddmStructureKey,
-			true);
+			ddmStructureId);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), uploadPortletRequest);
@@ -322,7 +320,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			article = _journalArticleService.addArticle(
 				null, groupId, folderId, classNameId, classPK, articleId,
 				autoArticleId, titleMap, descriptionMap, friendlyURLMap,
-				content, ddmStructureKey, ddmTemplateKey, layoutUuid,
+				content, ddmStructureId, ddmTemplateKey, layoutUuid,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
@@ -346,15 +344,15 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			if (actionName.equals("/journal/update_article")) {
 				article = _journalArticleService.updateArticle(
 					groupId, folderId, articleId, version, titleMap,
-					descriptionMap, friendlyURLMap, content, ddmStructureKey,
-					ddmTemplateKey, layoutUuid, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, reviewDateMonth,
-					reviewDateDay, reviewDateYear, reviewDateHour,
-					reviewDateMinute, neverReview, indexable, smallImage,
-					smallImageURL, smallFile, null, articleURL, serviceContext);
+					descriptionMap, friendlyURLMap, content, ddmTemplateKey,
+					layoutUuid, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					reviewDateMonth, reviewDateDay, reviewDateYear,
+					reviewDateHour, reviewDateMinute, neverReview, indexable,
+					smallImage, smallImageURL, smallFile, null, articleURL,
+					serviceContext);
 			}
 
 			if (!tempOldUrlTitle.equals(article.getUrlTitle())) {

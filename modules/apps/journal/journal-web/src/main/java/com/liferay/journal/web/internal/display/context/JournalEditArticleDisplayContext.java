@@ -446,12 +446,14 @@ public class JournalEditArticleDisplayContext {
 
 		long ddmStructureId = ParamUtil.getLong(
 			_httpServletRequest, "ddmStructureId");
+		String ddmStructureKey = ParamUtil.getString(
+			_httpServletRequest, "ddmStructureKey");
 
 		if (ddmStructureId > 0) {
 			_ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 				ddmStructureId);
 		}
-		else if (Validator.isNotNull(getDDMStructureKey())) {
+		else if (Validator.isNotNull(ddmStructureKey)) {
 			long groupId = ParamUtil.getLong(
 				_httpServletRequest, "groupId", _themeDisplay.getSiteGroupId());
 
@@ -461,7 +463,11 @@ public class JournalEditArticleDisplayContext {
 
 			_ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 				groupId, PortalUtil.getClassNameId(JournalArticle.class),
-				getDDMStructureKey(), true);
+				ddmStructureKey, true);
+		}
+		else if (_article != null) {
+			_ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+				_article.getDDMStructureId());
 		}
 
 		return _ddmStructure;
@@ -471,23 +477,6 @@ public class JournalEditArticleDisplayContext {
 		DDMStructure ddmStructure = getDDMStructure();
 
 		return ddmStructure.getStructureId();
-	}
-
-	public String getDDMStructureKey() {
-		if (_ddmStructureKey != null) {
-			return _ddmStructureKey;
-		}
-
-		String ddmStructureKey = ParamUtil.getString(
-			_httpServletRequest, "ddmStructureKey");
-
-		if (Validator.isNull(ddmStructureKey) && (_article != null)) {
-			ddmStructureKey = _article.getDDMStructureKey();
-		}
-
-		_ddmStructureKey = ddmStructureKey;
-
-		return _ddmStructureKey;
 	}
 
 	public DDMTemplate getDDMTemplate() throws PortalException {
@@ -555,7 +544,7 @@ public class JournalEditArticleDisplayContext {
 
 		if (Validator.isNull(ddmTemplateKey) && (_article != null) &&
 			Objects.equals(
-				_article.getDDMStructureKey(), getDDMStructureKey())) {
+				_article.getDDMStructureKey(), _getDDMStructureKey())) {
 
 			ddmTemplateKey = _article.getDDMTemplateKey();
 		}
@@ -1261,6 +1250,12 @@ public class JournalEditArticleDisplayContext {
 		return null;
 	}
 
+	private String _getDDMStructureKey() {
+		DDMStructure ddmStructure = getDDMStructure();
+
+		return ddmStructure.getStructureKey();
+	}
+
 	private LayoutPageTemplateEntry _getDefaultLayoutPageTemplateEntry() {
 		if (_defaultLayoutPageTemplateEntry != null) {
 			return _defaultLayoutPageTemplateEntry;
@@ -1523,7 +1518,6 @@ public class JournalEditArticleDisplayContext {
 	private Long _classPK;
 	private DDMFormValues _ddmFormValues;
 	private DDMStructure _ddmStructure;
-	private String _ddmStructureKey;
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
 	private String _defaultArticleLanguageId;

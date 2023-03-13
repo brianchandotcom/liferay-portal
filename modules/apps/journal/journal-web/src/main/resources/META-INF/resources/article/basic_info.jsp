@@ -24,7 +24,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 %>
 
-<aui:input name="ddmStructureKey" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
+<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructure.getStructureId() %>" />
 
 <c:if test="<%= journalWebConfiguration.changeableDefaultLanguage() %>">
 	<div id="<%= liferayPortletResponse.getNamespace() %>-change-default-language">

@@ -119,13 +119,11 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 		Map<Locale, String> titleMap = _localization.getLocalizationMap(
 			actionRequest, "titleMapAsXML");
 
-		String ddmStructureKey = ParamUtil.getString(
-			uploadPortletRequest, "ddmStructureKey");
+		long ddmStructureId = ParamUtil.getLong(
+			uploadPortletRequest, "ddmStructureId");
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			_portal.getSiteGroupId(groupId),
-			_portal.getClassNameId(JournalArticle.class), ddmStructureKey,
-			true);
+			ddmStructureId);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), uploadPortletRequest);
@@ -274,7 +272,7 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 
 			article = _journalArticleService.addArticleDefaultValues(
 				groupId, classNameId, classPK, titleMap, descriptionMap,
-				content, ddmStructureKey, ddmTemplateKey, layoutUuid,
+				content, ddmStructureId, ddmTemplateKey, layoutUuid,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
@@ -290,13 +288,13 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 
 			article = _journalArticleService.updateArticleDefaultValues(
 				groupId, articleId, titleMap, descriptionMap, content,
-				ddmStructureKey, ddmTemplateKey, layoutUuid, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
-				reviewDateHour, reviewDateMinute, neverReview, indexable,
-				smallImage, smallImageURL, smallFile, serviceContext);
+				ddmTemplateKey, layoutUuid, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
+				reviewDateMinute, neverReview, indexable, smallImage,
+				smallImageURL, smallFile, serviceContext);
 		}
 
 		return article;

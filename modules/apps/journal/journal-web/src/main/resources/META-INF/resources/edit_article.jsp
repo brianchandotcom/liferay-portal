@@ -26,7 +26,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 <portlet:actionURL var="editArticleActionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 	<portlet:param name="mvcPath" value="/edit_article.jsp" />
-	<portlet:param name="ddmStructureKey" value="<%= journalEditArticleDisplayContext.getDDMStructureKey() %>" />
+	<portlet:param name="ddmStructureId" value="<%= String.valueOf(journalEditArticleDisplayContext.getDDMStructureId()) %>" />
 </portlet:actionURL>
 
 <portlet:renderURL var="editArticleRenderURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
@@ -47,7 +47,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<aui:input name="articleId" type="hidden" value="<%= journalEditArticleDisplayContext.getArticleId() %>" />
 	<aui:input name="version" type="hidden" value="<%= ((article == null) || article.isNew()) ? journalEditArticleDisplayContext.getVersion() : article.getVersion() %>" />
 	<aui:input name="articleURL" type="hidden" value="<%= editArticleRenderURL %>" />
-	<aui:input name="ddmStructureId" type="hidden" />
+	<aui:input name="ddmStructureId" type="hidden" value="<%= journalEditArticleDisplayContext.getDDMStructureId() %>" />
 	<aui:input name="ddmTemplateId" type="hidden" />
 	<aui:input name="availableLocales" type="hidden" />
 	<aui:input name="defaultLanguageId" type="hidden" value="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" />

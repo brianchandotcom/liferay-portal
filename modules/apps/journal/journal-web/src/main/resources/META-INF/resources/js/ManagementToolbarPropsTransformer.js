@@ -123,7 +123,7 @@ export default function propsTransformer({
 							navigate(
 								addParams(
 									{
-										[`${portletNamespace}ddmStructureKey`]: itemValue.ddmstructurekey,
+										[`${portletNamespace}ddmStructureId`]: itemValue.ddmstructureid,
 									},
 									viewDDMStructureArticlesURL
 								)
@@ -152,7 +152,7 @@ export default function propsTransformer({
 						navigate(
 							addParams(
 								{
-									[`${portletNamespace}ddmStructureKey`]: selectedItem.ddmstructurekey,
+									[`${portletNamespace}ddmStructureId`]: selectedItem.ddmstructureid,
 								},
 								addArticleURL
 							)

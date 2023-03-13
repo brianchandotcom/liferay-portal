@@ -275,7 +275,8 @@ public class JournalArticleAssetRendererFactory
 
 			if (ddmStructure != null) {
 				portletURL.setParameter(
-					"ddmStructureKey", ddmStructure.getStructureKey());
+					"ddmStructureId",
+					String.valueOf(ddmStructure.getStructureId()));
 			}
 		}
 

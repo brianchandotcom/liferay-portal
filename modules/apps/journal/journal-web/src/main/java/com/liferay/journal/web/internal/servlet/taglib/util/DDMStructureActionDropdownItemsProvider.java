@@ -214,7 +214,7 @@ public class DDMStructureActionDropdownItemsProvider {
 				).setParameter(
 					"classPK", _ddmStructure.getStructureId()
 				).setParameter(
-					"ddmStructureKey", _ddmStructure.getStructureKey()
+					"ddmStructureId", _ddmStructure.getStructureId()
 				).setParameter(
 					"groupId", _ddmStructure.getGroupId()
 				).buildString());

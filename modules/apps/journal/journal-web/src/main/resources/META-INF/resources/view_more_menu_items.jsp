@@ -59,7 +59,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 					cssClass="selector-button"
 					data='<%=
 						HashMapBuilder.<String, Object>put(
-							"ddmStructureKey", ddmStructure.getStructureKey()
+							"ddmStructureId", ddmStructure.getStructureId()
 						).build()
 					%>'
 					href="javascript:void(0);"

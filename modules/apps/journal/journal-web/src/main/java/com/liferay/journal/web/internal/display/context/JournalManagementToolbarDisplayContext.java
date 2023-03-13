@@ -574,8 +574,7 @@ public class JournalManagementToolbarDisplayContext
 							).setRedirect(
 								PortalUtil.getCurrentURL(httpServletRequest)
 							).setParameter(
-								"ddmStructureKey",
-								ddmStructure.getStructureKey()
+								"ddmStructureId", ddmStructure.getStructureId()
 							).setParameter(
 								"folderId", _journalDisplayContext.getFolderId()
 							).setParameter(

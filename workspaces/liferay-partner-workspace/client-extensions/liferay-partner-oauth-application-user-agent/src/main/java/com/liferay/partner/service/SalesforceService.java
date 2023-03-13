@@ -75,19 +75,9 @@ public class SalesforceService {
 
 		_bulkConnection.updateJob(jobInfo2);
 
-		_awaitCompletion(_bulkConnection, jobInfo2.getId(), batchInfo);
-
-		return _getResultJSONArray(
-			_bulkConnection, jobInfo2.getId(), batchInfo);
-	}
-
-	private void _awaitCompletion(
-			BulkConnection connection, String jobId, BatchInfo batchInfo)
-		throws Exception {
-
 		while (true) {
-			BatchInfo batchInfoStatus = connection.getBatchInfo(
-				jobId, batchInfo.getId());
+			BatchInfo batchInfoStatus = _bulkConnection.getBatchInfo(
+				jobInfo1.getId(), batchInfo.getId());
 
 			if (batchInfoStatus.getState() == BatchStateEnum.Completed) {
 				break;
@@ -99,6 +89,9 @@ public class SalesforceService {
 
 			Thread.sleep(1000);
 		}
+
+		return _getResultJSONArray(
+			_bulkConnection, jobInfo1.getId(), batchInfo);
 	}
 
 	private JSONArray _getResultJSONArray(

@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>ENTRIES_NUMBER</td>
-	<td>//div[@class='dropdown pagination-items-per-page']//a[contains(text(),'${key_numberEntries}')]</td>
+	<td>//div[@class='dropdown pagination-items-per-page']//button[contains(text(),'${key_numberEntries}')]</td>
 	<td></td>
 </tr>
 <tr>

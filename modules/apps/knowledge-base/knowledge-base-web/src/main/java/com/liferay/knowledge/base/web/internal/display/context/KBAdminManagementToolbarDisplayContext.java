@@ -405,6 +405,11 @@ public class KBAdminManagementToolbarDisplayContext {
 			_liferayPortletResponse
 		).setMVCPath(
 			"/admin/view.jsp"
+		).setParameter(
+			"parentResourcePrimKey",
+			ParamUtil.getLong(
+				_httpServletRequest, "parentResourcePrimKey",
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)
 		).buildPortletURL();
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {

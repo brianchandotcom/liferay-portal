@@ -390,6 +390,120 @@ definition {
 			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 	}
 
+	@description = "LPS-163661- Verify that, when the Object has the Deletion Type 'Cascade' and the user deletes an entry with Parent and Child entries related, only the entry and it's child are deleted"
+	@priority = 5
+	test CanDeleteEntriesUsingCascadeDeletionType {
+		property portal.acceptance = "true";
+
+		task ("Given an object with self relationship and cascade deletion type") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 163661",
+				objectName = "CustomObject163661",
+				pluralLabelName = "Custom Objects 163661");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject163661");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				deletionType = "cascade",
+				objectName_1 = "CustomObject163661",
+				objectName_2 = "CustomObject163661",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "manyToMany");
+		}
+
+		task ("And given a default layout is created to display relationships") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObject163661");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 163661");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = 1,
+				fieldLabelName = "Custom Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			PortletEntry.save();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject163661");
+		}
+
+		task ("When multiple entries are created and have a hierarchical relationship") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject163661",
+				value = "Entry A");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject163661",
+				value = "Entry B");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject163661",
+				value = "Entry C");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject163661");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry A");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry B");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry B");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry C");
+		}
+
+		task ("And when the user deletes a parent entry") {
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry C");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject163661");
+
+			ObjectPortlet.deleteEntry(entry = "Entry B");
+		}
+
+		task ("Then the entry and it's child are deleted") {
+			ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
+
+			ObjectPortlet.assertEntryNotPresent(entry = "Entry C");
+
+			ObjectPortlet.viewEntry(entry = "Entry A");
+		}
+	}
+
 	@description = "LPS-146754 - Verify that it's possible to delete a relationship between a Custom Object entry and Native Object entry (Many-to-Many)"
 	@priority = 4
 	test CanDeleteManyToManyRelationshipBetweenCustomObjectEntryAndNativeObjectEntry {

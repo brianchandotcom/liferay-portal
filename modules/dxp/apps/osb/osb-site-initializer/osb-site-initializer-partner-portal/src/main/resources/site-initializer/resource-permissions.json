@@ -106,6 +106,15 @@
 	},
 	{
 		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition",
+		"roleName": "User",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
 			"DELETE",
 			"UPDATE",
 			"VIEW"

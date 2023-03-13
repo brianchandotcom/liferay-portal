@@ -573,7 +573,7 @@ public class PredicateExpressionVisitorImpl
 		else if (Objects.equals(left, "keywords") &&
 				 FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
 
-			return _getKeywordsPredicate(
+			predicate = _getKeywordsPredicate(
 				objectDefinitionId,
 				_getExpressionPredicate(
 					AssetTagTable.INSTANCE.name, operation, (String)right));

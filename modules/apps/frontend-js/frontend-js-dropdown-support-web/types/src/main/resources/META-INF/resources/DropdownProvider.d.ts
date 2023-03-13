@@ -24,5 +24,6 @@ declare class DropdownProvider {
 	_getTrigger(menu: any): any;
 	_onKeyDown: (event: any) => void;
 	_onTriggerClick: (event: any) => void;
+	_warnNotButtonTrigger(): void;
 }
 export default DropdownProvider;

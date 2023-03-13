@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -55,11 +53,7 @@ public class GridDDMFormFieldValueRequestParameterRetriever
 		}
 
 		if (parameterValues.length == 1) {
-			jsonObject = Optional.ofNullable(
-				getJSONObject(_log, parameterValues[0])
-			).orElse(
-				jsonObject
-			);
+			jsonObject = getJSONObject(_log, parameterValues[0]);
 		}
 
 		for (String parameterValue : parameterValues) {

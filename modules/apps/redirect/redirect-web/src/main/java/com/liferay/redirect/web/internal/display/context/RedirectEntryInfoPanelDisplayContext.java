@@ -42,7 +42,7 @@ public class RedirectEntryInfoPanelDisplayContext {
 		_redirectEntries = redirectEntries;
 
 		_dateFormat = DateFormat.getDateInstance(
-			DateFormat.LONG, _liferayPortletRequest.getLocale());
+			DateFormat.LONG, liferayPortletRequest.getLocale());
 	}
 
 	public String getFormattedRedirectEntryCreateDate() {

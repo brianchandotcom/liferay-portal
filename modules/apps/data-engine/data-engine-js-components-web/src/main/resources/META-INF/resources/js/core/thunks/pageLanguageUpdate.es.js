@@ -97,7 +97,10 @@ export default function pageLanguageUpdate({
 					siteGroupId: themeDisplay.getSiteGroupId(),
 				}),
 				headers: {
-					'Accept-Language': nextEditingLanguageId.replace('_', '-'),
+					'Accept-Language': nextEditingLanguageId.replaceAll(
+						'_',
+						'-'
+					),
 					'Content-Type': 'application/json',
 				},
 				method: 'POST',

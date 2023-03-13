@@ -82,10 +82,6 @@ definition {
 		property test.name.skip.portal.instance = "BreakRelationshipBetweenSystemAndCustonObjects#CanBreakManyToManyRelationship";
 
 		task ("Given I relate the custom object entry with the userAccount entry through the userAccount PUT endpoint") {
-			var response = ObjectDefinitionAPI._getRelationshipId(
-				objectDefinitionId = ${staticObjectId},
-				relationshipName = "usersSecondFoundations");
-
 			UserAccountAPI.relateObjectEntries(
 				customObjectId = ${staticObjectEntryId3},
 				relationshipName = "usersSecondFoundations",

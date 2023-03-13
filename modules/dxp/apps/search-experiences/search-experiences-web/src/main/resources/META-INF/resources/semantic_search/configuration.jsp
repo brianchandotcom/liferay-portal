@@ -58,7 +58,7 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
-				"redirectURL", liferayPortletResponse.createRenderURL()
+				"redirectURL", String.valueOf(liferayPortletResponse.createRenderURL())
 			).build()
 		%>'
 	/>

@@ -82,7 +82,7 @@ export function normalizeLocaleId(localeId) {
 		throw new Error(`localeId ${localeId} is invalid`);
 	}
 
-	return localeId.replace('_', '-').toLowerCase();
+	return localeId.replaceAll('_', '-').toLowerCase();
 }
 
 export function transformAvailableLocales(

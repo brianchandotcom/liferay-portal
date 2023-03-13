@@ -73,30 +73,6 @@ public class BatchEngineBundleTracker {
 		_bundleTracker.close();
 	}
 
-	private boolean _bundleAlreadyProcessed(Bundle bundle) {
-		File batchMarkerFile = bundle.getDataFile(
-			".liferay-client-extension-batch");
-
-		if ((batchMarkerFile != null) && batchMarkerFile.exists() &&
-			(batchMarkerFile.lastModified() == bundle.getLastModified())) {
-
-			return true;
-		}
-
-		try {
-			if (!batchMarkerFile.exists()) {
-				batchMarkerFile.createNewFile();
-			}
-
-			batchMarkerFile.setLastModified(bundle.getLastModified());
-		}
-		catch (IOException ioException) {
-			ReflectionUtil.throwException(ioException);
-		}
-
-		return false;
-	}
-
 	private String _getBatchEngineBundleEntryKey(URL url) {
 		String zipEntryName = url.getPath();
 
@@ -164,6 +140,30 @@ public class BatchEngineBundleTracker {
 		};
 	}
 
+	private boolean _isAlreadyProcessed(Bundle bundle) {
+		File batchMarkerFile = bundle.getDataFile(
+			".liferay-client-extension-batch");
+
+		if ((batchMarkerFile != null) && batchMarkerFile.exists() &&
+			(batchMarkerFile.lastModified() == bundle.getLastModified())) {
+
+			return true;
+		}
+
+		try {
+			if (!batchMarkerFile.exists()) {
+				batchMarkerFile.createNewFile();
+			}
+
+			batchMarkerFile.setLastModified(bundle.getLastModified());
+		}
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
+		}
+
+		return false;
+	}
+
 	private void _processBatchEngineBundle(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
@@ -171,7 +171,7 @@ public class BatchEngineBundleTracker {
 		String batchPath = headers.get("Liferay-Client-Extension-Batch");
 
 		if (batchPath != null) {
-			if (_bundleAlreadyProcessed(bundle)) {
+			if (_isAlreadyProcessed(bundle)) {
 				return;
 			}
 
@@ -181,6 +181,10 @@ public class BatchEngineBundleTracker {
 
 			if (StringUtil.startsWith(batchPath, StringPool.SLASH)) {
 				batchPath = batchPath.substring(1);
+			}
+
+			if (!StringUtil.endsWith(batchPath, StringPool.SLASH)) {
+				batchPath = batchPath.concat(StringPool.SLASH);
 			}
 
 			_batchEngineUnitProcessor.processBatchEngineUnits(

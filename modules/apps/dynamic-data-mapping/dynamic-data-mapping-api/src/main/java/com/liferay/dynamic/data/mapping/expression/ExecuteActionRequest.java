@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.expression;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Leonardo Barros
@@ -27,12 +26,8 @@ public final class ExecuteActionRequest {
 		return _action;
 	}
 
-	public <T> Optional<T> getParameterOptional(String name) {
-		if (!_parameters.containsKey(name)) {
-			return Optional.empty();
-		}
-
-		return Optional.of((T)_parameters.get(name));
+	public <T> T getParameter(String name) {
+		return (T)_parameters.get(name);
 	}
 
 	public static class Builder {

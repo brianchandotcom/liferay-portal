@@ -746,10 +746,9 @@ definition {
 
 		DMDocument.checkinPG(dmDocumentTitle = "これは日本語のファイルです");
 
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "これは日本語のファイルです",
-			groupName = "Guest",
-			siteURLKey = "guest");
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "これは日本語のファイルです");
 
 		DMDocument.viewEntryInEdit(
 			dmDocumentFileName = "これは日本語のファイルです.docx",

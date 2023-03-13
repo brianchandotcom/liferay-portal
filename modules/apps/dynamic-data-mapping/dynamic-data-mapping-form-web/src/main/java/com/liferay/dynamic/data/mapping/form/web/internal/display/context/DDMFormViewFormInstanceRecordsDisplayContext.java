@@ -36,6 +36,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -68,8 +69,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -96,18 +95,18 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
 		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		portletDisplay.setShowBackIcon(true);
 
-		String redirect = ParamUtil.getString(_renderRequest, "redirect");
+		String redirect = ParamUtil.getString(renderRequest, "redirect");
 
 		if (Validator.isNull(redirect)) {
 			DDMFormAdminDisplayContext ddmFormAdminDisplayContext =
-				(DDMFormAdminDisplayContext)_renderRequest.getAttribute(
+				(DDMFormAdminDisplayContext)renderRequest.getAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 			redirect = String.valueOf(
@@ -279,17 +278,13 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Stream<String> stream = Arrays.stream(
-			columnValues.split(StringPool.COMMA_AND_SPACE));
-
 		return StringUtil.merge(
-			stream.map(
-				value -> value.toLowerCase()
-			).map(
-				value -> LanguageUtil.get(themeDisplay.getLocale(), value)
-			).toArray(
-				String[]::new
-			),
+			TransformUtil.transformToArray(
+				Arrays.asList(
+					StringUtil.split(columnValues, StringPool.COMMA_AND_SPACE)),
+				value -> LanguageUtil.get(
+					themeDisplay.getLocale(), value.toLowerCase()),
+				String.class),
 			StringPool.COMMA_AND_SPACE);
 	}
 
@@ -482,17 +477,13 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		LocalizedValue visibleFields = (LocalizedValue)ddmFormField.getProperty(
 			"visibleFields");
 
-		return Stream.of(
+		return TransformUtil.transformToList(
 			StringUtil.split(
 				StringUtil.removeChars(
 					visibleFields.getString(_renderRequest.getLocale()),
 					CharPool.CLOSE_BRACKET, CharPool.OPEN_BRACKET,
-					CharPool.QUOTE))
-		).map(
-			String::trim
-		).collect(
-			Collectors.toList()
-		);
+					CharPool.QUOTE)),
+			String::trim);
 	}
 
 	public boolean isDisabledManagementBar() {
@@ -605,33 +596,25 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		DDMFormFieldOptions ddmFormFieldOptions,
 		List<String> renderedFormFieldValues) {
 
-		Stream<String> stream = renderedFormFieldValues.stream();
+		List<String> values = new ArrayList<>();
 
-		List<String> convertedFormFieldValues = stream.flatMap(
-			renderedFormFieldValue -> Arrays.stream(
-				StringUtil.split(renderedFormFieldValue, CharPool.COMMA))
-		).map(
-			String::trim
-		).collect(
-			Collectors.toList()
-		);
+		for (String renderedFormFieldValue : renderedFormFieldValues) {
+			Collections.addAll(
+				values,
+				StringUtil.split(renderedFormFieldValue, CharPool.COMMA));
+		}
 
-		return ListUtil.toList(
-			convertedFormFieldValues,
-			new Function<String, String>() {
+		return TransformUtil.transform(
+			values,
+			value -> {
+				LocalizedValue optionLabel =
+					ddmFormFieldOptions.getOptionLabels(value.trim());
 
-				@Override
-				public String apply(String formFieldValue) {
-					LocalizedValue optionLabel =
-						ddmFormFieldOptions.getOptionLabels(formFieldValue);
-
-					if (optionLabel == null) {
-						return formFieldValue;
-					}
-
-					return optionLabel.getString(_renderRequest.getLocale());
+				if (optionLabel == null) {
+					return value;
 				}
 
+				return optionLabel.getString(_renderRequest.getLocale());
 			});
 	}
 

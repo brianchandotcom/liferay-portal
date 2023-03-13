@@ -1,7 +1,4 @@
 {
-	"dependencies": {
-		"frontend-js-web": "*"
-	},
 	"main": "js/index.js",
 	"name": "@liferay/frontend-icons-web",
 	"scripts": {
@@ -9,5 +6,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "1.0.22"
+	"version": "1.0.23"
 }

@@ -23,7 +23,6 @@ import java.io.InputStream;
 
 import java.net.URI;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -51,10 +50,8 @@ public final class AMImage implements AdaptiveMedia<AMImageProcessor> {
 	}
 
 	@Override
-	public <V> Optional<V> getValueOptional(
-		AMAttribute<AMImageProcessor, V> amAttribute) {
-
-		return _amImageAttributeMapping.getValueOptional(amAttribute);
+	public <V> V getValue(AMAttribute<AMImageProcessor, V> amAttribute) {
+		return _amImageAttributeMapping.getValue(amAttribute);
 	}
 
 	private final AMImageAttributeMapping _amImageAttributeMapping;

@@ -174,6 +174,7 @@ page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
+page import="java.util.Objects" %><%@
 page import="java.util.TreeMap" %>
 
 <%@ page import="javax.portlet.PortletMode" %><%@

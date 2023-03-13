@@ -94,18 +94,21 @@ public class ObjectDefinitionLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectDefinition addSystemObjectDefinition(
 			long userId, String className, String dbTableName,
+			boolean enableComments,
 			java.util.Map<java.util.Locale, String> labelMap,
-			boolean modifiable, String name, String pkObjectFieldDBColumnName,
+			boolean modifiable, String name, String panelAppOrder,
+			String panelCategoryKey, String pkObjectFieldDBColumnName,
 			String pkObjectFieldName,
 			java.util.Map<java.util.Locale, String> pluralLabelMap,
-			String scope, String titleObjectFieldName, int version,
+			String scope, String titleObjectFieldName, int version, int status,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.addSystemObjectDefinition(
-			userId, className, dbTableName, labelMap, modifiable, name,
+			userId, className, dbTableName, enableComments, labelMap,
+			modifiable, name, panelAppOrder, panelCategoryKey,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
-			titleObjectFieldName, version, objectFields);
+			titleObjectFieldName, version, status, objectFields);
 	}
 
 	/**
@@ -528,6 +531,15 @@ public class ObjectDefinitionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
+			userId, objectDefinitionId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition
+			publishSystemObjectDefinition(long userId, long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.publishSystemObjectDefinition(
 			userId, objectDefinitionId);
 	}
 

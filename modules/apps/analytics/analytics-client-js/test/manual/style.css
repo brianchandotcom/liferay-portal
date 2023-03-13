@@ -1,0 +1,89 @@
+body {
+	background-color: #e5e5e5;
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 14px;
+}
+
+.header {
+	margin-bottom: 2rem;
+	text-align: center;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.box {
+	background-color: #fff;
+	border: 1px solid black;
+	grid-column: span 1;
+	margin: 0.5rem;
+	padding: 1rem;
+	position: relative;
+}
+
+.box .box__title {
+	color: #0f7213;
+	margin-top: 0;
+}
+
+.box .box__title small {
+	color: #000;
+}
+
+.box .box__track {
+	background-color: #dfffe0;
+	padding: 1rem;
+}
+
+pre {
+	background-color: #f2f2f2;
+	margin: 1em 0;
+	overflow-x: auto;
+	padding: 1em;
+}
+
+.box .box__form input {
+	width: calc(100% - 8px);
+}
+
+.box .box__form .content {
+	margin-bottom: 1rem;
+}
+
+.events {
+	background-color: #f2f2f2;
+	line-height: 1.25rem;
+	padding: 1rem 2rem;
+}
+
+.btn-hidden {
+	all: unset;
+	background-color: #ffeb3b;
+	border: 1px solid;
+	cursor: pointer;
+	margin: 5px;
+	padding: 5px 10px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	visibility: hidden;
+}
+
+.box:hover .btn-hidden {
+	visibility: visible;
+}
+
+.btns-header {
+	margin: 1rem 0;
+}
+
+.btns-header button {
+	all: unset;
+	background-color: #fff;
+	border: 1px solid;
+	cursor: pointer;
+	margin: 0 0.25rem;
+	padding: 5px 10px;
+}

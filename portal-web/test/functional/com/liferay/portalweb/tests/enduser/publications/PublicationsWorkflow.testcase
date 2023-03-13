@@ -82,6 +82,114 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-173968. As a publications user, I should be able to configure if unapproved changes should be publishable."
+	@priority = 4
+	test CanConfigureUnapprovedChangesToBePublishable {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		Publications.enableAllowUnapprovedChanges();
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		if (IsElementPresent(key_publicationName = "Production", locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE")) {
+			Publications.selectPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.submitForPublication();
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "PENDING",
+			webContentTitle = "WC WebContent Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		if (IsElementPresent(key_publicationName = "Production", locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE")) {
+			Publications.selectPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+		}
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Web Content Article",
+			user = "userfn userln");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
+
+		Workflow.confirmWorkflowAction();
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		// Workaround LPS-177895
+
+		/*PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Article",
+			changeSite = "Guest",
+			changeStatus = "Pending",
+			changeTitle = "WC WebContent Title",
+			changeType = "Added",
+			changeUser = "userfn userln");*/
+
+		Button.clickPublish();
+
+		AssertTextEquals.assertPartialText(
+			key_warningMessage = "This publication contains unapproved changes.",
+			locator1 = "Message#WARNING_SPECIFIC",
+			value1 = "This publication contains unapproved changes.");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "No unresolved conflicts, ready to publish.");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+	}
+
 	@description = "This is a use case for LPS-159649."
 	@priority = 4
 	test CannotPublishPublicationWithPendingAssetEntries {
@@ -195,14 +303,16 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChanges(
+		// Workaround LPS-177895
+
+		/*PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
 			changeOrder = 2,
 			changeSite = "Guest",
 			changeStatus = "Approved",
 			changeTitle = "WC WebContent Title 2",
 			changeType = "Added",
-			changeUser = "userfn userln");
+			changeUser = "userfn userln");*/
 
 		PublicationsNavigator.gotoPublish(publicationName = "Publication Name");
 
@@ -286,13 +396,15 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.viewChanges(
+		// Workaround LPS-177895
+
+		/*PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
 			changeSite = "Site Name",
 			changeStatus = "Approved",
 			changeTitle = "WC WebContent Title",
 			changeType = "Added",
-			changeUser = "userfn userln");
+			changeUser = "userfn userln");*/
 
 		PublicationsNavigator.gotoPublish(publicationName = "Publication Name");
 

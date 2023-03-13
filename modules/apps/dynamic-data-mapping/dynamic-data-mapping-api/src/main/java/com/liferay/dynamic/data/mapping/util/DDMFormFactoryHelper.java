@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -42,7 +43,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
@@ -154,49 +154,47 @@ public class DDMFormFactoryHelper {
 	protected List<com.liferay.dynamic.data.mapping.model.DDMFormField>
 		getDDMFormFields() {
 
-		List<com.liferay.dynamic.data.mapping.model.DDMFormField>
-			ddmFormFields = new ArrayList<>();
+		return TransformUtil.transform(
+			getDDMFormFieldMethods(),
+			method -> {
+				DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
+					new DDMFormFieldFactoryHelper(this, method);
 
-		for (Method method : getDDMFormFieldMethods()) {
-			DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
-				new DDMFormFieldFactoryHelper(this, method);
+				ddmFormFieldFactoryHelper.setAvailableLocales(
+					_availableLocales);
+				ddmFormFieldFactoryHelper.setDefaultLocale(_defaultLocale);
 
-			ddmFormFieldFactoryHelper.setAvailableLocales(_availableLocales);
-			ddmFormFieldFactoryHelper.setDefaultLocale(_defaultLocale);
-
-			ddmFormFields.add(ddmFormFieldFactoryHelper.createDDMFormField());
-		}
-
-		return ddmFormFields;
+				return ddmFormFieldFactoryHelper.createDDMFormField();
+			});
 	}
 
 	protected List<com.liferay.dynamic.data.mapping.model.DDMFormRule>
 		getDDMFormRules() {
 
-		List<com.liferay.dynamic.data.mapping.model.DDMFormRule> ddmFormRules =
-			new ArrayList<>();
-
-		for (DDMFormRule ddmFormRule : _ddmForm.rules()) {
-			ddmFormRules.add(
+		return TransformUtil.transformToList(
+			_ddmForm.rules(),
+			ddmFormRule ->
 				new com.liferay.dynamic.data.mapping.model.DDMFormRule(
 					ListUtil.fromArray(ddmFormRule.actions()),
 					ddmFormRule.condition()));
-		}
-
-		return ddmFormRules;
 	}
 
 	protected Locale getDefaultLocale() {
 		if (Validator.isNull(_ddmForm.defaultLanguageId())) {
-			return Optional.ofNullable(
-				LocaleThreadLocal.getThemeDisplayLocale()
-			).orElse(
-				Optional.ofNullable(
-					LocaleThreadLocal.getSiteDefaultLocale()
-				).orElse(
-					LocaleUtil.getDefault()
-				)
-			);
+			Locale themeDisplayLocale =
+				LocaleThreadLocal.getThemeDisplayLocale();
+
+			if (themeDisplayLocale != null) {
+				return themeDisplayLocale;
+			}
+
+			Locale siteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
+
+			if (siteDefaultLocale != null) {
+				return siteDefaultLocale;
+			}
+
+			return LocaleUtil.getDefault();
 		}
 
 		return LocaleUtil.fromLanguageId(_ddmForm.defaultLanguageId());

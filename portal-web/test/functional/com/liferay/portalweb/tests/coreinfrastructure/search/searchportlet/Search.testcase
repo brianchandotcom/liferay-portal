@@ -4794,6 +4794,102 @@ definition {
 			searchTerm = "organic");
 	}
 
+	@description = "This is a use case for LPS-141138."
+	@priority = 4
+	test ViewObjectsSearchResultDetailsDisplayPageTemplate {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			panelCategoryKey = "site_administration.content",
+			pluralLabelName = "Custom Objects",
+			scope = "site");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "title",
+			fieldName = "title",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.selectTitleField(fieldLabel = "title");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		JSONObject.addObjectSingleFieldEntryViaJSONAPI(
+			fieldName = "title",
+			objectName = "CustomObject",
+			value = "apple");
+
+		Search.openSearchPage();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "apple");
+
+		AssertElementPresent(
+			locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
+			value1 = "apple");
+
+		GoBack();
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "apple",
+			searchAssetType = "Custom Object");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		LexiconCard.clickCard(card = "Blank");
+
+		PortletEntry.inputName(name = "Custom Object Display Template");
+
+		Select(
+			key_fieldLabel = "Content Type",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Custom Object");
+
+		Button.clickSave();
+
+		PageEditor.addFragment(
+			collectionName = "Featured Content",
+			composition = "true",
+			fragmentName = "Banner Center");
+
+		PageEditorMapping.mapEditableTextToField(
+			field = "Title",
+			fragmentName = "Heading",
+			id = "element-text");
+
+		PageEditor.publish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Custom Object Display Template");
+
+		Search.openSearchPage();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "apple");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "apple");
+
+		GoBack();
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "apple",
+			searchAssetType = "Custom Object");
+	}
+
 	@priority = 5
 	test ViewSearchResultDetails {
 		property app.server.types = "tomcat";

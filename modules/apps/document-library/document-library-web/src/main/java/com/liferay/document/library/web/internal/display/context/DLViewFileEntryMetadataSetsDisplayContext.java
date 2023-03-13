@@ -57,11 +57,10 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		_ddmStructureService = ddmStructureService;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-
 		_portal = portal;
 
 		_dlRequestHelper = new DLRequestHelper(
-			_portal.getHttpServletRequest(liferayPortletRequest));
+			portal.getHttpServletRequest(liferayPortletRequest));
 	}
 
 	public PortletURL getCopyDDMStructurePortletURL(DDMStructure ddmStructure) {

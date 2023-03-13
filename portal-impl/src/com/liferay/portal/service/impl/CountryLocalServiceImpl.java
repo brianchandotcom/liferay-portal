@@ -83,12 +83,12 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 		country.setUserId(user.getUserId());
 		country.setUserName(user.getFullName());
 
+		country.setDefaultLanguageId(
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 		country.setA2(a2);
 		country.setA3(a3);
 		country.setActive(active);
 		country.setBillingAllowed(billingAllowed);
-		country.setDefaultLanguageId(
-			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 		country.setGroupFilterEnabled(false);
 		country.setIdd(idd);
 		country.setName(name);

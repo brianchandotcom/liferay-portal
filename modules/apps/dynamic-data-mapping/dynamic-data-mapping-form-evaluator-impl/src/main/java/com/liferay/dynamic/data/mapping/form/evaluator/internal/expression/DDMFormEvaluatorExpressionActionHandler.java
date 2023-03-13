@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.expression.ExecuteActionRequest;
 import com.liferay.dynamic.data.mapping.expression.ExecuteActionResponse;
 
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Leonardo Barros
@@ -72,15 +71,13 @@ public class DDMFormEvaluatorExpressionActionHandler
 	private ExecuteActionResponse _jumpPage(
 		ExecuteActionRequest executeActionRequest) {
 
-		Optional<Integer> fromOptional =
-			executeActionRequest.getParameterOptional("from");
-		Optional<Integer> toOptional =
-			executeActionRequest.getParameterOptional("to");
+		Integer from = executeActionRequest.getParameter("from");
+		Integer to = executeActionRequest.getParameter("to");
 
-		if (fromOptional.isPresent() && toOptional.isPresent() &&
-			!_hasIntervalOnPageFlow(fromOptional.get(), toOptional.get())) {
+		if ((from != null) && (to != null) &&
+			!_hasIntervalOnPageFlow(from, to)) {
 
-			_pageFlow.put(fromOptional.get(), toOptional.get());
+			_pageFlow.put(from, to);
 		}
 
 		ExecuteActionResponse.Builder builder =

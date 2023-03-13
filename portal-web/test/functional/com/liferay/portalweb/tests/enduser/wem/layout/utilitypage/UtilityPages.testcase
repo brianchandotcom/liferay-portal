@@ -37,6 +37,8 @@ definition {
 	@description = "This is a test for LPS-162765. The page designer could add a 404 error type of utility page."
 	@priority = 5
 	test Add404ErrorUtilityPage {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer navigates to the Pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 		}
@@ -47,6 +49,10 @@ definition {
 
 		task ("Then the page designer can add a 404 error utility page") {
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -115,6 +121,10 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "First 404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -123,6 +133,10 @@ definition {
 			PageEditor.publish();
 
 			PagesAdmin.addUtilityPage(pageName = "Second 404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -189,6 +203,10 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -225,6 +243,10 @@ definition {
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -265,12 +287,18 @@ definition {
 	@description = "This is a test for LPS-162765. The page designer could edit a 404 error type of utility page."
 	@priority = 5
 	test Edit404ErrorUtilityPage {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer has a 404 error utility page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -284,6 +312,11 @@ definition {
 			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
 				menuItem = "Edit",
 				pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Paragraph",
@@ -316,9 +349,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162766. The page designer can edit the default 404 error utility page."
+	@priority = 3
+	test EditDefault404ErrorUtilityPage {
+		task ("Given a page designer navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+		}
+
+		task ("When the page designer edits the default 404 error utility page") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "404 Error");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "Status Code: 404");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page designer sees the changes persisted") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.openSitePage(
+				pageName = "Non Exist Page",
+				siteName = "Test Site Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Status Code: 404");
+		}
+	}
+
 	@description = "This is a test for LPS-162765. The page designer could mark a 404 error type of utility page as default."
 	@priority = 5
 	test Mark404ErrorUtilityPageAsDefault {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "UtilityPages#Mark404ErrorUtilityPageAsDefault";
 
 		task ("Given a page designer has a 404 error utility page before enabling private pages") {
@@ -327,6 +411,10 @@ definition {
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -415,12 +503,18 @@ definition {
 	@description = "This is a test for LPS-162765. The page designer could preview a 404 error type of utility page."
 	@priority = 5
 	test Preview404ErrorUtilityPage {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer has a draft 404 error utility page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -477,6 +571,11 @@ definition {
 				menuItem = "Edit",
 				pageName = "404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Paragraph",
 				id = "element-text",
@@ -514,6 +613,10 @@ definition {
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -546,6 +649,10 @@ definition {
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
 			PagesAdmin.addUtilityPage(pageName = "404 Error Utility Page");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",

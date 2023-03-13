@@ -34,7 +34,7 @@ definition {
 				userEmailAddress = "manager@liferay.com",
 				userFirstName = "manager",
 				userLastName = "manager",
-				userScreenName = "manager manager");
+				userScreenName = "manager");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
@@ -77,6 +77,8 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Partner Portal");
+
+			Account.tearDownCP();
 		}
 	}
 
@@ -87,7 +89,7 @@ definition {
 			PRMMarketing.gotoAddNewMDF();
 		}
 
-		task ("And I fill all Goals form with my informations") {
+		task ("And I fill all Goals page form") {
 			PRMMDFRequest.fillGoalsPage(
 				accountName = "Company Name 1",
 				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
@@ -101,7 +103,7 @@ definition {
 			Button.click(button = "Continue");
 		}
 
-		task ("And I add two activities and fill it with my information") {
+		task ("And I add two activities") {
 			PRMMDFRequest.newActivity(
 				activityDescription = "Activity Description",
 				activityName = "Activity Name 1",
@@ -192,8 +194,7 @@ definition {
 					accountName = "Company Name 1",
 					activityDescription = "Activity Description",
 					activityName = "Activity Name 1",
-					additionalOptions = "6.x to DXP Migration",
-					budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+					budgetList = "Sponsorship Fee-2000",
 					campaignDescription = "Campaign Description",
 					campaignName = "Campaign Name ${n}",
 					countryName = "Global",
@@ -214,7 +215,9 @@ definition {
 		}
 
 		task ("Then the information of the visible MDF's will be inside the exported file") {
-			PRMMDFRequest.viewExportedMDF(campaignNameList = "Campaign Name 1,Campaign Name 2,Campaign Name 3");
+			PRMMDFRequest.viewExportedMDF(
+				fileContentList = "Campaign Name 1,Campaign Name 2,Campaign Name 3",
+				fileName = "MDF Requests.csv");
 		}
 	}
 
@@ -324,22 +327,17 @@ definition {
 				accountName = "Company Name 1",
 				activityDescription = "Activity Description",
 				activityName = "Activity Name 1",
-				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
-				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
-				campaignDescription = "Campaign Test Description",
-				campaignName = "Campaign Name",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name 1",
 				countryName = "Global",
 				followUpStrategy = "test",
-				goalsOptions = "Thought leadership",
 				goalsOptions = "Lead generation",
 				leadFollowUpList = "Other",
 				leadList = "No",
 				tactic = "Other",
-				targetAudienceRoles = "C-Level/Executive/VP",
-				targetMarketOptions = "Aerospace & Defense,Energy",
-				targetMarketOptions = "Agriculture,Aerospace & Defense",
+				targetMarketOptions = "Education,Energy",
 				targetOfLeads = "test",
-				targetRolesOptions = "Director/Manager",
 				targetRolesOptions = "Administrator",
 				typeOfActivity = "Miscellaneous Marketing");
 		}
@@ -348,26 +346,6 @@ definition {
 			PRMMDFListing.viewOnList(
 				mdfStatus = "Pending Marketing Review",
 				rowNumber = "Status");
-		}
-
-		task ("And when I change the MDF Request status") {
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
-			PRMMDFRequest.changeMDFStatus(
-				campaignName = "Campaign Name",
-				key_statusButton = "Approve");
-		}
-
-		task ("Then the status of a MDF Request was change on list") {
-			PRMUtils.gotoPRM();
-
-			PRMHomePage.gotoQuickLinksOption(
-				buttonLink = "mdf-requests",
-				buttonText = "MDF");
-
-			PRMMDFListing.viewOnList(
-				campaignName = "First Campaign",
-				mdfStatus = "Approved");
 		}
 	}
 
@@ -390,8 +368,8 @@ definition {
 			var tactic = "Other";
 			var targetOfLeads = "test";
 			var typeOfActivity = "Miscellaneous Marketing";
-			var startDate = DateUtil.getFormattedDate("+0", "M/d/yyyy");
-			var endDate = DateUtil.getFormattedDate("+1", "M/d/yyyy");
+			var startDate = DateUtil.getFormattedDate("+1", "M/d/yyyy");
+			var endDate = DateUtil.getFormattedDate("+2", "M/d/yyyy");
 			var expense = "Sponsorship Fee";
 			var budget = "$2,000.00";
 
@@ -452,7 +430,6 @@ definition {
 		task ("And I fill all Goals form with my informations") {
 			PRMMDFRequest.fillGoalsPage(
 				accountName = "Company Name 1",
-				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				campaignDescription = "Campaign Description",
 				campaignName = "Campaign Name",
 				countryName = "Global",
@@ -463,28 +440,98 @@ definition {
 			Button.click(button = "Continue");
 		}
 
-		task ("And I add a new activity") {
-			PRMMDFRequest.newActivity(
-				activityDescription = "Activity Description",
-				activityName = "Activity Name 1",
-				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
-				followUpStrategy = "test",
-				leadFollowUpList = "Other",
-				leadList = "No",
-				tactic = "Other",
-				targetOfLeads = "test",
-				typeOfActivity = "Miscellaneous Marketing");
+		task ("And when I go to activity page") {
+			PRMMDFRequest.addNewActivity();
 		}
 
-		task ("When I put an end date that is higher than six months from the start date") {
+		task ("When a date is set on 'Start date' field") {
 			PRMMDFRequest.insertDate(
 				dateFormat = "MMddYYYY",
-				dateRange = "+185",
+				dateRange = "+1",
+				fieldName = "startDate");
+		}
+
+		task ("And a date that exceed 6 months is set on 'End date' field") {
+			PRMMDFRequest.insertDate(
+				dateFormat = "MMddYYYY",
+				dateRange = "+1851",
 				fieldName = "endDate");
 		}
 
-		task ("Then a feedback message will appear") {
-			PRMMDFRequest.viewErrorMessage(errorMessage = "End date must be less than six month after start date");
+		task ("Then an alert message will appear") {
+			PRMMDFRequest.viewErrorMessage(errorMessage = "The activity period can not be longer than 6 months");
+		}
+	}
+
+	@description = "This is a test for LPS-174501. Verify that the only user with the right roles can see/change the state manager"
+	@priority = 5
+	test OnlyManagersCanSeeStateManager {
+		task ("Given I go to add a new MDF Request") {
+			PRMUtils.gotoPRM();
+
+			PRMNavigator.goToNavItem(navItem = "Marketing");
+
+			PRMMarketing.gotoAddNewMDF();
+
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				countryName = "Global",
+				followUpStrategy = "test",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetMarketOptions = "Education,Energy",
+				targetOfLeads = "test",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When the partner goes to the MDF Detail page") {
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf",
+				buttonText = "MDF");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the State Manager isn't visible") {
+			PRMMDFRequest.CanNotViewStateManager();
+		}
+
+		task ("When the Manager goes to the MDF Detail page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf",
+				buttonText = "MDF");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the State Manager is visible") {
+			PRMMDFRequest.viewMDFStatus(key_status = "Pending Marketing Review");
+
+			PRMMDFRequest.viewStateManager();
+		}
+
+		task ("And the Manager can change the MDF Status") {
+			PRMMDFRequest.changeMDFStatus(
+				campaignName = "Campaign Name",
+				key_statusButton = "Approve");
+
+			PRMMDFRequest.viewMDFStatus(key_status = "Approved");
 		}
 	}
 
@@ -649,10 +696,9 @@ definition {
 				accountName = "Company Name 1",
 				activityDescription = "Activity Description",
 				activityName = "Activity Name 1",
-				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
-				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+				budgetList = "Sponsorship Fee-2000",
 				campaignDescription = "Campaign Description",
-				campaignName = ${campaignName},
+				campaignName = "Campaign Name",
 				countryName = "Global",
 				followUpStrategy = "test",
 				goalsOptions = "Lead generation",
@@ -666,9 +712,7 @@ definition {
 		}
 
 		task ("Then the MDF status appears on list") {
-			PRMMDFListing.viewOnList(
-				mdfStatus = "Pending Marketing Review",
-				rowNumber = "Status");
+			PRMMDFListing.viewOnList(campaignName = "Campaign Name");
 		}
 	}
 

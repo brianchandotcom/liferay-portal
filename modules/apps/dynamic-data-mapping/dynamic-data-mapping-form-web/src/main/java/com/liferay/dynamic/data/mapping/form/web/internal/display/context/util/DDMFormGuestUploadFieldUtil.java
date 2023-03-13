@@ -27,12 +27,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -94,20 +91,16 @@ public class DDMFormGuestUploadFieldUtil {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		Collection<DDMFormField> ddmFormFields = ddmFormFieldsMap.values();
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			if (Objects.equals(ddmFormField.getType(), "document_library") &&
+				GetterUtil.getBoolean(
+					ddmFormField.getProperty("allowGuestUsers"))) {
 
-		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
+				return true;
+			}
+		}
 
-		Optional<DDMFormField> ddmFormFieldOptional =
-			ddmFormFieldsStream.filter(
-				ddmFormField ->
-					Objects.equals(
-						ddmFormField.getType(), "document_library") &&
-					GetterUtil.getBoolean(
-						ddmFormField.getProperty("allowGuestUsers"))
-			).findFirst();
-
-		return ddmFormFieldOptional.isPresent();
+		return false;
 	}
 
 	@Reference(unbind = "-")

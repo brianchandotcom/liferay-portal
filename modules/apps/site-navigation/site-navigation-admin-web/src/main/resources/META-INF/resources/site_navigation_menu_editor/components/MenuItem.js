@@ -14,7 +14,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
-import {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
+import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
@@ -37,13 +37,14 @@ import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 import getFlatItems from '../utils/getFlatItems';
 import getItemPath from '../utils/getItemPath';
 import {useDragItem, useDropTarget} from '../utils/useDragAndDrop';
+import useKeyboardNavigation from '../utils/useKeyboardNavigation';
 
 const DELETION_TYPES = {
 	bulk: 0,
 	single: 1,
 };
 
-export function MenuItem({item}) {
+export function MenuItem({item, onMenuItemRemoved}) {
 	const setItems = useSetItems();
 	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
@@ -78,6 +79,7 @@ export function MenuItem({item}) {
 				setItems(newItems);
 
 				setSidebarPanelId(null);
+				onMenuItemRemoved();
 			})
 			.catch(({error}) => {
 				openToast({
@@ -137,109 +139,119 @@ export function MenuItem({item}) {
 	const parentItemId =
 		itemPath.length > 1 ? itemPath[itemPath.length - 2] : '0';
 
+	const {
+		isTarget,
+		onBlur,
+		onFocus,
+		onKeyDown,
+		setElement,
+	} = useKeyboardNavigation();
+
 	return (
 		<>
 			<div
 				aria-label={`${title} (${type})`}
 				aria-level={itemPath.length}
+				className="focusable-menu-item site_navigation_menu_editor_MenuItem"
 				data-item-id={item.siteNavigationMenuItemId}
 				data-parent-item-id={parentItemId}
-				ref={targetRef}
-				role="listitem"
+				onBlur={onBlur}
+				onClick={() => {
+					setSelectedMenuItemId(siteNavigationMenuItemId);
+					setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
+				}}
+				onFocus={onFocus}
+				onKeyDown={(event) => {
+					if (event.key === ' ' || event.key === 'Enter') {
+						setSelectedMenuItemId(siteNavigationMenuItemId);
+						setSidebarPanelId(SIDEBAR_PANEL_IDS.menuItemSettings);
+					}
+
+					onKeyDown(event);
+				}}
+				ref={(ref) => {
+					targetRef(ref);
+					setElement(ref);
+				}}
+				role="menuitem"
+				tabIndex={isTarget ? '0' : '-1'}
 			>
 				<ClayCard
-					className={classNames(
-						'mb-3 site_navigation_menu_editor_MenuItem',
-						{
-							active: selected,
-							dragging: isDragging,
-						}
+					aria-label={sub(
+						Liferay.Language.get('select-x'),
+						`${title} (${type})`
 					)}
-					ref={handlerRef}
+					className={classNames('mb-3', {
+						active: selected,
+						dragging: isDragging,
+					})}
 					selectable
 					style={itemStyle}
 				>
-					<ClayCheckbox
-						aria-label={sub(
-							Liferay.Language.get('select-x'),
-							`${title} (${type})`
-						)}
-						checked={selected}
-						onChange={() => {
-							setSelectedMenuItemId(siteNavigationMenuItemId);
-							setSidebarPanelId(
-								SIDEBAR_PANEL_IDS.menuItemSettings
-							);
-						}}
-					>
-						<ClayCard.Body className="px-0">
-							<div ref={handlerRef}>
-								<ClayCard.Row>
-									<ClayLayout.ContentCol gutters>
-										<ClayIcon symbol="drag" />
-									</ClayLayout.ContentCol>
+					<ClayCard.Body className="px-0">
+						<div ref={handlerRef}>
+							<ClayCard.Row>
+								<ClayLayout.ContentCol gutters>
+									<ClayIcon symbol="drag" />
+								</ClayLayout.ContentCol>
 
-									<ClayLayout.ContentCol expand>
-										<ClayCard.Description
-											displayType="title"
-											title={title}
+								<ClayLayout.ContentCol expand>
+									<ClayCard.Description
+										displayType="title"
+										title={title}
+									>
+										{title}
+
+										{item.icon && (
+											<ClayIcon
+												className="ml-2 text-warning"
+												symbol={item.icon}
+											/>
+										)}
+									</ClayCard.Description>
+
+									<div className="d-flex">
+										<ClayLabel
+											className="mt-1"
+											displayType="secondary"
 										>
-											{title}
+											{type}
+										</ClayLabel>
 
-											{item.icon && (
-												<ClayIcon
-													className="ml-2 text-warning"
-													symbol={item.icon}
-												/>
-											)}
-										</ClayCard.Description>
-
-										<div className="d-flex">
+										{item.dynamic && (
 											<ClayLabel
 												className="mt-1"
-												displayType="secondary"
+												displayType="info"
 											>
-												{type}
+												{Liferay.Language.get(
+													'dynamic'
+												)}
 											</ClayLabel>
+										)}
+									</div>
+								</ClayLayout.ContentCol>
 
-											{item.dynamic && (
-												<ClayLabel
-													className="mt-1"
-													displayType="info"
-												>
-													{Liferay.Language.get(
-														'dynamic'
-													)}
-												</ClayLabel>
-											)}
-										</div>
-									</ClayLayout.ContentCol>
-
-									<ClayLayout.ContentCol gutters>
-										<ClayButtonWithIcon
-											aria-label={sub(
-												Liferay.Language.get(
-													'delete-x'
-												),
-												`${title} (${type})`
-											)}
-											className="delete-item-button"
-											displayType="unstyled"
-											onClick={() =>
-												item.children.length
-													? setDeletionModalVisible(
-															true
-													  )
-													: deleteMenuItem()
-											}
-											size="sm"
-											symbol="times-circle"
-										/>
-									</ClayLayout.ContentCol>
-								</ClayCard.Row>
-							</div>
-						</ClayCard.Body>
-					</ClayCheckbox>
+								<ClayLayout.ContentCol gutters>
+									<ClayButtonWithIcon
+										aria-label={sub(
+											Liferay.Language.get('delete-x'),
+											`${title} (${type})`
+										)}
+										className="delete-item-button"
+										displayType="unstyled"
+										onClick={() =>
+											item.children.length
+												? setDeletionModalVisible(true)
+												: deleteMenuItem()
+										}
+										size="sm"
+										symbol="times-circle"
+										tabIndex={isTarget ? '0' : '-1'}
+									/>
+								</ClayLayout.ContentCol>
+							</ClayCard.Row>
+						</div>
+					</ClayCard.Body>
 				</ClayCard>
 			</div>
 

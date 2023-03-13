@@ -131,7 +131,7 @@
 
 <tr>
 	<td>MEMBERSHIPS_SELECT_ASSET_BUTTON</td>
-	<td>//a[contains(@id,'${key_selectId}')]/span</td>
+	<td>//*[contains(@id,'${key_selectId}')]</td>
 	<td></td>
 </tr>
 <tr>

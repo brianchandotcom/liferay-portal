@@ -76,7 +76,7 @@ public class WikiPagesManagementToolbarDisplayContext {
 		_wikiURLHelper = wikiURLHelper;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
-			_liferayPortletRequest, _liferayPortletResponse);
+			liferayPortletRequest, liferayPortletResponse);
 
 		_httpServletRequest = liferayPortletRequest.getHttpServletRequest();
 

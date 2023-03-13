@@ -90,7 +90,7 @@ const VerticalNavigationBar = ({
 			closedProductMenuListener?.removeListener();
 			openProductMenuListener?.removeListener();
 
-			productMenu.destroy();
+			productMenu?.destroy();
 		};
 	}, [activePanel, initialProductMenuOpen, productMenu]);
 

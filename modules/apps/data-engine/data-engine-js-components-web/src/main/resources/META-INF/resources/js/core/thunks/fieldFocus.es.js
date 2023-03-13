@@ -14,7 +14,13 @@
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 
-export default function fieldFocus({activePage, formId, properties}) {
+export default function fieldFocus({
+	activePage,
+	formId,
+	formPageTitle,
+	properties,
+	title,
+}) {
 	return (dispatch) => {
 		const {fieldInstance} = properties;
 
@@ -23,7 +29,9 @@ export default function fieldFocus({activePage, formId, properties}) {
 		Liferay.fire('ddmFieldFocus', {
 			fieldName: fieldInstance.label,
 			formId,
+			formPageTitle,
 			page: activePage,
+			title,
 		});
 	};
 }

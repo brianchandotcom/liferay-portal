@@ -66,6 +66,8 @@ public interface WebKeys {
 
 	public static final String BEAN_PORTLET_IDS = "BEAN_PORTLET_IDS";
 
+	public static final String BLOCK_LOGIN_PROMPT = "BLOCK_LOGIN_PROMPT";
+
 	public static final String BLOGS_CATEGORY = "BLOGS_CATEGORY";
 
 	public static final String BLOGS_ENTRY = "BLOGS_ENTRY";
@@ -693,6 +695,9 @@ public interface WebKeys {
 	public static final String USER_PASSWORD = "USER_PASSWORD";
 
 	public static final String USERS_NOTIFIED = "USERS_NOTIFIED";
+
+	public static final String VIRTUAL_HOST_LANGUAGE_ID =
+		"VIRTUAL_HOST_LANGUAGE_ID";
 
 	public static final String VIRTUAL_HOST_LAYOUT_SET =
 		"VIRTUAL_HOST_LAYOUT_SET";

@@ -32,6 +32,8 @@ Function<String, String> unrestrictedPreferenceFunction = basePreferenceFunction
 <aui:fieldset>
 	<aui:input name="preferencesCompanyId" type="hidden" value="<%= companyId %>" />
 
+	<aui:input label="enable-pop-server-notifications" name="popServerNotificationsEnabled" type="checkbox" value="<%= restrictedPreferenceFunction.apply(PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED) %>" />
+
 	<aui:input cssClass="lfr-input-text-container" label="incoming-pop-server" name="pop3Host" type="text" value="<%= restrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_POP3_HOST) %>" />
 
 	<aui:input cssClass="lfr-input-text-container" label="incoming-port" name="pop3Port" type="text" value="<%= restrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_POP3_PORT) %>" />

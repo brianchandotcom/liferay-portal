@@ -34,10 +34,9 @@ public class FragmentCollectionFilterDateDisplayContext {
 
 		_configuration = configuration;
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
-
 		_fragmentRendererContext = fragmentRendererContext;
 
-		_fragmentEntryLink = _fragmentRendererContext.getFragmentEntryLink();
+		_fragmentEntryLink = fragmentRendererContext.getFragmentEntryLink();
 	}
 
 	public String getLabel() {

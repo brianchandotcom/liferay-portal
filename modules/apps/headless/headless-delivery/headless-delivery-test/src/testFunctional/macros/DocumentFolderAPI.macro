@@ -3,7 +3,11 @@ definition {
 	macro _curlDocumentFolders {
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(assetLibraryId)) {
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(
+				depotName = ${depotName},
+				noSelenium = "true");
+
 			var api = "asset-libraries/${assetLibraryId}";
 		}
 		else {
@@ -40,7 +44,11 @@ definition {
 			else {
 				var actualHref = JSONUtil.getWithJSONPath(${responseToParse}, "$.actions.createBatch[?(@.method == 'POST')].href");
 
-				if (isSet(assetLibraryId)) {
+				if (isSet(depotName)) {
+					var assetLibraryId = JSONGroupAPI._getDepotIdByName(
+						depotName = ${depotName},
+						noSelenium = "true");
+
 					var expectedHref = "${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/document-folders/batch";
 				}
 				else {
@@ -60,7 +68,7 @@ definition {
 
 	macro getDocumentFolders {
 		var curl = DocumentFolderAPI._curlDocumentFolders(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			groupName = ${groupName});
 
 		var response = JSONCurlUtil.get(${curl});

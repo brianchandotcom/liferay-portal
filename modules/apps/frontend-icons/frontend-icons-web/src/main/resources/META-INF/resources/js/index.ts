@@ -12,6 +12,10 @@
  * details.
  */
 
+export function getControlPanelSpritemap(): string {
+	return Liferay.Icons.controlPanelSpritemap;
+}
+
 export function getSpritemap(): string {
-	return Liferay.ThemeDisplay.getPathThemeSpritemap();
+	return Liferay.Icons.spritemap;
 }

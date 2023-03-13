@@ -69,14 +69,14 @@ const SubtaskCard: React.FC<SubtaskCardProps> = ({subtask, taskId}) => (
 const TaskSidebar: React.FC<TaskSidebarProps> = ({expanded}) => {
 	const {tasks} = useSidebarTask();
 
+	if (!tasks.length) {
+		return null;
+	}
+
 	const sidebarVisibility = {
 		'task-sidebar-expanded': expanded,
 		'task-sidebar-hidden': !expanded,
 	};
-
-	if (!tasks.length) {
-		return null;
-	}
 
 	return (
 		<div

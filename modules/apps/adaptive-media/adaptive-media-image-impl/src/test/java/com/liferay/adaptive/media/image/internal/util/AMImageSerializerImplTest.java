@@ -38,7 +38,6 @@ import java.net.URI;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -87,16 +86,16 @@ public class AMImageSerializerImplTest {
 
 		Assert.assertEquals(
 			new URI("http://localhost"), adaptiveMedia.getURI());
-
-		Optional<Integer> heightValueOptional = adaptiveMedia.getValueOptional(
-			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
-
-		Assert.assertEquals("200", String.valueOf(heightValueOptional.get()));
-
-		Optional<Integer> widthValueOptional = adaptiveMedia.getValueOptional(
-			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
-
-		Assert.assertEquals("300", String.valueOf(widthValueOptional.get()));
+		Assert.assertEquals(
+			"200",
+			String.valueOf(
+				adaptiveMedia.getValue(
+					AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT)));
+		Assert.assertEquals(
+			"300",
+			String.valueOf(
+				adaptiveMedia.getValue(
+					AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH)));
 	}
 
 	@Test(expected = AMRuntimeException.class)
@@ -124,16 +123,10 @@ public class AMImageSerializerImplTest {
 
 		Assert.assertEquals(
 			new URI("http://localhost"), adaptiveMedia.getURI());
-
-		Optional<Integer> heightValueOptional = adaptiveMedia.getValueOptional(
-			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
-
-		Assert.assertFalse(heightValueOptional.isPresent());
-
-		Optional<Integer> widthValueOptional = adaptiveMedia.getValueOptional(
-			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
-
-		Assert.assertFalse(widthValueOptional.isPresent());
+		Assert.assertNull(
+			adaptiveMedia.getValue(AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT));
+		Assert.assertNull(
+			adaptiveMedia.getValue(AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH));
 	}
 
 	@Test

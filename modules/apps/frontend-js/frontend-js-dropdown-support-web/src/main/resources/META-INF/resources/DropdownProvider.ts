@@ -24,7 +24,7 @@ const Selector = {
 };
 
 const KEYCODES = {
-	ENTER: 13,
+	ARROW_DOWN: 40,
 	SPACE: 32,
 };
 
@@ -50,6 +50,8 @@ class DropdownProvider {
 		);
 
 		delegate(document.body, 'keydown', Selector.TRIGGER, this._onKeyDown);
+
+		this._warnNotButtonTrigger();
 
 		Liferay.DropdownProvider = this;
 	}
@@ -133,14 +135,17 @@ class DropdownProvider {
 
 	_onKeyDown = (event: any) => {
 		if (
-			event.keyCode === KEYCODES.ENTER ||
-			event.keyCode === KEYCODES.SPACE
+			event.keyCode === KEYCODES.ARROW_DOWN ||
+			(event.keyCode === KEYCODES.SPACE &&
+				event.delegateTarget.tagName === 'A')
 		) {
 			this._onTriggerClick(event);
 		}
 	};
 
 	_onTriggerClick = (event: any) => {
+		event.preventDefault();
+
 		const trigger = event.delegateTarget;
 
 		if (trigger.tagName === 'A') {
@@ -158,6 +163,17 @@ class DropdownProvider {
 			}
 		}
 	};
+
+	_warnNotButtonTrigger() {
+		const triggerElements = document.querySelectorAll(
+			`:not(button)${Selector.TRIGGER}`
+		);
+
+		triggerElements.forEach((element) => {
+			console.warn('This Dropdown Trigger should be a button');
+			console.warn(element);
+		});
+	}
 }
 
 export default DropdownProvider;

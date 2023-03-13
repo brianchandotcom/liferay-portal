@@ -47,16 +47,11 @@ import java.io.Serializable;
 
 import java.text.Format;
 
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.TreeMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -139,119 +134,135 @@ public class ObjectEntryRowInfoItemRenderer
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws PortalException {
 
+		Map<String, Serializable> sortedValues = new TreeMap<>();
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry);
 
-		Set<Map.Entry<String, Serializable>> entries = values.entrySet();
+		Map<String, ObjectField> objectFieldsMap = new HashMap<>();
 
-		Stream<Map.Entry<String, Serializable>> entriesStream =
-			entries.stream();
+		for (ObjectField objectField :
+				_objectFieldLocalService.getActiveObjectFields(
+					_objectFieldLocalService.getObjectFields(
+						objectEntry.getObjectDefinitionId()))) {
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectEntry.getObjectDefinitionId());
+			objectFieldsMap.put(objectField.getName(), objectField);
+		}
 
-		objectFields = _objectFieldLocalService.getActiveObjectFields(
-			objectFields);
+		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
+			ObjectField objectField = objectFieldsMap.get(entry.getKey());
 
-		Stream<ObjectField> objectFieldsStream = objectFields.stream();
+			if (objectField == null) {
+				continue;
+			}
 
-		Map<String, ObjectField> objectFieldsMap = objectFieldsStream.collect(
-			Collectors.toMap(ObjectField::getName, Function.identity()));
+			if (entry.getValue() == null) {
+				sortedValues.put(entry.getKey(), StringPool.BLANK);
 
-		return entriesStream.filter(
-			entry -> objectFieldsMap.containsKey(entry.getKey())
-		).sorted(
-			Map.Entry.comparingByKey()
-		).collect(
-			Collectors.toMap(
-				Map.Entry::getKey,
-				entry -> {
-					if (entry.getValue() == null) {
-						return StringPool.BLANK;
-					}
+				continue;
+			}
 
-					ObjectField objectField = objectFieldsMap.get(
-						entry.getKey());
+			if (objectField.getListTypeDefinitionId() != 0) {
+				ListTypeEntry listTypeEntry =
+					_listTypeEntryLocalService.fetchListTypeEntry(
+						objectField.getListTypeDefinitionId(),
+						(String)entry.getValue());
 
-					if (objectField.getListTypeDefinitionId() != 0) {
-						ListTypeEntry listTypeEntry =
-							_listTypeEntryLocalService.fetchListTypeEntry(
-								objectField.getListTypeDefinitionId(),
-								(String)entry.getValue());
+				sortedValues.put(
+					entry.getKey(),
+					listTypeEntry.getName(serviceContext.getLocale()));
 
-						return listTypeEntry.getName(
-							serviceContext.getLocale());
-					}
-					else if (Objects.equals(
-								objectField.getBusinessType(),
-								ObjectFieldConstants.
-									BUSINESS_TYPE_ATTACHMENT)) {
+				continue;
+			}
 
-						long dlFileEntryId = GetterUtil.getLong(
-							values.get(objectField.getName()));
+			if (Objects.equals(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+					objectField.getBusinessType())) {
 
-						if (dlFileEntryId == GetterUtil.DEFAULT_LONG) {
-							return StringPool.BLANK;
-						}
+				long dlFileEntryId = GetterUtil.getLong(
+					values.get(objectField.getName()));
 
-						DLFileEntry dlFileEntry =
-							_dlFileEntryLocalService.fetchDLFileEntry(
-								dlFileEntryId);
+				if (dlFileEntryId == GetterUtil.DEFAULT_LONG) {
+					sortedValues.put(entry.getKey(), StringPool.BLANK);
 
-						if (dlFileEntry == null) {
-							return StringPool.BLANK;
-						}
+					continue;
+				}
 
-						return LinkUtil.toLink(
-							_dlAppService, dlFileEntry, _dlURLHelper,
-							objectDefinition.getExternalReferenceCode(),
-							objectEntry.getExternalReferenceCode(), _portal);
-					}
-					else if (Objects.equals(
-								objectField.getDBType(),
-								ObjectFieldConstants.DB_TYPE_DATE)) {
+				DLFileEntry dlFileEntry =
+					_dlFileEntryLocalService.fetchDLFileEntry(dlFileEntryId);
 
-						Format dateFormat = FastDateFormatFactoryUtil.getDate(
-							serviceContext.getLocale());
+				if (dlFileEntry == null) {
+					sortedValues.put(entry.getKey(), StringPool.BLANK);
 
-						return dateFormat.format(entry.getValue());
-					}
-					else if (Validator.isNotNull(
-								objectField.getRelationshipType())) {
+					continue;
+				}
 
-						Object value = values.get(objectField.getName());
+				sortedValues.put(
+					entry.getKey(),
+					LinkUtil.toLink(
+						_dlAppService, dlFileEntry, _dlURLHelper,
+						objectDefinition.getExternalReferenceCode(),
+						objectEntry.getExternalReferenceCode(), _portal));
 
-						if (GetterUtil.getLong(value) <= 0) {
-							return StringPool.BLANK;
-						}
+				continue;
+			}
 
-						try {
-							ObjectRelationship objectRelationship =
-								_objectRelationshipLocalService.
-									fetchObjectRelationshipByObjectFieldId2(
-										objectField.getObjectFieldId());
+			if (Objects.equals(
+					ObjectFieldConstants.DB_TYPE_DATE,
+					objectField.getDBType())) {
 
-							return _objectEntryLocalService.getTitleValue(
-								objectRelationship.getObjectDefinitionId1(),
-								(Long)values.get(objectField.getName()));
-						}
-						catch (PortalException portalException) {
-							throw new RuntimeException(portalException);
-						}
-					}
+				Format dateFormat = FastDateFormatFactoryUtil.getDate(
+					serviceContext.getLocale());
 
-					return Optional.ofNullable(
-						entry.getValue()
-					).orElse(
-						StringPool.BLANK
-					);
-				},
-				(oldValue, newValue) -> oldValue, LinkedHashMap::new)
-		);
+				sortedValues.put(
+					entry.getKey(), dateFormat.format(entry.getValue()));
+
+				continue;
+			}
+
+			if (Validator.isNotNull(objectField.getRelationshipType())) {
+				Object value = values.get(objectField.getName());
+
+				if (GetterUtil.getLong(value) <= 0) {
+					sortedValues.put(entry.getKey(), StringPool.BLANK);
+
+					continue;
+				}
+
+				try {
+					ObjectRelationship objectRelationship =
+						_objectRelationshipLocalService.
+							fetchObjectRelationshipByObjectFieldId2(
+								objectField.getObjectFieldId());
+
+					sortedValues.put(
+						entry.getKey(),
+						_objectEntryLocalService.getTitleValue(
+							objectRelationship.getObjectDefinitionId1(),
+							(Long)values.get(objectField.getName())));
+
+					continue;
+				}
+				catch (PortalException portalException) {
+					throw new RuntimeException(portalException);
+				}
+			}
+
+			Object value = entry.getValue();
+
+			if (value != null) {
+				sortedValues.put(entry.getKey(), (Serializable)value);
+
+				continue;
+			}
+
+			sortedValues.put(entry.getKey(), StringPool.BLANK);
+		}
+
+		return sortedValues;
 	}
 
 	private final AssetDisplayPageFriendlyURLProvider

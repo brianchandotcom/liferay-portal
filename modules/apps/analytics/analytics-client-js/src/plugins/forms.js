@@ -40,7 +40,7 @@ function getFormKey(form) {
 function getFieldPayload({form, name}) {
 	return {
 		fieldName: name,
-		formId: getFormKey(form),
+		...getFormPayload(form),
 	};
 }
 

@@ -39,7 +39,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiConsumer;
 
@@ -154,23 +153,6 @@ public class CompanyIndexFactory
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected void addElasticsearchIndexSettingsContributor(
-		com.liferay.portal.search.elasticsearch7.settings.
-			IndexSettingsContributor indexSettingsContributor) {
-
-		_elasticsearchIndexSettingsContributors.add(indexSettingsContributor);
-
-		_processContributions(
-			(indexName, liferayDocumentTypeFactory) ->
-				indexSettingsContributor.contribute(
-					indexName, liferayDocumentTypeFactory));
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
 	protected void addIndexSettingsContributor(
 		IndexSettingsContributor indexSettingsContributor) {
 
@@ -243,14 +225,6 @@ public class CompanyIndexFactory
 		liferayDocumentTypeFactory.addTypeMappings(
 			indexName,
 			_elasticsearchConfigurationWrapper.additionalTypeMappings());
-	}
-
-	protected void removeElasticsearchIndexSettingsContributor(
-		com.liferay.portal.search.elasticsearch7.settings.
-			IndexSettingsContributor indexSettingsContributor) {
-
-		_elasticsearchIndexSettingsContributors.remove(
-			indexSettingsContributor);
 	}
 
 	protected void removeIndexSettingsContributor(
@@ -386,17 +360,6 @@ public class CompanyIndexFactory
 	}
 
 	private void _loadIndexSettingsContributors(Settings.Builder builder) {
-		com.liferay.portal.search.elasticsearch7.settings.IndexSettingsHelper
-			elasticsearchIndexSettingsHelper = (setting, value) -> builder.put(
-				setting, value);
-
-		for (com.liferay.portal.search.elasticsearch7.settings.
-				IndexSettingsContributor indexSettingsContributor :
-					_elasticsearchIndexSettingsContributors) {
-
-			indexSettingsContributor.populate(elasticsearchIndexSettingsHelper);
-		}
-
 		IndexSettingsHelper indexSettingsHelper =
 			(setting, value) -> builder.put(setting, value);
 
@@ -421,14 +384,6 @@ public class CompanyIndexFactory
 	private void _loadTypeMappingsContributors(
 		String indexName,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
-
-		for (com.liferay.portal.search.elasticsearch7.settings.
-				IndexSettingsContributor elasticsearchIndexSettingsContributor :
-					_elasticsearchIndexSettingsContributors) {
-
-			elasticsearchIndexSettingsContributor.contribute(
-				indexName, liferayDocumentTypeFactory);
-		}
 
 		for (IndexSettingsContributor indexSettingsContributor :
 				_indexSettingsContributors) {
@@ -524,10 +479,6 @@ public class CompanyIndexFactory
 	private volatile ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private final Set
-		<com.liferay.portal.search.elasticsearch7.settings.
-			IndexSettingsContributor> _elasticsearchIndexSettingsContributors =
-				new ConcurrentSkipListSet<>();
 	private final List<IndexContributor> _indexContributors =
 		new CopyOnWriteArrayList<>();
 	private IndexNameBuilder _indexNameBuilder;

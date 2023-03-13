@@ -84,7 +84,7 @@ public class PasswordTrackerLocalServiceImpl
 			passwordTrackerPersistence.findByUserId(userId);
 
 		for (PasswordTracker passwordTracker : passwordTrackers) {
-			if (historyCount >= passwordPolicy.getHistoryCount()) {
+			if (historyCount > passwordPolicy.getHistoryCount()) {
 				break;
 			}
 

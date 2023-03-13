@@ -12,18 +12,39 @@
  * details.
  */
 
-import React from 'react';
+import React, {useRef} from 'react';
 
 import {useItems} from '../contexts/ItemsContext';
 import {MenuItem} from './MenuItem';
 
 export function Menu() {
 	const items = useItems();
+	const menuRef = useRef();
+
+	const onMenuItemRemoved = (itemIndex) => {
+		const items = menuRef.current?.querySelectorAll('.focusable-menu-item');
+
+		if (!items) {
+			return;
+		}
+
+		const index = Math.min(itemIndex, items.length - 1);
+
+		items[index]?.focus();
+	};
 
 	return (
-		<div className="container ml-lg-auto ml-sm-0 p-3 pt-4" role="list">
-			{items.map((item) => (
-				<MenuItem item={item} key={item.siteNavigationMenuItemId} />
+		<div
+			className="container ml-lg-auto ml-sm-0 p-3 pt-4"
+			ref={menuRef}
+			role="menubar"
+		>
+			{items.map((item, index) => (
+				<MenuItem
+					item={item}
+					key={item.siteNavigationMenuItemId}
+					onMenuItemRemoved={() => onMenuItemRemoved(index)}
+				/>
 			))}
 		</div>
 	);

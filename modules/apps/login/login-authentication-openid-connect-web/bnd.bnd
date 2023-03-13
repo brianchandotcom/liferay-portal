@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Login Authentication OpenID Connect Web
 Bundle-SymbolicName: com.liferay.login.authentication.openid.connect.web
-Bundle-Version: 6.0.18
+Bundle-Version: 6.0.19
 Web-ContextPath: /login-authentication-openid-connect-web

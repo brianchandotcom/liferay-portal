@@ -125,7 +125,7 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 			setSXPBlueprint({loading: true, title: ''});
 
 			fetch(
-				`${window.location.origin}/o/search-experiences-rest/v1.0/sxp-blueprints/${value.attributes?.sxpBlueprintId}`,
+				`/o/search-experiences-rest/v1.0/sxp-blueprints/${value.attributes?.sxpBlueprintId}`,
 				{
 					headers: new Headers({
 						'Accept': 'application/json',

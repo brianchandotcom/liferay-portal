@@ -51,7 +51,6 @@ public class LayoutRevisionAssetRenderer
 
 		try {
 			_layoutBranch = layoutRevision.getLayoutBranch();
-
 			_layoutSetBranch =
 				LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
 					layoutRevision.getLayoutSetBranchId());

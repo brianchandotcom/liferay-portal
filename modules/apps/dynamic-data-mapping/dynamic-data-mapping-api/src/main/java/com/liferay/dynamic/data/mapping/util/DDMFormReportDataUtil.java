@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -46,7 +48,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.stream.Stream;
 
 /**
  * @author Bruno Farache
@@ -71,18 +72,14 @@ public class DDMFormReportDataUtil {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		Set<String> set = ddmFormFieldsMap.keySet();
+		return JSONUtil.toJSONArray(
+			ddmFormFieldsMap.values(),
+			ddmFormField -> {
+				if (StringUtil.equals("fieldset", ddmFormField.getType())) {
+					return null;
+				}
 
-		Stream<String> stream = set.stream();
-
-		stream.map(
-			ddmFormFieldName -> ddmFormFieldsMap.get(ddmFormFieldName)
-		).filter(
-			ddmFormField -> !StringUtil.equals(
-				ddmFormField.getType(), "fieldset")
-		).forEach(
-			ddmFormField -> fieldsJSONArray.put(
-				JSONUtil.put(
+				return JSONUtil.put(
 					"columns",
 					_getPropertyLabelsJSONObject(ddmFormField, "columns")
 				).put(
@@ -97,10 +94,9 @@ public class DDMFormReportDataUtil {
 					"rows", _getPropertyLabelsJSONObject(ddmFormField, "rows")
 				).put(
 					"type", ddmFormField.getType()
-				))
-		);
-
-		return fieldsJSONArray;
+				);
+			},
+			_log);
 	}
 
 	public static JSONArray getFieldValuesJSONArray(
@@ -214,25 +210,25 @@ public class DDMFormReportDataUtil {
 			LocalizedValue visibleFields =
 				(LocalizedValue)ddmFormField.getProperty("visibleFields");
 
-			Stream.of(
-				StringUtil.split(
-					StringUtil.removeChars(
-						GetterUtil.getString(
-							visibleFields.getString(
-								visibleFields.getDefaultLocale())),
-						CharPool.CLOSE_BRACKET, CharPool.OPEN_BRACKET,
-						CharPool.QUOTE))
-			).map(
-				String::trim
-			).forEach(
-				visibleField -> jsonObject.put(
+			for (String visibleField :
+					StringUtil.split(
+						StringUtil.removeChars(
+							GetterUtil.getString(
+								visibleFields.getString(
+									visibleFields.getDefaultLocale())),
+							CharPool.CLOSE_BRACKET, CharPool.OPEN_BRACKET,
+							CharPool.QUOTE))) {
+
+				visibleField = visibleField.trim();
+
+				jsonObject.put(
 					visibleField,
 					LanguageUtil.get(
 						ResourceBundleUtil.getModuleAndPortalResourceBundle(
 							visibleFields.getDefaultLocale(),
 							DDMFormReportDataUtil.class),
-						visibleField))
-			);
+						visibleField));
+			}
 
 			return jsonObject.toString();
 		}
@@ -265,5 +261,8 @@ public class DDMFormReportDataUtil {
 
 		return value.getString(value.getDefaultLocale());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormReportDataUtil.class.getName());
 
 }

@@ -105,7 +105,8 @@ public class VirtualHostAbsoluteRedirectsFilterTest {
 
 			Assert.assertEquals(
 				virtualHost.getLanguageId(),
-				_mockHttpServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
+				_mockHttpServletRequest.getAttribute(
+					WebKeys.VIRTUAL_HOST_LANGUAGE_ID));
 
 			LayoutSet layoutSet =
 				(LayoutSet)_mockHttpServletRequest.getAttribute(
@@ -161,7 +162,8 @@ public class VirtualHostAbsoluteRedirectsFilterTest {
 
 		Assert.assertEquals(
 			virtualHost.getLanguageId(),
-			_mockHttpServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
+			_mockHttpServletRequest.getAttribute(
+				WebKeys.VIRTUAL_HOST_LANGUAGE_ID));
 
 		LayoutSet layoutSet = (LayoutSet)_mockHttpServletRequest.getAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET);

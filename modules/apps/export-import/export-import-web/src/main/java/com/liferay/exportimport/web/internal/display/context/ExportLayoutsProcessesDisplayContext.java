@@ -51,7 +51,7 @@ public class ExportLayoutsProcessesDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_portletRequest = (PortletRequest)_httpServletRequest.getAttribute(
+		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 

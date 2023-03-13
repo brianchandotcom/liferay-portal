@@ -232,7 +232,7 @@
 					}
 				});
 
-				languageId = languageId.replace('_', '-');
+				languageId = languageId.replaceAll('_', '-');
 
 				const triggerContent = Lang.sub(
 					'<span class="inline-item">{flag}</span><span class="btn-section">{languageId}</span>',

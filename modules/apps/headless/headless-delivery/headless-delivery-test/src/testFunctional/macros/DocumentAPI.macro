@@ -5,7 +5,9 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(assetLibraryId)) {
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
 			var api = "asset-libraries/${assetLibraryId}/documents";
 		}
 		else {
@@ -34,7 +36,9 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(assetLibraryId)) {
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
 			var api = "asset-libraries/${assetLibraryId}/documents/by-external-reference-code/${externalReferenceCode}";
 		}
 		else {
@@ -53,8 +57,9 @@ definition {
 	}
 
 	macro _filterDocumentInAssetLibrary {
-		Variables.assertDefined(parameterList = "${assetLibraryId},${filtervalue}");
+		Variables.assertDefined(parameterList = "${depotName},${filtervalue}");
 
+		var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -92,9 +97,13 @@ definition {
 	}
 
 	macro _getDocumentsByErcInAssetLibrary {
-		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
+		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(assetLibraryId))) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+		}
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/documents/by-external-reference-code/${externalReferenceCode} \
@@ -114,7 +123,9 @@ definition {
 			TestUtils.fail(message = "Please set at least one property to update the document.");
 		}
 
-		if (isSet(assetLibraryId)) {
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
 			var api = "asset-libraries/${assetLibraryId}/documents/by-external-reference-code/${externalReferenceCode}";
 		}
 		else {
@@ -163,10 +174,10 @@ definition {
 	}
 
 	macro addDocumentInAssetLibraryByUploadFile {
-		Variables.assertDefined(parameterList = "${assetLibraryId},${filePath}");
+		Variables.assertDefined(parameterList = "${depotName},${filePath}");
 
 		var response = DocumentAPI._addDocument(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode},
 			filePath = ${filePath});
 
@@ -189,7 +200,7 @@ definition {
 		Variables.assertDefined(parameterList = ${expectedDocumentTotalCount});
 
 		var response = DocumentAPI._filterDocumentInAssetLibrary(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			filtervalue = ${filtervalue});
 
 		var actualDocumentTotalCount = JSONUtil.getWithJSONPath(${response}, "$..['totalCount']");
@@ -200,7 +211,7 @@ definition {
 	}
 
 	macro deleteDocumentInAssetLibrary {
-		Variables.assertDefined(parameterList = ${assetLibraryId});
+		Variables.assertDefined(parameterList = ${depotName});
 
 		if (!(isSet(externalReferenceCode))) {
 			Variables.assertDefined(parameterList = ${responseToParse});
@@ -209,7 +220,7 @@ definition {
 		}
 
 		DocumentAPI._deleteDocumentsByErcInAssetLibrary(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode});
 	}
 
@@ -225,6 +236,7 @@ definition {
 	macro getDocumentsByErcInAssetLibrary {
 		var response = DocumentAPI._getDocumentsByErcInAssetLibrary(
 			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode});
 
 		return ${response};
@@ -232,7 +244,7 @@ definition {
 
 	macro getIdOfCreatedDocument {
 		var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode},
 			filePath = ${filePath});
 
@@ -260,10 +272,10 @@ definition {
 	}
 
 	macro updateDocumentByErcInAssetLibrary {
-		Variables.assertDefined(parameterList = ${assetLibraryId});
+		Variables.assertDefined(parameterList = ${depotName});
 
 		var response = DocumentAPI._updateDocumentByErc(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode},
 			filePath = ${filePath},
 			title = ${title},

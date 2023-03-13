@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -50,8 +51,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -116,29 +115,18 @@ public class DummyStagedModelRepository
 	}
 
 	public List<Dummy> fetchDummiesByFolderId(long folderId) {
-		Stream<Dummy> dummiesStream = _dummies.stream();
-
-		return dummiesStream.filter(
-			d -> d.getFolderId() == folderId
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.filter(
+			_dummies, dummy -> folderId == dummy.getFolderId());
 	}
 
 	public Dummy fetchDummyById(long id) {
-		Stream<Dummy> dummiesStream = _dummies.stream();
-
-		List<Dummy> dummies = dummiesStream.filter(
-			d -> d.getId() == id
-		).collect(
-			Collectors.toList()
-		);
-
-		if (dummies.isEmpty()) {
-			return null;
+		for (Dummy dummy : _dummies) {
+			if (id == dummy.getId()) {
+				return dummy;
+			}
 		}
 
-		return dummies.get(0);
+		return null;
 	}
 
 	@Override
@@ -148,36 +136,26 @@ public class DummyStagedModelRepository
 
 	@Override
 	public Dummy fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		Stream<Dummy> dummiesStream = _dummies.stream();
+		for (Dummy dummy : _dummies) {
+			if (Objects.equals(uuid, dummy.getUuid()) &&
+				(groupId == dummy.getGroupId())) {
 
-		List<Dummy> dummies = dummiesStream.filter(
-			dummy ->
-				Objects.equals(dummy.getUuid(), uuid) &&
-				(dummy.getGroupId() == groupId)
-		).collect(
-			Collectors.toList()
-		);
-
-		if (dummies.isEmpty()) {
-			return null;
+				return dummy;
+			}
 		}
 
-		return dummies.get(0);
+		return null;
 	}
 
 	@Override
 	public List<Dummy> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		Stream<Dummy> dummiesStream = _dummies.stream();
-
-		return dummiesStream.filter(
+		return ListUtil.filter(
+			_dummies,
 			dummy ->
-				Objects.equals(dummy.getUuid(), uuid) &&
-				(dummy.getCompanyId() == companyId)
-		).collect(
-			Collectors.toList()
-		);
+				Objects.equals(uuid, dummy.getUuid()) &&
+				(companyId == dummy.getCompanyId()));
 	}
 
 	@Override
@@ -358,8 +336,6 @@ public class DummyStagedModelRepository
 	public class DummyBaseLocalServiceImpl extends BaseLocalServiceImpl {
 
 		public List<Dummy> dynamicQuery(DynamicQuery dynamicQuery) {
-			List<Dummy> result = _dummies;
-
 			try {
 				Object detachedCriteria = ReflectionTestUtil.getFieldValue(
 					dynamicQuery, "_detachedCriteria");
@@ -370,21 +346,23 @@ public class DummyStagedModelRepository
 				Iterator<?> iterator = ReflectionTestUtil.invoke(
 					criteriaImpl, "iterateExpressionEntries", new Class<?>[0]);
 
-				while (iterator.hasNext()) {
-					Stream<Dummy> dummiesStream = result.stream();
-
-					result = dummiesStream.filter(
-						getPredicate(String.valueOf(iterator.next()))
-					).collect(
-						Collectors.toList()
-					);
+				if (!iterator.hasNext()) {
+					return _dummies;
 				}
+
+				Predicate<Dummy> predicate = getPredicate(
+					String.valueOf(iterator.next()));
+
+				while (iterator.hasNext()) {
+					predicate = predicate.and(
+						getPredicate(String.valueOf(iterator.next())));
+				}
+
+				return ListUtil.filter(_dummies, predicate);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
 			}
-
-			return result;
 		}
 
 		public long dynamicQueryCount(
@@ -393,24 +371,24 @@ public class DummyStagedModelRepository
 			return _dummies.size();
 		}
 
-		public Predicate<? super Dummy> getPredicate(String expression) {
+		public Predicate<Dummy> getPredicate(String expression) {
 			if (expression.startsWith("groupId=")) {
-				return d ->
-					d.getGroupId() == Long.valueOf(
+				return dummy ->
+					dummy.getGroupId() == Long.valueOf(
 						expression.substring("groupId=".length()));
 			}
 
 			if (expression.contains("id>-1")) {
-				return d -> d.getId() > -1;
+				return dummy -> dummy.getId() > -1;
 			}
 
 			if (expression.startsWith("companyId=")) {
-				return d ->
-					d.getCompanyId() == Long.valueOf(
+				return dummy ->
+					dummy.getCompanyId() == Long.valueOf(
 						expression.substring("companyId=".length()));
 			}
 
-			return d -> true;
+			return dummy -> true;
 		}
 
 		@Override

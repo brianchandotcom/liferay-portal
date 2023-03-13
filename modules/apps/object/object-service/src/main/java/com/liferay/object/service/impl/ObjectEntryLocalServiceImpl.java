@@ -162,7 +162,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -196,8 +195,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
 
@@ -1115,24 +1112,16 @@ public class ObjectEntryLocalServiceImpl
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
-		List<SearchHit> searchHitsList = searchHits.getSearchHits();
-
-		Stream<SearchHit> stream = searchHitsList.stream();
-
-		List<ObjectEntry> objectEntries = stream.map(
-			searchHit -> {
-				Document document = searchHit.getDocument();
-
-				long objectEntryId = document.getLong(Field.ENTRY_CLASS_PK);
-
-				return objectEntryPersistence.fetchByPrimaryKey(objectEntryId);
-			}
-		).collect(
-			Collectors.toList()
-		);
-
 		return new BaseModelSearchResult<>(
-			objectEntries, searchResponse.getTotalHits());
+			(List<ObjectEntry>)TransformUtil.transform(
+				searchHits.getSearchHits(),
+				searchHit -> {
+					Document document = searchHit.getDocument();
+
+					return objectEntryPersistence.fetchByPrimaryKey(
+						document.getLong(Field.ENTRY_CLASS_PK));
+				}),
+			searchResponse.getTotalHits());
 	}
 
 	@Override
@@ -2042,6 +2031,11 @@ public class ObjectEntryLocalServiceImpl
 		if (repository != null) {
 			return repository;
 		}
+
+		serviceContext = (ServiceContext)serviceContext.clone();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 
 		try {
 			return _portletFileRepository.addPortletRepository(
@@ -3019,6 +3013,10 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 		else if (sqlType == Types.DECIMAL) {
+			if (Validator.isNull(String.valueOf(value))) {
+				value = BigDecimal.ZERO;
+			}
+
 			preparedStatement.setBigDecimal(
 				index, new BigDecimal(String.valueOf(value)));
 		}
@@ -3597,19 +3595,24 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (objectField.getListTypeDefinitionId() != 0) {
-			List<ListTypeEntry> listTypeEntries =
-				_listTypeEntryLocalService.getListTypeEntries(
-					objectField.getListTypeDefinitionId());
-
-			Stream<ListTypeEntry> stream = listTypeEntries.stream();
+			ListTypeEntry listTypeEntry = null;
 
 			String value = _getValue(
 				String.valueOf(values.get(entry.getKey())));
 
-			if ((!value.isEmpty() || objectField.isRequired()) &&
-				!stream.anyMatch(
-					listTypeEntry -> Objects.equals(
-						listTypeEntry.getKey(), value))) {
+			for (ListTypeEntry curListTypeEntry :
+					_listTypeEntryLocalService.getListTypeEntries(
+						objectField.getListTypeDefinitionId())) {
+
+				if (Objects.equals(value, curListTypeEntry.getKey())) {
+					listTypeEntry = curListTypeEntry;
+
+					break;
+				}
+			}
+
+			if ((listTypeEntry == null) &&
+				(!value.isEmpty() || objectField.isRequired())) {
 
 				throw new ObjectEntryValuesException.ListTypeEntry(
 					entry.getKey());

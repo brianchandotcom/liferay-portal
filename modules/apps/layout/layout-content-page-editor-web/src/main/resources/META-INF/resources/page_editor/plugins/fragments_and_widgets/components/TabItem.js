@@ -45,7 +45,7 @@ const ITEM_PROPTYPES_SHAPE = PropTypes.shape({
 	type: PropTypes.string.isRequired,
 });
 
-export default function TabItem({displayStyle, item}) {
+export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 	const dispatch = useDispatch();
 
 	const onToggleHighlighted = useCallback(() => {
@@ -67,7 +67,11 @@ export default function TabItem({displayStyle, item}) {
 				})
 			);
 		}
-	}, [dispatch, item]);
+
+		if (item.highlighted) {
+			onRemoveHighlighted();
+		}
+	}, [dispatch, item, onRemoveHighlighted]);
 
 	const {isDraggingSource, sourceRef} = useDragSymbol(
 		{

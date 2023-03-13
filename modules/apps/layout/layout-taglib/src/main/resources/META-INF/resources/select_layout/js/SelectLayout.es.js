@@ -71,7 +71,7 @@ const SelectLayout = ({
 				<>
 					{Boolean(selectedItemsCount) && multiSelection && (
 						<ClayLayout.Container
-							className="align-items-center d-flex layout-tree-count-feedback px-4"
+							className="align-items-center d-flex layout-tree-count-feedback px-3"
 							containerElement="section"
 							fluid
 						>

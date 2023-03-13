@@ -641,19 +641,19 @@ definition {
 		var attributesDescendingOrder2 = "birthday,agreedToTermsOfUse";
 		var attributesDataTypeAscending1 = '''
 			male,agreedToTermsOfUse,defaultUser,emailAddressVerified,
-			birthday,createDate,modifiedDate,createDate,modifiedDate,status,classNameId,classPK,contactId,
-			employeeStatusId,parentContactId,prefixListTypeId,suffixListTypeId,companyId,companyId,contactId,facebookId,
-			ldapServerId,portraitId,timeZoneId,userId,emailAddress,employeeNumber,facebookSn,hoursOfOperation,
-			jabberSn,jobClass,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,firstName,
-			firstName,googleUserId,greeting,jobTitle,languageId,lastName,lastName,middleName,middleName,openId
+			birthday,createDate,modifiedDate,createDate,modifiedDate,status,classNameId,classPK,companyId,contactId,
+			employeeStatusId,parentContactId,prefixListTypeId,suffixListTypeId,companyId,contactId,facebookId,
+			ldapServerId,portraitId,timeZoneId,userId,emailAddress,employeeNumber,facebookSn,firstName,hoursOfOperation,
+			jabberSn,jobClass,jobTitle,lastName,middleName,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,
+			firstName,googleUserId,greeting,jobTitle,languageId,lastName,middleName,openId
 		''';
 		var attributesDataTypeAscending2 = "screenName,uuid";
 		var attributesDataTypeDescending1 = '''
-			emailAddress,employeeNumber,facebookSn,hoursOfOperation,
-			jabberSn,jobClass,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,firstName,
-			firstName,googleUserId,greeting,jobTitle,languageId,lastName,lastName,middleName,middleName,openId,screenName,uuid,
-			classNameId,classPK,contactId,employeeStatusId,parentContactId,prefixListTypeId,suffixListTypeId,
-			companyId,companyId,contactId,facebookId,ldapServerId,portraitId,timeZoneId,userId,status,birthday,createDate,
+			emailAddress,employeeNumber,facebookSn,firstName,hoursOfOperation,
+			jabberSn,jobClass,jobTitle,lastName,middleName,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,
+			firstName,googleUserId,greeting,jobTitle,languageId,lastName,middleName,openId,screenName,uuid,
+			classNameId,classPK,companyId,contactId,employeeStatusId,parentContactId,prefixListTypeId,suffixListTypeId,
+			companyId,contactId,facebookId,ldapServerId,portraitId,timeZoneId,userId,status,birthday,createDate,
 			modifiedDate,createDate,modifiedDate,male,agreedToTermsOfUse
 		''';
 		var attributesDataTypeDescending2 = "defaultUser,emailAddressVerified";
@@ -678,6 +678,8 @@ definition {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = ${indexList2},
 				itemValueList = ${attributesAscendingOrder2});
+
+			ACUtils.checkAnyPage(pageNumber = 1);
 		}
 
 		task ("See that the list is sorted by attributes in the descending order") {
@@ -694,6 +696,8 @@ definition {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = ${indexList2},
 				itemValueList = ${attributesDescendingOrder2});
+
+			ACUtils.checkAnyPage(pageNumber = 1);
 		}
 
 		task ("See that the list is sorted by the data type of the attributes in ascending order") {
@@ -710,6 +714,8 @@ definition {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = ${indexList2},
 				itemValueList = ${attributesDataTypeAscending2});
+
+			ACUtils.checkAnyPage(pageNumber = 1);
 		}
 
 		task ("See that the list is sorted by the data type of the attributes in descending order") {
@@ -964,7 +970,7 @@ definition {
 			''';
 
 		task ("Click to configure orders attributes") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Orders");
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Order");
 		}
 
 		task ("See that the required attributes can not be deselected") {

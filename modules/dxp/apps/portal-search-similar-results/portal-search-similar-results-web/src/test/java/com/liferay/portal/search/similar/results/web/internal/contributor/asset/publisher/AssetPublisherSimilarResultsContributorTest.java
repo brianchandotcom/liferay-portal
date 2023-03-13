@@ -27,8 +27,6 @@ import com.liferay.portal.search.similar.results.web.spi.contributor.helper.Rout
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.wiki.model.WikiPage;
 
-import java.util.Optional;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -97,12 +95,9 @@ public class AssetPublisherSimilarResultsContributorTest
 		_assetPublisherSimilarResultsContributor.resolveCriteria(
 			criteriaBuilderImpl, criteriaHelper);
 
-		Optional<Criteria> criteraOptional = criteriaBuilderImpl.build();
+		Criteria criteria = criteriaBuilderImpl.build();
 
-		Criteria criteria = criteraOptional.get();
-
-		Assert.assertEquals(
-			Optional.of("assetEntryClassName"), criteria.getTypeOptional());
+		Assert.assertEquals("assetEntryClassName", criteria.getType());
 		Assert.assertEquals("assetEntryClassName_PORTLET_0", criteria.getUID());
 	}
 

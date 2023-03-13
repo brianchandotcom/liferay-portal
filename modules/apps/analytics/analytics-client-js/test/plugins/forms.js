@@ -172,6 +172,7 @@ describe('Forms Plugin', () => {
 					properties: {
 						fieldName: 'myField',
 						formId: 'formId',
+						title: 'Form Title',
 					},
 				}),
 			]);
@@ -214,6 +215,7 @@ describe('Forms Plugin', () => {
 						fieldName: 'myField',
 						focusDuration: expect.any(Number),
 						formId: 'formId',
+						title: 'Form Title',
 					}),
 				}),
 			]);

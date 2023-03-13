@@ -260,28 +260,16 @@ public abstract class BaseDB implements DB {
 			Connection connection, String tableName)
 		throws SQLException {
 
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		List<PrimaryKey> primaryKeys = _getPrimaryKeys(connection, tableName);
 
-		DBInspector dbInspector = new DBInspector(connection);
+		String[] primaryKeyColumnNames = new String[primaryKeys.size()];
 
-		String normalizedTableName = dbInspector.normalizeName(
-			tableName, databaseMetaData);
-
-		String[] columnNames = new String[0];
-
-		try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
-				dbInspector.getCatalog(), dbInspector.getSchema(),
-				normalizedTableName)) {
-
-			while (resultSet.next()) {
-				columnNames = ArrayUtil.append(
-					columnNames,
-					dbInspector.normalizeName(
-						resultSet.getString("COLUMN_NAME"), databaseMetaData));
-			}
+		for (PrimaryKey primaryKey : primaryKeys) {
+			primaryKeyColumnNames[primaryKey._keySeq - 1] =
+				primaryKey._columnName;
 		}
 
-		return columnNames;
+		return primaryKeyColumnNames;
 	}
 
 	@Override
@@ -1067,6 +1055,32 @@ public abstract class BaseDB implements DB {
 		return sb.toString();
 	}
 
+	private List<PrimaryKey> _getPrimaryKeys(
+			Connection connection, String tableName)
+		throws SQLException {
+
+		List<PrimaryKey> primaryKeys = new ArrayList<>();
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		DBInspector dbInspector = new DBInspector(connection);
+
+		try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
+				dbInspector.getCatalog(), dbInspector.getSchema(),
+				dbInspector.normalizeName(tableName, databaseMetaData))) {
+
+			while (resultSet.next()) {
+				primaryKeys.add(
+					new PrimaryKey(
+						dbInspector.normalizeName(
+							resultSet.getString("COLUMN_NAME"),
+							databaseMetaData),
+						resultSet.getInt("KEY_SEQ")));
+			}
+		}
+
+		return primaryKeys;
+	}
+
 	private static final boolean _SUPPORTS_ALTER_COLUMN_NAME = true;
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = true;
@@ -1117,5 +1131,17 @@ public abstract class BaseDB implements DB {
 	private final Map<String, Integer> _sqlVarcharSizes = new HashMap<>();
 	private boolean _supportsStringCaseSensitiveQuery = true;
 	private final Map<String, String> _templates = new HashMap<>();
+
+	private static class PrimaryKey {
+
+		private PrimaryKey(String columnName, int keySeq) {
+			_columnName = columnName;
+			_keySeq = keySeq;
+		}
+
+		private final String _columnName;
+		private final int _keySeq;
+
+	}
 
 }

@@ -830,6 +830,7 @@ definition {
 	macro deleteObjectViaAPI {
 		JSONObject.deleteObject(
 			objectName = ${objectName},
+			token = ${token},
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword});
 	}
@@ -1102,6 +1103,16 @@ definition {
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword},
 			value = ${value});
+	}
+
+	macro getObjectSortedEntry {
+		var entrySort = JSONObject.getObjectSortedEntry(
+			objectName = ${objectName},
+			sortString = ${sortString});
+
+		var entrySortValue = JSONUtil.getWithJSONPath(${entrySort}, "$..items..${sortString}");
+
+		return ${entrySortValue};
 	}
 
 	macro goToActionDetails {

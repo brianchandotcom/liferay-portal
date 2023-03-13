@@ -35,7 +35,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
@@ -110,6 +112,46 @@ public class LangSanitizer {
 		}
 	}
 
+	private String _getMessage(String sentence1, String sentence2) {
+		String[] words1 = sentence1.split("\\s+");
+		String[] words2 = sentence2.split("\\s+");
+
+		List<String> differentWords = new ArrayList<>();
+
+		for (String word : words1) {
+			List<String> wordList = Arrays.asList(words2);
+
+			if (!wordList.contains(word)) {
+				differentWords.add(word);
+			}
+		}
+
+		Set<String> escapedCharacters = EscapeUtil.getEscapedCharacters();
+
+		for (String character : escapedCharacters) {
+			String unexpectedChar = character.substring(
+				0, character.length() - 1);
+
+			for (String word : differentWords) {
+				if (word.contains(unexpectedChar) &&
+					!word.contains(character)) {
+
+					return "A ';' is expected after " + unexpectedChar;
+				}
+			}
+		}
+
+		for (String word : words2) {
+			List<String> wordList = Arrays.asList(words1);
+
+			if (!wordList.contains(word)) {
+				differentWords.add(word);
+			}
+		}
+
+		return String.join(", ", differentWords);
+	}
+
 	private List<File> _getPropertiesFiles(String baseDirName)
 		throws Exception {
 
@@ -174,16 +216,18 @@ public class LangSanitizer {
 		}
 		catch (ScanException scanException) {
 			return new SanitizedMessage(
-				file.getAbsolutePath(), key, originalValue,
-				EscapeUtil.escapeTag(originalValue));
+				file.getAbsolutePath(), key, scanException.getMessage(),
+				originalValue, EscapeUtil.escapeTag(originalValue));
 		}
 
 		if (!sanitizedValue.equals(
 				EscapeUtil.formatTag(EscapeUtil.unescape(originalValue)))) {
 
 			return new SanitizedMessage(
-				file.getAbsolutePath(), key, originalValue,
-				EscapeUtil.unescapeTag(sanitizedValue));
+				file.getAbsolutePath(), key,
+				_getMessage(
+					originalValue, EscapeUtil.unescapeTag(sanitizedValue)),
+				originalValue, EscapeUtil.unescapeTag(sanitizedValue));
 		}
 
 		return null;
@@ -229,11 +273,12 @@ public class LangSanitizer {
 		implements Comparable<SanitizedMessage> {
 
 		public SanitizedMessage(
-			String fileName, String languageKey, String originalContent,
-			String santizedContent) {
+			String fileName, String languageKey, String message,
+			String originalContent, String santizedContent) {
 
 			_fileName = fileName;
 			_languageKey = languageKey;
+			_message = message;
 			_originalContent = originalContent;
 			_santizedContent = santizedContent;
 		}
@@ -262,7 +307,7 @@ public class LangSanitizer {
 
 		@Override
 		public String toString() {
-			StringBundler sb = new StringBundler(11);
+			StringBundler sb = new StringBundler(14);
 
 			sb.append("File: ");
 			sb.append(_fileName);
@@ -276,11 +321,18 @@ public class LangSanitizer {
 			sb.append("\tSanitized Content: ");
 			sb.append(_santizedContent);
 
+			if (Objects.nonNull(_message)) {
+				sb.append(System.lineSeparator());
+				sb.append("\tMessage: ");
+				sb.append(_message);
+			}
+
 			return sb.toString();
 		}
 
 		private final String _fileName;
 		private final String _languageKey;
+		private final String _message;
 		private final String _originalContent;
 		private final String _santizedContent;
 

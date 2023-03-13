@@ -3,7 +3,9 @@ definition {
 	macro _curlTaxonomyKeywords {
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(assetLibraryId)) {
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
 			var api = "asset-libraries/${assetLibraryId}/keywords";
 		}
 		else if (isSet(keywordId)) {
@@ -31,7 +33,11 @@ definition {
 	macro _curlTaxonomyVocabulary {
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(assetLibraryId)) {
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(
+				depotName = ${depotName},
+				noSelenium = "true");
+
 			var api = "asset-libraries/${assetLibraryId}/taxonomy-vocabularies";
 		}
 		else {
@@ -95,7 +101,11 @@ definition {
 			else {
 				var method = "POST";
 
-				if (isSet(assetLibraryId)) {
+				if (isSet(depotName)) {
+					var assetLibraryId = JSONGroupAPI._getDepotIdByName(
+						depotName = ${depotName},
+						noSelenium = "true");
+
 					var href = "${portalURL}/o/headless-admin-taxonomy/v1.0/asset-libraries/${assetLibraryId}/taxonomy-vocabularies/batch";
 				}
 				else {
@@ -119,7 +129,7 @@ definition {
 		Variables.assertDefined(parameterList = ${expectedTotalCount});
 
 		var response = TaxonomyVocabularyAPI.filterTaxonomyVocabulary(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			filterValue = ${filterValue});
 
 		var actualTotalCount = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
@@ -140,9 +150,9 @@ definition {
 	}
 
 	macro createAssetLibraryWithKeyWords {
-		Variables.assertDefined(parameterList = "${assetLibraryId},${name}");
+		Variables.assertDefined(parameterList = "${depotName},${name}");
 
-		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(assetLibraryId = ${assetLibraryId});
+		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(depotName = ${depotName});
 		var body = '''-d {"name": "${name}"}''';
 
 		var curl = StringUtil.add(${curl}, ${body}, " ");
@@ -160,7 +170,7 @@ definition {
 		}
 
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			groupName = ${groupName});
 		var body = '''-d {
 				"name": "${name}",
@@ -178,7 +188,7 @@ definition {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode},
 			groupName = ${groupName});
 
@@ -189,7 +199,7 @@ definition {
 		Variables.assertDefined(parameterList = ${filterValue});
 
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			filterValue = ${filterValue},
 			groupName = ${groupName});
 
@@ -200,7 +210,7 @@ definition {
 
 	macro getAssetLibraryKeywordsWithDifferentParameters {
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			keywordId = ${keywordId},
 			parameter = ${parameter},
 			parameterValue = ${parameterValue});
@@ -222,7 +232,7 @@ definition {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode},
 			groupName = ${groupName});
 
@@ -233,7 +243,7 @@ definition {
 
 	macro getTaxonomyVocabularyWithDifferentParameters {
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			groupName = ${groupName},
 			parameter = ${parameter},
 			parameterValue = ${parameterValue});
@@ -253,7 +263,7 @@ definition {
 		}
 
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode},
 			groupName = ${groupName});
 

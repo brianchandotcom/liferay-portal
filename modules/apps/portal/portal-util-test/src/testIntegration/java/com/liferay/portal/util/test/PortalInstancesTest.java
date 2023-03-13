@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -42,10 +43,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.Locale;
-
-import javax.servlet.http.HttpSession;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -138,14 +135,17 @@ public class PortalInstancesTest {
 	}
 
 	@Test
-	public void testGetI18nLanguageId() throws Exception {
+	public void testGetVirtualHostLanguageId() throws Exception {
 		Group group = GroupTestUtil.addGroupToCompany(_company.getCompanyId());
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
 
-		typeSettingsUnicodeProperties.setProperty(PropsKeys.LOCALES, "es_ES");
-		typeSettingsUnicodeProperties.setProperty("languageId", "es_ES");
+		String languageId = LanguageUtil.getLanguageId(LocaleUtil.SPAIN);
+
+		typeSettingsUnicodeProperties.setProperty(
+			PropsKeys.LOCALES, languageId);
+		typeSettingsUnicodeProperties.setProperty("languageId", languageId);
 
 		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
@@ -160,21 +160,14 @@ public class PortalInstancesTest {
 		_updateLayoutSetVirtualHostname(
 			StringPool.BLANK, group.getPublicLayoutSet(), hostname);
 
-		_testGetI18NLanguageId(null, hostname, null);
-		_testGetI18NLanguageId(null, hostname, LanguageUtil.getLocale("vi_VN"));
+		_testGetVirtualHostLanguageId(null, hostname);
 
 		// Spanish virtual host language
 
 		_updateLayoutSetVirtualHostname(
-			"es_ES", group.getPublicLayoutSet(), hostname);
+			languageId, group.getPublicLayoutSet(), hostname);
 
-		_testGetI18NLanguageId("es_ES", hostname, null);
-
-		// Company available locale is still usable
-
-		_testGetI18NLanguageId(
-			LanguageUtil.getLanguageId(_company.getLocale()), hostname,
-			_company.getLocale());
+		_testGetVirtualHostLanguageId(languageId, hostname);
 	}
 
 	private void _testGetCompanyId(
@@ -197,8 +190,8 @@ public class PortalInstancesTest {
 				WebKeys.VIRTUAL_HOST_LAYOUT_SET));
 	}
 
-	private void _testGetI18NLanguageId(
-		String expectedLanguageId, String hostname, Locale locale) {
+	private void _testGetVirtualHostLanguageId(
+		String expectedLanguageId, String hostname) {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -206,20 +199,13 @@ public class PortalInstancesTest {
 		mockHttpServletRequest.addHeader("Host", hostname);
 		mockHttpServletRequest.setServerName(hostname);
 
-		if (locale != null) {
-			HttpSession httpSession = mockHttpServletRequest.getSession(true);
-
-			httpSession.setAttribute(WebKeys.LOCALE, locale);
-
-			mockHttpServletRequest.setSession(httpSession);
-		}
-
 		Assert.assertEquals(
 			_company.getCompanyId(),
 			PortalInstances.getCompanyId(mockHttpServletRequest));
 		Assert.assertEquals(
 			expectedLanguageId,
-			mockHttpServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
+			mockHttpServletRequest.getAttribute(
+				WebKeys.VIRTUAL_HOST_LANGUAGE_ID));
 	}
 
 	private void _updateLayoutSetVirtualHostname(

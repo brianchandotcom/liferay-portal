@@ -14,9 +14,7 @@ definition {
 		task ("Given a content structure is created in an asset library") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
 
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
-			WebContentNavigator.openWebContentStructuresAdminInAssetLibrary(depotId = ${assetLibraryId});
+			WebContentNavigator.openWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 			WebContentStructures.addCP(structureName = "content-structure");
 
@@ -29,7 +27,7 @@ definition {
 
 		task ("And Given a structured content folder is created with POST request in the asset library") {
 			HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				name = "Test Folder",
 				setUpGlobalFolderId = "true");
 		}
@@ -117,10 +115,8 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given another structured content folder is created with POST request in the asset library") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				name = "Second Folder");
 
 			var idOfSecondStructuredContentFolder = JSONPathUtil.getIdValue(response = ${response});
@@ -140,9 +136,9 @@ definition {
 		}
 
 		task ("And Given the structured content is moved into another folder through UI") {
-			Navigator.openWithAppendToBaseURL(
-				baseURL = ${baseURL},
-				urlAppend = "group/asset-library-${assetLibraryId}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${staticStructuredContentFolderId}");
+			WebContentNavigator.openFolderInWebContentAdmin(
+				depotName = "Test Depot Name",
+				folderId = ${staticStructuredContentFolderId});
 
 			WebContent.moveToFolderCP(
 				folderName = "Second Folder",

@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author Carolina Barbosa
@@ -63,18 +61,19 @@ public class DDMFormInstanceSubmissionLimitStatusUtil {
 				getFormInstanceRecordVersions(
 					user.getUserId(), ddmFormInstance.getFormInstanceId());
 
-		Stream<DDMFormInstanceRecordVersion> stream =
-			ddmFormInstanceRecordVersions.stream();
+		for (DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion :
+				ddmFormInstanceRecordVersions) {
 
-		Optional<DDMFormInstanceRecordVersion> optional = stream.filter(
-			ddmFormInstanceRecordVersion ->
-				(ddmFormInstanceRecordVersion.getStatus() !=
+			if ((ddmFormInstanceRecordVersion.getStatus() !=
 					WorkflowConstants.STATUS_DRAFT) &&
 				(ddmFormInstanceRecordVersion.getStatus() !=
-					WorkflowConstants.STATUS_PENDING)
-		).findFirst();
+					WorkflowConstants.STATUS_PENDING)) {
 
-		return optional.isPresent();
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

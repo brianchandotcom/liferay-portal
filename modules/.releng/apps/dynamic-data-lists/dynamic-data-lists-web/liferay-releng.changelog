@@ -362,3 +362,8 @@ bbd94af418935fb2a87319c5e23d93ffd2fc6814^..4dced5e37b08cea14e214925caea279335ad6
 # Bundle Version 6.0.63
 #
 e80f37c694c7734ca5c7c8cd8da91b3814f5f4c4^..3d71a1e0d4cf0d0f79f16c1a4a86cc2f4be4bfbc=LPS-171957 LPS-175504 LPS-175926
+
+#
+# Bundle Version 6.0.64
+#
+3d71a1e0d4cf0d0f79f16c1a4a86cc2f4be4bfbc^..b73c1e233fbc6f2014ce5ebe8be80ad78519c1a9=LPS-174314

@@ -14,10 +14,21 @@
 
 package com.liferay.portal.vulcan.yaml.openapi;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Map;
+import java.util.function.Function;
+
 /**
  * @author Peter Shin
  */
 public class PathItem {
+
+	public Operation get(Method method) {
+		Function<PathItem, Operation> function = _functions.get(method);
+
+		return function.apply(this);
+	}
 
 	public Delete getDelete() {
 		return _delete;
@@ -82,6 +93,23 @@ public class PathItem {
 	public void setPut(Put put) {
 		_put = put;
 	}
+
+	private static final Map<Method, Function<PathItem, Operation>> _functions =
+		HashMapBuilder.<Method, Function<PathItem, Operation>>put(
+			Method.DELETE, PathItem::getDelete
+		).put(
+			Method.GET, PathItem::getGet
+		).put(
+			Method.HEAD, PathItem::getHead
+		).put(
+			Method.OPTIONS, PathItem::getOptions
+		).put(
+			Method.PATCH, PathItem::getPatch
+		).put(
+			Method.POST, PathItem::getPost
+		).put(
+			Method.PUT, PathItem::getPut
+		).build();
 
 	private Delete _delete;
 	private String _description;

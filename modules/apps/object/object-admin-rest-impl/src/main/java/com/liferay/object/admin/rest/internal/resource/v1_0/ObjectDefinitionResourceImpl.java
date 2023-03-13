@@ -67,10 +67,13 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -243,6 +246,32 @@ public class ObjectDefinitionResourceImpl
 		_addListTypeDefinition(objectDefinition);
 
 		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition;
+
+		if (GetterUtil.getBoolean(objectDefinition.getSystem()) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.addSystemObjectDefinition(
+					contextUser.getUserId(),
+					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
+					LocalizedMapUtil.getLocalizedMap(
+						objectDefinition.getLabel()),
+					objectDefinition.getName(),
+					objectDefinition.getPanelAppOrder(),
+					objectDefinition.getPanelCategoryKey(),
+					LocalizedMapUtil.getLocalizedMap(
+						objectDefinition.getPluralLabel()),
+					objectDefinition.getScope(),
+					transformToList(
+						objectDefinition.getObjectFields(),
+						objectField -> ObjectFieldUtil.toObjectField(
+							_listTypeDefinitionLocalService, objectField,
+							_objectFieldLocalService,
+							_objectFieldSettingLocalService,
+							_objectFilterLocalService)));
+		}
+		else {
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
@@ -256,12 +285,18 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getScope(),
 					objectDefinition.getStorageType(),
 					transformToList(
-						objectDefinition.getObjectFields(),
+						ArrayUtil.filter(
+							objectDefinition.getObjectFields(),
+							objectField -> !StringUtil.equals(
+								objectField.getBusinessTypeAsString(),
+								ObjectFieldConstants.
+									BUSINESS_TYPE_AGGREGATION)),
 						objectField -> ObjectFieldUtil.toObjectField(
 							_listTypeDefinitionLocalService, objectField,
 							_objectFieldLocalService,
 							_objectFieldSettingLocalService,
 							_objectFilterLocalService)));
+		}
 
 		if (!Validator.isBlank(objectDefinition.getExternalReferenceCode())) {
 			serviceBuilderObjectDefinition =
@@ -290,6 +325,39 @@ public class ObjectDefinitionResourceImpl
 			objectDefinition.getObjectValidationRules(),
 			objectDefinition.getObjectViews());
 
+		for (com.liferay.object.model.ObjectField
+				aggregationServiceBuilderObjectField :
+					transformToList(
+						ArrayUtil.filter(
+							objectDefinition.getObjectFields(),
+							objectField -> StringUtil.equals(
+								objectField.getBusinessTypeAsString(),
+								ObjectFieldConstants.
+									BUSINESS_TYPE_AGGREGATION)),
+						objectField -> ObjectFieldUtil.toObjectField(
+							_listTypeDefinitionLocalService, objectField,
+							_objectFieldLocalService,
+							_objectFieldSettingLocalService,
+							_objectFilterLocalService))) {
+
+			_objectFieldLocalService.addCustomObjectField(
+				aggregationServiceBuilderObjectField.getExternalReferenceCode(),
+				GuestOrUserUtil.getUserId(),
+				aggregationServiceBuilderObjectField.getListTypeDefinitionId(),
+				serviceBuilderObjectDefinition.getObjectDefinitionId(),
+				aggregationServiceBuilderObjectField.getBusinessType(),
+				aggregationServiceBuilderObjectField.getDBType(),
+				aggregationServiceBuilderObjectField.getDefaultValue(),
+				aggregationServiceBuilderObjectField.isIndexed(),
+				aggregationServiceBuilderObjectField.isIndexedAsKeyword(),
+				aggregationServiceBuilderObjectField.getIndexedLanguageId(),
+				aggregationServiceBuilderObjectField.getLabelMap(),
+				aggregationServiceBuilderObjectField.getName(),
+				aggregationServiceBuilderObjectField.isRequired(),
+				aggregationServiceBuilderObjectField.isState(),
+				aggregationServiceBuilderObjectField.getObjectFieldSettings());
+		}
+
 		return _toObjectDefinition(serviceBuilderObjectDefinition);
 	}
 
@@ -297,8 +365,21 @@ public class ObjectDefinitionResourceImpl
 	public void postObjectDefinitionPublish(Long objectDefinitionId)
 		throws Exception {
 
-		_objectDefinitionService.publishCustomObjectDefinition(
-			objectDefinitionId);
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.getObjectDefinition(
+					objectDefinitionId);
+
+		if (GetterUtil.getBoolean(serviceBuilderObjectDefinition.getSystem()) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+
+			_objectDefinitionService.publishSystemObjectDefinition(
+				objectDefinitionId);
+		}
+		else {
+			_objectDefinitionService.publishCustomObjectDefinition(
+				objectDefinitionId);
+		}
 	}
 
 	@Override

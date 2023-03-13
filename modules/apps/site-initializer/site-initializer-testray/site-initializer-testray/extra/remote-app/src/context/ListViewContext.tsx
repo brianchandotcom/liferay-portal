@@ -20,7 +20,7 @@ import {CONSENT_TYPE} from '~/util/enum';
 import useStorage from '../hooks/useStorage';
 import {ActionMap, SortDirection, SortOption} from '../types';
 
-const testrayStorage = TestrayStorage.getInstance().getStorage('temporary');
+const testrayStorage = TestrayStorage.getInstance().getStorage('persisted');
 
 export type Sort = {
 	direction: SortDirection;
@@ -40,11 +40,14 @@ type ListViewFilter = {
 	};
 };
 
+type ListViewColumns = {
+	[key: string]: boolean;
+};
+
 export type InitialState = {
 	checkAll: boolean;
-	columns: {
-		[key: string]: boolean;
-	};
+	columns: ListViewColumns;
+	columnsFixed: string[];
 	filters: ListViewFilter;
 	id: string;
 	keywords: string;
@@ -58,6 +61,7 @@ export type InitialState = {
 const initialState: InitialState = {
 	checkAll: false,
 	columns: {},
+	columnsFixed: [],
 	filters: {
 		entries: [],
 		filter: {},
@@ -118,8 +122,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 				selectedRows = state.checkAll ? [] : rowIds;
 
 				state.checkAll = !state.checkAll;
-			}
-			else {
+			} else {
 				const rowAlreadyInserted = state.selectedRows.includes(
 					rowIds as number
 				);
@@ -150,9 +153,19 @@ const reducer = (state: InitialState, action: AppActions) => {
 			};
 
 		case ListViewTypes.SET_COLUMNS:
+			const columns = action.payload.columns;
+			const storageColumnsName =
+				STORAGE_KEYS.LIST_VIEW_COLUMNS + state.id;
+
+			testrayStorage.setItem(
+				storageColumnsName,
+				JSON.stringify(columns),
+				CONSENT_TYPE.NECESSARY
+			);
+
 			return {
 				...state,
-				columns: action.payload.columns,
+				columns,
 			};
 
 		case ListViewTypes.SET_PAGE:
@@ -175,7 +188,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 
 			const pin = !state.pin;
 
-			const storageName = STORAGE_KEYS.LIST_VIEW + state.id;
+			const storageName = STORAGE_KEYS.LIST_VIEW_PIN + state.id;
 
 			if (pin) {
 				testrayStorage.setItem(
@@ -183,8 +196,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 					JSON.stringify(state.filters),
 					CONSENT_TYPE.NECESSARY
 				);
-			}
-			else {
+			} else {
 				testrayStorage.removeItem(storageName);
 			}
 
@@ -242,8 +254,12 @@ export type ListViewContextProviderProps = Partial<InitialState>;
 const ListViewContextProvider: React.FC<
 	ListViewContextProviderProps & {children: ReactNode; id: string}
 > = ({children, id, ...initialStateProps}) => {
+	const [columnsStorage] = useStorage<ListViewColumns>(
+		(STORAGE_KEYS.LIST_VIEW_COLUMNS + id) as STORAGE_KEYS,
+		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
+	);
 	const [filterPinnedStorage] = useStorage<ListViewFilter>(
-		(STORAGE_KEYS.LIST_VIEW + id) as STORAGE_KEYS,
+		(STORAGE_KEYS.LIST_VIEW_PIN + id) as STORAGE_KEYS,
 		{consentType: CONSENT_TYPE.NECESSARY, storageType: 'persisted'}
 	);
 
@@ -254,6 +270,7 @@ const ListViewContextProvider: React.FC<
 			filters: filterPinnedStorage,
 			pin: !!filterPinnedStorage.entries.length,
 		}),
+		...(columnsStorage && {columns: columnsStorage}),
 		id,
 	});
 

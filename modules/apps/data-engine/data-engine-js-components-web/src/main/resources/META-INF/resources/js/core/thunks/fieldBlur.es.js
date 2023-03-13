@@ -18,7 +18,9 @@ export default function fieldBlur({
 	activePage,
 	focusDuration,
 	formId,
+	formPageTitle,
 	properties,
+	title,
 }) {
 	return (dispatch) => {
 		const {fieldInstance} = properties;
@@ -30,7 +32,9 @@ export default function fieldBlur({
 			focusDuration:
 				focusDuration.end - (focusDuration.start ?? focusDuration.end),
 			formId,
+			formPageTitle,
 			page: activePage,
+			title,
 		});
 	};
 }

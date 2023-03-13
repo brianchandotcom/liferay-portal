@@ -55,11 +55,10 @@ definition {
 		}
 
 		task ("And Given a document is uploaded with post request in asset library") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var documentId = DocumentAPI.getIdOfCreatedDocument(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				filePath = ${filePath});
 		}
@@ -76,17 +75,13 @@ definition {
 		}
 
 		task ("When with get request and siteId to retrieve the navigation menu") {
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
-
-			var response = NavigationMenuAPI.getNavigationMenu(siteId = ${siteId});
+			var response = NavigationMenuAPI.getNavigationMenu(groupName = "Guest");
 		}
 
 		task ("Then I can see values of useCustomName is false, contentURL equals to document endpoint and type equals to document") {
-			var portalURL = JSONCompany.getPortalURL();
-
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "document",
-				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
+				expectedURL = "o/headless-delivery/v1.0/documents/${documentId}",
 				expectedUseCustomName = "false",
 				responseFromSite = "true",
 				responseToParse = ${response});
@@ -106,11 +101,10 @@ definition {
 		}
 
 		task ("And Given a document is uploaded with post request in asset library") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var documentId = DocumentAPI.getIdOfCreatedDocument(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				filePath = ${filePath});
 		}
@@ -139,11 +133,9 @@ definition {
 		}
 
 		task ("Then I can see values of useCustomName equals to true, contentURL equals to document endpoint and type equals to document") {
-			var portalURL = JSONCompany.getPortalURL();
-
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "document",
-				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
+				expectedURL = "o/headless-delivery/v1.0/documents/${documentId}",
 				expectedUseCustomName = "true",
 				responseToParse = ${response});
 		}
@@ -162,9 +154,7 @@ definition {
 		}
 
 		task ("And Given a content structure created in asset library") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
-			WebContentNavigator.openWebContentStructuresAdminInAssetLibrary(depotId = ${assetLibraryId});
+			WebContentNavigator.openWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 			WebContentStructures.addCP(structureName = "content-structure");
 
@@ -176,13 +166,12 @@ definition {
 		}
 
 		task ("And Given a web content article is created in asset Library") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
 				ddmStructureId = ${ddmStructureId},
+				depotName = "Test Depot Name",
 				label = "Text",
 				name = "Text",
 				title = "Web Content Title");
@@ -204,18 +193,15 @@ definition {
 		}
 
 		task ("When with get request and siteId to retrieve the navigation menu") {
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
-
-			var response = NavigationMenuAPI.getNavigationMenu(siteId = ${siteId});
+			var response = NavigationMenuAPI.getNavigationMenu(groupName = "Guest");
 		}
 
 		task ("Then I can see values of useCustomName equals to true, contentURL equals to webcontent endpoint and type equals to structuredContent") {
-			var portalURL = JSONCompany.getPortalURL();
 			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = ${responseFromCreate});
 
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "structuredContent",
-				expectedURL = "${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
+				expectedURL = "o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
 				expectedUseCustomName = "true",
 				responseFromSite = "true",
 				responseToParse = ${response});
@@ -235,9 +221,7 @@ definition {
 		}
 
 		task ("And Given a content structure created in asset library") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
-			WebContentNavigator.openWebContentStructuresAdminInAssetLibrary(depotId = ${assetLibraryId});
+			WebContentNavigator.openWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 			WebContentStructures.addCP(structureName = "content-structure");
 
@@ -249,13 +233,12 @@ definition {
 		}
 
 		task ("And Given a web content article is created in asset Library") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
 				ddmStructureId = ${ddmStructureId},
+				depotName = "Test Depot Name",
 				label = "Text",
 				name = "Text",
 				title = "Web Content Title");
@@ -281,12 +264,11 @@ definition {
 		}
 
 		task ("Then I can see values of useCustomName is false, contentURL equals to webcontent endpoint and type equals to structuredContent") {
-			var portalURL = JSONCompany.getPortalURL();
 			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = ${responseFromCreate});
 
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "structuredContent",
-				expectedURL = "${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
+				expectedURL = "o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
 				expectedUseCustomName = "false",
 				responseToParse = ${response});
 		}
@@ -321,11 +303,9 @@ definition {
 		}
 
 		task ("Then I can see values of useCustomName is false, contentURL equals to blog endpoint and type equals to blogPosting") {
-			var portalURL = JSONCompany.getPortalURL();
-
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "blogPosting",
-				expectedURL = "${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}",
+				expectedURL = "o/headless-delivery/v1.0/blog-postings/${blogPostingId}",
 				expectedUseCustomName = "false",
 				responseToParse = ${response});
 		}
@@ -356,17 +336,13 @@ definition {
 		}
 
 		task ("When with get request to retrieve the navigation menu with siteId") {
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
-
-			var response = NavigationMenuAPI.getNavigationMenu(siteId = ${siteId});
+			var response = NavigationMenuAPI.getNavigationMenu(groupName = "Guest");
 		}
 
 		task ("Then I can see values of useCustomName is true, contentURL equals to blog endpoint and type equals to blogPosting") {
-			var portalURL = JSONCompany.getPortalURL();
-
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "blogPosting",
-				expectedURL = "${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}",
+				expectedURL = "o/headless-delivery/v1.0/blog-postings/${blogPostingId}",
 				expectedUseCustomName = "true",
 				responseFromSite = "true",
 				responseToParse = ${response});
@@ -396,20 +372,17 @@ definition {
 		}
 
 		task ("When with get request and siteId to retrieve the navigation menu") {
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
-
-			var response = NavigationMenuAPI.getNavigationMenu(siteId = ${siteId});
+			var response = NavigationMenuAPI.getNavigationMenu(groupName = "Guest");
 		}
 
 		task ("Then I can see values of useCustomName is false, contentURL equals to document endpoint and type equals to document") {
-			var portalURL = JSONCompany.getPortalURL();
 			var documentId = JSONDocument.getFileEntryId(
 				dmDocumentTitle = "Document_1.txt",
 				groupName = "Guest");
 
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "document",
-				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
+				expectedURL = "o/headless-delivery/v1.0/documents/${documentId}",
 				expectedUseCustomName = "false",
 				responseFromSite = "true",
 				responseToParse = ${response});
@@ -451,14 +424,13 @@ definition {
 		}
 
 		task ("Then I can see values of useCustomName equals to true, contentURL equals to document endpoint and type equals to document") {
-			var portalURL = JSONCompany.getPortalURL();
 			var documentId = JSONDocument.getFileEntryId(
 				dmDocumentTitle = "Document_1.txt",
 				groupName = "Guest");
 
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "document",
-				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
+				expectedURL = "o/headless-delivery/v1.0/documents/${documentId}",
 				expectedUseCustomName = "true",
 				responseToParse = ${response});
 		}
@@ -490,18 +462,15 @@ definition {
 		}
 
 		task ("When with get request and siteId to retrieve the navigation menu") {
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
-
-			var response = NavigationMenuAPI.getNavigationMenu(siteId = ${siteId});
+			var response = NavigationMenuAPI.getNavigationMenu(groupName = "Guest");
 		}
 
 		task ("Then I can see values of useCustomName equals to true, contentURL equals to webcontent endpoint and type equals to structuredContent") {
-			var portalURL = JSONCompany.getPortalURL();
 			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(title = "Web Content Title");
 
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "structuredContent",
-				expectedURL = "${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
+				expectedURL = "o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
 				expectedUseCustomName = "true",
 				responseFromSite = "true",
 				responseToParse = ${response});
@@ -538,12 +507,11 @@ definition {
 		}
 
 		task ("Then I can see values of useCustomName is false, contentURL equals to webcontent endpoint and type equals to structuredContent") {
-			var portalURL = JSONCompany.getPortalURL();
 			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(title = "Web Content Title");
 
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "structuredContent",
-				expectedURL = "${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
+				expectedURL = "o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
 				expectedUseCustomName = "false",
 				responseToParse = ${response});
 		}

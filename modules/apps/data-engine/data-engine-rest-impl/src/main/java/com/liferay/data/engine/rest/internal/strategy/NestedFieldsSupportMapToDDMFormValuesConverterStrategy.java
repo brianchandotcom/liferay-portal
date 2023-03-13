@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Rafael Praxedes
@@ -76,13 +74,17 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 		for (Map.Entry<String, DDMFormField> entry :
 				ddmFormFieldsMap.entrySet()) {
 
-			Set<String> keys = values.keySet();
+			boolean match = false;
 
-			Stream<String> stream = keys.stream();
+			for (String key : values.keySet()) {
+				if (StringUtil.startsWith(key, entry.getKey())) {
+					match = true;
 
-			if (stream.anyMatch(
-					key -> StringUtil.startsWith(key, entry.getKey()))) {
+					break;
+				}
+			}
 
+			if (match) {
 				continue;
 			}
 

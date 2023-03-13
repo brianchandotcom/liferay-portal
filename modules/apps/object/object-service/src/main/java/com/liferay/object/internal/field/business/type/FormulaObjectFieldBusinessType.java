@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.HashMap;
@@ -127,7 +128,7 @@ public class FormulaObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 		String script = objectFieldSettingsValues.get("script");
 
-		if (script == null) {
+		if (Validator.isNull(script)) {
 			return;
 		}
 

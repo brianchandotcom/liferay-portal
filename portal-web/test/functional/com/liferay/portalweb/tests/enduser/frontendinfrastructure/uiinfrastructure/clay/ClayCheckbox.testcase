@@ -196,8 +196,7 @@ definition {
 		// Temporarily remove sikuli assertion until fix in LRQA-65984
 
 		//SikuliAssertElementPresent(locator1 = "ClaySamplePortlet#CHECKBOX_UNCHECKED");
-
-		SikuliAssertElementPresent(locator1 = "ClaySamplePortlet#CHECKBOX_INDETERMINATE_PNG");
+		//SikuliAssertElementPresent(locator1 = "ClaySamplePortlet#CHECKBOX_INDETERMINATE_PNG");
 
 		takeScreenshot();
 	}

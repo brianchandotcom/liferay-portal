@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -50,8 +51,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,8 +106,8 @@ public class DummyFolderStagedModelRepository
 
 		_dummyFolders.removeIf(
 			dummyFolder ->
-				Objects.equals(dummyFolder.getUuid(), uuid) &&
-				(dummyFolder.getGroupId() == groupId));
+				Objects.equals(uuid, dummyFolder.getUuid()) &&
+				(groupId == dummyFolder.getGroupId()));
 	}
 
 	@Override
@@ -127,46 +126,31 @@ public class DummyFolderStagedModelRepository
 	public DummyFolder fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
+		for (DummyFolder dummyFolder : _dummyFolders) {
+			if (Objects.equals(uuid, dummyFolder.getUuid()) &&
+				(groupId == dummyFolder.getGroupId())) {
 
-		List<DummyFolder> dummyFolders = dummyFoldersStream.filter(
-			dummyFolder ->
-				Objects.equals(dummyFolder.getUuid(), uuid) &&
-				(dummyFolder.getGroupId() == groupId)
-		).collect(
-			Collectors.toList()
-		);
-
-		if (dummyFolders.isEmpty()) {
-			return null;
+				return dummyFolder;
+			}
 		}
 
-		return dummyFolders.get(0);
+		return null;
 	}
 
 	@Override
 	public List<DummyFolder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
-
-		return dummyFoldersStream.filter(
+		return ListUtil.filter(
+			_dummyFolders,
 			dummyFolder ->
-				Objects.equals(dummyFolder.getUuid(), uuid) &&
-				(dummyFolder.getCompanyId() == companyId)
-		).collect(
-			Collectors.toList()
-		);
+				Objects.equals(uuid, dummyFolder.getUuid()) &&
+				(companyId == dummyFolder.getCompanyId()));
 	}
 
 	public List<DummyFolder> getDummyFolders(long groupId) {
-		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
-
-		return dummyFoldersStream.filter(
-			d -> d.getGroupId() == groupId
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.filter(
+			_dummyFolders, dummyFolder -> groupId == dummyFolder.getGroupId());
 	}
 
 	@Override
@@ -319,19 +303,13 @@ public class DummyFolderStagedModelRepository
 	}
 
 	public DummyFolder getFolder(long folderId) {
-		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
-
-		List<DummyFolder> dummyFolders = dummyFoldersStream.filter(
-			f -> f.getId() == folderId
-		).collect(
-			Collectors.toList()
-		);
-
-		if (dummyFolders.isEmpty()) {
-			throw new RuntimeException(new NoSuchModelException());
+		for (DummyFolder dummyFolder : _dummyFolders) {
+			if (folderId == dummyFolder.getId()) {
+				return dummyFolder;
+			}
 		}
 
-		return dummyFolders.get(0);
+		throw new RuntimeException(new NoSuchModelException());
 	}
 
 	@Override
@@ -367,8 +345,6 @@ public class DummyFolderStagedModelRepository
 	public class DummyFolderBaseLocalServiceImpl extends BaseLocalServiceImpl {
 
 		public List<DummyFolder> dynamicQuery(DynamicQuery dynamicQuery) {
-			List<DummyFolder> result = _dummyFolders;
-
 			try {
 				Object detachedCriteria = ReflectionTestUtil.getFieldValue(
 					dynamicQuery, "_detachedCriteria");
@@ -379,21 +355,23 @@ public class DummyFolderStagedModelRepository
 				Iterator<?> iterator = ReflectionTestUtil.invoke(
 					criteriaImpl, "iterateExpressionEntries", new Class<?>[0]);
 
-				while (iterator.hasNext()) {
-					Stream<DummyFolder> dummyFoldersStream = result.stream();
-
-					result = dummyFoldersStream.filter(
-						getPredicate(String.valueOf(iterator.next()))
-					).collect(
-						Collectors.toList()
-					);
+				if (!iterator.hasNext()) {
+					return _dummyFolders;
 				}
+
+				Predicate<DummyFolder> predicate = getPredicate(
+					String.valueOf(iterator.next()));
+
+				while (iterator.hasNext()) {
+					predicate = predicate.and(
+						getPredicate(String.valueOf(iterator.next())));
+				}
+
+				return ListUtil.filter(_dummyFolders, predicate);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
 			}
-
-			return result;
 		}
 
 		public long dynamicQueryCount(
@@ -402,24 +380,24 @@ public class DummyFolderStagedModelRepository
 			return _dummyFolders.size();
 		}
 
-		public Predicate<? super DummyFolder> getPredicate(String expression) {
+		public Predicate<DummyFolder> getPredicate(String expression) {
 			if (expression.startsWith("groupId=")) {
-				return d ->
-					d.getGroupId() == Long.valueOf(
+				return dummyFolder ->
+					dummyFolder.getGroupId() == Long.valueOf(
 						expression.substring("groupId=".length()));
 			}
 
 			if (expression.contains("id>-1")) {
-				return d -> d.getId() > -1;
+				return dummyFolder -> dummyFolder.getId() > -1;
 			}
 
 			if (expression.startsWith("companyId=")) {
-				return d ->
-					d.getCompanyId() == Long.valueOf(
+				return dummyFolder ->
+					dummyFolder.getCompanyId() == Long.valueOf(
 						expression.substring("companyId=".length()));
 			}
 
-			return d -> true;
+			return dummyFolder -> true;
 		}
 
 		@Override

@@ -42,7 +42,7 @@ public class ExportImportProcessDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 
-		_portletRequest = (PortletRequest)_httpServletRequest.getAttribute(
+		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 

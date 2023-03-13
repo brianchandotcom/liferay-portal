@@ -14,63 +14,48 @@
 
 package com.liferay.portal.search.similar.results.web.internal.util;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author André de Oliveira
  */
 public class SearchStringUtil {
 
-	public static Optional<String> maybe(String s) {
+	public static String maybe(String s) {
 		s = StringUtil.trim(s);
 
 		if (Validator.isBlank(s)) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.of(s);
+		return s;
 	}
 
-	public static String requireEquals(String expected, String actual) {
+	public static void requireEquals(String expected, String actual) {
 		if (!Objects.equals(expected, actual)) {
 			throw new RuntimeException(actual + " != " + expected);
 		}
-
-		return actual;
 	}
 
-	public static String requireStartsWith(String expected, String actual) {
+	public static void requireStartsWith(String expected, String actual) {
 		if (!StringUtil.startsWith(actual, expected)) {
 			throw new RuntimeException(actual + " /= " + expected);
 		}
-
-		return actual;
-	}
-
-	public static String[] splitAndUnquote(Optional<String> optional) {
-		return optional.map(
-			SearchStringUtil::splitAndUnquote
-		).orElse(
-			new String[0]
-		);
 	}
 
 	public static String[] splitAndUnquote(String s) {
-		return Stream.of(
-			StringUtil.split(s.trim(), CharPool.COMMA)
-		).map(
-			String::trim
-		).map(
-			StringUtil::unquote
-		).toArray(
-			String[]::new
-		);
+		if (Validator.isBlank(s)) {
+			return new String[0];
+		}
+
+		return TransformUtil.transform(
+			StringUtil.split(s, CharPool.COMMA),
+			string -> StringUtil.unquote(string.trim()), String.class);
 	}
 
 }

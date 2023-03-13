@@ -52,7 +52,7 @@ export function GeneralTerms({baseResourceURL}: GeneralTermsProps) {
 			const response = await fetch(
 				createResourceURL(baseResourceURL, {
 					p_p_resource_id:
-						'/notification_templates/notification_template_general_terms',
+						'/notification_templates/get_general_notification_template_terms',
 				}).toString()
 			);
 
@@ -67,7 +67,7 @@ export function GeneralTerms({baseResourceURL}: GeneralTermsProps) {
 	return (
 		<ClayPanel
 			collapsable
-			defaultExpanded={false}
+			defaultExpanded
 			displayTitle={Liferay.Language.get('general-terms')}
 			displayType="secondary"
 			showCollapseIcon={true}
@@ -96,11 +96,11 @@ export function GeneralTerms({baseResourceURL}: GeneralTermsProps) {
 							schema: {
 								fields: [
 									{
-										fieldName: 'name',
-										label: Liferay.Language.get('name'),
+										fieldName: 'termLabel',
+										label: Liferay.Language.get('label'),
 									},
 									{
-										fieldName: 'term',
+										fieldName: 'termName',
 										label: Liferay.Language.get('term'),
 									},
 								],

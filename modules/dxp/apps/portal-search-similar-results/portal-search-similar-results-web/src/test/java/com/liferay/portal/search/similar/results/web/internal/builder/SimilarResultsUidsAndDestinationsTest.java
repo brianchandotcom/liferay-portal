@@ -62,7 +62,6 @@ import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -447,11 +446,9 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 	@Test
 	public void testURLBlank() {
-		Optional<SimilarResultsRoute> optional =
+		Assert.assertNull(
 			_similarResultsContributorsRegistryImpl.detectRoute(
-				StringPool.BLANK);
-
-		Assert.assertFalse(optional.isPresent());
+				StringPool.BLANK));
 	}
 
 	@Test
@@ -686,10 +683,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 	}
 
 	protected SimilarResultsRoute detectRoute(String urlString) {
-		Optional<SimilarResultsRoute> optional =
-			_similarResultsContributorsRegistryImpl.detectRoute(urlString);
-
-		return optional.get();
+		return _similarResultsContributorsRegistryImpl.detectRoute(urlString);
 	}
 
 	protected AssetEntry getAssetEntry(String className, long classPK) {
@@ -1018,9 +1012,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 		similarResultsContributor.resolveCriteria(
 			criteriaBuilderImpl, inputHelper);
 
-		Optional<Criteria> optional = criteriaBuilderImpl.build();
-
-		return optional.get();
+		return criteriaBuilderImpl.build();
 	}
 
 	private String _resolveUID(SimilarResultsRoute similarResultsContributor) {

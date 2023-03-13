@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
@@ -73,6 +74,24 @@ public class ObjectDefinitionServiceImpl
 
 		return objectDefinitionLocalService.addObjectDefinition(
 			externalReferenceCode, getUserId());
+	}
+
+	@Override
+	public ObjectDefinition addSystemObjectDefinition(
+			long userId, boolean enableComments, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			Map<Locale, String> pluralLabelMap, String scope,
+			List<ObjectField> objectFields)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			ObjectActionKeys.ADD_OBJECT_DEFINITION);
+
+		return objectDefinitionLocalService.addSystemObjectDefinition(
+			userId, null, null, enableComments, labelMap, true, name,
+			panelAppOrder, panelCategoryKey, null, null, pluralLabelMap, scope,
+			null, 1, WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
 	@Override
@@ -167,6 +186,19 @@ public class ObjectDefinitionServiceImpl
 			ObjectActionKeys.PUBLISH_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.publishCustomObjectDefinition(
+			getUserId(), objectDefinitionId);
+	}
+
+	@Override
+	public ObjectDefinition publishSystemObjectDefinition(
+			long objectDefinitionId)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			ObjectActionKeys.PUBLISH_OBJECT_DEFINITION);
+
+		return objectDefinitionLocalService.publishSystemObjectDefinition(
 			getUserId(), objectDefinitionId);
 	}
 

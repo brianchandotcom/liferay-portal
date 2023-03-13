@@ -95,7 +95,7 @@ function SelectAssetCategory({
 
 			{selectedItemsCount && multiSelection ? (
 				<ClayLayout.Container
-					className="align-items-center category-tree-count-feedback d-flex justify-content-between px-4"
+					className="align-items-center category-tree-count-feedback d-flex justify-content-between px-3"
 					containerElement="section"
 					fluid
 				>
@@ -122,7 +122,10 @@ function SelectAssetCategory({
 			) : null}
 
 			<form name={`${namespace}selectCategoryFm`}>
-				<ClayLayout.ContainerFluid containerElement="fieldset">
+				<ClayLayout.ContainerFluid
+					className="px-3"
+					containerElement="fieldset"
+				>
 					<div
 						className="category-tree mt-3"
 						id={`${namespace}categoryContainer`}

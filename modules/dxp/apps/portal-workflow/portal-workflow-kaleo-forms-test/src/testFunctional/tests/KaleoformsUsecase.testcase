@@ -501,90 +501,57 @@ definition {
 
 	@priority = 4
 	test AssignRolePermissionsAddProcessCP {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		Role.add(roleTitle = "KaleoRegRole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_ACTION_CHECKBOX",
-			permissionDefinitionValue = "Action",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
-			roleTitle = "KaleoRegRole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_ACTION_CHECKBOX",
-			permissionDefinitionValue = "Action",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
-			roleTitle = "KaleoRegRole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_ACTION_CHECKBOX",
-			permissionDefinitionValue = "Action",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
-			roleTitle = "KaleoRegRole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_FIELD_SETS_ACTION_CHECKBOX",
-			permissionDefinitionValue = "Action",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
-			roleTitle = "KaleoRegRole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONRole.addRegularRole(roleTitle = "KaleoRegRole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		JSONRole.assignRoleToUser(
+			roleTitle = "KaleoRegRole Name",
+			userEmailAddress = "userea@liferay.com");
 
-		Role.addAssignee(
-			assigneeName = "userfn userln",
-			assigneeType = "Users",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "KaleoRegRole Name");
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = ${resourceActionIndex},
+				resourceName = "com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet",
+				roleTitle = "KaleoRegRole Name");
+		}
+
+		for (var resourceActionIndex : list "COMPLETE_FORM,DELETE,PERMISSIONS,SUBMIT,UPDATE,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = ${resourceActionIndex},
+				resourceName = "com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
+				roleTitle = "KaleoRegRole Name");
+		}
+
+		for (var resourceActionIndex : list "ADD_PROCESS,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = ${resourceActionIndex},
+				resourceName = "com.liferay.portal.workflow.kaleo.forms",
+				roleTitle = "KaleoRegRole Name");
+		}
+
+		for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = ${resourceActionIndex},
+				resourceName = "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
+				roleTitle = "KaleoRegRole Name");
+		}
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -650,60 +617,32 @@ definition {
 
 	@priority = 5
 	test AssignRolePermissionsApprovePG {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsApprovePG";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_VIEW",
-			permissionDefinitionValue = "View",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
-			roleTitle = "Portal Content Reviewer");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE",
-			permissionDefinitionValue = "Update",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
-			roleTitle = "Portal Content Reviewer");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Portal Content Reviewer",
+			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet",
+			roleTitle = "Portal Content Reviewer");
 
-		Role.addAssignee(
-			assigneeName = "userfn userln",
-			assigneeType = "Users",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			roleTitle = "Portal Content Reviewer");
 
 		Navigator.openURL();
@@ -816,58 +755,31 @@ definition {
 
 	@priority = 4
 	test AssignRolePermissionsCompleteFormPG {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_VIEW",
-			permissionDefinitionValue = "View",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
-			roleTitle = "Portal Content Reviewer");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_COMPLETE_FORM",
-			permissionDefinitionValue = "Complete Form",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
-			roleTitle = "Portal Content Reviewer");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Portal Content Reviewer",
+			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet",
+			roleTitle = "Portal Content Reviewer");
 
-		Role.addAssignee(
-			assigneeName = "userfn userln",
-			assigneeType = "Users",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "COMPLETE_FORM",
+			resourceName = "com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			roleTitle = "Portal Content Reviewer");
 
 		Navigator.openURL();
@@ -983,61 +895,33 @@ definition {
 
 	@priority = 5
 	test AssignRolePermissionsRejectPG {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsRejectPG";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_VIEW",
-			permissionDefinitionValue = "View",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet",
 			roleTitle = "Portal Content Reviewer");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE",
-			permissionDefinitionValue = "Update",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			roleTitle = "Portal Content Reviewer");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.addAssignee(
-			assigneeName = "userfn userln",
-			assigneeType = "Users",
-			roleTitle = "Portal Content Reviewer");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Portal Content Reviewer",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openURL();
 
@@ -1149,63 +1033,38 @@ definition {
 
 	@priority = 4
 	test AssignRolePermissionsSubmitProcessPG {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#AssignRolePermissionsSubmitProcessPG";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		JSONRole.addRegularRole(roleTitle = "KaleoRegRole Name");
 
-		Role.add(roleTitle = "KaleoRegRole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION",
-			permissionDefinitionValue = "Access in Site and Asset Library Administration",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet",
 			roleTitle = "KaleoRegRole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_SUBMIT",
-			permissionDefinitionValue = "Submit",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "SUBMIT",
+			resourceName = "com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			roleTitle = "KaleoRegRole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW",
-			permissionDefinitionValue = "View",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			roleTitle = "KaleoRegRole Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1225,32 +1084,9 @@ definition {
 			siteRoleName = "Site Content Reviewer",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.addAssignee(
-			assigneeName = "userfn userln",
-			assigneeType = "Users",
-			roleTitle = "KaleoRegRole Name");
+		JSONRole.assignRoleToUser(
+			roleTitle = "KaleoRegRole Name",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openURL();
 
@@ -1343,61 +1179,28 @@ definition {
 
 	@priority = 3
 	test AssignRolePermissionsViewPG {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		Role.add(roleTitle = "KaleoRegRole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_VIEW",
-			permissionDefinitionValue = "View",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN",
-			permissionNavigationValue = "Kaleo Forms Admin",
-			roleTitle = "KaleoRegRole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONRole.addRegularRole(roleTitle = "KaleoRegRole Name");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		JSONRole.assignRoleToUser(
+			roleTitle = "KaleoRegRole Name",
+			userEmailAddress = "userea@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.addAssignee(
-			assigneeName = "userfn userln",
-			assigneeType = "Users",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet",
 			roleTitle = "KaleoRegRole Name");
 
 		User.logoutAndLoginPG(

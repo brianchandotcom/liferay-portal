@@ -1,0 +1,18 @@
+[
+	{
+		"key": "singleInstance",
+		"name": "Single instance",
+		"name_i18n": {
+			"en-US": "Single instance"
+		},
+		"type": "string"
+	},
+	{
+		"key": "clustered",
+		"name": "Clustered",
+		"name_i18n": {
+			"en-US": "Clustered"
+		},
+		"type": "string"
+	}
+]

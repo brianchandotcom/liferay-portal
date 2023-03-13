@@ -56,14 +56,12 @@ public class CommerceChannelResourceImpl
 		Map<Long, String> analyticsChannelsMap = new HashMap<>();
 
 		com.liferay.analytics.settings.rest.internal.client.pagination.Page
-			<AnalyticsChannel> analyticsChannelsPage =
+			<AnalyticsChannel> page =
 				_analyticsCloudClient.getAnalyticsChannelsPage(
 					contextCompany.getCompanyId(), null, 0, QueryUtil.ALL_POS,
 					null);
 
-		for (AnalyticsChannel analyticsChannel :
-				analyticsChannelsPage.getItems()) {
-
+		for (AnalyticsChannel analyticsChannel : page.getItems()) {
 			analyticsChannelsMap.put(
 				analyticsChannel.getId(), analyticsChannel.getName());
 		}

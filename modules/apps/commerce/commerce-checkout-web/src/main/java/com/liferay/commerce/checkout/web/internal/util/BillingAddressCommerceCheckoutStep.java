@@ -20,6 +20,7 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
+import com.liferay.commerce.checkout.web.internal.display.context.AddressCommerceCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.internal.display.context.BillingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -211,16 +213,19 @@ public class BillingAddressCommerceCheckoutStep
 		throws Exception {
 
 		try {
-			AddressCommerceCheckoutStepUtil addressCommerceCheckoutStepUtil =
-				new AddressCommerceCheckoutStepUtil(
-					_commerceAccountLocalService,
-					CommerceAddressConstants.ADDRESS_TYPE_BILLING,
-					_commerceOrderService, _commerceAddressService,
-					_commerceOrderModelResourcePermission);
+			AddressCommerceCheckoutStepDisplayContext
+				addressCommerceCheckoutStepDisplayContext =
+					new AddressCommerceCheckoutStepDisplayContext(
+						_commerceAccountLocalService,
+						CommerceAddressConstants.ADDRESS_TYPE_BILLING,
+						_commerceOrderService, _commerceAddressService,
+						_countryLocalService,
+						_commerceOrderModelResourcePermission);
 
-			addressCommerceCheckoutStepUtil.updateCommerceOrderAddress(
-				actionRequest,
-				CommerceCheckoutWebKeys.BILLING_ADDRESS_PARAM_NAME);
+			addressCommerceCheckoutStepDisplayContext.
+				updateCommerceOrderAddress(
+					actionRequest,
+					CommerceCheckoutWebKeys.BILLING_ADDRESS_PARAM_NAME);
 		}
 		catch (Exception exception) {
 			if (exception instanceof CommerceAddressCityException ||
@@ -491,6 +496,9 @@ public class BillingAddressCommerceCheckoutStep
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CountryLocalService _countryLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

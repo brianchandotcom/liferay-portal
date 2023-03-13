@@ -27,6 +27,7 @@ const CaseTypes = () => (
 					test_fix: false,
 					untested: false,
 				},
+				columnsFixed: ['name'],
 			}}
 			managementToolbarProps={{
 				filterSchema: 'buildCaseTypes',
@@ -38,7 +39,7 @@ const CaseTypes = () => (
 					{
 						key: 'name',
 						size: 'md',
-						value: i18n.translate('team'),
+						value: i18n.translate('test-type'),
 					},
 					{
 						clickable: true,

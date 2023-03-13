@@ -35,16 +35,15 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * @author Marco Leo
@@ -83,43 +82,38 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 			return fdsTableSchemaBuilder.build();
 		}
 
-		List<ObjectViewColumn> objectViewColumns =
-			defaultObjectView.getObjectViewColumns();
+		for (ObjectViewColumn objectViewColumn :
+				ListUtil.sort(
+					defaultObjectView.getObjectViewColumns(),
+					Comparator.comparingInt(
+						ObjectViewColumnModel::getPriority))) {
 
-		Stream<ObjectViewColumn> stream = objectViewColumns.stream();
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				_objectDefinition.getObjectDefinitionId(),
+				objectViewColumn.getObjectFieldName());
 
-		stream.sorted(
-			Comparator.comparingInt(ObjectViewColumnModel::getPriority)
-		).forEach(
-			objectViewColumn -> {
-				ObjectField objectField =
-					_objectFieldLocalService.fetchObjectField(
-						_objectDefinition.getObjectDefinitionId(),
-						objectViewColumn.getObjectFieldName());
+			String label = _getLabel(
+				objectViewColumn.getLabel(locale, false),
+				objectField.getLabel(locale, false));
 
-				String label = _getLabel(
-					objectViewColumn.getLabel(locale, false),
-					objectField.getLabel(locale, false));
-
-				if ((objectField == null) || objectField.isSystem()) {
-					_addSystemObjectField(
-						fdsTableSchemaBuilder, label,
-						objectViewColumn.getObjectFieldName());
-				}
-				else {
-					if (Validator.isNull(label)) {
-						label = _getLabel(
-							objectViewColumn.getLabel(
-								objectViewColumn.getDefaultLanguageId()),
-							objectField.getLabel(
-								objectField.getDefaultLanguageId()));
-					}
-
-					_addCustomObjectField(
-						fdsTableSchemaBuilder, label, objectField);
-				}
+			if ((objectField == null) || objectField.isSystem()) {
+				_addSystemObjectField(
+					fdsTableSchemaBuilder, label,
+					objectViewColumn.getObjectFieldName());
 			}
-		);
+			else {
+				if (Validator.isNull(label)) {
+					label = _getLabel(
+						objectViewColumn.getLabel(
+							objectViewColumn.getDefaultLanguageId()),
+						objectField.getLabel(
+							objectField.getDefaultLanguageId()));
+				}
+
+				_addCustomObjectField(
+					fdsTableSchemaBuilder, label, objectField);
+			}
+		}
 
 		return fdsTableSchemaBuilder.build();
 	}

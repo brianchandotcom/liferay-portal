@@ -132,16 +132,14 @@ public class DLAdminDisplayContext {
 
 		_dlPortletInstanceSettings =
 			_dlRequestHelper.getDLPortletInstanceSettings();
-
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
 
 		_httpSession = httpServletRequest.getSession();
-
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			httpServletRequest);
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = _themeDisplay.getPermissionChecker();

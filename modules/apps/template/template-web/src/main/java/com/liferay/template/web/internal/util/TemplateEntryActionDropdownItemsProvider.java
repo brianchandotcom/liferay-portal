@@ -53,7 +53,7 @@ public class TemplateEntryActionDropdownItemsProvider {
 		_tabs1 = tabs1;
 		_templateEntry = templateEntry;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

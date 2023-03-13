@@ -272,7 +272,7 @@ definition {
 		}
 
 		task ("End connection with Analytics Cloud") {
-			AnalyticsCloud.teardownAnalyticsCloud();
+			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 		}
 	}
 

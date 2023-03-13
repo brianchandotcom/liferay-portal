@@ -53,10 +53,10 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
@@ -290,29 +290,29 @@ public class ViewObjectEntriesDisplayContext {
 	}
 
 	private String _getNestedFieldsQueryString() {
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId());
+		Set<String> strings = new LinkedHashSet<>();
 
-		Stream<ObjectField> stream = objectFields.stream();
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId())) {
 
-		String queryString = stream.filter(
-			objectField -> Objects.equals(
-				objectField.getRelationshipType(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)
-		).map(
-			objectField -> {
-				String fieldName = objectField.getName();
+			if (!Objects.equals(
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
+					objectField.getRelationshipType())) {
 
-				return StringUtil.replaceLast(
+				continue;
+			}
+
+			String fieldName = objectField.getName();
+
+			strings.add(
+				StringUtil.replaceLast(
 					fieldName.substring(
 						fieldName.lastIndexOf(StringPool.UNDERLINE) + 1),
-					"Id", "");
-			}
-		).distinct(
-		).collect(
-			Collectors.joining(StringPool.COMMA)
-		);
+					"Id", ""));
+		}
+
+		String queryString = StringUtil.merge(strings, StringPool.COMMA);
 
 		if (Validator.isNull(queryString)) {
 			return StringPool.BLANK;

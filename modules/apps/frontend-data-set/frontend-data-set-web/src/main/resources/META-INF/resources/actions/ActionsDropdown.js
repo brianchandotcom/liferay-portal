@@ -25,15 +25,7 @@ import FrontendDataSetContext from '../FrontendDataSetContext';
 import {formatActionURL} from '../utils/index';
 import {actionsBasePropTypes, isLink} from './Actions';
 
-function DropdownItem({
-	action,
-	closeMenu,
-	itemData,
-	itemId,
-	onClick,
-	size,
-	url,
-}) {
+function DropdownItem({action, closeMenu, onClick, url}) {
 	const {icon, label, target} = action;
 
 	return (
@@ -44,9 +36,6 @@ function DropdownItem({
 					action,
 					closeMenu,
 					event,
-					itemData,
-					itemId,
-					size,
 				})
 			}
 		>
@@ -63,7 +52,6 @@ function DropdownItem({
 
 function ActionsDropdown({
 	actions,
-	handleAction,
 	itemData,
 	itemId,
 	loading,
@@ -72,27 +60,27 @@ function ActionsDropdown({
 	onMenuActiveChange,
 	setLoading,
 }) {
-	const frontendDataSetContext = useContext(FrontendDataSetContext);
-
 	const {
+		applyItemInlineUpdates,
 		inlineEditingSettings,
-		loadData,
-		openSidePanel,
+		itemsChanges,
+		toggleItemInlineEdit,
 		uniformActionsDisplay,
-	} = frontendDataSetContext;
+	} = useContext(FrontendDataSetContext);
 
 	const inlineEditingAvailable =
 		inlineEditingSettings && itemData.actions?.update;
+
 	const inlineEditingAlwaysOn =
 		inlineEditingAvailable && inlineEditingSettings.alwaysOn;
 
 	const isMounted = useIsMounted();
 
-	const editModeActive = !!frontendDataSetContext.itemsChanges[itemId];
+	const editModeActive = !!itemsChanges[itemId];
+
 	const itemChanges =
-		editModeActive &&
-		Object.keys(frontendDataSetContext.itemsChanges[itemId]).length
-			? frontendDataSetContext.itemsChanges[itemId]
+		editModeActive && Object.keys(itemsChanges[itemId]).length
+			? itemsChanges[itemId]
 			: null;
 
 	const inlineEditingActions = (
@@ -101,9 +89,7 @@ function ActionsDropdown({
 				className="mr-1"
 				disabled={inlineEditingAlwaysOn && !itemChanges}
 				displayType="secondary"
-				onClick={() =>
-					frontendDataSetContext.toggleItemInlineEdit(itemId)
-				}
+				onClick={() => toggleItemInlineEdit(itemId)}
 				small
 				symbol="times-small"
 			/>
@@ -116,13 +102,12 @@ function ActionsDropdown({
 					monospaced
 					onClick={() => {
 						setLoading(true);
-						frontendDataSetContext
-							.applyItemInlineUpdates(itemId)
-							.finally(() => {
-								if (isMounted()) {
-									setLoading(false);
-								}
-							});
+
+						applyItemInlineUpdates(itemId).finally(() => {
+							if (isMounted()) {
+								setLoading(false);
+							}
+						});
 					}}
 					small
 					symbol="check"
@@ -145,6 +130,7 @@ function ActionsDropdown({
 		actions.length === 1
 	) {
 		const [action] = actions;
+
 		const {data: actionData} = action;
 
 		if (actionData?.id && !action?.href) {
@@ -155,78 +141,25 @@ function ActionsDropdown({
 			return <ClayLoadingIndicator className="mb-2 mt-2" />;
 		}
 
-		const content = action.icon ? (
-			<ClayIcon symbol={action.icon} />
-		) : (
-			action.label
-		);
-
-		const onActionDropdownItemClick =
-			frontendDataSetContext.onActionDropdownItemClick;
-
-		const url = formatActionURL(action.href, itemData);
-
-		const elementWithIconSpecialProps = action.icon
-			? {
-					ariaLabel: action.label,
-					title: action.label,
-			  }
-			: {};
-
-		return isLink(action.target, action.onClick) ? (
+		return (
 			<ClayLink
-				{...elementWithIconSpecialProps}
+				aria-label={action.label}
 				className="btn btn-secondary btn-sm"
-				href={url}
+				href={
+					isLink(action.target, action.onClick)
+						? formatActionURL(action.href, itemData)
+						: null
+				}
 				monospaced={Boolean(action.icon)}
 				onClick={(event) => {
-					if (onActionDropdownItemClick) {
-						onActionDropdownItemClick({
-							action,
-							event,
-							itemData,
-							loadData,
-							openSidePanel,
-						});
-					}
+					onClick({
+						action,
+						event,
+					});
 				}}
+				title={action.label}
 			>
-				{content}
-			</ClayLink>
-		) : (
-			<ClayLink
-				{...elementWithIconSpecialProps}
-				className="btn btn-secondary btn-sm"
-				data-senna-off
-				href="#"
-				monospaced={Boolean(action.icon)}
-				onClick={(event) => {
-					if (onActionDropdownItemClick) {
-						onActionDropdownItemClick({
-							action,
-							event,
-							itemData,
-							loadData,
-							openSidePanel,
-						});
-					}
-
-					handleAction(
-						{
-							errorMessage: actionData?.errorMessage,
-							event,
-							itemId,
-							method: action.method ?? actionData?.method,
-							setLoading,
-							successMessage: actionData?.successMessage,
-							url,
-							...action,
-						},
-						frontendDataSetContext
-					);
-				}}
-			>
-				{content}
+				{action.icon ? <ClayIcon symbol={action.icon} /> : action.label}
 			</ClayLink>
 		);
 	}
@@ -251,9 +184,6 @@ function ActionsDropdown({
 				<DropdownItem
 					action={item}
 					closeMenu={() => onMenuActiveChange(false)}
-					handleAction={handleAction}
-					itemData={itemData}
-					itemId={itemId}
 					key={i}
 					onClick={onClick}
 					setLoading={setLoading}
@@ -293,7 +223,6 @@ function ActionsDropdown({
 
 ActionsDropdown.propTypes = {
 	...actionsBasePropTypes,
-	handleAction: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
 	onClick: PropTypes.func.isRequired,
 	setLoading: PropTypes.func.isRequired,

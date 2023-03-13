@@ -185,26 +185,28 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 	private void _updateChannels(ActionRequest actionRequest) throws Exception {
 		long countryId = ParamUtil.getLong(actionRequest, "countryId");
 
-		long[] commerceChannelIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "commerceChannelIds"), 0L);
+		_commerceChannelRelService.deleteCommerceChannelRels(
+			Country.class.getName(), countryId);
 
 		boolean channelFilterEnabled = ParamUtil.getBoolean(
 			actionRequest, "channelFilterEnabled");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceChannelRel.class.getName(), actionRequest);
+		if (channelFilterEnabled) {
+			long[] commerceChannelIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "commerceChannelIds"), 0L);
 
-		_commerceChannelRelService.deleteCommerceChannelRels(
-			Country.class.getName(), countryId);
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CommerceChannelRel.class.getName(), actionRequest);
 
-		for (long commerceChannelId : commerceChannelIds) {
-			if (commerceChannelId == 0) {
-				continue;
+			for (long commerceChannelId : commerceChannelIds) {
+				if (commerceChannelId == 0) {
+					continue;
+				}
+
+				_commerceChannelRelService.addCommerceChannelRel(
+					Country.class.getName(), countryId, commerceChannelId,
+					serviceContext);
 			}
-
-			_commerceChannelRelService.addCommerceChannelRel(
-				Country.class.getName(), countryId, commerceChannelId,
-				serviceContext);
 		}
 
 		_countryService.updateGroupFilterEnabled(

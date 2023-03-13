@@ -19,7 +19,8 @@ import {CONSENT_TYPE} from '~/util/enum';
 export enum STORAGE_KEYS {
 	COMPARE_RUNS = '@testray/compare-runs',
 	EXPORT_CASE_IDS = '@testray/export-case-ids',
-	LIST_VIEW = '@testray/listview-',
+	LIST_VIEW_COLUMNS = '@testray/listview-columns-',
+	LIST_VIEW_PIN = '@testray/listview-pin-',
 	SIDEBAR = '@testray/sidebar',
 	SWR_CACHE = '@testray/swr-cache',
 }

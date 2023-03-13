@@ -32,6 +32,15 @@ const Runs = () => {
 		<Container className="mt-4">
 			<ListView
 				forceRefetch={formModal.forceRefetch}
+				initialContext={{
+					columns: {
+						inprogress: false,
+						passed: false,
+						total: false,
+						untested: false,
+					},
+					columnsFixed: ['number'],
+				}}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
 					filterSchema: 'buildRuns',

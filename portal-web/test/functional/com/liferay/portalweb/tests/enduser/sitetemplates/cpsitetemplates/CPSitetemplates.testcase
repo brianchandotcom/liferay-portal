@@ -605,12 +605,16 @@ definition {
 				sitePageType = "Content Page",
 				siteTemplateName = "Site Template Name");
 
+			SelectFrameTop();
+
 			PageEditor.publish();
 
 			ContentPages.addChildPage(
 				childPageName = "Child Content Page",
 				parentPageName = "Parent Content Page",
 				sitePageType = "Blank");
+
+			SelectFrameTop();
 
 			PageEditor.publish();
 		}

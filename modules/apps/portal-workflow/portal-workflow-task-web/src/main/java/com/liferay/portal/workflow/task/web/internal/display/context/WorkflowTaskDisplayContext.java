@@ -105,7 +105,7 @@ public class WorkflowTaskDisplayContext {
 			liferayPortletRequest);
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(

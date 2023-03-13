@@ -514,7 +514,7 @@ definition {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 			WebContent.viewTitle(
-				webContentTitle = '''<script>alert(123);</script>''',
+				webContentTitle = '''&lt;script&gt;alert(123);&lt;/script&gt;''',
 				webContentTitleEscapeCharacter = '''&lt;script&gt;alert(123);&lt;/script&gt;''');
 		}
 
@@ -539,7 +539,7 @@ definition {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 			WebContentNavigator.gotoEditCP(
-				webContentTitle = '''<script>alert(123);</script>''',
+				webContentTitle = '''&lt;script&gt;alert(123);&lt;/script&gt;''',
 				webContentTitleEscapeCharacter = '''&lt;script&gt;alert(123);&lt;/script&gt;''');
 
 			WebContent.editCP(

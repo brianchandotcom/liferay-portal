@@ -130,6 +130,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -2429,7 +2431,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		String replyToAddress = StringPool.BLANK;
 
-		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
+		if (PrefsPropsUtil.getBoolean(
+				company.getCompanyId(),
+				PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED,
+				PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED)) {
+
 			replyToAddress = MBMailUtil.getReplyToAddress(
 				message.getCategoryId(), message.getMessageId(),
 				company.getMx(), fromAddress);

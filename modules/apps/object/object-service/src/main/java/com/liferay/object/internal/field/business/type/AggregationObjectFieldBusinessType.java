@@ -41,14 +41,13 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -131,20 +130,21 @@ public class AggregationObjectFieldBusinessType
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
-		Stream<ObjectFieldSetting> stream = objectFieldSettings.stream();
+		Map<String, Object> objectFieldSettingsValuesMap = new HashMap<>();
 
-		Map<String, Object> objectFieldSettingsValuesMap = stream.collect(
-			Collectors.toMap(
-				ObjectFieldSetting::getName,
-				objectFieldSetting -> {
-					if (Objects.equals(
-							objectFieldSetting.getName(), "filters")) {
+		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
+			String name = objectFieldSetting.getName();
 
-						return objectFieldSetting.getObjectFilters();
-					}
+			if (Objects.equals("filters", name)) {
+				objectFieldSettingsValuesMap.put(
+					name, objectFieldSetting.getObjectFilters());
 
-					return objectFieldSetting.getValue();
-				}));
+				continue;
+			}
+
+			objectFieldSettingsValuesMap.put(
+				name, objectFieldSetting.getValue());
+		}
 
 		String function = GetterUtil.getString(
 			objectFieldSettingsValuesMap.get("function"));

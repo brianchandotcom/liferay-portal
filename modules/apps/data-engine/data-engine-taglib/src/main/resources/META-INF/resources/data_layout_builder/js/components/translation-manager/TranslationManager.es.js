@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 export function formatLabel(label) {
-	return label.replace('_', '-');
+	return label.replaceAll('_', '-');
 }
 
 export function formatIcon(label) {

@@ -16,9 +16,11 @@
 
 <%@ include file="/permissions/init.jsp" %>
 
-<aui:fieldset cssClass="options-group" markupView="lexicon">
+<div aria-labelledby="<portlet:namespace />permissions" class="options-group" role="group">
 	<clay:sheet-section>
-		<h3 class="sheet-subtitle"><liferay-ui:message key="permissions" /></h3>
+		<span class="sheet-subtitle" id="<portlet:namespace />permissions">
+			<liferay-ui:message key="permissions" />
+		</span>
 
 		<%
 		ExportImportServiceConfiguration exportImportServiceConfiguration = ConfigurationProviderUtil.getSystemConfiguration(ExportImportServiceConfiguration.class);
@@ -32,4 +34,4 @@
 			name="<%= PortletDataHandlerKeys.PERMISSIONS %>"
 		/>
 	</clay:sheet-section>
-</aui:fieldset>
+</div>

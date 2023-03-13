@@ -37,7 +37,6 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.connection.HttpPortRange;
 import com.liferay.portal.search.elasticsearch7.internal.index.constants.SidecarVersionConstants;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
-import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +54,6 @@ import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +77,6 @@ public class Sidecar {
 		ElasticsearchInstancePaths elasticsearchInstancePaths,
 		ProcessExecutor processExecutor,
 		ProcessExecutorPaths processExecutorPaths,
-		Collection<SettingsContributor> settingsContributors,
 		SidecarManager sidecarManager) {
 
 		_clusterExecutor = clusterExecutor;
@@ -87,7 +84,6 @@ public class Sidecar {
 		_elasticsearchInstancePaths = elasticsearchInstancePaths;
 		_processExecutor = processExecutor;
 		_processExecutorPaths = processExecutorPaths;
-		_settingsContributors = settingsContributors;
 		_sidecarManager = sidecarManager;
 
 		_dataHomePath = elasticsearchInstancePaths.getDataPath();
@@ -497,8 +493,6 @@ public class Sidecar {
 			_clusterExecutor::getBindInetAddress
 		).nodeName(
 			_getNodeName()
-		).settingsContributors(
-			_settingsContributors
 		).build();
 	}
 
@@ -611,7 +605,6 @@ public class Sidecar {
 	private final ProcessExecutor _processExecutor;
 	private final ProcessExecutorPaths _processExecutorPaths;
 	private FutureListener<Serializable> _restartFutureListener;
-	private final Collection<SettingsContributor> _settingsContributors;
 	private final Path _sidecarHomePath;
 	private SidecarManager _sidecarManager;
 	private Path _sidecarTempDirPath;

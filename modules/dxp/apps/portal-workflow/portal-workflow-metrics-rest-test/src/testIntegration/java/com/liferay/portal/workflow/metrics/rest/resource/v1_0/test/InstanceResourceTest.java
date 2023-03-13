@@ -57,7 +57,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang.time.DateUtils;
 
@@ -102,25 +101,25 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	@Override
 	@Test
 	public void testGetProcessInstance() throws Exception {
+		SLAResult[] slaResults = {
+			_toSLAResult(true, SLAResult.Status.NEW),
+			_toSLAResult(true, SLAResult.Status.NEW),
+			_toSLAResult(true, SLAResult.Status.PAUSED),
+			_toSLAResult(true, SLAResult.Status.PAUSED),
+			_toSLAResult(true, SLAResult.Status.RUNNING),
+			_toSLAResult(true, SLAResult.Status.RUNNING),
+			_toSLAResult(true, SLAResult.Status.RUNNING),
+			_toSLAResult(true, SLAResult.Status.STOPPED),
+			_toSLAResult(true, SLAResult.Status.STOPPED),
+			_toSLAResult(true, SLAResult.Status.STOPPED)
+		};
+
+		Arrays.sort(
+			slaResults, Comparator.comparing(SLAResult::getRemainingTime));
+
 		Instance instance = randomInstance();
 
-		instance.setSlaResults(
-			Stream.of(
-				_toSLAResult(true, SLAResult.Status.NEW),
-				_toSLAResult(true, SLAResult.Status.NEW),
-				_toSLAResult(true, SLAResult.Status.PAUSED),
-				_toSLAResult(true, SLAResult.Status.PAUSED),
-				_toSLAResult(true, SLAResult.Status.RUNNING),
-				_toSLAResult(true, SLAResult.Status.RUNNING),
-				_toSLAResult(true, SLAResult.Status.RUNNING),
-				_toSLAResult(true, SLAResult.Status.STOPPED),
-				_toSLAResult(true, SLAResult.Status.STOPPED),
-				_toSLAResult(true, SLAResult.Status.STOPPED)
-			).sorted(
-				Comparator.comparing(SLAResult::getRemainingTime)
-			).toArray(
-				SLAResult[]::new
-			));
+		instance.setSlaResults(slaResults);
 
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance);
 
@@ -280,19 +279,15 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 			EntityField.Type.DATE_TIME,
 			(entityField, instance1, instance2) -> {
 				if (Objects.equals(entityField.getName(), "dateOverdue")) {
-					Stream.of(
-						instance1.getSlaResults()
-					).forEach(
-						slaResult -> slaResult.setDateOverdue(
-							DateUtils.addDays(slaResult.getDateOverdue(), -2))
-					);
+					for (SLAResult slaResult : instance1.getSlaResults()) {
+						slaResult.setDateOverdue(
+							DateUtils.addDays(slaResult.getDateOverdue(), -2));
+					}
 
-					Stream.of(
-						instance2.getSlaResults()
-					).forEach(
-						slaResult -> slaResult.setDateOverdue(
-							DateUtils.addDays(slaResult.getDateOverdue(), -1))
-					);
+					for (SLAResult slaResult : instance2.getSlaResults()) {
+						slaResult.setDateOverdue(
+							DateUtils.addDays(slaResult.getDateOverdue(), -1));
+					}
 				}
 				else {
 					BeanTestUtil.setProperty(

@@ -47,31 +47,6 @@ const editButtonManager = fragmentElement.querySelector('#edit-button-manager');
 
 const editButton = fragmentElement.querySelector('#edit-button-user');
 
-const updateStatus = async (status) => {
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const statusManagerResponse = await fetch(
-		`/o/c/mdfrequests/${mdfRequestId}`,
-		{
-			body: `{"mdfRequestStatus": "${status}"}`,
-			headers: {
-				'content-type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'PUT',
-		}
-	);
-	if (statusManagerResponse.ok) {
-		location.reload();
-
-		return;
-	}
-
-	Liferay.Util.openToast({
-		message: 'The MDF Request Status cannot be changed.',
-		type: 'danger',
-	});
-};
-
 if (updateStatusToApproved) {
 	updateStatusToApproved.onclick = () =>
 		Liferay.Util.openConfirmModal({
@@ -143,26 +118,32 @@ if (updateStatusToCanceled) {
 			},
 		});
 }
+const statusResponse = async () => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const mdfRequestResponse = await fetch(
+		`/o/c/mdfrequests/${mdfRequestId}?nestedFields=mdfReqToActs
+	`,
+		{
+			headers: {
+				'accept': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+		}
+	);
+
+	return mdfRequestResponse.json();
+};
 
 const getMDFRequestStatus = async () => {
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const statusResponse = await fetch(`/o/c/mdfrequests/${mdfRequestId}`, {
-		headers: {
-			'accept': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-	});
-
-	if (statusResponse.ok) {
-		const data = await statusResponse.json();
-
+	const mdfRequest = await statusResponse();
+	if (mdfRequest) {
 		fragmentElement.querySelector(
 			'#mdf-request-status-display'
 		).innerHTML = `Status: ${Liferay.Util.escape(
-			data.mdfRequestStatus.name
+			mdfRequest.mdfRequestStatus.name
 		)}`;
 
-		updateButtons(data.mdfRequestStatus.key);
+		updateButtons(mdfRequest.mdfRequestStatus.key);
 
 		return;
 	}
@@ -171,6 +152,56 @@ const getMDFRequestStatus = async () => {
 		message: 'An unexpected error occured.',
 		type: 'danger',
 	});
+};
+
+const updateStatus = async (status) => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const statusManagerResponse = await fetch(
+		`/o/c/mdfrequests/${mdfRequestId}`,
+		{
+			body: `{"mdfRequestStatus": "${status}"}`,
+			headers: {
+				'content-type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+			method: 'PUT',
+		}
+	);
+
+	if (statusManagerResponse.ok) {
+		if (status === 'approved') {
+			await updateStatusActivities(status);
+		}
+
+		location.reload();
+
+		return;
+	}
+
+	Liferay.Util.openToast({
+		message: 'The MDF Request Status cannot be changed.',
+		type: 'danger',
+	});
+};
+
+const updateStatusActivities = async (status) => {
+	const mdfRequest = await statusResponse();
+
+	await Promise.all(
+		mdfRequest.mdfReqToActs.map((activity) => {
+			if (activity.activityStatus.key === 'submitted') {
+				// eslint-disable-next-line @liferay/portal/no-global-fetch
+				return fetch(`/o/c/activities/${activity.id}`, {
+					body: `{"activityStatus": "${status}"}`,
+					headers: {
+						'content-type': 'application/json',
+						'x-csrf-token': Liferay.authToken,
+					},
+					method: 'PUT',
+				});
+			}
+		})
+	);
 };
 
 const updateButtons = (mdfRequestStatusKey) => {

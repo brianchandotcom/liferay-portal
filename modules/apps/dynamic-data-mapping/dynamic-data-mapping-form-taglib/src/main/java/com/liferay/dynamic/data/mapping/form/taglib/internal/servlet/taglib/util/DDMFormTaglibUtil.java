@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -177,8 +176,8 @@ public class DDMFormTaglibUtil {
 
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 
-		Optional<DDMStructure> ddmStructureOptional = Optional.ofNullable(
-			_ddmStructureLocalService.fetchDDMStructure(ddmStructureId));
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
+			ddmStructureId);
 
 		DDMStructureVersion ddmStructureVersion =
 			_ddmStructureVersionLocalService.fetchDDMStructureVersion(
@@ -186,7 +185,7 @@ public class DDMFormTaglibUtil {
 
 		Locale locale = themeDisplay.getSiteDefaultLocale();
 
-		if (ddmStructureOptional.isPresent() || (ddmStructureVersion != null)) {
+		if ((ddmStructure != null) || (ddmStructureVersion != null)) {
 			DDMForm ddmForm = getDDMForm(ddmStructureId, ddmStructureVersionId);
 
 			locale = ddmForm.getDefaultLocale();
@@ -194,7 +193,7 @@ public class DDMFormTaglibUtil {
 
 		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
 			DDMFormBuilderContextRequest.with(
-				ddmStructureOptional, themeDisplay.getRequest(),
+				ddmStructure, themeDisplay.getRequest(),
 				themeDisplay.getResponse(), locale, true);
 
 		ddmFormBuilderContextRequest.addProperty(

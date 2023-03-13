@@ -13,14 +13,16 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import {ReactNode, useContext} from 'react';
+import ClayPopover from '@clayui/popover';
+import {ReactNode, useContext, useState} from 'react';
 
 import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
 import i18n from '../../i18n';
 import {FilterSchema} from '../../schema/filter';
+import {Column} from '../Table';
+import ManagementToolbarColumns from './ManagementToolbarColumns';
 import ManagementToolbarFilter from './ManagementToolbarFilter';
 
 export type IItem = {
@@ -50,7 +52,7 @@ type ManagementToolbarRightProps = {
 	actions: any;
 	addButton?: () => void;
 	buttons?: ReactNode;
-	columns: IItem[];
+	columns: Column[];
 	disabled: boolean;
 	display?: {
 		columns?: boolean;
@@ -64,10 +66,10 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	buttons,
 	display = {columns: true},
 	columns,
-	disabled,
 	filterSchema,
 }) => {
 	const [{pin}, dispatch] = useContext(ListViewContext);
+	const [columnsDropdownVisible, setColumnsDropdownVisible] = useState(false);
 
 	return (
 		<ClayManagementToolbar.ItemList>
@@ -91,24 +93,22 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 			)}
 
 			{display.columns && (
-				<ClayDropDownWithItems
-					items={columns}
+				<ClayPopover
+					alignPosition="bottom-right"
+					className="body-columns popover-management-toolbar"
+					closeOnClickOutside
+					onShowChange={setColumnsDropdownVisible}
+					show={columnsDropdownVisible}
 					trigger={
 						<ClayButton
-							className="nav-link"
-							disabled={disabled}
+							className="d-flex nav-link"
 							displayType="unstyled"
 						>
 							<span className="navbar-breakpoint-down-d-none">
-								<span
-									className="navbar-text-truncate"
-									title={i18n.translate('columns')}
-								>
-									<ClayIcon
-										className="inline-item inline-item-after"
-										symbol="columns"
-									/>
-								</span>
+								<ClayIcon
+									className="inline-item inline-item-after"
+									symbol="columns"
+								/>
 							</span>
 
 							<span className="navbar-breakpoint-d-none">
@@ -116,7 +116,12 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 							</span>
 						</ClayButton>
 					}
-				/>
+				>
+					<ManagementToolbarColumns
+						columns={columns}
+						onClose={() => setColumnsDropdownVisible(false)}
+					/>
+				</ClayPopover>
 			)}
 
 			{buttons}

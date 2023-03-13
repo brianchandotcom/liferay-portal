@@ -511,8 +511,6 @@ definition {
 	@description = "This is a use case for LPS-65069."
 	@priority = 5
 	test AddRecordWithRepeatableTextField {
-		property portal.acceptance = "quarantine";
-
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP();

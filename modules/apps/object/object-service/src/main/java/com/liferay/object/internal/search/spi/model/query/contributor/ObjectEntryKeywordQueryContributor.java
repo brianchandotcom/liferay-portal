@@ -18,9 +18,9 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
-import com.liferay.object.model.ObjectViewColumn;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -55,8 +55,6 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Marco Leo
@@ -118,27 +116,20 @@ public class ObjectEntryKeywordQueryContributor
 			if (defaultObjectView != null) {
 				addObjectEntryTitle.set(false);
 
-				List<ObjectViewColumn> objectViewColumns =
-					defaultObjectView.getObjectViewColumns();
-
-				Stream<ObjectViewColumn> stream = objectViewColumns.stream();
-
-				objectFields = stream.peek(
+				objectFields = TransformUtil.transform(
+					defaultObjectView.getObjectViewColumns(),
 					objectViewColumn -> {
-						if (Objects.equals(
-								objectViewColumn.getObjectFieldName(), "id")) {
+						String objectFieldName =
+							objectViewColumn.getObjectFieldName();
 
+						if (Objects.equals("id", objectFieldName)) {
 							addObjectEntryTitle.set(true);
 						}
-					}
-				).map(
-					objectViewColumn ->
-						_objectFieldLocalService.fetchObjectField(
+
+						return _objectFieldLocalService.fetchObjectField(
 							defaultObjectView.getObjectDefinitionId(),
-							objectViewColumn.getObjectFieldName())
-				).collect(
-					Collectors.toList()
-				);
+							objectFieldName);
+					});
 			}
 		}
 

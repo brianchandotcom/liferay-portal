@@ -499,6 +499,85 @@ definition {
 		}
 	}
 
+	@description = "Verify if is not possible navigate through pages on public pages with not contains validation error"
+	@priority = 5
+	test CannotNavigateThroughThePagesOnPublicPagesWithDoesNotContainsValidationError {
+		property portal.acceptance = "true";
+
+		task ("Given that the user creates a form with validation") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.editPageTitle(
+				formPageName = "Page 1",
+				formTitleNumber = 1);
+
+			Form.addTextField(fieldPositionNumber = 0);
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			FormFields.enableSwitch(fieldName = "Validation");
+
+			FormFields.editValidation(
+				validationArgument = "Does Not Contain",
+				validationErrorMessage = "",
+				validationInput = "Do not contain this text");
+
+			Form.closeSidebar();
+
+			Form.publishForm();
+		}
+
+		task ("When creating a public page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.addPage(pageName = "Form Page");
+
+			Navigator.gotoPage(pageName = "Form Page");
+
+			Portlet.addPG(
+				pageName = "Form Page",
+				portletName = "Form");
+
+			FormPortletNavigator.gotoSelectForm();
+
+			FormPortletConfiguration.selectForm(formName = "Form 1");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the user is unable to navigate through pages with not contains validation error") {
+			Navigator.gotoPage(pageName = "Form Page");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Do not contain this text");
+
+			FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is invalid.");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Contains this text");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "Text",
+				fieldValue = "Contains this text");
+		}
+	}
+
 	@description = "Verify that you cannot navigate through Pages on Public Pages when the Empty Field is Required"
 	@priority = 5
 	test CannotNavigateThroughThePagesOnPublicPagesWithEmptyRequiredField {
@@ -606,6 +685,241 @@ definition {
 				key_formPageName = "Page 3",
 				locator1 = "FormPortlet#FORM_PAGE",
 				value1 = "Page 3");
+		}
+	}
+
+	@description = "Verify if is not possible navigate through pages on public pages with is an email validation error"
+	@priority = 5
+	test CannotNavigateThroughThePagesOnPublicPagesWithIsanemailValidationError {
+		property portal.acceptance = "true";
+
+		task ("Given that the user creates a form with validation") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.editPageTitle(
+				formPageName = "Page 1",
+				formTitleNumber = 1);
+
+			Form.addTextField(fieldPositionNumber = 0);
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			FormFields.enableSwitch(fieldName = "Validation");
+
+			FormFields.editValidation(
+				validationArgument = "Is an email",
+				validationErrorMessage = "");
+
+			Form.closeSidebar();
+
+			Form.publishForm();
+		}
+
+		task ("When creating a public page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.addPage(pageName = "Form Page");
+
+			Navigator.gotoPage(pageName = "Form Page");
+
+			Portlet.addPG(
+				pageName = "Form Page",
+				portletName = "Form");
+
+			FormPortletNavigator.gotoSelectForm();
+
+			FormPortletConfiguration.selectForm(formName = "Form 1");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the user is unable to navigate through pages with is an email validation error") {
+			Navigator.gotoPage(pageName = "Form Page");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "This is not an email");
+
+			FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is invalid.");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "test@liferay.com");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "Text",
+				fieldValue = "test@liferay.com");
+		}
+	}
+
+	@description = "Verify if is not possible navigate through pages on public pages with is a URL validation error"
+	@priority = 5
+	test CannotNavigateThroughThePagesOnPublicPagesWithIsaURLValidationError {
+		property portal.acceptance = "true";
+
+		task ("Given that the user creates a form with validation") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.editPageTitle(
+				formPageName = "Page 1",
+				formTitleNumber = 1);
+
+			Form.addTextField(fieldPositionNumber = 0);
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			FormFields.enableSwitch(fieldName = "Validation");
+
+			FormFields.editValidation(
+				validationArgument = "Is a URL",
+				validationErrorMessage = "");
+
+			Form.closeSidebar();
+
+			Form.publishForm();
+		}
+
+		task ("When creating a public page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.addPage(pageName = "Form Page");
+
+			Navigator.gotoPage(pageName = "Form Page");
+
+			Portlet.addPG(
+				pageName = "Form Page",
+				portletName = "Form");
+
+			FormPortletNavigator.gotoSelectForm();
+
+			FormPortletConfiguration.selectForm(formName = "Form 1");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the user is unable to navigate through pages with is a URL validation error") {
+			Navigator.gotoPage(pageName = "Form Page");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "This is not a url");
+
+			FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is invalid.");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "https://liferay.com");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "Text",
+				fieldValue = "https://liferay.com");
+		}
+	}
+
+	@description = "Verify if is not possible navigate through pages on public pages with matches validation error"
+	@priority = 5
+	test CannotNavigateThroughThePagesOnPublicPagesWithMatchesValidationError {
+		property portal.acceptance = "true";
+
+		task ("Given that the user creates a form with validation") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.editPageTitle(
+				formPageName = "Page 1",
+				formTitleNumber = 1);
+
+			Form.addTextField(fieldPositionNumber = 0);
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			FormFields.enableSwitch(fieldName = "Validation");
+
+			FormFields.editValidation(
+				validationArgument = "Matches",
+				validationErrorMessage = "",
+				validationInput = "^[A-Z].*");
+
+			Form.closeSidebar();
+
+			Form.publishForm();
+		}
+
+		task ("When creating a public page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.addPage(pageName = "Form Page");
+
+			Navigator.gotoPage(pageName = "Form Page");
+
+			Portlet.addPG(
+				pageName = "Form Page",
+				portletName = "Form");
+
+			FormPortletNavigator.gotoSelectForm();
+
+			FormPortletConfiguration.selectForm(formName = "Form 1");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the user is unable to navigate through pages with is a URL validation error") {
+			Navigator.gotoPage(pageName = "Form Page");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "lowercase condition");
+
+			FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is invalid.");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Uppercase condition");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "Text",
+				fieldValue = "Uppercase condition");
 		}
 	}
 

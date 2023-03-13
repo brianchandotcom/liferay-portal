@@ -513,11 +513,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		KBArticle kbArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
+		if (kbArticle.isDraft()) {
+			return kbArticle;
+		}
+
 		kbArticle.setExpirationDate(new Date());
 
 		kbArticleLocalService.updateKBArticle(kbArticle);
-
-		serviceContext.setCommand(Constants.EXPIRE);
 
 		return updateStatus(
 			userId, resourcePrimKey, WorkflowConstants.STATUS_EXPIRED,
@@ -1221,6 +1223,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				kbArticle.getCompanyId(),
 				_classNameLocalService.getClassNameId(KBArticle.class),
 				kbArticle.getPrimaryKey(), (int)oldKBArticle.getViewCount());
+
+			// Indexer
+
+			Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
+				KBArticle.class);
+
+			indexer.delete(oldKBArticle);
 		}
 		else {
 			kbArticle = oldKBArticle;
@@ -1267,6 +1276,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_removeKBArticleAttachments(removeFileEntryIds);
 
+		// Indexer
+
+		_indexKBArticle(kbArticle);
+
 		// Workflow
 
 		_startWorkflowInstance(userId, kbArticle, serviceContext);
@@ -1280,27 +1293,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			String[] assetTagNames, long[] assetLinkEntryIds)
 		throws PortalException {
 
-		boolean visible = false;
-
-		if (kbArticle.isApproved()) {
-			visible = true;
-		}
-
-		String summary = _htmlParser.extractText(
-			StringUtil.shorten(kbArticle.getContent(), 500));
-
-		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
-			userId, kbArticle.getGroupId(), kbArticle.getCreateDate(),
-			kbArticle.getModifiedDate(), KBArticle.class.getName(),
-			kbArticle.getClassPK(), kbArticle.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, visible, null, null, null,
-			kbArticle.getExpirationDate(), ContentTypes.TEXT_HTML,
-			kbArticle.getTitle(), kbArticle.getDescription(), summary, null,
-			null, 0, 0, null);
-
-		_assetLinkLocalService.updateLinks(
-			userId, assetEntry.getEntryId(), assetLinkEntryIds,
-			AssetLinkConstants.TYPE_RELATED);
+		_updateKBArticleAsset(
+			userId, kbArticle, assetCategoryIds, assetTagNames,
+			assetLinkEntryIds, WorkflowConstants.STATUS_ANY);
 	}
 
 	@Override
@@ -1382,19 +1377,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		kbArticle = kbArticlePersistence.update(kbArticle);
 
-		if (status != WorkflowConstants.STATUS_APPROVED) {
-			if (status == WorkflowConstants.STATUS_EXPIRED) {
-				_notify(
-					SetUtil.fromArray(
-						_NOTIFICATION_RECEIVER_OWNER,
-						_NOTIFICATION_RECEIVER_SUBSCRIBER),
-					userId, kbArticle, Constants.EXPIRE, serviceContext);
-			}
+		if ((status != WorkflowConstants.STATUS_APPROVED) &&
+			(status != WorkflowConstants.STATUS_EXPIRED)) {
 
 			return kbArticle;
 		}
-
-		String action = Constants.ADD;
 
 		if (!kbArticle.isFirstVersion()) {
 			KBArticle oldKBArticle = kbArticlePersistence.findByR_V(
@@ -1403,9 +1390,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			oldKBArticle.setModifiedDate(oldKBArticle.getModifiedDate());
 			oldKBArticle.setMain(false);
 
-			kbArticlePersistence.update(oldKBArticle);
+			oldKBArticle = kbArticlePersistence.update(oldKBArticle);
 
-			action = Constants.UPDATE;
+			// Indexer
+
+			Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
+				KBArticle.class);
+
+			indexer.delete(oldKBArticle);
 		}
 
 		// Asset
@@ -1424,9 +1416,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		long[] assetLinkEntryIds = StringUtil.split(
 			ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
 
-		updateKBArticleAsset(
+		_updateKBArticleAsset(
 			userId, kbArticle, assetEntry.getCategoryIds(),
-			assetEntry.getTagNames(), assetLinkEntryIds);
+			assetEntry.getTagNames(), assetLinkEntryIds, status);
 
 		SystemEventHierarchyEntryThreadLocal.push(KBArticle.class);
 
@@ -1467,16 +1459,20 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<KBArticle> indexer = _indexerRegistry.getIndexer(
-			KBArticle.class);
-
-		indexer.reindex(kbArticle);
+		_indexKBArticle(kbArticle);
 
 		// Subscriptions
 
+		Set<String> receivers = SetUtil.fromArray(
+			_NOTIFICATION_RECEIVER_SUBSCRIBER);
+
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			receivers.add(_NOTIFICATION_RECEIVER_OWNER);
+		}
+
 		_notify(
-			Collections.singleton(_NOTIFICATION_RECEIVER_SUBSCRIBER), userId,
-			kbArticle, action, serviceContext);
+			receivers, userId, kbArticle, _getAction(kbArticle, status),
+			serviceContext);
 
 		return kbArticle;
 	}
@@ -1688,6 +1684,18 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
+	private String _getAction(KBArticle kbArticle, int status) {
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			return Constants.EXPIRE;
+		}
+
+		if (kbArticle.isFirstVersion()) {
+			return Constants.ADD;
+		}
+
+		return Constants.UPDATE;
+	}
+
 	private void _getAllDescendantKBArticles(
 		List<KBArticle> kbArticles, long resourcePrimKey, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
@@ -1803,6 +1811,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 					KBArticleTable.INSTANCE.expirationDate.lte(expirationDate)
 				).and(
 					KBArticleTable.INSTANCE.latest.eq(Boolean.TRUE)
+				).and(
+					KBArticleTable.INSTANCE.status.neq(
+						WorkflowConstants.STATUS_DRAFT)
 				).and(
 					KBArticleTable.INSTANCE.status.neq(
 						WorkflowConstants.STATUS_EXPIRED)
@@ -2219,6 +2230,39 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticle.getCompanyId(), kbArticle.getGroupId(), userId,
 			KBArticle.class.getName(), kbArticle.getResourcePrimKey(),
 			kbArticle, serviceContext, Collections.emptyMap());
+	}
+
+	private void _updateKBArticleAsset(
+			long userId, KBArticle kbArticle, long[] assetCategoryIds,
+			String[] assetTagNames, long[] assetLinkEntryIds, int status)
+		throws PortalException {
+
+		boolean visible = false;
+
+		if (kbArticle.isApproved()) {
+			visible = true;
+		}
+
+		String summary = _htmlParser.extractText(
+			StringUtil.shorten(kbArticle.getContent(), 500));
+
+		long classPK = kbArticle.getClassPK();
+
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			classPK = kbArticle.getResourcePrimKey();
+		}
+
+		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
+			userId, kbArticle.getGroupId(), kbArticle.getCreateDate(),
+			kbArticle.getModifiedDate(), KBArticle.class.getName(), classPK,
+			kbArticle.getUuid(), 0, assetCategoryIds, assetTagNames, true,
+			visible, null, null, null, kbArticle.getExpirationDate(),
+			ContentTypes.TEXT_HTML, kbArticle.getTitle(),
+			kbArticle.getDescription(), summary, null, null, 0, 0, null);
+
+		_assetLinkLocalService.updateLinks(
+			userId, assetEntry.getEntryId(), assetLinkEntryIds,
+			AssetLinkConstants.TYPE_RELATED);
 	}
 
 	private void _updatePermissionFields(

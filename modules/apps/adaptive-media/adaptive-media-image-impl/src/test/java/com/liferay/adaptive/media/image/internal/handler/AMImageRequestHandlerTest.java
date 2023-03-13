@@ -45,7 +45,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -269,26 +268,19 @@ public class AMImageRequestHandlerTest {
 			_amImageRequestHandler.handleRequest(httpServletRequest);
 
 		Assert.assertNotNull(adaptiveMedia);
-
 		Assert.assertEquals(
 			_fileVersion.getContentStream(false),
 			adaptiveMedia.getInputStream());
-
 		Assert.assertEquals(
-			Optional.of(_fileVersion.getFileName()),
-			adaptiveMedia.getValueOptional(
-				AMAttribute.getFileNameAMAttribute()));
-
+			_fileVersion.getFileName(),
+			adaptiveMedia.getValue(AMAttribute.getFileNameAMAttribute()));
 		Assert.assertEquals(
-			Optional.of(_fileVersion.getMimeType()),
-			adaptiveMedia.getValueOptional(
-				AMAttribute.getContentTypeAMAttribute()));
-
-		Optional<Long> contentLengthOptional = adaptiveMedia.getValueOptional(
-			AMAttribute.getContentLengthAMAttribute());
-
+			_fileVersion.getMimeType(),
+			adaptiveMedia.getValue(AMAttribute.getContentTypeAMAttribute()));
 		Assert.assertEquals(
-			_fileVersion.getSize(), (long)contentLengthOptional.get());
+			_fileVersion.getSize(),
+			(long)adaptiveMedia.<Long>getValue(
+				AMAttribute.getContentLengthAMAttribute()));
 
 		Mockito.verify(
 			_amAsyncProcessor

@@ -32,7 +32,7 @@ export type APIParametersOptions = {
 	sort?: string;
 };
 
-const getNestedFieldDepth = (nestedFields: string | undefined) => {
+const getNestedFieldDepth = (nestedFields?: string) => {
 	if (!nestedFields) {
 		return 1;
 	}

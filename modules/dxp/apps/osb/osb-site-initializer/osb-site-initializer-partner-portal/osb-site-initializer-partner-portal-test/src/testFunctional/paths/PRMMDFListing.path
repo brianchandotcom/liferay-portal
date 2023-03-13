@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>LISTING_TABLE</td>
-	<td>//table/tbody//th['${key_rowNumber}'][normalize-space(text())='${key_rowValue}']</td>
+	<td>//table/tbody//th['${key_rowNumber}'][normalize-space(text())='${key_rowValue}'] | //table/tbody//th//span['${key_rowNumber}'][normalize-space(text())='${key_rowValue}']</td>
 	<td></td>
 </tr>
 </tbody>

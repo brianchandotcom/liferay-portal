@@ -545,9 +545,9 @@ public class CommerceTermEntryLocalServiceImpl
 
 			cTermEntryLocalization.setCompanyId(companyId);
 			cTermEntryLocalization.setCommerceTermEntryId(commerceTermEntryId);
+			cTermEntryLocalization.setLanguageId(languageId);
 			cTermEntryLocalization.setDescription(description);
 			cTermEntryLocalization.setLabel(label);
-			cTermEntryLocalization.setLanguageId(languageId);
 		}
 		else {
 			cTermEntryLocalization.setDescription(description);

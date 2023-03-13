@@ -71,8 +71,8 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 			new DefaultAnnouncementsAdminViewDisplayContext(
 				_httpServletRequest);
 		_currentURLObj = PortletURLUtil.getCurrent(
-			_liferayPortletRequest, _liferayPortletResponse);
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			liferayPortletRequest, liferayPortletResponse);
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

@@ -137,10 +137,10 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		friendlyURLEntry.setCompanyId(group.getCompanyId());
 
+		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 		friendlyURLEntry.setGroupId(groupId);
 		friendlyURLEntry.setClassNameId(classNameId);
 		friendlyURLEntry.setClassPK(classPK);
-		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {
 			friendlyURLEntryMapping.setFriendlyURLEntryId(friendlyURLEntryId);
@@ -499,9 +499,9 @@ public class FriendlyURLEntryLocalServiceImpl
 		validate(
 			friendlyURLEntry.getGroupId(), classNameId, classPK, urlTitleMap);
 
+		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 		friendlyURLEntry.setClassNameId(classNameId);
 		friendlyURLEntry.setClassPK(classPK);
-		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 
 		friendlyURLEntry = friendlyURLEntryPersistence.update(friendlyURLEntry);
 

@@ -672,10 +672,10 @@ AUI.add(
 					if (sourceLocale !== targetLocale) {
 						const test = 1.1;
 						const sourceDecimalSeparator = test
-							.toLocaleString(sourceLocale.replace('_', '-'))
+							.toLocaleString(sourceLocale.replaceAll('_', '-'))
 							.charAt(1);
 						const targetDecimalSeparator = test
-							.toLocaleString(targetLocale.replace('_', '-'))
+							.toLocaleString(targetLocale.replaceAll('_', '-'))
 							.charAt(1);
 
 						if (sourceDecimalSeparator !== targetDecimalSeparator) {

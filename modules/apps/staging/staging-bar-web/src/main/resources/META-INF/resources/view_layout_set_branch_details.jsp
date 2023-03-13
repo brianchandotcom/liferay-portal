@@ -34,11 +34,11 @@ List<LayoutSetBranch> layoutSetBranches = (List<LayoutSetBranch>)request.getAttr
 	</div>
 
 	<div class="dropdown">
-		<a class="dropdown-toggle form-control form-control-select form-control-sm layout-set-branch-selector staging-variation-selector" data-toggle="liferay-dropdown" href="#1">
+		<button aria-haspopup="true" class="dropdown-toggle form-control form-control-select form-control-sm layout-set-branch-selector staging-variation-selector" data-toggle="liferay-dropdown">
 			<span class="c-inner" tabindex="-1">
 				<liferay-ui:message key="<%= HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(layoutSetBranch)) %>" localizeKey="<%= false %>" />
 			</span>
-		</a>
+		</button>
 
 		<ul class="dropdown-menu">
 

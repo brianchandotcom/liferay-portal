@@ -584,6 +584,14 @@ public class JournalArticleLocalServiceImpl
 		article.setArticleId(articleId);
 		article.setVersion(version);
 		article.setUrlTitle(urlTitleMap.get(LocaleUtil.toLanguageId(locale)));
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(groupId),
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
+		article.setDDMStructureId(ddmStructure.getStructureId());
+
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 		article.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
@@ -835,6 +843,14 @@ public class JournalArticleLocalServiceImpl
 		article.setClassNameId(classNameId);
 		article.setClassPK(classPK);
 		article.setArticleId(articleId);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(groupId),
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
+		article.setDDMStructureId(ddmStructure.getStructureId());
+
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 
@@ -1072,6 +1088,7 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setTreePath(oldArticle.getTreePath());
 		newArticle.setArticleId(newArticleId);
 		newArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
+		newArticle.setDDMStructureId(oldArticle.getDDMStructureId());
 		newArticle.setDDMStructureKey(oldArticle.getDDMStructureKey());
 		newArticle.setDDMTemplateKey(oldArticle.getDDMTemplateKey());
 		newArticle.setDefaultLanguageId(oldArticle.getDefaultLanguageId());
@@ -5836,6 +5853,7 @@ public class JournalArticleLocalServiceImpl
 		article.setFolderId(folderId);
 		article.setTreePath(article.buildTreePath());
 		article.setUrlTitle(urlTitle);
+		article.setDDMStructureId(latestArticle.getDDMStructureId());
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 		article.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
@@ -6359,6 +6377,13 @@ public class JournalArticleLocalServiceImpl
 		_updateArticleLocalizedFields(
 			article.getCompanyId(), article.getId(), titleMap, descriptionMap);
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(groupId),
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
+		article.setDDMStructureId(ddmStructure.getStructureId());
+
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 
@@ -6501,6 +6526,7 @@ public class JournalArticleLocalServiceImpl
 				getUniqueUrlTitle(
 					id, groupId, articleId, title, oldArticle.getUrlTitle(),
 					serviceContext));
+			article.setDDMStructureId(oldArticle.getDDMStructureId());
 			article.setDDMStructureKey(oldArticle.getDDMStructureKey());
 			article.setDDMTemplateKey(oldArticle.getDDMTemplateKey());
 			article.setDefaultLanguageId(

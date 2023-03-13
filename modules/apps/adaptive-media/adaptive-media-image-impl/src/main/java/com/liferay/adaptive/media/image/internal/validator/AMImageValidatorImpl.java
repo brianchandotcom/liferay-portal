@@ -45,7 +45,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,15 +64,12 @@ public class AMImageValidatorImpl implements AMImageValidator {
 			return false;
 		}
 
-		Optional<String> configurationUuidOptional =
-			adaptiveMedia.getValueOptional(
-				AMAttribute.getConfigurationUuidAMAttribute());
+		String configurationUuid = adaptiveMedia.getValue(
+			AMAttribute.getConfigurationUuidAMAttribute());
 
-		if (!configurationUuidOptional.isPresent()) {
+		if (configurationUuid == null) {
 			return true;
 		}
-
-		String configurationUuid = configurationUuidOptional.get();
 
 		if (_amImageEntryLocalService.hasAMImageEntryContent(
 				configurationUuid, fileVersion)) {

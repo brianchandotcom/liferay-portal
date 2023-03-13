@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.mapping.util;
 import com.liferay.dynamic.data.mapping.form.renderer.constants.DDMFormRendererConstants;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Optional;
-
 /**
  * @author Marcos Martins
  * @author Rodrigo Paulino
@@ -34,14 +32,16 @@ public class DDMFormFieldParameterNameUtil {
 	public static String[] getLastDDMFormFieldParameterNameParts(
 		String ddmFormFieldParameterName) {
 
+		String ddmFormFieldParameterNameParts = StringUtil.extractLast(
+			ddmFormFieldParameterName,
+			DDMFormRendererConstants.DDM_FORM_FIELDS_SEPARATOR);
+
+		if (ddmFormFieldParameterNameParts == null) {
+			ddmFormFieldParameterNameParts = ddmFormFieldParameterName;
+		}
+
 		return StringUtil.split(
-			Optional.ofNullable(
-				StringUtil.extractLast(
-					ddmFormFieldParameterName,
-					DDMFormRendererConstants.DDM_FORM_FIELDS_SEPARATOR)
-			).orElse(
-				ddmFormFieldParameterName
-			),
+			ddmFormFieldParameterNameParts,
 			DDMFormRendererConstants.DDM_FORM_FIELD_PARTS_SEPARATOR);
 	}
 

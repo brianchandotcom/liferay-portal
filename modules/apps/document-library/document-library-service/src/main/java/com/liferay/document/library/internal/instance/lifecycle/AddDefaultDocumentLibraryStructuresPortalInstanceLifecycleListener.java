@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.osgi.util.configuration.ConfigurationPersistenceUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -41,7 +42,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -57,6 +57,11 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public long getLastModifiedTime() {
+		return _lastModifiedTime;
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		if (!_dlConfiguration.addDefaultStructures()) {
 			return;
@@ -66,8 +71,10 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	}
 
 	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties) throws Exception {
+		_lastModifiedTime = ConfigurationPersistenceUtil.update(
+			this, properties);
+
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
 	}
@@ -129,6 +136,8 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	private long _lastModifiedTime;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

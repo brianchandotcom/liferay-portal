@@ -160,13 +160,13 @@ else {
 
 	<li class="control-menu-nav-item">
 		<div class="d-none d-sm-block dropdown">
-			<a class="component-action dropdown-toggle taglib-icon" data-toggle="liferay-dropdown" href="javascript:void(0);">
+			<button aria-haspopup="true" class="component-action dropdown-toggle taglib-icon" data-toggle="liferay-dropdown">
 				<aui:icon cssClass="<%= StringPool.BLANK %>" image="ellipsis-v" markupView="lexicon" />
 
 				<span class="sr-only">
 					<liferay-ui:message key="options" />
 				</span>
-			</a>
+			</button>
 
 			<ul class="dropdown-menu dropdown-menu-right" role="menu">
 				<li>

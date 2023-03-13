@@ -37,6 +37,7 @@ const Routines = () => {
 						total: false,
 						untested: false,
 					},
+					columnsFixed: ['name'],
 				}}
 				managementToolbarProps={{
 					addButton: () => navigate('create'),

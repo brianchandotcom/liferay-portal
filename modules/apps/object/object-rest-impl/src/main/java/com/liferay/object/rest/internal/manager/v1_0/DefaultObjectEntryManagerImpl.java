@@ -1075,8 +1075,7 @@ public class DefaultObjectEntryManagerImpl
 		throws Exception {
 
 		return DTOConverterUtil.toDTO(
-			baseModel, _dtoConverterRegistry,
-			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor(),
+			baseModel, _dtoConverterRegistry, systemObjectDefinitionMetadata,
 			_userLocalService.getUser(serviceBuilderObjectEntry.getUserId()));
 	}
 

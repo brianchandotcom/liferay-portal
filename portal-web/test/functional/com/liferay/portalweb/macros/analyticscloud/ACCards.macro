@@ -71,6 +71,12 @@ definition {
 		}
 	}
 
+	macro viewCardDataIsPresent {
+		AssertElementPresent(
+			key_cardName = ${cardName},
+			locator1 = "ACCards#CHART_DATA_PRESENT");
+	}
+
 	macro viewCards {
 		var key_cardTitle = ${cardTitle};
 

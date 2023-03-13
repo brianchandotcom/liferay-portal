@@ -514,9 +514,9 @@ public class CPTestUtil {
 
 		CPInstance cpInstance = addCPInstanceFromCatalog(groupId);
 
+		cpInstance.setExternalReferenceCode(externalReferenceCode);
 		cpInstance.setSku(sku);
 		cpInstance.setPrice(price);
-		cpInstance.setExternalReferenceCode(externalReferenceCode);
 
 		cpInstance = CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
 

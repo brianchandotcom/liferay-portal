@@ -772,7 +772,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-04 16:18:50</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:17</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:09:05</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.data.engine.rest.impl.jar!json-path.jar</file-name>
@@ -800,7 +800,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-19 18:35:18</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:47</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:10:19</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.diff.impl.jar!java-diff.jar</file-name>
@@ -1453,7 +1453,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-04 16:18:50</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:17</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:09:05</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!archaius-core.jar</file-name>
@@ -1550,7 +1550,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-19 18:35:18</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:47</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:10:19</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!rxjava.jar</file-name>
@@ -1632,7 +1632,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-04 16:18:50</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:17</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:09:05</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.service.jar!json-path.jar</file-name>
@@ -1660,7 +1660,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-19 18:35:18</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:47</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:10:19</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.service.jar!xmlbeans.jar</file-name>
@@ -2187,7 +2187,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-04 16:18:50</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:17</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:09:05</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.oauth.client.persistence.service.jar!activation.jar</file-name>
@@ -2284,7 +2284,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-19 18:35:18</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:47</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:10:19</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.oauth.client.persistence.service.jar!lang-tag.jar</file-name>
@@ -2316,7 +2316,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.oauth.client.persistence.service.jar!oauth2-oidc-sdk.jar</file-name>
-				<version>8.4.3</version>
+				<version>8.11</version>
 				<project-name>OAuth 2.0 SDK with OpenID Connect extensions</project-name>
 				<project-url>https://connect2id.com</project-url>
 				<licenses>
@@ -2325,7 +2325,7 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html‎</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2020-05-31 11:45:35</current-version-publish-date>
+				<current-version-publish-date>2020-06-28 11:51:04</current-version-publish-date>
 				<latest-version-publish-date>2023-02-16 11:03:26</latest-version-publish-date>
 			</library>
 			<library>
@@ -3820,7 +3820,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-04 16:18:50</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:17</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:09:05</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!activation.jar</file-name>
@@ -3917,7 +3917,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-19 18:35:18</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:47</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:10:19</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!lang-tag.jar</file-name>
@@ -3949,7 +3949,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!oauth2-oidc-sdk.jar</file-name>
-				<version>8.4.3</version>
+				<version>8.11</version>
 				<project-name>OAuth 2.0 SDK with OpenID Connect extensions</project-name>
 				<project-url>https://connect2id.com</project-url>
 				<licenses>
@@ -3958,7 +3958,7 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html‎</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2020-05-31 11:45:35</current-version-publish-date>
+				<current-version-publish-date>2020-06-28 11:51:04</current-version-publish-date>
 				<latest-version-publish-date>2023-02-16 11:03:26</latest-version-publish-date>
 			</library>
 			<library>
@@ -3973,7 +3973,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-04 16:18:50</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:17</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:09:05</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!content-type.jar</file-name>
@@ -4015,7 +4015,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-04-19 18:35:18</current-version-publish-date>
-				<latest-version-publish-date>2022-02-13 07:37:47</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 14:10:19</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!lang-tag.jar</file-name>
@@ -4047,7 +4047,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!oauth2-oidc-sdk.jar</file-name>
-				<version>8.4.3</version>
+				<version>8.11</version>
 				<project-name>OAuth 2.0 SDK with OpenID Connect extensions</project-name>
 				<project-url>https://connect2id.com</project-url>
 				<licenses>
@@ -4056,7 +4056,7 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html‎</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2020-05-31 11:45:35</current-version-publish-date>
+				<current-version-publish-date>2020-06-28 11:51:04</current-version-publish-date>
 				<latest-version-publish-date>2023-02-16 11:03:26</latest-version-publish-date>
 			</library>
 			<library>
@@ -4249,7 +4249,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-11 22:22:38</current-version-publish-date>
-				<latest-version-publish-date>2023-02-21 18:27:05</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 19:24:30</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-http-client-apache-v2.jar</file-name>
@@ -4442,7 +4442,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-09-29 19:48:45</current-version-publish-date>
-				<latest-version-publish-date>2023-02-16 19:04:28</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 22:39:39</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!protobuf-java.jar</file-name>
@@ -4456,7 +4456,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-09-29 19:48:48</current-version-publish-date>
-				<latest-version-publish-date>2023-02-16 19:03:31</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 22:39:09</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!threetenbp.jar</file-name>
@@ -4484,7 +4484,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:54:32</current-version-publish-date>
-				<latest-version-publish-date>2023-03-03 21:38:06</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-08 21:59:20</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
@@ -4498,7 +4498,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:54:29</current-version-publish-date>
-				<latest-version-publish-date>2023-03-03 21:38:33</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-08 21:59:44</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
@@ -4512,7 +4512,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:53:45</current-version-publish-date>
-				<latest-version-publish-date>2023-03-03 21:37:26</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-08 21:59:17</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!commons-logging.jar</file-name>
@@ -5064,7 +5064,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-09-19 05:40:06</current-version-publish-date>
-				<latest-version-publish-date>2023-01-24 02:12:09</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 03:45:31</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java-kickstart.jar</file-name>
@@ -5217,7 +5217,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-08-28 07:25:52</current-version-publish-date>
-				<latest-version-publish-date>2022-09-12 23:26:01</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 06:44:52</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!javassist.jar</file-name>
@@ -6488,7 +6488,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-11 22:22:38</current-version-publish-date>
-				<latest-version-publish-date>2023-02-21 18:27:05</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 19:24:30</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!google-http-client-apache-v2.jar</file-name>
@@ -6695,7 +6695,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-09-29 19:48:45</current-version-publish-date>
-				<latest-version-publish-date>2023-02-16 19:04:28</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 22:39:39</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!protobuf-java.jar</file-name>
@@ -6709,7 +6709,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-09-29 19:48:48</current-version-publish-date>
-				<latest-version-publish-date>2023-02-16 19:03:31</latest-version-publish-date>
+				<latest-version-publish-date>2023-03-07 22:39:09</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!threetenbp.jar</file-name>

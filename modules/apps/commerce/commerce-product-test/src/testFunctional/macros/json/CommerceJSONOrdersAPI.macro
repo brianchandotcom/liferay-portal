@@ -192,6 +192,43 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
+	macro _addCommerceOrderNote {
+		Variables.assertDefined(parameterList = ${content});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(orderId))) {
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
+		}
+
+		if (!(isSet(restricted))) {
+			var restricted = "false";
+		}
+
+		if (!(isSet(userEmail))) {
+			var userEmail = "test";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId}/orderNotes \
+				-u ${userEmail}@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"content": "${content}",
+					"restricted": ${restricted}
+				}'
+		''';
+
+		var responseBody = JSONCurlUtil.post(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _addOrderRule {
 		Variables.assertDefined(parameterList = "${orderRuleName},${orderRuleType},${applyTo}");
 
@@ -489,6 +526,53 @@ definition {
 		return ${response};
 	}
 
+	macro _patchCommerceOrderNote {
+		Variables.assertDefined(parameterList = ${orderNoteId});
+
+		var baseURL = ${baseURL};
+		var fieldsList = ListUtil.newList();
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(content)) {
+			var content = '''"content": "${content}"''';
+
+			ListUtil.add(${fieldsList}, ${content});
+		}
+
+		if (isSet(restricted)) {
+			var restricted = '''"restricted": ${restricted}''';
+
+			ListUtil.add(${fieldsList}, ${restricted});
+		}
+
+		if (!(isSet(userEmail))) {
+			var userEmail = "test";
+		}
+
+		var fieldsList = ListUtil.toString(${fieldsList});
+
+		echo("Fieldlist: ${fieldsList}");
+
+		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = ${fieldsList});
+
+		echo("payload: ${payload}");
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/orderNotes/${orderNoteId} \
+				-u ${userEmail}@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{${payload}}'
+		''';
+
+		var responseBody = JSONCurlUtil.patch(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _updateCommerceOrderERC {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
@@ -536,6 +620,20 @@ definition {
 			password = ${password});
 
 		var fieldValue = JSONUtil.getWithJSONPath(${response}, ${jsonPath});
+
+		return ${fieldValue};
+	}
+
+	macro getOrderNotePostRequestField {
+		Variables.assertDefined(parameterList = "${content},${field}");
+
+		var responseBody = CommerceJSONOrdersAPI._addCommerceOrderNote(
+			content = ${content},
+			orderId = ${orderId},
+			restricted = ${restricted},
+			userEmail = ${userEmail});
+
+		var fieldValue = JSONUtil.getWithJSONPath(${responseBody}, "$..['${field}']");
 
 		return ${fieldValue};
 	}

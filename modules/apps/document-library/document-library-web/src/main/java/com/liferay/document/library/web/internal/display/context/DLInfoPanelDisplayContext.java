@@ -50,7 +50,7 @@ public class DLInfoPanelDisplayContext {
 	public DLInfoPanelDisplayContext(HttpServletRequest httpServletRequest) {
 		_httpServletRequest = httpServletRequest;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = _themeDisplay.getPermissionChecker();

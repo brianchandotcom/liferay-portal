@@ -419,6 +419,7 @@ definition {
 	@priority = 5
 	test FilterDisplayedAssetsByCategory {
 		property portal.acceptance = "true";
+		property testray.component.names = "Item Selector";
 
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
@@ -1359,6 +1360,7 @@ definition {
 	@priority = 5
 	test ViewDetailsOfDisplayedAssets {
 		property portal.acceptance = "true";
+		property testray.component.names = "Item Selector";
 
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(

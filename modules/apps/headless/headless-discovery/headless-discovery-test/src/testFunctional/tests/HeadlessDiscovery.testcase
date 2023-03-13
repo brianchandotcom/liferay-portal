@@ -48,9 +48,7 @@ definition {
 		}
 
 		task ("When executing query structured content title") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
+			var siteId = JSONGroupSetter.setGroupId(groupName = "Guest");
 
 			APIExplorer.executeGraphqlQuery(query = "query {structuredContents(siteKey:\"${siteId}\"){items{title}}}");
 		}
@@ -79,9 +77,7 @@ definition {
 		}
 
 		task ("When executing query taxonomy vocabulary name") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
+			var siteId = JSONGroupSetter.setGroupId(groupName = "Guest");
 
 			APIExplorer.executeGraphqlQuery(query = "query{taxonomyVocabularies(siteKey:\"${siteId}\"){items{name}}}");
 		}
@@ -110,9 +106,7 @@ definition {
 		}
 
 		task ("When executing query blog headline") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
+			var siteId = JSONGroupSetter.setGroupId(groupName = "Guest");
 
 			APIExplorer.executeGraphqlQuery(query = "query{blogPostings(siteKey:\"${siteId}\"){items{headline}}}");
 		}
@@ -225,10 +219,6 @@ definition {
 		}
 
 		task ("When executing getSiteBlogPosingPage with siteID as the parameter") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
-
 			APIExplorer.executeAPIMethodWithParameters(
 				method = "getSiteBlogPostingsPage",
 				parameter = "siteId",
@@ -254,10 +244,6 @@ definition {
 		}
 
 		task ("When executing getSiteKeywordsPage with siteID as the parameter") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
-
 			APIExplorer.executeAPIMethodWithParameters(
 				method = "getSiteKeywordsPage",
 				parameter = "siteId",
@@ -283,10 +269,6 @@ definition {
 		}
 
 		task ("When executing getSiteStructuredContentsPage with siteID as the parameter") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
-
 			APIExplorer.executeAPIMethodWithParameters(
 				method = "getSiteStructuredContentsPage",
 				parameter = "siteId",
@@ -318,9 +300,6 @@ definition {
 		}
 
 		task ("When executing postSiteTaxonomyVocabulary with siteID as the parameter") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
 			var requestBody = '''{"name": "Vocubulary Name"}''';
 
 			APIExplorer.executeAPIMethodWithParameters(
@@ -388,9 +367,6 @@ definition {
 		}
 
 		task ("When executing postSiteStructuredContentDraft with siteID as the parameter and structuredId in the body") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
 			var requestBody = '''
 				{
 					"contentStructureId": ${ddmStructureId},
@@ -463,9 +439,6 @@ definition {
 		}
 
 		task ("When executing postSiteStructuredContent with siteID as the parameter and structuredId in the body") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
 			var requestBody = '''
 				{
 					"contentStructureId": ${ddmStructureId},
@@ -529,10 +502,6 @@ definition {
 		}
 
 		task ("When executing getSiteStructuredContentsPage with siteID as the parameter") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
-
 			APIExplorer.executeAPIMethodWithParameters(
 				method = "getSiteStructuredContentsPage",
 				parameter = "siteId",
@@ -578,10 +547,6 @@ definition {
 		}
 
 		task ("When executing getSiteTaxonomyVocabulariesPage with siteID as the parameter") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
-
 			APIExplorer.executeAPIMethodWithParameters(
 				method = "getSiteTaxonomyVocabulariesPage",
 				parameter = "siteId",
@@ -628,10 +593,6 @@ definition {
 		}
 
 		task ("When executing getSiteStructuredContentsPage with siteID as the parameter") {
-			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "Guest",
-				site = "true");
-
 			APIExplorer.executeAPIMethodWithParameters(
 				method = "getSiteStructuredContentsPage",
 				parameter = "siteId",

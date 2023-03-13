@@ -262,14 +262,6 @@ public class DocumentDTOConverter
 		return ddmStructure.getStructureId();
 	}
 
-	private <T, S> T _getValue(
-		AdaptiveMedia<S> adaptiveMedia, AMAttribute<S, T> amAttribute) {
-
-		Optional<T> valueOptional = adaptiveMedia.getValueOptional(amAttribute);
-
-		return valueOptional.orElse(null);
-	}
-
 	private AdaptedImage _toAdaptedImage(
 			AdaptiveMedia<AMImageProcessor> adaptiveMedia,
 			Optional<UriInfo> uriInfoOptional)
@@ -285,15 +277,14 @@ public class DocumentDTOConverter
 				contentValue = ContentValueUtil.toContentValue(
 					"adaptedImages.contentValue", adaptiveMedia::getInputStream,
 					uriInfoOptional);
-				height = _getValue(
-					adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
-				resolutionName = _getValue(
-					adaptiveMedia,
+				height = adaptiveMedia.getValue(
+					AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
+				resolutionName = adaptiveMedia.getValue(
 					AMAttribute.getConfigurationUuidAMAttribute());
-				sizeInBytes = _getValue(
-					adaptiveMedia, AMAttribute.getContentLengthAMAttribute());
-				width = _getValue(
-					adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
+				sizeInBytes = adaptiveMedia.getValue(
+					AMAttribute.getContentLengthAMAttribute());
+				width = adaptiveMedia.getValue(
+					AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
 			}
 		};
 	}

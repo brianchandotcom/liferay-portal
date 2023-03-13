@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author Jeyvison Nascimento
@@ -70,13 +69,9 @@ public class DataRecordExporter {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		Stream<DataRecord> stream = dataRecords.parallelStream();
-
-		stream.map(
-			record -> _toJSON(dataDefinition, record)
-		).forEach(
-			jsonArray::put
-		);
+		for (DataRecord record : dataRecords) {
+			jsonArray.put(_toJSON(dataDefinition, record));
+		}
 
 		return jsonArray.toString();
 	}

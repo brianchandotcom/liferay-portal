@@ -159,7 +159,7 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		if (isSet(noSelenium)) {
+		if (${noSelenium} == "true") {
 			var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = ${portalURL});
 		}
 		else {

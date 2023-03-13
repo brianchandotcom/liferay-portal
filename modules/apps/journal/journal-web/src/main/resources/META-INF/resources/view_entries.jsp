@@ -114,7 +114,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										<clay:link
 											cssClass="d-block lfr-portal-tooltip text-dark text-truncate"
 											href="<%= editURL %>"
-											label="<%= HtmlUtil.escape(title) %>"
+											label="<%= title %>"
 											title="<%= HtmlUtil.escape(title) %>"
 										/>
 									</c:when>

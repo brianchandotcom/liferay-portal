@@ -20,7 +20,6 @@ import com.liferay.adaptive.media.AdaptiveMedia;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Adolfo Pérez
@@ -45,28 +44,23 @@ public class AMPropertyDistanceComparator
 			AMAttribute<AMImageProcessor, Object> amAttribute =
 				(AMAttribute<AMImageProcessor, Object>)entry.getKey();
 
-			Object requestedValue = entry.getValue();
+			Object value1 = adaptiveMedia1.getValue(amAttribute);
+			Object value2 = adaptiveMedia2.getValue(amAttribute);
 
-			Optional<?> valueOptional1 = adaptiveMedia1.getValueOptional(
-				amAttribute);
+			if ((value1 != null) && (value2 != null)) {
+				Object requestedValue = entry.getValue();
 
-			Optional<Long> valueDistanceOptional1 = valueOptional1.map(
-				value1 -> amAttribute.distance(value1, requestedValue));
+				long valueDistance1 = amAttribute.distance(
+					value1, requestedValue);
 
-			Optional<?> valueOptional2 = adaptiveMedia2.getValueOptional(
-				amAttribute);
+				long valueDistance2 = amAttribute.distance(
+					value2, requestedValue);
 
-			Optional<Long> valueDistanceOptional2 = valueOptional2.map(
-				value2 -> amAttribute.distance(value2, requestedValue));
+				long result = valueDistance1 - valueDistance2;
 
-			Optional<Long> resultOptional = valueDistanceOptional1.flatMap(
-				value1 -> valueDistanceOptional2.map(
-					value2 -> value1 - value2));
-
-			long result = resultOptional.orElse(0L);
-
-			if (result != 0) {
-				return result;
+				if (result != 0) {
+					return result;
+				}
 			}
 		}
 

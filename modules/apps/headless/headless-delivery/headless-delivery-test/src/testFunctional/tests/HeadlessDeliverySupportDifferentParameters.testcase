@@ -30,9 +30,7 @@ definition {
 		}
 
 		task ("Given a content structure created in asset library") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
-			WebContentNavigator.openWebContentStructuresAdminInAssetLibrary(depotId = ${assetLibraryId});
+			WebContentNavigator.openWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 			WebContentStructures.addCP(structureName = "content-structure");
 
@@ -44,13 +42,12 @@ definition {
 		}
 
 		task ("Given a structured content is created with a POST request in asset library") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
 				ddmStructureId = ${ddmStructureId},
+				depotName = "Test Depot Name",
 				label = "Text",
 				name = "Text",
 				title = "WC WebContent Title");
@@ -58,7 +55,7 @@ definition {
 
 		task ("When with curl I request GET getAssetLibraryContentElementsPage with assetLibraryId and fields=content.assetLibraryKey") {
 			var response = ContentElementAPI.getAssetLibraryContentElementsByDifferentParameters(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				fieldValue = "content.assetLibraryKey",
 				parameter = "fields");
 		}
@@ -79,17 +76,15 @@ definition {
 		}
 
 		task ("Given a Web Content Folder created") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
 
 		task ("When with curl I request GET getAssetLibraryStructuredContentFoldersPage with assetLibraryId and nestedFields = profileURL") {
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersWithDifferentParameters(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				parameter = "nestedFields",
 				parameterValue = "profileURL");
 		}

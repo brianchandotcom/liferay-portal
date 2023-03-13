@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -93,6 +95,7 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 				layoutSet.getTheme(), layoutSet.getColorScheme());
 
 			themeDisplay.setPlid(layout.getPlid());
+			themeDisplay.setScopeGroupId(layout.getGroupId());
 		}
 
 		if (!LayoutPermissionUtil.containsLayoutUpdatePermission(
@@ -107,6 +110,8 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 		long[] currentSegmentsExperienceIds = GetterUtil.getLongValues(
 			httpServletRequest.getAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));
+		Layout currentLayout = (Layout)httpServletRequest.getAttribute(
+			WebKeys.LAYOUT);
 		boolean currentPortletDecorate = GetterUtil.getBoolean(
 			httpServletRequest.getAttribute(WebKeys.PORTLET_DECORATE));
 
@@ -150,6 +155,18 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 				layout.setType(LayoutConstants.TYPE_CONTENT);
 			}
 
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ServiceContext clonedServiceContext =
+				(ServiceContext)serviceContext.clone();
+
+			clonedServiceContext.setPlid(layout.getPlid());
+			clonedServiceContext.setScopeGroupId(layout.getGroupId());
+
+			ServiceContextThreadLocal.pushServiceContext(clonedServiceContext);
+
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 			httpServletRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, themeDisplay);
 
@@ -182,10 +199,13 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			httpServletRequest.setAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
 				currentSegmentsExperienceIds);
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, currentLayout);
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DECORATE, currentPortletDecorate);
 			httpServletRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, currentThemeDisplay);
+
+			ServiceContextThreadLocal.popServiceContext();
 		}
 
 		return null;

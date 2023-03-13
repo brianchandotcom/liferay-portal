@@ -61,7 +61,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -352,15 +351,27 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 		SimilarResultsDocumentDisplayContext
 			similarResultsDocumentDisplayContext) {
 
-		Optional<String> dateStringOptional = SearchStringUtil.maybe(
+		String dateString = SearchStringUtil.maybe(
 			_getFieldValueString(Field.CREATE_DATE));
 
-		Optional<Date> dateOptional = dateStringOptional.map(
-			this::_parseDateStringFieldValue);
+		if (dateString == null) {
+			return;
+		}
 
-		dateOptional.ifPresent(
-			date -> similarResultsDocumentDisplayContext.setCreationDateString(
-				_formatCreationDate(date)));
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+
+		try {
+			Date date = dateFormat.parse(dateString);
+
+			if (date != null) {
+				similarResultsDocumentDisplayContext.setCreationDateString(
+					_formatCreationDate(date));
+			}
+		}
+		catch (Exception exception) {
+			throw new IllegalArgumentException(
+				"Unable to parse date string: " + dateString, exception);
+		}
 	}
 
 	private void _buildCreatorUserName(
@@ -597,7 +608,7 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 
 		SimilarResultsPortletPreferences similarResultsPortletPreferences =
 			new SimilarResultsPortletPreferencesImpl(
-				Optional.of(_renderRequest.getPreferences()));
+				_renderRequest.getPreferences());
 
 		if (Objects.equals(
 				similarResultsPortletPreferences.getLinkBehavior(),
@@ -690,19 +701,6 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 			destinationBuilderImpl, destinationHelper);
 
 		return destinationBuilderImpl.build();
-	}
-
-	private Date _parseDateStringFieldValue(String dateStringFieldValue) {
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-
-		try {
-			return dateFormat.parse(dateStringFieldValue);
-		}
-		catch (Exception exception) {
-			throw new IllegalArgumentException(
-				"Unable to parse date string: " + dateStringFieldValue,
-				exception);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

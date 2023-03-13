@@ -27,7 +27,7 @@ import {APIResponse} from '../../services/rest';
 import {Action, SortDirection, SortOption} from '../../types';
 import ContextMenu from '../ContextMenu';
 
-type Column<T = any> = {
+export type Column<T = any> = {
 	clickable?: boolean;
 	key: string;
 	render?: (

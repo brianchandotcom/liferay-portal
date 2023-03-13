@@ -90,12 +90,12 @@ public class EditFragmentEntryDisplayContext {
 
 		_fragmentCollectionContributorRegistry =
 			(FragmentCollectionContributorRegistry)
-				_httpServletRequest.getAttribute(
+				httpServletRequest.getAttribute(
 					FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 		_fragmentEntryProcessorRegistry =
-			(FragmentEntryProcessorRegistry)_httpServletRequest.getAttribute(
+			(FragmentEntryProcessorRegistry)httpServletRequest.getAttribute(
 				FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY);
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_setViewAttributes();

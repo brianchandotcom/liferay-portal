@@ -33,7 +33,7 @@ public class OAuth2ApplicationFeatureUpgradeProcess extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select oAuth2ApplicationId, features from OAuth2Application " +
-					"where features is not NULL");
+					"where features IS NOT NULL");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

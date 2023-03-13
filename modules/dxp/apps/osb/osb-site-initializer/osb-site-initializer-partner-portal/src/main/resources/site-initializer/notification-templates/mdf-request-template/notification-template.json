@@ -12,7 +12,7 @@
 				"en-US": "Partner Portal"
 			},
 			"to": {
-				"en-US": "[%RETRIEVEEMAIL%]"
+				"en-US": "liferay@liferay.com"
 			}
 		}
 	],

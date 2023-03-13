@@ -14,13 +14,16 @@
 
 package com.liferay.jenkins.plugin.events.publisher;
 
+import com.liferay.jenkins.plugin.events.jms.JMSConnection;
+import com.liferay.jenkins.plugin.events.jms.JMSFactory;
+import com.liferay.jenkins.plugin.events.jms.JMSQueue;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -49,6 +52,19 @@ public class JenkinsPublisher {
 			"computerTemporarilyOffline");
 		computerTemporarilyOnline = jsonObject.getBoolean(
 			"computerTemporarilyOnline");
+
+		jmsRequest = jsonObject.has("jmsRequest");
+
+		if (jmsRequest) {
+			JSONObject jmsRequestJSONObject = jsonObject.getJSONObject(
+				"jmsRequest");
+
+			inboundJMSQueueName = jmsRequestJSONObject.optString(
+				"inboundJMSQueueName");
+			outboundJMSQueueName = jmsRequestJSONObject.optString(
+				"outboundJMSQueueName");
+		}
+
 		queueItemEnterBlocked = jsonObject.getBoolean("queueItemEnterBlocked");
 		queueItemEnterBuildable = jsonObject.getBoolean(
 			"queueItemEnterBuildable");
@@ -59,11 +75,17 @@ public class JenkinsPublisher {
 		queueItemLeaveWaiting = jsonObject.getBoolean("queueItemLeaveWaiting");
 		queueItemLeft = jsonObject.getBoolean("queueItemLeft");
 		url = jsonObject.getString("url");
+		userName = jsonObject.getString("userName");
+		userPassword = jsonObject.getString("userPassword");
 
 		_initializeEventTypes();
 	}
 
 	public boolean containsEventTrigger(EventTrigger eventTrigger) {
+		if (eventTrigger == null) {
+			return false;
+		}
+
 		if (_eventTriggers.contains(eventTrigger)) {
 			return true;
 		}
@@ -71,88 +93,18 @@ public class JenkinsPublisher {
 		return false;
 	}
 
-	public URL getURL() {
-		try {
-			return new URL(url);
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
-	}
-
 	public void publish(String payload, EventTrigger eventTrigger) {
 		if (!_eventTriggers.contains(eventTrigger)) {
 			return;
 		}
 
-		HttpURLConnection httpURLConnection = null;
+		if (jmsRequest) {
+			_publishJMS(payload, eventTrigger);
 
-		try {
-			URL url = getURL();
-
-			httpURLConnection = (HttpURLConnection)url.openConnection();
-
-			httpURLConnection.setDoOutput(true);
-			httpURLConnection.setRequestMethod("POST");
-			httpURLConnection.setRequestProperty(
-				"Authorization", _getAuthorizationHeader());
-
-			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-				httpURLConnection.getOutputStream());
-
-			outputStreamWriter.write(payload);
-
-			outputStreamWriter.flush();
-
-			outputStreamWriter.close();
-
-			try (InputStream errorInputStream =
-					httpURLConnection.getErrorStream()) {
-
-				if (errorInputStream != null) {
-					ByteArrayOutputStream byteArrayOutputStream =
-						new ByteArrayOutputStream();
-
-					int b;
-					byte[] bytes = new byte[1024];
-
-					while ((b = errorInputStream.read(bytes)) != -1) {
-						byteArrayOutputStream.write(bytes, 0, b);
-					}
-
-					throw new RuntimeException(
-						byteArrayOutputStream.toString("UTF-8"));
-				}
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
-
-			try (InputStream inputStream = httpURLConnection.getInputStream()) {
-				if (inputStream != null) {
-					ByteArrayOutputStream byteArrayOutputStream =
-						new ByteArrayOutputStream();
-
-					int b;
-					byte[] bytes = new byte[1024];
-
-					while ((b = inputStream.read(bytes)) != -1) {
-						byteArrayOutputStream.write(bytes, 0, b);
-					}
-				}
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
+			return;
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-		finally {
-			if (httpURLConnection != null) {
-				httpURLConnection.disconnect();
-			}
-		}
+
+		_publishHttp(payload, eventTrigger);
 	}
 
 	public boolean buildCompleted;
@@ -163,6 +115,9 @@ public class JenkinsPublisher {
 	public boolean computerOnline;
 	public boolean computerTemporarilyOffline;
 	public boolean computerTemporarilyOnline;
+	public String inboundJMSQueueName;
+	public boolean jmsRequest;
+	public String outboundJMSQueueName;
 	public boolean queueItemEnterBlocked;
 	public boolean queueItemEnterBuildable;
 	public boolean queueItemEnterWaiting;
@@ -171,6 +126,8 @@ public class JenkinsPublisher {
 	public boolean queueItemLeaveWaiting;
 	public boolean queueItemLeft;
 	public String url;
+	public String userName;
+	public String userPassword;
 
 	public enum EventTrigger {
 
@@ -188,7 +145,7 @@ public class JenkinsPublisher {
 
 		sb.append("Basic ");
 
-		String userNamePassword = "admin:admin";
+		String userNamePassword = userName + ":" + userPassword;
 
 		Base64.Encoder base64Encoder = Base64.getEncoder();
 
@@ -259,6 +216,96 @@ public class JenkinsPublisher {
 		if (queueItemLeft) {
 			_eventTriggers.add(EventTrigger.QUEUE_ITEM_LEFT);
 		}
+	}
+
+	private void _publishHttp(String payload, EventTrigger eventTrigger) {
+		if (!_eventTriggers.contains(eventTrigger)) {
+			return;
+		}
+
+		HttpURLConnection httpURLConnection = null;
+
+		try {
+			URL url = new URL(this.url);
+
+			httpURLConnection = (HttpURLConnection)url.openConnection();
+
+			httpURLConnection.setDoOutput(true);
+			httpURLConnection.setRequestMethod("POST");
+			httpURLConnection.setRequestProperty(
+				"Authorization", _getAuthorizationHeader());
+
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+				httpURLConnection.getOutputStream());
+
+			outputStreamWriter.write(payload);
+
+			outputStreamWriter.flush();
+
+			outputStreamWriter.close();
+
+			try (InputStream errorInputStream =
+					httpURLConnection.getErrorStream()) {
+
+				if (errorInputStream != null) {
+					ByteArrayOutputStream byteArrayOutputStream =
+						new ByteArrayOutputStream();
+
+					int b;
+					byte[] bytes = new byte[1024];
+
+					while ((b = errorInputStream.read(bytes)) != -1) {
+						byteArrayOutputStream.write(bytes, 0, b);
+					}
+
+					throw new RuntimeException(
+						byteArrayOutputStream.toString("UTF-8"));
+				}
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+
+			try (InputStream inputStream = httpURLConnection.getInputStream()) {
+				if (inputStream != null) {
+					ByteArrayOutputStream byteArrayOutputStream =
+						new ByteArrayOutputStream();
+
+					int b;
+					byte[] bytes = new byte[1024];
+
+					while ((b = inputStream.read(bytes)) != -1) {
+						byteArrayOutputStream.write(bytes, 0, b);
+					}
+				}
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+		finally {
+			if (httpURLConnection != null) {
+				httpURLConnection.disconnect();
+			}
+		}
+	}
+
+	private void _publishJMS(String payload, EventTrigger eventTrigger) {
+		if (!_eventTriggers.contains(eventTrigger) ||
+			(outboundJMSQueueName == null) || outboundJMSQueueName.isEmpty()) {
+
+			return;
+		}
+
+		JMSConnection jmsConnection = JMSFactory.newJMSConnection(url);
+
+		JMSQueue jmsQueue = JMSFactory.newJMSQueue(
+			jmsConnection, outboundJMSQueueName);
+
+		jmsQueue.publish(payload);
 	}
 
 	private final List<EventTrigger> _eventTriggers = new ArrayList<>();

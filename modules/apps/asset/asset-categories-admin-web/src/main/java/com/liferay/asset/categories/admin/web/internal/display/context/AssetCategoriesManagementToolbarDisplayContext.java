@@ -267,6 +267,11 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isSelectable() {
+		return _assetCategoriesDisplayContext.isShowCategoriesSelectButton();
+	}
+
+	@Override
 	public Boolean isShowCreationMenu() {
 		return _assetCategoriesDisplayContext.isShowCategoriesAddButton();
 	}

@@ -208,11 +208,13 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public List<CommerceAddress> getBillingCommerceAddresses(
-			long commerceAccountId, long companyId)
+			long commerceAccountId)
 		throws PortalException {
 
 		return _commerceAddressService.getBillingCommerceAddresses(
-			companyId, AccountEntry.class.getName(), commerceAccountId);
+			_commerceContext.getCommerceChannelId(),
+			AccountEntry.class.getName(), commerceAccountId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	public CommerceAccount getCommerceAccount() {
@@ -968,11 +970,13 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public List<CommerceAddress> getShippingCommerceAddresses(
-			long commerceAccountId, long companyId)
+			long commerceAccountId)
 		throws PortalException {
 
 		return _commerceAddressService.getShippingCommerceAddresses(
-			companyId, AccountEntry.class.getName(), commerceAccountId);
+			_commerceContext.getCommerceChannelId(),
+			AccountEntry.class.getName(), commerceAccountId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	public PortletURL getTransitionOrderPortletURL() throws PortalException {

@@ -1,5 +1,13 @@
 [
 	{
+		"key": "submitted",
+		"name": "Submitted",
+		"name_i18n": {
+			"en-US": "Submitted"
+		},
+		"type": "string"
+	},
+	{
 		"key": "approved",
 		"name": "Approved",
 		"name_i18n": {

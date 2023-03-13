@@ -57,7 +57,7 @@ public class WikiSearchDisplayContext {
 		_renderResponse = renderResponse;
 		_wikiPortletInstanceSettingsHelper = wikiPortletInstanceSettingsHelper;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

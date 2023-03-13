@@ -118,8 +118,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_stagingGroupHelper = stagingGroupHelper;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			httpServletRequest);
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

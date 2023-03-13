@@ -101,6 +101,11 @@ $toolbarZIndex: 971;
 		margin-left: 40px;
 
 		transition: margin-left 0.25s ease-in-out;
+
+		.lfr-portal-tooltip.taglib-icon-help {
+			position: relative;
+			top: 3px;
+		}
 	}
 
 	.knowledge-base-vertical-bar.expanded + .knowledge-base-admin-content {

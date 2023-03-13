@@ -45,7 +45,7 @@ public class DDMStructureContentDashboardItemSubtype
 		_infoItemReference = new InfoItemReference(
 			JournalArticle.class.getName(),
 			new ClassNameClassPKInfoItemIdentifier(
-				DDMStructure.class.getName(), _ddmStructure.getStructureId()));
+				DDMStructure.class.getName(), ddmStructure.getStructureId()));
 	}
 
 	@Override

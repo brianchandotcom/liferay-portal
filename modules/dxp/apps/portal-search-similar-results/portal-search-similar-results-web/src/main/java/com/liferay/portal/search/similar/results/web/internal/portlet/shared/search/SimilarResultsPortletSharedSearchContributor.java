@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -67,26 +68,42 @@ public class SimilarResultsPortletSharedSearchContributor
 	public void contribute(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		Optional<SimilarResultsRoute> optional =
+		SimilarResultsRoute similarResultsRoute =
 			similarResultsContributorsRegistry.detectRoute(
 				_getURLString(portletSharedSearchSettings));
 
-		optional.flatMap(
-			similarResultsRoute -> _getSimilarResultsInputOptional(
-				getGroupId(portletSharedSearchSettings), similarResultsRoute)
-		).ifPresent(
-			similarResultsInput -> contribute(
-				similarResultsInput, portletSharedSearchSettings)
-		);
+		if (similarResultsRoute == null) {
+			return;
+		}
+
+		SimilarResultsContributor similarResultsContributor =
+			similarResultsRoute.getContributor();
+
+		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
+
+		CriteriaHelper criteriaHelper = new CriteriaHelperImpl(
+			getGroupId(portletSharedSearchSettings), similarResultsRoute);
+
+		similarResultsContributor.resolveCriteria(
+			criteriaBuilderImpl, criteriaHelper);
+
+		Criteria criteria = criteriaBuilderImpl.build();
+
+		if (criteria != null) {
+			contribute(criteria, portletSharedSearchSettings);
+		}
 	}
 
 	protected void contribute(
 		Criteria criteria,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
+		Optional<PortletPreferences> portletPreferencesOptional =
+			portletSharedSearchSettings.getPortletPreferencesOptional();
+
 		SimilarResultsPortletPreferences similarResultsPortletPreferences =
 			new SimilarResultsPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferencesOptional());
+				portletPreferencesOptional.orElse(null));
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
@@ -167,16 +184,12 @@ public class SimilarResultsPortletSharedSearchContributor
 			return;
 		}
 
-		Optional<String> classNameOptional = criteria.getTypeOptional();
+		String className = criteria.getType();
 
-		classNameOptional.ifPresent(
-			className -> {
-				if (!Validator.isBlank(className)) {
-					searchRequestBuilder.addComplexQueryPart(
-						_getComplexQueryPart(
-							_getEntryClassNameQuery(className)));
-				}
-			});
+		if (!Validator.isBlank(className)) {
+			searchRequestBuilder.addComplexQueryPart(
+				_getComplexQueryPart(_getEntryClassNameQuery(className)));
+		}
 	}
 
 	private void _filterByGroupId(
@@ -218,23 +231,6 @@ public class SimilarResultsPortletSharedSearchContributor
 		_populate(moreLikeThisQuery, similarResultsPortletPreferences);
 
 		return moreLikeThisQuery;
-	}
-
-	private Optional<Criteria> _getSimilarResultsInputOptional(
-		long groupId, SimilarResultsRoute similarResultsRoute) {
-
-		SimilarResultsContributor similarResultsContributor =
-			similarResultsRoute.getContributor();
-
-		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
-
-		CriteriaHelper criteriaHelper = new CriteriaHelperImpl(
-			groupId, similarResultsRoute);
-
-		similarResultsContributor.resolveCriteria(
-			criteriaBuilderImpl, criteriaHelper);
-
-		return criteriaBuilderImpl.build();
 	}
 
 	private String _getURLString(

@@ -28,8 +28,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 
-import java.util.Optional;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -117,12 +115,9 @@ public class WikiDisplaySimilarResultsContributorTest
 		_wikiDisplaySimilarResultsContributor.resolveCriteria(
 			criteriaBuilderImpl, criteriaHelper);
 
-		Optional<Criteria> criteraOptional = criteriaBuilderImpl.build();
+		Criteria criteria = criteriaBuilderImpl.build();
 
-		Criteria criteria = criteraOptional.get();
-
-		Assert.assertEquals(
-			Optional.of("assetEntryClassName"), criteria.getTypeOptional());
+		Assert.assertEquals("assetEntryClassName", criteria.getType());
 		Assert.assertEquals("uid", criteria.getUID());
 	}
 

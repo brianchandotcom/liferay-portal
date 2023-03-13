@@ -1,0 +1,77 @@
+definition {
+
+	@summary = "Create a new claim on MDF detail page"
+	macro createNewClaim {
+		if (!(isSet(activityIndex))) {
+			var activityIndex = 0;
+		}
+
+		if (!(isSet(budgetIndex))) {
+			var budgetIndex = 0;
+		}
+
+		Button.click(button = "New Claim");
+
+		WaitForPageLoad();
+
+		for (var actvIndex : list ${activityIndex}) {
+			Click.javaScriptClick(
+				key_fieldName = "activities[${actvIndex}].selected",
+				locator1 = "Checkbox#CHECKBOX_NAME");
+
+			for (var bdgtIndex : list ${budgetIndex}) {
+				Click.javaScriptClick(
+					key_fieldName = "activities[${actvIndex}].budgets[${bdgtIndex}].selected",
+					locator1 = "Checkbox#CHECKBOX_NAME");
+
+				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+					key_fieldName = "activities[${actvIndex}].budgets[${bdgtIndex}].invoice",
+					locator1 = "PRMMDFClaim#UPLOAD_FIELD",
+					value1 = ${thirdInvoice});
+
+				if (isSet(metrics)) {
+					var key_indexNumber = ${actvIndex} + 1;
+
+					Select(
+						key_indexNumber = ${key_indexNumber},
+						key_text = "Metrics",
+						locator1 = "TextArea#ANY_LABELED_N",
+						value1 = ${mestricsDescription});
+				}
+
+				if (isSet(selectfiles)) {
+					var key_indexNumber = ${activityIndex} + 1;
+
+					Select(
+						key_indexNumber = ${key_indexNumber},
+						key_text = "Select Files",
+						locator1 = "Button#ANY_N",
+						value1 = ${selectedFile});
+				}
+
+				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+					key_fieldName = "activities[${actvIndex}].listQualifiedLeads",
+					locator1 = "PRMMDFClaim#UPLOAD_FIELD",
+					value1 = ${listLeads});
+			}
+		}
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			key_fieldName = "reimbursementInvoice",
+			locator1 = "PRMMDFClaim#UPLOAD_FIELD",
+			value1 = ${reimbursementInvoice});
+
+		Button.click(button = "Submit");
+	}
+
+	@summary = "Get the claim ID by index"
+	macro getClaimID {
+		var key_index = ${claimIndex};
+		var orderID = selenium.getText("PRMMDFClaim#CLAIM_ID_INDEX");
+
+		var orderID = StringUtil.extractLast(${orderID}, "-");
+
+		return ${orderID};
+	}
+
+}

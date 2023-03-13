@@ -33,7 +33,6 @@ import java.net.URI;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Component;
@@ -89,12 +88,11 @@ public class AMImageSerializerImpl implements AMImageSerializer {
 
 		allowedAMAttributes.forEach(
 			(name, amAttribute) -> {
-				Optional<Object> valueOptional = adaptiveMedia.getValueOptional(
-					(AMAttribute)amAttribute);
+				Object value = adaptiveMedia.getValue((AMAttribute)amAttribute);
 
-				valueOptional.ifPresent(
-					value -> attributesJSONObject.put(
-						name, String.valueOf(value)));
+				if (value != null) {
+					attributesJSONObject.put(name, String.valueOf(value));
+				}
 			});
 
 		return JSONUtil.put(

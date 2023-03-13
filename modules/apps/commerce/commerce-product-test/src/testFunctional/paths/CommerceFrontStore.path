@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_PAGES_NOTES_BUTTON</td>
+	<td>//span[@title='Notes']//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COUPON_CODE_BODY</td>
 	<td>//div[@class='coupon-code-body']/h3[text()='${key_couponCode}']</td>
 	<td></td>

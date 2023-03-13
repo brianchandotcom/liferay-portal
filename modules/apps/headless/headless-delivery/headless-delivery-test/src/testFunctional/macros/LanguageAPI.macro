@@ -3,7 +3,9 @@ definition {
 	macro _getLanguages {
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(assetLibraryId)) {
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
 			var api = "asset-libraries/${assetLibraryId}";
 		}
 		else {
@@ -22,13 +24,17 @@ definition {
 	}
 
 	macro getAssetLibraryLanguages {
-		Variables.assertDefined(parameterList = ${assetLibraryId});
+		Variables.assertDefined(parameterList = ${depotName});
 
-		LanguageAPI._getLanguages(assetLibraryId = ${assetLibraryId});
+		LanguageAPI._getLanguages(depotName = ${depotName});
 	}
 
 	macro getSiteLanguages {
-		Variables.assertDefined(parameterList = ${siteId});
+		Variables.assertDefined(parameterList = ${groupName});
+
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = ${groupName},
+			site = "true");
 
 		LanguageAPI._getLanguages(siteId = ${siteId});
 	}

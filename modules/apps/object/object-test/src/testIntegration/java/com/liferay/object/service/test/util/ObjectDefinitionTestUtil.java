@@ -20,9 +20,12 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Guilherme Camacho
@@ -48,6 +51,23 @@ public class ObjectDefinitionTestUtil {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
+	}
+
+	public static ObjectDefinition addSystemObjectDefinition(
+			long userId, String className, String dbTableName,
+			Map<Locale, String> labelMap, boolean modifiable, String name,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, String scope,
+			String titleObjectFieldName, int version,
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			List<ObjectField> objectFields)
+		throws Exception {
+
+		return objectDefinitionLocalService.addSystemObjectDefinition(
+			userId, className, dbTableName, false, labelMap, modifiable, name,
+			null, null, pkObjectFieldDBColumnName, pkObjectFieldName,
+			pluralLabelMap, scope, titleObjectFieldName, version,
+			WorkflowConstants.STATUS_APPROVED, objectFields);
 	}
 
 }

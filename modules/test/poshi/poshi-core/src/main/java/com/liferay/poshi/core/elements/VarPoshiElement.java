@@ -120,7 +120,7 @@ public class VarPoshiElement extends PoshiElement {
 	public void parsePoshiScript(String poshiScript)
 		throws PoshiScriptParserException {
 
-		if (poshiScript.startsWith("static")) {
+		if (poshiScript.startsWith("static var")) {
 			addAttribute("static", "true");
 
 			poshiScript = poshiScript.replaceFirst("static", "");

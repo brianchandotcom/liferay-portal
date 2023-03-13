@@ -14,11 +14,14 @@
 
 package com.liferay.frontend.data.set.views.web.internal.display.context;
 
+import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
 import com.liferay.frontend.data.set.views.web.internal.resource.FDSHeadlessResource;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import java.util.Comparator;
 import java.util.List;
@@ -40,6 +43,26 @@ public class FDSViewsDisplayContext {
 
 	public String getFDSEntriesAPIURL() {
 		return "/o/c/fdsentries";
+	}
+
+	public String getFDSEntriesURL() {
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_portletRequest, FDSViewsPortletKeys.FDS_VIEWS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/fds_entries.jsp"
+		).buildString();
+	}
+
+	public String getFDSViewsURL() {
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_portletRequest, FDSViewsPortletKeys.FDS_VIEWS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/fds_views.jsp"
+		).buildString();
 	}
 
 	public JSONArray getHeadlessResourcesJSONArray() {

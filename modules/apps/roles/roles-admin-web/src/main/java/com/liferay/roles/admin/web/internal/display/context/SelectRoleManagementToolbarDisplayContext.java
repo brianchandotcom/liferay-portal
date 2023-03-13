@@ -63,8 +63,8 @@ public class SelectRoleManagementToolbarDisplayContext {
 		_currentRoleTypeContributor =
 			RoleTypeContributorRetrieverUtil.getCurrentRoleTypeContributor(
 				renderRequest);
-		_groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
-		_step = ParamUtil.getInteger(_httpServletRequest, "step", 1);
+		_groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+		_step = ParamUtil.getInteger(httpServletRequest, "step", 1);
 	}
 
 	public String getClearResultsURL() {

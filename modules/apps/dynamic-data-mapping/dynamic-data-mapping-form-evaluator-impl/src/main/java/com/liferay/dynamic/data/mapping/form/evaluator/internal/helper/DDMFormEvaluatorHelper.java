@@ -85,7 +85,7 @@ public class DDMFormEvaluatorHelper {
 
 		_ddmFormEvaluatorFormValuesHelper =
 			new DDMFormEvaluatorFormValuesHelper(
-				_ddmFormEvaluatorEvaluateRequest.getDDMFormValues());
+				ddmFormEvaluatorEvaluateRequest.getDDMFormValues());
 
 		ddmFormEvaluatorExpressionObserver =
 			new DDMFormEvaluatorExpressionObserver(

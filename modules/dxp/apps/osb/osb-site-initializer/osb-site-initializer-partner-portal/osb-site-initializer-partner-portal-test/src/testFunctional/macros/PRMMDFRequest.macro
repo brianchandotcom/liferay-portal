@@ -20,6 +20,13 @@ definition {
 			value1 = ${key_claimMessage});
 	}
 
+	@summary = "Cannot view Manager Status Button on MDF Request detail page"
+	macro CanNotViewStateManager {
+		AssertElementNotPresent(
+			key_statusButton = "Approve",
+			locator1 = "PRMMDFRequest#STATUS_BUTTON");
+	}
+
 	@summary = "Change MDF status"
 	macro changeMDFStatus {
 		ClickNoError(
@@ -31,6 +38,8 @@ definition {
 
 	@summary = "Add a new MDF Request filling the goals and activity pages"
 	macro createNewRequest {
+		WaitForPageLoad();
+
 		PRMMDFRequest.fillGoalsPage(
 			accountName = ${accountName},
 			additionalOptions = ${additionalOptions},
@@ -63,6 +72,8 @@ definition {
 		Button.click(button = "Submit");
 
 		WaitForPageLoad();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Edit total MDF amount field"
@@ -105,10 +116,12 @@ definition {
 				value1 = ${campaignName});
 		}
 
-		Type(
-			key_fieldName = "overallCampaignDescription",
-			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = ${campaignDescription});
+		if (isSet(campaignDescription)) {
+			Type(
+				key_fieldName = "overallCampaignDescription",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${campaignDescription});
+		}
 
 		if (isSet(goalsOptions)) {
 			for (var goalsList : list ${goalsOptions}) {
@@ -161,7 +174,7 @@ definition {
 	@summary = "Go to MDF"
 	macro goToMDF {
 		Click(
-			key_MDFName = ${campaignName},
+			key_campaignName = ${campaignName},
 			locator1 = "PRMMDFRequest#REQUEST_ID");
 	}
 
@@ -304,18 +317,18 @@ definition {
 
 	@summary = "Verify that a content is present in the MDF file"
 	macro viewExportedMDF {
-		for (var campaignName : list ${campaignNameList}) {
+		for (var fileContentItem : list ${fileContentList}) {
 			var directoryPath = PropsUtil.get("output.dir.name");
 
-			var fileContent = FileUtil.read("${directoryPath}/MDF Requests.csv");
+			var fileContent = FileUtil.read("${directoryPath}/${fileName}");
 
-			if (!(contains(${fileContent}, ${campaignName}))) {
+			if (!(contains(${fileContent}, ${fileContentItem}))) {
 				echo(${fileContent});
 
-				fail("MDF '${campaignName}' doesn't exist");
+				fail("The string '${fileContentItem}' doesn't exists on this file");
 			}
 			else {
-				echo("MDF '${campaignName}' exists");
+				echo("The string '${fileContentItem}' exists on this file");
 			}
 		}
 	}
@@ -405,6 +418,20 @@ definition {
 			key_fieldName = "Target Audience/Role",
 			key_nameValue = ${targetRolesOptions},
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
+	}
+
+	@summary = "View MDF actual Status on MDF Request detail page "
+	macro viewMDFStatus {
+		AssertElementPresent(
+			key_value = ${key_status},
+			locator1 = "PRMMDFRequest#STATUS_INFO");
+	}
+
+	@summary = "Verify that the state manager is present on MDF Request detail page"
+	macro viewStateManager {
+		AssertElementPresent(
+			key_statusButton = "Approve",
+			locator1 = "PRMMDFRequest#STATUS_BUTTON");
 	}
 
 }

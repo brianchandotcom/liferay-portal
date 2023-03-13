@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Export Import Test Utilities
 Bundle-SymbolicName: com.liferay.exportimport.test.util
-Bundle-Version: 5.0.2
+Bundle-Version: 5.0.3
 Export-Package:\
 	com.liferay.exportimport.test.util,\
 	com.liferay.exportimport.test.util.constants,\

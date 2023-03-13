@@ -51,7 +51,7 @@ public class ContentDashboardDropdownItemsProvider {
 
 		_currentURL = String.valueOf(
 			PortletURLUtil.getCurrent(
-				_liferayPortletRequest, liferayPortletResponse));
+				liferayPortletRequest, liferayPortletResponse));
 	}
 
 	public List<DropdownItem> getDropdownItems(

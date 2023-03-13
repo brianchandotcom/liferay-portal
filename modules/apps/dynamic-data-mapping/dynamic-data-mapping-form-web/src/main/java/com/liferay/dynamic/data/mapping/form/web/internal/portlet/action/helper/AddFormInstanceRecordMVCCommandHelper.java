@@ -47,14 +47,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -168,16 +165,15 @@ public class AddFormInstanceRecordMVCCommandHelper {
 	private Set<String> _getFieldNamesFromDisabledPages(
 		DDMFormLayout ddmFormLayout, Set<Integer> disabledPagesIndexes) {
 
-		Stream<Integer> stream = disabledPagesIndexes.stream();
+		Set<String> fieldNamesFromDisabledPages = new HashSet<>();
 
-		return stream.map(
-			index -> _getFieldNamesFromPage(
-				ddmFormLayout.getDDMFormLayoutPage(index))
-		).flatMap(
-			field -> field.stream()
-		).collect(
-			Collectors.toSet()
-		);
+		for (Integer disabledPagesIndex : disabledPagesIndexes) {
+			fieldNamesFromDisabledPages.addAll(
+				_getFieldNamesFromPage(
+					ddmFormLayout.getDDMFormLayoutPage(disabledPagesIndex)));
+		}
+
+		return fieldNamesFromDisabledPages;
 	}
 
 	private Set<String> _getFieldNamesFromPage(
@@ -201,28 +197,26 @@ public class AddFormInstanceRecordMVCCommandHelper {
 	private Set<String> _getNonevaluableFieldNames(
 		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse) {
 
+		Set<String> nonevaluableFieldNames = new HashSet<>();
+
 		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
 			ddmFormFieldsPropertyChanges =
 				ddmFormEvaluatorEvaluateResponse.
 					getDDMFormFieldsPropertyChanges();
 
-		Set<Map.Entry<DDMFormEvaluatorFieldContextKey, Map<String, Object>>>
-			entrySet = ddmFormFieldsPropertyChanges.entrySet();
+		for (Map.Entry<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+				entry : ddmFormFieldsPropertyChanges.entrySet()) {
 
-		Stream<Map.Entry<DDMFormEvaluatorFieldContextKey, Map<String, Object>>>
-			stream = entrySet.stream();
+			if (MapUtil.getBoolean(entry.getValue(), "readOnly") ||
+				!MapUtil.getBoolean(entry.getValue(), "visible", true)) {
 
-		return stream.filter(
-			result ->
-				MapUtil.getBoolean(result.getValue(), "readOnly") ||
-				!MapUtil.getBoolean(result.getValue(), "visible", true)
-		).map(
-			result -> result.getKey()
-		).map(
-			DDMFormEvaluatorFieldContextKey::getName
-		).collect(
-			Collectors.toSet()
-		);
+				DDMFormEvaluatorFieldContextKey key = entry.getKey();
+
+				nonevaluableFieldNames.add(key.getName());
+			}
+		}
+
+		return nonevaluableFieldNames;
 	}
 
 	private String _getTimeZoneId(ActionRequest actionRequest) {
@@ -262,36 +256,27 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
 		Set<String> nonevaluableFieldNames) {
 
-		Stream<String> stream = nonevaluableFieldNames.stream();
+		for (String nonevaluableFieldName : nonevaluableFieldNames) {
+			for (DDMFormFieldValue ddmFormFieldValue :
+					ddmFormFieldValuesMap.get(nonevaluableFieldName)) {
 
-		stream.map(
-			ddmFormFieldValuesMap::get
-		).flatMap(
-			List::stream
-		).filter(
-			ddmFormFieldValue -> ddmFormFieldValue.getValue() != null
-		).forEach(
-			this::_removeDDMFormFieldValue
-		);
+				if (ddmFormFieldValue.getValue() != null) {
+					_removeDDMFormFieldValue(ddmFormFieldValue);
+				}
+			}
+		}
 	}
 
 	private void _updateNonevaluableDDMFormFields(
 		Map<String, DDMFormField> ddmFormFieldsMap,
 		Set<String> nonevaluableFieldNames) {
 
-		Collection<DDMFormField> ddmFormFields = ddmFormFieldsMap.values();
-
-		Stream<DDMFormField> stream = ddmFormFields.stream();
-
-		stream.filter(
-			ddmFormField -> nonevaluableFieldNames.contains(
-				ddmFormField.getName())
-		).forEach(
-			ddmFormField -> {
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			if (nonevaluableFieldNames.contains(ddmFormField.getName())) {
 				ddmFormField.setDDMFormFieldValidation(null);
 				ddmFormField.setRequired(false);
 			}
-		);
+		}
 	}
 
 	@Reference

@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -56,6 +57,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -89,6 +91,20 @@ public class DDMIndexerImplTest {
 	public void tearDown() {
 		_ddmFixture.tearDown();
 		_documentFixture.tearDown();
+	}
+
+	@Test
+	public void testExtractIndexableAttributes() {
+		_testExtractIndexableAttributes(
+			_createDDMFormField(), StringPool.BLANK);
+		_testExtractIndexableAttributes(_createDDMFormField(), "Create New");
+		_testExtractIndexableAttributes(_createDDMFormField(), "null");
+
+		DDMFormField ddmFormField = _createDDMFormField();
+
+		ddmFormField.setRepeatable(true);
+
+		_testExtractIndexableAttributes(ddmFormField, StringPool.BLANK);
 	}
 
 	@Test
@@ -306,6 +322,27 @@ public class DDMIndexerImplTest {
 	private void _setUpPropsUtil() {
 		PropsTestUtil.setProps(
 			PropsKeys.INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH, "255");
+	}
+
+	private void _testExtractIndexableAttributes(
+		DDMFormField ddmFormField, String fieldValue) {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		Assert.assertEquals(
+			fieldValue,
+			_ddmIndexer.extractIndexableAttributes(
+				_createDDMStructure(ddmForm),
+				_createDDMFormValues(
+					ddmForm,
+					DDMFormValuesTestUtil.createDDMFormFieldValue(
+						_FIELD_NAME,
+						DDMFormValuesTestUtil.createLocalizedValue(
+							fieldValue, LocaleUtil.US))),
+				LocaleUtil.US));
 	}
 
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();

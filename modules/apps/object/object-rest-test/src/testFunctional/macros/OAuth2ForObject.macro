@@ -1,0 +1,45 @@
+definition {
+
+	macro addOAuth2Application {
+		if (isSet(baseURL)) {
+			SignIn.signInSpecificURL(url = ${baseURL});
+		}
+		else {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		OAuth2.openOAuth2Admin(baseURL = ${baseURL});
+
+		OAuth2.addApplication(
+			applicationName = "OAuth Application",
+			checkboxUncheckList = "Authorization Code");
+
+		OAuth2.inputApplicationValues(
+			clientId = "myApplication",
+			clientSecret = "mySecret");
+	}
+
+	macro createTokenWithOAuth2Scopes {
+		Variables.assertDefined(parameterList = ${resourceCheckList});
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		OAuth2.openOAuth2Admin(baseURL = ${baseURL});
+
+		OAuth2.editScopes(
+			applicationName = "OAuth Application",
+			resourceCheckList = ${resourceCheckList},
+			resourcePanels = ${resourcePanels});
+
+		var accessToken = OAuth2.getAccessToken(
+			client_id = "myApplication",
+			client_secret = "mySecret",
+			grantFlow = "clientCredentials",
+			portalURL = ${baseURL});
+
+		return ${accessToken};
+	}
+
+}

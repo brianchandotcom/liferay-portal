@@ -28,7 +28,7 @@ import {VariantsContext} from './VariantsContext.es';
 
 export function Layout({components, editable, itemPath, rows, viewMode}) {
 	const {containerElement, pageIndex} = usePage();
-	const {activePage, defaultLanguageId} = useFormState();
+	const {activePage, defaultLanguageId, pages, title} = useFormState();
 	const {allowNestedFields, submitButtonId} = useConfig();
 
 	const createFieldChange = useEvaluate(fieldChange);
@@ -93,7 +93,10 @@ export function Layout({components, editable, itemPath, rows, viewMode}) {
 														containerElement.current
 													)
 												),
+												formPageTitle:
+													pages[activePage].title,
 												properties: event,
+												title,
 											})
 										)
 									}
@@ -114,7 +117,10 @@ export function Layout({components, editable, itemPath, rows, viewMode}) {
 														containerElement.current
 													)
 												),
+												formPageTitle:
+													pages[activePage].title,
 												properties: event,
+												title,
 											})
 										)
 									}

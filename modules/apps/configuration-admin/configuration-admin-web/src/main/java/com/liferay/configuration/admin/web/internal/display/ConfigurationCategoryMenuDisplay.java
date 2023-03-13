@@ -15,14 +15,13 @@
 package com.liferay.configuration.admin.web.internal.display;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Jorge Ferrer
@@ -34,12 +33,6 @@ public class ConfigurationCategoryMenuDisplay {
 		Set<ConfigurationEntry> configurationEntries) {
 
 		_configurationCategoryDisplay = configurationCategoryDisplay;
-
-		Stream<String> scopeStream = Arrays.stream(_UI_ORDERED_SCOPES);
-
-		scopeStream.forEach(
-			scopeKey -> _configurationScopeDisplays.put(
-				scopeKey, new ConfigurationScopeDisplay(scopeKey)));
 
 		for (ConfigurationEntry configurationEntry : configurationEntries) {
 			_addConfigurationEntry(configurationEntry);
@@ -107,6 +100,8 @@ public class ConfigurationCategoryMenuDisplay {
 
 	private final ConfigurationCategoryDisplay _configurationCategoryDisplay;
 	private final Map<String, ConfigurationScopeDisplay>
-		_configurationScopeDisplays = new LinkedHashMap<>();
+		_configurationScopeDisplays = LinkedHashMapBuilder.put(
+			Arrays.asList(_UI_ORDERED_SCOPES), ConfigurationScopeDisplay::new
+		).build();
 
 }

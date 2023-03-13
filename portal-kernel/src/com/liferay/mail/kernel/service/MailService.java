@@ -36,6 +36,8 @@ public interface MailService {
 
 	public Session getSession(Account account);
 
+	public Session getSession(long companyId);
+
 	public void sendEmail(MailMessage mailMessage);
 
 }

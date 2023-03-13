@@ -364,7 +364,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
-			"defaultValue": "approved",
+			"defaultValue": "submitted",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -377,6 +377,14 @@
 					"name": "stateFlow",
 					"value": {
 						"objectStates": [
+							{
+								"key": "submitted",
+								"objectStateTransitions": [
+									{
+										"key": "approved"
+									}
+								]
+							},
 							{
 								"key": "approved",
 								"objectStateTransitions": [

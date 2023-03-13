@@ -57,7 +57,7 @@ export default function getNewActivity(): MDFRequestActivity {
 			webinarTopic: '',
 			weeksAiring: '',
 		},
-		activityStatus: Status.APPROVED,
+		activityStatus: Status.SUBMITTED,
 		budgets: [],
 		endDate: undefined,
 		mdfRequestAmount: 0,

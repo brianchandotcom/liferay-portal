@@ -1,0 +1,174 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "include-and-override=portal-liferay-online.properties";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		User.firstLoginUI();
+
+		task ("Given an OAuth application with headless scopes is created on default instance") {
+			OAuth2ForObject.addOAuth2Application();
+
+			var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
+				resourceCheckList = "Liferay.Headless.Portal.Instances.everything,Liferay.Object.Admin.REST.everything",
+				resourcePanels = "Liferay.Headless.Portal.Instances,Liferay.Object.Admin.REST");
+		}
+
+		task ("And Given a new virtual instances www.able.com is created") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "liferay.com",
+				portalInstanceId = "www.able.com",
+				token = ${defaultInstanceToken},
+				virtualHost = "www.able.com");
+		}
+
+		task ("And Given an OAuth application with headless scopes is created on www.able.com") {
+			OAuth2ForObject.addOAuth2Application(baseURL = "http://www.able.com:8080");
+
+			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
+				baseURL = "http://www.able.com:8080",
+				resourceCheckList = "Liferay.Headless.Portal.Instances.everything,Liferay.Object.Admin.REST.everything");
+		}
+
+		task ("And Given objectDefinition Test with site scope and new field name is created and published in default instance") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Test",
+				en_US_plural_label = "Tests",
+				name = "Test",
+				requiredStringFieldName = "name",
+				scope = "site",
+				token = ${defaultInstanceToken});
+		}
+
+		task ("And Given objectDefinition University with default company scope and new field location is created and published in www.able.com") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Test",
+				en_US_plural_label = "Tests",
+				name = "Test",
+				requiredStringFieldName = "location",
+				token = ${virtualInstanceToken},
+				virtualHost = "www.able.com");
+		}
+	}
+
+	tearDown {
+		var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
+			resourceCheckList = "Liferay.Headless.Portal.Instances.everything,Liferay.Object.Admin.REST.everything",
+			resourcePanels = "Liferay.Headless.Portal.Instances,Liferay.Object.Admin.REST");
+
+		ObjectAdmin.deleteObjectViaAPI(
+			objectName = "Test",
+			token = ${defaultInstanceToken});
+
+		OAuth2.deleteApplication(applicationName = "OAuth Application");
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Ignore tests since Oauth scopes problems in LPS-169916"
+	@ignore = "true"
+	@priority = 4
+	test CanCreateObjectEntryByScopeKey {
+		property portal.acceptance = "true";
+
+		task ("When I use postScopeScopeKey and scopeKey to create an object entry in default instance") {
+			var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
+				resourceCheckList = "C_Test.everything",
+				resourcePanels = "C_Test");
+
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "tests",
+				name = "Object Entry in Default Instance",
+				scopeKey = "true",
+				token = ${defaultInstanceToken});
+		}
+
+		task ("Then the object entry created successfully") {
+			var responseToParse = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "tests",
+				token = ${defaultInstanceToken});
+
+			var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.totalCount");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = 1);
+		}
+	}
+
+	@description = "Ignore tests since Oauth scopes problems in LPS-169916"
+	@ignore = "true"
+	@priority = 4
+	test CanCreateObjectEntryInVirtualInstance {
+		property portal.acceptance = "true";
+
+		task ("When I use postTest to create an object entry in www.able.com instance") {
+			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
+				baseURL = "http://www.able.com:8080",
+				resourceCheckList = "C_Test.everything");
+
+			ObjectDefinitionAPI.createObjectEntryWithField(
+				en_US_plural_label = "tests",
+				fieldName = "location",
+				fieldValue = "Object Entry in Virtual Instance",
+				token = ${virtualInstanceToken},
+				virtualHost = "www.able.com");
+		}
+
+		task ("Then the object entry with location created successfully") {
+			var responseToParse = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "tests",
+				token = ${virtualInstanceToken},
+				virtualHost = "www.able.com");
+
+			var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.items[*].location");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "Object Entry in Virtual Instance");
+		}
+	}
+
+	@description = "Ignore tests since Oauth scopes problems in LPS-169916"
+	@ignore = "true"
+	@priority = 4
+	test CanIncludeObjectFieldInAPIExplorer {
+		property portal.acceptance = "true";
+
+		task ("Given navigate to www.able.com:8080/o/c/tests") {
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "tests",
+				virtualHost = "www.able.com");
+		}
+
+		task ("When expand postTest") {
+			Click(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "postTest",
+				service = "Test");
+		}
+
+		task ("Then location field exists and name does not exist in postTest body") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#REQUEST_BODY",
+				method = "postTest",
+				value1 = "\"location\":");
+		}
+
+		task ("And Then location field exists and name does not exist in Test schema") {
+			IsTextNotEqual(
+				locator1 = "OpenAPI#REQUEST_BODY",
+				method = "postTest",
+				value1 = "\"name\":");
+		}
+	}
+
+}

@@ -33,7 +33,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DecimalStyle;
 
 import java.util.Locale;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
@@ -67,11 +66,11 @@ public class DateDDMFormFieldValueRenderer
 			return StringPool.BLANK;
 		}
 
-		Locale locale = Optional.ofNullable(
-			LocaleThreadLocal.getThemeDisplayLocale()
-		).orElse(
-			defaultLocale
-		);
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		if (locale == null) {
+			locale = defaultLocale;
+		}
 
 		SimpleDateFormat simpleDateFormat = null;
 

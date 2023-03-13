@@ -51,7 +51,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 
@@ -228,32 +227,26 @@ public class DDMFormInstanceFieldSettingsValidator {
 			return Collections.emptySet();
 		}
 
-		Set<String> ddmFormFieldList = new HashSet<>();
+		Set<String> ddmFormFields = new HashSet<>();
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			fieldDDMForm.getDDMFormFieldsMap(true);
 
-		Set<Map.Entry<DDMFormEvaluatorFieldContextKey, Map<String, Object>>>
-			entrySet = ddmFormFieldsPropertyChanges.entrySet();
+		for (Map.Entry<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+				entry : ddmFormFieldsPropertyChanges.entrySet()) {
 
-		Stream<Map.Entry<DDMFormEvaluatorFieldContextKey, Map<String, Object>>>
-			stream = entrySet.stream();
+			if (!MapUtil.getBoolean(entry.getValue(), "valid", true)) {
+				DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey =
+					entry.getKey();
 
-		stream.forEach(
-			entry -> {
-				if (!MapUtil.getBoolean(entry.getValue(), "valid", true)) {
-					DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey =
-						entry.getKey();
+				DDMFormField propertyFormField = ddmFormFieldsMap.get(
+					ddmFormFieldContextKey.getName());
 
-					DDMFormField propertyFormField = ddmFormFieldsMap.get(
-						ddmFormFieldContextKey.getName());
+				ddmFormFields.add(_getFieldLabel(propertyFormField, locale));
+			}
+		}
 
-					ddmFormFieldList.add(
-						_getFieldLabel(propertyFormField, locale));
-				}
-			});
-
-		return ddmFormFieldList;
+		return ddmFormFields;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

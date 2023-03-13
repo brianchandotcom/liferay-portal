@@ -20,7 +20,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {fetch, openModal} from 'frontend-js-web';
+import {fetch, navigate, openModal} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useRef, useState} from 'react';
 
@@ -165,12 +165,14 @@ const DropdownMenu = ({
 
 interface IFDSEntriesProps {
 	apiURL: string;
+	fdsViewsURL: string;
 	headlessResources: Array<HeadlessResource>;
 	namespace: string;
 }
 
 const FDSEntries = ({
 	apiURL,
+	fdsViewsURL,
 	headlessResources,
 	namespace,
 }: IFDSEntriesProps) => {
@@ -185,13 +187,11 @@ const FDSEntries = ({
 
 	type FDSEntry = {
 		entityClassName: string;
+		id: string;
+		label: string;
 	};
 
-	interface IProviderRendererProps {
-		itemData: FDSEntry;
-	}
-
-	const ProviderRenderer = ({itemData}: IProviderRendererProps) => {
+	const ProviderRenderer = ({itemData}: {itemData: FDSEntry}) => {
 		const headlessResource = headlessResourcesMapRef.current.get(
 			itemData.entityClassName
 		);
@@ -430,6 +430,15 @@ const FDSEntries = ({
 		],
 	};
 
+	const onViewClick = ({itemData}: {itemData: FDSEntry}) => {
+		const url = new URL(fdsViewsURL);
+
+		url.searchParams.set(`${namespace}fdsEntryId`, itemData.id);
+		url.searchParams.set(`${namespace}fdsEntryLabel`, itemData.label);
+
+		navigate(url);
+	};
+
 	const views = [
 		{
 			contentRenderer: 'table',
@@ -463,6 +472,13 @@ const FDSEntries = ({
 					provider: ProviderRenderer,
 				}}
 				id={`${namespace}FDSEntries`}
+				itemsActions={[
+					{
+						icon: 'view',
+						label: Liferay.Language.get('view'),
+						onClick: onViewClick,
+					},
+				]}
 				pagination={{
 					deltas: [
 						{label: 4},

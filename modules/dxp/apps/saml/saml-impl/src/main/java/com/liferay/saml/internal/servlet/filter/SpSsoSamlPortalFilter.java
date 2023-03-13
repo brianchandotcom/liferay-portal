@@ -90,29 +90,7 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 			return false;
 		}
 
-		try {
-			User user = _portal.getUser(httpServletRequest);
-
-			if (user != null) {
-				return true;
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
-
-		String requestPath = _samlHttpRequestUtil.getRequestPath(
-			httpServletRequest);
-
-		if (requestPath.equals("/c/portal/login") ||
-			requestPath.equals("/c/portal/logout")) {
-
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	@Override
@@ -175,8 +153,32 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 			}
 		}
 		else {
-			_webSsoProfile.updateSamlSpSession(
-				httpServletRequest, httpServletResponse);
+			User user = null;
+
+			try {
+				user = _portal.getUser(httpServletRequest);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
+				}
+			}
+
+			if (user != null) {
+				_webSsoProfile.updateSamlSpSession(
+					httpServletRequest, httpServletResponse);
+			}
+			else {
+				HttpSession httpSession = httpServletRequest.getSession(false);
+
+				if ((httpSession != null) &&
+					(httpSession.getAttribute(SamlWebKeys.SAML_SSO_ERROR) !=
+						null)) {
+
+					httpServletRequest.setAttribute(
+						WebKeys.BLOCK_LOGIN_PROMPT, Boolean.TRUE);
+				}
+			}
 
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}

@@ -63,7 +63,7 @@ public class DDMFormAdminActionDropdownItemsProvider {
 		_scopeGroupId = scopeGroupId;
 		_shareFormInstanceURL = shareFormInstanceURL;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

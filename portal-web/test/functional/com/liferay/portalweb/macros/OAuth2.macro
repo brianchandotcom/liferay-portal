@@ -361,8 +361,10 @@ definition {
 				Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
 			}
 
-			for (var resourcePanel : list ${resourcePanels}) {
-				OAuth2.expandResourcePanel(resourcePanel = ${resourcePanel});
+			if (isSet(resourcePanels) && (${resourcePanels} != "")) {
+				for (var resourcePanel : list ${resourcePanels}) {
+					OAuth2.expandResourcePanel(resourcePanel = ${resourcePanel});
+				}
 			}
 
 			if (isSet(checkGlobalScopesViaModal)) {
@@ -439,7 +441,9 @@ definition {
 	}
 
 	macro getAccessToken {
-		var portalURL = PropsUtil.get("portal.url");
+		if (!(isSet(portalURL))) {
+			var portalURL = PropsUtil.get("portal.url");
+		}
 
 		if (${grantFlow} == "clientCredentials") {
 			var tokenCurl = '''

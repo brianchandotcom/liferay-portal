@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>ITEMS_PER_PAGE_SELECT_2</td>
-	<td>xpath=(//div[contains(@class,'pagination-items-per-page')]/a[contains(@class,'toggle')])[2]</td>
+	<td>xpath=(//div[contains(@class,'pagination-items-per-page')]/button[contains(@class,'toggle')])[2]</td>
 	<td></td>
 </tr>
 <tr>

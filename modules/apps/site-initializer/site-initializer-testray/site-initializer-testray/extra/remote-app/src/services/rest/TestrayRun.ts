@@ -56,9 +56,7 @@ class TestrayRunImpl extends Rest<RunForm, TestrayRun> {
 					...run,
 					applicationServer,
 					browser,
-					build: run?.r_buildToRuns_c_build
-						? run?.r_buildToRuns_c_build
-						: undefined,
+					build: run?.r_buildToRuns_c_build,
 					database,
 					javaJDK,
 					operatingSystem,
@@ -113,8 +111,7 @@ class TestrayRunImpl extends Rest<RunForm, TestrayRun> {
 			await liferayDispatchTriggerImpl.run(
 				response.liferayDispatchTrigger.id
 			);
-		}
-		catch (error) {
+		} catch (error) {
 			body.dueStatus = DispatchTriggerStatuses.FAILED;
 			body.output = (error as TestrayError)?.message;
 		}

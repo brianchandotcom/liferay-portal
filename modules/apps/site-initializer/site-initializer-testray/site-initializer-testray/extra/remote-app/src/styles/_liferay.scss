@@ -114,10 +114,25 @@ html {
 	z-index: 999;
 }
 
-.popover-filter {
+.popover-management-toolbar {
 	&.popover {
 		width: 300px !important;
 		z-index: 999;
+	}
+
+	&.body-columns {
+		.popover-body {
+			max-height: 300px !important;
+			min-height: 50px !important;
+			overflow-y: auto !important;
+			padding: 0;
+		}
+
+		.popover-columns-content {
+			max-height: 350px;
+			min-height: 180px;
+			padding: 0 16px;
+		}
 	}
 
 	.popover-body {
@@ -127,7 +142,7 @@ html {
 		padding: 0;
 	}
 
-	.body-filters {
+	.management-toolbar-body {
 		max-height: 390px !important;
 		min-height: 180px !important;
 		overflow-y: none;

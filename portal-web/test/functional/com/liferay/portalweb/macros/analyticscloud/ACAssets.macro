@@ -29,6 +29,44 @@ definition {
 			locator1 = "ACAssets#TECHNOLOGY_TAB_INACTIVE");
 	}
 
+	macro interactWithCustomAssets {
+		if (isSet(formOptionNameList)) {
+			for (var formOptionName : list ${formOptionNameList}) {
+				Click(
+					key_formOptionName = ${formOptionName},
+					locator1 = "ACAssets#CUSTOM_ASSETS_FORM_OPTION");
+			}
+		}
+
+		if (isSet(submissionNumber)) {
+			for (var n : list ${submissionNumber}) {
+				Click(locator1 = "ACCustomEvents#INPUT_BUTTON");
+
+				GoBack();
+
+				ACUtils.waitForSendingRequest();
+			}
+		}
+
+		if (isSet(downloadNumber)) {
+			for (var n : list ${downloadNumber}) {
+				Click(locator1 = "ACAssets#CUSTOM_ASSETS_DOWNLOAD");
+
+				GoBack();
+
+				ACUtils.waitForSendingRequest();
+			}
+		}
+		else {
+			for (var n : list ${viewPageNumber}) {
+				ACUtils.navigateToSitePage(
+					actionType = "View WC",
+					pageName = ${pageName},
+					siteName = ${siteName});
+			}
+		}
+	}
+
 	macro removeCustomAssetReport {
 		Click(
 			key_cardTitle = ${reportName},

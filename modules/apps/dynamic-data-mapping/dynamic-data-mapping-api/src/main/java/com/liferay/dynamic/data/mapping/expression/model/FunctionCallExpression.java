@@ -16,10 +16,9 @@ package com.liferay.dynamic.data.mapping.expression.model;
 
 import com.liferay.dynamic.data.mapping.expression.constants.DDMExpressionConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Leonardo Barros
@@ -70,16 +69,9 @@ public class FunctionCallExpression extends Expression {
 
 		sb.append(_functionName);
 		sb.append("(");
-
-		Stream<Expression> expressionStream = _parameterExpressions.stream();
-
-		Stream<String> expressionStringStream = expressionStream.map(
-			expression -> expression.toString());
-
 		sb.append(
-			expressionStringStream.collect(
-				Collectors.joining(StringPool.COMMA_AND_SPACE)));
-
+			StringUtil.merge(
+				_parameterExpressions, StringPool.COMMA_AND_SPACE));
 		sb.append(")");
 
 		return sb.toString();

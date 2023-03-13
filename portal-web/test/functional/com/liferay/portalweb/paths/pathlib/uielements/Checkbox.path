@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKBOX_NAME</td>
+	<td>//input[@name='${key_fieldName}'][@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETIONS</td>
 	<td>//label[contains(.,'Deletions')]/input[contains(@id,'DELETIONS')]</td>
 	<td></td>

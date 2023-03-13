@@ -534,6 +534,7 @@ definition {
 				}
 				else if (isSet(imageFileName)) {
 					ItemSelector.selectDMImage(
+						dmFolderName = ${dmFolderName},
 						imageFileName = ${webContentImage},
 						navTab = ${navTab});
 				}

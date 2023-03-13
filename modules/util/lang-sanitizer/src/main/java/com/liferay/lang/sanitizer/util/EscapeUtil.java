@@ -55,13 +55,17 @@ public class EscapeUtil {
 		return content;
 	}
 
+	public static Set<String> getEscapedCharacters() {
+		return _unescapedCharactersMap.keySet();
+	}
+
 	public static String unescape(String content) {
-		Set<String> keys = _escapedCharacterMap.keySet();
+		Set<String> keys = _unescapedCharactersMap.keySet();
 
 		for (String key : keys) {
 			if (content.contains(key)) {
 				content = content.replaceAll(
-					key, _escapedCharacterMap.get(key));
+					key, _unescapedCharactersMap.get(key));
 			}
 		}
 
@@ -75,8 +79,10 @@ public class EscapeUtil {
 		return content;
 	}
 
+	private static final Pattern _tagPattern = Pattern.compile("<.+?>");
+
 	@SuppressWarnings("serial")
-	private static final Map<String, String> _escapedCharacterMap =
+	private static final Map<String, String> _unescapedCharactersMap =
 		new HashMap<String, String>() {
 			{
 				put("&#039;", "'");
@@ -93,7 +99,5 @@ public class EscapeUtil {
 				put("&trade;", "™");
 			}
 		};
-
-	private static final Pattern _tagPattern = Pattern.compile("<.+?>");
 
 }

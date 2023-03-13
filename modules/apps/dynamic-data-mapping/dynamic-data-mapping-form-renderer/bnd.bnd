@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Form Renderer
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.renderer
-Bundle-Version: 6.0.51
+Bundle-Version: 6.0.52
 Provide-Capability:\
 	soy;\
 		type:String="LiferayForm"

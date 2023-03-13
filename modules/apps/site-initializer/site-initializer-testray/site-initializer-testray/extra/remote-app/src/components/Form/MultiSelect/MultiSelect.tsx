@@ -13,17 +13,15 @@
  */
 
 import Form from '..';
-import {InputHTMLAttributes, useState} from 'react';
-import ReactSelect from 'react-select';
+import {InputHTMLAttributes} from 'react';
+import ReactSelect, {PropsValue} from 'react-select';
 
 type Option = {label: string; value: string};
 
 type MultiSelectProps = {
 	label?: string;
 	options: Option[];
-} & InputHTMLAttributes<HTMLInputElement>;
-
-type SelectValue = Option | Option[] | undefined;
+} & InputHTMLAttributes<HTMLSelectElement>;
 
 const MultiSelect: React.FC<MultiSelectProps> = ({
 	disabled,
@@ -32,31 +30,23 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 	onChange,
 	options,
 	value,
-}) => {
-	const [selectValue, setSelectValue] = useState<SelectValue>(
-		value as SelectValue
-	);
-
-	return (
-		<Form.BaseWrapper label={label}>
-			<ReactSelect
-				classNamePrefix="testray-multi-select"
-				closeMenuOnSelect={false}
-				isDisabled={disabled}
-				isMulti
-				name={name}
-				onChange={(value) => {
-					setSelectValue(value as Option[]);
-
-					if (onChange) {
-						onChange({target: {name, value: value as any}} as any);
-					}
-				}}
-				options={options}
-				value={selectValue}
-			/>
-		</Form.BaseWrapper>
-	);
-};
+}) => (
+	<Form.BaseWrapper label={label}>
+		<ReactSelect
+			classNamePrefix="testray-multi-select"
+			closeMenuOnSelect={false}
+			isDisabled={disabled}
+			isMulti
+			name={name}
+			onChange={(value) => {
+				if (onChange) {
+					onChange({target: {name, value}} as any);
+				}
+			}}
+			options={options}
+			value={value as PropsValue<unknown>}
+		/>
+	</Form.BaseWrapper>
+);
 
 export default MultiSelect;

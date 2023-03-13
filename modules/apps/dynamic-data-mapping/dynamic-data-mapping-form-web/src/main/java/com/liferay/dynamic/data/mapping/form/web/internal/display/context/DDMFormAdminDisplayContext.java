@@ -107,6 +107,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -128,8 +129,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -715,8 +714,7 @@ public class DDMFormAdminDisplayContext {
 
 		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
 			DDMFormBuilderContextRequest.with(
-				Optional.ofNullable(null), themeDisplay.getRequest(),
-				themeDisplay.getResponse(),
+				null, themeDisplay.getRequest(), themeDisplay.getResponse(),
 				LocaleUtil.fromLanguageId(getDefaultLanguageId()), true);
 
 		ddmFormBuilderContextRequest.addProperty(
@@ -1436,11 +1434,13 @@ public class DDMFormAdminDisplayContext {
 
 		ThemeDisplay themeDisplay = ddmFormAdminRequestHelper.getThemeDisplay();
 
-		return Optional.ofNullable(
-			themeDisplay.getSiteDefaultLocale()
-		).orElse(
-			themeDisplay.getLocale()
-		);
+		Locale defaultLocale = themeDisplay.getSiteDefaultLocale();
+
+		if (defaultLocale == null) {
+			return themeDisplay.getLocale();
+		}
+
+		return defaultLocale;
 	}
 
 	protected String getDisplayStyle(
@@ -1580,14 +1580,10 @@ public class DDMFormAdminDisplayContext {
 			JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
 			LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT);
 
-		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream();
-
-		return stream.filter(
+		return ListUtil.filter(
+			ddmFormFieldTypes,
 			ddmFormFieldType -> !outOfScopeDDMFormFieldTypes.contains(
-				ddmFormFieldType.getName())
-		).collect(
-			Collectors.toList()
-		);
+				ddmFormFieldType.getName()));
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception> _getAddFormDropdownItem() {

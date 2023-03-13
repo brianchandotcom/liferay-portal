@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_ASSETS_FORM_OPTION</td>
+	<td>//input[@name='portal'and @value='${key_formOptionName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_ASSETS_DOWNLOAD</td>
+	<td>//a[@data-analytics-asset-action='download']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRIC_VALUE</td>
 	<td>//span[@class='title'and text()='${key_metricTitle}']/..//div[text()='${key_metricValue}']</td>
 	<td></td>

@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.util.SettingsDDMFormFieldsUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -55,8 +56,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Jeyvison Nascimento
@@ -263,21 +262,12 @@ public class DataDefinitionUtil {
 		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
 
-		if (ListUtil.isEmpty(ddmFormFields)) {
-			return new DataDefinitionField[0];
-		}
-
-		Stream<DDMFormField> stream = ddmFormFields.stream();
-
-		return stream.map(
+		return TransformUtil.transformToArray(
+			ddmFormFields,
 			ddmFormField -> _toDataDefinitionField(
 				ddmFormField, ddmFormFieldTypeServicesRegistry,
-				ddmStructureLayoutLocalService)
-		).collect(
-			Collectors.toList()
-		).toArray(
-			new DataDefinitionField[0]
-		);
+				ddmStructureLayoutLocalService),
+			DataDefinitionField.class);
 	}
 
 	private static JSONArray _toJSONArray(String value) {
@@ -294,15 +284,8 @@ public class DataDefinitionUtil {
 	}
 
 	private static String[] _toLanguageIds(Set<Locale> locales) {
-		Stream<Locale> stream = locales.stream();
-
-		return stream.map(
-			LanguageUtil::getLanguageId
-		).collect(
-			Collectors.toList()
-		).toArray(
-			new String[0]
-		);
+		return TransformUtil.transformToArray(
+			locales, LanguageUtil::getLanguageId, String.class);
 	}
 
 	private static Map<String, List<JSONObject>> _toMap(

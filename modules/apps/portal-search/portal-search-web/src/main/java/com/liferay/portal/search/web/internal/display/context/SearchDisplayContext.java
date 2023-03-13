@@ -115,7 +115,7 @@ public class SearchDisplayContext {
 		_keywords = new Keywords(keywords);
 
 		HttpServletRequest httpServletRequest = portal.getHttpServletRequest(
-			_renderRequest);
+			renderRequest);
 
 		String emptyResultMessage = language.format(
 			httpServletRequest,
@@ -133,7 +133,7 @@ public class SearchDisplayContext {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContext searchContext = _searchContextFactory.getSearchContext(
+		SearchContext searchContext = searchContextFactory.getSearchContext(
 			assetCategoryIds, assetTagNames, themeDisplay.getCompanyId(),
 			ParamUtil.getString(httpServletRequest, "keywords"),
 			themeDisplay.getLayout(), themeDisplay.getLocale(),

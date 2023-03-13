@@ -31,10 +31,8 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When user makes a PUT request to create a vocabulary with assetLibraryId and a custom ERC") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			var response = TaxonomyVocabularyAPI.updateTaxonomyVocabularyByErc(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				externalReferenceCodeInBody = "erc-in-body",
 				name = "Vocabulary Name");
@@ -54,10 +52,8 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When user makes a PUT request to create a vocabulary with assetLibraryId and no ERC specified in the body") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			var response = TaxonomyVocabularyAPI.updateTaxonomyVocabularyByErc(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "nonexistent-erc",
 				name = "Vocabulary Name");
 		}
@@ -76,23 +72,21 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given an existing vocabulary with ERC") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				name = "Vocabulary Name");
 		}
 
 		task ("When user makes a DELETE request to delete the vocabulary with ERC") {
 			TaxonomyVocabularyAPI.deleteTaxonomyVocabularyByErc(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc");
 		}
 
 		task ("Then the vocabulary is deleted") {
 			TaxonomyVocabularyAPI.assertProperVocabularyTotalCount(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				expectedTotalCount = 0,
 				filterValue = "name%20eq%20%27Vocabulary%20Name%27");
 		}
@@ -103,17 +97,15 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given an existing vocabulary with ERC") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				name = "Vocabulary Name");
 		}
 
 		task ("When user makes a GET request to retrieve the vocabulary with assetLibraryId and ERC") {
 			var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyByErc(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc");
 		}
 
@@ -133,23 +125,21 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given an existing vocabulary with ERC") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				name = "Vocabulary Name");
 		}
 
 		task ("When user makes a DELETE request to delete the vocabulary with a nonexisting ERC") {
 			TaxonomyVocabularyAPI.deleteTaxonomyVocabularyByErc(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "nonexistent-erc");
 		}
 
 		task ("Then existing vocabularies are still present") {
 			TaxonomyVocabularyAPI.assertProperVocabularyTotalCount(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				expectedTotalCount = 1,
 				filterValue = "name%20eq%20%27Vocabulary%20Name%27");
 		}
@@ -160,10 +150,8 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When user makes a GET request to retrieve the vocabulary with assetLibraryId and a nonexisting ERC") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyByErc(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "nonexistent-erc");
 		}
 
@@ -179,17 +167,15 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given an existing vocabulary") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
-
 			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				name = "Vocabulary Name");
 		}
 
 		task ("When user makes a PUT request to update the vocabulary name with assetLibraryId and ERC") {
 			var response = TaxonomyVocabularyAPI.updateTaxonomyVocabularyByErc(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				name = "Update Vocabulary Name");
 		}
@@ -206,7 +192,7 @@ definition {
 
 		task ("And Then the previous vocabulary name is not present") {
 			TaxonomyVocabularyAPI.assertProperVocabularyTotalCount(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				expectedTotalCount = 0,
 				filterValue = "name%20eq%20%27Vocabulary%20Name%27");
 		}

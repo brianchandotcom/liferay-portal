@@ -250,6 +250,11 @@ public class I18nFilter extends BasePortalFilter {
 				false);
 		}
 
+		if (Validator.isNull(requestedLanguageId)) {
+			requestedLanguageId = (String)httpServletRequest.getAttribute(
+				WebKeys.VIRTUAL_HOST_LANGUAGE_ID);
+		}
+
 		return requestedLanguageId;
 	}
 

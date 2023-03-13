@@ -34,7 +34,7 @@ public class CTSQLModeThreadLocal {
 
 	public static enum CTSQLMode {
 
-		CT_ONLY, DEFAULT,
+		CT_ALL, CT_ONLY, DEFAULT,
 
 	}
 

@@ -25,11 +25,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -61,20 +56,20 @@ public class DDMFormUploadValidator {
 	public void validateFileExtension(String fileName)
 		throws FileExtensionException {
 
-		List<String> guestUploadFileExtensions = Arrays.asList(
-			getGuestUploadFileExtensions());
+		String extension = null;
 
-		Stream<String> guestUploadFileExtensionsStream =
-			guestUploadFileExtensions.stream();
-
-		Optional<String> guestUploadFileExtensionOptional =
-			guestUploadFileExtensionsStream.filter(
-				guestUploadFileExtension -> StringUtil.equalsIgnoreCase(
+		for (String guestUploadFileExtension : getGuestUploadFileExtensions()) {
+			if (StringUtil.equalsIgnoreCase(
 					FileUtil.getExtension(fileName),
-					StringUtil.trim(guestUploadFileExtension))
-			).findFirst();
+					StringUtil.trim(guestUploadFileExtension))) {
 
-		if (!guestUploadFileExtensionOptional.isPresent()) {
+				extension = guestUploadFileExtension;
+
+				break;
+			}
+		}
+
+		if (extension == null) {
 			throw new FileExtensionException(
 				"Invalid file extension for " + fileName);
 		}

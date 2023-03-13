@@ -32,8 +32,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONNECT_DISCONNECT_BUTTON</td>
-	<td>//button[@type='button' and text()='Connect'] | //button[@type='button' and text()='Disconnect']</td>
+	<td>CONNECT_BUTTON</td>
+	<td>//button[@type='button' and text()='Connect']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISCONNECT_BUTTON</td>
+	<td>//button[@type='button' and text()='Disconnect']</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,6 +83,11 @@
 <tr>
 	<td>FIRST_AVAILABLE_PROPERTY</td>
 	<td>//td[@class='table-column-text-start']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SECOND_AVAILABLE_PROPERTY</td>
+	<td>//tr[2]/td[@class='table-column-text-start']</td>
 	<td></td>
 </tr>
 <tr>

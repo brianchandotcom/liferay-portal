@@ -1,9 +1,10 @@
 definition {
 
 	macro _getAssetLibraryContentElementsByDifferentParameters {
-		Variables.assertDefined(parameterList = "${assetLibraryId},${parameter}");
+		Variables.assertDefined(parameterList = "${depotName},${parameter},${fieldValue}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/content-elements?${parameter}=${fieldValue} \
@@ -26,7 +27,7 @@ definition {
 
 	macro getAssetLibraryContentElementsByDifferentParameters {
 		ContentElementAPI._getAssetLibraryContentElementsByDifferentParameters(
-			assetLibraryId = ${assetLibraryId},
+			depotName = ${depotName},
 			fieldValue = ${fieldValue},
 			parameter = ${parameter});
 	}

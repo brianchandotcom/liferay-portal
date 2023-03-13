@@ -327,3 +327,8 @@ b91099c8edfcccf80de3f1e94db42ace0814246e^..a2df2f2e310b56cceeca89d618d7890f6ad68
 # Bundle Version 59.1.0
 #
 a2df2f2e310b56cceeca89d618d7890f6ad68d1f^..ec2a1491ebf47d113b18a592a2e8ca817add3a29=COMMERCE-10783
+
+#
+# Bundle Version 59.2.0
+#
+ec2a1491ebf47d113b18a592a2e8ca817add3a29^..f59721ca7eab1c580b8431a6e8a4e3bc337bad0a=COMMERCE-10759

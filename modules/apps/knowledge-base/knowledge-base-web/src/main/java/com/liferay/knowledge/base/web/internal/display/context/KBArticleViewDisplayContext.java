@@ -17,8 +17,10 @@ package com.liferay.knowledge.base.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
+import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.web.internal.configuration.KBServiceConfigurationProviderUtil;
 import com.liferay.knowledge.base.web.internal.util.KBDropdownItemsProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -89,6 +91,23 @@ public class KBArticleViewDisplayContext {
 		return _kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle);
 	}
 
+	public int getKBFolderKBArticlesCount(long groupId, long kbFolderId)
+		throws PortalException {
+
+		int foldersAndArticlesCount =
+			KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(
+				groupId, kbFolderId, WorkflowConstants.STATUS_ANY);
+
+		return foldersAndArticlesCount -
+			KBFolderServiceUtil.getKBFoldersCount(groupId, kbFolderId);
+	}
+
+	public int getKBFoldersCount(long groupId, long kbFolderId)
+		throws PortalException {
+
+		return KBFolderServiceUtil.getKBFoldersCount(groupId, kbFolderId);
+	}
+
 	public String getModifiedDateDescription(KBArticle kbArticle) {
 		Date modifiedDate = kbArticle.getModifiedDate();
 
@@ -106,7 +125,9 @@ public class KBArticleViewDisplayContext {
 
 		Date expirationDate = kbArticle.getExpirationDate();
 
-		if (kbArticle.isExpired() || (expirationDate == null)) {
+		if (kbArticle.isDraft() || kbArticle.isExpired() ||
+			(expirationDate == null)) {
+
 			return false;
 		}
 

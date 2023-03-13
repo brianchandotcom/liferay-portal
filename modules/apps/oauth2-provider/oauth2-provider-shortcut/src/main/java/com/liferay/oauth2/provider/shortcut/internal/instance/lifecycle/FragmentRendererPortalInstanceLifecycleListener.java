@@ -18,6 +18,7 @@ import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.osgi.util.configuration.ConfigurationPersistenceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -46,6 +47,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FragmentRendererPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
+
+	@Override
+	public long getLastModifiedTime() {
+		return _lastModifiedTime;
+	}
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
@@ -84,7 +90,10 @@ public class FragmentRendererPortalInstanceLifecycleListener
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties) throws Exception {
+		_lastModifiedTime = ConfigurationPersistenceUtil.update(
+			this, properties);
+
 		_applicationName = GetterUtil.getString(
 			properties.get("applicationName"));
 		_clientId = GetterUtil.getString(properties.get("clientId"));
@@ -92,6 +101,7 @@ public class FragmentRendererPortalInstanceLifecycleListener
 
 	private String _applicationName = "Fragment Renderer";
 	private String _clientId = "FragmentRenderer";
+	private long _lastModifiedTime;
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

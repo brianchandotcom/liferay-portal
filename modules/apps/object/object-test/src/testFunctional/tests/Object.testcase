@@ -288,6 +288,46 @@ definition {
 			value1 = "Input does not match");
 	}
 
+	@description = "Verify it's possible to sort object entries by API"
+	@priority = 4
+	test CanSortObjectEntriesViaAPI {
+		task ("Given: An custom object with a text field and three object entries") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 158616",
+				objectName = "CustomObject158616",
+				pluralLabelName = "Custom Objects 158616");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject158616");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject158616");
+
+			for (var letter : list "C,Z,A") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customObjectField",
+					objectName = "CustomObject158616",
+					value = "Entry${letter}");
+			}
+		}
+
+		task ("When: The object entries are sorted using the API") {
+			var entrySortValue = ObjectAdmin.getObjectSortedEntry(
+				objectName = "CustomObject158616",
+				sortString = "customObjectField");
+		}
+
+		task ("Then: The object entries are returned in alphabetical order") {
+			TestUtils.assertEquals(
+				actual = ${entrySortValue},
+				expected = "EntryA,EntryC,EntryZ");
+		}
+	}
+
 	@description = "LPS-135406 - Verify it is possible to update the label of relationship field of custom object from a native object"
 	@priority = 4
 	test CanUpdateRelationshipFieldLabelFromNativeObject {

@@ -95,6 +95,7 @@ definition {
 
 		var response = TaxonomyVocabularyAPI.createTaxonomyVocabulary(
 			assetLibraryId = ${assetLibraryId},
+			groupName = "Guest",
 			name = "Vocabulary Name");
 
 		static var responseOfCreated = ${response};

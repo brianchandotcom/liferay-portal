@@ -812,9 +812,7 @@ definition {
 		}
 
 		task ("And Then the status of the imported objectDefinition is approved") {
-			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Coupon");
-
-			var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = ${objectDefinitionId});
+			var objectDefinitionStatus = ObjectDefinitionAPI.getObjectDefinitionStatusByName(name = "Coupon");
 
 			TestUtils.assertEquals(
 				actual = ${objectDefinitionStatus},
@@ -855,9 +853,7 @@ definition {
 		}
 
 		task ("And Then the status of the imported objectDefinition is Draft") {
-			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Coupon");
-
-			var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = ${objectDefinitionId});
+			var objectDefinitionStatus = ObjectDefinitionAPI.getObjectDefinitionStatusByName(name = "Coupon");
 
 			TestUtils.assertEquals(
 				actual = ${objectDefinitionStatus},

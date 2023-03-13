@@ -224,7 +224,7 @@ public class AssetListEntryExportImportContentProcessor
 							MapUtil.getLong(groupIds, groupId, groupId));
 
 						if (group != null) {
-							return groupId;
+							return group.getGroupId();
 						}
 
 						return null;

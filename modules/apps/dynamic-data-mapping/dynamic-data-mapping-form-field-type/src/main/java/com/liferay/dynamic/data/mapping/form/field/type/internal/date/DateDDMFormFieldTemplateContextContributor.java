@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -32,8 +33,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -79,14 +78,10 @@ public class DateDDMFormFieldTemplateContextContributor
 				"tooltip")
 		).put(
 			"weekdaysShort",
-			Stream.of(
-				CalendarUtil.DAYS_ABBREVIATION
-			).map(
+			TransformUtil.transformToList(
+				CalendarUtil.DAYS_ABBREVIATION,
 				day -> _language.get(
-					ddmFormFieldRenderingContext.getLocale(), day)
-			).collect(
-				Collectors.toList()
-			)
+					ddmFormFieldRenderingContext.getLocale(), day))
 		).put(
 			"years", _getYears()
 		).build();

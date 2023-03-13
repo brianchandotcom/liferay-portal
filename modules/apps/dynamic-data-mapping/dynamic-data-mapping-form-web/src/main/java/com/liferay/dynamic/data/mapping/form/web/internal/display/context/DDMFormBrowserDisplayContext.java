@@ -59,7 +59,7 @@ public class DDMFormBrowserDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_httpServletRequest = PortalUtil.getHttpServletRequest(_renderRequest);
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
 		_formWebRequestHelper = new DDMFormWebRequestHelper(
 			_httpServletRequest);

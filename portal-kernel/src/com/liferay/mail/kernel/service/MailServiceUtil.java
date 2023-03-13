@@ -46,6 +46,10 @@ public class MailServiceUtil {
 		return getService().getSession(account);
 	}
 
+	public static Session getSession(long companyId) {
+		return getService().getSession(companyId);
+	}
+
 	public static void sendEmail(MailMessage mailMessage) {
 		getService().sendEmail(mailMessage);
 	}

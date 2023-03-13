@@ -18,9 +18,13 @@ definition {
 	macro assertResponseHasCorrectInformations {
 		Variables.assertDefined(parameterList = "${expectedURL},${expectedType},${expectedUseCustomName},${responseToParse}");
 
+		var portalURL = JSONCompany.getPortalURL();
+
+		var expectedContentURL = "${portalURL}/${expectedURL}";
+
 		NavigationMenuAPI._assertResponseIncludeCorrectElement(
 			element = "contentURL",
-			expectedElement = ${expectedURL},
+			expectedElement = ${expectedContentURL},
 			responseFromSite = ${responseFromSite},
 			responseToParse = ${responseToParse});
 
@@ -44,6 +48,10 @@ definition {
 			var api = "navigation-menus/${navigationMenuId}";
 		}
 		else {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = ${groupName},
+				site = "true");
+
 			var api = "sites/${siteId}/navigation-menus/";
 		}
 

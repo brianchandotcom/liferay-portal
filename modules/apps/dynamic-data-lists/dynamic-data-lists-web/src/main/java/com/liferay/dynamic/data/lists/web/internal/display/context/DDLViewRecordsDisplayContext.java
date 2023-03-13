@@ -92,7 +92,7 @@ public class DDLViewRecordsDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_formDDMTemplateId = formDDMTemplateId;
 
-		_ddlRecordSet = (DDLRecordSet)_liferayPortletRequest.getAttribute(
+		_ddlRecordSet = (DDLRecordSet)liferayPortletRequest.getAttribute(
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 		_ddlRequestHelper = new DDLRequestHelper(

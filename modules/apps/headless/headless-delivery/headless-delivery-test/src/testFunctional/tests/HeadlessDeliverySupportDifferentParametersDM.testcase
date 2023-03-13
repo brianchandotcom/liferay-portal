@@ -9,6 +9,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONDepot.addDepot(depotName = "Test Depot Name");
 	}
 
 	tearDown {
@@ -25,14 +27,11 @@ definition {
 	test CanReceiveIdFieldValuesOnlyInResponseForIndividualElement {
 		property portal.acceptance = "true";
 
-		task ("Given a document of a site") {
-			JSONDepot.addDepot(depotName = "Test Depot Name");
-
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+		task ("Given a document of an asset library") {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var documentId = DocumentAPI.getIdOfCreatedDocument(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				filePath = ${filePath});
 		}
@@ -57,14 +56,11 @@ definition {
 	test CanReceiveTitleFieldValuesOnlyInResponseForIndividualElement {
 		property portal.acceptance = "true";
 
-		task ("Given a document of a site") {
-			JSONDepot.addDepot(depotName = "Test Depot Name");
-
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+		task ("Given a document of an asset library") {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var documentId = DocumentAPI.getIdOfCreatedDocument(
-				assetLibraryId = ${assetLibraryId},
+				depotName = "Test Depot Name",
 				externalReferenceCode = "erc",
 				filePath = ${filePath});
 		}

@@ -15,7 +15,6 @@
 package com.liferay.analytics.reports.web.internal.portlet.action.test;
 
 import com.liferay.analytics.reports.test.util.MockContextUtil;
-import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -42,6 +41,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.MockHttp;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -101,13 +101,13 @@ public class GetSocialTrafficSourcesMVCResourceCommandTest {
 							RandomTestUtil.randomString()
 						).put(
 							"liferayAnalyticsFaroBackendURL",
-							RandomTestUtil.randomString()
+							"http://" + RandomTestUtil.randomString()
 						).build(),
 						SettingsFactoryUtil.getSettingsFactory())) {
 
 			ReflectionTestUtil.setFieldValue(
 				_mvcResourceCommand, "_http",
-				MockHttpUtil.geHttp(
+				new MockHttp(
 					HashMapBuilder.
 						<String, UnsafeSupplier<String, Exception>>put(
 							"/api/1.0/data-sources/" + dataSourceId,

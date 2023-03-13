@@ -47,7 +47,7 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 		_modelSearchSettings = modelSearchSettings;
 		_modelSummaryContributor = modelSummaryContributor;
 
-		String className = _modelSearchSettings.getClassName();
+		String className = modelSearchSettings.getClassName();
 
 		_keywordQueryContributors = ServiceTrackerListFactory.open(
 			bundleContext, KeywordQueryContributor.class,

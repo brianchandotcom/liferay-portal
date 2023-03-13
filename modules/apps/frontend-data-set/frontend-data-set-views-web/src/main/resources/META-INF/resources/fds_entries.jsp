@@ -22,6 +22,8 @@
 		HashMapBuilder.<String, Object>put(
 			"apiURL", fdsViewsDisplayContext.getFDSEntriesAPIURL()
 		).put(
+			"fdsViewsURL", fdsViewsDisplayContext.getFDSViewsURL()
+		).put(
 			"headlessResources", fdsViewsDisplayContext.getHeadlessResourcesJSONArray()
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()

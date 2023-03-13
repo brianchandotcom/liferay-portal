@@ -202,6 +202,7 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "My Image");
 
 			WebContent.addWithStructureCP(
+				dmFolderName = "Provided by Liferay",
 				imageFileName = "tree.png",
 				navTab = "Documents and Media",
 				structureName = "My Image",

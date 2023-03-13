@@ -86,14 +86,13 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			ApplicationListWebKeys.GROUP_PROVIDER);
 		_groupURLProvider = (GroupURLProvider)portletRequest.getAttribute(
 			SiteAdministrationWebKeys.GROUP_URL_PROVIDER);
-		_panelCategory = (PanelCategory)_portletRequest.getAttribute(
+		_panelCategory = (PanelCategory)portletRequest.getAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY);
-		_panelCategoryHelper =
-			(PanelCategoryHelper)_portletRequest.getAttribute(
-				ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+		_panelCategoryHelper = (PanelCategoryHelper)portletRequest.getAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
 		_recentGroupManager = (RecentGroupManager)portletRequest.getAttribute(
 			SiteAdministrationWebKeys.RECENT_GROUP_MANAGER);
-		_themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

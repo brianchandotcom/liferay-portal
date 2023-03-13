@@ -98,6 +98,7 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 	<liferay-ui:error exception="<%= CommerceAddressZipException.class %>" message="please-enter-a-valid-zip" />
 	<liferay-ui:error exception="<%= CommerceOrderBillingAddressException.class %>" message="please-enter-a-valid-address" />
 	<liferay-ui:error exception="<%= CommerceOrderShippingAddressException.class %>" message="please-enter-a-valid-address" />
+	<liferay-ui:error exception="<%= CommerceOrderShippingAndBillingException.class %>" message="please-enter-a-valid-country-for-the-billing-address" />
 
 	<aui:model-context bean="<%= baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId) %>" model="<%= CommerceAddress.class %>" />
 

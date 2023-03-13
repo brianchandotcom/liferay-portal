@@ -50,7 +50,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
@@ -146,12 +145,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			return fileVersion.getSize();
 		}
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
-
-		Optional<Long> valueOptional = adaptiveMedia.getValueOptional(
-			AMAttribute.getContentLengthAMAttribute());
-
-		return valueOptional.orElse(0L);
+		return _getValue(adaptiveMedias.get(0));
 	}
 
 	@Override
@@ -194,12 +188,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			return 0L;
 		}
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
-
-		Optional<Long> valueOptional = adaptiveMedia.getValueOptional(
-			AMAttribute.getContentLengthAMAttribute());
-
-		return valueOptional.orElse(0L);
+		return _getValue(adaptiveMedias.get(0));
 	}
 
 	@Override
@@ -342,6 +331,17 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH),
 			PrefsPropsUtil.getInteger(
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT));
+	}
+
+	private Long _getValue(AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
+		Long value = adaptiveMedia.getValue(
+			AMAttribute.getContentLengthAMAttribute());
+
+		if (value == null) {
+			return 0L;
+		}
+
+		return value;
 	}
 
 	private boolean _isMimeTypeSupported(String mimeType) {

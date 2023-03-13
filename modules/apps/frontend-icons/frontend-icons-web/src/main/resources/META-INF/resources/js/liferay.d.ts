@@ -16,6 +16,7 @@
 
 declare module Liferay {
 	export const Icons: {
+		controlPanelSpritemap: string;
 		spritemap: string;
 	};
 }

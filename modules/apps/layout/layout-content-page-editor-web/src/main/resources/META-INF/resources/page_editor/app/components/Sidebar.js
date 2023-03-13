@@ -482,7 +482,16 @@ export default function Sidebar() {
 					})}
 					id={sidebarContentId}
 					onClick={deselectItem}
-					ref={sidebarContentRef}
+					ref={(ref) => {
+						sidebarContentRef.current = ref;
+
+						if (sidebarOpen) {
+							ref?.removeAttribute('inert');
+						}
+						else {
+							ref?.setAttribute('inert', '');
+						}
+					}}
 					role="tabpanel"
 					tabIndex="-1"
 				>

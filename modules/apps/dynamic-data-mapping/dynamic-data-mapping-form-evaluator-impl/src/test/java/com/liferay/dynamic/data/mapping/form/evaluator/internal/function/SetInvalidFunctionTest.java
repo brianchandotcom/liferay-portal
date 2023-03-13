@@ -70,9 +70,7 @@ public class SetInvalidFunctionTest {
 		Assert.assertTrue("valid", properties.containsKey("valid"));
 		Assert.assertEquals(
 			"Custom error message",
-			updateFieldPropertyRequest.getPropertyOptional(
-				"errorMessage"
-			).get());
+			updateFieldPropertyRequest.getProperty("errorMessage"));
 
 		Assert.assertFalse((boolean)properties.get("valid"));
 

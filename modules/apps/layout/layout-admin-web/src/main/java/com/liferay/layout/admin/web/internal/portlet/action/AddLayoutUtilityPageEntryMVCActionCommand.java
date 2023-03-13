@@ -16,12 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutUtilityPageEntryPortalExceptionRequestHandler;
-import com.liferay.layout.importer.LayoutsImporter;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.provider.LayoutUtilityPageEntryDefaultPageElementDefinitionProvider;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -103,21 +98,9 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, serviceContext.getUserId(),
-				serviceContext.getScopeGroupId(), 0, 0, false, name, type,
-				masterLayoutPlid, serviceContext);
-
-		String pageElementJSON =
-			_layoutUtilityPageEntryDefaultPageElementDefinitionProvider.
-				getDefaultPageElementJSON(type);
-
-		if (pageElementJSON != null) {
-			_importPageElement(layoutUtilityPageEntry, pageElementJSON);
-		}
-
-		return layoutUtilityPageEntry;
+		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			0, 0, false, name, type, masterLayoutPlid, serviceContext);
 	}
 
 	private String _getRedirectURL(
@@ -148,42 +131,8 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 			layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 
-	private void _importPageElement(
-			LayoutUtilityPageEntry layoutUtilityPageEntry,
-			String pageElementJSON)
-		throws Exception {
-
-		Layout layout = _layoutLocalService.getLayout(
-			layoutUtilityPageEntry.getPlid());
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					draftLayout.getGroupId(), draftLayout.getPlid(), true);
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
-
-		_layoutsImporter.importPageElement(
-			draftLayout, layoutStructure, layoutStructure.getMainItemId(),
-			pageElementJSON, 0);
-	}
-
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
-
-	@Reference
-	private LayoutsImporter _layoutsImporter;
-
-	@Reference
-	private LayoutUtilityPageEntryDefaultPageElementDefinitionProvider
-		_layoutUtilityPageEntryDefaultPageElementDefinitionProvider;
 
 	@Reference
 	private LayoutUtilityPageEntryLocalService

@@ -152,6 +152,14 @@ definition {
 			value1 = ${templateName});
 	}
 
+	macro openFolderInWebContentAdmin {
+		var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
+		Navigator.openWithAppendToBaseURL(
+			baseURL = ${baseURL},
+			urlAppend = "group/asset-library-${assetLibraryId}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}");
+	}
+
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
 	macro openToAddBasicArticle {
@@ -239,15 +247,18 @@ definition {
 	}
 
 	macro openWebContentStructuresAdmin {
-		Navigator.openWithAppendToBaseURL(
-			baseURL = ${baseURL},
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp&p_p_auth=sNIcMAzl");
-	}
+		if (isSet(depotName)) {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
-	macro openWebContentStructuresAdminInAssetLibrary {
+			var urlKey = "asset-library-${depotId}";
+		}
+		else {
+			var urlKey = ${siteURLKey};
+		}
+
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
-			urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp");
+			urlAppend = "group/${urlKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp&p_p_auth=sNIcMAzl");
 	}
 
 	macro openWebContentTemplatesAdmin {

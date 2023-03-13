@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_ALLOW_UNAPPROVED_CHANGES</td>
+	<td>//input[contains(@id,'enableUnapprovedChanges')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_PUBLICATIONS_TOGGLE_SWITCH</td>
 	<td>//input[contains(@id,'enablePublications')]</td>
 	<td></td>

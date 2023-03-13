@@ -34,11 +34,8 @@ class TestrayFactorOptionsImpl extends Rest<FactorOption, TestrayFactorOption> {
 			nestedFields: 'factorCategory',
 			transformData: (testrayFactorOption) => ({
 				...testrayFactorOption,
-				factorCategory: testrayFactorOption?.r_factorCategoryToOptions_c_factorCategory
-					? {
-							...testrayFactorOption.r_factorCategoryToOptions_c_factorCategory,
-					  }
-					: undefined,
+				factorCategory:
+					testrayFactorOption?.r_factorCategoryToOptions_c_factorCategory,
 			}),
 			uri: 'factoroptions',
 		});

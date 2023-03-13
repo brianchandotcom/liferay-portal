@@ -36,7 +36,7 @@ SimilarResultsDisplayContext similarResultsDisplayContext = new SimilarResultsDi
 
 SimilarResultsPortletInstanceConfiguration similarResultsPortletInstanceConfiguration = similarResultsDisplayContext.getSimilarResultsPortletInstanceConfiguration();
 
-SimilarResultsPortletPreferences similarResultsPortletPreferences = new SimilarResultsPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));
+SimilarResultsPortletPreferences similarResultsPortletPreferences = new SimilarResultsPortletPreferencesImpl(portletPreferences);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

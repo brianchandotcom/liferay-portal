@@ -43,7 +43,12 @@ public class ProductNavigationControlMenuTagDisplayContext {
 		HttpServletRequest httpServletRequest, PageContext pageContext) {
 
 		_httpServletRequest = httpServletRequest;
+
 		_pageContext = pageContext;
+
+		_httpServletResponse =
+			PipingServletResponseFactory.createPipingServletResponse(
+				_pageContext);
 	}
 
 	public Map<String, List<ProductNavigationControlMenuEntry>>
@@ -207,12 +212,8 @@ public class ProductNavigationControlMenuTagDisplayContext {
 			boolean useList, Writer writer)
 		throws Exception {
 
-		HttpServletResponse httpServletResponse =
-			PipingServletResponseFactory.createPipingServletResponse(
-				_pageContext);
-
 		if (productNavigationControlMenuEntry.includeIcon(
-				_httpServletRequest, httpServletResponse)) {
+				_httpServletRequest, _httpServletResponse)) {
 
 			return;
 		}
@@ -250,7 +251,7 @@ public class ProductNavigationControlMenuTagDisplayContext {
 			productNavigationControlMenuEntry.getURL(_httpServletRequest));
 
 		writer.append(
-			iconTag.doTagAsString(_httpServletRequest, httpServletResponse));
+			iconTag.doTagAsString(_httpServletRequest, _httpServletResponse));
 
 		if (useList) {
 			writer.append("</li>");
@@ -261,6 +262,7 @@ public class ProductNavigationControlMenuTagDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final HttpServletResponse _httpServletResponse;
 	private final PageContext _pageContext;
 	private Map<String, List<ProductNavigationControlMenuEntry>>
 		_productNavigationControlMenuEntriesMap;

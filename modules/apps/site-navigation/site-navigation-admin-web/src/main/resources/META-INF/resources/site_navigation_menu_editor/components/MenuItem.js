@@ -227,6 +227,10 @@ export function MenuItem({item, onMenuItemRemoved}) {
 												);
 											}
 
+											if (event.key === 'Escape') {
+												setIsMovementEnabled(false);
+											}
+
 											if (!isMovementEnabled) {
 												return;
 											}

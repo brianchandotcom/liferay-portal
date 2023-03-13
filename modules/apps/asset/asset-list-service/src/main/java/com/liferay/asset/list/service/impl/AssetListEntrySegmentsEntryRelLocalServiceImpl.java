@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Date;
 import java.util.List;
@@ -172,6 +173,17 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 
 		return assetListEntrySegmentsEntryRelPersistence.findByAssetListEntryId(
 			assetListEntryId, start, end);
+	}
+
+	@Override
+	public List<AssetListEntrySegmentsEntryRel>
+		getAssetListEntrySegmentsEntryRels(
+			long assetListEntryId, long[] segmentsEntryIds, int start, int end,
+			OrderByComparator<AssetListEntrySegmentsEntryRel>
+				orderByComparator) {
+
+		return assetListEntrySegmentsEntryRelPersistence.findByA_S_C(
+			assetListEntryId, segmentsEntryIds, start, end, orderByComparator);
 	}
 
 	@Override

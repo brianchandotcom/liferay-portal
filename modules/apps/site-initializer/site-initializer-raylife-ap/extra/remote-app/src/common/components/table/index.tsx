@@ -22,9 +22,9 @@ type sort = {
 	[keys: string]: boolean;
 };
 
-type TableRowContentType = {[keys: string]: string};
+export type TableRowContentType = {[keys: string]: string | number};
 
-type TableHeaders = {
+export type TableHeaders = {
 	bold?: boolean;
 	centered?: boolean;
 	clickable?: boolean;
@@ -170,7 +170,10 @@ const Table: React.FC<TableProps> = ({
 
 									<span
 										className={classnames('', {
-											'cursor-pointer': !!item.clickable,
+											'cursor-pointer':
+												!!item.clickable &&
+												rowContent.isClickable ===
+													'true',
 											'font-weight-bolder': !!item.bold,
 											'text-danger font-weight-bolder':
 												Number(rowContent[item.key]) <

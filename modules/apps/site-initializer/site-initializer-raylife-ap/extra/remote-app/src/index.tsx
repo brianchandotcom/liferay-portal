@@ -24,6 +24,7 @@ import Applications from './routes/applications/pages/Applications';
 import ApplicationsTable from './routes/applications/pages/ApplicationsTable';
 import NewApplication from './routes/applications/pages/NewApplication';
 import Claims from './routes/claims/pages/Claims';
+import ClaimDetails from './routes/claims/pages/ClaimsDetails';
 import ClaimsTable from './routes/claims/pages/ClaimsTable';
 import ProductPerformance from './routes/dashboard/ProductPerformance';
 import NotificationSidebar from './routes/dashboard/notification-sidebar/index';
@@ -46,6 +47,7 @@ const RaylifeComponents: RaylifeComponentsType = {
 	'application-details': <ApplicationDetails />,
 	'applications': <Applications />,
 	'applications-table': <ApplicationsTable />,
+	'claim-details': <ClaimDetails />,
 	'claims': <Claims />,
 	'claims-table': <ClaimsTable />,
 	'new-application': (

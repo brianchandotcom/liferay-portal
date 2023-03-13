@@ -1,8 +1,0 @@
-assemble:
-    - from: assets
-      include: "**/*"
-      into: static
-sample-global-js:
-    name: Sample Global JS
-    type: globalJS
-    url: global.js

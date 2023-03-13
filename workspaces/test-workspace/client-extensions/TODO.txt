@@ -1,2 +1,0 @@
-Use meaning external reference codes instead of generated UUID for
-sample-object-definition.json.

@@ -1092,23 +1092,26 @@ public class WabProcessor {
 
 		URI uri = dir.toURI();
 
-		ClassLoader classLoader = new URLClassLoader(new URL[] {uri.toURL()});
+		try (URLClassLoader urlClassLoader = new URLClassLoader(
+				new URL[] {uri.toURL()})) {
 
-		if (classLoader.getResource("portlet.properties") == null) {
-			return;
-		}
+			if (urlClassLoader.getResource("portlet.properties") == null) {
+				return;
+			}
 
-		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
-			classLoader, "portlet");
+			Configuration configuration =
+				ConfigurationFactoryUtil.getConfiguration(
+					urlClassLoader, "portlet");
 
-		Properties properties = configuration.getProperties();
+			Properties properties = configuration.getProperties();
 
-		for (String xmlFile :
-				StringUtil.split(
-					properties.getProperty(
-						PropsKeys.RESOURCE_ACTIONS_CONFIGS))) {
+			for (String xmlFile :
+					StringUtil.split(
+						properties.getProperty(
+							PropsKeys.RESOURCE_ACTIONS_CONFIGS))) {
 
-			_processResourceActionXML(dir, xmlFile);
+				_processResourceActionXML(dir, xmlFile);
+			}
 		}
 	}
 

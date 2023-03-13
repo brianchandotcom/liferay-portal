@@ -45,6 +45,38 @@ public class JournalArticleLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalArticleLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static JournalArticle addArticle(
+			String externalReferenceCode, long userId, long groupId,
+			long folderId, long classNameId, long classPK, String articleId,
+			boolean autoArticleId, double version,
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap,
+			Map<java.util.Locale, String> friendlyURLMap, String content,
+			long ddmStructureId, String ddmTemplateKey, String layoutUuid,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, java.io.File smallImageFile,
+			Map<String, byte[]> images, String articleURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addArticle(
+			externalReferenceCode, userId, groupId, folderId, classNameId,
+			classPK, articleId, autoArticleId, version, titleMap,
+			descriptionMap, friendlyURLMap, content, ddmStructureId,
+			ddmTemplateKey, layoutUuid, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
+			reviewDateMinute, neverReview, indexable, smallImage, smallImageURL,
+			smallImageFile, images, articleURL, serviceContext);
+	}
 
 	/**
 	 * Adds a web content article with additional parameters. All scheduling
@@ -145,7 +177,15 @@ public class JournalArticleLocalServiceUtil {
 	 whether to add the default guest and group permissions.
 	 * @return the web content article
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addArticle(String, long, long, long, long, long,
+	 String, boolean, double, Map, Map, Map, String, long,
+	 String, String, int, int, int, int, int, int, int, int,
+	 int, int, boolean, int, int, int, int, int, boolean,
+	 boolean, boolean, String, File, Map, String,
+	 ServiceContext)}
 	 */
+	@Deprecated
 	public static JournalArticle addArticle(
 			String externalReferenceCode, long userId, long groupId,
 			long folderId, long classNameId, long classPK, String articleId,
@@ -179,6 +219,20 @@ public class JournalArticleLocalServiceUtil {
 			smallImageFile, images, articleURL, serviceContext);
 	}
 
+	public static JournalArticle addArticle(
+			String externalReferenceCode, long userId, long groupId,
+			long folderId, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String content,
+			long ddmStructureId, String ddmTemplateKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addArticle(
+			externalReferenceCode, userId, groupId, folderId, titleMap,
+			descriptionMap, content, ddmStructureId, ddmTemplateKey,
+			serviceContext);
+	}
+
 	/**
 	 * Adds a web content article.
 	 *
@@ -209,8 +263,12 @@ public class JournalArticleLocalServiceUtil {
 	 title, and workflow actions for the web content article. Can also
 	 set whether to add the default guest and group permissions.
 	 * @return the web content article
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a portal exception occurred	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addArticle(String, long, long, long, Map, Map,
+	 String, long, String, ServiceContext)}
 	 */
+	@Deprecated
 	public static JournalArticle addArticle(
 			String externalReferenceCode, long userId, long groupId,
 			long folderId, Map<java.util.Locale, String> titleMap,
@@ -225,6 +283,43 @@ public class JournalArticleLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static JournalArticle addArticleDefaultValues(
+			long userId, long groupId, long classNameId, long classPK,
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String content,
+			long ddmStructureId, String ddmTemplateKey, String layoutUuid,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, java.io.File smallImageFile,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addArticleDefaultValues(
+			userId, groupId, classNameId, classPK, titleMap, descriptionMap,
+			content, ddmStructureId, ddmTemplateKey, layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview, indexable,
+			smallImage, smallImageURL, smallImageFile, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addArticleDefaultValues(long, long, long,
+	 long, Map, Map, String, long, String,
+	 String, int, int, int, int, int, int, int,
+	 int, int, int, boolean, int, int, int, int,
+	 int, boolean, boolean, boolean, String,
+	 File, ServiceContext)}
+	 */
+	@Deprecated
 	public static JournalArticle addArticleDefaultValues(
 			long userId, long groupId, long classNameId, long classPK,
 			Map<java.util.Locale, String> titleMap,
@@ -3504,6 +3599,36 @@ public class JournalArticleLocalServiceUtil {
 		getService().unsubscribeStructure(groupId, userId, ddmStructureId);
 	}
 
+	public static JournalArticle updateArticle(
+			long userId, long groupId, long folderId, String articleId,
+			double version, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap,
+			Map<java.util.Locale, String> friendlyURLMap, String content,
+			String ddmTemplateKey, String layoutUuid, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, java.io.File smallImageFile,
+			Map<String, byte[]> images, String articleURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateArticle(
+			userId, groupId, folderId, articleId, version, titleMap,
+			descriptionMap, friendlyURLMap, content, ddmTemplateKey, layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview, indexable,
+			smallImage, smallImageURL, smallImageFile, images, articleURL,
+			serviceContext);
+	}
+
 	/**
 	 * Updates the web content article with additional parameters. All
 	 * scheduling parameters (display date, expiration date, and review date)
@@ -3588,8 +3713,16 @@ public class JournalArticleLocalServiceUtil {
 	 content update activity; otherwise it is considered a web content
 	 add activity.
 	 * @return the updated web content article
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a portal exception occurred	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateArticle(long, long, long, String,
+	 double, Map, Map, Map, String, String,
+	 String, int, int, int, int, int, int, int,
+	 int, int, int, boolean, int, int, int, int,
+	 int, boolean, boolean, boolean, String,
+	 File, Map, String, ServiceContext)}
 	 */
+	@Deprecated
 	public static JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
 			double version, Map<java.util.Locale, String> titleMap,
@@ -3665,6 +3798,35 @@ public class JournalArticleLocalServiceUtil {
 		return getService().updateArticle(
 			userId, groupId, folderId, articleId, version, titleMap,
 			descriptionMap, content, layoutUuid, serviceContext);
+	}
+
+	public static JournalArticle updateArticle(
+			long userId, long groupId, long folderId, String articleId,
+			double version, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String content,
+			String ddmTemplateKey, String layoutUuid, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, java.io.File smallImageFile,
+			Map<String, byte[]> images, String articleURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateArticle(
+			userId, groupId, folderId, articleId, version, titleMap,
+			descriptionMap, content, ddmTemplateKey, layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview, indexable,
+			smallImage, smallImageURL, smallImageFile, images, articleURL,
+			serviceContext);
 	}
 
 	/**
@@ -3749,8 +3911,14 @@ public class JournalArticleLocalServiceUtil {
 	 content update activity; otherwise it is considered a web content
 	 add activity.
 	 * @return the updated web content article
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a portal exception occurred	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateArticle(long, long, long, String, double, Map, Map,
+	 String, String, String, int, int, int, int, int, int, int, int,
+	 int, int, boolean, int, int, int, int, int, boolean, boolean,
+	 boolean, String, File, Map, String, ServiceContext)}
 	 */
+	@Deprecated
 	public static JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
 			double version, Map<java.util.Locale, String> titleMap,
@@ -3834,6 +4002,42 @@ public class JournalArticleLocalServiceUtil {
 		return getService().updateArticle(id, urlTitle);
 	}
 
+	public static JournalArticle updateArticleDefaultValues(
+			long userId, long groupId, String articleId,
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String content,
+			String ddmTemplateKey, String layoutUuid, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, java.io.File smallImageFile,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateArticleDefaultValues(
+			userId, groupId, articleId, titleMap, descriptionMap, content,
+			ddmTemplateKey, layoutUuid, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
+			reviewDateMinute, neverReview, indexable, smallImage, smallImageURL,
+			smallImageFile, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateArticleDefaultValues(long, long, String, Map,
+	 Map, String, String, String, int, int, int, int, int,
+	 int, int, int, int, int, boolean, int, int, int, int,
+	 int, boolean, boolean, boolean, String, File,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static JournalArticle updateArticleDefaultValues(
 			long userId, long groupId, String articleId,
 			Map<java.util.Locale, String> titleMap,

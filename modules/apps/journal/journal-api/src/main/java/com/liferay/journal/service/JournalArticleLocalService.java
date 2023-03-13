@@ -85,6 +85,25 @@ public interface JournalArticleLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.journal.service.impl.JournalArticleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the journal article local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link JournalArticleLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalArticle addArticle(
+			String externalReferenceCode, long userId, long groupId,
+			long folderId, long classNameId, long classPK, String articleId,
+			boolean autoArticleId, double version, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap,
+			Map<Locale, String> friendlyURLMap, String content,
+			long ddmStructureId, String ddmTemplateKey, String layoutUuid,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, File smallImageFile,
+			Map<String, byte[]> images, String articleURL,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds a web content article with additional parameters. All scheduling
@@ -185,8 +204,15 @@ public interface JournalArticleLocalService
 	 whether to add the default guest and group permissions.
 	 * @return the web content article
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addArticle(String, long, long, long, long, long,
+	 String, boolean, double, Map, Map, Map, String, long,
+	 String, String, int, int, int, int, int, int, int, int,
+	 int, int, boolean, int, int, int, int, int, boolean,
+	 boolean, boolean, String, File, Map, String,
+	 ServiceContext)}
 	 */
-	@Indexable(type = IndexableType.REINDEX)
+	@Deprecated
 	public JournalArticle addArticle(
 			String externalReferenceCode, long userId, long groupId,
 			long folderId, long classNameId, long classPK, String articleId,
@@ -203,6 +229,14 @@ public interface JournalArticleLocalService
 			boolean neverReview, boolean indexable, boolean smallImage,
 			String smallImageURL, File smallImageFile,
 			Map<String, byte[]> images, String articleURL,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public JournalArticle addArticle(
+			String externalReferenceCode, long userId, long groupId,
+			long folderId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String content,
+			long ddmStructureId, String ddmTemplateKey,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -236,8 +270,12 @@ public interface JournalArticleLocalService
 	 title, and workflow actions for the web content article. Can also
 	 set whether to add the default guest and group permissions.
 	 * @return the web content article
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a portal exception occurred	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addArticle(String, long, long, long, Map, Map,
+	 String, long, String, ServiceContext)}
 	 */
+	@Deprecated
 	public JournalArticle addArticle(
 			String externalReferenceCode, long userId, long groupId,
 			long folderId, Map<Locale, String> titleMap,
@@ -246,6 +284,31 @@ public interface JournalArticleLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public JournalArticle addArticleDefaultValues(
+			long userId, long groupId, long classNameId, long classPK,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String content, long ddmStructureId, String ddmTemplateKey,
+			String layoutUuid, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+			int reviewDateDay, int reviewDateYear, int reviewDateHour,
+			int reviewDateMinute, boolean neverReview, boolean indexable,
+			boolean smallImage, String smallImageURL, File smallImageFile,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addArticleDefaultValues(long, long, long,
+	 long, Map, Map, String, long, String,
+	 String, int, int, int, int, int, int, int,
+	 int, int, int, boolean, int, int, int, int,
+	 int, boolean, boolean, boolean, String,
+	 File, ServiceContext)}
+	 */
+	@Deprecated
 	public JournalArticle addArticleDefaultValues(
 			long userId, long groupId, long classNameId, long classPK,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -3016,6 +3079,25 @@ public interface JournalArticleLocalService
 			long groupId, long userId, long ddmStructureId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalArticle updateArticle(
+			long userId, long groupId, long folderId, String articleId,
+			double version, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap,
+			Map<Locale, String> friendlyURLMap, String content,
+			String ddmTemplateKey, String layoutUuid, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, File smallImageFile,
+			Map<String, byte[]> images, String articleURL,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Updates the web content article with additional parameters. All
 	 * scheduling parameters (display date, expiration date, and review date)
@@ -3100,9 +3182,16 @@ public interface JournalArticleLocalService
 	 content update activity; otherwise it is considered a web content
 	 add activity.
 	 * @return the updated web content article
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a portal exception occurred	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateArticle(long, long, long, String,
+	 double, Map, Map, Map, String, String,
+	 String, int, int, int, int, int, int, int,
+	 int, int, int, boolean, int, int, int, int,
+	 int, boolean, boolean, boolean, String,
+	 File, Map, String, ServiceContext)}
 	 */
-	@Indexable(type = IndexableType.REINDEX)
+	@Deprecated
 	public JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
 			double version, Map<Locale, String> titleMap,
@@ -3160,6 +3249,24 @@ public interface JournalArticleLocalService
 			double version, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String content,
 			String layoutUuid, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalArticle updateArticle(
+			long userId, long groupId, long folderId, String articleId,
+			double version, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String content,
+			String ddmTemplateKey, String layoutUuid, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, File smallImageFile,
+			Map<String, byte[]> images, String articleURL,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -3244,9 +3351,14 @@ public interface JournalArticleLocalService
 	 content update activity; otherwise it is considered a web content
 	 add activity.
 	 * @return the updated web content article
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a portal exception occurred	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateArticle(long, long, long, String, double, Map, Map,
+	 String, String, String, int, int, int, int, int, int, int, int,
+	 int, int, boolean, int, int, int, int, int, boolean, boolean,
+	 boolean, String, File, Map, String, ServiceContext)}
 	 */
-	@Indexable(type = IndexableType.REINDEX)
+	@Deprecated
 	public JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
 			double version, Map<Locale, String> titleMap,
@@ -3310,6 +3422,30 @@ public interface JournalArticleLocalService
 	public JournalArticle updateArticle(long id, String urlTitle)
 		throws PortalException;
 
+	public JournalArticle updateArticleDefaultValues(
+			long userId, long groupId, String articleId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String content, String ddmTemplateKey, String layoutUuid,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			String smallImageURL, File smallImageFile,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateArticleDefaultValues(long, long, String, Map,
+	 Map, String, String, String, int, int, int, int, int,
+	 int, int, int, int, int, boolean, int, int, int, int,
+	 int, boolean, boolean, boolean, String, File,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public JournalArticle updateArticleDefaultValues(
 			long userId, long groupId, String articleId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,

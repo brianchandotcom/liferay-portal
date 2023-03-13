@@ -1,0 +1,9 @@
+assemble:
+    - from: bootJar
+liferay-partner-oauth-application-user-agent:
+    homePageURL: http://localhost:58081
+    name: Liferay Partner OAuth Application User Agent
+    scopes:
+        - C_Opportunity.everything.write
+        - Liferay.Object.Admin.REST.everything.read
+    type: oAuthApplicationUserAgent

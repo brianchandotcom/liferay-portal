@@ -15,6 +15,7 @@
 **/.web_bundle_build
 .gradle
 .idea
+.vscode
 /bundles
 /gradle-*.properties
 /plugins-sdk/**/classes

@@ -91,11 +91,10 @@ public class NotificationQueueEntryLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteNotificationQueueEntries(
-			long companyId, java.util.Date sentDate)
+	public static void deleteNotificationQueueEntries(java.util.Date sentDate)
 		throws PortalException {
 
-		getService().deleteNotificationQueueEntries(companyId, sentDate);
+		getService().deleteNotificationQueueEntries(sentDate);
 	}
 
 	/**
@@ -310,9 +309,9 @@ public class NotificationQueueEntryLocalServiceUtil {
 	}
 
 	public static List<NotificationQueueEntry> getUnsentNotificationEntries(
-		long companyId, String type) {
+		String type) {
 
-		return getService().getUnsentNotificationEntries(companyId, type);
+		return getService().getUnsentNotificationEntries(type);
 	}
 
 	public static NotificationQueueEntry resendNotificationQueueEntry(

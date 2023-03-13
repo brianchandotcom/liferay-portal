@@ -55,13 +55,12 @@ public class CheckNotificationQueueEntrySchedulerJobConfiguration
 				_notificationTypeServiceTracker.getNotificationType(
 					NotificationConstants.TYPE_EMAIL);
 
-			notificationType.sendUnsentNotifications(companyId);
+			notificationType.sendUnsentNotifications();
 
 			long deleteInterval =
 				_notificationQueueConfiguration.deleteInterval() * Time.MINUTE;
 
 			_notificationQueueEntryLocalService.deleteNotificationQueueEntries(
-				companyId,
 				new Date(System.currentTimeMillis() - deleteInterval));
 		};
 	}

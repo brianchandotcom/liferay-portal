@@ -96,12 +96,11 @@ public class NotificationQueueEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteNotificationQueueEntries(
-			long companyId, java.util.Date sentDate)
+	public void deleteNotificationQueueEntries(java.util.Date sentDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_notificationQueueEntryLocalService.deleteNotificationQueueEntries(
-			companyId, sentDate);
+			sentDate);
 	}
 
 	/**
@@ -355,10 +354,10 @@ public class NotificationQueueEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.notification.model.NotificationQueueEntry>
-		getUnsentNotificationEntries(long companyId, String type) {
+		getUnsentNotificationEntries(String type) {
 
 		return _notificationQueueEntryLocalService.getUnsentNotificationEntries(
-			companyId, type);
+			type);
 	}
 
 	@Override

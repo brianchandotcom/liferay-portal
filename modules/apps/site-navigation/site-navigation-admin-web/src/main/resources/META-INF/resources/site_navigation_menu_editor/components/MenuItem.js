@@ -23,7 +23,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {fetch, objectToFormData, openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {NESTING_MARGIN} from '../constants/nestingMargin';
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
@@ -95,6 +95,21 @@ export function MenuItem({item, onMenuItemRemoved}) {
 			});
 	};
 
+	const order = useMemo(
+		() =>
+			items
+				.filter(
+					(siteNavigationMenuItem) =>
+						siteNavigationMenuItem.parentSiteNavigationMenuItemId ===
+						item.parentSiteNavigationMenuItemId
+				)
+				.findIndex(
+					(siteNavigationMenuItem) =>
+						siteNavigationMenuItem.siteNavigationMenuItemId ===
+						item.siteNavigationMenuItemId
+				),
+		[items, item]
+	);
 
 	const updateMenuItemParent = (itemId, parentId) => {
 		const order = getOrder({

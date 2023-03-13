@@ -28,6 +28,85 @@ definition {
 		}
 	}
 
+	@description = "Verify a data migration can be executed from the default store to Azure store."
+	@priority = 3
+	test AzureStoreDataMigration {
+		property store.migration.test = "true";
+		property test.name.skip.portal.instance = "AzureStore#AzureStoreDataMigration";
+
+		task ("Given a document is added to the default store") {
+			var containerId = PropsUtil.get("azure.container.id");
+			var companyId = JSONCompany.getCompanyId();
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Test Site Name",
+				site = "true");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+
+			AntCommands.runCommand("build-test-azure.xml", "assert-no-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+		}
+
+		task ("And given the user cannot migrate data to Azure store without setting up a connection configuration") {
+			ServerAdministration.openServerAdmin();
+
+			Navigator.gotoNavItem(navItem = "Data Migration");
+
+			AssertElementNotPresent(
+				key_fieldLabel = "dl.store.impl",
+				key_value = "com.liferay.portal.store.azure.AzureStore",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+		}
+
+		task ("When the user adds the configuration") {
+			AntCommands.runCommand("build-test.xml", "prepare-azure-store-configuration -Dazure.container.id=${containerId}");
+
+			OSGiConfig.waitForOSGiConfig();
+
+			Refresh();
+		}
+
+		task ("Then the user can now migrate data over to the Azure container") {
+			SelectField.select(
+				selectFieldLabel = "dl.store.impl",
+				selectFieldValue = "com.liferay.portal.store.azure.AzureStore");
+		}
+
+		task ("When the user executes the data migration") {
+			Button.click(button = "Execute");
+
+			AssertTextPresent(
+				locator1 = "//body",
+				value1 = "Executing com.liferay.document.library.internal.convert.document.library.DocumentLibraryConvertProcess");
+
+			WaitForConsoleTextPresent(value1 = "Please set dl.store.impl in your portal-ext.properties to use com.liferay.portal.store.azure.AzureStore");
+
+			WaitForConsoleTextPresent(value1 = "Finished conversion for com.liferay.document.library.internal.convert.document.library.DocumentLibraryConvertProcess");
+		}
+
+		task ("Then the document is migrated over from the default store to the Azure container") {
+			AntCommands.runCommand("build-test-azure.xml", "assert-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+		}
+
+		task ("And the user can configure the portal to use Azure store without issue") {
+			Portlet.shutdownServer();
+
+			var newProperty = "dl.store.impl=com.liferay.portal.store.azure.AzureStore";
+
+			AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=${newProperty}");
+
+			Portlet.startServer(deleteLiferayHome = "false");
+
+			User.firstLoginPG();
+
+			Smoke.viewWelcomeContentPage();
+		}
+	}
+
 	@priority = 5
 	test AzureStoreSmoke {
 		property test.name.skip.portal.instance = "AzureStore#AzureStoreSmoke";

@@ -38,9 +38,6 @@ import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eduardo García
@@ -139,12 +136,9 @@ public class UserOrganizationSegmentsCriteriaContributor
 		UserOrganizationSegmentsCriteriaContributor.class);
 
 	@Reference(
-		cardinality = ReferenceCardinality.MANDATORY,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(entity.model.name=" + OrganizationEntityModel.NAME + ")"
 	)
-	private volatile EntityModel _entityModel;
+	private EntityModel _entityModel;
 
 	@Reference
 	private EntityModelFieldMapper _entityModelFieldMapper;

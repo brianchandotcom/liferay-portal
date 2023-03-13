@@ -886,6 +886,126 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9392. Verify that Related Diagrams are available for use with Collection Display Fragment."
+	@priority = 5
+	test CanMapRelatedDiagramsToCollectionDisplayFragment {
+		property portal.acceptance = "true";
+		property test.run.environment = "EE";
+
+		task ("Given a diagram product is created and 2 products are pinned to it") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Diagram T-Shirt",
+				productType = "diagram");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Diagram T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			CommerceJSONProductsAPI._addDiagramPin(
+				diagram = "Diagram T-Shirt",
+				linkedSKU = "MIN55859",
+				pinType = "Linked to a SKU",
+				position = 1,
+				positionX = 40,
+				positionY = 40,
+				quantity = 1);
+
+			CommerceJSONProductsAPI._addDiagramPin(
+				diagram = "Diagram T-Shirt",
+				linkedSKU = "MIN55861",
+				pinType = "Linked to a SKU",
+				position = 2,
+				positionX = 20,
+				positionY = 25,
+				quantity = 1);
+		}
+
+		task ("And a new Commerce Product type Display Page Template is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And the Collection Display fragment is deployed on the page") {
+			DisplayPageTemplate.addFragment(
+				collectionName = "Content Display",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fragmentName = "Collection Display",
+				publish = "false",
+				siteURLKey = "minium");
+		}
+
+		task ("And Related Diagrams is selected, Style Display is set to Bordered List") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Related Diagrams",
+				styleDisplay = "Bordered List");
+		}
+
+		task ("And the template is published and Marked as Default") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the buyer can see the Diagram T-Shirt link mapped to the products by navigating the pinned products' details page") {
+			for (var productName : list "U-Joint,Torque Converters") {
+				CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = ${productName});
+
+				AssertElementPresent(
+					key_toPageLink = "Diagram T-Shirt",
+					locator1 = "BridgeIssues#TO_PAGE_LINK");
+
+				Click.javaScriptClick(
+					key_toPageLink = "Diagram T-Shirt",
+					locator1 = "BridgeIssues#TO_PAGE_LINK");
+
+				AssertLocation.assertPartialLocation(value1 = "web/minium/p/diagram-t-shirt");
+
+				CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+			}
+		}
+
+		task ("And by navigating to a product that is not pinned to the diagram, No Results Found alert is shown") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Mount");
+
+			AssertElementNotPresent(
+				key_toPageLink = "Diagram T-Shirt",
+				locator1 = "BridgeIssues#TO_PAGE_LINK");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_TEXT",
+				value1 = "No Results Found");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7277 Verify mapped Shipping related fields to fragments are visible in Store Fronts"
 	@priority = 5
 	test CanMapShippingFieldsToFragments {

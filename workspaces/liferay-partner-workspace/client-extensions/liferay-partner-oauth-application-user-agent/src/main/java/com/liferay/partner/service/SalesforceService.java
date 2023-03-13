@@ -55,8 +55,18 @@ public class SalesforceService {
 
 		jobInfo = _bulkConnection.createJob(jobInfo);
 
-		BatchInfo batchInfo = _createBatch(
-			objectType, objectFields, _bulkConnection, jobInfo);
+		String query = StringBundler.concat(
+			"SELECT ", StringUtil.merge(objectFields, ", "), " FROM ",
+			objectType);
+
+		BatchInfo batchInfo;
+
+		try (ByteArrayInputStream byteArrayInputStream =
+				new ByteArrayInputStream(query.getBytes())) {
+
+			batchInfo = _bulkConnection.createBatchFromStream(
+				jobInfo, byteArrayInputStream);
+		}
 
 		_closeJob(_bulkConnection, jobInfo.getId());
 		_awaitCompletion(_bulkConnection, jobInfo, batchInfo);
@@ -93,23 +103,6 @@ public class SalesforceService {
 		job.setState(JobStateEnum.Closed);
 
 		connection.updateJob(job);
-	}
-
-	private BatchInfo _createBatch(
-			String objectType, String[] objectFields, BulkConnection connection,
-			JobInfo jobInfo)
-		throws Exception {
-
-		String query = StringBundler.concat(
-			"SELECT ", StringUtil.merge(objectFields, ", "), " FROM ",
-			objectType);
-
-		try (ByteArrayInputStream byteArrayInputStream =
-				new ByteArrayInputStream(query.getBytes())) {
-
-			return connection.createBatchFromStream(
-				jobInfo, byteArrayInputStream);
-		}
 	}
 
 	private JSONArray _getResultJSONArray(

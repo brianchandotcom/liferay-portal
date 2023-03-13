@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupService;
@@ -23,6 +24,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -122,7 +124,8 @@ public class EditAccountGroupMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		AccountGroup accountGroup = _accountGroupService.addAccountGroup(
-			themeDisplay.getUserId(), description, name);
+			themeDisplay.getUserId(), description, name, ServiceContextFactory.getInstance(
+				AccountGroup.class.getName(), actionRequest));
 
 		return _accountGroupLocalService.updateExternalReferenceCode(
 			accountGroup.getAccountGroupId(),
@@ -139,7 +142,8 @@ public class EditAccountGroupMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		AccountGroup accountGroup = _accountGroupService.updateAccountGroup(
-			accountGroupId, description, name);
+			accountGroupId, description, name, ServiceContextFactory.getInstance(
+				AccountGroup.class.getName(), actionRequest));
 
 		_accountGroupService.updateExternalReferenceCode(
 			accountGroup.getAccountGroupId(),

@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
+		JSONUser.tearDownNonAdminUsersNoSelenium();
 
 		ObjectFieldAPI.deleteObjectField();
 

@@ -52,7 +52,7 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
+		JSONUser.tearDownNonAdminUsersNoSelenium();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();

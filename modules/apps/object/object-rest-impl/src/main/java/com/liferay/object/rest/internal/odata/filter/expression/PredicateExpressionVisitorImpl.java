@@ -570,9 +570,7 @@ public class PredicateExpressionVisitorImpl
 				Predicate.withParentheses((Predicate)left),
 				Predicate.withParentheses((Predicate)right));
 		}
-		else if (Objects.equals(left, "keywords") &&
-				 FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
-
+		else if (_isKeywords(left)) {
 			predicate = _getKeywordsPredicate(
 				objectDefinitionId,
 				_getExpressionPredicate(
@@ -685,6 +683,16 @@ public class PredicateExpressionVisitorImpl
 		return false;
 	}
 
+	private boolean _isKeywords(Object fieldName) {
+		if (fieldName.equals("keywords") &&
+			FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private Predicate _startsWith(Column<?, ?> column, Object value) {
 		return column.like(value + StringPool.PERCENT);
 	}
@@ -692,9 +700,7 @@ public class PredicateExpressionVisitorImpl
 	private Predicate _startsWith(
 		Object fieldName, Object fieldValue, long objectDefinitionId) {
 
-		if (fieldName.equals("keywords") &&
-			FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
-
+		if (_isKeywords(fieldName)) {
 			return _getKeywordsPredicate(
 				objectDefinitionId,
 				_startsWith(AssetTagTable.INSTANCE.name, fieldValue));

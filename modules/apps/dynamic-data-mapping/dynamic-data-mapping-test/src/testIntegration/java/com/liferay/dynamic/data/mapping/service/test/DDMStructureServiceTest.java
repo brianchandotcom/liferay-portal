@@ -46,7 +46,6 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -196,9 +195,17 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 		Assert.assertEquals(structures.toString(), 3, structures.size());
 
-		Stream<DDMStructure> stream = expectedStructures.stream();
+		Boolean allMatch = true;
 
-		Assert.assertTrue(stream.allMatch(structures::contains));
+		for (DDMStructure ddmStructure : expectedStructures) {
+			if (!structures.contains(ddmStructure)) {
+				allMatch = false;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(allMatch);
 	}
 
 	@Test

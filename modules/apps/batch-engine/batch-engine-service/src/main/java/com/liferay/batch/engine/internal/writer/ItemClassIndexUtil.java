@@ -26,6 +26,7 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -41,53 +42,63 @@ import java.util.Objects;
 public class ItemClassIndexUtil {
 
 	public static Map<String, Field> index(Class<?> itemClass) {
-		return _fieldsMap.computeIfAbsent(
-			itemClass,
-			clazz -> {
-				Map<String, Field> fieldsMap = new HashMap<>();
+		List<Class<?>> fieldClasses = new ArrayList<>();
 
-				while (clazz != Object.class) {
-					for (Field field : clazz.getDeclaredFields()) {
-						if (isMultidimensionalArray(field.getType())) {
-							continue;
+		try {
+			return _fieldsMap.computeIfAbsent(
+				itemClass,
+				clazz -> {
+					Map<String, Field> fieldsMap = new HashMap<>();
+
+					while (clazz != Object.class) {
+						for (Field field : clazz.getDeclaredFields()) {
+							if (isMultidimensionalArray(field.getType())) {
+								continue;
+							}
+
+							field.setAccessible(true);
+
+							String name = field.getName();
+
+							if (name.charAt(0) == CharPool.UNDERLINE) {
+								name = name.substring(1);
+							}
+
+							if (field.isSynthetic()) {
+								continue;
+							}
+
+							fieldsMap.put(name, field);
+
+							Class<?> fieldClass = field.getType();
+
+							if (!isIterable(fieldClass) && !isMap(fieldClass) &&
+								!isSingleColumnAdoptableArray(fieldClass) &&
+								!isSingleColumnAdoptableValue(fieldClass) &&
+								!Objects.equals(clazz, fieldClass)) {
+
+								fieldClasses.add(itemClass);
+							}
 						}
 
-						field.setAccessible(true);
+						if (Objects.equals(
+								clazz.getSuperclass(),
+								clazz.getDeclaringClass())) {
 
-						String name = field.getName();
-
-						if (name.charAt(0) == CharPool.UNDERLINE) {
-							name = name.substring(1);
+							break;
 						}
 
-						if (field.isSynthetic()) {
-							continue;
-						}
-
-						fieldsMap.put(name, field);
-
-						Class<?> fieldClass = field.getType();
-
-						if (!isIterable(fieldClass) && !isMap(fieldClass) &&
-							!isSingleColumnAdoptableArray(fieldClass) &&
-							!isSingleColumnAdoptableValue(fieldClass) &&
-							!Objects.equals(clazz, fieldClass)) {
-
-							index(fieldClass);
-						}
+						clazz = clazz.getSuperclass();
 					}
 
-					if (Objects.equals(
-							clazz.getSuperclass(), clazz.getDeclaringClass())) {
-
-						break;
-					}
-
-					clazz = clazz.getSuperclass();
-				}
-
-				return fieldsMap;
-			});
+					return fieldsMap;
+				});
+		}
+		finally {
+			for (Class<?> fieldClass : fieldClasses) {
+				index(fieldClass);
+			}
+		}
 	}
 
 	public static boolean isIterable(Class<?> valueClass) {

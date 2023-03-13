@@ -323,11 +323,11 @@ public class AssetListEntrySegmentsEntryRelLocalServiceWrapper
 	@Override
 	public java.util.List<AssetListEntrySegmentsEntryRel>
 		fetchAssetListEntrySegmentsEntryRels(
-			long assetListEntryId, long[] segmentsEntryId) {
+			long assetListEntryId, long[] segmentsEntryIds) {
 
 		return _assetListEntrySegmentsEntryRelLocalService.
 			fetchAssetListEntrySegmentsEntryRels(
-				assetListEntryId, segmentsEntryId);
+				assetListEntryId, segmentsEntryIds);
 	}
 
 	@Override
@@ -408,6 +408,19 @@ public class AssetListEntrySegmentsEntryRelLocalServiceWrapper
 
 		return _assetListEntrySegmentsEntryRelLocalService.
 			getAssetListEntrySegmentsEntryRels(assetListEntryId, start, end);
+	}
+
+	@Override
+	public java.util.List<AssetListEntrySegmentsEntryRel>
+		getAssetListEntrySegmentsEntryRels(
+			long assetListEntryId, long[] segmentsEntryIds, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntrySegmentsEntryRel> orderByComparator) {
+
+		return _assetListEntrySegmentsEntryRelLocalService.
+			getAssetListEntrySegmentsEntryRels(
+				assetListEntryId, segmentsEntryIds, start, end,
+				orderByComparator);
 	}
 
 	/**

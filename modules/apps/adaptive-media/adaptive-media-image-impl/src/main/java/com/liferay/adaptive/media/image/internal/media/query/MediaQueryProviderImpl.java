@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URI;
@@ -133,28 +134,16 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 
 		Map<String, String> properties = HashMapBuilder.put(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH.getName(),
-			() -> {
-				Integer width = _getPropertiesValue(
-					amImageConfigurationEntry, "max-width");
-
-				if (width == null) {
-					return String.valueOf(0);
-				}
-
-				return String.valueOf(width);
-			}
+			String.valueOf(
+				GetterUtil.getInteger(
+					_getPropertiesValue(
+						amImageConfigurationEntry, "max-width")))
 		).put(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT.getName(),
-			() -> {
-				Integer height = _getPropertiesValue(
-					amImageConfigurationEntry, "max-height");
-
-				if (height == null) {
-					return String.valueOf(0);
-				}
-
-				return String.valueOf(height);
-			}
+			String.valueOf(
+				GetterUtil.getInteger(
+					_getPropertiesValue(
+						amImageConfigurationEntry, "max-height")))
 		).build();
 
 		return new AMImage(

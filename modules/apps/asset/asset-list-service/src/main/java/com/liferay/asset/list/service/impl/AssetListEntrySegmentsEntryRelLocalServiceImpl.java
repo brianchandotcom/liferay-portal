@@ -151,10 +151,10 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 	@Override
 	public List<AssetListEntrySegmentsEntryRel>
 		fetchAssetListEntrySegmentsEntryRels(
-			long assetListEntryId, long[] segmentsEntryId) {
+			long assetListEntryId, long[] segmentsEntryIds) {
 
 		return assetListEntrySegmentsEntryRelPersistence.findByA_S_C(
-			assetListEntryId, segmentsEntryId);
+			assetListEntryId, segmentsEntryIds);
 	}
 
 	@Override

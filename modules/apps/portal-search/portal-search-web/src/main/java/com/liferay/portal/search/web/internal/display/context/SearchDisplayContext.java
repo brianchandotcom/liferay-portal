@@ -46,17 +46,13 @@ import com.liferay.portal.search.web.internal.facet.SearchFacetRegistry;
 import com.liferay.portal.search.web.internal.portlet.SearchPortletSearchResultPreferences;
 import com.liferay.portal.search.web.internal.search.request.SearchRequestImpl;
 import com.liferay.portal.search.web.internal.search.request.SearchResponseImpl;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.io.Serializable;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -552,19 +548,16 @@ public class SearchDisplayContext {
 
 		long companyId = themeDisplay.getCompanyId();
 
-		Collection<SearchFacet> searchFacets = getEnabledSearchFacets();
+		for (SearchFacet searchFacet : getEnabledSearchFacets()) {
+			Facet facet = searchRequestBuilder.withSearchContextGet(
+				searchContext -> _getFacet(
+					searchFacet, companyId, searchContext));
 
-		Stream<SearchFacet> searchFacetsStream = searchFacets.stream();
-
-		Stream<Optional<Facet>> facetOptionalsStream = searchFacetsStream.map(
-			searchFacet -> searchRequestBuilder.withSearchContextGet(
-				searchContext -> _createFacet(
-					searchFacet, companyId, searchContext)));
-
-		searchRequestBuilder.withFacetContext(
-			facetContext -> facetOptionalsStream.forEach(
-				facetOptional -> facetOptional.ifPresent(
-					facetContext::addFacet)));
+			if (facet != null) {
+				searchRequestBuilder.withFacetContext(
+					facetContext -> facetContext.addFacet(facet));
+			}
+		}
 	}
 
 	private void _contributeSearchSettings(SearchSettings searchSettings) {
@@ -589,7 +582,19 @@ public class SearchDisplayContext {
 		_filterByThisSite(searchSettings);
 	}
 
-	private Optional<Facet> _createFacet(
+	private void _filterByThisSite(SearchSettings searchSettings) {
+		long groupId = getSearchScopeGroupId();
+
+		if (groupId == 0) {
+			return;
+		}
+
+		SearchContext searchContext = searchSettings.getSearchContext();
+
+		searchContext.setGroupIds(new long[] {groupId});
+	}
+
+	private Facet _getFacet(
 		SearchFacet searchFacet, long companyId, SearchContext searchContext) {
 
 		try {
@@ -603,27 +608,7 @@ public class SearchDisplayContext {
 			throw new RuntimeException(exception);
 		}
 
-		return Optional.ofNullable(searchFacet.getFacet());
-	}
-
-	private void _filterByThisSite(SearchSettings searchSettings) {
-		SearchOptionalUtil.copy(
-			this::_getThisSiteGroupId,
-			groupId -> {
-				SearchContext searchContext = searchSettings.getSearchContext();
-
-				searchContext.setGroupIds(new long[] {groupId});
-			});
-	}
-
-	private Optional<Long> _getThisSiteGroupId() {
-		long searchScopeGroupId = getSearchScopeGroupId();
-
-		if (searchScopeGroupId == 0) {
-			return Optional.empty();
-		}
-
-		return Optional.of(searchScopeGroupId);
+		return searchFacet.getFacet();
 	}
 
 	private void _resetScope(SearchContext searchContext) {

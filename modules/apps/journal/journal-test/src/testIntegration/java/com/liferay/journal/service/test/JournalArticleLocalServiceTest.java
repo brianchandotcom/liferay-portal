@@ -503,7 +503,7 @@ public class JournalArticleLocalServiceTest {
 
 		_journalArticleLocalService.deleteArticleDefaultValues(
 			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			journalArticle.getDDMStructureKey());
+			journalArticle.getDDMStructureId());
 
 		Assert.assertNull(
 			_journalArticleLocalService.fetchLatestArticle(

@@ -276,7 +276,7 @@ interface ObjectRelationship {
 	type: ObjectRelationshipType;
 }
 
-interface ObjectDefinitionsRelationship {
+interface AddObjectEntryDefinitions {
 	externalReferenceCode: string;
 	id: number;
 	label: string;
@@ -342,7 +342,7 @@ interface NameValueObject {
 	value: string;
 }
 
-interface ObjectDefinitionsRelationship {
+interface AddObjectEntryDefinitions {
 	id: number;
 	label: string;
 	related?: boolean;

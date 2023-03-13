@@ -17,12 +17,20 @@ export declare type ObjectsOptionsList = {
 	options: LabelValueObject[];
 	type: string;
 }[];
-export declare function fetchObjectDefinitions(
-	objectDefinitionsRelationshipsURL: string,
-	values: Partial<ObjectAction>,
-	setRelationships: (values: ObjectDefinitionsRelationship[]) => void,
-	setObjectOptions: (values: ObjectsOptionsList) => void
-): Promise<void>;
+interface FetchObjectDefinitionsProps {
+	objectDefinitionsRelationshipsURL: string;
+	values: Partial<ObjectAction>;
+	setAddObjectEntryDefinitions: (values: AddObjectEntryDefinitions[]) => void;
+	setObjectOptions: (values: ObjectsOptionsList) => void;
+	setSelectedObjectDefinition?: (value: string) => void;
+}
+export declare function fetchObjectDefinitions({
+	objectDefinitionsRelationshipsURL,
+	values,
+	setAddObjectEntryDefinitions,
+	setObjectOptions,
+	setSelectedObjectDefinition,
+}: FetchObjectDefinitionsProps): Promise<void>;
 export declare function fetchObjectDefinitionFields(
 	objectDefinitionId: number,
 	objectDefinitionExternalReferenceCode: string,
@@ -35,3 +43,4 @@ export declare function fetchObjectDefinitionFields(
 	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void,
 	setValues: (values: Partial<ObjectAction>) => void
 ): Promise<void>;
+export {};

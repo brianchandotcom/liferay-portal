@@ -1351,6 +1351,10 @@ public class PortalImpl implements Portal {
 									WebKeys.LOCALE, locale
 								).build());
 
+						if (layoutFriendlyURLComposite == null) {
+							break;
+						}
+
 						alternateURLSuffix =
 							groupFriendlyURL +
 								layoutFriendlyURLComposite.getFriendlyURL();

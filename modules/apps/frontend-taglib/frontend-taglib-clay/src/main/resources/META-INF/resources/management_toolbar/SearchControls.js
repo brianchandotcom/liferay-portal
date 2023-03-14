@@ -107,6 +107,7 @@ const ShowMobileButton = ({disabled, setSearchMobile}) => {
 	return (
 		<ManagementToolbar.Item className="navbar-breakpoint-d-none">
 			<ClayButtonWithIcon
+				aria-haspopup="true"
 				aria-label={Liferay.Language.get('open-search')}
 				className="nav-link nav-link-monospaced"
 				disabled={disabled}

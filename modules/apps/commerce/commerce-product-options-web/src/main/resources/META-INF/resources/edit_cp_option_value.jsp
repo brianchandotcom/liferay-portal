@@ -39,7 +39,7 @@ if (cpOptionValue != null) {
 <portlet:actionURL name="/cp_options/edit_cp_option_value" var="editProductOptionValueActionURL" />
 
 <liferay-frontend:side-panel-content
-	title='<%= LanguageUtil.format(request, "edit-x", cpOptionValue.getName(), false) %>'
+	title='<%= LanguageUtil.format(request, "edit-x", cpOptionValue.getName(locale), false) %>'
 >
 	<aui:form action="<%= editProductOptionValueActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpOptionValue == null) ? Constants.ADD : Constants.UPDATE %>" />

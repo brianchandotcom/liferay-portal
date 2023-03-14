@@ -687,31 +687,11 @@ definition {
 	@description = "This is a test for LPS-169960. Verify that a submited MDF will be displayed on the list"
 	@priority = 5
 	test SubmittedMDFAppearsOnListing {
-		task ("Given I go to add a new MDF Request") {
-			PRMMarketing.gotoAddNewMDF();
+		task ("Given that a new MDF Request is submitted") { {
+			JSONPRM.createMDFRequest();
 		}
 
-		task ("Given that a partner submit a new MDF Request") {
-			PRMMDFRequest.createNewRequest(
-				accountName = "Company Name 1",
-				activityDescription = "Activity Description",
-				activityName = "Activity Name 1",
-				budgetList = "Sponsorship Fee-2000",
-				campaignDescription = "Campaign Description",
-				campaignName = "Campaign Name",
-				countryName = "Global",
-				followUpStrategy = "test",
-				goalsOptions = "Lead generation",
-				leadFollowUpList = "Other",
-				leadList = "No",
-				tactic = "Other",
-				targetMarketOptions = "Education,Energy",
-				targetOfLeads = "test",
-				targetRolesOptions = "Administrator",
-				typeOfActivity = "Miscellaneous Marketing");
-		}
-
-		task ("Then the MDF status appears on list") {
+		task ("Then the MDF appears on listing page") {
 			PRMMDFListing.viewOnList(campaignName = "Campaign Name");
 		}
 	}

@@ -31,9 +31,11 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -198,6 +200,25 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createObjectDefinitionObjectActionsPageExportBatch(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectActionResource ->
+				objectActionResource.
+					postObjectDefinitionObjectActionsPageExportBatch(
+						objectDefinitionId, search, callbackURL, contentType,
+						fieldNames));
+	}
+
+	@GraphQLField
 	public ObjectAction createObjectDefinitionObjectAction(
 			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
 			@GraphQLName("objectAction") ObjectAction objectAction)
@@ -224,6 +245,29 @@ public class Mutation {
 			objectActionResource ->
 				objectActionResource.postObjectDefinitionObjectActionBatch(
 					objectDefinitionId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createObjectDefinitionsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectDefinitionResource ->
+				objectDefinitionResource.postObjectDefinitionsPageExportBatch(
+					search,
+					_filterBiFunction.apply(
+						objectDefinitionResource, filterString),
+					_sortsBiFunction.apply(
+						objectDefinitionResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -370,6 +414,31 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createObjectDefinitionObjectFieldsPageExportBatch(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectFieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectFieldResource ->
+				objectFieldResource.
+					postObjectDefinitionObjectFieldsPageExportBatch(
+						objectDefinitionId, search,
+						_filterBiFunction.apply(
+							objectFieldResource, filterString),
+						_sortsBiFunction.apply(
+							objectFieldResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public ObjectField createObjectDefinitionObjectField(
 			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
 			@GraphQLName("objectField") ObjectField objectField)
@@ -482,6 +551,25 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createObjectDefinitionObjectLayoutsPageExportBatch(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectLayoutResource ->
+				objectLayoutResource.
+					postObjectDefinitionObjectLayoutsPageExportBatch(
+						objectDefinitionId, search, callbackURL, contentType,
+						fieldNames));
+	}
+
+	@GraphQLField
 	public ObjectLayout createObjectDefinitionObjectLayout(
 			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
 			@GraphQLName("objectLayout") ObjectLayout objectLayout)
@@ -580,6 +668,28 @@ public class Mutation {
 				objectRelationshipResource.
 					postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 						externalReferenceCode, objectRelationship));
+	}
+
+	@GraphQLField
+	public Response createObjectDefinitionObjectRelationshipsPageExportBatch(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectRelationshipResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectRelationshipResource ->
+				objectRelationshipResource.
+					postObjectDefinitionObjectRelationshipsPageExportBatch(
+						objectDefinitionId, search,
+						_filterBiFunction.apply(
+							objectRelationshipResource, filterString),
+						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -688,6 +798,25 @@ public class Mutation {
 				objectValidationRuleResource.
 					postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 						externalReferenceCode, objectValidationRule));
+	}
+
+	@GraphQLField
+	public Response createObjectDefinitionObjectValidationRulesPageExportBatch(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource ->
+				objectValidationRuleResource.
+					postObjectDefinitionObjectValidationRulesPageExportBatch(
+						objectDefinitionId, search, callbackURL, contentType,
+						fieldNames));
 	}
 
 	@GraphQLField
@@ -808,6 +937,25 @@ public class Mutation {
 				objectViewResource.
 					postObjectDefinitionByExternalReferenceCodeObjectView(
 						externalReferenceCode, objectView));
+	}
+
+	@GraphQLField
+	public Response createObjectDefinitionObjectViewsPageExportBatch(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectViewResource ->
+				objectViewResource.
+					postObjectDefinitionObjectViewsPageExportBatch(
+						objectDefinitionId, search, callbackURL, contentType,
+						fieldNames));
 	}
 
 	@GraphQLField
@@ -956,6 +1104,9 @@ public class Mutation {
 		objectActionResource.setGroupLocalService(_groupLocalService);
 		objectActionResource.setRoleLocalService(_roleLocalService);
 
+		objectActionResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		objectActionResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -975,6 +1126,9 @@ public class Mutation {
 		objectDefinitionResource.setGroupLocalService(_groupLocalService);
 		objectDefinitionResource.setRoleLocalService(_roleLocalService);
 
+		objectDefinitionResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		objectDefinitionResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -991,6 +1145,9 @@ public class Mutation {
 		objectFieldResource.setContextUser(_user);
 		objectFieldResource.setGroupLocalService(_groupLocalService);
 		objectFieldResource.setRoleLocalService(_roleLocalService);
+
+		objectFieldResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		objectFieldResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -1009,6 +1166,9 @@ public class Mutation {
 		objectLayoutResource.setContextUser(_user);
 		objectLayoutResource.setGroupLocalService(_groupLocalService);
 		objectLayoutResource.setRoleLocalService(_roleLocalService);
+
+		objectLayoutResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		objectLayoutResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -1029,6 +1189,9 @@ public class Mutation {
 		objectRelationshipResource.setGroupLocalService(_groupLocalService);
 		objectRelationshipResource.setRoleLocalService(_roleLocalService);
 
+		objectRelationshipResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		objectRelationshipResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -1048,6 +1211,9 @@ public class Mutation {
 		objectValidationRuleResource.setGroupLocalService(_groupLocalService);
 		objectValidationRuleResource.setRoleLocalService(_roleLocalService);
 
+		objectValidationRuleResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		objectValidationRuleResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -1063,6 +1229,9 @@ public class Mutation {
 		objectViewResource.setContextUser(_user);
 		objectViewResource.setGroupLocalService(_groupLocalService);
 		objectViewResource.setRoleLocalService(_roleLocalService);
+
+		objectViewResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		objectViewResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -1085,6 +1254,7 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
@@ -1092,6 +1262,8 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
+	private VulcanBatchEngineExportTaskResource
+		_vulcanBatchEngineExportTaskResource;
 	private VulcanBatchEngineImportTaskResource
 		_vulcanBatchEngineImportTaskResource;
 

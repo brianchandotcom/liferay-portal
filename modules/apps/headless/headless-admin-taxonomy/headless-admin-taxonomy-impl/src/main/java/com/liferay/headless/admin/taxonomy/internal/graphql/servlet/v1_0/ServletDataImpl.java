@@ -97,6 +97,11 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createAssetLibraryKeywordsPageExportBatch",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class,
+							"postAssetLibraryKeywordsPageExportBatch"));
+					put(
 						"mutation#createAssetLibraryKeyword",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class,
@@ -136,6 +141,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class,
 							"putKeywordUnsubscribe"));
+					put(
+						"mutation#createSiteKeywordsPageExportBatch",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class,
+							"postSiteKeywordsPageExportBatch"));
 					put(
 						"mutation#createSiteKeyword",
 						new ObjectValuePair<>(

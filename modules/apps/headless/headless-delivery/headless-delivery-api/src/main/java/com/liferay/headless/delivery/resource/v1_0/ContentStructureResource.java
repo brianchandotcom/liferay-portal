@@ -25,6 +25,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -39,6 +40,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -59,6 +61,11 @@ public interface ContentStructureResource {
 			Long assetLibraryId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Response postAssetLibraryContentStructuresPageExportBatch(
+			Long assetLibraryId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
@@ -90,6 +97,11 @@ public interface ContentStructureResource {
 			Long siteId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Response postSiteContentStructuresPageExportBatch(
+			Long siteId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
@@ -141,6 +153,10 @@ public interface ContentStructureResource {
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
+
+	public void setVulcanBatchEngineExportTaskResource(
+		VulcanBatchEngineExportTaskResource
+			vulcanBatchEngineExportTaskResource);
 
 	public void setVulcanBatchEngineImportTaskResource(
 		VulcanBatchEngineImportTaskResource

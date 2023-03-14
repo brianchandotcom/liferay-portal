@@ -61,6 +61,8 @@ public class ServletDataImpl implements ServletData {
 			_workflowDefinitionResourceComponentServiceObjects);
 		Mutation.setWorkflowInstanceResourceComponentServiceObjects(
 			_workflowInstanceResourceComponentServiceObjects);
+		Mutation.setWorkflowLogResourceComponentServiceObjects(
+			_workflowLogResourceComponentServiceObjects);
 		Mutation.setWorkflowTaskResourceComponentServiceObjects(
 			_workflowTaskResourceComponentServiceObjects);
 		Mutation.setWorkflowTaskAssignableUsersResourceComponentServiceObjects(
@@ -117,6 +119,11 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createWorkflowDefinitionsPageExportBatch",
+						new ObjectValuePair<>(
+							WorkflowDefinitionResourceImpl.class,
+							"postWorkflowDefinitionsPageExportBatch"));
+					put(
 						"mutation#createWorkflowDefinition",
 						new ObjectValuePair<>(
 							WorkflowDefinitionResourceImpl.class,
@@ -167,6 +174,11 @@ public class ServletDataImpl implements ServletData {
 							WorkflowDefinitionResourceImpl.class,
 							"putWorkflowDefinitionBatch"));
 					put(
+						"mutation#createWorkflowInstancesPageExportBatch",
+						new ObjectValuePair<>(
+							WorkflowInstanceResourceImpl.class,
+							"postWorkflowInstancesPageExportBatch"));
+					put(
 						"mutation#createWorkflowInstanceSubmit",
 						new ObjectValuePair<>(
 							WorkflowInstanceResourceImpl.class,
@@ -186,6 +198,21 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WorkflowInstanceResourceImpl.class,
 							"postWorkflowInstanceChangeTransition"));
+					put(
+						"mutation#createWorkflowInstanceWorkflowLogsPageExportBatch",
+						new ObjectValuePair<>(
+							WorkflowLogResourceImpl.class,
+							"postWorkflowInstanceWorkflowLogsPageExportBatch"));
+					put(
+						"mutation#createWorkflowTaskWorkflowLogsPageExportBatch",
+						new ObjectValuePair<>(
+							WorkflowLogResourceImpl.class,
+							"postWorkflowTaskWorkflowLogsPageExportBatch"));
+					put(
+						"mutation#createWorkflowInstanceWorkflowTasksPageExportBatch",
+						new ObjectValuePair<>(
+							WorkflowTaskResourceImpl.class,
+							"postWorkflowInstanceWorkflowTasksPageExportBatch"));
 					put(
 						"mutation#createWorkflowTasksPage",
 						new ObjectValuePair<>(
@@ -362,6 +389,10 @@ public class ServletDataImpl implements ServletData {
 		_workflowInstanceResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WorkflowLogResource>
+		_workflowLogResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<WorkflowTaskResource>
 		_workflowTaskResourceComponentServiceObjects;
 
@@ -380,9 +411,5 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TransitionResource>
 		_transitionResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<WorkflowLogResource>
-		_workflowLogResourceComponentServiceObjects;
 
 }

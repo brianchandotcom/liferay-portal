@@ -25,6 +25,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -62,6 +63,11 @@ public interface CommentResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postBlogPostingCommentsPageExportBatch(
+			Long blogPostingId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
+
 	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
 		throws Exception;
 
@@ -94,6 +100,11 @@ public interface CommentResource {
 			Long documentId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Response postDocumentCommentsPageExportBatch(
+			Long documentId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public Comment postDocumentComment(Long documentId, Comment comment)
@@ -181,6 +192,12 @@ public interface CommentResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postStructuredContentCommentsPageExportBatch(
+			Long structuredContentId, String search, Filter filter,
+			Sort[] sorts, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
 	public Comment postStructuredContentComment(
 			Long structuredContentId, Comment comment)
 		throws Exception;
@@ -227,6 +244,10 @@ public interface CommentResource {
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
+
+	public void setVulcanBatchEngineExportTaskResource(
+		VulcanBatchEngineExportTaskResource
+			vulcanBatchEngineExportTaskResource);
 
 	public void setVulcanBatchEngineImportTaskResource(
 		VulcanBatchEngineImportTaskResource

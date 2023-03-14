@@ -25,9 +25,11 @@ import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.WarehouseR
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -152,6 +154,27 @@ public class Mutation {
 				availabilityEstimateResource.
 					postCommerceAdminSiteSettingGroupAvailabilityEstimate(
 						groupId, availabilityEstimate));
+	}
+
+	@GraphQLField
+	public Response createMeasurementUnitsPageExportBatch(
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_measurementUnitResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			measurementUnitResource ->
+				measurementUnitResource.postMeasurementUnitsPageExportBatch(
+					_filterBiFunction.apply(
+						measurementUnitResource, filterString),
+					_sortsBiFunction.apply(
+						measurementUnitResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -458,6 +481,9 @@ public class Mutation {
 		availabilityEstimateResource.setGroupLocalService(_groupLocalService);
 		availabilityEstimateResource.setRoleLocalService(_roleLocalService);
 
+		availabilityEstimateResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		availabilityEstimateResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -477,6 +503,9 @@ public class Mutation {
 		measurementUnitResource.setGroupLocalService(_groupLocalService);
 		measurementUnitResource.setRoleLocalService(_roleLocalService);
 
+		measurementUnitResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		measurementUnitResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -494,6 +523,9 @@ public class Mutation {
 		taxCategoryResource.setGroupLocalService(_groupLocalService);
 		taxCategoryResource.setRoleLocalService(_roleLocalService);
 
+		taxCategoryResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		taxCategoryResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -510,6 +542,9 @@ public class Mutation {
 		warehouseResource.setGroupLocalService(_groupLocalService);
 		warehouseResource.setRoleLocalService(_roleLocalService);
 
+		warehouseResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		warehouseResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -525,6 +560,7 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
@@ -532,6 +568,8 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
+	private VulcanBatchEngineExportTaskResource
+		_vulcanBatchEngineExportTaskResource;
 	private VulcanBatchEngineImportTaskResource
 		_vulcanBatchEngineImportTaskResource;
 

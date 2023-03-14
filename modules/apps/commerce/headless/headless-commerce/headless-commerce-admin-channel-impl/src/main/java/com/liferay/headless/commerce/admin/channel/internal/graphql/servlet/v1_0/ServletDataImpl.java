@@ -70,6 +70,8 @@ public class ServletDataImpl implements ServletData {
 			_shippingFixedOptionOrderTypeResourceComponentServiceObjects);
 		Mutation.setShippingFixedOptionTermResourceComponentServiceObjects(
 			_shippingFixedOptionTermResourceComponentServiceObjects);
+		Mutation.setShippingMethodResourceComponentServiceObjects(
+			_shippingMethodResourceComponentServiceObjects);
 
 		Query.setChannelResourceComponentServiceObjects(
 			_channelResourceComponentServiceObjects);
@@ -125,6 +127,11 @@ public class ServletDataImpl implements ServletData {
 		_resourceMethodObjectValuePairs =
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
+					put(
+						"mutation#createChannelsPageExportBatch",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class,
+							"postChannelsPageExportBatch"));
 					put(
 						"mutation#createChannel",
 						new ObjectValuePair<>(
@@ -228,6 +235,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ShippingFixedOptionTermResourceImpl.class,
 							"postShippingFixedOptionIdShippingFixedOptionTerm"));
+					put(
+						"mutation#createChannelShippingMethodsPageExportBatch",
+						new ObjectValuePair<>(
+							ShippingMethodResourceImpl.class,
+							"postChannelShippingMethodsPageExportBatch"));
 
 					put(
 						"query#channels",
@@ -320,12 +332,12 @@ public class ServletDataImpl implements ServletData {
 		_shippingFixedOptionTermResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<OrderTypeResource>
-		_orderTypeResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ShippingMethodResource>
 		_shippingMethodResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<OrderTypeResource>
+		_orderTypeResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TaxCategoryResource>

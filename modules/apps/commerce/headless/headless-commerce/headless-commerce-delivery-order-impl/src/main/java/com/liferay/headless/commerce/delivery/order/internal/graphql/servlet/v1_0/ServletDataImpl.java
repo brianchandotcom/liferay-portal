@@ -51,6 +51,13 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setPlacedOrderCommentResourceComponentServiceObjects(
+			_placedOrderCommentResourceComponentServiceObjects);
+		Mutation.setPlacedOrderItemResourceComponentServiceObjects(
+			_placedOrderItemResourceComponentServiceObjects);
+		Mutation.setPlacedOrderItemShipmentResourceComponentServiceObjects(
+			_placedOrderItemShipmentResourceComponentServiceObjects);
+
 		Query.setPlacedOrderResourceComponentServiceObjects(
 			_placedOrderResourceComponentServiceObjects);
 		Query.setPlacedOrderAddressResourceComponentServiceObjects(
@@ -97,6 +104,22 @@ public class ServletDataImpl implements ServletData {
 		_resourceMethodObjectValuePairs =
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
+					put(
+						"mutation#createPlacedOrderPlacedOrderCommentsPageExportBatch",
+						new ObjectValuePair<>(
+							PlacedOrderCommentResourceImpl.class,
+							"postPlacedOrderPlacedOrderCommentsPageExportBatch"));
+					put(
+						"mutation#createPlacedOrderPlacedOrderItemsPageExportBatch",
+						new ObjectValuePair<>(
+							PlacedOrderItemResourceImpl.class,
+							"postPlacedOrderPlacedOrderItemsPageExportBatch"));
+					put(
+						"mutation#createPlacedOrderItemPlacedOrderItemShipmentsPageExportBatch",
+						new ObjectValuePair<>(
+							PlacedOrderItemShipmentResourceImpl.class,
+							"postPlacedOrderItemPlacedOrderItemShipmentsPageExportBatch"));
+
 					put(
 						"query#channelAccountPlacedOrders",
 						new ObjectValuePair<>(
@@ -150,14 +173,6 @@ public class ServletDataImpl implements ServletData {
 			};
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<PlacedOrderResource>
-		_placedOrderResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<PlacedOrderAddressResource>
-		_placedOrderAddressResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PlacedOrderCommentResource>
 		_placedOrderCommentResourceComponentServiceObjects;
 
@@ -168,5 +183,13 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PlacedOrderItemShipmentResource>
 		_placedOrderItemShipmentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<PlacedOrderResource>
+		_placedOrderResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<PlacedOrderAddressResource>
+		_placedOrderAddressResourceComponentServiceObjects;
 
 }

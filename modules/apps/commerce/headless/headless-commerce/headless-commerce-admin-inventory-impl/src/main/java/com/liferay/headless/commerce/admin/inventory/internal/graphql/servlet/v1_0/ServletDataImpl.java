@@ -142,6 +142,11 @@ public class ServletDataImpl implements ServletData {
 							ReplenishmentItemResourceImpl.class,
 							"patchReplenishmentItem"));
 					put(
+						"mutation#createReplenishmentItemsPageExportBatch",
+						new ObjectValuePair<>(
+							ReplenishmentItemResourceImpl.class,
+							"postReplenishmentItemsPageExportBatch"));
+					put(
 						"mutation#createReplenishmentItem",
 						new ObjectValuePair<>(
 							ReplenishmentItemResourceImpl.class,
@@ -151,6 +156,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ReplenishmentItemResourceImpl.class,
 							"postReplenishmentItemBatch"));
+					put(
+						"mutation#createWarehousesPageExportBatch",
+						new ObjectValuePair<>(
+							WarehouseResourceImpl.class,
+							"postWarehousesPageExportBatch"));
 					put(
 						"mutation#createWarehouse",
 						new ObjectValuePair<>(

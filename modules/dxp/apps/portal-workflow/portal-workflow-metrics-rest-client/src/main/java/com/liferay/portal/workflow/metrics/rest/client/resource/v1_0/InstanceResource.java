@@ -57,6 +57,23 @@ public interface InstanceResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
+	public void postProcessInstancesPageExportBatch(
+			Long processId, Long[] assigneeIds, Long[] classPKs,
+			java.util.Date dateEnd, java.util.Date dateStart,
+			String[] slaStatuses, String[] statuses, String[] taskNames,
+			String sortString, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postProcessInstancesPageExportBatchHttpResponse(
+				Long processId, Long[] assigneeIds, Long[] classPKs,
+				java.util.Date dateEnd, java.util.Date dateStart,
+				String[] slaStatuses, String[] statuses, String[] taskNames,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
+		throws Exception;
+
 	public Instance postProcessInstance(Long processId, Instance instance)
 		throws Exception;
 
@@ -320,6 +337,155 @@ public interface InstanceResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/portal-workflow-metrics/v1.0/processes/{processId}/instances");
+
+			httpInvoker.path("processId", processId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postProcessInstancesPageExportBatch(
+				Long processId, Long[] assigneeIds, Long[] classPKs,
+				java.util.Date dateEnd, java.util.Date dateStart,
+				String[] slaStatuses, String[] statuses, String[] taskNames,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postProcessInstancesPageExportBatchHttpResponse(
+					processId, assigneeIds, classPKs, dateEnd, dateStart,
+					slaStatuses, statuses, taskNames, sortString, callbackURL,
+					contentType, fieldNames);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postProcessInstancesPageExportBatchHttpResponse(
+					Long processId, Long[] assigneeIds, Long[] classPKs,
+					java.util.Date dateEnd, java.util.Date dateStart,
+					String[] slaStatuses, String[] statuses, String[] taskNames,
+					String sortString, String callbackURL, String contentType,
+					String fieldNames)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ssXX");
+
+			if (assigneeIds != null) {
+				for (int i = 0; i < assigneeIds.length; i++) {
+					httpInvoker.parameter(
+						"assigneeIds", String.valueOf(assigneeIds[i]));
+				}
+			}
+
+			if (classPKs != null) {
+				for (int i = 0; i < classPKs.length; i++) {
+					httpInvoker.parameter(
+						"classPKs", String.valueOf(classPKs[i]));
+				}
+			}
+
+			if (dateEnd != null) {
+				httpInvoker.parameter(
+					"dateEnd", liferayToJSONDateFormat.format(dateEnd));
+			}
+
+			if (dateStart != null) {
+				httpInvoker.parameter(
+					"dateStart", liferayToJSONDateFormat.format(dateStart));
+			}
+
+			if (slaStatuses != null) {
+				for (int i = 0; i < slaStatuses.length; i++) {
+					httpInvoker.parameter(
+						"slaStatuses", String.valueOf(slaStatuses[i]));
+				}
+			}
+
+			if (statuses != null) {
+				for (int i = 0; i < statuses.length; i++) {
+					httpInvoker.parameter(
+						"statuses", String.valueOf(statuses[i]));
+				}
+			}
+
+			if (taskNames != null) {
+				for (int i = 0; i < taskNames.length; i++) {
+					httpInvoker.parameter(
+						"taskNames", String.valueOf(taskNames[i]));
+				}
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			if (contentType != null) {
+				httpInvoker.parameter(
+					"contentType", String.valueOf(contentType));
+			}
+
+			if (fieldNames != null) {
+				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/export-batch");
 
 			httpInvoker.path("processId", processId);
 

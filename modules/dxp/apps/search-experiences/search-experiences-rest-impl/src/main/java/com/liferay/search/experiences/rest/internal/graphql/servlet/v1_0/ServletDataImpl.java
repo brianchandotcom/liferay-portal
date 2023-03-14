@@ -70,12 +70,25 @@ public class ServletDataImpl implements ServletData {
 		Mutation.
 			setEmbeddingProviderValidationResultResourceComponentServiceObjects(
 				_embeddingProviderValidationResultResourceComponentServiceObjects);
+		Mutation.setFieldMappingInfoResourceComponentServiceObjects(
+			_fieldMappingInfoResourceComponentServiceObjects);
+		Mutation.setKeywordQueryContributorResourceComponentServiceObjects(
+			_keywordQueryContributorResourceComponentServiceObjects);
+		Mutation.setModelPrefilterContributorResourceComponentServiceObjects(
+			_modelPrefilterContributorResourceComponentServiceObjects);
+		Mutation.setQueryPrefilterContributorResourceComponentServiceObjects(
+			_queryPrefilterContributorResourceComponentServiceObjects);
 		Mutation.setSXPBlueprintResourceComponentServiceObjects(
 			_sxpBlueprintResourceComponentServiceObjects);
 		Mutation.setSXPElementResourceComponentServiceObjects(
 			_sxpElementResourceComponentServiceObjects);
+		Mutation.
+			setSXPParameterContributorDefinitionResourceComponentServiceObjects(
+				_sxpParameterContributorDefinitionResourceComponentServiceObjects);
 		Mutation.setSearchResponseResourceComponentServiceObjects(
 			_searchResponseResourceComponentServiceObjects);
+		Mutation.setSearchableAssetNameResourceComponentServiceObjects(
+			_searchableAssetNameResourceComponentServiceObjects);
 
 		Query.setFieldMappingInfoResourceComponentServiceObjects(
 			_fieldMappingInfoResourceComponentServiceObjects);
@@ -142,6 +155,31 @@ public class ServletDataImpl implements ServletData {
 							EmbeddingProviderValidationResultResourceImpl.class,
 							"postTextEmbeddingValidateProviderConfiguration"));
 					put(
+						"mutation#createFieldMappingInfosPageExportBatch",
+						new ObjectValuePair<>(
+							FieldMappingInfoResourceImpl.class,
+							"postFieldMappingInfosPageExportBatch"));
+					put(
+						"mutation#createKeywordQueryContributorsPageExportBatch",
+						new ObjectValuePair<>(
+							KeywordQueryContributorResourceImpl.class,
+							"postKeywordQueryContributorsPageExportBatch"));
+					put(
+						"mutation#createModelPrefilterContributorsPageExportBatch",
+						new ObjectValuePair<>(
+							ModelPrefilterContributorResourceImpl.class,
+							"postModelPrefilterContributorsPageExportBatch"));
+					put(
+						"mutation#createQueryPrefilterContributorsPageExportBatch",
+						new ObjectValuePair<>(
+							QueryPrefilterContributorResourceImpl.class,
+							"postQueryPrefilterContributorsPageExportBatch"));
+					put(
+						"mutation#createSXPBlueprintsPageExportBatch",
+						new ObjectValuePair<>(
+							SXPBlueprintResourceImpl.class,
+							"postSXPBlueprintsPageExportBatch"));
+					put(
 						"mutation#createSXPBlueprint",
 						new ObjectValuePair<>(
 							SXPBlueprintResourceImpl.class,
@@ -177,6 +215,11 @@ public class ServletDataImpl implements ServletData {
 							SXPBlueprintResourceImpl.class,
 							"postSXPBlueprintCopy"));
 					put(
+						"mutation#createSXPElementsPageExportBatch",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class,
+							"postSXPElementsPageExportBatch"));
+					put(
 						"mutation#createSXPElement",
 						new ObjectValuePair<>(
 							SXPElementResourceImpl.class, "postSXPElement"));
@@ -209,9 +252,19 @@ public class ServletDataImpl implements ServletData {
 							SXPElementResourceImpl.class,
 							"postSXPElementCopy"));
 					put(
+						"mutation#createSXPParameterContributorDefinitionsPageExportBatch",
+						new ObjectValuePair<>(
+							SXPParameterContributorDefinitionResourceImpl.class,
+							"postSXPParameterContributorDefinitionsPageExportBatch"));
+					put(
 						"mutation#createSearch",
 						new ObjectValuePair<>(
 							SearchResponseResourceImpl.class, "postSearch"));
+					put(
+						"mutation#createSearchableAssetNamesPageExportBatch",
+						new ObjectValuePair<>(
+							SearchableAssetNameResourceImpl.class,
+							"postSearchableAssetNamesPageExportBatch"));
 
 					put(
 						"query#fieldMappingInfos",
@@ -294,28 +347,12 @@ public class ServletDataImpl implements ServletData {
 		_embeddingProviderValidationResultResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SXPBlueprintResource>
-		_sxpBlueprintResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SXPElementResource>
-		_sxpElementResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SearchResponseResource>
-		_searchResponseResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FieldMappingInfoResource>
 		_fieldMappingInfoResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<KeywordQueryContributorResource>
 		_keywordQueryContributorResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<MLModelResource>
-		_mlModelResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ModelPrefilterContributorResource>
@@ -326,16 +363,32 @@ public class ServletDataImpl implements ServletData {
 		_queryPrefilterContributorResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SXPBlueprintResource>
+		_sxpBlueprintResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SXPElementResource>
+		_sxpElementResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SXPParameterContributorDefinitionResource>
 		_sxpParameterContributorDefinitionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SearchIndexResource>
-		_searchIndexResourceComponentServiceObjects;
+	private ComponentServiceObjects<SearchResponseResource>
+		_searchResponseResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SearchableAssetNameResource>
 		_searchableAssetNameResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<MLModelResource>
+		_mlModelResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SearchIndexResource>
+		_searchIndexResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SearchableAssetNameDisplayResource>

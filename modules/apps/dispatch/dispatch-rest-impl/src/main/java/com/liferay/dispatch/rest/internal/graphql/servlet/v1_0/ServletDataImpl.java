@@ -85,6 +85,11 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createDispatchTriggersPageExportBatch",
+						new ObjectValuePair<>(
+							DispatchTriggerResourceImpl.class,
+							"postDispatchTriggersPageExportBatch"));
+					put(
 						"mutation#createDispatchTrigger",
 						new ObjectValuePair<>(
 							DispatchTriggerResourceImpl.class,

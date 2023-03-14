@@ -97,6 +97,11 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createShipmentsPageExportBatch",
+						new ObjectValuePair<>(
+							ShipmentResourceImpl.class,
+							"postShipmentsPageExportBatch"));
+					put(
 						"mutation#createShipment",
 						new ObjectValuePair<>(
 							ShipmentResourceImpl.class, "postShipment"));

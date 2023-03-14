@@ -45,9 +45,11 @@ import com.liferay.headless.commerce.admin.order.resource.v1_0.TermResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -213,6 +215,25 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createOrdersPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderResource -> orderResource.postOrdersPageExportBatch(
+				search, _filterBiFunction.apply(orderResource, filterString),
+				_sortsBiFunction.apply(orderResource, sortsString), callbackURL,
+				contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public Order createOrder(@GraphQLName("order") Order order)
 		throws Exception {
 
@@ -289,6 +310,27 @@ public class Mutation {
 			_orderResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			orderResource -> orderResource.patchOrder(id, order));
+	}
+
+	@GraphQLField
+	public Response createOrderItemsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderItemResource ->
+				orderItemResource.postOrderItemsPageExportBatch(
+					search,
+					_filterBiFunction.apply(orderItemResource, filterString),
+					_sortsBiFunction.apply(orderItemResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -534,6 +576,27 @@ public class Mutation {
 			this::_populateResourceContext,
 			orderNoteResource -> orderNoteResource.postOrderIdOrderNoteBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response createOrderRulesPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderRuleResource ->
+				orderRuleResource.postOrderRulesPageExportBatch(
+					search,
+					_filterBiFunction.apply(orderRuleResource, filterString),
+					_sortsBiFunction.apply(orderRuleResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -934,6 +997,27 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createOrderTypesPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource ->
+				orderTypeResource.postOrderTypesPageExportBatch(
+					search,
+					_filterBiFunction.apply(orderTypeResource, filterString),
+					_sortsBiFunction.apply(orderTypeResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public OrderType createOrderType(
 			@GraphQLName("orderType") OrderType orderType)
 		throws Exception {
@@ -1126,6 +1210,25 @@ public class Mutation {
 			shippingAddressResource ->
 				shippingAddressResource.patchOrderIdShippingAddress(
 					id, shippingAddress));
+	}
+
+	@GraphQLField
+	public Response createTermsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> termResource.postTermsPageExportBatch(
+				search, _filterBiFunction.apply(termResource, filterString),
+				_sortsBiFunction.apply(termResource, sortsString), callbackURL,
+				contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -1345,6 +1448,9 @@ public class Mutation {
 		orderResource.setGroupLocalService(_groupLocalService);
 		orderResource.setRoleLocalService(_roleLocalService);
 
+		orderResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		orderResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -1360,6 +1466,9 @@ public class Mutation {
 		orderItemResource.setContextUser(_user);
 		orderItemResource.setGroupLocalService(_groupLocalService);
 		orderItemResource.setRoleLocalService(_roleLocalService);
+
+		orderItemResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		orderItemResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -1377,6 +1486,9 @@ public class Mutation {
 		orderNoteResource.setGroupLocalService(_groupLocalService);
 		orderNoteResource.setRoleLocalService(_roleLocalService);
 
+		orderNoteResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		orderNoteResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -1392,6 +1504,9 @@ public class Mutation {
 		orderRuleResource.setContextUser(_user);
 		orderRuleResource.setGroupLocalService(_groupLocalService);
 		orderRuleResource.setRoleLocalService(_roleLocalService);
+
+		orderRuleResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		orderRuleResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -1412,6 +1527,9 @@ public class Mutation {
 		orderRuleAccountResource.setGroupLocalService(_groupLocalService);
 		orderRuleAccountResource.setRoleLocalService(_roleLocalService);
 
+		orderRuleAccountResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		orderRuleAccountResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -1430,6 +1548,9 @@ public class Mutation {
 		orderRuleAccountGroupResource.setContextUser(_user);
 		orderRuleAccountGroupResource.setGroupLocalService(_groupLocalService);
 		orderRuleAccountGroupResource.setRoleLocalService(_roleLocalService);
+
+		orderRuleAccountGroupResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		orderRuleAccountGroupResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -1450,6 +1571,9 @@ public class Mutation {
 		orderRuleChannelResource.setGroupLocalService(_groupLocalService);
 		orderRuleChannelResource.setRoleLocalService(_roleLocalService);
 
+		orderRuleChannelResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		orderRuleChannelResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -1469,6 +1593,9 @@ public class Mutation {
 		orderRuleOrderTypeResource.setGroupLocalService(_groupLocalService);
 		orderRuleOrderTypeResource.setRoleLocalService(_roleLocalService);
 
+		orderRuleOrderTypeResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		orderRuleOrderTypeResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -1484,6 +1611,9 @@ public class Mutation {
 		orderTypeResource.setContextUser(_user);
 		orderTypeResource.setGroupLocalService(_groupLocalService);
 		orderTypeResource.setRoleLocalService(_roleLocalService);
+
+		orderTypeResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		orderTypeResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -1503,6 +1633,9 @@ public class Mutation {
 		orderTypeChannelResource.setContextUser(_user);
 		orderTypeChannelResource.setGroupLocalService(_groupLocalService);
 		orderTypeChannelResource.setRoleLocalService(_roleLocalService);
+
+		orderTypeChannelResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		orderTypeChannelResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -1536,6 +1669,9 @@ public class Mutation {
 		termResource.setGroupLocalService(_groupLocalService);
 		termResource.setRoleLocalService(_roleLocalService);
 
+		termResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		termResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -1553,6 +1689,9 @@ public class Mutation {
 		termOrderTypeResource.setContextUser(_user);
 		termOrderTypeResource.setGroupLocalService(_groupLocalService);
 		termOrderTypeResource.setRoleLocalService(_roleLocalService);
+
+		termOrderTypeResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		termOrderTypeResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -1589,6 +1728,7 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
@@ -1596,6 +1736,8 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
+	private VulcanBatchEngineExportTaskResource
+		_vulcanBatchEngineExportTaskResource;
 	private VulcanBatchEngineImportTaskResource
 		_vulcanBatchEngineImportTaskResource;
 

@@ -77,14 +77,20 @@ public class ServletDataImpl implements ServletData {
 			_accountRoleResourceComponentServiceObjects);
 		Mutation.setOrganizationResourceComponentServiceObjects(
 			_organizationResourceComponentServiceObjects);
+		Mutation.setPhoneResourceComponentServiceObjects(
+			_phoneResourceComponentServiceObjects);
 		Mutation.setRoleResourceComponentServiceObjects(
 			_roleResourceComponentServiceObjects);
+		Mutation.setSegmentResourceComponentServiceObjects(
+			_segmentResourceComponentServiceObjects);
 		Mutation.setSubscriptionResourceComponentServiceObjects(
 			_subscriptionResourceComponentServiceObjects);
 		Mutation.setUserAccountResourceComponentServiceObjects(
 			_userAccountResourceComponentServiceObjects);
 		Mutation.setUserGroupResourceComponentServiceObjects(
 			_userGroupResourceComponentServiceObjects);
+		Mutation.setWebUrlResourceComponentServiceObjects(
+			_webUrlResourceComponentServiceObjects);
 
 		Query.setAccountResourceComponentServiceObjects(
 			_accountResourceComponentServiceObjects);
@@ -153,6 +159,11 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createAccountsPageExportBatch",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"postAccountsPageExportBatch"));
+					put(
 						"mutation#createAccount",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "postAccount"));
@@ -211,6 +222,11 @@ public class ServletDataImpl implements ServletData {
 							AccountResourceImpl.class,
 							"deleteOrganizationAccounts"));
 					put(
+						"mutation#createOrganizationAccountsPageExportBatch",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"postOrganizationAccountsPageExportBatch"));
+					put(
 						"mutation#createOrganizationAccounts",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class,
@@ -251,6 +267,11 @@ public class ServletDataImpl implements ServletData {
 							AccountRoleResourceImpl.class,
 							"postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress"));
 					put(
+						"mutation#createAccountAccountRolesPageExportBatch",
+						new ObjectValuePair<>(
+							AccountRoleResourceImpl.class,
+							"postAccountAccountRolesPageExportBatch"));
+					put(
 						"mutation#createAccountAccountRole",
 						new ObjectValuePair<>(
 							AccountRoleResourceImpl.class,
@@ -281,6 +302,11 @@ public class ServletDataImpl implements ServletData {
 							OrganizationResourceImpl.class,
 							"postAccountByExternalReferenceCodeOrganization"));
 					put(
+						"mutation#createAccountOrganizationsPageExportBatch",
+						new ObjectValuePair<>(
+							OrganizationResourceImpl.class,
+							"postAccountOrganizationsPageExportBatch"));
+					put(
 						"mutation#deleteAccountOrganization",
 						new ObjectValuePair<>(
 							OrganizationResourceImpl.class,
@@ -290,6 +316,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							OrganizationResourceImpl.class,
 							"postAccountOrganization"));
+					put(
+						"mutation#createOrganizationsPageExportBatch",
+						new ObjectValuePair<>(
+							OrganizationResourceImpl.class,
+							"postOrganizationsPageExportBatch"));
 					put(
 						"mutation#createOrganization",
 						new ObjectValuePair<>(
@@ -360,6 +391,21 @@ public class ServletDataImpl implements ServletData {
 							OrganizationResourceImpl.class,
 							"postUserAccountByEmailAddress"));
 					put(
+						"mutation#createOrganizationPhonesPageExportBatch",
+						new ObjectValuePair<>(
+							PhoneResourceImpl.class,
+							"postOrganizationPhonesPageExportBatch"));
+					put(
+						"mutation#createUserAccountPhonesPageExportBatch",
+						new ObjectValuePair<>(
+							PhoneResourceImpl.class,
+							"postUserAccountPhonesPageExportBatch"));
+					put(
+						"mutation#createRolesPageExportBatch",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class,
+							"postRolesPageExportBatch"));
+					put(
 						"mutation#deleteRoleUserAccountAssociation",
 						new ObjectValuePair<>(
 							RoleResourceImpl.class,
@@ -389,6 +435,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							RoleResourceImpl.class,
 							"postSiteRoleUserAccountAssociation"));
+					put(
+						"mutation#createSiteSegmentsPageExportBatch",
+						new ObjectValuePair<>(
+							SegmentResourceImpl.class,
+							"postSiteSegmentsPageExportBatch"));
 					put(
 						"mutation#deleteMyUserAccountSubscription",
 						new ObjectValuePair<>(
@@ -430,6 +481,11 @@ public class ServletDataImpl implements ServletData {
 							UserAccountResourceImpl.class,
 							"postAccountUserAccountByExternalReferenceCodeByEmailAddress"));
 					put(
+						"mutation#createAccountUserAccountsPageExportBatch",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"postAccountUserAccountsPageExportBatch"));
+					put(
 						"mutation#createAccountUserAccount",
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,
@@ -459,6 +515,21 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,
 							"postAccountUserAccountByEmailAddress"));
+					put(
+						"mutation#createOrganizationUserAccountsPageExportBatch",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"postOrganizationUserAccountsPageExportBatch"));
+					put(
+						"mutation#createSiteUserAccountsPageExportBatch",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"postSiteUserAccountsPageExportBatch"));
+					put(
+						"mutation#createUserAccountsPageExportBatch",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"postUserAccountsPageExportBatch"));
 					put(
 						"mutation#createUserAccount",
 						new ObjectValuePair<>(
@@ -506,6 +577,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,
 							"postUserAccountImage"));
+					put(
+						"mutation#createUserGroupsPageExportBatch",
+						new ObjectValuePair<>(
+							UserGroupResourceImpl.class,
+							"postUserGroupsPageExportBatch"));
 					put(
 						"mutation#createUserGroup",
 						new ObjectValuePair<>(
@@ -559,6 +635,16 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createUserGroupUsers",
 						new ObjectValuePair<>(
 							UserGroupResourceImpl.class, "postUserGroupUsers"));
+					put(
+						"mutation#createOrganizationWebUrlsPageExportBatch",
+						new ObjectValuePair<>(
+							WebUrlResourceImpl.class,
+							"postOrganizationWebUrlsPageExportBatch"));
+					put(
+						"mutation#createUserAccountWebUrlsPageExportBatch",
+						new ObjectValuePair<>(
+							WebUrlResourceImpl.class,
+							"postUserAccountWebUrlsPageExportBatch"));
 
 					put(
 						"query#accounts",
@@ -821,8 +907,16 @@ public class ServletDataImpl implements ServletData {
 		_organizationResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<PhoneResource>
+		_phoneResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<RoleResource>
 		_roleResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SegmentResource>
+		_segmentResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SubscriptionResource>
@@ -837,20 +931,16 @@ public class ServletDataImpl implements ServletData {
 		_userGroupResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WebUrlResource>
+		_webUrlResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<EmailAddressResource>
 		_emailAddressResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<PhoneResource>
-		_phoneResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PostalAddressResource>
 		_postalAddressResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SegmentResource>
-		_segmentResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SegmentUserResource>
@@ -863,9 +953,5 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TicketResource>
 		_ticketResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<WebUrlResource>
-		_webUrlResourceComponentServiceObjects;
 
 }

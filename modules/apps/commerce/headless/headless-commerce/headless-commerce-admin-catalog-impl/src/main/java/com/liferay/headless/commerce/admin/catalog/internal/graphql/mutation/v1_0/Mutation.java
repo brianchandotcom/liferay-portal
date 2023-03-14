@@ -44,6 +44,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LowStockActionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
@@ -67,9 +68,11 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SpecificationRe
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -132,6 +135,14 @@ public class Mutation {
 
 		_groupedProductResourceComponentServiceObjects =
 			groupedProductResourceComponentServiceObjects;
+	}
+
+	public static void setLowStockActionResourceComponentServiceObjects(
+		ComponentServiceObjects<LowStockActionResource>
+			lowStockActionResourceComponentServiceObjects) {
+
+		_lowStockActionResourceComponentServiceObjects =
+			lowStockActionResourceComponentServiceObjects;
 	}
 
 	public static void setMappedProductResourceComponentServiceObjects(
@@ -538,6 +549,25 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createCatalogsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_catalogResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			catalogResource -> catalogResource.postCatalogsPageExportBatch(
+				search, _filterBiFunction.apply(catalogResource, filterString),
+				_sortsBiFunction.apply(catalogResource, sortsString),
+				callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public Catalog createCatalog(@GraphQLName("catalog") Catalog catalog)
 		throws Exception {
 
@@ -699,6 +729,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createLowStockActionsPageExportBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_lowStockActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			lowStockActionResource ->
+				lowStockActionResource.postLowStockActionsPageExportBatch(
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public boolean deleteMappedProduct(
 			@GraphQLName("mappedProductId") Long mappedProductId)
 		throws Exception {
@@ -766,6 +811,25 @@ public class Mutation {
 			mappedProductResource ->
 				mappedProductResource.postProductIdMappedProduct(
 					productId, mappedProduct));
+	}
+
+	@GraphQLField
+	public Response createOptionsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_optionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			optionResource -> optionResource.postOptionsPageExportBatch(
+				search, _filterBiFunction.apply(optionResource, filterString),
+				_sortsBiFunction.apply(optionResource, sortsString),
+				callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -1074,6 +1138,25 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createProductsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productResource -> productResource.postProductsPageExportBatch(
+				search, _filterBiFunction.apply(productResource, filterString),
+				_sortsBiFunction.apply(productResource, sortsString),
+				callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public Product createProduct(@GraphQLName("product") Product product)
 		throws Exception {
 
@@ -1299,6 +1382,27 @@ public class Mutation {
 			productConfigurationResource ->
 				productConfigurationResource.patchProductIdConfiguration(
 					id, productConfiguration));
+	}
+
+	@GraphQLField
+	public Response createProductGroupsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productGroupResource ->
+				productGroupResource.postProductGroupsPageExportBatch(
+					search,
+					_filterBiFunction.apply(productGroupResource, filterString),
+					_sortsBiFunction.apply(productGroupResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -1855,6 +1959,24 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createSkusPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_skuResourceComponentServiceObjects, this::_populateResourceContext,
+			skuResource -> skuResource.postSkusPageExportBatch(
+				search, _filterBiFunction.apply(skuResource, filterString),
+				_sortsBiFunction.apply(skuResource, sortsString), callbackURL,
+				contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public Response deleteSkuByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -1902,6 +2024,28 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_skuResourceComponentServiceObjects, this::_populateResourceContext,
 			skuResource -> skuResource.patchSku(id, sku));
+	}
+
+	@GraphQLField
+	public Response createSpecificationsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_specificationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			specificationResource ->
+				specificationResource.postSpecificationsPageExportBatch(
+					search,
+					_filterBiFunction.apply(
+						specificationResource, filterString),
+					_sortsBiFunction.apply(specificationResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -2018,6 +2162,9 @@ public class Mutation {
 		attachmentResource.setGroupLocalService(_groupLocalService);
 		attachmentResource.setRoleLocalService(_roleLocalService);
 
+		attachmentResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		attachmentResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -2034,6 +2181,9 @@ public class Mutation {
 		catalogResource.setGroupLocalService(_groupLocalService);
 		catalogResource.setRoleLocalService(_roleLocalService);
 
+		catalogResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		catalogResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -2049,6 +2199,9 @@ public class Mutation {
 		categoryResource.setContextUser(_user);
 		categoryResource.setGroupLocalService(_groupLocalService);
 		categoryResource.setRoleLocalService(_roleLocalService);
+
+		categoryResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		categoryResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -2082,7 +2235,32 @@ public class Mutation {
 		groupedProductResource.setGroupLocalService(_groupLocalService);
 		groupedProductResource.setRoleLocalService(_roleLocalService);
 
+		groupedProductResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		groupedProductResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
+			LowStockActionResource lowStockActionResource)
+		throws Exception {
+
+		lowStockActionResource.setContextAcceptLanguage(_acceptLanguage);
+		lowStockActionResource.setContextCompany(_company);
+		lowStockActionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		lowStockActionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		lowStockActionResource.setContextUriInfo(_uriInfo);
+		lowStockActionResource.setContextUser(_user);
+		lowStockActionResource.setGroupLocalService(_groupLocalService);
+		lowStockActionResource.setRoleLocalService(_roleLocalService);
+
+		lowStockActionResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		lowStockActionResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
 
@@ -2100,6 +2278,9 @@ public class Mutation {
 		mappedProductResource.setGroupLocalService(_groupLocalService);
 		mappedProductResource.setRoleLocalService(_roleLocalService);
 
+		mappedProductResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		mappedProductResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -2115,6 +2296,9 @@ public class Mutation {
 		optionResource.setContextUser(_user);
 		optionResource.setGroupLocalService(_groupLocalService);
 		optionResource.setRoleLocalService(_roleLocalService);
+
+		optionResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		optionResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -2135,6 +2319,9 @@ public class Mutation {
 		optionCategoryResource.setGroupLocalService(_groupLocalService);
 		optionCategoryResource.setRoleLocalService(_roleLocalService);
 
+		optionCategoryResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		optionCategoryResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -2152,6 +2339,9 @@ public class Mutation {
 		optionValueResource.setGroupLocalService(_groupLocalService);
 		optionValueResource.setRoleLocalService(_roleLocalService);
 
+		optionValueResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		optionValueResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -2168,6 +2358,9 @@ public class Mutation {
 		pinResource.setGroupLocalService(_groupLocalService);
 		pinResource.setRoleLocalService(_roleLocalService);
 
+		pinResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		pinResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -2183,6 +2376,9 @@ public class Mutation {
 		productResource.setContextUser(_user);
 		productResource.setGroupLocalService(_groupLocalService);
 		productResource.setRoleLocalService(_roleLocalService);
+
+		productResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		productResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -2203,6 +2399,9 @@ public class Mutation {
 		productAccountGroupResource.setGroupLocalService(_groupLocalService);
 		productAccountGroupResource.setRoleLocalService(_roleLocalService);
 
+		productAccountGroupResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		productAccountGroupResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -2221,6 +2420,9 @@ public class Mutation {
 		productChannelResource.setContextUser(_user);
 		productChannelResource.setGroupLocalService(_groupLocalService);
 		productChannelResource.setRoleLocalService(_roleLocalService);
+
+		productChannelResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		productChannelResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -2256,6 +2458,9 @@ public class Mutation {
 		productGroupResource.setGroupLocalService(_groupLocalService);
 		productGroupResource.setRoleLocalService(_roleLocalService);
 
+		productGroupResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		productGroupResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -2275,6 +2480,9 @@ public class Mutation {
 		productGroupProductResource.setGroupLocalService(_groupLocalService);
 		productGroupProductResource.setRoleLocalService(_roleLocalService);
 
+		productGroupProductResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		productGroupProductResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -2292,6 +2500,9 @@ public class Mutation {
 		productOptionResource.setContextUser(_user);
 		productOptionResource.setGroupLocalService(_groupLocalService);
 		productOptionResource.setRoleLocalService(_roleLocalService);
+
+		productOptionResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		productOptionResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -2311,6 +2522,9 @@ public class Mutation {
 		productOptionValueResource.setContextUser(_user);
 		productOptionValueResource.setGroupLocalService(_groupLocalService);
 		productOptionValueResource.setRoleLocalService(_roleLocalService);
+
+		productOptionValueResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		productOptionValueResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -2350,6 +2564,9 @@ public class Mutation {
 		productSpecificationResource.setContextUser(_user);
 		productSpecificationResource.setGroupLocalService(_groupLocalService);
 		productSpecificationResource.setRoleLocalService(_roleLocalService);
+
+		productSpecificationResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		productSpecificationResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -2408,6 +2625,9 @@ public class Mutation {
 		relatedProductResource.setGroupLocalService(_groupLocalService);
 		relatedProductResource.setRoleLocalService(_roleLocalService);
 
+		relatedProductResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		relatedProductResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -2423,6 +2643,9 @@ public class Mutation {
 		skuResource.setContextUser(_user);
 		skuResource.setGroupLocalService(_groupLocalService);
 		skuResource.setRoleLocalService(_roleLocalService);
+
+		skuResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
 
 		skuResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
@@ -2442,6 +2665,9 @@ public class Mutation {
 		specificationResource.setGroupLocalService(_groupLocalService);
 		specificationResource.setRoleLocalService(_roleLocalService);
 
+		specificationResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		specificationResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -2456,6 +2682,8 @@ public class Mutation {
 		_diagramResourceComponentServiceObjects;
 	private static ComponentServiceObjects<GroupedProductResource>
 		_groupedProductResourceComponentServiceObjects;
+	private static ComponentServiceObjects<LowStockActionResource>
+		_lowStockActionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MappedProductResource>
 		_mappedProductResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OptionResource>
@@ -2500,6 +2728,7 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
@@ -2507,6 +2736,8 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
+	private VulcanBatchEngineExportTaskResource
+		_vulcanBatchEngineExportTaskResource;
 	private VulcanBatchEngineImportTaskResource
 		_vulcanBatchEngineImportTaskResource;
 

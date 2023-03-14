@@ -25,6 +25,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -61,6 +62,11 @@ public interface RegionResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postCountryRegionsPageExportBatch(
+			Long countryId, Boolean active, String search, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
+
 	public Region postCountryRegion(Long countryId, Region region)
 		throws Exception;
 
@@ -74,6 +80,11 @@ public interface RegionResource {
 
 	public Page<Region> getRegionsPage(
 			Boolean active, String search, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Response postRegionsPageExportBatch(
+			Boolean active, String search, Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public void deleteRegion(Long regionId) throws Exception;
@@ -128,6 +139,10 @@ public interface RegionResource {
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
+
+	public void setVulcanBatchEngineExportTaskResource(
+		VulcanBatchEngineExportTaskResource
+			vulcanBatchEngineExportTaskResource);
 
 	public void setVulcanBatchEngineImportTaskResource(
 		VulcanBatchEngineImportTaskResource

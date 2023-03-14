@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -65,6 +66,23 @@ public class Mutation {
 
 		_dsRecipientViewDefinitionResourceComponentServiceObjects =
 			dsRecipientViewDefinitionResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public Response createSiteDSEnvelopesPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dsEnvelopeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dsEnvelopeResource ->
+				dsEnvelopeResource.postSiteDSEnvelopesPageExportBatch(
+					Long.valueOf(siteKey), callbackURL, contentType,
+					fieldNames));
 	}
 
 	@GraphQLField
@@ -163,6 +181,9 @@ public class Mutation {
 		dsEnvelopeResource.setGroupLocalService(_groupLocalService);
 		dsEnvelopeResource.setRoleLocalService(_roleLocalService);
 
+		dsEnvelopeResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		dsEnvelopeResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -200,6 +221,8 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
+	private VulcanBatchEngineExportTaskResource
+		_vulcanBatchEngineExportTaskResource;
 	private VulcanBatchEngineImportTaskResource
 		_vulcanBatchEngineImportTaskResource;
 

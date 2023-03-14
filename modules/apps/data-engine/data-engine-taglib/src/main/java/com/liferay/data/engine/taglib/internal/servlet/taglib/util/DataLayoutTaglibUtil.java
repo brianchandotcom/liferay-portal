@@ -1042,26 +1042,17 @@ public class DataLayoutTaglibUtil {
 			List<Map<String, Object>> nestedFields =
 				(List<Map<String, Object>>)field.get("nestedFields");
 
-			if (nestedFields != null) {
-				List<Map<String, Object>> nestedFieldsList = new ArrayList<>();
-
-				for (Map<String, Object> nestedField : nestedFields) {
-					nestedFieldsList.addAll(_getNestedFieldsList(nestedField));
-				}
-
-				return nestedFieldsList;
+			if (nestedFields == null) {
+				return new ArrayList<>();
 			}
 
-			return new ArrayList<>();
-		}
+			List<Map<String, Object>> nestedFieldsList = new ArrayList<>();
 
-		private List<Map<String, Object>> _getNestedFieldsList(
-			Map<String, Object> field) {
+			for (Map<String, Object> nestedField : nestedFields) {
+				nestedFieldsList.add(nestedField);
 
-			List<Map<String, Object>> nestedFieldsList = new ArrayList<>(
-				Arrays.asList(field));
-
-			nestedFieldsList.addAll(_getNestedFields(field));
+				nestedFieldsList.addAll(_getNestedFields(nestedField));
+			}
 
 			return nestedFieldsList;
 		}

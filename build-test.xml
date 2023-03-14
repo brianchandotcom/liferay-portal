@@ -8791,6 +8791,35 @@ go</echo>
 		<delete failonerror="false" file="${project.dir}/console-shut-down" />
 	</target>
 
+	<target name="clean-up-node-processes">
+		<if>
+			<os family="unix" />
+			<then>
+				<echo file="clean_up_node_processes.sh">
+					<![CDATA[
+						#!/bin/bash
+
+						for i in `ps -o pid,args -e | grep build/node/bin/node | grep -v grep | cut -c1-5`
+						do
+							echo "Killing $i"
+
+							kill -9 $i
+						done
+					]]>
+				</echo>
+
+				<chmod
+					file="clean_up_node_processes.sh"
+					perm="a+x"
+				/>
+
+				<exec executable="${basedir}/clean_up_node_processes.sh" />
+
+				<delete file="clean_up_node_processes.sh" />
+			</then>
+		</if>
+	</target>
+
 	<target name="clean-up-selenium-driver">
 		<if>
 			<equals arg1="${browser.type}" arg2="chrome" />
@@ -12441,6 +12470,23 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
+		<get-testcase-property property.name="oauth2.application.enabled" />
+
+		<if>
+			<equals arg1="${oauth2.application.enabled}" arg2="true" />
+			<then>
+				<local name="oauth2.application.url" />
+
+				<condition else="http://localhost:3000" property="oauth2.application.url" value="http://${env.HOSTNAME}:3000">
+					<isset property="env.HOSTNAME" />
+				</condition>
+
+				<echo append="true" file="${test.ext.properties.file}">
+					oauth2.application.url=${oauth2.application.url}
+				</echo>
+			</then>
+		</if>
+
 		<if>
 			<equals arg1="${tear.down.before.test}" arg2="true" />
 			<then>
@@ -12668,6 +12714,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
 		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-node-processes" />
 	</target>
 
 	<target name="prepare-test-build-custom">
@@ -12698,6 +12745,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
 		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-node-processes" />
 	</target>
 
 	<target name="prepare-test-bundle">
@@ -14762,6 +14810,7 @@ mail.send.blacklist=</echo>
 			</not>
 			<then>
 				<antcall inheritAll="false" target="clean-up-java-processes" />
+				<antcall inheritAll="false" target="clean-up-node-processes" />
 			</then>
 		</if>
 
@@ -14913,6 +14962,15 @@ mail.send.blacklist=</echo>
 			<equals arg1="${liferay.faces}" arg2="true" />
 			<then>
 				<ant antfile="build-test-jsf.xml" target="run-jsf-tests" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="oauth2.application.enabled" />
+
+		<if>
+			<equals arg1="${oauth2.application.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-oauth2.xml" target="start-oauth2-application" />
 			</then>
 		</if>
 
@@ -15430,6 +15488,15 @@ mail.send.blacklist=</echo>
 				<ant antfile="build-test-httpd.xml" target="stop-httpd-server" />
 
 				<ant antfile="build-test-httpd.xml" target="clean-up-httpd-server" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="oauth2.application.enabled" />
+
+		<if>
+			<equals arg1="${oauth2.application.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-oauth2.xml" target="stop-oauth2-application" />
 			</then>
 		</if>
 

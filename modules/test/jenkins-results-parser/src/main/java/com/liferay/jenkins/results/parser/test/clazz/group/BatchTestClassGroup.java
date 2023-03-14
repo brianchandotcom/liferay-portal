@@ -236,9 +236,13 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		jsonObject = new JSONObject();
 
-		jsonObject.put("batch_name", getBatchName());
-		jsonObject.put("include_stable_test_suite", includeStableTestSuite);
-		jsonObject.put("job_properties", _getJobPropertiesMap());
+		jsonObject.put(
+			"batch_name", getBatchName()
+		).put(
+			"include_stable_test_suite", includeStableTestSuite
+		).put(
+			"job_properties", _getJobPropertiesMap()
+		);
 
 		JSONArray segmentJSONArray = new JSONArray();
 
@@ -248,13 +252,16 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			segmentJSONArray.put(segmentTestClassGroup.getJSONObject());
 		}
 
-		jsonObject.put("segments", segmentJSONArray);
-
-		jsonObject.put("test_release_bundle", testReleaseBundle);
-		jsonObject.put("test_relevant_changes", testRelevantChanges);
 		jsonObject.put(
+			"segments", segmentJSONArray
+		).put(
+			"test_release_bundle", testReleaseBundle
+		).put(
+			"test_relevant_changes", testRelevantChanges
+		).put(
 			"test_relevant_integration_unit_only",
-			testRelevantIntegrationUnitOnly);
+			testRelevantIntegrationUnitOnly
+		);
 
 		return jsonObject;
 	}

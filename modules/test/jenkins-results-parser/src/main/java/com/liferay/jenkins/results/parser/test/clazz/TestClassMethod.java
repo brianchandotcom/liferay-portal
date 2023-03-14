@@ -46,8 +46,11 @@ public class TestClassMethod {
 
 		_jsonObject = new JSONObject();
 
-		_jsonObject.put("ignored", ignored);
-		_jsonObject.put("name", name);
+		_jsonObject.put(
+			"ignored", ignored
+		).put(
+			"name", name
+		);
 	}
 
 	protected TestClassMethod(JSONObject jsonObject, TestClass testClass) {

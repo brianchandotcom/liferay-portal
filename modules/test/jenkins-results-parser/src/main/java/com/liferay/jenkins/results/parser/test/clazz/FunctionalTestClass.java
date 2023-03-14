@@ -53,8 +53,11 @@ public class FunctionalTestClass extends BaseTestClass {
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		jsonObject.put("poshi_properties", _poshiProperties);
-		jsonObject.put("test_class_method_name", _testClassMethodName);
+		jsonObject.put(
+			"poshi_properties", _poshiProperties
+		).put(
+			"test_class_method_name", _testClassMethodName
+		);
 
 		return jsonObject;
 	}

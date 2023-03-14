@@ -1114,10 +1114,15 @@ public class GitHubWebhookPayloadProcessor {
 
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("branch", branchName);
-		jsonObject.put("command", "pull");
-		jsonObject.put("pullRequestNumber", pullRequest.getNumber());
-		jsonObject.put("repo", repositoryName);
+		jsonObject.put(
+			"branch", branchName
+		).put(
+			"command", "pull"
+		).put(
+			"pullRequestNumber", pullRequest.getNumber()
+		).put(
+			"repo", repositoryName
+		);
 
 		try {
 			if (!pullRequest.isValidCIMergeFile()) {
@@ -1587,9 +1592,11 @@ public class GitHubWebhookPayloadProcessor {
 			_log.info("Sync subrepo SHA " + sha);
 		}
 
-		jsonObject.put("sha", sha);
-
-		jsonObject.put("pullRequestNumber", "0");
+		jsonObject.put(
+			"pullRequestNumber", "0"
+		).put(
+			"sha", sha
+		);
 
 		String command = "push";
 		String propertyName =

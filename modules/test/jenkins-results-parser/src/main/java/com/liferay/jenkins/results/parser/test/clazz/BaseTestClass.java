@@ -92,11 +92,15 @@ public abstract class BaseTestClass implements TestClass {
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("average_duration", getAverageDuration());
 		jsonObject.put(
-			"average_overhead_duration", getAverageOverheadDuration());
-		jsonObject.put("file", getTestClassFile());
-		jsonObject.put("ignored", isIgnored());
+			"average_duration", getAverageDuration()
+		).put(
+			"average_overhead_duration", getAverageOverheadDuration()
+		).put(
+			"file", getTestClassFile()
+		).put(
+			"ignored", isIgnored()
+		);
 
 		JSONArray methodsJSONArray = new JSONArray();
 
@@ -104,9 +108,11 @@ public abstract class BaseTestClass implements TestClass {
 			methodsJSONArray.put(testClassMethod.getJSONObject());
 		}
 
-		jsonObject.put("methods", methodsJSONArray);
-
-		jsonObject.put("name", getName());
+		jsonObject.put(
+			"methods", methodsJSONArray
+		).put(
+			"name", getName()
+		);
 
 		return jsonObject;
 	}

@@ -95,9 +95,11 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 			axesJSONArray.put(axisTestClassGroup.getJSONObject());
 		}
 
-		jsonObject.put("axes", axesJSONArray);
-
-		jsonObject.put("segment_name", getSegmentName());
+		jsonObject.put(
+			"axes", axesJSONArray
+		).put(
+			"segment_name", getSegmentName()
+		);
 
 		return jsonObject;
 	}

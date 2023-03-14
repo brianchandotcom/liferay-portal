@@ -10046,6 +10046,44 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 	</target>
 
+	<target name="deploy-workspace-zips">
+		<for list="${workspace.includes}" param="workspace.include">
+			<sequential>
+				<local name="workspace.name" />
+
+				<antelope:stringutil property="workspace.name" string="@{workspace.include}">
+					<antelope:trim />
+				</antelope:stringutil>
+
+				<property location="${project.dir}/workspaces/${workspace.name}" name="workspace.dir" />
+
+				<if>
+					<available file="${workspace.dir}" />
+					<then>
+						<execute dir="${workspace.dir}">
+							./gradlew clean assemble
+						</execute>
+
+						<for param="client.extension.zip.file">
+							<path>
+								<fileset
+									dir="${workspace.dir}/client-extensions"
+									includes="**/*.zip"
+								/>
+							</path>
+							<sequential>
+								<copy
+									file="@{client.extension.zip.file}"
+									todir="${liferay.home}/deploy"
+								/>
+							</sequential>
+						</for>
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="execute-groovy-script-from-gogo-shell">
 		<set-app-server-properties
 			app.server.bundle.index="${bundle.index}"
@@ -15015,6 +15053,10 @@ mail.send.blacklist=</echo>
 		<get-testcase-property property.name="osgi.app.includes" />
 
 		<antcall if:set="osgi.app.includes" target="deploy-osgi-apps" />
+
+		<get-testcase-property property.name="workspace.includes" />
+
+		<antcall if:set="workspace.includes" target="deploy-workspace-zips" />
 
 		<antcall target="hot-deploy-osgi-apps" />
 

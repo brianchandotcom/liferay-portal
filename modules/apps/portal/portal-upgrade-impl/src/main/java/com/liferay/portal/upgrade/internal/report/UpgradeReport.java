@@ -73,7 +73,7 @@ public class UpgradeReport {
 	public UpgradeReport() {
 		_initialBuildNumber = _getBuildNumber();
 		_initialSchemaVersion = _getSchemaVersion();
-		_initialTableRowsMap = _getTableCounts();
+		_initialTableCountMap = _getTableCountMap();
 	}
 
 	public void addErrorMessage(String loggerName, String message) {
@@ -392,10 +392,10 @@ public class UpgradeReport {
 		).put(
 			"tables.initial.final.rows",
 			() -> {
-				Map<String, Integer> finalTableRowsMap = _getTableCounts();
+				Map<String, Integer> finalTableCountMap = _getTableCountMap();
 
-				if ((_initialTableRowsMap == null) ||
-					(finalTableRowsMap == null)) {
+				if ((_initialTableCountMap == null) ||
+					(finalTableCountMap == null)) {
 
 					return null;
 				}
@@ -404,15 +404,15 @@ public class UpgradeReport {
 
 				List<String> tableNamesList = new ArrayList<>();
 
-				tableNamesList.addAll(_initialTableRowsMap.keySet());
-				tableNamesList.addAll(finalTableRowsMap.keySet());
+				tableNamesList.addAll(_initialTableCountMap.keySet());
+				tableNamesList.addAll(finalTableCountMap.keySet());
 
 				ListUtil.distinct(
 					tableNamesList,
 					(tableNameA, tableNameB) -> {
-						int countA = _initialTableRowsMap.getOrDefault(
+						int countA = _initialTableCountMap.getOrDefault(
 							tableNameA, 0);
-						int countB = _initialTableRowsMap.getOrDefault(
+						int countB = _initialTableCountMap.getOrDefault(
 							tableNameB, 0);
 
 						if (countA != countB) {
@@ -423,9 +423,9 @@ public class UpgradeReport {
 					});
 
 				for (String tableName : tableNamesList) {
-					int initialCount = _initialTableRowsMap.getOrDefault(
+					int initialCount = _initialTableCountMap.getOrDefault(
 						tableName, -1);
-					int finalCount = finalTableRowsMap.getOrDefault(
+					int finalCount = finalTableCountMap.getOrDefault(
 						tableName, -1);
 
 					if ((initialCount <= 0) && (finalCount <= 0)) {
@@ -664,7 +664,7 @@ public class UpgradeReport {
 		return eventMessages;
 	}
 
-	private Map<String, Integer> _getTableCounts() {
+	private Map<String, Integer> _getTableCountMap() {
 		try (Connection connection = DataAccess.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -791,7 +791,7 @@ public class UpgradeReport {
 		new ConcurrentHashMap<>();
 	private final int _initialBuildNumber;
 	private final String _initialSchemaVersion;
-	private final Map<String, Integer> _initialTableRowsMap;
+	private final Map<String, Integer> _initialTableCountMap;
 	private PersistenceManager _persistenceManager;
 	private String _rootDir;
 	private final Map<String, Map<String, Integer>> _warningMessages =

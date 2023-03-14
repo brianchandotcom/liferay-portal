@@ -16,8 +16,6 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {ENTER} from '../../utils/key-constants.es';
-
 class LocalizedDropdown extends React.Component {
 	static defaultProps = {
 		availableLanguages: [],
@@ -73,7 +71,7 @@ class LocalizedDropdown extends React.Component {
 	_handleLanguageClick = (langKey) => () => this._changeLanguage(langKey);
 
 	_handleLanguageKeyboard = (langKey) => (event) => {
-		if (event.keyCode === ENTER) {
+		if (event.code === 'Enter') {
 			this._changeLanguage(langKey);
 		}
 	};

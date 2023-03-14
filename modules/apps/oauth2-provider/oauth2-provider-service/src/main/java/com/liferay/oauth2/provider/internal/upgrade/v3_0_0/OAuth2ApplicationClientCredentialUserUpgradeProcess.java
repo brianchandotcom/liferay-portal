@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Luis Ortiz
  */
-public class OAuth2ApplicationClientCredentialUserUpgradeUser
+public class OAuth2ApplicationClientCredentialUserUpgradeProcess
 	extends UpgradeProcess {
 
 	@Override

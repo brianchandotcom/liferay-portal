@@ -21,7 +21,9 @@ FragmentServiceConfigurationDisplayContext fragmentServiceConfigurationDisplayCo
 %>
 
 <aui:form action="<%= fragmentServiceConfigurationDisplayContext.getEditFragmentServiceConfigurationURL() %>" method="post" name="fm">
-	<clay:sheet>
+	<clay:sheet
+		size="full"
+	>
 		<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>" message="there-was-an-unknown-error" />
 
 		<clay:sheet-header>

@@ -928,6 +928,124 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-101720. As an End User, OTP verification shows up in login process when OTP is enabled and scoped by Company Id."
+	@priority = 5
+	test LoginWithOTPEnabledByCompanyId {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithOTPEnabledByCompanyId";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Deploy MFA configuration with CompanyId set") {
+			MultiFactorAuthentication.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.scoped~CompanyId.config");
+		}
+
+		task ("Add user and set password") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Enable OTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
+
+			AssertTextEquals(
+				locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_NAME_FIELD",
+				value1 = "Joe Bloggs");
+
+			MultiFactorAuthentication.configureOTP(enableOtp = "true");
+		}
+
+		task ("Sign out and Login with new user") {
+			SignOut.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Send OTP email and check information correctness for userfn userln") {
+			MultiFactorAuthentication.sendOTPEmailPG();
+
+			MultiFactorAuthentication.verifyOTP(
+				portalURL = ${portalURL},
+				recipient = "userfn userln",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+		}
+	}
+
+	@description = "This is a use case for LPS-101720. As an End User, OTP verification shows up in login process when OTP is enabled and scoped by Company Web Id."
+	@priority = 5
+	test LoginWithOTPEnabledByCompanyWebId {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithOTPEnabledByCompanyWebId";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Deploy the OSGI configuration file with CompanyWebId") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/mfa/dependencies",
+				osgiConfigFileName = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.scoped~CompanyWebId.config");
+		}
+
+		task ("Add user and set password") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Enable OTP") {
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
+
+			AssertTextEquals(
+				locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_NAME_FIELD",
+				value1 = "Joe Bloggs Web Id");
+
+			MultiFactorAuthentication.configureOTP(enableOtp = "true");
+		}
+
+		task ("Sign out and Login with new user") {
+			SignOut.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Send OTP email and check information correctness for userfn userln") {
+			MultiFactorAuthentication.sendOTPEmailPG();
+
+			MultiFactorAuthentication.verifyOTP(
+				portalURL = ${portalURL},
+				recipient = "userfn userln",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+		}
+	}
+
 	@description = "This is a use case for LPS-98267 and LPS-101744. Login with TOTP enabled as end user."
 	@priority = 5
 	test LoginWithTOTPEnabledAsEndUser {

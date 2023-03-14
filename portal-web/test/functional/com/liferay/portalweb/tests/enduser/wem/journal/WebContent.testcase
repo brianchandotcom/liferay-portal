@@ -1735,6 +1735,160 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172561. View warning of duplicated friendly URL in web content from a site."
+	@priority = 4
+	test ViewWarningOfDuplicatedFriendlyURLInWebContentFromASite {
+		task ("Given some web contents with duplicated friendly URLs") {
+			task ("Add a web content with five friendly URLs") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+				WebContent.editFriendlyURL(webContentFriendlyURL = "wc");
+
+				PortletEntry.changeLocale(locale = "zh-CN");
+
+				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-zh");
+
+				PortletEntry.changeLocale(locale = "ja-JP");
+
+				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-ja");
+
+				PortletEntry.changeLocale(locale = "de-DE");
+
+				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-de");
+
+				PortletEntry.changeLocale(locale = "es-ES");
+
+				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-es");
+
+				PortletEntry.publish();
+			}
+
+			task ("Add another site") {
+				JSONGroup.addGroup(groupName = "Test Site Name 2");
+			}
+
+			task ("Add a web content with one friendly URL") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content 2",
+					groupName = "Test Site Name 2",
+					title = "Web Content Title 2");
+
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-2");
+
+				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+
+				WebContent.editFriendlyURL(webContentFriendlyURL = "wc");
+			}
+		}
+
+		task ("When publish the web content with one duplicated friendly URL") {
+			Button.clickPublish();
+		}
+
+		task ("Then there's warning message in pop up") {
+			Alert.viewWarningSpecific(warningMessage = "Warning:The content has been published but might cause errors. The URL used in English (United States) already exists in other sites or asset libraries.");
+		}
+
+		task ("When go to view the web content ") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+		}
+
+		task ("Then there's warning message inside Friendly URL section") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_3",
+				value1 = "Warning:The content has been published but might cause errors. The URL used in English (United States) already exists in other sites or asset libraries.");
+		}
+
+		task ("When publish the web content with three duplicated friendly URLs") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-2");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+
+			PortletEntry.changeLocale(locale = "zh-CN");
+
+			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-zh");
+
+			PortletEntry.changeLocale(locale = "ja-JP");
+
+			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-ja");
+
+			Button.clickPublish();
+		}
+
+		task ("Then there's warning message in pop up") {
+			Alert.viewWarningSpecific(warningMessage = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China) and Japanese (Japan) already exists in other sites or asset libraries.");
+		}
+
+		task ("When go to view the web content ") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+		}
+
+		task ("Then there's warning message inside Friendly URL section") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_3",
+				value1 = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China) and Japanese (Japan) already exists in other sites or asset libraries.");
+		}
+
+		task ("When publish the web content with four duplicated friendly URLs") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-2");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+
+			PortletEntry.changeLocale(locale = "de-DE");
+
+			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-de");
+
+			Button.clickPublish();
+		}
+
+		task ("Then there's warning message in pop up") {
+			Alert.viewWarningSpecific(warningMessage = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China), Japanese (Japan) and 1 more translations already exist in other sites or asset libraries.");
+		}
+
+		task ("When go to view the web content ") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+		}
+
+		task ("Then there's warning message inside Friendly URL section") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_3",
+				value1 = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China), Japanese (Japan) and 1 more translations already exist in other sites or asset libraries.");
+		}
+
+		task ("When publish the web content with five duplicated friendly URLs") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-2");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+
+			PortletEntry.changeLocale(locale = "es-ES");
+
+			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-es");
+
+			Button.clickPublish();
+		}
+
+		task ("Then there's warning message in pop up") {
+			Alert.viewWarningSpecific(warningMessage = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China), Spanish (Spain) and 2 more translations already exist in other sites or asset libraries.");
+		}
+
+		task ("When go to view the web content ") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+		}
+
+		task ("Then there's warning message inside Friendly URL section") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_3",
+				value1 = "Warning:The content has been published but might cause errors. The URL used in English (United States), Chinese (China), Spanish (Spain) and 2 more translations already exist in other sites or asset libraries.");
+		}
+	}
+
 	@description = "This is a test for LPS-88500. At any given time, a user can view all the places a web content article is displayed through a Web Content Display widget or an Asset Publisher widget with manual selection."
 	@priority = 5
 	test ViewWebContentArticleUsages {

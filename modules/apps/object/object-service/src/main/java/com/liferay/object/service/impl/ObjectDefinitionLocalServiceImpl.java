@@ -98,6 +98,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -597,15 +598,16 @@ public class ObjectDefinitionLocalServiceImpl
 				_assetCategoryLocalService, _assetTagLocalService,
 				_assetVocabularyLocalService, _bundleContext,
 				_dynamicQueryBatchIndexingActionableFactory, _groupLocalService,
-				_listTypeEntryLocalService, _modelSearchRegistrarHelper,
-				_objectActionLocalService, this, _objectEntryLocalService,
-				_objectEntryManagerRegistry, _objectEntryService,
-				_objectFieldLocalService, _objectLayoutLocalService,
-				_objectLayoutTabLocalService, _objectRelationshipLocalService,
-				_objectScopeProviderRegistry, _objectViewLocalService,
-				_organizationLocalService, _persistedModelLocalServiceRegistry,
-				_ploEntryLocalService, _portletLocalService, _resourceActions,
-				_userLocalService, _resourcePermissionLocalService,
+				_listTypeEntryLocalService, _listTypeLocalService,
+				_modelSearchRegistrarHelper, _objectActionLocalService, this,
+				_objectEntryLocalService, _objectEntryManagerRegistry,
+				_objectEntryService, _objectFieldLocalService,
+				_objectLayoutLocalService, _objectLayoutTabLocalService,
+				_objectRelationshipLocalService, _objectScopeProviderRegistry,
+				_objectViewLocalService, _organizationLocalService,
+				_persistedModelLocalServiceRegistry, _ploEntryLocalService,
+				_portletLocalService, _resourceActions, _userLocalService,
+				_resourcePermissionLocalService,
 				_workflowStatusModelPreFilterContributor,
 				_userGroupRoleLocalService));
 
@@ -1723,6 +1725,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
 	private ModelSearchRegistrarHelper _modelSearchRegistrarHelper;

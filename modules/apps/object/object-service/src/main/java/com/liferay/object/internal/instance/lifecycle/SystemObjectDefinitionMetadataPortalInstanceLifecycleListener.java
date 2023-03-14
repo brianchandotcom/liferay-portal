@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -143,8 +144,8 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 			_bundleContext.registerService(
 				NotificationTermEvaluator.class,
 				new ObjectDefinitionNotificationTermEvaluator(
-					objectDefinition, _objectFieldLocalService,
-					_userLocalService),
+					_listTypeLocalService, objectDefinition,
+					_objectFieldLocalService, _userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"class.name", objectDefinition.getClassName()
 				).build());
@@ -201,6 +202,9 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	@Reference
 	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
 		_itemSelectorViewDescriptorRenderer;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

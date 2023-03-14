@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -111,6 +112,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			dynamicQueryBatchIndexingActionableFactory,
 		GroupLocalService groupLocalService,
 		ListTypeEntryLocalService listTypeEntryLocalService,
+		ListTypeLocalService listTypeLocalService,
 		ModelSearchRegistrarHelper modelSearchRegistrarHelper,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -270,8 +272,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				NotificationTermEvaluator.class,
 				new ObjectDefinitionNotificationTermEvaluator(
-					objectDefinition, _objectFieldLocalService,
-					_userLocalService),
+					_listTypeLocalService, objectDefinition,
+					_objectFieldLocalService, _userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"class.name", objectDefinition.getClassName()
 				).build()),
@@ -415,6 +417,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final GroupLocalService _groupLocalService;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
+	private ListTypeLocalService _listTypeLocalService;
 	private final ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

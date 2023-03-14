@@ -19,23 +19,23 @@ import com.liferay.object.definition.notification.term.util.ObjectDefinitionNoti
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ListTypeServiceUtil;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -45,10 +45,12 @@ public class ObjectDefinitionNotificationTermEvaluator
 	implements NotificationTermEvaluator {
 
 	public ObjectDefinitionNotificationTermEvaluator(
+		ListTypeLocalService listTypeLocalService,
 		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService,
 		UserLocalService userLocalService) {
 
+		_listTypeLocalService = listTypeLocalService;
 		_objectDefinition = objectDefinition;
 		_objectFieldLocalService = objectFieldLocalService;
 		_userLocalService = userLocalService;
@@ -64,155 +66,201 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 		Map<String, Object> termValues = (Map<String, Object>)object;
 
-		User user = null;
+		for (Subevaluator subevaluator : _subevaluators) {
+			String termValue = subevaluator.evaluate(
+				context, termName, termValues);
 
-		String prefix = StringUtil.toUpperCase(
-			_objectDefinition.getShortName());
-
-		Set<String> creatorTermNames = Collections.unmodifiableSet(
-			SetUtil.fromArray(
-				"[%" + prefix + "_CREATOR%]",
-				"[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]",
-				"[%" + prefix + "_AUTHOR_FIRST_NAME%]",
-				"[%" + prefix + "_AUTHOR_ID%]",
-				"[%" + prefix + "_AUTHOR_LAST_NAME%]",
-				"[%" + prefix + "_AUTHOR_MIDDLE_NAME%]",
-				"[%" + prefix + "_AUTHOR_PREFIX%]",
-				"[%" + prefix + "_AUTHOR_SUFFIX%]"));
-
-		if (creatorTermNames.contains(termName)) {
-			user = _userLocalService.getUser(
-				GetterUtil.getLong(termValues.get("creator")));
-
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
-				if (context.equals(Context.RECIPIENT)) {
-					return String.valueOf(termValues.get("creator"));
-				}
-
-				return user.getFullName(true, true);
+			if (termValue != null) {
+				return termValue;
 			}
 		}
 
-		if (_currentUserTermName.contains(termName)) {
-			user = _userLocalService.getUser(
-				GetterUtil.getLong(termValues.get("currentUserId")));
-		}
-
-		if (user != null) {
-			Map<String, String> userTermValuesMap = _getUserTermValuesMap(
-				context, user);
-
-			return userTermValuesMap.get(
-				StringUtil.removeSubstring(
-					StringUtil.extractLast(termName, StringPool.UNDERLINE),
-					"%]"));
-		}
-
-		Map<String, Long> objectFieldIds =
-			_objectFieldIdsDCLSingleton.getSingleton(
-				this::_createObjectFieldIds);
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectFieldIds.get(termName));
-
-		if (objectField == null) {
-			return termName;
-		}
-
-		Object termValue = termValues.get(objectField.getName());
-
-		if (Validator.isNotNull(termValue)) {
-			return String.valueOf(termValue);
-		}
-
-		return String.valueOf(termValues.get(objectField.getDBColumnName()));
+		return termName;
 	}
 
-	private Map<String, Long> _createObjectFieldIds() {
-		Map<String, Long> objectFieldIds = HashMapBuilder.put(
-			"[%OBJECT_ENTRY_CREATOR%]", 0L
-		).build();
-
-		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId())) {
-
-			objectFieldIds.put(
-				ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-					_objectDefinition.getShortName(), objectField.getName()),
-				objectField.getObjectFieldId());
-		}
-
-		return objectFieldIds;
-	}
-
-	private String _getListTypeName(boolean prefix, User user)
+	private String _getTermValue(
+			Context context, String partialObjectFieldName, User user)
 		throws PortalException {
 
-		Contact contact = user.fetchContact();
+		if (Objects.equals(partialObjectFieldName, "CREATOR")) {
+			if (context.equals(Context.RECIPIENT)) {
+				String.valueOf(user.getUserId());
+			}
 
-		if (contact == null) {
-			return StringPool.BLANK;
+			return user.getFullName(true, true);
 		}
+		else if (Objects.equals(partialObjectFieldName, "EMAIL_ADDRESS")) {
+			return user.getEmailAddress();
+		}
+		else if (Objects.equals(partialObjectFieldName, "FIRST_NAME")) {
+			return user.getFirstName();
+		}
+		else if (Objects.equals(partialObjectFieldName, "ID")) {
+			return String.valueOf(user.getUserId());
+		}
+		else if (Objects.equals(partialObjectFieldName, "LAST_NAME")) {
+			return user.getLastName();
+		}
+		else if (Objects.equals(partialObjectFieldName, "MIDDLE_NAME")) {
+			return user.getMiddleName();
+		}
+		else if (Objects.equals(partialObjectFieldName, "PREFIX") ||
+				 Objects.equals(partialObjectFieldName, "SUFFIX")) {
 
-		if (prefix) {
-			if (Validator.isNull(contact.getPrefixListTypeId())) {
+			Contact contact = user.fetchContact();
+
+			if (contact == null) {
 				return StringPool.BLANK;
 			}
 
-			ListType listType = ListTypeServiceUtil.getListType(
-				contact.getPrefixListTypeId());
+			long listTypeId = contact.getPrefixListTypeId();
+
+			if (Objects.equals(partialObjectFieldName, "SUFFIX")) {
+				listTypeId = contact.getSuffixListTypeId();
+			}
+
+			if (listTypeId == 0) {
+				return StringPool.BLANK;
+			}
+
+			ListType listType = _listTypeLocalService.getListType(listTypeId);
 
 			return listType.getName();
 		}
 
-		if (Validator.isNull(contact.getSuffixListTypeId())) {
-			return StringPool.BLANK;
-		}
-
-		ListType listType = ListTypeServiceUtil.getListType(
-			contact.getSuffixListTypeId());
-
-		return listType.getName();
+		return null;
 	}
 
-	private Map<String, String> _getUserTermValuesMap(
-			Context context, User user)
-		throws PortalException {
+	private final ListTypeLocalService _listTypeLocalService;
+	private final ObjectDefinition _objectDefinition;
+	private final ObjectFieldLocalService _objectFieldLocalService;
 
-		return HashMapBuilder.put(
-			"CREATOR",
-			() -> context.equals(Context.RECIPIENT) ?
-				String.valueOf(user.getUserId()) : user.getFullName(true, true)
-		).put(
-			"EMAIL_ADDRESS", user.getEmailAddress()
-		).put(
-			"FIRST_NAME", user.getFirstName()
-		).put(
-			"ID", String.valueOf(user.getUserId())
-		).put(
-			"LAST_NAME", user.getLastName()
-		).put(
-			"MIDDLE_NAME", user.getMiddleName()
-		).put(
-			"PREFIX", _getListTypeName(true, user)
-		).put(
-			"SUFFIX", _getListTypeName(false, user)
-		).build();
-	}
+	private final List<Subevaluator> _subevaluators = ListUtil.fromArray(
+		new Subevaluator() {
 
-	private static final Set<String> _currentUserTermName =
-		Collections.unmodifiableSet(
-			SetUtil.fromArray(
+			public String evaluate(
+					Context context, String termName,
+					Map<String, Object> termValues)
+				throws PortalException {
+
+				User user = null;
+
+				String prefix = StringUtil.toUpperCase(
+					_objectDefinition.getShortName());
+
+				Set<String> creatorTermNames = SetUtil.fromArray(
+					"[%" + prefix + "_CREATOR%]",
+					"[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]",
+					"[%" + prefix + "_AUTHOR_FIRST_NAME%]",
+					"[%" + prefix + "_AUTHOR_ID%]",
+					"[%" + prefix + "_AUTHOR_LAST_NAME%]",
+					"[%" + prefix + "_AUTHOR_MIDDLE_NAME%]",
+					"[%" + prefix + "_AUTHOR_PREFIX%]",
+					"[%" + prefix + "_AUTHOR_SUFFIX%]");
+
+				if (creatorTermNames.contains(termName)) {
+					user = _userLocalService.getUser(
+						GetterUtil.getLong(termValues.get("creator")));
+
+					if (!FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
+						if (context.equals(Context.RECIPIENT)) {
+							return String.valueOf(termValues.get("creator"));
+						}
+
+						return user.getFullName(true, true);
+					}
+				}
+
+				if (user == null) {
+					return null;
+				}
+
+				return _getTermValue(
+					context,
+					StringUtil.removeSubstring(
+						StringUtil.extractLast(termName, StringPool.UNDERLINE),
+						"%]"),
+					user);
+			}
+
+		},
+		new Subevaluator() {
+
+			public String evaluate(
+					Context context, String termName,
+					Map<String, Object> termValues)
+				throws PortalException {
+
+				if (!_termNames.contains(termName)) {
+					return null;
+				}
+
+				return _getTermValue(
+					context,
+					StringUtil.removeSubstring(
+						StringUtil.extractLast(termName, StringPool.UNDERLINE),
+						"%]"),
+					_userLocalService.getUser(
+						GetterUtil.getLong(termValues.get("currentUserId"))));
+			}
+
+			private final Set<String> _termNames = SetUtil.fromArray(
 				"[%CURRENT_USER_EMAIL_ADDRESS%]", "[%CURRENT_USER_FIRST_NAME%]",
 				"[%CURRENT_USER_ID%]", "[%CURRENT_USER_LAST_NAME%]",
 				"[%CURRENT_USER_MIDDLE_NAME%]", "[%CURRENT_USER_PREFIX%]",
-				"[%CURRENT_USER_SUFFIX%]"));
+				"[%CURRENT_USER_SUFFIX%]");
 
-	private final ObjectDefinition _objectDefinition;
-	private final DCLSingleton<Map<String, Long>> _objectFieldIdsDCLSingleton =
-		new DCLSingleton<>();
-	private final ObjectFieldLocalService _objectFieldLocalService;
+		},
+		new Subevaluator() {
+
+			public String evaluate(
+					Context context, String termName,
+					Map<String, Object> termValues)
+				throws PortalException {
+
+				if (termName.equals("[%OBJECT_ENTRY_CREATOR%]")) {
+					return termName;
+				}
+
+				for (ObjectField objectField :
+						_objectFieldLocalService.getObjectFields(
+							_objectDefinition.getObjectDefinitionId())) {
+
+					if (!Objects.equals(
+							ObjectDefinitionNotificationTermUtil.
+								getObjectFieldTermName(
+									_objectDefinition.getShortName(),
+									objectField.getName()),
+							termName)) {
+
+						continue;
+					}
+
+					String termValue = (String)termValues.get(
+						objectField.getName());
+
+					if (Validator.isNotNull(termValue)) {
+						return termValue;
+					}
+
+					return (String)termValues.get(
+						objectField.getDBColumnName());
+				}
+
+				return null;
+			}
+
+		});
+
 	private final UserLocalService _userLocalService;
+
+	private interface Subevaluator {
+
+		public String evaluate(
+				Context context, String termName,
+				Map<String, Object> termValues)
+			throws PortalException;
+
+	}
 
 }

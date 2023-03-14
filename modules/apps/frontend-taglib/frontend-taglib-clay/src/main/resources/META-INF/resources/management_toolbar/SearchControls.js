@@ -15,7 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 
 const SearchControls = ({
 	disabled,
@@ -29,6 +29,14 @@ const SearchControls = ({
 	searchValue,
 	setSearchMobile,
 }) => {
+	const searchInputRef = useRef();
+
+	useEffect(() => {
+		if (searchMobile) {
+			searchInputRef.current.focus();
+		}
+	}, [searchMobile]);
+
 	return (
 		<>
 			<ManagementToolbar.Search
@@ -47,6 +55,7 @@ const SearchControls = ({
 							disabled={disabled}
 							name={searchInputName}
 							placeholder={Liferay.Language.get('search-for')}
+							ref={searchInputRef}
 							type="search"
 						/>
 

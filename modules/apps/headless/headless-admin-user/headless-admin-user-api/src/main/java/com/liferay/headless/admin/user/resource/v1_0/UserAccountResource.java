@@ -25,6 +25,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -99,6 +100,11 @@ public interface UserAccountResource {
 			Sort[] sorts)
 		throws Exception;
 
+	public Response postAccountUserAccountsPageExportBatch(
+			Long accountId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
+
 	public UserAccount postAccountUserAccount(
 			Long accountId, UserAccount userAccount)
 		throws Exception;
@@ -130,13 +136,28 @@ public interface UserAccountResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postOrganizationUserAccountsPageExportBatch(
+			String organizationId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
+
 	public Page<UserAccount> getSiteUserAccountsPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception;
 
+	public Response postSiteUserAccountsPageExportBatch(
+			Long siteId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
+
 	public Page<UserAccount> getUserAccountsPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Response postUserAccountsPageExportBatch(
+			String search, Filter filter, Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public UserAccount postUserAccount(UserAccount userAccount)
@@ -217,6 +238,10 @@ public interface UserAccountResource {
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
+
+	public void setVulcanBatchEngineExportTaskResource(
+		VulcanBatchEngineExportTaskResource
+			vulcanBatchEngineExportTaskResource);
 
 	public void setVulcanBatchEngineImportTaskResource(
 		VulcanBatchEngineImportTaskResource

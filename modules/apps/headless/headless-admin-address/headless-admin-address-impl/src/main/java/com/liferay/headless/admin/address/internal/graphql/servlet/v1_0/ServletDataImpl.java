@@ -119,6 +119,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CountryResourceImpl.class, "putCountryBatch"));
 					put(
+						"mutation#createCountryRegionsPageExportBatch",
+						new ObjectValuePair<>(
+							RegionResourceImpl.class,
+							"postCountryRegionsPageExportBatch"));
+					put(
 						"mutation#createCountryRegion",
 						new ObjectValuePair<>(
 							RegionResourceImpl.class, "postCountryRegion"));
@@ -127,6 +132,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							RegionResourceImpl.class,
 							"postCountryRegionBatch"));
+					put(
+						"mutation#createRegionsPageExportBatch",
+						new ObjectValuePair<>(
+							RegionResourceImpl.class,
+							"postRegionsPageExportBatch"));
 					put(
 						"mutation#deleteRegion",
 						new ObjectValuePair<>(

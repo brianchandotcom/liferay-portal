@@ -106,6 +106,11 @@ public class ServletDataImpl implements ServletData {
 							NotificationQueueEntryResourceImpl.class,
 							"putNotificationQueueEntryResend"));
 					put(
+						"mutation#createNotificationTemplatesPageExportBatch",
+						new ObjectValuePair<>(
+							NotificationTemplateResourceImpl.class,
+							"postNotificationTemplatesPageExportBatch"));
+					put(
 						"mutation#createNotificationTemplate",
 						new ObjectValuePair<>(
 							NotificationTemplateResourceImpl.class,

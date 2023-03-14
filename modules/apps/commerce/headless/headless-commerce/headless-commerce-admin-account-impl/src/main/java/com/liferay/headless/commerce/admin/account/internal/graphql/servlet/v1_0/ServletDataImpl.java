@@ -135,6 +135,11 @@ public class ServletDataImpl implements ServletData {
 							AccountResourceImpl.class,
 							"deleteAccountGroupByExternalReferenceCodeAccount"));
 					put(
+						"mutation#createAccountsPageExportBatch",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"postAccountsPageExportBatch"));
+					put(
 						"mutation#createAccount",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "postAccount"));
@@ -433,6 +438,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountChannelShippingOptionResourceImpl.class,
 							"postAccountIdAccountChannelShippingOptionBatch"));
+					put(
+						"mutation#createAccountGroupsPageExportBatch",
+						new ObjectValuePair<>(
+							AccountGroupResourceImpl.class,
+							"postAccountGroupsPageExportBatch"));
 					put(
 						"mutation#createAccountGroup",
 						new ObjectValuePair<>(

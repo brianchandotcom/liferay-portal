@@ -128,6 +128,11 @@ public class ServletDataImpl implements ServletData {
 							AvailabilityEstimateResourceImpl.class,
 							"postCommerceAdminSiteSettingGroupAvailabilityEstimate"));
 					put(
+						"mutation#createMeasurementUnitsPageExportBatch",
+						new ObjectValuePair<>(
+							MeasurementUnitResourceImpl.class,
+							"postMeasurementUnitsPageExportBatch"));
+					put(
 						"mutation#createMeasurementUnit",
 						new ObjectValuePair<>(
 							MeasurementUnitResourceImpl.class,

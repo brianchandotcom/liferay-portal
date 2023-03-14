@@ -89,6 +89,11 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createSiteDSEnvelopesPageExportBatch",
+						new ObjectValuePair<>(
+							DSEnvelopeResourceImpl.class,
+							"postSiteDSEnvelopesPageExportBatch"));
+					put(
 						"mutation#createSiteDSEnvelope",
 						new ObjectValuePair<>(
 							DSEnvelopeResourceImpl.class,

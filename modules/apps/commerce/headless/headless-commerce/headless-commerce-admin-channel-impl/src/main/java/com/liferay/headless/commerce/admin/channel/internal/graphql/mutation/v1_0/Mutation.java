@@ -24,12 +24,15 @@ import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGr
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelTermResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionOrderTypeResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionTermResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingMethodResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -95,6 +98,33 @@ public class Mutation {
 
 		_shippingFixedOptionTermResourceComponentServiceObjects =
 			shippingFixedOptionTermResourceComponentServiceObjects;
+	}
+
+	public static void setShippingMethodResourceComponentServiceObjects(
+		ComponentServiceObjects<ShippingMethodResource>
+			shippingMethodResourceComponentServiceObjects) {
+
+		_shippingMethodResourceComponentServiceObjects =
+			shippingMethodResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public Response createChannelsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource -> channelResource.postChannelsPageExportBatch(
+				search, _filterBiFunction.apply(channelResource, filterString),
+				_sortsBiFunction.apply(channelResource, sortsString),
+				callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -420,6 +450,23 @@ public class Mutation {
 						id, shippingFixedOptionTerm));
 	}
 
+	@GraphQLField
+	public Response createChannelShippingMethodsPageExportBatch(
+			@GraphQLName("channelId") Long channelId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_shippingMethodResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shippingMethodResource ->
+				shippingMethodResource.
+					postChannelShippingMethodsPageExportBatch(
+						channelId, callbackURL, contentType, fieldNames));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -470,6 +517,9 @@ public class Mutation {
 		channelResource.setGroupLocalService(_groupLocalService);
 		channelResource.setRoleLocalService(_roleLocalService);
 
+		channelResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		channelResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
@@ -494,6 +544,10 @@ public class Mutation {
 			_roleLocalService);
 
 		paymentMethodGroupRelOrderTypeResource.
+			setVulcanBatchEngineExportTaskResource(
+				_vulcanBatchEngineExportTaskResource);
+
+		paymentMethodGroupRelOrderTypeResource.
 			setVulcanBatchEngineImportTaskResource(
 				_vulcanBatchEngineImportTaskResource);
 	}
@@ -515,6 +569,10 @@ public class Mutation {
 			_groupLocalService);
 		paymentMethodGroupRelTermResource.setRoleLocalService(
 			_roleLocalService);
+
+		paymentMethodGroupRelTermResource.
+			setVulcanBatchEngineExportTaskResource(
+				_vulcanBatchEngineExportTaskResource);
 
 		paymentMethodGroupRelTermResource.
 			setVulcanBatchEngineImportTaskResource(
@@ -541,6 +599,10 @@ public class Mutation {
 			_roleLocalService);
 
 		shippingFixedOptionOrderTypeResource.
+			setVulcanBatchEngineExportTaskResource(
+				_vulcanBatchEngineExportTaskResource);
+
+		shippingFixedOptionOrderTypeResource.
 			setVulcanBatchEngineImportTaskResource(
 				_vulcanBatchEngineImportTaskResource);
 	}
@@ -562,7 +624,32 @@ public class Mutation {
 			_groupLocalService);
 		shippingFixedOptionTermResource.setRoleLocalService(_roleLocalService);
 
+		shippingFixedOptionTermResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
 		shippingFixedOptionTermResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
+			ShippingMethodResource shippingMethodResource)
+		throws Exception {
+
+		shippingMethodResource.setContextAcceptLanguage(_acceptLanguage);
+		shippingMethodResource.setContextCompany(_company);
+		shippingMethodResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		shippingMethodResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		shippingMethodResource.setContextUriInfo(_uriInfo);
+		shippingMethodResource.setContextUser(_user);
+		shippingMethodResource.setGroupLocalService(_groupLocalService);
+		shippingMethodResource.setRoleLocalService(_roleLocalService);
+
+		shippingMethodResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		shippingMethodResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
 
@@ -577,9 +664,12 @@ public class Mutation {
 		_shippingFixedOptionOrderTypeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ShippingFixedOptionTermResource>
 		_shippingFixedOptionTermResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ShippingMethodResource>
+		_shippingMethodResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
@@ -587,6 +677,8 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
+	private VulcanBatchEngineExportTaskResource
+		_vulcanBatchEngineExportTaskResource;
 	private VulcanBatchEngineImportTaskResource
 		_vulcanBatchEngineImportTaskResource;
 

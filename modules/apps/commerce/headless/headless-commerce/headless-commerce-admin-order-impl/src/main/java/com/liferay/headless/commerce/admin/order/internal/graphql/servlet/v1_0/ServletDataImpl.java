@@ -185,6 +185,11 @@ public class ServletDataImpl implements ServletData {
 							BillingAddressResourceImpl.class,
 							"patchOrderIdBillingAddress"));
 					put(
+						"mutation#createOrdersPageExportBatch",
+						new ObjectValuePair<>(
+							OrderResourceImpl.class,
+							"postOrdersPageExportBatch"));
+					put(
 						"mutation#createOrder",
 						new ObjectValuePair<>(
 							OrderResourceImpl.class, "postOrder"));
@@ -214,6 +219,11 @@ public class ServletDataImpl implements ServletData {
 						"mutation#patchOrder",
 						new ObjectValuePair<>(
 							OrderResourceImpl.class, "patchOrder"));
+					put(
+						"mutation#createOrderItemsPageExportBatch",
+						new ObjectValuePair<>(
+							OrderItemResourceImpl.class,
+							"postOrderItemsPageExportBatch"));
 					put(
 						"mutation#deleteOrderItemByExternalReferenceCode",
 						new ObjectValuePair<>(
@@ -303,6 +313,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							OrderNoteResourceImpl.class,
 							"postOrderIdOrderNoteBatch"));
+					put(
+						"mutation#createOrderRulesPageExportBatch",
+						new ObjectValuePair<>(
+							OrderRuleResourceImpl.class,
+							"postOrderRulesPageExportBatch"));
 					put(
 						"mutation#createOrderRule",
 						new ObjectValuePair<>(
@@ -435,6 +450,11 @@ public class ServletDataImpl implements ServletData {
 							OrderRuleOrderTypeResourceImpl.class,
 							"postOrderRuleIdOrderRuleOrderTypeBatch"));
 					put(
+						"mutation#createOrderTypesPageExportBatch",
+						new ObjectValuePair<>(
+							OrderTypeResourceImpl.class,
+							"postOrderTypesPageExportBatch"));
+					put(
 						"mutation#createOrderType",
 						new ObjectValuePair<>(
 							OrderTypeResourceImpl.class, "postOrderType"));
@@ -500,6 +520,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ShippingAddressResourceImpl.class,
 							"patchOrderIdShippingAddress"));
+					put(
+						"mutation#createTermsPageExportBatch",
+						new ObjectValuePair<>(
+							TermResourceImpl.class,
+							"postTermsPageExportBatch"));
 					put(
 						"mutation#createTerm",
 						new ObjectValuePair<>(

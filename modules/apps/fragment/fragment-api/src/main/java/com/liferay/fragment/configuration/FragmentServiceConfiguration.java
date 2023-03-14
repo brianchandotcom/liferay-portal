@@ -41,4 +41,12 @@ public interface FragmentServiceConfiguration {
 	)
 	public boolean propagateChanges();
 
+	@Meta.AD(
+		deflt = "true",
+		description = "propagate-contributed-fragment-changes-automatically-description",
+		name = "propagate-contributed-fragment-changes-automatically",
+		required = false
+	)
+	public boolean propagateContributedFragmentChanges();
+
 }

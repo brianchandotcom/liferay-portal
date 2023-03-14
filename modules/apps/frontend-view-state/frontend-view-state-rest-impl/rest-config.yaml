@@ -6,6 +6,7 @@ application:
     name: "Liferay.Frontend.View.State.REST"
 author: "Javier Gamarra"
 clientDir: "../frontend-view-state-rest-client/src/main/java"
+compatibilityVersion: 2
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false

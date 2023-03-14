@@ -6,5 +6,6 @@ application:
     name: "Liferay.Search.Experiences.REST"
 author: "Brian Wing Shun Chan"
 clientDir: "../search-experiences-rest-client/src/main/java"
+compatibilityVersion: 2
 forcePredictableOperationId: true
 testDir: "../search-experiences-rest-test/src/testIntegration/java"

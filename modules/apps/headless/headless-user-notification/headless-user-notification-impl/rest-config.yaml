@@ -6,5 +6,6 @@ application:
     name: "Liferay.Headless.User.Notification"
 author: "Carlos Correa"
 clientDir: "../headless-user-notification-client/src/main/java"
+compatibilityVersion: 2
 forcePredictableOperationId: true
 testDir: "../headless-user-notification-test/src/testIntegration/java"

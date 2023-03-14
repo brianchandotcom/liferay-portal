@@ -6,5 +6,6 @@ application:
     name: "Liferay.Headless.Commerce.Delivery.Catalog"
 author: "Andrea Sbarra"
 clientDir: "../headless-commerce-delivery-catalog-client/src/main/java"
+compatibilityVersion: 2
 forcePredictableSchemaPropertyName: false
 testDir: "../headless-commerce-delivery-catalog-test/src/testIntegration/java"

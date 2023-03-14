@@ -6,5 +6,6 @@ application:
     name: "Liferay.Segments.Asah.REST"
 author: "Javier Gamarra"
 clientDir: "../segments-asah-rest-client/src/main/java"
+compatibilityVersion: 2
 forcePredictableOperationId: true
 testDir: "../segments-asah-rest-test/src/testIntegration/java"

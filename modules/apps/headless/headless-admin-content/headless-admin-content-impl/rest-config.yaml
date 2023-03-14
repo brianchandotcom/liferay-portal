@@ -6,6 +6,7 @@ application:
     name: "Liferay.Headless.Admin.Content"
 author: "Javier Gamarra"
 clientDir: "../headless-admin-content-client/src/main/java"
+compatibilityVersion: 2
 forcePredictableOperationId: true
 generateBatch: false
 graphQLNamespace: "admin"

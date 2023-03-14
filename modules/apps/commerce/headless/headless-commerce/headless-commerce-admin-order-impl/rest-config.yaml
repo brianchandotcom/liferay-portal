@@ -6,5 +6,6 @@ application:
     name: "Liferay.Headless.Commerce.Admin.Order"
 author: "Alessio Antonio Rendina"
 clientDir: "../headless-commerce-admin-order-client/src/main/java"
+compatibilityVersion: 2
 forcePredictableSchemaPropertyName: false
 testDir: "../headless-commerce-admin-order-test/src/testIntegration/java"

@@ -23,6 +23,7 @@ import com.liferay.journal.test.util.search.JournalArticleContent;
 import com.liferay.journal.test.util.search.JournalArticleDescription;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -56,8 +57,6 @@ import com.liferay.users.admin.test.util.search.UserSearchFixture;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -310,16 +309,11 @@ public class JournalArticleMultiLanguageSearchTest {
 	protected void assertSearchMatchesAllArticles(SearchContext searchContext) {
 		Hits hits = search(searchContext);
 
-		Stream<JournalArticle> stream = _journalArticles.stream();
-
 		DocumentsAssert.assertValuesIgnoreRelevance(
 			(String)searchContext.getAttribute("queryString"), hits.getDocs(),
 			Field.ARTICLE_ID,
-			stream.map(
-				JournalArticle::getArticleId
-			).collect(
-				Collectors.toList()
-			));
+			TransformUtil.transform(
+				_journalArticles, JournalArticle::getArticleId));
 	}
 
 	protected SearchContext getSearchContext(Locale locale) {

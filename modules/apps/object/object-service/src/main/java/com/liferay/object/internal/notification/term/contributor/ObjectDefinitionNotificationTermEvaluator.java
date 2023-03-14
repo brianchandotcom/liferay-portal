@@ -156,16 +156,18 @@ public class ObjectDefinitionNotificationTermEvaluator
 					!termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") ||
 					!termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]")) {
 
-					user = _userLocalService.getUser(
-						GetterUtil.getLong(termValues.get("creator")));
+					return null;
+				}
 
-					if (!FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
-						if (context.equals(Context.RECIPIENT)) {
-							return String.valueOf(termValues.get("creator"));
-						}
+				user = _userLocalService.getUser(
+					GetterUtil.getLong(termValues.get("creator")));
 
-						return user.getFullName(true, true);
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
+					if (context.equals(Context.RECIPIENT)) {
+						return String.valueOf(termValues.get("creator"));
 					}
+
+					return user.getFullName(true, true);
 				}
 
 				if (user == null) {

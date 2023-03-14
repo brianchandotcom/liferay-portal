@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -378,6 +379,10 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			}
 
 			String serviceXMLFilePath = serviceXMLFile.getAbsolutePath();
+
+			serviceXMLFilePath = StringUtil.replace(
+				serviceXMLFilePath, CharPool.BACK_SLASH, CharPool.SLASH);
+
 			String tablesSQLFilePath = "";
 
 			if (dirName.startsWith("portal-impl/")) {

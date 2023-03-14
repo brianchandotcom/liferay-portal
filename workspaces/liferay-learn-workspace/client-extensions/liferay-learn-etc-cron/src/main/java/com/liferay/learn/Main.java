@@ -521,8 +521,11 @@ public class Main {
 			if (matcher.find()) {
 				JSONObject linkJSONObject = new JSONObject();
 
-				linkJSONObject.put("title", matcher.group(1));
-				linkJSONObject.put("url", matcher.group(2));
+				linkJSONObject.put(
+					"title", matcher.group(1)
+				).put(
+					"url", matcher.group(2)
+				);
 
 				navigationLinksJSONArray.put(linkJSONObject);
 

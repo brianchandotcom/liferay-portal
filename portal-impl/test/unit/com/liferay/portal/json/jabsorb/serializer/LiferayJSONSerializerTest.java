@@ -65,8 +65,11 @@ public class LiferayJSONSerializerTest {
 
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("contextName", "TestClassLoader");
-		jsonObject.put("javaClass", ServiceContext.class.getName());
+		jsonObject.put(
+			"contextName", "TestClassLoader"
+		).put(
+			"javaClass", ServiceContext.class.getName()
+		);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
 				LiferayJSONSerializer.class.getName(), Level.WARNING)) {

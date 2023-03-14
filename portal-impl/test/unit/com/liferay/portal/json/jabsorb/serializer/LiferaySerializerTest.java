@@ -66,9 +66,13 @@ public class LiferaySerializerTest {
 
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("contextName", "TestClassLoader");
-		jsonObject.put("javaClass", ServiceContext.class.getName());
-		jsonObject.put("serializable", new JSONObject());
+		jsonObject.put(
+			"contextName", "TestClassLoader"
+		).put(
+			"javaClass", ServiceContext.class.getName()
+		).put(
+			"serializable", new JSONObject()
+		);
 
 		SerializerState serializerState = new SerializerState();
 

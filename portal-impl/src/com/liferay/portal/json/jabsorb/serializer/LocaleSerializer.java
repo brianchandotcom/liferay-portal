@@ -90,9 +90,13 @@ public class LocaleSerializer extends AbstractSerializer {
 		try {
 			Locale locale = (Locale)object;
 
-			localeJSONObject.put("country", locale.getCountry());
-			localeJSONObject.put("language", locale.getLanguage());
-			localeJSONObject.put("variant", locale.getVariant());
+			localeJSONObject.put(
+				"country", locale.getCountry()
+			).put(
+				"language", locale.getLanguage()
+			).put(
+				"variant", locale.getVariant()
+			);
 		}
 		catch (Exception exception) {
 			throw new MarshallException(

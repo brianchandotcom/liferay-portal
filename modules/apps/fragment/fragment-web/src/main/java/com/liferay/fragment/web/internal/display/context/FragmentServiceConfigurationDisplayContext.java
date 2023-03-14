@@ -64,6 +64,11 @@ public class FragmentServiceConfigurationDisplayContext {
 			_scope, _getScopePk());
 	}
 
+	public boolean isPropagateContributedFragmentChangesEnabled() {
+		return _fragmentServiceManagedServiceFactory.
+			isPropagateContributedFragmentChanges(_scope, _getScopePk());
+	}
+
 	private long _getScopePk() {
 		if (Objects.equals(
 				_scope,

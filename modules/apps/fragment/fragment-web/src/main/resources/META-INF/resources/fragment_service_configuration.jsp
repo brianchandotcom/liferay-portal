@@ -31,16 +31,33 @@ FragmentServiceConfigurationDisplayContext fragmentServiceConfigurationDisplayCo
 		</clay:sheet-header>
 
 		<clay:sheet-section>
-			<clay:checkbox
-				checked="<%= fragmentServiceConfigurationDisplayContext.isPropagateChangesEnabled() %>"
-				id='<%= liferayPortletResponse.getNamespace() + "propagateChanges" %>'
-				label='<%= LanguageUtil.get(request, "propagate-fragment-changes-automatically") %>'
-				name='<%= liferayPortletResponse.getNamespace() + "propagateChanges" %>'
-			/>
+			<div class="mb-3">
+				<clay:checkbox
+					checked="<%= fragmentServiceConfigurationDisplayContext.isPropagateContributedFragmentChangesEnabled() %>"
+					id='<%= liferayPortletResponse.getNamespace() + "propagateContributedFragmentChanges" %>'
+					label='<%= LanguageUtil.get(request, "propagate-contributed-fragment-changes-automatically") %>'
+					name='<%= liferayPortletResponse.getNamespace() + "propagateContributedFragmentChanges" %>'
+				/>
 
-			<div aria-hidden="true" class="form-feedback-group">
-				<div class="form-text text-weight-normal">
-					<liferay-ui:message key="propagate-fragment-changes-automatically-description" />
+				<div aria-hidden="true" class="form-feedback-group">
+					<div class="form-text text-weight-normal">
+						<liferay-ui:message key="propagate-contributed-fragment-changes-automatically-description" />
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<clay:checkbox
+					checked="<%= fragmentServiceConfigurationDisplayContext.isPropagateChangesEnabled() %>"
+					id='<%= liferayPortletResponse.getNamespace() + "propagateChanges" %>'
+					label='<%= LanguageUtil.get(request, "propagate-fragment-changes-automatically") %>'
+					name='<%= liferayPortletResponse.getNamespace() + "propagateChanges" %>'
+				/>
+
+				<div aria-hidden="true" class="form-feedback-group">
+					<div class="form-text text-weight-normal">
+						<liferay-ui:message key="propagate-fragment-changes-automatically-description" />
+					</div>
 				</div>
 			</div>
 		</clay:sheet-section>

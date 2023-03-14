@@ -70,9 +70,12 @@ public class EditFragmentServiceConfigurationMVCActionCommand
 		try {
 			boolean propagateChanges = ParamUtil.getBoolean(
 				actionRequest, "propagateChanges");
+			boolean propagateContributedFragmentChanges = ParamUtil.getBoolean(
+				actionRequest, "propagateContributedFragmentChanges");
 
 			_fragmentServiceManagedServiceFactory.updatePropagateChanges(
-				propagateChanges, scope, scopePK);
+				propagateChanges, propagateContributedFragmentChanges, scope,
+				scopePK);
 		}
 		catch (ConfigurationModelListenerException
 					configurationModelListenerException) {

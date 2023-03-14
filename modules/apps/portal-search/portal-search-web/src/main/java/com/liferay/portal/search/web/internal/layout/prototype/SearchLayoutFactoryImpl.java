@@ -36,11 +36,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.search.web.layout.prototype.SearchLayoutPrototypeCustomizer;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,11 +59,12 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 			return;
 		}
 
-		Optional<LayoutPrototype> optional = _findSearchLayoutPrototype(
+		LayoutPrototype layoutPrototype = _findSearchLayoutPrototype(
 			group.getCompanyId());
 
-		optional.ifPresent(
-			layoutPrototype -> createSearchLayout(group, layoutPrototype));
+		if (layoutPrototype != null) {
+			createSearchLayout(group, layoutPrototype);
+		}
 	}
 
 	@Override
@@ -218,23 +216,22 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	@Reference
 	protected UserLocalService userLocalService;
 
-	private Optional<LayoutPrototype> _findSearchLayoutPrototype(
-		long companyId) {
-
+	private LayoutPrototype _findSearchLayoutPrototype(long companyId) {
 		Map<Locale, String> searchTitleLocalizationMap =
 			_getSearchTitleLocalizationMap();
 
-		List<LayoutPrototype> layoutPrototypes =
-			layoutPrototypeLocalService.getLayoutPrototypes(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		for (LayoutPrototype layoutPrototype :
+				layoutPrototypeLocalService.getLayoutPrototypes(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
-		Stream<LayoutPrototype> stream1 = layoutPrototypes.stream();
+			if (_isSearchLayoutPrototype(
+					layoutPrototype, companyId, searchTitleLocalizationMap)) {
 
-		Stream<LayoutPrototype> stream2 = stream1.filter(
-			layoutPrototype -> _isSearchLayoutPrototype(
-				layoutPrototype, companyId, searchTitleLocalizationMap));
+				return layoutPrototype;
+			}
+		}
 
-		return stream2.findAny();
+		return null;
 	}
 
 	private Map<Locale, String> _getFriendlyURLMap() {

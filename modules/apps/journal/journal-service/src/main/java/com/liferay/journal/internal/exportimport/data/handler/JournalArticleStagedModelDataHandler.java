@@ -749,8 +749,8 @@ public class JournalArticleStagedModelDataHandler
 		if (article.getClassNameId() !=
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
 
-			Map<String, Long> ddmStructureIds =
-				(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
+			Map<Long, Long> ddmStructureIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					DDMStructure.class);
 
 			classPK = ddmStructureIds.get(article.getClassPK());

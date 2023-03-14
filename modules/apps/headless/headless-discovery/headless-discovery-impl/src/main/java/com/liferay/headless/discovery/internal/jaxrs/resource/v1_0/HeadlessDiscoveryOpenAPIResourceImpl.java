@@ -21,7 +21,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -51,7 +50,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -93,10 +91,6 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 	@Produces({"application/json", "application/xml"})
 	public Response getGlobalOpenAPI(@PathParam("type") String type)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-166216")) {
-			throw new NotFoundException();
-		}
 
 		Map<OpenAPIContext, Response> responses = new HashMap<>();
 

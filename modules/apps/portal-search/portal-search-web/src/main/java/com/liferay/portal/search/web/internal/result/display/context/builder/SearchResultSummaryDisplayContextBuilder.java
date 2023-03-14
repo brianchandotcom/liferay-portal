@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatConstants;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,17 +66,13 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -546,18 +544,16 @@ public class SearchResultSummaryDisplayContextBuilder {
 	private void _buildCreationDateString(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		Optional<String> dateStringOptional = SearchStringUtil.maybe(
+		String dateString = StringUtil.trim(
 			_getFieldValueString(Field.CREATE_DATE));
 
-		Optional<Date> dateOptional = dateStringOptional.map(
-			this::_parseDateStringFieldValue);
+		if (Validator.isBlank(dateString)) {
+			return;
+		}
 
-		dateOptional.ifPresent(
-			date -> {
-				searchResultSummaryDisplayContext.setCreationDateString(
-					_formatDate(date));
-				searchResultSummaryDisplayContext.setCreationDateVisible(true);
-			});
+		searchResultSummaryDisplayContext.setCreationDateString(
+			_formatDate(_parseDateStringFieldValue(dateString)));
+		searchResultSummaryDisplayContext.setCreationDateVisible(true);
 	}
 
 	private void _buildCreatorUserName(
@@ -591,25 +587,19 @@ public class SearchResultSummaryDisplayContextBuilder {
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
 		if (_searchResultPreferences.isDisplayResultsInDocumentForm()) {
-			Collection<String> allFieldNames = _getAllFieldNames();
-
 			searchResultSummaryDisplayContext.
 				setDocumentFormFieldDisplayContexts(
-					_buildFieldDisplayContexts(allFieldNames.stream()));
+					_buildFieldDisplayContexts(_getAllFieldNames()));
 
 			searchResultSummaryDisplayContext.setDocumentFormVisible(true);
 		}
 	}
 
 	private List<SearchResultFieldDisplayContext> _buildFieldDisplayContexts(
-		Stream<String> fieldNames) {
+		List<String> fieldNames) {
 
-		return fieldNames.sorted(
-		).map(
-			this::_buildFieldWithHighlight
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			ListUtil.sort(fieldNames), this::_buildFieldWithHighlight);
 	}
 
 	private SearchResultFieldDisplayContext _buildFieldWithHighlight(
@@ -705,7 +695,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 			}
 
 			searchResultSummaryDisplayContext.setFieldDisplayContexts(
-				_buildFieldDisplayContexts(visibleFieldNames.stream()));
+				_buildFieldDisplayContexts(visibleFieldNames));
 		}
 
 		searchResultSummaryDisplayContext.setHighlightedTitle(
@@ -829,35 +819,31 @@ public class SearchResultSummaryDisplayContextBuilder {
 	private void _buildModifiedDateString(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		Optional<String> dateStringOptional = SearchStringUtil.maybe(
+		String dateString = StringUtil.trim(
 			_getFieldValueString(Field.MODIFIED_DATE));
 
-		Optional<Date> dateOptional = dateStringOptional.map(
-			this::_parseDateStringFieldValue);
+		if (Validator.isBlank(dateString)) {
+			return;
+		}
 
-		dateOptional.ifPresent(
-			date -> {
-				searchResultSummaryDisplayContext.setModifiedDateString(
-					_formatDate(date));
-				searchResultSummaryDisplayContext.setModifiedDateVisible(true);
-			});
+		searchResultSummaryDisplayContext.setModifiedDateString(
+			_formatDate(_parseDateStringFieldValue(dateString)));
+		searchResultSummaryDisplayContext.setModifiedDateVisible(true);
 	}
 
 	private void _buildPublishedDateString(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		Optional<String> dateStringOptional = SearchStringUtil.maybe(
+		String dateString = StringUtil.trim(
 			_getFieldValueString(Field.PUBLISH_DATE));
 
-		Optional<Date> dateOptional = dateStringOptional.map(
-			this::_parseDateStringFieldValue);
+		if (Validator.isBlank(dateString)) {
+			return;
+		}
 
-		dateOptional.ifPresent(
-			date -> {
-				searchResultSummaryDisplayContext.setPublishedDateString(
-					_formatDate(date));
-				searchResultSummaryDisplayContext.setPublishedDateVisible(true);
-			});
+		searchResultSummaryDisplayContext.setPublishedDateString(
+			_formatDate(_parseDateStringFieldValue(dateString)));
+		searchResultSummaryDisplayContext.setPublishedDateVisible(true);
 	}
 
 	private SearchResultSummaryDisplayContext _buildTemporarilyUnavailable() {

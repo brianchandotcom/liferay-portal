@@ -45,39 +45,38 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String selectSQL = SQLTransformer.transform(
-			StringBundler.concat(
-				"select ObjectDefinition.companyId, ",
-				"ObjectDefinition.dbTableName, ",
-				"ObjectDefinition.objectDefinitionId, ",
-				"ObjectDefinition.userName, ObjectDefinition.userId, ",
-				"ObjectDefinition.system_ from ObjectDefinition where ",
-				"ObjectDefinition.objectDefinitionId not in (select distinct ",
-				"ObjectField.objectDefinitionId from ObjectField where ",
-				"(ObjectField.name = 'creator' or ObjectField.name = ",
-				"'createDate' or ObjectField.name = 'id' or ObjectField.name ",
-				"= 'modifiedDate' or ObjectField.name = 'status') and ",
-				"ObjectField.system_ = [$TRUE$])"));
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				selectSQL);
+				SQLTransformer.transform(
+					StringBundler.concat(
+						"select ObjectDefinition.companyId, ",
+						"ObjectDefinition.dbTableName, ",
+						"ObjectDefinition.objectDefinitionId, ",
+						"ObjectDefinition.userName, ObjectDefinition.userId, ",
+						"ObjectDefinition.system_ from ObjectDefinition where ",
+						"ObjectDefinition.objectDefinitionId not in (select ",
+						"distinct ObjectField.objectDefinitionId from ",
+						"ObjectField where (ObjectField.name = 'creator' or ",
+						"ObjectField.name = 'createDate' or ObjectField.name ",
+						"= 'id' or ObjectField.name = 'modifiedDate' or ",
+						"ObjectField.name = 'status') and ObjectField.system_ ",
+						"= [$TRUE$])")));
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"insert into ObjectField (mvccVersion, uuid_, ",
+						"objectFieldId, companyId, userId, userName, ",
+						"createDate, modifiedDate, externalReferenceCode, ",
+						"listTypeDefinitionId, objectDefinitionId, ",
+						"businessType, dbColumnName, dbTableName, dbType, ",
+						"defaultValue, indexed, indexedAsKeyWord, ",
+						"indexedLanguageId, label, name, relationshipType, ",
+						"required, state_, system_) values (?, ?, ?, ?, ?, ?, ",
+						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+						"?, ?)"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-			String insertSQL = StringBundler.concat(
-				"insert into ObjectField (mvccVersion, uuid_, objectFieldId, ",
-				"companyId, userId, userName, createDate, modifiedDate, ",
-				"externalReferenceCode, listTypeDefinitionId, ",
-				"objectDefinitionId, businessType, dbColumnName, dbTableName, ",
-				"dbType, defaultValue, indexed, indexedAsKeyWord, ",
-				"indexedLanguageId, label, name, relationshipType, required, ",
-				"state_, system_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-				"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
 			while (resultSet.next()) {
-				PreparedStatement preparedStatement2 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection, insertSQL);
-
 				long companyId = resultSet.getLong("companyId");
 				String dbTableName = resultSet.getString("dbTableName");
 				Locale defaultLocale = LocaleUtil.fromLanguageId(
@@ -170,9 +169,9 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 						},
 						"Label"),
 					"status");
-
-				preparedStatement2.executeBatch();
 			}
+
+			preparedStatement2.executeBatch();
 		}
 	}
 

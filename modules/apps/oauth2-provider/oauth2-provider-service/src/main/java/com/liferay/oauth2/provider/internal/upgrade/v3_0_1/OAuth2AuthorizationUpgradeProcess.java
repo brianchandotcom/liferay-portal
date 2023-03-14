@@ -53,13 +53,14 @@ public class OAuth2AuthorizationUpgradeProcess extends UpgradeProcess {
 		timestamp.setTime(
 			timestamp.getTime() - expiredAuthorizationsAfterlifeDurationMillis);
 
+		String sql = StringBundler.concat(
+			"create table TEMP_TABLE_1 as (",
+			"select * from OAuth2Authorization where ",
+			"(accessTokenExpirationDate >= ?) or ((refreshTokenExpirationDate ",
+			"is not null) and (refreshTokenExpirationDate >= ?)))");
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"create table TEMP_TABLE_1 as (",
-					"select * from OAuth2Authorization where ",
-					"(accessTokenExpirationDate >= ?) or ",
-					"((refreshTokenExpirationDate is not null) and ",
-					"(refreshTokenExpirationDate >= ?)))"))) {
+				sql)) {
 
 			preparedStatement.setTimestamp(1, timestamp);
 			preparedStatement.setTimestamp(2, timestamp);
@@ -75,11 +76,9 @@ public class OAuth2AuthorizationUpgradeProcess extends UpgradeProcess {
 				"TEMP_TABLE_1))"));
 
 		runSQL("drop table OAuth2Authorization");
-
-		runSQL("rename table TEMP_TABLE_1 to OAuth2Authorization");
-
 		runSQL("drop table OA2Auths_OA2ScopeGrants");
 
+		runSQL("rename table TEMP_TABLE_1 to OAuth2Authorization");
 		runSQL("rename table TEMP_TABLE_2 to OA2Auths_OA2ScopeGrants");
 	}
 

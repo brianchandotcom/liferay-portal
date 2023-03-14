@@ -110,9 +110,18 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Click.javaScriptClick(
-			key_text = "Add Contributor",
+		Click.mouseDownMouseUp(
+			key_text = "Add Suggestions",
 			locator1 = "Button#ANY");
+
+		Click(
+			key_suggestionContributorOrder = 1,
+			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR");
+
+		Click(
+			key_suggestionContributor = "Blueprint",
+			key_suggestionContributorOrder = 1,
+			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SELECT");
 
 		Click.clickAt(
 			key_suggestionContributorOrder = 1,
@@ -252,7 +261,7 @@ definition {
 				suggestionContributor = "Blueprint",
 				suggestionContributorBlueprint = "Empty Blueprint",
 				suggestionContributorDisplayGroupName = "Blueprint 1",
-				suggestionContributorOrder = 1,
+				suggestionContributorOrder = 2,
 				suggestionContributorSize = 2);
 
 			Refresh();
@@ -263,7 +272,7 @@ definition {
 				suggestionContributor = "Blueprint",
 				suggestionContributorBlueprint = "Empty Blueprint",
 				suggestionContributorDisplayGroupName = "Blueprint 3",
-				suggestionContributorOrder = 2,
+				suggestionContributorOrder = 3,
 				suggestionContributorSize = 2);
 
 			Refresh();
@@ -274,7 +283,7 @@ definition {
 				suggestionContributor = "Blueprint",
 				suggestionContributorBlueprint = "Empty Blueprint",
 				suggestionContributorDisplayGroupName = "Blueprint 5",
-				suggestionContributorOrder = 3,
+				suggestionContributorOrder = 4,
 				suggestionContributorSize = 2);
 		}
 
@@ -548,6 +557,7 @@ definition {
 			suggestionContributor = "Blueprint",
 			suggestionContributorBlueprint = "Test Blueprint",
 			suggestionContributorDisplayGroupName = "Blueprint 0",
+			suggestionContributorOrder = 2,
 			suggestionContributorSize = 5);
 
 		Click(locator1 = "Search#EMBEDDED_SEARCH_BAR");
@@ -612,8 +622,12 @@ definition {
 		Navigator.openURL();
 
 		SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+			addContributor = "true",
+			deleteBasicContributor = "true",
 			suggestionContributor = "Blueprint",
-			suggestionContributorBlueprint = "Test Blueprint");
+			suggestionContributorBlueprint = "Test Blueprint",
+			suggestionContributorDisplayGroupName = "Suggestions",
+			suggestionContributorSize = 3);
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",

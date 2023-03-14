@@ -32,11 +32,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -44,6 +46,7 @@ import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -159,6 +162,22 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 			scopePK);
 	}
 
+	private void _updatePropagateContributedFragmentChangesPortletPreference(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			_portalPreferencesLocalService.getPreferences(
+				_portal.getCompanyId(actionRequest),
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		portletPreferences.setValue(
+			"alreadyPropagateContributedFragmentChanges",
+			Boolean.TRUE.toString());
+
+		portletPreferences.store();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PropagateContributedFragmentEntriesChangesMVCActionCommand.class);
 
@@ -183,6 +202,9 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 	@Reference
 	private Portal _portal;
 
+	@Reference
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
+
 	private class PropagateContributedFragmentEntriesChangesCallable
 		implements Callable<Object> {
 
@@ -190,6 +212,8 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 		public Object call() throws Exception {
 			_propagateContributedFragmentEntriesChanges();
 			_updateFragmentServiceConfiguration(_actionRequest);
+			_updatePropagateContributedFragmentChangesPortletPreference(
+				_actionRequest);
 
 			return null;
 		}

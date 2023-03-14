@@ -220,16 +220,14 @@ const FDSViews = ({
 	];
 
 	return (
-		<>
-			<FrontendDataSet
-				apiURL={`${fdsEntriesAPIURL}/${fdsEntryId}/fdsViews`}
-				creationMenu={creationMenu}
-				id={`${namespace}FDSViews`}
-				style="fluid"
-				views={views}
-				{...PAGINATION_PROPS}
-			/>
-		</>
+		<FrontendDataSet
+			apiURL={`${fdsEntriesAPIURL}/${fdsEntryId}/fdsViews`}
+			creationMenu={creationMenu}
+			id={`${namespace}FDSViews`}
+			style="fluid"
+			views={views}
+			{...PAGINATION_PROPS}
+		/>
 	);
 };
 

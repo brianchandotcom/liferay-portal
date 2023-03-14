@@ -452,26 +452,24 @@ const FDSEntries = ({
 	];
 
 	return (
-		<>
-			<FrontendDataSet
-				apiURL={apiURL}
-				creationMenu={creationMenu}
-				customDataRenderers={{
-					provider: ProviderRenderer,
-				}}
-				id={`${namespace}FDSEntries`}
-				itemsActions={[
-					{
-						icon: 'view',
-						label: Liferay.Language.get('view'),
-						onClick: onViewClick,
-					},
-				]}
-				style="fluid"
-				views={views}
-				{...PAGINATION_PROPS}
-			/>
-		</>
+		<FrontendDataSet
+			apiURL={apiURL}
+			creationMenu={creationMenu}
+			customDataRenderers={{
+				provider: ProviderRenderer,
+			}}
+			id={`${namespace}FDSEntries`}
+			itemsActions={[
+				{
+					icon: 'view',
+					label: Liferay.Language.get('view'),
+					onClick: onViewClick,
+				},
+			]}
+			style="fluid"
+			views={views}
+			{...PAGINATION_PROPS}
+		/>
 	);
 };
 

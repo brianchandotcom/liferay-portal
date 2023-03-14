@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.commerce.model.AccountChannelEntry",
-	service = {AccountChannelEntryDTOConverter.class, DTOConverter.class}
+	service = DTOConverter.class
 )
 public class AccountChannelEntryDTOConverter
 	implements DTOConverter

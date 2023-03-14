@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.portal.kernel.model.User",
-	service = {DTOConverter.class, UserDTOConverter.class}
+	service = DTOConverter.class
 )
 public class UserDTOConverter
 	implements DTOConverter<com.liferay.portal.kernel.model.User, User> {

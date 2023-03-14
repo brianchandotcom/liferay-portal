@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.function.Function;
@@ -59,6 +60,10 @@ public class FeatureFlagManagerUtil {
 
 	private static <T> T _withFeatureFlagManager(
 		Function<FeatureFlagManager, T> function, Supplier<T> supplier) {
+
+		if (PortalRunMode.isTestMode()) {
+			return supplier.get();
+		}
 
 		FeatureFlagManager featureFlagManager = _serviceTracker.getService();
 

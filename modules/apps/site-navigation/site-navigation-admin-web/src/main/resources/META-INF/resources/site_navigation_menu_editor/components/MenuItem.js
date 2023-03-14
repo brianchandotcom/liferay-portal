@@ -185,7 +185,13 @@ export function MenuItem({
 				}
 				aria-label={`${title} (${type})`}
 				aria-level={itemPath.length}
-				className="focusable-menu-item site_navigation_menu_editor_MenuItem"
+				className={classNames(
+					'focusable-menu-item site_navigation_menu_editor_MenuItem',
+					{
+						active: selected,
+						dragging: isDragging,
+					}
+				)}
 				data-item-id={item.siteNavigationMenuItemId}
 				data-parent-item-id={parentItemId}
 				onBlur={onBlur}
@@ -207,20 +213,10 @@ export function MenuItem({
 					setElement(ref);
 				}}
 				role="menuitem"
+				style={itemStyle}
 				tabIndex={isTarget ? '0' : '-1'}
 			>
-				<ClayCard
-					aria-label={sub(
-						Liferay.Language.get('select-x'),
-						`${title} (${type})`
-					)}
-					className={classNames('mb-3', {
-						active: selected,
-						dragging: isDragging,
-					})}
-					selectable
-					style={itemStyle}
-				>
+				<ClayCard className="mb-3">
 					<ClayCard.Body className="px-0">
 						<div ref={handlerRef}>
 							<ClayCard.Row>
@@ -253,7 +249,6 @@ export function MenuItem({
 												return;
 											}
 
-											event.preventDefault();
 											event.stopPropagation();
 
 											const eventKey = event.key;

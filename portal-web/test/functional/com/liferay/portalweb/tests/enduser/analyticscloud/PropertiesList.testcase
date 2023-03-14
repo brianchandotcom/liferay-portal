@@ -179,10 +179,6 @@ definition {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
 
-		task ("Go to Synced Sites") {
-			ACDXPSettings.navToSyncedSitesMenu();
-		}
-
 		task ("Check that the existing properties in the AC appear in the list") {
 			ACUtils.assertItemsName(itemList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 1");
 		}
@@ -228,8 +224,6 @@ definition {
 
 			ACDXPSettings.connectAnalyticsCloud();
 
-			ACDXPSettings.navToSyncedSitesMenu();
-
 			ACUtils.assertItemsName(itemList = "Property OnlyAvailablePropertiesAppearInDXP 1");
 
 			ACUtils.assertItemsName(itemList = "Property OnlyAvailablePropertiesAppearInDXP 2");
@@ -258,7 +252,9 @@ definition {
 		}
 
 		task ("Assert a new property is created along with old property") {
-			ACDXPSettings.navToSyncedSitesMenu();
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
 
 			ACUtils.assertItemsName(itemList = "Property OnlyAvailablePropertiesAppearInDXP 1");
 

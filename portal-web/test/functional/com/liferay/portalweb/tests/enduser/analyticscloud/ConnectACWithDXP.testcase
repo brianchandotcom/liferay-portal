@@ -88,7 +88,9 @@ definition {
 
 			ACDXPSettings.goToInstanceSettingsAC();
 
-			ACDXPSettings.navToSyncedSitesMenu();
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
 
 			ACDXPSettings.syncSites(propertyName = ${assignedPropertyName});
 		}
@@ -116,7 +118,13 @@ definition {
 
 			ACDXPSettings.goToInstanceSettingsAC();
 
-			ACDXPSettings.navToSyncedContactDataMenu();
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");	
 
 			ACDXPSettings.syncContactsAndAccountstData();
 		}

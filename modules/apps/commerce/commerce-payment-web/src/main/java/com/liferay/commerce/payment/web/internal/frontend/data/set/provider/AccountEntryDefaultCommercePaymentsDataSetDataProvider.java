@@ -113,13 +113,9 @@ public class AccountEntryDefaultCommercePaymentsDataSetDataProvider
 			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		long accountEntryId = ParamUtil.getLong(
-			httpServletRequest, "accountEntryId");
-
-		return _commerceChannelAccountEntryRelService.
-			getCommerceChannelAccountEntryRelsCount(
-				accountEntryId,
-				CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT);
+		return _commerceChannelService.searchCommerceChannelsCount(
+			_portal.getCompanyId(httpServletRequest),
+			fdsKeywords.getKeywords());
 	}
 
 	@Reference

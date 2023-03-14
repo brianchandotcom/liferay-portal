@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.web.internal.portlet.shared.task.helper;
 
-import java.util.Optional;
-
 import javax.portlet.RenderRequest;
 
 /**
@@ -23,15 +21,13 @@ import javax.portlet.RenderRequest;
  */
 public interface PortletSharedRequestHelper {
 
-	public <T> Optional<T> getAttribute(
-		String name, RenderRequest renderRequest);
+	public <T> T getAttribute(String name, RenderRequest renderRequest);
 
 	public String getCompleteURL(RenderRequest renderRequest);
 
-	public Optional<String> getParameter(
-		String name, RenderRequest renderRequest);
+	public String getParameter(String name, RenderRequest renderRequest);
 
-	public Optional<String[]> getParameterValues(
+	public String[] getParameterValues(
 		String name, RenderRequest renderRequest);
 
 	public void setAttribute(

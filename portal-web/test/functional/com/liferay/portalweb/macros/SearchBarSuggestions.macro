@@ -12,8 +12,8 @@ definition {
 		}
 
 		if (${addContributor} == "true") {
-			Click.javaScriptClick(
-				key_text = "Add Contributor",
+			Click.mouseDownMouseUp(
+				key_text = "Add Suggestions",
 				locator1 = "Button#ANY");
 		}
 

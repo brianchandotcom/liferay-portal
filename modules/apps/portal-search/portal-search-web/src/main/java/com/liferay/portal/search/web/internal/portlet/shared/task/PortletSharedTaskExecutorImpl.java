@@ -18,9 +18,9 @@ import com.liferay.portal.search.web.internal.portlet.shared.task.helper.Portlet
 import com.liferay.portal.search.web.portlet.shared.task.PortletSharedTask;
 import com.liferay.portal.search.web.portlet.shared.task.PortletSharedTaskExecutor;
 
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.portlet.RenderRequest;
 
@@ -39,28 +39,27 @@ public class PortletSharedTaskExecutorImpl
 		PortletSharedTask<T> portletSharedTask, String attributeSuffix,
 		RenderRequest renderRequest) {
 
-		String attributeName = "LIFERAY_SHARED_" + attributeSuffix;
-
-		Optional<FutureTask<T>> oldFutureTaskOptional;
 		FutureTask<T> futureTask;
 
+		AtomicBoolean oldTaskExists = new AtomicBoolean(true);
+
+		String attributeName = "LIFERAY_SHARED_" + attributeSuffix;
+
 		synchronized (renderRequest) {
-			oldFutureTaskOptional = portletSharedRequestHelper.getAttribute(
+			futureTask = portletSharedRequestHelper.getAttribute(
 				attributeName, renderRequest);
 
-			futureTask = oldFutureTaskOptional.orElseGet(
-				() -> {
-					FutureTask<T> newFutureTask = new FutureTask<>(
-						portletSharedTask::execute);
+			if (futureTask == null) {
+				futureTask = new FutureTask<>(portletSharedTask::execute);
 
-					portletSharedRequestHelper.setAttribute(
-						attributeName, newFutureTask, renderRequest);
+				portletSharedRequestHelper.setAttribute(
+					attributeName, futureTask, renderRequest);
 
-					return newFutureTask;
-				});
+				oldTaskExists.set(false);
+			}
 		}
 
-		if (!oldFutureTaskOptional.isPresent()) {
+		if (oldTaskExists.get()) {
 			futureTask.run();
 		}
 

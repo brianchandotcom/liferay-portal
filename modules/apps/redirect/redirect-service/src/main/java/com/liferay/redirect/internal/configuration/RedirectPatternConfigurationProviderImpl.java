@@ -18,11 +18,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
+import com.liferay.redirect.model.RedirectPatternEntry;
 import com.liferay.redirect.provider.RedirectProvider;
 
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -36,8 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 public class RedirectPatternConfigurationProviderImpl
 	implements RedirectPatternConfigurationProvider {
 
-	public Map<Pattern, String> getPatternStrings(long groupId) {
-		return _redirectProvider.getPatternStrings(groupId);
+	public List<RedirectPatternEntry> getRedirectPatternEntries(long groupId) {
+		return _redirectProvider.getRedirectPatternEntries(groupId);
 	}
 
 	@Override

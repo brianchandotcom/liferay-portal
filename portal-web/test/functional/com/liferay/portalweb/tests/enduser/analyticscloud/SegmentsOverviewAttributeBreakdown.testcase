@@ -66,6 +66,8 @@ definition {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
+			ACDXPSettings.navToSyncedAttributes();
+
 			ACDXPSettings.syncAttributes(
 				attributeCategory = "People",
 				attributeNameList = "User Custom Field");

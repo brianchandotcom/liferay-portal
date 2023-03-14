@@ -32,6 +32,7 @@ const TeamsModal: React.FC<TeamsModalProps> = ({projectId}) => {
 				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
+					display: {columns: false},
 					filterSchema: 'teams',
 				}}
 				resource={testrayTeamImpl.resource}

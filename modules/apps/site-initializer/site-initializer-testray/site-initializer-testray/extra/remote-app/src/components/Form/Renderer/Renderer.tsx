@@ -37,6 +37,7 @@ export type RendererFields = {
 	name: string;
 	operator?: Operators;
 	options?: RenderedFieldOptions;
+	placeholder?: string;
 	removeQuoteMark?: boolean;
 	type:
 		| 'autocomplete'

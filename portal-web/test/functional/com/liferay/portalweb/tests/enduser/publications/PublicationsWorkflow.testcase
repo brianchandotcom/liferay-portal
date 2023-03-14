@@ -132,7 +132,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.submitForPublication();
+		PortletEntry.submitForWorkflow();
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",

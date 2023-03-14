@@ -37,7 +37,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.io.Serializable;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -177,15 +176,9 @@ public class WorkflowInstanceResourceImpl
 		return new WorkflowInstance() {
 			{
 				completed = workflowInstance.isComplete();
-				currentNodeNames = Stream.of(
-					workflowInstance.getCurrentWorkflowNodes()
-				).flatMap(
-					List::stream
-				).map(
-					WorkflowNode::getName
-				).toArray(
-					String[]::new
-				);
+				currentNodeNames = transformToArray(
+					workflowInstance.getCurrentWorkflowNodes(),
+					WorkflowNode::getName, String.class);
 				dateCompletion = workflowInstance.getEndDate();
 				dateCreated = workflowInstance.getStartDate();
 				id = workflowInstance.getWorkflowInstanceId();

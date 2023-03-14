@@ -16,7 +16,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import {createPortletURL, fetch} from 'frontend-js-web';
+import {createPortletURL, fetch, openModal} from 'frontend-js-web';
 import {
 	KeyboardEvent,
 	MouseEvent,
@@ -51,7 +51,7 @@ export default function LayoutPageTemplateEntryCard({
 	} = useModal();
 
 	const onClick = () => {
-		Liferay.Util.openModal({
+		openModal({
 			disableAutoClose: true,
 			height: '60vh',
 			id: 'addLayoutDialog',
@@ -240,7 +240,7 @@ function PreviewModalContent({
 					onClick={() => {
 						onPreviewOpenChange(false);
 
-						Liferay.Util.openModal({
+						openModal({
 							disableAutoClose: true,
 							height: '60vh',
 							id: 'addLayoutDialog',

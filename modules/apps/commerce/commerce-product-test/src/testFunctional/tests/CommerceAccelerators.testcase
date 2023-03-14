@@ -378,6 +378,34 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9739 Verify that it is not possible to make an XSS attack by injecting malicious script"
+	@priority = 5
+	test CannotInjectScriptInSortWidget {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium and Speedwell sites are created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
+
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When the user tries to inject a malicious script for the Sort Widget on Speedwell") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/speedwell/catalog?_com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet_orderByCol=<script>alert(123)</script>&p_p_id=com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet");
+		}
+
+		task ("Then the script is not executed") {
+			AssertAlertNotPresent();
+		}
+
+		task ("When the user tries to inject a malicious script for the Sort Widget on Minium") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog?_com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet_orderByCol=<script>alert(123)</script>&p_p_id=com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet");
+		}
+
+		task ("Then the script is not executed") {
+			AssertAlertNotPresent();
+		}
+	}
+
 	@description = "This is for COMMERCE-10315. It's not possible to save the Root Category for the Commerce Categories Navigation widget"
 	@priority = 5
 	test CanSaveCommerceCategoriesNavigationRootCategory {

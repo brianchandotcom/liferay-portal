@@ -82,6 +82,61 @@
 									"indexed": true
 								},
 								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-button"
+									},
+									"fragmentConfig": {
+										"inverted": false,
+										"style": "primary",
+										"type": "solid",
+										"uppercase": false
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"mapping": {
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.model.Layout",
+																	"fields": [
+																		{
+																			"fieldName": "friendlyURL",
+																			"fieldValue": "/organization-form"
+																		},
+																		{
+																			"fieldName": "privatePage",
+																			"fieldValue": "false"
+																		},
+																		{
+																			"fieldName": "siteKey",
+																			"fieldValue": "[$GROUP_KEY$]"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Create an Organization"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginRight": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
 							}
 						],
 						"type": "Section"

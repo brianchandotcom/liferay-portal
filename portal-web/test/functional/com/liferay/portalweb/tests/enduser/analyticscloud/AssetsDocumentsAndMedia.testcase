@@ -1069,8 +1069,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8115 | Test Summary: Assert document list shows all of the documents and media assets in a list"
 	@priority = 5
 	test ViewAllDocumentsAndMediaShownInAssetList {
-		property portal.acceptance = "true";
-
 		var assetName = "DM AC Title,DM AC Title 2,DM AC Title 3,DM AC Title 4";
 
 		for (var n : list "2,3,4") {
@@ -1107,12 +1105,9 @@ definition {
 	@description = "Documents visitor behavior card shows expected amount of views"
 	@priority = 5
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
-
-		//property portal.acceptance = "true";
+		property portal.acceptance = "true";
 
 		property portal.release = "true";
-
-		// This test can be put back into acceptance after LRAC-11639 is resolved
 
 		var documentNameList = "DM AC Title,DM AC Title";
 

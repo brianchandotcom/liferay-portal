@@ -29,9 +29,11 @@ const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 
 export default function () {
 	const [data, setData] = useState();
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		const getRenewalsData = async () => {
+			setLoading(true);
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			await fetch('/o/c/opportunitysfs?pageSize=200&sort=closeDate:asc', {
 				headers: {
@@ -42,12 +44,14 @@ export default function () {
 				.then((response) => response.json())
 				.then((data) => {
 					setData(data);
+					setLoading(false);
 				})
 				.catch(() => {
 					Liferay.Util.openToast({
 						message: 'An unexpected error occured.',
 						type: 'danger',
 					});
+					setLoading(false);
 				});
 		};
 		getRenewalsData();
@@ -65,7 +69,7 @@ export default function () {
 		const milisecondsPerDay = 1000 * 3600 * 24;
 
 		data?.items?.map((item) => {
-			const expirationInTime = new Date(item.closeDate) - currentDate;
+			const expirationInTime = currentDate - new Date(item.closeDate);
 			const expirationInDays =
 				Math.floor(expirationInTime / milisecondsPerDay) + 1;
 
@@ -92,17 +96,16 @@ export default function () {
 	const getCurrentStatusColor = (item) => {
 		if (item?.expirationDays <= 5) {
 			return status[5];
-		}
-		else if (item?.expirationDays <= 15) {
+		} else if (item?.expirationDays <= 15) {
 			return status[15];
-		}
-		else if (item?.expirationDays <= 30) {
+		} else if (item?.expirationDays <= 30) {
 			return status[30];
 		}
 	};
 
 	return (
 		<Container
+			className="renewal-chart-card-height"
 			footer={
 				<ClayButton
 					className="border-brand-primary-darken-1 mt-2 text-brand-primary-darken-1"
@@ -119,8 +122,6 @@ export default function () {
 			}
 			title="Renewals"
 		>
-			{!data && <ClayLoadingIndicator className="mb-10 mt-9" size="md" />}
-
 			<div className="align-items-start d-flex flex-column mt-3">
 				{filteredRenewals?.map((item, index) => {
 					getCurrentStatusColor(item);
@@ -157,6 +158,14 @@ export default function () {
 					);
 				})}
 			</div>
+
+			{loading && (
+				<ClayLoadingIndicator className="mb-10 mt-9" size="md" />
+			)}
+
+			{!loading && !data && (
+				<h2 className="mb-10 mt-9 text-center">No Data Available</h2>
+			)}
 		</Container>
 	);
 }

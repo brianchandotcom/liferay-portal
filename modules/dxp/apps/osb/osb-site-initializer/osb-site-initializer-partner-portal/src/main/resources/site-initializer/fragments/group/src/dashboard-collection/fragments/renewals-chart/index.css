@@ -1102,6 +1102,9 @@
 	margin-right: 2px;
 	width: 10px;
 }
+.renewal-chart-card-height {
+	height: 305px;
+}
 .status-bar-vertical {
 	border-radius: 6px;
 	height: 50px;

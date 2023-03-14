@@ -186,7 +186,6 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			latestArticle.getFriendlyURLMap(),
 			_journalConverter.getContent(
 				ddmStructure, fields, ddmStructure.getGroupId()),
-			latestArticle.getDDMStructureKey(),
 			latestArticle.getDDMTemplateKey(), latestArticle.getLayoutUuid(),
 			displayDateArray[0], displayDateArray[1], displayDateArray[2],
 			displayDateArray[3], displayDateArray[4], expirationDateArray[0],

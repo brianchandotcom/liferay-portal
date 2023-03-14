@@ -706,7 +706,7 @@ public class FileSystemImporter extends BaseImporter {
 		}
 
 		addJournalArticles(
-			ddmStructureKey, ddmTemplate.getTemplateKey(),
+			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(),
 			_JOURNAL_ARTICLES_DIR_NAME + fileName,
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
@@ -845,7 +845,7 @@ public class FileSystemImporter extends BaseImporter {
 	}
 
 	protected void addJournalArticles(
-			String ddmStructureKey, String ddmTemplateKey, String dirName,
+			long ddmStructureId, String ddmTemplateKey, String dirName,
 			long folderId)
 		throws Exception {
 
@@ -862,14 +862,14 @@ public class FileSystemImporter extends BaseImporter {
 					new FileInputStream(file))) {
 
 				addJournalArticles(
-					ddmStructureKey, ddmTemplateKey, file.getName(), folderId,
+					ddmStructureId, ddmTemplateKey, file.getName(), folderId,
 					inputStream);
 			}
 		}
 	}
 
 	protected void addJournalArticles(
-			String ddmStructureKey, String ddmTemplateKey, String fileName,
+			long ddmStructureId, String ddmTemplateKey, String fileName,
 			long folderId, InputStream inputStream)
 		throws Exception {
 
@@ -933,7 +933,7 @@ public class FileSystemImporter extends BaseImporter {
 				journalArticle = journalArticleLocalService.addArticle(
 					null, userId, groupId, folderId, 0, 0, journalArticleId,
 					false, JournalArticleConstants.VERSION_DEFAULT, titleMap,
-					descriptionMap, titleMap, content, ddmStructureKey,
+					descriptionMap, titleMap, content, ddmStructureId,
 					ddmTemplateKey, StringPool.BLANK, 1, 1, 2010, 0, 0, 0, 0, 0,
 					0, 0, true, 0, 0, 0, 0, 0, true, indexable, smallImage,
 					smallImageURL, null, new HashMap<String, byte[]>(),
@@ -943,9 +943,9 @@ public class FileSystemImporter extends BaseImporter {
 				journalArticle = journalArticleLocalService.updateArticle(
 					userId, groupId, folderId, journalArticleId,
 					journalArticle.getVersion(), titleMap, descriptionMap,
-					content, ddmStructureKey, ddmTemplateKey, StringPool.BLANK,
-					1, 1, 2010, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
-					indexable, smallImage, smallImageURL, null,
+					content, ddmTemplateKey, StringPool.BLANK, 1, 1, 2010, 0, 0,
+					0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, indexable,
+					smallImage, smallImageURL, null,
 					new HashMap<String, byte[]>(), StringPool.BLANK,
 					serviceContext);
 			}

@@ -352,7 +352,7 @@ public class ResourceImporter extends FileSystemImporter {
 
 	@Override
 	protected void addJournalArticles(
-			String ddmStructureKey, String ddmTemplateKey, String dirName,
+			long ddmStructureId, String ddmTemplateKey, String dirName,
 			long folderId)
 		throws Exception {
 
@@ -380,7 +380,7 @@ public class ResourceImporter extends FileSystemImporter {
 				}
 
 				addJournalArticles(
-					ddmStructureKey, ddmTemplateKey,
+					ddmStructureId, ddmTemplateKey,
 					dirName + CharPool.FORWARD_SLASH + folderName,
 					journalFolder.getFolderId());
 			}
@@ -392,7 +392,7 @@ public class ResourceImporter extends FileSystemImporter {
 				URLConnection urlConnection = url.openConnection();
 
 				addJournalArticles(
-					ddmStructureKey, ddmTemplateKey, name, folderId,
+					ddmStructureId, ddmTemplateKey, name, folderId,
 					urlConnection.getInputStream());
 			}
 		}

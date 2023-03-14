@@ -370,10 +370,11 @@ public class CPFileImporterImpl implements CPFileImporter {
 			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			0L, JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0L, articleId,
 			false, 1, titleMap, descriptionMap, titleMap, content,
-			ddmStructureKey, ddmTemplateKey, StringPool.BLANK, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
-			StringPool.BLANK, null, null, StringPool.BLANK, serviceContext);
+			ddmStructure.getStructureId(), ddmTemplateKey, StringPool.BLANK,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true,
+			false, StringPool.BLANK, null, null, StringPool.BLANK,
+			serviceContext);
 
 		JSONArray permissionsJSONArray = jsonObject.getJSONArray("permissions");
 

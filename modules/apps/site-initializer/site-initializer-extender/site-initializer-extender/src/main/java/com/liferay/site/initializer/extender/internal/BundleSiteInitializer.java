@@ -1994,7 +1994,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			String ddmStructureKey = jsonObject.getString("ddmStructureKey");
 
-			ddmStructureLocalService.getStructure(
+			DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
 				serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(JournalArticle.class), ddmStructureKey,
 				true);
@@ -2034,7 +2034,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 							_replace(resourcePath, ".json", ".xml"),
 							_servletContext),
 						documentsStringUtilReplaceValues),
-					ddmStructureKey, ddmTemplateKey, null,
+					ddmStructure.getStructureId(), ddmTemplateKey, null,
 					calendar.get(Calendar.MONTH),
 					calendar.get(Calendar.DAY_OF_MONTH),
 					calendar.get(Calendar.YEAR),
@@ -2054,8 +2054,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 							_replace(resourcePath, ".json", ".xml"),
 							_servletContext),
 						documentsStringUtilReplaceValues),
-					ddmStructureKey, ddmTemplateKey, null,
-					calendar.get(Calendar.MONTH),
+					ddmTemplateKey, null, calendar.get(Calendar.MONTH),
 					calendar.get(Calendar.DAY_OF_MONTH),
 					calendar.get(Calendar.YEAR),
 					calendar.get(Calendar.HOUR_OF_DAY),
@@ -2068,8 +2067,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			serviceContext.setAssetCategoryIds(null);
 			serviceContext.setAssetTagNames(null);
-
-			DDMStructure ddmStructure = finalJournalArticle.getDDMStructure();
 
 			siteNavigationMenuItemSettingsBuilder.put(
 				resourcePath,

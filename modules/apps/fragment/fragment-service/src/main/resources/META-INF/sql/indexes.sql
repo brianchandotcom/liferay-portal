@@ -44,6 +44,7 @@ create index IX_4606AFC on FragmentEntry (uuid_[$COLUMN_LENGTH:75$], groupId, ct
 create unique index IX_E5D3F650 on FragmentEntry (uuid_[$COLUMN_LENGTH:75$], groupId, head, ctCollectionId);
 create index IX_6FD3C0BE on FragmentEntry (uuid_[$COLUMN_LENGTH:75$], head, ctCollectionId);
 
+create index IX_7B88E4C4 on FragmentEntryLink (companyId, rendererKey[$COLUMN_LENGTH:200$], ctCollectionId);
 create index IX_6AFFBB89 on FragmentEntryLink (fragmentEntryId, ctCollectionId);
 create index IX_932B7FDB on FragmentEntryLink (groupId, classNameId, classPK, ctCollectionId);
 create index IX_7AB5A586 on FragmentEntryLink (groupId, ctCollectionId);

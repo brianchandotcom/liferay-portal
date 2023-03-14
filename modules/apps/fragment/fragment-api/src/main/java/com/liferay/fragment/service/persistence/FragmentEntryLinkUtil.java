@@ -1514,6 +1514,287 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
+	 * Returns all the fragment entry links where companyId = &#63; and rendererKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKey the renderer key
+	 * @return the matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByC_R(
+		long companyId, String rendererKey) {
+
+		return getPersistence().findByC_R(companyId, rendererKey);
+	}
+
+	/**
+	 * Returns a range of all the fragment entry links where companyId = &#63; and rendererKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKey the renderer key
+	 * @param start the lower bound of the range of fragment entry links
+	 * @param end the upper bound of the range of fragment entry links (not inclusive)
+	 * @return the range of matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByC_R(
+		long companyId, String rendererKey, int start, int end) {
+
+		return getPersistence().findByC_R(companyId, rendererKey, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment entry links where companyId = &#63; and rendererKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKey the renderer key
+	 * @param start the lower bound of the range of fragment entry links
+	 * @param end the upper bound of the range of fragment entry links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByC_R(
+		long companyId, String rendererKey, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return getPersistence().findByC_R(
+			companyId, rendererKey, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment entry links where companyId = &#63; and rendererKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKey the renderer key
+	 * @param start the lower bound of the range of fragment entry links
+	 * @param end the upper bound of the range of fragment entry links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByC_R(
+		long companyId, String rendererKey, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_R(
+			companyId, rendererKey, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first fragment entry link in the ordered set where companyId = &#63; and rendererKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKey the renderer key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment entry link
+	 * @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
+	 */
+	public static FragmentEntryLink findByC_R_First(
+			long companyId, String rendererKey,
+			OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+
+		return getPersistence().findByC_R_First(
+			companyId, rendererKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the first fragment entry link in the ordered set where companyId = &#63; and rendererKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKey the renderer key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	 */
+	public static FragmentEntryLink fetchByC_R_First(
+		long companyId, String rendererKey,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return getPersistence().fetchByC_R_First(
+			companyId, rendererKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the last fragment entry link in the ordered set where companyId = &#63; and rendererKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKey the renderer key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment entry link
+	 * @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
+	 */
+	public static FragmentEntryLink findByC_R_Last(
+			long companyId, String rendererKey,
+			OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+
+		return getPersistence().findByC_R_Last(
+			companyId, rendererKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the last fragment entry link in the ordered set where companyId = &#63; and rendererKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKey the renderer key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	 */
+	public static FragmentEntryLink fetchByC_R_Last(
+		long companyId, String rendererKey,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return getPersistence().fetchByC_R_Last(
+			companyId, rendererKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where companyId = &#63; and rendererKey = &#63;.
+	 *
+	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
+	 * @param companyId the company ID
+	 * @param rendererKey the renderer key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next fragment entry link
+	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
+	 */
+	public static FragmentEntryLink[] findByC_R_PrevAndNext(
+			long fragmentEntryLinkId, long companyId, String rendererKey,
+			OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+
+		return getPersistence().findByC_R_PrevAndNext(
+			fragmentEntryLinkId, companyId, rendererKey, orderByComparator);
+	}
+
+	/**
+	 * Returns all the fragment entry links where companyId = &#63; and rendererKey = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKeys the renderer keys
+	 * @return the matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByC_R(
+		long companyId, String[] rendererKeys) {
+
+		return getPersistence().findByC_R(companyId, rendererKeys);
+	}
+
+	/**
+	 * Returns a range of all the fragment entry links where companyId = &#63; and rendererKey = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKeys the renderer keys
+	 * @param start the lower bound of the range of fragment entry links
+	 * @param end the upper bound of the range of fragment entry links (not inclusive)
+	 * @return the range of matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByC_R(
+		long companyId, String[] rendererKeys, int start, int end) {
+
+		return getPersistence().findByC_R(companyId, rendererKeys, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment entry links where companyId = &#63; and rendererKey = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKeys the renderer keys
+	 * @param start the lower bound of the range of fragment entry links
+	 * @param end the upper bound of the range of fragment entry links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByC_R(
+		long companyId, String[] rendererKeys, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return getPersistence().findByC_R(
+			companyId, rendererKeys, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment entry links where companyId = &#63; and rendererKey = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKeys the renderer keys
+	 * @param start the lower bound of the range of fragment entry links
+	 * @param end the upper bound of the range of fragment entry links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByC_R(
+		long companyId, String[] rendererKeys, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_R(
+			companyId, rendererKeys, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes all the fragment entry links where companyId = &#63; and rendererKey = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKey the renderer key
+	 */
+	public static void removeByC_R(long companyId, String rendererKey) {
+		getPersistence().removeByC_R(companyId, rendererKey);
+	}
+
+	/**
+	 * Returns the number of fragment entry links where companyId = &#63; and rendererKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKey the renderer key
+	 * @return the number of matching fragment entry links
+	 */
+	public static int countByC_R(long companyId, String rendererKey) {
+		return getPersistence().countByC_R(companyId, rendererKey);
+	}
+
+	/**
+	 * Returns the number of fragment entry links where companyId = &#63; and rendererKey = any &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param rendererKeys the renderer keys
+	 * @return the number of matching fragment entry links
+	 */
+	public static int countByC_R(long companyId, String[] rendererKeys) {
+		return getPersistence().countByC_R(companyId, rendererKeys);
+	}
+
+	/**
 	 * Returns all the fragment entry links where groupId = &#63; and originalFragmentEntryLinkId = &#63; and plid = &#63;.
 	 *
 	 * @param groupId the group ID

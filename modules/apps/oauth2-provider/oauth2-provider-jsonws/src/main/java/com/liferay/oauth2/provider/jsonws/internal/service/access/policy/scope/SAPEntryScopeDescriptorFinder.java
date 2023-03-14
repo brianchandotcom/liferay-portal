@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * @author Tomas Polesovsky
@@ -35,24 +36,17 @@ public class SAPEntryScopeDescriptorFinder
 	implements ScopeDescriptor, ScopeFinder {
 
 	public SAPEntryScopeDescriptorFinder(
-		List<SAPEntryScope> sapEntryScopes,
+		Supplier<List<SAPEntryScope>> sapEntryScopesSupplier,
 		ScopeDescriptor defaultScopeDescriptor) {
 
+		_sapEntryScopesSupplier = sapEntryScopesSupplier;
 		_defaultScopeDescriptor = defaultScopeDescriptor;
-
-		for (SAPEntryScope sapEntryScope : sapEntryScopes) {
-			SAPEntry sapEntry = sapEntryScope.getSAPEntry();
-
-			if (sapEntry.isEnabled()) {
-				_scopes.add(sapEntryScope.getScope());
-			}
-
-			_sapEntryScopes.put(sapEntryScope.getScope(), sapEntryScope);
-		}
 	}
 
 	@Override
 	public String describeScope(String scope, Locale locale) {
+		_initialize();
+
 		SAPEntryScope sapEntryScope = _sapEntryScopes.get(scope);
 
 		if (sapEntryScope == null) {
@@ -68,14 +62,46 @@ public class SAPEntryScopeDescriptorFinder
 
 	@Override
 	public Collection<String> findScopes() {
+		_initialize();
+
 		return new HashSet<>(_scopes);
+	}
+
+	public Collection<SAPEntryScope> getSAPEntryScopes() {
+		_initialize();
+
+		return _sapEntryScopes.values();
+	}
+
+	private void _initialize() {
+		if (_initialized) {
+			return;
+		}
+
+		synchronized (this) {
+			if (_initialized) {
+				return;
+			}
+
+			for (SAPEntryScope sapEntryScope : _sapEntryScopesSupplier.get()) {
+				SAPEntry sapEntry = sapEntryScope.getSAPEntry();
+
+				if (sapEntry.isEnabled()) {
+					_scopes.add(sapEntryScope.getScope());
+				}
+
+				_sapEntryScopes.put(sapEntryScope.getScope(), sapEntryScope);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SAPEntryScopeDescriptorFinder.class);
 
 	private final ScopeDescriptor _defaultScopeDescriptor;
+	private volatile boolean _initialized;
 	private final Map<String, SAPEntryScope> _sapEntryScopes = new HashMap<>();
+	private final Supplier<List<SAPEntryScope>> _sapEntryScopesSupplier;
 	private final Set<String> _scopes = new HashSet<>();
 
 }

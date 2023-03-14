@@ -60,16 +60,19 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class SAPEntryScopeDescriptorFinderRegistrator {
 
 	public List<SAPEntryScope> getRegisteredSAPEntryScopes(long companyId) {
-		return new ArrayList<>(_registeredSAPEntryScopes.get(companyId));
+		SAPEntryScopeDescriptorFinder sapEntryScopeDescriptorFinder =
+			_registeredSAPEntryScopeDescriptorFinders.get(companyId);
+
+		return new ArrayList<>(
+			sapEntryScopeDescriptorFinder.getSAPEntryScopes());
 	}
 
 	public void register(long companyId) {
 		try {
-			List<SAPEntryScope> sapEntryScopes = _loadSAPEntryScopes(companyId);
-
 			SAPEntryScopeDescriptorFinder sapEntryScopeDescriptorFinder =
 				new SAPEntryScopeDescriptorFinder(
-					sapEntryScopes, _defaultScopeDescriptor);
+					() -> _loadSAPEntryScopes(companyId),
+					_defaultScopeDescriptor);
 
 			_scopeDescriptorServiceRegistrations.compute(
 				companyId,
@@ -103,7 +106,8 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 						ScopeFinder.class, sapEntryScopeDescriptorFinder,
 						properties);
 
-					_registeredSAPEntryScopes.put(companyId, sapEntryScopes);
+					_registeredSAPEntryScopeDescriptorFinders.put(
+						companyId, sapEntryScopeDescriptorFinder);
 
 					return serviceRegistration;
 				});
@@ -271,8 +275,8 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 
 	private final Set<String> _jaxRsApplicationNames =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
-	private final Map<Long, List<SAPEntryScope>> _registeredSAPEntryScopes =
-		new ConcurrentHashMap<>();
+	private final Map<Long, SAPEntryScopeDescriptorFinder>
+		_registeredSAPEntryScopeDescriptorFinders = new ConcurrentHashMap<>();
 	private boolean _removeSAPEntryOAuth2Prefix = true;
 
 	@Reference

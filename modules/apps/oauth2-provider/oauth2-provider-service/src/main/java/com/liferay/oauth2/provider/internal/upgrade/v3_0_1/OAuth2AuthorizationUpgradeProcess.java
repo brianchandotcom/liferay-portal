@@ -48,10 +48,10 @@ public class OAuth2AuthorizationUpgradeProcess extends UpgradeProcess {
 		long expiredAuthorizationsAfterlifeDurationMillis =
 			expiredAuthorizationsAfterlifeDuration * Time.SECOND;
 
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		Timestamp purgeDate = new Timestamp(System.currentTimeMillis());
 
-		timestamp.setTime(
-			timestamp.getTime() - expiredAuthorizationsAfterlifeDurationMillis);
+		purgeDate.setTime(
+			purgeDate.getTime() - expiredAuthorizationsAfterlifeDurationMillis);
 
 		String sql = StringBundler.concat(
 			"create table TEMP_TABLE as (",
@@ -62,8 +62,8 @@ public class OAuth2AuthorizationUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
 
-			preparedStatement.setTimestamp(1, timestamp);
-			preparedStatement.setTimestamp(2, timestamp);
+			preparedStatement.setTimestamp(1, purgeDate);
+			preparedStatement.setTimestamp(2, purgeDate);
 
 			preparedStatement.execute();
 		}

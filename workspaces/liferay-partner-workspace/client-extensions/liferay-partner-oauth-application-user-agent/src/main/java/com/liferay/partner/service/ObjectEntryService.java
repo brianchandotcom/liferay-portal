@@ -18,28 +18,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import reactor.core.publisher.Mono;
+
 /**
  * @author Jair Medeiros
  */
 @Service
 public class ObjectEntryService {
 
-	public void postObjectEntryBatch(
-		String objectDefinitionName, Object[] objects) {
+	public void postObjectEntryBatch(String body, String restContextPath)
+		throws Exception {
 
 		WebClient.RequestBodyUriSpec requestBodyUriSpec = _webClient.post();
 
 		WebClient.RequestBodySpec requestBodySpec = requestBodyUriSpec.uri(
 			uriBuilder -> uriBuilder.path(
-				"/o/c/" + objectDefinitionName + "/batch"
+				restContextPath + "/batch"
 			).queryParam(
 				"createStrategy", "UPSERT"
 			).build());
 
 		WebClient.RequestHeadersSpec<?> requestHeadersSpec =
-			requestBodySpec.bodyValue(objects);
+			requestBodySpec.bodyValue(body);
 
-		requestHeadersSpec.retrieve();
+		WebClient.ResponseSpec responseSpec = requestHeadersSpec.retrieve();
+
+		Mono<Void> mono = responseSpec.bodyToMono(Void.class);
+
+		mono.block();
 	}
 
 	@Autowired

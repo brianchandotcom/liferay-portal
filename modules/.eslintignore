@@ -23,6 +23,7 @@
     apps/frontend-editor/frontend-editor-tinymce-web
     apps/frontend-js/frontend-js-jquery-web
     build/**
+    tmp/**
     classes/**
     css/clay/**
     node_modules/**
@@ -50,3 +51,16 @@
     # inspection.
     #
     apps/frontend-js/frontend-js-svg4everybody-web/src/main/resources/META-INF/resources/svg4everybody.js
+    apps/commerce/google-copyright.js
+
+##
+## Other
+##
+
+    #
+    # These are generated third-party files, not intended for editing or
+    # inspection.
+    #
+    /**/*-min.js
+    /test/jenkins-results-parser/**
+    /test/poshi/**

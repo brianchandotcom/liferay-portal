@@ -10,6 +10,7 @@
     #
     *.soy.js
     build/**
+    tmp/**
     classes/**
     css/clay/**
     types/**/*.d.ts
@@ -36,6 +37,7 @@
     # need to ignore them to prevent Prettier from stripping off the trailing
     # blank line.
     #
+    /sdk/**
     /apps/portal-portlet-bridge/portal-portlet-bridge-soy-impl/src/test/resources/com/liferay/portal/portlet/bridge/soy/internal/dependencies/**/*.js
     /apps/fragment/fragment-demo-data-creator-impl/src/main/resources/com/liferay/fragment/demo/data/creator/internal/dependencies/**/*.js
     /apps/fragment/fragment-test/src/testIntegration/resources/com/liferay/fragment/dependencies/**/*.js
@@ -49,4 +51,17 @@
     # inspection.
     #
     /apps/frontend-js/frontend-js-svg4everybody-web/src/main/resources/META-INF/resources/svg4everybody.js
+    /apps/commerce/google-copyright.js
     /yarn-*.js
+
+##
+## Other
+##
+
+    #
+    # These are generated third-party files, not intended for editing or
+    # inspection.
+    #
+    /**/*-min.js
+    /test/jenkins-results-parser/**
+    /test/poshi/**

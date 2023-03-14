@@ -109,10 +109,9 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 		}
 
 		try (ZipFile zipFile = new ZipFile(file)) {
-
 			ZipEntry zipEntry = zipFile.getEntry("site-initializer/");
 
-			if(zipEntry == null){
+			if (zipEntry == null) {
 				return false;
 			}
 
@@ -142,9 +141,9 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 
 		UnicodeProperties typeSettingsUnicodeProperties = null;
 
-		try(ZipFile zipFile = new ZipFile(file)){
-			typeSettingsUnicodeProperties =
-				_getTypeSettingsUnicodeProperties(zipFile);
+		try (ZipFile zipFile = new ZipFile(file)) {
+			typeSettingsUnicodeProperties = _getTypeSettingsUnicodeProperties(
+				zipFile);
 		}
 
 		if (typeSettingsUnicodeProperties == null) {
@@ -228,48 +227,50 @@ public class SiteInitializerAutoDeployListener implements AutoDeployListener {
 
 	private UnicodeProperties _getTypeSettingsUnicodeProperties(ZipFile zipFile)
 		throws Exception {
-			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
-			while (enumeration.hasMoreElements()) {
-				ZipEntry zipEntry = enumeration.nextElement();
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
-				String name = zipEntry.getName();
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
 
-				if (zipEntry.isDirectory() ||
-					!name.endsWith("client-extension-config.json")) {
+			String name = zipEntry.getName();
 
+			if (zipEntry.isDirectory() ||
+				!name.endsWith("client-extension-config.json")) {
+
+				continue;
+			}
+
+			JSONObject clientExtensionJSONObject =
+				_jsonFactory.createJSONObject(
+					StringUtil.read(zipFile.getInputStream(zipEntry)));
+
+			if (clientExtensionJSONObject == null) {
+				return null;
+			}
+
+			for (String key : clientExtensionJSONObject.keySet()) {
+				JSONObject jsonObject = clientExtensionJSONObject.getJSONObject(
+					key);
+
+				JSONArray typeSettingsJSONArray = jsonObject.getJSONArray(
+					"typeSettings");
+
+				if (typeSettingsJSONArray == null) {
 					continue;
 				}
 
-				JSONObject clientExtensionJSONObject = _jsonFactory.createJSONObject(
-					StringUtil.read(zipFile.getInputStream(zipEntry)));
+				String typeSettings = "";
 
-				if (clientExtensionJSONObject == null) {
-					return null;
+				for (int i = 0; i < typeSettingsJSONArray.length(); i++) {
+					typeSettings += typeSettingsJSONArray.getString(i) + "\n";
 				}
 
-				for (String key : clientExtensionJSONObject.keySet()) {
-					JSONObject jsonObject = clientExtensionJSONObject.getJSONObject(key);
-
-					JSONArray typeSettingsJSONArray = jsonObject.getJSONArray(
-						"typeSettings");
-
-					if (typeSettingsJSONArray == null) {
-						continue;
-					}
-
-					String typeSettings = "";
-
-					for (int i = 0; i < typeSettingsJSONArray.length(); i++) {
-						typeSettings +=
-							typeSettingsJSONArray.getString(i) + "\n";
-					}
-
-					return UnicodePropertiesBuilder.fastLoad(
-						typeSettings
-					).build();
-				}
+				return UnicodePropertiesBuilder.fastLoad(
+					typeSettings
+				).build();
 			}
+		}
 
 		return null;
 	}

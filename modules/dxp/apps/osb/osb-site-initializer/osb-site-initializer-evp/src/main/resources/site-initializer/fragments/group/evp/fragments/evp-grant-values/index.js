@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 /* eslint-disable @liferay/portal/no-global-fetch */
 /* eslint-disable eqeqeq */
 /**
@@ -46,7 +47,7 @@ getFundsLimit();
 getServiceHoursLimit();
 
 const requests = [];
-const userId = document.getElementById('userIdContainer').textContent;
+const userId = parseInt(document.getElementById('userIdContainer').textContent);
 
 const getRequests = async () => {
 	await fetch(`/o/c/evprequests`, {
@@ -144,3 +145,58 @@ const getAvailableHours = async () => {
 };
 
 getAvailableHours();
+
+const updateUser = async () => {
+	await Promise.all([
+		fetch(`/o/headless-admin-user/v1.0/user-accounts/${userId}`, {
+			body: JSON.stringify({
+				customFields: [
+					{
+						customValue: {
+							data: availableServiceHours[0],
+						},
+						dataType: 'Integer',
+						name: 'serviceHoursAvailable',
+					},
+					{
+						customValue: {
+							data: availableFunds[0],
+						},
+						dataType: 'Integer',
+						name: 'fundsAvailable',
+					},
+				],
+			}),
+			headers: {
+				'content-type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+			method: 'PATCH',
+		}).then((response) => response.json()),
+	]);
+};
+
+const updateAvailableValues = async () => {
+	await Promise.all([getAvailableHours(), getAvailableFunds()]).then(() => {
+		updateUser();
+	});
+};
+
+const getUser = async () => {
+	await Promise.all([
+		updateAvailableValues(),
+
+		fetch(`/o/headless-admin-user/v1.0/user-accounts/${userId}`, {
+			headers: {
+				'content-type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+			method: 'GET',
+		})
+			.then((response) => response.json())
+			// eslint-disable-next-line no-console
+			.then((data) => console.log(data)),
+	]);
+};
+
+getUser();

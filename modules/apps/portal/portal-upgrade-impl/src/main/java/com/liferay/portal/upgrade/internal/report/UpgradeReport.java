@@ -529,7 +529,7 @@ public class UpgradeReport {
 	}
 
 	private File _getReportFile() {
-		File reportsDir = null;
+		File reportsDir;
 
 		if (DBUpgrader.isUpgradeClient()) {
 			reportsDir = new File(".", "reports");

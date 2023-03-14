@@ -14,8 +14,11 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceAccountModel" %><%@
 page import="com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceOrderModel" %><%@
@@ -36,7 +39,7 @@ CurrentCommerceOrderModel currentCommerceOrder = (CurrentCommerceOrderModel)requ
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 String selectOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:selectOrderURL");
 String setCurrentAccountURL = (String)request.getAttribute("liferay-commerce:account-selector:setCurrentAccountURL");
-boolean showOrderTypeModal = (boolean)request.getAttribute("liferay-commerce:account-selector:showOrderTypeModal");
+Boolean showOrderTypeModal = (Boolean)request.getAttribute("liferay-commerce:account-selector:showOrderTypeModal");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_account_selector") + StringPool.UNDERLINE;
 

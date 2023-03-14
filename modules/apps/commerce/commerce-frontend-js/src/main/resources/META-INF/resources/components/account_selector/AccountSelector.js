@@ -42,6 +42,7 @@ function AccountSelector({
 	createNewOrderURL,
 	currentCommerceAccount: account,
 	currentCommerceOrder: order,
+	namespace,
 	refreshPageOnAccountSelected: forceRefresh,
 	selectOrderURL,
 	setCurrentAccountURL,
@@ -135,6 +136,7 @@ function AccountSelector({
 					createOrderURL={createNewOrderURL}
 					currentAccount={currentAccount}
 					disabled={!active}
+					namespace={namespace}
 					selectOrderURL={selectOrderURL}
 					setCurrentView={setCurrentView}
 					showOrderTypeModal={showOrderTypeModal}
@@ -163,6 +165,7 @@ AccountSelector.propTypes = {
 			label_i18n: PropTypes.string,
 		}),
 	}),
+	namespace: PropTypes.string,
 	refreshPageOnAccountSelected: PropTypes.bool,
 	selectOrderURL: PropTypes.string.isRequired,
 	setCurrentAccountURL: PropTypes.string.isRequired,

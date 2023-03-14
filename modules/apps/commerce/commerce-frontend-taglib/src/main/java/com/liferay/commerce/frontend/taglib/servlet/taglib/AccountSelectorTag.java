@@ -46,12 +46,71 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Fabio Diego Mastrorilli
  */
 public class AccountSelectorTag extends IncludeTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		try {
+			HttpServletRequest httpServletRequest = getRequest();
+
+			CommerceContext commerceContext =
+				(CommerceContext)httpServletRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
+
+			_commerceChannelId = commerceContext.getCommerceChannelId();
+
+			if (_commerceChannelId == 0) {
+				_accountEntryAllowedTypes = new String[0];
+				_addCommerceOrderURL = StringPool.BLANK;
+				_editOrderURL = StringPool.BLANK;
+				_setCurrentAccountURL = StringPool.BLANK;
+
+				return super.doStartTag();
+			}
+
+			_accountEntryAllowedTypes =
+				commerceContext.getAccountEntryAllowedTypes();
+
+			_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_addCommerceOrderURL = _getAddCommerceOrderURL(
+				_themeDisplay, httpServletRequest);
+
+			_commerceAccount = commerceContext.getCommerceAccount();
+			_commerceOrder = commerceContext.getCommerceOrder();
+			_editOrderURL = _getEditOrderURL(_themeDisplay);
+			_setCurrentAccountURL =
+				PortalUtil.getPortalURL(httpServletRequest) +
+					PortalUtil.getPathContext() +
+						"/o/commerce-ui/set-current-account";
+
+			if (Validator.isNull(_spritemap)) {
+				_spritemap = _themeDisplay.getPathThemeSpritemap();
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			_accountEntryAllowedTypes = null;
+			_addCommerceOrderURL = null;
+			_commerceAccount = null;
+			_commerceChannelId = 0;
+			_commerceOrder = null;
+			_editOrderURL = null;
+			_setCurrentAccountURL = null;
+			_spritemap = null;
+			_themeDisplay = null;
+		}
+
+		return super.doStartTag();
+	}
 
 	public String getSpritemap() {
 		return _spritemap;
@@ -75,8 +134,16 @@ public class AccountSelectorTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_accountEntryAllowedTypes = null;
+		_addCommerceOrderURL = null;
+		_commerceAccount = null;
+		_commerceChannelId = 0;
+		_commerceOrder = null;
 		_commerceOrderTypeLocalService = null;
+		_editOrderURL = null;
+		_setCurrentAccountURL = null;
 		_spritemap = null;
+		_themeDisplay = null;
 	}
 
 	@Override
@@ -86,102 +153,67 @@ public class AccountSelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:account-selector:accountEntryAllowedTypes",
+			_accountEntryAllowedTypes);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:account-selector:commerceChannelId",
+			_commerceChannelId);
 
-			if (Validator.isNull(_spritemap)) {
-				_spritemap = themeDisplay.getPathThemeSpritemap();
+		if (_commerceAccount != null) {
+			String thumbnailUrl = null;
+
+			if (_commerceAccount.getLogoId() == 0) {
+				thumbnailUrl =
+					_themeDisplay.getPathImage() +
+						"/organization_logo?img_id=0";
+			}
+			else {
+				thumbnailUrl = StringBundler.concat(
+					_themeDisplay.getPathImage(), "/organization_logo?img_id=",
+					_commerceAccount.getLogoId(), "&t=",
+					WebServerServletTokenUtil.getToken(
+						_commerceAccount.getLogoId()));
 			}
 
-			HttpServletRequest parentHttpServletRequest = getRequest();
-
-			CommerceContext commerceContext =
-				(CommerceContext)parentHttpServletRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
-
-			httpServletRequest.setAttribute(
-				"liferay-commerce:account-selector:accountEntryAllowedTypes",
-				commerceContext.getAccountEntryAllowedTypes());
-			httpServletRequest.setAttribute(
-				"liferay-commerce:account-selector:commerceChannelId",
-				commerceContext.getCommerceChannelId());
-
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
-
-			if (commerceAccount != null) {
-				String thumbnailUrl = null;
-
-				if (commerceAccount.getLogoId() == 0) {
-					thumbnailUrl =
-						themeDisplay.getPathImage() +
-							"/organization_logo?img_id=0";
-				}
-				else {
-					thumbnailUrl = StringBundler.concat(
-						themeDisplay.getPathImage(),
-						"/organization_logo?img_id=",
-						commerceAccount.getLogoId(), "&t=",
-						WebServerServletTokenUtil.getToken(
-							commerceAccount.getLogoId()));
-				}
-
-				CurrentCommerceAccountModel currentCommerceAccountModel =
-					new CurrentCommerceAccountModel(
-						commerceAccount.getCommerceAccountId(), thumbnailUrl,
-						commerceAccount.getName());
-
-				httpServletRequest.setAttribute(
-					"liferay-commerce:account-selector:currentCommerceAccount",
-					currentCommerceAccountModel);
-			}
-
-			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
-
-			if (commerceOrder != null) {
-				String workflowStatusInfoLabel =
-					WorkflowConstants.getStatusLabel(commerceOrder.getStatus());
-
-				WorkflowStatusModel workflowStatusModel =
-					new WorkflowStatusModel(
-						commerceOrder.getStatus(), workflowStatusInfoLabel,
-						LanguageUtil.get(
-							themeDisplay.getLocale(), workflowStatusInfoLabel));
-
-				CurrentCommerceOrderModel currentCommerceOrderModel =
-					new CurrentCommerceOrderModel(
-						commerceOrder.getCommerceOrderId(),
-						workflowStatusModel);
-
-				httpServletRequest.setAttribute(
-					"liferay-commerce:account-selector:currentCommerceOrder",
-					currentCommerceOrderModel);
-			}
+			CurrentCommerceAccountModel currentCommerceAccountModel =
+				new CurrentCommerceAccountModel(
+					_commerceAccount.getCommerceAccountId(), thumbnailUrl,
+					_commerceAccount.getName());
 
 			httpServletRequest.setAttribute(
-				"liferay-commerce:account-selector:createNewOrderURL",
-				_getAddCommerceOrderURL(themeDisplay, httpServletRequest));
-			httpServletRequest.setAttribute(
-				"liferay-commerce:account-selector:selectOrderURL",
-				_getEditOrderURL(themeDisplay));
-
-			String setCurrentAccountURL =
-				PortalUtil.getPortalURL(parentHttpServletRequest) +
-					PortalUtil.getPathContext() +
-						"/o/commerce-ui/set-current-account";
-
-			httpServletRequest.setAttribute(
-				"liferay-commerce:account-selector:setCurrentAccountURL",
-				setCurrentAccountURL);
-
-			httpServletRequest.setAttribute(
-				"liferay-commerce:account-selector:spritemap", _spritemap);
+				"liferay-commerce:account-selector:currentCommerceAccount",
+				currentCommerceAccountModel);
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
+
+		if (_commerceOrder != null) {
+			String workflowStatusInfoLabel = WorkflowConstants.getStatusLabel(
+				_commerceOrder.getStatus());
+
+			WorkflowStatusModel workflowStatusModel = new WorkflowStatusModel(
+				_commerceOrder.getStatus(), workflowStatusInfoLabel,
+				LanguageUtil.get(
+					_themeDisplay.getLocale(), workflowStatusInfoLabel));
+
+			CurrentCommerceOrderModel currentCommerceOrderModel =
+				new CurrentCommerceOrderModel(
+					_commerceOrder.getCommerceOrderId(), workflowStatusModel);
+
+			httpServletRequest.setAttribute(
+				"liferay-commerce:account-selector:currentCommerceOrder",
+				currentCommerceOrderModel);
 		}
+
+		httpServletRequest.setAttribute(
+			"liferay-commerce:account-selector:createNewOrderURL",
+			_addCommerceOrderURL);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:account-selector:selectOrderURL", _editOrderURL);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:account-selector:setCurrentAccountURL",
+			_setCurrentAccountURL);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:account-selector:spritemap", _spritemap);
 	}
 
 	private String _getAddCommerceOrderURL(
@@ -278,7 +310,15 @@ public class AccountSelectorTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountSelectorTag.class);
 
+	private String[] _accountEntryAllowedTypes;
+	private String _addCommerceOrderURL;
+	private CommerceAccount _commerceAccount;
+	private long _commerceChannelId;
+	private CommerceOrder _commerceOrder;
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
+	private String _editOrderURL;
+	private String _setCurrentAccountURL;
 	private String _spritemap;
+	private ThemeDisplay _themeDisplay;
 
 }

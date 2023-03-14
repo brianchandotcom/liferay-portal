@@ -30,6 +30,7 @@ function OrdersListView({
 	createOrderURL,
 	currentAccount,
 	disabled,
+	namespace,
 	selectOrderURL,
 	setCurrentView,
 	showOrderTypeModal,
@@ -100,7 +101,9 @@ function OrdersListView({
 					displayType="primary"
 					onClick={() =>
 						showOrderTypeModal
-							? Liferay.fire(OPEN_MODAL, {id: 'add-order-modal'})
+							? Liferay.fire(OPEN_MODAL, {
+									id: `${namespace}add-order-modal`,
+							  })
 							: liferayNavigate(createOrderURL)
 					}
 				>
@@ -110,7 +113,7 @@ function OrdersListView({
 
 			{showOrderTypeModal ? (
 				<Modal
-					id="add-order-modal"
+					id={`${namespace}add-order-modal`}
 					refreshPageOnClose={true}
 					url={createOrderURL}
 				/>

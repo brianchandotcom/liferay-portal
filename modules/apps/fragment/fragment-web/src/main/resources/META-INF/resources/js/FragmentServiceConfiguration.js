@@ -13,11 +13,25 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayCheckbox} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import React, {useState} from 'react';
+
+const FEEDBACK_MESSAGES = {
+	error: {
+		cssClass: 'has-error',
+		icon: 'exclamation-full',
+		text: Liferay.Language.get(
+			'the-changes-could-not-be-propagated,-please-try-again'
+		),
+	},
+	success: {
+		cssClass: 'has-success',
+		icon: 'check-circle-full',
+		text: Liferay.Language.get('all-changes-are-propagated'),
+	},
+};
 
 export default function FragmentServiceConfiguration({
 	alreadyPropagateContributedFragmentChanges,
@@ -40,9 +54,15 @@ export default function FragmentServiceConfiguration({
 		propagateChanges
 	);
 
-	const [messageType, setMessageType] = useState(null);
+	const [feedbackMessage, setFeedbackMessage] = useState(null);
 
-	const handleSubmit = function () {
+	const [warningModalVisible, setWarningModalVisible] = useState(false);
+
+	const {observer, onClose} = useModal({
+		onClose: () => setWarningModalVisible(false),
+	});
+
+	const handleSubmit = () => {
 		fetch(propagateContributedFragmentEntriesChangesURL, {
 			body: objectToFormData({
 				[`${namespace}propagateChanges`]: propagateChangesChecked,
@@ -51,8 +71,8 @@ export default function FragmentServiceConfiguration({
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then((response) => {
-				if (response.success) {
+			.then(({success}) => {
+				if (success) {
 					openToast({
 						message: Liferay.Language.get(
 							'the-changes-in-the-contributed-fragments-have-been-propagated-successfully'
@@ -62,7 +82,7 @@ export default function FragmentServiceConfiguration({
 					});
 
 					setDisablePropagateChangesButton(true);
-					setMessageType('success');
+					setFeedbackMessage(FEEDBACK_MESSAGES.success);
 				}
 				else {
 					openToast({
@@ -73,24 +93,18 @@ export default function FragmentServiceConfiguration({
 						type: 'danger',
 					});
 
-					setMessageType('error');
+					setFeedbackMessage(FEEDBACK_MESSAGES.error);
 				}
 
 				setWarningModalVisible(false);
 			});
 	};
 
-	const [warningModalVisible, setWarningModalVisible] = useState(false);
-
-	const {observer, onClose} = useModal({
-		onClose: () => setWarningModalVisible(false),
-	});
-
 	return (
 		<>
-			<div className="sheet-subtitle">
+			<h3 className="sheet-subtitle">
 				{Liferay.Language.get('default-fragments')}
-			</div>
+			</h3>
 
 			<p className="text-secondary">
 				{Liferay.Language.get(
@@ -104,17 +118,11 @@ export default function FragmentServiceConfiguration({
 					'propagate-contributed-fragment-changes-automatically'
 				)}
 				name={`${namespace}propagateContributedFragmentChanges`}
-				onChange={({target: {checked}}) => {
-					const propagateContributedFragmentChangesContainer = document.getElementById(
-						`${namespace}propagateContributedFragmentChangesContainer`
-					);
-
-					propagateContributedFragmentChangesContainer.classList.toggle(
-						'hide'
-					);
-
-					setPropagateContributedFragmentChangesChecked(checked);
-				}}
+				onChange={(event) =>
+					setPropagateContributedFragmentChangesChecked(
+						event.target.checked
+					)
+				}
 			/>
 
 			<div aria-hidden="true" className="form-feedback-group mb-3">
@@ -125,48 +133,38 @@ export default function FragmentServiceConfiguration({
 				</div>
 			</div>
 
-			<div
-				className={`${
-					propagateContributedFragmentChangesChecked ? 'hide' : ''
-				}`}
-				id={`${namespace}propagateContributedFragmentChangesContainer`}
-			>
-				<ClayButton
-					disabled={disablePropagateChangesButton}
-					displayType="secondary"
-					onClick={() => setWarningModalVisible(true)}
-				>
-					{Liferay.Language.get('propagate-changes')}
-				</ClayButton>
+			{!propagateContributedFragmentChangesChecked && (
+				<div className="align-items-center d-flex">
+					<ClayButton
+						className="mr-3"
+						disabled={disablePropagateChangesButton}
+						displayType="secondary"
+						onClick={() => setWarningModalVisible(true)}
+					>
+						{Liferay.Language.get('propagate-changes')}
+					</ClayButton>
 
-				{messageType === 'error' && (
-					<span className="font-weight-semi-bold ml-3 text-danger">
-						<ClayIcon
-							className="mr-1 text-error"
-							symbol="exclamation-full"
-						/>
+					{feedbackMessage && (
+						<ClayForm.Group
+							className={`mb-0 ${feedbackMessage.cssClass}`}
+						>
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayForm.FeedbackIndicator
+										symbol={feedbackMessage.icon}
+									/>
 
-						{Liferay.Language.get(
-							'the-changes-could-not-be-propagated,-please-try-again'
-						)}
-					</span>
-				)}
+									{feedbackMessage.text}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						</ClayForm.Group>
+					)}
+				</div>
+			)}
 
-				{messageType === 'success' && (
-					<span className="font-weight-semi-bold ml-3 text-success">
-						<ClayIcon
-							className="mr-1 text-success"
-							symbol="check-circle-full"
-						/>
-
-						{Liferay.Language.get('all-changes-are-propagated')}
-					</span>
-				)}
-			</div>
-
-			<div className="mt-3 sheet-subtitle">
+			<h3 className="mt-3 sheet-subtitle">
 				{Liferay.Language.get('custom-fragments')}
-			</div>
+			</h3>
 
 			<p className="text-secondary">
 				{Liferay.Language.get(
@@ -180,9 +178,9 @@ export default function FragmentServiceConfiguration({
 					'propagate-fragment-changes-automatically'
 				)}
 				name={`${namespace}propagateChanges`}
-				onChange={({target: {checked}}) => {
-					setPropagateChangesChecked(checked);
-				}}
+				onChange={(event) =>
+					setPropagateChangesChecked(event.target.checked)
+				}
 			/>
 
 			<div aria-hidden="true" className="form-feedback-group">
@@ -205,13 +203,13 @@ export default function FragmentServiceConfiguration({
 					</ClayModal.Header>
 
 					<ClayModal.Body>
-						<p>
+						<p className="text-secondary">
 							{Liferay.Language.get(
 								'please-be-aware-that-if-any-content-creator-is-editing-a-page,-some-changes-may-not-be-saved.-performance-issues-can-also-result-from-this-action'
 							)}
 						</p>
 
-						<p>
+						<p className="text-secondary">
 							{Liferay.Language.get(
 								'are-you-sure-you-want-to-continue'
 							)}
@@ -231,7 +229,6 @@ export default function FragmentServiceConfiguration({
 								<ClayButton
 									displayType="warning"
 									onClick={handleSubmit}
-									type="submit"
 								>
 									{Liferay.Language.get('continue')}
 								</ClayButton>

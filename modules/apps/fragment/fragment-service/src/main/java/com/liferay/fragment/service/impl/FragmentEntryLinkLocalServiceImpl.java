@@ -356,6 +356,13 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public List<FragmentEntryLink> getFragmentEntryLinks(
+		long companyId, String rendererKey) {
+
+		return fragmentEntryLinkPersistence.findByC_R(companyId, rendererKey);
+	}
+
+	@Override
 	public List<FragmentEntryLink> getFragmentEntryLinks(String rendererKey) {
 		return fragmentEntryLinkPersistence.findByRendererKey(rendererKey);
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.marketplace.store.web.internal.portlet;
 
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.marketplace.constants.MarketplaceStorePortletKeys;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalService;
@@ -80,6 +81,7 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -544,6 +546,11 @@ public class MarketplaceStorePortlet extends MVCPortlet {
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
+	@Activate
+	protected void activate() {
+		oAuthManager = new OAuthManager(expandoValueLocalService);
+	}
+
 	protected void addOAuthParameter(
 		OAuthRequest oAuthRequest, String key, String value) {
 
@@ -694,9 +701,11 @@ public class MarketplaceStorePortlet extends MVCPortlet {
 	protected AppService appService;
 
 	@Reference
-	protected JSONFactory jsonFactory;
+	protected ExpandoValueLocalService expandoValueLocalService;
 
 	@Reference
+	protected JSONFactory jsonFactory;
+
 	protected OAuthManager oAuthManager;
 
 	@Reference

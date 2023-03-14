@@ -21,9 +21,6 @@ import com.liferay.marketplace.store.web.internal.oauth.api.MarketplaceApi;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import org.scribe.builder.api.Api;
 import org.scribe.model.OAuthConfig;
 import org.scribe.model.SignatureType;
@@ -33,8 +30,11 @@ import org.scribe.oauth.OAuthService;
 /**
  * @author Ryan Park
  */
-@Component(service = OAuthManager.class)
 public class OAuthManager {
+
+	public OAuthManager(ExpandoValueLocalService expandoValueLocalService) {
+		_expandoValueLocalService = expandoValueLocalService;
+	}
 
 	public void deleteAccessToken(User user) throws PortalException {
 		_expandoValueLocalService.deleteValue(
@@ -120,7 +120,6 @@ public class OAuthManager {
 			user.getUserId(), token.getToken());
 	}
 
-	@Reference
-	private ExpandoValueLocalService _expandoValueLocalService;
+	private final ExpandoValueLocalService _expandoValueLocalService;
 
 }

@@ -8,5 +8,6 @@ author: "Javier Gamarra"
 clientDir: "../frontend-view-state-rest-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
+generateExportBatch: false
 generateGraphQL: false
 testDir: "../frontend-view-state-rest-test/src/testIntegration/java"

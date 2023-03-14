@@ -8,4 +8,5 @@ author: "Alberto Chaparro"
 clientDir: "../headless-portal-instances-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
+generateExportBatch: false
 generateGraphQL: false

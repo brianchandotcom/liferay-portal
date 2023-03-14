@@ -8,4 +8,5 @@ author: "Riccardo Ferrari"
 clientDir: "../analytics-settings-rest-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
+generateExportBatch: false
 testDir: "../analytics-settings-rest-test/src/testIntegration/java"

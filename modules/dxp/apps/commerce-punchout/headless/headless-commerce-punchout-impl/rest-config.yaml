@@ -6,4 +6,6 @@ application:
     name: "Liferay.Headless.Commerce.PunchOut"
 author: "Jaclyn Ong"
 forcePredictableSchemaPropertyName: false
+generateBatch: true
+generateExportBatch: true
 generateGraphQL: false

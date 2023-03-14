@@ -7,4 +7,6 @@ application:
 author: "Alessio Antonio Rendina"
 clientDir: "../headless-commerce-admin-inventory-client/src/main/java"
 forcePredictableSchemaPropertyName: false
+generateBatch: true
+generateExportBatch: true
 testDir: "../headless-commerce-admin-inventory-test/src/testIntegration/java"

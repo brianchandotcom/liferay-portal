@@ -7,4 +7,6 @@ application:
 author: "Alessio Antonio Rendina"
 clientDir: "../headless-commerce-admin-account-client/src/main/java"
 forcePredictableOperationId: false
+generateBatch: true
+generateExportBatch: true
 testDir: "../headless-commerce-admin-account-test/src/testIntegration/java"

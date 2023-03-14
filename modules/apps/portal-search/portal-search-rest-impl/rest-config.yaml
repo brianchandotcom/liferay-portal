@@ -7,4 +7,6 @@ application:
 author: "Petteri Karttunen"
 clientDir: "../portal-search-rest-client/src/main/java"
 forcePredictableOperationId: true
+generateBatch: true
+generateExportBatch: true
 testDir: "../portal-search-rest-test/src/testIntegration/java"

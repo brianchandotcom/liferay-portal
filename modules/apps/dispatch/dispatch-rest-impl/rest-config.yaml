@@ -7,4 +7,6 @@ application:
 author: "Nilton Vieira"
 clientDir: "../dispatch-rest-client/src/main/java"
 forcePredictableOperationId: true
+generateBatch: true
+generateExportBatch: true
 testDir: "../dispatch-rest-test/src/testIntegration/java"

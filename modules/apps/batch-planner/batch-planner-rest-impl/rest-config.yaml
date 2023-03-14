@@ -8,5 +8,6 @@ author: "Matija Petanjek"
 clientDir: "../batch-planner-rest-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
+generateExportBatch: false
 generateGraphQL: false
 testDir: "../batch-planner-rest-test/src/testIntegration/java"

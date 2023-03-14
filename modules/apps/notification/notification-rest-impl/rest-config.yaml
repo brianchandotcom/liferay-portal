@@ -7,4 +7,6 @@ application:
 author: "Gabriel Albuquerque"
 clientDir: "../notification-rest-client/src/main/java"
 forcePredictableOperationId: true
+generateBatch: true
+generateExportBatch: true
 testDir: "../notification-rest-test/src/testIntegration/java"

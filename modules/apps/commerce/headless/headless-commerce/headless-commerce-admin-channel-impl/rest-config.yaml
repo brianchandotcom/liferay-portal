@@ -8,4 +8,6 @@ author: "Andrea Sbarra"
 clientDir: "../headless-commerce-admin-channel-client/src/main/java"
 forcePredictableOperationId: false
 forcePredictableSchemaPropertyName: false
+generateBatch: true
+generateExportBatch: true
 testDir: "../headless-commerce-admin-channel-test/src/testIntegration/java"

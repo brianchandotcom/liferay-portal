@@ -8,4 +8,5 @@ author: "Ivica Cardic"
 clientDir: "../headless-batch-engine-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
+generateExportBatch: false
 generateGraphQL: false

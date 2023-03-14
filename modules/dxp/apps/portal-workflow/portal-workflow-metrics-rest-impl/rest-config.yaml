@@ -7,4 +7,6 @@ application:
 author: "Rafael Praxedes"
 clientDir: "../portal-workflow-metrics-rest-client/src/main/java"
 forcePredictableOperationId: true
+generateBatch: true
+generateExportBatch: true
 testDir: "../portal-workflow-metrics-rest-test/src/testIntegration/java"

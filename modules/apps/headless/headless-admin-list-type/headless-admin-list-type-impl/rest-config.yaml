@@ -7,4 +7,6 @@ application:
 author: "Gabriel Albuquerque"
 clientDir: "../headless-admin-list-type-client/src/main/java"
 forcePredictableOperationId: true
+generateBatch: true
+generateExportBatch: true
 testDir: "../headless-admin-list-type-test/src/testIntegration/java"

@@ -7,4 +7,6 @@ application:
 author: "José Abelenda"
 clientDir: "../digital-signature-rest-client/src/main/java"
 forcePredictableOperationId: true
+generateBatch: true
+generateExportBatch: true
 testDir: "../digital-signature-rest-test/src/testIntegration/java"

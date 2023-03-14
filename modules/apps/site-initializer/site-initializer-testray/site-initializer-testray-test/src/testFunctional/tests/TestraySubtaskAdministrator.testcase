@@ -104,7 +104,7 @@ definition {
 				taskName = ${taskName});
 		}
 
-		task ("Go to Testray 2 and select enviroments factors for the routine") {
+		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
@@ -144,9 +144,7 @@ definition {
 			object = "routines",
 			objectName = ${routineName});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "projects",
-			objectName = ${projectName});
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
 
@@ -201,6 +199,8 @@ definition {
 				comment = "button does not work",
 				issues = "LPS-166191",
 				selectStatus = "Blocked");
+
+			WaitForPageLoad();
 		}
 
 		task ("Then the complete status appears of the subtask with details") {
@@ -238,6 +238,8 @@ definition {
 				comment = "button does not work",
 				issues = "LPS-166191",
 				selectStatus = "Failed");
+
+			WaitForPageLoad();
 		}
 
 		task ("Then the complete status appears of the subtask with details") {
@@ -270,6 +272,8 @@ definition {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
 
 			TestrayTestflow.editStatus(selectStatus = "Passed");
+
+			WaitForPageLoad();
 		}
 
 		task ("Then the complete status appears of the subtask") {
@@ -299,6 +303,8 @@ definition {
 				comment = "button does not work",
 				issues = "LPS-166191",
 				selectStatus = "Test Fix");
+
+			WaitForPageLoad();
 		}
 
 		task ("Then the complete status appears of the subtask with details") {
@@ -375,6 +381,8 @@ definition {
 				issues = "LPS-166193",
 				selectStatus = "Blocked");
 
+			WaitForPageLoad();
+
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Complete");
@@ -412,7 +420,7 @@ definition {
 	@description = "Story ID: LPS-164984 | Test Summary: Verify if as an Administrator I should be able a subtask return to open"
 	@priority = 5
 	test AdminCanReturnToOpenSubtask {
-		task ("Given that the user Assign and Begin Analysis of the subtask") {
+		task ("When that the user Assign and Begin Analysis of the subtask") {
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
 				status = "Open");

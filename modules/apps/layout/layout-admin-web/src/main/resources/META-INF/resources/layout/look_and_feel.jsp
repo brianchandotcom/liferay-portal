@@ -25,8 +25,6 @@ Theme rootTheme = layoutSet.getTheme();
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
-
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 %>
 
@@ -103,10 +101,12 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 >
 	<c:choose>
 		<c:when test="<%= themeDisplay.isStateExclusive() %>">
-			<%= HtmlUtil.escape(rootNodeName) %>
+			<liferay-ui:message key="see-theme-configurations" />
 		</c:when>
 		<c:otherwise>
-			<aui:a href="<%= redirectURL.toString() %>"><%= HtmlUtil.escape(rootNodeName) %></aui:a>
+			<aui:a href="<%= redirectURL.toString() %>">
+				<liferay-ui:message key="see-theme-configurations" />
+			</aui:a>
 		</c:otherwise>
 	</c:choose>
 </liferay-util:buffer>
@@ -118,7 +118,7 @@ if (group.isLayoutPrototype()) {
 	taglibLabel = LanguageUtil.get(request, "use-the-same-look-and-feel-of-the-pages-in-which-this-template-is-used");
 }
 else {
-	taglibLabel = LanguageUtil.format(request, "use-the-same-look-and-feel-of-the-x", rootNodeNameLink, false);
+	taglibLabel = LanguageUtil.format(request, "use-the-inherited-theme-x", rootNodeNameLink, false);
 }
 %>
 

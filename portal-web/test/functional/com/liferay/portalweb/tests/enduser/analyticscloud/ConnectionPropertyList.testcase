@@ -458,7 +458,7 @@ definition {
 		}
 
 		task ("Go to AC > Go to Settings > Go to Properties") {
-			ACUtils.launchAC(workspaceName = "New AC Workspace");
+			ACUtils.launchAC(workspaceName = "New AC Property List Empty State Workspace");
 
 			ACNavigation.goToSettings();
 

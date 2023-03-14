@@ -778,7 +778,7 @@ definition {
 			AssertTextEquals(
 				key_text = "info-panel-open",
 				locator1 = "Icon#ANY",
-				value1 = "Collection Prefiltered");
+				value1 = "Collection Filtered");
 		}
 
 		task ("View only web contents with tag1 are shown in Collection Display") {
@@ -815,7 +815,7 @@ definition {
 			AssertTextEquals(
 				key_text = "info-panel-open",
 				locator1 = "Icon#ANY",
-				value1 = "Collection Prefiltered");
+				value1 = "Collection Filtered");
 		}
 
 		task ("View only web contents with tag2 are shown in Collection Display") {
@@ -852,7 +852,7 @@ definition {
 			AssertTextEquals(
 				key_text = "info-panel-open",
 				locator1 = "Icon#ANY",
-				value1 = "Collection Prefiltered");
+				value1 = "Collection Filtered");
 		}
 
 		task ("View only web contents with tag3 are shown in Collection Display") {
@@ -889,7 +889,7 @@ definition {
 			AssertTextEquals(
 				key_text = "info-panel-open",
 				locator1 = "Icon#ANY",
-				value1 = "Collection Prefiltered");
+				value1 = "Collection Filtered");
 		}
 
 		task ("View only web contents with tag are shown in Collection Display") {
@@ -2838,11 +2838,15 @@ definition {
 			Check.checkNotVisible(
 				checkboxName = "nba teams",
 				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Click(
+				key_fieldLabel = "Tag",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
 		}
 
 		task ("View prefilter results in modal") {
 			AssertTextEquals(
-				locator1 = "Modal#SEARCH_INFO",
+				locator1 = "Search#SEARCH_INFO_WITHOUT_INLINE",
 				value1 = "There is 1 result for nba teams.");
 		}
 
@@ -2856,12 +2860,14 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = "James");
 
-			Click(locator1 = "Modal#HEADER");
+			Click(
+				key_fieldLabel = "Title",
+				locator1 = "FormFields#LABEL");
 		}
 
 		task ("View prefilter results in modal") {
 			AssertTextEquals(
-				locator1 = "Modal#SEARCH_INFO",
+				locator1 = "Search#SEARCH_INFO_WITHOUT_INLINE",
 				value1 = "There is 1 result for James.");
 		}
 
@@ -2875,12 +2881,14 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = "Durant");
 
-			Click(locator1 = "Modal#HEADER");
+			Click(
+				key_fieldLabel = "Title",
+				locator1 = "FormFields#LABEL");
 		}
 
 		task ("View prefilter results in modal") {
 			AssertTextEquals(
-				locator1 = "Modal#SEARCH_INFO",
+				locator1 = "Search#SEARCH_INFO_WITHOUT_INLINE",
 				value1 = "There are 0 results for Durant.");
 		}
 

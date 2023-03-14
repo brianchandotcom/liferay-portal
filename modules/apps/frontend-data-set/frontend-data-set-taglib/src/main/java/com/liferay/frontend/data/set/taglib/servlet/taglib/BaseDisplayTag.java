@@ -15,11 +15,9 @@
 package com.liferay.frontend.data.set.taglib.servlet.taglib;
 
 import com.liferay.frontend.data.set.model.FDSPaginationEntry;
-import com.liferay.frontend.data.set.taglib.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.data.set.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.data.set.taglib.internal.util.ServicesProvider;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
@@ -260,11 +258,6 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		jspWriter.write("table-id\"><span aria-hidden=\"true\" class=\"");
 		jspWriter.write("loading-animation my-7\"></span>");
 
-		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
-
-		String moduleName = npmResolver.resolveModuleName(
-			"@liferay/frontend-data-set-web/FrontendDataSet");
-
 		String propsTransformer = null;
 
 		if (Validator.isNotNull(_propsTransformer)) {
@@ -292,8 +285,8 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		}
 
 		ComponentDescriptor componentDescriptor = new ComponentDescriptor(
-			moduleName, getId(), new LinkedHashSet<>(), false,
-			propsTransformer);
+			"{FrontendDataSet} from frontend-data-set-web", getId(),
+			new LinkedHashSet<>(), false, propsTransformer);
 
 		ReactRenderer reactRenderer = ServicesProvider.getReactRenderer();
 

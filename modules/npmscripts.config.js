@@ -436,6 +436,7 @@ module.exports = {
 			'dynamic-data-mapping-form-renderer',
 		],
 		imports: {
+			'@liferay/frontend-data-set-web': [],
 			'@liferay/frontend-js-dependencies-web': [
 				'@liferay/js-api',
 				'clipboard',

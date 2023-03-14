@@ -64,6 +64,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testChainPutForOrgJSONObject() throws Exception {
+		test("ChainPutForOrgJSONObject.testjava",
+				"Chaining on 'jsonObject.put' is preferred", 27);
+	}
+
+	@Test
 	public void testCollapseImports() throws Exception {
 		test("CollapseImports.testjava");
 	}

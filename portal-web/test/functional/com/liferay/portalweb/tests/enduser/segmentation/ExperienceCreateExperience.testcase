@@ -451,15 +451,23 @@ definition {
 	test AddNewExperienceOrganizationCountrySegment {
 		property portal.acceptance = "true";
 
-		task ("Add a Organization via JSONWS") {
-			JSONOrganization.addOrganization(
-				organizationCountry = "China",
-				organizationName = "organization Name");
+		task ("Add organization via UI") {
+			Organization.openOrganizationsAdmin();
+
+			Organization.addCP(orgName = "Organization Name");
+
+			Select(
+				locator1 = "Select#COUNTRY",
+				value1 = "China");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Assign user to organization created") {
 			JSONOrganization.assignUserToOrganization(
-				organizationName = "organization Name",
+				organizationName = "Organization Name",
 				userEmailAddress = "userea1@liferay.com");
 		}
 

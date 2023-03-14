@@ -256,23 +256,8 @@ public class PortalImplAlternateURLTest {
 
 	@Test
 	public void testAlternateURLWithUrlSeparator() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		String urlSeparator = "/p/";
-
-		Locale locale = LocaleUtil.SPAIN;
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		Assert.assertEquals(
-			_generateURL(
-				"localhost", StringPool.SLASH + locale.getLanguage(),
-				_group.getFriendlyURL(), urlSeparator),
-			_portal.getAlternateURL(
-				_generateURL(
-					"localhost", StringPool.BLANK, _group.getFriendlyURL(),
-					urlSeparator),
-				_getThemeDisplay(_group, layout), locale, layout));
+		_testAlternateURLWithUrlSeparator("/g/");
+		_testAlternateURLWithUrlSeparator("/p/");
 	}
 
 	@Test
@@ -756,6 +741,26 @@ public class PortalImplAlternateURLTest {
 		finally {
 			preferences.reset(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 		}
+	}
+
+	private void _testAlternateURLWithUrlSeparator(String urlSeparator)
+		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		Locale locale = LocaleUtil.SPAIN;
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Assert.assertEquals(
+			_generateURL(
+				"localhost", StringPool.SLASH + locale.getLanguage(),
+				_group.getFriendlyURL(), urlSeparator),
+			_portal.getAlternateURL(
+				_generateURL(
+					"localhost", StringPool.BLANK, _group.getFriendlyURL(),
+					urlSeparator),
+				_getThemeDisplay(_group, layout), locale, layout));
 	}
 
 	private void _testAlternateURLWithVirtualHosts(

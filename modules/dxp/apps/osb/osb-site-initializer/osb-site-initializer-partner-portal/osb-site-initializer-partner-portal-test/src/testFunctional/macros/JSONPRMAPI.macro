@@ -169,4 +169,58 @@ definition {
 		return ${response};
 	}
 
+	macro addMDF {
+		Variables.assertDefined(parameterList = ${campaignName});
+
+		if(!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if(!(isSet(accountEntryName))) {
+			var accountEntryName = "Company Name 1";
+		}
+
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+		var accountName = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/mdfrequests \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"maxDateActivity":"${endDate}",
+					"minDateActivity":"${startDate}",
+					"totalCostOfExpense":${totalCostOfExpense},
+					"totalMDFRequestAmount":${totalMDFRequestAmount},
+					"additionalOption":{
+					},
+					"companyName":"${accountName}",
+					"country":{
+						"key":"global",
+						"name":"Global"
+					},
+					"emailAddress":"test@liferay.com",
+					"liferayBusinessSalesGoals":"${goalsOptions}",
+					"mdfRequestStatus":{
+						"key":"pendingMarketingReview",
+						"name":"PendingMarketingReview"
+					},
+					"overallCampaignDescription":"${campaignDescription}",
+					"overallCampaignName":"${campaignName}",
+					"r_accToMDFReqs_accountEntryId":${accountName},
+					"r_usrToMDFReqs_userId":${userId},
+					"targetAudienceRoles":"${targetRolesOptions}",
+					"targetMarkets":"${targetMarketOptions}"
+				}'
+		''';
+
+		var response = JSONCurlUtil.post(${curl}, "$.id");
+
+		echo(${response});
+
+		return ${response};
+	}
+
 }

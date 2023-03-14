@@ -19,6 +19,7 @@ import com.liferay.object.definition.notification.term.util.ObjectDefinitionNoti
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.function.UnsafeTriFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -28,10 +29,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -64,8 +65,11 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 		Map<String, Object> termValues = (Map<String, Object>)object;
 
-		for (Subevaluator subevaluator : _subevaluators) {
-			String termValue = subevaluator.evaluate(
+		for (UnsafeTriFunction
+				<Context, String, Map<String, Object>, String, PortalException>
+					evaluatorFunction : _evaluatorsFunctions) {
+
+			String termValue = evaluatorFunction.apply(
 				context, termName, termValues);
 
 			if (termValue != null) {
@@ -74,6 +78,103 @@ public class ObjectDefinitionNotificationTermEvaluator
 		}
 
 		return termName;
+	}
+
+	private String _evaluateAuthor(
+			Context context, String termName, Map<String, Object> termValues)
+		throws PortalException {
+
+		String prefix = StringUtil.toUpperCase(
+			_objectDefinition.getShortName());
+
+		if (!termName.equals("[%" + prefix + "_CREATOR%]") ||
+			!termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") ||
+			!termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") ||
+			!termName.equals("[%" + prefix + "_AUTHOR_ID%]") ||
+			!termName.equals("[%" + prefix + "_AUTHOR_LAST_NAME%]") ||
+			!termName.equals("[%" + prefix + "_AUTHOR_MIDDLE_NAME%]") ||
+			!termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") ||
+			!termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]")) {
+
+			return null;
+		}
+
+		User user = _userLocalService.getUser(
+			GetterUtil.getLong(termValues.get("creator")));
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
+			if (context.equals(Context.RECIPIENT)) {
+				return String.valueOf(termValues.get("creator"));
+			}
+
+			return user.getFullName(true, true);
+		}
+
+		if (user == null) {
+			return null;
+		}
+
+		return _getTermValue(
+			context,
+			StringUtil.removeSubstring(
+				StringUtil.extractLast(termName, StringPool.UNDERLINE), "%]"),
+			user);
+	}
+
+	private String _evaluateCurrentUser(
+			Context context, String termName, Map<String, Object> termValues)
+		throws PortalException {
+
+		if (!termName.equals("[%CURRENT_USER_EMAIL_ADDRESS%]") ||
+			!termName.equals("[%CURRENT_USER_FIRST_NAME%]") ||
+			!termName.equals("[%CURRENT_USER_ID%]") ||
+			!termName.equals("[%CURRENT_USER_LAST_NAME%]") ||
+			!termName.equals("[%CURRENT_USER_MIDDLE_NAME%]") ||
+			!termName.equals("[%CURRENT_USER_PREFIX%]") ||
+			!termName.equals("[%CURRENT_USER_SUFFIX%]")) {
+
+			return null;
+		}
+
+		return _getTermValue(
+			context,
+			StringUtil.removeSubstring(
+				StringUtil.extractLast(termName, StringPool.UNDERLINE), "%]"),
+			_userLocalService.getUser(
+				GetterUtil.getLong(termValues.get("currentUserId"))));
+	}
+
+	private String _evaluateObjectFields(
+			Context context, String termName, Map<String, Object> termValues)
+		throws PortalException {
+
+		if (termName.equals("[%OBJECT_ENTRY_CREATOR%]")) {
+			return termName;
+		}
+
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId())) {
+
+			if (!Objects.equals(
+					ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
+						_objectDefinition.getShortName(),
+						objectField.getName()),
+					termName)) {
+
+				continue;
+			}
+
+			String termValue = (String)termValues.get(objectField.getName());
+
+			if (Validator.isNotNull(termValue)) {
+				return termValue;
+			}
+
+			return (String)termValues.get(objectField.getDBColumnName());
+		}
+
+		return null;
 	}
 
 	private String _getTermValue(
@@ -129,104 +230,15 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return null;
 	}
 
+	private final List
+		<UnsafeTriFunction
+			<Context, String, Map<String, Object>, String, PortalException>>
+			_evaluatorsFunctions = Arrays.asList(
+					this::_evaluateAuthor, this::_evaluateCurrentUser,
+					this::_evaluateObjectFields);
 	private final ListTypeLocalService _listTypeLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectFieldLocalService _objectFieldLocalService;
-
-	private String _evaluateAuthor(Context context, String termName, Map<String, Object> termValues) throws PortalException {
-		String prefix = StringUtil.toUpperCase(
-			_objectDefinition.getShortName());
-
-		if (!termName.equals("[%" + prefix + "_CREATOR%]") ||
-			!termName.equals(
-				"[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_ID%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_LAST_NAME%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_MIDDLE_NAME%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]")) {
-
-			return null;
-		}
-
-		User user = _userLocalService.getUser(
-			GetterUtil.getLong(termValues.get("creator")));
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
-			if (context.equals(Context.RECIPIENT)) {
-				return String.valueOf(termValues.get("creator"));
-			}
-
-			return user.getFullName(true, true);
-		}
-
-		if (user == null) {
-			return null;
-		}
-
-		return _getTermValue(
-			context,
-			StringUtil.removeSubstring(
-				StringUtil.extractLast(termName, StringPool.UNDERLINE),
-				"%]"),
-			user);
-	}
-
-	private String _evaluateCurrentUser(Context context, String termName, Map<String, Object> termValues) throws PortalException {
-		if (!termName.equals("[%CURRENT_USER_EMAIL_ADDRESS%]") ||
-			!termName.equals("[%CURRENT_USER_FIRST_NAME%]") ||
-			!termName.equals("[%CURRENT_USER_ID%]") ||
-			!termName.equals("[%CURRENT_USER_LAST_NAME%]") ||
-			!termName.equals("[%CURRENT_USER_MIDDLE_NAME%]") ||
-			!termName.equals("[%CURRENT_USER_PREFIX%]") ||
-			!termName.equals("[%CURRENT_USER_SUFFIX%]")) {
-
-			return null;
-		}
-
-		return _getTermValue(
-			context,
-			StringUtil.removeSubstring(
-				StringUtil.extractLast(termName, StringPool.UNDERLINE),
-				"%]"),
-			_userLocalService.getUser(
-				GetterUtil.getLong(termValues.get("currentUserId"))));
-	}
-
-	private String _evaluateObjectFields(Context context, String termName, Map<String, Object> termValues) throws PortalException {
-		if (termName.equals("[%OBJECT_ENTRY_CREATOR%]")) {
-			return termName;
-		}
-
-		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId())) {
-
-			if (!Objects.equals(
-					ObjectDefinitionNotificationTermUtil.
-						getObjectFieldTermName(
-							_objectDefinition.getShortName(),
-							objectField.getName()),
-					termName)) {
-
-				continue;
-			}
-
-			String termValue = (String)termValues.get(
-				objectField.getName());
-
-			if (Validator.isNotNull(termValue)) {
-				return termValue;
-			}
-
-			return (String)termValues.get(
-				objectField.getDBColumnName());
-		}
-
-		return null;
-	}
-
 	private final UserLocalService _userLocalService;
 
 }

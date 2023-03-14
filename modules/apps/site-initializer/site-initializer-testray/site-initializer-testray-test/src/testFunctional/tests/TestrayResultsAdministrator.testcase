@@ -31,7 +31,7 @@ definition {
 			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
-		task ("Setup for SubtaskAPI") {
+		task ("Setup for case results") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -105,9 +105,7 @@ definition {
 			object = "routines",
 			objectName = ${routineName});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "projects",
-			objectName = ${projectName});
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
 
@@ -116,19 +114,19 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160701 - Verify if as an Administrator I am able to Assign Tests directly to me through the context menu"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Assign Tests directly to me through the context menu"
 	@priority = 4
 	test AdminCanAssignTestsDirectlyThroughTheContextMenu {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
+			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign to Me");
 		}
@@ -138,20 +136,20 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160707 - Verify if as Add and Delete a Result by kebab button"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as Add and Delete a Result by kebab button"
 	@ignore = "true"
 	@priority = 5
 	test AdminCanDeleteResultByKebab {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
 		task ("When the user goes to delete a case results by kebab") {
-			TestrayResults.goToCaseResults(caseResultsName = "Cases_1 Case");
+			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
 
 			Testray.kebabMenuOption(kebabOption = "Delete Case Result");
 
@@ -159,53 +157,51 @@ definition {
 		}
 
 		task ("Then the Case Results should not be displayed anymore") {
-			Testray.assertItemNotPresent(itemName = "Cases_1 Case");
+			Testray.assertItemNotPresent(itemName = ${caseName});
 		}
 	}
 
-	@description = "This is a test for LPS-160690 - Verify if as an Administrator I am able to Delete Results"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Delete Results"
 	@priority = 5
 	test AdminCanDeleteResults {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
 		task ("When the user goes to delete a case results") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
+			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
 		}
 
 		task ("Then the Case Results should not be displayed anymore") {
-			Testray.assertItemNotPresent(itemName = "Cases_1 Case");
+			Testray.assertItemNotPresent(itemName = ${caseName});
 		}
 	}
 
-	@description = "This is a test for LPS-160689 - Verify if as an Administrator I am able to execute Tests and mark them as Failed"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to execute Tests and mark them as Failed"
 	@priority = 5
 	test AdminCanExecuteTestsAndMarkThemAsFailed {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
-		task ("When the user goes to assign a case results and edit test for Failed") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
+		task ("When the user goes to assign a case results and edit test with Failed") {
+			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 
-			TestrayResults.goToCaseResults(caseResultsName = "Cases_1 Case");
+			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
 
 			TestrayTestflow.userAvatarPresent(label = "Dates");
 
@@ -214,6 +210,8 @@ definition {
 			TestrayTestflow.editStatus(
 				issues = "LPS-111111",
 				selectStatus = "Failed");
+
+			WaitForPageLoad();
 		}
 
 		task ("Then the Failed status appear in the list") {
@@ -223,19 +221,19 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160687 - Verify if as an Administrator I am able to Quick Edit Tests"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Quick Edit Tests"
 	@priority = 4
 	test AdminCanQuickEditTests {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
-		task ("When the user goes to assign a case results and edit test for Test Fix") {
-			TestrayResults.goToCaseResults(caseResultsName = "Cases_1 Case");
+		task ("When the user goes to assign a case results and edit test with Test Fix") {
+			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
 
 			Button.click(button = "Assign to Me");
 
@@ -247,6 +245,8 @@ definition {
 				comment = "button does not work",
 				issues = "LPS-111111",
 				selectStatus = "Test Fix");
+
+			WaitForPageLoad();
 		}
 
 		task ("Then the Test Fix status appear in the list") {
@@ -256,19 +256,19 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160686 - Verify if as an Administrator I am able to Reopen Tests"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Reopen Tests"
 	@priority = 4
 	test AdminCanReopenTests {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results and go to complete test") {
-			TestrayResults.goToCaseResults(caseResultsName = "Cases_1 Case");
+			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
 
 			Button.click(button = "Assign");
 
@@ -279,11 +279,13 @@ definition {
 			Button.click(button = "Complete Test");
 		}
 
-		task ("And the user edit test for Blocked status") {
+		task ("And the user edit test with Blocked status") {
 			TestrayTestflow.editStatus(
 				comment = "button does not work",
 				issues = "LPS-111111",
 				selectStatus = "Blocked");
+
+			WaitForPageLoad();
 
 			TestrayTestflow.assertStatus(
 				label = "Test Details",
@@ -299,19 +301,19 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-167470 - Verify if as an Administrator I am able to reset Tests"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to reset Tests"
 	@priority = 4
 	test AdminCanResetTests {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results with status in progress") {
-			TestrayResults.goToCaseResults(caseResultsName = "Cases_1 Case");
+			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
 
 			Button.click(button = "Assign to Me");
 
@@ -331,27 +333,27 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160685 - Verify if as an Administrator I am able to Unassign Tests"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Unassign Tests"
 	@priority = 4
 	test AdminCanUnassignTests {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results and Unassign Myself a case results") {
-			TestrayResults.goToCaseResults(caseResultsName = "Cases_1 Case");
+			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
 
 			Button.click(button = "Assign to Me");
 
 			TestrayTestflow.userAvatarPresent(label = "Dates");
 
-			TestrayHeader.clickBreadcrumbTitle(breadcrumbName = "Builds_1 Project");
+			TestrayHeader.clickBreadcrumbTitle(breadcrumbName = ${buildName});
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
+			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Unassign Myself");
 		}
@@ -361,25 +363,25 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160684 - Verify if as an Administrator I am able to Unassign Tests through the context menu"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Unassign Tests through the context menu"
 	@priority = 3
 	test AdminCanUnassignTestsThroughTheContextMenu {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results and Unassign Myself a case results") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
+			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign to Me");
 
 			TestrayTestflow.userAvatarPresent(label = "Tests");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
+			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Unassign Myself");
 		}
@@ -389,16 +391,15 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160691 - Verify if as an Administrator I am able to verify the accuracy of the Case Result Metrics Card"
-	@ignore = "true"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to verify the accuracy of the Case Result Metrics Card"
 	@priority = 5
 	test AdminCanVerifyTheAccuracyOfTheCaseResultMetricsCard {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
 		task ("Then can view test total in metrics of case results") {
@@ -406,47 +407,47 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160683 - Verify if as an Administrator I am able to view Results grouped by Component"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to view Results grouped by Component"
 	@priority = 3
 	test AdminCanViewResultsGroupedByComponent {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
-		task ("Then the user view resullts by component") {
+		task ("Then the user view results by component") {
 			Testray.projectTabNavigator(navTabName = "Components");
 
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
-			Testray.assertItemName(text = "Components_1 Project");
+			Testray.assertItemName(text = ${componentName});
 		}
 	}
 
-	@description = "This is a test for LPS-160682 - Verify if as an Administrator I am able to view Results grouped by Team"
+	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to view Results grouped by Team"
 	@priority = 3
 	test AdminCanViewResultsGroupedByTeam {
-		task ("Given that the user add a new case results") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+			TestrayBuild.goToBuild(buildName = ${buildName});
 		}
 
-		task ("Then the user view resullts by team") {
+		task ("Then the user view results by team") {
 			Testray.projectTabNavigator(navTabName = "Teams");
 
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
-			Testray.assertItemName(text = "Teams_1 Team");
+			Testray.assertItemName(text = ${teamName});
 		}
 	}
 

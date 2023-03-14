@@ -71,3 +71,19 @@ export default function formatDate(date: Date, withSlash = false) {
 		newDate[0]
 	}`;
 }
+
+export function dateFormatter(date?: string) {
+	if (date) {
+		return new Date(`${date}`)
+			.toLocaleTimeString('en-US', {
+				day: 'numeric',
+				hour: 'numeric',
+				hour12: true,
+				minute: 'numeric',
+				month: 'numeric',
+				timeZone: 'UTC',
+				year: 'numeric',
+			})
+			.replace(',', '');
+	}
+}

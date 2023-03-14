@@ -87,13 +87,13 @@ public class ObjectDefinitionNotificationTermEvaluator
 		String prefix = StringUtil.toUpperCase(
 			_objectDefinition.getShortName());
 
-		if (!termName.equals("[%" + prefix + "_CREATOR%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_ID%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_LAST_NAME%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_MIDDLE_NAME%]") ||
-			!termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") ||
+		if (!termName.equals("[%" + prefix + "_CREATOR%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_ID%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_LAST_NAME%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_MIDDLE_NAME%]") &&
+			!termName.equals("[%" + prefix + "_AUTHOR_PREFIX%]") &&
 			!termName.equals("[%" + prefix + "_AUTHOR_SUFFIX%]")) {
 
 			return null;
@@ -114,32 +114,33 @@ public class ObjectDefinitionNotificationTermEvaluator
 			return null;
 		}
 
-		return _getTermValue(
-			context,
-			StringUtil.removeSubstring(
-				StringUtil.extractLast(termName, StringPool.UNDERLINE), "%]"),
-			user);
+		String suffix = StringUtil.removeSubstring(
+			termName, "[%" + prefix + "_AUTHOR_");
+
+		if (StringUtil.equals(termName, suffix)) {
+			suffix = StringUtil.removeSubstring(termName, "[%" + prefix + "_");
+		}
+
+		return _getTermValue(context, suffix, user);
 	}
 
 	private String _evaluateCurrentUser(
 			Context context, String termName, Map<String, Object> termValues)
 		throws PortalException {
 
-		if (!termName.equals("[%CURRENT_USER_EMAIL_ADDRESS%]") ||
-			!termName.equals("[%CURRENT_USER_FIRST_NAME%]") ||
-			!termName.equals("[%CURRENT_USER_ID%]") ||
-			!termName.equals("[%CURRENT_USER_LAST_NAME%]") ||
-			!termName.equals("[%CURRENT_USER_MIDDLE_NAME%]") ||
-			!termName.equals("[%CURRENT_USER_PREFIX%]") ||
+		if (!termName.equals("[%CURRENT_USER_EMAIL_ADDRESS%]") &&
+			!termName.equals("[%CURRENT_USER_FIRST_NAME%]") &&
+			!termName.equals("[%CURRENT_USER_ID%]") &&
+			!termName.equals("[%CURRENT_USER_LAST_NAME%]") &&
+			!termName.equals("[%CURRENT_USER_MIDDLE_NAME%]") &&
+			!termName.equals("[%CURRENT_USER_PREFIX%]") &&
 			!termName.equals("[%CURRENT_USER_SUFFIX%]")) {
 
 			return null;
 		}
 
 		return _getTermValue(
-			context,
-			StringUtil.removeSubstring(
-				StringUtil.extractLast(termName, StringPool.UNDERLINE), "%]"),
+			context, StringUtil.removeSubstring(termName, "[%CURRENT_USER_"),
 			_userLocalService.getUser(
 				GetterUtil.getLong(termValues.get("currentUserId"))));
 	}
@@ -177,35 +178,32 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return null;
 	}
 
-	private String _getTermValue(
-			Context context, String partialObjectFieldName, User user)
+	private String _getTermValue(Context context, String suffix, User user)
 		throws PortalException {
 
-		if (partialObjectFieldName.equals("CREATOR")) {
+		if (suffix.equals("CREATOR%]")) {
 			if (context.equals(Context.RECIPIENT)) {
-				String.valueOf(user.getUserId());
+				return String.valueOf(user.getUserId());
 			}
 
 			return user.getFullName(true, true);
 		}
-		else if (partialObjectFieldName.equals("EMAIL_ADDRESS")) {
+		else if (suffix.equals("EMAIL_ADDRESS%]")) {
 			return user.getEmailAddress();
 		}
-		else if (partialObjectFieldName.equals("FIRST_NAME")) {
+		else if (suffix.equals("FIRST_NAME%]")) {
 			return user.getFirstName();
 		}
-		else if (partialObjectFieldName.equals("ID")) {
+		else if (suffix.equals("ID%]")) {
 			return String.valueOf(user.getUserId());
 		}
-		else if (partialObjectFieldName.equals("LAST_NAME")) {
+		else if (suffix.equals("LAST_NAME%]")) {
 			return user.getLastName();
 		}
-		else if (partialObjectFieldName.equals("MIDDLE_NAME")) {
+		else if (suffix.equals("MIDDLE_NAME%]")) {
 			return user.getMiddleName();
 		}
-		else if (partialObjectFieldName.equals("PREFIX") ||
-				 partialObjectFieldName.equals("SUFFIX")) {
-
+		else if (suffix.equals("PREFIX%]") || suffix.equals("SUFFIX%]")) {
 			Contact contact = user.fetchContact();
 
 			if (contact == null) {
@@ -214,7 +212,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 			long listTypeId = contact.getPrefixListTypeId();
 
-			if (partialObjectFieldName.equals("SUFFIX")) {
+			if (suffix.equals("SUFFIX%]")) {
 				listTypeId = contact.getSuffixListTypeId();
 			}
 
@@ -233,7 +231,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 	private final List
 		<UnsafeTriFunction
 			<Context, String, Map<String, Object>, String, PortalException>>
-			_evaluatorsFunctions = Arrays.asList(
+				_evaluatorsFunctions = Arrays.asList(
 					this::_evaluateAuthor, this::_evaluateCurrentUser,
 					this::_evaluateObjectFields);
 	private final ListTypeLocalService _listTypeLocalService;

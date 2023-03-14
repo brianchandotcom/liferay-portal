@@ -1996,7 +1996,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			ddmStructureLocalService.getStructure(
 				serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(JournalArticle.class), ddmStructureKey);
+				_portal.getClassNameId(JournalArticle.class), ddmStructureKey,
+				true);
 
 			String ddmTemplateKey = jsonObject.getString("ddmTemplateKey");
 

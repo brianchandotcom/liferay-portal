@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -56,7 +55,6 @@ import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
-import com.liferay.wiki.model.WikiPageTable;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
@@ -559,24 +557,9 @@ public class WikiListPagesDisplayContext {
 			}
 			else {
 				searchContainer.setResultsAndTotal(
-					(List<WikiPage>)WikiPageLocalServiceUtil.dslQuery(
-						DSLQueryFactoryUtil.select(
-							WikiPageTable.INSTANCE
-						).from(
-							WikiPageTable.INSTANCE
-						).where(
-							WikiPageTable.INSTANCE.groupId.eq(
-								themeDisplay.getScopeGroupId()
-							).and(
-								WikiPageTable.INSTANCE.statusByUserId.eq(
-									wikiPageDraftUserId)
-							).and(
-								WikiPageTable.INSTANCE.nodeId.eq(
-									_wikiNode.getNodeId())
-							).and(
-								WikiPageTable.INSTANCE.status.eq(wikiPageStatus)
-							)
-						)));
+					WikiPageLocalServiceUtil.getPages(
+						themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(),
+						wikiPageDraftUserId, wikiPageStatus));
 			}
 		}
 		else if (navigation.equals("frontpage")) {

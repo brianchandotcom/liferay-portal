@@ -28,6 +28,7 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -126,6 +127,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;
 import com.liferay.wiki.model.WikiPageResource;
+import com.liferay.wiki.model.WikiPageTable;
 import com.liferay.wiki.model.impl.WikiPageDisplayImpl;
 import com.liferay.wiki.model.impl.WikiPageImpl;
 import com.liferay.wiki.processor.WikiPageRenameContentProcessor;
@@ -1422,6 +1424,28 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		return wikiPagePersistence.findByN_S(
 			nodeId, status, start, end, new PageCreateDateComparator(false));
+	}
+
+	@Override
+	public List<WikiPage> getPages(
+		long groupId, long nodeId, long statusByUserId, int status) {
+
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				WikiPageTable.INSTANCE
+			).from(
+				WikiPageTable.INSTANCE
+			).where(
+				WikiPageTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					WikiPageTable.INSTANCE.nodeId.eq(nodeId)
+				).and(
+					WikiPageTable.INSTANCE.statusByUserId.eq(statusByUserId)
+				).and(
+					WikiPageTable.INSTANCE.status.eq(status)
+				)
+			));
 	}
 
 	@Override

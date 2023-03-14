@@ -409,8 +409,7 @@ public class JournalArticleStagedModelDataHandler
 		}
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			article.getGroupId(), _portal.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
+			article.getDDMStructureId());
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, article, ddmStructure,
@@ -744,25 +743,17 @@ public class JournalArticleStagedModelDataHandler
 			}
 		}
 
+		Map<Long, Long> ddmStructureIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class);
+
 		long classPK = 0;
 
 		if (article.getClassNameId() !=
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
 
-			Map<Long, Long> ddmStructureIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					DDMStructure.class);
-
 			classPK = ddmStructureIds.get(article.getClassPK());
 		}
-
-		Map<String, String> ddmStructureKeys =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class + ".ddmStructureKey");
-
-		String ddmStructureKey = MapUtil.getString(
-			ddmStructureKeys, article.getDDMStructureKey(),
-			article.getDDMStructureKey());
 
 		Map<String, String> ddmTemplateKeys =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
@@ -803,6 +794,10 @@ public class JournalArticleStagedModelDataHandler
 					}
 				}
 			}
+
+			long ddmStructureId = MapUtil.getLong(
+				ddmStructureIds, article.getDDMStructureId(),
+				article.getDDMStructureId());
 
 			JournalArticle latestArticle =
 				_journalArticleLocalService.fetchLatestArticle(
@@ -929,10 +924,10 @@ public class JournalArticleStagedModelDataHandler
 						article.getClassNameId(), classPK, articleId,
 						autoArticleId, article.getVersion(),
 						article.getTitleMap(), article.getDescriptionMap(),
-						friendlyURLMap, content, ddmStructureKey,
-						ddmTemplateKey, article.getLayoutUuid(),
-						displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, expirationDateMonth,
+						friendlyURLMap, content, ddmStructureId, ddmTemplateKey,
+						article.getLayoutUuid(), displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, expirationDateMonth,
 						expirationDateDay, expirationDateYear,
 						expirationDateHour, expirationDateMinute, neverExpire,
 						reviewDateMonth, reviewDateDay, reviewDateYear,
@@ -946,10 +941,10 @@ public class JournalArticleStagedModelDataHandler
 						userId, existingArticle.getGroupId(), folderId,
 						existingArticle.getArticleId(), article.getVersion(),
 						article.getTitleMap(), article.getDescriptionMap(),
-						friendlyURLMap, content, ddmStructureKey,
-						ddmTemplateKey, article.getLayoutUuid(),
-						displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, expirationDateMonth,
+						friendlyURLMap, content, ddmTemplateKey,
+						article.getLayoutUuid(), displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, expirationDateMonth,
 						expirationDateDay, expirationDateYear,
 						expirationDateHour, expirationDateMinute, neverExpire,
 						reviewDateMonth, reviewDateDay, reviewDateYear,
@@ -982,10 +977,10 @@ public class JournalArticleStagedModelDataHandler
 						article.getClassNameId(), classPK, articleId,
 						autoArticleId, article.getVersion(),
 						article.getTitleMap(), article.getDescriptionMap(),
-						friendlyURLMap, content, ddmStructureKey,
-						ddmTemplateKey, article.getLayoutUuid(),
-						displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, expirationDateMonth,
+						friendlyURLMap, content, ddmStructureId, ddmTemplateKey,
+						article.getLayoutUuid(), displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, expirationDateMonth,
 						expirationDateDay, expirationDateYear,
 						expirationDateHour, expirationDateMinute, neverExpire,
 						reviewDateMonth, reviewDateDay, reviewDateYear,
@@ -999,10 +994,9 @@ public class JournalArticleStagedModelDataHandler
 						userId, portletDataContext.getScopeGroupId(), folderId,
 						articleId, article.getVersion(), article.getTitleMap(),
 						article.getDescriptionMap(), friendlyURLMap, content,
-						ddmStructureKey, ddmTemplateKey,
-						article.getLayoutUuid(), displayDateMonth,
-						displayDateDay, displayDateYear, displayDateHour,
-						displayDateMinute, expirationDateMonth,
+						ddmTemplateKey, article.getLayoutUuid(),
+						displayDateMonth, displayDateDay, displayDateYear,
+						displayDateHour, displayDateMinute, expirationDateMonth,
 						expirationDateDay, expirationDateYear,
 						expirationDateHour, expirationDateMinute, neverExpire,
 						reviewDateMonth, reviewDateDay, reviewDateYear,
@@ -1049,16 +1043,16 @@ public class JournalArticleStagedModelDataHandler
 					userId, importedArticle.getGroupId(), folderId,
 					importedArticle.getArticleId(), article.getVersion(),
 					article.getTitleMap(), article.getDescriptionMap(),
-					friendlyURLMap, replacedContent, ddmStructureKey,
-					ddmTemplateKey, article.getLayoutUuid(), displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, reviewDateMonth,
-					reviewDateDay, reviewDateYear, reviewDateHour,
-					reviewDateMinute, neverReview, article.isIndexable(),
-					article.isSmallImage(), article.getSmallImageURL(),
-					smallFile, null, articleURL, serviceContext);
+					friendlyURLMap, replacedContent, ddmTemplateKey,
+					article.getLayoutUuid(), displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					reviewDateMonth, reviewDateDay, reviewDateYear,
+					reviewDateHour, reviewDateMinute, neverReview,
+					article.isIndexable(), article.isSmallImage(),
+					article.getSmallImageURL(), smallFile, null, articleURL,
+					serviceContext);
 			}
 
 			_journalArticleLocalService.updateAsset(

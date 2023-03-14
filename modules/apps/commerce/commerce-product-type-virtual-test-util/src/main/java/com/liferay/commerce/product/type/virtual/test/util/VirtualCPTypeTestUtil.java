@@ -108,7 +108,7 @@ public class VirtualCPTypeTestUtil {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), content,
-			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
+			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(),
 			serviceContext);
 	}
 

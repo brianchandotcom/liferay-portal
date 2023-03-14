@@ -15,6 +15,7 @@
 package com.liferay.portal.search.facet.faceted.searcher.test;
 
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.test.util.AssertUtils;
@@ -139,7 +141,7 @@ public abstract class BaseFacetedSearcherTestCase {
 
 	protected void setUpJournalArticleSearchFixture() throws Exception {
 		journalArticleSearchFixture = new JournalArticleSearchFixture(
-			_journalArticleLocalService);
+			_ddmStructureLocalService, _journalArticleLocalService, _portal);
 
 		journalArticleSearchFixture.setUp();
 
@@ -163,10 +165,16 @@ public abstract class BaseFacetedSearcherTestCase {
 		new UserSearchFixture();
 
 	@Inject
+	private static DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
 	private static FacetedSearcherManager _facetedSearcherManager;
 
 	@Inject
 	private static JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private static Portal _portal;
 
 	@DeleteAfterTestRun
 	private List<AssetTag> _assetTags;

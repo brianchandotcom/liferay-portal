@@ -15,6 +15,7 @@
 package com.liferay.portal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
 import com.liferay.journal.test.util.search.JournalArticleContent;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.module.util.BundleUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -72,7 +74,7 @@ public class IndexerRequestBufferTest {
 		_group = GroupTestUtil.addGroup();
 
 		_journalArticleSearchFixture = new JournalArticleSearchFixture(
-			_journalArticleLocalService);
+			_ddmStructureLocalService, _journalArticleLocalService, _portal);
 
 		_journalArticleSearchFixture.setUp();
 	}
@@ -128,7 +130,13 @@ public class IndexerRequestBufferTest {
 	}
 
 	@Inject
+	private static DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
 	private static JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private static Portal _portal;
 
 	private static TransactionConfig _transactionConfig;
 

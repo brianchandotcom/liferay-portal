@@ -17,6 +17,8 @@ package com.liferay.portal.search.indexer.clauses.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -225,6 +228,13 @@ public class IndexerClausesExpandoTest {
 							RandomTestUtil.randomString(), serviceContext));
 				}
 				else if (clazz.equals(JournalArticle.class)) {
+					DDMStructure ddmStructure =
+						_ddmStructureLocalService.getStructure(
+							_group.getGroupId(),
+							_portal.getClassNameId(
+								JournalArticle.class.getName()),
+							"BASIC-WEB-CONTENT", true);
+
 					JournalArticleLocalServiceUtil.addArticle(
 						null, TestPropsValues.getUserId(), _group.getGroupId(),
 						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -237,7 +247,7 @@ public class IndexerClausesExpandoTest {
 						DDMStructureTestUtil.getSampleStructuredContent(
 							"content", Collections.emptyList(),
 							LocaleUtil.toLanguageId(LocaleUtil.US)),
-						"BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT",
+						ddmStructure.getStructureId(), "BASIC-WEB-CONTENT",
 						serviceContext);
 				}
 				else if (clazz.equals(MBMessage.class)) {
@@ -286,6 +296,9 @@ public class IndexerClausesExpandoTest {
 
 	private Consumer<SearchRequestBuilder> _consumer;
 
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
 	@DeleteAfterTestRun
 	private List<ExpandoColumn> _expandoColumns = new ArrayList<>();
 
@@ -297,6 +310,9 @@ public class IndexerClausesExpandoTest {
 
 	@Inject(filter = "component.name=*.JournalArticleIndexer")
 	private Indexer<JournalArticle> _journalArticleIndexer;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private Searcher _searcher;

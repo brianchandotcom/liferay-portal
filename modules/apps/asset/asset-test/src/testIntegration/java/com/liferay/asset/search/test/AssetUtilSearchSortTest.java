@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
@@ -62,6 +63,9 @@ public class AssetUtilSearchSortTest {
 	@Before
 	public void setUp() throws Exception {
 		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		_journalArticleFixture.setDDMStructureLocalService(
+			_ddmStructureLocalService);
 
 		_group = GroupTestUtil.addGroup();
 
@@ -147,6 +151,9 @@ public class AssetUtilSearchSortTest {
 
 	@Inject
 	private static AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private static DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject
 	private static JournalArticleLocalService _journalArticleLocalService;

@@ -15,6 +15,8 @@
 package com.liferay.journal.content.web.internal.upgrade.v1_1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -153,6 +155,11 @@ public class UpgradePortletPreferencesTest {
 			"scopeType", "layout"
 		).build();
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(_group.getGroupId()),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			"BASIC-WEB-CONTENT", true);
+
 		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
 			null, TestPropsValues.getUserId(), layoutGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -165,7 +172,7 @@ public class UpgradePortletPreferencesTest {
 			DDMStructureTestUtil.getSampleStructuredContent(
 				"content", Collections.emptyList(),
 				LocaleUtil.toLanguageId(locale)),
-			"BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT",
+			ddmStructure.getStructureId(), "BASIC-WEB-CONTENT",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_assertUpgradePortletPreferences(
@@ -405,6 +412,9 @@ public class UpgradePortletPreferencesTest {
 			_groupLocalService, _journalArticleLocalService, _language,
 			_layoutLocalService, _portal);
 	}
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

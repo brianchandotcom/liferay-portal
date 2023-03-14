@@ -793,6 +793,11 @@ public class JournalArticleLocalServiceTest {
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(_group.getGroupId()),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			dataDefinition.getDataDefinitionKey(), true);
+
 		JournalArticle journalArticle =
 			JournalArticleLocalServiceUtil.addArticle(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
@@ -817,9 +822,9 @@ public class JournalArticleLocalServiceTest {
 					_readFileToString(
 						"journal_content_with_different_locales.xml"),
 					"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
-				dataDefinition.getDataDefinitionKey(), null, null, 1, 1, 1965,
-				0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
-				null, null, null, null,
+				ddmStructure.getStructureId(), null, null, 1, 1, 1965, 0, 0, 0,
+				0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null,
+				null, null,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -862,6 +867,11 @@ public class JournalArticleLocalServiceTest {
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(_group.getGroupId()),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			dataDefinition.getDataDefinitionKey(), true);
+
 		JournalArticle journalArticle =
 			JournalArticleLocalServiceUtil.addArticle(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
@@ -887,9 +897,9 @@ public class JournalArticleLocalServiceTest {
 						"journal_content_nested_fields_with_different_" +
 							"locales.xml"),
 					"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
-				dataDefinition.getDataDefinitionKey(), null, null, 1, 1, 1965,
-				0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
-				null, null, null, null,
+				ddmStructure.getStructureId(), null, null, 1, 1, 1965, 0, 0, 0,
+				0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null,
+				null, null,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -1164,7 +1174,7 @@ public class JournalArticleLocalServiceTest {
 				HashMapBuilder.put(
 					LocaleUtil.US, title
 				).build(),
-				null, content, ddmStructure.getStructureKey(),
+				null, content, ddmStructure.getStructureId(),
 				ddmTemplate.getTemplateKey(), null, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null,
 				serviceContext);
@@ -1265,11 +1275,11 @@ public class JournalArticleLocalServiceTest {
 			journalArticle.getFolderId(), journalArticle.getArticleId(),
 			journalArticle.getVersion(), journalArticle.getTitleMap(),
 			journalArticle.getDescriptionMap(), friendlyURLMap,
-			journalArticle.getContent(), journalArticle.getDDMStructureKey(),
-			journalArticle.getDDMTemplateKey(), journalArticle.getLayoutUuid(),
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
-			journalArticle.isIndexable(), false, null, null, null, null,
+			journalArticle.getContent(), journalArticle.getDDMTemplateKey(),
+			journalArticle.getLayoutUuid(), displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute, 0, 0, 0, 0, 0,
+			true, 0, 0, 0, 0, 0, true, journalArticle.isIndexable(), false,
+			null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				journalArticle.getGroupId(), TestPropsValues.getUserId()));
 	}

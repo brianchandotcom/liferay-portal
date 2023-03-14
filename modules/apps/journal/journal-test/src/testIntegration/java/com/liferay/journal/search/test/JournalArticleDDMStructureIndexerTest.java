@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -148,7 +150,8 @@ public class JournalArticleDDMStructureIndexerTest {
 
 	protected void setUpJournalArticleDDMStructureFixture() throws Exception {
 		structureFixture = new JournalArticleDDMStructureFixture(
-			group, journalArticleLocalService);
+			ddmStructureLocalService, group, journalArticleLocalService,
+			portal);
 
 		ddmStructures = structureFixture.getStructures();
 
@@ -171,7 +174,13 @@ public class JournalArticleDDMStructureIndexerTest {
 	}
 
 	@Inject
+	protected static DDMStructureLocalService ddmStructureLocalService;
+
+	@Inject
 	protected static JournalArticleLocalService journalArticleLocalService;
+
+	@Inject
+	protected static Portal portal;
 
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	protected DDMFormDeserializer ddmFormDeserializer;

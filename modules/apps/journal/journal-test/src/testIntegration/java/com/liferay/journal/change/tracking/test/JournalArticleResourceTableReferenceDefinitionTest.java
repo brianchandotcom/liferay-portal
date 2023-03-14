@@ -109,8 +109,8 @@ public class JournalArticleResourceTableReferenceDefinitionTest
 					defaultLocale, RandomTestUtil.randomString()
 				).build(),
 				LocaleUtil.toLanguageId(defaultLocale)),
-			_ddmStructure.getStructureKey(), _ddmTemplate.getTemplateKey(),
-			null, displayCal.get(Calendar.MONTH), displayCal.get(Calendar.DATE),
+			_ddmStructure.getStructureId(), _ddmTemplate.getTemplateKey(), null,
+			displayCal.get(Calendar.MONTH), displayCal.get(Calendar.DATE),
 			displayCal.get(Calendar.YEAR), displayCal.get(Calendar.HOUR_OF_DAY),
 			displayCal.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0,
 			true, true, false, null, null, null, null,

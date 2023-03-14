@@ -438,7 +438,7 @@ public class ExportImportPerformanceTest {
 			RandomTestUtil.randomLocaleStringMap(defaultLocale),
 			RandomTestUtil.randomLocaleStringMap(defaultLocale),
 			RandomTestUtil.randomLocaleStringMap(defaultLocale), content,
-			_ddmStructure.getStructureKey(), _ddmTemplate.getTemplateKey(),
+			_ddmStructure.getStructureId(), _ddmTemplate.getTemplateKey(),
 			StringPool.BLANK, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0,
 			true, true, false, null, null, null, null, _serviceContext);
 	}

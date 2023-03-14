@@ -15,6 +15,7 @@
 package com.liferay.journal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.search.test.util.SummaryFixture;
 import com.liferay.portal.test.rule.Inject;
@@ -70,7 +72,7 @@ public class JournalArticleIndexerSummaryTest {
 		_user = UserTestUtil.addUser();
 
 		_journalArticleSearchFixture = new JournalArticleSearchFixture(
-			_journalArticleLocalService);
+			_ddmStructureLocalService, _journalArticleLocalService, _portal);
 
 		_journalArticleSearchFixture.setUp();
 
@@ -211,7 +213,13 @@ public class JournalArticleIndexerSummaryTest {
 	}
 
 	@Inject
+	private static DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
 	private static JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private static Portal _portal;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -18,6 +18,7 @@ dependencies {
 	testIntegrationCompile project(":apps:blogs:blogs-test-util")
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-api")
 	testIntegrationCompile project(":apps:document-library:document-library-test-util")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")

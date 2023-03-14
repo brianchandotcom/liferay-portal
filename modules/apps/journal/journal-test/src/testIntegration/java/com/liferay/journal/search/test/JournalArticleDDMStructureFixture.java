@@ -17,6 +17,7 @@ package com.liferay.journal.search.test;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.model.JournalArticle;
@@ -27,6 +28,7 @@ import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
@@ -40,12 +42,13 @@ import java.util.Locale;
 public class JournalArticleDDMStructureFixture {
 
 	public JournalArticleDDMStructureFixture(
-		Group group, JournalArticleLocalService journalArticleLocalService) {
+		DDMStructureLocalService ddmStructureLocalService, Group group,
+		JournalArticleLocalService journalArticleLocalService, Portal portal) {
 
 		_group = group;
 
 		_journalArticleSearchFixture = new JournalArticleSearchFixture(
-			journalArticleLocalService);
+			ddmStructureLocalService, journalArticleLocalService, portal);
 	}
 
 	public DDMStructure createStructureWithJournalArticle(
@@ -71,7 +74,7 @@ public class JournalArticleDDMStructureFixture {
 		getTemplates().add(ddmTemplate);
 
 		JournalArticle journalArticle = _journalArticleSearchFixture.addArticle(
-			journalArticleBlueprint, ddmStructure.getStructureKey(),
+			journalArticleBlueprint, ddmStructure.getStructureId(),
 			ddmTemplate.getTemplateKey());
 
 		getJournalArticles().add(journalArticle);

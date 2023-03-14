@@ -132,7 +132,7 @@ public class DDMTemplateStagedModelDataHandlerTest
 			JournalArticleLocalServiceUtil.addArticle(
 				null, TestPropsValues.getUserId(), childGroup.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, titleMap,
-				descriptionMap, content, structure.getStructureKey(),
+				descriptionMap, content, structure.getStructureId(),
 				template.getTemplateKey(), serviceContext);
 
 		_exportTemplateAndStructure(parentGroup, template, structure);

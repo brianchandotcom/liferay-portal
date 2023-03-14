@@ -304,7 +304,7 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			journalFolder.getFolderId(),
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
 			true, 0, titleMap, null, titleMap, content,
-			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(), null,
+			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(), null,
 			1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true,
 			false, null, null, null, null, serviceContext);
 	}

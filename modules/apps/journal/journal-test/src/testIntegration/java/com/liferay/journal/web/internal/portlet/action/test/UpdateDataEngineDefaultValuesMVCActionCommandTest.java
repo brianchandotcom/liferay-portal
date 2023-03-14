@@ -121,9 +121,9 @@ public class UpdateDataEngineDefaultValuesMVCActionCommandTest {
 						Collections.singletonList(
 							String.valueOf(ddmStructure.getStructureId()))
 					).put(
-						"ddmStructureKey",
+						"ddmStructureId",
 						Collections.singletonList(
-							ddmStructure.getStructureKey())
+							String.valueOf(ddmStructure.getStructureId()))
 					).put(
 						"expirationDateDay",
 						Collections.singletonList(

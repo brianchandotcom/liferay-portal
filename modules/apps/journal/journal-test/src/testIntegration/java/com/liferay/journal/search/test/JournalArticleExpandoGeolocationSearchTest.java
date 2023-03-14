@@ -15,6 +15,7 @@
 package com.liferay.journal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.query.Queries;
@@ -81,7 +83,7 @@ public class JournalArticleExpandoGeolocationSearchTest {
 	@Before
 	public void setUp() throws Exception {
 		_journalArticleSearchFixture = new JournalArticleSearchFixture(
-			journalArticleLocalService);
+			ddmStructureLocalService, journalArticleLocalService, portal);
 
 		_journalArticles = _journalArticleSearchFixture.getJournalArticles();
 
@@ -304,6 +306,12 @@ public class JournalArticleExpandoGeolocationSearchTest {
 			searchResponse.getRequestString(), searchResponse.getDocuments(),
 			fieldName, expected);
 	}
+
+	@Inject
+	protected static DDMStructureLocalService ddmStructureLocalService;
+
+	@Inject
+	protected static Portal portal;
 
 	@Inject
 	protected static SearchEngineHelper searchEngineHelper;

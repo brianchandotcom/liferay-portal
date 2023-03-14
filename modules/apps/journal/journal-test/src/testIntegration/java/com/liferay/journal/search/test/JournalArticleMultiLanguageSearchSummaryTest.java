@@ -15,6 +15,7 @@
 package com.liferay.journal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.test.util.SearchContextTestUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.search.test.util.SummaryFixture;
@@ -79,7 +81,7 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 		_indexer = indexerRegistry.getIndexer(JournalArticle.class);
 
 		_journalArticleSearchFixture = new JournalArticleSearchFixture(
-			journalArticleLocalService);
+			ddmStructureLocalService, journalArticleLocalService, portal);
 
 		_journalArticleSearchFixture.setUp();
 
@@ -433,6 +435,12 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 			throw new RuntimeException(searchException);
 		}
 	}
+
+	@Inject
+	protected static DDMStructureLocalService ddmStructureLocalService;
+
+	@Inject
+	protected static Portal portal;
 
 	@Inject
 	protected IndexerRegistry indexerRegistry;

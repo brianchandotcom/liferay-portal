@@ -132,7 +132,7 @@ public class JournalArticleFinderByKeywordsTest {
 					defaultLocale, RandomTestUtil.randomString()
 				).build(),
 				LocaleUtil.toLanguageId(defaultLocale)),
-			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(), null,
+			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(), null,
 			displayCalendar.get(Calendar.MONTH),
 			displayCalendar.get(Calendar.DATE),
 			displayCalendar.get(Calendar.YEAR),

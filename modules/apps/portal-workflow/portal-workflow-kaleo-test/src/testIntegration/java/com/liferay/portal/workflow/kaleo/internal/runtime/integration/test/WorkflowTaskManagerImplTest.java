@@ -1361,7 +1361,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 
 		return _journalArticleLocalService.addArticle(
 			null, _adminUser.getUserId(), _group.getGroupId(), folderId,
-			titleMap, descriptionMap, content, ddmStructure.getStructureKey(),
+			titleMap, descriptionMap, content, ddmStructure.getStructureId(),
 			ddmTemplate.getTemplateKey(), _serviceContext);
 	}
 

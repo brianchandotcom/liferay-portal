@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.search.FileEntryBlueprint;
 import com.liferay.document.library.test.util.search.FileEntrySearchFixture;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.SearchTestRule;
@@ -90,7 +92,7 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 		_fileEntries = _fileEntrySearchFixture.getFileEntries();
 
 		_journalArticleSearchFixture = new JournalArticleSearchFixture(
-			journalArticleLocalService);
+			ddmStructureLocalService, journalArticleLocalService, portal);
 
 		_journalArticleSearchFixture.setUp();
 
@@ -348,7 +350,13 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 	protected static final String US_TITLE = "english";
 
 	@Inject
+	protected static DDMStructureLocalService ddmStructureLocalService;
+
+	@Inject
 	protected static FacetedSearcherManager facetedSearcherManager;
+
+	@Inject
+	protected static Portal portal;
 
 	@Inject
 	protected DLAppLocalService dlAppLocalService;

@@ -470,7 +470,7 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		_journalArticle = _journalArticleLocalService.addArticle(
 			null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, nameMap, nameMap,
-			content, structure.getStructureKey(), _ddmTemplate.getTemplateKey(),
+			content, structure.getStructureId(), _ddmTemplate.getTemplateKey(),
 			serviceContext);
 	}
 

@@ -15,6 +15,7 @@
 package com.liferay.journal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -84,7 +85,7 @@ public class JournalArticleMultiLanguageSearchTest {
 		_indexer = indexerRegistry.getIndexer(JournalArticle.class);
 
 		_journalArticleSearchFixture = new JournalArticleSearchFixture(
-			journalArticleLocalService);
+			ddmStructureLocalService, journalArticleLocalService, portal);
 
 		_journalArticleSearchFixture.setUp();
 
@@ -365,6 +366,9 @@ public class JournalArticleMultiLanguageSearchTest {
 	protected static final String US_DESCRIPTION = "description";
 
 	protected static final String US_TITLE = "english";
+
+	@Inject
+	protected static DDMStructureLocalService ddmStructureLocalService;
 
 	@Inject
 	protected IndexerRegistry indexerRegistry;

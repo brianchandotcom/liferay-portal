@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.search.FileEntryBlueprint;
 import com.liferay.document.library.test.util.search.FileEntrySearchFixture;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.site.SiteFacetFactory;
@@ -97,7 +99,8 @@ public class AggregationFilteringTest {
 		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
 		JournalArticleSearchFixture journalArticleSearchFixture =
-			new JournalArticleSearchFixture(journalArticleLocalService);
+			new JournalArticleSearchFixture(
+				ddmStructureLocalService, journalArticleLocalService, portal);
 
 		_blogsEntries = blogsEntrySearchFixture.getBlogsEntries();
 		_blogsEntrySearchFixture = blogsEntrySearchFixture;
@@ -467,6 +470,12 @@ public class AggregationFilteringTest {
 		addJournalArticle(_group2, _user1, keyword);
 		addJournalArticle(_group1, _user3, keyword);
 	}
+
+	@Inject
+	protected static DDMStructureLocalService ddmStructureLocalService;
+
+	@Inject
+	protected static Portal portal;
 
 	@Inject
 	protected AssetEntriesFacetFactory assetEntriesFacetFactory;

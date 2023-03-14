@@ -636,7 +636,7 @@ public class FragmentEntryProcessorEditableTest {
 				_readFileToString("dynamic_content.xml"),
 				new String[] {"[$FIELD_ID$]", "[$IMAGE_JSON$]"},
 				new String[] {fieldId, _toJSON(fileEntry)}),
-			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(), null,
+			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(), null,
 			displayCalendar.get(Calendar.MONTH),
 			displayCalendar.get(Calendar.DATE),
 			displayCalendar.get(Calendar.YEAR),

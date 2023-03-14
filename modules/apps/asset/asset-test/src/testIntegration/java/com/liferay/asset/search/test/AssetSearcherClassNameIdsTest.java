@@ -21,6 +21,7 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.bookmarks.constants.BookmarksFolderConstants;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -65,6 +66,8 @@ public class AssetSearcherClassNameIdsTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_journalArticleFixture.setDDMStructureLocalService(
+			_ddmStructureLocalService);
 		_group = GroupTestUtil.addGroup();
 
 		_journalArticleFixture.setGroup(_group);
@@ -191,6 +194,9 @@ public class AssetSearcherClassNameIdsTest {
 
 	@Inject
 	private static BookmarksEntryLocalService _bookmarksEntryLocalService;
+
+	@Inject
+	private static DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject
 	private static JournalArticleLocalService _journalArticleLocalService;

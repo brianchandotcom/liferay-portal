@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.test.util.DocumentsAssert;
@@ -94,7 +96,7 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 		_group = _groupSearchFixture.addGroup(new GroupBlueprint());
 
 		_journalArticleSearchFixture = new JournalArticleSearchFixture(
-			_journalArticleLocalService);
+			_ddmStructureLocalService, _journalArticleLocalService, _portal);
 	}
 
 	@Test
@@ -279,10 +281,16 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 	@Inject
 	private static AssetVocabularyLocalService _assetVocabularyLocalService;
 
+	@Inject
+	private static DDMStructureLocalService _ddmStructureLocalService;
+
 	@Inject(
 		filter = "component.name=com.liferay.journal.internal.search.JournalArticleIndexer"
 	)
 	private static Indexer<JournalArticle> _indexer;
+
+	@Inject
+	private static Portal _portal;
 
 	@DeleteAfterTestRun
 	private List<AssetCategory> _assetCategories = new ArrayList<>();

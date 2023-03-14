@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "LPS-137279 Given the Content Performance Panel When the users leave the page because the session expires or s/he does log out Then they find the panel closed"
 	@priority = 3
 	test ContentPerformanceClosed {
 		task ("Open Content Performance panel") {

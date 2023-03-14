@@ -61,11 +61,15 @@ const SearchControls = ({
 
 						<ClayInput.GroupInsetItem after tag="span">
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'close-search'
+								)}
 								className="navbar-breakpoint-d-none"
 								disabled={disabled}
 								displayType="unstyled"
 								onClick={() => setSearchMobile(false)}
 								symbol="times"
+								title={Liferay.Language.get('close-search')}
 							/>
 
 							<ClayButtonWithIcon
@@ -100,12 +104,13 @@ const ShowMobileButton = ({disabled, setSearchMobile}) => {
 	return (
 		<ManagementToolbar.Item className="navbar-breakpoint-d-none">
 			<ClayButtonWithIcon
-				aria-label={Liferay.Language.get('search')}
+				aria-label={Liferay.Language.get('open-search')}
 				className="nav-link nav-link-monospaced"
 				disabled={disabled}
 				displayType="unstyled"
 				onClick={() => setSearchMobile(true)}
 				symbol="search"
+				title={Liferay.Language.get('open-search')}
 			/>
 		</ManagementToolbar.Item>
 	);

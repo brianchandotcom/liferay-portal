@@ -14,12 +14,11 @@
 
 package com.liferay.redirect.internal.util;
 
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.redirect.model.RedirectPatternEntry;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -40,47 +39,53 @@ public class PatternUtilTest {
 
 	@Test
 	public void testAnchoredPattern() {
-		Map<Pattern, String> patternStrings = PatternUtil.parse(
+		List<RedirectPatternEntry> redirectPatternEntries = PatternUtil.parse(
 			new String[] {"^xyz abc"});
 
-		Assert.assertEquals("^xyz", _getFirstPatternString(patternStrings));
 		Assert.assertEquals(
-			patternStrings.toString(), 1, patternStrings.size());
+			"^xyz", _getFirstPatternString(redirectPatternEntries));
+		Assert.assertEquals(
+			redirectPatternEntries.toString(), 1,
+			redirectPatternEntries.size());
 	}
 
 	@Test
 	public void testCaretPattern() {
-		Map<Pattern, String> patternStrings = PatternUtil.parse(
+		List<RedirectPatternEntry> redirectPatternEntries = PatternUtil.parse(
 			new String[] {"^xyz abc"});
 
-		Assert.assertEquals("^xyz", _getFirstPatternString(patternStrings));
 		Assert.assertEquals(
-			patternStrings.toString(), 1, patternStrings.size());
+			"^xyz", _getFirstPatternString(redirectPatternEntries));
+		Assert.assertEquals(
+			redirectPatternEntries.toString(), 1,
+			redirectPatternEntries.size());
 	}
 
 	@Test
 	public void testCaretSlashPattern() {
-		Map<Pattern, String> patternStrings = PatternUtil.parse(
+		List<RedirectPatternEntry> redirectPatternEntries = PatternUtil.parse(
 			new String[] {"^/xyz abc"});
 
-		Assert.assertEquals("^xyz", _getFirstPatternString(patternStrings));
 		Assert.assertEquals(
-			patternStrings.toString(), 1, patternStrings.size());
+			"^xyz", _getFirstPatternString(redirectPatternEntries));
+		Assert.assertEquals(
+			redirectPatternEntries.toString(), 1,
+			redirectPatternEntries.size());
 	}
 
 	@Test
 	public void testEmptyPatternOrEmptyReplacement() {
 		Assert.assertTrue(
-			MapUtil.isEmpty(PatternUtil.parse(new String[] {" xyz"})));
+			ListUtil.isEmpty(PatternUtil.parse(new String[] {" xyz"})));
 		Assert.assertTrue(
-			MapUtil.isEmpty(PatternUtil.parse(new String[] {"xyz "})));
+			ListUtil.isEmpty(PatternUtil.parse(new String[] {"xyz "})));
 		Assert.assertTrue(
-			MapUtil.isEmpty(PatternUtil.parse(new String[] {"xyz"})));
+			ListUtil.isEmpty(PatternUtil.parse(new String[] {"xyz"})));
 	}
 
 	@Test
 	public void testEmptyPatterns() {
-		Assert.assertTrue(MapUtil.isEmpty(PatternUtil.parse(new String[0])));
+		Assert.assertTrue(ListUtil.isEmpty(PatternUtil.parse(new String[0])));
 	}
 
 	@Test(expected = PatternSyntaxException.class)
@@ -90,32 +95,35 @@ public class PatternUtilTest {
 
 	@Test
 	public void testSlashPattern() {
-		Map<Pattern, String> patternStrings = PatternUtil.parse(
+		List<RedirectPatternEntry> redirectPatternEntries = PatternUtil.parse(
 			new String[] {"/xyz abc"});
 
-		Assert.assertEquals("^xyz", _getFirstPatternString(patternStrings));
 		Assert.assertEquals(
-			patternStrings.toString(), 1, patternStrings.size());
+			"^xyz", _getFirstPatternString(redirectPatternEntries));
+		Assert.assertEquals(
+			redirectPatternEntries.toString(), 1,
+			redirectPatternEntries.size());
 	}
 
 	@Test
 	public void testUnanchoredPattern() {
-		Map<Pattern, String> patternStrings = PatternUtil.parse(
+		List<RedirectPatternEntry> redirectPatternEntries = PatternUtil.parse(
 			new String[] {"xyz abc"});
 
-		Assert.assertEquals("^xyz", _getFirstPatternString(patternStrings));
 		Assert.assertEquals(
-			patternStrings.toString(), 1, patternStrings.size());
+			"^xyz", _getFirstPatternString(redirectPatternEntries));
+		Assert.assertEquals(
+			redirectPatternEntries.toString(), 1,
+			redirectPatternEntries.size());
 	}
 
-	private String _getFirstPatternString(Map<Pattern, String> patternStrings) {
-		Set<Map.Entry<Pattern, String>> entries = patternStrings.entrySet();
+	private String _getFirstPatternString(
+		List<RedirectPatternEntry> redirectPatternEntries) {
 
-		Iterator<Map.Entry<Pattern, String>> iterator = entries.iterator();
+		RedirectPatternEntry redirectPatternEntry = redirectPatternEntries.get(
+			0);
 
-		Map.Entry<Pattern, String> entry = iterator.next();
-
-		Pattern pattern = entry.getKey();
+		Pattern pattern = redirectPatternEntry.getPattern();
 
 		return pattern.pattern();
 	}

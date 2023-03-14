@@ -326,14 +326,7 @@ public class JournalArticleIndexerLocalizedContentTest {
 
 		localizedTitleStrings.put("localized_title", title);
 
-		String word1 = "新規";
-		String word2 = "作成";
-		String prefix1 = "新";
-		String prefix2 = "作";
-
-		for (String searchTerm :
-				Arrays.asList(word1, word2, prefix1, prefix2)) {
-
+		for (String searchTerm : Arrays.asList("新規", "作成", "新", "作")) {
 			SearchResponse searchResponse =
 				_indexerFixture.searchOnlyOneSearchResponse(
 					searchTerm, LocaleUtil.JAPAN);
@@ -356,10 +349,8 @@ public class JournalArticleIndexerLocalizedContentTest {
 			"title_ja_JP",
 			() -> {
 				String full = "新規作成";
-				String partial1 = "新大阪";
-				String partial2 = "作戦大成功";
 
-				for (String title : Arrays.asList(full, partial1, partial2)) {
+				for (String title : Arrays.asList(full, "新大阪", "作戦大成功")) {
 					_journalArticleSearchFixture.addArticle(
 						new JournalArticleBlueprint() {
 							{
@@ -389,15 +380,11 @@ public class JournalArticleIndexerLocalizedContentTest {
 			}
 		).build();
 
-		String word1 = "新規";
-		String word2 = "作成";
-
-		for (String searchTerm : Arrays.asList(word1, word2)) {
-			Document document = _indexerFixture.searchOnlyOne(
-				searchTerm, LocaleUtil.JAPAN);
-
+		for (String searchTerm : Arrays.asList("新規", "作成")) {
 			FieldValuesAssert.assertFieldValues(
-				titleStrings, "title_", document, searchTerm);
+				titleStrings, "title_",
+				_indexerFixture.searchOnlyOne(searchTerm, LocaleUtil.JAPAN),
+				searchTerm);
 		}
 	}
 
@@ -416,17 +403,17 @@ public class JournalArticleIndexerLocalizedContentTest {
 	}
 
 	private Map<String, String> _withSortableValues(Map<String, String> map) {
-		Map<String, String> map2 = new HashMap<>();
+		Map<String, String> values = new HashMap<>();
 
 		for (Map.Entry<String, String> entry : map.entrySet()) {
-			map2.put(
+			values.put(
 				entry.getKey() + "_sortable",
 				StringUtil.toLowerCase(entry.getValue()));
 		}
 
-		map2.putAll(map);
+		values.putAll(map);
 
-		return map2;
+		return values;
 	}
 
 	@Inject

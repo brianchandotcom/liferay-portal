@@ -135,6 +135,15 @@ html {
 		}
 	}
 
+	&.popover-management-toolbar-small {
+		.popover-body {
+			max-height: 190px !important;
+			min-height: 50px !important;
+			overflow-y: hidden !important;
+			padding: 0;
+		}
+	}
+
 	.popover-body {
 		max-height: 590px !important;
 		min-height: 350px !important;

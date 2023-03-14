@@ -137,14 +137,12 @@ public class FragmentCollectionContributorRegistryImpl
 			FragmentCollectionContributor fragmentCollectionContributor =
 				fragmentCollectionBag._fragmentCollectionContributor;
 
-			for (int type : _SUPPORTED_FRAGMENT_TYPES) {
-				for (FragmentEntry fragmentEntry :
-						fragmentCollectionContributor.getFragmentEntries(
-							type, locale)) {
+			for (FragmentEntry fragmentEntry :
+					fragmentCollectionContributor.getFragmentEntries(
+						_SUPPORTED_FRAGMENT_TYPES, locale)) {
 
-					fragmentEntries.put(
-						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
-				}
+				fragmentEntries.put(
+					fragmentEntry.getFragmentEntryKey(), fragmentEntry);
 			}
 		}
 
@@ -308,20 +306,18 @@ public class FragmentCollectionContributorRegistryImpl
 					fragmentComposition);
 			}
 
-			for (int type : _SUPPORTED_FRAGMENT_TYPES) {
-				for (FragmentEntry fragmentEntry :
-						fragmentCollectionContributor.getFragmentEntries(
-							type)) {
+			for (FragmentEntry fragmentEntry :
+					fragmentCollectionContributor.getFragmentEntries(
+						_SUPPORTED_FRAGMENT_TYPES)) {
 
-					if (!_validateFragmentEntry(fragmentEntry)) {
-						continue;
-					}
-
-					fragmentEntries.put(
-						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
-
-					_updateFragmentEntryLinks(fragmentEntry);
+				if (!_validateFragmentEntry(fragmentEntry)) {
+					continue;
 				}
+
+				fragmentEntries.put(
+					fragmentEntry.getFragmentEntryKey(), fragmentEntry);
+
+				_updateFragmentEntryLinks(fragmentEntry);
 			}
 
 			return new FragmentCollectionBag(

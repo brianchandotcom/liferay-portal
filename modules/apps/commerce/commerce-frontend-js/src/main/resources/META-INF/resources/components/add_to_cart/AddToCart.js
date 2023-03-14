@@ -134,12 +134,10 @@ function AddToCart({
 
 		Liferay.on(CART_PRODUCT_QUANTITY_CHANGED, handleQuantityChanged);
 
-		if (settings.namespace) {
-			Liferay.on(
-				`${settings.namespace}${CP_INSTANCE_CHANGED}`,
-				handleCPInstanceReplaced
-			);
-		}
+		Liferay.on(
+			`${settings.namespace}${CP_INSTANCE_CHANGED}`,
+			handleCPInstanceReplaced
+		);
 
 		return () => {
 			Liferay.detach(
@@ -147,14 +145,12 @@ function AddToCart({
 				handleQuantityChanged
 			);
 
-			if (settings.namespace) {
-				Liferay.detach(
-					`${settings.namespace}${CP_INSTANCE_CHANGED}`,
-					handleCPInstanceReplaced
-				);
-			}
+			Liferay.detach(
+				`${settings.namespace}${CP_INSTANCE_CHANGED}`,
+				handleCPInstanceReplaced
+			);
 		};
-	}, [handleCPInstanceReplaced, settings.namespace]);
+	}, [handleCPInstanceReplaced, settings]);
 
 	const spaceDirection = settings.inline ? 'ml' : 'mt';
 	const spacer = settings.size === 'sm' ? 1 : 3;

@@ -40,7 +40,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 		: Liferay.ThemeDisplay.getUserName();
 
 	return (
-		<div className="cursor-pointer testray-sidebar-footer">
+		<div className="tr-sidebar__content__footer">
 			<div className="d-flex justify-content-end">
 				<Tooltip
 					position="right"
@@ -48,9 +48,12 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 				>
 					<div onClick={onClick}>
 						<ForwardIcon
-							className={classNames('forward-icon ', {
-								'forward-icon-expanded': expanded,
-							})}
+							className={classNames(
+								'tr-sidebar__content__footer__forwardicon',
+								{
+									'tr-sidebar__content__footer__forwardicon--expand': expanded,
+								}
+							)}
 						/>
 					</div>
 				</Tooltip>
@@ -68,13 +71,16 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 							}
 						>
 							<div
-								className={classNames('testray-sidebar-item', {
-									'testray-sidebar-item-expand': expanded,
-									'testray-sidebar-item-normal': !expanded,
-								})}
+								className={classNames(
+									'tr-sidebar__content__list',
+									{
+										'tr-sidebar__content__list--expand': expanded,
+										'tr-sidebar__content__list--normal': !expanded,
+									}
+								)}
 							>
 								<TestrayIcons
-									className="testray-icon"
+									className="tr-sidebar__content__list__icon"
 									fill="#8b8db2"
 									size={30}
 									symbol="cog"
@@ -82,9 +88,9 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 
 								<span
 									className={classNames(
-										'ml-1 testray-sidebar-text',
+										'tr-sidebar__content__list__text',
 										{
-											'testray-sidebar-text-expanded': expanded,
+											'tr-sidebar__content__list__text--expanded': expanded,
 										}
 									)}
 								>
@@ -96,7 +102,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 				}
 			/>
 
-			<div className="divider divider-full" />
+			<div className="tr-sidebar__content__divider" />
 
 			<DropDown
 				items={[
@@ -123,8 +129,14 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 							position="right"
 							title={expanded ? undefined : loggedUserName}
 						>
-							<div className="testray-avatar-dropdown testray-sidebar-item">
+							<div className="tr-sidebar__content__list">
 								<Avatar
+									className={classNames(
+										'tr-sidebar__content__footer__avatar',
+										{
+											'tr-sidebar__content__footer__avatar--expanded': expanded,
+										}
+									)}
 									displayName
 									displayTooltip={false}
 									expanded={expanded}

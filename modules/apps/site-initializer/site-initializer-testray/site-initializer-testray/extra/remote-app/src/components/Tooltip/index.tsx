@@ -26,14 +26,20 @@ export type ALIGN_POSITIONS =
 
 type TooltipProps = {
 	children: ReactNode;
+	className?: string;
 	position?: ALIGN_POSITIONS;
 	ref?: React.ForwardedRef<HTMLDivElement>;
 	title?: string;
 };
 
 const Tooltip: React.FC<TooltipProps> = forwardRef(
-	({children, position = 'top', title}, ref) => (
-		<div data-tooltip-align={position} ref={ref} title={title}>
+	({children, className, position = 'top', title}, ref) => (
+		<div
+			className={className}
+			data-tooltip-align={position}
+			ref={ref}
+			title={title}
+		>
 			{children}
 		</div>
 	)

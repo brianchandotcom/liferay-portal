@@ -39,17 +39,21 @@ const Sidebar = () => {
 	const [visible, setVisible] = useState(false);
 
 	const CompareRunsContent = (
-		<div className={classNames('cursor-pointer testray-sidebar-item')}>
+		<div
+			className={classNames(
+				'tr-sidebar__content__list tr-sidebar__content__list__compare-runs-options'
+			)}
+		>
 			<TestrayIcons
-				className="testray-icon"
+				className="tr-sidebar__content__list__icon"
 				fill="#8b8db2"
 				size={35}
 				symbol="drop"
 			/>
 
 			<span
-				className={classNames('ml-1 testray-sidebar-text', {
-					'testray-sidebar-text-expanded': expanded,
+				className={classNames('tr-sidebar__content__list__text', {
+					'tr-sidebar__content__list__text--expanded': expanded,
 				})}
 			>
 				{i18n.sub('compare-x', 'runs')}
@@ -71,16 +75,8 @@ const Sidebar = () => {
 			path: '/testflow',
 		},
 		{
-			className: 'mt-3',
 			element: (
-				<div
-					className={classNames({
-						'testray-sidebar-item-expand': expanded,
-						'testray-sidebar-item-normal': !expanded,
-					})}
-					onClick={() => setVisible((show) => !show)}
-					ref={ref}
-				>
+				<div onClick={() => setVisible((show) => !show)} ref={ref}>
 					<Tooltip
 						position="right"
 						title={
@@ -99,67 +95,62 @@ const Sidebar = () => {
 	return (
 		<ClayTooltipProvider>
 			<div
-				className={classNames(
-					'testray-sidebar d-flex flex-column justify-content-between',
-					{
-						'testray-sidebar-expanded': expanded,
-					}
-				)}
+				className={classNames('tr-sidebar', {
+					'tr-sidebar--expanded': expanded,
+				})}
 			>
-				<div className="testray-sidebar-content">
-					<div>
-						<Link
-							className="d-flex flex-center testray-sidebar-title"
-							to="/"
-						>
-							<TestrayIcon className="testray-logo" />
+				<div className="tr-sidebar__content">
+					<div className="mb-4">
+						<Link className="tr-sidebar__content__title" to="/">
+							<TestrayIcon />
 
 							<TestrayIconBrand
-								className={classNames('testray-brand-logo', {
-									'testray-brand-logo-expand': expanded,
-								})}
+								className={classNames(
+									'tr-sidebar__content__title__brand',
+									{
+										'tr-sidebar__content__title__brand--expanded': expanded,
+									}
+								)}
 							/>
 						</Link>
 
-						{sidebarItems.map(
-							(
-								{className, element, icon, label, path},
-								index
-							) => {
-								const [, ...items] = sidebarItems;
+						<div className="d-flex flex-column pb-5">
+							{sidebarItems.map(
+								({element, icon, label, path}, index) => {
+									const [, ...items] = sidebarItems;
 
-								if (path) {
-									const someItemIsActive = items.some(
-										(item) =>
-											item.path
-												? pathname.includes(item.path)
-												: false
-									);
+									if (path) {
+										const someItemIsActive = items.some(
+											(item) =>
+												item.path
+													? pathname.includes(
+															item.path
+													  )
+													: false
+										);
 
-									return (
-										<SidebarItem
-											active={
-												index === 0
-													? !someItemIsActive
-													: pathname.includes(path)
-											}
-											className={className}
-											expanded={expanded}
-											icon={icon}
-											key={index}
-											label={label}
-											path={path}
-										/>
-									);
+										return (
+											<SidebarItem
+												active={
+													index === 0
+														? !someItemIsActive
+														: pathname.includes(
+																path
+														  )
+												}
+												expanded={expanded}
+												icon={icon}
+												key={index}
+												label={label}
+												path={path}
+											/>
+										);
+									}
+
+									return <div key={index}>{element}</div>;
 								}
-
-								return (
-									<div className={className} key={index}>
-										{element}
-									</div>
-								);
-							}
-						)}
+							)}
+						</div>
 
 						<CompareRunsPopover
 							expanded={expanded}
@@ -168,19 +159,17 @@ const Sidebar = () => {
 							visible={visible}
 						/>
 
-						<div className="pb-5 pt-3">
-							<div className="divider divider-full" />
-						</div>
+						<div className="tr-sidebar__content__divider" />
 					</div>
 
 					<TaskSidebar expanded={expanded} />
-				</div>
 
-				<div className="pb-1">
-					<SidebarFooter
-						expanded={expanded}
-						onClick={() => setExpanded(!expanded)}
-					/>
+					<div className="pb-1">
+						<SidebarFooter
+							expanded={expanded}
+							onClick={() => setExpanded(!expanded)}
+						/>
+					</div>
 				</div>
 			</div>
 		</ClayTooltipProvider>

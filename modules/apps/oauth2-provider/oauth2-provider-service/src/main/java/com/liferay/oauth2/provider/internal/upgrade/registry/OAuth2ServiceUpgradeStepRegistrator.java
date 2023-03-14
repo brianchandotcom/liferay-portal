@@ -16,12 +16,10 @@ package com.liferay.oauth2.provider.internal.upgrade.registry;
 
 import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.OAuth2ApplicationScopeAliasesUpgradeProcess;
 import com.liferay.oauth2.provider.internal.upgrade.v3_0_0.OAuth2ApplicationClientCredentialUserUpgradeUser;
-import com.liferay.oauth2.provider.internal.upgrade.v3_0_1.OAuth2AuthorizationUpgradeProcess;
 import com.liferay.oauth2.provider.internal.upgrade.v3_2_0.OAuth2ApplicationFeatureUpgradeProcess;
 import com.liferay.oauth2.provider.internal.upgrade.v4_1_0.OAuth2ApplicationClientAuthenticationMethodUpgradeProcess;
 import com.liferay.oauth2.provider.internal.upgrade.v4_2_1.OAuth2ScopeGrantRemoveCompanyIdFromObjectsRelatedUpgradeProcess;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
@@ -73,11 +71,7 @@ public class OAuth2ServiceUpgradeStepRegistrator
 			new OAuth2ApplicationClientCredentialUserUpgradeUser());
 
 		registry.register(
-			"3.0.0", "3.0.1",
-			new OAuth2AuthorizationUpgradeProcess(_configurationProvider));
-
-		registry.register(
-			"3.0.1", "3.1.0",
+			"3.0.0", "3.1.0",
 			UpgradeProcessFactory.addColumns(
 				"OAuth2Application", "rememberDevice BOOLEAN"),
 			UpgradeProcessFactory.addColumns(
@@ -131,9 +125,6 @@ public class OAuth2ServiceUpgradeStepRegistrator
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private ScopeLocator _scopeLocator;

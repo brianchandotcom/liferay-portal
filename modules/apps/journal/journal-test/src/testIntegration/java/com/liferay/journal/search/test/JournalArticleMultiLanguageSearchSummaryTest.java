@@ -51,8 +51,6 @@ import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -404,15 +402,19 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 	protected Document getDocumentByUSTitle(
 		List<Document> documents, String title) {
 
-		Stream<Document> stream = documents.stream();
+		Document document = null;
 
-		Optional<Document> documentOptional = stream.filter(
-			document -> title.equals(document.get(LocaleUtil.US, "title"))
-		).findAny();
+		for (Document curDocument : documents) {
+			if (title.equals(curDocument.get(LocaleUtil.US, "title"))) {
+				document = curDocument;
 
-		Assert.assertTrue(title, documentOptional.isPresent());
+				break;
+			}
+		}
 
-		return documentOptional.get();
+		Assert.assertNotNull(title, document);
+
+		return document;
 	}
 
 	protected List<Document> search(String searchTerm, Locale locale)

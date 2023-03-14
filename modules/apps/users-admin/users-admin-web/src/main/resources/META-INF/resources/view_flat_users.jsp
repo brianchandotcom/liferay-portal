@@ -29,8 +29,14 @@ String displayStyle = viewFlatUsersDisplayContext.getDisplayStyle();
 %>
 
 <clay:management-toolbar
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"basePortletURL", String.valueOf(renderResponse.createRenderURL())
+		).build()
+	%>'
 	itemsType="users"
 	managementToolbarDisplayContext="<%= viewFlatUsersDisplayContext.getManagementToolbarDisplayContext() %>"
+	propsTransformer="js/ViewFlatManagementToolbarPropsTransformer"
 />
 
 <aui:form action="<%= currentURLObj.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "search();" %>'>

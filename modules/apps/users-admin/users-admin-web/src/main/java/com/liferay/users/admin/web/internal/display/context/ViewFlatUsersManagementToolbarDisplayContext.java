@@ -91,8 +91,8 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 				if (userSearchTerms.isActive()) {
 					action = Constants.DEACTIVATE;
 				}
-
-				dropdownItem.setHref(
+				dropdownItem.putData("action", "deactivateUserEntries");
+				dropdownItem.putData("deactivateUserEntriesURL",
 					StringBundler.concat(
 						"javascript:", liferayPortletResponse.getNamespace(),
 						"deleteUsers('", action, "');"));

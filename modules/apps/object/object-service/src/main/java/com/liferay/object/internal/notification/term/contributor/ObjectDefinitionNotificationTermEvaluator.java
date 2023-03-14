@@ -141,8 +141,6 @@ public class ObjectDefinitionNotificationTermEvaluator
 					Map<String, Object> termValues)
 				throws PortalException {
 
-				User user = null;
-
 				String prefix = StringUtil.toUpperCase(
 					_objectDefinition.getShortName());
 
@@ -159,7 +157,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 					return null;
 				}
 
-				user = _userLocalService.getUser(
+				User user = _userLocalService.getUser(
 					GetterUtil.getLong(termValues.get("creator")));
 
 				if (!FeatureFlagManagerUtil.isEnabled("LPS-171625")) {

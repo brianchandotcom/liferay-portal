@@ -1,50 +1,27 @@
 $opacity-transition: all 0.3s ease;
 
-.task-sidebar {
-	color: #8b8db2;
+.tr-task-sidebar {
+	color: $color-indigo-light;
 	display: flex;
-	flex: 1 1 auto;
 	flex-direction: column;
+	height: 100%;
 	overflow-x: hidden;
-	overflow-y: scroll;
-	padding: 0 25px 20px;
+
+	a {
+		color: $color-indigo-light;
+	}
 
 	li {
 		overflow-x: hidden;
-		width: 200px;
 	}
 
-	&-expanded {
-		opacity: 1;
-		transition: $opacity-transition;
-		visibility: visible;
-		width: 220px;
-	}
-
-	&-hidden {
-		opacity: 0;
-		transition: $opacity-transition;
-		visibility: hidden;
-		width: 60px;
-	}
-
-	.task-sidebar-title {
-		height: 30px;
-
-		&-expanded {
-			background-color: #18215c;
-			display: flex;
-			justify-content: space-between;
-			width: 100%;
-		}
-
-		&-hidden {
-			display: flex;
-			position: relative;
+	&--hidden {
+		ul {
+			overflow-y: hidden;
 		}
 	}
 
-	.ellipsis-text {
+	&__ellipsis-text {
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
 		display: -webkit-box;
@@ -57,86 +34,109 @@ $opacity-transition: all 0.3s ease;
 		word-wrap: break-word;
 	}
 
-	.quantity-task-badge {
-		align-items: center;
-		background-color: #303376;
-		color: #fff;
-		display: inline-flex;
-		height: 25px;
-		justify-content: center;
-		padding: 4px;
-		width: 25px;
-	}
+	&__title {
+		background-color: $color-indigo-dark;
+		display: flex;
+		flex-shrink: 0;
+		height: 30px;
+		justify-content: space-between;
+		opacity: 0;
+		position: fixed;
+		transition: $opacity-transition;
+		width: 80px;
 
-	.subtask-sidebar {
-		animation-delay: 1s;
-		background-color: #303376;
-		box-sizing: border-box;
-		font-size: 14px !important;
-		margin-bottom: 8px;
-		padding: 8px;
-		text-decoration: none !important;
-		text-transform: uppercase;
-		width: 100%;
+		&--expanded {
+			opacity: 1;
+			transition: $opacity-transition;
+			width: 250px;
+		}
 
-		&:hover {
-			background-color: #434796;
-			color: #b0b2dd;
+		&__text {
+			color: $color-indigo-light;
+			padding-left: 20px;
+			transition: $opacity-transition;
+		}
+
+		.tr-task-sidebar__quantity-badge {
+			margin-right: 20px;
+			padding: 15px;
 		}
 	}
 
-	.sidebar-item-hidden {
+	&__notification {
 		opacity: 0;
+		padding: 0 25px;
+		position: relative;
+		top: 15px;
 		transition: $opacity-transition;
-		visibility: hidden;
-		width: 0;
-	}
 
-	.sidebar-item-visible {
-		opacity: 1;
-		transition: $opacity-transition;
-		visibility: visible;
-	}
+		&--expanded {
+			opacity: 1;
+			transition: $opacity-transition;
+		}
 
-	.notification {
-		margin-left: 3px;
-		position: absolute;
-		top: 10px;
-		user-select: none;
-
-		.task-sidebar-notification {
+		&--badge {
 			align-items: center;
-			background: #f00;
+			background: $color-red;
 			border-radius: 100%;
-			bottom: 10px;
 			box-shadow: 1px 2px 3px rgba(200, 0, 0, 0.3);
-			color: #fff;
+			color: $color-white;
 			display: flex;
 			font-size: 12px;
 			height: 20px;
 			justify-content: center;
-			left: 10px;
-			padding: 10px;
-			position: absolute;
-			transition: all 1s ease;
+			position: relative;
+			right: -10px;
+			top: -30px;
+			transition: $opacity-transition;
 			user-select: none;
 			width: 20px;
 		}
+	}
 
-		&-hide {
-			opacity: 0 !important;
-			transition: all 0.3s ease;
+	&__subtask-list {
+		opacity: 0;
+		padding: 0 20px;
+		visibility: hidden;
+
+		&__subtask-card {
+			align-items: center;
+			background-color: $color-indigo;
+			display: flex;
+			justify-content: space-between;
+			margin: 16px 0;
+			padding: 10px;
+			text-transform: uppercase;
 		}
 
-		&-show {
-			opacity: 1 !important;
-			transition: all 1s ease;
+		&--expanded {
+			margin-bottom: 2rem;
+			opacity: 1;
+			visibility: visible;
+
+			&__progress-bar {
+				height: 16px;
+				margin-bottom: 25px;
+				overflow: hidden;
+			}
 		}
+	}
+
+	&__quantity-badge {
+		align-items: center;
+		background-color: $color-indigo;
+		color: $color-white;
+		display: inline-flex;
+		flex-shrink: 0;
+		height: 25px;
+		justify-content: center;
+		padding: 10px;
+		width: 25px;
 	}
 
 	.scroller {
 		overflow-y: scroll;
-		scrollbar-color: #8b8db2;
+		scrollbar-color: $color-indigo-light;
 	}
 
 	&::-webkit-scrollbar {
@@ -149,31 +149,8 @@ $opacity-transition: all 0.3s ease;
 	}
 
 	&::-webkit-scrollbar-thumb {
-		background-color: #8b8db2;
-		border: 1px solid #18215c;
+		background-color: $color-indigo-light;
+		border: 1px solid $color-indigo-dark;
 		border-radius: 20px;
 	}
-
-	a {
-		color: #8b8db2;
-	}
-
-	.sidebar-buildlink {
-		max-width: 50px;
-		overflow: auto;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		width: 50px;
-	}
-
-	.sidebar-link {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		width: 180px;
-	}
-}
-
-.task-sidebar-divider {
-	border-top: solid #8b8db2 1px;
 }

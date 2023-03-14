@@ -13,7 +13,7 @@
  */
 
 type TestrayIconProps = {
-	className: string;
+	className?: string;
 	fill?: string;
 };
 

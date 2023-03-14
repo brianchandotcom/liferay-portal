@@ -249,8 +249,11 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 
 		};
 
-		jsonObject.put("alt", "This is a image description. " + index);
-		jsonObject.put("data", "base64Value" + index);
+		jsonObject.put(
+			"alt", "This is a image description. " + index
+		).put(
+			"data", "base64Value" + index
+		);
 
 		return new UnlocalizedValue(jsonObject.toString());
 	}

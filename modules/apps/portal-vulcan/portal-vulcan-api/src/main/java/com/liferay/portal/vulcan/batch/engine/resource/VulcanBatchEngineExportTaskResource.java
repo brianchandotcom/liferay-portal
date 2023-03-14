@@ -29,7 +29,8 @@ import javax.ws.rs.core.UriInfo;
 public interface VulcanBatchEngineExportTaskResource {
 
 	public Object postExportTask(
-			String name, String callbackURL, String fieldNames)
+			String name, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);

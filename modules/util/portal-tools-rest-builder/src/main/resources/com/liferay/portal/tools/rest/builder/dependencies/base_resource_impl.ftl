@@ -187,7 +187,7 @@ public abstract class Base${schemaName}ResourceImpl
 				javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.accepted();
 
 				return responseBuilder.entity(
-					vulcanBatchEngineExportTaskResource.postExportTask(${javaDataType}.class.getName(), callbackURL, fieldNames)
+					vulcanBatchEngineExportTaskResource.postExportTask(${javaDataType}.class.getName(), callbackURL, contentType, fieldNames)
 				).build();
 			<#elseif generateBatch && (stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "Batch") || stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + "Id" + schemaName + "Batch"))>
 				vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);

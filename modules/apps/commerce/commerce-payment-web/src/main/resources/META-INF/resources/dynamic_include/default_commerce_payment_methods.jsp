@@ -47,6 +47,8 @@ CommerceChannelAccountEntryRelDisplayContext commerceChannelAccountEntryRelDispl
 					dataProviderKey="<%= CommercePaymentMethodGroupRelFDSNames.ACCOUNT_ENTRY_DEFAULT_PAYMENTS %>"
 					id="<%= CommercePaymentMethodGroupRelFDSNames.ACCOUNT_ENTRY_DEFAULT_PAYMENTS %>"
 					itemsPerPage="<%= 10 %>"
+					showSearch="<%= false %>"
+					style="fluid"
 				/>
 			</div>
 		</div>

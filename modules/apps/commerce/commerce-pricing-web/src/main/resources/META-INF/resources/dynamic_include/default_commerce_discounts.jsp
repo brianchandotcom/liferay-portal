@@ -50,6 +50,7 @@ AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAcco
 			dataProviderKey="<%= CommercePricingFDSNames.ACCOUNT_ENTRY_DISCOUNTS %>"
 			id="<%= CommercePricingFDSNames.ACCOUNT_ENTRY_DISCOUNTS %>"
 			itemsPerPage="<%= 10 %>"
+			showSearch="<%= false %>"
 			style="fluid"
 		/>
 	</div>

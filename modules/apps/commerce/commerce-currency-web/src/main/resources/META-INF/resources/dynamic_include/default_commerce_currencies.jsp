@@ -50,6 +50,7 @@ AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAcco
 			dataProviderKey="<%= CommerceCurrencyFDSNames.ACCOUNT_ENTRY_CURRENCIES %>"
 			id="<%= CommerceCurrencyFDSNames.ACCOUNT_ENTRY_CURRENCIES %>"
 			itemsPerPage="<%= 10 %>"
+			showSearch="<%= false %>"
 			style="fluid"
 		/>
 	</div>

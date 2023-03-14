@@ -50,6 +50,7 @@ AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAcco
 			dataProviderKey="<%= CommerceAddressFDSNames.ACCOUNT_ENTRY_BILLING_ADDRESSES %>"
 			id="<%= CommerceAddressFDSNames.ACCOUNT_ENTRY_BILLING_ADDRESSES %>"
 			itemsPerPage="<%= 10 %>"
+			showSearch="<%= false %>"
 			style="fluid"
 		/>
 	</div>
@@ -79,6 +80,7 @@ AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAcco
 			dataProviderKey="<%= CommerceAddressFDSNames.ACCOUNT_ENTRY_SHIPPING_ADDRESSES %>"
 			id="<%= CommerceAddressFDSNames.ACCOUNT_ENTRY_SHIPPING_ADDRESSES %>"
 			itemsPerPage="<%= 10 %>"
+			showSearch="<%= false %>"
 			style="fluid"
 		/>
 	</div>

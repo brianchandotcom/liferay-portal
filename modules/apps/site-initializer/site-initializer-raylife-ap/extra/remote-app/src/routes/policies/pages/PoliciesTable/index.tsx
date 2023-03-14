@@ -23,7 +23,7 @@ import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 
 import Header from '../../../../common/components/header';
-import Table from '../../../../common/components/table';
+import Table, {TableRowContentType} from '../../../../common/components/table';
 import {
 	Parameters,
 	deletePolicyByExternalReferenceCode,
@@ -62,24 +62,16 @@ type TableItemType = {
 	value: string;
 };
 
-type TableRowContentType = {[keys: string]: string};
-
-type itemsPolicies = {
-	[keys: string]: string;
-};
-
 type itemsPolicyFilter = {
 	policyStatus: {name: string};
 	productName: string;
 };
 
-type itemsProducts = {
-	[keys: string]: string;
-};
+type itemsPolicies = TableContent;
 
-type itemsPicklists = {
-	[keys: string]: string;
-};
+type itemsProducts = TableContent;
+
+type itemsPicklists = TableContent;
 
 type StateSortType = {
 	[keys: string]: boolean;
@@ -576,6 +568,7 @@ const PoliciesTable = () => {
 					policiesList.push({
 						commission: `$${commissionValue.toFixed(2)}`,
 						externalReferenceCode,
+						isClickable: 'true',
 						isExpiring: (renewalDue < 0).toString(),
 						isRedLine: (
 							renewalDue >= 0 &&
@@ -644,7 +637,7 @@ const PoliciesTable = () => {
 		rowContent: TableRowContentType
 	) => {
 		if (item.clickable && item.key === 'email') {
-			handleRedirectToGmail(rowContent[item.key]);
+			handleRedirectToGmail(rowContent[item.key] as string);
 		}
 
 		if (
@@ -652,7 +645,7 @@ const PoliciesTable = () => {
 			item.key === 'externalReferenceCode'
 		) {
 			handleRedirectToDetailsPages(
-				rowContent['externalReferenceCode'],
+				rowContent['externalReferenceCode'] as string,
 				'policy-details'
 			);
 		}

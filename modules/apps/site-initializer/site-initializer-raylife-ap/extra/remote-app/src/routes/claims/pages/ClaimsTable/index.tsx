@@ -23,7 +23,10 @@ import classNames from 'classnames';
 import {useCallback, useEffect, useState} from 'react';
 
 import Header from '../../../../common/components/header';
-import Table from '../../../../common/components/table';
+import Table, {
+	TableHeaders,
+	TableRowContentType,
+} from '../../../../common/components/table';
 import {Parameters} from '../../../../common/services';
 import {
 	deleteClaimByExternalReferenceCode,
@@ -40,6 +43,7 @@ import {
 	lowercaseFirstLetter,
 } from '../../../../common/utils/constantsType';
 import formatDate from '../../../../common/utils/dateFormatter';
+import {redirectTo} from '../../../../common/utils/liferay';
 import useDebounce from '../../../../hooks/useDebounce';
 
 type ClaimTableType = {
@@ -47,6 +51,7 @@ type ClaimTableType = {
 	claimStatus: {name: string};
 	externalReferenceCode: string;
 	id: string;
+	isClickable: string;
 	r_policyToClaims_c_raylifePolicy: {
 		externalReferenceCode: string;
 		policyOwnerName: string;
@@ -54,17 +59,13 @@ type ClaimTableType = {
 	};
 };
 
-type ItemsProducts = {
-	[keys: string]: string;
-};
-
-type ItemsPicklists = {
-	[keys: string]: string;
-};
-
 type TableContentType = {
 	[key: string]: string;
 };
+
+type ItemsProducts = TableContentType;
+
+type ItemsPicklists = TableContentType;
 
 type ItemsFilteredType = {
 	checked: boolean;
@@ -249,6 +250,7 @@ const ClaimsTable = () => {
 		},
 		{
 			bold: true,
+			clickable: true,
 			clickableSort: true,
 			hasSort: false,
 			key: 'id',
@@ -381,6 +383,9 @@ const ClaimsTable = () => {
 				claimName: r_policyToClaims_c_raylifePolicy?.policyOwnerName,
 				claimStatus: claimStatus?.name,
 				id,
+				isClickable: (
+					r_policyToClaims_c_raylifePolicy.productName === 'Auto'
+				).toString(),
 				key: externalReferenceCode,
 				policyNumber:
 					r_policyToClaims_c_raylifePolicy?.externalReferenceCode,
@@ -678,6 +683,22 @@ const ClaimsTable = () => {
 		]);
 	};
 
+	const handleRedirectToDetailsPages = (id: number, entity: string) => {
+		redirectTo(`${entity}?id=${id}`);
+	};
+
+	const onClickRules = (
+		item: TableHeaders,
+		rowContent: TableRowContentType
+	) => {
+		if (item.clickable && item.key === 'id') {
+			handleRedirectToDetailsPages(
+				rowContent['id'] as number,
+				'claim-details'
+			);
+		}
+	};
+
 	useEffect(() => {
 		const handler: LiferayOnAction<ActionType> = ({eventName}) => {
 			const hasDoubleClick = filterCheckedLabel.some(
@@ -953,6 +974,7 @@ const ClaimsTable = () => {
 				]}
 				data={dataClaims}
 				headers={HEADERS}
+				onClickRules={onClickRules}
 				onSaveCurrent={setHeader}
 				setSort={setSortState}
 				sort={sortState}

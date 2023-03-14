@@ -18,7 +18,7 @@ import {useModal} from '@clayui/modal';
 import {useEffect, useState} from 'react';
 
 import Header from '../../../common/components/header';
-import Table from '../../../common/components/table';
+import Table, {TableRowContentType} from '../../../common/components/table';
 import {
 	deleteApplicationByExternalReferenceCode,
 	getApplications,
@@ -107,8 +107,6 @@ type TableItemType = {
 	value: string;
 };
 
-type TableRowContentType = {[keys: string]: string};
-
 type StateSortType = {
 	[keys: string]: boolean;
 };
@@ -187,6 +185,7 @@ const RecentApplications = () => {
 							new Date(applicationCreateDate)
 						),
 						externalReferenceCode,
+						isClickable: 'true',
 						key: externalReferenceCode,
 						name,
 						productName,
@@ -270,7 +269,7 @@ const RecentApplications = () => {
 		rowContent: TableRowContentType
 	) => {
 		if (item.clickable && item.key === 'email') {
-			handleRedirectToGmail(rowContent[item.key]);
+			handleRedirectToGmail(rowContent[item.key] as string);
 		}
 
 		if (
@@ -280,7 +279,7 @@ const RecentApplications = () => {
 				item.key === 'applicationCreateDate')
 		) {
 			handleRedirectToDetailsPages(
-				rowContent['externalReferenceCode'],
+				rowContent['externalReferenceCode'] as string,
 				'app-details'
 			);
 		}

@@ -391,6 +391,19 @@ public class ObjectEntryResourceTest {
 			String.format(
 				"taxonomyCategoryIds/any(k:k le %s)",
 				taxonomyCategory3.getId()));
+
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k in (%s,%s))",
+				taxonomyCategory1.getId(), taxonomyCategory2.getId()));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"taxonomyCategoryIds/any(k:k in (%s,%s))",
+				taxonomyCategory2.getId(), taxonomyCategory3.getId()));
+		_assertFilteredObjectEntries(
+			0, "taxonomyCategoryIds/any(k:k in (1234,5678))");
 	}
 
 	@Test

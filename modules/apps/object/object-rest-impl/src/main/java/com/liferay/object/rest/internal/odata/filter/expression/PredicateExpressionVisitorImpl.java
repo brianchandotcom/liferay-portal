@@ -472,6 +472,15 @@ public class PredicateExpressionVisitorImpl
 						rights, String::valueOf, Object.class)));
 		}
 
+		if (_isTaxonomyCategoryIds(left)) {
+			return _getTaxonomyCategoryIdsPredicate(
+				objectDefinitionId,
+				AssetEntryAssetCategoryRelTable.INSTANCE.assetCategoryId.in(
+					TransformUtil.transformToArray(
+						rights, assetCategoryId -> (Long)assetCategoryId,
+						Long.class)));
+		}
+
 		return _getColumn(
 			left, objectDefinitionId
 		).in(

@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
+import com.liferay.redirect.model.RedirectPatternEntry;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,16 +59,20 @@ public class RedirectPatternConfigurationDisplayContext {
 					(ThemeDisplay)_httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				Map<Pattern, String> patternStrings =
-					_redirectPatternConfigurationProvider.getPatternStrings(
-						themeDisplay.getScopeGroupId());
+				List<RedirectPatternEntry> redirectPatternEntries =
+					_redirectPatternConfigurationProvider.
+						getRedirectPatternEntries(
+							themeDisplay.getScopeGroupId());
 
-				patternStrings.forEach(
-					(pattern, destinationURL) -> list.add(
+				redirectPatternEntries.forEach(
+					redirectPatternUserAgent -> list.add(
 						HashMapBuilder.<String, Object>put(
-							"destinationURL", destinationURL
+							"destinationURL",
+							redirectPatternUserAgent.getDestinationURL()
 						).put(
-							"pattern", pattern.toString()
+							"pattern",
+							String.valueOf(
+								redirectPatternUserAgent.getPattern())
 						).build()));
 
 				return list;

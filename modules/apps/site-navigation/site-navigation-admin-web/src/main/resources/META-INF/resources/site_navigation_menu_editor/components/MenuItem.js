@@ -12,19 +12,17 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
-import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
-import ClayModal, {useModal} from '@clayui/modal';
-import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {fetch, objectToFormData, openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
+import {DELETION_TYPES} from '../constants/deletionTypes';
 import {NESTING_MARGIN} from '../constants/nestingMargin';
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
 import {useConstants} from '../contexts/ConstantsContext';
@@ -39,11 +37,7 @@ import getItemPath from '../utils/getItemPath';
 import getOrder from '../utils/getOrder';
 import {useDragItem, useDropTarget} from '../utils/useDragAndDrop';
 import useKeyboardNavigation from '../utils/useKeyboardNavigation';
-
-const DELETION_TYPES = {
-	bulk: 0,
-	single: 1,
-};
+import DeletionModal from './DeletionModal';
 
 export function MenuItem({
 	isMovementEnabled,
@@ -394,79 +388,6 @@ MenuItem.propTypes = {
 		type: PropTypes.string.isRequired,
 	}),
 };
-
-function DeletionModal({
-	deletionType,
-	onCloseModal,
-	onDeleteItem,
-	setDeletionType,
-}) {
-	const isMounted = useIsMounted();
-
-	const {observer, onClose} = useModal({
-		onClose: () => {
-			if (isMounted()) {
-				onCloseModal();
-			}
-		},
-	});
-
-	return (
-		<ClayModal
-			containerProps={{className: 'cadmin'}}
-			observer={observer}
-			size="lg"
-		>
-			<ClayModal.Header>
-				{Liferay.Language.get('delete-item')}
-			</ClayModal.Header>
-
-			<ClayModal.Body>
-				<p className="font-weight-semi-bold">
-					{Liferay.Language.get(
-						'the-item-you-want-to-delete-has-children-that-also-can-be-removed'
-					)}
-				</p>
-
-				<p className="text-secondary">
-					{Liferay.Language.get('what-action-do-you-want-to-take')}
-				</p>
-
-				<ClayRadioGroup
-					onChange={(type) => setDeletionType(type)}
-					value={deletionType}
-				>
-					<ClayRadio
-						label={Liferay.Language.get('only-delete-this-item')}
-						value={DELETION_TYPES.single}
-					/>
-
-					<ClayRadio
-						label={Liferay.Language.get('delete-item-and-children')}
-						value={DELETION_TYPES.bulk}
-					/>
-				</ClayRadioGroup>
-			</ClayModal.Body>
-
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton displayType="secondary" onClick={onClose}>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-
-						<ClayButton
-							displayType="primary"
-							onClick={onDeleteItem}
-						>
-							{Liferay.Language.get('delete')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
-		</ClayModal>
-	);
-}
 
 function updateMenuItem({
 	editSiteNavigationMenuItemParentURL,

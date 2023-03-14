@@ -22,6 +22,16 @@ export default function FragmentServiceConfiguration({
 }) {
 	return (
 		<>
+			<div className="sheet-subtitle">
+				{Liferay.Language.get('default-fragments')}
+			</div>
+
+			<p className="text-secondary">
+				{Liferay.Language.get(
+					'default-fragments-are-provided-by-liferay-and-they-are-part-of-the-product-code.-here-you-can-define-their-behavior'
+				)}
+			</p>
+
 			<ClayCheckbox
 				defaultChecked={propagateContributedFragmentChanges}
 				label={Liferay.Language.get(
@@ -37,6 +47,16 @@ export default function FragmentServiceConfiguration({
 					)}
 				</div>
 			</div>
+
+			<div className="mt-3 sheet-subtitle">
+				{Liferay.Language.get('custom-fragments')}
+			</div>
+
+			<p className="text-secondary">
+				{Liferay.Language.get(
+					'custom-fragments-are-those-that-are-created-by-the-user.-here-you-can-define-their-behavior'
+				)}
+			</p>
 
 			<ClayCheckbox
 				defaultChecked={propagateChanges}

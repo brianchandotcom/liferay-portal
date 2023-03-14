@@ -1,0 +1,149 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given Object Definition student created") {
+			var objectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given student entry created") {
+			var studentEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Able");
+
+			CustomObjectAPI.staticObjectEntryId(objectEntryId = ${studentEntryId});
+		}
+
+		task ("And Given new role "Test" with permissions created") {
+			JSONRole.addRegularRole(
+				roleKey = "Test",
+				roleTitle = "Test");
+		}
+
+		task ("And Given the role "Test" assigned to student entry") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.object.model.ObjectDefinition#${objectDefinitionId}",
+				roleTitle = "Test",
+				roleType = "regular");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+		else {
+			ObjectAdmin.deleteObjectViaAPI(objectName = "Student");
+		}
+	}
+
+	@description = "Ignore tests until LPS-177115 fixed"
+	@disable-webdriver = "true"
+	@ignore = "true"
+	@priority = 5
+	test CanChangePermissionsAssignedToObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("When requesting putStudentPermissionsPage with created {studentId} to update actionIds of Owner") {
+			var response = CustomObjectAPI.updateObjectPermissions(
+				actionIds = "\"UPDATE\",\"VIEW\"",
+				en_US_plural_label = "students",
+				objectEntryId = ${staticObjectId},
+				roleName = "Owner");
+		}
+
+		task ("Then I can see Owner actionIds are updated") {
+			var actualPermissions = JSONUtil.getWithJSONPath(${response}, "$.items[?(@.roleName == 'Owner')].actionIds");
+
+			TestUtils.assertEquals(
+				actual = ${actualPermissions},
+				expected = "[\"UPDATE\",\"VIEW\"]");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanEmptyPermissionsOfNewRoleAssignedToObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("And Given with putStudentPermissionsPage I update "Test" role with no actionIds") {
+			CustomObjectAPI.updateObjectPermissions(
+				actionIds = "",
+				en_US_plural_label = "students",
+				objectEntryId = ${staticObjectId},
+				roleName = "Test");
+		}
+
+		task ("When requesting getStudentPermissionsPage with created {studentId}") {
+			var response = CustomObjectAPI.getObjectPermissions(
+				en_US_plural_label = "students",
+				objectEntryId = ${staticObjectId});
+		}
+
+		task ("Then I can see "Owner" as a unique assigned role") {
+			var actualRole = JSONUtil.getWithJSONPath(${response}, "$.items[*].roleName");
+
+			TestUtils.assertEquals(
+				actual = ${actualRole},
+				expected = "Owner");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 5
+	test CanGetPermissionsAssignedToObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("When requesting getStudentPermissionsPage with created {studentId}") {
+			var response = CustomObjectAPI.getObjectPermissions(
+				en_US_plural_label = "students",
+				objectEntryId = ${staticObjectId});
+		}
+
+		task ("Then I can see roles with permissions assigned to the student entry") {
+			var actualPermissions = JSONUtil.getWithJSONPath(${response}, "$.items[?(@.roleName == 'Owner')].actionIds");
+
+			TestUtils.assertEquals(
+				actual = ${actualPermissions},
+				expected = "[\"DELETE\",\"PERMISSIONS\",\"UPDATE\",\"VIEW\"]");
+		}
+	}
+
+	@description = "Ignore tests until LPS-177115 fixed"
+	@disable-webdriver = "true"
+	@ignore = "true"
+	@priority = 4
+	test CanGetPermissionsOfNewRoleAssignedToObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("When requesting getStudentPermissionsPage with created {studentId} and roleNames as "Test"") {
+			var response = CustomObjectAPI.getObjectPermissions(
+				en_US_plural_label = "students",
+				objectEntryId = ${staticObjectId},
+				roleNames = "Test");
+		}
+
+		task ("Then I can see roles with permissions assigned to the student entry") {
+			var actualPermissions = JSONUtil.getWithJSONPath(${response}, "$.items[?(@.roleName == 'Test')].actionIds");
+
+			TestUtils.assertEquals(
+				actual = ${actualPermissions},
+				expected = "[\"VIEW\"]");
+		}
+	}
+
+}

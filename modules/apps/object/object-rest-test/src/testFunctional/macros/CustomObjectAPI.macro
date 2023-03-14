@@ -1,0 +1,65 @@
+definition {
+
+	macro _curlObjectPermissions {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
+
+		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
+		var portalURL = JSONCompany.getPortalURL();
+		var headerAndType = '''
+ 			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+		''';
+		var api = "${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectEntryId}/permissions";
+
+		if (isSet(roleNames)) {
+			var api = StringUtil.add(${curl}, "?roleNames=${roleNames}", "");
+		}
+
+		var curl = StringUtil.add(${api}, " \ ${headerAndType}", "");
+
+		return ${curl};
+	}
+
+	macro getObjectPermissions {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
+
+		var curl = CustomObjectAPI._curlObjectPermissions(
+			en_US_plural_label = ${en_US_plural_label},
+			objectEntryId = ${objectEntryId});
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+	macro staticObjectEntryId {
+		Variables.assertDefined(parameterList = ${objectEntryId});
+
+		static var staticObjectId = ${objectEntryId};
+
+		return ${staticObjectId};
+	}
+
+	macro updateObjectPermissions {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId},${actionIds},${roleName}");
+
+		var curl = CustomObjectAPI._curlObjectPermissions(
+			en_US_plural_label = ${en_US_plural_label},
+			objectEntryId = ${objectEntryId});
+		var body = '''
+			-d [{
+				"actionIds": [
+					${actionIds}
+				],
+				"roleName": "${roleName}"
+			}]
+		''';
+
+		var curl = StringUtil.add(${curl}, " \ ${body}", "");
+
+		var response = JSONCurlUtil.put(${curl});
+
+		return ${response};
+	}
+
+}

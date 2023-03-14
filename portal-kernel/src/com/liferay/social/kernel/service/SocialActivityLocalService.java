@@ -533,6 +533,10 @@ public interface SocialActivityLocalService
 	public List<SocialActivity> getActivitySetActivities(
 		long activitySetId, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SocialActivity> getApprovedActivities(
+		long classPK, double version);
+
 	/**
 	 * Returns a range of all the activities done in the group.
 	 *

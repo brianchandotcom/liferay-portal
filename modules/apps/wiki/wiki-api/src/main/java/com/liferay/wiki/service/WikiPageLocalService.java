@@ -546,6 +546,10 @@ public interface WikiPageLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getPages(
+		long groupId, long nodeId, long statusByUserId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiPage> getPages(
 		long nodeId, String title, boolean head, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

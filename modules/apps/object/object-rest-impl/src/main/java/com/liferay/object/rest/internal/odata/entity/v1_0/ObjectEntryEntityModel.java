@@ -264,6 +264,18 @@ public class ObjectEntryEntityModel implements EntityModel {
 				new CollectionEntityField(
 					new IntegerEntityField("status", locale -> Field.STATUS))
 			).put(
+				"taxonomyCategoryIds",
+				() -> {
+					if (FeatureFlagManagerUtil.isEnabled("LPS-176651")) {
+						return new CollectionEntityField(
+							new IntegerEntityField(
+								"taxonomyCategoryIds",
+								locale -> "assetCategoryIds"));
+					}
+
+					return null;
+				}
+			).put(
 				"userId",
 				new IntegerEntityField("userId", locale -> Field.USER_ID)
 			).build();

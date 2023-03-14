@@ -32,6 +32,7 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationsh
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -272,6 +273,124 @@ public class ObjectEntryResourceTest {
 		_assertFilteredObjectEntries(3, "keywords/any(k:k in ('tag1','tag2'))");
 		_assertFilteredObjectEntries(2, "keywords/any(k:k in ('tag2','tag3'))");
 		_assertFilteredObjectEntries(0, "keywords/any(k:k in ('1234','5678'))");
+	}
+
+	@Test
+	public void testGetObjectEntryFilteredByTaxonomyCategories()
+		throws Exception {
+
+		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
+		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory();
+		TaxonomyCategory taxonomyCategory3 = _addTaxonomyCategory();
+
+		_postObjectEntryWithTaxonomyCategories();
+		_postObjectEntryWithTaxonomyCategories(taxonomyCategory1);
+		_postObjectEntryWithTaxonomyCategories(
+			taxonomyCategory1, taxonomyCategory2);
+		_postObjectEntryWithTaxonomyCategories(
+			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3);
+
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k eq %s)",
+				taxonomyCategory1.getId()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k eq %s)",
+				taxonomyCategory1.getId()));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"taxonomyCategoryIds/any(k:k eq %s)",
+				taxonomyCategory2.getId()));
+		_assertFilteredObjectEntries(
+			1,
+			String.format(
+				"taxonomyCategoryIds/any(k:k eq %s)",
+				taxonomyCategory3.getId()));
+		_assertFilteredObjectEntries(0, "taxonomyCategoryIds/any(k:k eq 1234)");
+
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"taxonomyCategoryIds/any(k:k ne %s)",
+				taxonomyCategory1.getId()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k ne %s)",
+				taxonomyCategory2.getId()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k ne %s)",
+				taxonomyCategory3.getId()));
+
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"taxonomyCategoryIds/any(k:k gt %s)",
+				taxonomyCategory1.getId()));
+		_assertFilteredObjectEntries(
+			1,
+			String.format(
+				"taxonomyCategoryIds/any(k:k gt %s)",
+				taxonomyCategory2.getId()));
+		_assertFilteredObjectEntries(
+			0,
+			String.format(
+				"taxonomyCategoryIds/any(k:k gt %s)",
+				taxonomyCategory3.getId()));
+
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k ge %s)",
+				taxonomyCategory1.getId()));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"taxonomyCategoryIds/any(k:k ge %s)",
+				taxonomyCategory2.getId()));
+		_assertFilteredObjectEntries(
+			1,
+			String.format(
+				"taxonomyCategoryIds/any(k:k ge %s)",
+				taxonomyCategory3.getId()));
+
+		_assertFilteredObjectEntries(
+			0,
+			String.format(
+				"taxonomyCategoryIds/any(k:k lt %s)",
+				taxonomyCategory1.getId()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k lt %s)",
+				taxonomyCategory2.getId()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k lt %s)",
+				taxonomyCategory3.getId()));
+
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k le %s)",
+				taxonomyCategory1.getId()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k le %s)",
+				taxonomyCategory2.getId()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k le %s)",
+				taxonomyCategory3.getId()));
 	}
 
 	@Test
@@ -1077,6 +1196,21 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 			).put(
 				"keywords", JSONUtil.putAll(keywords)
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+	}
+
+	private void _postObjectEntryWithTaxonomyCategories(
+			TaxonomyCategory... taxonomyCategories)
+		throws Exception {
+
+		HTTPTestUtil.invoke(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"taxonomyCategoryIds",
+				TransformUtil.transform(
+					taxonomyCategories, TaxonomyCategory::getId, String.class)
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 	}

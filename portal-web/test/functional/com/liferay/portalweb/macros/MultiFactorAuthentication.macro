@@ -134,6 +134,14 @@ definition {
 		MultiFactorAuthentication.saveConfiguration();
 	}
 
+	macro deployInstanceConfigFile {
+		var companyId = JSONCompany.getCompanyId();
+
+		AntCommand(
+			locator1 = "build-test-mfa.xml",
+			value1 = "prepare-mfa-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
+	}
+
 	macro emailOTPConfiguration {
 		var failedAttemptsAllowed = ${failedAttemptsAllowed};
 

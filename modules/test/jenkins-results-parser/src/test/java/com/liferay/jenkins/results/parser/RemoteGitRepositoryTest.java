@@ -39,9 +39,13 @@ public class RemoteGitRepositoryTest extends GitRepositoryTest {
 
 		JSONObject expectedJSONObject = new JSONObject();
 
-		expectedJSONObject.put("hostname", HOSTNAME_REPOSITORY);
-		expectedJSONObject.put("name", NAME_REPOSITORY);
-		expectedJSONObject.put("username", USERNAME_REPOSITORY);
+		expectedJSONObject.put(
+			"hostname", HOSTNAME_REPOSITORY
+		).put(
+			"name", NAME_REPOSITORY
+		).put(
+			"username", USERNAME_REPOSITORY
+		);
 
 		JSONObject actualJSONObject = remoteGitRepository.getJSONObject();
 

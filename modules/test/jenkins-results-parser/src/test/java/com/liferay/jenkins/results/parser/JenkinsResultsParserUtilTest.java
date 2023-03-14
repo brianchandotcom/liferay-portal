@@ -327,10 +327,15 @@ public class JenkinsResultsParserUtilTest
 
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("boolean", true);
-		jsonObject.put("double", 1.1);
-		jsonObject.put("int", 1);
-		jsonObject.put("string", "value");
+		jsonObject.put(
+			"boolean", true
+		).put(
+			"double", 1.1
+		).put(
+			"int", 1
+		).put(
+			"string", "value"
+		);
 
 		expectedJSONArray.put(jsonObject);
 		actualJSONArray.put(jsonObject);
@@ -374,24 +379,39 @@ public class JenkinsResultsParserUtilTest
 	public void testIsJSONObjectEqual() {
 		JSONObject expectedJSONObject = new JSONObject();
 
-		expectedJSONObject.put("boolean", true);
-		expectedJSONObject.put("double", 1.1);
-		expectedJSONObject.put("int", 1);
-		expectedJSONObject.put("string", "value");
+		expectedJSONObject.put(
+			"boolean", true
+		).put(
+			"double", 1.1
+		).put(
+			"int", 1
+		).put(
+			"string", "value"
+		);
 
 		JSONObject actualJSONObject = new JSONObject();
 
-		actualJSONObject.put("boolean", true);
-		actualJSONObject.put("double", 1.1);
-		actualJSONObject.put("int", 1);
-		actualJSONObject.put("string", "value");
+		actualJSONObject.put(
+			"boolean", true
+		).put(
+			"double", 1.1
+		).put(
+			"int", 1
+		).put(
+			"string", "value"
+		);
 
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("boolean", true);
-		jsonObject.put("double", 1.1);
-		jsonObject.put("int", 1);
-		jsonObject.put("string", "value");
+		jsonObject.put(
+			"boolean", true
+		).put(
+			"double", 1.1
+		).put(
+			"int", 1
+		).put(
+			"string", "value"
+		);
 
 		expectedJSONObject.put("json_object", jsonObject);
 		actualJSONObject.put("json_object", jsonObject);

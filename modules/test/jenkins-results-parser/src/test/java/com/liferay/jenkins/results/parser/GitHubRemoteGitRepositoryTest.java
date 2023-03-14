@@ -121,17 +121,24 @@ public class GitHubRemoteGitRepositoryTest extends GitRepositoryTest {
 	public void testLabelEquals() throws Exception {
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("color", "c7e8cb");
-		jsonObject.put("default", false);
-		jsonObject.put("description", "This is a description");
-		jsonObject.put("id", 884437936);
-		jsonObject.put("name", "ci:test - success");
-		jsonObject.put("node_id", "MDU6TGFiZWw4ODQ0Mzc5MzY=");
 		jsonObject.put(
+			"color", "c7e8cb"
+		).put(
+			"default", false
+		).put(
+			"description", "This is a description"
+		).put(
+			"id", 884437936
+		).put(
+			"name", "ci:test - success"
+		).put(
+			"node_id", "MDU6TGFiZWw4ODQ0Mzc5MzY="
+		).put(
 			"url",
 			JenkinsResultsParserUtil.combine(
 				"https://api.github.com/repos/liferay/liferay-portal/labels/",
-				"ci:test%20-%20success"));
+				"ci:test%20-%20success")
+		);
 
 		GitHubRemoteGitRepository.Label expectedLabel =
 			new GitHubRemoteGitRepository.Label(

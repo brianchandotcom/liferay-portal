@@ -118,6 +118,19 @@ public class BNDSourceUtil {
 		return bundleSymbolicNamesMap;
 	}
 
+	public static String getDefinition(String content, String key) {
+		Pattern pattern = Pattern.compile(
+			"^" + key + ":[\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		return StringUtil.trim(matcher.group());
+	}
+
 	public static Map<String, String> getDefinitionKeysMap() {
 		return _populateDefinitionKeysMap(
 			ArrayUtil.append(

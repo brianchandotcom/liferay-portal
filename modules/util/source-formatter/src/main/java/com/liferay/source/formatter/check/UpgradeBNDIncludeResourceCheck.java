@@ -15,9 +15,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.liferay.source.formatter.check.util.BNDSourceUtil;
 
 /**
  * @author Nícolas Moura
@@ -32,17 +30,15 @@ public class UpgradeBNDIncludeResourceCheck extends BaseFileCheck {
 			return content;
 		}
 
-		Matcher matcher = _includeResourcePattern.matcher(content);
+		String definition = BNDSourceUtil.getDefinition(
+			content, "-includeresource");
 
-		if (!matcher.find()) {
-			return content;
+		if (definition == null) {
+			definition = BNDSourceUtil.getDefinition(
+				content, "Include-Resource");
 		}
 
-		return StringUtil.removeSubstring(content, matcher.group());
+		return StringUtil.removeSubstring(content, definition);
 	}
-
-	private static final Pattern _includeResourcePattern = Pattern.compile(
-		"^(-includeresource|Include-Resource):[\\s\\S]*?([^\\\\]\n|\\Z)",
-		Pattern.MULTILINE);
 
 }

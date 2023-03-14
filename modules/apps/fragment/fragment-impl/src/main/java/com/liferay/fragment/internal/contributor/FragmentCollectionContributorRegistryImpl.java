@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
@@ -217,19 +218,23 @@ public class FragmentCollectionContributorRegistryImpl
 	protected FragmentEntryValidator fragmentEntryValidator;
 
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				fragmentEntry.getFragmentEntryKey());
+		_companyLocalService.forEachCompany(
+			company -> {
+				List<FragmentEntryLink> fragmentEntryLinks =
+					_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+						company.getCompanyId(),
+						fragmentEntry.getFragmentEntryKey());
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			try {
-				_fragmentEntryLinkLocalService.updateLatestChanges(
-					fragmentEntry, fragmentEntryLink);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
-		}
+				for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+					try {
+						_fragmentEntryLinkLocalService.updateLatestChanges(
+							fragmentEntry, fragmentEntryLink);
+					}
+					catch (PortalException portalException) {
+						_log.error(portalException);
+					}
+				}
+			});
 	}
 
 	private boolean _validateFragmentEntry(FragmentEntry fragmentEntry) {
@@ -258,6 +263,9 @@ public class FragmentCollectionContributorRegistryImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentCollectionContributorRegistryImpl.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

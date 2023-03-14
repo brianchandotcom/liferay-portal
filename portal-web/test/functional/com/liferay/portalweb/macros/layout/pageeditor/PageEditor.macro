@@ -1916,16 +1916,9 @@ definition {
 				text = ${selectedName});
 
 			if (isSet(filterCollection)) {
-				if (contains(${selectedName}, "Items")) {
-					PageEditor.gotoEllipsisMenuItemInItemSelector(
-						fieldLabel = "Collection",
-						menuItem = "Filter Collection");
-				}
-				else {
-					PageEditor.gotoEllipsisMenuItemInItemSelector(
-						fieldLabel = "Collection",
-						menuItem = "Filter Collection");
-				}
+				PageEditor.gotoEllipsisMenuItemInItemSelector(
+					fieldLabel = "Collection",
+					menuItem = "Filter Collection");
 
 				if (isSet(clearFilter)) {
 					Click(
@@ -1965,6 +1958,10 @@ definition {
 							checkboxName = ${tagName},
 							locator1 = "Checkbox#ANY_CHECKBOX");
 					}
+
+					Click(
+						key_fieldLabel = "Tag",
+						locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
 				}
 
 				if (isSet(assetTitle)) {
@@ -1973,12 +1970,14 @@ definition {
 						locator1 = "TextInput#ANY",
 						value1 = ${assetTitle});
 
-					Click(locator1 = "Modal#HEADER");
+					Click(
+						key_fieldLabel = "Title",
+						locator1 = "FormFields#LABEL");
 				}
 
 				if (isSet(filterResults)) {
 					AssertTextEquals(
-						locator1 = "Modal#SEARCH_INFO",
+						locator1 = "Search#SEARCH_INFO_WITHOUT_INLINE",
 						value1 = ${filterResults});
 				}
 
@@ -1989,12 +1988,7 @@ definition {
 						value1 = ${option});
 				}
 
-				if (contains(${selectedName}, "Items")) {
-					Button.clickSave();
-				}
-				else {
-					Button.clickApply();
-				}
+				Button.clickSave();
 			}
 		}
 		else if (!(isSet(deviceType)) || (${deviceType} == "Desktop")) {

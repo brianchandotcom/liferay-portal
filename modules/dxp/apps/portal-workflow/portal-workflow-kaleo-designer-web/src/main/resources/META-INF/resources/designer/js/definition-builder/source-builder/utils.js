@@ -217,7 +217,9 @@ export function parseNotifications(node) {
 			notifications.recipients[index].push({
 				assignmentType: ['taskAssignees'],
 				receptionType: [
-					item.receptionType[notifications.recipients[index].length],
+					item.receptionType?.[
+						notifications.recipients[index].length
+					],
 				],
 			});
 		}
@@ -234,7 +236,7 @@ export function parseNotifications(node) {
 					assignmentType: ['user'],
 					emailAddress,
 					receptionType: [
-						item.receptionType[
+						item.receptionType?.[
 							notifications.recipients[index].length
 						],
 					],
@@ -251,7 +253,7 @@ export function parseNotifications(node) {
 				notifications.recipients[index].push({
 					assignmentType: ['user'],
 					receptionType: [
-						item.receptionType[
+						item.receptionType?.[
 							notifications.recipients[index].length
 						],
 					],
@@ -269,7 +271,7 @@ export function parseNotifications(node) {
 				notifications.recipients[index].push({
 					assignmentType: ['user'],
 					receptionType: [
-						item.receptionType[
+						item.receptionType?.[
 							notifications.recipients[index].length
 						],
 					],
@@ -282,7 +284,9 @@ export function parseNotifications(node) {
 				assignmentType: ['roleType'],
 				autoCreate: item['auto-create'],
 				receptionType: [
-					item.receptionType[notifications.recipients[index].length],
+					item.receptionType?.[
+						notifications.recipients[index].length
+					],
 				],
 				roleKey: item['role-name'],
 				roleType: item['role-type'],
@@ -292,7 +296,9 @@ export function parseNotifications(node) {
 			notifications.recipients[index].push({
 				assignmentType: ['roleId'],
 				receptionType: [
-					item.receptionType[notifications.recipients[index].length],
+					item.receptionType?.[
+						notifications.recipients[index].length
+					],
 				],
 				roleId: item['role-id'][0],
 			});
@@ -306,7 +312,9 @@ export function parseNotifications(node) {
 			notifications.recipients[index].push({
 				assignmentType: ['scriptedRecipient'],
 				receptionType: [
-					item.receptionType[notifications.recipients[index].length],
+					item.receptionType?.[
+						notifications.recipients[index].length
+					],
 				],
 				script: [script],
 				scriptLanguage: scriptLanguage || [DEFAULT_LANGUAGE],
@@ -317,7 +325,9 @@ export function parseNotifications(node) {
 			notifications.recipients[index].push({
 				assignmentType: ['user'],
 				receptionType: [
-					item.receptionType[notifications.recipients[index].length],
+					item.receptionType?.[
+						notifications.recipients[index].length
+					],
 				],
 			});
 		}

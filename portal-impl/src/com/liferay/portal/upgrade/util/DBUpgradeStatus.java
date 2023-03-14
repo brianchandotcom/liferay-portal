@@ -29,7 +29,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -57,10 +56,11 @@ public class DBUpgradeStatus {
 	public static void addUpgradeProcessMessage(
 		String loggerName, String message) {
 
-		List<String> eventMessages = _upgradeProcessMessages.computeIfAbsent(
-			loggerName, key -> new ArrayList<>());
+		List<String> upgradeProcessMessages =
+			_upgradeProcessMessages.computeIfAbsent(
+				loggerName, key -> new ArrayList<>());
 
-		eventMessages.add(message);
+		upgradeProcessMessages.add(message);
 	}
 
 	public static void addWarningMessage(String loggerName, String message) {
@@ -80,16 +80,16 @@ public class DBUpgradeStatus {
 		return _errorMessages;
 	}
 
-	public static String getFinalSchemaVersion(String bundleSymbolicName) {
+	public static String getFinalSchemaVersion(String servletContextName) {
 		ModuleSchemaVersions moduleSchemaVersions =
-			_moduleSchemaVersionsMap.get(bundleSymbolicName);
+			_moduleSchemaVersionsMap.get(servletContextName);
 
 		return moduleSchemaVersions.getFinalSchemaVersion();
 	}
 
-	public static String getInitialSchemaVersion(String bundleSymbolicName) {
+	public static String getInitialSchemaVersion(String servletContextName) {
 		ModuleSchemaVersions moduleSchemaVersions =
-			_moduleSchemaVersionsMap.get(bundleSymbolicName);
+			_moduleSchemaVersionsMap.get(servletContextName);
 
 		return moduleSchemaVersions.getInitialSchemaVersion();
 	}
@@ -112,21 +112,15 @@ public class DBUpgradeStatus {
 		return _warningMessages;
 	}
 
-	public static void setInitialSchemaVersion() {
-		_browseReleaseTable(
-			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions.setInitialSchemaVersion(schemaVersion));
-	}
-
 	public static void setNoUpgradesEnabled() {
-		_upgradeType = "Not enabled";
 		_upgradeStatus = "Not enabled";
+		_upgradeType = "Not enabled";
 	}
 
 	public static void upgradeFinished(DBUpgradeChecker dbUpgradeChecker) {
 		_setFinalSchemaVersion();
-		_calculateUpgradeStatus(dbUpgradeChecker);
-		_calculateTypeOfUpgrade();
+		_setFinalUpgradeStatus(dbUpgradeChecker);
+		_setTypeOfUpgrade();
 
 		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
 			ThreadContext.put("upgrade.type", _upgradeType);
@@ -195,7 +189,52 @@ public class DBUpgradeStatus {
 		}
 	}
 
-	private static void _calculateTypeOfUpgrade() {
+	private static void _filterMessages() {
+		if (!_filtered) {
+			for (String filteredClassName : _FILTERED_CLASS_NAMES) {
+				_errorMessages.remove(filteredClassName);
+				_warningMessages.remove(filteredClassName);
+			}
+
+			_filtered = true;
+		}
+	}
+
+	private static void _setFinalSchemaVersion() {
+		_browseReleaseTable(
+			(moduleSchemaVersions, schemaVersion) ->
+				moduleSchemaVersions.setFinalSchemaVersion(schemaVersion));
+	}
+
+	private static void _setFinalUpgradeStatus(
+		DBUpgradeChecker dbUpgradeChecker) {
+
+		if (dbUpgradeChecker == null) {
+			_log.error(
+				"Not possible to check upgrade successful completion. Please " +
+					"check manually.");
+
+			_upgradeStatus = "Failure";
+
+			return;
+		}
+
+		if (!_errorMessages.isEmpty() || !dbUpgradeChecker.check()) {
+			_upgradeStatus = "Failure";
+
+			return;
+		}
+
+		if (!_warningMessages.isEmpty()) {
+			_upgradeStatus = "Warning";
+
+			return;
+		}
+
+		_upgradeStatus = "Success";
+	}
+
+	private static void _setTypeOfUpgrade() {
 		String upgradeType = "No upgrade";
 
 		for (Map.Entry<String, ModuleSchemaVersions> servlet :
@@ -245,51 +284,6 @@ public class DBUpgradeStatus {
 		_upgradeType = upgradeType;
 	}
 
-	private static void _calculateUpgradeStatus(
-		DBUpgradeChecker dbUpgradeChecker) {
-
-		if (dbUpgradeChecker == null) {
-			_log.error(
-				"Not possible to check upgrade successful completion. Please " +
-					"check manually.");
-
-			_upgradeStatus = "Failure";
-
-			return;
-		}
-
-		if (!_errorMessages.isEmpty() || !dbUpgradeChecker.check()) {
-			_upgradeStatus = "Failure";
-
-			return;
-		}
-
-		if (!_warningMessages.isEmpty()) {
-			_upgradeStatus = "Warning";
-
-			return;
-		}
-
-		_upgradeStatus = "Success";
-	}
-
-	private static void _filterMessages() {
-		if (!_filtered) {
-			for (String filteredClassName : _FILTERED_CLASS_NAMES) {
-				_errorMessages.remove(filteredClassName);
-				_warningMessages.remove(filteredClassName);
-			}
-
-			_filtered = true;
-		}
-	}
-
-	private static void _setFinalSchemaVersion() {
-		_browseReleaseTable(
-			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions.setFinalSchemaVersion(schemaVersion));
-	}
-
 	private static final String[] _FILTERED_CLASS_NAMES = {
 		"com.liferay.portal.search.elasticsearch7.internal.sidecar." +
 			"SidecarManager"
@@ -302,7 +296,7 @@ public class DBUpgradeStatus {
 		new ConcurrentHashMap<>();
 	private static boolean _filtered;
 	private static final Map<String, ModuleSchemaVersions>
-		_moduleSchemaVersionsMap = new HashMap<>();
+		_moduleSchemaVersionsMap = new ConcurrentHashMap<>();
 	private static final Map<String, ArrayList<String>>
 		_upgradeProcessMessages = new ConcurrentHashMap<>();
 	private static String _upgradeStatus = "Pending";

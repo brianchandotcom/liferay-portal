@@ -28,8 +28,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.apache.commons.lang.time.StopWatch;
+
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -51,6 +55,19 @@ public class DBUpgraderTest {
 	public static void setUpClass() throws SQLException {
 		_currentBuildNumber = _getReleaseColumnValue("buildNumber");
 		_currentState = _getReleaseColumnValue("state_");
+		_originalStopWatch = ReflectionTestUtil.getFieldValue(
+			DBUpgrader.class, "_stopWatch");
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		ReflectionTestUtil.setFieldValue(
+			DBUpgrader.class, "_stopWatch", _originalStopWatch);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
 	}
 
 	@After
@@ -132,5 +149,6 @@ public class DBUpgraderTest {
 
 	private static int _currentBuildNumber;
 	private static int _currentState;
+	private static StopWatch _originalStopWatch;
 
 }

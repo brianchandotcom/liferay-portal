@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.internal.contributor;
 
+import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
@@ -29,6 +30,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -220,6 +222,24 @@ public class FragmentCollectionContributorRegistryImpl
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
 		_companyLocalService.forEachCompany(
 			company -> {
+				try {
+					FragmentServiceConfiguration fragmentServiceConfiguration =
+						ConfigurationProviderUtil.getCompanyConfiguration(
+							FragmentServiceConfiguration.class,
+							company.getCompanyId());
+
+					if (!fragmentServiceConfiguration.
+							propagateContributedFragmentChanges()) {
+
+						return;
+					}
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+
+					return;
+				}
+
 				List<FragmentEntryLink> fragmentEntryLinks =
 					_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 						company.getCompanyId(),

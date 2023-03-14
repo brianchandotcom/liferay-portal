@@ -151,7 +151,7 @@ definition {
 
 		PageEditor.gotoEllipsisMenuItemInItemSelector(
 			fieldLabel = "Collection",
-			menuItem = "Prefilter Collection");
+			menuItem = "Filter Collection");
 
 		VisualizeObjectDisplayPage.selectFilterCollection(
 			fieldLabel = "Field Picklist",

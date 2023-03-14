@@ -1924,7 +1924,7 @@ definition {
 				else {
 					PageEditor.gotoEllipsisMenuItemInItemSelector(
 						fieldLabel = "Collection",
-						menuItem = "Prefilter Collection");
+						menuItem = "Filter Collection");
 				}
 
 				if (isSet(clearFilter)) {

@@ -2761,7 +2761,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-147390. The user could view the prefilter results in Prefilter Collection modal."
+	@description = "This is a test for LPS-147390. The user could view the prefilter results in Filter Collection modal."
 	@priority = 5
 	test ViewPrefilterResults {
 		property portal.acceptance = "true";
@@ -2824,12 +2824,12 @@ definition {
 			}
 		}
 
-		task ("Prefilter collection by the first tag") {
+		task ("Filter collection by the first tag") {
 			PageEditor.gotoConfiguration(fragmentName = "Collection Display");
 
 			PageEditor.gotoEllipsisMenuItemInItemSelector(
 				fieldLabel = "Collection",
-				menuItem = "Prefilter Collection");
+				menuItem = "Filter Collection");
 
 			Click(
 				key_text = "Select",
@@ -2846,7 +2846,7 @@ definition {
 				value1 = "There is 1 result for nba teams.");
 		}
 
-		task ("Prefilter collection by the keywords") {
+		task ("Filter collection by the keywords") {
 			Click(
 				key_text = "Clear",
 				locator1 = "Button#ANY");
@@ -2865,7 +2865,7 @@ definition {
 				value1 = "There is 1 result for James.");
 		}
 
-		task ("Prefilter collection by the keywords") {
+		task ("Filter collection by the keywords") {
 			Click(
 				key_text = "Clear",
 				locator1 = "Button#ANY");

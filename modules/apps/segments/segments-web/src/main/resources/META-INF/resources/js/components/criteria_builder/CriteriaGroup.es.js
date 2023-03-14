@@ -30,7 +30,7 @@ import {
 	getSupportedOperatorsFromType,
 	insertAtIndex,
 	replaceAtIndex,
-} from '../../utils/utils.es';
+} from '../../utils/utils';
 import Conjunction from './Conjunction.es';
 import CriteriaRow from './CriteriaRow.es';
 import DropZone from './DropZone.es';

@@ -17,7 +17,7 @@ import React, {Component} from 'react';
 
 import {PROPERTY_TYPES} from '../../utils/constants';
 import {unescapeSingleQuotes} from '../../utils/odata';
-import {dateToInternationalHuman} from '../../utils/utils.es';
+import {dateToInternationalHuman} from '../../utils/utils';
 
 class CriteriaRowReadable extends Component {
 	static propTypes = {

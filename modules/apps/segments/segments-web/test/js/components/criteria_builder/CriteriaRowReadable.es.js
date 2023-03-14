@@ -16,7 +16,7 @@ import {render} from '@testing-library/react';
 import React from 'react';
 
 import CriteriaRowReadable from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaRowReadable.es';
-import {dateToInternationalHuman} from '../../../../src/main/resources/META-INF/resources/js/utils/utils.es';
+import {dateToInternationalHuman} from '../../../../src/main/resources/META-INF/resources/js/utils/utils';
 
 import '@testing-library/jest-dom/extend-expect';
 

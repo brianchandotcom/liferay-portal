@@ -23,7 +23,7 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {contributorShape, propertyGroupShape} from '../../utils/types.es';
-import {getPluralMessage} from '../../utils/utils.es';
+import {getPluralMessage} from '../../utils/utils';
 import CriteriaSidebar from '../criteria_sidebar/CriteriaSidebar.es';
 import Conjunction from './Conjunction.es';
 import CriteriaBuilder from './CriteriaBuilder.es';

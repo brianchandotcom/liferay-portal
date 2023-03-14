@@ -23,10 +23,7 @@ import {
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
 } from '../../utils/constants';
-import {
-	createNewGroup,
-	getSupportedOperatorsFromType,
-} from '../../utils/utils.es';
+import {createNewGroup, getSupportedOperatorsFromType} from '../../utils/utils';
 import BooleanInput from '../inputs/BooleanInput.es';
 import CollectionInput from '../inputs/CollectionInput.es';
 import DateTimeInput from '../inputs/DateTimeInput';

@@ -13,7 +13,7 @@
  */
 
 import * as ODataUtil from '../../../src/main/resources/META-INF/resources/js/utils/odata';
-import * as Utils from '../../../src/main/resources/META-INF/resources/js/utils/utils.es';
+import * as Utils from '../../../src/main/resources/META-INF/resources/js/utils/utils';
 import {mockCriteria, mockCriteriaNested} from '../mockData';
 
 const properties = [

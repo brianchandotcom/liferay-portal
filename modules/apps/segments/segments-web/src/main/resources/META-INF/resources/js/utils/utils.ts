@@ -14,7 +14,8 @@
 
 import {format, isValid, parseISO} from 'date-fns';
 
-import {CONJUNCTIONS} from './constants';
+import {Criteria} from '../../types/Criteria';
+import {CONJUNCTIONS, PropertyType} from './constants';
 
 const GROUP_ID_NAMESPACE = 'group_';
 
@@ -22,10 +23,8 @@ const SPLIT_REGEX = /({\d+})/g;
 
 /**
  * Creates a new group object with items.
- * @param {Array} items The items to add to the new group.
- * @return {Object} The new group object.
  */
-export function createNewGroup(items) {
+export function createNewGroup(items: Criteria['items']): Criteria {
 	return {
 		conjunctionName: CONJUNCTIONS.AND,
 		groupId: generateGroupId(),
@@ -37,7 +36,6 @@ let uniqueIdCounter_ = 1;
 
 /**
  * Generates a unique group id.
- * @return {string} The unique id.
  */
 export function generateGroupId() {
 	return `${GROUP_ID_NAMESPACE}${uniqueIdCounter_++}`;
@@ -46,31 +44,29 @@ export function generateGroupId() {
 /**
  * Uses the singular language key if the count is 1. Otherwise uses the plural
  * language key.
- * @param {string} singular The language key in singular form.
- * @param {string} plural The language key in plural form.
- * @param {number} count The amount to display in the message.
- * @param {boolean} toString If the message should be converted to a string.
- * @return {(string|Array)} The translated message.
  */
-export function getPluralMessage(singular, plural, count = 0, toString) {
+export function getPluralMessage(
+	singular: string,
+	plural: string,
+	count: number = 0,
+	toString: boolean = false
+) {
 	const message = count === 1 ? singular : plural;
 
-	return sub(message, [count], toString);
+	return sub(message, [count.toString()], toString);
 }
 
 /**
  * Gets a list of group ids from a criteria object.
  * Used for disallowing groups to be moved into its own deeper nested groups.
  * Example of returned value: ['group_02', 'group_03']
- * @param {Object} criteria The criteria object to search through.
- * @return {Array}
  */
-export function getChildGroupIds(criteria) {
-	let childGroupIds = [];
+export function getChildGroupIds(criteria: Criteria) {
+	let childGroupIds: string[] = [];
 
 	if (criteria.items && criteria.items.length) {
-		childGroupIds = criteria.items.reduce((groupIdList, item) => {
-			return item.groupId
+		childGroupIds = criteria.items.reduce((groupIdList: string[], item) => {
+			return 'groupId' in item
 				? [...groupIdList, item.groupId, ...getChildGroupIds(item)]
 				: groupIdList;
 		}, []);
@@ -82,12 +78,15 @@ export function getChildGroupIds(criteria) {
 /**
  * Gets the list of operators for a supported type.
  * Used for displaying the operators available for each criteria row.
- * @param {Array} operators The full list of supported operators.
- * @param {Object} propertyTypes A map of property types and the operators
- * supported for each type.
- * @param {string} type The type to get the supported operators for.
  */
-export function getSupportedOperatorsFromType(operators, propertyTypes, type) {
+export function getSupportedOperatorsFromType<
+	Operator extends {name: string},
+	PropertyKey extends string
+>(
+	operators: Operator[],
+	propertyTypes: Record<PropertyKey, PropertyType>,
+	type: PropertyKey
+) {
 	return operators.filter((operator) => {
 		const validOperators = propertyTypes[type];
 
@@ -97,21 +96,16 @@ export function getSupportedOperatorsFromType(operators, propertyTypes, type) {
 
 /**
  * Inserts an item into a list at the specified index.
- * @param {*} item The item that will be inserted.
- * @param {Array} list The list where the item will be inserted into.
- * @param {number} index The position where the item will be inserted.
- * @return {Array}
  */
-export function insertAtIndex(item, list, index) {
+export function insertAtIndex<T>(item: T, list: T[], index: number) {
 	return [...list.slice(0, index), item, ...list.slice(index, list.length)];
 }
 
 /**
  * Converts an object of key value pairs to a form data object for passing
  * into a fetch body.
- * @param {Object} dataObject The data to be converted.
  */
-export function objectToFormData(dataObject) {
+export function objectToFormData(dataObject: Record<string, string | Blob>) {
 	const formData = new FormData();
 
 	Object.keys(dataObject).forEach((key) => {
@@ -123,22 +117,15 @@ export function objectToFormData(dataObject) {
 
 /**
  * Removes an item at the specified index.
- * @param {Array} list The list the where an item will be removed.
- * @param {number} index The position where the item will be removed.
- * @return {Array}
  */
-export function removeAtIndex(list, index) {
+export function removeAtIndex<T>(list: T[], index: number) {
 	return list.filter((fItem, fIndex) => fIndex !== index);
 }
 
 /**
  * Replaces an item in a list at the specified index.
- * @param {*} item The item that will be added.
- * @param {Array} list The list where an item will be replaced.
- * @param {number} index The position where the item will be replaced.
- * @return {Array}
  */
-export function replaceAtIndex(item, list, index) {
+export function replaceAtIndex<T>(item: T, list: T[], index: number) {
 	return Object.assign(list, {
 		[index]: item,
 	});
@@ -153,13 +140,10 @@ export function replaceAtIndex(item, list, index) {
  * sub(Liferay.Language.get('search-x'), [<b>all<b>], false)
  * => 'search <b>all</b>'
  *
- * @param {string} langKey This is the language key used from our properties file
- * @param {string} args Arguments to pass into language key
- * @param {string} join Boolean used to indicate whether to call `.join()` on
+ * Join boolean is used to indicate whether to call `.join()` on
  * the array before it is returned. Use `false` if subbing in JSX.
- * @return {(string|Array)}
  */
-export function sub(langKey, args, join = true) {
+export function sub(langKey: string, args: string[], join = true) {
 	const keyArray = langKey
 		.split(SPLIT_REGEX)
 		.filter((val) => val.length !== 0);
@@ -182,18 +166,16 @@ export function sub(langKey, args, join = true) {
 }
 
 export function dateToInternationalHuman(
-	ISOString,
+	ISOString: string,
 	localeKey = Liferay.ThemeDisplay.getBCP47LanguageId()
 ) {
 	const date = new Date(ISOString);
 
-	const options = {
+	const intl = new Intl.DateTimeFormat(localeKey, {
 		day: 'numeric',
 		month: 'long',
 		year: 'numeric',
-	};
-
-	const intl = new Intl.DateTimeFormat(localeKey, options);
+	});
 
 	return intl.format(date);
 }
@@ -201,15 +183,11 @@ export function dateToInternationalHuman(
 /**
  * Returns a YYYY-MM-DD date
  * based on a JS Date object
- *
- * @export
- * @param {Date} dateJsObject
- * @returns {string}
  */
-export function jsDatetoYYYYMMDD(dateJsObject) {
+export function jsDatetoYYYYMMDD(dateJsObject: string | Date) {
 	if (!isValid(dateJsObject)) {
-		dateJsObject = parseISO(dateJsObject);
+		dateJsObject = parseISO(dateJsObject as string);
 	}
 
-	return format(dateJsObject, 'yyyy-MM-dd');
+	return format(dateJsObject as Date, 'yyyy-MM-dd');
 }

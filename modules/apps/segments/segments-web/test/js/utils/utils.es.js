@@ -13,7 +13,7 @@
  */
 
 import {CONJUNCTIONS} from '../../../src/main/resources/META-INF/resources/js/utils/constants';
-import * as Utils from '../../../src/main/resources/META-INF/resources/js/utils/utils.es';
+import * as Utils from '../../../src/main/resources/META-INF/resources/js/utils/utils';
 import {mockCriteria, mockCriteriaNested} from '../mockData';
 
 const GROUP_ID = 'group_1';

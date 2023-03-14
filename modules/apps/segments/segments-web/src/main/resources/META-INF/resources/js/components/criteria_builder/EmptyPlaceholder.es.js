@@ -15,7 +15,7 @@
 import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
 
-import {sub} from '../../utils/utils.es';
+import {sub} from '../../utils/utils';
 
 export default function EmptyPlaceholder() {
 	return (

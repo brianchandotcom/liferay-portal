@@ -21,7 +21,7 @@ import {
 	removeAtIndex,
 	replaceAtIndex,
 	sub,
-} from '../../utils/utils.es';
+} from '../../utils/utils';
 import CriteriaGroup from './CriteriaGroup.es';
 
 class CriteriaBuilder extends Component {

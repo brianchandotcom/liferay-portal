@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -328,14 +327,9 @@ public class ObjectCodeEditorUtil {
 
 			for (DDMExpressionFunction ddmExpressionFunction : values()) {
 				if (StringUtil.equals(
-						ddmExpressionFunction._key, "old-value") &&
-					(PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION != 2)) {
-
-					continue;
-				}
-
-				if (StringUtil.equals(ddmExpressionFunction._key, "power") &&
-					!FeatureFlagManagerUtil.isEnabled("LPS-164948")) {
+						ddmExpressionFunction._key, "old-value") ||
+					(StringUtil.equals(ddmExpressionFunction._key, "power") &&
+					 !FeatureFlagManagerUtil.isEnabled("LPS-164948"))) {
 
 					continue;
 				}

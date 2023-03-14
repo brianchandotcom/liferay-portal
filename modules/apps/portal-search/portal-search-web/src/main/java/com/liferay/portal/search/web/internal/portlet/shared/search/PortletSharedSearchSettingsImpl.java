@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.display.context.ThemeDisplaySupplier;
@@ -98,27 +99,29 @@ public class PortletSharedSearchSettingsImpl
 
 	@Override
 	public Optional<String> getParameter71(String name) {
-		return _portletSharedRequestHelper.getParameter(name, _renderRequest);
+		return Optional.ofNullable(
+			_portletSharedRequestHelper.getParameter(name, _renderRequest));
 	}
 
 	@Override
 	public Optional<String> getParameterOptional(String name) {
-		return _portletSharedRequestHelper.getParameter(name, _renderRequest);
+		return Optional.ofNullable(
+			_portletSharedRequestHelper.getParameter(name, _renderRequest));
 	}
 
 	@Override
 	public String[] getParameterValues(String name) {
-		Optional<String[]> optional =
+		return (String[])GetterUtil.getObject(
 			_portletSharedRequestHelper.getParameterValues(
-				name, _renderRequest);
-
-		return optional.orElse(new String[0]);
+				name, _renderRequest),
+			new String[0]);
 	}
 
 	@Override
 	public Optional<String[]> getParameterValues71(String name) {
-		return _portletSharedRequestHelper.getParameterValues(
-			name, _renderRequest);
+		return Optional.ofNullable(
+			_portletSharedRequestHelper.getParameterValues(
+				name, _renderRequest));
 	}
 
 	@Override

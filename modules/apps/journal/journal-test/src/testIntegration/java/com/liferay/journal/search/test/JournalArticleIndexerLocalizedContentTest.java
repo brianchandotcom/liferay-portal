@@ -43,14 +43,13 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -332,25 +331,23 @@ public class JournalArticleIndexerLocalizedContentTest {
 		String prefix1 = "新";
 		String prefix2 = "作";
 
-		Stream.of(
-			word1, word2, prefix1, prefix2
-		).forEach(
-			searchTerm -> {
-				SearchResponse searchResponse =
-					_indexerFixture.searchOnlyOneSearchResponse(
-						searchTerm, LocaleUtil.JAPAN);
+		for (String searchTerm :
+				Arrays.asList(word1, word2, prefix1, prefix2)) {
 
-				FieldValuesAssert.assertFieldValues(
-					titleStrings, name -> name.startsWith("title_"),
-					searchResponse);
-				FieldValuesAssert.assertFieldValues(
-					contentStrings, name -> name.startsWith("content_"),
-					searchResponse);
-				FieldValuesAssert.assertFieldValues(
-					localizedTitleStrings,
-					name -> name.startsWith("localized_title"), searchResponse);
-			}
-		);
+			SearchResponse searchResponse =
+				_indexerFixture.searchOnlyOneSearchResponse(
+					searchTerm, LocaleUtil.JAPAN);
+
+			FieldValuesAssert.assertFieldValues(
+				titleStrings, name -> name.startsWith("title_"),
+				searchResponse);
+			FieldValuesAssert.assertFieldValues(
+				contentStrings, name -> name.startsWith("content_"),
+				searchResponse);
+			FieldValuesAssert.assertFieldValues(
+				localizedTitleStrings,
+				name -> name.startsWith("localized_title"), searchResponse);
+		}
 	}
 
 	@Test
@@ -362,10 +359,8 @@ public class JournalArticleIndexerLocalizedContentTest {
 				String partial1 = "新大阪";
 				String partial2 = "作戦大成功";
 
-				Stream.of(
-					full, partial1, partial2
-				).forEach(
-					title -> _journalArticleSearchFixture.addArticle(
+				for (String title : Arrays.asList(full, partial1, partial2)) {
+					_journalArticleSearchFixture.addArticle(
 						new JournalArticleBlueprint() {
 							{
 								setGroupId(_group.getGroupId());
@@ -387,8 +382,8 @@ public class JournalArticleIndexerLocalizedContentTest {
 										}
 									});
 							}
-						})
-				);
+						});
+				}
 
 				return full;
 			}
@@ -397,17 +392,13 @@ public class JournalArticleIndexerLocalizedContentTest {
 		String word1 = "新規";
 		String word2 = "作成";
 
-		Stream.of(
-			word1, word2
-		).forEach(
-			searchTerm -> {
-				Document document = _indexerFixture.searchOnlyOne(
-					searchTerm, LocaleUtil.JAPAN);
+		for (String searchTerm : Arrays.asList(word1, word2)) {
+			Document document = _indexerFixture.searchOnlyOne(
+				searchTerm, LocaleUtil.JAPAN);
 
-				FieldValuesAssert.assertFieldValues(
-					titleStrings, "title_", document, searchTerm);
-			}
-		);
+			FieldValuesAssert.assertFieldValues(
+				titleStrings, "title_", document, searchTerm);
+		}
 	}
 
 	@Rule
@@ -425,14 +416,13 @@ public class JournalArticleIndexerLocalizedContentTest {
 	}
 
 	private Map<String, String> _withSortableValues(Map<String, String> map) {
-		Set<Map.Entry<String, String>> entrySet = map.entrySet();
+		Map<String, String> map2 = new HashMap<>();
 
-		Stream<Map.Entry<String, String>> entries = entrySet.stream();
-
-		Map<String, String> map2 = entries.collect(
-			Collectors.toMap(
-				entry -> entry.getKey() + "_sortable",
-				entry -> StringUtil.toLowerCase(entry.getValue())));
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			map2.put(
+				entry.getKey() + "_sortable",
+				StringUtil.toLowerCase(entry.getValue()));
+		}
 
 		map2.putAll(map);
 

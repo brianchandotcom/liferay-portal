@@ -12,7 +12,12 @@
 <tbody>
 <tr>
 	<td>TEMPLATE_DETAILS</td>
-	<td>//td[text()='${statusTemplate}']//following::td[text()='${nameTemplate}']</td>
+	<td>//td[text()='${templateStatus}']//following::td[text()='${templateName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_TEMPLATE</td>
+	<td>//button/li[contains(text(),'${templateName}')]</td>
 	<td></td>
 </tr>
 </tbody>

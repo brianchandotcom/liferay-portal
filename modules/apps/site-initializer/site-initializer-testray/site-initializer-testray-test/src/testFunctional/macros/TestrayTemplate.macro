@@ -5,7 +5,7 @@ definition {
 
 		Click.javaScriptClick(
 			key_picklistOption = ${dropdownItem},
-			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+			locator1 = "TestrayDropdown#PICKLIST_KEBAB_MENU_OPTION");
 
 		if (isSet(fieldName)) {
 			Type(
@@ -14,10 +14,10 @@ definition {
 				value1 = ${fieldName});
 		}
 
-		if (isSet(routine)) {
+		if (isSet(routineName)) {
 			Select(
 				locator1 = "TestrayBuild#ROUTINE_ID",
-				value1 = ${routine});
+				value1 = ${routineName});
 		}
 
 		if (isSet(gitHash)) {
@@ -40,8 +40,8 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		AssertElementPresent(
-			key_picklistOption = ${dropdownItem},
-			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+			locator1 = "TestrayTemplate#SEARCH_TEMPLATE",
+			templateName = ${templateName});
 	}
 
 	macro goToBuildTemplate {
@@ -49,14 +49,14 @@ definition {
 
 		Click.javaScriptClick(
 			key_picklistOption = ${dropdownItem},
-			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+			locator1 = "TestrayDropdown#PICKLIST_KEBAB_MENU_OPTION");
 	}
 
 	macro viewTemplateDetails {
 		AssertElementPresent(
 			locator1 = "TestrayTemplate#TEMPLATE_DETAILS",
-			nameTemplate = ${nameTemplate},
-			statusTemplate = ${statusTemplate});
+			templateName = ${templateName},
+			templateStatus = ${templateStatus});
 	}
 
 }

@@ -8,7 +8,6 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
-	var buildName = "Build 1";
 	var caseName = "Case 1";
 	var caseType = "Case Type 1";
 	var componentName = "Component 1";
@@ -29,7 +28,7 @@ definition {
 			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
-		task ("Setup for SubtaskAPI") {
+		task ("Setup for template") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -60,12 +59,6 @@ definition {
 			JSONTestray.addProductVersion(
 				productVersion = ${productVersion},
 				projectName = ${projectName});
-
-			JSONTestray.addBuild(
-				buildName = ${buildName},
-				productVersion = ${productVersion},
-				projectName = ${projectName},
-				routineName = ${routineName});
 		}
 
 		task ("Go to Testray Site") {
@@ -95,8 +88,10 @@ definition {
 			objectName = ${routineName});
 
 		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "projects",
-			objectName = ${projectName});
+			object = "teams",
+			objectName = ${teamName});
+
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
@@ -109,40 +104,25 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-168472 - Verify if as an Administrator I should not be able to add a duplicate template"
+	@description = "Story ID: LPS-162435 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate template"
 	@priority = 5
 	test AdminCanNotAddDuplicateTemplate {
 		task ("Given that the user adds a Template") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
-
-			TestrayBuild.selectDefaultEnvironmentFactors(
-				label = "Application Server",
-				label1 = "Browser",
-				listCategory = "Application Server,Browser",
-				listOption = "JBoss 6.1",
-				listOption1 = "Chrome x");
-
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
-
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = 12345,
-				routine = "Routines_1 Routine");
+				gitHash = "ae4a18721aa0a0831e0dca25e175b1408fa9ac2sa",
+				routineName = ${routineName});
 		}
 
-		task ("And the user tries to add a duplicate template") {
+		task ("When the user tries add a duplicate template") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = 12345,
-				routine = "Routines_1 Routine");
+				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
+				routineName = ${routineName});
 		}
 
 		task ("Then the error message should appear") {
@@ -150,40 +130,25 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-163909 - Verify if that can Activate Disabled Template"
+	@description = "Story ID: LPS-162439 | Test Summary: Verify if that can Activate Disabled Template"
 	@priority = 5
 	test CanActivateDisabledTemplate {
 		task ("Given that the user adds a Template with status active") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
-
-			TestrayBuild.selectDefaultEnvironmentFactors(
-				label = "Application Server",
-				label1 = "Browser",
-				listCategory = "Application Server,Browser",
-				listOption = "JBoss 6.1",
-				listOption1 = "Chrome x");
-
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
-
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = 12345,
-				routine = "Routines_1 Routine");
+				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
+				routine = ${routineName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
 			TestrayTemplate.viewTemplateDetails(
-				nameTemplate = "Build_Template",
-				statusTemplate = "Active");
+				templateName = "Build_Template",
+				templateStatus = "Active");
 		}
 
-		task ("When changed the status of deactivate for Active") {
+		task ("When the user changed the status of deactivate for Active") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Build_Template");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Deactivate");
@@ -191,8 +156,8 @@ definition {
 			Refresh();
 
 			TestrayTemplate.viewTemplateDetails(
-				nameTemplate = "Build_Template",
-				statusTemplate = "Deactive");
+				templateName = "Build_Template",
+				templateStatus = "Deactive");
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Deactive");
 
@@ -206,73 +171,43 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-163905 - Verify that when creating a build with template, it comes with 'Active' status by default"
+	@description = "Story ID: LPS-162439 | Test Summary: Verify that when creating a build with template, it comes with 'Active' status by default"
 	@priority = 4
 	test CanCreateTemplateWithActiveDefault {
 		task ("Given that the user adds a Template") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
-
-			TestrayBuild.selectDefaultEnvironmentFactors(
-				label = "Application Server",
-				label1 = "Browser",
-				listCategory = "Application Server,Browser",
-				listOption = "JBoss 6.1",
-				listOption1 = "Chrome x");
-
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
-
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = 12345,
-				routine = "Routines_1 Routine");
+				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
+				routineName = ${routineName});
 		}
 
 		task ("Then the status active should appear") {
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
 			TestrayTemplate.viewTemplateDetails(
-				nameTemplate = "Build_Template",
-				statusTemplate = "Active");
+				templateName = "Build_Template",
+				templateStatus = "Active");
 		}
 	}
 
-	@description = "This is a test for LPS-163908 - Verify if can delete an deactived template"
+	@description = "Story ID: LPS-162439 | Test Summary: Verify if can delete an deactived template"
 	@priority = 4
 	test CanDeleteDeactiveTemplate {
 		task ("Given that the user adds a Template with status deactive") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
-
-			TestrayBuild.selectDefaultEnvironmentFactors(
-				label = "Application Server",
-				label1 = "Browser",
-				listCategory = "Application Server,Browser",
-				listOption = "JBoss 6.1",
-				listOption1 = "Chrome x");
-
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
-
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = 12345,
-				routine = "Routines_1 Routine");
+				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
+				routineName = ${routineName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
 			TestrayTemplate.viewTemplateDetails(
-				nameTemplate = "Build_Template",
-				statusTemplate = "Active");
+				templateName = "Build_Template",
+				templateStatus = "Active");
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Build_Template");
 
@@ -281,22 +216,22 @@ definition {
 			Refresh();
 
 			TestrayTemplate.viewTemplateDetails(
-				nameTemplate = "Build_Template",
-				statusTemplate = "Deactive");
+				templateName = "Build_Template",
+				templateStatus = "Deactive");
 		}
 
-		task ("When the deactive status is deleted") {
+		task ("When the template with deactive status is deleted") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Deactive");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
 		}
 
-		task ("Then the deactive status should not appear in the list") {
+		task ("Then the template with deactive status should not appear in the list") {
 			Testray.assertItemNotPresent(text = "Deactive");
 		}
 	}
 
-	@description = "This is a test for LPS-163906 - Verify that can filter out activated models"
+	@description = "Story ID: LPS-162435 | Test Summary: Verify that can filter out activated models"
 	@ignore = "Test Stub"
 	@priority = 5
 	test CanFilterActiveTemplate {
@@ -305,127 +240,24 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-166570 - Verify that as an administrator cannot add a new template without enviroments"
-	@priority = 5
-	test CanNotAddTemplateWithoutEnviroments {
-		task ("Given that the user tries to add a model without enviroments") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
-
-			TestrayTemplate.addTemplate(
-				dropdownItem = "New Template",
-				fieldName = "Build_Template");
-		}
-
-		task ("Then the error message should appear") {
-			Alert.viewErrorMessage(errorMessage = "At least one environment stack is required.");
-		}
-	}
-
-	@description = "This is a test for LPS-166569 - Verify if As an administrator can search for the new template created"
+	@description = "Story ID: LPS-162435 | Test Summary: Verify if As an administrator can search for the new template created"
 	@priority = 3
 	test CanSeachTemplate {
 		task ("Given the user adds a template") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
-
-			TestrayBuild.selectDefaultEnvironmentFactors(
-				label = "Application Server",
-				label1 = "Browser",
-				listCategory = "Application Server,Browser",
-				listOption = "JBoss 6.1",
-				listOption1 = "Chrome x");
-
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
-
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = 12345,
-				routine = "Routines_1 Routine");
+				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
+				routineName = ${routineName});
 		}
 
 		task ("Then can search for the template created in the filter") {
-			TestrayTemplate.assertTemplateName(dropdownItem = "Build_Template");
+			TestrayTemplate.assertTemplateName(templateName = "Build_Template");
 		}
 	}
 
-	@description = "This is a test for LPS-166567 - Verify if As an administrator can use a new template in a build"
-	@priority = 3
-	test CanUseTemplateInBuild {
-		task ("Given that the user add a new component, enviroments and cases") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-
-			Testray.addNewComponent(componentName = "Components_1 Project 1");
-
-			Click(
-				key_modalTitle = "Components - Projects_1 Project",
-				locator1 = "Button#CLOSE_MODAL");
-
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
-
-			TestrayBuild.selectDefaultEnvironmentFactors(
-				label = "Application Server",
-				label1 = "Browser",
-				listCategory = "Application Server,Browser",
-				listOption = "JBoss 6.1",
-				listOption1 = "Chrome x");
-
-			Testray.projectTabNavigator(navTabName = "Cases");
-
-			TestrayCases.typeCasesField(
-				caseName = "Cases_1 Case",
-				caseTypeId = "Manual Test",
-				componentId = "Components_1 Project 1",
-				description = "Cases_1 Case Description",
-				duration = 40,
-				priority = 5,
-				steps = "Auto Test Steps");
-
-			Testray.projectTabNavigator(navTabName = "Routine");
-		}
-
-		task ("And Add new template") {
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
-
-			TestrayTemplate.addTemplate(
-				description = "Template Description",
-				dropdownItem = "New Template",
-				fieldName = "Build_Template",
-				gitHash = 12345,
-				routine = "Routines_1 Routine");
-		}
-
-		task ("Then can use the newly created model in a build") {
-			TestrayTemplate.assertTemplateName(dropdownItem = "Build_Template");
-
-			TestrayTemplate.goToBuildTemplate(dropdownItem = "Build_Template");
-
-			TestrayBuild.createBuild(
-				addVersion = "1.4",
-				caseName = "Cases_1 Case",
-				description = "Builds_1 Project Description",
-				fieldName = "Builds_1 Project",
-				gitHash = 12345,
-				productVersion = "1.4",
-				routine = "Routines_1 Routine");
-
-			Testray.assertItemName(text = "Builds_1 Project");
-		}
-	}
-
-	@description = "This is a test for LPS-163907 - Verify that can see the activated templates in the filter"
+	@description = "Story ID: LPS-162435 | Test Summary: Verify that can see the activated templates in the filter"
 	@ignore = "Test Stub"
 	@priority = 5
 	test CanViewActiveInFilter {
@@ -434,14 +266,10 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-166571 - Verify if, as an Administrator, can see the required field message"
+	@description = "Story ID: LPS-162435 | Test Summary: Verify if, as an Administrator, can see the required field message"
 	@priority = 3
 	test CanViewRequiredField {
-		task ("Given the user tries to add a new template without filling out the required fields") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
-
+		task ("When the user tries add a new template without filling out the required fields") {
 			TestrayTemplate.addTemplate(dropdownItem = "New Template");
 		}
 

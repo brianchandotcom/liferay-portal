@@ -710,6 +710,41 @@ public class SocialActivityLocalServiceImpl
 			activitySetId, start, end);
 	}
 
+	@Override
+	public List<SocialActivity> getApprovedActivities(
+		long classPK, double version) {
+
+		String strVersion = String.valueOf(version);
+
+		if (Math.floor(version) == version) {
+			strVersion = String.valueOf((int)version);
+		}
+
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				SocialActivityTable.INSTANCE
+			).from(
+				SocialActivityTable.INSTANCE
+			).where(
+				SocialActivityTable.INSTANCE.classPK.eq(
+					classPK
+				).and(
+					SocialActivityTable.INSTANCE.type.notIn(
+						new Integer[] {
+							SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+							SocialActivityConstants.
+								TYPE_MOVE_ATTACHMENT_TO_TRASH,
+							SocialActivityConstants.
+								TYPE_RESTORE_ATTACHMENT_FROM_TRASH
+						}
+					).or(
+						SocialActivityTable.INSTANCE.extraData.notLike(
+							"%version\":" + strVersion + ",%")
+					).withParentheses()
+				)
+			));
+	}
+
 	/**
 	 * Returns a range of all the activities done in the group.
 	 *

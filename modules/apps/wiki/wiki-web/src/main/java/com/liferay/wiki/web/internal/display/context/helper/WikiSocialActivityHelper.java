@@ -15,7 +15,6 @@
 package com.liferay.wiki.web.internal.display.context.helper;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
-import com.liferay.social.kernel.model.SocialActivityTable;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -66,31 +64,8 @@ public class WikiSocialActivityHelper {
 				start, end);
 		}
 
-		String version = String.valueOf(wikiPage.getVersion());
-
-		if (Math.floor(wikiPage.getVersion()) == wikiPage.getVersion()) {
-			version = String.valueOf((int)wikiPage.getVersion());
-		}
-
-		return SocialActivityLocalServiceUtil.dslQuery(
-			DSLQueryFactoryUtil.select(
-				SocialActivityTable.INSTANCE
-			).from(
-				SocialActivityTable.INSTANCE
-			).where(
-				SocialActivityTable.INSTANCE.extraData.notLike(
-					"%version\":" + version + ",%"
-				).or(
-					SocialActivityTable.INSTANCE.type.notIn(
-						new Integer[] {
-							SocialActivityConstants.TYPE_ADD_ATTACHMENT,
-							SocialActivityConstants.
-								TYPE_MOVE_ATTACHMENT_TO_TRASH,
-							SocialActivityConstants.
-								TYPE_RESTORE_ATTACHMENT_FROM_TRASH
-						})
-				)
-			));
+		return SocialActivityLocalServiceUtil.getApprovedActivities(
+			wikiPage.getResourcePrimKey(), wikiPage.getVersion());
 	}
 
 	public String getSocialActivityActionJSP(

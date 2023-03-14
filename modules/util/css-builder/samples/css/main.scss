@@ -1,19 +1,19 @@
-@import "bourbon";
+@import 'bourbon';
 
 ol {
 	> li {
-		background-color: #F4F5F7;
-		@include background-image( linear-gradient(to left, #FFF, #F4F5F7) );
+		background-color: #f4f5f7;
+		@include background-image(linear-gradient(to left, #fff, #f4f5f7));
 		float: left;
 		font-family: $lucida-grande;
 		position: relative;
-		@include transition( all 0.8s );
+		@include transition(all 0.8s);
 
 		&::after {
-			content: " ";
+			content: ' ';
 			height: 23px;
-			@include position( absolute, 10px -13px 0 0 );
-			@include transform( rotate(45deg) skew(20deg, 30deg) );
+			@include position(absolute, 10px -13px 0 0);
+			@include transform(rotate(45deg) skew(20deg, 30deg));
 			width: 23px;
 		}
 	}

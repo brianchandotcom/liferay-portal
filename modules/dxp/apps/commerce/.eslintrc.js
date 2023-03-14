@@ -10,11 +10,12 @@
  */
 
 module.exports = {
-	overrides: [{
-		files: ['**/dev/**', '**/jest.config.js'],
-		env: {
-			node: true,
-		}
-	}],
+	overrides: [
+		{
+			env: {
+				node: true,
+			},
+			files: ['**/dev/**', '**/jest.config.js'],
+		},
+	],
 };
-

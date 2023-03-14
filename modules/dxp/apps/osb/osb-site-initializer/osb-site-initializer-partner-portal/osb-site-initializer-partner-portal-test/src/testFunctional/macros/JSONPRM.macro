@@ -1,16 +1,17 @@
 definition {
-    macro createMDFRequest {
-        var totalCostOfExpense = 0;
 
-        if(!(isSet(userEmailAddress))) {
+	macro createMDFRequest {
+		var totalCostOfExpense = 0;
+
+		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
 		}
 
-		if(!(isSet(accountEntryName))) {
+		if (!(isSet(accountEntryName))) {
 			var accountEntryName = "Company Name 1";
 		}
 
-        if (!(isSet(startDate))) {
+		if (!(isSet(startDate))) {
 			var startDate = DateUtil.getFormattedDate("+1", "yyyy-MM-dd");
 		}
 
@@ -18,110 +19,111 @@ definition {
 			var endDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");
 		}
 
-        if (!(isSet(campaignName))) {
+		if (!(isSet(campaignName))) {
 			var campaignName = "Campaign Name";
 		}
 
-        if (!(isSet(campaignDescription))) {
+		if (!(isSet(campaignDescription))) {
 			var campaignDescription = "Campaign Description";
 		}
 
-        if (!(isSet(goalsOptions))) {
+		if (!(isSet(goalsOptions))) {
 			var goalsOptions = "Thought leadership";
 		}
 
-        if (!(isSet(targetMarketOptions))) {
+		if (!(isSet(targetMarketOptions))) {
 			var targetMarketOptions = "Professional Services (Technical/Web/IT)";
 		}
 
-        if (!(isSet(targetRolesOptions))) {
+		if (!(isSet(targetRolesOptions))) {
 			var targetRolesOptions = "Director/Manager";
 		}
 
-        if (!(isSet(activityName))) {
+		if (!(isSet(activityName))) {
 			var activityName = "Activity Name";
 		}
 
-        if (!(isSet(activityDescription))) {
+		if (!(isSet(activityDescription))) {
 			var activityDescription = "Activity Description";
 		}
-        
-        if (!(isSet(expenseOption))) {
+
+		if (!(isSet(expenseOption))) {
 			var expenseOption = "Content Creation";
 		}
 
-        if (!(isSet(budgetValueList))) {
+		if (!(isSet(budgetValueList))) {
 			var budgetValueList = 1000;
 		}
 
-        for (var budget : list "${budgetValueList}") {
-			var totalCostOfExpense = MathUtil.sum(${totalCostOfExpense}, ${budget});
+		for (var budget : list ${budgetValueList}) {
+			var totalCostOfExpense = ${totalCostOfExpense} + ${budget};
 
-            if(isSet(secondBudgetValueList)) {
-                for (var budget : list "${secondBudgetValueList}") {
-                    var totalCostOfExpense = MathUtil.sum(${totalCostOfExpense}, ${budget});
-                }
-            }
+			if (isSet(secondBudgetValueList)) {
+				for (var budget : list ${secondBudgetValueList}) {
+					var totalCostOfExpense = ${totalCostOfExpense} + ${budget};
+				}
+			}
 		}
 
-        var totalMDFRequestAmount = MathUtil.quotient("${totalCostOfExpense}", "2");
-        
-        var requestId = JSONPRMAPI.addMDF(
-            userEmailAddress = "${userEmailAddress}",
-            accountEntryName = "${accountEntryName}",
-            endDate = "${endDate}",
-            startDate = "${startDate}",
-			campaignDescription = "${campaignDescription}",
-			campaignName = "${campaignName}",
-			goalsOptions = "${goalsOptions}",
-			targetMarketOptions = "${targetMarketOptions}",
-			targetRolesOptions = "${targetRolesOptions}",
-            totalCostOfExpense = ${totalCostOfExpense},
-            totalMDFRequestAmount = ${totalMDFRequestAmount});
+		var totalMDFRequestAmount = ${totalCostOfExpense} / 2;
 
-        var activityId = JSONPRMAPI.addActivity(
-            accountEntryName = "${accountEntryName}",
-			activityDescription = "${activityDescription}",
-			activityName = "${activityName}",
-            budgetValue = ${totalCostOfExpense},
-            expenseOption = "${expenseOption}",
-            startDate = "${startDate}",
-            endDate = "${endDate}",
+		var requestId = JSONPRMAPI.addMDF(
+			accountEntryName = ${accountEntryName},
+			campaignDescription = ${campaignDescription},
+			campaignName = ${campaignName},
+			endDate = ${endDate},
+			goalsOptions = ${goalsOptions},
+			startDate = ${startDate},
+			targetMarketOptions = ${targetMarketOptions},
+			targetRolesOptions = ${targetRolesOptions},
+			totalCostOfExpense = ${totalCostOfExpense},
+			totalMDFRequestAmount = ${totalMDFRequestAmount},
+			userEmailAddress = ${userEmailAddress});
+
+		var activityId = JSONPRMAPI.addActivity(
+			accountEntryName = ${accountEntryName},
+			activityDescription = ${activityDescription},
+			activityName = ${activityName},
+			budgetValue = ${totalCostOfExpense},
+			endDate = ${endDate},
+			expenseOption = ${expenseOption},
 			requestId = ${requestId},
-            totalMDFRequestAmount = ${totalMDFRequestAmount});
+			startDate = ${startDate},
+			totalMDFRequestAmount = ${totalMDFRequestAmount});
 
-        for (var budgetValue : list "${budgetValueList}") {
-            JSONPRMAPI.addBudget(
-                activityId = ${activityId},
-                expenseOption = "${expenseOption}",
-                budgetValue = ${budgetValue});
-        }
+		for (var budgetValue : list ${budgetValueList}) {
+			JSONPRMAPI.addBudget(
+				activityId = ${activityId},
+				budgetValue = ${budgetValue},
+				expenseOption = ${expenseOption});
+		}
 
-        if (isSet(secondActivityName)) {
-            var secondTotalCostOfExpense = 0;
+		if (isSet(secondActivityName)) {
+			var secondTotalCostOfExpense = 0;
 
-            for (var budget : list "${secondBudgetValueList}") {
-                var secondTotalCostOfExpense = MathUtil.sum(${secondTotalCostOfExpense}, ${budget});
-            }
+			for (var budget : list ${secondBudgetValueList}) {
+				var secondTotalCostOfExpense = ${secondTotalCostOfExpense} + ${budget};
+			}
 
-            var secondTotalMDFRequestAmount = MathUtil.quotient("${secondTotalCostOfExpense}", "2");
+			var secondTotalMDFRequestAmount = ${secondTotalCostOfExpense} / 2;
 
-            var secondActivityId = JSONPRMAPI.addActivity(
-                activityDescription = "${activityDescription}",
-                activityName = "${secondActivityName}",
-                budgetValue = ${secondTotalCostOfExpense},
-                expenseOption = "${expenseOption}",
-                startDate = "${startDate}",
-                endDate = "${endDate}",
-                requestId = ${requestId},
-                totalMDFRequestAmount = ${secondTotalMDFRequestAmount});
+			var secondActivityId = JSONPRMAPI.addActivity(
+				activityDescription = ${activityDescription},
+				activityName = ${secondActivityName},
+				budgetValue = ${secondTotalCostOfExpense},
+				endDate = ${endDate},
+				expenseOption = ${expenseOption},
+				requestId = ${requestId},
+				startDate = ${startDate},
+				totalMDFRequestAmount = ${secondTotalMDFRequestAmount});
 
-            for (var secondBudgetValue : list "${secondBudgetValueList}") {
-                JSONPRMAPI.addBudget(
-                    activityId = ${secondActivityId},
-                    expenseOption = "${expenseOption}",
-                    budgetValue = ${secondBudgetValue});
-            }
-         }
-    }
+			for (var secondBudgetValue : list ${secondBudgetValueList}) {
+				JSONPRMAPI.addBudget(
+					activityId = ${secondActivityId},
+					budgetValue = ${secondBudgetValue},
+					expenseOption = ${expenseOption});
+			}
+		}
+	}
+
 }

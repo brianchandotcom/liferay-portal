@@ -687,7 +687,7 @@ definition {
 	@description = "This is a test for LPS-169960. Verify that a submited MDF will be displayed on the list"
 	@priority = 5
 	test SubmittedMDFAppearsOnListing {
-		task ("Given that a new MDF Request is submitted") { {
+		task ("Given that a new MDF Request is submitted") {
 			JSONPRM.createMDFRequest();
 		}
 

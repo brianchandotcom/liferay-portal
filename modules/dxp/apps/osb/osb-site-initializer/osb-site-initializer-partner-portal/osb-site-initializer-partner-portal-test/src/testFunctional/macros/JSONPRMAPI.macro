@@ -1,44 +1,21 @@
 definition {
 
-	macro addBudget {
-		Variables.assertDefined(parameterList = ${activityId});
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/c/budgets \
-				-u test@liferay.com:test \
-				-H 'accept: application/json' \
-				-H 'Content-Type: application/json' \
-				-d '{
-				"cost":${budgetValue},
-				"expense":{
-					"key":"contentCreation",
-					"name":"Content Creation"
-				},
-				"r_actToBgts_c_activityId":${activityId}
-				}'
-		''';
-
-		var response = JSONCurlUtil.post(${curl});
-
-		echo(${response});
-	}
-
 	macro addActivity {
 		Variables.assertDefined(parameterList = ${requestId});
 
-		if(!(isSet(accountEntryName))) {
+		if (!(isSet(accountEntryName))) {
 			var accountEntryName = "Company Name 1";
 		}
 
-		if(!(isSet(accountEntryName))) {
+		if (!(isSet(accountEntryName))) {
 			var accountEntryName = "Company Name 1";
 		}
 
-		var accountName = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+		var accountName = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
 		var portalURL = JSONCompany.getPortalURL();
-		var expenseKey = StringUtil.lowerCaseFirstLetter("${expenseOption}");
-		var expenseKey = StringUtil.replace("${expenseKey}", " ", "");
+		var expenseKey = StringUtil.lowerCaseFirstLetter(${expenseOption});
+
+		var expenseKey = StringUtil.replace(${expenseKey}, " ", "");
 
 		var curl = '''
 			${portalURL}/o/c/activities \
@@ -169,19 +146,44 @@ definition {
 		return ${response};
 	}
 
+	macro addBudget {
+		Variables.assertDefined(parameterList = ${activityId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/budgets \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"cost":${budgetValue},
+					"expense":{
+						"key":"contentCreation",
+						"name":"Content Creation"
+					},
+					"r_actToBgts_c_activityId":${activityId}
+				}'
+		''';
+
+		var response = JSONCurlUtil.post(${curl});
+
+		echo(${response});
+	}
+
 	macro addMDF {
 		Variables.assertDefined(parameterList = ${campaignName});
 
-		if(!(isSet(userEmailAddress))) {
+		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
 		}
 
-		if(!(isSet(accountEntryName))) {
+		if (!(isSet(accountEntryName))) {
 			var accountEntryName = "Company Name 1";
 		}
 
-		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
-		var accountName = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});
+		var accountName = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''

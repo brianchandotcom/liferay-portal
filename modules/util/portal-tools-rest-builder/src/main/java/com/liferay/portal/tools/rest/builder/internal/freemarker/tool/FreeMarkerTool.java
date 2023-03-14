@@ -70,16 +70,16 @@ public class FreeMarkerTool {
 		return _freeMarkerTool;
 	}
 
-	public boolean containsAggregationFunction(
-		List<JavaMethodSignature> javaMethodSignatures) {
+	public boolean containsParameterType(
+		List<JavaMethodSignature> javaMethodSignatures, String parameterType) {
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
 			for (JavaMethodParameter javaMethodParameter :
-					javaMethodSignature.getJavaMethodParameters()) {
+				javaMethodSignature.getJavaMethodParameters()) {
 
 				if (StringUtil.equals(
-						javaMethodParameter.getParameterType(),
-						"com.liferay.portal.vulcan.aggregation.Aggregation")) {
+					javaMethodParameter.getParameterType(),
+					parameterType)) {
 
 					return true;
 				}
@@ -1046,6 +1046,14 @@ public class FreeMarkerTool {
 			String string = returnTypeParts[returnTypeParts.length - 1];
 
 			return relatedSchemaNames.contains(string);
+		}
+
+		return false;
+	}
+
+	public boolean isVersionCompatible(ConfigYAML configYAML, int version) {
+		if (configYAML.getCompatibilityVersion() >= version) {
+			return true;
 		}
 
 		return false;

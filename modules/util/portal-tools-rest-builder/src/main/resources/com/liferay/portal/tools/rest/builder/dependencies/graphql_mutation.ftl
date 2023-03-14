@@ -20,7 +20,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 <#assign
 	javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, "mutation", openAPIYAML)
 
-	generateAggregationFunction = freeMarkerTool.isVersionCompatible(configYAML, 2) && freeMarkerTool.containsAggregationFunction(javaMethodSignatures)
+	generateAggregationFunction = freeMarkerTool.isVersionCompatible(configYAML, 2) && freeMarkerTool.containsParameterType(javaMethodSignatures, "com.liferay.portal.vulcan.aggregation.Aggregation")
+	generateFilterFunction = freeMarkerTool.isVersionCompatible(configYAML, 2) && freeMarkerTool.containsParameterType(javaMethodSignatures, "com.liferay.portal.kernel.search.filter.Filter")
 />
 
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -163,7 +164,11 @@ public class Mutation {
 	</#if>
 
 	private com.liferay.portal.kernel.model.Company _company;
-	private BiFunction<Object, String, Filter> _filterBiFunction;
+
+	<#if generateFilterFunction>
+		private BiFunction<Object, String, Filter> _filterBiFunction;
+	</#if>
+
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;

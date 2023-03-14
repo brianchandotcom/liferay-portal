@@ -15,14 +15,16 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.fragment.configuration.FragmentServiceConfigurationProvider;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.web.internal.configuration.admin.service.FragmentServiceManagedServiceFactory;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +35,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -66,7 +70,8 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 		throws Exception {
 
 		Callable<Object> callable =
-			new PropagateContributedFragmentEntriesChangesCallable();
+			new PropagateContributedFragmentEntriesChangesCallable(
+				actionRequest);
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -124,6 +129,36 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 		}
 	}
 
+	private void _updateFragmentServiceConfiguration(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		String scope = ParamUtil.getString(actionRequest, "scope");
+
+		if (Validator.isNull(scope)) {
+			throw new PortalException("Unsupported scope: " + scope);
+		}
+
+		long scopePK = ParamUtil.getLong(actionRequest, "scopePK");
+
+		if ((scopePK == 0) &&
+			!scope.equals(
+				ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
+
+			throw new PortalException(
+				"Invalid scope primary key 0 for " + scope + " scope");
+		}
+
+		boolean propagateChanges = ParamUtil.getBoolean(
+			actionRequest, "propagateChanges");
+		boolean propagateContributedFragmentChanges = ParamUtil.getBoolean(
+			actionRequest, "propagateContributedFragmentChanges");
+
+		_fragmentServiceManagedServiceFactory.updatePropagateChanges(
+			propagateChanges, propagateContributedFragmentChanges, scope,
+			scopePK);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PropagateContributedFragmentEntriesChangesMVCActionCommand.class);
 
@@ -139,8 +174,8 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
-	private FragmentServiceConfigurationProvider
-		_fragmentServiceConfigurationProvider;
+	private FragmentServiceManagedServiceFactory
+		_fragmentServiceManagedServiceFactory;
 
 	@Reference
 	private JSONFactory _jsonFactory;
@@ -154,9 +189,18 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 		@Override
 		public Object call() throws Exception {
 			_propagateContributedFragmentEntriesChanges();
+			_updateFragmentServiceConfiguration(_actionRequest);
 
 			return null;
 		}
+
+		private PropagateContributedFragmentEntriesChangesCallable(
+			ActionRequest actionRequest) {
+
+			_actionRequest = actionRequest;
+		}
+
+		private final ActionRequest _actionRequest;
 
 	}
 

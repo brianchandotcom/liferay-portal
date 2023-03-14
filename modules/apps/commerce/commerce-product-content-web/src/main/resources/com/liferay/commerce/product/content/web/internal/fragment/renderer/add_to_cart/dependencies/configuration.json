@@ -1,0 +1,69 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "left",
+					"label": "alignment",
+					"name": "alignment",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "center",
+								"value": "center"
+							},
+							{
+								"label": "left",
+								"value": "left"
+							},
+							{
+								"label": "right",
+								"value": "right"
+							},
+							{
+								"label": "full-width",
+								"value": "full-width"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "inline",
+					"name": "inline",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": "lg",
+					"label": "size",
+					"name": "size",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "sm",
+								"value": "sm"
+							},
+							{
+								"label": "md",
+								"value": "md"
+							},
+							{
+								"label": "lg",
+								"value": "lg"
+							},
+							{
+								"label": "xl",
+								"value": "xl"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

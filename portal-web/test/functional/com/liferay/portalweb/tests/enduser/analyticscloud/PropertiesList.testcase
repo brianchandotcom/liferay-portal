@@ -252,10 +252,6 @@ definition {
 		}
 
 		task ("Assert a new property is created along with old property") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-
 			ACUtils.assertItemsName(itemList = "Property OnlyAvailablePropertiesAppearInDXP 1");
 
 			ACUtils.assertItemsName(itemList = "Property OnlyAvailablePropertiesAppearInDXP 2");

@@ -124,7 +124,7 @@ definition {
 
 			Click(
 				key_text = "Next",
-				locator1 = "Button#ANY");	
+				locator1 = "Button#ANY");
 
 			ACDXPSettings.syncContactsAndAccountstData();
 		}

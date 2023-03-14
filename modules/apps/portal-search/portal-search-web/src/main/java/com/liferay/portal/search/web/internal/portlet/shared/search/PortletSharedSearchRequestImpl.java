@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -53,7 +54,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -183,15 +183,12 @@ public class PortletSharedSearchRequestImpl
 
 		List<Portlet> portlets = new ArrayList<>();
 
-		List<com.liferay.portal.kernel.model.PortletPreferences>
-			portletPreferencesList =
-				portletPreferencesLocalService.getPortletPreferences(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
+		List<PortletPreferences> portletPreferencesList =
+			portletPreferencesLocalService.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
 
-		for (com.liferay.portal.kernel.model.PortletPreferences
-				portletPreferences : portletPreferencesList) {
-
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
 			Portlet portlet = portletLocalService.getPortletById(
 				companyId, portletPreferences.getPortletId());
 

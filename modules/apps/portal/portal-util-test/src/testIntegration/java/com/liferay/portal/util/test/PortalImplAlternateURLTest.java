@@ -255,6 +255,27 @@ public class PortalImplAlternateURLTest {
 	}
 
 	@Test
+	public void testAlternateURLWithUrlSeparator() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		String urlSeparator = "/p/";
+
+		Locale locale = LocaleUtil.SPAIN;
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Assert.assertEquals(
+			_generateURL(
+				"localhost", StringPool.SLASH + locale.getLanguage(),
+				_group.getFriendlyURL(), urlSeparator),
+			_portal.getAlternateURL(
+				_generateURL(
+					"localhost", StringPool.BLANK, _group.getFriendlyURL(),
+					urlSeparator),
+				_getThemeDisplay(_group, layout), locale, layout));
+	}
+
+	@Test
 	public void testAlternativeVirtualHostDefaultPortalLocaleAlternateURL()
 		throws Exception {
 

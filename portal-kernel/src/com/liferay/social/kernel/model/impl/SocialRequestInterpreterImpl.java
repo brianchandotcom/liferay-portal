@@ -31,7 +31,6 @@ public class SocialRequestInterpreterImpl implements SocialRequestInterpreter {
 		String portletId, SocialRequestInterpreter requestInterpreter) {
 
 		_portletId = portletId;
-
 		_requestInterpreter = requestInterpreter;
 
 		String[] classNames = requestInterpreter.getClassNames();

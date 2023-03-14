@@ -35,7 +35,6 @@ public class SocialActivityInterpreterImpl
 		String portletId, SocialActivityInterpreter activityInterpreter) {
 
 		_portletId = portletId;
-
 		_activityInterpreter = activityInterpreter;
 
 		String[] classNames = activityInterpreter.getClassNames();

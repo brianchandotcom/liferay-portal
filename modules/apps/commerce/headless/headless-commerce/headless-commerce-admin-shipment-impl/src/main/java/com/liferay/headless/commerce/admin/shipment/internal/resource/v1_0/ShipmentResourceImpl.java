@@ -25,7 +25,6 @@ import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress;
-import com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.converter.ShipmentDTOConverter;
 import com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.admin.shipment.internal.util.v1_0.ShipmentItemUtil;
 import com.liferay.headless.commerce.admin.shipment.internal.util.v1_0.ShippingAddressUtil;
@@ -42,6 +41,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -508,7 +508,9 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
 
-	@Reference
-	private ShipmentDTOConverter _shipmentDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.converter.ShipmentDTOConverter)"
+	)
+	private DTOConverter<CommerceShipment, Shipment> _shipmentDTOConverter;
 
 }

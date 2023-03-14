@@ -21,12 +21,12 @@ import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress;
-import com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.converter.ShippingAddressDTOConverter;
 import com.liferay.headless.commerce.admin.shipment.internal.util.v1_0.ShippingAddressUtil;
 import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShippingAddressResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -162,7 +162,10 @@ public class ShippingAddressResourceImpl
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
 
-	@Reference
-	private ShippingAddressDTOConverter _shippingAddressDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.converter.ShippingAddressDTOConverter)"
+	)
+	private DTOConverter<CommerceAddress, ShippingAddress>
+		_shippingAddressDTOConverter;
 
 }

@@ -12,8 +12,8 @@
  * details.
  */
 
-export const DragTypes = {
-	CRITERIA_GROUP: 'criteria-group',
-	CRITERIA_ROW: 'criteria-row',
-	PROPERTY: 'property',
+export declare const DragTypes: {
+	readonly CRITERIA_GROUP: 'criteria-group';
+	readonly CRITERIA_ROW: 'criteria-row';
+	readonly PROPERTY: 'property';
 };

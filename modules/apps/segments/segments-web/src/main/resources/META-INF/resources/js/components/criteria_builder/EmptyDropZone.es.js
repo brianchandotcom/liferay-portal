@@ -18,7 +18,7 @@ import React, {Component} from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
 
 import ThemeContext from '../../ThemeContext.es';
-import {DragTypes} from '../../utils/drag-types.es';
+import {DragTypes} from '../../utils/drag-types';
 import EmptyPlaceholder from './EmptyPlaceholder.es';
 
 /**

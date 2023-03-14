@@ -25,7 +25,7 @@ import {
 	SUPPORTED_OPERATORS,
 	SUPPORTED_PROPERTY_TYPES,
 } from '../../utils/constants';
-import {DragTypes} from '../../utils/drag-types.es';
+import {DragTypes} from '../../utils/drag-types';
 import {
 	generateGroupId,
 	getChildGroupIds,

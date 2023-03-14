@@ -328,41 +328,21 @@ public class SegmentsDisplayContext {
 		searchContainer.setOrderByType(getOrderByType());
 
 		if (_isSearch()) {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-166954")) {
-				searchContainer.setResultsAndTotal(
-					_segmentsEntryService.searchSegmentsEntries(
-						_themeDisplay.getCompanyId(),
-						_themeDisplay.getScopeGroupId(), _getKeywords(), true,
-						searchContainer.getStart(), searchContainer.getEnd(),
-						_getSort()));
-			}
-			else {
-				searchContainer.setResultsAndTotal(
-					_segmentsEntryService.searchSegmentsEntries(
-						_themeDisplay.getCompanyId(), _getKeywords(),
-						searchContainer.getStart(), searchContainer.getEnd(),
-						_getSort()));
-			}
+			searchContainer.setResultsAndTotal(
+				_segmentsEntryService.searchSegmentsEntries(
+					_themeDisplay.getCompanyId(),
+					_themeDisplay.getScopeGroupId(), _getKeywords(), true,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					_getSort()));
 		}
 		else {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-166954")) {
-				searchContainer.setResultsAndTotal(
-					() -> _segmentsEntryService.getSegmentsEntries(
-						_themeDisplay.getScopeGroupId(), true,
-						searchContainer.getStart(), searchContainer.getEnd(),
-						searchContainer.getOrderByComparator()),
-					_segmentsEntryService.getSegmentsEntriesCount(
-						_themeDisplay.getScopeGroupId(), true));
-			}
-			else {
-				searchContainer.setResultsAndTotal(
-					() -> _segmentsEntryService.getSegmentsEntries(
-						_themeDisplay.getCompanyId(),
-						searchContainer.getStart(), searchContainer.getEnd(),
-						searchContainer.getOrderByComparator()),
-					_segmentsEntryService.getSegmentsEntriesCount(
-						_themeDisplay.getCompanyId()));
-			}
+			searchContainer.setResultsAndTotal(
+				() -> _segmentsEntryService.getSegmentsEntries(
+					_themeDisplay.getScopeGroupId(), true,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
+				_segmentsEntryService.getSegmentsEntriesCount(
+					_themeDisplay.getScopeGroupId(), true));
 		}
 
 		searchContainer.setRowChecker(

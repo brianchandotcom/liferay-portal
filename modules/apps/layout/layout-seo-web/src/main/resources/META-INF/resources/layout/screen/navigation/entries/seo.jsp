@@ -232,9 +232,19 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 		</clay:sheet-section>
 
 		<clay:sheet-footer>
-			<aui:button primary="<%= true %>" type="submit" />
+			<clay:button
+				cssClass="mr-3"
+				displayType="primary"
+				label='<%= LanguageUtil.get(request, "save") %>'
+				type="submit"
+			/>
 
-			<aui:button href="<%= backURL %>" type="cancel" />
+			<clay:link
+				displayType="secondary"
+				href="<%= backURL %>"
+				label='<%= LanguageUtil.get(request, "cancel") %>'
+				type="button"
+			/>
 		</clay:sheet-footer>
 	</clay:sheet>
 </aui:form>

@@ -14,12 +14,11 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.exception.mapper;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionTimeframeException;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.GenericError;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -45,11 +44,8 @@ public class SLATimeframeExceptionMapper
 		WorkflowMetricsSLADefinitionTimeframeException
 			workflowMetricsSLADefinitionTimeframeException) {
 
-		List<GenericError> genericErrors = Stream.of(
-			workflowMetricsSLADefinitionTimeframeException.getFieldNames()
-		).flatMap(
-			List::parallelStream
-		).map(
+		List<GenericError> genericErrors = TransformUtil.transform(
+			workflowMetricsSLADefinitionTimeframeException.getFieldNames(),
 			fieldName -> {
 				GenericError genericError = new GenericError();
 
@@ -58,10 +54,7 @@ public class SLATimeframeExceptionMapper
 					getMessage("selected-option-is-no-longer-available"));
 
 				return genericError;
-			}
-		).collect(
-			Collectors.toList()
-		);
+			});
 
 		genericErrors.add(
 			new GenericError() {

@@ -70,25 +70,6 @@ public class FreeMarkerTool {
 		return _freeMarkerTool;
 	}
 
-	public boolean containsParameterType(
-		List<JavaMethodSignature> javaMethodSignatures, String parameterType) {
-
-		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
-			for (JavaMethodParameter javaMethodParameter :
-				javaMethodSignature.getJavaMethodParameters()) {
-
-				if (StringUtil.equals(
-					javaMethodParameter.getParameterType(),
-					parameterType)) {
-
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	public boolean containsJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String text) {
 
@@ -98,6 +79,25 @@ public class FreeMarkerTool {
 
 			if (javaMethodSignatureMethodName.contains(text)) {
 				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean containsParameterType(
+		List<JavaMethodSignature> javaMethodSignatures, String parameterType) {
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			for (JavaMethodParameter javaMethodParameter :
+					javaMethodSignature.getJavaMethodParameters()) {
+
+				if (StringUtil.equals(
+						javaMethodParameter.getParameterType(),
+						parameterType)) {
+
+					return true;
+				}
 			}
 		}
 

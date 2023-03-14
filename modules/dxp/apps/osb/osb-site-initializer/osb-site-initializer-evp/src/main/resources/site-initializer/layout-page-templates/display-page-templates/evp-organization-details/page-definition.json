@@ -72,10 +72,12 @@
 						"definition": {
 							"fragmentStyle": {
 								"borderRadius": "borderRadiusLg",
+								"paddingLeft": "2",
 								"shadow": "boxShadow"
 							},
 							"indexed": true,
 							"layout": {
+								"opacity": 100,
 								"widthType": "Fixed"
 							}
 						},
@@ -84,6 +86,7 @@
 								"definition": {
 									"indexed": true,
 									"layout": {
+										"opacity": 100,
 										"widthType": "Fluid"
 									}
 								},
@@ -255,8 +258,8 @@
 											},
 											"gutters": true,
 											"indexed": true,
-											"modulesPerRow": 1,
-											"numberOfColumns": 1,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
 											"reverseOrder": false,
 											"rowViewports": [
 												{
@@ -276,7 +279,7 @@
 													}
 												}
 											],
-											"verticalAlignment": "top"
+											"verticalAlignment": "middle"
 										},
 										"pageElements": [
 											{
@@ -299,7 +302,7 @@
 															"id": "tablet"
 														}
 													],
-													"size": 12
+													"size": 6
 												},
 												"pageElements": [
 													{
@@ -340,6 +343,62 @@
 													}
 												],
 												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h4",
+																"truncateText": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "ObjectField_messageEVPManager",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
 											}
 										],
 										"type": "Row"
@@ -368,11 +427,13 @@
 						"definition": {
 							"fragmentStyle": {
 								"borderRadius": "borderRadiusLg",
+								"paddingLeft": "2",
 								"shadow": "boxShadow",
 								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
+								"opacity": 100,
 								"widthType": "Fixed"
 							}
 						},
@@ -424,6 +485,7 @@
 								"definition": {
 									"indexed": true,
 									"layout": {
+										"opacity": 100,
 										"widthType": "Fluid"
 									}
 								},
@@ -1623,10 +1685,12 @@
 						"definition": {
 							"fragmentStyle": {
 								"borderRadius": "borderRadiusLg",
+								"paddingLeft": "2",
 								"shadow": "boxShadow"
 							},
 							"indexed": true,
 							"layout": {
+								"opacity": 100,
 								"widthType": "Fixed"
 							}
 						},
@@ -1678,6 +1742,7 @@
 								"definition": {
 									"indexed": true,
 									"layout": {
+										"opacity": 100,
 										"widthType": "Fluid"
 									}
 								},
@@ -2298,10 +2363,12 @@
 						"definition": {
 							"fragmentStyle": {
 								"borderRadius": "borderRadiusLg",
+								"paddingLeft": "2",
 								"shadow": "boxShadow"
 							},
 							"indexed": true,
 							"layout": {
+								"opacity": 100,
 								"widthType": "Fixed"
 							}
 						},
@@ -2353,6 +2420,7 @@
 								"definition": {
 									"indexed": true,
 									"layout": {
+										"opacity": 100,
 										"widthType": "Fluid"
 									}
 								},

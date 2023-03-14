@@ -10,7 +10,7 @@
  * distribution rights of the Software.
  */
 
-const updateStatus = async (key, name) => {
+const updateStatus = async (key, name, message) => {
 	const organizationID = fragmentElement.querySelector('.organizationID')
 		.value;
 
@@ -20,7 +20,8 @@ const updateStatus = async (key, name) => {
 		"organizationStatus":{
 		   "key":"${key}",
 		   "name":"${name}"
-		}
+		},
+		"messageEVPManager":"${message}"
 	 }`,
 		headers: {
 			'content-type': 'application/json',
@@ -32,17 +33,37 @@ const updateStatus = async (key, name) => {
 	location.reload();
 };
 
+const layerForDendingUpdateStatus = async (message, attribute, key, value) => {
+	if (message === '') {
+		return attribute.removeAttribute('hidden');
+	}
+
+	return await updateStatus(key, value, message);
+};
+
 const openModal = () => {
+	let message = '';
+	let attributeHidden = '';
 	const organizationName = fragmentElement.querySelector('.organizationName')
 		.innerHTML;
 
 	Liferay.Util.openModal({
+		bodyHTML:
+			'<textarea id="messageDescribed" style="word-wrap: break-word;width:100%;height: 10em;resize: none; border-style: inset;border-width: 1px;border-radius: 5px;" placeholder="Describe here..."></textarea>' +
+			'<div id="messageDanger" class="alert alert-danger" role="alert" hidden>This field is mandatory, please fill it in.</div>',
 		buttons: [
 			{
 				displayType: 'danger',
 				label: 'Reject',
 				async onClick() {
-					await updateStatus('rejected', 'Rejected');
+					message = document.querySelector('#messageDescribed').value;
+					attributeHidden = document.querySelector('#messageDanger');
+					await layerForDendingUpdateStatus(
+						message,
+						attributeHidden,
+						'rejected',
+						'Rejected'
+					);
 				},
 				type: 'submit',
 			},
@@ -50,7 +71,11 @@ const openModal = () => {
 				displayType: 'success',
 				label: 'Approve',
 				async onClick() {
-					await updateStatus(
+					message = document.querySelector('#messageDescribed').value;
+					attributeHidden = document.querySelector('#messageDanger');
+					await layerForDendingUpdateStatus(
+						message,
+						attributeHidden,
 						'awaitingFinanceApproval',
 						'Awaiting Finance Approval'
 					);

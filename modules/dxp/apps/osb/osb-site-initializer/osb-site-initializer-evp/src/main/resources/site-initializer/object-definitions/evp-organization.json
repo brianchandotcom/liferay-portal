@@ -379,6 +379,24 @@
 			"name": "organizationStatus",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "LongText",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Message EVP Manager"
+			},
+			"name": "messageEVPManager",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

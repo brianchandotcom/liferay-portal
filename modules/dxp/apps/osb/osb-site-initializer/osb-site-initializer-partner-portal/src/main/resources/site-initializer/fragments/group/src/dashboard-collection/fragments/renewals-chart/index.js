@@ -105,7 +105,6 @@ export default function () {
 
 	return (
 		<Container
-			className="renewal-chart-card-height"
 			footer={
 				<ClayButton
 					className="border-brand-primary-darken-1 mt-2 text-brand-primary-darken-1"
@@ -122,49 +121,51 @@ export default function () {
 			}
 			title="Renewals"
 		>
-			<div className="align-items-start d-flex flex-column mt-3">
-				{filteredRenewals?.map((item, index) => {
-					getCurrentStatusColor(item);
-
-					return (
-						<div
-							className="align-items-center d-flex flex-row justify-content-center mb-4"
-							key={index}
-						>
-							<div
-								className={classNames(
-									'mr-3 status-bar-vertical',
-									getCurrentStatusColor(item)
-								)}
-							></div>
-
-							<div>
-								<div className="font-weight-semi-bold">
-									{item.opportunityName}
-								</div>
-
-								<div>
-									Expires in &nbsp;
-									<span className="font-weight-semi-bold">
-										{item.expirationDays} days.
-									</span>
-									&nbsp;
-									<span className="ml-2">
-										{item.closeDate}
-									</span>
-								</div>
-							</div>
-						</div>
-					);
-				})}
-			</div>
-
 			{loading && (
 				<ClayLoadingIndicator className="mb-10 mt-9" size="md" />
 			)}
 
 			{!loading && !data && (
 				<h2 className="mb-10 mt-9 text-center">No Data Available</h2>
+			)}
+
+			{data && (
+				<div className="align-items-start d-flex flex-column justify-content-center mt-3 renewal-chart-card-height">
+					{filteredRenewals?.map((item, index) => {
+						getCurrentStatusColor(item);
+
+						return (
+							<div
+								className="align-items-center d-flex flex-row justify-content-center mb-4"
+								key={index}
+							>
+								<div
+									className={classNames(
+										'mr-3 status-bar-vertical',
+										getCurrentStatusColor(item)
+									)}
+								></div>
+
+								<div>
+									<div className="font-weight-semi-bold">
+										{item.opportunityName}
+									</div>
+
+									<div>
+										Expires in &nbsp;
+										<span className="font-weight-semi-bold">
+											{item.expirationDays} days.
+										</span>
+										&nbsp;
+										<span className="ml-2">
+											{item.closeDate}
+										</span>
+									</div>
+								</div>
+							</div>
+						);
+					})}
+				</div>
 			)}
 		</Container>
 	);

@@ -514,7 +514,7 @@ public class UpgradeReport {
 			"osgi.status",
 			() -> {
 				if (releaseManagerOSGiCommands == null) {
-					return "Not possible to check upgrades status";
+					return "Unable to determine. Upgrade check not available";
 				}
 
 				String check = releaseManagerOSGiCommands.check();

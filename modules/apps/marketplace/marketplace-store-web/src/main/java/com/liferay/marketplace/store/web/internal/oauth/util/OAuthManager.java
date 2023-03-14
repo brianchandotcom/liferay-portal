@@ -14,24 +14,13 @@
 
 package com.liferay.marketplace.store.web.internal.oauth.util;
 
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoValue;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.marketplace.store.web.internal.configuration.MarketplaceStoreWebConfigurationValues;
 import com.liferay.marketplace.store.web.internal.oauth.api.MarketplaceApi;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -131,64 +120,7 @@ public class OAuthManager {
 			user.getUserId(), token.getToken());
 	}
 
-	@Activate
-	protected void activate() {
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				try {
-					_setupExpando(companyId);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Unable to setup Marketplace for company ",
-								companyId, ": ", exception.getMessage()));
-					}
-				}
-			});
-	}
-
-	private void _setupExpando(long companyId) throws Exception {
-		ExpandoTable table = _expandoTableLocalService.fetchTable(
-			companyId,
-			_classNameLocalService.getClassNameId(User.class.getName()), "MP");
-
-		if (table != null) {
-			return;
-		}
-
-		table = _expandoTableLocalService.addTable(
-			companyId, User.class.getName(), "MP");
-
-		_expandoColumnLocalService.addColumn(
-			table.getTableId(), "accessSecret", ExpandoColumnConstants.STRING);
-		_expandoColumnLocalService.addColumn(
-			table.getTableId(), "accessToken", ExpandoColumnConstants.STRING);
-		_expandoColumnLocalService.addColumn(
-			table.getTableId(), "requestSecret", ExpandoColumnConstants.STRING);
-		_expandoColumnLocalService.addColumn(
-			table.getTableId(), "requestToken", ExpandoColumnConstants.STRING);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(OAuthManager.class);
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private ExpandoColumnLocalService _expandoColumnLocalService;
-
-	@Reference
-	private ExpandoTableLocalService _expandoTableLocalService;
-
 	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

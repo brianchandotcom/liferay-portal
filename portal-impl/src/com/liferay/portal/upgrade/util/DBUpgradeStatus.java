@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.DBUpgradeChecker;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,6 +35,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
+
+import org.apache.logging.log4j.ThreadContext;
 
 /**
  * @author Luis Ortiz
@@ -123,6 +127,22 @@ public class DBUpgradeStatus {
 		_setFinalSchemaVersion();
 		_calculateUpgradeStatus(dbUpgradeChecker);
 		_calculateTypeOfUpgrade();
+
+		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
+			ThreadContext.put("upgrade.type", _upgradeType);
+			ThreadContext.put("upgrade.result", _upgradeStatus);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Upgrade of type ", _upgradeType, " finished with ",
+					_upgradeStatus, " result."));
+		}
+
+		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
+			ThreadContext.clearMap();
+		}
 	}
 
 	public static void upgradeStarted() {

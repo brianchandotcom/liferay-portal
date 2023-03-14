@@ -437,6 +437,8 @@ public class ResourceOpenAPIParser {
 
 		if (batchOperationType == BatchOperationType.EXPORT) {
 			javaMethodParameters.add(
+				new JavaMethodParameter("contentType", "String"));
+			javaMethodParameters.add(
 				new JavaMethodParameter("fieldNames", "String"));
 		}
 		else if (batchOperationType == BatchOperationType.IMPORT) {
@@ -571,10 +573,11 @@ public class ResourceOpenAPIParser {
 			}
 		}
 
-		parameters.add(_getQueryParameter("callbackURL"));
+		parameters.add(_getQueryParameter(null, "callbackURL"));
 
 		if (batchOperationType == BatchOperationType.EXPORT) {
-			parameters.add(_getQueryParameter("fieldNames"));
+			parameters.add(_getQueryParameter("JSON", "contentType"));
+			parameters.add(_getQueryParameter(null, "fieldNames"));
 		}
 
 		return parameters;
@@ -1083,7 +1086,9 @@ public class ResourceOpenAPIParser {
 		return null;
 	}
 
-	private static Parameter _getQueryParameter(String parameterName) {
+	private static Parameter _getQueryParameter(
+		String defaultValue, String parameterName) {
+
 		Parameter parameter = new Parameter();
 
 		parameter.setIn("query");
@@ -1091,6 +1096,7 @@ public class ResourceOpenAPIParser {
 
 		Schema schema = new Schema();
 
+		schema.setDefault(defaultValue);
 		schema.setType("String");
 
 		parameter.setSchema(schema);

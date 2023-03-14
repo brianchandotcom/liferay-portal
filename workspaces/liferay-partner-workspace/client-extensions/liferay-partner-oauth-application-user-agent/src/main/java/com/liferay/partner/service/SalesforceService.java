@@ -42,7 +42,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SalesforceService {
 
-	public JSONArray getBulkObjects(String[] objectFields, String objectType)
+	public JSONArray getObjectJSONArray(
+			String[] objectFields, String objectType)
 		throws Exception {
 
 		JobInfo jobInfo1 = new JobInfo();

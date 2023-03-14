@@ -91,12 +91,19 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 	const openGraphTitleFieldDefaultLocale = document.getElementById(
 		`${namespace}openGraphTitle_${Liferay.ThemeDisplay.getLanguageId()}`
 	);
+	const openGraphTitleWrapper = document.getElementById(
+		`${namespace}openGraphTitleWrapper`
+	);
 
 	openGraphTitleEnabledCheck.addEventListener('click', (event) => {
 		const disabled = !event.target.checked;
 
-		toggleDisabled(openGraphTitleField, disabled);
-		toggleDisabled(openGraphTitleFieldDefaultLocale, disabled);
+		const label = openGraphTitleWrapper.querySelector('label');
+
+		toggleDisabled(
+			[openGraphTitleField, openGraphTitleFieldDefaultLocale, label],
+			disabled
+		);
 
 		previewSeoFireChange(namespace, {
 			disabled,
@@ -114,12 +121,23 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 	const openGraphDescriptionFieldDefaultLocale = document.getElementById(
 		`${namespace}openGraphDescription_${Liferay.ThemeDisplay.getLanguageId()}`
 	);
+	const openGraphDescriptionWrapper = document.getElementById(
+		`${namespace}openGraphDescriptionWrapper`
+	);
 
 	openGraphDescriptionEnabledCheck.addEventListener('click', (event) => {
 		const disabled = !event.target.checked;
 
-		toggleDisabled(openGraphDescriptionField, disabled);
-		toggleDisabled(openGraphDescriptionFieldDefaultLocale, disabled);
+		const label = openGraphDescriptionWrapper.querySelector('label');
+
+		toggleDisabled(
+			[
+				openGraphDescriptionField,
+				openGraphDescriptionFieldDefaultLocale,
+				label,
+			],
+			disabled
+		);
 
 		previewSeoFireChange(namespace, {
 			disabled,

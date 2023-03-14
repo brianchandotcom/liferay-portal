@@ -179,7 +179,9 @@ name = HtmlUtil.escapeJS(name);
 	});
 
 	var preventImageDropHandler = windowNode.on('drop', (event) => {
-		var validDropTarget = event.target.getDOMNode().isContentEditable;
+		var element = event.target.getDOMNode();
+		var validDropTarget =
+			element.isContentEditable || !!element.getAttribute('droppable');
 
 		if (!validDropTarget) {
 			event.preventDefault();

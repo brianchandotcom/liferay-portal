@@ -139,7 +139,7 @@ definition {
 		task ("View the individual in chart") {
 			ACIndividualsDashboard.viewBreakdownRecharts(
 				fillColor = "#4B9BFF",
-				tick = "ac@liferay.com- 100.0%");
+				tick = "ac@liferay.com -100.0%");
 		}
 	}
 

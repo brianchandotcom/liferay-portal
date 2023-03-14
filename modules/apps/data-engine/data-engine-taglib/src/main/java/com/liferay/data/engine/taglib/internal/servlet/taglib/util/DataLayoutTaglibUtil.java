@@ -57,6 +57,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -68,6 +69,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -80,6 +82,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -88,7 +91,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -357,6 +359,8 @@ public class DataLayoutTaglibUtil {
 		}
 
 		try {
+			Set<Locale> availableLocales = new HashSet<>();
+
 			DataDefinition dataDefinition = null;
 
 			if (Validator.isNotNull(dataDefinitionId)) {
@@ -371,13 +375,11 @@ public class DataLayoutTaglibUtil {
 					dataLayout.getDataDefinitionId(), httpServletRequest);
 			}
 
-			return Stream.of(
-				dataDefinition.getAvailableLanguageIds()
-			).map(
-				LocaleUtil::fromLanguageId
-			).collect(
-				Collectors.toSet()
-			);
+			for (String languageId : dataDefinition.getAvailableLanguageIds()) {
+				availableLocales.add(LocaleUtil.fromLanguageId(languageId));
+			}
+
+			return availableLocales;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -546,16 +548,11 @@ public class DataLayoutTaglibUtil {
 			}
 
 			for (JSONObject jsonObject : (Iterable<JSONObject>)jsonArray) {
-				String[] fieldTypeScopes = StringUtil.split(
-					jsonObject.getString("scope"));
+				if (ListUtil.exists(
+						Arrays.asList(
+							StringUtil.split(jsonObject.getString("scope"))),
+						scopes::contains)) {
 
-				boolean anyMatch = Stream.of(
-					fieldTypeScopes
-				).anyMatch(
-					scope -> scopes.contains(scope)
-				);
-
-				if (anyMatch) {
 					fieldTypesJSONArray.put(jsonObject);
 
 					if (searchableFieldsDisabled) {
@@ -601,18 +598,17 @@ public class DataLayoutTaglibUtil {
 	}
 
 	private String _resolveFieldTypesModules() {
-		Set<String> ddmFormFieldTypeNames =
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames();
+		return StringUtil.merge(
+			TransformUtil.transform(
+				_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames(),
+				name -> {
+					if (!_dataLayoutTaglibUtil._hasJavascriptModule(name)) {
+						return null;
+					}
 
-		Stream<String> stream = ddmFormFieldTypeNames.stream();
-
-		return stream.filter(
-			_dataLayoutTaglibUtil::_hasJavascriptModule
-		).map(
-			_dataLayoutTaglibUtil::_resolveFieldTypeModule
-		).collect(
-			Collectors.joining(StringPool.COMMA)
-		);
+					return _dataLayoutTaglibUtil._resolveFieldTypeModule(name);
+				}),
+			StringPool.COMMA);
 	}
 
 	private String _resolveModuleName(DDMFormFieldType ddmFormFieldType) {
@@ -1047,19 +1043,19 @@ public class DataLayoutTaglibUtil {
 				(List<Map<String, Object>>)field.get("nestedFields");
 
 			if (nestedFields != null) {
-				Stream<Map<String, Object>> stream = nestedFields.stream();
+				List<Map<String, Object>> nestedFieldsList = new ArrayList<>();
 
-				return stream.flatMap(
-					this::_getNestedFieldsStream
-				).collect(
-					Collectors.toList()
-				);
+				for (Map<String, Object> nestedField : nestedFields) {
+					nestedFieldsList.addAll(_getNestedFieldsList(nestedField));
+				}
+
+				return nestedFieldsList;
 			}
 
 			return new ArrayList<>();
 		}
 
-		private Stream<Map<String, Object>> _getNestedFieldsStream(
+		private List<Map<String, Object>> _getNestedFieldsList(
 			Map<String, Object> field) {
 
 			List<Map<String, Object>> nestedFieldsList = new ArrayList<>(
@@ -1067,7 +1063,7 @@ public class DataLayoutTaglibUtil {
 
 			nestedFieldsList.addAll(_getNestedFields(field));
 
-			return nestedFieldsList.stream();
+			return nestedFieldsList;
 		}
 
 		private boolean _isFieldSet(Map<String, Object> field) {

@@ -463,7 +463,7 @@ public class EditSegmentsEntryDisplayContext {
 		long segmentsEntryId = getSegmentsEntryId();
 
 		if (segmentsEntryId > 0) {
-			_segmentsEntry = _segmentsEntryService.recalculateSegmentsEntry(
+			_segmentsEntry = _segmentsEntryService.getSegmentsEntry(
 				segmentsEntryId);
 
 			return _segmentsEntry;

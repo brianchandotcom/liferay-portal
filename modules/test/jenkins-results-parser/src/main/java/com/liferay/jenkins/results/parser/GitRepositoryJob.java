@@ -146,22 +146,23 @@ public abstract class GitRepositoryJob extends BaseJob {
 			gitWorkingDirectory.getCurrentLocalGitBranch();
 
 		branchJSONObject.put(
-			"current_branch_name", currentLocalGitBranch.getName());
-		branchJSONObject.put(
-			"current_branch_sha", currentLocalGitBranch.getSHA());
+			"current_branch_name", currentLocalGitBranch.getName()
+		).put(
+			"current_branch_sha", currentLocalGitBranch.getSHA()
+		);
 
 		LocalGitBranch upstreamLocalGitBranch =
 			gitWorkingDirectory.getUpstreamLocalGitBranch();
 
 		branchJSONObject.put(
-			"upstream_branch_name", upstreamLocalGitBranch.getName());
-		branchJSONObject.put(
-			"upstream_branch_sha", upstreamLocalGitBranch.getSHA());
-
-		branchJSONObject.put(
 			"merge_branch_sha",
 			gitWorkingDirectory.getMergeBaseCommitSHA(
-				currentLocalGitBranch, upstreamLocalGitBranch));
+				currentLocalGitBranch, upstreamLocalGitBranch)
+		).put(
+			"upstream_branch_name", upstreamLocalGitBranch.getName()
+		).put(
+			"upstream_branch_sha", upstreamLocalGitBranch.getSHA()
+		);
 
 		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
 

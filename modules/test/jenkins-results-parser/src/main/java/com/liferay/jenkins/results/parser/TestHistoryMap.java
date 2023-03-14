@@ -139,18 +139,19 @@ public class TestHistoryMap {
 				JSONObject testJSONObject = new JSONObject();
 
 				testJSONObject.put(
-					"averageDuration", testClassHistory.getAverageDuration());
-				testJSONObject.put(
+					"averageDuration", testClassHistory.getAverageDuration()
+				).put(
 					"averageOverheadDuration",
-					testClassHistory.getAverageOverheadDuration());
-				testJSONObject.put(
-					"failureCount", testClassHistory.getFailureCount());
-				testJSONObject.put(
-					"statusChanges", testClassHistory.getStatusChanges());
-				testJSONObject.put(
-					"testCount", testClassHistory.getTestCount());
-				testJSONObject.put(
-					"testName", testClassHistory.getTestClassName());
+					testClassHistory.getAverageOverheadDuration()
+				).put(
+					"failureCount", testClassHistory.getFailureCount()
+				).put(
+					"statusChanges", testClassHistory.getStatusChanges()
+				).put(
+					"testCount", testClassHistory.getTestCount()
+				).put(
+					"testName", testClassHistory.getTestClassName()
+				);
 
 				TestrayCaseResult testrayCaseResult =
 					testClassHistory.getTestrayCaseResult();
@@ -166,9 +167,12 @@ public class TestHistoryMap {
 			JSONObject batchJSONObject = new JSONObject();
 
 			batchJSONObject.put(
-				"averageDuration", batchHistory.getAverageDuration());
-			batchJSONObject.put("batchName", batchHistory.getBatchName());
-			batchJSONObject.put("tests", testsJSONArray);
+				"averageDuration", batchHistory.getAverageDuration()
+			).put(
+				"batchName", batchHistory.getBatchName()
+			).put(
+				"tests", testsJSONArray
+			);
 
 			batchesJSONArray.put(batchJSONObject);
 		}
@@ -180,10 +184,10 @@ public class TestHistoryMap {
 		TestrayServer testrayServer = _latestTestrayBuild.getTestrayServer();
 
 		ciHistoryJSONObject.put(
-			"testray_url", String.valueOf(testrayServer.getURL()));
-
-		ciHistoryJSONObject.put(
-			"upstream_branch_name", _latestTestrayBuild.getPortalBranch());
+			"testray_url", String.valueOf(testrayServer.getURL())
+		).put(
+			"upstream_branch_name", _latestTestrayBuild.getPortalBranch()
+		);
 
 		File file = new File(filePath);
 

@@ -99,10 +99,15 @@ public abstract class BaseGitCommit implements GitCommit {
 	public JSONObject toJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("commitTime", commitTime);
-		jsonObject.put("emailAddress", emailAddress);
-		jsonObject.put("message", message);
-		jsonObject.put("sha", _sha);
+		jsonObject.put(
+			"commitTime", commitTime
+		).put(
+			"emailAddress", emailAddress
+		).put(
+			"message", message
+		).put(
+			"sha", _sha
+		);
 
 		return jsonObject;
 	}

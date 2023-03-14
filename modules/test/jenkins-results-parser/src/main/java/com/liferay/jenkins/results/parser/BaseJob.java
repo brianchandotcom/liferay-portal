@@ -418,11 +418,17 @@ public abstract class BaseJob implements Job {
 				jsonObject.put("batches", batchesJSONArray);
 			}
 
-			jsonObject.put("build_profile", String.valueOf(getBuildProfile()));
-			jsonObject.put("company_default_locale", getCompanyDefaultLocale());
-			jsonObject.put("job_name", getJobName());
-			jsonObject.put("job_properties", _getJobPropertiesMap());
-			jsonObject.put("job_property_options", getJobPropertyOptions());
+			jsonObject.put(
+				"build_profile", String.valueOf(getBuildProfile())
+			).put(
+				"company_default_locale", getCompanyDefaultLocale()
+			).put(
+				"job_name", getJobName()
+			).put(
+				"job_properties", _getJobPropertiesMap()
+			).put(
+				"job_property_options", getJobPropertyOptions()
+			);
 
 			List<BatchTestClassGroup> dependentBatchTestClassGroups =
 				getDependentBatchTestClassGroups();

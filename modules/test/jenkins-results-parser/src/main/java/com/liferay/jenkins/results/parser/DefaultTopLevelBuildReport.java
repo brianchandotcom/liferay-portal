@@ -102,8 +102,11 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 			JSONObject batchJSONObject = new JSONObject();
 
-			batchJSONObject.put("batchName", downstreamBuildEntry.getKey());
-			batchJSONObject.put("builds", downstreamBuildEntry.getValue());
+			batchJSONObject.put(
+				"batchName", downstreamBuildEntry.getKey()
+			).put(
+				"builds", downstreamBuildEntry.getValue()
+			);
 
 			batchesJSONArray.put(batchJSONObject);
 		}
@@ -159,10 +162,15 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 				"axisName", downstreamBuild.getAxisName());
 		}
 
-		downstreamBuildJSONObject.put("buildURL", build.getBuildURL());
-		downstreamBuildJSONObject.put("duration", build.getDuration());
-		downstreamBuildJSONObject.put("result", build.getResult());
-		downstreamBuildJSONObject.put("startTime", build.getStartTime());
+		downstreamBuildJSONObject.put(
+			"buildURL", build.getBuildURL()
+		).put(
+			"duration", build.getDuration()
+		).put(
+			"result", build.getResult()
+		).put(
+			"startTime", build.getStartTime()
+		);
 
 		StopWatchRecordsGroup stopWatchRecordsGroup =
 			build.getStopWatchRecordsGroup();
@@ -204,8 +212,11 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 			testResultJSONObject.put("errorDetails", errorDetails);
 		}
 
-		testResultJSONObject.put("name", testResult.getDisplayName());
-		testResultJSONObject.put("status", testResult.getStatus());
+		testResultJSONObject.put(
+			"name", testResult.getDisplayName()
+		).put(
+			"status", testResult.getStatus()
+		);
 
 		return testResultJSONObject;
 	}

@@ -252,16 +252,23 @@ public abstract class TopLevelBuild extends BaseBuild {
 			}
 		}
 
-		buildResultsJSONObject.put("batchResults", downstreamBuildJSONArray);
-		buildResultsJSONObject.put("buildNumber", getBuildNumber());
+		buildResultsJSONObject.put(
+			"batchResults", downstreamBuildJSONArray
+		).put(
+			"buildNumber", getBuildNumber()
+		);
 
 		if (dataTypesList.contains("duration")) {
 			buildResultsJSONObject.put("duration", getDuration());
 		}
 
-		buildResultsJSONObject.put("jobURL", getJobURL());
-		buildResultsJSONObject.put("result", getResult());
-		buildResultsJSONObject.put("startTime", getStartTime());
+		buildResultsJSONObject.put(
+			"jobURL", getJobURL()
+		).put(
+			"result", getResult()
+		).put(
+			"startTime", getStartTime()
+		);
 
 		if (dataTypesList.contains("stopWatchRecords")) {
 			StopWatchRecordsGroup stopWatchRecordsGroup =
@@ -276,8 +283,11 @@ public abstract class TopLevelBuild extends BaseBuild {
 			}
 		}
 
-		buildResultsJSONObject.put("testSuiteName", getTestSuiteName());
-		buildResultsJSONObject.put("upstreamBranchSHA", getUpstreamBranchSHA());
+		buildResultsJSONObject.put(
+			"testSuiteName", getTestSuiteName()
+		).put(
+			"upstreamBranchSHA", getUpstreamBranchSHA()
+		);
 
 		return buildResultsJSONObject;
 	}

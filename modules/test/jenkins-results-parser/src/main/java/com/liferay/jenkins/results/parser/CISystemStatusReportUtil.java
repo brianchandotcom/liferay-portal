@@ -206,8 +206,11 @@ public class CISystemStatusReportUtil {
 			durationsJSONArray.put(durations);
 		}
 
-		datesDurationsJSONObject.put("dates", datesJSONArray);
-		datesDurationsJSONObject.put("durations", durationsJSONArray);
+		datesDurationsJSONObject.put(
+			"dates", datesJSONArray
+		).put(
+			"durations", durationsJSONArray
+		);
 
 		return datesDurationsJSONObject;
 	}
@@ -313,12 +316,15 @@ public class CISystemStatusReportUtil {
 			unstableBuildsJSONArray.put(unstableBuilds);
 		}
 
-		relevantSuiteBuildDataJSONObject.put("dates", datesJSONArray);
-		relevantSuiteBuildDataJSONObject.put("failed", failedBuildsJSONArray);
 		relevantSuiteBuildDataJSONObject.put(
-			"succeeded", passedBuildsJSONArray);
-		relevantSuiteBuildDataJSONObject.put(
-			"unstable", unstableBuildsJSONArray);
+			"dates", datesJSONArray
+		).put(
+			"failed", failedBuildsJSONArray
+		).put(
+			"succeeded", passedBuildsJSONArray
+		).put(
+			"unstable", unstableBuildsJSONArray
+		);
 
 		return relevantSuiteBuildDataJSONObject;
 	}
@@ -466,8 +472,11 @@ public class CISystemStatusReportUtil {
 			durationsJSONArray.put(durations);
 		}
 
-		jsonObject.put("dates", datesJSONArray);
-		jsonObject.put("durations", durationsJSONArray);
+		jsonObject.put(
+			"dates", datesJSONArray
+		).put(
+			"durations", durationsJSONArray
+		);
 
 		return jsonObject;
 	}
@@ -515,8 +524,11 @@ public class CISystemStatusReportUtil {
 			durationsJSONArray.put(durations);
 		}
 
-		jsonObject.put("dates", datesJSONArray);
-		jsonObject.put("durations", durationsJSONArray);
+		jsonObject.put(
+			"dates", datesJSONArray
+		).put(
+			"durations", durationsJSONArray
+		);
 
 		return jsonObject;
 	}

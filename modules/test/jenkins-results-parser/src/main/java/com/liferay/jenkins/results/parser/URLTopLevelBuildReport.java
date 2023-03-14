@@ -219,13 +219,14 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 					JSONObject jsonObject = new JSONObject();
 
 					jsonObject.put(
-						"duration", testResultJSONObject.get("duration"));
-					jsonObject.put(
-						"errorDetails",
-						testResultJSONObject.opt("errorDetails"));
-					jsonObject.put("name", testResultJSONObject.get("name"));
-					jsonObject.put(
-						"status", testResultJSONObject.get("status"));
+						"duration", testResultJSONObject.get("duration")
+					).put(
+						"errorDetails", testResultJSONObject.opt("errorDetails")
+					).put(
+						"name", testResultJSONObject.get("name")
+					).put(
+						"status", testResultJSONObject.get("status")
+					);
 
 					testResultsJSONArray.put(jsonObject);
 				}

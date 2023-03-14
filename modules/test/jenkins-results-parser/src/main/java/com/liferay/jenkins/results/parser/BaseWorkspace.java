@@ -251,13 +251,13 @@ public abstract class BaseWorkspace implements Workspace {
 
 		jsonObject.put(
 			"primary_repository_dir_name",
-			_primaryWorkspaceGitRepository.getDirectoryName());
-		jsonObject.put(
-			"primary_repository_name",
-			_primaryWorkspaceGitRepository.getName());
-		jsonObject.put(
+			_primaryWorkspaceGitRepository.getDirectoryName()
+		).put(
+			"primary_repository_name", _primaryWorkspaceGitRepository.getName()
+		).put(
 			"primary_upstream_branch_name",
-			_primaryWorkspaceGitRepository.getUpstreamBranchName());
+			_primaryWorkspaceGitRepository.getUpstreamBranchName()
+		);
 
 		try {
 			jsonObject.put(

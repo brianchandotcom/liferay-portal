@@ -52,10 +52,13 @@ public abstract class BaseBuildReport implements BuildReport {
 
 		buildReportJSONObject = new JSONObject();
 
-		buildReportJSONObject.put("duration", buildJSONObject.get("duration"));
-		buildReportJSONObject.put("result", buildJSONObject.get("result"));
 		buildReportJSONObject.put(
-			"startTime", buildJSONObject.get("timestamp"));
+			"duration", buildJSONObject.get("duration")
+		).put(
+			"result", buildJSONObject.get("result")
+		).put(
+			"startTime", buildJSONObject.get("timestamp")
+		);
 
 		return buildReportJSONObject;
 	}

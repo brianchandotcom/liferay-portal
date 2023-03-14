@@ -165,10 +165,15 @@ public class NotificationUtil {
 
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("channel", channelName);
-		jsonObject.put("icon_emoji", iconEmoji);
-		jsonObject.put("text", text);
-		jsonObject.put("username", username);
+		jsonObject.put(
+			"channel", channelName
+		).put(
+			"icon_emoji", iconEmoji
+		).put(
+			"text", text
+		).put(
+			"username", username
+		);
 
 		try {
 			Properties properties = JenkinsResultsParserUtil.getBuildProperties(

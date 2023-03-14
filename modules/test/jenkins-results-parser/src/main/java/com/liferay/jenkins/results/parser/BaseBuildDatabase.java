@@ -454,8 +454,11 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		for (String propertyName : properties.stringPropertyNames()) {
 			JSONObject jsonObject = new JSONObject();
 
-			jsonObject.put("name", propertyName);
-			jsonObject.put("value", properties.getProperty(propertyName));
+			jsonObject.put(
+				"name", propertyName
+			).put(
+				"value", properties.getProperty(propertyName)
+			);
 
 			jsonArray.put(i, jsonObject);
 

@@ -397,14 +397,21 @@ public class DownstreamBuild extends BaseBuild {
 
 				String testClassName = entry.getKey();
 
-				caseJSONObject.put("className", testClassName);
-
-				caseJSONObject.put("duration", 0);
-				caseJSONObject.put("errorDetails", "This test was untested.");
-				caseJSONObject.put("errorStackTrace", "");
-				caseJSONObject.put("name", methodName);
-				caseJSONObject.put("status", "UNTESTED");
-				caseJSONObject.put("testName", methodName);
+				caseJSONObject.put(
+					"className", testClassName
+				).put(
+					"duration", 0
+				).put(
+					"errorDetails", "This test was untested."
+				).put(
+					"errorStackTrace", ""
+				).put(
+					"name", methodName
+				).put(
+					"status", "UNTESTED"
+				).put(
+					"testName", methodName
+				);
 
 				untestedTestResults.add(
 					TestResultFactory.newTestResult(this, caseJSONObject));

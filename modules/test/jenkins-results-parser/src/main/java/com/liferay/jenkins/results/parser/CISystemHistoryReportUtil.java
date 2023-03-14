@@ -452,13 +452,19 @@ public class CISystemHistoryReportUtil {
 		public String getAllDurationsJavaScriptVarValue() {
 			JSONObject jsonObject = new JSONObject();
 
-			jsonObject.put("description", _description);
-			jsonObject.put("durations", getDurationsJavaScriptVarNames());
-			jsonObject.put("durations_dates", getDateJavaScriptVarNames());
-			jsonObject.put("id", _getID());
 			jsonObject.put(
-				"modification_date", "new Date(" + _START_TIME + ")");
-			jsonObject.put("title", _title);
+				"description", _description
+			).put(
+				"durations", getDurationsJavaScriptVarNames()
+			).put(
+				"durations_dates", getDateJavaScriptVarNames()
+			).put(
+				"id", _getID()
+			).put(
+				"modification_date", "new Date(" + _START_TIME + ")"
+			).put(
+				"title", _title
+			);
 
 			String javascriptVarValue = jsonObject.toString();
 

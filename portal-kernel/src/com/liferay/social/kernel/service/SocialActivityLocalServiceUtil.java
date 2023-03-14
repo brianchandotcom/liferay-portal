@@ -613,6 +613,12 @@ public class SocialActivityLocalServiceUtil {
 		return getService().getActivitySetActivities(activitySetId, start, end);
 	}
 
+	public static List<SocialActivity> getApprovedActivities(
+		long classPK, double version) {
+
+		return getService().getApprovedActivities(classPK, version);
+	}
+
 	/**
 	 * Returns a range of all the activities done in the group.
 	 *

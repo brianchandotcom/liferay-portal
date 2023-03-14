@@ -660,6 +660,14 @@ public class SocialActivityLocalServiceWrapper
 			activitySetId, start, end);
 	}
 
+	@Override
+	public java.util.List<SocialActivity> getApprovedActivities(
+		long classPK, double version) {
+
+		return _socialActivityLocalService.getApprovedActivities(
+			classPK, version);
+	}
+
 	/**
 	 * Returns a range of all the activities done in the group.
 	 *

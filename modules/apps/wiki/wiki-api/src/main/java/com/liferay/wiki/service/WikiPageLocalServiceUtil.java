@@ -734,6 +734,12 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	public static List<WikiPage> getPages(
+		long groupId, long nodeId, long statusByUserId, int status) {
+
+		return getService().getPages(groupId, nodeId, statusByUserId, status);
+	}
+
+	public static List<WikiPage> getPages(
 		long nodeId, String title, boolean head, int start, int end) {
 
 		return getService().getPages(nodeId, title, head, start, end);

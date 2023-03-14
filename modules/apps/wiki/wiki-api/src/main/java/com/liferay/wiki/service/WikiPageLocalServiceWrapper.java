@@ -833,6 +833,14 @@ public class WikiPageLocalServiceWrapper
 
 	@Override
 	public java.util.List<WikiPage> getPages(
+		long groupId, long nodeId, long statusByUserId, int status) {
+
+		return _wikiPageLocalService.getPages(
+			groupId, nodeId, statusByUserId, status);
+	}
+
+	@Override
+	public java.util.List<WikiPage> getPages(
 		long nodeId, String title, boolean head, int start, int end) {
 
 		return _wikiPageLocalService.getPages(nodeId, title, head, start, end);

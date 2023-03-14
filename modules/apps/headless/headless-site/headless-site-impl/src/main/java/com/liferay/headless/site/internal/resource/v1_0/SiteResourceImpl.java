@@ -19,8 +19,10 @@ import com.liferay.headless.site.resource.v1_0.SiteResource;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -90,6 +92,26 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 			throw new IllegalArgumentException(
 				"Template type cannot be empty if template key is specified");
+		}
+
+		if (Objects.equals(
+					Site.TemplateType.SITE_TEMPLATE, site.getTemplateType())) {
+
+			LayoutSetPrototype layoutSetPrototype =
+				_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
+					GetterUtil.getLongStrict(site.getTemplateKey()));
+
+			if (layoutSetPrototype == null) {
+				throw new IllegalArgumentException(
+					"No site template found for site template key " +
+						site.getTemplateKey());
+			}
+
+			if (!layoutSetPrototype.isActive()) {
+				throw new IllegalArgumentException(
+					"Site template with site template key " +
+						site.getTemplateKey() + " is inactive");
+			}
 		}
 
 		ServiceContext serviceContext = new ServiceContext() {
@@ -182,6 +204,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	@Reference
 	private SiteInitializerRegistry _siteInitializerRegistry;

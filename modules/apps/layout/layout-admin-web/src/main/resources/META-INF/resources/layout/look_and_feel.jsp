@@ -227,15 +227,15 @@ else {
 
 <c:if test="<%= layoutLookAndFeelDisplayContext.hasStyleBooks() %>">
 	<aui:script>
-		var regularInheritLookAndFeel = document.getElementById(
+		const regularInheritLookAndFeel = document.getElementById(
 			'<portlet:namespace />regularInheritLookAndFeel'
 		);
 
-		var regularUniqueLookAndFeelCheckbox = document.getElementById(
+		const regularUniqueLookAndFeelCheckbox = document.getElementById(
 			'<portlet:namespace />regularUniqueLookAndFeel'
 		);
 
-		var styleBookWarning = document.getElementById(
+		const styleBookWarning = document.getElementById(
 			'<portlet:namespace />styleBookWarning'
 		);
 

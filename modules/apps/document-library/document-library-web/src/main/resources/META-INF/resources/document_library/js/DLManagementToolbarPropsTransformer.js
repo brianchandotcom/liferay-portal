@@ -201,7 +201,7 @@ export default function propsTransformer({
 			onSelect(selectedItem) {
 				if (selectedItem) {
 					const url = addParams(
-						`${portletNamespace}fileEntryExtensions=${selectedItem.join(
+						`${portletNamespace}fileExtension=${selectedItem.join(
 							','
 						)}`,
 						viewFileEntryTypeURL

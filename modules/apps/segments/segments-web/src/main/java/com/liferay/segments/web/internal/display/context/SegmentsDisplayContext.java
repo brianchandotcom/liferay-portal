@@ -301,35 +301,11 @@ public class SegmentsDisplayContext {
 			return _language.get(_themeDisplay.getLocale(), "global");
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-166954")) {
-			if (segmentsEntry.getGroupId() == _themeDisplay.getScopeGroupId()) {
-				return _language.get(_themeDisplay.getLocale(), "current-site");
-			}
-
-			return _language.get(_themeDisplay.getLocale(), "parent-site");
+		if (segmentsEntry.getGroupId() == _themeDisplay.getScopeGroupId()) {
+			return _language.get(_themeDisplay.getLocale(), "current-site");
 		}
 
-		Group group = _groupLocalService.fetchGroup(segmentsEntry.getGroupId());
-
-		if (group == null) {
-			return StringPool.BLANK;
-		}
-
-		try {
-			String descriptiveName = group.getDescriptiveName(
-				_themeDisplay.getLocale());
-
-			if (descriptiveName != null) {
-				return descriptiveName;
-			}
-
-			return group.getName(_themeDisplay.getLocale());
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-
-			return group.getName(_themeDisplay.getLocale());
-		}
+		return _language.get(_themeDisplay.getLocale(), "parent-site");
 	}
 
 	public String getSearchActionURL() {

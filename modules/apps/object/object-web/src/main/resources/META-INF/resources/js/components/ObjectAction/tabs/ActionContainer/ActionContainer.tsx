@@ -63,7 +63,7 @@ export function ActionContainer({
 	values,
 }: ActionContainerProps) {
 	const [addObjectEntryDefinitions, setAddObjectEntryDefinitions] = useState<
-	AddObjectEntryDefinitions[]
+		AddObjectEntryDefinitions[]
 	>([]);
 
 	const [creationLanguageId, setCreationLanguageId] = useState<
@@ -112,7 +112,7 @@ export function ActionContainer({
 
 			const object = addObjectEntryDefinitions.find(
 				(definition) =>
-				definition.externalReferenceCode === externalReferenceCode
+					definition.externalReferenceCode === externalReferenceCode
 			);
 
 			const parameters: ObjectActionParameters = {
@@ -177,7 +177,11 @@ export function ActionContainer({
 			}));
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[addObjectEntryDefinitions, values.objectActionExecutorKey, values.parameters]
+		[
+			addObjectEntryDefinitions,
+			values.objectActionExecutorKey,
+			values.parameters,
+		]
 	);
 
 	useEffect(() => {
@@ -230,10 +234,10 @@ export function ActionContainer({
 				objectDefinitionsRelationshipsURL={
 					objectDefinitionsRelationshipsURL
 				}
+				setAddObjectEntryDefinitions={setAddObjectEntryDefinitions}
 				setCurrentObjectDefinitionFields={
 					setCurrentObjectDefinitionFields
 				}
-				setAddObjectEntryDefinitions={setAddObjectEntryDefinitions}
 				setValues={setValues}
 				systemObject={systemObject}
 				updateParameters={updateParameters}

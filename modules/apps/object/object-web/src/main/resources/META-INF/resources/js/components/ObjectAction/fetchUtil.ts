@@ -31,23 +31,23 @@ function fillSelect(
 }
 
 interface FetchObjectDefinitionsProps {
-	objectDefinitionsRelationshipsURL: string,
-	values: Partial<ObjectAction>,
-	setAddObjectEntryDefinitions: (values: AddObjectEntryDefinitions[]) => void,
-	setObjectOptions: (values: ObjectsOptionsList) => void,
-	setSelectedObjectDefinition?: (value: string) => void
+	objectDefinitionsRelationshipsURL: string;
+	setAddObjectEntryDefinitions: (values: AddObjectEntryDefinitions[]) => void;
+	setObjectOptions: (values: ObjectsOptionsList) => void;
+	setSelectedObjectDefinition?: (value: string) => void;
+	values: Partial<ObjectAction>;
 }
 
 export async function fetchObjectDefinitions({
 	objectDefinitionsRelationshipsURL,
-	values,
 	setAddObjectEntryDefinitions,
 	setObjectOptions,
-	setSelectedObjectDefinition
+	setSelectedObjectDefinition,
+	values,
 }: FetchObjectDefinitionsProps) {
-	const addObjectEntryDefinitions = await API.fetchJSON<AddObjectEntryDefinitions[]>(
-		objectDefinitionsRelationshipsURL
-	);
+	const addObjectEntryDefinitions = await API.fetchJSON<
+		AddObjectEntryDefinitions[]
+	>(objectDefinitionsRelationshipsURL);
 
 	const relatedObjects: LabelValueObject[] = [];
 	const unrelatedObjects: LabelValueObject[] = [];
@@ -74,12 +74,22 @@ export async function fetchObjectDefinitions({
 		objectsOptionsList
 	);
 
-	const {objectDefinitionExternalReferenceCode} = values.parameters as ObjectActionParameters;
+	const {
+		objectDefinitionExternalReferenceCode,
+	} = values.parameters as ObjectActionParameters;
 
 	if (setSelectedObjectDefinition && objectDefinitionExternalReferenceCode) {
-		const {defaultLanguageId, label, name} = await API.getObjectDefinitionByExternalReferenceCode(objectDefinitionExternalReferenceCode);
+		const {
+			defaultLanguageId,
+			label,
+			name,
+		} = await API.getObjectDefinitionByExternalReferenceCode(
+			objectDefinitionExternalReferenceCode
+		);
 
-		setSelectedObjectDefinition(getLocalizableLabel(defaultLanguageId, label, name));
+		setSelectedObjectDefinition(
+			getLocalizableLabel(defaultLanguageId, label, name)
+		);
 	}
 
 	setObjectOptions(objectsOptionsList);

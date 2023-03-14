@@ -19,17 +19,17 @@ export declare type ObjectsOptionsList = {
 }[];
 interface FetchObjectDefinitionsProps {
 	objectDefinitionsRelationshipsURL: string;
-	values: Partial<ObjectAction>;
 	setAddObjectEntryDefinitions: (values: AddObjectEntryDefinitions[]) => void;
 	setObjectOptions: (values: ObjectsOptionsList) => void;
 	setSelectedObjectDefinition?: (value: string) => void;
+	values: Partial<ObjectAction>;
 }
 export declare function fetchObjectDefinitions({
 	objectDefinitionsRelationshipsURL,
-	values,
 	setAddObjectEntryDefinitions,
 	setObjectOptions,
 	setSelectedObjectDefinition,
+	values,
 }: FetchObjectDefinitionsProps): Promise<void>;
 export declare function fetchObjectDefinitionFields(
 	objectDefinitionId: number,

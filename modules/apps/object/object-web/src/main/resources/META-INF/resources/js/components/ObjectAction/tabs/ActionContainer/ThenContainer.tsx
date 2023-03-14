@@ -45,8 +45,8 @@ interface ThenContainerProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
-	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void;
 	setAddObjectEntryDefinitions: (values: AddObjectEntryDefinitions[]) => void;
+	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void;
 	setValues: (values: Partial<ObjectAction>) => void;
 	systemObject: boolean;
 	updateParameters: (value: string) => Promise<void>;
@@ -61,8 +61,8 @@ export function ThenContainer({
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
-	setCurrentObjectDefinitionFields,
 	setAddObjectEntryDefinitions,
+	setCurrentObjectDefinitionFields,
 	setValues,
 	systemObject,
 	updateParameters,
@@ -125,13 +125,13 @@ export function ThenContainer({
 		}
 
 		if (values.objectActionExecutorKey === 'add-object-entry') {
-			fetchObjectDefinitions(
-				{objectDefinitionsRelationshipsURL,
-				values,
+			fetchObjectDefinitions({
+				objectDefinitionsRelationshipsURL,
 				setAddObjectEntryDefinitions,
 				setObjectOptions,
-				setSelectedObjectDefinition}
-			);
+				setSelectedObjectDefinition,
+				values,
+			});
 
 			fetchObjectDefinitionFields(
 				objectDefinitionId,
@@ -151,13 +151,13 @@ export function ThenContainer({
 		systemObject,
 		values.objectActionExecutorKey,
 	]);
-	console.log(values);
+
 	return (
 		<Card title={Liferay.Language.get('then[object]')} viewMode="inline">
 			<div className="lfr-object__action-builder-then">
 				<SingleSelect
 					error={errors.objectActionExecutorKey}
-					onChange={({value}) => {						
+					onChange={({value}) => {
 						if (values.objectActionExecutorKey !== value) {
 							return setValues({
 								objectActionExecutorKey: value,

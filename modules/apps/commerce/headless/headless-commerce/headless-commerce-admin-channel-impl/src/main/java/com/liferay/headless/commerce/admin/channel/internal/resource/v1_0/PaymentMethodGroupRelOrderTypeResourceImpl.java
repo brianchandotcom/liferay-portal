@@ -22,12 +22,12 @@ import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifi
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelOrderType;
-import com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter.PaymentMethodGroupRelOrderTypeDTOConverter;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelOrderTypeResource;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -175,8 +175,11 @@ public class PaymentMethodGroupRelOrderTypeResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private PaymentMethodGroupRelOrderTypeDTOConverter
-		_paymentMethodGroupRelOrderTypeDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter.PaymentMethodGroupRelOrderTypeDTOConverter)"
+	)
+	private DTOConverter
+		<CommercePaymentMethodGroupRelQualifier, PaymentMethodGroupRelOrderType>
+			_paymentMethodGroupRelOrderTypeDTOConverter;
 
 }

@@ -23,12 +23,12 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionQualifierService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionOrderType;
-import com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter.ShippingFixedOptionOrderTypeDTOConverter;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionOrderTypeResource;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -182,8 +182,11 @@ public class ShippingFixedOptionOrderTypeResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private ShippingFixedOptionOrderTypeDTOConverter
-		_shippingFixedOptionOrderTypeDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter.ShippingFixedOptionOrderTypeDTOConverter)"
+	)
+	private DTOConverter
+		<CommerceShippingFixedOptionQualifier, ShippingFixedOptionOrderType>
+			_shippingFixedOptionOrderTypeDTOConverter;
 
 }

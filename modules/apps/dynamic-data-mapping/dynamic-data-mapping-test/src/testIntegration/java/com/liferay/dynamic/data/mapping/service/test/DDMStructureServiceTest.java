@@ -195,17 +195,9 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 		Assert.assertEquals(structures.toString(), 3, structures.size());
 
-		Boolean allMatch = true;
-
 		for (DDMStructure ddmStructure : expectedStructures) {
-			if (!structures.contains(ddmStructure)) {
-				allMatch = false;
-
-				break;
-			}
+			Assert.assertTrue(structures.contains(ddmStructure));
 		}
-
-		Assert.assertTrue(allMatch);
 	}
 
 	@Test

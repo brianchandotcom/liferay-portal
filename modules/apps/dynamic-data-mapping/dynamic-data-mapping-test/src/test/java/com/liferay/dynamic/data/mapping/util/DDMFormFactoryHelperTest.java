@@ -46,7 +46,7 @@ public class DDMFormFactoryHelperTest {
 				"inputParameterLabel", "inputParameterName",
 				"inputParameterType", "inputParameterRequired"
 			},
-			getNames());
+			_getNames());
 	}
 
 	@Test
@@ -59,10 +59,10 @@ public class DDMFormFactoryHelperTest {
 				"outputParameterId", "outputParameterName",
 				"outputParameterPath", "outputParameterType"
 			},
-			getNames());
+			_getNames());
 	}
 
-	protected String[] getNames() {
+	private String[] _getNames() {
 		return TransformUtil.transformToArray(
 			_ddmFormFactoryHelper.getDDMFormFieldMethods(), Method::getName,
 			String.class);

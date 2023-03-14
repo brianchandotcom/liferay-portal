@@ -350,8 +350,19 @@ public class ChainingCheck extends BaseCheck {
 			}
 		}
 
-		List<String> requiredChainingMethodNames =
-			_getRequiredChainingMethodNames(fullyQualifiedClassName);
+		List<String> requiredChainingMethodNames = null;
+
+		if (fullyQualifiedClassName.equals("org.json.JSONObject")) {
+			requiredChainingMethodNames = new ArrayList<>();
+
+			requiredChainingMethodNames.add("put");
+			requiredChainingMethodNames.add("putOnce");
+			requiredChainingMethodNames.add("putOpt");
+		}
+		else {
+			requiredChainingMethodNames = _getRequiredChainingMethodNames(
+				fullyQualifiedClassName);
+		}
 
 		if (requiredChainingMethodNames == null) {
 			return;

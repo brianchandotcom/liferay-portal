@@ -34,7 +34,7 @@ import {
 	applyConjunctionChangeToContributor,
 	applyCriteriaChangeToContributors,
 	initialContributorsToContributors,
-} from '../../utils/contributors.es';
+} from '../../utils/contributors';
 import {initialContributorShape} from '../../utils/types.es';
 import {sub} from '../../utils/utils.es';
 import ContributorInputs from '../criteria_builder/ContributorInputs.es';

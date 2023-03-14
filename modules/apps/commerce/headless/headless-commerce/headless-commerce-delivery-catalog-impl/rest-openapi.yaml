@@ -610,6 +610,13 @@ components:
                     format: double
                     minimum: 0
                     type: number
+                discontinued:
+                    example: false
+                    type: boolean
+                discontinuedDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
                 displayDate:
                     example: 2017-07-21
                     format: date
@@ -657,6 +664,14 @@ components:
                 purchasable:
                     example: true
                     type: boolean
+                replacementSkuExternalReferenceCode:
+                    example: SKU0111
+                    type: string
+                replacementSkuId:
+                    example: 33135
+                    format: int64
+                    minimum: 0
+                    type: integer
                 sku:
                     type: string
                 skuOptions:

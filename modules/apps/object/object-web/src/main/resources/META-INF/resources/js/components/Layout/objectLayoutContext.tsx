@@ -235,6 +235,10 @@ const layoutReducer = (state: TState, action: TAction) => {
 				(box) => box.type !== 'regular'
 			);
 
+			const hasCategorizationBox = !!objectLayoutBoxes.find(
+				layoutBox => layoutBox.type === 'categorization'
+			);
+
 			if (
 				type === 'regular' ||
 				(type === 'categorization' && frameworkIndex >= 0)

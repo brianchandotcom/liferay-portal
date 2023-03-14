@@ -35,7 +35,7 @@ public class LayoutLookAndFeelFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT;
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_DESIGN;
 	}
 
 	@Override

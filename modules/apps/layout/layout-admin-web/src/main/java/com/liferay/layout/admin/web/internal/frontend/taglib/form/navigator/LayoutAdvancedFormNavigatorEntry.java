@@ -45,6 +45,11 @@ public class LayoutAdvancedFormNavigatorEntry
 	}
 
 	@Override
+	public String getFormNavigatorId() {
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_DESIGN;
+	}
+
+	@Override
 	public String getKey() {
 		return "advanced";
 	}

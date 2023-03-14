@@ -16,10 +16,15 @@ package com.liferay.company.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
@@ -84,6 +89,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -275,16 +281,36 @@ public class CompanyLocalServiceTest {
 		Group guestGroup = _groupLocalService.getGroup(
 			companyId, GroupConstants.GUEST);
 
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.getFileEntryType(
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-
 		ServiceContext serviceContext = getServiceContext(companyId);
+
+		serviceContext.setScopeGroupId(guestGroup.getGroupId());
+		serviceContext.setUserId(userId);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
+			userId, guestGroup.getGroupId(),
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			_portal.getClassNameId(DLFileEntryMetadata.class), StringPool.BLANK,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(),
+				DLFileEntryMetadata.class.getSimpleName()
+			).build(),
+			new HashMap<>(), StringPool.BLANK, StorageType.DEFAULT.toString(),
+			serviceContext);
+
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.addFileEntryType(
+				userId, guestGroup.getGroupId(), ddmStructure.getStructureId(),
+				CompanyLocalServiceTest.class.getSimpleName(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(),
+					CompanyLocalServiceTest.class.getSimpleName()
+				).build(),
+				new HashMap<>(),
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
+				serviceContext);
 
 		serviceContext.setAttribute(
 			"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
-		serviceContext.setScopeGroupId(guestGroup.getGroupId());
-		serviceContext.setUserId(userId);
 
 		_dlAppLocalService.addFileEntry(
 			null, userId, guestGroup.getGroupId(), 0, "test.xml", "text/xml",
@@ -292,6 +318,13 @@ public class CompanyLocalServiceTest {
 			serviceContext);
 
 		_companyLocalService.deleteCompany(companyId);
+
+		Assert.assertNull(
+			_ddmStructureLocalService.fetchStructure(
+				ddmStructure.getStructureId()));
+		Assert.assertNull(
+			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+				dlFileEntryType.getFileEntryTypeId()));
 	}
 
 	@Test
@@ -1142,6 +1175,9 @@ public class CompanyLocalServiceTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
@@ -1167,6 +1203,9 @@ public class CompanyLocalServiceTest {
 
 	@Inject
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private PortalPreferencesLocalService _portalPreferencesLocalService;

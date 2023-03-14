@@ -21,6 +21,12 @@ const FORM_BUILDER = {
 	},
 };
 
+const FORM_VIEW = {
+	REPEATABLE_FIELD: {
+		CHANGE_ORDER: 'form_view_repeatable_field_change_order',
+	},
+};
+
 const OBJECT = {
 	FIELDS_CHANGE: 'object_fields_change',
 	RELATIONSHIPS_CHANGE: 'object_relationships_change',
@@ -47,6 +53,7 @@ const RULES = {
 
 export const EVENT_TYPES = {
 	FORM_BUILDER,
+	FORM_VIEW,
 	OBJECT,
 	PAGE,
 	PAGINATION,

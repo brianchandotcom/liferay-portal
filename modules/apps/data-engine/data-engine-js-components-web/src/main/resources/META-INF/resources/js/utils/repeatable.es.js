@@ -30,6 +30,10 @@ export function parseName(name) {
 		: {};
 }
 
+export function isNestedFieldName(name) {
+	return NESTED_FIELD_NAME_REGEX.test(name);
+}
+
 export function generateName(name, props = {}) {
 	const parsedName = parseName(name);
 	const {
@@ -61,6 +65,30 @@ export function parseNestedFieldName(name) {
 	}
 
 	return parsed;
+}
+
+export function updateNestedFieldNameIndex(name, repeatedIndex) {
+	const parsedName = parseNestedFieldName(name);
+
+	const {fieldName, instanceId, portletNamespace} = parsedName;
+
+	return [
+		portletNamespace,
+		'ddm$$',
+		parsedName.parentFieldName,
+		'$',
+		parsedName.parentInstanceId,
+		'$',
+		parsedName.parentRepeatedIndex,
+		'#',
+		fieldName,
+		'$',
+		instanceId,
+		'$',
+		repeatedIndex,
+		'$$',
+		parsedName.locale || parsedName.editingLanguageId,
+	].join('');
 }
 
 export function generateNestedFieldName(name, parentFieldName) {

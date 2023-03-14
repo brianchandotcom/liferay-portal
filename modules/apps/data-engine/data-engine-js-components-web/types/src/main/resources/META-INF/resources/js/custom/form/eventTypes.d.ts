@@ -21,6 +21,11 @@ export declare const EVENT_TYPES: {
 			UPDATE: string;
 		};
 	};
+	FORM_VIEW: {
+		REPEATABLE_FIELD: {
+			CHANGE_ORDER: string;
+		};
+	};
 	OBJECT: {
 		FIELDS_CHANGE: string;
 		RELATIONSHIPS_CHANGE: string;

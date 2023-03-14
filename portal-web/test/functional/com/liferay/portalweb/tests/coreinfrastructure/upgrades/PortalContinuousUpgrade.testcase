@@ -87,7 +87,6 @@ definition {
 		property skip.start.app.server = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "PortalContinuousUpgrade#AutoUpgradeFromLatest7413UpdateWithDBPartitionEnabled";
-		property testcase.url = "http://www.example.com";
 
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");

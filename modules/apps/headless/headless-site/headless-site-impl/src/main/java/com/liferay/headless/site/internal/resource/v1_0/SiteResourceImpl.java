@@ -95,6 +95,25 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		}
 
 		if (Objects.equals(
+				Site.TemplateType.SITE_INITIALIZER, site.getTemplateType())) {
+
+			SiteInitializer siteInitializer =
+				_siteInitializerRegistry.getSiteInitializer(
+					site.getTemplateKey());
+
+			if (siteInitializer == null) {
+				throw new IllegalArgumentException(
+					"No site initializer was found for site template key " +
+						site.getTemplateKey());
+			}
+
+			if (!siteInitializer.isActive(contextCompany.getCompanyId())) {
+				throw new IllegalArgumentException(
+					"Site initializer with site template key " +
+						site.getTemplateKey() + " is inactive");
+			}
+		}
+		else if (Objects.equals(
 					Site.TemplateType.SITE_TEMPLATE, site.getTemplateType())) {
 
 			LayoutSetPrototype layoutSetPrototype =

@@ -536,6 +536,16 @@ const filterSchema = {
 			baseFilters.hasRequirements,
 		] as RendererFields[],
 	},
+	components: {
+		fields: [
+			{
+				label: i18n.translate('component-name'),
+				name: 'name',
+				operator: 'contains',
+				type: 'text',
+			},
+		] as RendererFields[],
+	},
 	requirementCases: {
 		fields: [
 			baseFilters.priority,

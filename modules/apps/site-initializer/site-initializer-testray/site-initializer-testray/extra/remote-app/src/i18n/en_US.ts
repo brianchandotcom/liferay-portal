@@ -110,6 +110,7 @@ export default {
 	'complete-test': 'Complete Test',
 	'complete-x': 'Complete {0}',
 	'component': 'Component',
+	'component-name': 'Component Name',
 	'components': 'Components',
 	'confirm-password': 'Confirm Password',
 	'copy-x': 'Copy - {0}',

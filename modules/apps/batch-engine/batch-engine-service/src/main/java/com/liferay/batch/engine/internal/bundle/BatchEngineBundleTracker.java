@@ -50,7 +50,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 public class BatchEngineBundleTracker {
 
 	public boolean isBatchEngineTechnical(String zipEntryName) {
-		if (zipEntryName.endsWith("jsont")) {
+		if (zipEntryName.endsWith(".batch-engine-data.json")) {
 			return true;
 		}
 

@@ -29,14 +29,21 @@ export default function ({namespace}) {
 	const canonicalURLAlert = document.getElementById(
 		`${namespace}canonicalURLAlert`
 	);
+	const canonicalURLSettings = document.getElementById(
+		`${namespace}customCanonicalURLSettings`
+	);
 
 	canonicalURLEnabledCheck.addEventListener('click', (event) => {
 		const disabled = !event.target.checked;
 
 		canonicalURLAlert.classList.toggle('hide');
 
-		toggleDisabled(canonicalURLField, disabled);
-		toggleDisabled(canonicalURLFieldDefaultLocale, disabled);
+		const label = canonicalURLSettings.querySelector('label');
+
+		toggleDisabled(
+			[canonicalURLField, canonicalURLFieldDefaultLocale, label],
+			disabled
+		);
 
 		if (!canonicalURLField.value && canonicalURLField.placeholder) {
 			canonicalURLField.value = canonicalURLField.placeholder;

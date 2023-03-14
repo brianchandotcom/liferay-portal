@@ -818,7 +818,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
 		property test.name.skip.portal.instance = "kbArticle#CanReviewArticleWhenReviewDateIsReached";
 
-		KBArticle.updateCheckInterval(fieldValue = 2);
+		KBArticle.updateCheckInterval(fieldValue = 1);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -864,7 +864,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-165476=true";
 		property test.name.skip.portal.instance = "kbArticle#CanReviewArticleWhenReviewDateIsUpdated";
 
-		KBArticle.updateCheckInterval(fieldValue = 2);
+		KBArticle.updateCheckInterval(fieldValue = 1);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

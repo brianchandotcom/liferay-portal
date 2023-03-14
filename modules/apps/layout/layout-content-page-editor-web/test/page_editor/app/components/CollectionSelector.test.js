@@ -97,7 +97,7 @@ describe('CollectionSelector', () => {
 		);
 
 		expect(
-			screen.queryByText('collection-prefiltered')
+			screen.queryByText('collection-filtered')
 		).not.toBeInTheDocument();
 	});
 
@@ -116,8 +116,6 @@ describe('CollectionSelector', () => {
 			</StoreAPIContextProvider>
 		);
 
-		expect(
-			screen.queryByText('collection-prefiltered')
-		).toBeInTheDocument();
+		expect(screen.queryByText('collection-filtered')).toBeInTheDocument();
 	});
 });

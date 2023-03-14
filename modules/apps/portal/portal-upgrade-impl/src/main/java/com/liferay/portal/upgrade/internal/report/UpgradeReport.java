@@ -400,8 +400,6 @@ public class UpgradeReport {
 					return null;
 				}
 
-				List<TableCounts> tableCountsList = new ArrayList<>();
-
 				List<String> tableNamesList = new ArrayList<>();
 
 				tableNamesList.addAll(_initialTableCountMap.keySet());
@@ -421,6 +419,8 @@ public class UpgradeReport {
 
 						return tableNameA.compareTo(tableNameB);
 					});
+
+				List<TableCounts> tableCountsList = new ArrayList<>();
 
 				for (String tableName : tableNamesList) {
 					int initialCount = _initialTableCountMap.getOrDefault(

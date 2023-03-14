@@ -9,12 +9,12 @@ definition {
 	}
 
 	macro missingSemicolonFail {
-    		var variable = "variable text";
+		var variable = "variable text";
 
-    		fail("Missing semicolon")
+		fail("Missing semicolon")
 
-    		MissingSemicolon.validMacro();
-    	}
+		MissingSemicolon.validMacro();
+	}
 
 	macro missingSemicolonExecute {
 		var variable = "variable text";
@@ -25,12 +25,12 @@ definition {
 	}
 
 	macro missingSemicolonUtil {
-    		var variable = "variable text";
+		var variable = "variable text";
 
-    		StringUtil.contains("missing semicolon", "missing")
+		StringUtil.contains("missing semicolon", "missing")
 
-    		MissingSemicolon.validMacro();
-    	}
+		MissingSemicolon.validMacro();
+	}
 
 	macro missingSemicolonVar {
 		var variable = "variable text";
@@ -41,21 +41,21 @@ definition {
 	}
 
 	macro missingSemicolonMultiline {
-    		var variable = "variable text";
+		var variable = "variable text";
 
-    		var missingSemicolon = '''missing
-    		semicolon'''
+		var missingSemicolon = '''missing
+		semicolon'''
 
-    		MissingSemicolon.validMacro();
-    	}
+		MissingSemicolon.validMacro();
+	}
 
     macro missingSemicolonVarMacro {
-    		var variable = "variable text";
+		var variable = "variable text";
 
-    		var siteName = MissingSemicolon.returnPassedVariable(variable = ${variable})
+		var siteName = MissingSemicolon.returnPassedVariable(variable = ${variable})
 
-    		MissingSemicolon.validMacro();
-    	}
+		MissingSemicolon.validMacro();
+	}
 
 	macro missingSemicolonMath {
 		var variable = "variable text";
@@ -66,52 +66,64 @@ definition {
 	}
 
 	macro missingSemicolonInteger {
-    		var variable = "variable text";
+		var variable = "variable text";
 
-    		var missingSemicolon = 10
+		var missingSemicolon = 10
 
-    		MissingSemicolon.validMacro();
-    	}
+		MissingSemicolon.validMacro();
+	}
 
     macro missingSemicolonVarReference {
-    		var variable = "variable text";
+		var variable = "variable text";
 
-    		var missingSemicolon = ${variable}
+		var missingSemicolon = ${variable}
 
-    		MissingSemicolon.validMacro();
-    	}
+		MissingSemicolon.validMacro();
+	}
 
     macro missingSemicolonLastExecute {
-    		var variable = "variable text";
+		var variable = "variable text";
 
-    		var semicolon = "semicolon";
+		var semicolon = "semicolon";
 
-    		MissingSemicolon.validMacro()
-    	}
+		MissingSemicolon.validMacro()
+	}
 
-    	 macro missingSemicolonLastVar {
-            		var variable = "variable text";
+	 macro missingSemicolonLastVar {
+		var variable = "variable text";
 
-            		MissingSemicolon.validMacro();
+		MissingSemicolon.validMacro();
 
-            		var missingSemicolon = "missing semicolon"
-            	}
+		var missingSemicolon = "missing semicolon"
+	}
 
-          macro missingSemicolonLastEcho {
-                     		var variable = "variable text";
+	macro missingSemicolonLastEcho {
+		var variable = "variable text";
 
-                     		MissingSemicolon.validMacro();
+		MissingSemicolon.validMacro();
 
-                     		echo("missing semicolon")
-                     	}
+		echo("missing semicolon")
+	}
+
+	 macro missingSemicolonVars {
+		var variable1 = "variable text"
+
+		var variable2 = "variable text";
+	}
+
+	 macro missingSemicolonProperty {
+		property fake.property = "property value"
+
+		var variable = "variable text";
+	}
+
+	macro returnPassedVariable {
+		return ${variable};
+	}
 
 	macro validMacro {
 		var variable = "variable text";
 
-		return ${variable};
-	}
-
-	macro returnPassedVariable {
 		return ${variable};
 	}
 

@@ -25,19 +25,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.apache.commons.lang3.ArrayUtils;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Kenji Heigel
  */
-public class PoshiScriptParserTest extends TestCase {
+public class PoshiScriptParserTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		PropsUtil.set("test.base.dir.name", "");
+	}
 
 	@After
-	@Override
 	public void tearDown() {
 		PoshiContext.clear();
 		PoshiScriptParserException.clear();
@@ -118,6 +123,12 @@ public class PoshiScriptParserTest extends TestCase {
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 105, _getFilePath(fileName));
 
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 109, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 115, _getFilePath(fileName));
+
 		_assertExceptions(
 			PoshiScriptParserException.getExceptions(), actualExceptions);
 	}
@@ -135,6 +146,9 @@ public class PoshiScriptParserTest extends TestCase {
 
 		_throwPoshiScriptParserException(
 			"Missing semicolon", 2, _getFilePath(fileName));
+
+		_throwPoshiScriptParserException(
+			"Missing semicolon", 9, _getFilePath(fileName));
 
 		_assertExceptions(
 			PoshiScriptParserException.getExceptions(), actualExceptions);
@@ -168,11 +182,11 @@ public class PoshiScriptParserTest extends TestCase {
 				actualPoshiScriptParserException.getMessage(),
 				expectedPoshiScriptParserException.getMessage());
 
-			assertEquals(
+			Assert.assertEquals(
 				expectedPoshiScriptParserException.getErrorLineNumber(),
 				actualPoshiScriptParserException.getErrorLineNumber());
 
-			assertEquals(
+			Assert.assertEquals(
 				expectedPoshiScriptParserException.getFilePath(),
 				actualPoshiScriptParserException.getFilePath());
 		}
@@ -191,15 +205,21 @@ public class PoshiScriptParserTest extends TestCase {
 	}
 
 	private void _preparePoshiContext(String dirName) {
+		String[] poshiFileNames = ArrayUtils.addAll(
+			PoshiContext.POSHI_SUPPORT_FILE_INCLUDES,
+			PoshiContext.POSHI_TEST_FILE_INCLUDES);
+
 		String poshiFileDir = _BASE_POSHI_FILE_DIR + "/" + dirName;
 
-		PropsUtil.set("test.base.dir.name", poshiFileDir);
-
 		try {
-			PoshiContext.readFiles();
+			PoshiContext.readFiles(true, poshiFileNames, poshiFileDir);
 		}
 		catch (Exception exception) {
-			System.out.println(exception);
+			String message = exception.getMessage();
+
+			if (!message.contains("Poshi Script syntax errors found")) {
+				throw new RuntimeException(exception);
+			}
 		}
 	}
 

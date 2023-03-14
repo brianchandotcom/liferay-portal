@@ -1,7 +1,13 @@
 definition {
-	property fake.property = "missing semicolon"
+	property fake.property1 = "missing semicolon"
 
-	test missingSemicolon {
+	setUp {
+		echo("this is the setup");
+	}
+
+	test missingSemicolonProperty {
+		property fake.property2 = "missing semicolon"
+
 		var test = "test";
 	}
 }

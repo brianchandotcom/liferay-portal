@@ -40,6 +40,7 @@ import java.io.File;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -353,11 +354,8 @@ public class ChainingCheck extends BaseCheck {
 		List<String> requiredChainingMethodNames = null;
 
 		if (fullyQualifiedClassName.equals("org.json.JSONObject")) {
-			requiredChainingMethodNames = new ArrayList<>();
-
-			requiredChainingMethodNames.add("put");
-			requiredChainingMethodNames.add("putOnce");
-			requiredChainingMethodNames.add("putOpt");
+			requiredChainingMethodNames = Arrays.asList(
+				"put", "putOnce", "putOpt");
 		}
 		else {
 			requiredChainingMethodNames = _getRequiredChainingMethodNames(

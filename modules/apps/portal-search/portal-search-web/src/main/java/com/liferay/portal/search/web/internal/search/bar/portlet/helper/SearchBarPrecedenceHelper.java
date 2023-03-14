@@ -142,7 +142,9 @@ public class SearchBarPrecedenceHelper {
 		}
 
 		return new SearchBarPortletPreferencesImpl(
-			_portletPreferencesLookup.fetchPreferences(portlet, themeDisplay));
+			Optional.ofNullable(
+				_portletPreferencesLookup.fetchPreferences(
+					portlet, themeDisplay)));
 	}
 
 	private SearchBarPortletPreferences _getSearchBarPortletPreferences(

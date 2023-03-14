@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifier-Term",
-	service = {DTOConverter.class, PaymentMethodGroupRelTermDTOConverter.class}
+	service = DTOConverter.class
 )
 public class PaymentMethodGroupRelTermDTOConverter
 	implements DTOConverter

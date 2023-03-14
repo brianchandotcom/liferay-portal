@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -629,7 +630,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		if (Validator.isNotNull(containerLinkHref)) {
 			jspWriter.write("<a href=\"");
-			jspWriter.write(containerLinkHref);
+			jspWriter.write(HtmlUtil.escapeAttribute(containerLinkHref));
 			jspWriter.write("\"style=\"color: inherit; text-decoration: ");
 			jspWriter.write("none;\" target=\"");
 			jspWriter.write(

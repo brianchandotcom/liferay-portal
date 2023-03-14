@@ -236,11 +236,11 @@ const layoutReducer = (state: TState, action: TAction) => {
 			);
 
 			const hasCategorizationBox = !!objectLayoutBoxes.find(
-				layoutBox => layoutBox.type === 'categorization'
+				(layoutBox) => layoutBox.type === 'categorization'
 			);
 
 			if (
-				type === 'regular' ||
+				(type === 'regular' && hasCategorizationBox) ||
 				(type === 'categorization' && frameworkIndex >= 0)
 			) {
 				objectLayoutBoxes.splice(frameworkIndex, 0, newBox);

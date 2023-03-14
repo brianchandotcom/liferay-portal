@@ -189,7 +189,7 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 	}
 
 	public String getRESTContextPath(ObjectDefinition objectDefinition) {
-		if (!objectDefinition.isSystem()) {
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
 			return objectDefinition.getRESTContextPath();
 		}
 

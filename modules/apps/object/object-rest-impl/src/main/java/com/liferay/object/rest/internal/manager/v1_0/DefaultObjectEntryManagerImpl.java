@@ -719,10 +719,10 @@ public class DefaultObjectEntryManagerImpl
 				_getRelatedObjectDefinition(
 					objectDefinition, objectRelationship);
 
-			if (relatedObjectDefinition.isSystem()) {
+			if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 				throw new UnsupportedOperationException(
-					"Unable to create nested object entries with system " +
-						"object definitions");
+					"Nested object entries require a custom object " +
+						"definition or modifiable system object definition");
 			}
 
 			ObjectEntryManager objectEntryManager =

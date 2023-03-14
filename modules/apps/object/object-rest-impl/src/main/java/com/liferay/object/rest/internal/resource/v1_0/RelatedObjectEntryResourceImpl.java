@@ -119,7 +119,7 @@ public class RelatedObjectEntryResourceImpl
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				systemObjectDefinition.getStorageType());
 
-		if (relatedObjectDefinition.isSystem()) {
+		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 			return objectEntryManager.getRelatedSystemObjectEntries(
 				systemObjectDefinition, objectEntryId, objectRelationshipName,
 				pagination);

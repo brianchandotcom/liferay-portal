@@ -600,7 +600,7 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			throw new ObjectDefinitionStatusException();
 		}
 
@@ -928,7 +928,9 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition.class.getName(),
 			objectDefinition.getObjectDefinitionId(), false, true, true);
 
-		if (objectDefinition.isModifiable() || !objectDefinition.isSystem()) {
+		if (objectDefinition.isModifiable() ||
+			!objectDefinition.isUnmodifiableSystemObject()) {
+
 			dbTableName = "ObjectEntry";
 		}
 

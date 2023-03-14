@@ -77,7 +77,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
 
-		if (relatedObjectDefinition.isSystem()) {
+		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 			_checkSystemObjectEntry(
 				relatedObjectEntryId, relatedObjectDefinition);
 		}
@@ -118,7 +118,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
 
-		if (relatedObjectDefinition.isSystem()) {
+		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 			return objectEntryManager.getRelatedSystemObjectEntries(
 				_objectDefinition, currentObjectEntryId, objectRelationshipName,
 				pagination);
@@ -157,7 +157,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
 
-		if (relatedObjectDefinition.isSystem()) {
+		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 			return objectEntryManager.
 				addSystemObjectRelationshipMappingTableValues(
 					relatedObjectDefinition, objectRelationship,

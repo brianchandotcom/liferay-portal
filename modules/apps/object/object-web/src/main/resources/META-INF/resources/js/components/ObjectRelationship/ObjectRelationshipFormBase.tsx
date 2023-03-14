@@ -151,8 +151,8 @@ export function ObjectRelationshipFormBase({
 			)!;
 
 			const objectDefinitions = items.filter(
-				({parameterRequired, storageType, system}) =>
-					(!currentObjectDefinition.system || !system) &&
+				({modifiable, parameterRequired, storageType}) =>
+					(currentObjectDefinition.modifiable || modifiable) &&
 					(!Liferay.FeatureFlags['LPS-135430'] ||
 						storageType === 'default') &&
 					!parameterRequired

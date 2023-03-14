@@ -140,7 +140,7 @@ public class RelatedObjectEntryOpenAPIContributor
 
 		OpenAPIContributorUtil.copySchemas(
 			relatedSchemaName, relatedSchemas,
-			relatedObjectDefinition.isSystem(), openAPI);
+			relatedObjectDefinition.isUnmodifiableSystemObject(), openAPI);
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();

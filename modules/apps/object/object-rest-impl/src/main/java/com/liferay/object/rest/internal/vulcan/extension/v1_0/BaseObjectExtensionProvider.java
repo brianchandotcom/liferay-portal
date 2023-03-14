@@ -44,7 +44,9 @@ public abstract class BaseObjectExtensionProvider implements ExtensionProvider {
 		ObjectDefinition objectDefinition = fetchObjectDefinition(
 			companyId, className);
 
-		if ((objectDefinition != null) && objectDefinition.isSystem()) {
+		if ((objectDefinition != null) &&
+			objectDefinition.isUnmodifiableSystemObject()) {
+			
 			return true;
 		}
 

@@ -683,9 +683,9 @@ public class PoshiContext {
 
 		_initComponentCommandNamesMap();
 
-		_throwExceptions();
-
 		PoshiScriptParserException.throwExceptions();
+
+		_throwExceptions();
 
 		long duration = System.currentTimeMillis() - start;
 

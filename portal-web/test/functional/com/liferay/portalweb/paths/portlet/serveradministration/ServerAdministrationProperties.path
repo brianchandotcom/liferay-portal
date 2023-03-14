@@ -23,6 +23,11 @@
 	<td>//tr[@data-qa-id="row" and contains(.,'${key_propertyName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PORTAL_SYSTEM_PROPERTY_VALUE</td>
+	<td>//tr[@data-qa-id="row" and contains(.,'${key_propertyName}')]//td[contains(@class,'value-column')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

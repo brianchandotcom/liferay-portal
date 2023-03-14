@@ -15,7 +15,6 @@
 package com.liferay.segments.web.internal.display.context;
 
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -53,7 +51,6 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.HashMap;
 import java.util.List;
@@ -177,27 +174,6 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		return _segmentsEntryKey;
-	}
-
-	public String getSiteItemSelectorURL() {
-		if (getSegmentsEntryId() != 0) {
-			return null;
-		}
-
-		SiteItemSelectorCriterion siteItemSelectorCriterion =
-			new SiteItemSelectorCriterion();
-
-		siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new URLItemSelectorReturnType());
-
-		return PortletURLBuilder.create(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_renderRequest),
-				_renderResponse.getNamespace() + "sitesSelectItem",
-				siteItemSelectorCriterion)
-		).setParameter(
-			"displayStyle", "list"
-		).buildString();
 	}
 
 	public String getTitle(Locale locale) throws PortalException {
@@ -431,8 +407,6 @@ public class EditSegmentsEntryDisplayContext {
 			"segmentsConfigurationURL", _getSegmentsCompanyConfigurationURL()
 		).put(
 			"showInEditMode", _isShowInEditMode()
-		).put(
-			"siteItemSelectorURL", getSiteItemSelectorURL()
 		).build();
 	}
 

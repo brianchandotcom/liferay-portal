@@ -212,10 +212,11 @@ export default function () {
 			data: {
 				colors,
 				columns: [
-					['submitted', ...leadsChartValues.submitted],
-					['approved', ...opportunitiesChartValues.approved],
-					['rejected', ...totalRejectedChartValues],
-					['closedwon', ...opportunitiesChartValues.closedWon],
+					['x', '1', '2', '3', '4'],
+					['Submitted', ...leadsChartValues.submitted],
+					['Approved', ...opportunitiesChartValues.approved],
+					['Rejected', ...totalRejectedChartValues],
+					['Closed Won', ...opportunitiesChartValues.closedWon],
 				],
 				groups: [['submitted', 'approved', 'closedwon']],
 				order: 'desc',
@@ -226,6 +227,7 @@ export default function () {
 					rejected: 'spline',
 					submitted: 'bar',
 				},
+				x: 'x',
 			},
 			grid: {
 				y: {

@@ -527,8 +527,6 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	private static boolean _originalUpgradeLogContextEnabled;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
-	private static final UnsyncStringWriter _unsyncStringWriter =
-		new UnsyncStringWriter();
 	private static Logger _upgradeReportLogger;
 
 	@Inject(filter = "appender.name=UpgradeReportLogAppender")
@@ -538,5 +536,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	private ReleaseLocalService _releaseLocalService;
 
 	private String _reportContent;
+	private final UnsyncStringWriter _unsyncStringWriter =
+		new UnsyncStringWriter();
 
 }

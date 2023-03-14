@@ -14,6 +14,7 @@
 
 package com.liferay.portal.language.override.internal;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -30,8 +31,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -47,62 +48,47 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 
 	@Override
 	public String get(String key, Locale locale) {
-		if (_ploEntriesMap.isEmpty() ||
+		Map<String, HashMap<String, String>> ploEntriesMap =
+			_ploEntriesMapDCLSingleton.getSingleton(_supplier);
+
+		if (ploEntriesMap.isEmpty() ||
 			PLOOriginalTranslationThreadLocal.isUseOriginalTranslation()) {
 
 			return null;
 		}
 
 		Map<String, String> overrideMap = _getOverrideMap(
-			CompanyThreadLocal.getCompanyId(), locale);
+			ploEntriesMap, CompanyThreadLocal.getCompanyId(), locale);
 
 		return overrideMap.get(key);
 	}
 
 	@Override
 	public Set<String> keySet(Locale locale) {
-		if (_ploEntriesMap.isEmpty() ||
+		Map<String, HashMap<String, String>> ploEntriesMap =
+			_ploEntriesMapDCLSingleton.getSingleton(_supplier);
+
+		if (ploEntriesMap.isEmpty() ||
 			PLOOriginalTranslationThreadLocal.isUseOriginalTranslation()) {
 
 			return Collections.emptySet();
 		}
 
 		Map<String, String> overrideMap = _getOverrideMap(
-			CompanyThreadLocal.getCompanyId(), locale);
+			ploEntriesMap, CompanyThreadLocal.getCompanyId(), locale);
 
 		return overrideMap.keySet();
 	}
 
-	@Activate
-	protected void activate() {
-		_ploEntriesMap = new ConcurrentHashMap<>();
-
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				for (PLOEntry ploEntry :
-						_ploEntryLocalService.getPLOEntries(companyId)) {
-
-					add(ploEntry);
-				}
-			});
-	}
-
 	protected void add(PLOEntry ploEntry) {
-		_ploEntriesMap.compute(
-			_encodeKey(ploEntry.getCompanyId(), ploEntry.getLanguageId()),
-			(key, value) -> {
-				if (value == null) {
-					value = new HashMap<>();
-				}
-
-				value.put(ploEntry.getKey(), ploEntry.getValue());
-
-				return value;
-			});
+		_add(_ploEntriesMapDCLSingleton.getSingleton(_supplier), ploEntry);
 	}
 
 	protected void remove(PLOEntry ploEntry) {
-		_ploEntriesMap.computeIfPresent(
+		Map<String, HashMap<String, String>> ploEntriesMap =
+			_ploEntriesMapDCLSingleton.getSingleton(_supplier);
+
+		ploEntriesMap.computeIfPresent(
 			_encodeKey(ploEntry.getCompanyId(), ploEntry.getLanguageId()),
 			(key, value) -> {
 				value.remove(ploEntry.getKey());
@@ -116,7 +102,10 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 	}
 
 	protected void update(PLOEntry ploEntry) {
-		_ploEntriesMap.computeIfPresent(
+		Map<String, HashMap<String, String>> ploEntriesMap =
+			_ploEntriesMapDCLSingleton.getSingleton(_supplier);
+
+		ploEntriesMap.computeIfPresent(
 			_encodeKey(ploEntry.getCompanyId(), ploEntry.getLanguageId()),
 			(key, value) -> {
 				value.put(ploEntry.getKey(), ploEntry.getValue());
@@ -125,12 +114,47 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 			});
 	}
 
+	private void _add(
+		Map<String, HashMap<String, String>> ploEntriesMap, PLOEntry ploEntry) {
+
+		ploEntriesMap.compute(
+			_encodeKey(ploEntry.getCompanyId(), ploEntry.getLanguageId()),
+			(key, value) -> {
+				if (value == null) {
+					value = new HashMap<>();
+				}
+
+				value.put(ploEntry.getKey(), ploEntry.getValue());
+
+				return value;
+			});
+	}
+
+	private Map<String, HashMap<String, String>> _createPLOEntriesMap() {
+		Map<String, HashMap<String, String>> ploEntriesMap =
+			new ConcurrentHashMap<>();
+
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				for (PLOEntry ploEntry :
+						_ploEntryLocalService.getPLOEntries(companyId)) {
+
+					_add(ploEntriesMap, ploEntry);
+				}
+			});
+
+		return ploEntriesMap;
+	}
+
 	private String _encodeKey(long companyId, String languageId) {
 		return StringBundler.concat(companyId, StringPool.POUND, languageId);
 	}
 
-	private Map<String, String> _getOverrideMap(long companyId, Locale locale) {
-		Map<String, String> overrideMap = _ploEntriesMap.get(
+	private Map<String, String> _getOverrideMap(
+		Map<String, HashMap<String, String>> ploEntriesMap, long companyId,
+		Locale locale) {
+
+		Map<String, String> overrideMap = ploEntriesMap.get(
 			_encodeKey(companyId, _language.getLanguageId(locale)));
 
 		if (overrideMap == null) {
@@ -146,9 +170,13 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 	@Reference
 	private Language _language;
 
-	private Map<String, HashMap<String, String>> _ploEntriesMap;
+	private final DCLSingleton<Map<String, HashMap<String, String>>>
+		_ploEntriesMapDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private PLOEntryLocalService _ploEntryLocalService;
+
+	private final Supplier<Map<String, HashMap<String, String>>> _supplier =
+		this::_createPLOEntriesMap;
 
 }

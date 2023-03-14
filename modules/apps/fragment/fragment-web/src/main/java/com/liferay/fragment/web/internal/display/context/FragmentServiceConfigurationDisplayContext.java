@@ -18,11 +18,16 @@ import com.liferay.fragment.web.internal.configuration.admin.service.FragmentSer
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Objects;
+
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,6 +76,21 @@ public class FragmentServiceConfigurationDisplayContext {
 		).setParameter(
 			"scopePK", _getScopePk()
 		).buildString();
+	}
+
+	public boolean isAlreadyPropagateContributedFragmentChanges() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletPreferences portletPreferences =
+			PortalPreferencesLocalServiceUtil.getPreferences(
+				themeDisplay.getCompanyId(),
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		return GetterUtil.getBoolean(
+			portletPreferences.getValue(
+				"alreadyPropagateContributedFragmentChanges", null));
 	}
 
 	public boolean isPropagateChangesEnabled() {

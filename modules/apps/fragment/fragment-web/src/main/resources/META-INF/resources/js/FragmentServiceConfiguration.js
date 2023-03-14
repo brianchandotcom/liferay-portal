@@ -20,11 +20,17 @@ import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 export default function FragmentServiceConfiguration({
+	alreadyPropagateContributedFragmentChanges,
 	namespace,
 	propagateChanges,
 	propagateContributedFragmentChanges,
 	propagateContributedFragmentEntriesChangesURL,
 }) {
+	const [
+		disablePropagateChangesButton,
+		setDisablePropagateChangesButton,
+	] = useState(alreadyPropagateContributedFragmentChanges);
+
 	const [
 		propagateContributedFragmentChangesChecked,
 		setPropagateContributedFragmentChangesChecked,
@@ -55,6 +61,7 @@ export default function FragmentServiceConfiguration({
 						type: 'success',
 					});
 
+					setDisablePropagateChangesButton(true);
 					setMessageType('success');
 				}
 				else {
@@ -125,6 +132,7 @@ export default function FragmentServiceConfiguration({
 				id={`${namespace}propagateContributedFragmentChangesContainer`}
 			>
 				<ClayButton
+					disabled={disablePropagateChangesButton}
 					displayType="secondary"
 					onClick={() => setWarningModalVisible(true)}
 				>

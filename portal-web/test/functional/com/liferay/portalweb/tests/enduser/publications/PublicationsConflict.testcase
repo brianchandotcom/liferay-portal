@@ -258,6 +258,8 @@ definition {
 	@description = "This is a use case for LPS-175305. As a publication admin, I would like to know log the conflicts that happened."
 	@priority = 4
 	test CanSeeConflictsInTheLog {
+		property test.name.skip.portal.instance = "PublicationsConflict#CanSeeConflictsInTheLog";
+
 		task ("Add Log level and Web Content") {
 			ServerAdministration.openServerAdmin();
 

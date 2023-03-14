@@ -1389,6 +1389,102 @@ definition {
 		}
 	}
 
+	@description = "LPS-176851 - Verify that formula fields can be mapped on the page builder framework"
+	@priority = 4
+	test CanMappedFormulaFieldOnPages {
+		task ("Given: An object with a Formula Field is created and added to a page") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 176851",
+				objectName = "CustomObject176851",
+				pluralLabelName = "Custom Objects 176851");
+
+			Navigator.openURL();
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 176851");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Widget",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			ObjectAdmin.goToFieldsTab();
+
+			for (var valueField : list "1,2") {
+				ObjectAdmin.addObjectFieldViaUI(
+					fieldLabel = "Custom Integer Field ${valueField}",
+					fieldType = "Integer");
+			}
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Formula Field",
+				fieldType = "Formula",
+				formulaFieldOption = "Integer");
+
+			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field");
+
+			ObjectField.insertScriptOnFormulaField(scriptFormulaField = "customIntegerField1 + customIntegerField2");
+
+			Button.clickSave();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176851");
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.addPage(
+				pageName = "Formula Page",
+				sitePageType = "Widget Page");
+
+			PagesAdmin.configurePage(
+				columnName = "1 Column",
+				pageName = "Formula Page",
+				sitePageType = "Widget Page");
+
+			Navigator.gotoPage(pageName = "Formula Page");
+
+			Portlet.addPG(
+				pageName = "Formula Page",
+				portletName = "Custom Objects 176851");
+		}
+
+		task ("When: the value of the fields is added in the page") {
+			LexiconEntry.gotoAdd();
+
+			ObjectAdmin.addEntryField(
+				entry = 1,
+				fieldLabel = "customIntegerField1");
+
+			ObjectAdmin.addEntryField(
+				entry = 2,
+				fieldLabel = "customIntegerField2");
+
+			PortletEntry.save();
+		}
+
+		task ("Then: the page shows the Formula Field value") {
+			AssertTextEquals(
+				key_fieldLabel = "customFormulaField",
+				locator1 = "ObjectField#OBJECT_FIELD_LABEL",
+				value1 = 3);
+
+			Navigator.gotoPage(pageName = "Formula Page");
+
+			AssertTextEquals(
+				key_column = 2,
+				key_line = 1,
+				locator1 = "ObjectField#VIEW_TABLE_CONTENT",
+				value1 = 3);
+		}
+	}
+
 	@description = "LPS-165995 - Verify that a message is displayed when the user tries to add more than 16 digits to a long integer field"
 	@priority = 4
 	test CanNotAddMoreThan16DigitsToLongIntField {

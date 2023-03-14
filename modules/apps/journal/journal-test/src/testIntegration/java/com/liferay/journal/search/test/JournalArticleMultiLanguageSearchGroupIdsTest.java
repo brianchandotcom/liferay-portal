@@ -21,6 +21,7 @@ import com.liferay.journal.test.util.search.JournalArticleBlueprint;
 import com.liferay.journal.test.util.search.JournalArticleContent;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -46,10 +47,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -295,11 +296,8 @@ public class JournalArticleMultiLanguageSearchGroupIdsTest {
 
 			if (ArrayUtil.isNotEmpty(groups)) {
 				searchContext.setGroupIds(
-					Stream.of(
-						groups
-					).mapToLong(
-						Group::getGroupId
-					).toArray());
+					TransformUtil.transformToLongArray(
+						Arrays.asList(groups), Group::getGroupId));
 			}
 
 			QueryConfig queryConfig = searchContext.getQueryConfig();

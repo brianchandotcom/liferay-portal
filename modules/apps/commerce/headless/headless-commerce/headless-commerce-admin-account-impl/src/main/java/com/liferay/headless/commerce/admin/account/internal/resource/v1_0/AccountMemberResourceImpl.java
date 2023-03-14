@@ -24,13 +24,13 @@ import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountRole;
-import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountMemberDTOConverter;
 import com.liferay.headless.commerce.admin.account.internal.util.v1_0.AccountMemberUtil;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountMemberResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -310,8 +310,11 @@ public class AccountMemberResourceImpl
 	@Reference
 	private AccountEntryService _accountEntryService;
 
-	@Reference
-	private AccountMemberDTOConverter _accountMemberDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountMemberDTOConverter)"
+	)
+	private DTOConverter<CommerceAccountUserRel, AccountMember>
+		_accountMemberDTOConverter;
 
 	@Reference
 	private CommerceAccountUserRelService _commerceAccountUserRelService;

@@ -22,11 +22,11 @@ import com.liferay.commerce.account.service.CommerceAccountOrganizationRelServic
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountOrganization;
-import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountOrganizationDTOConverter;
 import com.liferay.headless.commerce.admin.account.internal.util.v1_0.AccountOrganizationUtil;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountOrganizationResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -257,8 +257,11 @@ public class AccountOrganizationResourceImpl
 	@Reference
 	private AccountEntryService _accountEntryService;
 
-	@Reference
-	private AccountOrganizationDTOConverter _accountOrganizationDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountOrganizationDTOConverter)"
+	)
+	private DTOConverter<CommerceAccountOrganizationRel, AccountOrganization>
+		_accountOrganizationDTOConverter;
 
 	@Reference
 	private CommerceAccountOrganizationRelService

@@ -30,13 +30,13 @@ import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedO
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountChannelShippingOption;
-import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountChannelShippingOptionDTOConverter;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountChannelShippingOptionResource;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -429,9 +429,12 @@ public class AccountChannelShippingOptionResourceImpl
 			commerceShippingOptionAccountEntryRel);
 	}
 
-	@Reference
-	private AccountChannelShippingOptionDTOConverter
-		_accountChannelShippingOptionDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountChannelShippingOptionDTOConverter)"
+	)
+	private DTOConverter
+		<CommerceShippingOptionAccountEntryRel, AccountChannelShippingOption>
+			_accountChannelShippingOptionDTOConverter;
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

@@ -38,7 +38,6 @@ import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountAddress;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountOrganization;
-import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountDTOConverter;
 import com.liferay.headless.commerce.admin.account.internal.odata.entity.v1_0.AccountEntityModel;
 import com.liferay.headless.commerce.admin.account.internal.util.v1_0.AccountMemberUtil;
 import com.liferay.headless.commerce.admin.account.internal.util.v1_0.AccountOrganizationUtil;
@@ -65,6 +64,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -711,8 +711,10 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	private static final EntityModel _entityModel = new AccountEntityModel();
 
-	@Reference
-	private AccountDTOConverter _accountDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountDTOConverter)"
+	)
+	private DTOConverter<AccountEntry, Account> _accountDTOConverter;
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

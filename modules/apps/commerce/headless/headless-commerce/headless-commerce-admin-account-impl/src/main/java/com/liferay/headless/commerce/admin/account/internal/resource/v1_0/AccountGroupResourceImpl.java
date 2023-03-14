@@ -21,7 +21,6 @@ import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountGroup;
-import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountGroupDTOConverter;
 import com.liferay.headless.commerce.admin.account.internal.odata.entity.v1_0.AccountGroupEntityModel;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -296,8 +296,11 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 	@Reference
 	private AccountEntryService _accountEntryService;
 
-	@Reference
-	private AccountGroupDTOConverter _accountGroupDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountGroupDTOConverter)"
+	)
+	private DTOConverter<CommerceAccountGroup, AccountGroup>
+		_accountGroupDTOConverter;
 
 	@Reference
 	private CommerceAccountGroupService _commerceAccountGroupService;

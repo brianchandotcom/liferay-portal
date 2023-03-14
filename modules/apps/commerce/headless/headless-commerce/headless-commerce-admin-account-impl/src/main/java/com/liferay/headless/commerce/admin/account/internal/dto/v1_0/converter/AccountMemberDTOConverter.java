@@ -91,8 +91,10 @@ public class AccountMemberDTOConverter
 		return stream.toArray(AccountRole[]::new);
 	}
 
-	@Reference
-	private AccountRoleDTOConverter _accountRoleDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountRoleDTOConverter)"
+	)
+	private DTOConverter<UserGroupRole, AccountRole> _accountRoleDTOConverter;
 
 	@Reference
 	private CommerceAccountUserRelService _commerceAccountUserRelService;

@@ -44,7 +44,6 @@ import com.liferay.commerce.term.exception.NoSuchTermEntryException;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountChannelEntry;
-import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountChannelEntryDTOConverter;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountChannelEntryResource;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.model.Address;
@@ -56,6 +55,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -1387,8 +1387,11 @@ public class AccountChannelEntryResourceImpl
 				contextUser));
 	}
 
-	@Reference
-	private AccountChannelEntryDTOConverter _accountChannelEntryDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountChannelEntryDTOConverter)"
+	)
+	private DTOConverter<CommerceChannelAccountEntryRel, AccountChannelEntry>
+		_accountChannelEntryDTOConverter;
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

@@ -19,7 +19,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
-import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.UserDTOConverter;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.UserResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.model.Role;
@@ -32,6 +31,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.Calendar;
@@ -164,8 +164,11 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
 
-	@Reference
-	private UserDTOConverter _userDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.UserDTOConverter)"
+	)
+	private DTOConverter<com.liferay.portal.kernel.model.User, User>
+		_userDTOConverter;
 
 	@Reference
 	private UserLocalService _userLocalService;

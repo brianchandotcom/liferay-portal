@@ -248,14 +248,13 @@ public class PortletSharedSearchRequestImpl
 		Portlet portlet, ThemeDisplay themeDisplay,
 		RenderRequest renderRequest) {
 
-		Optional<PortletPreferences> portletPreferencesOptional =
-			portletPreferencesLookup.fetchPreferences(portlet, themeDisplay);
-
 		return searchSettings -> portletSharedSearchContributor.contribute(
 			new PortletSharedSearchSettingsImpl(
 				searchSettings, portlet.getPortletId(),
-				portletPreferencesOptional, portletSharedRequestHelper,
-				renderRequest));
+				Optional.ofNullable(
+					portletPreferencesLookup.fetchPreferences(
+						portlet, themeDisplay)),
+				portletSharedRequestHelper, renderRequest));
 	}
 
 	private List<SearchSettingsContributor> _getSearchSettingsContributors(

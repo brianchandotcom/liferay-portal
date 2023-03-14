@@ -138,12 +138,12 @@ else {
 	<clay:radio
 		checked="<%= !selLayout.isInheritLookAndFeel() %>"
 		label='<%= LanguageUtil.get(request, "define-a-custom-theming-for-this-page") %>'
-		name='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'
+		name='<%= liferayPortletResponse.getNamespace() + "regularUniqueLookAndFeel" %>'
 		value="false"
 	/>
 
 	<c:if test="<%= !group.isLayoutPrototype() %>">
-		<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
+		<div class="<%= "lfr-inherit-theme-options " + (selLayout.isInheritLookAndFeel() ? StringPool.BLANK : "hide") %>" id="<portlet:namespace />inheritThemeOptions">
 			<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="companyId" value="<%= String.valueOf(group.getCompanyId()) %>" />
 				<liferay-util:param name="editable" value="<%= Boolean.FALSE.toString() %>" />
@@ -152,7 +152,7 @@ else {
 		</div>
 	</c:if>
 
-	<div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
+	<div class="<%= "lfr-inherit-theme-options " + (!selLayout.isInheritLookAndFeel() ? StringPool.BLANK : "hide") %>" id="<portlet:namespace />themeOptions">
 		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 	</div>
 </clay:sheet-section>
@@ -194,17 +194,35 @@ else {
 	</div>
 </clay:sheet-section>
 
-<aui:script>
-	Liferay.Util.toggleRadio(
-		'<portlet:namespace />regularInheritLookAndFeel',
-		'<portlet:namespace />inheritThemeOptions',
-		'<portlet:namespace />themeOptions'
-	);
-	Liferay.Util.toggleRadio(
-		'<portlet:namespace />regularUniqueLookAndFeel',
-		'<portlet:namespace />themeOptions',
+<aui:script sandbox="<%= true %>">
+	const regularInheritLookAndFeel = document.getElementsByName(
+		'<portlet:namespace />regularInheritLookAndFeel'
+	)[0];
+	const regularUniqueLookAndFeel = document.getElementsByName(
+		'<portlet:namespace />regularUniqueLookAndFeel'
+	)[0];
+	const inheritThemeOptions = document.getElementById(
 		'<portlet:namespace />inheritThemeOptions'
 	);
+	const themeOptions = document.getElementById(
+		'<portlet:namespace />themeOptions'
+	);
+
+	regularInheritLookAndFeel.addEventListener('change', (event) => {
+		event.currentTarget.checked = true;
+		regularUniqueLookAndFeel.checked = false;
+
+		inheritThemeOptions.classList.toggle('hide');
+		themeOptions.classList.toggle('hide');
+	});
+
+	regularUniqueLookAndFeel.addEventListener('change', (event) => {
+		event.currentTarget.checked = true;
+		regularInheritLookAndFeel.checked = false;
+
+		inheritThemeOptions.classList.toggle('hide');
+		themeOptions.classList.toggle('hide');
+	});
 </aui:script>
 
 <c:if test="<%= layoutLookAndFeelDisplayContext.hasStyleBooks() %>">

@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -93,7 +94,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -337,23 +337,17 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 				Element missingReferencesElement =
 					missingReferencesElements.get(0);
 
-				List<Element> missingReferenceElements =
-					missingReferencesElement.elements("missing-reference");
-
-				Stream<Element> elementStream =
-					missingReferenceElements.stream();
-
 				Assert.assertEquals(
 					1,
-					elementStream.filter(
+					ListUtil.count(
+						missingReferencesElement.elements("missing-reference"),
 						element ->
 							Objects.equals(
 								element.attributeValue("class-name"),
 								ExportImportClassedModelUtil.getClassName(
 									dlFileEntry)) &&
 							(Long.valueOf(element.attributeValue("class-pk")) ==
-								dlFileEntry.getPrimaryKey())
-					).count());
+								dlFileEntry.getPrimaryKey())));
 			}
 			else {
 				Assert.assertNotNull(fileEntry);

@@ -24,7 +24,7 @@ import {
 	useEventListener,
 	useIsMounted,
 } from '@liferay/frontend-js-react-web';
-import {navigate, openToast} from 'frontend-js-web';
+import {COOKIE_TYPES, navigate, openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {config} from '../../../app/config/index';
@@ -111,7 +111,9 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 	const [editingExperience, setEditingExperience] = useState({});
 
 	const [modalExperienceState, setModalExperienceState] = useSessionState(
-		'modalExperienceState'
+		'modalExperienceState',
+		undefined,
+		COOKIE_TYPES.NECESSARY
 	);
 	const modalExperienceStateRef = useRef(modalExperienceState);
 	modalExperienceStateRef.current = modalExperienceState;

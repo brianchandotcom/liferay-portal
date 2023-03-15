@@ -12,6 +12,7 @@
  * details.
  */
 
+import {COOKIE_TYPES} from 'frontend-js-web';
 import {useCallback, useEffect} from 'react';
 
 import {useSessionState} from '../../../common/hooks/useSessionState';
@@ -24,7 +25,9 @@ import getFragmentItem from '../../utils/getFragmentItem';
 export default function useURLParser() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const [, setHighlightedCommentId] = useSessionState(
-		HIGHLIGHTED_COMMENT_ID_KEY
+		HIGHLIGHTED_COMMENT_ID_KEY,
+		undefined,
+		COOKIE_TYPES.NECESSARY
 	);
 	const layoutData = useSelector((state) => state.layoutData);
 	const dispatch = useDispatch();

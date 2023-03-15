@@ -68,9 +68,12 @@ public class AdvancedJSONReaderTest {
 				advancedJSONReader.getObject(
 					"configuration", BatchEngineUnitConfiguration.class);
 
-			Assert.assertEquals(2410, batchEngineUnitConfiguration.companyId);
-			Assert.assertEquals(245647, batchEngineUnitConfiguration.userId);
-			Assert.assertEquals("v10.0", batchEngineUnitConfiguration.version);
+			Assert.assertEquals(
+				2410, batchEngineUnitConfiguration.getCompanyId());
+			Assert.assertEquals(
+				245647, batchEngineUnitConfiguration.getUserId());
+			Assert.assertEquals(
+				"v10.0", batchEngineUnitConfiguration.getVersion());
 		}
 	}
 

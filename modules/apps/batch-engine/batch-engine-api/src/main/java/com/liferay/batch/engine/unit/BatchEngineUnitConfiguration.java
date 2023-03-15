@@ -29,43 +29,47 @@ import java.util.Map;
 public class BatchEngineUnitConfiguration {
 
 	public String getCallbackURL() {
-		return callbackURL;
+		return _callbackURL;
 	}
 
 	public String getClassName() {
-		return className;
+		return _className;
 	}
 
 	public long getCompanyId() {
-		return companyId;
+		return _companyId;
 	}
 
 	public Map<String, String> getFieldNameMappingMap() {
-		return fieldNameMappingMap;
+		return _fieldNameMappingMap;
 	}
 
 	public Map<String, Serializable> getParameters() {
-		return parameters;
+		return _parameters;
 	}
 
 	public String getTaskItemDelegateName() {
-		return taskItemDelegateName;
+		return _taskItemDelegateName;
 	}
 
 	public long getUserId() {
-		return userId;
+		return _userId;
 	}
 
 	public String getVersion() {
-		return version;
+		return _version;
+	}
+
+	public void setCallbackURL(String callbackURL) {
+		_callbackURL = callbackURL;
 	}
 
 	public void setClassName(String className) {
-		this.className = className;
+		_className = className;
 	}
 
 	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
+		_companyId = companyId;
 	}
 
 	public void setFieldNameMappingMap(
@@ -75,7 +79,7 @@ public class BatchEngineUnitConfiguration {
 			fieldNameMappingMap = Collections.emptyMap();
 		}
 
-		this.fieldNameMappingMap = new HashMap<>(fieldNameMappingMap);
+		_fieldNameMappingMap = new HashMap<>(fieldNameMappingMap);
 	}
 
 	public void setParameters(Map<String, Serializable> parameters) {
@@ -83,43 +87,43 @@ public class BatchEngineUnitConfiguration {
 			parameters = Collections.emptyMap();
 		}
 
-		this.parameters = new HashMap<>(parameters);
+		_parameters = new HashMap<>(parameters);
 	}
 
 	public void setTaskItemDelegateName(String taskItemDelegateName) {
-		this.taskItemDelegateName = taskItemDelegateName;
+		_taskItemDelegateName = taskItemDelegateName;
 	}
 
 	public void setUserId(long userId) {
-		this.userId = userId;
+		_userId = userId;
 	}
 
 	public void setVersion(String version) {
-		this.version = version;
+		_version = version;
 	}
 
-	@JsonProperty
-	public String callbackURL;
+	@JsonProperty("callbackURL")
+	private String _callbackURL;
 
-	@JsonProperty
-	public String className;
+	@JsonProperty("className")
+	private String _className;
 
-	@JsonProperty
-	public long companyId;
+	@JsonProperty("companyId")
+	private long _companyId;
 
-	@JsonProperty
-	public Map<String, String> fieldNameMappingMap;
+	@JsonProperty("fieldNameMappingMap")
+	private Map<String, String> _fieldNameMappingMap;
 
-	@JsonProperty
-	public Map<String, Serializable> parameters;
+	@JsonProperty("parameters")
+	private Map<String, Serializable> _parameters;
 
-	@JsonProperty
-	public String taskItemDelegateName;
+	@JsonProperty("taskItemDelegateName")
+	private String _taskItemDelegateName;
 
-	@JsonProperty
-	public long userId;
+	@JsonProperty("userId")
+	private long _userId;
 
-	@JsonProperty
-	public String version;
+	@JsonProperty("version")
+	private String _version;
 
 }

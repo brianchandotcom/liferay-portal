@@ -36,7 +36,7 @@ public class BatchEngineUnitConfigurationHelper {
 	public BatchEngineUnitConfiguration updateBatchEngineUnitConfiguration(
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
 
-		if (batchEngineUnitConfiguration.companyId == 0) {
+		if (batchEngineUnitConfiguration.getCompanyId() == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Using default company ID for this batch process");
 			}
@@ -45,23 +45,24 @@ public class BatchEngineUnitConfigurationHelper {
 				Company company = _companyLocalService.getCompanyByWebId(
 					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
-				batchEngineUnitConfiguration.companyId = company.getCompanyId();
+				batchEngineUnitConfiguration.setCompanyId(
+					company.getCompanyId());
 			}
 			catch (PortalException portalException) {
 				_log.error("Unable to get default company ID", portalException);
 			}
 		}
 
-		if (batchEngineUnitConfiguration.userId == 0) {
+		if (batchEngineUnitConfiguration.getUserId() == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Using default user ID for this batch process");
 			}
 
 			try {
-				batchEngineUnitConfiguration.userId =
+				batchEngineUnitConfiguration.setUserId(
 					_userLocalService.getUserIdByScreenName(
-						batchEngineUnitConfiguration.companyId,
-						PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME));
+						batchEngineUnitConfiguration.getCompanyId(),
+						PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME)));
 			}
 			catch (PortalException portalException) {
 				_log.error("Unable to get default user ID", portalException);

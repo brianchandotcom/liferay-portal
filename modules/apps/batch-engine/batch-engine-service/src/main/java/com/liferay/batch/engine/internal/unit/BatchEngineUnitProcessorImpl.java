@@ -120,17 +120,17 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				null, batchEngineUnitConfiguration.companyId,
-				batchEngineUnitConfiguration.userId, 100,
-				batchEngineUnitConfiguration.callbackURL,
-				batchEngineUnitConfiguration.className, content,
+				null, batchEngineUnitConfiguration.getCompanyId(),
+				batchEngineUnitConfiguration.getUserId(), 100,
+				batchEngineUnitConfiguration.getCallbackURL(),
+				batchEngineUnitConfiguration.getClassName(), content,
 				StringUtil.toUpperCase(contentType),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
-				batchEngineUnitConfiguration.fieldNameMappingMap,
+				batchEngineUnitConfiguration.getFieldNameMappingMap(),
 				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 				BatchEngineTaskOperation.CREATE.name(),
-				batchEngineUnitConfiguration.parameters,
-				batchEngineUnitConfiguration.taskItemDelegateName);
+				batchEngineUnitConfiguration.getParameters(),
+				batchEngineUnitConfiguration.getTaskItemDelegateName());
 
 		executorService.submit(
 			() -> {

@@ -23,7 +23,6 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.persistence.JournalArticleUtil;
-import com.liferay.journal.web.internal.portlet.action.util.DataDefinitionFieldNameUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -33,6 +32,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -102,26 +103,22 @@ public class UpdateDataDefinitionMVCActionCommand
 		long dataDefinitionId = ParamUtil.getLong(
 			actionRequest, "dataDefinitionId");
 
+		String dataDefinitionString = ParamUtil.getString(
+			actionRequest, "dataDefinition");
+
 		DataDefinition dataDefinition = DataDefinition.toDTO(
-			ParamUtil.getString(actionRequest, "dataDefinition"));
+			dataDefinitionString);
 
 		String structureKey = ParamUtil.getString(
 			actionRequest, "structureKey");
+		String dataLayout = ParamUtil.getString(actionRequest, "dataLayout");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 
 		dataDefinition.setDataDefinitionKey(structureKey);
-
-		DataLayout dataLayout = DataLayout.toDTO(
-			ParamUtil.getString(actionRequest, "dataLayout"));
-
-		DataDefinitionFieldNameUtil.normalizeFieldName(
-			dataDefinition, dataLayout);
-
-		dataDefinition.setDefaultDataLayout(dataLayout);
-
+		dataDefinition.setDefaultDataLayout(DataLayout.toDTO(dataLayout));
 		dataDefinition.setDescription(
-			LocalizedValueUtil.toStringObjectMap(
-				_localization.getLocalizationMap(
-					actionRequest, "description")));
+			LocalizedValueUtil.toStringObjectMap(descriptionMap));
 
 		dataDefinitionResource.putDataDefinition(
 			dataDefinitionId, dataDefinition);

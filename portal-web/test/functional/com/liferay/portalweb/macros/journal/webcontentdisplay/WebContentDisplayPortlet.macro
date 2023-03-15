@@ -84,8 +84,6 @@ definition {
 
 		Button.click(button = "Submit for Workflow");
 
-		WaitForElementNotPresent(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
-
 		AssertTextEquals(
 			locator1 = "Message#ERROR_3",
 			value1 = "${webContentTitle} is not approved.");

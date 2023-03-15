@@ -118,7 +118,7 @@ public class AddObjectEntryObjectActionExecutorImpl
 			Map<String, Object> values)
 		throws Exception {
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			if (!FeatureFlagManagerUtil.isEnabled(
 					objectDefinition.getCompanyId(), "LPS-173537")) {
 
@@ -177,7 +177,7 @@ public class AddObjectEntryObjectActionExecutorImpl
 			return companyGroup.getGroupId();
 		}
 
-		if (sourceObjectDefinition.isSystem()) {
+		if (sourceObjectDefinition.isUnmodifiableSystemObject()) {
 			return MapUtil.getLong(
 				(Map<String, Object>)payloadJSONObject.get(
 					"model" + sourceObjectDefinition.getName()),

@@ -83,8 +83,8 @@ public class NotificationTemplateObjectActionExecutorImpl
 			).userId(
 				userId
 			).portletId(
-				objectDefinition.isSystem() ? StringPool.BLANK :
-					objectDefinition.getPortletId()
+				objectDefinition.isUnmodifiableSystemObject() ?
+					StringPool.BLANK : objectDefinition.getPortletId()
 			).build());
 	}
 

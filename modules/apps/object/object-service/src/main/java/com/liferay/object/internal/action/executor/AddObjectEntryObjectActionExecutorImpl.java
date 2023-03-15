@@ -117,7 +117,7 @@ public class AddObjectEntryObjectActionExecutorImpl
 			Map<String, Object> values)
 		throws Exception {
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			SystemObjectDefinitionManager systemObjectDefinitionManager =
 				_systemObjectDefinitionManagerRegistry.
 					getSystemObjectDefinitionManager(
@@ -170,7 +170,7 @@ public class AddObjectEntryObjectActionExecutorImpl
 			return companyGroup.getGroupId();
 		}
 
-		if (sourceObjectDefinition.isSystem()) {
+		if (sourceObjectDefinition.isUnmodifiableSystemObject()) {
 			return MapUtil.getLong(
 				(Map<String, Object>)payloadJSONObject.get(
 					"model" + sourceObjectDefinition.getName()),

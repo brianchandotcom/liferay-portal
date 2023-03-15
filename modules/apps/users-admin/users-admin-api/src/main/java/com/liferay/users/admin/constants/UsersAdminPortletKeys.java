@@ -25,6 +25,9 @@ public class UsersAdminPortletKeys {
 	public static final String MY_ORGANIZATIONS =
 		"com_liferay_users_admin_web_portlet_MyOrganizationsPortlet";
 
+	public static final String SERVICE_ACCOUNTS =
+		"com_liferay_users_admin_web_portlet_ServiceAccountsPortlet";
+
 	public static final String USERS_ADMIN =
 		"com_liferay_users_admin_web_portlet_UsersAdminPortlet";
 

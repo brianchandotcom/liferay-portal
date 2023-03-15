@@ -62,6 +62,14 @@ public class FragmentServiceManagedServiceFactory
 			"FragmentServiceConfiguration.scoped";
 	}
 
+	public boolean hasScopedConfiguration(long companyId) throws Exception {
+		if (_getScopedConfiguration(companyId) != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isPropagateChanges(String scope, long scopePK) {
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {

@@ -103,6 +103,19 @@ public class FragmentServiceConfigurationDisplayContext {
 			isPropagateContributedFragmentChanges(_scope, _getScopePk());
 	}
 
+	public boolean showInfoMessage() throws Exception {
+		if (!Objects.equals(
+				_scope,
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue()) ||
+			_fragmentServiceManagedServiceFactory.hasScopedConfiguration(
+				_getScopePk())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private long _getScopePk() {
 		if (Objects.equals(
 				_scope,

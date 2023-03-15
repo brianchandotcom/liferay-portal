@@ -34,6 +34,9 @@ export default function useKeyboardNavigation({handleOpen, type}) {
 	const [element, setElement] = useState(null);
 	const [isTarget, setIsTarget] = useState(false);
 
+	const rtl =
+		Liferay.Language.direction?.[themeDisplay?.getLanguageId()] === 'rtl';
+
 	useEffect(() => {
 		const list = element?.closest('[role="menubar"]');
 		const listItem = element?.closest('li');
@@ -52,13 +55,23 @@ export default function useKeyboardNavigation({handleOpen, type}) {
 				return;
 			}
 
+			let nextCode = code;
+
+			if (rtl && code === ARROW_RIGHT_KEY_CODE) {
+				nextCode = ARROW_LEFT_KEY_CODE;
+			}
+
+			if (rtl && code === ARROW_LEFT_KEY_CODE) {
+				nextCode = ARROW_RIGHT_KEY_CODE;
+			}
+
 			event.preventDefault();
 
 			if (type === LIST_ITEM_TYPES.header) {
-				onHeaderKeyDown(element, code, handleOpen);
+				onHeaderKeyDown(element, nextCode, handleOpen);
 			}
 			else if (type === LIST_ITEM_TYPES.listItem) {
-				onListItemKeyDown(element, code);
+				onListItemKeyDown(element, nextCode);
 			}
 		},
 		true,

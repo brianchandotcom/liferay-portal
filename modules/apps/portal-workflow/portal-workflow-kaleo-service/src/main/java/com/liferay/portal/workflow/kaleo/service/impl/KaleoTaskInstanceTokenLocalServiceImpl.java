@@ -825,18 +825,8 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		return new BaseModelSearchResult<>(
 			(List<KaleoTaskInstanceToken>)TransformUtil.transformToList(
 				hits.getDocs(),
-				document -> {
-					KaleoTaskInstanceToken kaleoTaskInstanceToken =
-						kaleoTaskInstanceTokenPersistence.fetchByPrimaryKey(
-							GetterUtil.getLong(
-								document.get(Field.ENTRY_CLASS_PK)));
-
-					if (kaleoTaskInstanceToken == null) {
-						return null;
-					}
-
-					return kaleoTaskInstanceToken;
-				}),
+				document -> kaleoTaskInstanceTokenPersistence.fetchByPrimaryKey(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			hits.getLength());
 	}
 

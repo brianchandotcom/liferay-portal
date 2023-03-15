@@ -396,18 +396,8 @@ public class KaleoInstanceLocalServiceImpl
 		return new BaseModelSearchResult<>(
 			(List<KaleoInstance>)TransformUtil.transformToList(
 				hits.getDocs(),
-				document -> {
-					KaleoInstance kaleoInstance =
-						kaleoInstancePersistence.fetchByPrimaryKey(
-							GetterUtil.getLong(
-								document.get(Field.ENTRY_CLASS_PK)));
-
-					if (kaleoInstance == null) {
-						return null;
-					}
-
-					return kaleoInstance;
-				}),
+				document -> kaleoInstancePersistence.fetchByPrimaryKey(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			hits.getLength());
 	}
 

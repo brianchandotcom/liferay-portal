@@ -613,16 +613,8 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 
 			return TransformUtil.transformToList(
 				hits.getDocs(),
-				document -> {
-					KaleoLog kaleoLog = kaleoLogPersistence.fetchByPrimaryKey(
-						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
-
-					if (kaleoLog == null) {
-						return null;
-					}
-
-					return kaleoLog;
-				});
+				document -> kaleoLogPersistence.fetchByPrimaryKey(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

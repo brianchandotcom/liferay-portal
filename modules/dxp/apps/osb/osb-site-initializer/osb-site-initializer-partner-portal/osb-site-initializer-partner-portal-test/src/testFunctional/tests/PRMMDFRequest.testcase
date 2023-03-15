@@ -15,6 +15,10 @@ definition {
 			User.firstLoginPG();
 		}
 
+		task ("Create a new Partner Portal Site") {
+				PRMUtils.addPRMSite();
+		}
+
 		task ("Add a partner user") {
 			JSONUser.addUser(
 				userEmailAddress = "partner@liferay.com",
@@ -76,6 +80,10 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
 			JSONGroup.deleteGroupByName(groupName = "Partner Portal");
 
 			Account.tearDownCP();

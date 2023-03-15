@@ -44,13 +44,17 @@
 	}
 
 	&__item {
-		&.cursor-pointer:hover {
-			.header-title {
-				text-decoration: underline;
-			}
+		color: $color-black;
+		text-decoration: none;
+
+		small {
+			cursor: default;
 		}
 
 		&__title:not(:last-child) {
+			&:hover {
+				text-decoration: underline;
+			}
 			display: flex;
 			flex-direction: column;
 			max-width: 250px;

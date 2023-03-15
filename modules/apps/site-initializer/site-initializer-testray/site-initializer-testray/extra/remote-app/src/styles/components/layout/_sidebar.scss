@@ -102,7 +102,7 @@ $normal-transition: all 0.3s ease;
 				cursor: pointer;
 				display: flex;
 				flex-direction: row;
-				flex-flow: nowrap;
+				flex-wrap: nowrap;
 				overflow: hidden;
 				padding: 8px 20px;
 
@@ -191,7 +191,7 @@ $normal-transition: all 0.3s ease;
 		&__title {
 			align-items: center;
 			display: flex;
-			margin: 20px 20px 40px 20px;
+			margin: 20px 20px 40px;
 
 			&__logo {
 				transition: $normal-transition;

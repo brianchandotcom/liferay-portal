@@ -17,7 +17,7 @@ import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
 import {useContext} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Permission from '~/core/Permission';
 
 import {HeaderContext} from '../../context/HeaderContext';
@@ -91,20 +91,18 @@ const Header = () => {
 							const isClickable =
 								header.path && index !== heading.length - 1;
 
+							const Component =
+								isClickable && header.path
+									? Link
+									: (props: any) => <span {...props} />;
+
 							return (
-								<span
+								<Component
 									className={classNames(
-										'tr-header-container__item',
-										{
-											'cursor-pointer': isClickable,
-										}
+										'tr-header-container__item'
 									)}
 									key={index}
-									onClick={() => {
-										if (isClickable && header.path) {
-											navigate(header.path);
-										}
-									}}
+									to={header.path as string}
 								>
 									<small className="pr-2 text-paragraph-xs text-secondary">
 										{header.category ? (
@@ -127,7 +125,7 @@ const Header = () => {
 												<Divider />
 											)}
 									</div>
-								</span>
+								</Component>
 							);
 						})}
 					</div>

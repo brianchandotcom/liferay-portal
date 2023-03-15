@@ -362,7 +362,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		for (var searchTerm : list ""Blogs","Blogs Entry Content"") {
+		for (var searchTerm : list "\"Blogs\",\"Blogs Entry Content\"") {
 			Navigator.gotoPage(pageName = "Search Page");
 
 			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
@@ -373,7 +373,7 @@ definition {
 				searchTerm = ${searchTerm});
 		}
 
-		for (var searchTerm : list ""Blogs1","Blogs1 Entry1 Content1"") {
+		for (var searchTerm : list "\"Blogs1\",\"Blogs1 Entry1 Content1\"") {
 			Navigator.gotoPage(pageName = "Search Page");
 
 			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
@@ -396,7 +396,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		for (var searchTerm : list ""Blogs","Blogs Entry Title"") {
+		for (var searchTerm : list "\"Blogs\",\"Blogs Entry Title\"") {
 			Navigator.gotoPage(pageName = "Search Page");
 
 			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
@@ -407,7 +407,7 @@ definition {
 				searchTerm = ${searchTerm});
 		}
 
-		for (var searchTerm : list ""Blogs1","Blogs Entry Title1"") {
+		for (var searchTerm : list "\"Blogs1\",\"Blogs Entry Title1\"") {
 			Navigator.gotoPage(pageName = "Search Page");
 
 			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});

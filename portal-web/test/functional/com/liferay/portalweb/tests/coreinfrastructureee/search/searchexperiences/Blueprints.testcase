@@ -35,9 +35,29 @@ definition {
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
 
+		for (var element : list "Boost All Keywords Match,Paste Any Elasticsearch Query,Boost Asset Type,Filter by Exact Terms Match,Hide Comments") {
+			Type.sendKeysApplicationSearch(
+				locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_BAR",
+				value1 = ${element});
+
+			AssertElementPresent(
+				element = ${element},
+				locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_NAME");
+
+			Click.clickNoMouseOver(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_CLEAR");
+		}
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "Test");
+
 		PortletEntry.save();
 
 		Blueprints.viewEntryTitle(title = "Test Blueprint");
+
+		AssertJavaScriptErrors();
 	}
 
 	test AddBlueprintWithDescription {

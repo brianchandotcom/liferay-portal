@@ -1086,8 +1086,8 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testEnableAccountEntryRestricted() throws Exception {
 
-		// Creating an account restriction between AccountEntry
-		// and an object definition
+		// Enabling account restriction between AccountEntry
+		// and a custom object definition
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
@@ -1116,8 +1116,8 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(objectDefinition2.isAccountEntryRestricted());
 		Assert.assertFalse(objectDefinition2.isSystem());
 
-		// Negative test - trying to create an account restriction between two
-		// custom objects
+		// Negative test - trying to enable account restriction between two
+		// custom object definitions
 
 		ObjectDefinition objectDefinition3 =
 			_objectDefinitionLocalService.addObjectDefinition(

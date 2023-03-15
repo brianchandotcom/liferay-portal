@@ -77,7 +77,12 @@ public class YAMLUtil {
 
 		propertyUtils.setSkipMissingProperties(true);
 
-		Constructor configYAMLConstructor = new Constructor(ConfigYAML.class);
+		LoaderOptions loaderOptions = new LoaderOptions();
+
+		loaderOptions.setAllowDuplicateKeys(false);
+
+		Constructor configYAMLConstructor = new Constructor(
+			ConfigYAML.class, loaderOptions);
 
 		TypeDescription securityTypeDescription = new TypeDescription(
 			Security.class);
@@ -87,15 +92,12 @@ public class YAMLUtil {
 
 		configYAMLConstructor.addTypeDescription(securityTypeDescription);
 
-		LoaderOptions loaderOptions = new LoaderOptions();
-
-		loaderOptions.setAllowDuplicateKeys(false);
-
 		_YAML_CONFIG = new Yaml(
 			configYAMLConstructor, representer, new DumperOptions(),
 			loaderOptions);
 
-		Constructor openAPIYAMLConstructor = new Constructor(OpenAPIYAML.class);
+		Constructor openAPIYAMLConstructor = new Constructor(
+			OpenAPIYAML.class, loaderOptions);
 
 		TypeDescription itemsTypeDescription = new TypeDescription(Items.class);
 

@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsStateManagerDisplayContext;
 import com.liferay.portal.kernel.language.Language;
@@ -86,7 +87,8 @@ public class ObjectDefinitionsStatesScreenNavigationCategory
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsStateManagerDisplayContext(
 				httpServletRequest, _listTypeDefinitionService,
-				_objectDefinitionModelResourcePermission));
+				_objectDefinitionModelResourcePermission,
+				_objectFieldSettingLocalService));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
@@ -102,5 +104,8 @@ public class ObjectDefinitionsStatesScreenNavigationCategory
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+
+	@Reference
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 }

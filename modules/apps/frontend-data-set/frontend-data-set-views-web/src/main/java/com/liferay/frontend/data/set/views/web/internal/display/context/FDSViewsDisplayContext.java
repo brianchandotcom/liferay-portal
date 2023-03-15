@@ -70,6 +70,30 @@ public class FDSViewsDisplayContext {
 		).buildString();
 	}
 
+	public String getFDSViewsURL(String fdsEntryId, String fdsEntryLabel) {
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_portletRequest, FDSViewsPortletKeys.FDS_VIEWS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/fds_views.jsp"
+		).setParameter(
+			"fdsEntryId", fdsEntryId
+		).setParameter(
+			"fdsEntryLabel", fdsEntryLabel
+		).buildString();
+	}
+
+	public String getFDSViewURL() {
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_portletRequest, FDSViewsPortletKeys.FDS_VIEWS,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/fds_view.jsp"
+		).buildString();
+	}
+
 	public JSONArray getHeadlessResourcesJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

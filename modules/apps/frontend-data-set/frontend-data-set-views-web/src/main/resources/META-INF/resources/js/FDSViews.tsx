@@ -17,16 +17,24 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {fetch, openModal} from 'frontend-js-web';
+import {fetch, navigate, openModal} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import '../css/FDSEntries.scss';
-import {PAGINATION_PROPS} from './Constants';
+import {OBJECT_RELATIONSHIP, PAGINATION_PROPS} from './Constants';
 import RequiredMark from './RequiredMark';
+
+export type TFDSView = {
+	description: string;
+	id: string;
+	label: string;
+};
 
 interface IFDSViewsProps {
 	fdsEntriesAPIURL: string;
 	fdsEntryId: string;
+	fdsEntryLabel: string;
+	fdsViewURL: string;
 	fdsViewsAPIURL: string;
 	namespace: string;
 }
@@ -34,6 +42,8 @@ interface IFDSViewsProps {
 const FDSViews = ({
 	fdsEntriesAPIURL,
 	fdsEntryId,
+	fdsEntryLabel,
+	fdsViewURL,
 	fdsViewsAPIURL,
 	namespace,
 }: IFDSViewsProps) => {
@@ -55,7 +65,7 @@ const FDSViews = ({
 			const body = {
 				description: fdsViewDescriptionRef.current?.value,
 				label: fdsViewLabelRef.current?.value,
-				r_fdsViews_c_fdsEntryId: fdsEntryId,
+				r_fdsEntryFDSViewRelationship_c_fdsEntryId: fdsEntryId,
 				symbol: 'catalog',
 			};
 
@@ -185,6 +195,17 @@ const FDSViews = ({
 		);
 	};
 
+	const onViewClick = ({itemData}: {itemData: TFDSView}) => {
+		const url = new URL(fdsViewURL);
+
+		url.searchParams.set(`${namespace}fdsEntryId`, fdsEntryId);
+		url.searchParams.set(`${namespace}fdsEntryLabel`, fdsEntryLabel);
+		url.searchParams.set(`${namespace}fdsViewId`, itemData.id);
+		url.searchParams.set(`${namespace}fdsViewLabel`, itemData.label);
+
+		navigate(url);
+	};
+
 	const creationMenu = {
 		primaryItems: [
 			{
@@ -221,9 +242,16 @@ const FDSViews = ({
 
 	return (
 		<FrontendDataSet
-			apiURL={`${fdsEntriesAPIURL}/${fdsEntryId}/fdsViews`}
+			apiURL={`${fdsEntriesAPIURL}/${fdsEntryId}/${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
 			creationMenu={creationMenu}
 			id={`${namespace}FDSViews`}
+			itemsActions={[
+				{
+					icon: 'view',
+					label: Liferay.Language.get('view'),
+					onClick: onViewClick,
+				},
+			]}
 			style="fluid"
 			views={views}
 			{...PAGINATION_PROPS}

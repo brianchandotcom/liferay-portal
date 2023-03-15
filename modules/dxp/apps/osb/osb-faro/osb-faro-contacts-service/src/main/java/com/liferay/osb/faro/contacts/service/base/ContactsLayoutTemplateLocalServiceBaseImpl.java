@@ -18,7 +18,8 @@ import com.liferay.osb.faro.contacts.model.ContactsLayoutTemplate;
 import com.liferay.osb.faro.contacts.service.ContactsLayoutTemplateLocalService;
 import com.liferay.osb.faro.contacts.service.ContactsLayoutTemplateLocalServiceUtil;
 import com.liferay.osb.faro.contacts.service.persistence.ContactsLayoutTemplatePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -38,12 +39,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -52,6 +52,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the contacts layout template local service.
@@ -66,7 +69,8 @@ import javax.sql.DataSource;
  */
 public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements ContactsLayoutTemplateLocalService, IdentifiableOSGiService {
+	implements AopService, ContactsLayoutTemplateLocalService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -146,6 +150,18 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 		ContactsLayoutTemplate contactsLayoutTemplate) {
 
 		return contactsLayoutTemplatePersistence.remove(contactsLayoutTemplate);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return contactsLayoutTemplatePersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -312,13 +328,30 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 	 * @throws PortalException
 	 */
 	@Override
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return contactsLayoutTemplatePersistence.create(
+			((Long)primaryKeyObj).longValue());
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Implement ContactsLayoutTemplateLocalServiceImpl#deleteContactsLayoutTemplate(ContactsLayoutTemplate) to avoid orphaned data");
+		}
 
 		return contactsLayoutTemplateLocalService.deleteContactsLayoutTemplate(
 			(ContactsLayoutTemplate)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<ContactsLayoutTemplate> getBasePersistence() {
 		return contactsLayoutTemplatePersistence;
 	}
@@ -380,88 +413,25 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 		return contactsLayoutTemplatePersistence.update(contactsLayoutTemplate);
 	}
 
-	/**
-	 * Returns the contacts layout template local service.
-	 *
-	 * @return the contacts layout template local service
-	 */
-	public ContactsLayoutTemplateLocalService
-		getContactsLayoutTemplateLocalService() {
-
-		return contactsLayoutTemplateLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the contacts layout template local service.
-	 *
-	 * @param contactsLayoutTemplateLocalService the contacts layout template local service
-	 */
-	public void setContactsLayoutTemplateLocalService(
-		ContactsLayoutTemplateLocalService contactsLayoutTemplateLocalService) {
-
-		this.contactsLayoutTemplateLocalService =
-			contactsLayoutTemplateLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			ContactsLayoutTemplateLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the contacts layout template persistence.
-	 *
-	 * @return the contacts layout template persistence
-	 */
-	public ContactsLayoutTemplatePersistence
-		getContactsLayoutTemplatePersistence() {
-
-		return contactsLayoutTemplatePersistence;
-	}
-
-	/**
-	 * Sets the contacts layout template persistence.
-	 *
-	 * @param contactsLayoutTemplatePersistence the contacts layout template persistence
-	 */
-	public void setContactsLayoutTemplatePersistence(
-		ContactsLayoutTemplatePersistence contactsLayoutTemplatePersistence) {
-
-		this.contactsLayoutTemplatePersistence =
-			contactsLayoutTemplatePersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.osb.faro.contacts.model.ContactsLayoutTemplate",
-			contactsLayoutTemplateLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		contactsLayoutTemplateLocalService =
+			(ContactsLayoutTemplateLocalService)aopProxy;
 
 		_setLocalServiceUtilService(contactsLayoutTemplateLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.osb.faro.contacts.model.ContactsLayoutTemplate");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -524,25 +494,18 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = ContactsLayoutTemplateLocalService.class)
 	protected ContactsLayoutTemplateLocalService
 		contactsLayoutTemplateLocalService;
 
-	@BeanReference(type = ContactsLayoutTemplatePersistence.class)
+	@Reference
 	protected ContactsLayoutTemplatePersistence
 		contactsLayoutTemplatePersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContactsLayoutTemplateLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

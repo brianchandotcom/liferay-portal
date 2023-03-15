@@ -16,7 +16,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a use case for LPS-120693."
+	@description = "This is a use case for LPS-120693. View styles of Container after upgrade."
 	@priority = 3
 	test ConfigureContainerStylesAfterUpgrade721 {
 		property data.archive.type = "data-archive-section-with-fragments";
@@ -134,7 +134,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-120693."
+	@description = "This is a use case for LPS-120693. View styles of Container after upgrade."
 	@priority = 3
 	test ConfigureContainerStylesAfterUpgrade735 {
 		property data.archive.type = "data-archive-container-with-fragments";
@@ -240,7 +240,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-120693."
+	@description = "This is a use case for LPS-120693. View styles of Container after upgrade."
 	@priority = 3
 	test ConfigureContainerStylesAfterUpgrade72104 {
 		property data.archive.type = "data-archive-section-with-fragments";
@@ -358,7 +358,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-120693."
+	@description = "This is a use case for LPS-120693. View styles of Container after upgrade."
 	@priority = 3
 	test ConfigureContainerStylesAfterUpgrade73101 {
 		property data.archive.type = "data-archive-container-with-fragments";

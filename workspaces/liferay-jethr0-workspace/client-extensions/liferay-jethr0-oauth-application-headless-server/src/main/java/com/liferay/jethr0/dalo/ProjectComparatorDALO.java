@@ -14,17 +14,15 @@
 
 package com.liferay.jethr0.dalo;
 
-import com.liferay.jethr0.project.comparator.FIFOProjectComparator;
-import com.liferay.jethr0.project.comparator.PriorityProjectComparator;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
+import com.liferay.jethr0.project.comparator.ProjectComparatorFactory;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
-import com.liferay.jethr0.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -37,9 +35,9 @@ public class ProjectComparatorDALO extends BaseDALO {
 		ProjectPrioritizer projectPrioritizer, int position,
 		ProjectComparator.Type type, String value) {
 
-		JSONObject jsonObject = new JSONObject();
+		JSONObject requestJSONObject = new JSONObject();
 
-		jsonObject.put(
+		requestJSONObject.put(
 			"position", position
 		).put(
 			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId",
@@ -50,7 +48,14 @@ public class ProjectComparatorDALO extends BaseDALO {
 			"value", value
 		);
 
-		return _newProjectComparator(projectPrioritizer, create(jsonObject));
+		JSONObject responseJSONObject = create(requestJSONObject);
+
+		if (responseJSONObject == null) {
+			throw new RuntimeException("No response");
+		}
+
+		return ProjectComparatorFactory.newProjectComparator(
+			projectPrioritizer, responseJSONObject);
 	}
 
 	public void deleteProjectComparator(ProjectComparator projectComparator) {
@@ -64,53 +69,29 @@ public class ProjectComparatorDALO extends BaseDALO {
 		projectPrioritizer.removeProjectComparator(projectComparator);
 
 		delete(projectComparator.getId());
-	}
 
-	public List<ProjectComparator> retrieveProjectComparators(
-		ProjectPrioritizer projectPrioritizer) {
-
-		List<ProjectComparator> projectComparators = new ArrayList<>();
-
-		String objectURLPath = StringUtil.combine(
-			"/o/c/projectprioritizers/", projectPrioritizer.getId(),
-			"/projectPrioritizerToProjectComparators");
-
-		for (JSONObject jsonObject : retrieve(objectURLPath)) {
-			projectComparators.add(
-				_newProjectComparator(projectPrioritizer, jsonObject));
-		}
-
-		return projectComparators;
+		ProjectComparatorFactory.removeProjectComparator(projectComparator);
 	}
 
 	public ProjectComparator updateProjectComparator(
 		ProjectComparator projectComparator) {
 
-		update(projectComparator.getJSONObject());
+		JSONObject responseJSONObject = update(
+			projectComparator.getJSONObject());
+
+		if (responseJSONObject == null) {
+			throw new RuntimeException("No response");
+		}
 
 		return projectComparator;
 	}
 
 	@Override
-	protected String getObjectDefinitionName() {
+	protected String getObjectDefinitionLabel() {
 		return "Project Comparator";
 	}
 
-	private ProjectComparator _newProjectComparator(
-		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
-
-		ProjectComparator.Type type = ProjectComparator.Type.get(
-			jsonObject.getJSONObject("type"));
-
-		if (type == ProjectComparator.Type.FIFO) {
-			return new FIFOProjectComparator(projectPrioritizer, jsonObject);
-		}
-		else if (type == ProjectComparator.Type.PROJECT_PRIORITY) {
-			return new PriorityProjectComparator(
-				projectPrioritizer, jsonObject);
-		}
-
-		throw new UnsupportedOperationException();
-	}
+	@Autowired
+	private ProjectPrioritizerComparatorDALO _projectPrioritizerComparatorDALO;
 
 }

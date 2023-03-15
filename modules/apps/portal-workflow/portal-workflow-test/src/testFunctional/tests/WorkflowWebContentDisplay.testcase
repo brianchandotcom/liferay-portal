@@ -23,16 +23,15 @@ definition {
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page");
 
-		PagesAdmin.addPage(pageName = "Web Content Display Page");
-
-		Navigator.gotoPage(pageName = "Web Content Display Page");
-
-		Portlet.addPG(portletName = "Web Content Display");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
 	}
 
 	tearDown {

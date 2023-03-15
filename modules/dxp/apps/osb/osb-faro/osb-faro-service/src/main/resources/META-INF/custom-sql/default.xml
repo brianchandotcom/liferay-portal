@@ -45,10 +45,10 @@
 			FROM
 				OSBFaro_FaroProject
 			INNER JOIN
-				OSBFaro_FaroProjectEmailAddressDomain ON
-					OSBFaro_FaroProjectEmailAddressDomain.groupId = OSBFaro_FaroProject.groupId
+				OSBFaro_FaroProjectEmailDomain ON
+					OSBFaro_FaroProjectEmailDomain.groupId = OSBFaro_FaroProject.groupId
 			WHERE
-				LOWER(OSBFaro_FaroProjectEmailAddressDomain.emailAddressDomain) = ?
+				LOWER(OSBFaro_FaroProjectEmailDomain.emailAddressDomain) = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.osb.faro.service.persistence.FaroUserFinder.countByChannelG_EA_EA_FN_LN">

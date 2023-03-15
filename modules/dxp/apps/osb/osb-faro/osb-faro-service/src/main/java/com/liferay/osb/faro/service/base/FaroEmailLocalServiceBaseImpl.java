@@ -16,7 +16,7 @@ package com.liferay.osb.faro.service.base;
 
 import com.liferay.osb.faro.service.FaroEmailLocalService;
 import com.liferay.osb.faro.service.FaroEmailLocalServiceUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the faro email local service.
@@ -47,63 +49,30 @@ import javax.sql.DataSource;
  */
 public abstract class FaroEmailLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements FaroEmailLocalService, IdentifiableOSGiService {
+	implements AopService, FaroEmailLocalService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>FaroEmailLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FaroEmailLocalServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the faro email local service.
-	 *
-	 * @return the faro email local service
-	 */
-	public FaroEmailLocalService getFaroEmailLocalService() {
-		return faroEmailLocalService;
-	}
-
-	/**
-	 * Sets the faro email local service.
-	 *
-	 * @param faroEmailLocalService the faro email local service
-	 */
-	public void setFaroEmailLocalService(
-		FaroEmailLocalService faroEmailLocalService) {
-
-		this.faroEmailLocalService = faroEmailLocalService;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setLocalServiceUtilService(faroEmailLocalService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setLocalServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			FaroEmailLocalService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		faroEmailLocalService = (FaroEmailLocalService)aopProxy;
+
+		_setLocalServiceUtilService(faroEmailLocalService);
 	}
 
 	/**
@@ -156,12 +125,9 @@ public abstract class FaroEmailLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = FaroEmailLocalService.class)
 	protected FaroEmailLocalService faroEmailLocalService;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

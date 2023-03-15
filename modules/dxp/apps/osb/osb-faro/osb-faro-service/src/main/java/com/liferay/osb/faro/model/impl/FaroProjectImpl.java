@@ -30,9 +30,6 @@ import java.net.InetAddress;
  */
 public class FaroProjectImpl extends FaroProjectBaseImpl {
 
-	public FaroProjectImpl() {
-	}
-
 	@Override
 	public String getProjectId() {
 		return StringUtil.removeSubstring(getWeDeployKey(), ".lfr.cloud");
@@ -56,7 +53,7 @@ public class FaroProjectImpl extends FaroProjectBaseImpl {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 		}
 
@@ -79,6 +76,8 @@ public class FaroProjectImpl extends FaroProjectBaseImpl {
 			return false;
 		}
 		catch (Exception exception) {
+			_log.error(exception);
+
 			return true;
 		}
 	}

@@ -1,7 +1,0 @@
-- safe: 2a6909965296498a57ce78eb77f7fb2ee2b8ff2a osb-faro-web/src/main/java/com/liferay/osb/faro/web/internal/util/comparator/FaroUserComparator.java
-- safe: 94afcd2efa75f02b347660b73a6f104b83ce4772 osb-faro-web/src/main/java/com/liferay/osb/faro/web/internal/util/comparator/FaroChannelComparator.java
-- safe: b7e52eab1b955695a42e48b8ae9081f520fd11bd  osb-faro-web/src/main/java/com/liferay/osb/faro/web/internal/util/comparator/ContactsCardTemplateNameComparator.java
--- whitelist getOrderBy() and review & update any existing comparators
-com/liferay/osb/faro/service/persistence/impl/FaroUserFinderImpl.getStatuses(Ljava/util/List;)Ljava/lang/String;:SAFE
-com/liferay/portal/kernel/util/OrderByComparator.getOrderBy()Ljava/lang/String;:SAFE
-com/liferay/portal/kernel/util/StringUtil.quote(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1

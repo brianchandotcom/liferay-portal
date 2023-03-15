@@ -140,10 +140,6 @@ public interface CompanyLocalService
 	 * @param mx the company's mail domain
 	 * @return the company with the web domain and mail domain
 	 */
-	@Transactional(
-		isolation = Isolation.PORTAL,
-		rollbackFor = {PortalException.class, SystemException.class}
-	)
 	public Company checkCompany(String webId, String mx) throws PortalException;
 
 	/**

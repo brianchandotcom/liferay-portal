@@ -144,9 +144,7 @@ public class BatchEngineBundleTracker {
 		File batchMarkerFile = bundle.getDataFile(
 			".liferay-client-extension-batch");
 
-		if ((batchMarkerFile != null) && batchMarkerFile.exists() &&
-			(batchMarkerFile.lastModified() == bundle.getLastModified())) {
-
+		if ((batchMarkerFile != null) && batchMarkerFile.exists()) {
 			return true;
 		}
 
@@ -154,8 +152,6 @@ public class BatchEngineBundleTracker {
 			if (!batchMarkerFile.exists()) {
 				batchMarkerFile.createNewFile();
 			}
-
-			batchMarkerFile.setLastModified(bundle.getLastModified());
 		}
 		catch (IOException ioException) {
 			ReflectionUtil.throwException(ioException);

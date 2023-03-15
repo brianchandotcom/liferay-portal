@@ -31,7 +31,9 @@ definition {
 	}
 
 	macro configureMailServerSettings {
-		Navigator.gotoNavItem(navItem = "Mail");
+		if (IsElementPresent(key_navItem = "Mail", locator1 = "NavBar#NAV_ITEM_LINK")) {
+			Navigator.gotoNavItem(navItem = "Mail");
+		}
 
 		Type(
 			locator1 = "ServerAdministrationMail#INCOMING_POP_SERVER",

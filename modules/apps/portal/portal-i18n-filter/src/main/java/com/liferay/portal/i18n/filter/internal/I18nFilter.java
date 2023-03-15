@@ -406,7 +406,7 @@ public class I18nFilter extends BasePortalFilter {
 
 	private boolean _isPermanentRedirect(long companyId) {
 		if (Objects.equals(
-				_friendlyURLRedirectionConfigurationHelper.redirectionType(
+				_friendlyURLRedirectionConfigurationHelper.getRedirectionType(
 					companyId),
 				"permanent")) {
 

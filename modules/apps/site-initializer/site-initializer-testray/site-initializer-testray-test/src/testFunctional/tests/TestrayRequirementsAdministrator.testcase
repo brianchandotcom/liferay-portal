@@ -101,7 +101,7 @@ definition {
 				componentName = "Component Edited",
 				projectName = ${projectName},
 				teamName = "Team 2");
-			
+
 			JSONTestray.addRequirement(
 				componentName = ${componentName},
 				linkTitle = "The front page of the internet",

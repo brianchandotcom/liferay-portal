@@ -112,12 +112,18 @@ public class OAuth2AuthorizationLocalServiceImpl
 			purgeDate.getTime() -
 				_expiredAuthorizationsAfterlifeDurationMillis);
 
-		for (OAuth2Authorization oAuth2Authorization :
-				oAuth2AuthorizationFinder.findByPurgeDate(
-					purgeDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+		Collection<OAuth2Authorization> oAuth2Authorizations = null;
 
-			oAuth2AuthorizationPersistence.remove(oAuth2Authorization);
+		do {
+			oAuth2Authorizations = oAuth2AuthorizationFinder.findByPurgeDate(
+				purgeDate, QueryUtil.ALL_POS,
+				_expiredAuthorizationsProcessingBatchSize);
+
+			oAuth2Authorizations.forEach(
+				oAuth2AuthorizationPersistence::remove);
 		}
+		while ((_expiredAuthorizationsProcessingBatchSize > -1) &&
+			   !oAuth2Authorizations.isEmpty());
 	}
 
 	@Override
@@ -273,8 +279,13 @@ public class OAuth2AuthorizationLocalServiceImpl
 
 		_expiredAuthorizationsAfterlifeDurationMillis =
 			expiredAuthorizationsAfterlifeDuration * Time.SECOND;
+
+		_expiredAuthorizationsProcessingBatchSize =
+			oAuth2ProviderConfiguration.
+				expiredAuthorizationsProcessingBatchSize();
 	}
 
 	private volatile long _expiredAuthorizationsAfterlifeDurationMillis;
+	private volatile int _expiredAuthorizationsProcessingBatchSize;
 
 }

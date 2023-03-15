@@ -58,7 +58,6 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 		%>
 
 		<c:if test="<%= !configurableSettings.isEmpty() %>">
-			<h2 class="h4"><liferay-ui:message key="settings" /></h2>
 
 			<%
 			LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();

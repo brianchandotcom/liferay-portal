@@ -82,7 +82,6 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 		%>
 
 		<c:if test="<%= !configurableSettings.isEmpty() %>">
-			<h2 class="h4"><liferay-ui:message key="settings" /></h2>
 
 			<%
 			ServletContext servletContext = ServletContextPool.get(selTheme.getServletContextName());

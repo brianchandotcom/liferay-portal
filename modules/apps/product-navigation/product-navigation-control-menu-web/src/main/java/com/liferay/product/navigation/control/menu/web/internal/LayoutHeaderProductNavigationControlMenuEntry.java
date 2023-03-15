@@ -96,13 +96,12 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		sb.append("data-qa-id=\"headerTitle\"><h1 class=\"");
 		sb.append("lfr-portal-tooltip h4 mb-0\" title=\"");
 
-		String headerTitle = HtmlUtil.escapeAttribute(
-			_getHeaderTitle(httpServletRequest));
+		String headerTitle = _getHeaderTitle(httpServletRequest);
 
-		sb.append(headerTitle);
+		sb.append(HtmlUtil.escapeAttribute(headerTitle));
 
 		sb.append("\">");
-		sb.append(headerTitle);
+		sb.append(HtmlUtil.escape(headerTitle));
 
 		if (_hasDraftLayout(httpServletRequest) &&
 			_hasEditPermission(httpServletRequest)) {

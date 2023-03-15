@@ -964,13 +964,13 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/card@3.89.0":
-  version "3.89.0"
-  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.89.0.tgz#f461977c72835b18f0c3389420c7b7beee281d1a"
-  integrity sha512-dbDMuPJ6WTqnCa9AUzwDEar40RD+BYH1hW8SdLb/Rj9yc58hv4lfOWeq+h5Xy8jcPBIieDxUvw6R5Q4rJ73kLA==
+"@clayui/card@3.90.0":
+  version "3.90.0"
+  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.90.0.tgz#6140e9d901b751d315deea47995d826f0b3d23b6"
+  integrity sha512-gDubJtRX2kuR04we46h73HYJlgvncsPpm0YVbnrI+gGHgitZtkB+9vChLvkWroZapiYORb0GjjOyErnFWsXq4A==
   dependencies:
     "@clayui/button" "^3.83.0"
-    "@clayui/drop-down" "^3.89.0"
+    "@clayui/drop-down" "^3.90.0"
     "@clayui/form" "^3.89.0"
     "@clayui/icon" "^3.56.0"
     "@clayui/label" "^3.88.0"
@@ -989,10 +989,10 @@
     classnames "^2.2.6"
     d3 "^5.9.2"
 
-"@clayui/core@^3.89.0":
-  version "3.89.0"
-  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.89.0.tgz#67669b5e23319f4925700cf39e5d052997cea592"
-  integrity sha512-hylNFBqdLu9KbVk6pv6N/zU8kClK52yGSU6TE8CcKxHiafYsYdz/JZhCmZcNAVMuF/chycapgtSQc+aCrO3epg==
+"@clayui/core@^3.90.0":
+  version "3.90.0"
+  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.90.0.tgz#907461ad42e9cf2a1fe539d842cb95c894ce80a6"
+  integrity sha512-vG0TkVIdTzFBBIJWoPyuyBi+InXfmX0Ry/yvuvvLcfDVM6/JKeAZj2w0RD5CmyY6UvIyy0r44srps/CdRvxOlw==
   dependencies:
     "@clayui/button" "^3.83.0"
     "@clayui/icon" "^3.56.0"
@@ -1009,13 +1009,13 @@
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/drop-down@^3.89.0":
-  version "3.89.0"
-  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.89.0.tgz#a53ccd9fb2b360518845ac029fcc257e9ec64bac"
-  integrity sha512-P0ILbCEO4KtjzQ60FUYa5iJ6GX8dVjOYGLMa83J0Vz57kvC5OSOPAsWah+ZgnuzwwNUW/4Lxf0jmceBLfQGzgw==
+"@clayui/drop-down@^3.90.0":
+  version "3.90.0"
+  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.90.0.tgz#f91a0a7f311adefde5de5ea48cabfed85fdc97ae"
+  integrity sha512-qRn9J+Ej2HX2DoBGHJxwiOQ6TiJKssMOcmhs4qolOF+2NswosJpJKV5Eox+PXmrCoQrvHhjWgTmXR0Je0wLZFw==
   dependencies:
     "@clayui/button" "^3.83.0"
-    "@clayui/core" "^3.89.0"
+    "@clayui/core" "^3.90.0"
     "@clayui/form" "^3.89.0"
     "@clayui/icon" "^3.56.0"
     "@clayui/link" "^3.88.0"

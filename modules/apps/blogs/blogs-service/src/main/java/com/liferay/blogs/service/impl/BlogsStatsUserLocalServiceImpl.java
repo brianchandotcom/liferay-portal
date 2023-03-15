@@ -63,8 +63,7 @@ public class BlogsStatsUserLocalServiceImpl
 		Predicate predicate = _companyIdAlias.eq(companyId);
 
 		return _getBlogsStatsUsers(
-			UnaryOperator.identity(),
-			predicate.and(_groupIdAlias.eq(groupId)),
+			UnaryOperator.identity(), predicate.and(_groupIdAlias.eq(groupId)),
 			_entryCountExpression.descending(), start, end);
 	}
 
@@ -99,8 +98,7 @@ public class BlogsStatsUserLocalServiceImpl
 		Predicate predicate = _groupIdAlias.eq(groupId);
 
 		List<BlogsStatsUser> blogsStatsUsers = _getBlogsStatsUsers(
-			UnaryOperator.identity(),
-			predicate.and(_userIdAlias.eq(userId)),
+			UnaryOperator.identity(), predicate.and(_userIdAlias.eq(userId)),
 			_groupIdExpression.descending(), 0, 1);
 
 		if (blogsStatsUsers.isEmpty()) {

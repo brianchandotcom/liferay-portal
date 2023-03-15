@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -66,7 +67,6 @@ import java.net.URLEncoder;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -457,57 +457,68 @@ public class FileEntryContentDashboardItemTest {
 				versionableContentDashboardItem.getSpecificInformationList(
 					LocaleUtil.getDefault());
 
-		Stream<ContentDashboardItem.SpecificInformation<?>> stream =
-			specificInformationList.stream();
-
 		ContentDashboardItem.SpecificInformation<?>
-			extensionSpecificInformation = stream.filter(
-				specificInformation -> Objects.equals(
-					specificInformation.getKey(), "extension")
-			).findFirst(
-			).orElseThrow(
-				() -> new AssertionError("extension not found")
-			);
+			extensionSpecificInformation = null;
+
+		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
+				specificInformationList) {
+
+			if (Objects.equals("extension", specificInformation.getKey())) {
+				extensionSpecificInformation = specificInformation;
+
+				break;
+			}
+		}
+
+		if (extensionSpecificInformation == null) {
+			throw new AssertionError("extension not found");
+		}
 
 		Assert.assertEquals("jpg", extensionSpecificInformation.getValue());
 
-		stream = specificInformationList.stream();
-
 		ContentDashboardItem.SpecificInformation<?> sizeSpecificInformation =
-			stream.filter(
-				specificInformation -> Objects.equals(
-					specificInformation.getKey(), "size")
-			).findFirst(
-			).orElseThrow(
-				() -> new AssertionError("size not found")
-			);
+			null;
+
+		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
+				specificInformationList) {
+
+			if (Objects.equals("size", specificInformation.getKey())) {
+				sizeSpecificInformation = specificInformation;
+
+				break;
+			}
+		}
+
+		if (sizeSpecificInformation == null) {
+			throw new AssertionError("size not found");
+		}
 
 		Assert.assertEquals("0 B", sizeSpecificInformation.getValue());
 
-		stream = specificInformationList.stream();
-
-		ContentDashboardItem.SpecificInformation<?>
-			fileNameSpecificInformation = stream.filter(
+		Assert.assertTrue(
+			ListUtil.exists(
+				specificInformationList,
 				specificInformation -> Objects.equals(
-					specificInformation.getKey(), "file-name")
-			).findFirst(
-			).orElseThrow(
-				() -> new AssertionError("file-name not found")
-			);
-
-		Assert.assertNotNull(fileNameSpecificInformation.getValue());
-
-		stream = specificInformationList.stream();
+					specificInformation.getKey(), "file-name")));
 
 		ContentDashboardItem.SpecificInformation<URL>
-			webDAVSpecificInformation =
-				(ContentDashboardItem.SpecificInformation<URL>)stream.filter(
-					specificInformation -> Objects.equals(
-						specificInformation.getKey(), "web-dav-url")
-				).findFirst(
-				).orElseThrow(
-					() -> new AssertionError("web-dav-url not found")
-				);
+			webDAVSpecificInformation = null;
+
+		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
+				specificInformationList) {
+
+			if (Objects.equals("web-dav-url", specificInformation.getKey())) {
+				webDAVSpecificInformation =
+					(ContentDashboardItem.SpecificInformation<URL>)
+						specificInformation;
+
+				break;
+			}
+		}
+
+		if (webDAVSpecificInformation == null) {
+			throw new AssertionError("web-dav-url not found");
+		}
 
 		String url = String.valueOf(webDAVSpecificInformation.getValue());
 

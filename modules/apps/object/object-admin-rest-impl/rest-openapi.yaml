@@ -163,6 +163,7 @@ components:
                     enum: [Aggregation, Attachment, Boolean, Date, Decimal, Formula, Integer, LongInteger, LongText, MultiselectPicklist, Picklist, PrecisionDecimal, Relationship, RichText, Text]
                     type: string
                 defaultValue:
+                    deprecated: true
                     type: string
                 externalReferenceCode:
                     type: string

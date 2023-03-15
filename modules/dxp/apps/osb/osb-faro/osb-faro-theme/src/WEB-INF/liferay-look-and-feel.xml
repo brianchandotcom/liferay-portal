@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE look-and-feel PUBLIC "-//Liferay//DTD Look and Feel 7.1.0//EN" "http://www.liferay.com/dtd/liferay-look-and-feel_7_1_0.dtd">
+<!DOCTYPE look-and-feel PUBLIC "-//Liferay//DTD Look and Feel 7.4.0//EN" "http://www.liferay.com/dtd/liferay-look-and-feel_7_4_0.dtd">
 
 <look-and-feel>
 	<compatibility>
-		<version>7.1.0+</version>
-		<version>7.1.10+</version>
+		<version>7.4.0+</version>
 	</compatibility>
-	<theme id="osb-faro" name="osb-faro">
+	<theme id="osb-faro-theme" name="OSB Faro Theme">
 		<template-extension>ftl</template-extension>
 	</theme>
 </look-and-feel>

@@ -913,7 +913,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	private boolean _isPermanentRedirect(long companyId) {
 		if (Objects.equals(
-				friendlyURLRedirectionConfigurationHelper.redirectionType(
+				friendlyURLRedirectionConfigurationHelper.getRedirectionType(
 					companyId),
 				"permanent")) {
 

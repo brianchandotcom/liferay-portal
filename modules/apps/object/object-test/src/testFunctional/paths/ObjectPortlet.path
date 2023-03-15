@@ -225,6 +225,11 @@
 		<td>//button[contains(@class,'btn-sorting') and contains(.,'${key_orderColumn}')]//*[contains(@class,'lexicon-icon-order')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>RELATIONSHIP_ENTRY_READ_ONLY</td>
+		<td>//div[contains(@class,'ddm-field')]//input[contains(@value, '${key_entry}') and @readonly]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

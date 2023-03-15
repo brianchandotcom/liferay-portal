@@ -27,9 +27,12 @@ import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
@@ -37,6 +40,8 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +53,10 @@ import java.util.Set;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -224,19 +232,58 @@ public class FragmentCollectionContributorRegistryImpl
 	@Reference
 	protected FragmentEntryValidator fragmentEntryValidator;
 
+	private Configuration _getFragmentServiceCompanyConfiguration(
+			long companyId)
+		throws ConfigurationException {
+
+		try {
+			String filterString = StringBundler.concat(
+				"(&(", ConfigurationAdmin.SERVICE_FACTORYPID, StringPool.EQUAL,
+				FragmentServiceConfiguration.class.getName(), ".scoped",
+				")(companyId=", companyId, "))");
+
+			Configuration[] configuration =
+				_configurationAdmin.listConfigurations(filterString);
+
+			if (configuration != null) {
+				return configuration[0];
+			}
+
+			return null;
+		}
+		catch (InvalidSyntaxException | IOException exception) {
+			throw new ConfigurationException(exception);
+		}
+	}
+
+	private boolean _isPropagateContributedFragmentChanges(long companyId)
+		throws ConfigurationException {
+
+		if (_getFragmentServiceCompanyConfiguration(companyId) != null) {
+			FragmentServiceConfiguration companyFragmentServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					FragmentServiceConfiguration.class, companyId);
+
+			return companyFragmentServiceConfiguration.
+				propagateContributedFragmentChanges();
+		}
+
+		FragmentServiceConfiguration systemFragmentServiceConfiguration =
+			ConfigurationProviderUtil.getSystemConfiguration(
+				FragmentServiceConfiguration.class);
+
+		return systemFragmentServiceConfiguration.
+			propagateContributedFragmentChanges();
+	}
+
 	private void _updateFragmentEntryLinks(
 		Map<String, FragmentEntry> fragmentEntries) {
 
 		_companyLocalService.forEachCompany(
 			company -> {
 				try {
-					FragmentServiceConfiguration fragmentServiceConfiguration =
-						ConfigurationProviderUtil.getCompanyConfiguration(
-							FragmentServiceConfiguration.class,
-							company.getCompanyId());
-
-					if (!fragmentServiceConfiguration.
-							propagateContributedFragmentChanges()) {
+					if (!_isPropagateContributedFragmentChanges(
+							company.getCompanyId())) {
 
 						PortletPreferences portletPreferences =
 							_portalPreferencesLocalService.getPreferences(
@@ -308,6 +355,9 @@ public class FragmentCollectionContributorRegistryImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

@@ -14,15 +14,12 @@
 
 package com.liferay.osb.faro.model;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
-import java.io.Serializable;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the FaroProject service. Represents a row in the &quot;OSBFaro_FaroProject&quot; database table, with each column mapped to a property of this class.
@@ -36,7 +33,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface FaroProjectModel extends BaseModel<FaroProject> {
+public interface FaroProjectModel
+	extends BaseModel<FaroProject>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +55,22 @@ public interface FaroProjectModel extends BaseModel<FaroProject> {
 	 * @param primaryKey the primary key of this faro project
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this faro project.
+	 *
+	 * @return the mvcc version of this faro project
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this faro project.
+	 *
+	 * @param mvccVersion the mvcc version of this faro project
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the faro project ID of this faro project.
@@ -85,6 +99,36 @@ public interface FaroProjectModel extends BaseModel<FaroProject> {
 	 * @param groupId the group ID of this faro project
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this faro project.
+	 *
+	 * @return the company ID of this faro project
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this faro project.
+	 *
+	 * @param companyId the company ID of this faro project
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the create time of this faro project.
+	 *
+	 * @return the create time of this faro project
+	 */
+	public long getCreateTime();
+
+	/**
+	 * Sets the create time of this faro project.
+	 *
+	 * @param createTime the create time of this faro project
+	 */
+	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the user ID of this faro project.
@@ -128,20 +172,6 @@ public interface FaroProjectModel extends BaseModel<FaroProject> {
 	 * @param userName the user name of this faro project
 	 */
 	public void setUserName(String userName);
-
-	/**
-	 * Returns the create time of this faro project.
-	 *
-	 * @return the create time of this faro project
-	 */
-	public long getCreateTime();
-
-	/**
-	 * Sets the create time of this faro project.
-	 *
-	 * @param createTime the create time of this faro project
-	 */
-	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the modified time of this faro project.
@@ -389,60 +419,10 @@ public interface FaroProjectModel extends BaseModel<FaroProject> {
 	public void setWeDeployKey(String weDeployKey);
 
 	@Override
-	public boolean isNew();
+	public FaroProject cloneWithOriginalValues();
 
-	@Override
-	public void setNew(boolean n);
-
-	@Override
-	public boolean isCachedModel();
-
-	@Override
-	public void setCachedModel(boolean cachedModel);
-
-	@Override
-	public boolean isEscapedModel();
-
-	@Override
-	public Serializable getPrimaryKeyObj();
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj);
-
-	@Override
-	public ExpandoBridge getExpandoBridge();
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
-
-	@Override
-	public Object clone();
-
-	@Override
-	public int compareTo(FaroProject faroProject);
-
-	@Override
-	public int hashCode();
-
-	@Override
-	public CacheModel<FaroProject> toCacheModel();
-
-	@Override
-	public FaroProject toEscapedModel();
-
-	@Override
-	public FaroProject toUnescapedModel();
-
-	@Override
-	public String toString();
-
-	@Override
-	public String toXmlString();
+	public default String toXmlString() {
+		return null;
+	}
 
 }

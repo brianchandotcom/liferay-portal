@@ -14,9 +14,8 @@
 
 package com.liferay.osb.faro.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.faro.model.FaroNotification;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -36,6 +35,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides the local service interface for FaroNotification. Methods of this
@@ -92,6 +93,12 @@ public interface FaroNotificationLocalService
 	public FaroNotification createFaroNotification(long faroNotificationId);
 
 	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
 	 * Deletes the faro notification from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -132,6 +139,12 @@ public interface FaroNotificationLocalService
 
 	public void deleteUnreadFaroNotifications(
 		long groupId, String type, String subtype, long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int dslQueryCount(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

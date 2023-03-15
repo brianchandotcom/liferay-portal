@@ -782,10 +782,6 @@ public class FaroProjectUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static FaroProjectPersistence getPersistence() {
 		return _persistence;
 	}

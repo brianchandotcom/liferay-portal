@@ -28,12 +28,12 @@ public class NoSuchFaroChannelException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchFaroChannelException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchFaroChannelException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchFaroChannelException(Throwable cause) {
-		super(cause);
+	public NoSuchFaroChannelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

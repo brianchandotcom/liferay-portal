@@ -27,6 +27,10 @@ public class FaroChannelLocalServiceWrapper
 	implements FaroChannelLocalService,
 			   ServiceWrapper<FaroChannelLocalService> {
 
+	public FaroChannelLocalServiceWrapper() {
+		this(null);
+	}
+
 	public FaroChannelLocalServiceWrapper(
 		FaroChannelLocalService faroChannelLocalService) {
 
@@ -94,6 +98,17 @@ public class FaroChannelLocalServiceWrapper
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _faroChannelLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the faro channel from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -156,6 +171,18 @@ public class FaroChannelLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _faroChannelLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _faroChannelLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _faroChannelLocalService.dslQueryCount(dslQuery);
 	}
 
 	@Override

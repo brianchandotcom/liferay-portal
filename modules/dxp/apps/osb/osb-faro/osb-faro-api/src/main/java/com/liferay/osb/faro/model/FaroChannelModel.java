@@ -14,15 +14,12 @@
 
 package com.liferay.osb.faro.model;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
-import java.io.Serializable;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the FaroChannel service. Represents a row in the &quot;OSBFaro_FaroChannel&quot; database table, with each column mapped to a property of this class.
@@ -36,7 +33,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface FaroChannelModel extends BaseModel<FaroChannel> {
+public interface FaroChannelModel
+	extends BaseModel<FaroChannel>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +55,22 @@ public interface FaroChannelModel extends BaseModel<FaroChannel> {
 	 * @param primaryKey the primary key of this faro channel
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this faro channel.
+	 *
+	 * @return the mvcc version of this faro channel
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this faro channel.
+	 *
+	 * @param mvccVersion the mvcc version of this faro channel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the faro channel ID of this faro channel.
@@ -85,6 +99,36 @@ public interface FaroChannelModel extends BaseModel<FaroChannel> {
 	 * @param groupId the group ID of this faro channel
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this faro channel.
+	 *
+	 * @return the company ID of this faro channel
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this faro channel.
+	 *
+	 * @param companyId the company ID of this faro channel
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the create time of this faro channel.
+	 *
+	 * @return the create time of this faro channel
+	 */
+	public long getCreateTime();
+
+	/**
+	 * Sets the create time of this faro channel.
+	 *
+	 * @param createTime the create time of this faro channel
+	 */
+	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the user ID of this faro channel.
@@ -128,20 +172,6 @@ public interface FaroChannelModel extends BaseModel<FaroChannel> {
 	 * @param userName the user name of this faro channel
 	 */
 	public void setUserName(String userName);
-
-	/**
-	 * Returns the create time of this faro channel.
-	 *
-	 * @return the create time of this faro channel
-	 */
-	public long getCreateTime();
-
-	/**
-	 * Sets the create time of this faro channel.
-	 *
-	 * @param createTime the create time of this faro channel
-	 */
-	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the modified time of this faro channel.
@@ -216,60 +246,10 @@ public interface FaroChannelModel extends BaseModel<FaroChannel> {
 	public void setWorkspaceGroupId(long workspaceGroupId);
 
 	@Override
-	public boolean isNew();
+	public FaroChannel cloneWithOriginalValues();
 
-	@Override
-	public void setNew(boolean n);
-
-	@Override
-	public boolean isCachedModel();
-
-	@Override
-	public void setCachedModel(boolean cachedModel);
-
-	@Override
-	public boolean isEscapedModel();
-
-	@Override
-	public Serializable getPrimaryKeyObj();
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj);
-
-	@Override
-	public ExpandoBridge getExpandoBridge();
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
-
-	@Override
-	public Object clone();
-
-	@Override
-	public int compareTo(FaroChannel faroChannel);
-
-	@Override
-	public int hashCode();
-
-	@Override
-	public CacheModel<FaroChannel> toCacheModel();
-
-	@Override
-	public FaroChannel toEscapedModel();
-
-	@Override
-	public FaroChannel toUnescapedModel();
-
-	@Override
-	public String toString();
-
-	@Override
-	public String toXmlString();
+	public default String toXmlString() {
+		return null;
+	}
 
 }

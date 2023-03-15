@@ -28,12 +28,12 @@ public class NoSuchFaroPreferencesException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchFaroPreferencesException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchFaroPreferencesException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchFaroPreferencesException(Throwable cause) {
-		super(cause);
+	public NoSuchFaroPreferencesException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

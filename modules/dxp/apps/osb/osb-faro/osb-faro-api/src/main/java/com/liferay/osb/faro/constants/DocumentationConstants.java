@@ -14,7 +14,8 @@
 
 package com.liferay.osb.faro.constants;
 
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.util.Map;
 
 /**
@@ -33,11 +34,10 @@ public class DocumentationConstants {
 	}
 
 	private static final Map<String, String> _urls =
-		new HashMap<String, String>() {
-			{
-				put("addLiferayDataSource", DATA_SOURCE_ADD_LIFERAY);
-				put("base", BASE_URL);
-			}
-		};
+		new HashMapBuilder<>().<String, String>put(
+			"addLiferayDataSource", DATA_SOURCE_ADD_LIFERAY
+		).put(
+			"base", BASE_URL
+		).build();
 
 }

@@ -14,15 +14,11 @@
 
 package com.liferay.osb.faro.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -34,31 +30,24 @@ import java.util.Objects;
  * @generated
  */
 public class FaroProjectWrapper
+	extends BaseModelWrapper<FaroProject>
 	implements FaroProject, ModelWrapper<FaroProject> {
 
 	public FaroProjectWrapper(FaroProject faroProject) {
-		_faroProject = faroProject;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return FaroProject.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return FaroProject.class.getName();
+		super(faroProject);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("faroProjectId", getFaroProjectId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("createTime", getCreateTime());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
-		attributes.put("createTime", getCreateTime());
 		attributes.put("modifiedTime", getModifiedTime());
 		attributes.put("name", getName());
 		attributes.put("accountKey", getAccountKey());
@@ -82,6 +71,12 @@ public class FaroProjectWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long faroProjectId = (Long)attributes.get("faroProjectId");
 
 		if (faroProjectId != null) {
@@ -94,6 +89,18 @@ public class FaroProjectWrapper
 			setGroupId(groupId);
 		}
 
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long createTime = (Long)attributes.get("createTime");
+
+		if (createTime != null) {
+			setCreateTime(createTime);
+		}
+
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
@@ -104,12 +111,6 @@ public class FaroProjectWrapper
 
 		if (userName != null) {
 			setUserName(userName);
-		}
-
-		Long createTime = (Long)attributes.get("createTime");
-
-		if (createTime != null) {
-			setCreateTime(createTime);
 		}
 
 		Long modifiedTime = (Long)attributes.get("modifiedTime");
@@ -212,13 +213,8 @@ public class FaroProjectWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new FaroProjectWrapper((FaroProject)_faroProject.clone());
-	}
-
-	@Override
-	public int compareTo(FaroProject faroProject) {
-		return _faroProject.compareTo(faroProject);
+	public FaroProject cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**
@@ -228,7 +224,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getAccountKey() {
-		return _faroProject.getAccountKey();
+		return model.getAccountKey();
 	}
 
 	/**
@@ -238,7 +234,17 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getAccountName() {
-		return _faroProject.getAccountName();
+		return model.getAccountName();
+	}
+
+	/**
+	 * Returns the company ID of this faro project.
+	 *
+	 * @return the company ID of this faro project
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -248,7 +254,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getCorpProjectName() {
-		return _faroProject.getCorpProjectName();
+		return model.getCorpProjectName();
 	}
 
 	/**
@@ -258,7 +264,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getCorpProjectUuid() {
-		return _faroProject.getCorpProjectUuid();
+		return model.getCorpProjectUuid();
 	}
 
 	/**
@@ -268,12 +274,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public long getCreateTime() {
-		return _faroProject.getCreateTime();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _faroProject.getExpandoBridge();
+		return model.getCreateTime();
 	}
 
 	/**
@@ -283,7 +284,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public long getFaroProjectId() {
-		return _faroProject.getFaroProjectId();
+		return model.getFaroProjectId();
 	}
 
 	/**
@@ -293,7 +294,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _faroProject.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -303,7 +304,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getIncidentReportEmailAddresses() {
-		return _faroProject.getIncidentReportEmailAddresses();
+		return model.getIncidentReportEmailAddresses();
 	}
 
 	/**
@@ -313,7 +314,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getIpAddresses() {
-		return _faroProject.getIpAddresses();
+		return model.getIpAddresses();
 	}
 
 	/**
@@ -323,7 +324,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public long getLastAccessTime() {
-		return _faroProject.getLastAccessTime();
+		return model.getLastAccessTime();
 	}
 
 	/**
@@ -333,7 +334,17 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public long getModifiedTime() {
-		return _faroProject.getModifiedTime();
+		return model.getModifiedTime();
+	}
+
+	/**
+	 * Returns the mvcc version of this faro project.
+	 *
+	 * @return the mvcc version of this faro project
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -343,7 +354,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getName() {
-		return _faroProject.getName();
+		return model.getName();
 	}
 
 	/**
@@ -353,17 +364,12 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _faroProject.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _faroProject.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public String getProjectId() {
-		return _faroProject.getProjectId();
+		return model.getProjectId();
 	}
 
 	/**
@@ -373,7 +379,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public boolean getRecommendationsEnabled() {
-		return _faroProject.getRecommendationsEnabled();
+		return model.getRecommendationsEnabled();
 	}
 
 	/**
@@ -383,7 +389,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getServerLocation() {
-		return _faroProject.getServerLocation();
+		return model.getServerLocation();
 	}
 
 	/**
@@ -393,7 +399,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getServices() {
-		return _faroProject.getServices();
+		return model.getServices();
 	}
 
 	/**
@@ -403,7 +409,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getState() {
-		return _faroProject.getState();
+		return model.getState();
 	}
 
 	/**
@@ -413,7 +419,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getSubscription() {
-		return _faroProject.getSubscription();
+		return model.getSubscription();
 	}
 
 	/**
@@ -423,7 +429,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getTimeZoneId() {
-		return _faroProject.getTimeZoneId();
+		return model.getTimeZoneId();
 	}
 
 	/**
@@ -433,7 +439,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _faroProject.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -443,7 +449,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _faroProject.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -453,7 +459,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _faroProject.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -463,32 +469,12 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public String getWeDeployKey() {
-		return _faroProject.getWeDeployKey();
-	}
-
-	@Override
-	public int hashCode() {
-		return _faroProject.hashCode();
+		return model.getWeDeployKey();
 	}
 
 	@Override
 	public boolean isAllowedIPAddress(String ipAddress) {
-		return _faroProject.isAllowedIPAddress(ipAddress);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _faroProject.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _faroProject.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _faroProject.isNew();
+		return model.isAllowedIPAddress(ipAddress);
 	}
 
 	/**
@@ -498,17 +484,17 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public boolean isRecommendationsEnabled() {
-		return _faroProject.isRecommendationsEnabled();
+		return model.isRecommendationsEnabled();
 	}
 
 	@Override
 	public boolean isTrial() {
-		return _faroProject.isTrial();
+		return model.isTrial();
 	}
 
 	@Override
 	public void persist() {
-		_faroProject.persist();
+		model.persist();
 	}
 
 	/**
@@ -518,7 +504,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setAccountKey(String accountKey) {
-		_faroProject.setAccountKey(accountKey);
+		model.setAccountKey(accountKey);
 	}
 
 	/**
@@ -528,12 +514,17 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setAccountName(String accountName) {
-		_faroProject.setAccountName(accountName);
+		model.setAccountName(accountName);
 	}
 
+	/**
+	 * Sets the company ID of this faro project.
+	 *
+	 * @param companyId the company ID of this faro project
+	 */
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_faroProject.setCachedModel(cachedModel);
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -543,7 +534,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setCorpProjectName(String corpProjectName) {
-		_faroProject.setCorpProjectName(corpProjectName);
+		model.setCorpProjectName(corpProjectName);
 	}
 
 	/**
@@ -553,7 +544,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setCorpProjectUuid(String corpProjectUuid) {
-		_faroProject.setCorpProjectUuid(corpProjectUuid);
+		model.setCorpProjectUuid(corpProjectUuid);
 	}
 
 	/**
@@ -563,24 +554,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setCreateTime(long createTime) {
-		_faroProject.setCreateTime(createTime);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_faroProject.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_faroProject.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_faroProject.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateTime(createTime);
 	}
 
 	/**
@@ -590,7 +564,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setFaroProjectId(long faroProjectId) {
-		_faroProject.setFaroProjectId(faroProjectId);
+		model.setFaroProjectId(faroProjectId);
 	}
 
 	/**
@@ -600,7 +574,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_faroProject.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -612,8 +586,7 @@ public class FaroProjectWrapper
 	public void setIncidentReportEmailAddresses(
 		String incidentReportEmailAddresses) {
 
-		_faroProject.setIncidentReportEmailAddresses(
-			incidentReportEmailAddresses);
+		model.setIncidentReportEmailAddresses(incidentReportEmailAddresses);
 	}
 
 	/**
@@ -623,7 +596,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setIpAddresses(String ipAddresses) {
-		_faroProject.setIpAddresses(ipAddresses);
+		model.setIpAddresses(ipAddresses);
 	}
 
 	/**
@@ -633,7 +606,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setLastAccessTime(long lastAccessTime) {
-		_faroProject.setLastAccessTime(lastAccessTime);
+		model.setLastAccessTime(lastAccessTime);
 	}
 
 	/**
@@ -643,7 +616,17 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setModifiedTime(long modifiedTime) {
-		_faroProject.setModifiedTime(modifiedTime);
+		model.setModifiedTime(modifiedTime);
+	}
+
+	/**
+	 * Sets the mvcc version of this faro project.
+	 *
+	 * @param mvccVersion the mvcc version of this faro project
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -653,12 +636,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_faroProject.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_faroProject.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -668,12 +646,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_faroProject.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_faroProject.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -683,7 +656,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setRecommendationsEnabled(boolean recommendationsEnabled) {
-		_faroProject.setRecommendationsEnabled(recommendationsEnabled);
+		model.setRecommendationsEnabled(recommendationsEnabled);
 	}
 
 	/**
@@ -693,7 +666,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setServerLocation(String serverLocation) {
-		_faroProject.setServerLocation(serverLocation);
+		model.setServerLocation(serverLocation);
 	}
 
 	/**
@@ -703,7 +676,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setServices(String services) {
-		_faroProject.setServices(services);
+		model.setServices(services);
 	}
 
 	/**
@@ -713,7 +686,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setState(String state) {
-		_faroProject.setState(state);
+		model.setState(state);
 	}
 
 	/**
@@ -723,7 +696,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setSubscription(String subscription) {
-		_faroProject.setSubscription(subscription);
+		model.setSubscription(subscription);
 	}
 
 	/**
@@ -733,7 +706,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setTimeZoneId(String timeZoneId) {
-		_faroProject.setTimeZoneId(timeZoneId);
+		model.setTimeZoneId(timeZoneId);
 	}
 
 	/**
@@ -743,7 +716,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_faroProject.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -753,7 +726,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_faroProject.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -763,7 +736,7 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_faroProject.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -773,75 +746,17 @@ public class FaroProjectWrapper
 	 */
 	@Override
 	public void setWeDeployKey(String weDeployKey) {
-		_faroProject.setWeDeployKey(weDeployKey);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<FaroProject>
-		toCacheModel() {
-
-		return _faroProject.toCacheModel();
-	}
-
-	@Override
-	public FaroProject toEscapedModel() {
-		return new FaroProjectWrapper(_faroProject.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _faroProject.toString();
-	}
-
-	@Override
-	public FaroProject toUnescapedModel() {
-		return new FaroProjectWrapper(_faroProject.toUnescapedModel());
+		model.setWeDeployKey(weDeployKey);
 	}
 
 	@Override
 	public String toXmlString() {
-		return _faroProject.toXmlString();
+		return model.toXmlString();
 	}
 
 	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof FaroProjectWrapper)) {
-			return false;
-		}
-
-		FaroProjectWrapper faroProjectWrapper = (FaroProjectWrapper)object;
-
-		if (Objects.equals(_faroProject, faroProjectWrapper._faroProject)) {
-			return true;
-		}
-
-		return false;
+	protected FaroProjectWrapper wrap(FaroProject faroProject) {
+		return new FaroProjectWrapper(faroProject);
 	}
-
-	@Override
-	public FaroProject getWrappedModel() {
-		return _faroProject;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _faroProject.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _faroProject.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_faroProject.resetOriginalValues();
-	}
-
-	private final FaroProject _faroProject;
 
 }

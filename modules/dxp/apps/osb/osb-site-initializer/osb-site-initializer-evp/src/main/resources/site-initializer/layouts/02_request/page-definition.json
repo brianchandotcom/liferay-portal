@@ -79,6 +79,9 @@
 											}
 										}
 									],
+									"fragmentStyle": {
+										"marginRight": "3"
+									},
 									"indexed": true
 								},
 								"type": "Fragment"

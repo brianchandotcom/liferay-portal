@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,10 +58,7 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 			_toProductGroup(values));
 
 		setExtendedProperties(
-			ProductGroup.class.getName(), productGroup,
-			_extensionProviderRegistry.getExtensionProviders(
-				user.getCompanyId(), ProductGroup.class.getName()),
-			user, values);
+			ProductGroup.class.getName(), productGroup, user, values);
 
 		return productGroup.getId();
 	}
@@ -166,10 +162,8 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 			primaryKey, _toProductGroup(values));
 
 		setExtendedProperties(
-			ProductGroup.class.getName(), JSONUtil.put("id", primaryKey),
-			_extensionProviderRegistry.getExtensionProviders(
-				user.getCompanyId(), ProductGroup.class.getName()),
-			user, values);
+			ProductGroup.class.getName(), JSONUtil.put("id", primaryKey), user,
+			values);
 	}
 
 	private ProductGroupResource _buildProductGroupResource(User user) {
@@ -200,9 +194,6 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 
 	@Reference
 	private CommercePricingClassLocalService _commercePricingClassLocalService;
-
-	@Reference
-	private ExtensionProviderRegistry _extensionProviderRegistry;
 
 	@Reference
 	private ProductGroupResource.Factory _productGroupResourceFactory;

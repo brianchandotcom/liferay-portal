@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -58,11 +57,7 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 
 		Product product = productResource.postProduct(_toProduct(values));
 
-		setExtendedProperties(
-			Product.class.getName(), product,
-			_extensionProviderRegistry.getExtensionProviders(
-				user.getCompanyId(), Product.class.getName()),
-			user, values);
+		setExtendedProperties(Product.class.getName(), product, user, values);
 
 		return product.getId();
 	}
@@ -184,10 +179,8 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 			cpDefinition.getCProductId(), _toProduct(values));
 
 		setExtendedProperties(
-			Product.class.getName(), JSONUtil.put("id", primaryKey),
-			_extensionProviderRegistry.getExtensionProviders(
-				user.getCompanyId(), Product.class.getName()),
-			user, values);
+			Product.class.getName(), JSONUtil.put("id", primaryKey), user,
+			values);
 	}
 
 	private ProductResource _buildProductResource(User user) {
@@ -225,9 +218,6 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 
 	@Reference
 	private CProductLocalService _cProductLocalService;
-
-	@Reference
-	private ExtensionProviderRegistry _extensionProviderRegistry;
 
 	@Reference
 	private ProductResource.Factory _productResourceFactory;

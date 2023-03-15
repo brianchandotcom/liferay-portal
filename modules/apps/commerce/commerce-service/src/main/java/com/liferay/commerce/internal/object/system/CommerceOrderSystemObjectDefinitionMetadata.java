@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 
 import java.math.BigDecimal;
 
@@ -59,11 +58,7 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 
 		Order order = orderResource.postOrder(_toOrder(values));
 
-		setExtendedProperties(
-			Order.class.getName(), order,
-			_extensionProviderRegistry.getExtensionProviders(
-				user.getCompanyId(), Order.class.getName()),
-			user, values);
+		setExtendedProperties(Order.class.getName(), order, user, values);
 
 		return order.getId();
 	}
@@ -165,10 +160,8 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 		orderResource.patchOrder(primaryKey, _toOrder(values));
 
 		setExtendedProperties(
-			Order.class.getName(), JSONUtil.put("id", primaryKey),
-			_extensionProviderRegistry.getExtensionProviders(
-				user.getCompanyId(), Order.class.getName()),
-			user, values);
+			Order.class.getName(), JSONUtil.put("id", primaryKey), user,
+			values);
 	}
 
 	private OrderResource _buildOrderResource(User user) {
@@ -200,9 +193,6 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
-
-	@Reference
-	private ExtensionProviderRegistry _extensionProviderRegistry;
 
 	@Reference
 	private OrderResource.Factory _orderResourceFactory;

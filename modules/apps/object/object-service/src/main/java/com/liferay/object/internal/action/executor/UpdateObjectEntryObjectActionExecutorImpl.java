@@ -89,7 +89,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 			Map<String, Object> values)
 		throws Exception {
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			SystemObjectDefinitionManager systemObjectDefinitionManager =
 				_systemObjectDefinitionManagerRegistry.
 					getSystemObjectDefinitionManager(
@@ -143,7 +143,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 		for (ObjectField objectField :
 				_objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId(),
-					objectDefinition.isSystem())) {
+					objectDefinition.isUnmodifiableSystemObject())) {
 
 			if (_readOnlyObjectFieldNames.contains(objectField.getName()) ||
 				values.containsKey(objectField.getName())) {

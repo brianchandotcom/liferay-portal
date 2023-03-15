@@ -57,7 +57,7 @@ public class RefreshLiferayMVCActionCommand extends BaseMVCActionCommand {
 				_faroProjectLocalService.getFaroProject(faroProjectId));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			SessionErrors.add(actionRequest, exception.getClass());
 		}

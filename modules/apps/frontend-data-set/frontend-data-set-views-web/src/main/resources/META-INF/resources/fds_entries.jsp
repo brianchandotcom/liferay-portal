@@ -20,7 +20,7 @@
 	module="js/FDSEntries"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"apiURL", fdsViewsDisplayContext.getFDSEntriesAPIURL()
+			"fdsEntriesAPIURL", fdsViewsDisplayContext.getFDSEntriesAPIURL()
 		).put(
 			"fdsViewsURL", fdsViewsDisplayContext.getFDSViewsURL()
 		).put(

@@ -24,7 +24,8 @@ import fuzzy from 'fuzzy';
 import React, {useRef, useState} from 'react';
 
 import '../css/FDSEntries.scss';
-import {PAGINATION_PROPS} from './Constants';
+import {OBJECT_RELATIONSHIP, PAGINATION_PROPS} from './Constants';
+import {TFDSView} from './FDSViews';
 import RequiredMark from './RequiredMark';
 
 const FUZZY_OPTIONS = {
@@ -154,14 +155,14 @@ const DropdownMenu = ({
 };
 
 interface IFDSEntriesProps {
-	apiURL: string;
+	fdsEntriesAPIURL: string;
 	fdsViewsURL: string;
 	headlessResources: Array<HeadlessResource>;
 	namespace: string;
 }
 
 const FDSEntries = ({
-	apiURL,
+	fdsEntriesAPIURL,
 	fdsViewsURL,
 	headlessResources,
 	namespace,
@@ -175,7 +176,8 @@ const FDSEntries = ({
 		)
 	);
 
-	type FDSEntry = {
+	type TFDSEntry = {
+		[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<TFDSView>;
 		actions: {
 			delete: {
 				href: string;
@@ -187,12 +189,26 @@ const FDSEntries = ({
 		label: string;
 	};
 
-	const ProviderRenderer = ({itemData}: {itemData: FDSEntry}) => {
+	const ProviderRenderer = ({itemData}: {itemData: TFDSEntry}) => {
 		const headlessResource = headlessResourcesMapRef.current.get(
 			itemData.entityClassName
 		);
 
 		return `${headlessResource?.name} (${headlessResource?.bundleLabel} ${headlessResource?.version})`;
+	};
+
+	const ViewsCountRenderer = ({itemData}: {itemData: TFDSEntry}) => {
+		const count = itemData[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW].length;
+
+		return (
+			<span
+				className={classNames('count', {
+					'count-zero': !count,
+				})}
+			>
+				{count}
+			</span>
+		);
 	};
 
 	interface IAddFDSEntryModalContentProps {
@@ -222,7 +238,7 @@ const FDSEntries = ({
 				label: fdsEntryLabelRef.current?.value,
 			};
 
-			const response = await fetch(apiURL, {
+			const response = await fetch(fdsEntriesAPIURL, {
 				body: JSON.stringify(body),
 				headers: {
 					'Accept': 'application/json',
@@ -426,7 +442,7 @@ const FDSEntries = ({
 		],
 	};
 
-	const onViewClick = ({itemData}: {itemData: FDSEntry}) => {
+	const onViewClick = ({itemData}: {itemData: TFDSEntry}) => {
 		const url = new URL(fdsViewsURL);
 
 		url.searchParams.set(`${namespace}fdsEntryId`, itemData.id);
@@ -439,7 +455,7 @@ const FDSEntries = ({
 		itemData,
 		loadData,
 	}: {
-		itemData: FDSEntry;
+		itemData: TFDSEntry;
 		loadData: Function;
 	}) => {
 		openModal({
@@ -501,6 +517,11 @@ const FDSEntries = ({
 						label: Liferay.Language.get('provider'),
 					},
 					{
+						contentRenderer: 'viewsCount',
+						fieldName: OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW,
+						label: Liferay.Language.get('views'),
+					},
+					{
 						contentRenderer: 'dateTime',
 						fieldName: 'dateModified',
 						label: Liferay.Language.get('modified-date'),
@@ -511,29 +532,32 @@ const FDSEntries = ({
 	];
 
 	return (
-		<FrontendDataSet
-			apiURL={apiURL}
-			creationMenu={creationMenu}
-			customDataRenderers={{
-				provider: ProviderRenderer,
-			}}
-			id={`${namespace}FDSEntries`}
-			itemsActions={[
-				{
-					icon: 'view',
-					label: Liferay.Language.get('view'),
-					onClick: onViewClick,
-				},
-				{
-					icon: 'trash',
-					label: Liferay.Language.get('delete'),
-					onClick: onDeleteClick,
-				},
-			]}
-			style="fluid"
-			views={views}
-			{...PAGINATION_PROPS}
-		/>
+		<div className="fds-entries">
+			<FrontendDataSet
+				apiURL={`${fdsEntriesAPIURL}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
+				creationMenu={creationMenu}
+				customDataRenderers={{
+					provider: ProviderRenderer,
+					viewsCount: ViewsCountRenderer,
+				}}
+				id={`${namespace}FDSEntries`}
+				itemsActions={[
+					{
+						icon: 'view',
+						label: Liferay.Language.get('view'),
+						onClick: onViewClick,
+					},
+					{
+						icon: 'trash',
+						label: Liferay.Language.get('delete'),
+						onClick: onDeleteClick,
+					},
+				]}
+				style="fluid"
+				views={views}
+				{...PAGINATION_PROPS}
+			/>
+		</div>
 	);
 };
 

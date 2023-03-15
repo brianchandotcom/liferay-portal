@@ -175,8 +175,9 @@ public class FDSViewsPortlet extends MVCPortlet {
 			userId, fdsEntryObjectDefinition.getObjectDefinitionId(),
 			fdsViewObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap("FDS Views of FDS Entry"),
-			"fdsViews", ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			LocalizedMapUtil.getLocalizedMap("FDSEntry FDSView Relationship"),
+			"fdsEntryFDSViewRelationship",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

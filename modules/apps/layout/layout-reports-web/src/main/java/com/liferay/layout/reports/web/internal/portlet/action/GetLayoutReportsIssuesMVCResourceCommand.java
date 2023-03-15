@@ -154,7 +154,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 	private JSONObject _fetchLayoutReportIssuesJSONObject(
 			Group group, ResourceBundle resourceBundle,
 			ThemeDisplay themeDisplay, String url)
-		throws Exception, PortalException {
+		throws Exception {
 
 		LayoutReportsDataProvider layoutReportsDataProvider =
 			new LayoutReportsDataProvider(
@@ -264,7 +264,7 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 	private JSONObject _getLayoutReportIssuesResponseJSONObject(
 			boolean refreshCache, Group group, ResourceBundle resourceBundle,
 			ThemeDisplay themeDisplay, String url)
-		throws Exception, PortalException {
+		throws Exception {
 
 		String cacheKey = themeDisplay.getLocale() + "-" + url;
 

@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {fetch, navigate, openModal} from 'frontend-js-web';
+import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useRef, useState} from 'react';
 
@@ -176,6 +176,12 @@ const FDSEntries = ({
 	);
 
 	type FDSEntry = {
+		actions: {
+			delete: {
+				href: string;
+				method: string;
+			};
+		};
 		entityClassName: string;
 		id: string;
 		label: string;
@@ -429,6 +435,59 @@ const FDSEntries = ({
 		navigate(url);
 	};
 
+	const onDeleteClick = ({
+		itemData,
+		loadData,
+	}: {
+		itemData: FDSEntry;
+		loadData: Function;
+	}) => {
+		openModal({
+			bodyHTML: Liferay.Language.get(
+				'deleting-a-dataset-is-an-action-that-cannot-be-reversed'
+			),
+			buttons: [
+				{
+					autoFocus: true,
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+					type: 'cancel',
+				},
+				{
+					displayType: 'danger',
+					label: Liferay.Language.get('delete'),
+					onClick: ({processClose}: {processClose: Function}) => {
+						processClose();
+
+						fetch(itemData.actions.delete.href, {
+							method: itemData.actions.delete.method,
+						})
+							.then(() => {
+								openToast({
+									message: Liferay.Language.get(
+										'your-request-completed-successfully'
+									),
+									type: 'success',
+								});
+
+								loadData();
+							})
+							.catch(() =>
+								openToast({
+									message: Liferay.Language.get(
+										'your-request-failed-to-complete'
+									),
+									type: 'danger',
+								})
+							);
+					},
+				},
+			],
+			status: 'danger',
+			title: Liferay.Language.get('delete-dataset'),
+		});
+	};
+
 	const views = [
 		{
 			contentRenderer: 'table',
@@ -464,6 +523,11 @@ const FDSEntries = ({
 					icon: 'view',
 					label: Liferay.Language.get('view'),
 					onClick: onViewClick,
+				},
+				{
+					icon: 'trash',
+					label: Liferay.Language.get('delete'),
+					onClick: onDeleteClick,
 				},
 			]}
 			style="fluid"

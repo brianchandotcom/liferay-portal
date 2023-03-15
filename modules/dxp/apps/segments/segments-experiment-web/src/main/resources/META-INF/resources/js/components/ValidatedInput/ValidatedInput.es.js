@@ -21,18 +21,16 @@ function _isValueValid(value) {
 	return !!noSpacesValue;
 }
 
-function ValidatedInput(props) {
-	const {
-		autofocus = false,
-		errorMessage,
-		label,
-		onBlur = () => {},
-		onChange = () => {},
-		onFocus = () => {},
-		onValidationChange = () => {},
-		value = '',
-	} = props;
-
+function ValidatedInput({
+	autofocus = false,
+	errorMessage,
+	label,
+	onBlur = () => {},
+	onChange = () => {},
+	onFocus = () => {},
+	onValidationChange = () => {},
+	value = '',
+}) {
 	const inputId = useId();
 	const [invalid, setInvalid] = useState(false);
 	const nodeRef = useRef();

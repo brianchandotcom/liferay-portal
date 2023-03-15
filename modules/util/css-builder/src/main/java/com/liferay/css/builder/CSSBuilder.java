@@ -91,9 +91,9 @@ public class CSSBuilder implements AutoCloseable {
 	public CSSBuilder(CSSBuilderArgs cssBuilderArgs) throws Exception {
 		_cssBuilderArgs = cssBuilderArgs;
 
-		List<File> importPaths = _cssBuilderArgs.getImportPaths();
+		List<File> importPaths = cssBuilderArgs.getImportPaths();
 
-		List<String> excludes = _cssBuilderArgs.getExcludes();
+		List<String> excludes = cssBuilderArgs.getExcludes();
 
 		_excludes = excludes.toArray(new String[0]);
 
@@ -118,7 +118,7 @@ public class CSSBuilder implements AutoCloseable {
 		}
 
 		List<String> rtlExcludedPathRegexps =
-			_cssBuilderArgs.getRtlExcludedPathRegexps();
+			cssBuilderArgs.getRtlExcludedPathRegexps();
 
 		_rtlExcludedPathPatterns = new Pattern[rtlExcludedPathRegexps.size()];
 
@@ -127,7 +127,7 @@ public class CSSBuilder implements AutoCloseable {
 				rtlExcludedPathRegexps.get(i));
 		}
 
-		_initSassCompiler(_cssBuilderArgs.getSassCompilerClassName());
+		_initSassCompiler(cssBuilderArgs.getSassCompilerClassName());
 	}
 
 	@Override

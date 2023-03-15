@@ -279,7 +279,7 @@
 		</finder>
 		<finder name="C_R" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="rendererKey" />
+			<finder-column arrayable-operator="OR" name="rendererKey" />
 		</finder>
 		<finder name="G_OFELI_P" return-type="Collection">
 			<finder-column name="groupId" />

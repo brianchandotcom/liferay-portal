@@ -28,6 +28,7 @@ $opacity-transition: all 0.3s ease;
 		line-clamp: 2;
 		max-width: 25ch;
 		overflow: hidden;
+		text-align: justify;
 		text-overflow: ellipsis;
 		white-space: break-spaces;
 		word-wrap: break-word;
@@ -69,11 +70,6 @@ $opacity-transition: all 0.3s ease;
 		top: 15px;
 		transition: $opacity-transition;
 
-		&--expanded {
-			opacity: 1;
-			transition: $opacity-transition;
-		}
-
 		&--badge {
 			align-items: center;
 			background: $color-red;
@@ -91,9 +87,14 @@ $opacity-transition: all 0.3s ease;
 			user-select: none;
 			width: 20px;
 		}
+
+		&--hidden {
+			opacity: 1;
+			transition: $opacity-transition;
+		}
 	}
 
-	&__subtask-list {
+	&__subtask-item {
 		opacity: 0;
 		padding: 0 20px;
 		visibility: hidden;

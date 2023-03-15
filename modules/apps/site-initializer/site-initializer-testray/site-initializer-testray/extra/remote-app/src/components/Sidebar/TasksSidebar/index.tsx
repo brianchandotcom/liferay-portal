@@ -47,7 +47,7 @@ const TaskBadge: React.FC<TaskBadgeProps> = ({className, count}) => (
 
 const SubtaskCard: React.FC<SubtaskCardProps> = ({subtask, taskId}) => (
 	<Link
-		className="tr-task-sidebar__subtask-list__subtask-card"
+		className="tr-task-sidebar__subtask-item__subtask-card"
 		to={`testflow/${taskId}/subtasks/${subtask?.id}`}
 	>
 		<div className="col-4">
@@ -90,25 +90,27 @@ const TaskSidebar: React.FC<TaskSidebarProps> = ({expanded}) => {
 				/>
 			</div>
 
-			<div
-				className={classNames('tr-task-sidebar__notification', {
-					'tr-task-sidebar__notification--expanded': !expanded,
-				})}
-			>
-				<ClayIcon fontSize={20} symbol="blogs" />
+			<Tooltip position="right" title={i18n.translate('tasks')}>
+				<div
+					className={classNames('tr-task-sidebar__notification', {
+						'tr-task-sidebar__notification--hidden': !expanded,
+					})}
+				>
+					<ClayIcon fontSize={20} symbol="blogs" />
 
-				{!!tasks.length && (
-					<span className="tr-task-sidebar__notification--badge">
-						{tasks.length}
-					</span>
-				)}
-			</div>
+					{!!tasks.length && (
+						<span className="tr-task-sidebar__notification--badge">
+							{tasks.length}
+						</span>
+					)}
+				</div>
+			</Tooltip>
 
 			<ul>
 				{tasks.map((task, index) => (
 					<li
-						className={classNames('tr-task-sidebar__subtask-list', {
-							'tr-task-sidebar__subtask-list--expanded': expanded,
+						className={classNames('tr-task-sidebar__subtask-item', {
+							'tr-task-sidebar__subtask-item--expanded': expanded,
 						})}
 						key={index}
 					>
@@ -136,7 +138,7 @@ const TaskSidebar: React.FC<TaskSidebarProps> = ({expanded}) => {
 							</Link>
 						</Tooltip>
 
-						<div className="tr-task-sidebar__subtask-list--expanded__progress-bar">
+						<div className="tr-task-sidebar__subtask-item--expanded__progress-bar">
 							<TaskbarProgress
 								displayTotalCompleted
 								items={[

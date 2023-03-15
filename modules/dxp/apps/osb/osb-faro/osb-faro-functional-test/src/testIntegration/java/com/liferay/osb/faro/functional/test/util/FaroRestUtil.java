@@ -14,6 +14,7 @@
 
 package com.liferay.osb.faro.functional.test.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.nio.charset.StandardCharsets;
@@ -70,11 +71,8 @@ public class FaroRestUtil {
 	private static String _encodeAuthorizationFields(
 		String userName, String password) {
 
-		String authorizationString = userName.concat(
-			StringPool.COLON
-		).concat(
-			password
-		);
+		String authorizationString = StringBundler.concat(
+			userName, StringPool.COLON, password);
 
 		return new String(
 			Base64.encodeBase64(

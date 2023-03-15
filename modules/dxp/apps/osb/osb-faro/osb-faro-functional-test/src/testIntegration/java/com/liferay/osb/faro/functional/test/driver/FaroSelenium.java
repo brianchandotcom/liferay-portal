@@ -14,7 +14,7 @@
 
 package com.liferay.osb.faro.functional.test.driver;
 
-import com.liferay.poshi.runner.selenium.LiferaySelenium;
+import com.liferay.poshi.core.selenium.LiferaySelenium;
 
 import java.util.List;
 

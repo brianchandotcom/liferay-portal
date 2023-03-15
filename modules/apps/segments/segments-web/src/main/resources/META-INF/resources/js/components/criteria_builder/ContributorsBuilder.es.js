@@ -93,28 +93,6 @@ class ContributorBuilder extends React.Component {
 		});
 	};
 
-	_handleScopeChange = () => {
-		openSelectionModal({
-			onSelect: (selectedItem) => {
-				this.setState({
-					scopeName: selectedItem.groupdescriptivename
-						? selectedItem.groupdescriptivename
-						: selectedItem.groupscopelabel,
-				});
-				const input = document.querySelector(
-					`[name="${this.props.portletNamespace}groupId"]`
-				);
-
-				if (input) {
-					input.value = selectedItem.groupid;
-				}
-			},
-			selectEventName: 'sitesSelectItem',
-			title: Liferay.Language.get('select-site'),
-			url: this.props.siteItemSelectorURL,
-		});
-	};
-
 	render() {
 		const {
 			contributors,
@@ -131,7 +109,7 @@ class ContributorBuilder extends React.Component {
 			renderEmptyValuesErrors,
 		} = this.props;
 
-		const {editingId, scopeName} = this.state;
+		const {editingId} = this.state;
 
 		const rootClasses = getCN('contributor-builder-root', {
 			editing,
@@ -143,12 +121,6 @@ class ContributorBuilder extends React.Component {
 		const sidebarClasses = getCN('criteria-builder-section-sidebar', {
 			'criteria-builder-section-sidebar--with-warning': showDisabledSegmentationAlert,
 		});
-
-		function handleViewMembersClick(event) {
-			event.stopPropagation();
-
-			onPreviewMembers();
-		}
 
 		return (
 			<DndProvider backend={HTML5Backend}>
@@ -182,135 +154,133 @@ class ContributorBuilder extends React.Component {
 
 							<ClayLayout.ContainerFluid>
 								<div className="content-wrapper p-4">
-										<ClayLayout.Sheet>
-											<div className="d-flex flex-wrap justify-content-between mb-4">
-												<h2 className="mb-2 sheet-title">
-													{Liferay.Language.get(
-														'conditions'
-													)}
-												</h2>
+									<ClayLayout.Sheet>
+										<div className="d-flex flex-wrap justify-content-between mb-4">
+											<h2 className="mb-2 sheet-title">
+												{Liferay.Language.get(
+													'conditions'
+												)}
+											</h2>
 
-												<div className="criterion-string">
-													<div className="btn-group">
-														<div className="btn-group-item inline-item">
-															{membersCountLoading && (
-																<ClayLoadingIndicator
-																	className="mr-4"
-																	small
-																/>
-															)}
-
-															{!membersCountLoading && (
-																<span className="mr-4">
-																	{Liferay.Language.get(
-																		'conditions-match'
-																	)}
-
-																	<b className="ml-2 text-dark">
-																		{getPluralMessage(
-																			Liferay.Language.get(
-																				'x-member'
-																			),
-																			Liferay.Language.get(
-																				'x-members'
-																			),
-																			membersCount
-																		)}
-																	</b>
-																</span>
-															)}
-
-															<ClayButton
-																displayType="secondary"
-																onClick={
-																	onPreviewMembers
-																}
+											<div className="criterion-string">
+												<div className="btn-group">
+													<div className="btn-group-item inline-item">
+														{membersCountLoading && (
+															<ClayLoadingIndicator
+																className="mr-4"
 																small
-																type="button"
-															>
+															/>
+														)}
+
+														{!membersCountLoading && (
+															<span className="mr-4">
 																{Liferay.Language.get(
-																	'view-members'
+																	'conditions-match'
 																)}
-															</ClayButton>
-														</div>
+
+																<b className="ml-2 text-dark">
+																	{getPluralMessage(
+																		Liferay.Language.get(
+																			'x-member'
+																		),
+																		Liferay.Language.get(
+																			'x-members'
+																		),
+																		membersCount
+																	)}
+																</b>
+															</span>
+														)}
+
+														<ClayButton
+															displayType="secondary"
+															onClick={
+																onPreviewMembers
+															}
+															small
+															type="button"
+														>
+															{Liferay.Language.get(
+																'view-members'
+															)}
+														</ClayButton>
 													</div>
 												</div>
 											</div>
+										</div>
 
-											{emptyContributors &&
-												(editingId === undefined ||
-													!editing) && (
-													<EmptyPlaceholder />
-												)}
+										{emptyContributors &&
+											(editingId === undefined ||
+												!editing) && (
+												<EmptyPlaceholder />
+											)}
 
-											{contributors
-												.filter((criteria) => {
-													const editingCriteria =
-														editingId ===
-															criteria.propertyKey &&
-														editing;
-													const emptyCriteriaQuery =
-														criteria.query === '';
+										{contributors
+											.filter((criteria) => {
+												const editingCriteria =
+													editingId ===
+														criteria.propertyKey &&
+													editing;
+												const emptyCriteriaQuery =
+													criteria.query === '';
 
-													return (
-														editingCriteria ||
-														!emptyCriteriaQuery
-													);
-												})
-												.map((criteria, i) => {
-													return (
-														<React.Fragment key={i}>
-															{i !== 0 && (
-																<>
-																	<Conjunction
-																		className="mb-4 ml-0 mt-4"
-																		conjunctionName={
-																			criteria.conjunctionId
-																		}
-																		editing={
-																			editing
-																		}
-																		onSelect={
-																			onConjunctionChange
-																		}
-																	/>
-																</>
-															)}
+												return (
+													editingCriteria ||
+													!emptyCriteriaQuery
+												);
+											})
+											.map((criteria, i) => {
+												return (
+													<React.Fragment key={i}>
+														{i !== 0 && (
+															<>
+																<Conjunction
+																	className="mb-4 ml-0 mt-4"
+																	conjunctionName={
+																		criteria.conjunctionId
+																	}
+																	editing={
+																		editing
+																	}
+																	onSelect={
+																		onConjunctionChange
+																	}
+																/>
+															</>
+														)}
 
-															<CriteriaBuilder
-																criteria={
-																	criteria.criteriaMap
-																}
-																editing={
-																	editing
-																}
-																emptyContributors={
-																	emptyContributors
-																}
-																entityName={
-																	criteria.entityName
-																}
-																modelLabel={
-																	criteria.modelLabel
-																}
-																onChange={
-																	this
-																		._handleCriteriaChange
-																}
-																propertyKey={
-																	criteria.propertyKey
-																}
-																renderEmptyValuesErrors={
-																	renderEmptyValuesErrors
-																}
-																supportedProperties={
-																	criteria.properties
-																}
-															/>
-														</React.Fragment>
-													);
-												})}
-										</ClayLayout.Sheet>
+														<CriteriaBuilder
+															criteria={
+																criteria.criteriaMap
+															}
+															editing={editing}
+															emptyContributors={
+																emptyContributors
+															}
+															entityName={
+																criteria.entityName
+															}
+															modelLabel={
+																criteria.modelLabel
+															}
+															onChange={
+																this
+																	._handleCriteriaChange
+															}
+															propertyKey={
+																criteria.propertyKey
+															}
+															renderEmptyValuesErrors={
+																renderEmptyValuesErrors
+															}
+															supportedProperties={
+																criteria.properties
+															}
+														/>
+													</React.Fragment>
+												);
+											})}
+									</ClayLayout.Sheet>
 								</div>
 							</ClayLayout.ContainerFluid>
 						</div>

@@ -12,6 +12,7 @@
  * details.
  */
 
+import {COOKIE_TYPES, sessionStorage} from 'frontend-js-web';
 import React, {useCallback, useContext, useState} from 'react';
 
 import {useConstants} from './ConstantsContext';
@@ -36,7 +37,7 @@ export function SelectedMenuItemIdProvider({children}) {
 			selectedMenuItemIdKey
 		);
 
-		window.sessionStorage.removeItem(selectedMenuItemIdKey);
+		sessionStorage.removeItem(selectedMenuItemIdKey);
 
 		return persistedSelectedMenuItemId || null;
 	});
@@ -46,9 +47,10 @@ export function SelectedMenuItemIdProvider({children}) {
 			setSelectedMenuItemId(nextMenuItemId);
 
 			if (persist && nextMenuItemId) {
-				window.sessionStorage.setItem(
+				sessionStorage.setItem(
 					selectedMenuItemIdKey,
-					nextMenuItemId
+					nextMenuItemId,
+					COOKIE_TYPES.PERSONALIZATION
 				);
 			}
 		},

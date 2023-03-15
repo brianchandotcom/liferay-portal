@@ -104,9 +104,10 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 			<liferay-ui:message key="see-theme-configurations" />
 		</c:when>
 		<c:otherwise>
-			<aui:a href="<%= redirectURL.toString() %>">
-				<liferay-ui:message key="see-theme-configurations" />
-			</aui:a>
+			<clay:link
+				href="<%= redirectURL.toString() %>"
+				label='<%= LanguageUtil.get(request, "see-theme-configurations") %>'
+			/>
 		</c:otherwise>
 	</c:choose>
 </liferay-util:buffer>

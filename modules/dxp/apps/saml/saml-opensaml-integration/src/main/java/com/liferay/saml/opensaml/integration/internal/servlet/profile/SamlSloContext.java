@@ -65,7 +65,7 @@ public class SamlSloContext implements Serializable {
 
 		try {
 			List<SamlIdpSpSession> samlIdpSpSessions =
-				_samlIdpSpSessionLocalService.getSamlIdpSpSessions(
+				samlIdpSpSessionLocalService.getSamlIdpSpSessions(
 					samlIdpSsoSession.getSamlIdpSsoSessionId());
 
 			for (SamlIdpSpSession samlIdpSpSession : samlIdpSpSessions) {
@@ -94,7 +94,7 @@ public class SamlSloContext implements Serializable {
 
 				try {
 					SamlIdpSpConnection samlIdpSpConnection =
-						_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+						samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 							samlIdpSpSession.getCompanyId(), samlSpEntityId);
 
 					name = samlIdpSpConnection.getName();

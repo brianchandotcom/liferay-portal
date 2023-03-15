@@ -46,6 +46,7 @@ import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.util.FaroThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -228,15 +229,15 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 		for (Map<String, Object> liferayGroup :
 				liferayGroupsDataCreator.getObjects()) {
 
-			Map<String, String> group = new HashMap<>();
-
 			Map<String, Object> fields = (Map<String, Object>)liferayGroup.get(
 				"fields");
 
-			group.put("id", String.valueOf(fields.get("groupId")));
-			group.put("name", (String)fields.get("name"));
-
-			groups.add(group);
+			groups.add(
+				new HashMapBuilder<>().<String, String>put(
+					"id", String.valueOf(fields.get("groupId"))
+				).put(
+					"name", (String)fields.get("name")
+				).build());
 		}
 
 		contactsEngineClient.patchChannel(
@@ -414,32 +415,23 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 
 			contactsEngineClient.addNanite(
 				faroProject, "UpdateDynamicMembershipsNanite",
-				new HashMap<String, Object>() {
-					{
-						put(
-							"dateModified",
-							dateFormat.format(
-								new Date(
-									System.currentTimeMillis() - Time.MONTH)));
-						put(
-							"individualSegmentJSONObject",
-							new HashMap<String, Object>() {
-								{
-									put(
-										"channelId",
-										individualSegment.getChannelId());
-									put(
-										"filter",
-										individualSegment.getFilter());
-									put("id", individualSegment.getId());
-									put(
-										"includeAnonymousUsers",
-										individualSegment.
-											isIncludeAnonymousUsers());
-								}
-							});
-					}
-				});
+				new HashMapBuilder<>().<String, Object>put(
+					"dateModified",
+					dateFormat.format(
+						new Date(System.currentTimeMillis() - Time.MONTH))
+				).put(
+					"individualSegmentJSONObject",
+					new HashMapBuilder<>().<String, Object>put(
+						"channelId", individualSegment.getChannelId()
+					).put(
+						"filter", individualSegment.getFilter()
+					).put(
+						"id", individualSegment.getId()
+					).put(
+						"includeAnonymousUsers",
+						individualSegment.isIncludeAnonymousUsers()
+					).build()
+				).build());
 		}
 
 		membershipChangesDataCreator.execute();
@@ -498,10 +490,12 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 
 		// Nanites
 
-		Map<String, Object> salesforceNaniteContext = new HashMap<>();
-
-		salesforceNaniteContext.put("dataSourceId", dataSource.getId());
-		salesforceNaniteContext.put("type", "audit-events");
+		Map<String, Object> salesforceNaniteContext =
+			new HashMapBuilder<>().<String, Object>put(
+				"dataSourceId", dataSource.getId()
+			).put(
+				"type", "audit-events"
+			).build();
 
 		contactsEngineClient.addNanite(
 			faroProject, "SalesforceAccountsNanite", salesforceNaniteContext);
@@ -635,16 +629,12 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 	private static final int _SALESFORCE_INDIVIDUALS_COUNT = 100;
 
 	private static final Map<String, String> _individualSegments =
-		new HashMap<String, String>() {
-			{
-				put(
-					"Annual Revenue > $500K",
-					"(accounts.filter(filter='(" +
-						"organization/annualRevenue/value gt 500000)'))");
-				put(
-					"managers",
-					"contains(demographics/jobTitle/value, 'manager')");
-			}
-		};
+		new HashMapBuilder<>().<String, String>put(
+			"Annual Revenue > $500K",
+			"(accounts.filter(filter='(" +
+				"organization/annualRevenue/value gt 500000)'))"
+		).put(
+			"managers", "contains(demographics/jobTitle/value, 'manager')"
+		).build();
 
 }

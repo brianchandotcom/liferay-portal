@@ -735,7 +735,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			expandoBridge.addAttribute(
-				jsonObject.getString("name"), jsonObject.getInt("dataType"));
+				jsonObject.getString("name"), jsonObject.getInt("dataType"),
+				jsonObject.getLong("defaultValue"));
 
 			if (jsonObject.has("properties")) {
 				UnicodeProperties unicodeProperties = new UnicodeProperties(

@@ -21,9 +21,6 @@ import java.util.Date;
  */
 public class IndividualSegmentMembership {
 
-	public IndividualSegmentMembership() {
-	}
-
 	public Date getDateCreated() {
 		if (_dateCreated == null) {
 			return null;

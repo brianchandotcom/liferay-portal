@@ -25,9 +25,6 @@ import java.util.Map;
  */
 public class Interest {
 
-	public Interest() {
-	}
-
 	public Date getDateRecorded() {
 		if (_dateRecorded == null) {
 			return null;

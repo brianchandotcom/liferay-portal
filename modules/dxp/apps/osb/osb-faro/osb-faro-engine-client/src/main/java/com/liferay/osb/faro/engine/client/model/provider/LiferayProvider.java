@@ -116,9 +116,6 @@ public class LiferayProvider implements Provider {
 
 	public static class Container {
 
-		public Container() {
-		}
-
 		public String getId() {
 			return _id;
 		}

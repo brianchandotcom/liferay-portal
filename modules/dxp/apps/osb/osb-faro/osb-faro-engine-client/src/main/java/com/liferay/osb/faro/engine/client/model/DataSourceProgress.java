@@ -22,9 +22,6 @@ import java.util.Date;
 @SuppressWarnings({"FieldCanBeLocal", "UnusedDeclaration"})
 public class DataSourceProgress {
 
-	public DataSourceProgress() {
-	}
-
 	public Date getDateRecorded() {
 		if (_dateRecorded == null) {
 			return null;

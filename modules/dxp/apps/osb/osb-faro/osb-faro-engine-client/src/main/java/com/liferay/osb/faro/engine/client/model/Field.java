@@ -22,20 +22,17 @@ import java.util.Objects;
  */
 public class Field {
 
-	public Field() {
-	}
-
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Field)) {
+		if (!(object instanceof Field)) {
 			return false;
 		}
 
-		Field field = (Field)obj;
+		Field field = (Field)object;
 
 		if (Objects.equals(_context, field._context) &&
 			Objects.equals(_dataSourceId, field._dataSourceId) &&

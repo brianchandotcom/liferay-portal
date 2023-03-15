@@ -21,9 +21,6 @@ import java.util.Date;
  */
 public class Event {
 
-	public Event() {
-	}
-
 	public Date getEndDate() {
 		if (_endDate == null) {
 			return null;

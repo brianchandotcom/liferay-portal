@@ -14,6 +14,9 @@
 
 package com.liferay.osb.faro.engine.client.http.client;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.io.IOException;
 
 import javax.net.ssl.SSLHandshakeException;
@@ -44,6 +47,8 @@ public class SSLHandshakeExceptionHttpRequestInterceptor
 					Thread.sleep(5000);
 				}
 				catch (Exception exception) {
+					_log.error(sslHandshakeException, exception);
+
 					throw new IOException(exception);
 				}
 			}
@@ -51,5 +56,8 @@ public class SSLHandshakeExceptionHttpRequestInterceptor
 
 		throw new IOException("Unable to recover from SSL Handshake exception");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SSLHandshakeExceptionHttpRequestInterceptor.class);
 
 }

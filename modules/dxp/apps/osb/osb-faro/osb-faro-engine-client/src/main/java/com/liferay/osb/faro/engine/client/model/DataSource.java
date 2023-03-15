@@ -21,9 +21,6 @@ import java.util.Date;
  */
 public class DataSource {
 
-	public DataSource() {
-	}
-
 	public String getAbout() {
 		return _about;
 	}
@@ -212,9 +209,6 @@ public class DataSource {
 	}
 
 	public static class Details {
-
-		public Details() {
-		}
 
 		public Boolean isSelected() {
 			return _selected;

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.osb.faro.engine.client.util;
+package com.liferay.osb.faro.engine.client.constants;
 
 /**
  * @author Matthew Kong

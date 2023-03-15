@@ -38,6 +38,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,11 +49,11 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
@@ -179,7 +180,7 @@ public abstract class BaseEngineClient {
 							typeReference));
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 
 					responses.add(null);
 				}
@@ -210,16 +211,13 @@ public abstract class BaseEngineClient {
 		return httpHeaders;
 	}
 
-	protected void delete(
-			FaroProject faroProject, Map<String, List<String>> queryParameters)
-		throws Exception {
-
+	protected void delete(FaroProject faroProject) throws Exception {
 		RestTemplate restTemplate = getRestTemplate(faroProject);
 
 		restTemplate.delete(
 			getUriString(
 				faroProject, "/projects/" + faroProject.getProjectId(),
-				queryParameters));
+				Collections.emptyMap()));
 	}
 
 	protected void delete(
@@ -341,7 +339,7 @@ public abstract class BaseEngineClient {
 			return EngineServiceURLUtil.getBackendExternalURL(faroProject);
 		}
 		catch (URISyntaxException uriSyntaxException) {
-			_log.error(uriSyntaxException, uriSyntaxException);
+			_log.error(uriSyntaxException);
 		}
 
 		return _OSB_ASAH_BACKEND_URL;
@@ -445,16 +443,14 @@ public abstract class BaseEngineClient {
 			return null;
 		}
 
-		Optional<Link> link = resource.getLink(type);
+		Link link = resource.getRequiredLink(type);
 
-		if (!link.isPresent()) {
-			throw new IllegalStateException(
+		if (link == null) {
+			throw new IllegalArgumentException(
 				"URL does not exist for type: " + type);
 		}
 
-		String href = link.map(
-			Link::getHref
-		).get();
+		String href = link.getHref();
 
 		_urlPaths.put(
 			type,
@@ -488,11 +484,9 @@ public abstract class BaseEngineClient {
 	}
 
 	protected Map<String, Object> getUriVariables(FaroProject faroProject) {
-		Map<String, Object> uriVariables = new HashMap<>();
-
-		uriVariables.put("weDeployKey", faroProject.getWeDeployKey());
-
-		return uriVariables;
+		return new HashMapBuilder<>().<String, Object>put(
+			"weDeployKey", faroProject.getWeDeployKey()
+		).build();
 	}
 
 	protected Map<String, Object> getUriVariables(

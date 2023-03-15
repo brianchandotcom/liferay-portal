@@ -21,9 +21,6 @@ import java.util.Date;
  */
 public class Activity {
 
-	public Activity() {
-	}
-
 	public String getActivityKey() {
 		return _activityKey;
 	}
@@ -163,9 +160,6 @@ public class Activity {
 	}
 
 	public static class ActionObject {
-
-		public ActionObject() {
-		}
 
 		public String getCanonicalUrl() {
 			return _canonicalUrl;

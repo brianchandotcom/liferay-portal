@@ -15,8 +15,8 @@
 package com.liferay.osb.faro.engine.client.constants;
 
 import com.liferay.osb.faro.engine.client.model.IndividualSegment;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -33,19 +33,18 @@ public class SegmentConstants {
 	}
 
 	private static final Map<String, String> _segmentStates =
-		new HashMap<String, String>() {
-			{
-				put("disabled", IndividualSegment.State.DISABLED.name());
-				put("inProgress", IndividualSegment.State.IN_PROGRESS.name());
-				put("ready", IndividualSegment.State.READY.name());
-			}
-		};
+		new HashMapBuilder<>().<String, String>put(
+			"disabled", IndividualSegment.State.DISABLED.name()
+		).put(
+			"inProgress", IndividualSegment.State.IN_PROGRESS.name()
+		).put(
+			"ready", IndividualSegment.State.READY.name()
+		).build();
 	private static final Map<String, String> _segmentTypes =
-		new HashMap<String, String>() {
-			{
-				put("dynamic", IndividualSegment.Type.DYNAMIC.name());
-				put("static", IndividualSegment.Type.STATIC.name());
-			}
-		};
+		new HashMapBuilder<>().<String, String>put(
+			"dynamic", IndividualSegment.Type.DYNAMIC.name()
+		).put(
+			"static", IndividualSegment.Type.STATIC.name()
+		).build();
 
 }

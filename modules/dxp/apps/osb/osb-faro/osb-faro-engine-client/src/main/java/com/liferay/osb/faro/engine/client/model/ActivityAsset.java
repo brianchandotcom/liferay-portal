@@ -19,9 +19,6 @@ package com.liferay.osb.faro.engine.client.model;
  */
 public class ActivityAsset {
 
-	public ActivityAsset() {
-	}
-
 	public long getCount() {
 		return _count;
 	}

@@ -21,9 +21,6 @@ import java.util.Date;
  */
 public class Asset {
 
-	public Asset() {
-	}
-
 	public String getAssetType() {
 		return _assetType;
 	}

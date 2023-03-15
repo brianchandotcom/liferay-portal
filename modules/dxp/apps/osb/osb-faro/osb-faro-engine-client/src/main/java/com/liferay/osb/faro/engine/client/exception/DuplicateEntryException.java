@@ -26,12 +26,12 @@ public class DuplicateEntryException extends FaroEngineClientException {
 		super(msg);
 	}
 
-	public DuplicateEntryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public DuplicateEntryException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public DuplicateEntryException(Throwable cause) {
-		super(cause);
+	public DuplicateEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

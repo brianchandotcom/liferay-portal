@@ -28,9 +28,6 @@ public class Author {
 		return author;
 	}
 
-	public Author() {
-	}
-
 	public String getId() {
 		return _id;
 	}

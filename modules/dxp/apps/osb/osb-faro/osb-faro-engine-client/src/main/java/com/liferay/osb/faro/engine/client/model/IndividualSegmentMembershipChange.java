@@ -25,9 +25,6 @@ import java.util.Map;
  */
 public class IndividualSegmentMembershipChange {
 
-	public IndividualSegmentMembershipChange() {
-	}
-
 	public Date getDateChanged() {
 		if (_dateChanged == null) {
 			return null;

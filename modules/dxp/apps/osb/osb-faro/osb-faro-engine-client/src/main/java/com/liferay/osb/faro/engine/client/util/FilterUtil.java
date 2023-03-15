@@ -14,16 +14,16 @@
 
 package com.liferay.osb.faro.engine.client.util;
 
+import com.liferay.osb.faro.engine.client.constants.FilterConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Matthew Kong
@@ -31,11 +31,8 @@ import java.util.stream.Stream;
 public class FilterUtil {
 
 	public static String getBlankFilter(String fieldName, String operator) {
-		return fieldName.concat(
-			operator
-		).concat(
-			StringPool.DOUBLE_APOSTROPHE
-		);
+		return StringBundler.concat(
+			fieldName, operator, StringPool.DOUBLE_APOSTROPHE);
 	}
 
 	public static String getFieldName(
@@ -56,16 +53,7 @@ public class FilterUtil {
 			return null;
 		}
 
-		if (!(value instanceof Boolean) && !(value instanceof Long)) {
-			String valueString = String.valueOf(value);
-
-			if (Validator.isBlank(valueString)) {
-				return null;
-			}
-
-			value = StringUtil.quote(valueString, StringPool.APOSTROPHE);
-		}
-		else if (value instanceof Date) {
+		if (value instanceof Date) {
 			Date date = (Date)value;
 
 			value = String.valueOf(date.toInstant());
@@ -73,17 +61,25 @@ public class FilterUtil {
 		else if (value instanceof List) {
 			List<?> values = (List<?>)value;
 
-			Stream<?> stream = values.stream();
+			List<String> valuesListString = new ArrayList<>();
 
-			value = StringPool.OPEN_BRACKET.concat(
-				stream.map(
-					String::valueOf
-				).collect(
-					Collectors.joining(StringPool.COMMA)
-				)
-			).concat(
-				StringPool.CLOSE_BRACKET
-			);
+			for (Object valueObject : values) {
+				valuesListString.add(String.valueOf(valueObject));
+			}
+
+			value = StringBundler.concat(
+				StringPool.OPEN_BRACKET,
+				StringUtil.merge(valuesListString, StringPool.COMMA),
+				StringPool.CLOSE_BRACKET);
+		}
+		else {
+			String valueString = String.valueOf(value);
+
+			if (Validator.isBlank(valueString)) {
+				return null;
+			}
+
+			value = StringUtil.quote(valueString, StringPool.APOSTROPHE);
 		}
 
 		if (FilterConstants.isStringFunction(operator)) {
@@ -142,19 +138,11 @@ public class FilterUtil {
 	}
 
 	public static String getNullFilter(String fieldName, String operator) {
-		return fieldName.concat(
-			operator
-		).concat(
-			StringPool.NULL
-		);
+		return operator + StringPool.NULL;
 	}
 
 	public static String negate(String filterString) {
-		return "not".concat(
-			StringPool.SPACE
-		).concat(
-			filterString
-		);
+		return "not " + filterString;
 	}
 
 }

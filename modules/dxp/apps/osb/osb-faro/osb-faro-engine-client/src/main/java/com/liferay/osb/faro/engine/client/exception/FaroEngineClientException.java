@@ -26,12 +26,12 @@ public class FaroEngineClientException extends RuntimeException {
 		super(msg);
 	}
 
-	public FaroEngineClientException(String msg, Throwable cause) {
-		super(msg, cause);
+	public FaroEngineClientException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public FaroEngineClientException(Throwable cause) {
-		super(cause);
+	public FaroEngineClientException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

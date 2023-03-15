@@ -154,8 +154,7 @@ public interface ContactsEngineClient {
 		FaroProject faroProject, String individualSegmentId,
 		String individualId);
 
-	public void deleteProject(FaroProject faroProject, boolean deleteData)
-		throws Exception;
+	public void deleteProject(FaroProject faroProject) throws Exception;
 
 	public void disconnectDataSource(FaroProject faroProject, String id)
 		throws FaroEngineClientException;
@@ -327,8 +326,8 @@ public interface ContactsEngineClient {
 		int delta, List<OrderByField> orderByFields);
 
 	public Results<Object> getFieldValues(
-		FaroProject faroProject, Long channelId, String query,
-		String fieldMappingId, int cur, int delta);
+		FaroProject faroProject, String query, String fieldMappingId, int cur,
+		int delta);
 
 	public Individual getIndividual(
 			FaroProject faroProject, String id, String channelId)
@@ -375,7 +374,7 @@ public interface ContactsEngineClient {
 
 	public Results<Distribution> getIndividualsDistribution(
 		FaroProject faroProject, String channelId, String fieldMappingId,
-		String individualSegmentId, int count, int numberOfBins,
+		String filter, String individualSegmentId, int count, int numberOfBins,
 		List<OrderByField> orderByFields);
 
 	public IndividualSegment getIndividualSegment(

@@ -176,6 +176,15 @@ public class MasterLayoutManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isDisabled() {
+		if (getItemsTotal() > 1) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public Boolean isShowCreationMenu() {
 		if (LayoutPageTemplatePermission.contains(
 				_themeDisplay.getPermissionChecker(),

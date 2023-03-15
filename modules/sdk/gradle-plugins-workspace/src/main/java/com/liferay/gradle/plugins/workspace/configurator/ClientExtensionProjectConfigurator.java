@@ -258,11 +258,7 @@ public class ClientExtensionProjectConfigurator
 				ioException);
 		}
 
-		File dockerFile = project.file("Dockerfile");
-
-		if (dockerFile.exists()) {
-			_addDockerTasks(project, assembleClientExtensionTaskProvider);
-		}
+		_addDockerTasks(project, assembleClientExtensionTaskProvider);
 	}
 
 	@Override

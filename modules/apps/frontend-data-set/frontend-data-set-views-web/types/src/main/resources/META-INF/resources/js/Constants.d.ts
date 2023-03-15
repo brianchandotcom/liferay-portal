@@ -12,6 +12,9 @@
  * details.
  */
 
+declare const OBJECT_RELATIONSHIP: {
+	readonly FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship';
+};
 declare const PAGINATION_PROPS: {
 	pagination: {
 		deltas: {
@@ -20,4 +23,4 @@ declare const PAGINATION_PROPS: {
 		initialDelta: number;
 	};
 };
-export {PAGINATION_PROPS};
+export {OBJECT_RELATIONSHIP, PAGINATION_PROPS};

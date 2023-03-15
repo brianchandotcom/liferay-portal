@@ -22,13 +22,13 @@ declare type HeadlessResource = {
 	version: string;
 };
 interface IFDSEntriesProps {
-	apiURL: string;
+	fdsEntriesAPIURL: string;
 	fdsViewsURL: string;
 	headlessResources: Array<HeadlessResource>;
 	namespace: string;
 }
 declare const FDSEntries: ({
-	apiURL,
+	fdsEntriesAPIURL,
 	fdsViewsURL,
 	headlessResources,
 	namespace,

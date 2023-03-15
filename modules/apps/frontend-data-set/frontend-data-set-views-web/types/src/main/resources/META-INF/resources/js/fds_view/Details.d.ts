@@ -14,26 +14,17 @@
 
 /// <reference types="react" />
 
-import '../css/FDSEntries.scss';
-export declare type TFDSView = {
-	description: string;
-	id: string;
-	label: string;
-};
-interface IFDSViewsProps {
-	fdsEntriesAPIURL: string;
-	fdsEntryId: string;
-	fdsEntryLabel: string;
-	fdsViewURL: string;
+import {TFDSView} from '../FDSViews';
+interface IDetailsProps {
+	fdsView: TFDSView;
 	fdsViewsAPIURL: string;
+	fdsViewsURL: string;
 	namespace: string;
 }
-declare const FDSViews: ({
-	fdsEntriesAPIURL,
-	fdsEntryId,
-	fdsEntryLabel,
-	fdsViewURL,
+declare const Details: ({
+	fdsView,
 	fdsViewsAPIURL,
+	fdsViewsURL,
 	namespace,
-}: IFDSViewsProps) => JSX.Element;
-export default FDSViews;
+}: IDetailsProps) => JSX.Element;
+export default Details;

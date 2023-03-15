@@ -117,7 +117,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userNotification(userNotificationId: ___){actions, dateCreated, id, message, read, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userNotification(userNotificationId: ___){actions, comment, dateCreated, id, message, read, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the user notification.")
 	public UserNotification userNotification(

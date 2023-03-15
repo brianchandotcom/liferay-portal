@@ -58,6 +58,27 @@ public class UserNotification implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public void setComment(
+		UnsafeSupplier<String, Exception> commentUnsafeSupplier) {
+
+		try {
+			comment = commentUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String comment;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}

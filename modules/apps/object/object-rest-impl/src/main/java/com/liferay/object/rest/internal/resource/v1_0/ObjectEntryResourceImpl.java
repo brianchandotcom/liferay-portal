@@ -493,7 +493,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectDefinitionId);
 
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			SystemObjectDefinitionManager systemObjectDefinitionManager =
 				_systemObjectDefinitionManagerRegistry.
 					getSystemObjectDefinitionManager(

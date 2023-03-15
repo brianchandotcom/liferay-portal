@@ -139,7 +139,9 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			};
 		}
 		case TYPES.UPDATE_APP_TAGS: {
-			return state;
+			const appTags = action.payload.value;
+
+			return {...state, appTags};
 		}
 		case TYPES.UPDATE_APP_TRIAL_INFO: {
 			const dayTrial = action.payload.value;

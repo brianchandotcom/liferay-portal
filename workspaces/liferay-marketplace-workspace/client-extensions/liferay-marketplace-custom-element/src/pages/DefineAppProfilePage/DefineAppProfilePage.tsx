@@ -1,3 +1,5 @@
+import {useEffect, useState} from 'react';
+
 import {filesize} from 'filesize';
 import {uniqueId} from 'lodash';
 
@@ -10,7 +12,7 @@ import {Section} from '../../components/Section/Section';
 import {UploadLogo} from '../../components/UploadLogo/UploadLogo';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {createApp, createImage, updateApp} from '../../utils/api';
+import {createApp, createImage, getVocabularies, getCategories, updateApp} from '../../utils/api';
 import {submitBase64EncodedFile} from '../../utils/util';
 
 import './DefineAppProfilePage.scss';
@@ -60,7 +62,7 @@ export function DefineAppProfilePage({
 	onClickBack,
 	onClickContinue,
 }: DefineAppProfilePageProps) {
-	const [{appDescription, appERC, appLogo, appName, catalogId}, dispatch] =
+	const [{appCategories, appDescription, appERC, appLogo, appName, appTags, catalogId}, dispatch] =
 		useAppContext();
 
 	const handleLogoUpload = (files: FileList) => {
@@ -93,6 +95,55 @@ export function DefineAppProfilePage({
 			type: TYPES.UPDATE_APP_LOGO,
 		});
 	};
+
+	const [categories, setCategories] = useState([]);
+	const [tags, setTags] = useState([]);
+
+	useEffect(() => {
+		const getData = async () => {
+			const vocabulariesResponse = await getVocabularies();
+
+			let categoryVocabId = 0;
+			let tagVocabId = 0;
+
+			vocabulariesResponse.items.forEach((vocab : { id : number; name : string; }) => {
+				if (vocab.name === "Marketplace Solution Category") {
+					categoryVocabId = vocab.id;
+				}
+
+				if (vocab.name === "Marketplace Solution Tags") {
+					tagVocabId = vocab.id;
+				}
+			});
+
+			let categoriesList = await getCategories({ vocabId: categoryVocabId });
+			let tagsList = await getCategories({ vocabId: tagVocabId });
+
+			categoriesList = categoriesList.items.map((category : { externalReferenceCode : string; id : number; name : string; }) => {
+				return {
+					checked: false,
+					externalReferenceCode: category.externalReferenceCode,
+					id: category.id,
+					label: category.name,
+					value: category.name,
+				}
+			})
+
+			tagsList = tagsList.items.map((tag : { externalReferenceCode : string; id : number; name : string; }) => {
+				return {
+					checked: false,
+					externalReferenceCode: tag.externalReferenceCode,
+					id: tag.id,
+					label: tag.name,
+					value: tag.name,
+				}
+			})
+
+			setCategories(categoriesList);
+			setTags(tagsList);
+		}
+		getData();
+	}, []);
 
 	return (
 		<div className="profile-page-container">
@@ -152,7 +203,7 @@ export function DefineAppProfilePage({
 						/>
 
 						<MultiSelect
-							items={CategoriesItems}
+							items={categories}
 							label="Categories"
 							onChange={(value) =>
 								dispatch({
@@ -168,9 +219,16 @@ export function DefineAppProfilePage({
 						/>
 
 						<MultiSelect
-							items={TagsItems}
+							items={tags}
 							label="Tags"
-							onChange={() => {}}
+							onChange={(value) =>
+								dispatch({
+									payload: {
+										value,
+									},
+									type: TYPES.UPDATE_APP_TAGS,
+								})
+							}
 							placeholder="Select tags"
 							required
 							tooltip="Tags"
@@ -195,6 +253,7 @@ export function DefineAppProfilePage({
 					}
 					else {
 						response = await createApp({
+							appCategories: [...appCategories, ...appTags],
 							appDescription,
 							appName,
 							catalogId,

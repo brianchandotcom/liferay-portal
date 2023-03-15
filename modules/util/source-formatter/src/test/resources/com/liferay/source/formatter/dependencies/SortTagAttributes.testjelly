@@ -1,0 +1,3 @@
+<?jelly escape-by-default="true"?>
+
+<div for="card in cards" class="section-card"></div>

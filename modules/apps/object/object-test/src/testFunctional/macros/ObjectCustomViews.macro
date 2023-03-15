@@ -175,8 +175,8 @@ definition {
 		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
 		AssertElementPresent(
-			key_picklistOption = ${filterBy},
-			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+			key_menuItem = ${filterBy},
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro assertNoColumnPresentInDefaultSort {

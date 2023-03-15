@@ -17,8 +17,8 @@ definition {
 
 		if (isSet(dropdownItem)) {
 			Click.javaScriptClick(
-				key_picklistOption = ${dropdownItem},
-				locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+				key_menuItem = ${dropdownItem},
+				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 
 		Type(
@@ -56,8 +56,8 @@ definition {
 
 		if (isSet(dropdownItem)) {
 			Click.javaScriptClick(
-				key_picklistOption = ${dropdownItem},
-				locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+				key_menuItem = ${dropdownItem},
+				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 
 		Type(

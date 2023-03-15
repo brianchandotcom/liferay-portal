@@ -27,6 +27,10 @@ public class ContactsLayoutTemplateLocalServiceWrapper
 	implements ContactsLayoutTemplateLocalService,
 			   ServiceWrapper<ContactsLayoutTemplateLocalService> {
 
+	public ContactsLayoutTemplateLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ContactsLayoutTemplateLocalServiceWrapper(
 		ContactsLayoutTemplateLocalService contactsLayoutTemplateLocalService) {
 
@@ -77,6 +81,18 @@ public class ContactsLayoutTemplateLocalServiceWrapper
 
 		return _contactsLayoutTemplateLocalService.createContactsLayoutTemplate(
 			contactsLayoutTemplateId);
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactsLayoutTemplateLocalService.createPersistedModel(
+			primaryKeyObj);
 	}
 
 	/**
@@ -135,6 +151,18 @@ public class ContactsLayoutTemplateLocalServiceWrapper
 
 		return _contactsLayoutTemplateLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _contactsLayoutTemplateLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _contactsLayoutTemplateLocalService.dslQueryCount(dslQuery);
 	}
 
 	@Override

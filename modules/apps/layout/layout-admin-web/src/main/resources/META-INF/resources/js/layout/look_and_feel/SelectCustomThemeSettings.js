@@ -34,13 +34,9 @@ export default function SelectCustomThemeSettings({
 			<ClayCheckbox
 				checked={checked}
 				label={Liferay.Language.get(label)}
-				onChange={() => handleCheckedOption(setChecked, checked)}
+				onChange={() => setChecked(!checked)}
 				value="true"
 			/>
 		</div>
 	);
 }
-
-const handleCheckedOption = (setChecked, checked) => {
-	setChecked(!checked);
-};

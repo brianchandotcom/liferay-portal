@@ -66,23 +66,20 @@ public class ProductContentCommerceMLRecommendationManagerTest {
 						0,
 						_productContentCommerceMLRecommendations.size() - 1));
 
-		List<ProductContentCommerceMLRecommendation>
-			expectedProductContentCommerceMLRecommendations = ListUtil.sort(
-				ListUtil.filter(
-					_productContentCommerceMLRecommendations,
-					recommendation ->
-						recommendation.getEntryClassPK() ==
-							productContentCommerceMLRecommendation.
-								getEntryClassPK()),
-				Comparator.comparingInt(
-					ProductContentCommerceMLRecommendation::getRank));
-
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
 				_assetResultEquals(
 					productContentCommerceMLRecommendation.getEntryClassPK(),
-					expectedProductContentCommerceMLRecommendations);
+					ListUtil.sort(
+						ListUtil.filter(
+							_productContentCommerceMLRecommendations,
+							recommendation ->
+								recommendation.getEntryClassPK() ==
+									productContentCommerceMLRecommendation.
+										getEntryClassPK()),
+						Comparator.comparingInt(
+							ProductContentCommerceMLRecommendation::getRank)));
 
 				return null;
 			});

@@ -71,21 +71,19 @@ public class UserCommerceMLRecommendationManagerTest {
 			userCommerceMLRecommendationComparator = Comparator.comparingDouble(
 				UserCommerceMLRecommendation::getScore);
 
-		List<UserCommerceMLRecommendation>
-			expectedUserCommerceMLRecommendations = ListUtil.sort(
-				ListUtil.filter(
-					_userCommerceMLRecommendations,
-					recommendation ->
-						recommendation.getEntryClassPK() ==
-							userCommerceMLRecommendation.getEntryClassPK()),
-				userCommerceMLRecommendationComparator.reversed());
-
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
 				_assetResultEquals(
 					userCommerceMLRecommendation.getEntryClassPK(), null,
-					expectedUserCommerceMLRecommendations);
+					ListUtil.sort(
+						ListUtil.filter(
+							_userCommerceMLRecommendations,
+							recommendation ->
+								recommendation.getEntryClassPK() ==
+									userCommerceMLRecommendation.
+										getEntryClassPK()),
+						userCommerceMLRecommendationComparator.reversed()));
 
 				return null;
 			});
@@ -104,33 +102,30 @@ public class UserCommerceMLRecommendationManagerTest {
 			userCommerceMLRecommendationComparator = Comparator.comparingDouble(
 				UserCommerceMLRecommendation::getScore);
 
-		List<UserCommerceMLRecommendation>
-			expectedUserCommerceMLRecommendations = ListUtil.sort(
-				TransformUtil.transform(
-					_userCommerceMLRecommendations,
-					recommendation -> {
-						if ((recommendation.getEntryClassPK() !=
-								userCommerceMLRecommendation.
-									getEntryClassPK()) ||
-							!_filterAssetCategories(
-								recommendation.getAssetCategoryIds(),
-								userCommerceMLRecommendation.
-									getAssetCategoryIds())) {
-
-							return null;
-						}
-
-						return recommendation;
-					}),
-				userCommerceMLRecommendationComparator.reversed());
-
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
 				_assetResultEquals(
 					userCommerceMLRecommendation.getEntryClassPK(),
 					userCommerceMLRecommendation.getAssetCategoryIds(),
-					expectedUserCommerceMLRecommendations);
+					ListUtil.sort(
+						TransformUtil.transform(
+							_userCommerceMLRecommendations,
+							recommendation -> {
+								if ((recommendation.getEntryClassPK() !=
+										userCommerceMLRecommendation.
+											getEntryClassPK()) ||
+									!_filterAssetCategories(
+										recommendation.getAssetCategoryIds(),
+										userCommerceMLRecommendation.
+											getAssetCategoryIds())) {
+
+									return null;
+								}
+
+								return recommendation;
+							}),
+						userCommerceMLRecommendationComparator.reversed()));
 
 				return null;
 			});

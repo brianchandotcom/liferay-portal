@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile project(":apps:digital-signature:digital-signature-rest-api")
 	testIntegrationCompile project(":apps:digital-signature:digital-signature-rest-client")
+	testIntegrationCompile project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

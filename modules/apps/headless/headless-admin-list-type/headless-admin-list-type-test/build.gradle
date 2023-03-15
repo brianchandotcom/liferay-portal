@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile project(":apps:headless:headless-admin-list-type:headless-admin-list-type-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-list-type:headless-admin-list-type-client")
+	testIntegrationCompile project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
 	testIntegrationCompile project(":apps:list-type:list-type-api")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")

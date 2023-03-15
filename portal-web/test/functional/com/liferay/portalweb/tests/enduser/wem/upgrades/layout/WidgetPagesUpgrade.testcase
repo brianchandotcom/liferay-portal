@@ -16,7 +16,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a use case for LPS-75561."
+	@description = "This is a use case for LPS-75561. Add widget to widget page after upgrade."
 	@priority = 5
 	test AddWidgetToPageAfterUpgrade625 {
 		property data.archive.type = "data-archive-pages-administration";
@@ -30,7 +30,7 @@ definition {
 		AssertTextNotPresent(value1 = "There was an unexpected error. Please refresh the current page.");
 	}
 
-	@description = "This is a use case for LPS-75561."
+	@description = "This is a use case for LPS-75561. Add widget to widget page after upgrade."
 	@priority = 5
 	test AddWidgetToPageAfterUpgrade621015 {
 		property data.archive.type = "data-archive-pages-administration";
@@ -44,7 +44,7 @@ definition {
 		AssertTextNotPresent(value1 = "There was an unexpected error. Please refresh the current page.");
 	}
 
-	@description = "This is a use case for LPS-75561."
+	@description = "This is a use case for LPS-75561. Add widget to widget page after upgrade."
 	@priority = 5
 	test AddWidgetToPageAfterUpgrade621021 {
 		property data.archive.type = "data-archive-pages-administration";

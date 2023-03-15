@@ -19,6 +19,7 @@ import {
 	screen,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
+import {sessionStorage} from 'frontend-js-web';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -50,7 +51,7 @@ const renderSidebar = async () => {
 describe('Sidebar', () => {
 	describe('resize', () => {
 		afterEach(() => {
-			window.sessionStorage.clear();
+			sessionStorage.clear();
 		});
 
 		it('can be resized with mouse', async () => {

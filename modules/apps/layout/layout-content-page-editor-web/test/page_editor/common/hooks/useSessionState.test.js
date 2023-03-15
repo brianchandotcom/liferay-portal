@@ -18,8 +18,8 @@ import {useSessionState} from '../../../../src/main/resources/META-INF/resources
 
 describe('useSessionState', () => {
 	beforeEach(() => {
-		jest.spyOn(window.sessionStorage.__proto__, 'getItem');
-		jest.spyOn(window.sessionStorage.__proto__, 'setItem');
+		jest.spyOn(sessionStorage.__proto__, 'getItem');
+		jest.spyOn(sessionStorage.__proto__, 'setItem');
 	});
 
 	afterEach(() => {
@@ -27,10 +27,8 @@ describe('useSessionState', () => {
 	});
 
 	it('gets initial value from session storage', () => {
-		window.sessionStorage.getItem.mockImplementation(() =>
-			JSON.stringify('hey!')
-		);
-		window.sessionStorage.setItem.mockImplementation(() => {});
+		sessionStorage.getItem.mockImplementation(() => JSON.stringify('hey!'));
+		sessionStorage.setItem.mockImplementation(() => {});
 
 		const {result} = renderHook(() => useSessionState('key'));
 		const [value] = result.current;

@@ -72,15 +72,13 @@ public class UserCommerceMLRecommendationManagerTest {
 				UserCommerceMLRecommendation::getScore);
 
 		List<UserCommerceMLRecommendation>
-			expectedUserCommerceMLRecommendations = ListUtil.filter(
-				_userCommerceMLRecommendations,
-				recommendation ->
-					recommendation.getEntryClassPK() ==
-						userCommerceMLRecommendation.getEntryClassPK());
-
-		Collections.sort(
-			expectedUserCommerceMLRecommendations,
-			userCommerceMLRecommendationComparator.reversed());
+			expectedUserCommerceMLRecommendations = ListUtil.sort(
+				ListUtil.filter(
+					_userCommerceMLRecommendations,
+					recommendation ->
+						recommendation.getEntryClassPK() ==
+							userCommerceMLRecommendation.getEntryClassPK()),
+				userCommerceMLRecommendationComparator.reversed());
 
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
@@ -107,25 +105,24 @@ public class UserCommerceMLRecommendationManagerTest {
 				UserCommerceMLRecommendation::getScore);
 
 		List<UserCommerceMLRecommendation>
-			expectedUserCommerceMLRecommendations = TransformUtil.transform(
-				_userCommerceMLRecommendations,
-				recommendation -> {
-					if ((recommendation.getEntryClassPK() !=
-							userCommerceMLRecommendation.getEntryClassPK()) ||
-						!_filterAssetCategories(
-							recommendation.getAssetCategoryIds(),
-							userCommerceMLRecommendation.
-								getAssetCategoryIds())) {
+			expectedUserCommerceMLRecommendations = ListUtil.sort(
+				TransformUtil.transform(
+					_userCommerceMLRecommendations,
+					recommendation -> {
+						if ((recommendation.getEntryClassPK() !=
+								userCommerceMLRecommendation.
+									getEntryClassPK()) ||
+							!_filterAssetCategories(
+								recommendation.getAssetCategoryIds(),
+								userCommerceMLRecommendation.
+									getAssetCategoryIds())) {
 
-						return null;
-					}
+							return null;
+						}
 
-					return recommendation;
-				});
-
-		Collections.sort(
-			expectedUserCommerceMLRecommendations,
-			userCommerceMLRecommendationComparator.reversed());
+						return recommendation;
+					}),
+				userCommerceMLRecommendationComparator.reversed());
 
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,

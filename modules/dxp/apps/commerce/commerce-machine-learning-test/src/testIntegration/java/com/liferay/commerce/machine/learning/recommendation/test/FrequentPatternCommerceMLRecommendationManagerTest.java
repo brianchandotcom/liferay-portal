@@ -82,25 +82,21 @@ public class FrequentPatternCommerceMLRecommendationManagerTest {
 
 		long[] antecedentIds = ArrayUtil.toLongArray(antecedentIdList);
 
-		List<FrequentPatternCommerceMLRecommendation>
-			expectedFrequentPatternCommerceMLRecommendations = ListUtil.filter(
-				_frequentPatternCommerceMLRecommendations,
-				recommendation ->
-					_filterFrequentPatternCommerceMLRecommendation(
-						recommendation, antecedentIds));
-
-		expectedFrequentPatternCommerceMLRecommendations.sort(
-			new FrequentPatternCommerceMLRecommendationComparator(
-				antecedentIds));
-
 		Map<Long, FrequentPatternCommerceMLRecommendation>
-			expectedFrequentPatternCommerceMLRecommendationsMap =
+			expectedFrequentPatternCommerceMLRecommendations =
 				new LinkedHashMap<>();
 
 		for (FrequentPatternCommerceMLRecommendation recommendation :
-				expectedFrequentPatternCommerceMLRecommendations) {
+				ListUtil.sort(
+					ListUtil.filter(
+						_frequentPatternCommerceMLRecommendations,
+						recommendation ->
+							_filterFrequentPatternCommerceMLRecommendation(
+								recommendation, antecedentIds)),
+					new FrequentPatternCommerceMLRecommendationComparator(
+						antecedentIds))) {
 
-			expectedFrequentPatternCommerceMLRecommendationsMap.putIfAbsent(
+			expectedFrequentPatternCommerceMLRecommendations.putIfAbsent(
 				recommendation.getRecommendedEntryClassPK(), recommendation);
 		}
 
@@ -109,8 +105,8 @@ public class FrequentPatternCommerceMLRecommendationManagerTest {
 			() -> {
 				_assetResultEquals(
 					antecedentIds,
-					new ArrayList(
-						expectedFrequentPatternCommerceMLRecommendationsMap.
+					new ArrayList<>(
+						expectedFrequentPatternCommerceMLRecommendations.
 							values()));
 
 				return null;

@@ -60,7 +60,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import org.junit.AfterClass;
@@ -225,25 +224,23 @@ public class UserSegmentsCriteriaContributorTest {
 		SegmentsCriteriaContributor segmentsCriteriaContributor =
 			_getSegmentsCriteriaContributor();
 
-		Optional<Field> fieldOptional = null;
+		Field field = null;
 
-		for (Field field :
+		for (Field curField :
 				segmentsCriteriaContributor.getFields(
 					_getMockPortletRequest())) {
 
 			if (StringUtil.endsWith(
-					field.getName(),
+					curField.getName(),
 					Normalizer.normalizeIdentifier(expandoColumn.getName()))) {
 
-				fieldOptional = Optional.ofNullable(field);
+				field = curField;
 
 				break;
 			}
 		}
 
-		Assert.assertTrue(fieldOptional.isPresent());
-
-		Field field = fieldOptional.get();
+		Assert.assertNotNull(field);
 
 		Assert.assertEquals(
 			Arrays.asList(defaultValue),
@@ -255,20 +252,18 @@ public class UserSegmentsCriteriaContributorTest {
 	public void testGetFieldsWithSelectEntity() throws Exception {
 		SegmentsCriteriaContributor segmentsCriteriaContributor =
 			_getSegmentsCriteriaContributor();
-		Optional<Field> fieldOptional = null;
+		Field field = null;
 
 		for (Field curField :
 				segmentsCriteriaContributor.getFields(
 					_getMockPortletRequest())) {
 
 			if (Objects.equals(curField.getName(), "groupIds")) {
-				fieldOptional = Optional.ofNullable(curField);
+				field = curField;
 			}
 		}
 
-		Assert.assertTrue(fieldOptional.isPresent());
-
-		Field field = fieldOptional.get();
+		Assert.assertNotNull(field);
 
 		Assert.assertEquals("id", field.getType());
 

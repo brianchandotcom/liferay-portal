@@ -155,7 +155,7 @@ public interface DefaultExpression<T> extends Expression<T> {
 
 	@Override
 	public default Predicate notLike(String value) {
-		return like(new Scalar<>(value));
+		return notLike(new Scalar<>(value));
 	}
 
 }

@@ -118,7 +118,7 @@ public class ListUtil {
 		}
 
 		if (comparator != null) {
-			Collections.sort(list, comparator);
+			list.sort(comparator);
 		}
 	}
 
@@ -436,7 +436,7 @@ public class ListUtil {
 			list = copy(list);
 		}
 
-		Collections.sort(list, comparator);
+		list.sort(comparator);
 
 		return list;
 	}

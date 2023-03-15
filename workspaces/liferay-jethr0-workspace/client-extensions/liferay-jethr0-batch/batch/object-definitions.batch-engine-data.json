@@ -285,7 +285,6 @@
 						"en_US": "Branch Name"
 					},
 					"name": "branchName",
-					"required": true,
 					"type": "String"
 				},
 				{
@@ -295,17 +294,15 @@
 						"en_US": "Branch SHA"
 					},
 					"name": "branchSHA",
-					"required": true,
 					"type": "String"
 				},
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
 					"label": {
-						"en_US": "Rebase"
+						"en_US": "Rebased"
 					},
-					"name": "rebase",
-					"required": true,
+					"name": "rebased",
 					"type": "Boolean"
 				},
 				{
@@ -315,7 +312,6 @@
 						"en_US": "Repository Name"
 					},
 					"name": "repositoryName",
-					"required": true,
 					"type": "String"
 				},
 				{
@@ -325,7 +321,6 @@
 						"en_US": "Upstream Branch Name"
 					},
 					"name": "upstreamBranchName",
-					"required": true,
 					"type": "String"
 				},
 				{
@@ -335,7 +330,6 @@
 						"en_US": "Upstream Branch SHA"
 					},
 					"name": "upstreamBranchSHA",
-					"required": true,
 					"type": "String"
 				},
 				{
@@ -1010,12 +1004,12 @@
 				{
 					"deletionType": "disassociate",
 					"label": {
-						"en_US": "Project to Git Branches"
+						"en_US": "Projects to Git Branches"
 					},
-					"name": "projectToGitBranches",
+					"name": "projectsToGitBranches",
 					"objectDefinitionExternalReferenceCode1": "Project",
 					"objectDefinitionExternalReferenceCode2": "GitBranch",
-					"type": "oneToMany"
+					"type": "manyToMany"
 				},
 				{
 					"deletionType": "disassociate",
@@ -1028,14 +1022,14 @@
 					"type": "oneToMany"
 				},
 				{
-					"deletionType": "cascade",
+					"deletionType": "disassociate",
 					"label": {
-						"en_US": "Project to Test Suites"
+						"en_US": "Projects to Test Suites"
 					},
-					"name": "projectToTestSuites",
+					"name": "projectsToTestSuites",
 					"objectDefinitionExternalReferenceCode1": "Project",
 					"objectDefinitionExternalReferenceCode2": "TestSuite",
-					"type": "oneToMany"
+					"type": "manyToMany"
 				}
 			],
 			"panelCategoryKey": "",

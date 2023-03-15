@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.project;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,15 +28,17 @@ public class ProjectFactory {
 	public static Project newProject(JSONObject jsonObject) {
 		long id = jsonObject.getLong("id");
 
-		if (_projects.containsKey(id)) {
-			return _projects.get(id);
+		synchronized (_projects) {
+			if (_projects.containsKey(id)) {
+				return _projects.get(id);
+			}
+
+			Project project = new DefaultProject(jsonObject);
+
+			_projects.put(project.getId(), project);
+
+			return project;
 		}
-
-		Project project = new DefaultProject(jsonObject);
-
-		_projects.put(project.getId(), project);
-
-		return project;
 	}
 
 	public static void removeProject(Project project) {
@@ -43,9 +46,12 @@ public class ProjectFactory {
 			return;
 		}
 
-		_projects.remove(project.getId());
+		synchronized (_projects) {
+			_projects.remove(project.getId());
+		}
 	}
 
-	private static final Map<Long, Project> _projects = new HashMap<>();
+	private static final Map<Long, Project> _projects =
+		Collections.synchronizedMap(new HashMap<>());
 
 }

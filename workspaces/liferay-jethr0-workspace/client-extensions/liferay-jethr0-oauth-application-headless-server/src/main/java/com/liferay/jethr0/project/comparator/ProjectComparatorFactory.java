@@ -16,6 +16,7 @@ package com.liferay.jethr0.project.comparator;
 
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,30 +32,33 @@ public class ProjectComparatorFactory {
 
 		long id = jsonObject.getLong("id");
 
-		if (_projectComparators.containsKey(id)) {
-			return _projectComparators.get(id);
+		synchronized (_projectComparators) {
+			if (_projectComparators.containsKey(id)) {
+				return _projectComparators.get(id);
+			}
+
+			ProjectComparator.Type type = ProjectComparator.Type.get(
+				jsonObject.getJSONObject("type"));
+
+			ProjectComparator projectComparator;
+
+			if (type == ProjectComparator.Type.FIFO) {
+				projectComparator = new FIFOProjectComparator(
+					projectPrioritizer, jsonObject);
+			}
+			else if (type == ProjectComparator.Type.PROJECT_PRIORITY) {
+				projectComparator = new PriorityProjectComparator(
+					projectPrioritizer, jsonObject);
+			}
+			else {
+				throw new UnsupportedOperationException();
+			}
+
+			_projectComparators.put(
+				projectComparator.getId(), projectComparator);
+
+			return projectComparator;
 		}
-
-		ProjectComparator.Type type = ProjectComparator.Type.get(
-			jsonObject.getJSONObject("type"));
-
-		ProjectComparator projectComparator;
-
-		if (type == ProjectComparator.Type.FIFO) {
-			projectComparator = new FIFOProjectComparator(
-				projectPrioritizer, jsonObject);
-		}
-		else if (type == ProjectComparator.Type.PROJECT_PRIORITY) {
-			projectComparator = new PriorityProjectComparator(
-				projectPrioritizer, jsonObject);
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
-
-		_projectComparators.put(projectComparator.getId(), projectComparator);
-
-		return projectComparator;
 	}
 
 	public static void removeProjectComparator(
@@ -64,10 +68,12 @@ public class ProjectComparatorFactory {
 			return;
 		}
 
-		_projectComparators.remove(projectComparator.getId());
+		synchronized (_projectComparators) {
+			_projectComparators.remove(projectComparator.getId());
+		}
 	}
 
 	private static final Map<Long, ProjectComparator> _projectComparators =
-		new HashMap<>();
+		Collections.synchronizedMap(new HashMap<>());
 
 }

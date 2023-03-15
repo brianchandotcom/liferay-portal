@@ -24,12 +24,12 @@ export default function SelectCustomThemeSettings({
 	const [checked, setChecked] = useState(value === 'true');
 
 	return (
-		<>
+		<div className="mb-3">
 			<ClayInput
 				hidden
 				name={`${portletNamespace}${propertyName}`}
 				value={checked}
-			></ClayInput>
+			/>
 
 			<ClayCheckbox
 				checked={checked}
@@ -37,7 +37,7 @@ export default function SelectCustomThemeSettings({
 				onChange={() => handleCheckedOption(setChecked, checked)}
 				value="true"
 			/>
-		</>
+		</div>
 	);
 }
 

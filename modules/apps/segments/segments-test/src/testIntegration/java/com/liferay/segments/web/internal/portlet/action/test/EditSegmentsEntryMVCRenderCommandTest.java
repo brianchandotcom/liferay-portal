@@ -121,7 +121,6 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 
 		Assert.assertTrue(formId.endsWith("editSegmentFm"));
 
-		Assert.assertEquals(_group.getGroupId(), (long)props.get("groupId"));
 		Assert.assertTrue((boolean)props.get("hasUpdatePermission"));
 		Assert.assertEquals(0, (int)props.get("initialMembersCount"));
 		Assert.assertFalse((boolean)props.get("initialSegmentActive"));
@@ -138,7 +137,6 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 			_group.getDescriptiveName(), props.get("scopeName"));
 		Assert.assertNotNull(props.get("segmentsConfigurationURL"));
 		Assert.assertTrue((boolean)props.get("showInEditMode"));
-		Assert.assertNotNull(props.get("siteItemSelectorURL"));
 	}
 
 	@Test

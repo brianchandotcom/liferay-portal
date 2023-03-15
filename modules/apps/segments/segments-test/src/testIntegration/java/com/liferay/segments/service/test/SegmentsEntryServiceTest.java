@@ -395,11 +395,15 @@ public class SegmentsEntryServiceTest {
 			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 			RandomTestUtil.randomString(), serviceContext);
 
-		_segmentsEntryService.updateSegmentsEntry(
-			segmentsEntry.getSegmentsEntryId(),
-			segmentsEntry.getSegmentsEntryKey(), segmentsEntry.getNameMap(),
-			segmentsEntry.getDescriptionMap(), segmentsEntry.isActive(),
-			segmentsEntry.getCriteria(), serviceContext);
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
+
+			_segmentsEntryService.updateSegmentsEntry(
+				segmentsEntry.getSegmentsEntryId(),
+				segmentsEntry.getSegmentsEntryKey(), segmentsEntry.getNameMap(),
+				segmentsEntry.getDescriptionMap(), segmentsEntry.isActive(),
+				segmentsEntry.getCriteria(), serviceContext);
+		}
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)

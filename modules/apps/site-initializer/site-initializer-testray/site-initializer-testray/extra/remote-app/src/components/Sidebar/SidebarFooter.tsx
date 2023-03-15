@@ -72,15 +72,15 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 						>
 							<div
 								className={classNames(
-									'tr-sidebar__content__list',
+									'tr-sidebar__content__list__item',
 									{
-										'tr-sidebar__content__list--expand': expanded,
-										'tr-sidebar__content__list--normal': !expanded,
+										'tr-sidebar__content__list__item--expand': expanded,
+										'tr-sidebar__content__list__item--normal': !expanded,
 									}
 								)}
 							>
 								<TestrayIcons
-									className="tr-sidebar__content__list__icon"
+									className="tr-sidebar__content__list__item__icon"
 									fill="#8b8db2"
 									size={30}
 									symbol="cog"
@@ -88,9 +88,9 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 
 								<span
 									className={classNames(
-										'tr-sidebar__content__list__text',
+										'tr-sidebar__content__list__item__text',
 										{
-											'tr-sidebar__content__list__text--expanded': expanded,
+											'tr-sidebar__content__list__item__text--expanded': expanded,
 										}
 									)}
 								>
@@ -129,7 +129,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 							position="right"
 							title={expanded ? undefined : loggedUserName}
 						>
-							<div className="tr-sidebar__content__list">
+							<div className="tr-sidebar__content__list__item">
 								<Avatar
 									className={classNames(
 										'tr-sidebar__content__footer__avatar',

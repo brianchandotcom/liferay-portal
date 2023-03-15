@@ -41,19 +41,19 @@ const Sidebar = () => {
 	const CompareRunsContent = (
 		<div
 			className={classNames(
-				'tr-sidebar__content__list tr-sidebar__content__list__compare-runs-options'
+				'tr-sidebar__content__list__item tr-sidebar__content__list__item__compare-runs-options'
 			)}
 		>
 			<TestrayIcons
-				className="tr-sidebar__content__list__icon"
+				className="tr-sidebar__content__list__item__icon"
 				fill="#8b8db2"
 				size={35}
 				symbol="drop"
 			/>
 
 			<span
-				className={classNames('tr-sidebar__content__list__text', {
-					'tr-sidebar__content__list__text--expanded': expanded,
+				className={classNames('tr-sidebar__content__list__item__text', {
+					'tr-sidebar__content__list__item__text--expanded': expanded,
 				})}
 			>
 				{i18n.sub('compare-x', 'runs')}
@@ -114,7 +114,7 @@ const Sidebar = () => {
 							/>
 						</Link>
 
-						<div className="d-flex flex-column pb-5">
+						<div className="tr-sidebar__content__list">
 							{sidebarItems.map(
 								({element, icon, label, path}, index) => {
 									const [, ...items] = sidebarItems;
@@ -147,7 +147,14 @@ const Sidebar = () => {
 										);
 									}
 
-									return <div key={index}>{element}</div>;
+									return (
+										<div
+											className="tr-sidebar__content_list__item"
+											key={index}
+										>
+											{element}
+										</div>
+									);
 								}
 							)}
 						</div>

@@ -77,13 +77,14 @@ $normal-transition: all 0.3s ease;
 			.tr-avatar {
 				&__text {
 					opacity: 0;
+
 					&--expanded {
 						opacity: 1;
 					}
 				}
 			}
 
-			.tr-sidebar__content__list {
+			.tr-sidebar__content__list__item {
 				.tr-avatar__text {
 					color: $color-indigo-light;
 					transition: $normal-transition;
@@ -92,80 +93,98 @@ $normal-transition: all 0.3s ease;
 		}
 
 		&__list {
-			align-items: center;
-			cursor: pointer;
 			display: flex;
-			flex-direction: row;
-			flex-flow: nowrap;
-			overflow: hidden;
-			padding: 8px 20px;
+			flex-direction: column;
+			padding-bottom: 2rem;
 
-			&:active,
-			&:focus,
-			&:hover {
-				background-color: $color-indigo;
-				color: $color-white;
-				fill: $color-white;
-				text-decoration: none;
-				transition: $hover-transition;
-			}
+			&__item {
+				align-items: center;
+				cursor: pointer;
+				display: flex;
+				flex-direction: row;
+				flex-flow: nowrap;
+				overflow: hidden;
+				padding: 8px 20px;
 
-			&:active,
-			&:hover > &__icon {
-				color: $color-white;
-				fill: $color-white;
-			}
+				a {
+					text-decoration: none;
+				}
 
-			&.active {
-				background-color: $color-indigo;
-				color: $color-indigo-light;
+				&:active,
+				&:focus,
+				&:hover,
+				&--active {
+					background-color: $color-indigo;
+
+					svg {
+						fill: $color-white;
+					}
+
+					span {
+						color: $color-white;
+					}
+
+					text-decoration: none;
+					transition: $hover-transition;
+				}
+
+				&:active,
+				&:hover > &__icon {
+					color: $color-white;
+					fill: $color-white;
+				}
+
+				&.active {
+					background-color: $color-indigo;
+					color: $color-indigo-light;
+
+					&__text {
+						color: $color-white;
+						width: 0;
+					}
+				}
+
+				&__compare-runs-options {
+					margin-top: 20px;
+				}
+
+				&__icon {
+					fill: $color-indigo-light;
+					min-height: 35px;
+					min-width: 35px;
+				}
 
 				&__text {
-					color: $color-white;
+					color: $color-indigo-light;
+					font-size: 1.2em;
+					margin-left: 1rem;
+					opacity: 0;
+					transition: $normal-transition;
+					visibility: hidden;
+					white-space: nowrap;
 					width: 0;
+
+					&--expanded {
+						opacity: 1;
+						visibility: visible;
+						width: auto;
+					}
 				}
-			}
 
-			&__compare-runs-options {
-				margin-top: 20px;
-			}
-
-			&__icon {
-				fill: $color-indigo-light;
-				min-height: 35px;
-				min-width: 35px;
-			}
-
-			&__text {
-				color: $color-indigo-light;
-				font-size: 1.2em;
-				margin-left: 1rem;
-				opacity: 0;
-				transition: $normal-transition;
-				visibility: hidden;
-				white-space: nowrap;
-				width: 0;
-
-				&--expanded {
-					opacity: 1;
-					visibility: visible;
-					width: auto;
+				&:hover .tr-avatar__text {
+					color: $color-white;
+					transition: $normal-transition;
 				}
-			}
 
-			&:hover .tr-avatar__text {
-				color: $color-white;
-				transition: $normal-transition;
-			}
+				&:hover > .tr-sidebar__content__item__text--expanded {
+					color: $color-white;
+					transition: $normal-transition;
+				}
 
-			&:hover > .tr-sidebar__content__list__text--expanded {
-				color: $color-white;
-				transition: $normal-transition;
-			}
-
-			&:hover > .tr-sidebar__content__list__icon {
-				fill: $color-white;
-				transition: $normal-transition;
+				&:hover > .tr-sidebar__content__item__icon {
+					fill: $color-white;
+					transition: $normal-transition;
+				}
 			}
 		}
 

@@ -427,11 +427,10 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Address",
 				showLabel = "true",
-				type = "text-input");
+				type = "textarea");
 
 			PageEditor.viewInputStyle(
 				label = "Region",
-				position = 2,
 				showLabel = "true",
 				type = "text-input");
 
@@ -443,11 +442,7 @@ definition {
 		}
 
 		task ("Then the page creator could remove automatically added input fragments") {
-			PageEditor.removeFragment(
-				fragmentName = "Text Input",
-				index = 2);
-
-			for (var fragmentName : list "Text Input,Submit Button") {
+			for (var fragmentName : list "Text Input,Textarea,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -1228,10 +1223,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			Type(
-				key_text = "Address",
-				locator1 = "TextInput#ANY",
-				value1 = "Dalian");
+			FormFields.editTextArea(
+				fieldName = "address",
+				fieldValue = "Dalian");
 
 			Type(
 				key_text = "Age",

@@ -62,7 +62,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 <clay:row>
 	<clay:col
 		size="6"
-		sm="4"
+		sm="5"
 	>
 		<clay:image-card
 			imageAlt='<%= Validator.isNotNull(selTheme.getName()) ? HtmlUtil.escapeAttribute(selTheme.getName()) : "" %>'
@@ -74,7 +74,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 
 	<clay:col
 		size="6"
-		sm="8"
+		sm="7"
 	>
 
 		<%

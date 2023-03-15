@@ -8,222 +8,178 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
+	var projectName = "Project 1";
+	var teamName = "Team 1";
 	var testSiteName = "Testray 2";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
 
-		Testray.addTestraySite(siteName = ${testSiteName});
+			Testray.addTR2Site(siteName = ${testSiteName});
+		}
 
-		Refresh();
+		task ("Given that a Testray Project are created") {
+			JSONTestray.addProject(
+				projectDescription = "Project Description 1",
+				projectName = ${projectName});
+		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Testray.deleteAllProjects();
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-		Testray.tearDownCP();
-
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "This is a test for LPS-160594 - Verify if as an Administrator I am able to add a Team"
+	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I am able to add a Team"
 	@priority = 5
 	test AdminCanAddTeam {
-		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
+		task ("Given that a Testray team are created via API") {
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
 		}
 
-		task ("Change pagination, create Team and Assert it was created") {
+		task ("When I go to the manage teams") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+		}
 
-			TestrayManage.createTeam(teamName = "Teams_1 Team");
-
-			Testray.assertItemName(text = "Teams_1 Team");
+		task ("Then I should be able to assert that the Testray Team was created") {
+			Testray.assertItemName(text = ${teamName});
 		}
 	}
 
-	@description = "This is a test for LPS-166560 - Verify if as an administrator I can assign teams without components to dualbox"
-	@priority = 4
-	test AdminCanAssignTeamsByDualbox {
-		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-		}
-
-		task ("create a component without team") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-
-			Testray.addNewComponent(componentName = "Component_Unassigned");
-
-			Click(
-				key_modalTitle = "Components - Projects_1 Project",
-				locator1 = "Button#CLOSE_MODAL");
-		}
-
-		task ("Assign a component to a team via duallbox") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
-
-			TestrayManage.createTeam(
-				component = "Component_Unassigned",
-				teamName = "Components_1 Team");
-
-			Click(
-				key_modalTitle = "Teams - Projects_1 Project",
-				locator1 = "Button#CLOSE_MODAL");
-		}
-
-		task ("Assert that the component was Assign to a team") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-
-			Testray.assertItemName(text = "Component_Unassigned");
-		}
-	}
-
-	@description = "This is a test for LPS-160595 - Verify if as an Administrator I am able to delete a Team"
+	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I am able to delete a Team"
 	@priority = 5
 	test AdminCanDeleteTeam {
-		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
+		task ("Given that a Testray team are created via API") {
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
 		}
 
-		task ("Change pagination and create Team") {
+		task ("And I go to the manage teams") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
-
-			TestrayManage.createTeam(teamName = "Teams_2 Team");
 		}
 
-		task ("Delete Team and Assert it was Deleted") {
+		task ("When I delete the newly created Testray Team") {
 			TestrayManage.deleteProductVersion(
 				itemManage = "Delete",
-				versionName = "Teams_2 Team");
+				versionName = ${teamName});
+		}
 
-			Testray.assertItemNotPresent(text = "Teams_2 Team");
+		task ("Then I should be able to assert that the Testray Team has been deleted") {
+			Testray.assertItemNotPresent(text = ${teamName});
 		}
 	}
 
-	@description = "This is a test for LPS-160596 - Verify if as an Administrator I am able to edit a Team"
+	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I am able to edit a Team"
 	@priority = 5
 	test AdminCanEditTeam {
-		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
+		task ("Given that a Testray team are created via API") {
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
 		}
 
-		task ("Change pagination and create Team") {
+		task ("And I go to the manage teams") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
-
-			TestrayManage.createTeam(teamName = "Teams_3 Team");
 		}
 
-		task ("Edit Team and Assert it was Edited") {
+		task ("When I edit the Testray Team") {
 			TestrayManage.editTeam(
-				nameTeam = "Teams_3 Team",
-				typeTeam = "Teams_3 Team Edited");
+				currentTeamName = ${teamName},
+				newTeamName = "Team Edited");
+		}
 
-			Testray.assertItemName(text = "Teams_3 Team Edited");
+		task ("Then I should be able to assert that the Testray Team has been edited") {
+			Testray.assertItemName(text = "Team Edited");
 		}
 	}
 
-	@description = "This is a test for LPS-162501 - Verify if as an Administrator I should not be able to add a duplicate Teams"
+	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Teams"
 	@priority = 5
 	test AdminCanNotAddDuplicateTeams {
-		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
+		task ("Given that a Testray team are created via API") {
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
 		}
 
-		task ("Change pagination, create Product Version and Assert that no duplicate product version was created") {
+		task ("And I go to the manage teams") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+		}
 
-			TestrayManage.createTeam(teamName = "Teams_2 Team");
+		task ("When I try to create an existing Testray Team") {
+			TestrayManage.createTeam(teamName = ${teamName});
+		}
 
-			TestrayManage.createTeam(teamName = "Teams_2 Team");
-
+		task ("Then I should be able to assert that an error message is shown") {
 			Alert.viewErrorMessage(errorMessage = "The Team name already exists");
 		}
 	}
 
-	@description = "This is a test for LPS-162502 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
+	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
 	@priority = 4
-	test AdminCanViewWarningMessage {
-		task ("Go to Testray and Create Project") {
+	test AssertThatTheFieldIsRequired {
+		task ("Given I go to the manage teams") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
-		}
-
-		task ("Change pagination and Assert that field Name is required") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+		}
 
+		task ("When I try to create a Testray Team without filling in the name") {
 			TestrayManage.createTeam();
+		}
 
+		task ("Then I should be able to assert that the field is required") {
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",
 				warningMessage = "name is a required field");

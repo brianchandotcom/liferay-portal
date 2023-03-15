@@ -452,7 +452,7 @@ public class ObjectActionLocalServiceImpl
 				objectActionTriggerKey,
 				ObjectActionTriggerConstants.KEY_STANDALONE)) {
 
-			if (objectDefinition.isSystem()) {
+			if (objectDefinition.isUnmodifiableSystemObject()) {
 				throw new ObjectActionTriggerKeyException(
 					StringBundler.concat(
 						"The object action trigger key ",
@@ -572,7 +572,7 @@ public class ObjectActionLocalServiceImpl
 				!objectDefinition.isApproved() ||
 				(!FeatureFlagManagerUtil.isEnabled(
 					objectDefinition.getCompanyId(), "LPS-173537") &&
-				 objectDefinition.isSystem())) {
+				 objectDefinition.isUnmodifiableSystemObject())) {
 
 				errorMessageKeys.put("objectDefinitionId", "invalid");
 			}

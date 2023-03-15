@@ -33,7 +33,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.ProductSerDes;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,8 +94,8 @@ public class KoroneikiHttpUtil {
 
 		HttpInvoker.HttpResponse httpResponse =
 			_contactRoleResource.getContactRoleHttpResponse(
-				HttpUtil.encodePath(type.toString()),
-				HttpUtil.encodePath(
+				HttpComponentsUtil.encodePath(type.toString()),
+				HttpComponentsUtil.encodePath(
 					KoroneikiConstants.translateContactRoleName(name)));
 
 		if (httpResponse.getStatusCode() == HttpServletResponse.SC_OK) {
@@ -108,7 +108,7 @@ public class KoroneikiHttpUtil {
 	public static Product fetchProduct(String productName) throws Exception {
 		HttpInvoker.HttpResponse httpResponse =
 			_productResource.getProductByNameProductNameHttpResponse(
-				HttpUtil.encodePath(productName));
+				HttpComponentsUtil.encodePath(productName));
 
 		if (httpResponse.getStatusCode() == HttpServletResponse.SC_OK) {
 			return ProductSerDes.toDTO(httpResponse.getContent());
@@ -140,12 +140,12 @@ public class KoroneikiHttpUtil {
 			int pageSize)
 		throws Exception {
 
-		Page<Account> accounts =
+		Page<Account> accountsPage =
 			_accountResource.getAccountByExternalLinkDomainEntityNameEntityPage(
 				domain, entityName, entityId, Pagination.of(page, pageSize));
 
-		if ((accounts != null) && (accounts.getItems() != null)) {
-			return new ArrayList<>(accounts.getItems());
+		if ((accountsPage != null) && (accountsPage.getItems() != null)) {
+			return new ArrayList<>(accountsPage.getItems());
 		}
 
 		return Collections.emptyList();
@@ -175,11 +175,11 @@ public class KoroneikiHttpUtil {
 			String filter, int page, int size)
 		throws Exception {
 
-		Page<Account> accounts = _accountResource.getAccountsPage(
+		Page<Account> accountsPage = _accountResource.getAccountsPage(
 			null, filter, Pagination.of(page, size), null);
 
-		if ((accounts != null) && (accounts.getItems() != null)) {
-			return new ArrayList<>(accounts.getItems());
+		if ((accountsPage != null) && (accountsPage.getItems() != null)) {
+			return new ArrayList<>(accountsPage.getItems());
 		}
 
 		return Collections.emptyList();

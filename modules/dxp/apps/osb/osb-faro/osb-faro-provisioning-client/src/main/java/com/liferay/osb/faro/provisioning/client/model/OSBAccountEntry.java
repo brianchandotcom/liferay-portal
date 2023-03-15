@@ -17,13 +17,13 @@ package com.liferay.osb.faro.provisioning.client.model;
 import com.liferay.osb.faro.provisioning.client.constants.KoroneikiConstants;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Matthew Kong
@@ -55,13 +55,13 @@ public class OSBAccountEntry {
 
 		_name = account.getName();
 
-		_offeringEntries = Stream.of(
-			account.getProductPurchases()
-		).map(
-			OSBOfferingEntry::new
-		).collect(
-			Collectors.toList()
-		);
+		List<OSBOfferingEntry> osbOfferingEntry = new ArrayList<>();
+
+		for (ProductPurchase productPurchase : account.getProductPurchases()) {
+			osbOfferingEntry.add(new OSBOfferingEntry(productPurchase));
+		}
+
+		_offeringEntries = osbOfferingEntry;
 	}
 
 	public long getAccountEntryId() {

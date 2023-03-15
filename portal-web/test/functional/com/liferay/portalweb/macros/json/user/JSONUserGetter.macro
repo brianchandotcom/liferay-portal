@@ -52,9 +52,7 @@ definition {
 
 		var curl = JSONUserGetter._getUserByIdCurlNoSelenium(userId = ${userId});
 
-		var response = JSONCurlUtil.get(${curl});
-
-		var userEmailAddress = JSONUtil.getWithJSONPath(${response}, "$..emailAddress");
+		var userEmailAddress = JSONCurlUtil.get(${curl}, "$..emailAddress");
 
 		return ${userEmailAddress};
 	}

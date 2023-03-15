@@ -14,8 +14,6 @@ definition {
 
 		User.firstLoginPG();
 
-		Navigator.openURL();
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
@@ -25,23 +23,19 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Message Boards Message");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
 
-		PagesAdmin.addPage(
-			pageName = "Message Boards Page",
-			sitePageType = "Widget Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			layoutTemplate = "1 Column");
 
-		PagesAdmin.configurePage(
-			columnName = "1 Column",
-			pageName = "Message Boards Page",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		Portlet.addPG(portletName = "Message Boards");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
 	}
 
 	tearDown {

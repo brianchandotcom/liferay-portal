@@ -1,0 +1,65 @@
+@component-name = "portal-util-misc"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Ext";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Verify pop server notifications can be enabled via UI"
+	@priority = 3
+	test CanEnablePopServerNotificationsViaUI {
+		property database.types = "mysql";
+
+		task ("Given pop server notifications are disabled") {
+			ServerAdministration.openServerAdmin();
+
+			Navigator.gotoNavItem(navItem = "Properties");
+
+			Navigator.gotoNavItem(navItem = "Portal Properties");
+
+			Search.searchCP(searchTerm = "pop.server.notifications.enabled");
+
+			AssertTextEquals(
+				key_propertyName = "pop.server.notifications.enabled",
+				locator1 = "ServerAdministrationProperties#PORTAL_SYSTEM_PROPERTY_VALUE",
+				value1 = "false");
+		}
+
+		task ("Then the user can enable them via UI") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Email",
+				configurationName = "Mail Settings",
+				configurationScope = "Virtual Instance Scope");
+
+			Check(
+				checkboxName = "Enable POP Server Notifications",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			ServerAdministration.configureMailServerSettings(
+				userName = PropsUtil.get("email.address.2"),
+				userPassword = PropsUtil.get("email.password.2"));
+
+			var companyId = JSONCompany.getCompanyId();
+
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT smallValue FROM lportal.PortalPreferenceValue WHERE companyId='${companyId}' AND key_='pop.server.notifications.enabled'",
+				text = "true");
+		}
+	}
+
+}

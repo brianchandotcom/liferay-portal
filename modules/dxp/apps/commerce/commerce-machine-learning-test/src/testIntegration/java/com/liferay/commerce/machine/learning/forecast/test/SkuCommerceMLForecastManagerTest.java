@@ -94,8 +94,8 @@ public class SkuCommerceMLForecastManagerTest {
 					ListUtil.filter(
 						_skuCommerceMLForecasts,
 						forecast -> Objects.equals(
-							forecast.getSku(),
-							skuCommerceMLForecast.getSku())));
+							skuCommerceMLForecast.getSku(),
+							forecast.getSku())));
 
 				return null;
 			});

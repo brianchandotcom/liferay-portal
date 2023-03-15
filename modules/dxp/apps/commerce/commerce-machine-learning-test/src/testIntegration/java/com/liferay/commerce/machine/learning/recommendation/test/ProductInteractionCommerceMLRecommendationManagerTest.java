@@ -68,18 +68,15 @@ public class ProductInteractionCommerceMLRecommendationManagerTest {
 							1));
 
 		List<ProductInteractionCommerceMLRecommendation>
-			expectedProductInteractionCommerceMLRecommendations =
+			expectedProductInteractionCommerceMLRecommendations = ListUtil.sort(
 				ListUtil.filter(
 					_productInteractionCommerceMLRecommendations,
 					recommendation ->
 						recommendation.getEntryClassPK() ==
 							productInteractionCommerceMLRecommendation.
-								getEntryClassPK());
-
-		Collections.sort(
-			expectedProductInteractionCommerceMLRecommendations,
-			Comparator.comparingInt(
-				ProductInteractionCommerceMLRecommendation::getRank));
+								getEntryClassPK()),
+				Comparator.comparingInt(
+					ProductInteractionCommerceMLRecommendation::getRank));
 
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,

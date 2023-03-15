@@ -55,12 +55,6 @@ public class ObjectFieldBuilder {
 		return this;
 	}
 
-	public ObjectFieldBuilder defaultValue(String defaultValue) {
-		objectField.setDefaultValue(defaultValue);
-
-		return this;
-	}
-
 	public ObjectFieldBuilder externalReferenceCode(
 		String externalReferenceCode) {
 

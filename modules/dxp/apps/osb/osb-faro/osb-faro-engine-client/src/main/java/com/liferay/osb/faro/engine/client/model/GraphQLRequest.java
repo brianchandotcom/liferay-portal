@@ -22,9 +22,6 @@ import java.util.Map;
  */
 public class GraphQLRequest {
 
-	public GraphQLRequest() {
-	}
-
 	public String getOperationName() {
 		return _operationName;
 	}

@@ -16,6 +16,7 @@ package com.liferay.osb.faro.engine.client.http.client;
 
 import com.liferay.osb.faro.util.FaroRequestAudit;
 import com.liferay.osb.faro.util.FaroThreadLocal;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
@@ -62,11 +63,7 @@ public class AuditClientHttpRequestInterceptor
 		String query = uri.getQuery();
 
 		if (query != null) {
-			urlPath = urlPath.concat(
-				StringPool.QUESTION
-			).concat(
-				query
-			);
+			urlPath = StringBundler.concat(urlPath, StringPool.QUESTION, query);
 		}
 
 		childFaroRequestAudit.setURLPath(urlPath);

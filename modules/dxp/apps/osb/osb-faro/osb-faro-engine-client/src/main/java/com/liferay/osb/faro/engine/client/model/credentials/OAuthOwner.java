@@ -19,9 +19,6 @@ package com.liferay.osb.faro.engine.client.model.credentials;
  */
 public class OAuthOwner {
 
-	public OAuthOwner() {
-	}
-
 	public String getEmailAddress() {
 		return _emailAddress;
 	}

@@ -21,9 +21,6 @@ import java.util.Date;
  */
 public class BlockedKeyword {
 
-	public BlockedKeyword() {
-	}
-
 	public Date getCreateDate() {
 		if (_createDate == null) {
 			return null;

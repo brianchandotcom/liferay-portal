@@ -17,7 +17,6 @@ package com.liferay.osb.faro.engine.client;
 import com.liferay.osb.faro.model.FaroProject;
 
 import java.util.Date;
-import java.util.Optional;
 
 /**
  * @author Marcellus Tavares
@@ -25,13 +24,7 @@ import java.util.Optional;
 public interface CerebroEngineClient {
 
 	public long getPageViews(
-			FaroProject faroProject, Optional<Date> fromDateOptional,
-			Optional<Date> toDateOptional)
-		throws Exception;
-
-	public String getSiteMetrics(
-			String channelId, FaroProject faroProject, String interval,
-			int rangeKey)
+			FaroProject faroProject, Date fromDate, Date toDate)
 		throws Exception;
 
 	public boolean isCustomEventsLimitReached(FaroProject faroProject)

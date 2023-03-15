@@ -23,9 +23,6 @@ public class TokenCredentials implements Credentials {
 
 	public static final String TYPE = "Token Authentication";
 
-	public TokenCredentials() {
-	}
-
 	@Override
 	public void clearPasswords() {
 		_privateKey = null;

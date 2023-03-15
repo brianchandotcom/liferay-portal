@@ -27,9 +27,6 @@ import java.util.Map;
  */
 public class Individual {
 
-	public Individual() {
-	}
-
 	public long getActivitiesCount() {
 		return _activitiesCount;
 	}
@@ -124,9 +121,6 @@ public class Individual {
 	}
 
 	public static class DataSourceIndividualPK {
-
-		public DataSourceIndividualPK() {
-		}
 
 		public String getDataSourceId() {
 			return _dataSourceId;

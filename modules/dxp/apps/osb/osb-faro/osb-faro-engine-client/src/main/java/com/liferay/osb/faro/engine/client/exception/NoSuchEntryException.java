@@ -26,12 +26,12 @@ public class NoSuchEntryException extends FaroEngineClientException {
 		super(msg);
 	}
 
-	public NoSuchEntryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchEntryException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchEntryException(Throwable cause) {
-		super(cause);
+	public NoSuchEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -21,9 +21,6 @@ import java.util.Date;
  */
 public class IndividualSegmentMembershipChangeAggregation {
 
-	public IndividualSegmentMembershipChangeAggregation() {
-	}
-
 	public long getAddedIndividualsCount() {
 		return _addedIndividualsCount;
 	}

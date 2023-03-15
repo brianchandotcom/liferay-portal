@@ -31,8 +31,6 @@ import java.time.ZonedDateTime;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,14 +48,12 @@ public class CerebroEngineClientImpl implements CerebroEngineClient {
 
 	@Override
 	public long getPageViews(
-			FaroProject faroProject, Optional<Date> fromDateOptional,
-			Optional<Date> toDateOptional)
+			FaroProject faroProject, Date fromDate, Date toDate)
 		throws Exception {
 
 		ResponseEntity<String> responseEntity = _getResponseEntity(
 			faroProject,
-			_getPagesCountGraphQLRequestHttpEntity(
-				fromDateOptional, toDateOptional));
+			_getPagesCountGraphQLRequestHttpEntity(fromDate, toDate));
 
 		JSONObject rootJSONObject = _jsonFactory.createJSONObject(
 			responseEntity.getBody());
@@ -65,53 +61,6 @@ public class CerebroEngineClientImpl implements CerebroEngineClient {
 		JSONObject dataJSONObject = rootJSONObject.getJSONObject("data");
 
 		return dataJSONObject.getLong("pagesCount");
-	}
-
-	@Override
-	public String getSiteMetrics(
-			String channelId, FaroProject faroProject, String interval,
-			int rangeKey)
-		throws Exception {
-
-		GraphQLRequest graphQLRequest = new GraphQLRequest();
-
-		graphQLRequest.setOperationName("SiteMetrics");
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("query SiteMetrics($channelId: String $interval: String! ");
-		sb.append("$rangeKey: Int) {site(channelId: $channelId interval: ");
-		sb.append("$interval rangeKey: $rangeKey) {bounceRateMetric {trend {");
-		sb.append("percentage trendClassification} previousValue value} ");
-		sb.append("sessionDurationMetric {trend {percentage ");
-		sb.append("trendClassification} previousValue value} ");
-		sb.append("sessionsPerVisitorMetric {trend {percentage ");
-		sb.append("trendClassification} previousValue value} visitorsMetric {");
-		sb.append("trend {percentage trendClassification} previousValue ");
-		sb.append("value}}}");
-
-		graphQLRequest.setQuery(sb.toString());
-
-		graphQLRequest.setVariables(
-			new HashMap<String, Object>() {
-				{
-					put("channelId", channelId);
-					put("interval", interval);
-					put("rangeKey", rangeKey);
-				}
-			});
-
-		ResponseEntity<String> responseEntity = _getResponseEntity(
-			faroProject, graphQLRequest);
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			responseEntity.getBody());
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		JSONObject siteJSONObject = dataJSONObject.getJSONObject("site");
-
-		return siteJSONObject.toString();
 	}
 
 	@Override
@@ -140,12 +89,10 @@ public class CerebroEngineClientImpl implements CerebroEngineClient {
 			_getTimeZoneGraphQLRequestHttpEntity(faroProject.getTimeZoneId()));
 	}
 
-	private String _getDateTimeString(Optional<Date> dateOptional) {
-		if (!dateOptional.isPresent()) {
+	private String _getDateTimeString(Date date) {
+		if (date == null) {
 			return StringPool.BLANK;
 		}
-
-		Date date = dateOptional.get();
 
 		Instant instant = date.toInstant();
 
@@ -157,7 +104,7 @@ public class CerebroEngineClientImpl implements CerebroEngineClient {
 	}
 
 	private GraphQLRequest _getPagesCountGraphQLRequestHttpEntity(
-		Optional<Date> fromDateOptional, Optional<Date> toDateOptional) {
+		Date fromDate, Date toDate) {
 
 		GraphQLRequest graphQLRequest = new GraphQLRequest();
 
@@ -165,18 +112,18 @@ public class CerebroEngineClientImpl implements CerebroEngineClient {
 
 		sb.append("{pagesCount");
 
-		if (fromDateOptional.isPresent() || toDateOptional.isPresent()) {
+		if ((fromDate != null) || (toDate != null)) {
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			if (fromDateOptional.isPresent()) {
+			if (fromDate != null) {
 				sb.append(" fromDate: \"");
-				sb.append(_getDateTimeString(fromDateOptional));
+				sb.append(_getDateTimeString(fromDate));
 				sb.append(StringPool.QUOTE);
 			}
 
-			if (toDateOptional.isPresent()) {
+			if (toDate != null) {
 				sb.append(" toDate: \"");
-				sb.append(_getDateTimeString(toDateOptional));
+				sb.append(_getDateTimeString(toDate));
 				sb.append(StringPool.QUOTE);
 			}
 

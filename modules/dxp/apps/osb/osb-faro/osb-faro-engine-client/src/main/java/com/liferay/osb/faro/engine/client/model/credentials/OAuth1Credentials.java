@@ -26,9 +26,6 @@ public class OAuth1Credentials implements Credentials {
 
 	public static final String TYPE = "OAuth 1 Authentication";
 
-	public OAuth1Credentials() {
-	}
-
 	@Override
 	public void clearPasswords() {
 		_oAuthAccessSecret = null;

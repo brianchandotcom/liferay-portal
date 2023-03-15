@@ -19,9 +19,6 @@ package com.liferay.osb.faro.engine.client.model;
  */
 public class PageVisit {
 
-	public PageVisit() {
-	}
-
 	public String getDescription() {
 		return _description;
 	}

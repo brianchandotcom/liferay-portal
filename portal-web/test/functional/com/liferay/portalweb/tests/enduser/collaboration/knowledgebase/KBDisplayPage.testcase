@@ -84,7 +84,8 @@ definition {
 	@description = "This test ensures that when viewing a KB article in the navigation fragment, the corresponding KB article content is displayed in another fragment that selects to display KB content."
 	@priority = 5
 	test CanViewArticlesViaKBNavigation {
-		property portal.acceptance = "quarantine";
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property test.name.skip.portal.instance = "KBDisplayPage#CanViewArticlesViaKBNavigation";
 
 		var portalURL = PropsUtil.get("portal.url");
 

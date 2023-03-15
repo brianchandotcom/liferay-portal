@@ -32,7 +32,7 @@ public class FriendlyURLRedirectionConfigurationHelperImpl
 	implements FriendlyURLRedirectionConfigurationHelper {
 
 	@Override
-	public String redirectionType(long companyId) {
+	public String getRedirectionType(long companyId) {
 		FriendlyURLRedirectionConfiguration
 			friendlyURLRedirectionConfiguration =
 				friendlyURLRedirectionManagedServiceFactory.

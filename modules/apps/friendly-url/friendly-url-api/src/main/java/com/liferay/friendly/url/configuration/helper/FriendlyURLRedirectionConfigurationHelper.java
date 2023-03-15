@@ -19,6 +19,6 @@ package com.liferay.friendly.url.configuration.helper;
  */
 public interface FriendlyURLRedirectionConfigurationHelper {
 
-	public String redirectionType(long companyId);
+	public String getRedirectionType(long companyId);
 
 }

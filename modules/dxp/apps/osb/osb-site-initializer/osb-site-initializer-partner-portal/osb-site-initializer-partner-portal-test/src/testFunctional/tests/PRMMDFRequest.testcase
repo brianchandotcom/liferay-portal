@@ -55,11 +55,6 @@ definition {
 				accountEntryName = "Company Name 1",
 				userEmailAddress = "partner@liferay.com");
 		}
-
-		task ("Create a new Partner Portal Site") {
-			PRMUtils.addPRMSite();
-		}
-
 		task ("Go to Partner Portal and login with the created user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "partner@liferay.com",
@@ -322,6 +317,45 @@ definition {
 
 		task ("Then an error message is displayed") {
 			PRMMDFRequest.viewErrorMessage(errorMessage = "It is not possible to give a bigger discount than the Claim Percent");
+		}
+	}
+
+	@description = "This is for LPS-172427. Verify that the value of Total MDF Requested Amount* will be according to the Total cost and Claim percent"
+	@priority = "5"
+	test RequestedValueIsEqualsTo50PercentOfTotalCost {
+		task ("Given a new MDF request") {
+			PRMMarketing.gotoAddNewMDF();
+
+			PRMMDFRequest.fillGoalsPage(
+				accountName = "Company Name 1",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				countryName = "Global",
+				goalsOptions = "Lead generation",
+				targetMarketOptions = "Education,Energy",
+				targetRolesOptions = "Administrator");
+
+			Button.click(button = "Continue");
+		}
+
+		task ("When a new activity is added") {
+			PRMMDFRequest.addNewActivity();
+		}
+
+		task ("And when a new expense is added to the activity") {
+			var budgetValue = 5000;
+
+			PRMMDFRequest.editexpenseFields(budgetList = "Sponsorship Fee-${budgetValue}");
+		}
+
+		task ("Then the 'Total MDF Requested Amount' value is equals to 50% of the budget value") {
+			var requestedAmound = MathUtil.quotient(${budgetValue}, 2);
+
+			var actualValue = PRMMDFRequest.getRequestedAmoundValue();
+
+			TestUtils.assertPartialEquals(
+				actual = ${actualValue},
+				expected = ${requestedAmound});
 		}
 	}
 

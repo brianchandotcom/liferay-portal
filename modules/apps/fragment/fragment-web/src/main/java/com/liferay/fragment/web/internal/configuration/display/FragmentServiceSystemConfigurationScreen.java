@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(enabled = false, service = ConfigurationScreen.class)
+@Component(service = ConfigurationScreen.class)
 public class FragmentServiceSystemConfigurationScreen
 	extends BaseFragmentServiceConfigurationScreen {
 

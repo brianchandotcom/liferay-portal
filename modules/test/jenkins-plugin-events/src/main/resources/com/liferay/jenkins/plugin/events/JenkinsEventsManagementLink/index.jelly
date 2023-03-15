@@ -30,6 +30,9 @@
                                     <f:repeatableDeleteButton />
                                 </div>
                             </f:entry>
+                            <f:entry title="Name">
+                                <f:textbox name="name" value="${jenkinsPublishers.name}" />
+                            </f:entry>
                             <f:entry title="URL">
                                 <f:textbox name="url" value="${jenkinsPublishers.url}" />
                             </f:entry>

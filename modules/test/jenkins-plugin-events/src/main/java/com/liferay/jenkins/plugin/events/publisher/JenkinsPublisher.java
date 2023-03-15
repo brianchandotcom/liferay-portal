@@ -66,6 +66,7 @@ public class JenkinsPublisher {
 				"outboundJMSQueueName");
 		}
 
+		name = jsonObject.getString("name");
 		queueItemEnterBlocked = jsonObject.getBoolean("queueItemEnterBlocked");
 		queueItemEnterBuildable = jsonObject.getBoolean(
 			"queueItemEnterBuildable");
@@ -118,6 +119,7 @@ public class JenkinsPublisher {
 	public boolean computerTemporarilyOnline;
 	public String inboundJMSQueueName;
 	public boolean jmsRequest;
+	public String name;
 	public String outboundJMSQueueName;
 	public boolean queueItemEnterBlocked;
 	public boolean queueItemEnterBuildable;

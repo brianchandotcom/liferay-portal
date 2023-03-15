@@ -40,9 +40,9 @@ public class ProjectPrioritizerFactory {
 
 			_projectPrioritizers.put(
 				projectPrioritizer.getId(), projectPrioritizer);
-
-			return projectPrioritizer;
 		}
+
+		return projectPrioritizer;
 	}
 
 	public static void removeProjectPrioritizer(

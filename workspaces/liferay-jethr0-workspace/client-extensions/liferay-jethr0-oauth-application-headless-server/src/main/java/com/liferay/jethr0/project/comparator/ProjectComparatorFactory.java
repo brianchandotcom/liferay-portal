@@ -56,9 +56,9 @@ public class ProjectComparatorFactory {
 
 			_projectComparators.put(
 				projectComparator.getId(), projectComparator);
-
-			return projectComparator;
 		}
+
+		return projectComparator;
 	}
 
 	public static void removeProjectComparator(

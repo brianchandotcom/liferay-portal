@@ -36,9 +36,9 @@ public class ProjectFactory {
 			Project project = new DefaultProject(jsonObject);
 
 			_projects.put(project.getId(), project);
-
-			return project;
 		}
+
+		return project;
 	}
 
 	public static void removeProject(Project project) {

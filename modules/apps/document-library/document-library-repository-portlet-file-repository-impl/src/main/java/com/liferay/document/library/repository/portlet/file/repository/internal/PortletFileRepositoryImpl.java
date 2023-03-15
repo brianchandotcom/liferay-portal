@@ -233,9 +233,15 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 						_log.debug(noSuchFolderException);
 					}
 
+					Folder folder = localRepository.getFolder(parentFolderId);
+
+					Group group = _groupLocalService.getGroup(
+						folder.getGroupId());
+
 					try (SafeCloseable safeCloseable =
 							CTCollectionThreadLocal.
-								setProductionModeWithSafeCloseable()) {
+								setCTCollectionIdWithSafeCloseable(
+									group.getCtCollectionId())) {
 
 						return localRepository.addFolder(
 							null, userId, parentFolderId, folderName,
@@ -282,7 +288,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			new UnicodeProperties();
 
 		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					group.getCtCollectionId())) {
 
 			return _run(
 				() -> _repositoryLocalService.addRepository(

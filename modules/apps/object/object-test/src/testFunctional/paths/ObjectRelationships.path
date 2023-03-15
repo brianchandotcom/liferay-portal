@@ -46,6 +46,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OPTIONS_TAB_EXPANDED_RELATIONSHIPS_HIERARCHY</td>
+		<td>//div[contains(@class, 'lfr-objects')]//span[contains(text(), '${key_relationHierarchy}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OPTIONS_TAB_RELATIONSHIPS_LAYOUT_TAB</td>
 		<td>//div[contains(@class,'object-admin-panel__header') and contains(.,'${key_layout}')]</td>
 		<td></td>

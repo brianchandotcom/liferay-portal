@@ -125,8 +125,6 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					).setParameter(
 						"accountEntryId", _getAccountEntryId()
 					).setParameter(
-						"openModalOnRedirect", Boolean.TRUE
-					).setParameter(
 						"showCreateButton", Boolean.TRUE
 					).setWindowState(
 						LiferayWindowState.POP_UP

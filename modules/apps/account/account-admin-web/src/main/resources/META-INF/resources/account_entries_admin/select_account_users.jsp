@@ -34,8 +34,6 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 	additionalProps='<%=
 		HashMapBuilder.<String, Object>put(
 			"addAccountEntryUserURL", addAccountEntryUserURL.toString()
-		).put(
-			"openModalOnRedirect", selectAccountUsersDisplayContext.isOpenModalOnRedirect()
 		).build()
 	%>'
 	managementToolbarDisplayContext="<%= selectAccountUsersManagementToolbarDisplayContext %>"

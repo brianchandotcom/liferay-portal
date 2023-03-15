@@ -14,22 +14,13 @@
 
 import {getTop} from 'frontend-js-web';
 
-import {MODAL_STATE_ACCOUNT_USERS} from './SessionStorageKeys.es';
-
 export default function propsTransformer({
-	additionalProps: {addAccountEntryUserURL, openModalOnRedirect},
+	additionalProps: {addAccountEntryUserURL},
 	...otherProps
 }) {
 	return {
 		...otherProps,
 		onCreateButtonClick: () => {
-			if (openModalOnRedirect) {
-				window.sessionStorage.setItem(
-					MODAL_STATE_ACCOUNT_USERS,
-					'open'
-				);
-			}
-
 			const openerWindow = getTop();
 
 			openerWindow.Liferay.Util.navigate(addAccountEntryUserURL);

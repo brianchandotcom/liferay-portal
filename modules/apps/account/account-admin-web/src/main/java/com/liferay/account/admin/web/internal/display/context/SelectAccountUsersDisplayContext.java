@@ -58,11 +58,6 @@ public class SelectAccountUsersDisplayContext {
 			_accountEntryId, _liferayPortletResponse);
 	}
 
-	public boolean isOpenModalOnRedirect() {
-		return ParamUtil.getBoolean(
-			_liferayPortletRequest, "openModalOnRedirect");
-	}
-
 	public boolean isShowCreateButton() {
 		return ParamUtil.getBoolean(_liferayPortletRequest, "showCreateButton");
 	}

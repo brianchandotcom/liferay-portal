@@ -164,7 +164,11 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 
 		</c:if>
 
-		<aui:button id="changeTheme" value="change-current-theme" />
+		<clay:button
+			displayType="secondary"
+			id='<%= liferayPortletResponse.getNamespace() + "changeTheme" %>'
+			label='<%= LanguageUtil.get(request, "change-current-theme") %>'
+		/>
 
 		<portlet:renderURL var="selectThemeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/select_theme.jsp" />

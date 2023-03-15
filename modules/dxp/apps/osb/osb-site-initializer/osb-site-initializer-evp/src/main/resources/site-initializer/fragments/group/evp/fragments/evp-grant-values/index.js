@@ -156,14 +156,14 @@ const updateUser = async () => {
 							data: availableServiceHours[0],
 						},
 						dataType: 'Integer',
-						name: 'serviceHoursAvailable',
+						name: 'Service Hours Available',
 					},
 					{
 						customValue: {
 							data: availableFunds[0],
 						},
 						dataType: 'Integer',
-						name: 'fundsAvailable',
+						name: 'Funds Available',
 					},
 				],
 			}),
@@ -192,10 +192,7 @@ const getUser = async () => {
 				'x-csrf-token': Liferay.authToken,
 			},
 			method: 'GET',
-		})
-			.then((response) => response.json())
-			// eslint-disable-next-line no-console
-			.then((data) => console.log(data)),
+		}).then((response) => response.json()),
 	]);
 };
 

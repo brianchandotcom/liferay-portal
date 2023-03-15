@@ -181,6 +181,7 @@ public class CompanyLocalServiceTest {
 		_serviceRegistrations.clear();
 
 		deleteClassName(_layoutFriendlyURLEntryHelper.getClassName(true));
+		deleteStagingClassNameEntries();
 	}
 
 	@Test
@@ -266,8 +267,6 @@ public class CompanyLocalServiceTest {
 			companyStagingGroup.getGroupId());
 
 		Assert.assertNull(companyStagingGroup);
-
-		deleteStagingClassNameEntries();
 	}
 
 	@Test
@@ -366,8 +365,6 @@ public class CompanyLocalServiceTest {
 				layoutSetPrototype.getLayoutSetPrototypeId());
 
 		Assert.assertNull(layoutSetPrototype);
-
-		deleteStagingClassNameEntries();
 	}
 
 	@Test
@@ -407,8 +404,6 @@ public class CompanyLocalServiceTest {
 				layoutSetPrototype.getLayoutSetPrototypeId()));
 		Assert.assertNull(
 			_userGroupLocalService.fetchUserGroup(userGroup.getUserGroupId()));
-
-		deleteStagingClassNameEntries();
 	}
 
 	@Test
@@ -470,8 +465,6 @@ public class CompanyLocalServiceTest {
 			companyOrganizationGroup.getGroupId());
 
 		Assert.assertNull(companyOrganizationGroup);
-
-		deleteStagingClassNameEntries();
 	}
 
 	@Test

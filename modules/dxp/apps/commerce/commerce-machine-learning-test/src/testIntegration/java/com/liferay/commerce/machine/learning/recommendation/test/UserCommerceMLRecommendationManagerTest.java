@@ -242,12 +242,10 @@ public class UserCommerceMLRecommendationManagerTest {
 	private boolean _filterAssetCategories(
 		long[] assetCategoryIds, long[] expectedAssetCategoryIds) {
 
-		List<Long> assetCategoryIdList = ListUtil.fromArray(assetCategoryIds);
+		for (long expectedAssetCategoryId : expectedAssetCategoryIds) {
+			if (!ArrayUtil.contains(
+					assetCategoryIds, expectedAssetCategoryId)) {
 
-		for (Long expectedAssetCategoryId :
-				ListUtil.fromArray(expectedAssetCategoryIds)) {
-
-			if (!assetCategoryIdList.contains(expectedAssetCategoryId)) {
 				return false;
 			}
 		}

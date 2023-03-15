@@ -35,8 +35,8 @@ function ValidatedInput(props) {
 
 	const inputId = useId();
 	const [invalid, setInvalid] = useState(false);
-
 	const nodeRef = useRef();
+
 	useEffect(() => {
 		if (nodeRef.current && autofocus) {
 			nodeRef.current.focus();

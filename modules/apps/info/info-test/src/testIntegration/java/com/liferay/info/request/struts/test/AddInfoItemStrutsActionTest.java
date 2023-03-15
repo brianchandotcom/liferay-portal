@@ -21,6 +21,7 @@ import com.liferay.info.exception.InfoFormException;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
@@ -42,8 +43,14 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -53,6 +60,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -135,6 +143,26 @@ public class AddInfoItemStrutsActionTest {
 
 	@Test
 	public void testAddInfoItemAttachment() throws Exception {
+		_testAddInfoItem(
+			RandomTestUtil.randomString(), null, null, null, null, null, null,
+			null, null, null, false);
+	}
+
+	@Test
+	public void testAddInfoItemAttachmentWithGuestRole() throws Exception {
+		_user = _userLocalService.getDefaultUser(_group.getCompanyId());
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_group.getCompanyId(), _objectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_group.getCompanyId()), role.getRoleId(),
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		UserTestUtil.setUser(_user);
+
 		_testAddInfoItem(
 			RandomTestUtil.randomString(), null, null, null, null, null, null,
 			null, null, null, false);
@@ -270,7 +298,8 @@ public class AddInfoItemStrutsActionTest {
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				_user.getUserId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
+				"A" + RandomTestUtil.randomString(), null,
+				"control_panel.sites",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
@@ -678,8 +707,17 @@ public class AddInfoItemStrutsActionTest {
 	private Portal _portal;
 
 	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

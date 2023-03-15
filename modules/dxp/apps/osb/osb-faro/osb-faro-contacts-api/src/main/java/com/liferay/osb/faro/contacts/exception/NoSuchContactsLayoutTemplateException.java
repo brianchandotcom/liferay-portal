@@ -29,12 +29,14 @@ public class NoSuchContactsLayoutTemplateException
 		super(msg);
 	}
 
-	public NoSuchContactsLayoutTemplateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchContactsLayoutTemplateException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchContactsLayoutTemplateException(Throwable cause) {
-		super(cause);
+	public NoSuchContactsLayoutTemplateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

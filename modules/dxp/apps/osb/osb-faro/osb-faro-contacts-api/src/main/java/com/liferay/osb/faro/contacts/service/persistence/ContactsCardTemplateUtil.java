@@ -453,10 +453,6 @@ public class ContactsCardTemplateUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static ContactsCardTemplatePersistence getPersistence() {
 		return _persistence;
 	}

@@ -14,15 +14,12 @@
 
 package com.liferay.osb.faro.contacts.model;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
-import java.io.Serializable;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The base model interface for the ContactsCardTemplate service. Represents a row in the &quot;OSBFaro_ContactsCardTemplate&quot; database table, with each column mapped to a property of this class.
@@ -37,7 +34,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface ContactsCardTemplateModel
-	extends BaseModel<ContactsCardTemplate> {
+	extends BaseModel<ContactsCardTemplate>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -58,6 +55,22 @@ public interface ContactsCardTemplateModel
 	 * @param primaryKey the primary key of this contacts card template
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this contacts card template.
+	 *
+	 * @return the mvcc version of this contacts card template
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this contacts card template.
+	 *
+	 * @param mvccVersion the mvcc version of this contacts card template
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the contacts card template ID of this contacts card template.
@@ -86,6 +99,36 @@ public interface ContactsCardTemplateModel
 	 * @param groupId the group ID of this contacts card template
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this contacts card template.
+	 *
+	 * @return the company ID of this contacts card template
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this contacts card template.
+	 *
+	 * @param companyId the company ID of this contacts card template
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the create time of this contacts card template.
+	 *
+	 * @return the create time of this contacts card template
+	 */
+	public long getCreateTime();
+
+	/**
+	 * Sets the create time of this contacts card template.
+	 *
+	 * @param createTime the create time of this contacts card template
+	 */
+	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the user ID of this contacts card template.
@@ -129,20 +172,6 @@ public interface ContactsCardTemplateModel
 	 * @param userName the user name of this contacts card template
 	 */
 	public void setUserName(String userName);
-
-	/**
-	 * Returns the create time of this contacts card template.
-	 *
-	 * @return the create time of this contacts card template
-	 */
-	public long getCreateTime();
-
-	/**
-	 * Sets the create time of this contacts card template.
-	 *
-	 * @param createTime the create time of this contacts card template
-	 */
-	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the modified time of this contacts card template.
@@ -203,60 +232,10 @@ public interface ContactsCardTemplateModel
 	public void setType(int type);
 
 	@Override
-	public boolean isNew();
+	public ContactsCardTemplate cloneWithOriginalValues();
 
-	@Override
-	public void setNew(boolean n);
-
-	@Override
-	public boolean isCachedModel();
-
-	@Override
-	public void setCachedModel(boolean cachedModel);
-
-	@Override
-	public boolean isEscapedModel();
-
-	@Override
-	public Serializable getPrimaryKeyObj();
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj);
-
-	@Override
-	public ExpandoBridge getExpandoBridge();
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
-
-	@Override
-	public Object clone();
-
-	@Override
-	public int compareTo(ContactsCardTemplate contactsCardTemplate);
-
-	@Override
-	public int hashCode();
-
-	@Override
-	public CacheModel<ContactsCardTemplate> toCacheModel();
-
-	@Override
-	public ContactsCardTemplate toEscapedModel();
-
-	@Override
-	public ContactsCardTemplate toUnescapedModel();
-
-	@Override
-	public String toString();
-
-	@Override
-	public String toXmlString();
+	public default String toXmlString() {
+		return null;
+	}
 
 }

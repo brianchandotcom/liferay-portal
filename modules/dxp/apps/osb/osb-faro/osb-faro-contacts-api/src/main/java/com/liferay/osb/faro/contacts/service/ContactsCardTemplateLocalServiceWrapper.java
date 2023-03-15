@@ -27,6 +27,10 @@ public class ContactsCardTemplateLocalServiceWrapper
 	implements ContactsCardTemplateLocalService,
 			   ServiceWrapper<ContactsCardTemplateLocalService> {
 
+	public ContactsCardTemplateLocalServiceWrapper() {
+		this(null);
+	}
+
 	public ContactsCardTemplateLocalServiceWrapper(
 		ContactsCardTemplateLocalService contactsCardTemplateLocalService) {
 
@@ -74,6 +78,18 @@ public class ContactsCardTemplateLocalServiceWrapper
 
 		return _contactsCardTemplateLocalService.createContactsCardTemplate(
 			contactsCardTemplateId);
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactsCardTemplateLocalService.createPersistedModel(
+			primaryKeyObj);
 	}
 
 	/**
@@ -131,6 +147,18 @@ public class ContactsCardTemplateLocalServiceWrapper
 
 		return _contactsCardTemplateLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _contactsCardTemplateLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _contactsCardTemplateLocalService.dslQueryCount(dslQuery);
 	}
 
 	@Override

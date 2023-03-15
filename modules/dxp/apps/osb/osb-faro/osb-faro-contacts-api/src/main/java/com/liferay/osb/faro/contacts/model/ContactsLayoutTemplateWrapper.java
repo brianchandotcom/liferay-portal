@@ -14,15 +14,11 @@
 
 package com.liferay.osb.faro.contacts.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -34,34 +30,27 @@ import java.util.Objects;
  * @generated
  */
 public class ContactsLayoutTemplateWrapper
+	extends BaseModelWrapper<ContactsLayoutTemplate>
 	implements ContactsLayoutTemplate, ModelWrapper<ContactsLayoutTemplate> {
 
 	public ContactsLayoutTemplateWrapper(
 		ContactsLayoutTemplate contactsLayoutTemplate) {
 
-		_contactsLayoutTemplate = contactsLayoutTemplate;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return ContactsLayoutTemplate.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return ContactsLayoutTemplate.class.getName();
+		super(contactsLayoutTemplate);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"contactsLayoutTemplateId", getContactsLayoutTemplateId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("createTime", getCreateTime());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
-		attributes.put("createTime", getCreateTime());
 		attributes.put("modifiedTime", getModifiedTime());
 		attributes.put(
 			"headerContactsCardTemplateIds",
@@ -75,6 +64,12 @@ public class ContactsLayoutTemplateWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long contactsLayoutTemplateId = (Long)attributes.get(
 			"contactsLayoutTemplateId");
 
@@ -88,6 +83,18 @@ public class ContactsLayoutTemplateWrapper
 			setGroupId(groupId);
 		}
 
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long createTime = (Long)attributes.get("createTime");
+
+		if (createTime != null) {
+			setCreateTime(createTime);
+		}
+
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
@@ -98,12 +105,6 @@ public class ContactsLayoutTemplateWrapper
 
 		if (userName != null) {
 			setUserName(userName);
-		}
-
-		Long createTime = (Long)attributes.get("createTime");
-
-		if (createTime != null) {
-			setCreateTime(createTime);
 		}
 
 		Long modifiedTime = (Long)attributes.get("modifiedTime");
@@ -139,14 +140,18 @@ public class ContactsLayoutTemplateWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new ContactsLayoutTemplateWrapper(
-			(ContactsLayoutTemplate)_contactsLayoutTemplate.clone());
+	public ContactsLayoutTemplate cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
+	/**
+	 * Returns the company ID of this contacts layout template.
+	 *
+	 * @return the company ID of this contacts layout template
+	 */
 	@Override
-	public int compareTo(ContactsLayoutTemplate contactsLayoutTemplate) {
-		return _contactsLayoutTemplate.compareTo(contactsLayoutTemplate);
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -156,7 +161,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public long getContactsLayoutTemplateId() {
-		return _contactsLayoutTemplate.getContactsLayoutTemplateId();
+		return model.getContactsLayoutTemplateId();
 	}
 
 	/**
@@ -166,12 +171,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public long getCreateTime() {
-		return _contactsLayoutTemplate.getCreateTime();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _contactsLayoutTemplate.getExpandoBridge();
+		return model.getCreateTime();
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _contactsLayoutTemplate.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public String getHeaderContactsCardTemplateIds() {
-		return _contactsLayoutTemplate.getHeaderContactsCardTemplateIds();
+		return model.getHeaderContactsCardTemplateIds();
 	}
 
 	/**
@@ -201,7 +201,17 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public long getModifiedTime() {
-		return _contactsLayoutTemplate.getModifiedTime();
+		return model.getModifiedTime();
+	}
+
+	/**
+	 * Returns the mvcc version of this contacts layout template.
+	 *
+	 * @return the mvcc version of this contacts layout template
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -211,7 +221,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public String getName() {
-		return _contactsLayoutTemplate.getName();
+		return model.getName();
 	}
 
 	/**
@@ -221,12 +231,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _contactsLayoutTemplate.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _contactsLayoutTemplate.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -236,7 +241,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public String getSettings() {
-		return _contactsLayoutTemplate.getSettings();
+		return model.getSettings();
 	}
 
 	/**
@@ -246,7 +251,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public int getType() {
-		return _contactsLayoutTemplate.getType();
+		return model.getType();
 	}
 
 	/**
@@ -256,7 +261,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _contactsLayoutTemplate.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -266,7 +271,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _contactsLayoutTemplate.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -276,37 +281,22 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _contactsLayoutTemplate.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _contactsLayoutTemplate.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _contactsLayoutTemplate.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _contactsLayoutTemplate.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _contactsLayoutTemplate.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_contactsLayoutTemplate.persist();
+		model.persist();
 	}
 
+	/**
+	 * Sets the company ID of this contacts layout template.
+	 *
+	 * @param companyId the company ID of this contacts layout template
+	 */
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_contactsLayoutTemplate.setCachedModel(cachedModel);
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -316,8 +306,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public void setContactsLayoutTemplateId(long contactsLayoutTemplateId) {
-		_contactsLayoutTemplate.setContactsLayoutTemplateId(
-			contactsLayoutTemplateId);
+		model.setContactsLayoutTemplateId(contactsLayoutTemplateId);
 	}
 
 	/**
@@ -327,24 +316,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public void setCreateTime(long createTime) {
-		_contactsLayoutTemplate.setCreateTime(createTime);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_contactsLayoutTemplate.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_contactsLayoutTemplate.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_contactsLayoutTemplate.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateTime(createTime);
 	}
 
 	/**
@@ -354,7 +326,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_contactsLayoutTemplate.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -366,8 +338,7 @@ public class ContactsLayoutTemplateWrapper
 	public void setHeaderContactsCardTemplateIds(
 		String headerContactsCardTemplateIds) {
 
-		_contactsLayoutTemplate.setHeaderContactsCardTemplateIds(
-			headerContactsCardTemplateIds);
+		model.setHeaderContactsCardTemplateIds(headerContactsCardTemplateIds);
 	}
 
 	/**
@@ -377,7 +348,17 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public void setModifiedTime(long modifiedTime) {
-		_contactsLayoutTemplate.setModifiedTime(modifiedTime);
+		model.setModifiedTime(modifiedTime);
+	}
+
+	/**
+	 * Sets the mvcc version of this contacts layout template.
+	 *
+	 * @param mvccVersion the mvcc version of this contacts layout template
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -387,12 +368,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public void setName(String name) {
-		_contactsLayoutTemplate.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_contactsLayoutTemplate.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -402,12 +378,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_contactsLayoutTemplate.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_contactsLayoutTemplate.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -417,7 +388,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public void setSettings(String settings) {
-		_contactsLayoutTemplate.setSettings(settings);
+		model.setSettings(settings);
 	}
 
 	/**
@@ -427,7 +398,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public void setType(int type) {
-		_contactsLayoutTemplate.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -437,7 +408,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_contactsLayoutTemplate.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -447,7 +418,7 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_contactsLayoutTemplate.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -457,81 +428,19 @@ public class ContactsLayoutTemplateWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_contactsLayoutTemplate.setUserUuid(userUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<ContactsLayoutTemplate>
-		toCacheModel() {
-
-		return _contactsLayoutTemplate.toCacheModel();
-	}
-
-	@Override
-	public ContactsLayoutTemplate toEscapedModel() {
-		return new ContactsLayoutTemplateWrapper(
-			_contactsLayoutTemplate.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _contactsLayoutTemplate.toString();
-	}
-
-	@Override
-	public ContactsLayoutTemplate toUnescapedModel() {
-		return new ContactsLayoutTemplateWrapper(
-			_contactsLayoutTemplate.toUnescapedModel());
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
 	public String toXmlString() {
-		return _contactsLayoutTemplate.toXmlString();
+		return model.toXmlString();
 	}
 
 	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
+	protected ContactsLayoutTemplateWrapper wrap(
+		ContactsLayoutTemplate contactsLayoutTemplate) {
 
-		if (!(object instanceof ContactsLayoutTemplateWrapper)) {
-			return false;
-		}
-
-		ContactsLayoutTemplateWrapper contactsLayoutTemplateWrapper =
-			(ContactsLayoutTemplateWrapper)object;
-
-		if (Objects.equals(
-				_contactsLayoutTemplate,
-				contactsLayoutTemplateWrapper._contactsLayoutTemplate)) {
-
-			return true;
-		}
-
-		return false;
+		return new ContactsLayoutTemplateWrapper(contactsLayoutTemplate);
 	}
-
-	@Override
-	public ContactsLayoutTemplate getWrappedModel() {
-		return _contactsLayoutTemplate;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _contactsLayoutTemplate.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _contactsLayoutTemplate.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_contactsLayoutTemplate.resetOriginalValues();
-	}
-
-	private final ContactsLayoutTemplate _contactsLayoutTemplate;
 
 }

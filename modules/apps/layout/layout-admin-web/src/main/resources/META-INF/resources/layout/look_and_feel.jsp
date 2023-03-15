@@ -130,6 +130,7 @@ else {
 
 	<clay:radio
 		checked="<%= selLayout.isInheritLookAndFeel() %>"
+		id='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'
 		label="<%= taglibLabel %>"
 		name='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'
 		value="true"
@@ -137,8 +138,9 @@ else {
 
 	<clay:radio
 		checked="<%= !selLayout.isInheritLookAndFeel() %>"
+		id='<%= liferayPortletResponse.getNamespace() + "regularUniqueLookAndFeel" %>'
 		label='<%= LanguageUtil.get(request, "define-a-custom-theme-for-this-page") %>'
-		name='<%= liferayPortletResponse.getNamespace() + "regularUniqueLookAndFeel" %>'
+		name='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'
 		value="false"
 	/>
 
@@ -195,12 +197,12 @@ else {
 </clay:sheet-section>
 
 <aui:script sandbox="<%= true %>">
-	const regularInheritLookAndFeel = document.getElementsByName(
+	const regularInheritLookAndFeel = document.getElementById(
 		'<portlet:namespace />regularInheritLookAndFeel'
-	)[0];
-	const regularUniqueLookAndFeel = document.getElementsByName(
+	);
+	const regularUniqueLookAndFeel = document.getElementById(
 		'<portlet:namespace />regularUniqueLookAndFeel'
-	)[0];
+	);
 	const inheritThemeOptions = document.getElementById(
 		'<portlet:namespace />inheritThemeOptions'
 	);

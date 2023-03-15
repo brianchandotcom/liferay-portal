@@ -957,8 +957,6 @@ definition {
 	@description = "This is a use case for LPS-45616."
 	@priority = 4
 	test CancelRepeatingDialog {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Non-Repeating Event 1");
@@ -1009,7 +1007,7 @@ definition {
 
 		CalendarEvent.gotoRepeatConfiguration();
 
-		Button.clickCancel();
+		Button.click(button = "Cancel");
 
 		CalendarEvent.viewTitle(eventTitle = "Calendar Non-Repeating Event 3");
 

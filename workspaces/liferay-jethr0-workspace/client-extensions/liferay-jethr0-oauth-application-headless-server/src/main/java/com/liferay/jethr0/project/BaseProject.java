@@ -33,6 +33,22 @@ import org.json.JSONObject;
 public abstract class BaseProject implements Project {
 
 	@Override
+	public void addGitBranch(GitBranch gitBranch) {
+		addGitBranches(Arrays.asList(gitBranch));
+	}
+
+	@Override
+	public void addGitBranches(List<GitBranch> gitBranches) {
+		for (GitBranch gitBranch : gitBranches) {
+			if (_gitBranches.contains(gitBranch)) {
+				continue;
+			}
+
+			_gitBranches.add(gitBranch);
+		}
+	}
+
+	@Override
 	public void addTestSuite(TestSuite testSuite) {
 		addTestSuites(Arrays.asList(testSuite));
 	}
@@ -51,6 +67,11 @@ public abstract class BaseProject implements Project {
 	@Override
 	public Date getCreatedDate() {
 		return _createdDate;
+	}
+
+	@Override
+	public List<GitBranch> getGitBranches() {
+		return _gitBranches;
 	}
 
 	@Override
@@ -108,10 +129,21 @@ public abstract class BaseProject implements Project {
 	}
 
 	@Override
+	public void removeGitBranch(GitBranch gitBranch) {
+		_gitBranches.remove(gitBranch);
+	}
+
+	@Override
+	public void removeGitBranches(List<GitBranch> gitBranches) {
+		_gitBranches.remove(gitBranches);
+	}
+
+	@Override
 	public void removeTestSuite(TestSuite testSuite) {
 		_testSuites.remove(testSuite);
 	}
 
+	@Override
 	public void removeTestSuites(List<TestSuite> testSuites) {
 		_testSuites.removeAll(testSuites);
 	}
@@ -156,6 +188,7 @@ public abstract class BaseProject implements Project {
 		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	private final Date _createdDate;
+	private final List<GitBranch> _gitBranches = new ArrayList<>();
 	private final long _id;
 	private String _name;
 	private int _priority;

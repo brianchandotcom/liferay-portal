@@ -14,8 +14,11 @@
 
 package com.liferay.jethr0.project;
 
+import com.liferay.jethr0.testsuite.TestSuite;
+
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -24,6 +27,10 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public interface Project {
+
+	public void addTestSuite(TestSuite testSuite);
+
+	public void addTestSuites(List<TestSuite> testSuites);
 
 	public Date getCreatedDate();
 
@@ -37,7 +44,13 @@ public interface Project {
 
 	public State getState();
 
+	public List<TestSuite> getTestSuites();
+
 	public Type getType();
+
+	public void removeTestSuite(TestSuite testSuite);
+
+	public void removeTestSuites(List<TestSuite> testSuites);
 
 	public void setName(String name);
 

@@ -14,10 +14,16 @@
 
 package com.liferay.jethr0.project;
 
+import com.liferay.jethr0.gitbranch.GitBranch;
+import com.liferay.jethr0.testsuite.TestSuite;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.json.JSONObject;
 
@@ -25,6 +31,22 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BaseProject implements Project {
+
+	@Override
+	public void addTestSuite(TestSuite testSuite) {
+		addTestSuites(Arrays.asList(testSuite));
+	}
+
+	@Override
+	public void addTestSuites(List<TestSuite> testSuites) {
+		for (TestSuite testSuite : testSuites) {
+			if (_testSuites.contains(testSuite)) {
+				continue;
+			}
+
+			_testSuites.add(testSuite);
+		}
+	}
 
 	@Override
 	public Date getCreatedDate() {
@@ -76,8 +98,22 @@ public abstract class BaseProject implements Project {
 	}
 
 	@Override
+	public List<TestSuite> getTestSuites() {
+		return _testSuites;
+	}
+
+	@Override
 	public Type getType() {
 		return _type;
+	}
+
+	@Override
+	public void removeTestSuite(TestSuite testSuite) {
+		_testSuites.remove(testSuite);
+	}
+
+	public void removeTestSuites(List<TestSuite> testSuites) {
+		_testSuites.removeAll(testSuites);
 	}
 
 	@Override
@@ -124,6 +160,7 @@ public abstract class BaseProject implements Project {
 	private String _name;
 	private int _priority;
 	private State _state;
+	private final List<TestSuite> _testSuites = new ArrayList<>();
 	private final Type _type;
 
 }

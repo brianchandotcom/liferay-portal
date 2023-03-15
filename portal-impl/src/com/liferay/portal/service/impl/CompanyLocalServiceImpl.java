@@ -99,7 +99,6 @@ import com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistenc
 import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.VirtualHostPersistence;
-import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -329,7 +328,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	public Company checkCompany(String webId) throws PortalException {
 		String mx = webId;
 
-		return companyLocalService.checkCompany(webId, mx);
+		return checkCompany(webId, mx);
 	}
 
 	/**
@@ -343,10 +342,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @return the company with the web domain and mail domain
 	 */
 	@Override
-	@Transactional(
-		isolation = Isolation.PORTAL,
-		rollbackFor = {PortalException.class, SystemException.class}
-	)
 	public Company checkCompany(String webId, String mx)
 		throws PortalException {
 

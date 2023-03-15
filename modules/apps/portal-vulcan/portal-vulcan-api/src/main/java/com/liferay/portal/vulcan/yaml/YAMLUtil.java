@@ -87,7 +87,7 @@ public class YAMLUtil {
 
 		configYAMLConstructor.addTypeDescription(securityTypeDescription);
 
-		Representer representer = new Representer() {
+		Representer representer = new Representer(new DumperOptions()) {
 			{
 				setPropertyUtils(
 					new PropertyUtils() {

@@ -35,7 +35,7 @@ public class KoroneikiConstants {
 
 	public static final String ENTITY_NAME_WORKSPACE = "workspace";
 
-	public static final String translateContactRoleName(String roleName) {
+	public static String translateContactRoleName(String roleName) {
 		if (roleName.equals("OSB Corp Analytics Cloud Owner")) {
 			return "Analytics Cloud Owner";
 		}

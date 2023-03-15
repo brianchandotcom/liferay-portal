@@ -28,12 +28,12 @@ public class NoSuchCorpProjectException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCorpProjectException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCorpProjectException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchCorpProjectException(Throwable cause) {
-		super(cause);
+	public NoSuchCorpProjectException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

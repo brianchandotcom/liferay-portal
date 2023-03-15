@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -180,14 +178,13 @@ public class ProvisioningClientImpl implements ProvisioningClient {
 			List<Account> accounts = KoroneikiHttpUtil.searchAccounts(
 				sb.toString(), page, 500);
 
-			Stream<Account> stream = accounts.stream();
+			List<OSBAccountEntry> osbAccountEntry = new ArrayList<>();
 
-			osbAccountEntries.addAll(
-				stream.map(
-					OSBAccountEntry::new
-				).collect(
-					Collectors.toList()
-				));
+			for (Account account : accounts) {
+				osbAccountEntry.add(new OSBAccountEntry(account));
+			}
+
+			osbAccountEntries.addAll(osbAccountEntry);
 
 			page++;
 		}

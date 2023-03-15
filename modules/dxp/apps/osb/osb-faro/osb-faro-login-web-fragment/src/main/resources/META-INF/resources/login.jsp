@@ -2,15 +2,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 --%>
 
@@ -21,8 +21,10 @@
 
 		<%
 		String signedInAs = HtmlUtil.escape(user.getFullName());
+
 		if (themeDisplay.isShowMyAccountIcon() && (themeDisplay.getURLMyAccount() != null)) {
 			String myAccountURL = String.valueOf(themeDisplay.getURLMyAccount());
+
 			signedInAs = "<a class=\"signed-in\" href=\"" + HtmlUtil.escape(myAccountURL) + "\">" + signedInAs + "</a>";
 		}
 		%>
@@ -33,16 +35,21 @@
 
 		<%
 		String formName = "loginForm";
+
 		if (windowState.equals(LiferayWindowState.EXCLUSIVE)) {
 			formName += "Modal";
 		}
+
 		String redirect = ParamUtil.getString(request, "redirect");
 		String login = (String)SessionErrors.get(renderRequest, "login");
+
 		if (Validator.isNull(login)) {
 			login = LoginUtil.getLogin(request, "login", company);
 		}
+
 		String password = StringPool.BLANK;
 		boolean rememberMe = ParamUtil.getBoolean(request, "rememberMe");
+
 		if (Validator.isNull(authType)) {
 			authType = company.getAuthType();
 		}
@@ -154,6 +161,7 @@
 
 					<%
 					String loginLabel = null;
+
 					if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
 						loginLabel = "email-address";
 					}
@@ -191,29 +199,26 @@
 		<aui:script sandbox="<%= true %>">
 			var form = AUI.$(document.<portlet:namespace /><%= formName %>);
 
-			form.on(
-				'submit',
-				function(event) {
-					<c:if test="<%= Validator.isNotNull(redirect) %>">
-						var redirect = form.fm('redirect');
+			form.on('submit', (event) => {
+				<c:if test="<%= Validator.isNotNull(redirect) %>">
+					var redirect = form.fm('redirect');
 
-						if (redirect) {
-							var redirectVal = redirect.val();
+					if (redirect) {
+						var redirectVal = redirect.val();
 
-							redirect.val(redirectVal + window.location.hash);
-						}
-					</c:if>
+						redirect.val(redirectVal + window.location.hash);
+					}
+				</c:if>
 
-					submitForm(form);
-				}
-			);
+				submitForm(form);
+			});
 
-			form.fm('password').on(
-				'keypress',
-				function(event) {
-					Liferay.Util.showCapsLock(event, '<portlet:namespace />passwordCapsLockSpan');
-				}
-			);
+			form.fm('password').on('keypress', (event) => {
+				Liferay.Util.showCapsLock(
+					event,
+					'<portlet:namespace />passwordCapsLockSpan'
+				);
+			});
 		</aui:script>
 	</c:otherwise>
 </c:choose>

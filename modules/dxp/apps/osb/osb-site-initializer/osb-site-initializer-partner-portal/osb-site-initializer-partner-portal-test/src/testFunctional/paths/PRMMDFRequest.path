@@ -75,6 +75,11 @@
 	<td>//div[contains(@class,'mdf-request-manager-status')]//p[contains(text(), '${key_value}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REQUESTED_AMOUT_FIELD</td>
+	<td>//div[contains(@class,'total-mdf-request-amount')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

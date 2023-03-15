@@ -9,8 +9,9 @@
  * distribution rights of the Software.
  */
 
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import getCN from 'classnames';
+import {useId} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -32,6 +33,7 @@ function ValidatedInput(props) {
 		value = '',
 	} = props;
 
+	const inputId = useId();
 	const [invalid, setInvalid] = useState(false);
 
 	const nodeRef = useRef();
@@ -41,15 +43,11 @@ function ValidatedInput(props) {
 		}
 	}, [autofocus]);
 
-	const formGroupClasses = getCN('form-group w-100', {
-		'has-error': invalid,
-	});
-
 	return (
-		<label className={formGroupClasses}>
+		<ClayForm.Group className={invalid ? 'has-error' : ''}>
 			{label && (
 				<>
-					{label}
+					<label htmlFor={inputId}>{label}</label>
 					<ClayIcon
 						className="lexicon-icon-sm ml-1 reference-mark text-warning"
 						style={{verticalAlign: 'super'}}
@@ -58,8 +56,8 @@ function ValidatedInput(props) {
 				</>
 			)}
 
-			<input
-				className="form-control mt-1"
+			<ClayInput
+				id={inputId}
 				maxLength="75"
 				onBlur={_handleNameInputBlur}
 				onChange={onChange}
@@ -70,18 +68,15 @@ function ValidatedInput(props) {
 			/>
 
 			{invalid && errorMessage && (
-				<div className="form-feedback-group">
-					<div className="form-feedback-item">
-						<ClayIcon
-							className="mr-1 text-danger"
-							symbol="info-circle"
-						/>
+				<ClayForm.FeedbackGroup>
+					<ClayForm.FeedbackItem>
+						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
 						{errorMessage}
-					</div>
-				</div>
+					</ClayForm.FeedbackItem>
+				</ClayForm.FeedbackGroup>
 			)}
-		</label>
+		</ClayForm.Group>
 	);
 
 	function _handleNameInputBlur(event) {

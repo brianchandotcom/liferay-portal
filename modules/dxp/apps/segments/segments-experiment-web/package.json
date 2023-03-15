@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/layout-content-page-editor-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"

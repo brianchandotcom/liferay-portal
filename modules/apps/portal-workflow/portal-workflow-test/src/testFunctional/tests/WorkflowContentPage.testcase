@@ -12,26 +12,6 @@ definition {
 		User.firstLoginPG();
 
 		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Workflow");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Comment");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		PagesAdmin.addPage(pageName = "Page Comments Page");
-
-		Navigator.gotoPage(pageName = "Page Comments Page");
-
-		Portlet.addPG(portletName = "Page Comments");
 	}
 
 	tearDown {
@@ -41,8 +21,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			PageComment.tearDownPG(pageName = "Page Comments Page");
-
 			PagesAdmin.tearDownCP();
 
 			Workflow.tearDownPortalWorkflow();

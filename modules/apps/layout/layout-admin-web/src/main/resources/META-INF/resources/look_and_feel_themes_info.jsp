@@ -39,7 +39,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 <clay:row>
 	<clay:col
 		size="6"
-		sm="4"
+		sm="5"
 	>
 		<clay:image-card
 			imageSrc='<%= themeDisplay.getCDNBaseURL() + HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) + HtmlUtil.escapeAttribute(selTheme.getImagesPath()) + "/thumbnail.png" %>'
@@ -50,7 +50,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 
 	<clay:col
 		size="6"
-		sm="8"
+		sm="7"
 	>
 
 		<%

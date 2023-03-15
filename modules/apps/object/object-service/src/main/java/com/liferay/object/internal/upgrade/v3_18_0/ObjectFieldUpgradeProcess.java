@@ -202,15 +202,15 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 		preparedStatement.setString(14, dbTableName);
 		preparedStatement.setString(15, dbType);
 		preparedStatement.setString(16, null);
-		preparedStatement.setInt(17, 0);
-		preparedStatement.setInt(18, 0);
+		preparedStatement.setBoolean(17, false);
+		preparedStatement.setBoolean(18, false);
 		preparedStatement.setString(19, null);
 		preparedStatement.setString(20, label);
 		preparedStatement.setString(21, name);
 		preparedStatement.setString(22, null);
-		preparedStatement.setInt(23, 0);
-		preparedStatement.setInt(24, 0);
-		preparedStatement.setInt(25, 1);
+		preparedStatement.setBoolean(23, false);
+		preparedStatement.setBoolean(24, false);
+		preparedStatement.setBoolean(25, true);
 
 		preparedStatement.addBatch();
 	}

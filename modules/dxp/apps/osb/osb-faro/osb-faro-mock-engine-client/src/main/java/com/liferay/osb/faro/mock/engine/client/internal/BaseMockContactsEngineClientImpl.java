@@ -283,10 +283,8 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	@Override
-	public void deleteProject(FaroProject faroProject, boolean deleteData)
-		throws Exception {
-
-		contactsEngineClient.deleteProject(faroProject, deleteData);
+	public void deleteProject(FaroProject faroProject) throws Exception {
+		contactsEngineClient.deleteProject(faroProject);
 	}
 
 	@Override
@@ -682,11 +680,11 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	@Override
 	public Results<Object> getFieldValues(
-		FaroProject faroProject, Long channelId, String query,
-		String fieldMappingId, int cur, int delta) {
+		FaroProject faroProject, String query, String fieldMappingId, int cur,
+		int delta) {
 
 		return contactsEngineClient.getFieldValues(
-			faroProject, channelId, query, fieldMappingId, cur, delta);
+			faroProject, query, fieldMappingId, cur, delta);
 	}
 
 	@Override
@@ -777,12 +775,12 @@ public abstract class BaseMockContactsEngineClientImpl
 	@Override
 	public Results<Distribution> getIndividualsDistribution(
 		FaroProject faroProject, String channelId, String fieldMappingId,
-		String individualSegmentId, int count, int numberOfBins,
+		String filter, String individualSegmentId, int count, int numberOfBins,
 		List<OrderByField> orderByFields) {
 
 		return contactsEngineClient.getIndividualsDistribution(
-			faroProject, channelId, fieldMappingId, individualSegmentId, count,
-			numberOfBins, orderByFields);
+			faroProject, channelId, fieldMappingId, filter, individualSegmentId,
+			count, numberOfBins, orderByFields);
 	}
 
 	@Override

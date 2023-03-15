@@ -266,9 +266,9 @@ definition {
 
 	macro editTeam {
 		TestrayManage.editProductVersion(
-			caseName = ${typeTeam},
+			caseName = ${newTeamName},
 			itemManage = "Edit",
-			valueName = ${newTeamName});
+			valueName = ${currentTeamName});
 	}
 
 	macro selectOptionDropdownCategory {

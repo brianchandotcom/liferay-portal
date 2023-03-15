@@ -15,7 +15,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a basic test for modern site building components such as Content Pages, Page Templates, Fragments, Display Page Templates, and Navigation Menus. After the upgrade is complete, all of those elements should still be present, and a user should still be able to perform basic modern site building functions."
+	@description = "View entities persisted after upgrade then create a content page."
 	@priority = 5
 	test ViewMSBAndAddContentPageAfterUpgrade713 {
 		property data.archive.type = "data-archive-msb";
@@ -27,6 +27,7 @@ definition {
 		Upgrade.addContentPage();
 	}
 
+	@description = "View entities persisted after upgrade then create a content page."
 	@priority = 5
 	test ViewMSBAndAddContentPageAfterUpgrade71102 {
 		property data.archive.type = "data-archive-msb";

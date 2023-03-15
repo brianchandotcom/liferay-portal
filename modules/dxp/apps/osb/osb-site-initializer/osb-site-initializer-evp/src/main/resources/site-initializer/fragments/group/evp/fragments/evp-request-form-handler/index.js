@@ -122,6 +122,7 @@ const getUser = async () => {
 		method: 'GET',
 	})
 		.then((response) => response.json())
+		// eslint-disable-next-line no-console
 		.then((data) => userInformation.push(data));
 };
 
@@ -129,6 +130,14 @@ getUser();
 
 const grantInput = document.querySelector('#jjyo-numeric-input');
 const hoursInput = document.querySelector('#zzag-numeric-input');
+const grantInputDiv = grantInput.parentNode;
+const hoursInputDiv = hoursInput.parentNode;
+
+const p = document.createElement('p');
+p.setAttribute('style', 'display:none');
+p.setAttribute('class', 'error-msg');
+const message = document.createTextNode('Text');
+p.appendChild(message);
 
 const compareGrants = async () => {
 	const grantInputValue = grantInput.value;
@@ -136,13 +145,14 @@ const compareGrants = async () => {
 	await getUser();
 
 	if (grantInputValue > userInformation[0].customFields[1].customValue.data) {
-		// eslint-disable-next-line no-console
-		console.log('Dá não');
+		grantInputDiv.appendChild(p);
+
+		document.querySelector('.error-msg').innerText = 'No funds available';
+		document.querySelector('.error-msg').style.display = 'block';
 		document.querySelector('#fragment-dzko-submit-button').disabled = true;
 	} else {
+		document.querySelector('.error-msg').style.display = 'none';
 		document.querySelector('#fragment-dzko-submit-button').disabled = false;
-		// eslint-disable-next-line no-console
-		console.log('Agora pode');
 	}
 };
 
@@ -154,13 +164,16 @@ const compareHours = async () => {
 	await getUser();
 
 	if (hoursInputValue > userInformation[0].customFields[0].customValue.data) {
-		// eslint-disable-next-line no-console
-		console.log('Dá não');
+		hoursInputDiv.appendChild(p);
+
+		document.querySelector('.error-msg').innerText =
+			'No service hours available';
+
+		document.querySelector('.error-msg').style.display = 'block';
 		document.querySelector('#fragment-dzko-submit-button').disabled = true;
 	} else {
+		document.querySelector('.error-msg').style.display = 'none';
 		document.querySelector('#fragment-dzko-submit-button').disabled = false;
-		// eslint-disable-next-line no-console
-		console.log('Agora pode');
 	}
 };
 

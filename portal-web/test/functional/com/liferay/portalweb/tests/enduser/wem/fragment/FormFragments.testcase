@@ -451,10 +451,20 @@ definition {
 
 			ScrollBy(value1 = "0, 300");
 
+			AssertVisible(locator1 = "//div[contains(@class,'multiselect-list')]//div[contains(@class,'checkbox')]");
+
+			ScrollBy(value1 = "0, 300");
+
 			AssertVisible(
 				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
 				type = "numeric-input");
+
+			ScrollBy(value1 = "0, 300");
+
+			AssertVisible(
+				key_fieldLabel = "Write your content here...",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 			ScrollBy(value1 = "0, 300");
 
@@ -469,6 +479,13 @@ definition {
 				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
 				type = "text-input");
+
+			ScrollBy(value1 = "0, 300");
+
+			AssertVisible(
+				index = 1,
+				locator1 = "Fragment#TEXTAREA_FIELD",
+				type = "textarea");
 		}
 	}
 

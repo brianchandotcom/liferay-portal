@@ -93,7 +93,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 
 				<liferay-ui:search-container-column-text
 					align="right"
-					name="view"
+					name="views"
 					value="--"
 				/>
 
@@ -185,7 +185,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 
 				<liferay-ui:search-container-column-text
 					align="right"
-					name="view"
+					name="views"
 				>
 					<%= kbArticle.getViewCount() %>
 				</liferay-ui:search-container-column-text>

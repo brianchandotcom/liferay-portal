@@ -27,6 +27,7 @@ const Teams = () => (
 					test_fix: false,
 					untested: false,
 				},
+				columnsFixed: ['name'],
 			}}
 			managementToolbarProps={{
 				filterSchema: 'buildTeams',

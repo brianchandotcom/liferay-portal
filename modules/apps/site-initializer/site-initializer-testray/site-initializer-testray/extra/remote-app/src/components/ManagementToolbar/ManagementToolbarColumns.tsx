@@ -86,7 +86,7 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 				</div>
 			</div>
 
-			<div className="popover-footer">
+			<div className="mt-5 popover-footer">
 				<Form.Divider />
 
 				<ClayButton

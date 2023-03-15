@@ -42,10 +42,10 @@ const layerForDendingUpdateStatus = async (message, attribute, key, value) => {
 };
 
 const getMessage = () => document.querySelector('#messageDescribed').value;
+
 const getAttributeHidden = () => document.querySelector('#messageDanger');
 
 const openModal = () => {
-
 	const organizationName = fragmentElement.querySelector('.organizationName')
 		.innerHTML;
 
@@ -58,7 +58,6 @@ const openModal = () => {
 				displayType: 'danger',
 				label: 'Reject',
 				async onClick() {
-					
 					await layerForDendingUpdateStatus(
 						getMessage(),
 						getAttributeHidden(),
@@ -72,7 +71,6 @@ const openModal = () => {
 				displayType: 'success',
 				label: 'Approve',
 				async onClick() {
-					
 					await layerForDendingUpdateStatus(
 						getMessage(),
 						getAttributeHidden(),

@@ -3,33 +3,15 @@
 [#assign organizationId = objectRequest.classPK! /]
 [#assign URL = (layoutURL?substring(0,layoutURL?lastIndexOf('/')))! /]
 [#assign approvedRoles =["Administrator", "Finance User"]/]
+[#assign approvedRolesForOrganization =["Administrator", "EVP Manager"]/]
 [#assign userRoles = permissionChecker.getUserBag().getRoles()/]
 
 [#if organizationId?? && organizationId?hasContent]
-[#assign requestStatus = (restClient.get("/c/evporganizations/" + organizationId).organizationStatus.key)! /]
 	[#assign organizationStatus = (restClient.get("/c/evporganizations/" + organizationId).organizationStatus.key) ! /]
 	[#assign organizationName = (restClient.get("/c/evporganizations/" + organizationId).organizationName)! /]
 	[#assign organizationStatusListing = ["rejected","awaitingFinanceApproval","verified"] /]
 
 	<input class="organizationID" id="${organizationId}" type="hidden" value="${organizationId}" />
-		[@liferay_ui["icon"]
-			message="Details"
-			url=URL + "/l/" + organizationId
-		/]
-	[#list userRoles as role]
-			[#if approvedRoles?seqContains(role.name)]
-
-				[#if requestStatus == "awaitingFinanceApproval"]
-					[@liferay_ui["icon"]
-						message="Edit"
-						url=URL + "/edit-organization-form?id=" + organizationId
-					/]
-				[/#if]
-
-				[#break]
-			[/#if]
-		[/#list]
-
 	<span class="organizationName" hidden>${organizationName}</span>
 
 	<div id="evp-organization-kebab-button">
@@ -43,28 +25,26 @@
 				message="Details"
 				url=URL + "/l/" + organizationId
 			/]
-			[#list userRoles as role]
-			[#if approvedRoles?seqContains(role.name)]
 
-				[#if requestStatus == "awaitingFinanceApproval"]
+			[#list userRoles as role]
+				[#if approvedRoles?seqContains(role.name) && organizationStatus == "awaitingFinanceApproval"]
+
 					[@liferay_ui["icon"]
 						message="Edit"
 						url=URL + "/edit-organization-form?id=" + organizationId
 					/]
+
 				[/#if]
 
-				[#break]
-			[/#if]
-		[/#list]
-
-			[#if !organizationStatusListing?seqContains(organizationStatus)]
-				<div class="btnOpenModal">
-					[@liferay_ui["icon"]
-						message="Approve or Reject"
-						url="#${organizationId}"
-					/]
-				</div>
-			[/#if]
+				[#if approvedRolesForOrganization?seqContains(role.name) && !organizationStatusListing?seqContains(organizationStatus)]
+					<div class="btnOpenModal">
+						[@liferay_ui["icon"]
+							message="Approve or Reject"
+							url="#${organizationId}"
+						/]
+					</div>
+				[/#if]
+			[/#list]
 		[/@]
 	</div>
 [/#if]

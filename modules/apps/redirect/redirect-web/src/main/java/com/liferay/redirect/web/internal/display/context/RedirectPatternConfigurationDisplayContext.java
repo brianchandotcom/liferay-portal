@@ -65,14 +65,13 @@ public class RedirectPatternConfigurationDisplayContext {
 							themeDisplay.getScopeGroupId());
 
 				redirectPatternEntries.forEach(
-					redirectPatternUserAgent -> list.add(
+					redirectPatternEntry -> list.add(
 						HashMapBuilder.<String, Object>put(
 							"destinationURL",
-							redirectPatternUserAgent.getDestinationURL()
+							redirectPatternEntry.getDestinationURL()
 						).put(
 							"pattern",
-							String.valueOf(
-								redirectPatternUserAgent.getPattern())
+							String.valueOf(redirectPatternEntry.getPattern())
 						).build()));
 
 				return list;

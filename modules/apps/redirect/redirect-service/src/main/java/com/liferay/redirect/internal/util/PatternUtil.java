@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 public class PatternUtil {
 
 	public static List<RedirectPatternEntry> parse(String[] patternStrings) {
-		List<RedirectPatternEntry> parsedPatterns = new ArrayList<>();
+		List<RedirectPatternEntry> redirectPatternEntries = new ArrayList<>();
 
 		for (String patternString : patternStrings) {
 			String[] parts = patternString.split("\\s+", 2);
@@ -38,13 +38,13 @@ public class PatternUtil {
 				continue;
 			}
 
-			parsedPatterns.add(
+			redirectPatternEntries.add(
 				new RedirectPatternEntry(
 					Pattern.compile(_normalize(parts[0])), parts[1],
 					StringPool.BLANK));
 		}
 
-		return parsedPatterns;
+		return redirectPatternEntries;
 	}
 
 	private static String _normalize(String patternString) {

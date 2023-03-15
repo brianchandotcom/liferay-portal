@@ -235,7 +235,7 @@ public class RedirectProviderImplTest {
 	private void _setupRedirectPatternEntries(
 		List<RedirectPatternEntry> redirectPatternEntries) {
 
-		_redirectProviderImpl.setPatternStrings(
+		_redirectProviderImpl.setRedirectPatternEntries(
 			HashMapBuilder.put(
 				_GROUP_ID, redirectPatternEntries
 			).build());

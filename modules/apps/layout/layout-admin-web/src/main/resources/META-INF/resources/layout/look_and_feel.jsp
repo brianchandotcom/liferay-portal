@@ -211,7 +211,7 @@ else {
 	);
 
 	regularInheritLookAndFeel.addEventListener('change', (event) => {
-		event.currentTarget.checked = true;
+		event.target.checked = true;
 		regularUniqueLookAndFeel.checked = false;
 
 		inheritThemeOptions.classList.toggle('hide');
@@ -219,7 +219,7 @@ else {
 	});
 
 	regularUniqueLookAndFeel.addEventListener('change', (event) => {
-		event.currentTarget.checked = true;
+		event.target.checked = true;
 		regularInheritLookAndFeel.checked = false;
 
 		inheritThemeOptions.classList.toggle('hide');

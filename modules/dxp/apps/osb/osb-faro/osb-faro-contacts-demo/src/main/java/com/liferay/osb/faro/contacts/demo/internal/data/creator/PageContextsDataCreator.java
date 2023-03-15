@@ -14,10 +14,10 @@
 
 package com.liferay.osb.faro.contacts.demo.internal.data.creator;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +33,10 @@ public class PageContextsDataCreator extends DataCreator {
 
 	@Override
 	protected Map<String, Object> doCreate(Object[] params) {
-		Map<String, Object> pageContext = new HashMap<>();
-
-		pageContext.put("browserName", "Chrome");
+		Map<String, Object> pageContext =
+			new HashMapBuilder<>().<String, Object>put(
+				"browserName", "Chrome"
+			).build();
 
 		ObjectValuePair<String, String> page = _pages.get(_count++);
 

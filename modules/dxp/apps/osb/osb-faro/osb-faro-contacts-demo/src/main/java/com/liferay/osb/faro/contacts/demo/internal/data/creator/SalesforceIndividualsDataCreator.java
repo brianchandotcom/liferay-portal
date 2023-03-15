@@ -17,6 +17,7 @@ package com.liferay.osb.faro.contacts.demo.internal.data.creator;
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
 import java.util.Date;
@@ -53,12 +54,6 @@ public class SalesforceIndividualsDataCreator extends DataCreator {
 
 	@Override
 	protected Map<String, Object> doCreate(Object[] params) {
-		Map<String, Object> salesforceIndividual = new HashMap<>();
-
-		salesforceIndividual.put("dataSourceId", _dataSourceId);
-
-		Map<String, Object> fields = new HashMap<>();
-
 		Map<String, Object> liferayUser = new HashMap<>();
 		Map<String, Object> salesforceAccount = new HashMap<>();
 
@@ -68,6 +63,9 @@ public class SalesforceIndividualsDataCreator extends DataCreator {
 		}
 
 		Object accountPKs = salesforceAccount.get("id");
+
+		HashMapBuilder.HashMapWrapper<String, Object> fields =
+			new HashMapBuilder.HashMapWrapper<>();
 
 		if (accountPKs != null) {
 			fields.put("accountPKs", Collections.singletonList(accountPKs));
@@ -119,8 +117,14 @@ public class SalesforceIndividualsDataCreator extends DataCreator {
 		fields.put("suffix", name.suffix());
 		fields.put("title", name.title());
 
-		salesforceIndividual.put("fields", fields);
-		salesforceIndividual.put("id", internet.uuid());
+		Map<String, Object> salesforceIndividual =
+			new HashMapBuilder<>().<String, Object>put(
+				"dataSourceId", _dataSourceId
+			).put(
+				"fields", fields
+			).put(
+				"id", internet.uuid()
+			).build();
 
 		_salesforceAuditEventsDataCreator.create(
 			new Object[] {salesforceIndividual});

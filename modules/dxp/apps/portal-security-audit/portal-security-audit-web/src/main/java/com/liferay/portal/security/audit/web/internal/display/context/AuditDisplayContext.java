@@ -57,11 +57,11 @@ public class AuditDisplayContext {
 		_renderRequest = renderRequest;
 		_timeZone = timeZone;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_today = CalendarFactoryUtil.getCalendar(
-			_timeZone, _themeDisplay.getLocale());
+			timeZone, _themeDisplay.getLocale());
 	}
 
 	public SearchContainer<AuditEvent> getSearchContainer() throws Exception {

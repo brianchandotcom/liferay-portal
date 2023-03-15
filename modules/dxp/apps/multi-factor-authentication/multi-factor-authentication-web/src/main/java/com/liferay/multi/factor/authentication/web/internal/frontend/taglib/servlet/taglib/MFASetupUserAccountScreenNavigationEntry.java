@@ -53,11 +53,11 @@ public class MFASetupUserAccountScreenNavigationEntry
 		_servletContext = servletContext;
 		_setupMFAChecker = setupMFAChecker;
 
-		_bundle = _serviceReference.getBundle();
+		_bundle = serviceReference.getBundle();
 		_companyId = GetterUtil.getLong(
 			serviceReference.getProperty("companyId"));
 
-		Class<? extends SetupMFAChecker> clazz = _setupMFAChecker.getClass();
+		Class<? extends SetupMFAChecker> clazz = setupMFAChecker.getClass();
 
 		_resourceBundleKey = clazz.getName();
 	}

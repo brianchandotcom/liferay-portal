@@ -61,6 +61,7 @@ definition {
 		Upgrade.viewContributedFragmentStyle();
 	}
 
+	@description = "This is a use case for LPS-106776. Fragment configuration persists after upgrating."
 	@priority = 5
 	test ViewContributedFragmentStyleAfterUpgrade72101 {
 		property data.archive.type = "data-archive-contributed-fragments";

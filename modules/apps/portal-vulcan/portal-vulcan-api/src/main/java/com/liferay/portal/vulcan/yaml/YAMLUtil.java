@@ -72,7 +72,12 @@ public class YAMLUtil {
 	private static final Yaml _YAML_OPEN_API;
 
 	static {
-		Constructor configYAMLConstructor = new Constructor(ConfigYAML.class);
+		LoaderOptions loaderOptions = new LoaderOptions();
+
+		loaderOptions.setAllowDuplicateKeys(false);
+
+		Constructor configYAMLConstructor = new Constructor(
+			ConfigYAML.class, loaderOptions);
 
 		TypeDescription securityTypeDescription = new TypeDescription(
 			Security.class);
@@ -108,15 +113,12 @@ public class YAMLUtil {
 			}
 		};
 
-		LoaderOptions loaderOptions = new LoaderOptions();
-
-		loaderOptions.setAllowDuplicateKeys(false);
-
 		_YAML_CONFIG = new Yaml(
 			configYAMLConstructor, representer, new DumperOptions(),
 			loaderOptions);
 
-		Constructor openAPIYAMLConstructor = new Constructor(OpenAPIYAML.class);
+		Constructor openAPIYAMLConstructor = new Constructor(
+			OpenAPIYAML.class, loaderOptions);
 
 		TypeDescription itemsTypeDescription = new TypeDescription(Items.class);
 

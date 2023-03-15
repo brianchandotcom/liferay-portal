@@ -64,9 +64,15 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 		List<ProjectPrioritizer> projectPrioritizers = new ArrayList<>();
 
 		for (JSONObject responseJSONObject : retrieve()) {
-			projectPrioritizers.add(
+			ProjectPrioritizer projectPrioritizer =
 				ProjectPrioritizerFactory.newProjectPrioritizer(
-					responseJSONObject));
+					responseJSONObject);
+
+			projectPrioritizer.addProjectComparators(
+				_projectPrioritizerComparatorDALO.retrieveProjectComparators(
+					projectPrioritizer));
+
+			projectPrioritizers.add(projectPrioritizer);
 		}
 
 		return projectPrioritizers;
@@ -74,6 +80,31 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 
 	public ProjectPrioritizer updateProjectPrioritizer(
 		ProjectPrioritizer projectPrioritizer) {
+
+		List<ProjectComparator> retrievedProjectComparators =
+			_projectPrioritizerComparatorDALO.retrieveProjectComparators(
+				projectPrioritizer);
+
+		for (ProjectComparator projectComparator :
+				projectPrioritizer.getProjectComparators()) {
+
+			if (retrievedProjectComparators.contains(projectComparator)) {
+				retrievedProjectComparators.removeAll(
+					Collections.singletonList(projectComparator));
+
+				continue;
+			}
+
+			_projectPrioritizerComparatorDALO.createRelationship(
+				projectPrioritizer, projectComparator);
+		}
+
+		for (ProjectComparator retrievedProjectComparator :
+				retrievedProjectComparators) {
+
+			_projectPrioritizerComparatorDALO.deleteRelationship(
+				projectPrioritizer, retrievedProjectComparator);
+		}
 
 		JSONObject responseJSONObject = update(
 			projectPrioritizer.getJSONObject());
@@ -92,5 +123,8 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 
 	@Autowired
 	private ProjectComparatorDALO _projectComparatorDALO;
+
+	@Autowired
+	private ProjectPrioritizerComparatorDALO _projectPrioritizerComparatorDALO;
 
 }

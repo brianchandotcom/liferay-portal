@@ -1,11 +1,11 @@
 .portlet-login {
-	$alert: #F48989;
-	$blue: #0B5FFF;
-	$error: #DA1414;
-	$errorLight: #FEEFEF;
+	$alert: #f48989;
+	$blue: #0b5fff;
+	$error: #da1414;
+	$errorLight: #feefef;
 	$main: #272833;
-	$secondary: #F7F8F9;
-	$white: #FFF;
+	$secondary: #f7f8f9;
+	$white: #fff;
 
 	background: $secondary;
 	bottom: 0;
@@ -84,7 +84,7 @@
 							width: 100%;
 
 							&:hover {
-								background-color: #0053F0;
+								background-color: #0053f0;
 								border-color: transparent;
 							}
 
@@ -136,8 +136,8 @@
 							}
 
 							.form-control {
-								background-color: #F1F2F5;
-								border: 0.063rem solid #E7E7ED;
+								background-color: #f1f2f5;
+								border: 0.063rem solid #e7e7ed;
 								border-radius: 0.25rem;
 								box-shadow: none;
 								color: $main;
@@ -148,11 +148,12 @@
 								margin: 0;
 								min-width: 0;
 								padding: 0.5rem 1rem;
-								transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+								transition: border-color 0.15s ease-in-out,
+									box-shadow 0.15s ease-in-out;
 
 								&:focus {
-									background-color: #F0F5FF;
-									border-color: #80ACFF;
+									background-color: #f0f5ff;
+									border-color: #80acff;
 									color: $main;
 									outline: 0;
 								}
@@ -189,9 +190,9 @@
 
 						&:first-child a {
 							background-color: $white;
-							border: 1px solid #CDCED9;
+							border: 1px solid #cdced9;
 							border-radius: 0.25rem;
-							color: #7D8B94;
+							color: #7d8b94;
 							padding: 0.4375rem 0.9375rem;
 							width: 100%;
 

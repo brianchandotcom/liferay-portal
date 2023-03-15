@@ -100,7 +100,7 @@ public class LegacyDataArchive {
 		_databaseName = databaseName;
 
 		_legacyDataArchivePortalVersion =
-			_legacyDataArchiveGroup.getLegacyDataArchivePortalVersion();
+			legacyDataArchiveGroup.getLegacyDataArchivePortalVersion();
 
 		_legacyDataArchiveHelper =
 			_legacyDataArchivePortalVersion.getLegacyDataArchiveHelper();
@@ -108,7 +108,7 @@ public class LegacyDataArchive {
 		_legacyGitWorkingDirectory =
 			_legacyDataArchiveHelper.getLegacyGitWorkingDirectory();
 
-		_dataArchiveType = _legacyDataArchiveGroup.getDataArchiveType();
+		_dataArchiveType = legacyDataArchiveGroup.getDataArchiveType();
 
 		File legacyDataWorkingDirectory =
 			_legacyGitWorkingDirectory.getWorkingDirectory();

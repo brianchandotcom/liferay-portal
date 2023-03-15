@@ -1,3 +1,5 @@
+/* eslint-disable radix */
+/* eslint-disable @liferay/portal/no-global-fetch */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -8,6 +10,8 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+
+const userId = parseInt(document.getElementById('userIdContainer').textContent);
 
 function main() {
 	const requestType = document.querySelector('[name="requestType"]');
@@ -87,8 +91,7 @@ function toggleServiceRequired(service) {
 		service.querySelector('[name="totalHoursRequested"]').required = false;
 		service.querySelector('[name="startDate"]').required = false;
 		service.querySelector('[name="endDate"]').required = false;
-	}
-	else {
+	} else {
 		service.querySelector('[name="managerEmailAddress"]').required = true;
 		service.querySelector('[name="totalHoursRequested"]').required = true;
 		service.querySelector('[name="startDate"]').required = true;
@@ -99,8 +102,7 @@ function toggleServiceRequired(service) {
 function toggleGrantRequired(grant) {
 	if (grant.querySelector('[name="grantAmount"]').required) {
 		grant.querySelector('[name="grantAmount"]').required = false;
-	}
-	else {
+	} else {
 		grant.querySelector('[name="grantAmount"]').required = true;
 	}
 }
@@ -108,3 +110,58 @@ function toggleGrantRequired(grant) {
 function handleDocumentClick(requestType) {
 	updateValue(requestType);
 }
+
+const userInformation = [];
+
+const getUser = async () => {
+	await fetch(`/o/headless-admin-user/v1.0/user-accounts/${userId}`, {
+		headers: {
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'GET',
+	})
+		.then((response) => response.json())
+		.then((data) => userInformation.push(data));
+};
+
+getUser();
+
+const grantInput = document.querySelector('#jjyo-numeric-input');
+const hoursInput = document.querySelector('#zzag-numeric-input');
+
+const compareGrants = async () => {
+	const grantInputValue = grantInput.value;
+
+	await getUser();
+
+	if (grantInputValue > userInformation[0].customFields[1].customValue.data) {
+		// eslint-disable-next-line no-console
+		console.log('Dá não');
+		document.querySelector('#fragment-dzko-submit-button').disabled = true;
+	} else {
+		document.querySelector('#fragment-dzko-submit-button').disabled = false;
+		// eslint-disable-next-line no-console
+		console.log('Agora pode');
+	}
+};
+
+grantInput.addEventListener('change', compareGrants);
+
+const compareHours = async () => {
+	const hoursInputValue = hoursInput.value;
+
+	await getUser();
+
+	if (hoursInputValue > userInformation[0].customFields[0].customValue.data) {
+		// eslint-disable-next-line no-console
+		console.log('Dá não');
+		document.querySelector('#fragment-dzko-submit-button').disabled = true;
+	} else {
+		document.querySelector('#fragment-dzko-submit-button').disabled = false;
+		// eslint-disable-next-line no-console
+		console.log('Agora pode');
+	}
+};
+
+hoursInput.addEventListener('change', compareHours);

@@ -55,6 +55,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			JSONUser.tearDownNonAdminUsers();
+			
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 	}
@@ -445,6 +447,94 @@ definition {
 
 		task ("View the individual name at the top of individuals page") {
 			ACNavigation.assertPageHeader(headerTitle = "userfn userln");
+		}
+	}
+
+	@description = "Bug: LRAC-12694 | Automation ID: LRAC-12811 | Test Summary: Known Individuals is not duplicated if user exists in multiple properties"
+	@priority = 3
+	test IndividualNotDuplicatedIfUserExistsInMultipleProperties {
+		var propertyName1 = ${assignedPropertyName};
+
+		task ("View the site page with new user to the first property") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "userea@liferay.com",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Disconnect AC and DXP") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+		}
+
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Reconnect AC with DXP to use another property") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("View the site page with new user to the second property") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "userea@liferay.com",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close Sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to the first property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${propertyName1});
+		}
+
+		task ("Navigate to the Individuals and And check that only 1 user is counted in the total of individuals") {
+			ACNavigation.goToIndividuals();
+
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = 1);
+		}
+
+		task ("Navigate to the Known Individuals tab") {
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Check that the user does not appear duplicated in the list") {
+			ACUtils.viewNameList(nameList = "userfn userln");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entry.");
+		}
+
+		task ("Switch to the second property in AC") {
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+		}
+
+		task ("Navigate to the Individuals and And check that only 1 user is counted in the total of individuals") {
+			ACNavigation.goToIndividuals();
+
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = 1);
+		}
+
+		task ("Navigate to the Known Individuals tab") {
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Check that the user does not appear duplicated in the list") {
+			ACUtils.viewNameList(nameList = "userfn userln");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entry.");
 		}
 	}
 

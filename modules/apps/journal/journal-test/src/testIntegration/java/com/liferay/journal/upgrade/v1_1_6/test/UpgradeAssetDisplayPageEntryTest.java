@@ -471,7 +471,7 @@ public class UpgradeAssetDisplayPageEntryTest {
 			"AssetDisplayPageEntryUpgradeProcess";
 
 	@Inject(
-		filter = "(&(objectClass=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
+		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 

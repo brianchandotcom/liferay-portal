@@ -260,7 +260,7 @@ public class UpgradeDDMFormInstanceSettingsTest {
 			"DDMFormInstanceSettingsUpgradeProcess";
 
 	@Inject(
-		filter = "(&(objectClass=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 

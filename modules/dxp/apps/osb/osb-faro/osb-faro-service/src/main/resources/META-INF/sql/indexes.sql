@@ -16,8 +16,8 @@ create index IX_46F39E6A on OSBFaro_FaroProject (serverLocation[$COLUMN_LENGTH:7
 create index IX_DC26D918 on OSBFaro_FaroProject (userId);
 create unique index IX_D2CDE05C on OSBFaro_FaroProject (weDeployKey[$COLUMN_LENGTH:75$]);
 
-create index IX_1E62D92 on OSBFaro_FaroProjectEmailAddressDomain (faroProjectId);
-create index IX_D2188450 on OSBFaro_FaroProjectEmailAddressDomain (groupId);
+create index IX_82F8539E on OSBFaro_FaroProjectEmailDomain (faroProjectId);
+create index IX_7D13235C on OSBFaro_FaroProjectEmailDomain (groupId);
 
 create index IX_5E384504 on OSBFaro_FaroUser (emailAddress[$COLUMN_LENGTH:75$], status);
 create unique index IX_6A8038A4 on OSBFaro_FaroUser (groupId, emailAddress[$COLUMN_LENGTH:75$]);

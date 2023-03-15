@@ -29,14 +29,17 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author André Miranda
  */
+@Component(service = FaroChannelFinder.class)
 public class FaroChannelFinderImpl
 	extends FaroChannelFinderBaseImpl implements FaroChannelFinder {
 
@@ -73,24 +76,24 @@ public class FaroChannelFinderImpl
 				sql = StringUtil.removeSubstring(sql, _PERMISSION_CHECK_SQL);
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(groupId);
-			qPos.add(keywordsArray, 2);
+			queryPos.add(groupId);
+			queryPos.add(keywordsArray, 2);
 
 			if (!admin) {
-				qPos.add(userId);
-				qPos.add(permissionType);
+				queryPos.add(userId);
+				queryPos.add(permissionType);
 			}
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Long count = itr.next();
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();
@@ -138,22 +141,22 @@ public class FaroChannelFinderImpl
 				sql = StringUtil.removeSubstring(sql, _PERMISSION_CHECK_SQL);
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("OSBFaro_FaroChannel", FaroChannelImpl.class);
+			sqlQuery.addEntity("OSBFaro_FaroChannel", FaroChannelImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(groupId);
-			qPos.add(keywordsArray, 2);
+			queryPos.add(groupId);
+			queryPos.add(keywordsArray, 2);
 
 			if (!admin) {
-				qPos.add(userId);
-				qPos.add(permissionType);
+				queryPos.add(userId);
+				queryPos.add(permissionType);
 			}
 
 			return (List<FaroChannel>)QueryUtil.list(
-				q, getDialect(), start, end);
+				sqlQuery, getDialect(), start, end);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -181,7 +184,7 @@ public class FaroChannelFinderImpl
 		"AND ((UserGroupRole.userId = ?) OR " +
 			"(OSBFaro_FaroChannel.permissionType = ?))";
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

@@ -23,6 +23,7 @@ import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.base.FaroChannelLocalServiceBaseImpl;
 import com.liferay.osb.faro.service.persistence.FaroUserFinder;
 import com.liferay.osb.faro.util.EmailUtil;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -35,11 +36,14 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,21 +51,26 @@ import java.util.ResourceBundle;
 
 import javax.mail.internet.InternetAddress;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Matthew Kong
- * @see FaroChannelLocalServiceBaseImpl
  */
+@Component(
+	property = "model.class.name=com.liferay.osb.faro.model.FaroChannel",
+	service = AopService.class
+)
 public class FaroChannelLocalServiceImpl
 	extends FaroChannelLocalServiceBaseImpl {
 
-	@Override
 	public FaroChannel addFaroChannel(
 			long userId, String name, String channelId, long workspaceGroupId)
 		throws PortalException {
 
 		long faroChannelId = counterLocalService.increment();
 
-		Group group = groupLocalService.addGroup(
+		Group group = _groupLocalService.addGroup(
 			userId, workspaceGroupId, FaroChannel.class.getName(),
 			faroChannelId, 0,
 			Collections.singletonMap(LocaleUtil.getDefault(), name), null,
@@ -74,7 +83,7 @@ public class FaroChannelLocalServiceImpl
 
 		group.setFriendlyURL(null);
 
-		groupLocalService.updateGroup(group);
+		_groupLocalService.updateGroup(group);
 
 		FaroChannel faroChannel = faroChannelPersistence.create(faroChannelId);
 
@@ -93,26 +102,25 @@ public class FaroChannelLocalServiceImpl
 		return faroChannelPersistence.update(faroChannel);
 	}
 
-	@Override
 	public void addUsers(
 			long companyId, String channelId, List<Long> invitedUserIds,
 			long userId, long workspaceGroupId)
 		throws PortalException {
 
-		FaroChannel faroChannel = faroChannelPersistence.findByChannelId(
+		FaroChannel faroChannel = faroChannelPersistence.findByC_W(
 			channelId, workspaceGroupId);
 
-		Role role = roleLocalService.getRole(
+		Role role = _roleLocalService.getRole(
 			companyId, RoleConstants.SITE_MEMBER);
 
 		for (long invitedUserId : invitedUserIds) {
-			groupLocalService.addUserGroup(
+			_groupLocalService.addUserGroup(
 				invitedUserId, faroChannel.getGroupId());
 
-			userGroupRoleLocalService.deleteUserGroupRoles(
+			_userGroupRoleLocalService.deleteUserGroupRoles(
 				invitedUserId, new long[] {faroChannel.getGroupId()});
 
-			userGroupRoleLocalService.addUserGroupRoles(
+			_userGroupRoleLocalService.addUserGroupRoles(
 				invitedUserId, faroChannel.getGroupId(),
 				new long[] {role.getRoleId()});
 
@@ -120,18 +128,17 @@ public class FaroChannelLocalServiceImpl
 				_sendEmail(faroChannel, invitedUserId, userId);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}
 
-	@Override
 	public int countFaroUsers(
 			String channelId, boolean available, String query,
 			List<Integer> statuses, long workspaceGroupId)
 		throws PortalException {
 
-		FaroChannel faroChannel = faroChannelPersistence.findByChannelId(
+		FaroChannel faroChannel = faroChannelPersistence.findByC_W(
 			channelId, workspaceGroupId);
 
 		return _faroUserFinder.countByChannelKeywords(
@@ -139,26 +146,22 @@ public class FaroChannelLocalServiceImpl
 			faroChannel.getWorkspaceGroupId());
 	}
 
-	@Override
 	public FaroChannel deleteFaroChannel(FaroChannel faroChannel)
 		throws PortalException {
 
-		groupLocalService.deleteGroup(faroChannel.getGroupId());
+		_groupLocalService.deleteGroup(faroChannel.getGroupId());
 
 		return faroChannelPersistence.remove(faroChannel);
 	}
 
-	@Override
 	public FaroChannel deleteFaroChannel(
 			String channelId, long workspaceGroupId)
 		throws PortalException {
 
 		return deleteFaroChannel(
-			faroChannelPersistence.findByChannelId(
-				channelId, workspaceGroupId));
+			faroChannelPersistence.findByC_W(channelId, workspaceGroupId));
 	}
 
-	@Override
 	public void deleteFaroChannels(long workspaceGroupId)
 		throws PortalException {
 
@@ -170,14 +173,13 @@ public class FaroChannelLocalServiceImpl
 		}
 	}
 
-	@Override
 	public List<FaroUser> findFaroUsers(
 			String channelId, boolean available, String query,
 			List<Integer> statuses, long workspaceGroupId, int start, int end,
 			OrderByComparator<FaroUser> orderByComparator)
 		throws PortalException {
 
-		FaroChannel faroChannel = faroChannelPersistence.findByChannelId(
+		FaroChannel faroChannel = faroChannelPersistence.findByC_W(
 			channelId, workspaceGroupId);
 
 		return _faroUserFinder.findByChannelKeywords(
@@ -185,31 +187,28 @@ public class FaroChannelLocalServiceImpl
 			faroChannel.getWorkspaceGroupId(), start, end, orderByComparator);
 	}
 
-	@Override
 	public FaroChannel getFaroChannel(String channelId, long workspaceGroupId)
 		throws PortalException {
 
-		return faroChannelPersistence.findByChannelId(
-			channelId, workspaceGroupId);
+		return faroChannelPersistence.findByC_W(channelId, workspaceGroupId);
 	}
 
-	@Override
 	public void removeUsers(
 			String channelId, List<Long> userIds, long workspaceGroupId)
 		throws PortalException {
 
-		FaroChannel faroChannel = faroChannelPersistence.findByChannelId(
+		FaroChannel faroChannel = faroChannelPersistence.findByC_W(
 			channelId, workspaceGroupId);
 
 		for (long userId : userIds) {
-			userGroupRoleLocalService.deleteUserGroupRoles(
+			_userGroupRoleLocalService.deleteUserGroupRoles(
 				userId, new long[] {faroChannel.getGroupId()});
 
-			groupLocalService.deleteUserGroup(userId, faroChannel.getGroupId());
+			_groupLocalService.deleteUserGroup(
+				userId, faroChannel.getGroupId());
 		}
 	}
 
-	@Override
 	public List<FaroChannel> search(
 		long groupId, String query, int start, int end,
 		OrderByComparator<FaroChannel> orderByComparator) {
@@ -222,7 +221,6 @@ public class FaroChannelLocalServiceImpl
 			permissionChecker.getUserId(), start, end, orderByComparator);
 	}
 
-	@Override
 	public int searchCount(long groupId, String query) {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -236,12 +234,12 @@ public class FaroChannelLocalServiceImpl
 			FaroChannel faroChannel, long invitedUserId, long userId)
 		throws Exception {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		InternetAddress from = new InternetAddress(
 			"ac@liferay.com", user.getFullName() + " (Analytics Cloud)");
 
-		User invitedUser = userLocalService.getUser(invitedUserId);
+		User invitedUser = _userLocalService.getUser(invitedUserId);
 
 		InternetAddress to = new InternetAddress(
 			invitedUser.getEmailAddress(), invitedUser.getFullName());
@@ -265,7 +263,7 @@ public class FaroChannelLocalServiceImpl
 			new String[] {
 				_language.get(resourceBundle, "go-to-workspace"),
 				EmailUtil.getWorkspaceURL(
-					groupLocalService.fetchGroup(faroChannel.getGroupId())),
+					_groupLocalService.fetchGroup(faroChannel.getGroupId())),
 				subject,
 				_language.format(
 					resourceBundle, "email-need-more-help",
@@ -294,10 +292,22 @@ public class FaroChannelLocalServiceImpl
 	@BeanReference(type = FaroUserFinder.class)
 	private FaroUserFinder _faroUserFinder;
 
-	@ServiceReference(type = Language.class)
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private Language _language;
 
-	@ServiceReference(type = MailService.class)
+	@Reference
 	private MailService _mailService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

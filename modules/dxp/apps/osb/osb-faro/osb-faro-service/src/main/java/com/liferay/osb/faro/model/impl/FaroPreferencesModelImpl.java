@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.osb.faro.model.FaroPreferences;
 import com.liferay.osb.faro.model.FaroPreferencesModel;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -28,12 +29,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -44,6 +43,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -69,9 +69,10 @@ public class FaroPreferencesModelImpl
 	public static final String TABLE_NAME = "OSBFaro_FaroPreferences";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"faroPreferencesId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createTime", Types.BIGINT}, {"modifiedTime", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"faroPreferencesId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createTime", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"modifiedTime", Types.BIGINT},
 		{"ownerId", Types.BIGINT}, {"preferences", Types.VARCHAR}
 	};
 
@@ -79,18 +80,20 @@ public class FaroPreferencesModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("faroPreferencesId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ownerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("preferences", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBFaro_FaroPreferences (faroPreferencesId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,ownerId LONG,preferences STRING null)";
+		"create table OSBFaro_FaroPreferences (mvccVersion LONG default 0 not null,faroPreferencesId LONG not null primary key,groupId LONG,companyId LONG,createTime LONG,userId LONG,userName VARCHAR(75) null,modifiedTime LONG,ownerId LONG,preferences STRING null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBFaro_FaroPreferences";
@@ -107,30 +110,38 @@ public class FaroPreferencesModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.osb.faro.model.FaroPreferences"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.osb.faro.model.FaroPreferences"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.osb.faro.model.FaroPreferences"),
-		true);
-
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long OWNERID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long FAROPREFERENCESID_COLUMN_BITMASK = 4L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.osb.faro.model.FaroPreferences"));
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
 
 	public FaroPreferencesModelImpl() {
 	}
@@ -184,9 +195,6 @@ public class FaroPreferencesModelImpl
 				attributeGetterFunction.apply((FaroPreferences)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -211,239 +219,118 @@ public class FaroPreferencesModelImpl
 	public Map<String, Function<FaroPreferences, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<FaroPreferences, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static Function<InvocationHandler, FaroPreferences>
-		_getProxyProviderFunction() {
+	private static class AttributeGetterFunctionsHolder {
 
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			FaroPreferences.class.getClassLoader(), FaroPreferences.class,
-			ModelWrapper.class);
+		private static final Map<String, Function<FaroPreferences, Object>>
+			_attributeGetterFunctions;
 
-		try {
-			Constructor<FaroPreferences> constructor =
-				(Constructor<FaroPreferences>)proxyClass.getConstructor(
-					InvocationHandler.class);
+		static {
+			Map<String, Function<FaroPreferences, Object>>
+				attributeGetterFunctions =
+					new LinkedHashMap
+						<String, Function<FaroPreferences, Object>>();
 
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
+			attributeGetterFunctions.put(
+				"mvccVersion", FaroPreferences::getMvccVersion);
+			attributeGetterFunctions.put(
+				"faroPreferencesId", FaroPreferences::getFaroPreferencesId);
+			attributeGetterFunctions.put(
+				"groupId", FaroPreferences::getGroupId);
+			attributeGetterFunctions.put(
+				"companyId", FaroPreferences::getCompanyId);
+			attributeGetterFunctions.put(
+				"createTime", FaroPreferences::getCreateTime);
+			attributeGetterFunctions.put("userId", FaroPreferences::getUserId);
+			attributeGetterFunctions.put(
+				"userName", FaroPreferences::getUserName);
+			attributeGetterFunctions.put(
+				"modifiedTime", FaroPreferences::getModifiedTime);
+			attributeGetterFunctions.put(
+				"ownerId", FaroPreferences::getOwnerId);
+			attributeGetterFunctions.put(
+				"preferences", FaroPreferences::getPreferences);
 
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
 		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
+
 	}
 
-	private static final Map<String, Function<FaroPreferences, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<FaroPreferences, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeSetterBiConsumersHolder {
 
-	static {
-		Map<String, Function<FaroPreferences, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap<String, Function<FaroPreferences, Object>>();
-		Map<String, BiConsumer<FaroPreferences, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<FaroPreferences, ?>>();
+		private static final Map<String, BiConsumer<FaroPreferences, Object>>
+			_attributeSetterBiConsumers;
 
-		attributeGetterFunctions.put(
-			"faroPreferencesId",
-			new Function<FaroPreferences, Object>() {
+		static {
+			Map<String, BiConsumer<FaroPreferences, ?>>
+				attributeSetterBiConsumers =
+					new LinkedHashMap<String, BiConsumer<FaroPreferences, ?>>();
 
-				@Override
-				public Object apply(FaroPreferences faroPreferences) {
-					return faroPreferences.getFaroPreferencesId();
-				}
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<FaroPreferences, Long>)
+					FaroPreferences::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"faroPreferencesId",
+				(BiConsumer<FaroPreferences, Long>)
+					FaroPreferences::setFaroPreferencesId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<FaroPreferences, Long>)FaroPreferences::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<FaroPreferences, Long>)
+					FaroPreferences::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"createTime",
+				(BiConsumer<FaroPreferences, Long>)
+					FaroPreferences::setCreateTime);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<FaroPreferences, Long>)FaroPreferences::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<FaroPreferences, String>)
+					FaroPreferences::setUserName);
+			attributeSetterBiConsumers.put(
+				"modifiedTime",
+				(BiConsumer<FaroPreferences, Long>)
+					FaroPreferences::setModifiedTime);
+			attributeSetterBiConsumers.put(
+				"ownerId",
+				(BiConsumer<FaroPreferences, Long>)FaroPreferences::setOwnerId);
+			attributeSetterBiConsumers.put(
+				"preferences",
+				(BiConsumer<FaroPreferences, String>)
+					FaroPreferences::setPreferences);
 
-			});
-		attributeSetterBiConsumers.put(
-			"faroPreferencesId",
-			new BiConsumer<FaroPreferences, Object>() {
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
 
-				@Override
-				public void accept(
-					FaroPreferences faroPreferences,
-					Object faroPreferencesIdObject) {
+	}
 
-					faroPreferences.setFaroPreferencesId(
-						(Long)faroPreferencesIdObject);
-				}
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
 
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<FaroPreferences, Object>() {
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
 
-				@Override
-				public Object apply(FaroPreferences faroPreferences) {
-					return faroPreferences.getGroupId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"groupId",
-			new BiConsumer<FaroPreferences, Object>() {
-
-				@Override
-				public void accept(
-					FaroPreferences faroPreferences, Object groupIdObject) {
-
-					faroPreferences.setGroupId((Long)groupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<FaroPreferences, Object>() {
-
-				@Override
-				public Object apply(FaroPreferences faroPreferences) {
-					return faroPreferences.getUserId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userId",
-			new BiConsumer<FaroPreferences, Object>() {
-
-				@Override
-				public void accept(
-					FaroPreferences faroPreferences, Object userIdObject) {
-
-					faroPreferences.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<FaroPreferences, Object>() {
-
-				@Override
-				public Object apply(FaroPreferences faroPreferences) {
-					return faroPreferences.getUserName();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userName",
-			new BiConsumer<FaroPreferences, Object>() {
-
-				@Override
-				public void accept(
-					FaroPreferences faroPreferences, Object userNameObject) {
-
-					faroPreferences.setUserName((String)userNameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"createTime",
-			new Function<FaroPreferences, Object>() {
-
-				@Override
-				public Object apply(FaroPreferences faroPreferences) {
-					return faroPreferences.getCreateTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"createTime",
-			new BiConsumer<FaroPreferences, Object>() {
-
-				@Override
-				public void accept(
-					FaroPreferences faroPreferences, Object createTimeObject) {
-
-					faroPreferences.setCreateTime((Long)createTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"modifiedTime",
-			new Function<FaroPreferences, Object>() {
-
-				@Override
-				public Object apply(FaroPreferences faroPreferences) {
-					return faroPreferences.getModifiedTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"modifiedTime",
-			new BiConsumer<FaroPreferences, Object>() {
-
-				@Override
-				public void accept(
-					FaroPreferences faroPreferences,
-					Object modifiedTimeObject) {
-
-					faroPreferences.setModifiedTime((Long)modifiedTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"ownerId",
-			new Function<FaroPreferences, Object>() {
-
-				@Override
-				public Object apply(FaroPreferences faroPreferences) {
-					return faroPreferences.getOwnerId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"ownerId",
-			new BiConsumer<FaroPreferences, Object>() {
-
-				@Override
-				public void accept(
-					FaroPreferences faroPreferences, Object ownerIdObject) {
-
-					faroPreferences.setOwnerId((Long)ownerIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"preferences",
-			new Function<FaroPreferences, Object>() {
-
-				@Override
-				public Object apply(FaroPreferences faroPreferences) {
-					return faroPreferences.getPreferences();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"preferences",
-			new BiConsumer<FaroPreferences, Object>() {
-
-				@Override
-				public void accept(
-					FaroPreferences faroPreferences, Object preferencesObject) {
-
-					faroPreferences.setPreferences((String)preferencesObject);
-				}
-
-			});
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -453,6 +340,10 @@ public class FaroPreferencesModelImpl
 
 	@Override
 	public void setFaroPreferencesId(long faroPreferencesId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_faroPreferencesId = faroPreferencesId;
 	}
 
@@ -463,19 +354,48 @@ public class FaroPreferencesModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_companyId = companyId;
+	}
+
+	@Override
+	public long getCreateTime() {
+		return _createTime;
+	}
+
+	@Override
+	public void setCreateTime(long createTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_createTime = createTime;
 	}
 
 	@Override
@@ -485,6 +405,10 @@ public class FaroPreferencesModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userId = userId;
 	}
 
@@ -516,17 +440,11 @@ public class FaroPreferencesModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userName = userName;
-	}
-
-	@Override
-	public long getCreateTime() {
-		return _createTime;
-	}
-
-	@Override
-	public void setCreateTime(long createTime) {
-		_createTime = createTime;
 	}
 
 	@Override
@@ -536,6 +454,10 @@ public class FaroPreferencesModelImpl
 
 	@Override
 	public void setModifiedTime(long modifiedTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_modifiedTime = modifiedTime;
 	}
 
@@ -546,19 +468,20 @@ public class FaroPreferencesModelImpl
 
 	@Override
 	public void setOwnerId(long ownerId) {
-		_columnBitmask |= OWNERID_COLUMN_BITMASK;
-
-		if (!_setOriginalOwnerId) {
-			_setOriginalOwnerId = true;
-
-			_originalOwnerId = _ownerId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_ownerId = ownerId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalOwnerId() {
-		return _originalOwnerId;
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("ownerId"));
 	}
 
 	@Override
@@ -573,17 +496,41 @@ public class FaroPreferencesModelImpl
 
 	@Override
 	public void setPreferences(String preferences) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_preferences = preferences;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (!Objects.equals(
+					entry.getValue(), getColumnValue(entry.getKey()))) {
+
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, FaroPreferences.class.getName(), getPrimaryKey());
+			getCompanyId(), FaroPreferences.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -612,16 +559,46 @@ public class FaroPreferencesModelImpl
 	public Object clone() {
 		FaroPreferencesImpl faroPreferencesImpl = new FaroPreferencesImpl();
 
+		faroPreferencesImpl.setMvccVersion(getMvccVersion());
 		faroPreferencesImpl.setFaroPreferencesId(getFaroPreferencesId());
 		faroPreferencesImpl.setGroupId(getGroupId());
+		faroPreferencesImpl.setCompanyId(getCompanyId());
+		faroPreferencesImpl.setCreateTime(getCreateTime());
 		faroPreferencesImpl.setUserId(getUserId());
 		faroPreferencesImpl.setUserName(getUserName());
-		faroPreferencesImpl.setCreateTime(getCreateTime());
 		faroPreferencesImpl.setModifiedTime(getModifiedTime());
 		faroPreferencesImpl.setOwnerId(getOwnerId());
 		faroPreferencesImpl.setPreferences(getPreferences());
 
 		faroPreferencesImpl.resetOriginalValues();
+
+		return faroPreferencesImpl;
+	}
+
+	@Override
+	public FaroPreferences cloneWithOriginalValues() {
+		FaroPreferencesImpl faroPreferencesImpl = new FaroPreferencesImpl();
+
+		faroPreferencesImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		faroPreferencesImpl.setFaroPreferencesId(
+			this.<Long>getColumnOriginalValue("faroPreferencesId"));
+		faroPreferencesImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		faroPreferencesImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		faroPreferencesImpl.setCreateTime(
+			this.<Long>getColumnOriginalValue("createTime"));
+		faroPreferencesImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		faroPreferencesImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		faroPreferencesImpl.setModifiedTime(
+			this.<Long>getColumnOriginalValue("modifiedTime"));
+		faroPreferencesImpl.setOwnerId(
+			this.<Long>getColumnOriginalValue("ownerId"));
+		faroPreferencesImpl.setPreferences(
+			this.<String>getColumnOriginalValue("preferences"));
 
 		return faroPreferencesImpl;
 	}
@@ -668,25 +645,27 @@ public class FaroPreferencesModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return true;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return true;
 	}
 
 	@Override
 	public void resetOriginalValues() {
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
-
-		_originalOwnerId = _ownerId;
-
-		_setOriginalOwnerId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_columnBitmask = 0;
 	}
@@ -696,9 +675,15 @@ public class FaroPreferencesModelImpl
 		FaroPreferencesCacheModel faroPreferencesCacheModel =
 			new FaroPreferencesCacheModel();
 
+		faroPreferencesCacheModel.mvccVersion = getMvccVersion();
+
 		faroPreferencesCacheModel.faroPreferencesId = getFaroPreferencesId();
 
 		faroPreferencesCacheModel.groupId = getGroupId();
+
+		faroPreferencesCacheModel.companyId = getCompanyId();
+
+		faroPreferencesCacheModel.createTime = getCreateTime();
 
 		faroPreferencesCacheModel.userId = getUserId();
 
@@ -709,8 +694,6 @@ public class FaroPreferencesModelImpl
 		if ((userName != null) && (userName.length() == 0)) {
 			faroPreferencesCacheModel.userName = null;
 		}
-
-		faroPreferencesCacheModel.createTime = getCreateTime();
 
 		faroPreferencesCacheModel.modifiedTime = getModifiedTime();
 
@@ -776,56 +759,100 @@ public class FaroPreferencesModelImpl
 		return sb.toString();
 	}
 
-	@Override
-	public String toXmlString() {
-		Map<String, Function<FaroPreferences, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
-
-		StringBundler sb = new StringBundler(
-			(5 * attributeGetterFunctions.size()) + 4);
-
-		sb.append("<model><model-name>");
-		sb.append(getModelClassName());
-		sb.append("</model-name>");
-
-		for (Map.Entry<String, Function<FaroPreferences, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
-			String attributeName = entry.getKey();
-			Function<FaroPreferences, Object> attributeGetterFunction =
-				entry.getValue();
-
-			sb.append("<column><column-name>");
-			sb.append(attributeName);
-			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeGetterFunction.apply((FaroPreferences)this));
-			sb.append("]]></column-value></column>");
-		}
-
-		sb.append("</model>");
-
-		return sb.toString();
-	}
-
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, FaroPreferences>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					FaroPreferences.class, ModelWrapper.class);
 
 	}
 
+	private long _mvccVersion;
 	private long _faroPreferencesId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _createTime;
 	private long _userId;
 	private String _userName;
-	private long _createTime;
 	private long _modifiedTime;
 	private long _ownerId;
-	private long _originalOwnerId;
-	private boolean _setOriginalOwnerId;
 	private String _preferences;
+
+	public <T> T getColumnValue(String columnName) {
+		Function<FaroPreferences, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((FaroPreferences)this);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("faroPreferencesId", _faroPreferencesId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("createTime", _createTime);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("modifiedTime", _modifiedTime);
+		_columnOriginalValues.put("ownerId", _ownerId);
+		_columnOriginalValues.put("preferences", _preferences);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("faroPreferencesId", 2L);
+
+		columnBitmasks.put("groupId", 4L);
+
+		columnBitmasks.put("companyId", 8L);
+
+		columnBitmasks.put("createTime", 16L);
+
+		columnBitmasks.put("userId", 32L);
+
+		columnBitmasks.put("userName", 64L);
+
+		columnBitmasks.put("modifiedTime", 128L);
+
+		columnBitmasks.put("ownerId", 256L);
+
+		columnBitmasks.put("preferences", 512L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
 	private long _columnBitmask;
 	private FaroPreferences _escapedModel;
 

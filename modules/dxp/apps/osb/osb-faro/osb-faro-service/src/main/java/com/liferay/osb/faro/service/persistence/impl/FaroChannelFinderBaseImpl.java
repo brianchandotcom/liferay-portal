@@ -16,41 +16,53 @@ package com.liferay.osb.faro.service.persistence.impl;
 
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.service.persistence.FaroChannelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.osb.faro.service.persistence.impl.constants.OSBFaroPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matthew Kong
  * @generated
  */
-public class FaroChannelFinderBaseImpl
+public abstract class FaroChannelFinderBaseImpl
 	extends BasePersistenceImpl<FaroChannel> {
 
 	public FaroChannelFinderBaseImpl() {
 		setModelClass(FaroChannel.class);
 	}
 
-	/**
-	 * Returns the faro channel persistence.
-	 *
-	 * @return the faro channel persistence
-	 */
-	public FaroChannelPersistence getFaroChannelPersistence() {
-		return faroChannelPersistence;
+	@Override
+	@Reference(
+		target = OSBFaroPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
 	}
 
-	/**
-	 * Sets the faro channel persistence.
-	 *
-	 * @param faroChannelPersistence the faro channel persistence
-	 */
-	public void setFaroChannelPersistence(
-		FaroChannelPersistence faroChannelPersistence) {
-
-		this.faroChannelPersistence = faroChannelPersistence;
+	@Override
+	@Reference(
+		target = OSBFaroPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = FaroChannelPersistence.class)
+	@Override
+	@Reference(
+		target = OSBFaroPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected FaroChannelPersistence faroChannelPersistence;
 
 }

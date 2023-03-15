@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.model.FaroUserModel;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -28,12 +29,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -44,6 +43,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -69,9 +69,10 @@ public class FaroUserModelImpl
 	public static final String TABLE_NAME = "OSBFaro_FaroUser";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"faroUserId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createTime", Types.BIGINT}, {"modifiedTime", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"faroUserId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createTime", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"modifiedTime", Types.BIGINT},
 		{"liveUserId", Types.BIGINT}, {"roleId", Types.BIGINT},
 		{"emailAddress", Types.VARCHAR}, {"key_", Types.VARCHAR},
 		{"status", Types.INTEGER}
@@ -81,11 +82,13 @@ public class FaroUserModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("faroUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("liveUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
@@ -95,7 +98,7 @@ public class FaroUserModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBFaro_FaroUser (faroUserId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,liveUserId LONG,roleId LONG,emailAddress VARCHAR(75) null,key_ VARCHAR(75) null,status INTEGER)";
+		"create table OSBFaro_FaroUser (mvccVersion LONG default 0 not null,faroUserId LONG not null primary key,groupId LONG,companyId LONG,createTime LONG,userId LONG,userName VARCHAR(75) null,modifiedTime LONG,liveUserId LONG,roleId LONG,emailAddress VARCHAR(75) null,key_ VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table OSBFaro_FaroUser";
 
@@ -111,38 +114,62 @@ public class FaroUserModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.osb.faro.model.FaroUser"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.osb.faro.model.FaroUser"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.osb.faro.model.FaroUser"),
-		true);
-
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long EMAILADDRESS_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long KEY_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long LIVEUSERID_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long ROLEID_COLUMN_BITMASK = 16L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long STATUS_COLUMN_BITMASK = 32L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)}
+	 */
+	@Deprecated
 	public static final long FAROUSERID_COLUMN_BITMASK = 64L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.osb.faro.model.FaroUser"));
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
 
 	public FaroUserModelImpl() {
 	}
@@ -195,9 +222,6 @@ public class FaroUserModelImpl
 				attributeName, attributeGetterFunction.apply((FaroUser)this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
 		return attributes;
 	}
 
@@ -222,283 +246,109 @@ public class FaroUserModelImpl
 	public Map<String, Function<FaroUser, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<FaroUser, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static Function<InvocationHandler, FaroUser>
-		_getProxyProviderFunction() {
+	private static class AttributeGetterFunctionsHolder {
 
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			FaroUser.class.getClassLoader(), FaroUser.class,
-			ModelWrapper.class);
+		private static final Map<String, Function<FaroUser, Object>>
+			_attributeGetterFunctions;
 
-		try {
-			Constructor<FaroUser> constructor =
-				(Constructor<FaroUser>)proxyClass.getConstructor(
-					InvocationHandler.class);
+		static {
+			Map<String, Function<FaroUser, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<FaroUser, Object>>();
 
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
+			attributeGetterFunctions.put(
+				"mvccVersion", FaroUser::getMvccVersion);
+			attributeGetterFunctions.put("faroUserId", FaroUser::getFaroUserId);
+			attributeGetterFunctions.put("groupId", FaroUser::getGroupId);
+			attributeGetterFunctions.put("companyId", FaroUser::getCompanyId);
+			attributeGetterFunctions.put("createTime", FaroUser::getCreateTime);
+			attributeGetterFunctions.put("userId", FaroUser::getUserId);
+			attributeGetterFunctions.put("userName", FaroUser::getUserName);
+			attributeGetterFunctions.put(
+				"modifiedTime", FaroUser::getModifiedTime);
+			attributeGetterFunctions.put("liveUserId", FaroUser::getLiveUserId);
+			attributeGetterFunctions.put("roleId", FaroUser::getRoleId);
+			attributeGetterFunctions.put(
+				"emailAddress", FaroUser::getEmailAddress);
+			attributeGetterFunctions.put("key", FaroUser::getKey);
+			attributeGetterFunctions.put("status", FaroUser::getStatus);
 
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
 		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
+
 	}
 
-	private static final Map<String, Function<FaroUser, Object>>
-		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<FaroUser, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeSetterBiConsumersHolder {
 
-	static {
-		Map<String, Function<FaroUser, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<FaroUser, Object>>();
-		Map<String, BiConsumer<FaroUser, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<FaroUser, ?>>();
+		private static final Map<String, BiConsumer<FaroUser, Object>>
+			_attributeSetterBiConsumers;
 
-		attributeGetterFunctions.put(
-			"faroUserId",
-			new Function<FaroUser, Object>() {
+		static {
+			Map<String, BiConsumer<FaroUser, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<FaroUser, ?>>();
 
-				@Override
-				public Object apply(FaroUser faroUser) {
-					return faroUser.getFaroUserId();
-				}
+			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<FaroUser, Long>)FaroUser::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"faroUserId",
+				(BiConsumer<FaroUser, Long>)FaroUser::setFaroUserId);
+			attributeSetterBiConsumers.put(
+				"groupId", (BiConsumer<FaroUser, Long>)FaroUser::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<FaroUser, Long>)FaroUser::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"createTime",
+				(BiConsumer<FaroUser, Long>)FaroUser::setCreateTime);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<FaroUser, Long>)FaroUser::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<FaroUser, String>)FaroUser::setUserName);
+			attributeSetterBiConsumers.put(
+				"modifiedTime",
+				(BiConsumer<FaroUser, Long>)FaroUser::setModifiedTime);
+			attributeSetterBiConsumers.put(
+				"liveUserId",
+				(BiConsumer<FaroUser, Long>)FaroUser::setLiveUserId);
+			attributeSetterBiConsumers.put(
+				"roleId", (BiConsumer<FaroUser, Long>)FaroUser::setRoleId);
+			attributeSetterBiConsumers.put(
+				"emailAddress",
+				(BiConsumer<FaroUser, String>)FaroUser::setEmailAddress);
+			attributeSetterBiConsumers.put(
+				"key", (BiConsumer<FaroUser, String>)FaroUser::setKey);
+			attributeSetterBiConsumers.put(
+				"status", (BiConsumer<FaroUser, Integer>)FaroUser::setStatus);
 
-			});
-		attributeSetterBiConsumers.put(
-			"faroUserId",
-			new BiConsumer<FaroUser, Object>() {
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
 
-				@Override
-				public void accept(FaroUser faroUser, Object faroUserIdObject) {
-					faroUser.setFaroUserId((Long)faroUserIdObject);
-				}
+	}
 
-			});
-		attributeGetterFunctions.put(
-			"groupId",
-			new Function<FaroUser, Object>() {
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
 
-				@Override
-				public Object apply(FaroUser faroUser) {
-					return faroUser.getGroupId();
-				}
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
 
-			});
-		attributeSetterBiConsumers.put(
-			"groupId",
-			new BiConsumer<FaroUser, Object>() {
-
-				@Override
-				public void accept(FaroUser faroUser, Object groupIdObject) {
-					faroUser.setGroupId((Long)groupIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userId",
-			new Function<FaroUser, Object>() {
-
-				@Override
-				public Object apply(FaroUser faroUser) {
-					return faroUser.getUserId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userId",
-			new BiConsumer<FaroUser, Object>() {
-
-				@Override
-				public void accept(FaroUser faroUser, Object userIdObject) {
-					faroUser.setUserId((Long)userIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"userName",
-			new Function<FaroUser, Object>() {
-
-				@Override
-				public Object apply(FaroUser faroUser) {
-					return faroUser.getUserName();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userName",
-			new BiConsumer<FaroUser, Object>() {
-
-				@Override
-				public void accept(FaroUser faroUser, Object userNameObject) {
-					faroUser.setUserName((String)userNameObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"createTime",
-			new Function<FaroUser, Object>() {
-
-				@Override
-				public Object apply(FaroUser faroUser) {
-					return faroUser.getCreateTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"createTime",
-			new BiConsumer<FaroUser, Object>() {
-
-				@Override
-				public void accept(FaroUser faroUser, Object createTimeObject) {
-					faroUser.setCreateTime((Long)createTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"modifiedTime",
-			new Function<FaroUser, Object>() {
-
-				@Override
-				public Object apply(FaroUser faroUser) {
-					return faroUser.getModifiedTime();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"modifiedTime",
-			new BiConsumer<FaroUser, Object>() {
-
-				@Override
-				public void accept(
-					FaroUser faroUser, Object modifiedTimeObject) {
-
-					faroUser.setModifiedTime((Long)modifiedTimeObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"liveUserId",
-			new Function<FaroUser, Object>() {
-
-				@Override
-				public Object apply(FaroUser faroUser) {
-					return faroUser.getLiveUserId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"liveUserId",
-			new BiConsumer<FaroUser, Object>() {
-
-				@Override
-				public void accept(FaroUser faroUser, Object liveUserIdObject) {
-					faroUser.setLiveUserId((Long)liveUserIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"roleId",
-			new Function<FaroUser, Object>() {
-
-				@Override
-				public Object apply(FaroUser faroUser) {
-					return faroUser.getRoleId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"roleId",
-			new BiConsumer<FaroUser, Object>() {
-
-				@Override
-				public void accept(FaroUser faroUser, Object roleIdObject) {
-					faroUser.setRoleId((Long)roleIdObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"emailAddress",
-			new Function<FaroUser, Object>() {
-
-				@Override
-				public Object apply(FaroUser faroUser) {
-					return faroUser.getEmailAddress();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"emailAddress",
-			new BiConsumer<FaroUser, Object>() {
-
-				@Override
-				public void accept(
-					FaroUser faroUser, Object emailAddressObject) {
-
-					faroUser.setEmailAddress((String)emailAddressObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"key",
-			new Function<FaroUser, Object>() {
-
-				@Override
-				public Object apply(FaroUser faroUser) {
-					return faroUser.getKey();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"key",
-			new BiConsumer<FaroUser, Object>() {
-
-				@Override
-				public void accept(FaroUser faroUser, Object keyObject) {
-					faroUser.setKey((String)keyObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"status",
-			new Function<FaroUser, Object>() {
-
-				@Override
-				public Object apply(FaroUser faroUser) {
-					return faroUser.getStatus();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"status",
-			new BiConsumer<FaroUser, Object>() {
-
-				@Override
-				public void accept(FaroUser faroUser, Object statusObject) {
-					faroUser.setStatus((Integer)statusObject);
-				}
-
-			});
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -508,6 +358,10 @@ public class FaroUserModelImpl
 
 	@Override
 	public void setFaroUserId(long faroUserId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_faroUserId = faroUserId;
 	}
 
@@ -534,19 +388,48 @@ public class FaroUserModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_companyId = companyId;
+	}
+
+	@Override
+	public long getCreateTime() {
+		return _createTime;
+	}
+
+	@Override
+	public void setCreateTime(long createTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_createTime = createTime;
 	}
 
 	@Override
@@ -556,6 +439,10 @@ public class FaroUserModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userId = userId;
 	}
 
@@ -587,17 +474,11 @@ public class FaroUserModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userName = userName;
-	}
-
-	@Override
-	public long getCreateTime() {
-		return _createTime;
-	}
-
-	@Override
-	public void setCreateTime(long createTime) {
-		_createTime = createTime;
 	}
 
 	@Override
@@ -607,6 +488,10 @@ public class FaroUserModelImpl
 
 	@Override
 	public void setModifiedTime(long modifiedTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_modifiedTime = modifiedTime;
 	}
 
@@ -617,12 +502,8 @@ public class FaroUserModelImpl
 
 	@Override
 	public void setLiveUserId(long liveUserId) {
-		_columnBitmask |= LIVEUSERID_COLUMN_BITMASK;
-
-		if (!_setOriginalLiveUserId) {
-			_setOriginalLiveUserId = true;
-
-			_originalLiveUserId = _liveUserId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_liveUserId = liveUserId;
@@ -644,8 +525,14 @@ public class FaroUserModelImpl
 	public void setLiveUserUuid(String liveUserUuid) {
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalLiveUserId() {
-		return _originalLiveUserId;
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("liveUserId"));
 	}
 
 	@Override
@@ -655,19 +542,20 @@ public class FaroUserModelImpl
 
 	@Override
 	public void setRoleId(long roleId) {
-		_columnBitmask |= ROLEID_COLUMN_BITMASK;
-
-		if (!_setOriginalRoleId) {
-			_setOriginalRoleId = true;
-
-			_originalRoleId = _roleId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_roleId = roleId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalRoleId() {
-		return _originalRoleId;
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("roleId"));
 	}
 
 	@Override
@@ -682,17 +570,20 @@ public class FaroUserModelImpl
 
 	@Override
 	public void setEmailAddress(String emailAddress) {
-		_columnBitmask |= EMAILADDRESS_COLUMN_BITMASK;
-
-		if (_originalEmailAddress == null) {
-			_originalEmailAddress = _emailAddress;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_emailAddress = emailAddress;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalEmailAddress() {
-		return GetterUtil.getString(_originalEmailAddress);
+		return getColumnOriginalValue("emailAddress");
 	}
 
 	@Override
@@ -707,17 +598,20 @@ public class FaroUserModelImpl
 
 	@Override
 	public void setKey(String key) {
-		_columnBitmask |= KEY_COLUMN_BITMASK;
-
-		if (_originalKey == null) {
-			_originalKey = _key;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_key = key;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalKey() {
-		return GetterUtil.getString(_originalKey);
+		return getColumnOriginalValue("key_");
 	}
 
 	@Override
@@ -727,29 +621,51 @@ public class FaroUserModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_status = status;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public int getOriginalStatus() {
-		return _originalStatus;
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (!Objects.equals(
+					entry.getValue(), getColumnValue(entry.getKey()))) {
+
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, FaroUser.class.getName(), getPrimaryKey());
+			getCompanyId(), FaroUser.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -778,11 +694,13 @@ public class FaroUserModelImpl
 	public Object clone() {
 		FaroUserImpl faroUserImpl = new FaroUserImpl();
 
+		faroUserImpl.setMvccVersion(getMvccVersion());
 		faroUserImpl.setFaroUserId(getFaroUserId());
 		faroUserImpl.setGroupId(getGroupId());
+		faroUserImpl.setCompanyId(getCompanyId());
+		faroUserImpl.setCreateTime(getCreateTime());
 		faroUserImpl.setUserId(getUserId());
 		faroUserImpl.setUserName(getUserName());
-		faroUserImpl.setCreateTime(getCreateTime());
 		faroUserImpl.setModifiedTime(getModifiedTime());
 		faroUserImpl.setLiveUserId(getLiveUserId());
 		faroUserImpl.setRoleId(getRoleId());
@@ -791,6 +709,35 @@ public class FaroUserModelImpl
 		faroUserImpl.setStatus(getStatus());
 
 		faroUserImpl.resetOriginalValues();
+
+		return faroUserImpl;
+	}
+
+	@Override
+	public FaroUser cloneWithOriginalValues() {
+		FaroUserImpl faroUserImpl = new FaroUserImpl();
+
+		faroUserImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		faroUserImpl.setFaroUserId(
+			this.<Long>getColumnOriginalValue("faroUserId"));
+		faroUserImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		faroUserImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		faroUserImpl.setCreateTime(
+			this.<Long>getColumnOriginalValue("createTime"));
+		faroUserImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		faroUserImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		faroUserImpl.setModifiedTime(
+			this.<Long>getColumnOriginalValue("modifiedTime"));
+		faroUserImpl.setLiveUserId(
+			this.<Long>getColumnOriginalValue("liveUserId"));
+		faroUserImpl.setRoleId(this.<Long>getColumnOriginalValue("roleId"));
+		faroUserImpl.setEmailAddress(
+			this.<String>getColumnOriginalValue("emailAddress"));
+		faroUserImpl.setKey(this.<String>getColumnOriginalValue("key_"));
+		faroUserImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
 
 		return faroUserImpl;
 	}
@@ -837,37 +784,27 @@ public class FaroUserModelImpl
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return true;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return true;
 	}
 
 	@Override
 	public void resetOriginalValues() {
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
-
-		_originalLiveUserId = _liveUserId;
-
-		_setOriginalLiveUserId = false;
-
-		_originalRoleId = _roleId;
-
-		_setOriginalRoleId = false;
-
-		_originalEmailAddress = _emailAddress;
-
-		_originalKey = _key;
-
-		_originalStatus = _status;
-
-		_setOriginalStatus = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_columnBitmask = 0;
 	}
@@ -876,9 +813,15 @@ public class FaroUserModelImpl
 	public CacheModel<FaroUser> toCacheModel() {
 		FaroUserCacheModel faroUserCacheModel = new FaroUserCacheModel();
 
+		faroUserCacheModel.mvccVersion = getMvccVersion();
+
 		faroUserCacheModel.faroUserId = getFaroUserId();
 
 		faroUserCacheModel.groupId = getGroupId();
+
+		faroUserCacheModel.companyId = getCompanyId();
+
+		faroUserCacheModel.createTime = getCreateTime();
 
 		faroUserCacheModel.userId = getUserId();
 
@@ -889,8 +832,6 @@ public class FaroUserModelImpl
 		if ((userName != null) && (userName.length() == 0)) {
 			faroUserCacheModel.userName = null;
 		}
-
-		faroUserCacheModel.createTime = getCreateTime();
 
 		faroUserCacheModel.modifiedTime = getModifiedTime();
 
@@ -968,65 +909,124 @@ public class FaroUserModelImpl
 		return sb.toString();
 	}
 
-	@Override
-	public String toXmlString() {
-		Map<String, Function<FaroUser, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
-
-		StringBundler sb = new StringBundler(
-			(5 * attributeGetterFunctions.size()) + 4);
-
-		sb.append("<model><model-name>");
-		sb.append(getModelClassName());
-		sb.append("</model-name>");
-
-		for (Map.Entry<String, Function<FaroUser, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
-			String attributeName = entry.getKey();
-			Function<FaroUser, Object> attributeGetterFunction =
-				entry.getValue();
-
-			sb.append("<column><column-name>");
-			sb.append(attributeName);
-			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeGetterFunction.apply((FaroUser)this));
-			sb.append("]]></column-value></column>");
-		}
-
-		sb.append("</model>");
-
-		return sb.toString();
-	}
-
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, FaroUser>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					FaroUser.class, ModelWrapper.class);
 
 	}
 
+	private long _mvccVersion;
 	private long _faroUserId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _createTime;
 	private long _userId;
 	private String _userName;
-	private long _createTime;
 	private long _modifiedTime;
 	private long _liveUserId;
-	private long _originalLiveUserId;
-	private boolean _setOriginalLiveUserId;
 	private long _roleId;
-	private long _originalRoleId;
-	private boolean _setOriginalRoleId;
 	private String _emailAddress;
-	private String _originalEmailAddress;
 	private String _key;
-	private String _originalKey;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
+
+	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
+		Function<FaroUser, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((FaroUser)this);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("faroUserId", _faroUserId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("createTime", _createTime);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("modifiedTime", _modifiedTime);
+		_columnOriginalValues.put("liveUserId", _liveUserId);
+		_columnOriginalValues.put("roleId", _roleId);
+		_columnOriginalValues.put("emailAddress", _emailAddress);
+		_columnOriginalValues.put("key_", _key);
+		_columnOriginalValues.put("status", _status);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("key_", "key");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("faroUserId", 2L);
+
+		columnBitmasks.put("groupId", 4L);
+
+		columnBitmasks.put("companyId", 8L);
+
+		columnBitmasks.put("createTime", 16L);
+
+		columnBitmasks.put("userId", 32L);
+
+		columnBitmasks.put("userName", 64L);
+
+		columnBitmasks.put("modifiedTime", 128L);
+
+		columnBitmasks.put("liveUserId", 256L);
+
+		columnBitmasks.put("roleId", 512L);
+
+		columnBitmasks.put("emailAddress", 1024L);
+
+		columnBitmasks.put("key_", 2048L);
+
+		columnBitmasks.put("status", 4096L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
 	private long _columnBitmask;
 	private FaroUser _escapedModel;
 

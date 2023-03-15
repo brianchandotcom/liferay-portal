@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getTop} from 'frontend-js-web';
+import {COOKIE_TYPES, getTop, sessionStorage} from 'frontend-js-web';
 
 export default function propsTransformer({...otherProps}) {
 	return {
@@ -21,7 +21,11 @@ export default function propsTransformer({...otherProps}) {
 			const data = item?.data;
 
 			if (data?.action === 'addSegmentEntry') {
-				window.sessionStorage.setItem(data?.sessionKey, 'open');
+				sessionStorage.setItem(
+					data?.sessionKey,
+					'open',
+					COOKIE_TYPES.NECESSARY
+				);
 
 				getTop().location.href = data?.addSegmentEntryURL;
 			}

@@ -211,7 +211,7 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 			closeOnClickOutside
 			disableScroll
 			onShowChange={setVisible}
-			show={visible ?? position !== undefined}
+			show={visible && position > 0}
 			trigger={
 				<ClayButton
 					className="management-toolbar-buttons nav-link"

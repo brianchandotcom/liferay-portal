@@ -20,6 +20,7 @@ dependencies {
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce-core-api")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-delivery-order-api")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-delivery-order-client")
+	testIntegrationCompile project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

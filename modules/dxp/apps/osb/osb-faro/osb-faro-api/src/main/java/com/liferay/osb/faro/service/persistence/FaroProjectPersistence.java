@@ -14,16 +14,11 @@
 
 package com.liferay.osb.faro.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.faro.exception.NoSuchFaroProjectException;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the faro project service.
@@ -44,9 +39,6 @@ public interface FaroProjectPersistence extends BasePersistence<FaroProject> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FaroProjectUtil} to access the faro project persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, FaroProject> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns the faro project where groupId = &#63; or throws a <code>NoSuchFaroProjectException</code> if it could not be found.
@@ -588,8 +580,5 @@ public interface FaroProjectPersistence extends BasePersistence<FaroProject> {
 	 * @return the number of faro projects
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

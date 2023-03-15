@@ -14,15 +14,11 @@
 
 package com.liferay.osb.faro.model;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -34,31 +30,24 @@ import java.util.Objects;
  * @generated
  */
 public class FaroPreferencesWrapper
+	extends BaseModelWrapper<FaroPreferences>
 	implements FaroPreferences, ModelWrapper<FaroPreferences> {
 
 	public FaroPreferencesWrapper(FaroPreferences faroPreferences) {
-		_faroPreferences = faroPreferences;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return FaroPreferences.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return FaroPreferences.class.getName();
+		super(faroPreferences);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("faroPreferencesId", getFaroPreferencesId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("createTime", getCreateTime());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
-		attributes.put("createTime", getCreateTime());
 		attributes.put("modifiedTime", getModifiedTime());
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("preferences", getPreferences());
@@ -68,6 +57,12 @@ public class FaroPreferencesWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long faroPreferencesId = (Long)attributes.get("faroPreferencesId");
 
 		if (faroPreferencesId != null) {
@@ -80,6 +75,18 @@ public class FaroPreferencesWrapper
 			setGroupId(groupId);
 		}
 
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long createTime = (Long)attributes.get("createTime");
+
+		if (createTime != null) {
+			setCreateTime(createTime);
+		}
+
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
@@ -90,12 +97,6 @@ public class FaroPreferencesWrapper
 
 		if (userName != null) {
 			setUserName(userName);
-		}
-
-		Long createTime = (Long)attributes.get("createTime");
-
-		if (createTime != null) {
-			setCreateTime(createTime);
 		}
 
 		Long modifiedTime = (Long)attributes.get("modifiedTime");
@@ -118,14 +119,18 @@ public class FaroPreferencesWrapper
 	}
 
 	@Override
-	public Object clone() {
-		return new FaroPreferencesWrapper(
-			(FaroPreferences)_faroPreferences.clone());
+	public FaroPreferences cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
+	/**
+	 * Returns the company ID of this faro preferences.
+	 *
+	 * @return the company ID of this faro preferences
+	 */
 	@Override
-	public int compareTo(FaroPreferences faroPreferences) {
-		return _faroPreferences.compareTo(faroPreferences);
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -135,12 +140,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public long getCreateTime() {
-		return _faroPreferences.getCreateTime();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _faroPreferences.getExpandoBridge();
+		return model.getCreateTime();
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public long getFaroPreferencesId() {
-		return _faroPreferences.getFaroPreferencesId();
+		return model.getFaroPreferencesId();
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public long getGroupId() {
-		return _faroPreferences.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -170,7 +170,17 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public long getModifiedTime() {
-		return _faroPreferences.getModifiedTime();
+		return model.getModifiedTime();
+	}
+
+	/**
+	 * Returns the mvcc version of this faro preferences.
+	 *
+	 * @return the mvcc version of this faro preferences
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -180,7 +190,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public long getOwnerId() {
-		return _faroPreferences.getOwnerId();
+		return model.getOwnerId();
 	}
 
 	/**
@@ -190,7 +200,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public String getPreferences() {
-		return _faroPreferences.getPreferences();
+		return model.getPreferences();
 	}
 
 	/**
@@ -200,12 +210,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public long getPrimaryKey() {
-		return _faroPreferences.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _faroPreferences.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -215,7 +220,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public long getUserId() {
-		return _faroPreferences.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -225,7 +230,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public String getUserName() {
-		return _faroPreferences.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -235,37 +240,22 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public String getUserUuid() {
-		return _faroPreferences.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _faroPreferences.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _faroPreferences.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _faroPreferences.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _faroPreferences.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_faroPreferences.persist();
+		model.persist();
 	}
 
+	/**
+	 * Sets the company ID of this faro preferences.
+	 *
+	 * @param companyId the company ID of this faro preferences
+	 */
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_faroPreferences.setCachedModel(cachedModel);
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -275,24 +265,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public void setCreateTime(long createTime) {
-		_faroPreferences.setCreateTime(createTime);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-
-		_faroPreferences.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_faroPreferences.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_faroPreferences.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateTime(createTime);
 	}
 
 	/**
@@ -302,7 +275,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public void setFaroPreferencesId(long faroPreferencesId) {
-		_faroPreferences.setFaroPreferencesId(faroPreferencesId);
+		model.setFaroPreferencesId(faroPreferencesId);
 	}
 
 	/**
@@ -312,7 +285,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public void setGroupId(long groupId) {
-		_faroPreferences.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -322,12 +295,17 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public void setModifiedTime(long modifiedTime) {
-		_faroPreferences.setModifiedTime(modifiedTime);
+		model.setModifiedTime(modifiedTime);
 	}
 
+	/**
+	 * Sets the mvcc version of this faro preferences.
+	 *
+	 * @param mvccVersion the mvcc version of this faro preferences
+	 */
 	@Override
-	public void setNew(boolean n) {
-		_faroPreferences.setNew(n);
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -337,7 +315,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public void setOwnerId(long ownerId) {
-		_faroPreferences.setOwnerId(ownerId);
+		model.setOwnerId(ownerId);
 	}
 
 	/**
@@ -347,7 +325,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public void setPreferences(String preferences) {
-		_faroPreferences.setPreferences(preferences);
+		model.setPreferences(preferences);
 	}
 
 	/**
@@ -357,12 +335,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_faroPreferences.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_faroPreferences.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -372,7 +345,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public void setUserId(long userId) {
-		_faroPreferences.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -382,7 +355,7 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public void setUserName(String userName) {
-		_faroPreferences.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -392,78 +365,17 @@ public class FaroPreferencesWrapper
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
-		_faroPreferences.setUserUuid(userUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<FaroPreferences>
-		toCacheModel() {
-
-		return _faroPreferences.toCacheModel();
-	}
-
-	@Override
-	public FaroPreferences toEscapedModel() {
-		return new FaroPreferencesWrapper(_faroPreferences.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _faroPreferences.toString();
-	}
-
-	@Override
-	public FaroPreferences toUnescapedModel() {
-		return new FaroPreferencesWrapper(_faroPreferences.toUnescapedModel());
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
 	public String toXmlString() {
-		return _faroPreferences.toXmlString();
+		return model.toXmlString();
 	}
 
 	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof FaroPreferencesWrapper)) {
-			return false;
-		}
-
-		FaroPreferencesWrapper faroPreferencesWrapper =
-			(FaroPreferencesWrapper)object;
-
-		if (Objects.equals(
-				_faroPreferences, faroPreferencesWrapper._faroPreferences)) {
-
-			return true;
-		}
-
-		return false;
+	protected FaroPreferencesWrapper wrap(FaroPreferences faroPreferences) {
+		return new FaroPreferencesWrapper(faroPreferences);
 	}
-
-	@Override
-	public FaroPreferences getWrappedModel() {
-		return _faroPreferences;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _faroPreferences.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _faroPreferences.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_faroPreferences.resetOriginalValues();
-	}
-
-	private final FaroPreferences _faroPreferences;
 
 }

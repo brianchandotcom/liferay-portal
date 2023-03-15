@@ -1510,10 +1510,6 @@ public class FaroNotificationUtil {
 		return getPersistence().countAll();
 	}
 
-	public static Set<String> getBadColumnNames() {
-		return getPersistence().getBadColumnNames();
-	}
-
 	public static FaroNotificationPersistence getPersistence() {
 		return _persistence;
 	}

@@ -14,16 +14,11 @@
 
 package com.liferay.osb.faro.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.faro.exception.NoSuchFaroChannelException;
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the faro channel service.
@@ -44,9 +39,6 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FaroChannelUtil} to access the faro channel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, FaroChannel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the faro channels where groupId = &#63;.
@@ -497,7 +489,7 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	 * @return the matching faro channel
 	 * @throws NoSuchFaroChannelException if a matching faro channel could not be found
 	 */
-	public FaroChannel findByChannelId(String channelId, long workspaceGroupId)
+	public FaroChannel findByC_W(String channelId, long workspaceGroupId)
 		throws NoSuchFaroChannelException;
 
 	/**
@@ -507,8 +499,7 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	 * @param workspaceGroupId the workspace group ID
 	 * @return the matching faro channel, or <code>null</code> if a matching faro channel could not be found
 	 */
-	public FaroChannel fetchByChannelId(
-		String channelId, long workspaceGroupId);
+	public FaroChannel fetchByC_W(String channelId, long workspaceGroupId);
 
 	/**
 	 * Returns the faro channel where channelId = &#63; and workspaceGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -518,7 +509,7 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching faro channel, or <code>null</code> if a matching faro channel could not be found
 	 */
-	public FaroChannel fetchByChannelId(
+	public FaroChannel fetchByC_W(
 		String channelId, long workspaceGroupId, boolean useFinderCache);
 
 	/**
@@ -528,8 +519,7 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	 * @param workspaceGroupId the workspace group ID
 	 * @return the faro channel that was removed
 	 */
-	public FaroChannel removeByChannelId(
-			String channelId, long workspaceGroupId)
+	public FaroChannel removeByC_W(String channelId, long workspaceGroupId)
 		throws NoSuchFaroChannelException;
 
 	/**
@@ -539,7 +529,7 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	 * @param workspaceGroupId the workspace group ID
 	 * @return the number of matching faro channels
 	 */
-	public int countByChannelId(String channelId, long workspaceGroupId);
+	public int countByC_W(String channelId, long workspaceGroupId);
 
 	/**
 	 * Caches the faro channel in the entity cache if it is enabled.

@@ -14,16 +14,11 @@
 
 package com.liferay.osb.faro.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.osb.faro.exception.NoSuchFaroNotificationException;
 import com.liferay.osb.faro.model.FaroNotification;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.io.Serializable;
-
-import java.util.Map;
-import java.util.Set;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The persistence interface for the faro notification service.
@@ -45,9 +40,6 @@ public interface FaroNotificationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FaroNotificationUtil} to access the faro notification persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
-	@Override
-	public Map<Serializable, FaroNotification> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys);
 
 	/**
 	 * Returns all the faro notifications where createTime &lt; &#63;.
@@ -1205,8 +1197,5 @@ public interface FaroNotificationPersistence
 	 * @return the number of faro notifications
 	 */
 	public int countAll();
-
-	@Override
-	public Set<String> getBadColumnNames();
 
 }

@@ -1,0 +1,45 @@
+.empty-drop-zone-root {
+	background: $white;
+	border-width: 2px;
+
+	.criteria-message, .groups-message {
+		color: $secondary;
+		font-size: $fontSizeSmall;
+		font-weight: $fontWeightSemiBold;
+
+		.icon-root {
+			margin-right: 12px;
+		}
+	}
+
+	.criteria-message {
+		margin-bottom: 20px;
+	}
+
+	.empty-drop-zone-target {
+		height: 50vh;
+
+		.empty-drop-zone-indicator {
+			visibility: hidden;
+			width: 100%;
+		}
+
+		&.dnd-hover {
+			background: $primaryLighten45;
+
+			.empty-drop-zone-indicator {
+				visibility: visible;
+			}
+		}
+	}
+}
+
+.empty-drop-zone-dashed {
+	border-color: $mainLighten65 !important;
+	border-style: dashed;
+}
+
+.empty-drop-zone-target-solid {
+	border-style: solid;
+	border-width: 2px;
+}

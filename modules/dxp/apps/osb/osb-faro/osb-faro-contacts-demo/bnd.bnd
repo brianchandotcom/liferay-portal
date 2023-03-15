@@ -1,0 +1,13 @@
+Bundle-Name: Liferay OSB Faro Contacts Demo
+Bundle-SymbolicName: com.liferay.osb.faro.contacts.demo
+Bundle-Version: 1.0.1
+Import-Package:\
+	!com.mifmif.common.regex.*,\
+	\
+	!org.apache.commons.lang3.*,\
+	\
+	!org.yaml.snakeyaml.*,\
+	\
+	*
+-dsannotations-options: inherit
+-includeresource: elasticsearch-snapshot-*.zip

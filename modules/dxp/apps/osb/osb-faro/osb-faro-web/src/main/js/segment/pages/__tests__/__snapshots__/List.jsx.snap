@@ -1,0 +1,503 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List should render 1`] = `
+<div>
+  <div
+    class="index-root segment-list-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <header
+      class="header-root"
+    >
+      <div
+        class="header-container"
+      >
+        <div
+          class="row-root align-items-center d-flex justify-content-between"
+        >
+          <ol
+            class="breadcrumb breadcrumbs-root"
+          >
+            <li
+              class="breadcrumb-item"
+            >
+              <a
+                class="breadcrumb-link breadcrumb-text-truncate"
+                href="/workspace/23/123/sites"
+              >
+                Channel 1
+              </a>
+            </li>
+          </ol>
+        </div>
+        <div
+          class="row-root align-items-center d-flex justify-content-between"
+        >
+          <div
+            class="header-section title-section"
+          >
+            <span
+              class="align-items-center d-flex"
+            >
+              <h1
+                class="title text-truncate"
+              >
+                <span
+                  class="text-truncate"
+                  data-tooltip="false"
+                  title=""
+                >
+                  Segments
+                </span>
+              </h1>
+            </span>
+          </div>
+          <div
+            class="header-section"
+          >
+            <div
+              aria-haspopup="true"
+              class="dropdown dropdown-root"
+            >
+              <button
+                class="button-root btn btn-primary dropdown-toggle"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  Create Segment
+                </span>
+                
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div
+      class="body-root page-container"
+    >
+      <span
+        class="children-wrapper"
+      >
+        <div
+          class="embedded-alert-list-root"
+        >
+          <div
+            class="alert alert-dismissible alert-warning"
+            role="alert"
+          >
+            <span
+              class="alert-indicator"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-warning-full"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+                />
+              </svg>
+            </span>
+            <strong
+              class="lead"
+            >
+              Warning:
+            </strong>
+            Some of your segments are disabled because a data source has been removed. 
+            <a
+              href="/?state=DISABLED"
+            >
+              View Disabled Segments
+            </a>
+            <button
+              class="close"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-times"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="card card-root page-display"
+        >
+          <div
+            class="card-body no-padding"
+          >
+            <div
+              class="base-results-root d-flex flex-column flex-grow-1 searchable-table-root searchable-table-borderless"
+            >
+              <div
+                class="toolbar-root"
+              >
+                <nav
+                  class="navbar navbar-root management-bar management-bar-light navbar-expand"
+                >
+                  <div
+                    class="container-fluid"
+                  >
+                    <ul
+                      class="nav-root front-nav navbar-nav"
+                      role="tablist"
+                    >
+                      <li
+                        aria-haspopup="true"
+                        class="dropdown dropdown-root filter-and-order-root nav-item"
+                      >
+                        <button
+                          class="button-root btn btn-unstyled dropdown-toggle nav-btn show-caret"
+                          data-testid="filter-and-order-button"
+                          type="button"
+                        >
+                          <span
+                            class="text-truncate"
+                          >
+                            Order
+                          </span>
+                          
+                          <span
+                            class="caret-root"
+                          >
+                            <svg
+                              class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                              viewBox=""
+                            >
+                              <use
+                                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </li>
+                      <li
+                        class="nav-item"
+                        role="presentation"
+                      >
+                        <a
+                          class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                          href="/?field=name&page=1&sortOrder=DESC"
+                        >
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                    </ul>
+                    <div
+                      class="navbar-form navbar-form-autofit"
+                    >
+                      <div
+                        class="input-group search"
+                      >
+                        <div
+                          class="input-group-item"
+                        >
+                          <input
+                            class="input-root form-control input-group-inset input-group-inset-after"
+                            placeholder="Search"
+                            type="text"
+                            value=""
+                          />
+                          <div
+                            class="input-group-inset-item input-group-inset-item-after"
+                          >
+                            <button
+                              class="button-root btn btn-unstyled"
+                              type="button"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-search"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+              <div
+                class="table-responsive table-root flex-grow-1"
+              >
+                <table
+                  class="table table-autofit table-hover show-quick-actions-on-hover table-heading-nowrap table-nowrap"
+                >
+                  <thead>
+                    <tr>
+                      <th
+                        class="table-head-title table-cell-expand"
+                      >
+                        <a
+                          class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                          href="/?field=name&page=1&sortOrder=DESC"
+                        >
+                          <span
+                            class="text-truncate"
+                          >
+                            Name
+                          </span>
+                          <span
+                            class="inline-item inline-item-after"
+                          >
+                            <svg
+                              class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
+                              viewBox=""
+                            >
+                              <use
+                                xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </th>
+                      <th
+                        class="table-head-title"
+                      >
+                        <a
+                          class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                          href="/?field=dateModified&page=1&sortOrder=ASC"
+                        >
+                          <span
+                            class="text-truncate"
+                          >
+                            Last Modified
+                          </span>
+                        </a>
+                      </th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class=""
+                    >
+                      <td
+                        class="name-cell-root table-cell-expand"
+                      >
+                        <div
+                          class="content-container"
+                        >
+                          <div
+                            class="icon-container"
+                          >
+                            <div
+                              class="sticker sticker-root sticker-static segment-sticker-root sticker-rounded sticker-light"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-individual-dynamic-segment"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#individual-dynamic-segment"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                          <div
+                            class="text-truncate"
+                          >
+                            <div
+                              class="table-title text-truncate"
+                            >
+                              <a
+                                class="text-truncate"
+                                href="/workspace/23/123/contacts/segments/0"
+                              >
+                                Seattle0
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <b />
+                        <div
+                          class="text-secondary"
+                        >
+                          <em>
+                            Last Edited: 7/10/18
+                          </em>
+                        </div>
+                      </td>
+                      <td
+                        class="row-actions"
+                      >
+                        <span>
+                          <div
+                            class="quick-action-menu"
+                          >
+                            <a
+                              alt="Edit"
+                              aria-label="Edit"
+                              class="button-root btn btn-unstyled component-action quick-action-item"
+                              data-tooltip="true"
+                              href="/workspace/23/123/contacts/segments/0/edit"
+                              title="Edit"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-pencil"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+                                />
+                              </svg>
+                            </a>
+                            <button
+                              alt="Delete"
+                              aria-label="Delete"
+                              class="button-root btn btn-unstyled component-action quick-action-item"
+                              data-tooltip="true"
+                              title="Delete"
+                              type="button"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-trash"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#trash"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                          <div
+                            aria-haspopup="true"
+                            class="dropdown dropdown-root dropdown-action"
+                          >
+                            <button
+                              class="button-root btn btn-unstyled dropdown-toggle component-action"
+                              type="button"
+                            >
+                              <span>
+                                <svg
+                                  class="icon-root lexicon-icon lexicon-icon-ellipsis-v"
+                                  viewBox=""
+                                >
+                                  <use
+                                    xlink:href="/o/osb-faro-web/dist/sprite.svg#ellipsis-v"
+                                  />
+                                </svg>
+                              </span>
+                            </button>
+                          </div>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <nav
+                class="navbar navbar-root pagination-bar-root"
+              >
+                <div
+                  class="container-fluid"
+                >
+                  <div
+                    aria-haspopup="true"
+                    class="dropdown dropdown-root pagination-items-per-page"
+                  >
+                    <button
+                      class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+                      type="button"
+                    >
+                      <span
+                        class="text-truncate"
+                      >
+                        2 Items
+                      </span>
+                      
+                      <span
+                        class="caret-root"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    class="pagination-results"
+                  >
+                    Showing 1 to 1 of 1 entry.
+                  </div>
+                  <ul
+                    class="pagination pagination-root"
+                  >
+                    <li
+                      class="page-item disabled"
+                    >
+                      <a
+                        class="button-root btn btn-unstyled page-link link-disabled"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-angle-left"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                          />
+                        </svg>
+                      </a>
+                    </li>
+                    <li
+                      class="page-item active"
+                    >
+                      <a
+                        class="button-root btn btn-unstyled page-link"
+                        href="/?page=1"
+                      >
+                        1
+                      </a>
+                    </li>
+                    <li
+                      class="page-item disabled"
+                    >
+                      <a
+                        class="button-root btn btn-unstyled page-link link-disabled"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-angle-right"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                          />
+                        </svg>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
+`;

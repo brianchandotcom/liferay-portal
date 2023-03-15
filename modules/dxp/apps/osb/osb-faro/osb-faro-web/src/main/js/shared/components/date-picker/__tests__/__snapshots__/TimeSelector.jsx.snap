@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimeSelector should render 1`] = `
+<div>
+  <div
+    class="time-selector-root"
+  >
+    <svg
+      class="icon-root lexicon-icon lexicon-icon-time"
+      viewBox=""
+    >
+      <use
+        xlink:href="/o/osb-faro-web/dist/sprite.svg#time"
+      />
+    </svg>
+    <input
+      class="input-root form-control"
+      type="time"
+      value="2020-08-30T21:00:00Z"
+    />
+    <div
+      class="time-zone"
+    >
+      (GMT +00:00)
+    </div>
+  </div>
+</div>
+`;

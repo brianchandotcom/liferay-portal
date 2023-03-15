@@ -1,0 +1,272 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LiferayDataSource should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root data-source-base-page-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <ol
+      class="breadcrumb breadcrumbs-root"
+    >
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/data-source"
+        >
+          Data Sources
+        </a>
+      </li>
+      <li
+        class="breadcrumb-item active"
+      >
+        <span
+          class="breadcrumb-text-truncate"
+        >
+          Liferay1
+        </span>
+      </li>
+    </ol>
+    <div
+      class="content-header has-page-actions"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Liferay1
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          https://www.faro-1.io
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      >
+        <button
+          class="button-root btn btn-secondary"
+          type="button"
+        >
+          Delete Data Source
+        </button>
+      </div>
+    </div>
+    <div>
+      <div
+        class="page-container"
+      >
+        <div
+          class="content-main"
+        >
+          <div
+            class="sheet liferay-data-source-root"
+          >
+            <div
+              class="sheet-header mb-1"
+            >
+              <h2
+                class="sheet-title"
+              >
+                Data Source Information
+              </h2>
+            </div>
+            <div
+              class="sheet-body"
+            >
+              <div
+                class="sheet-section"
+              >
+                <div
+                  class="input-with-edit-toggle-root definition-item-root"
+                >
+                  <form
+                    class="form-root input-with-edit-toggle-editor"
+                  >
+                    <label
+                      class="form-control-label label-root required"
+                    >
+                      <span
+                        class="content-container"
+                      >
+                        Name
+                      </span>
+                    </label>
+                    <div
+                      class="form-group align-items-center form-group-autofit"
+                    >
+                      <div
+                        class=""
+                        style="flex-basis: 100%; flex-grow: 0;"
+                      >
+                        <div
+                          class="input-group content-after"
+                        >
+                          <div
+                            class="input-group-item"
+                          >
+                            <input
+                              class="input-root form-control"
+                              disabled=""
+                              id="dataSourceName"
+                              name="dataSourceName"
+                              type="text"
+                              value="Liferay1"
+                            />
+                          </div>
+                          <div
+                            class="input-group-item input-group-item-shrink"
+                          >
+                            <button
+                              aria-label="Edit"
+                              class="button-root btn btn-secondary btn-sm"
+                              type="button"
+                            >
+                              <svg
+                                class="icon-root lexicon-icon lexicon-icon-pencil"
+                                viewBox=""
+                              >
+                                <use
+                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div
+                class="sheet-section"
+              >
+                <form
+                  class="form-root dxp-instance-id-root"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <div
+                      class="form-group-item d-flex mb-3"
+                    >
+                      <div
+                        class=""
+                        style="flex-basis: 100%; flex-grow: 0;"
+                      >
+                        <label
+                          class="form-control-label label-root"
+                          for="dxpInstanceId"
+                        >
+                          <span
+                            class="content-container"
+                          >
+                            DXP Instance ID
+                          </span>
+                        </label>
+                        <input
+                          class="input-root form-control"
+                          id="dxpInstanceId"
+                          name="dxpInstanceId"
+                          readonly=""
+                          type="text"
+                          value="1"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="form-group-item"
+                    >
+                      <button
+                        class="button-root btn btn-secondary"
+                        data-testid="disconnect-button"
+                        type="button"
+                      >
+                        Disconnect
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div
+                class="sheet-section has-last-child-margin"
+              >
+                <div
+                  class="mb-1 d-flex align-items-center"
+                >
+                  <h4
+                    class="mb-0 mr-2"
+                  >
+                    Synced Sites
+                  </h4>
+                  <div
+                    class="label label-root label-secondary label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Unconfigured
+                    </span>
+                  </div>
+                </div>
+                <p
+                  class="description-secondary"
+                >
+                  To configure sites, go to the Analytics Cloud configuration in your DXP Instance Settings, then select the sites you would like to start tracking.
+                </p>
+              </div>
+              <div
+                class="sheet-section has-last-child-margin"
+              >
+                <div
+                  class="mb-1 d-flex align-items-center"
+                >
+                  <h4
+                    class="mb-0 mr-2"
+                  >
+                    Synced Contacts
+                  </h4>
+                  <div
+                    class="label label-root label-secondary label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Unconfigured
+                    </span>
+                  </div>
+                </div>
+                <p
+                  class="description-secondary"
+                >
+                  To configure contacts, go to the Analytics Cloud configuration in your DXP Instance Settings, then select which contacts you would like to sync.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="content-side"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

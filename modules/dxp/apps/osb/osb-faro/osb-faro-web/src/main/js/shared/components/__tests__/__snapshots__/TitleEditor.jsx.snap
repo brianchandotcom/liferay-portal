@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TitleEditor should render 1`] = `
+<div>
+  <div
+    class="title-editor-root"
+  >
+    <input
+      class="title-input hide"
+      required=""
+      type="text"
+      value=""
+    />
+    <div
+      class="title-display placeholder-display"
+    >
+      <span
+        class="title-value"
+        role="button"
+        tabindex="0"
+      />
+      <button
+        aria-label="Edit"
+        class="button-root btn btn-outline-unstyled btn-outline-borderless btn-sm"
+        type="button"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-pencil"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;

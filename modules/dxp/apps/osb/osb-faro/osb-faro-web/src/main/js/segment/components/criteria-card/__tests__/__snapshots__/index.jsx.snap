@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CriteriaCard should render 1`] = `
+<div>
+  <div
+    class="card card-root criteria-card-root"
+  >
+    <div
+      class="card-header"
+    >
+      <h5
+        class="card-title"
+      >
+        Segment Criteria
+      </h5>
+    </div>
+    <div
+      class="card-body"
+    >
+      <div
+        class="criteria-view-root"
+      >
+        <div
+          class="criteria-group"
+        >
+          <div
+            class="criteria-row"
+          >
+            Individual
+            <b>
+              firstName
+            </b>
+            <span>
+              is
+            </span>
+            <b>
+              "Test"
+            </b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

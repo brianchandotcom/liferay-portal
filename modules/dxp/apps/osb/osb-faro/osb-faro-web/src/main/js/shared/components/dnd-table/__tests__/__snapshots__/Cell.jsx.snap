@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cell renders 1`] = `
+<div>
+  <td
+    class=""
+  >
+    Test
+  </td>
+</div>
+`;

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sticker should render 1`] = `
+<div>
+  <div
+    class="sticker sticker-root sticker-static sticker-rounded"
+  >
+    <svg
+      class="icon-root lexicon-icon lexicon-icon-file"
+      viewBox=""
+    >
+      <use
+        xlink:href="/o/osb-faro-web/dist/sprite.svg#file"
+      />
+    </svg>
+  </div>
+</div>
+`;

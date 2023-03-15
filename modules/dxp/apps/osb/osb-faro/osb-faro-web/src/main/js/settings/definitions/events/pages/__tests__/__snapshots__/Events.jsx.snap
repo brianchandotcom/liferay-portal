@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Events should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <ol
+      class="breadcrumb breadcrumbs-root"
+    >
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/definitions"
+        >
+          Definitions
+        </a>
+      </li>
+      <li
+        class="breadcrumb-item active"
+      >
+        <span
+          class="breadcrumb-text-truncate"
+        >
+          Events
+        </span>
+      </li>
+    </ol>
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Events
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          This is the data model of events sent to Analytics Cloud.
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="card card-root page-display"
+      >
+        <div
+          class="d-flex justify-content-between"
+        >
+          <ul
+            class="nav-root page-subnav mx-4 my-3 nav nav-underline"
+            role="tablist"
+          >
+            <li
+              class="nav-item"
+              role="presentation"
+            >
+              <a
+                class="nav-link"
+                href="/workspace/23/settings/definitions/events/default"
+                role="tab"
+              >
+                <div
+                  class="mb-2"
+                >
+                  <b>
+                    Default Events
+                  </b>
+                </div>
+              </a>
+            </li>
+            <li
+              class="nav-item"
+              role="presentation"
+            >
+              <a
+                class="nav-link"
+                href="/workspace/23/settings/definitions/events/custom"
+                role="tab"
+              >
+                <div
+                  class="mb-2"
+                >
+                  <b>
+                    Custom Events
+                  </b>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

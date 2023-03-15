@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectDataSource should render 1`] = `
+<div>
+  <div
+    class="select-data-source-root"
+  >
+    <section>
+      <h4
+        class="text-uppercase section-title"
+      >
+        section 1 title
+      </h4>
+      <div
+        class="section-items"
+      >
+        <a
+          class="button-root btn btn-unstyled data-source-item"
+          href="/"
+        >
+          <div
+            class="image"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-csv-logo icon-size-xl"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#csv-logo"
+              />
+            </svg>
+          </div>
+          <div
+            class="details"
+          >
+            <div
+              class="title"
+            >
+              <h4>
+                test
+              </h4>
+            </div>
+            <div
+              class="subtitle"
+            />
+          </div>
+        </a>
+        <a
+          class="button-root btn btn-unstyled data-source-item"
+          href="/"
+        >
+          <div
+            class="image"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-liferay-logo icon-size-xxl"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+              />
+            </svg>
+          </div>
+          <div
+            class="details"
+          >
+            <div
+              class="title"
+            >
+              <h4>
+                test1
+              </h4>
+            </div>
+            <div
+              class="subtitle"
+            />
+          </div>
+        </a>
+      </div>
+    </section>
+    <section>
+      <h4
+        class="text-uppercase section-title"
+      >
+        section two title
+      </h4>
+      <div
+        class="section-items"
+      >
+        <button
+          class="button-root btn btn-unstyled data-source-item"
+          type="button"
+        >
+          <div
+            class="image"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-salesforce-logo icon-size-xxl"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#salesforce-logo"
+              />
+            </svg>
+          </div>
+          <div
+            class="details"
+          >
+            <div
+              class="title"
+            >
+              <h4>
+                test1
+              </h4>
+            </div>
+            <div
+              class="subtitle"
+            />
+          </div>
+        </button>
+      </div>
+    </section>
+  </div>
+</div>
+`;

@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReportIssue should render 1`] = `
+<div>
+  <div
+    class="modal-header"
+  >
+    <h4
+      class="modal-title"
+    >
+      Report an Issue
+    </h4>
+    <button
+      class="button-root btn btn-secondary close"
+      type="button"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-times"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+        />
+      </svg>
+    </button>
+  </div>
+  <form
+    class="form-root"
+  >
+    <div
+      class="modal-body"
+    >
+      <div
+        class="form-group"
+      >
+        <div
+          class="form-group-item mb-4"
+        >
+          <div
+            class=""
+          >
+            <label
+              class="form-control-label label-root required"
+              for="issueTitle"
+            >
+              <span
+                class="content-container"
+              >
+                Issue Title
+              </span>
+            </label>
+            <input
+              class="input-root form-control"
+              id="issueTitle"
+              name="issueTitle"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="form-group-item"
+        >
+          <div
+            class=""
+          >
+            <label
+              class="form-control-label label-root required"
+              for="description"
+            >
+              <span
+                class="content-container"
+              >
+                Description
+              </span>
+            </label>
+            <textarea
+              class="input-root form-control"
+              id="description"
+              name="description"
+              type="textarea"
+            />
+          </div>
+        </div>
+        <div
+          class="form-group-item text-secondary"
+        >
+          Please include as many details as possible.
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal-footer"
+    >
+      <button
+        class="button-root btn btn-secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+      <button
+        class="button-root btn btn-primary"
+        disabled=""
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+`;

@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CodeSnippet should render 1`] = `
+<div>
+  <div
+    class="code-snippet-root"
+  >
+    <button
+      aria-label="Click to Copy"
+      class="button-root btn btn-secondary copy-button"
+      data-clipboard-text="console.log(variable);"
+      data-tooltip-response="Copied"
+      title="Click to Copy"
+      type="button"
+    >
+      Copy
+    </button>
+    <code
+      class="code-container"
+    >
+      console.log(variable);
+    </code>
+  </div>
+</div>
+`;

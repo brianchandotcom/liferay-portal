@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alert should render 1`] = `
+<div>
+  <div
+    class="alert alert-info"
+    role="alert"
+  >
+    <span
+      class="alert-indicator"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-info-circle"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#info-circle"
+        />
+      </svg>
+    </span>
+    <strong
+      class="lead"
+    >
+      Info:
+    </strong>
+  </div>
+</div>
+`;

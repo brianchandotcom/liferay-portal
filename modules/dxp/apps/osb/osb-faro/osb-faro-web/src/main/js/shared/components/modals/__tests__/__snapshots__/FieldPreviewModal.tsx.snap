@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FieldPreviewModal should render 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog field-preview-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Field Preview "foo"
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <ul
+        class="list-group list-group-root show-quick-actions-on-hover"
+      >
+        <li
+          class="list-group-header list-group-item-flex"
+        >
+          <div
+            class="autofit-col"
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

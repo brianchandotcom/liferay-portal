@@ -1,0 +1,307 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChannelUserList should render 1`] = `
+<div>
+  <div
+    class="toolbar-root"
+  >
+    <nav
+      class="navbar navbar-root management-bar management-bar-light navbar-expand"
+    >
+      <div
+        class="container-fluid"
+      >
+        <ul
+          class="nav-root front-nav navbar-nav"
+          role="tablist"
+        >
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  data-testid="select-all-checkbox"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+              href="/?field=name&page=1&sortOrder=DESC"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <div
+          class="navbar-form navbar-form-autofit"
+        >
+          <div
+            class="input-group search"
+          >
+            <div
+              class="input-group-item"
+            >
+              <input
+                class="input-root form-control input-group-inset input-group-inset-after"
+                placeholder="Search"
+                type="text"
+                value=""
+              />
+              <div
+                class="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-search"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul
+          class="nav-root navbar-nav"
+          role="tablist"
+        >
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <button
+              class="button-root btn btn-primary nav-btn px-3"
+              type="button"
+            >
+              Add User
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div
+    class="table-responsive table-root flex-grow-1"
+  >
+    <table
+      class="table table-autofit table-hover show-quick-actions-on-hover table-heading-nowrap table-nowrap"
+    >
+      <thead>
+        <tr>
+          <th />
+          <th
+            class="table-head-title table-cell-expand"
+          >
+            Name
+          </th>
+          <th
+            class="table-head-title table-cell-expand"
+          >
+            Email
+          </th>
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="clickable"
+        >
+          <td>
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class="table-cell-expand"
+          >
+            <h4
+              class="table-title text-truncate"
+            >
+              Test Test
+            </h4>
+          </td>
+          <td
+            class="table-cell-expand"
+          >
+            test@liferay.com
+          </td>
+          <td
+            class="row-actions"
+          >
+            <span>
+              <div
+                class="quick-action-menu"
+              >
+                <button
+                  alt="Delete"
+                  aria-label="Delete"
+                  class="button-root btn btn-unstyled component-action quick-action-item"
+                  data-testid="delete-user"
+                  data-tooltip="true"
+                  title="Delete"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-times"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                aria-haspopup="true"
+                class="dropdown dropdown-root dropdown-action"
+              >
+                <button
+                  class="button-root btn btn-unstyled dropdown-toggle component-action"
+                  type="button"
+                >
+                  <span>
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-ellipsis-v"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#ellipsis-v"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav
+    class="navbar navbar-root pagination-bar-root"
+  >
+    <div
+      class="container-fluid"
+    >
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root pagination-items-per-page"
+      >
+        <button
+          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            2 Items
+          </span>
+          
+          <span
+            class="caret-root"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        class="pagination-results"
+      >
+        Showing 1 to 1 of 1 entry.
+      </div>
+      <ul
+        class="pagination pagination-root"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <a
+            class="button-root btn btn-unstyled page-link link-disabled"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-angle-left"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+              />
+            </svg>
+          </a>
+        </li>
+        <li
+          class="page-item active"
+        >
+          <a
+            class="button-root btn btn-unstyled page-link"
+            href="/?page=1"
+          >
+            1
+          </a>
+        </li>
+        <li
+          class="page-item disabled"
+        >
+          <a
+            class="button-root btn btn-unstyled page-link link-disabled"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-angle-right"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+`;

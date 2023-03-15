@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommerceMetricCard should render 1`] = `
+<div>
+  <div
+    class="card card-root commerce-card-root"
+    style="min-height: 298px;"
+  >
+    <div
+      class="card-header align-items-center d-flex justify-content-between"
+    >
+      <h5
+        class="card-title"
+      >
+        this is the label
+      </h5>
+      <div
+        class="d-flex"
+      >
+        <div
+          class="dropdown dropdown-range-key-root"
+        >
+          <button
+            class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+            type="button"
+          >
+            Last 30 days
+            <svg
+              class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-bottom"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card-body align-items-center justify-content-center"
+    >
+      <h1
+        class="commerce-card-currency font-size-lg-3x font-weight-semibold mb-2"
+      >
+        $10,000,000.00
+      </h1>
+      <div
+        class="d-flex align-items-center mb-2"
+      >
+        <span
+          class="font-size-sm-1x text-secondary"
+        >
+          <div
+            class="analytics-trend d-inline"
+            style="color: rgb(40, 125, 60);"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-top-l"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-top-l"
+              />
+            </svg>
+            <span
+              class="analytics-trend-percent mb-0"
+            >
+              50%
+            </span>
+          </div>
+           vs. Previous
+        </span>
+      </div>
+      <p
+        class="font-size-sm-1x text-center"
+      >
+        this is the description
+      </p>
+    </div>
+  </div>
+</div>
+`;

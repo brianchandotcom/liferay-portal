@@ -1,0 +1,289 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalRenderer should pass props to modal: should render with title 'FooBar' 1`] = `
+<div>
+  <div
+    class="modal-renderer-root"
+  >
+    <div
+      class="modal-container d-block fade modal show"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        aria-modal="true"
+        class="modal-dialog"
+        role="dialog"
+      >
+        <div
+          class="modal-content"
+        >
+          <div
+            class="modal-header"
+          >
+            <h4
+              class="modal-title"
+            >
+              FooBar
+            </h4>
+            <button
+              class="button-root btn btn-secondary close"
+              type="button"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-times"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="modal-body inline-scroller"
+          >
+            <h4>
+              Modal Body
+            </h4>
+          </div>
+          <div
+            class="modal-footer"
+          >
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal-backdrop fade show"
+    />
+  </div>
+</div>
+`;
+
+exports[`ModalRenderer should render 1`] = `
+<div>
+  <div
+    class="modal-renderer-root"
+  />
+</div>
+`;
+
+exports[`ModalRenderer should render multiple modals 1`] = `
+<div>
+  <div
+    class="modal-renderer-root"
+  >
+    <div
+      class="modal-container d-block fade modal show"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        aria-modal="true"
+        class="modal-dialog"
+        role="dialog"
+      >
+        <div
+          class="modal-content"
+        >
+          <div
+            class="modal-header"
+          >
+            <h4
+              class="modal-title"
+            >
+              Modal
+            </h4>
+            <button
+              class="button-root btn btn-secondary close"
+              type="button"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-times"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="modal-body inline-scroller"
+          >
+            <h4>
+              Modal Body
+            </h4>
+          </div>
+          <div
+            class="modal-footer"
+          >
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal-container d-block fade modal show"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        aria-modal="true"
+        class="modal-dialog"
+        role="dialog"
+      >
+        <div
+          class="modal-content"
+        >
+          <div
+            class="modal-header"
+          >
+            <h4
+              class="modal-title"
+            >
+              Modal
+            </h4>
+            <button
+              class="button-root btn btn-secondary close"
+              type="button"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-times"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="modal-body inline-scroller"
+          >
+            <h4>
+              Modal Body
+            </h4>
+          </div>
+          <div
+            class="modal-footer"
+          >
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal-backdrop fade show"
+    />
+  </div>
+</div>
+`;
+
+exports[`ModalRenderer should render test modal 1`] = `
+<div>
+  <div
+    class="modal-renderer-root"
+  >
+    <div
+      class="modal-container d-block fade modal show"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        aria-modal="true"
+        class="modal-dialog"
+        role="dialog"
+      >
+        <div
+          class="modal-content"
+        >
+          <div
+            class="modal-header"
+          >
+            <h4
+              class="modal-title"
+            >
+              Modal
+            </h4>
+            <button
+              class="button-root btn btn-secondary close"
+              type="button"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-times"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="modal-body inline-scroller"
+          >
+            <h4>
+              Modal Body
+            </h4>
+          </div>
+          <div
+            class="modal-footer"
+          >
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal-backdrop fade show"
+    />
+  </div>
+</div>
+`;

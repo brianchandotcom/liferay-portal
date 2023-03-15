@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputWithEditToggle should render 1`] = `
+<div>
+  <div
+    class="input-with-edit-toggle-root definition-item-root"
+  >
+    <form
+      class="form-root input-with-edit-toggle-editor"
+    >
+      <div
+        class="form-group align-items-center form-group-autofit"
+      >
+        <div
+          class=""
+        >
+          <div
+            class="input-group content-after"
+          >
+            <div
+              class="input-group-item"
+            >
+              <input
+                class="input-root form-control"
+                disabled=""
+                id="name"
+                name="name"
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="input-group-item input-group-item-shrink"
+            >
+              <button
+                aria-label="Edit"
+                class="button-root btn btn-secondary btn-sm"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-pencil"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;

@@ -1,0 +1,638 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Summary Mapper for status FINISHED_WINNER and winner declared should return formatted data for status in FINISHED_WINNER 1`] = `
+Object {
+  "alert": Object {
+    "description": "We recommend that you publish the winning variant.",
+    "symbol": "check-circle",
+    "title": "Variant 02 has outperformed control by at least 5%",
+  },
+  "header": Object {
+    "Description": [Function],
+    "modals": Array [
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "dxpVariantId": "2365555171",
+          "dxpVariantName": "Variant 02",
+          "experimentId": undefined,
+          "pageURL": "http://localhost/web/guest/content-page",
+          "title": "Publish Winner",
+        },
+        "title": "Publish Winner",
+      },
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "dxpVariants": Array [
+            Object {
+              "changes": 0,
+              "control": false,
+              "dxpVariantId": "4203992243",
+              "dxpVariantName": "Variant 01",
+              "trafficSplit": 33,
+              "uniqueVisitors": 1,
+            },
+          ],
+          "experimentId": undefined,
+          "pageURL": "http://localhost/web/guest/content-page",
+          "title": "Publish Other Variant",
+        },
+        "title": "Publish Other Variant",
+      },
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "experimentId": undefined,
+          "modalBody": <React.Fragment>
+            <div
+              className="mb-2 text-secondary"
+            >
+              Are you sure you want to complete this test?
+            </div>
+            <strong>
+              No more traffic will be directed to the test variants, and we will stop collecting test data.
+               
+              You will still have access to the data that has already been collected.
+            </strong>
+          </React.Fragment>,
+          "nextStatus": "COMPLETED",
+          "publishedDXPVariantId": "DEFAULT",
+          "submitMessage": "Complete Test",
+          "title": "Complete Test",
+        },
+        "title": "Complete Test",
+      },
+    ],
+    "title": "Winner Declared",
+  },
+  "sections": Array [
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+  ],
+  "status": "finished_winner",
+  "summary": Object {
+    "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+    "subtitle": "Description",
+    "title": "Summary",
+  },
+}
+`;
+
+exports[`Summary Mapper for status in COMPLETED and a variant published should return formatted data 1`] = `
+Object {
+  "alert": Object {
+    "description": "Your new experience was successfully published and no more data will be collected for this test.",
+    "symbol": "check-circle",
+    "title": "Variant 02 has been published.",
+  },
+  "header": Object {
+    "Description": [Function],
+    "cardModals": Array [
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "experimentId": undefined,
+        },
+        "title": "Delete Test",
+      },
+    ],
+    "title": "Test Complete",
+  },
+  "sections": Array [
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+  ],
+  "status": "completed",
+  "summary": Object {
+    "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+    "subtitle": "Description",
+    "title": "Summary",
+  },
+}
+`;
+
+exports[`Summary Mapper for status in COMPLETED should return formatted data 1`] = `
+Object {
+  "alert": Object {
+    "description": "No more data will be collected for this test.",
+    "symbol": "check-circle",
+    "title": "Control has been kept as the experience.",
+  },
+  "header": Object {
+    "Description": [Function],
+    "cardModals": Array [
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "experimentId": undefined,
+        },
+        "title": "Delete Test",
+      },
+    ],
+    "title": "Test Complete",
+  },
+  "sections": Array [
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+  ],
+  "status": "completed",
+  "summary": Object {
+    "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+    "subtitle": "Description",
+    "title": "Summary",
+  },
+}
+`;
+
+exports[`Summary Mapper for status in COMPLETED should return formatted data and complete a variant 1`] = `
+Object {
+  "alert": Object {
+    "description": "Your new experience was successfully published and no more data will be collected for this test.",
+    "symbol": "check-circle",
+    "title": "Variant 02 has been published.",
+  },
+  "header": Object {
+    "Description": [Function],
+    "cardModals": Array [
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "experimentId": undefined,
+        },
+        "title": "Delete Test",
+      },
+    ],
+    "title": "Test Complete",
+  },
+  "sections": Array [
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+  ],
+  "status": "completed",
+  "summary": Object {
+    "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+    "subtitle": "Description",
+    "title": "Summary",
+  },
+}
+`;
+
+exports[`Summary Mapper for status in DRAFT should display empty state 1`] = `
+Object {
+  "header": Object {
+    "Description": [Function],
+    "cardModals": Array [
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "experimentId": undefined,
+        },
+        "title": "Delete Test",
+      },
+    ],
+    "title": "Test Is in Draft Mode",
+  },
+  "setup": Object {
+    "current": 3,
+    "steps": Array [
+      Object {
+        "Description": [Function],
+        "buttonProps": Object {
+          "label": "Change Target",
+          "symbol": "dxp-logo",
+        },
+        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
+        "title": "Test Target",
+      },
+      Object {
+        "Description": [Function],
+        "buttonProps": Object {
+          "label": "Change Metric",
+          "symbol": "dxp-logo",
+        },
+        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
+        "title": "Test Metric",
+      },
+      Object {
+        "Description": [Function],
+        "buttonProps": Object {
+          "label": "Edit Variants",
+          "symbol": "dxp-logo",
+        },
+        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
+        "title": "Variants",
+      },
+      Object {
+        "Description": [Function],
+        "buttonProps": Object {
+          "data-tooltip": true,
+          "disabled": true,
+          "label": "Review",
+          "title": "Select the target element on Liferay DXP to run the test.",
+        },
+        "modal": Object {
+          "Component": [Function],
+          "props": Object {
+            "dxpVariants": Array [
+              Object {
+                "changes": 0,
+                "control": true,
+                "dxpVariantId": "DEFAULT",
+                "dxpVariantName": "Control",
+                "trafficSplit": 34,
+                "uniqueVisitors": 1,
+              },
+              Object {
+                "changes": 0,
+                "control": false,
+                "dxpVariantId": "4203992243",
+                "dxpVariantName": "Variant 01",
+                "trafficSplit": 33,
+                "uniqueVisitors": 1,
+              },
+              Object {
+                "changes": 0,
+                "control": false,
+                "dxpVariantId": "2365555171",
+                "dxpVariantName": "Variant 02",
+                "trafficSplit": 33,
+                "uniqueVisitors": 1,
+              },
+            ],
+            "experimentId": undefined,
+          },
+        },
+        "title": "Review & Run",
+      },
+    ],
+    "title": "Setup",
+  },
+  "status": "draft",
+  "summary": Object {
+    "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+    "subtitle": "Description",
+    "title": "Summary",
+  },
+}
+`;
+
+exports[`Summary Mapper for status in DRAFT should render step 1 description 1`] = `
+<span>
+  <React.Fragment>
+    <div>
+      <span
+        className="text-secondary mr-1"
+      >
+        Experience:
+      </span>
+      Experience Name
+    </div>
+    <div>
+      <span
+        className="text-secondary mr-1"
+      >
+        Segment:
+      </span>
+      Segment Name
+    </div>
+  </React.Fragment>
+</span>
+`;
+
+exports[`Summary Mapper for status in DRAFT should render step 2 description 1`] = `
+<span>
+  <strong>
+    Click-Through Rate
+  </strong>
+</span>
+`;
+
+exports[`Summary Mapper for status in DRAFT should render step 3 description 1`] = `
+<span>
+  2 variants
+</span>
+`;
+
+exports[`Summary Mapper for status in DRAFT should render step 4 description 1`] = `
+<span>
+  Review traffic split and run your test.
+</span>
+`;
+
+exports[`Summary Mapper for status in DRAFT should return formatted data 1`] = `
+Object {
+  "header": Object {
+    "Description": [Function],
+    "cardModals": Array [
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "experimentId": undefined,
+        },
+        "title": "Delete Test",
+      },
+    ],
+    "title": "Test Is in Draft Mode",
+  },
+  "setup": Object {
+    "current": 3,
+    "steps": Array [
+      Object {
+        "Description": [Function],
+        "buttonProps": Object {
+          "label": "Change Target",
+          "symbol": "dxp-logo",
+        },
+        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
+        "title": "Test Target",
+      },
+      Object {
+        "Description": [Function],
+        "buttonProps": Object {
+          "label": "Change Metric",
+          "symbol": "dxp-logo",
+        },
+        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
+        "title": "Test Metric",
+      },
+      Object {
+        "Description": [Function],
+        "buttonProps": Object {
+          "label": "Edit Variants",
+          "symbol": "dxp-logo",
+        },
+        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
+        "title": "Variants",
+      },
+      Object {
+        "Description": [Function],
+        "buttonProps": Object {
+          "data-tooltip": true,
+          "disabled": true,
+          "label": "Review",
+          "title": "Select the target element on Liferay DXP to run the test.",
+        },
+        "modal": Object {
+          "Component": [Function],
+          "props": Object {
+            "dxpVariants": Array [
+              Object {
+                "changes": 0,
+                "control": true,
+                "dxpVariantId": "DEFAULT",
+                "dxpVariantName": "Control",
+                "trafficSplit": 34,
+                "uniqueVisitors": 1,
+              },
+              Object {
+                "changes": 0,
+                "control": false,
+                "dxpVariantId": "4203992243",
+                "dxpVariantName": "Variant 01",
+                "trafficSplit": 33,
+                "uniqueVisitors": 1,
+              },
+              Object {
+                "changes": 0,
+                "control": false,
+                "dxpVariantId": "2365555171",
+                "dxpVariantName": "Variant 02",
+                "trafficSplit": 33,
+                "uniqueVisitors": 1,
+              },
+            ],
+            "experimentId": undefined,
+          },
+        },
+        "title": "Review & Run",
+      },
+    ],
+    "title": "Setup",
+  },
+  "status": "draft",
+  "summary": Object {
+    "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+    "subtitle": "Description",
+    "title": "Summary",
+  },
+}
+`;
+
+exports[`Summary Mapper for status in FINISHED_WINNER and winner no declared should return formatted data for status in FINISHED_NO_WINNER 1`] = `
+Object {
+  "alert": Object {
+    "description": "We recommend that you use any of the test candidates, as they will perform similarly.",
+    "symbol": "exclamation-circle",
+    "title": "There is no clear winner.",
+  },
+  "header": Object {
+    "Description": [Function],
+    "modals": Array [
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "experimentId": undefined,
+          "modalBody": <React.Fragment>
+            <div
+              className="mb-2 text-secondary"
+            >
+              Are you sure you want to complete this test?
+            </div>
+            <strong>
+              No more traffic will be directed to the test variants, and we will stop collecting test data.
+               
+              You will still have access to the data that has already been collected.
+            </strong>
+          </React.Fragment>,
+          "nextStatus": "COMPLETED",
+          "publishedDXPVariantId": "DEFAULT",
+          "submitMessage": "Complete Test",
+          "title": "Complete Test",
+        },
+        "title": "Complete Test",
+      },
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "dxpVariants": Array [
+            Object {
+              "changes": 0,
+              "control": false,
+              "dxpVariantId": "4203992243",
+              "dxpVariantName": "Variant 01",
+              "trafficSplit": 33,
+              "uniqueVisitors": 1,
+            },
+            Object {
+              "changes": 0,
+              "control": false,
+              "dxpVariantId": "2365555171",
+              "dxpVariantName": "Variant 02",
+              "trafficSplit": 33,
+              "uniqueVisitors": 1,
+            },
+          ],
+          "experimentId": undefined,
+          "pageURL": "http://localhost/web/guest/content-page",
+          "title": "Publish Variant",
+        },
+        "title": "Publish Variant",
+      },
+    ],
+    "title": "No Clear Winner",
+  },
+  "sections": Array [
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+  ],
+  "status": "finished_no_winner",
+  "summary": Object {
+    "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+    "subtitle": "Description",
+    "title": "Summary",
+  },
+}
+`;
+
+exports[`Summary Mapper for status in RUNNING should return formatted data for status in RUNNING 1`] = `
+Object {
+  "header": Object {
+    "Description": [Function],
+    "modals": Array [
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "experimentId": undefined,
+          "modalBody": <React.Fragment>
+            <div
+              className="mb-2 text-secondary"
+            >
+              Are you sure you want to terminate this test?
+            </div>
+            <strong>
+              No more traffic will be directed to the test variants, and we will stop collecting test data.
+               
+              You will still have access to the data that has already been collected.
+            </strong>
+          </React.Fragment>,
+          "modalStatus": "warning",
+          "nextStatus": "TERMINATED",
+          "submitMessage": "Stop Test",
+          "title": "Terminate Test",
+        },
+        "title": "Terminate Test",
+      },
+    ],
+    "title": "Test Is Running",
+  },
+  "sections": Array [
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+  ],
+  "status": "running",
+  "summary": Object {
+    "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+    "subtitle": "Description",
+    "title": "Summary",
+  },
+}
+`;
+
+exports[`Summary Mapper for status in TERMINATED should return formatted data for status in TERMINATED 1`] = `
+Object {
+  "header": Object {
+    "Description": [Function],
+    "cardModals": Array [
+      Object {
+        "Component": [Function],
+        "props": Object {
+          "experimentId": undefined,
+        },
+        "title": "Delete Test",
+      },
+    ],
+    "title": "Test Was Terminated",
+  },
+  "sections": Array [
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+    Object {
+      "Body": [Function],
+    },
+  ],
+  "status": "terminated",
+  "summary": Object {
+    "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+    "subtitle": "Description",
+    "title": "Summary",
+  },
+}
+`;

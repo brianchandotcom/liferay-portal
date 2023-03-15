@@ -1,0 +1,272 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataTransformation should render 1`] = `
+<div>
+  <div
+    class="data-transformation-root"
+  >
+    <div
+      class="sheet-header"
+    >
+      <h3
+        class="title"
+      >
+        Map Contact Data
+      </h3>
+      <p
+        class="text-secondary"
+      >
+        All fields have been mapped automatically to the best possible match. Please confirm the data mapping below and make any changes if necessary. You may only map one source data field to a single Analytics Cloud field.
+      </p>
+    </div>
+    <div
+      class="sheet-body summary-section"
+    >
+      <p
+        class="summary"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-faro-connection-success-ovals"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-connection-success-ovals"
+          />
+        </svg>
+        0 fields mapped.
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-faro-connection-error-ovals"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-connection-error-ovals"
+          />
+        </svg>
+        1 fields not mapped.
+      </p>
+      <div
+        class="custom-control custom-checkbox"
+      >
+        <label>
+          <input
+            class="custom-control-input"
+            type="checkbox"
+            value="false"
+          />
+          <span
+            class="custom-control-label"
+          >
+            <span
+              class="custom-control-label-text"
+            >
+              Unmapped Fields Only
+            </span>
+          </span>
+        </label>
+      </div>
+    </div>
+    <div
+      class="sheet-section"
+    >
+      <div
+        class="data-transformation-list-root"
+      >
+        <div
+          class="data-transformation-header"
+        >
+          <div
+            class="left"
+          >
+            Source Data
+          </div>
+          <div
+            class="right"
+          >
+            Analytics Cloud Field
+          </div>
+        </div>
+        <div
+          class="form-group data-transformation-item-root error form-group-autofit"
+        >
+          <div
+            class="form-group-item"
+          >
+            <div>
+              <div
+                aria-haspopup="true"
+                class="dropdown dropdown-root searchable-select-root"
+              >
+                <button
+                  class="button-root btn btn-secondary dropdown-toggle show-caret"
+                  type="button"
+                >
+                  <span
+                    class="text-truncate"
+                  >
+                    Test0
+                  </span>
+                  
+                  <span
+                    class="caret-root"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-caret-double"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-double"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+              <div
+                class="example-value text-truncate"
+              />
+            </div>
+          </div>
+          <div
+            class="form-group-item add-on form-group-item-shrink"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-faro-connection-error-ovals"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-connection-error-ovals"
+              />
+            </svg>
+          </div>
+          <div
+            class="form-group-item"
+          >
+            <div
+              class="suggestion"
+            >
+              <div
+                aria-haspopup="true"
+                class="dropdown dropdown-root searchable-select-root"
+                name="undefined.0"
+              >
+                <button
+                  class="button-root btn btn-secondary dropdown-toggle show-caret"
+                  type="button"
+                >
+                  <span
+                    class="text-truncate"
+                  >
+                    Select Analytics Cloud Field
+                  </span>
+                  
+                  <span
+                    class="caret-root"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-caret-double"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-double"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+              <div
+                class="example-value text-truncate"
+              />
+            </div>
+          </div>
+          <div
+            class="form-group-item add-on form-group-item-shrink"
+          >
+            <span
+              data-tooltip="true"
+              title="No fields matched. Please select a field from the dropdown or create a new one."
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-exclamation-full help"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#exclamation-full"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="form-group-item add-on form-group-item-shrink"
+          >
+            <button
+              class="button-root btn btn-unstyled"
+              data-tooltip="true"
+              title="Remove Field"
+              type="button"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-times-circle"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="add-custom-field"
+      >
+        <div>
+          Add a custom field mapping.
+        </div>
+        <button
+          class="button-root btn btn-secondary"
+          type="button"
+        >
+          Add Field
+        </button>
+      </div>
+    </div>
+    <div
+      class="sheet-footer"
+    >
+      <div
+        class="form-navigation-root"
+      >
+        <a
+          class="button-root btn btn-secondary cancel"
+          href="/workspace/23/settings/data-source"
+        >
+          Cancel
+        </a>
+        <button
+          class="button-root btn btn-primary"
+          disabled=""
+          type="button"
+        >
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`processFieldMappings should return fieldMappings 1`] = `
+Array [
+  Object {
+    "dataSourceFieldName": "foo",
+    "name": undefined,
+  },
+  Object {
+    "dataSourceFieldName": "bar",
+    "name": undefined,
+  },
+  Object {
+    "dataSourceFieldName": "baz",
+    "name": undefined,
+  },
+]
+`;

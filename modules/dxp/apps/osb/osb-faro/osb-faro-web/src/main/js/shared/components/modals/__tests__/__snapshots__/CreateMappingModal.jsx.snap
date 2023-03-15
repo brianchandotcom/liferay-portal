@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateMappingModal should render 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog create-mapping-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Create New CSV Field
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <form
+        class="form-root"
+      >
+        <div
+          class="form-group form-group-autofit"
+        >
+          <div
+            class=""
+          >
+            <label
+              class="form-control-label label-root"
+              for="name"
+            >
+              <span
+                class="content-container"
+              >
+                New Field Name
+              </span>
+            </label>
+            <input
+              class="input-root form-control"
+              id="name"
+              name="name"
+              placeholder="Enter new field name..."
+              type="text"
+              value=""
+            />
+          </div>
+          <div>
+            <label>
+              Field Type
+            </label>
+            <div
+              aria-haspopup="true"
+              class="dropdown dropdown-root searchable-select-root"
+              name="type"
+            >
+              <button
+                class="button-root btn btn-secondary dropdown-toggle show-caret"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  Select
+                </span>
+                
+                <span
+                  class="caret-root"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-caret-double"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-double"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="button-root btn btn-secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="button-root btn btn-primary"
+            disabled=""
+            type="submit"
+          >
+            Create
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummaryBaseCard Header should render component 1`] = `
+<div>
+  <div>
+    <h3
+      class="font-weight-bold mb-2"
+    >
+      My Header
+    </h3>
+  </div>
+</div>
+`;

@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndividualDetailsCard should render 1`] = `
+<div>
+  <div
+    class="card card-root individual-details-card-root"
+  >
+    <div
+      class="card-body"
+    >
+      <div
+        class="sticker sticker-root sticker-static avatar-root sticker-circle sticker-chartRed sticker-xl"
+      >
+        FB
+      </div>
+      <h4>
+        Foo Bar
+      </h4>
+      <div
+        class="job-title"
+      >
+        Developer
+      </div>
+      <div
+        class="first-seen"
+      >
+        First Seen: July 8, 2018
+      </div>
+    </div>
+    <div
+      class="card-footer"
+    >
+      <a
+        class="button-root btn btn-link btn-sm"
+        href="/workspace/23/contacts/individuals/known-individuals/0/details"
+      >
+        View All Details
+        <span
+          class="inline-item inline-item-after"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-angle-right"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+            />
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+`;

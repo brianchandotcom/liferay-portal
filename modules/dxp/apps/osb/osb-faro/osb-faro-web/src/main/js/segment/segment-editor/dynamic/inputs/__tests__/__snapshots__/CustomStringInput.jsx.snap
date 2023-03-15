@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomStringInput should render 1`] = `
+<div>
+  <div
+    class="criteria-statement"
+  >
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+      />
+      <div
+        class="form-group-item display-value form-group-item-label form-group-item-shrink"
+      >
+        Address
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control"
+        >
+          <option
+            value="eq"
+          >
+            is
+          </option>
+          <option
+            value="ne"
+          >
+            is not
+          </option>
+          <option
+            value="contains"
+          >
+            contains
+          </option>
+          <option
+            value="not-contains"
+          >
+            does not contain
+          </option>
+          <option
+            value="is-known"
+          >
+            is known
+          </option>
+          <option
+            value="is-unknown"
+          >
+            is unknown
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item"
+      >
+        <div
+          aria-haspopup="true"
+          class="input-group base-select-input-root select-input-root"
+        >
+          <div
+            class="input-group-item"
+          >
+            <input
+              autocomplete="off"
+              class="input-root form-control input-group-inset input-group-inset-after"
+              placeholder=""
+              type="text"
+              value=""
+            />
+            <div
+              class="input-group-inset-item input-group-inset-item-after"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`CustomStringInput should render with data 1`] = `
+<div>
+  <div
+    class="criteria-statement"
+  >
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+      />
+      <div
+        class="form-group-item display-value form-group-item-label form-group-item-shrink"
+      >
+        Address
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control"
+        >
+          <option
+            value="eq"
+          >
+            is
+          </option>
+          <option
+            value="ne"
+          >
+            is not
+          </option>
+          <option
+            value="contains"
+          >
+            contains
+          </option>
+          <option
+            value="not-contains"
+          >
+            does not contain
+          </option>
+          <option
+            value="is-known"
+          >
+            is known
+          </option>
+          <option
+            value="is-unknown"
+          >
+            is unknown
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item"
+      >
+        <div
+          aria-haspopup="true"
+          class="input-group base-select-input-root select-input-root"
+        >
+          <div
+            class="input-group-item"
+          >
+            <input
+              autocomplete="off"
+              class="input-root form-control input-group-inset input-group-inset-after"
+              placeholder=""
+              type="text"
+              value="123 West Road"
+            />
+            <div
+              class="input-group-inset-item input-group-inset-item-after"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

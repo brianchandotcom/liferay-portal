@@ -1,0 +1,554 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EntityDetailsList should render 1`] = `
+<div>
+  <div
+    class="card card-root entity-details-list-root page-display"
+  >
+    <div
+      class="card-header"
+    >
+      <h5
+        class="card-title"
+      >
+        Test Test
+      </h5>
+      <div
+        class="secondary-info"
+      >
+        <b>
+          0
+        </b>
+         known attributes of 
+        <b>
+          0
+        </b>
+         total.
+      </div>
+    </div>
+    <div
+      class="card-body no-padding"
+    >
+      <div
+        class="base-results-root d-flex flex-column flex-grow-1 searchable-table-root searchable-table-borderless"
+      >
+        <div
+          class="toolbar-root"
+        >
+          <nav
+            class="navbar navbar-root management-bar management-bar-light navbar-expand"
+          >
+            <div
+              class="container-fluid"
+            >
+              <ul
+                class="nav-root front-nav navbar-nav"
+                role="tablist"
+              >
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <button
+                    class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                    type="button"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      />
+                    </svg>
+                  </button>
+                </li>
+              </ul>
+              <div
+                class="navbar-form navbar-form-autofit"
+              >
+                <div
+                  class="input-group search"
+                >
+                  <div
+                    class="input-group-item"
+                  >
+                    <input
+                      class="input-root form-control input-group-inset input-group-inset-after"
+                      placeholder="Search"
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="input-group-inset-item input-group-inset-item-after"
+                    >
+                      <button
+                        class="button-root btn btn-unstyled"
+                        type="button"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-search"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul
+                class="nav-root navbar-nav"
+                role="tablist"
+              >
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      >
+                        <span
+                          class="custom-control-label-text"
+                        >
+                          Hide Blank Attributes
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <div
+          class="table-responsive table-root flex-grow-1"
+        >
+          <table
+            class="table table-autofit table-hover table-heading-nowrap"
+          >
+            <thead>
+              <tr>
+                <th
+                  class="table-head-title table-cell-expand"
+                >
+                  <button
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    type="button"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Attribute
+                    </span>
+                    <span
+                      class="inline-item inline-item-after"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </th>
+                <th
+                  class="table-head-title table-cell-expand-small"
+                >
+                  <button
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    type="button"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Source Name
+                    </span>
+                  </button>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <button
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    type="button"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Data Source
+                    </span>
+                  </button>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <button
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    type="button"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Last Modified
+                    </span>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+          </table>
+          <div
+            class="spinner-root spinner-overlay"
+          >
+            <span
+              class="loading-animation loading-animation-dotted"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`EntityDetailsList should render with items 1`] = `
+<div>
+  <div
+    class="card card-root entity-details-list-root page-display"
+  >
+    <div
+      class="card-header"
+    >
+      <h5
+        class="card-title"
+      >
+        Test Test
+      </h5>
+      <div
+        class="secondary-info"
+      >
+        <b>
+          3
+        </b>
+         known attributes of 
+        <b>
+          3
+        </b>
+         total.
+      </div>
+    </div>
+    <div
+      class="card-body no-padding"
+    >
+      <div
+        class="base-results-root d-flex flex-column flex-grow-1 searchable-table-root searchable-table-borderless"
+      >
+        <div
+          class="toolbar-root"
+        >
+          <nav
+            class="navbar navbar-root management-bar management-bar-light navbar-expand"
+          >
+            <div
+              class="container-fluid"
+            >
+              <ul
+                class="nav-root front-nav navbar-nav"
+                role="tablist"
+              >
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <button
+                    class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                    type="button"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      />
+                    </svg>
+                  </button>
+                </li>
+              </ul>
+              <div
+                class="navbar-form navbar-form-autofit"
+              >
+                <div
+                  class="input-group search"
+                >
+                  <div
+                    class="input-group-item"
+                  >
+                    <input
+                      class="input-root form-control input-group-inset input-group-inset-after"
+                      placeholder="Search"
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="input-group-inset-item input-group-inset-item-after"
+                    >
+                      <button
+                        class="button-root btn btn-unstyled"
+                        type="button"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-search"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul
+                class="nav-root navbar-nav"
+                role="tablist"
+              >
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      >
+                        <span
+                          class="custom-control-label-text"
+                        >
+                          Hide Blank Attributes
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <div
+          class="table-responsive table-root flex-grow-1"
+        >
+          <table
+            class="table table-autofit table-hover table-heading-nowrap"
+          >
+            <thead>
+              <tr>
+                <th
+                  class="table-head-title table-cell-expand"
+                >
+                  <button
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    type="button"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Attribute
+                    </span>
+                    <span
+                      class="inline-item inline-item-after"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </th>
+                <th
+                  class="table-head-title table-cell-expand-small"
+                >
+                  <button
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    type="button"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Source Name
+                    </span>
+                  </button>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <button
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    type="button"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Data Source
+                    </span>
+                  </button>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <button
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    type="button"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Last Modified
+                    </span>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+              >
+                <td
+                  class="property-cell table-cell-expand"
+                >
+                  <div
+                    class="name"
+                  >
+                    industry
+                  </div>
+                  <div
+                    class="table-title"
+                  >
+                    Agriculture
+                  </div>
+                </td>
+                <td
+                  class="table-cell-expand-small"
+                >
+                  industry
+                </td>
+                <td
+                  class="table-cell-expand"
+                >
+                  <a
+                    class="text-truncate"
+                    href="/workspace/23/settings/data-source/123"
+                  >
+                    test data source
+                  </a>
+                </td>
+                <td>
+                  7 days ago
+                </td>
+              </tr>
+              <tr
+                class=""
+              >
+                <td
+                  class="property-cell table-cell-expand"
+                >
+                  <div
+                    class="name"
+                  >
+                    name
+                  </div>
+                  <div
+                    class="table-title"
+                  >
+                    Northern Parts, Southern Parts
+                  </div>
+                </td>
+                <td
+                  class="table-cell-expand-small"
+                >
+                  businessOwnership
+                </td>
+                <td
+                  class="table-cell-expand"
+                >
+                  <a
+                    class="text-truncate"
+                    href="/workspace/23/settings/data-source/123"
+                  >
+                    test data source
+                  </a>
+                </td>
+                <td>
+                  7 days ago
+                </td>
+              </tr>
+              <tr
+                class=""
+              >
+                <td
+                  class="property-cell table-cell-expand"
+                >
+                  <div
+                    class="name"
+                  >
+                    yearStarted
+                  </div>
+                  <div
+                    class="table-title"
+                  >
+                    2003
+                  </div>
+                </td>
+                <td
+                  class="table-cell-expand-small"
+                >
+                  yearStarted
+                </td>
+                <td
+                  class="table-cell-expand"
+                >
+                  <a
+                    class="text-truncate"
+                    href="/workspace/23/settings/data-source/123"
+                  >
+                    test data source
+                  </a>
+                </td>
+                <td>
+                  7 days ago
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BasePage should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <div />
+  </div>
+</div>
+`;

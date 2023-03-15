@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Unique Visitors Cell should render 1`] = `
+<div>
+  <td>
+    <span
+      class="lift"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-caret-top"
+        role="presentation"
+      >
+        <use
+          xlink:href="#caret-top"
+        />
+      </svg>
+       
+      10.12%
+       
+      lift
+    </span>
+  </td>
+</div>
+`;
+
+exports[`Unique Visitors Cell should render negative improvements 1`] = `
+<div>
+  <td>
+    <span
+      class="loss"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-caret-bottom"
+        role="presentation"
+      >
+        <use
+          xlink:href="#caret-bottom"
+        />
+      </svg>
+       
+      10.12%
+       
+      loss
+    </span>
+  </td>
+</div>
+`;

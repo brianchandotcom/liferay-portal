@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndividualFieldMapping should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root data-source-base-page-root base-field-mapping-view-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <ol
+      class="breadcrumb breadcrumbs-root"
+    >
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/data-source"
+        >
+          Data Sources
+        </a>
+      </li>
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/data-source/27"
+        >
+          Liferay1
+        </a>
+      </li>
+      <li
+        class="breadcrumb-item active"
+      >
+        <span
+          class="breadcrumb-text-truncate"
+        >
+          Individual Field Mapping
+        </span>
+      </li>
+    </ol>
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Configure Salesforce
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          Liferay1 - https://www.faro-1.io
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="page-container"
+      >
+        <div
+          class="content-main"
+        >
+          <div
+            class="sheet"
+          >
+            <div
+              class="sheet-header"
+            >
+              <div
+                class="sheet-section"
+              >
+                <h4>
+                  Individual Field Mapping
+                </h4>
+                <div
+                  class="sheet-text"
+                >
+                  All fields have been mapped automatically to the best possible match. Please review the data mapping below to see how your Salesforce object has been mapped to Analytics Cloud.
+                </div>
+              </div>
+            </div>
+            <div
+              class="data-transformation-list-root read-only"
+            >
+              <div
+                class="data-transformation-header"
+              >
+                <div
+                  class="left"
+                >
+                  Salesforce Field
+                </div>
+                <div
+                  class="right"
+                >
+                  Analytics Cloud Field
+                </div>
+              </div>
+              <div
+                class="form-group data-transformation-item-root form-group-autofit"
+              >
+                <div
+                  class="form-group-item"
+                >
+                  <div>
+                    <div
+                      aria-haspopup="true"
+                      class="dropdown dropdown-root searchable-select-root read-only"
+                    >
+                      <button
+                        class="button-root btn btn-secondary dropdown-toggle show-caret"
+                        type="button"
+                      >
+                        <span
+                          class="text-truncate"
+                        >
+                          Test0
+                        </span>
+                        
+                      </button>
+                    </div>
+                    <div
+                      class="example-value text-truncate"
+                    >
+                      value
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="form-group-item add-on form-group-item-shrink"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-faro-connection-success-ovals"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-connection-success-ovals"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="form-group-item"
+                >
+                  <div
+                    class="suggestion"
+                  >
+                    <div
+                      aria-haspopup="true"
+                      class="dropdown dropdown-root searchable-select-root read-only"
+                      name="undefined.0"
+                    >
+                      <button
+                        class="button-root btn btn-secondary dropdown-toggle show-caret"
+                        type="button"
+                      >
+                        <span
+                          class="text-truncate"
+                        >
+                          MappingName
+                        </span>
+                        
+                      </button>
+                    </div>
+                    <div
+                      class="example-value text-truncate"
+                    >
+                      mappingValue
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="content-side"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

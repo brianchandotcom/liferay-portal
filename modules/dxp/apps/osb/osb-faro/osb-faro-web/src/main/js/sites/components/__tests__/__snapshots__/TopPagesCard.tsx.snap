@@ -1,0 +1,213 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopPagesCard renders 1`] = `
+<div>
+  <div
+    class="card card-root"
+  >
+    <div
+      class="card-header align-items-center d-flex justify-content-between"
+    >
+      <h5
+        class="card-title"
+      >
+        card label
+      </h5>
+      <div
+        class="dropdown dropdown-range-key-root"
+      >
+        <button
+          class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+          type="button"
+        >
+          Last 30 days
+          <svg
+            class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-bottom"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div
+      class="card-body w-100 d-flex flex-column flex-grow-1 no-padding"
+    >
+      <ul
+        class="card-tabs-root"
+      >
+        <li
+          class="card-tab active"
+          data-testid="visitorsMetric"
+        >
+          <button
+            class="button-root btn btn-unstyled"
+            type="button"
+          >
+            <span
+              class="title"
+            >
+              Visited Pages
+            </span>
+            <div />
+          </button>
+        </li>
+        <li
+          class="card-tab"
+          data-testid="entrancesMetric"
+        >
+          <button
+            class="button-root btn btn-unstyled"
+            type="button"
+          >
+            <span
+              class="title"
+            >
+              Entrance Pages
+            </span>
+            <div />
+          </button>
+        </li>
+        <li
+          class="card-tab"
+          data-testid="exitRateMetric"
+        >
+          <button
+            class="button-root btn btn-unstyled"
+            type="button"
+          >
+            <span
+              class="title"
+            >
+              Exit Pages
+            </span>
+            <div />
+          </button>
+        </li>
+      </ul>
+      <div
+        class="table-responsive table-root flex-grow-1 flex-grow-1 table-hover"
+      >
+        <table
+          class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+        >
+          <thead>
+            <tr>
+              <th
+                class="table-head-title table-cell-expand"
+              >
+                Page Title
+			|
+			Canonical URL
+              </th>
+              <th
+                class="table-head-title table-column-text-end"
+              >
+                Unique Visitors
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="flex-grow-1 table-hover"
+          >
+            <tr
+              class=""
+            >
+              <td
+                class="name-cell-root table-cell-expand"
+              >
+                <div
+                  class="content-container"
+                >
+                  <div
+                    class="text-truncate"
+                  >
+                    <div
+                      class="table-title text-truncate"
+                    >
+                      My asset A
+                    </div>
+                    <div
+                      class="secondary-info text-truncate"
+                    >
+                      123
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                <h4
+                  class="table-title text-truncate"
+                >
+                  20
+                </h4>
+              </td>
+            </tr>
+            <tr
+              class=""
+            >
+              <td
+                class="name-cell-root table-cell-expand"
+              >
+                <div
+                  class="content-container"
+                >
+                  <div
+                    class="text-truncate"
+                  >
+                    <div
+                      class="table-title text-truncate"
+                    >
+                      My asset B
+                    </div>
+                    <div
+                      class="secondary-info text-truncate"
+                    >
+                      456
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                <h4
+                  class="table-title text-truncate"
+                >
+                  20
+                </h4>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div
+      class="card-footer"
+    >
+      <a
+        class="button-root btn btn-link btn-sm"
+        href="/?rangeKey=30"
+      >
+        view pages
+        <span
+          class="inline-item inline-item-after"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-angle-right"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+            />
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,9 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-api")
+	compileOnly project(":dxp:apps:osb:osb-faro:osb-faro-engine-client")
+}
+
+generateJSPJava {
+	enabled = false
+}

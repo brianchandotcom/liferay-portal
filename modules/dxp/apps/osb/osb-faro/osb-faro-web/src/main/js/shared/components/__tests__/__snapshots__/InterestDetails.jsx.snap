@@ -1,0 +1,361 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InterestDetails renders 1`] = `
+<div>
+  <div
+    class="card card-root page-display"
+  >
+    <div
+      class="card-header align-items-center d-flex justify-content-between"
+    >
+      <h5
+        class="card-title"
+      >
+        Pages Containing - 
+        <span
+          class="interest-title"
+        >
+          "test"
+        </span>
+      </h5>
+    </div>
+    <div
+      class="d-flex flex-column flex-grow-1 justify-content-between"
+    >
+      <div
+        class="toolbar-root"
+      >
+        <nav
+          class="navbar navbar-root management-bar management-bar-light navbar-expand"
+        >
+          <div
+            class="container-fluid"
+          >
+            <ul
+              class="nav-root front-nav navbar-nav"
+              role="tablist"
+            />
+            <div
+              class="navbar-form navbar-form-autofit"
+            >
+              <div
+                class="input-group search"
+              >
+                <div
+                  class="input-group-item"
+                >
+                  <input
+                    class="input-root form-control input-group-inset input-group-inset-after"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-search"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="no-results-root flex-grow-1"
+            >
+              <div
+                class="no-results-content"
+              >
+                <h4
+                  class="no-results-title"
+                >
+                  Sorry, an error occurred.
+                </h4>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div
+        class="table-responsive table-root flex-grow-1"
+      >
+        <table
+          class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+        >
+          <thead>
+            <tr>
+              <th
+                class="table-head-title table-cell-expand"
+              >
+                Page Title | Canonical URL
+              </th>
+              <th
+                class="table-head-title table-column-text-end"
+              >
+                <a
+                  class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                  href="/?field=visitorsMetric&page=1&sortOrder=ASC"
+                >
+                  <span
+                    class="text-truncate"
+                  >
+                    Unique Visitors
+                  </span>
+                  <span
+                    class="inline-item inline-item-after"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-order-arrow-down"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-down"
+                      />
+                    </svg>
+                  </span>
+                </a>
+              </th>
+              <th
+                class="table-head-title table-column-text-end"
+              >
+                <a
+                  class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                  href="/?field=viewsMetric&page=1&sortOrder=DESC"
+                >
+                  <span
+                    class="text-truncate"
+                  >
+                    Views
+                  </span>
+                </a>
+              </th>
+              <th
+                class="table-head-title table-column-text-end"
+              >
+                <a
+                  class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                  href="/?field=avgTimeOnPageMetric&page=1&sortOrder=DESC"
+                >
+                  <span
+                    class="text-truncate"
+                  >
+                    Time On Page
+                  </span>
+                </a>
+              </th>
+              <th
+                class="table-head-title table-column-text-end"
+              >
+                <a
+                  class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                  href="/?field=bounceRateMetric&page=1&sortOrder=DESC"
+                >
+                  <span
+                    class="text-truncate"
+                  >
+                    Bounce Rate
+                  </span>
+                </a>
+              </th>
+              <th
+                class="table-head-title table-column-text-end"
+              >
+                <a
+                  class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                  href="/?field=entrancesMetric&page=1&sortOrder=DESC"
+                >
+                  <span
+                    class="text-truncate"
+                  >
+                    Entrances
+                  </span>
+                </a>
+              </th>
+              <th
+                class="table-head-title table-column-text-end"
+              >
+                <a
+                  class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                  href="/?field=exitRateMetric&page=1&sortOrder=DESC"
+                >
+                  <span
+                    class="text-truncate"
+                  >
+                    Exit %
+                  </span>
+                </a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class=""
+            >
+              <td
+                class="name-cell-root table-cell-expand"
+              >
+                <div
+                  class="content-container"
+                >
+                  <div
+                    class="text-truncate"
+                  >
+                    <div
+                      class="table-title text-truncate"
+                    >
+                      <a
+                        class="text-truncate"
+                        href="/workspace/23/321321/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Dashboard%20-%20Retail?rangeKey=30"
+                      >
+                        Dashboard - Retail
+                      </a>
+                    </div>
+                    <div
+                      class="secondary-info text-truncate"
+                    >
+                      <span
+                        class="text-truncate"
+                        data-tooltip="false"
+                        title=""
+                      >
+                        https://www.liferay.com
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                45
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                243
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                00:00:00
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                23.0%
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                56
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                53.00%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <nav
+        class="navbar navbar-root pagination-bar-root"
+      >
+        <div
+          class="container-fluid"
+        >
+          <div
+            aria-haspopup="true"
+            class="dropdown dropdown-root pagination-items-per-page"
+          >
+            <button
+              class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+              type="button"
+            >
+              <span
+                class="text-truncate"
+              >
+                2 Items
+              </span>
+              
+              <span
+                class="caret-root"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div
+            class="pagination-results"
+          >
+            Showing 1 to 1 of 1 entry.
+          </div>
+          <ul
+            class="pagination pagination-root"
+          >
+            <li
+              class="page-item disabled"
+            >
+              <a
+                class="button-root btn btn-unstyled page-link link-disabled"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-angle-left"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                  />
+                </svg>
+              </a>
+            </li>
+            <li
+              class="page-item active"
+            >
+              <a
+                class="button-root btn btn-unstyled page-link"
+                href="/?page=1"
+              >
+                1
+              </a>
+            </li>
+            <li
+              class="page-item disabled"
+            >
+              <a
+                class="button-root btn btn-unstyled page-link link-disabled"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-angle-right"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                  />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+`;

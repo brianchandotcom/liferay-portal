@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummarySection Variant should render component 1`] = `
+<div>
+  <div
+    class="analytics-summary-section-variant"
+  >
+    <span
+      class="analytics-summary-section-variant-status analytics-summary-section-variant-status-up"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-caret-top"
+        role="presentation"
+      >
+        <use
+          xlink:href="#caret-top"
+        />
+      </svg>
+       50% lift
+    </span>
+    <span>
+      over control
+    </span>
+  </div>
+</div>
+`;

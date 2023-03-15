@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EventSection render 1`] = `
+<div>
+  <div
+    class="event-section-root d-flex align-items-center"
+  >
+    <div
+      class="section-header"
+    >
+      Analyze
+    </div>
+    <div
+      class="event-container d-flex justify-content-between"
+    >
+      <div
+        class="event-list"
+      />
+      <div
+        class="dropdown"
+      >
+        <button
+          class="button-root btn btn-primary dropdown-toggle add-event-button btn-sm"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-plus"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`EventSection render with event 1`] = `
+<div>
+  <div
+    class="event-section-root d-flex align-items-center"
+  >
+    <div
+      class="section-header"
+    >
+      Analyze
+    </div>
+    <div
+      class="event-container d-flex justify-content-between"
+    >
+      <div
+        class="event-list"
+      >
+        <div
+          class="dropdown"
+        >
+          <div
+            class="chip-root d-flex align-items-center justify-content-between event-chip-root"
+          >
+            <button
+              class="button-root btn btn-unstyled event-name"
+              type="button"
+            >
+              View Article
+            </button>
+            <button
+              class="button-root btn btn-unstyled remove-button"
+              type="button"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-times-circle"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

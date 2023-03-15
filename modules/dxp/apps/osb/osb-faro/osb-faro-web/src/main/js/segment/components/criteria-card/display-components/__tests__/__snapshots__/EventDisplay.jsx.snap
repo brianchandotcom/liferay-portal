@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EventDisplay renders 1`] = `
+<div>
+  <span
+    class="sentence-start"
+  >
+    has
+  </span>
+  <span>
+    performed
+  </span>
+  <b>
+    Downloaded Document
+  </b>
+  <span>
+    at least
+  </span>
+  <b>
+    2
+  </b>
+  <span>
+    time(s)
+  </span>
+  <span>
+    since
+  </span>
+  <span>
+    Last 24 hours
+  </span>
+  <span>
+    where
+  </span>
+  <b>
+    Foo Attribute String
+  </b>
+  <b>
+    contains
+  </b>
+  <b>
+    "Test String"
+  </b>
+</div>
+`;

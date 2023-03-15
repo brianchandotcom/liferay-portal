@@ -1,0 +1,13 @@
+<mj-spacer height="25px" />
+
+<mj-text mj-class="subtitle-text">[$TITLE_MSG$]</mj-text>
+
+<mj-text padding-top="18px" padding-bottom="0">[$NOTIFICATION_MSG_1$]</mj-text>
+
+<mj-text padding-top="2px">[$NOTIFICATION_MSG_2$]</mj-text>
+
+<mj-spacer css-class="hide-at-mobile" height="50px" />
+
+<mj-include path="./button.mjml" />
+
+<mj-include path="./help.mjml" />

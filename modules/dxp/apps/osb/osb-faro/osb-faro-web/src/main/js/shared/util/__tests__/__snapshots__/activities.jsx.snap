@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`activities buildLegendItems should return an array formatted for use as items in ChangeLegend 1`] = `
+Array [
+  Object {
+    "change": 20,
+    "id": "activities",
+    "secondaryInfo": "30 Day Change",
+    "title": "Total Activity Count: 10",
+  },
+]
+`;
+
+exports[`activities formatGroupingTime should format grouping time 1`] = `"Jul 10, 2018"`;
+
+exports[`activities formatSessions should format sessions 1`] = `
+Array [
+  Object {
+    "header": true,
+    "title": "Jul 10, 2018",
+    "totalEvents": 3,
+  },
+  Object {
+    "attributes": Object {
+      "contentLanguageID": undefined,
+      "devicePixelRatioz": undefined,
+      "header": "Session Attributes",
+      "languageID": undefined,
+      "screenHeight": undefined,
+      "screenWidth": undefined,
+      "timezoneOffset": undefined,
+      "userAgent": undefined,
+    },
+    "browserName": "Chrome",
+    "device": undefined,
+    "endTime": undefined,
+    "nestedItems": Array [
+      Object {
+        "attributes": Object {
+          "canonicalUrl": "https://www.liferay0.com",
+          "header": "Event Attributes",
+          "referrer": "www.liferay.com",
+          "title": "Page Title",
+          "url": "https://www.liferay0.com",
+        },
+        "description": "Page Title",
+        "subtitle": "https://www.liferay0.com",
+        "time": "1970-01-01T00:01:40.000Z",
+        "title": "Asset 0",
+      },
+      Object {
+        "attributes": Object {
+          "canonicalUrl": "https://www.liferay1.com",
+          "header": "Event Attributes",
+          "referrer": "www.liferay.com",
+          "title": "Page Title",
+          "url": "https://www.liferay1.com",
+        },
+        "description": "Page Title",
+        "subtitle": "https://www.liferay1.com",
+        "time": "1970-01-01T00:01:40.001Z",
+        "title": "Asset 1",
+      },
+      Object {
+        "attributes": Object {
+          "canonicalUrl": "https://www.liferay2.com",
+          "header": "Event Attributes",
+          "referrer": "www.liferay.com",
+          "title": "Page Title",
+          "url": "https://www.liferay2.com",
+        },
+        "description": "Page Title",
+        "subtitle": "https://www.liferay2.com",
+        "time": "1970-01-01T00:01:40.002Z",
+        "title": "Asset 2",
+      },
+    ],
+    "time": 1531263666366,
+  },
+]
+`;
+
+exports[`activities getActivityLabel should get singular label 1`] = `
+Array [
+  "Event: ",
+  <b>
+    1
+  </b>,
+]
+`;
+
+exports[`activities getActivityLabel should plural label 1`] = `
+Array [
+  "Events: ",
+  <b>
+    2
+  </b>,
+]
+`;

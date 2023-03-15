@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndividualAttributesModal should render 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          testFildName0
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="modal-body mt-3"
+      >
+        <h5>
+          Data Sources
+        </h5>
+        <div
+          class="table-responsive table-root flex-grow-1"
+        >
+          <table
+            class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+          >
+            <thead>
+              <tr>
+                <th
+                  class="table-head-title"
+                >
+                  Source
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  Attribute
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+              >
+                <td>
+                  LIFERAY-DATASOURCE-FARO-EXAMPLE-0
+                </td>
+                <td>
+                  testMiddleName0
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

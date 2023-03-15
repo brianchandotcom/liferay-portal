@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DistributionCard DistributionChart renders 1`] = `
+<div>
+  <div
+    class="card-body align-center"
+  >
+    <div />
+  </div>
+  <div
+    class="card-footer"
+  >
+    <a
+      class="button-root btn btn-link btn-sm"
+      href="/test/:id"
+    >
+      Explore Breakdown
+      <span
+        class="inline-item inline-item-after"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-right"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+          />
+        </svg>
+      </span>
+    </a>
+  </div>
+</div>
+`;
+
+exports[`DistributionCard DistributionChart renders empty state via props with noResultsRenderer 1`] = `
+<div>
+  <div
+    class="card-body align-center"
+  >
+    <div>
+      <div>
+        empty state
+      </div>
+    </div>
+  </div>
+  <div
+    class="card-footer"
+  >
+    <a
+      class="button-root btn btn-link btn-sm"
+      href="/test/:id"
+    >
+      Explore Breakdown
+      <span
+        class="inline-item inline-item-after"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-right"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+          />
+        </svg>
+      </span>
+    </a>
+  </div>
+</div>
+`;

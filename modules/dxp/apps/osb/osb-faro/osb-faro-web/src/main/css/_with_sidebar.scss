@@ -1,0 +1,12 @@
+.with-sidebar-root {
+	min-height: 100vh;
+	padding-left: $sidebarOpenWidth;
+
+	&.has-sidebar {
+		transition: padding 0.2s ease;
+	}
+
+	&.sidebar-collapsed {
+		padding-left: $sidebarClosedWidth;
+	}
+}

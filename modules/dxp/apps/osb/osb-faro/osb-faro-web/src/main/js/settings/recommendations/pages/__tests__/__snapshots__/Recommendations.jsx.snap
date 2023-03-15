@@ -1,0 +1,1004 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Recommendations should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Recommendations
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          Create and train machine learning models to use in your recommendations.
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="card card-root recommendations-list-root page-display"
+      >
+        <div
+          class="toolbar-root"
+        >
+          <nav
+            class="navbar navbar-root management-bar management-bar-light navbar-expand"
+          >
+            <div
+              class="container-fluid"
+            >
+              <ul
+                class="nav-root front-nav navbar-nav"
+                role="tablist"
+              >
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        data-testid="select-all-checkbox"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </li>
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <a
+                    class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                    href="/?field=name&page=1&sortOrder=ASC"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-order-arrow-descending"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-descending"
+                      />
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+              <div
+                class="navbar-form navbar-form-autofit"
+              >
+                <div
+                  class="input-group search"
+                >
+                  <div
+                    class="input-group-item"
+                  >
+                    <input
+                      class="input-root form-control input-group-inset input-group-inset-after"
+                      placeholder="Search"
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="input-group-inset-item input-group-inset-item-after"
+                    >
+                      <button
+                        class="button-root btn btn-unstyled"
+                        type="button"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-search"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul
+                class="nav-root navbar-nav"
+                role="tablist"
+              >
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <a
+                    class="button-root btn btn-primary nav-btn"
+                    href="/workspace/23/settings/recommendations/create-item-similarity-model"
+                  >
+                    New Model
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <div
+          class="table-responsive table-root flex-grow-1"
+        >
+          <table
+            class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+          >
+            <thead>
+              <tr>
+                <th />
+                <th
+                  class="table-head-title table-cell-expand"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=name&page=1&sortOrder=ASC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Name
+                    </span>
+                    <span
+                      class="inline-item inline-item-after"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-order-arrow-down"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-down"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=type&page=1&sortOrder=ASC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Training Model
+                    </span>
+                  </a>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=runDataPeriod&page=1&sortOrder=ASC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Training Period
+                    </span>
+                  </a>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=runFrequency&page=1&sortOrder=ASC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Training Frequency
+                    </span>
+                  </a>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=runDate&page=1&sortOrder=ASC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Last Trained
+                    </span>
+                  </a>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=status&page=1&sortOrder=ASC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Status
+                    </span>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="clickable"
+              >
+                <td>
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </td>
+                <td
+                  class="name-cell-root table-cell-expand"
+                >
+                  <div
+                    class="content-container"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      <div
+                        class="table-title text-truncate"
+                      >
+                        <a
+                          class="text-truncate"
+                          href="/workspace/23/settings/recommendations/0"
+                        >
+                          Recommendation Job Name 0
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  Item Similarity
+                </td>
+                <td>
+                  Last 30 days
+                </td>
+                <td>
+                  Every 30 days
+                </td>
+                <td>
+                  Jul 8th, 2018
+                </td>
+                <td>
+                  <div
+                    class="label label-root status label-success label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Ready
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="clickable"
+              >
+                <td>
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </td>
+                <td
+                  class="name-cell-root table-cell-expand"
+                >
+                  <div
+                    class="content-container"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      <div
+                        class="table-title text-truncate"
+                      >
+                        <a
+                          class="text-truncate"
+                          href="/workspace/23/settings/recommendations/1"
+                        >
+                          Recommendation Job Name 1
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  Item Similarity
+                </td>
+                <td>
+                  Last 30 days
+                </td>
+                <td>
+                  Every 30 days
+                </td>
+                <td>
+                  Jul 8th, 2018
+                </td>
+                <td>
+                  <div
+                    class="label label-root status label-success label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Ready
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="clickable"
+              >
+                <td>
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </td>
+                <td
+                  class="name-cell-root table-cell-expand"
+                >
+                  <div
+                    class="content-container"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      <div
+                        class="table-title text-truncate"
+                      >
+                        <a
+                          class="text-truncate"
+                          href="/workspace/23/settings/recommendations/2"
+                        >
+                          Recommendation Job Name 2
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  Item Similarity
+                </td>
+                <td>
+                  Last 30 days
+                </td>
+                <td>
+                  Every 30 days
+                </td>
+                <td>
+                  Jul 8th, 2018
+                </td>
+                <td>
+                  <div
+                    class="label label-root status label-success label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Ready
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="clickable"
+              >
+                <td>
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </td>
+                <td
+                  class="name-cell-root table-cell-expand"
+                >
+                  <div
+                    class="content-container"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      <div
+                        class="table-title text-truncate"
+                      >
+                        <a
+                          class="text-truncate"
+                          href="/workspace/23/settings/recommendations/3"
+                        >
+                          Recommendation Job Name 3
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  Item Similarity
+                </td>
+                <td>
+                  Last 30 days
+                </td>
+                <td>
+                  Every 30 days
+                </td>
+                <td>
+                  Jul 8th, 2018
+                </td>
+                <td>
+                  <div
+                    class="label label-root status label-success label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Ready
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="clickable"
+              >
+                <td>
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </td>
+                <td
+                  class="name-cell-root table-cell-expand"
+                >
+                  <div
+                    class="content-container"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      <div
+                        class="table-title text-truncate"
+                      >
+                        <a
+                          class="text-truncate"
+                          href="/workspace/23/settings/recommendations/4"
+                        >
+                          Recommendation Job Name 4
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  Item Similarity
+                </td>
+                <td>
+                  Last 30 days
+                </td>
+                <td>
+                  Every 30 days
+                </td>
+                <td>
+                  Jul 8th, 2018
+                </td>
+                <td>
+                  <div
+                    class="label label-root status label-success label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Ready
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="clickable"
+              >
+                <td>
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </td>
+                <td
+                  class="name-cell-root table-cell-expand"
+                >
+                  <div
+                    class="content-container"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      <div
+                        class="table-title text-truncate"
+                      >
+                        <a
+                          class="text-truncate"
+                          href="/workspace/23/settings/recommendations/5"
+                        >
+                          Recommendation Job Name 5
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  Item Similarity
+                </td>
+                <td>
+                  Last 30 days
+                </td>
+                <td>
+                  Every 30 days
+                </td>
+                <td>
+                  Jul 8th, 2018
+                </td>
+                <td>
+                  <div
+                    class="label label-root status label-success label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Ready
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="clickable"
+              >
+                <td>
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </td>
+                <td
+                  class="name-cell-root table-cell-expand"
+                >
+                  <div
+                    class="content-container"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      <div
+                        class="table-title text-truncate"
+                      >
+                        <a
+                          class="text-truncate"
+                          href="/workspace/23/settings/recommendations/6"
+                        >
+                          Recommendation Job Name 6
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  Item Similarity
+                </td>
+                <td>
+                  Last 30 days
+                </td>
+                <td>
+                  Every 30 days
+                </td>
+                <td>
+                  Jul 8th, 2018
+                </td>
+                <td>
+                  <div
+                    class="label label-root status label-success label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Ready
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="clickable"
+              >
+                <td>
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </td>
+                <td
+                  class="name-cell-root table-cell-expand"
+                >
+                  <div
+                    class="content-container"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      <div
+                        class="table-title text-truncate"
+                      >
+                        <a
+                          class="text-truncate"
+                          href="/workspace/23/settings/recommendations/7"
+                        >
+                          Recommendation Job Name 7
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  Item Similarity
+                </td>
+                <td>
+                  Last 30 days
+                </td>
+                <td>
+                  Every 30 days
+                </td>
+                <td>
+                  Jul 8th, 2018
+                </td>
+                <td>
+                  <div
+                    class="label label-root status label-success label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Ready
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="clickable"
+              >
+                <td>
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </td>
+                <td
+                  class="name-cell-root table-cell-expand"
+                >
+                  <div
+                    class="content-container"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      <div
+                        class="table-title text-truncate"
+                      >
+                        <a
+                          class="text-truncate"
+                          href="/workspace/23/settings/recommendations/8"
+                        >
+                          Recommendation Job Name 8
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  Item Similarity
+                </td>
+                <td>
+                  Last 30 days
+                </td>
+                <td>
+                  Every 30 days
+                </td>
+                <td>
+                  Jul 8th, 2018
+                </td>
+                <td>
+                  <div
+                    class="label label-root status label-success label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Ready
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="clickable"
+              >
+                <td>
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </td>
+                <td
+                  class="name-cell-root table-cell-expand"
+                >
+                  <div
+                    class="content-container"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      <div
+                        class="table-title text-truncate"
+                      >
+                        <a
+                          class="text-truncate"
+                          href="/workspace/23/settings/recommendations/9"
+                        >
+                          Recommendation Job Name 9
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  Item Similarity
+                </td>
+                <td>
+                  Last 30 days
+                </td>
+                <td>
+                  Every 30 days
+                </td>
+                <td>
+                  Jul 8th, 2018
+                </td>
+                <td>
+                  <div
+                    class="label label-root status label-success label-lg label-uppercase"
+                  >
+                    <span
+                      class="label-item"
+                    >
+                      Ready
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <nav
+          class="navbar navbar-root pagination-bar-root"
+        >
+          <div
+            class="container-fluid"
+          >
+            <div
+              aria-haspopup="true"
+              class="dropdown dropdown-root pagination-items-per-page"
+            >
+              <button
+                class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  10 Items
+                </span>
+                
+                <span
+                  class="caret-root"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="pagination-results"
+            >
+              Showing 1 to 10 of 10 entries.
+            </div>
+            <ul
+              class="pagination pagination-root"
+            >
+              <li
+                class="page-item disabled"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link link-disabled"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-angle-left"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li
+                class="page-item active"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link"
+                  href="/?page=1"
+                >
+                  1
+                </a>
+              </li>
+              <li
+                class="page-item disabled"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link link-disabled"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-angle-right"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+`;

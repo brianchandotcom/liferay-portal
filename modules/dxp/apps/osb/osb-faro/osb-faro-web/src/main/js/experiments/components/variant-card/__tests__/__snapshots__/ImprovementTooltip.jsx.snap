@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Unique Visitors Tooltip should render 1`] = `
+<div>
+  <span>
+    <div
+      class="analytics-trend"
+      style="color: rgb(40, 125, 60);"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-caret-top"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-top"
+        />
+      </svg>
+      <span
+        class="analytics-trend-percent mb-0"
+      >
+        10%
+      </span>
+    </div>
+  </span>
+</div>
+`;

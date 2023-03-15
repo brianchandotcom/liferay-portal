@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AttributeFilterSection renders 1`] = `
+<div>
+  <div
+    class="attribute-filter-section-root d-flex align-items-center"
+  >
+    <div
+      class="section-header"
+    >
+      Filter
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AttributeFilterSection renders w/ filter 1`] = `
+<div>
+  <div
+    class="attribute-filter-section-root d-flex align-items-center"
+  >
+    <div
+      class="section-header"
+    >
+      Filter
+    </div>
+    <div
+      class="attribute-container d-flex align-items-center justify-content-between"
+    >
+      <div
+        class="attribute-list d-flex align-items-center"
+      >
+        <div
+          class="dropdown"
+        >
+          <div
+            class="attribute-chip-container"
+          >
+            <div
+              class="chip-root d-flex align-items-center justify-content-between attribute-chip-root"
+            >
+              <button
+                class="button-root btn btn-unstyled edit-attribute-button d-flex"
+                type="button"
+              >
+                <div
+                  class="sticker"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-text"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <div
+                    class="attribute-label"
+                  >
+                     | Job Title
+                  </div>
+                  <div
+                    class="attribute-value"
+                  >
+                    is "undefined"
+                  </div>
+                </div>
+              </button>
+              <button
+                class="button-root btn btn-unstyled remove-button"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-times-circle"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="dropdown"
+      >
+        <button
+          class="button-root btn btn-light dropdown-toggle add-attribute btn-outline-borderless btn-sm"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-plus"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

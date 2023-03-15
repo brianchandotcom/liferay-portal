@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shared HOCs Mappers - Metrics should map metrics information 1`] = `
+Object {
+  "error": null,
+  "items": Array [
+    Object {
+      "asymmetricComparison": false,
+      "content": Object {
+        "details": Object {
+          "color": "#DA1414",
+          "icon": "caret-top-l",
+          "label": "100%",
+        },
+        "name": "views",
+        "title": "Views",
+        "type": "number",
+        "value": "1.08K",
+      },
+      "data": Array [
+        Object {
+          "color": "#4B9BFF",
+          "data": Array [
+            4,
+            315,
+            60,
+            46,
+            183,
+            241,
+            229,
+          ],
+          "id": "data_1",
+          "name": "Avg. Views",
+          "tooltipTitle": "Avg. Views",
+        },
+        Object {
+          "color": "#7EB7FF",
+          "data": Array [
+            108,
+            134,
+            71,
+            79,
+            250,
+            543,
+            176,
+          ],
+          "id": "data_previous",
+          "name": "Previous Period",
+        },
+        Object {
+          "data": Array [
+            1526515200000,
+            1526601600000,
+            1526688000000,
+            1526774400000,
+            1526860800000,
+            1526947200000,
+            1527033600000,
+          ],
+          "id": "x",
+        },
+      ],
+      "dateKeysIMap": Map {
+        1526515200000 => Array [
+          1526515200000,
+        ],
+        1526601600000 => Array [
+          1526601600000,
+        ],
+        1526688000000 => Array [
+          1526688000000,
+        ],
+        1526774400000 => Array [
+          1526774400000,
+        ],
+        1526860800000 => Array [
+          1526860800000,
+        ],
+        1526947200000 => Array [
+          1526947200000,
+        ],
+        1527033600000 => Array [
+          1527033600000,
+        ],
+      },
+      "format": [Function],
+      "intervals": Array [
+        1526515200000,
+        1526601600000,
+        1526688000000,
+        1526774400000,
+        1526860800000,
+        1526947200000,
+        1527033600000,
+      ],
+      "prevDateKeysIMap": Map {
+        1526515200000 => Array [
+          1525910400000,
+        ],
+        1526601600000 => Array [
+          1525996800000,
+        ],
+        1526688000000 => Array [
+          1526083200000,
+        ],
+        1526774400000 => Array [
+          1526169600000,
+        ],
+        1526860800000 => Array [
+          1526256000000,
+        ],
+        1526947200000 => Array [
+          1526342400000,
+        ],
+        1527033600000 => Array [
+          1526428800000,
+        ],
+      },
+    },
+  ],
+  "loading": false,
+  "refetch": undefined,
+}
+`;

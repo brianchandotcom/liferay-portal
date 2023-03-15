@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IssueSubmitted should render 1`] = `
+<div>
+  <div
+    class="modal-header"
+  >
+    <h4
+      class="modal-title"
+    >
+      Issue Submitted
+    </h4>
+    <button
+      class="button-root btn btn-secondary close"
+      type="button"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-times"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="modal-body d-flex flex-column align-items-center"
+  >
+    <svg
+      class="icon-root lexicon-icon lexicon-icon-ac-no-sites my-5 icon-size-xxxl"
+      viewBox=""
+    >
+      <use
+        xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-no-sites"
+      />
+    </svg>
+    <h3>
+      Message Received
+    </h3>
+    <p
+      class="description"
+    >
+      Thanks for your contribution. We will look in to this as soon as possible.
+    </p>
+  </div>
+</div>
+`;

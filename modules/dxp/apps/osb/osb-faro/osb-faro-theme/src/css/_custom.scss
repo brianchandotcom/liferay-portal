@@ -1,0 +1,234 @@
+.portlet-login {
+	$alert: #F48989;
+	$blue: #0B5FFF;
+	$error: #DA1414;
+	$errorLight: #FEEFEF;
+	$main: #272833;
+	$secondary: #F7F8F9;
+	$white: #FFF;
+
+	background: $secondary;
+	bottom: 0;
+	font-family: 'Source Sans Pro';
+	font-size: 0.875rem;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+
+	.portlet-content-container {
+		margin: 0 auto;
+		max-width: 960px;
+
+		.portlet-body {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+			min-height: 90vh;
+
+			.login-container {
+				background: $white;
+				border-radius: 2px;
+				box-sizing: border-box;
+				padding: 2rem;
+				width: 350px;
+
+				.inline-alert-container {
+					margin: 1rem 0;
+
+					.lfr-alert-wrapper {
+						margin-bottom: 12px;
+
+						.alert-danger {
+							background-color: $errorLight;
+							border: 1px solid $alert;
+							border-radius: 0.25rem;
+							box-sizing: border-box;
+							color: $error;
+							font-weight: 400;
+							padding: 1rem;
+
+							.close {
+								display: none;
+							}
+
+							.lead {
+								vertical-align: middle;
+
+								svg {
+									fill: $error;
+									height: 12px;
+									margin-right: 4px;
+									width: 12px;
+								}
+							}
+						}
+					}
+				}
+
+				.input-container {
+					border: none;
+					padding: 0;
+
+					.button-holder {
+						margin: 0;
+
+						.btn-primary {
+							background-color: $blue;
+							border: 1px solid $blue;
+							border-radius: 0.25rem;
+							color: $white;
+							cursor: pointer;
+							margin: 1.5rem 0 0.5rem;
+							padding: 0.4375rem 0.9375rem;
+							width: 100%;
+
+							&:hover {
+								background-color: #0053F0;
+								border-color: transparent;
+							}
+
+							.lfr-btn-label {
+								font-size: 0.875rem;
+							}
+						}
+					}
+
+					.fieldset {
+						border: none;
+						margin: 0;
+						padding: 0;
+
+						.form-group {
+							display: flex;
+							flex-direction: column;
+							margin-bottom: 1em;
+							max-width: 500px;
+							padding: 0;
+
+							&.has-error {
+								> .error-field {
+									background-color: $errorLight !important;
+									border-color: $alert;
+									color: $main;
+								}
+
+								.form-validator-stack .required {
+									color: $error;
+									margin-top: 0.25rem;
+									word-wrap: break-word;
+								}
+							}
+
+							.control-label {
+								color: $main;
+								font-weight: 600;
+								margin-bottom: 0.25rem;
+								word-wrap: break-word;
+
+								&:after {
+									color: $error;
+									content: '*';
+									display: inline-block;
+									height: 12px;
+									width: 12px;
+								}
+							}
+
+							.form-control {
+								background-color: #F1F2F5;
+								border: 0.063rem solid #E7E7ED;
+								border-radius: 0.25rem;
+								box-shadow: none;
+								color: $main;
+								font-family: inherit;
+								font-size: 1rem;
+								font-weight: 300;
+								line-height: 1.5;
+								margin: 0;
+								min-width: 0;
+								padding: 0.5rem 1rem;
+								transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+								&:focus {
+									background-color: #F0F5FF;
+									border-color: #80ACFF;
+									color: $main;
+									outline: 0;
+								}
+							}
+						}
+
+						.input-checkbox-wrapper {
+							align-items: start;
+							margin-top: 4px;
+
+							> label {
+								cursor: pointer;
+								display: flex;
+
+								> input {
+									margin-right: 8px;
+								}
+							}
+						}
+					}
+				}
+
+				.navigation .list-unstyled {
+					display: flex;
+					flex-direction: column;
+					list-style: none;
+					margin: 0;
+					padding: 0;
+
+					> li {
+						display: flex;
+						justify-content: center;
+						margin: 8px 0 0;
+
+						&:first-child a {
+							background-color: $white;
+							border: 1px solid #CDCED9;
+							border-radius: 0.25rem;
+							color: #7D8B94;
+							padding: 0.4375rem 0.9375rem;
+							width: 100%;
+
+							&:hover {
+								background-color: $secondary;
+							}
+						}
+
+						&:last-child a {
+							color: $blue;
+							margin-top: 16px;
+							text-align: center;
+						}
+
+						> a {
+							font-weight: 300;
+							text-align: center;
+							text-decoration: none;
+						}
+					}
+				}
+
+				.secondary-info {
+					font-weight: 300;
+					margin-bottom: 4px;
+
+					> span {
+						font-weight: 400;
+					}
+				}
+
+				.sign-in-heading {
+					font-size: 1.5em;
+					font-weight: 600;
+					padding: 0 0 1.5rem;
+				}
+			}
+		}
+	}
+}

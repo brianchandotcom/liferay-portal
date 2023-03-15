@@ -1,0 +1,23 @@
+.trendline-root {
+	.bb-tooltip-container {
+		box-shadow: 0 1px 10px -3px $mainLighten74;
+		font-size: 12px;
+		padding: 4px;
+		transition: left 0.5s ease-out, top 0.5s ease-out;
+	}
+
+	.position-line {
+		> line {
+			stroke: $mainLighten74;
+			stroke-width: 1px;
+		}
+	}
+
+	.guide-line {
+		> line {
+			stroke: $mainLighten74;
+			stroke-dasharray: 4, 4;
+			stroke-width: 1px;
+		}
+	}
+}

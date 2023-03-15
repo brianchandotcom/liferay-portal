@@ -1,0 +1,12 @@
+def faroEnvironmentName = System.getenv().get("FARO_ENVIRONMENT_NAME") ?: project.property("com.liferay.osb.faro.environment.name")
+
+if (faroEnvironmentName.contains("local")) {
+	apply from: project.file("build-local.gradle");
+}
+else {
+	apply from: project.file("build-" + faroEnvironmentName + ".gradle");
+}
+
+uploadArchives {
+	enabled = false
+}

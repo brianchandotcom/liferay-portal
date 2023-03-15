@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CSVPreviewModal should render 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog csv-preview-modal-root modal-lg"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Data Preview ""
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="modal-body"
+      >
+        <div
+          class="table-responsive"
+        >
+          <table
+            class="table table-autofit show-quick-actions-on-hover table-hover table-list"
+          >
+            <thead>
+              <tr
+                class=""
+              >
+                <th
+                  class="table-cell-expand"
+                >
+                  email
+                </th>
+                <th
+                  class="table-cell-expand"
+                >
+                  familyName
+                </th>
+                <th
+                  class="table-cell-expand"
+                >
+                  givenName
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+              >
+                <td
+                  class=""
+                >
+                  test@liferay.com
+                </td>
+                <td
+                  class=""
+                >
+                  Bloggs
+                </td>
+                <td
+                  class=""
+                >
+                  Joe
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

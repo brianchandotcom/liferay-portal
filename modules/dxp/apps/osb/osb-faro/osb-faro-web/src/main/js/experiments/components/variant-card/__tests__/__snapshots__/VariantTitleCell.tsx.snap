@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VariantTitle should render 1`] = `
+<div>
+  <td
+    class="table-cell-expanded"
+  >
+    <h5
+      class="variant-title mb-1 text-truncate"
+    >
+      Variant Title
+    </h5>
+  </td>
+</div>
+`;

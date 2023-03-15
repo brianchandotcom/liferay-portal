@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`validateGreaterThanZero should validate value as invalid 1`] = `"Must be greater than 0."`;
+
+exports[`validateIsInteger should validate value as invalid 1`] = `"Must be an integer."`;
+
+exports[`validateMaxLength should validate max length as not valid 1`] = `"Exceeds maximum length."`;
+
+exports[`validateMinDuration should validate min duration as not valid 1`] = `"Must be greater than 00:00:00."`;
+
+exports[`validateMinLength should validate min length as not valid 1`] = `"Does not meet minimum length required."`;
+
+exports[`validateMinValue should validate min value as not valid 1`] = `"Must be greater than 29."`;
+
+exports[`validateProtocol should validate protocol as not valid 1`] = `"Your URL is missing the protocol. Please include \\"http://\\" or \\"https://\\"."`;
+
+exports[`validateRequired should validate required as not valid 1`] = `"Required"`;
+
+exports[`validateRequired should validate required as not valid if the value is a string with only spaces 1`] = `"Required"`;
+
+exports[`validateRequired should validate required as valid 1`] = `""`;
+
+exports[`validateRequired should validate required as valid when validating array with value 1`] = `""`;

@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimePeriodInput should render 1`] = `
+<div>
+  <select
+    class="form-control operator-input"
+    data-testid="clay-select"
+  >
+    <option
+      value="last24Hours"
+    >
+      Last 24 hours
+    </option>
+    <option
+      value="yesterday"
+    >
+      Yesterday
+    </option>
+    <option
+      value="last7Days"
+    >
+      Last 7 days
+    </option>
+    <option
+      value="last28Days"
+    >
+      Last 28 days
+    </option>
+    <option
+      value="last30Days"
+    >
+      Last 30 days
+    </option>
+    <option
+      value="last90Days"
+    >
+      Last 90 days
+    </option>
+  </select>
+</div>
+`;

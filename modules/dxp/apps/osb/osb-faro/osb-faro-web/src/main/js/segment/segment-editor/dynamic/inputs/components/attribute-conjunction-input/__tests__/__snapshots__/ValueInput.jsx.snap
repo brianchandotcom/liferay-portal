@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ValueInput should render 1`] = `
+<div>
+  <select
+    class="form-control boolean-input"
+    data-testid="attribute-value-boolean-input"
+  >
+    <option
+      value="true"
+    >
+      True
+    </option>
+    <option
+      value="false"
+    >
+      False
+    </option>
+  </select>
+</div>
+`;

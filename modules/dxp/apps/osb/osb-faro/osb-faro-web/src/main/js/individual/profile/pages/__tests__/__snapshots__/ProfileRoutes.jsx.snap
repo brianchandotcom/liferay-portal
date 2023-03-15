@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndividualProfileRoutes should render 1`] = `
+<div>
+  <div
+    class="index-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <header
+      class="header-root"
+    >
+      <div
+        class="header-container"
+      >
+        <div
+          class="row-root align-items-center d-flex justify-content-between"
+        >
+          <ol
+            class="breadcrumb breadcrumbs-root"
+          >
+            <li
+              class="breadcrumb-item"
+            >
+              <a
+                class="breadcrumb-link breadcrumb-text-truncate"
+                href="/workspace/23/123/sites"
+              >
+                Channel 1
+              </a>
+            </li>
+            <li
+              class="breadcrumb-item"
+            >
+              <a
+                class="breadcrumb-link breadcrumb-text-truncate"
+                href="/workspace/23/123/contacts/individuals/known-individuals"
+              >
+                Known Individuals
+              </a>
+            </li>
+            <li
+              class="breadcrumb-item active"
+            >
+              <span
+                class="breadcrumb-text-truncate"
+              >
+                Foo Bar
+              </span>
+            </li>
+          </ol>
+        </div>
+        <div
+          class="header-section title-section"
+        >
+          <span
+            class="align-items-center d-flex"
+          >
+            <h1
+              class="title text-truncate"
+            >
+              <span
+                class="text-truncate"
+                data-tooltip="false"
+                title=""
+              >
+                Foo Bar
+              </span>
+            </h1>
+          </span>
+        </div>
+        <ul
+          class="nav-root page-subnav nav nav-underline"
+          role="tablist"
+        >
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/23/123/contacts/individuals/known-individuals/test"
+              role="tab"
+            >
+              <span
+                class="title"
+              >
+                Overview
+              </span>
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/23/123/contacts/individuals/known-individuals/test/interests"
+              role="tab"
+            >
+              <span
+                class="title"
+              >
+                Interests
+              </span>
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/23/123/contacts/individuals/known-individuals/test/segments"
+              role="tab"
+            >
+              <span
+                class="title"
+              >
+                Segments
+              </span>
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/23/123/contacts/individuals/known-individuals/test/details"
+              role="tab"
+            >
+              <span
+                class="title"
+              >
+                Details
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <div
+      class="body-root page-container"
+    >
+      <span
+        class="children-wrapper"
+      />
+    </div>
+  </div>
+</div>
+`;

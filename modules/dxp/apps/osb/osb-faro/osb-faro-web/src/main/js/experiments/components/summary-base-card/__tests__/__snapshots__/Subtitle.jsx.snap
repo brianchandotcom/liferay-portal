@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummaryBaseCard Subtitle should render 1`] = `
+<div>
+  <div
+    class="font-size-sm-1x mb-2 text-uppercase"
+  >
+    My Subtitle
+  </div>
+</div>
+`;

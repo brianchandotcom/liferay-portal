@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndividualDisplay renders 1`] = `
+<div>
+  Individual
+  <b>
+    name
+  </b>
+  <span>
+    is
+  </span>
+  <b>
+    "Test"
+  </b>
+</div>
+`;

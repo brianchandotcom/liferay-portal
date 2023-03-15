@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseCard should render component 1`] = `
+<div>
+  <div
+    class="card card-root my-component-classname"
+  >
+    <div
+      class="card-header align-items-center d-flex justify-content-between"
+    >
+      <h5
+        class="card-title"
+      >
+        My title
+      </h5>
+      <div
+        class="d-flex"
+      >
+        <div
+          class="spinner-root spinner-inline"
+        >
+          <span
+            class="loading-animation loading-animation-dotted"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      My body component
+    </div>
+  </div>
+</div>
+`;

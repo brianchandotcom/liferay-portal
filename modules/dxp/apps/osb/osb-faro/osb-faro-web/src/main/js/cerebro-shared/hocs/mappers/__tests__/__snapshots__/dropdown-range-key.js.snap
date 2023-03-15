@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dropdown-range-key should render map result to props 1`] = `
+Object {
+  "error": null,
+  "items": Array [
+    Object {
+      "description": "19 Sep, 08 PM - 20 Sep, 07 PM",
+      "label": "Last 24 hours",
+      "value": "0",
+    },
+    Object {
+      "description": "19 Sep, 12 AM - 19 Sep, 11 PM",
+      "label": "Yesterday",
+      "value": "1",
+    },
+    Object {
+      "description": "13 Sep - 19 Sep",
+      "label": "Last 7 days",
+      "value": "7",
+    },
+    Object {
+      "description": "23 Aug - 19 Sep",
+      "label": "Last 28 days",
+      "value": "28",
+    },
+    Object {
+      "description": "21 Aug - 19 Sep",
+      "label": "Last 30 days",
+      "value": "30",
+    },
+    Object {
+      "description": "24 Jun - 16 Sep",
+      "label": "Last 90 days",
+      "value": "90",
+    },
+  ],
+  "loading": false,
+  "refetch": undefined,
+}
+`;

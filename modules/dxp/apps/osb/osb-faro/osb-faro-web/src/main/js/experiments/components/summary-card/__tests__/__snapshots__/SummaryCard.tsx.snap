@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummaryCard should render a running SummaryCard 1`] = `
+<div>
+  <div
+    class="card card-root analytics-summary-card analytics-summary-card-status analytics-summary-card-status-running"
+  >
+    <div
+      class="card-header d-flex justify-content-between"
+    >
+      <div>
+        <h3
+          class="font-weight-bold mb-2"
+        >
+          Test Is Running
+        </h3>
+        <span
+          class="font-size-sm font-weight-normal"
+        >
+          Started: Sep 30, 2020
+        </span>
+      </div>
+      <div
+        class="d-flex align-items-center"
+      >
+        <div
+          class="btn-group"
+          role="group"
+        >
+          <button
+            class="btn btn-sm btn-secondary"
+            type="button"
+          >
+            Terminate Test
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card-body"
+    >
+      <div
+        class="w-100 mt-4"
+      >
+        <h3
+          class="font-weight-bold mb-4"
+        >
+          Summary
+        </h3>
+        
+        <div
+          class="analytics-summary-card-sections"
+        >
+          <div
+            class="analytics-summary-section"
+          >
+            <div
+              class="analytics-summary-section-title"
+            >
+              Test Completion
+            </div>
+            <h2
+              class="analytics-summary-section-heading"
+            >
+              99%
+            </h2>
+            <div
+              class="analytics-summary-section-progress"
+            >
+              <div
+                class="analytics-summary-section-progress-bar"
+                style="width: 99%;"
+              />
+            </div>
+          </div>
+          <div
+            class="analytics-summary-section"
+          >
+            <div
+              class="analytics-summary-section-title"
+            >
+              Days Running
+            </div>
+            <h2
+              class="analytics-summary-section-heading"
+            >
+              16
+            </h2>
+            <div
+              class="analytics-summary-section-description"
+            >
+              About 1 Day Left
+            </div>
+          </div>
+          <div
+            class="analytics-summary-section"
+          >
+            <div
+              class="analytics-summary-section-title"
+            >
+              Total Test Sessions
+            </div>
+            <h2
+              class="analytics-summary-section-heading"
+            >
+              800
+            </h2>
+          </div>
+          <div
+            class="analytics-summary-section"
+          >
+            <div
+              class="analytics-summary-section-title"
+            >
+              Test Metric
+            </div>
+            <div
+              class="analytics-summary-section-metric-type"
+            >
+              <span
+                class="analytics-summary-section-metric-type-icon"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-web-content"
+                  role="presentation"
+                >
+                  <use
+                    xlink:href="#web-content"
+                  />
+                </svg>
+              </span>
+              Click-Through Rate
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

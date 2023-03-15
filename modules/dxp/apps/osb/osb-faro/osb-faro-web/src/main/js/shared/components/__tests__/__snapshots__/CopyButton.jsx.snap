@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CopyButton should render 1`] = `
+<div>
+  <button
+    aria-label="Click to Copy"
+    class="button-root btn btn-secondary"
+    data-clipboard-text="foo"
+    data-tooltip-response="Copied"
+    title="Click to Copy"
+    type="button"
+  >
+    <svg
+      class="icon-root lexicon-icon lexicon-icon-paste"
+      viewBox=""
+    >
+      <use
+        xlink:href="/o/osb-faro-web/dist/sprite.svg#paste"
+      />
+    </svg>
+  </button>
+</div>
+`;

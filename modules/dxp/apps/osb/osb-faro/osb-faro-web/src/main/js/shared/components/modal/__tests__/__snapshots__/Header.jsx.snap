@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal Header renders 1`] = `
+<div>
+  <div
+    class="modal-header"
+  >
+    <h4
+      class="modal-title"
+    >
+      Foo
+    </h4>
+  </div>
+</div>
+`;

@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"allowJs": false,
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"esModuleInterop": true,
+		"noEmit": false
+	},
+	"extends": "./tsconfig.json"
+}

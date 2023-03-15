@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReadyToGo renders 1`] = `
+<div>
+  <div
+    class="onboarding-base-screen-root d-flex flex-column flex-grow-1 justify-content-between ready-to-go"
+  >
+    <div
+      class="header"
+    >
+      <div
+        class="d-flex justify-content-end"
+      >
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div
+      class="modal-body d-flex flex-column align-items-center"
+    >
+      <div
+        class="ac-ready-to-use"
+      />
+      <span
+        class="title d-flex justify-content-center"
+      >
+        You are Ready to Go
+      </span>
+      <div
+        class="d-flex description flex-column text-center"
+      >
+        <h4
+          class="pb-3"
+        >
+          Your workspace is all set up.
+        </h4>
+        <h4
+          class="pb-3"
+        >
+          Tracking will start immediately, however it may take some time for data to appear in your workspace.
+        </h4>
+        <h4>
+          Make sure to set your time period to last 24 hours to see if your data is coming in correctly.
+        </h4>
+      </div>
+    </div>
+    <div
+      class="modal-footer d-flex justify-content-end"
+    >
+      <button
+        class="button-root btn btn-primary"
+        type="button"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>
+`;

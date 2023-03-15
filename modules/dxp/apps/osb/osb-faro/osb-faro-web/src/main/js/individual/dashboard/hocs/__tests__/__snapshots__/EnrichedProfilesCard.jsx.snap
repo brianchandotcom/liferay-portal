@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EnrichedProfilesCard should render 1`] = `
+<div>
+  <div
+    class="card card-root enriched-profiles-card-root text-secondary"
+  >
+    <div
+      class="card-header d-flex justify-content-between"
+    >
+      <h5
+        class="card-title"
+      >
+        Enriched Profiles
+      </h5>
+      <span
+        class="info-popover-root"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-question-circle-full"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#question-circle-full"
+          />
+        </svg>
+      </span>
+    </div>
+    <div
+      class="card-body d-flex flex-column"
+    >
+      <div
+        class="total d-flex flex-grow-1 text-center justify-content-center align-items-center"
+      >
+        1 Profiles
+      </div>
+      <div
+        class="description text-center"
+      >
+        Enriched with attributes or behaviors in the last 30 days.
+      </div>
+    </div>
+  </div>
+</div>
+`;

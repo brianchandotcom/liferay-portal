@@ -1,0 +1,311 @@
+.onboarding-modal-root {
+	.close {
+		color: $mainLighten28;
+	}
+
+	.description {
+		color: $mainLighten28;
+		margin-top: 32px;
+	}
+
+	.connect-dxp {
+		.analytics-to-dxp-container {
+			align-items: center;
+			display: flex;
+			justify-content: space-evenly;
+			margin-bottom: 44px;
+			width: 100%;
+
+			.arrows {
+				color: $infoLighten28;
+
+				&.connected {
+					color: $successLighten25;
+				}
+			}
+
+			.icon-size-xl {
+				font-size: 6rem;
+			}
+		}
+
+		.fix-pack-container {
+			display: flex;
+			margin-top: 32px;
+			padding: 0 31px 0;
+			width: 100%;
+
+			.fix-pack-button {
+				align-self: flex-end;
+			}
+
+			.fix-pack-select {
+				margin-right: 24px;
+				width: 332px;
+
+				label {
+					font-size: 20px;
+				}
+			}
+		}
+
+		.input-group {
+			max-width: 490px;
+
+			.copy-button {
+				border-bottom-right-radius: 4px;
+				border-top-right-radius: 4px;
+			}
+
+			.input-root {
+				font-weight: $fontWeightSemiBold;
+
+				&.token-input {
+					border-bottom-right-radius: 0;
+					border-top-right-radius: 0;
+				}
+			}
+
+			.input-root,
+			.button-root {
+				color: $mainLighten28;
+			}
+		}
+
+		.input-success {
+			background-color: $successLighten63;
+			border: unset;
+			border-radius: 4px;
+			color: $success;
+		}
+
+		.modal-body {
+			.secondary-description {
+				color: $mainLighten28;
+			}
+
+			.token-info {
+				font-size: 16px;
+				font-weight: $fontWeightSemiBold;
+			}
+
+			.title {
+				margin-bottom: 32px;
+				text-align: center;
+			}
+		}
+
+		.modal-footer > div {
+			.btn {
+				&:not(:first-child) {
+					margin-left: 0.25rem;
+				}
+
+				&:not(:last-child) {
+					margin-right: 0.25rem;
+				}
+			}
+		}
+
+		.secondary-info,
+		.secondary-info > .button-root {
+			color: $mainLighten28;
+			font-size: $fontSizeExtraSmall;
+		}
+	}
+
+	.dxp-connection-type {
+		.description {
+			font-size: $fontSizeMedium;
+			margin-bottom: 16px;
+
+			.secondary-info {
+				color: $mainLighten28;
+				font-size: $fontSizeSmall;
+				margin-top: 16px;
+			}
+		}
+
+		.header {
+			.title {
+				color: $mainLighten8;
+				font-size: $fontSizeExtraLarge;
+				font-weight: $fontWeightBold;
+				margin-top: 60px;
+			}
+		}
+
+		.oauth-connection {
+			background: $lightBackground;
+
+			.skip-button {
+				color: $mainLighten28;
+			}
+		}
+
+		.title,
+		.modal-body {
+			margin-left: 24px;
+			margin-right: 24px;
+		}
+
+		.token-connection {
+			.connect-button-container {
+				margin-bottom: 76px;
+			}
+
+			.benefits-requirements-container {
+				.benefits {
+					border-right: 1px solid $mainLighten74;
+
+					.benefits-check {
+						fill: $successLighten25;
+						margin-right: 8px;
+					}
+				}
+
+				.heading {
+					color: $mainLighten8;
+					font-size: $fontSizeMedium;
+					font-weight: $fontWeightBold;
+				}
+
+				.item {
+					color: $mainLighten8;
+					font-size: $fontSizeMedium;
+				}
+
+				.requirements {
+					padding-left: 60px;
+				}
+
+				ul {
+					list-style: none;
+					padding-left: 0;
+				}
+			}
+		}
+	}
+
+	.invite-people {
+		// TODO: LRAC-7427 Adjust SVGs with Linear Gradients
+		.ac-invite {
+			background-image: url('/o/osb-faro-web/dist/sprite.svg#ac-invite-usage');
+			margin: 20px 0 10px;
+			padding: 201px 203px 0px;
+			width: 406px;
+		}
+
+		.add-emails {
+			margin-top: 35px;
+
+			.input-group {
+				margin-bottom: 4px;
+				margin-top: 12px;
+				width: 490px;
+			}
+
+			label {
+				font-size: $fontSizeLarge;
+			}
+
+			.secondary-info {
+				color: $mainLighten28;
+			}
+		}
+
+		.description {
+			margin-top: 64px;
+		}
+	}
+
+	.modal-content {
+		height: 628px;
+
+		.btn.wide {
+			padding-left: 48px;
+			padding-right: 48px;
+		}
+
+		.header {
+			margin: 24px 24px 0;
+		}
+
+		.modal-footer {
+			padding-bottom: 24px;
+		}
+
+		.title {
+			font-size: 32px;
+			font-weight: bold;
+		}
+	}
+
+	.ready-to-go {
+		// TODO: LRAC-7427 Adjust SVGs with Linear Gradients
+		.ac-ready-to-use {
+			background-image: url('/o/osb-faro-web/dist/sprite.svg#ac-ready-to-use-usage');
+			margin-bottom: 6px;
+			padding: 222px 214px 0px;
+			width: 428px;
+		}
+	}
+
+	.ready-to-go,
+	.welcome {
+		.description {
+			font-size: $fontSizeLarge;
+			max-width: 490px;
+			text-align: center;
+		}
+	}
+
+	.welcome {
+		// TODO: LRAC-7427 Adjust SVGs with Linear Gradients
+		.ac-setup {
+			background-image: url('/o/osb-faro-web/dist/sprite.svg#analytics-onboarding-welcome-usage');
+			margin: 20px 0 24px;
+			padding: 302px 143px 0px;
+			width: 262px;
+		}
+
+		.description {
+			font-size: 24px;
+			margin-top: 15px;
+		}
+
+		.title {
+			font-size: 40px;
+		}
+	}
+
+	.success-info {
+		margin-top: 24px;
+		padding: 0px 32px;
+
+		.container {
+			border: 1px solid $mainLighten74;
+			border-radius: 4px;
+			padding: 0px;
+
+			.row {
+				align-content: center;
+				height: 60px;
+				margin: 0px;
+
+				.col {
+					padding: 0px 24px;
+				}
+
+				&:first-child {
+					border-bottom: 1px solid $mainLighten74;
+				}
+
+				span {
+					font-size: 14px;
+					font-weight: $fontWeightSemiBold;
+				}
+			}
+		}
+	}
+}

@@ -451,7 +451,7 @@ public class ObjectActionLocalServiceImpl
 				objectActionTriggerKey,
 				ObjectActionTriggerConstants.KEY_STANDALONE)) {
 
-			if (objectDefinition.isSystem()) {
+			if (objectDefinition.isUnmodifiableSystemObject()) {
 				throw new ObjectActionTriggerKeyException(
 					StringBundler.concat(
 						"The object action trigger key ",

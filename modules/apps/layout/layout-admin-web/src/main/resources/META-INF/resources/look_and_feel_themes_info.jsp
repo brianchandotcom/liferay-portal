@@ -34,7 +34,7 @@ else if (selLayout == null) {
 PluginPackage selPluginPackage = selTheme.getPluginPackage();
 %>
 
-<p class="h4 mb-3 mt-3"><liferay-ui:message key="current-theme" /></p>
+<p class="h4 mb-3 mt-4"><liferay-ui:message key="current-theme" /></p>
 
 <clay:row>
 	<clay:col
@@ -49,6 +49,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 	</clay:col>
 
 	<clay:col
+		cssClass="pl-4 pt-3"
 		size="6"
 		sm="7"
 	>

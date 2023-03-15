@@ -21,7 +21,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 %>
 
-<p class="h4 mb-3 mt-3"><liferay-ui:message key="current-theme" /></p>
+<p class="h4 mb-3 mt-4"><liferay-ui:message key="current-theme" /></p>
 
 <div id="<portlet:namespace />currentThemeContainer">
 	<liferay-util:include page="/look_and_feel_theme_details.jsp" servletContext="<%= application %>" />

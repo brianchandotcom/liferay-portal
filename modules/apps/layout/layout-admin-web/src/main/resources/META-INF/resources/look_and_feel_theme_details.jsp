@@ -73,6 +73,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 	</clay:col>
 
 	<clay:col
+		cssClass="pl-4 pt-3"
 		size="6"
 		sm="7"
 	>

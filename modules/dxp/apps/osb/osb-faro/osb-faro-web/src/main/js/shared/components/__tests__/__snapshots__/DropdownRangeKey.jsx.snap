@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DropdownRangeKey should render 1`] = `
+<div>
+  <div
+    class="dropdown dropdown-range-key-root"
+  >
+    <button
+      class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+      type="button"
+    >
+      Last 30 days
+      <svg
+        class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+        role="presentation"
+      >
+        <use
+          xlink:href="#caret-bottom"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;

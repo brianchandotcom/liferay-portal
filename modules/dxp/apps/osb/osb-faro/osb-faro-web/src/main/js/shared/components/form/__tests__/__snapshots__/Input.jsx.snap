@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input should render 1`] = `
+<div>
+  <div
+    class="form-inline-group"
+  >
+    <input
+      class="input-root form-control"
+      id="foo"
+      name="foo"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;

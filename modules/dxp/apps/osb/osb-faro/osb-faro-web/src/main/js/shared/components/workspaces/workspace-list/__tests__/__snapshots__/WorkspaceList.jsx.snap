@@ -1,0 +1,277 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkspaceList should render 1`] = `
+<div>
+  <div
+    class="workspace-list-root"
+  >
+    <ul
+      class="list-group"
+    >
+      <li
+        class="list-group-item list-group-item-action list-group-item-flex"
+      >
+        <a
+          class="button-root btn btn-unstyled workspace-link border-button"
+          href="/workspace/1"
+        >
+          <div
+            class="autofit-col autofit-col-expand"
+          >
+            <div
+              class="col-content-wrapper"
+            >
+              <div
+                class="text-truncate"
+              >
+                <div
+                  class="workspace-name"
+                >
+                  <span
+                    class="text-truncate"
+                    data-tooltip="false"
+                    title=""
+                  >
+                    mockProject_AccountA 0
+                  </span>
+                </div>
+                <div
+                  class="info-wrapper corporation-project-name"
+                >
+                  corpProjectName0
+                </div>
+                <div
+                  class="workspace-info"
+                >
+                  mockProject_AccountA 0
+                </div>
+              </div>
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-angle-right"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                />
+              </svg>
+            </div>
+          </div>
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action list-group-item-flex"
+      >
+        <a
+          class="button-root btn btn-unstyled workspace-link border-button"
+          href="/workspace/2"
+        >
+          <div
+            class="autofit-col autofit-col-expand"
+          >
+            <div
+              class="col-content-wrapper"
+            >
+              <div
+                class="text-truncate"
+              >
+                <div
+                  class="workspace-name"
+                >
+                  <span
+                    class="text-truncate"
+                    data-tooltip="false"
+                    title=""
+                  >
+                    mockProject_AccountA 1
+                  </span>
+                </div>
+                <div
+                  class="info-wrapper corporation-project-name"
+                >
+                  corpProjectName1
+                </div>
+                <div
+                  class="workspace-info"
+                >
+                  mockProject_AccountA 1
+                </div>
+              </div>
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-angle-right"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                />
+              </svg>
+            </div>
+          </div>
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action list-group-item-flex"
+      >
+        <a
+          class="button-root btn btn-unstyled workspace-link border-button"
+          href="/workspace/3"
+        >
+          <div
+            class="autofit-col autofit-col-expand"
+          >
+            <div
+              class="col-content-wrapper"
+            >
+              <div
+                class="text-truncate"
+              >
+                <div
+                  class="workspace-name"
+                >
+                  <span
+                    class="text-truncate"
+                    data-tooltip="false"
+                    title=""
+                  >
+                    mockProject_AccountA 2
+                  </span>
+                </div>
+                <div
+                  class="info-wrapper corporation-project-name"
+                >
+                  corpProjectName2
+                </div>
+                <div
+                  class="workspace-info"
+                >
+                  mockProject_AccountA 2
+                </div>
+              </div>
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-angle-right"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                />
+              </svg>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`WorkspaceList should render WorkspaceList with friendlyURL 1`] = `
+<div>
+  <div
+    class="workspace-list-root"
+  >
+    <ul
+      class="list-group"
+    >
+      <li
+        class="list-group-item list-group-item-action list-group-item-flex"
+      >
+        <a
+          class="button-root btn btn-unstyled workspace-link border-button"
+          href="/workspace/faro-liferay-0"
+        >
+          <div
+            class="autofit-col autofit-col-expand"
+          >
+            <div
+              class="col-content-wrapper"
+            >
+              <div
+                class="text-truncate"
+              >
+                <div
+                  class="workspace-name"
+                >
+                  <span
+                    class="text-truncate"
+                    data-tooltip="false"
+                    title=""
+                  >
+                    mockProject_AccountA 0
+                  </span>
+                </div>
+                <div
+                  class="info-wrapper corporation-project-name"
+                >
+                  corpProjectName0
+                </div>
+                <div
+                  class="workspace-info"
+                >
+                  mockProject_AccountA 0
+                </div>
+              </div>
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-angle-right"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                />
+              </svg>
+            </div>
+          </div>
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action list-group-item-flex"
+      >
+        <a
+          class="button-root btn btn-unstyled workspace-link border-button"
+          href="/workspace/faro-liferay-1"
+        >
+          <div
+            class="autofit-col autofit-col-expand"
+          >
+            <div
+              class="col-content-wrapper"
+            >
+              <div
+                class="text-truncate"
+              >
+                <div
+                  class="workspace-name"
+                >
+                  <span
+                    class="text-truncate"
+                    data-tooltip="false"
+                    title=""
+                  >
+                    mockProject_AccountA 1
+                  </span>
+                </div>
+                <div
+                  class="info-wrapper corporation-project-name"
+                >
+                  corpProjectName1
+                </div>
+                <div
+                  class="workspace-info"
+                >
+                  mockProject_AccountA 1
+                </div>
+              </div>
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-angle-right"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                />
+              </svg>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+`;

@@ -1,0 +1,464 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination should render 1`] = `
+<div>
+  <ul
+    class="pagination pagination-root"
+  >
+    <li
+      class="page-item disabled"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link link-disabled"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-left"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+          />
+        </svg>
+      </a>
+    </li>
+    <li
+      class="page-item active"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=1"
+      >
+        1
+      </a>
+    </li>
+    <li
+      class="page-item disabled"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link link-disabled"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-right"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Pagination should render a lot of pages with a middle page active 1`] = `
+<div>
+  <ul
+    class="pagination pagination-root"
+  >
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=49"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-left"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+          />
+        </svg>
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=1"
+      >
+        1
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root"
+      >
+        <button
+          class="button-root btn btn-link dropdown-toggle page-link"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            ...
+          </span>
+          
+        </button>
+      </div>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=48"
+      >
+        48
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=49"
+      >
+        49
+      </a>
+    </li>
+    <li
+      class="page-item active"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=50"
+      >
+        50
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=51"
+      >
+        51
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=52"
+      >
+        52
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root"
+      >
+        <button
+          class="button-root btn btn-link dropdown-toggle page-link"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            ...
+          </span>
+          
+        </button>
+      </div>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=100"
+      >
+        100
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=51"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-right"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Pagination should render a lot of pages with the end page active 1`] = `
+<div>
+  <ul
+    class="pagination pagination-root"
+  >
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=99"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-left"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+          />
+        </svg>
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=1"
+      >
+        1
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root"
+      >
+        <button
+          class="button-root btn btn-link dropdown-toggle page-link"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            ...
+          </span>
+          
+        </button>
+      </div>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=98"
+      >
+        98
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=99"
+      >
+        99
+      </a>
+    </li>
+    <li
+      class="page-item active"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=100"
+      >
+        100
+      </a>
+    </li>
+    <li
+      class="page-item disabled"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link link-disabled"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-right"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Pagination should render with a lot of pages 1`] = `
+<div>
+  <ul
+    class="pagination pagination-root"
+  >
+    <li
+      class="page-item disabled"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link link-disabled"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-left"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+          />
+        </svg>
+      </a>
+    </li>
+    <li
+      class="page-item active"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=1"
+      >
+        1
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=2"
+      >
+        2
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=3"
+      >
+        3
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root"
+      >
+        <button
+          class="button-root btn btn-link dropdown-toggle page-link"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            ...
+          </span>
+          
+        </button>
+      </div>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=100"
+      >
+        100
+      </a>
+    </li>
+    <li
+      class="page-item"
+    >
+      <a
+        class="button-root btn btn-unstyled page-link"
+        href="/?page=2"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-right"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+          />
+        </svg>
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Pagination should render with buttons if passed an onChange handler 1`] = `
+<div>
+  <ul
+    class="pagination pagination-root"
+  >
+    <li
+      class="page-item disabled"
+    >
+      <button
+        class="button-root btn btn-unstyled page-link"
+        disabled=""
+        type="button"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-left"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+          />
+        </svg>
+      </button>
+    </li>
+    <li
+      class="page-item active"
+    >
+      <button
+        class="button-root btn btn-unstyled page-link"
+        type="button"
+      >
+        1
+      </button>
+    </li>
+    <li
+      class="page-item disabled"
+    >
+      <button
+        class="button-root btn btn-unstyled page-link"
+        disabled=""
+        type="button"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-right"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+          />
+        </svg>
+      </button>
+    </li>
+  </ul>
+</div>
+`;

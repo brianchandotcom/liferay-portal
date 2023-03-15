@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserActionsRenderer should render 1`] = `
+<div>
+  <span
+    class=""
+  >
+    <button
+      class="button-root btn btn-secondary btn-sm"
+      type="button"
+    >
+      Edit
+    </button>
+    <button
+      class="button-root btn btn-secondary btn-outline-borderless btn-sm"
+      type="button"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-trash"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#trash"
+        />
+      </svg>
+    </button>
+  </span>
+</div>
+`;

@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AcquisitionsCard renders 1`] = `
+<div>
+  <div
+    class="card card-root"
+  >
+    <div
+      class="card-header align-items-center d-flex justify-content-between"
+    >
+      <h5
+        class="card-title"
+      >
+        card label
+      </h5>
+      <div
+        class="dropdown dropdown-range-key-root"
+      >
+        <button
+          class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+          type="button"
+        >
+          Last 30 days
+          <svg
+            class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-bottom"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div
+      class="card-body w-100 d-flex flex-column flex-grow-1 no-padding"
+    >
+      <ul
+        class="card-tabs-root"
+      >
+        <li
+          class="card-tab active"
+          data-testid="CHANNEL"
+        >
+          <button
+            class="button-root btn btn-unstyled"
+            type="button"
+          >
+            <span
+              class="title"
+            >
+              Channels
+            </span>
+            <div />
+          </button>
+        </li>
+        <li
+          class="card-tab"
+          data-testid="SOURCE_MEDIUM"
+        >
+          <button
+            class="button-root btn btn-unstyled"
+            type="button"
+          >
+            <span
+              class="title"
+            >
+              Source | Medium
+            </span>
+            <div />
+          </button>
+        </li>
+        <li
+          class="card-tab"
+          data-testid="REFERRER"
+        >
+          <button
+            class="button-root btn btn-unstyled"
+            type="button"
+          >
+            <span
+              class="title"
+            >
+              Referrers
+            </span>
+            <div />
+          </button>
+        </li>
+      </ul>
+      <div
+        class="table-responsive table-root flex-grow-1 flex-grow-1 table-hover"
+      >
+        <table
+          class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+        >
+          <thead>
+            <tr>
+              <th
+                class="table-head-title"
+              >
+                <a
+                  class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                  href="/?field=name&page=1&sortOrder=ASC"
+                >
+                  <span
+                    class="text-truncate"
+                  >
+                    Channel
+                  </span>
+                </a>
+              </th>
+              <th
+                class="table-head-title table-cell-expand"
+              >
+                Sessions
+              </th>
+              <th
+                class="table-head-title table-column-text-end"
+              >
+                % of Sessions
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="flex-grow-1 table-hover"
+          >
+            <tr
+              class=""
+            >
+              <td
+                class="name-cell-root"
+              >
+                <div
+                  class="content-container"
+                  style="max-width: 200px;"
+                >
+                  <div
+                    class="text-truncate"
+                  >
+                    <div
+                      class="table-title text-truncate"
+                    >
+                      <span
+                        class="text-truncate"
+                        data-tooltip="false"
+                        title=""
+                      >
+                        direct
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td
+                class="table-cell-expand relative-metric-bar-root"
+              >
+                <div
+                  class="metric-bar-root"
+                >
+                  <div
+                    class="bar bar-lg"
+                    style="width: 100%;"
+                  />
+                  <div
+                    class="info-wrapper align-items-center d-flex justify-content-between"
+                  >
+                    <span
+                      class="text-truncate title"
+                      data-tooltip="false"
+                      title=""
+                    />
+                    <span
+                      class="count"
+                    >
+                      2686
+                    </span>
+                  </div>
+                </div>
+              </td>
+              <td
+                class="table-column-text-end"
+              >
+                <h4
+                  class="table-title text-truncate"
+                >
+                  100.00%
+                </h4>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;

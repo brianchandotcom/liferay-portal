@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseDropdownListItem should render 1`] = `
+<div>
+  <li>
+    <span
+      aria-haspopup="true"
+      class="dropdown-item d-flex justify-content-between"
+    >
+      <button
+        class="button-root btn btn-unstyled dropdown-item-primary-button btn-block"
+        type="button"
+      >
+        Test Display Name
+      </button>
+    </span>
+  </li>
+</div>
+`;

@@ -1,0 +1,250 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VariantTableCard should render 1`] = `
+<div>
+  <div
+    class="analytics-variant-card-table"
+  >
+    <div
+      class="table-responsive table-root flex-grow-1"
+    >
+      <table
+        class="table table-autofit table-hover"
+      >
+        <thead>
+          <tr>
+            <th
+              class="table-head-title"
+            >
+              <button
+                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  Variants
+                </span>
+                <span
+                  class="inline-item inline-item-after"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </th>
+            <th
+              class="table-head-title text-right"
+            >
+              <button
+                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  Median Click-Through Rate
+                </span>
+              </button>
+            </th>
+            <th
+              class="table-head-title text-right"
+            >
+              <button
+                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  Confidence Interval
+                </span>
+              </button>
+            </th>
+            <th
+              class="table-head-title text-right"
+            >
+              <button
+                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  Improvement
+                </span>
+              </button>
+            </th>
+            <th
+              class="table-head-title text-right"
+            >
+              <button
+                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  Probability to Win
+                </span>
+              </button>
+            </th>
+            <th
+              class="table-head-title text-right"
+            >
+              <button
+                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  Unique Visitors
+                </span>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class=""
+          >
+            <td
+              class="table-cell-expanded"
+            >
+              <h5
+                class="variant-title mb-1 text-truncate"
+              >
+                Control
+              </h5>
+              <div
+                class="label label-root label-success"
+              >
+                <span
+                  class="label-item"
+                >
+                  Current Best
+                </span>
+              </div>
+            </td>
+            <td
+              class="text-right"
+            >
+              37%
+            </td>
+            <td
+              class="text-right"
+            >
+              36% - 37%
+            </td>
+            <td
+              class="text-right"
+            >
+              <span
+                class=""
+              >
+                -
+              </span>
+            </td>
+            <td
+              class="text-right"
+            >
+              63%
+            </td>
+            <td
+              class="text-right"
+            >
+              <div
+                class="d-flex flex-column w-100"
+              >
+                <span
+                  class="unique-visitors"
+                >
+                  402
+                </span>
+                <span
+                  class="traffic-quota"
+                >
+                  50% Traffic Split
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class=""
+          >
+            <td
+              class="table-cell-expanded"
+            >
+              <h5
+                class="variant-title mb-1 text-truncate"
+              >
+                Red Button
+              </h5>
+            </td>
+            <td
+              class="text-right"
+            >
+              30%
+            </td>
+            <td
+              class="text-right"
+            >
+              28% - 31%
+            </td>
+            <td
+              class="text-right"
+            >
+              <span
+                class="loss"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-bottom"
+                  role="presentation"
+                >
+                  <use
+                    xlink:href="#caret-bottom"
+                  />
+                </svg>
+                 
+                18.92%
+                 
+                loss
+              </span>
+            </td>
+            <td
+              class="text-right"
+            >
+              &gt; 99.9%
+            </td>
+            <td
+              class="text-right"
+            >
+              <div
+                class="d-flex flex-column w-100"
+              >
+                <span
+                  class="unique-visitors"
+                >
+                  394
+                </span>
+                <span
+                  class="traffic-quota"
+                >
+                  50% Traffic Split
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;

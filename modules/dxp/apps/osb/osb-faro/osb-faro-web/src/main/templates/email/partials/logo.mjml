@@ -1,0 +1,4 @@
+<mj-spacer css-class="hide-at-mobile" height="19px" />
+<mj-text line-height="100%" padding-bottom="0" padding-right="0">
+  <img style="text-align: center" src="[$LOGO_ICON_URL$]" width="40px" />
+</mj-text>

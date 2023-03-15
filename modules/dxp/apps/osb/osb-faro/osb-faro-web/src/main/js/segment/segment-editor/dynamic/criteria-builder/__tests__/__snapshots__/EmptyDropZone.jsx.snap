@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmptyDropZone should render 1`] = `
+<div>
+  <div
+    class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
+  >
+    <div
+      class="drop-zone-target p-5"
+    >
+      <div
+        class="empty-drop-zone-indicator"
+      />
+      <div
+        class="criteria-message"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-ac-rule icon-size-md"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-rule"
+          />
+        </svg>
+        Drag and drop criterion from the right to add rules.
+      </div>
+      <div
+        class="groups-message"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-ac-group icon-size-md"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-group"
+          />
+        </svg>
+        Drag and drop over an existing criteria to form groups.
+      </div>
+    </div>
+  </div>
+</div>
+`;

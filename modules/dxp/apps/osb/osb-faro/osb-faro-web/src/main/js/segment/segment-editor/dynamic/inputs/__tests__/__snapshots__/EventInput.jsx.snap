@@ -1,0 +1,225 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EventInput should render 1`] = `
+<div>
+  <div
+    class="criteria-statement"
+  >
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div>
+        test
+      </div>
+      <div
+        class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+      >
+        performed
+      </div>
+      <div
+        class="form-group-item display-value form-group-item-label form-group-item-shrink"
+      >
+        <b>
+          Asset Clicked
+        </b>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control operator-input"
+        >
+          <option
+            value="ge"
+          >
+            at least
+          </option>
+          <option
+            value="le"
+          >
+            at most
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <input
+          class="input-root form-control number-input"
+          data-testid="occurence-count-input"
+          min="0"
+          type="number"
+          value="1"
+        />
+      </div>
+      <div
+        class="form-group-item unit form-group-item-label form-group-item-shrink"
+      >
+        time(s)
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control conjunction-input"
+          data-testid="conjunction-input"
+        >
+          <option
+            value="since"
+          >
+            since
+          </option>
+          <option
+            value="gt"
+          >
+            after
+          </option>
+          <option
+            value="lt"
+          >
+            before
+          </option>
+          <option
+            value="between"
+          >
+            between
+          </option>
+          <option
+            value="ever"
+          >
+            ever
+          </option>
+          <option
+            value="eq"
+          >
+            on
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control operator-input"
+          data-testid="clay-select"
+        >
+          <option
+            value="last24Hours"
+          >
+            Last 24 hours
+          </option>
+          <option
+            value="yesterday"
+          >
+            Yesterday
+          </option>
+          <option
+            value="last7Days"
+          >
+            Last 7 days
+          </option>
+          <option
+            value="last28Days"
+          >
+            Last 28 days
+          </option>
+          <option
+            value="last30Days"
+          >
+            Last 30 days
+          </option>
+          <option
+            value="last90Days"
+          >
+            Last 90 days
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item conjunction form-group-item-label form-group-item-shrink"
+      >
+        where
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control attribute-input"
+        >
+          <option
+            value="0"
+          >
+            displayName-0
+          </option>
+          <option
+            value="1"
+          >
+            displayName-1
+          </option>
+          <option
+            value="2"
+          >
+            displayName-2
+          </option>
+          <option
+            value="3"
+          >
+            displayName-3
+          </option>
+          <option
+            value="4"
+          >
+            displayName-4
+          </option>
+          <option
+            value="5"
+          >
+            displayName-5
+          </option>
+          <option
+            value="6"
+          >
+            displayName-6
+          </option>
+          <option
+            value="7"
+          >
+            displayName-7
+          </option>
+          <option
+            value="8"
+          >
+            displayName-8
+          </option>
+          <option
+            value="9"
+          >
+            displayName-9
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control operator-input"
+        />
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <input
+          class="input-root form-control"
+          data-testid="attribute-value-string-input"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,63 @@
+$barchart: '.analytics-bar-chart-html';
+$c: '.analytics-variant-card';
+$charts: '.analytics-variant-card-charts';
+$table: '.analytics-variant-card-table';
+
+#{$c} {
+	#{$charts} {
+		width: 100%;
+
+		& > .navigation-bar {
+			margin-bottom: 65px;
+
+			.navbar-nav .nav-link.active:after {
+				background-color: $primary;
+			}
+		}
+	}
+
+	#{$barchart} {
+		margin-bottom: 4rem;
+
+		&-header {
+			height: 48px;
+		}
+
+		&-item {
+			background: none;
+		}
+
+		&-progress > div {
+			border-radius: 0;
+		}
+	}
+
+	#{$table} {
+		margin-top: 2.8rem;
+
+		.table-responsive {
+			margin-bottom: 0;
+		}
+	}
+
+	.lift {
+		color: $success;
+	}
+
+	.loss {
+		color: $error;
+	}
+
+	.traffic-quota {
+		color: $mainLighten28;
+	}
+
+	.unique-visitors {
+		color: $main;
+		font-weight: $fontWeightSemiBold;
+	}
+
+	.variant-title {
+		max-width: 260px;
+	}
+}

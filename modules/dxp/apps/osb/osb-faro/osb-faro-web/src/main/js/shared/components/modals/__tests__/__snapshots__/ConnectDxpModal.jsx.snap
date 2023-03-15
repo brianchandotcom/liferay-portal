@@ -1,0 +1,223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConnectDXPModal renders 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog connect-dxp onboarding-modal-root"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="onboarding-base-screen-root d-flex flex-column flex-grow-1 justify-content-between connect-dxp"
+      >
+        <div
+          class="header"
+        >
+          <div
+            class="d-flex justify-content-end"
+          >
+            <button
+              class="button-root btn btn-secondary close"
+              type="button"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-times"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="modal-body d-flex flex-column align-items-center flex-grow-1 justify-content-center"
+        >
+          <div
+            class="analytics-to-dxp-container"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-dxp-icon icon-size-xl"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#dxp-icon"
+              />
+            </svg>
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-ac-horizontal-arrows arrows icon-size-lg"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-horizontal-arrows"
+              />
+            </svg>
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-ac-logo-grayscale icon-size-xl"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo-grayscale"
+              />
+            </svg>
+          </div>
+          <span
+            class="title connect-to-dxp d-flex justify-content-center"
+          >
+            Connect Your DXP Analytics
+          </span>
+          <div
+            class="w-100 ml-6 mt-1 token-info"
+          >
+            Copy this token to your DXP instance.
+          </div>
+          <div
+            class="input-group"
+          >
+            <div
+              class="input-group-item input-group-prepend"
+            >
+              <input
+                class="input-root form-control text-truncate token-input input-group-inset input-group-inset-after"
+                type="text"
+                value=""
+              />
+              <div
+                class="input-group-inset-item copy-button input-group-inset-item-after"
+              >
+                <button
+                  aria-label="Click to Copy"
+                  class="button-root btn btn-light copy-button"
+                  data-clipboard-text=""
+                  data-tooltip-response="Copied"
+                  title="Click to Copy"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-paste"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#paste"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="secondary-description w-100 ml-6 mt-1"
+          >
+            <a
+              href="https://learn.liferay.com/analytics-cloud/latest/en/connecting-data-sources/connecting-liferay-dxp-to-analytics-cloud.html"
+              target="_blank"
+            >
+              Click here
+            </a>
+             to learn how to connect Liferay DXP to Analytics Cloud.
+          </div>
+          <div
+            class="fix-pack-container"
+          >
+            <div
+              class="fix-pack-select"
+            >
+              <label
+                class="form-control-label label-root"
+              >
+                <span
+                  class="content-container"
+                >
+                  DXP Fix Pack Requirements
+                  <span
+                    class="info-popover-root ml-2"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-question-circle-full"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#question-circle-full"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </label>
+              <select
+                class="form-control select-root mt-1"
+              >
+                <option
+                  value="dxp-70-fixpack-98"
+                >
+                  DXP 7.0 Fix Pack 98
+                </option>
+                <option
+                  value="dxp-71-fixpack-22"
+                >
+                  DXP 7.1 Fix Pack 22
+                </option>
+                <option
+                  value="dxp-72-fixpack-1"
+                >
+                  DXP 7.2 Fix Pack 11
+                </option>
+                <option
+                  value="dxp-73-fixpack-1"
+                >
+                  DXP 7.3 Fix Pack 1
+                </option>
+              </select>
+            </div>
+            <div
+              class="fix-pack-button"
+            >
+              <a
+                class="button-root btn btn-secondary more-information-link mt-4 btn-outline-borderless"
+                href="https://customer.liferay.com/downloads/-/download/liferay-dxp-7-0-fix-pack-98"
+                target="_blank"
+              >
+                Download
+                <span
+                  class="inline-item inline-item-after"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-shortcut"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#shortcut"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="modal-footer d-flex justify-content-end"
+        >
+          <div>
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              class="button-root btn btn-primary"
+              disabled=""
+              type="button"
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

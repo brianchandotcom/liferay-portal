@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubscriptionTitle should render 1`] = `
+<div>
+  <div
+    class="plan-title"
+  >
+    <div
+      class="plan-name"
+    >
+      Business
+    </div>
+    <div
+      class="annual-price"
+    >
+      <div>
+        <strong>
+          750 USD
+        </strong>
+        <span
+          class="text-secondary small"
+        >
+           / year
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

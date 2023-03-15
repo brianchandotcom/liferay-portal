@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WithBaseResults Renders table w/ data 1`] = `
+<div
+  className="d-flex flex-column flex-grow-1 justify-content-between"
+>
+  <[object Object]
+    delta={10}
+    orderIOMap={
+      Immutable.OrderedMap {
+        "name": Immutable.Record {
+          "field": "name",
+          "sortOrder": "ASC",
+        },
+      }
+    }
+    page={1}
+    query=""
+  />
+</div>
+`;

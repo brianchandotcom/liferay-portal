@@ -1,0 +1,690 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CrossPageSelect should render the selected list when the user presses the "view selected link" 1`] = `
+<div>
+  <div
+    class="toolbar-root"
+  >
+    <nav
+      class="navbar navbar-root items-selected management-bar management-bar-primary navbar-expand"
+    >
+      <div
+        class="container-fluid"
+      >
+        <ul
+          class="nav-root front-nav navbar-nav"
+          role="tablist"
+        >
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  data-testid="select-all-checkbox"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+              href="/?field=name&page=1&sortOrder=DESC"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <div
+          class="navbar-form navbar-form-autofit"
+        >
+          <div
+            class="input-group search"
+          >
+            <div
+              class="input-group-item"
+            >
+              <input
+                class="input-root form-control input-group-inset input-group-inset-after"
+                placeholder="Search"
+                type="text"
+                value=""
+              />
+              <div
+                class="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-search"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <nav
+      class="subnav-tbar subnav-tbar-root tbar"
+    >
+      <div
+        class="container-fluid"
+      >
+        <div
+          class="tbar-nav"
+        >
+          <div
+            class="tbar-item view-selected-link-container"
+          >
+            <div
+              class="tbar-section text-truncate"
+            >
+              <button
+                class="btn btn-sm btn-link"
+                data-testid="view-selected"
+                type="button"
+              >
+                <b>
+                  Return to List
+                </b>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div
+    class="table-responsive table-root flex-grow-1"
+  >
+    <table
+      class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+    >
+      <thead>
+        <tr>
+          <th />
+          <th
+            class="table-head-title"
+          >
+            <a
+              class="button-root btn btn-unstyled inline-item text-truncate-inline"
+              href="/?field=name&page=1&sortOrder=DESC"
+            >
+              <span
+                class="text-truncate"
+              >
+                name
+              </span>
+              <span
+                class="inline-item inline-item-after"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                  />
+                </svg>
+              </span>
+            </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="clickable table-active"
+        >
+          <td>
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="true"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td>
+            orange
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav
+    class="navbar navbar-root pagination-bar-root"
+  >
+    <div
+      class="container-fluid"
+    >
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root pagination-items-per-page"
+      >
+        <button
+          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            2 Items
+          </span>
+          
+          <span
+            class="caret-root"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        class="pagination-results"
+      >
+        Showing 1 to 1 of 1 entry.
+      </div>
+      <ul
+        class="pagination pagination-root"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <button
+            class="button-root btn btn-unstyled page-link"
+            disabled=""
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-angle-left"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          class="page-item active"
+        >
+          <button
+            class="button-root btn btn-unstyled page-link"
+            type="button"
+          >
+            1
+          </button>
+        </li>
+        <li
+          class="page-item disabled"
+        >
+          <button
+            class="button-root btn btn-unstyled page-link"
+            disabled=""
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-angle-right"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+              />
+            </svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+`;
+
+exports[`CrossPageSelect should render the server data list by default 1`] = `
+<div>
+  <div
+    class="toolbar-root"
+  >
+    <nav
+      class="navbar navbar-root management-bar management-bar-light navbar-expand"
+    >
+      <div
+        class="container-fluid"
+      >
+        <ul
+          class="nav-root front-nav navbar-nav"
+          role="tablist"
+        >
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  data-testid="select-all-checkbox"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+              href="/?field=name&page=1&sortOrder=DESC"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <div
+          class="navbar-form navbar-form-autofit"
+        >
+          <div
+            class="input-group search"
+          >
+            <div
+              class="input-group-item"
+            >
+              <input
+                class="input-root form-control input-group-inset input-group-inset-after"
+                placeholder="Search"
+                type="text"
+                value=""
+              />
+              <div
+                class="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-search"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div
+    class="table-responsive table-root flex-grow-1"
+  >
+    <table
+      class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+    >
+      <thead>
+        <tr>
+          <th />
+          <th
+            class="table-head-title"
+          >
+            <a
+              class="button-root btn btn-unstyled inline-item text-truncate-inline"
+              href="/?field=name&page=1&sortOrder=DESC"
+            >
+              <span
+                class="text-truncate"
+              >
+                name
+              </span>
+              <span
+                class="inline-item inline-item-after"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                  />
+                </svg>
+              </span>
+            </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="clickable"
+        >
+          <td>
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td>
+            orange
+          </td>
+        </tr>
+        <tr
+          class="clickable"
+        >
+          <td>
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td>
+            apple
+          </td>
+        </tr>
+        <tr
+          class="clickable"
+        >
+          <td>
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td>
+            banana
+          </td>
+        </tr>
+        <tr
+          class="clickable"
+        >
+          <td>
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td>
+            grapefruit
+          </td>
+        </tr>
+        <tr
+          class="clickable"
+        >
+          <td>
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td>
+            strawberry
+          </td>
+        </tr>
+        <tr
+          class="clickable"
+        >
+          <td>
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  type="checkbox"
+                  value="false"
+                />
+                <span
+                  class="custom-control-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td>
+            tangerine
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav
+    class="navbar navbar-root pagination-bar-root"
+  >
+    <div
+      class="container-fluid"
+    >
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root pagination-items-per-page"
+      >
+        <button
+          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            2 Items
+          </span>
+          
+          <span
+            class="caret-root"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        class="pagination-results"
+      >
+        Showing 1 to 2 of 6 entries.
+      </div>
+      <ul
+        class="pagination pagination-root"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <a
+            class="button-root btn btn-unstyled page-link link-disabled"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-angle-left"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+              />
+            </svg>
+          </a>
+        </li>
+        <li
+          class="page-item active"
+        >
+          <a
+            class="button-root btn btn-unstyled page-link"
+            href="/?page=1"
+          >
+            1
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            class="button-root btn btn-unstyled page-link"
+            href="/?page=2"
+          >
+            2
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            class="button-root btn btn-unstyled page-link"
+            href="/?page=3"
+          >
+            3
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            class="button-root btn btn-unstyled page-link"
+            href="/?page=2"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-angle-right"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+`;
+
+exports[`ViewSelectedToggle should render with the "return to list" message 1`] = `
+<div>
+  <button
+    class="btn btn-sm btn-link"
+    data-testid="view-selected"
+    type="button"
+  >
+    <b>
+      Return to List
+    </b>
+  </button>
+</div>
+`;
+
+exports[`ViewSelectedToggle should render with the "view selected" message 1`] = `
+<div>
+  <button
+    class="btn btn-sm btn-link"
+    data-testid="view-selected"
+    type="button"
+  >
+    <b>
+      View Selected ()
+    </b>
+  </button>
+</div>
+`;

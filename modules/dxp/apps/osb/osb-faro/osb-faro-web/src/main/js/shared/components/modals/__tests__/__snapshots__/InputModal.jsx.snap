@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputModal should render 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog modal-sm"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          bar
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="modal-body"
+      >
+        <input
+          class="input-root form-control"
+          placeholder="foo"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="modal-footer"
+      >
+        <button
+          class="button-root btn btn-secondary"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="button-root btn btn-primary"
+          type="button"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NoResultsDisplay should render component 1`] = `
+<div>
+  <div
+    class="no-results-root flex-grow-1"
+  >
+    <div
+      class="no-results-content"
+    >
+      <h4
+        class="no-results-title"
+      >
+        There are no items found.
+      </h4>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`NoResultsDisplay should render component with icon 1`] = `
+<div>
+  <div
+    class="no-results-root flex-grow-1"
+  >
+    <div
+      class="no-results-content"
+    >
+      <div
+        class="no-results-icon no-results-icon-border"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-home icon-size-xxl"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+          />
+        </svg>
+      </div>
+      <h4
+        class="no-results-title"
+      >
+        There are no items found.
+      </h4>
+    </div>
+  </div>
+</div>
+`;

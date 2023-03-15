@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Breadcrumbs should render 1`] = `
+<div>
+  <ol
+    class="breadcrumb breadcrumbs-root"
+  >
+    <li
+      aria-haspopup="true"
+      class="dropdown dropdown-root breadcrumb-item"
+    >
+      <button
+        class="button-root btn btn-unstyled dropdown-toggle breadcrumb-link show-caret"
+        type="button"
+      >
+        <span>
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-ellipsis-h"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#ellipsis-h"
+            />
+          </svg>
+        </span>
+      </button>
+    </li>
+    <li
+      class="breadcrumb-item"
+    >
+      <a
+        class="breadcrumb-link breadcrumb-text-truncate"
+        href="/#five"
+      >
+        five
+      </a>
+    </li>
+    <li
+      class="breadcrumb-item"
+    >
+      <a
+        class="breadcrumb-link breadcrumb-text-truncate"
+        href="/#six"
+      >
+        six
+      </a>
+    </li>
+    <li
+      class="breadcrumb-item"
+    >
+      <a
+        class="breadcrumb-link breadcrumb-text-truncate"
+        href="/#seven"
+      >
+        seven
+      </a>
+    </li>
+  </ol>
+</div>
+`;

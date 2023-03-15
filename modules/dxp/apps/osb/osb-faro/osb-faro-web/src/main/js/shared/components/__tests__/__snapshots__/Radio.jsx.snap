@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Radio should render 1`] = `
+<div>
+  <div
+    class="custom-control custom-radio"
+  >
+    <label>
+      <input
+        class="custom-control-input"
+        type="radio"
+      />
+      <span
+        class="custom-control-label"
+      />
+    </label>
+  </div>
+</div>
+`;

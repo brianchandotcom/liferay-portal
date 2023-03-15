@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkspaceListItem should render 1`] = `
+<div>
+  <li
+    class="list-group-item list-group-item-action list-group-item-flex"
+  >
+    <button
+      class="button-root btn btn-unstyled workspace-link border-button"
+      type="button"
+    >
+      <div
+        class="autofit-col autofit-col-expand"
+      >
+        <div
+          class="col-content-wrapper"
+        >
+          <div
+            class="text-truncate"
+          >
+            <div
+              class="workspace-name"
+            >
+              <div
+                class="info-wrapper configuration-required"
+              >
+                Finish Setting Up Workspace
+              </div>
+              <span
+                class="text-truncate"
+                data-tooltip="false"
+                title=""
+              />
+            </div>
+            <div
+              class="workspace-info"
+            />
+          </div>
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-angle-right"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+            />
+          </svg>
+        </div>
+      </div>
+    </button>
+  </li>
+</div>
+`;

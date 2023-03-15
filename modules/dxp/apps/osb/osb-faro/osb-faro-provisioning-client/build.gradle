@@ -1,0 +1,5 @@
+dependencies {
+	compileInclude group: "com.liferay.osb.koroneiki", name: "com.liferay.osb.koroneiki.client", version: "1.0.0"
+
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+}

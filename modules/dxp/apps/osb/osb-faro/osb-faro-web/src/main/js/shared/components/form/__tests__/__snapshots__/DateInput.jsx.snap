@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateInput should render 1`] = `
+<div>
+  <div
+    class="form-date-input-root"
+  >
+    <div
+      aria-haspopup="true"
+      class="input-group date-input-root"
+    >
+      <div
+        class="input-group-item"
+      >
+        <input
+          autocomplete="off"
+          class="input-root form-control input-group-inset input-group-inset-after"
+          data-testid="date-input"
+          id="foo"
+          name="foo"
+          placeholder="YYYY-MM-DD"
+          type="text"
+          value=""
+        />
+        <div
+          class="input-group-inset-item input-group-inset-item-after"
+        >
+          <button
+            class="button-root btn btn-unstyled"
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-calendar"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#calendar"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummaryBaseCard should render component 1`] = `
+<div>
+  <div
+    class="card card-root analytics-summary-card"
+  />
+</div>
+`;
+
+exports[`SummaryBaseCard.Body should render component with Body 1`] = `
+<div>
+  <div
+    class="card card-root analytics-summary-card"
+  >
+    <div
+      class="card-body"
+    >
+      Summary Card with Body
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SummaryBaseCard.Footer should render component with Footer 1`] = `
+<div>
+  <div
+    class="card card-root analytics-summary-card"
+  >
+    <div
+      class="card-footer"
+    >
+      Summary Card with Footer
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SummaryBaseCard.Header Actions should render component with Header 1`] = `
+<div>
+  <div
+    class="card card-root analytics-summary-card"
+  >
+    <div
+      class="card-header d-flex justify-content-between"
+    >
+      Summary Card with Header
+      <div
+        class="d-flex align-items-center"
+      />
+    </div>
+  </div>
+</div>
+`;

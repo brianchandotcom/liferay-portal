@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
+		<suppress checks="GradleDependencyVersionCheck" files=".*" />
+		<suppress checks="GradleTestDependencyVersionCheck" files=".*" />
+		<suppress checks="GradleVersionCheck" files=".*" />
+		<suppress checks="JavaModuleTestCheck" files=".*/src/testIntegration/java/com/liferay/osb/faro/functional/test/steps/FaroHooks.java" />
+		<suppress checks="JSONPackageJSONDependencyVersionCheck" files=".*" />
+		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files=".*" />
+		<suppress checks="SQLLongNamesCheck" files=".*" />
+		<suppress checks="YMLDefinitionOrderCheck" files=".*" />
+	</source-check>
+</suppressions>

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountNames should render 1`] = `
+<tr>
+  <td
+    class="name-cell-root"
+  >
+    <div
+      class="text-truncate"
+    >
+      foo, bar, baz
+    </div>
+  </td>
+</tr>
+`;

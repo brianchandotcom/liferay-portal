@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChangeLegend should render 1`] = `
+<div>
+  <div
+    class="change-legend-root"
+  >
+    <div
+      class="legend-item activities"
+    >
+      <div
+        class="legend-header"
+      >
+        <span
+          class="legend-color"
+          style="background-color: rgb(75, 155, 255);"
+        />
+        <span
+          class="title"
+        >
+          Total Activity Count: 50
+        </span>
+      </div>
+      <div
+        class="secondary-info"
+      >
+        30 Day Total
+        <span
+          class="change increase"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-caret-top"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-top"
+            />
+          </svg>
+          200.0%
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

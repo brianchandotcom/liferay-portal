@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sites Dashboard Interests render 1`] = `
+<div>
+  <div
+    class="sites-dashboard-interests-root"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-xl-12"
+      >
+        <div
+          class="card card-root sites-interests-root page-display"
+        >
+          <div
+            class="card-header align-items-center d-flex justify-content-between"
+          >
+            <div
+              class="no-results-root flex-grow-1"
+            >
+              <div
+                class="no-results-content"
+              >
+                <h4
+                  class="no-results-title"
+                >
+                  Sorry, an error occurred.
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div
+            class="error-display-root flex-grow-1 error-spacer no-results-root flex-grow-1"
+          >
+            <div
+              class="no-results-content"
+            >
+              <h4
+                class="no-results-title"
+              >
+                An unexpected error occurred.
+              </h4>
+              <button
+                class="button-root btn btn-secondary"
+                type="button"
+              >
+                Reload
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

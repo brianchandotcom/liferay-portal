@@ -1,0 +1,74 @@
+.overview-root {
+	height: 100%;
+
+	.card-root {
+		.card-footer {
+			display: flex;
+			justify-content: flex-end;
+
+			.button-root {
+				color: $mainLighten28;
+				font-size: $fontSizeSmall;
+				font-weight: $fontWeightSemiBold;
+
+				.icon-root {
+					margin-left: 5px;
+					width: 10px;
+				}
+			}
+		}
+
+		.table-root {
+			&.table-responsive {
+				margin-bottom: 0;
+			}
+
+			td {
+				padding: 12px;
+			}
+
+			td,
+			th {
+				&:first-child {
+					padding-left: 24px;
+				}
+
+				&:last-child {
+					padding-right: 24px;
+				}
+			}
+		}
+	}
+
+	.container-fluid {
+		justify-content: center;
+	}
+
+	.overview-column-side {
+		.card-body .card-title {
+			margin-bottom: 16px;
+		}
+
+		.searchable-select-root > .button-root {
+			font-size: $fontSizeSmall;
+			margin: 8px 0;
+		}
+	}
+
+	.overview-layout {
+		display: grid;
+		grid-column-gap: $gridGap;
+		grid-row-gap: $gridGap;
+		grid-template-columns: minmax($overviewCardMainMinWidth, auto) $overviewCardSideMinWidth;
+	}
+}
+
+@media screen and (max-width: $sidebarOpenWidth
+		+ $overviewCardMainMinWidth
+		+ $gridGap
+		+ $overviewCardSideMinWidth
+		+ ($pagePadding * 2)) {
+	.overview-root .overview-layout {
+		display: block;
+	}
+}

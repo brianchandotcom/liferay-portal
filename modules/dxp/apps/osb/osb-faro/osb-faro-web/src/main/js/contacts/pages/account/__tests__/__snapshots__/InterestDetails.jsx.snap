@@ -1,0 +1,260 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InterestDetails should render 1`] = `
+<div>
+  <div
+    class="interest-details-root"
+  >
+    <div
+      class="back-button-root"
+    >
+      <a
+        class="button-root btn btn-outline-secondary btn-outline-borderless"
+        href="/workspace/123/contacts/accounts/123/interests"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-angle-left inline-item inline-item-before icon-size-sm"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+          />
+        </svg>
+        Back to Interests
+      </a>
+    </div>
+    <div
+      class="card card-root page-display"
+    >
+      <div
+        class="card-header"
+      >
+        <h5
+          class="card-title"
+        >
+          Interest - 
+          <span
+            class="interest-name"
+          >
+            123
+          </span>
+        </h5>
+      </div>
+      <div
+        class="card-header"
+      >
+        <ul
+          class="nav-root page-subnav nav nav-underline"
+          role="tablist"
+        >
+          <li
+            class="nav-item active"
+            role="presentation"
+          >
+            <a
+              class="nav-link active"
+              href="/workspace/123/contacts/accounts/123/interests/123/individuals"
+              role="tab"
+            >
+              <h4>
+                Individuals
+              </h4>
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/123/contacts/accounts/123/interests/123/pages?active=true"
+              role="tab"
+            >
+              <h4>
+                Active Pages
+              </h4>
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            role="presentation"
+          >
+            <a
+              class="nav-link"
+              href="/workspace/123/contacts/accounts/123/interests/123/pages?active=false"
+              role="tab"
+            >
+              <h4>
+                Inactive Pages
+              </h4>
+            </a>
+          </li>
+        </ul>
+        <h4
+          class="list-title"
+        >
+          Members Interested in "123" - As of January 1, 1970
+        </h4>
+      </div>
+      <div
+        class="base-results-root d-flex flex-column flex-grow-1 searchable-table-root interest-history-table d-flex flex-column flex-grow-1 searchable-table-borderless"
+      >
+        <div
+          class="toolbar-root"
+        >
+          <nav
+            class="navbar navbar-root management-bar management-bar-light navbar-expand"
+          >
+            <div
+              class="container-fluid"
+            >
+              <ul
+                class="nav-root front-nav navbar-nav"
+                role="tablist"
+              >
+                <li
+                  aria-haspopup="true"
+                  class="dropdown dropdown-root filter-and-order-root nav-item"
+                >
+                  <button
+                    class="button-root btn btn-unstyled dropdown-toggle nav-btn show-caret"
+                    data-testid="filter-and-order-button"
+                    type="button"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Order
+                    </span>
+                    
+                    <span
+                      class="caret-root"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <a
+                    class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                    href="/?field=name&page=1&sortOrder=DESC"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      />
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+              <div
+                class="navbar-form navbar-form-autofit"
+              >
+                <div
+                  class="input-group search"
+                >
+                  <div
+                    class="input-group-item"
+                  >
+                    <input
+                      class="input-root form-control input-group-inset input-group-inset-after"
+                      placeholder="Search"
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="input-group-inset-item input-group-inset-item-after"
+                    >
+                      <button
+                        class="button-root btn btn-unstyled"
+                        type="button"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-search"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div
+          class="table-responsive table-root flex-grow-1"
+        >
+          <table
+            class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+          >
+            <thead>
+              <tr>
+                <th
+                  class="table-head-title"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=name&page=1&sortOrder=DESC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Name
+                    </span>
+                    <span
+                      class="inline-item inline-item-after"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  Email
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  Account Names
+                </th>
+              </tr>
+            </thead>
+          </table>
+          <div
+            class="spinner-root spinner-overlay"
+          >
+            <span
+              class="loading-animation loading-animation-dotted"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

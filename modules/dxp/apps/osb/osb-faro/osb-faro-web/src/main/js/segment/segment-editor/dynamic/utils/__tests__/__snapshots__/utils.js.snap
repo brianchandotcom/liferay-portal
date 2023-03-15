@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`utils convertFieldMappingToAccountProperty should convert fieldMapping to an Account Property Record 1`] = `
+Immutable.Record {
+  "entityName": "Account",
+  "entityType": "",
+  "id": "345606994945962466",
+  "label": "accountName",
+  "name": "organization/accountName/value",
+  "options": Array [],
+  "propertyKey": "account",
+  "type": "account-text",
+}
+`;
+
+exports[`utils convertFieldMappingToAccountProperty should convert fieldMappingIMap to an Account Property Record 1`] = `
+Immutable.Record {
+  "entityName": "Account",
+  "entityType": "",
+  "id": "345606994945962466",
+  "label": "accountName",
+  "name": "organization/accountName/value",
+  "options": Array [],
+  "propertyKey": "account",
+  "type": "account-text",
+}
+`;
+
+exports[`utils convertFieldMappingToIndividualProperty should convert fieldMapping to an Individual Property Record 1`] = `
+Immutable.Record {
+  "entityName": "Individual",
+  "entityType": "",
+  "id": "335454102264596251",
+  "label": "additionalName",
+  "name": "demographics/additionalName/value",
+  "options": Array [],
+  "propertyKey": "individual",
+  "type": "text",
+}
+`;
+
+exports[`utils convertFieldMappingToIndividualProperty should convert fieldMappingIMap to an Individual Property Record 1`] = `
+Immutable.Record {
+  "entityName": "Individual",
+  "entityType": "",
+  "id": "335454102264596251",
+  "label": "additionalName",
+  "name": "demographics/additionalName/value",
+  "options": Array [],
+  "propertyKey": "individual",
+  "type": "text",
+}
+`;
+
+exports[`utils convertFieldMappingsToProperties should convert fieldMappings to Properties 1`] = `
+Immutable.Map {
+  "account": Immutable.Map {
+    "organization": Immutable.Map {
+      "accountName": Immutable.Record {
+        "entityName": "Account",
+        "entityType": "",
+        "id": "345606994945962466",
+        "label": "accountName",
+        "name": "organization/accountName/value",
+        "options": Array [],
+        "propertyKey": "account",
+        "type": "account-text",
+      },
+    },
+  },
+  "individual": Immutable.Map {
+    "custom": Immutable.Map {
+      "additionaName": Immutable.Record {
+        "entityName": "Individual",
+        "entityType": "",
+        "id": "123123",
+        "label": "customIndividualField",
+        "name": "custom/customIndividualField/value",
+        "options": Array [],
+        "propertyKey": "individual",
+        "type": "text",
+      },
+    },
+    "demographics": Immutable.Map {
+      "additionaName": Immutable.Record {
+        "entityName": "Individual",
+        "entityType": "",
+        "id": "335454102264596251",
+        "label": "additionalName",
+        "name": "demographics/additionalName/value",
+        "options": Array [],
+        "propertyKey": "individual",
+        "type": "text",
+      },
+    },
+  },
+  "organization": Immutable.Map {
+    "custom": Immutable.Map {
+      "additionaName": Immutable.Record {
+        "entityName": "Organization",
+        "entityType": "",
+        "id": "321321",
+        "label": "customOrganizationField",
+        "name": "custom/customOrganizationField/value",
+        "options": Array [],
+        "propertyKey": "organization",
+        "type": "organization-text",
+      },
+    },
+  },
+}
+`;

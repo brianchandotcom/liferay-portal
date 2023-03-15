@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shared HOCs Mappers - Filter should map filter information 1`] = `
+Object {
+  "error": null,
+  "items": Array [
+    Object {
+      "hasSearch": false,
+      "items": Array [
+        Object {
+          "category": "devices",
+          "checked": false,
+          "inputType": "radio",
+          "label": "Desktop",
+          "value": "8",
+        },
+        Object {
+          "category": "devices",
+          "checked": false,
+          "inputType": "radio",
+          "label": "SmartPhone",
+          "value": "5",
+        },
+        Object {
+          "category": "devices",
+          "checked": false,
+          "inputType": "radio",
+          "label": "Tablet",
+          "value": "2",
+        },
+      ],
+      "label": "Devices",
+      "name": "Devices",
+      "value": "3",
+    },
+    Object {
+      "hasSearch": false,
+      "items": Array [
+        Object {
+          "category": "location",
+          "checked": false,
+          "inputType": "radio",
+          "label": "Brazil",
+          "value": "5",
+        },
+        Object {
+          "category": "location",
+          "checked": false,
+          "inputType": "radio",
+          "label": "Spain",
+          "value": "6",
+        },
+        Object {
+          "category": "location",
+          "checked": false,
+          "inputType": "radio",
+          "label": "United States",
+          "value": "6",
+        },
+      ],
+      "label": "Location",
+      "name": "Location",
+      "value": "3",
+    },
+  ],
+  "loading": false,
+  "refetch": undefined,
+}
+`;

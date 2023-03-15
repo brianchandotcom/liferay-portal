@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationAlertList should render 1`] = `
+<div>
+  <div
+    class="embedded-alert-list-root notification-alert-list-root"
+  >
+    <div
+      class="alert alert-dismissible alert-info"
+      role="alert"
+    >
+      <span
+        class="alert-indicator"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-exclamation-full"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#exclamation-full"
+          />
+        </svg>
+      </span>
+      <strong
+        class="lead"
+      >
+        Info:
+      </strong>
+      Workspace timezone has changed to  as of a few seconds ago. Please allow 1-2 days for the data to adjust to this new setting.
+      <button
+        class="close"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-times"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;

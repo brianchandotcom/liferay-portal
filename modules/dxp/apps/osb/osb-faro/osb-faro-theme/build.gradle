@@ -1,0 +1,3 @@
+import com.liferay.gradle.plugins.defaults.internal.LiferayThemeDefaultsGulpPlugin
+
+LiferayThemeDefaultsGulpPlugin.INSTANCE.apply(project)

@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CriteriaSidebarItem should render 1`] = `
+<div>
+  <li
+    class="criteria-sidebar-item-root"
+  >
+    <span
+      class="inline-item"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-drag"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+        />
+      </svg>
+    </span>
+    <span
+      class="criteria-sidebar-item-type sticker"
+    >
+      <span
+        class="inline-item"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-text"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+          />
+        </svg>
+      </span>
+    </span>
+    Page Views
+  </li>
+</div>
+`;

@@ -1,0 +1,512 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InterestTopics should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <ol
+      class="breadcrumb breadcrumbs-root"
+    >
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/definitions"
+        >
+          Definitions
+        </a>
+      </li>
+      <li
+        class="breadcrumb-item active"
+      >
+        <span
+          class="breadcrumb-text-truncate"
+        >
+          Interest Topics
+        </span>
+      </li>
+    </ol>
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Interest Topics
+            </span>
+          </h3>
+        </div>
+        <div
+          class="description"
+        >
+          <p>
+            Approximates what topics individuals are interested in based on their interactions with registered touchpoints.
+            <br />
+            Liferay Analytics Cloud automatically associates registered touchpoints with keywords based on their meta tags, titles and descriptions.
+          </p>
+          <h4>
+            Keywords Blocklist
+          </h4>
+          <p>
+            Keywords can be excluded by adding them to a blocklist. Manage the keywords that you do not want listed in Liferay Analytics Cloud, and do not want them to be used to generate content recommendation in Liferay DXP.
+          </p>
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="card card-root page-display"
+      >
+        <div
+          class="toolbar-root"
+        >
+          <nav
+            class="navbar navbar-root management-bar management-bar-light navbar-expand"
+          >
+            <div
+              class="container-fluid"
+            >
+              <ul
+                class="nav-root front-nav navbar-nav"
+                role="tablist"
+              >
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        data-testid="select-all-checkbox"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </li>
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <a
+                    class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                    href="/?field=keyword&page=1&sortOrder=DESC"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      />
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+              <div
+                class="navbar-form navbar-form-autofit"
+              >
+                <div
+                  class="input-group search"
+                >
+                  <div
+                    class="input-group-item"
+                  >
+                    <input
+                      class="input-root form-control input-group-inset input-group-inset-after"
+                      maxlength="900"
+                      placeholder="Search"
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="input-group-inset-item input-group-inset-item-after"
+                    >
+                      <button
+                        class="button-root btn btn-unstyled"
+                        type="button"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-search"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul
+                class="nav-root navbar-nav"
+                role="tablist"
+              >
+                <li
+                  class="nav-item"
+                  role="presentation"
+                >
+                  <button
+                    class="button-root btn btn-primary nav-btn"
+                    type="button"
+                  >
+                    Add Keyword
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <div
+          class="table-responsive table-root flex-grow-1"
+        >
+          <table
+            class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+          >
+            <thead>
+              <tr>
+                <th />
+                <th
+                  class="table-head-title table-cell-expand"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=keyword&page=1&sortOrder=DESC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Keyword
+                    </span>
+                    <span
+                      class="inline-item inline-item-after"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  <a
+                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    href="/?field=createDate&page=1&sortOrder=DESC"
+                  >
+                    <span
+                      class="text-truncate"
+                    >
+                      Added
+                    </span>
+                  </a>
+                </th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="clickable"
+              >
+                <td>
+                  <div
+                    class="custom-control custom-checkbox"
+                  >
+                    <label>
+                      <input
+                        class="custom-control-input"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="custom-control-label"
+                      />
+                    </label>
+                  </div>
+                </td>
+                <td
+                  class="table-cell-expand"
+                >
+                  <h4
+                    class="table-title text-truncate"
+                  >
+                    bar-0
+                  </h4>
+                </td>
+                <td>
+                  Dec 3, 2019
+                </td>
+                <td
+                  class="row-inline-actions"
+                >
+                  <span>
+                    <button
+                      class="button-root btn btn-secondary btn-outline-borderless btn-sm"
+                      type="button"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-trash"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#trash"
+                        />
+                      </svg>
+                    </button>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <nav
+          class="navbar navbar-root pagination-bar-root"
+        >
+          <div
+            class="container-fluid"
+          >
+            <div
+              aria-haspopup="true"
+              class="dropdown dropdown-root pagination-items-per-page"
+            >
+              <button
+                class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+                type="button"
+              >
+                <span
+                  class="text-truncate"
+                >
+                  2 Items
+                </span>
+                
+                <span
+                  class="caret-root"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="pagination-results"
+            >
+              Showing 1 to 1 of 1 entry.
+            </div>
+            <ul
+              class="pagination pagination-root"
+            >
+              <li
+                class="page-item disabled"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link link-disabled"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-angle-left"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li
+                class="page-item active"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link"
+                  href="/?page=1"
+                >
+                  1
+                </a>
+              </li>
+              <li
+                class="page-item disabled"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link link-disabled"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-angle-right"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InterestTopics should render page not found puts a invalid page 1`] = `
+<div
+  class="no-results-root flex-grow-1"
+>
+  <div
+    class="no-results-content"
+  >
+    <h4
+      class="no-results-title"
+    >
+      Page Not Found
+    </h4>
+    <a
+      class="button-root btn btn-secondary"
+      href="/workspace/23/settings/definitions/interest-topics"
+    >
+      Back to Interest Topics
+    </a>
+  </div>
+</div>
+`;
+
+exports[`InterestTopics should render with a member-specific message to add keywords if there are none 1`] = `
+<div
+  class="no-results-root flex-grow-1 no-results-primary"
+>
+  <div
+    class="no-results-content"
+  >
+    <div
+      class="no-results-icon"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-ac-satellite icon-size-xxxl"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-satellite"
+        />
+      </svg>
+    </div>
+    <h4
+      class="no-results-title"
+    >
+      No Keywords Found
+    </h4>
+    <div
+      class="no-results-description"
+    >
+      Please contact your site administrator to add keywords.
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InterestTopics should render with a message to add keywords if there are none 1`] = `
+<div
+  class="no-results-root flex-grow-1 no-results-primary"
+>
+  <div
+    class="no-results-content"
+  >
+    <div
+      class="no-results-icon"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-ac-satellite icon-size-xxxl"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-satellite"
+        />
+      </svg>
+    </div>
+    <h4
+      class="no-results-title"
+    >
+      No Keywords Found
+    </h4>
+    <div
+      class="no-results-description"
+    >
+      Add a keyword to be blocked.
+      <a
+        class="d-block mb-3"
+        href="https://learn.liferay.com/analytics-cloud/latest/en/workspace-data/definitions/managing-interest-topics.html"
+        target="_blank"
+      >
+        Learn more about interest topics.
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`InterestTopics should render with an empty state 1`] = `
+<div
+  class="no-results-root flex-grow-1"
+>
+  <div
+    class="no-results-content"
+  >
+    <div
+      class="no-results-icon"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-ac-no-results-found icon-size-xxxl"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-no-results-found"
+        />
+      </svg>
+    </div>
+    <h4
+      class="no-results-title"
+    >
+      There are no results found.
+    </h4>
+    <div
+      class="no-results-description"
+    >
+      Please try a different search term.
+    </div>
+  </div>
+</div>
+`;

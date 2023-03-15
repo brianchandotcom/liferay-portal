@@ -1,0 +1,51 @@
+@mixin browser($browsers: Mozilla) {
+	@each $browser in $browsers {
+		html[data-browser*="#{$browser}"] & {
+			@content;
+		}
+	}
+}
+
+@mixin tooltip-arrow {
+	background-color: $white;
+	content: "";
+	height: 6px;
+	position: absolute;
+	transform: rotate(45deg);
+	transform-origin: 0% 0%;
+	width: 6px;
+}
+
+@mixin tooltip-arrow-left {
+	@include tooltip-arrow;
+	bottom: 50%;
+}
+
+@mixin tooltip-arrow-bottom {
+	@include tooltip-arrow;
+	bottom: -2px;
+	left: 50%;
+}
+
+@mixin generatePropertyGroupLoop(
+	$array,
+	$cssProperty,
+	$classPrefix: 'color--'
+) {
+	@each $a in $array {
+		$className: nth($a, 1);
+		$color: nth($a, 2);
+
+		@include generatePropertyGroup($color, $cssProperty, #{$classPrefix + $className});
+	}
+}
+
+@mixin generatePropertyGroup($color, $cssProperty, $className) {
+	&.#{$className} {
+		#{$cssProperty}: $color;
+	}
+}
+
+@mixin dashedLine($color) {
+	background-image: linear-gradient(90deg, $color 28.3%, transparent 28.3% 38.3%, $color 38.3% 61.6%, transparent 61.6% 71.6%, $color 71.6% 100%);
+}

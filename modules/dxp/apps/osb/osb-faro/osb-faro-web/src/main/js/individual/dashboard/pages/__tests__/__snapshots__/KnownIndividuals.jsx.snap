@@ -1,0 +1,427 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
+<div>
+  <div
+    class="body-root page-container"
+  >
+    <span
+      class="children-wrapper"
+    >
+      <div
+        class="individuals-dashboard-known-individuals-root"
+      >
+        <div
+          class="card card-root page-display"
+        >
+          <div
+            class="toolbar-root"
+          >
+            <nav
+              class="navbar navbar-root management-bar management-bar-light navbar-expand"
+            >
+              <div
+                class="container-fluid"
+              >
+                <ul
+                  class="nav-root front-nav navbar-nav"
+                  role="tablist"
+                >
+                  <li
+                    class="nav-item"
+                    role="presentation"
+                  >
+                    <div
+                      class="custom-control custom-checkbox"
+                    >
+                      <label>
+                        <input
+                          class="custom-control-input"
+                          data-testid="select-all-checkbox"
+                          type="checkbox"
+                          value="false"
+                        />
+                        <span
+                          class="custom-control-label"
+                        />
+                      </label>
+                    </div>
+                  </li>
+                  <li
+                    aria-haspopup="true"
+                    class="dropdown dropdown-root filter-and-order-root nav-item"
+                  >
+                    <button
+                      class="button-root btn btn-unstyled dropdown-toggle nav-btn show-caret"
+                      data-testid="filter-and-order-button"
+                      type="button"
+                    >
+                      <span
+                        class="text-truncate"
+                      >
+                        Order
+                      </span>
+                      
+                      <span
+                        class="caret-root"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </li>
+                  <li
+                    class="nav-item"
+                    role="presentation"
+                  >
+                    <a
+                      class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                      href="/?field=name&page=1&sortOrder=DESC"
+                    >
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                        />
+                      </svg>
+                    </a>
+                  </li>
+                </ul>
+                <div
+                  class="navbar-form navbar-form-autofit"
+                >
+                  <div
+                    class="input-group search"
+                  >
+                    <div
+                      class="input-group-item"
+                    >
+                      <input
+                        class="input-root form-control input-group-inset input-group-inset-after"
+                        placeholder="Search"
+                        type="text"
+                        value=""
+                      />
+                      <div
+                        class="input-group-inset-item input-group-inset-item-after"
+                      >
+                        <button
+                          class="button-root btn btn-unstyled"
+                          type="button"
+                        >
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-search"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+          <div
+            class="table-responsive table-root flex-grow-1"
+          >
+            <table
+              class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+            >
+              <thead>
+                <tr>
+                  <th />
+                  <th
+                    class="table-head-title table-cell-expand"
+                  >
+                    <a
+                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      href="/?field=name&page=1&sortOrder=DESC"
+                    >
+                      <span
+                        class="text-truncate"
+                      >
+                        Name | Email
+                      </span>
+                      <span
+                        class="inline-item inline-item-after"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                          />
+                        </svg>
+                      </span>
+                    </a>
+                  </th>
+                  <th
+                    class="table-head-title table-cell-expand"
+                  >
+                    <a
+                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      href="/?field=jobTitle&page=1&sortOrder=ASC"
+                    >
+                      <span
+                        class="text-truncate"
+                      >
+                        Job Title
+                      </span>
+                    </a>
+                  </th>
+                  <th
+                    class="table-head-title table-column-text-end"
+                  >
+                    <a
+                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      href="/?field=activitiesCount&page=1&sortOrder=DESC"
+                    >
+                      <span
+                        class="text-truncate"
+                      >
+                        Total Activities
+                      </span>
+                    </a>
+                  </th>
+                  <th
+                    class="table-head-title"
+                  >
+                    <a
+                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      href="/?field=lastActivityDate&page=1&sortOrder=DESC"
+                    >
+                      <span
+                        class="text-truncate"
+                      >
+                        Last Activity
+                      </span>
+                    </a>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="clickable"
+                >
+                  <td>
+                    <div
+                      class="custom-control custom-checkbox"
+                    >
+                      <label>
+                        <input
+                          class="custom-control-input"
+                          type="checkbox"
+                          value="false"
+                        />
+                        <span
+                          class="custom-control-label"
+                        />
+                      </label>
+                    </div>
+                  </td>
+                  <td
+                    class="name-cell-root table-cell-expand"
+                  >
+                    <div
+                      class="content-container"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        <div
+                          class="table-title text-truncate"
+                        >
+                          <a
+                            class="text-truncate"
+                            href="/workspace/23/321321/contacts/individuals/known-individuals/0"
+                          >
+                            Foo Bar
+                          </a>
+                        </div>
+                        <div
+                          class="secondary-info text-truncate"
+                        >
+                          -
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td
+                    class="table-cell-expand"
+                  >
+                    Developer
+                  </td>
+                  <td
+                    class="table-column-text-end"
+                  >
+                    1,000
+                  </td>
+                  <td>
+                    Jul 10, 2018
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <nav
+            class="navbar navbar-root pagination-bar-root"
+          >
+            <div
+              class="container-fluid"
+            >
+              <div
+                aria-haspopup="true"
+                class="dropdown dropdown-root pagination-items-per-page"
+              >
+                <button
+                  class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+                  type="button"
+                >
+                  <span
+                    class="text-truncate"
+                  >
+                    2 Items
+                  </span>
+                  
+                  <span
+                    class="caret-root"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+              <div
+                class="pagination-results"
+              >
+                Showing 1 to 1 of 1 entry.
+              </div>
+              <ul
+                class="pagination pagination-root"
+              >
+                <li
+                  class="page-item disabled"
+                >
+                  <a
+                    class="button-root btn btn-unstyled page-link link-disabled"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-angle-left"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                      />
+                    </svg>
+                  </a>
+                </li>
+                <li
+                  class="page-item active"
+                >
+                  <a
+                    class="button-root btn btn-unstyled page-link"
+                    href="/?page=1"
+                  >
+                    1
+                  </a>
+                </li>
+                <li
+                  class="page-item disabled"
+                >
+                  <a
+                    class="button-root btn btn-unstyled page-link link-disabled"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-angle-right"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                      />
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Individuals Dashboard KnownIndividuals List renders with data source empty state 1`] = `
+<div>
+  <div
+    class="body-root page-container"
+  >
+    <span
+      class="children-wrapper"
+    >
+      <div
+        class="no-results-root flex-grow-1 display-card"
+      >
+        <div
+          class="no-results-content"
+        >
+          <div
+            class="no-results-icon"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-ac-satellite icon-size-xxxl"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-satellite"
+              />
+            </svg>
+          </div>
+          <h4
+            class="no-results-title"
+          >
+            No Data Sources Connected
+          </h4>
+          <div
+            class="no-results-description"
+          >
+            Connect a data source to get started.
+            <a
+              class="d-block mb-3"
+              href="https://learn.liferay.com/analytics-cloud/latest/en/getting-started/connecting-liferay-dxp-to-analytics-cloud.html"
+              target="_blank"
+            >
+              Access our documentation to learn more.
+            </a>
+            <a
+              class="button-root btn btn-primary"
+              href="/workspace/23/settings/data-source/add"
+            >
+              Connect Data Source
+            </a>
+          </div>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+`;

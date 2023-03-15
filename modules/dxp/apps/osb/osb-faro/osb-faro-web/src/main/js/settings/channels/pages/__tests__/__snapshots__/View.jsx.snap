@@ -1,0 +1,251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`View Channel should render 1`] = `
+<div>
+  <div
+    class="modal-renderer-root"
+  />
+  <div
+    class="settings-base-page-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <ol
+      class="breadcrumb breadcrumbs-root"
+    >
+      <li
+        class="breadcrumb-item"
+      >
+        <a
+          class="breadcrumb-link breadcrumb-text-truncate"
+          href="/workspace/23/settings/properties"
+        >
+          Properties
+        </a>
+      </li>
+      <li
+        class="breadcrumb-item active"
+      >
+        <span
+          class="breadcrumb-text-truncate"
+        >
+          Channel 1
+        </span>
+      </li>
+    </ol>
+    <div>
+      <div
+        class="content-header has-page-actions"
+      >
+        <div
+          class="header-text w-100"
+        >
+          <div
+            class="title-editor-root"
+          >
+            <input
+              class="title-input hide"
+              name="name"
+              required=""
+              type="text"
+              value="Channel 1"
+            />
+            <div
+              class="title-display"
+            >
+              <span
+                class="title-value"
+                role="button"
+                tabindex="0"
+              >
+                Channel 1
+              </span>
+              <button
+                aria-label="Edit"
+                class="button-root btn btn-outline-unstyled btn-outline-borderless btn-sm"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-pencil"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            class="description"
+          >
+            Property ID: 1
+          </div>
+        </div>
+        <div
+          class="d-flex"
+        >
+          <span
+            class="font-weight-semibold mr-2 align-items-center d-flex"
+          >
+            Email Reports: 
+            Disabled
+            <button
+              class="button-root btn btn-unstyled btn-outline-borderless btn-sm"
+              disabled=""
+              type="button"
+            >
+              <span
+                class="ml-2 p-2"
+                data-tooltip="true"
+                data-tooltip-align="top"
+                title="Configure Email Reports"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-cog"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#cog"
+                  />
+                </svg>
+              </span>
+            </button>
+          </span>
+          <span
+            class="header-action-buttons pl-3"
+          >
+            <button
+              class="button-root btn btn-secondary mr-3"
+              type="button"
+            >
+              Clear Data
+            </button>
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Delete
+            </button>
+          </span>
+        </div>
+      </div>
+      <div
+        class="card card-root page-display"
+      >
+        <div
+          class="sites-synced-stripe-root empty"
+        >
+          <div
+            class="title d-flex align-items-center"
+          >
+            Sites Synced: 
+            <div
+              class="spinner-root"
+            >
+              <span
+                class="loading-animation loading-animation-light loading-animation-dotted loading-animation-sm"
+              />
+            </div>
+          </div>
+          <div>
+            Manage sites synced to this property by going to 
+            <b>
+              Instance Settings &gt; Analytics Cloud
+            </b>
+             in your DXP instance.
+          </div>
+        </div>
+        <div
+          class="card-body flex-grow-0"
+        >
+          <div
+            class="radio-group-root"
+          >
+            <div
+              class="custom-control custom-radio custom-control-inline"
+            >
+              <label>
+                <input
+                  checked=""
+                  class="custom-control-input"
+                  name="permissionType"
+                  type="radio"
+                />
+                <span
+                  class="custom-control-label"
+                >
+                  <span
+                    class="custom-control-label-text"
+                  >
+                    <b>
+                      All Users
+                    </b>
+                  </span>
+                </span>
+              </label>
+            </div>
+            <div
+              class="custom-control custom-radio custom-control-inline"
+            >
+              <label>
+                <input
+                  class="custom-control-input"
+                  name="permissionType"
+                  type="radio"
+                />
+                <span
+                  class="custom-control-label"
+                >
+                  <span
+                    class="custom-control-label-text"
+                  >
+                    <b>
+                      Select Users
+                    </b>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card-body no-padding"
+        >
+          <div
+            class="no-results-root flex-grow-1"
+          >
+            <div
+              class="no-results-content"
+            >
+              <div
+                class="no-results-icon"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-ac-no-sites icon-size-xxxl"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-no-sites"
+                  />
+                </svg>
+              </div>
+              <h4
+                class="no-results-title"
+              >
+                All Aboard!
+              </h4>
+              <div
+                class="no-results-description"
+              >
+                All users from this workspace have access to this property.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

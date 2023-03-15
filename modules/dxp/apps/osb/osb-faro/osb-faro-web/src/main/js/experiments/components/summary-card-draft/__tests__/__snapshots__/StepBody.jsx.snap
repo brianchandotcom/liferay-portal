@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummaryCardDraft StepBody should render "active card" when status is active 1`] = `
+<div
+  class="card card-root analytics-summary-card-step-content analytics-summary-card-step-content-active"
+>
+  <div
+    class="card-body"
+  >
+    <h4>
+      StepBody title
+    </h4>
+    StepBody description
+    <button
+      class="btn btn-sm btn-primary"
+      label="button label"
+      symbol="home"
+      type="button"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-home mr-2"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+        />
+      </svg>
+      button label
+    </button>
+  </div>
+</div>
+`;
+
+exports[`SummaryCardDraft StepBody should render component 1`] = `
+<div>
+  <div
+    class="card card-root analytics-summary-card-step-content analytics-summary-card-step-content-wait"
+  >
+    <div
+      class="card-body"
+    >
+      <h4>
+        StepBody title
+      </h4>
+      StepBody description
+      <button
+        class="btn btn-sm btn-secondary"
+        disabled=""
+        label="button label"
+        symbol="home"
+        type="button"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-home mr-2"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+          />
+        </svg>
+        button label
+      </button>
+    </div>
+  </div>
+</div>
+`;

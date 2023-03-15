@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExportLogModal renders 1`] = `
+<div>
+  <div
+    aria-modal="true"
+    class="modal-dialog export-log-modal-root"
+    role="dialog"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <h4
+          class="modal-title"
+        >
+          Test Title
+        </h4>
+        <button
+          class="button-root btn btn-secondary close"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="modal-body"
+      >
+        <p
+          class="text-secondary"
+        >
+          Test description
+        </p>
+        <h4>
+          Request Date Range
+        </h4>
+        <div
+          class="d-flex"
+        >
+          <div
+            aria-haspopup="true"
+            class="input-group date-range-input-root"
+          >
+            <div
+              class="input-group-item"
+            >
+              <input
+                autocomplete="off"
+                class="input-root form-control input-group-inset input-group-inset-after"
+                data-testid="date-range-input"
+                placeholder="YYYY-MM-DD to YYYY-MM-DD"
+                readonly=""
+                type="text"
+                value=""
+              />
+              <div
+                class="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  aria-label="Choose Date Range"
+                  class="button-root btn btn-unstyled"
+                  type="button"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-calendar"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#calendar"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <button
+            class="button-root btn btn-primary download"
+            disabled=""
+            type="button"
+          >
+            Download
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

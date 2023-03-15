@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummarySection Description should render component 1`] = `
+<div>
+  <div
+    class="analytics-summary-section-description"
+  >
+    100
+  </div>
+</div>
+`;

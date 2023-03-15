@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Data Privacy Overview should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root data-privacy-overview-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Data Control & Privacy
+            </span>
+          </h3>
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-xl-8"
+        >
+          <div
+            class="card card-root"
+          >
+            <div
+              class="card-body"
+            >
+              <div
+                class="container"
+              >
+                <div
+                  class="row justify-content-between"
+                >
+                  <div
+                    class="col-lg-8"
+                  >
+                    <h4>
+                      Retention Period
+                    </h4>
+                    <p
+                      class="text-secondary"
+                    >
+                      Analytics Cloud stores event data and inactive anonymous individuals for the period specified. Known Profile data will be stored indefinitely unless it is removed from the source or requested to be deleted. Contact sales to customize retention period.
+                    </p>
+                  </div>
+                  <div
+                    class="col-lg-auto align-self-center"
+                  >
+                    <select
+                      class="form-control"
+                      data-testid="data-retention-period-select-input"
+                    >
+                      <option
+                        value="18144000000"
+                      >
+                        7 Months
+                      </option>
+                      <option
+                        value="33696000000"
+                      >
+                        13 Months
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <hr />
+                <div
+                  class="row mt-3 justify-content-between"
+                >
+                  <div
+                    class="col-lg-8"
+                  >
+                    <h4>
+                      Request Log
+                    </h4>
+                    <p
+                      class="text-secondary"
+                    >
+                      Data subjects and your organization can request access, deletion and suppression of their data in Analytics Cloud. Some requests may take up to 7 days to complete. We will notify the requestor by email once the download is ready.
+                    </p>
+                  </div>
+                  <div
+                    class="col-lg-auto"
+                  >
+                    <a
+                      class="button-root btn btn-secondary btn-block"
+                      href="/workspace/23/settings/data-privacy/request-log"
+                    >
+                      Manage
+                    </a>
+                    <button
+                      class="button-root btn btn-secondary btn-block"
+                      type="button"
+                    >
+                      Export Log
+                    </button>
+                  </div>
+                </div>
+                <hr />
+                <div
+                  class="row mt-3 justify-content-between"
+                >
+                  <div
+                    class="col-lg-8"
+                  >
+                    <h4>
+                      Suppressed Users
+                    </h4>
+                    <p
+                      class="text-secondary"
+                    >
+                      Suppressed data subjects will be excluded in further identity resolution activity. Deleted data subjects will automatically be suppressed by their user ID and their identity will not be resolveable.
+                    </p>
+                  </div>
+                  <div
+                    class="col-lg-auto"
+                  >
+                    <a
+                      class="button-root btn btn-secondary btn-block"
+                      data-testid="manage-suppressed-user-button"
+                      href="/workspace/23/settings/data-privacy/suppressed-users"
+                    >
+                      Manage
+                    </a>
+                    <button
+                      class="button-root btn btn-secondary btn-block"
+                      data-testid="export-suppressed-user-button"
+                      type="button"
+                    >
+                      Export List
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

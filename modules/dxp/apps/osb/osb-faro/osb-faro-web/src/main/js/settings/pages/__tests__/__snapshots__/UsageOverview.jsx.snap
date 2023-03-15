@@ -1,0 +1,546 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UsageOverview should render 1`] = `
+<div>
+  <div
+    class="settings-base-page-root usage-overview-page-root"
+  >
+    <div
+      class="maintenance-alert-root"
+    />
+    <div
+      class="content-header"
+    >
+      <div
+        class="header-text"
+      >
+        <div
+          class="d-flex"
+        >
+          <h3
+            class="title-text text-truncate"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip="false"
+              title=""
+            >
+              Current Usage Limits
+            </span>
+          </h3>
+        </div>
+      </div>
+      <div
+        class="page-actions-container"
+      />
+    </div>
+    <div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-xl-8"
+        >
+          <div
+            class="text-secondary"
+          >
+            <p>
+              <b>
+                Plans are limited by the total amount of individuals and page views.
+              </b>
+            </p>
+            <p>
+              When either limit is exceeded, the current plan will either have to be upgraded or add-ons will have to be purchased to accommodate the overage.
+            </p>
+          </div>
+          <div
+            class="card card-root"
+          >
+            <div
+              class="card-body"
+            >
+              <div
+                class="overview-usage-metric-root"
+              >
+                <h3
+                  class="metric-name"
+                >
+                  Individuals
+                </h3>
+                <div
+                  class="metric-breakdown"
+                >
+                  <div
+                    class="sticker sticker-root sticker-static sticker-rounded sticker-light"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-ac-individual"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-individual"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="metric-breakdown-content"
+                  >
+                    <div>
+                      <span>
+                        <span
+                          class="metric-current"
+                        >
+                          2,057
+                        </span>
+                         of 
+                        <span
+                          class="metric-limit"
+                        >
+                          105,000
+                        </span>
+                      </span>
+                      <span
+                        class="text-secondary usage-since-label semibold"
+                      >
+                        2% since July 8, 2018
+                      </span>
+                    </div>
+                    <div
+                      class="text-muted small semibold"
+                    >
+                      Enterprise Plan 95,000 + 5,000 Add-On (2x)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="metric-bar-root"
+                >
+                  <div
+                    class="bar bar-primary bar-default"
+                    style="width: 2%;"
+                  />
+                </div>
+                <div
+                  class="metric-definition text-secondary"
+                >
+                  Contacts with a known email address that are synced to Analytics Cloud.
+                </div>
+              </div>
+              <div
+                class="overview-usage-metric-root"
+              >
+                <h3
+                  class="metric-name"
+                >
+                  Page Views
+                </h3>
+                <div
+                  class="metric-breakdown"
+                >
+                  <div
+                    class="sticker sticker-root sticker-static sticker-rounded sticker-light"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-faro-page-views"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-page-views"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="metric-breakdown-content"
+                  >
+                    <div>
+                      <span>
+                        <span
+                          class="metric-current"
+                        >
+                          100,023
+                        </span>
+                         of 
+                        <span
+                          class="metric-limit"
+                        >
+                          7,000,000
+                        </span>
+                      </span>
+                      <span
+                        class="text-secondary usage-since-label semibold"
+                      >
+                        1% since July 8, 2018
+                      </span>
+                    </div>
+                    <div
+                      class="text-muted small semibold"
+                    >
+                      Enterprise Plan 2,000,000 + 5,000,000 Add-On (1x)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="metric-bar-root"
+                >
+                  <div
+                    class="bar bar-primary bar-default"
+                    style="width: 1%;"
+                  />
+                </div>
+                <div
+                  class="metric-definition text-secondary"
+                >
+                  Non-unique visits to any of the pages synced to Analytics Cloud.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-xl-4 plans"
+        >
+          <div>
+            <h4>
+              Plans
+            </h4>
+            <div
+              class="text-secondary"
+            >
+              <p>
+                Balance pricing and value. Higher tiers offer more flexibility through cheaper add-ons and higher limits.
+              </p>
+            </div>
+            <div
+              class="plans-list-root"
+            >
+              <div
+                class="panel-root"
+              >
+                <div
+                  class="panel-header"
+                  role="button"
+                  tabindex="0"
+                >
+                  <div
+                    class="trigger"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-angle-up"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-up"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="panel-title"
+                  >
+                    <div
+                      class="plan-title"
+                    >
+                      <div
+                        class="plan-name"
+                      >
+                        Enterprise
+                      </div>
+                      <div
+                        class="label label-root label-primary label-lg label-uppercase"
+                      >
+                        <span
+                          class="label-item"
+                        >
+                          Current Plan
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="panel-body"
+                >
+                  <div
+                    class="plan-breakdown small"
+                  >
+                    <div
+                      class="limits"
+                    >
+                      <ul>
+                        <li>
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-ac-individual"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-individual"
+                            />
+                          </svg>
+                          <span
+                            class="limit-amount semibold"
+                          >
+                            100,000
+                          </span>
+                          <span
+                            class="text-secondary"
+                          >
+                            Individuals
+                          </span>
+                        </li>
+                        <li>
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-faro-page-views"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-page-views"
+                            />
+                          </svg>
+                          <span
+                            class="limit-amount semibold"
+                          >
+                            60,000,000
+                          </span>
+                          <span
+                            class="text-secondary"
+                          >
+                            Page Views
+                          </span>
+                        </li>
+                        <li>
+                          <svg
+                            class="icon-root lexicon-icon lexicon-icon-ac-users"
+                            viewBox=""
+                          >
+                            <use
+                              xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-users"
+                            />
+                          </svg>
+                          <span
+                            class="limit-amount semibold"
+                          >
+                            Unlimited
+                          </span>
+                          <span
+                            class="text-secondary"
+                          >
+                            Users
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      class="addons"
+                    >
+                      <p
+                        class="text-secondary semibold addon-list-header"
+                      >
+                        Add-ons
+                      </p>
+                      <ul>
+                        <li
+                          class="extra-small"
+                        >
+                          <span
+                            class="limit-amount semibold"
+                          >
+                            5,000
+                          </span>
+                          <span
+                            class="text-secondary"
+                          >
+                            <b
+                              class="addon-name"
+                            >
+                              Individuals
+                            </b>
+                             for 
+                            500
+                             USD
+                          </span>
+                        </li>
+                        <li
+                          class="extra-small"
+                        >
+                          <span
+                            class="limit-amount semibold"
+                          >
+                            5,000,000
+                          </span>
+                          <span
+                            class="text-secondary"
+                          >
+                            <b
+                              class="addon-name"
+                            >
+                              Page Views
+                            </b>
+                             for 
+                            250
+                             USD
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h4>
+              Add-ons
+            </h4>
+            <div
+              class="text-secondary"
+            >
+              <p>
+                Tailor limits to business needs. Incrementally increase individual or page view limits as needed without committing to a new plan.
+              </p>
+            </div>
+            <div
+              class="addons-list-root"
+            >
+              <div
+                class="panel-root"
+              >
+                <div
+                  class="panel-body"
+                >
+                  <div
+                    class="plan-title"
+                  >
+                    <div
+                      class="plan-name"
+                    >
+                      <span>
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-ac-individual"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-individual"
+                          />
+                        </svg>
+                        <span
+                          class="limit-amount semibold"
+                        >
+                          <b
+                            class="text-secondary"
+                          >
+                            +
+                          </b>
+                          5,000
+                        </span>
+                        <span
+                          class="text-secondary"
+                        >
+                          <b
+                            class="details-label"
+                          >
+                            Individuals
+                          </b>
+                        </span>
+                      </span>
+                    </div>
+                    <div
+                      class="label label-root label-primary label-lg label-uppercase"
+                    >
+                      <span
+                        class="label-item"
+                      >
+                        2X
+                      </span>
+                    </div>
+                    <div
+                      class="annual-price"
+                    >
+                      <div>
+                        <strong>
+                          500 USD
+                        </strong>
+                        <span
+                          class="text-secondary small"
+                        >
+                           / year
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="panel-root"
+              >
+                <div
+                  class="panel-body"
+                >
+                  <div
+                    class="plan-title"
+                  >
+                    <div
+                      class="plan-name"
+                    >
+                      <span>
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-faro-page-views"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-page-views"
+                          />
+                        </svg>
+                        <span
+                          class="limit-amount semibold"
+                        >
+                          <b
+                            class="text-secondary"
+                          >
+                            +
+                          </b>
+                          5,000,000
+                        </span>
+                        <span
+                          class="text-secondary"
+                        >
+                          <b
+                            class="details-label"
+                          >
+                            Page Views
+                          </b>
+                        </span>
+                      </span>
+                    </div>
+                    <div
+                      class="label label-root label-primary label-lg label-uppercase"
+                    >
+                      <span
+                        class="label-item"
+                      >
+                        1X
+                      </span>
+                    </div>
+                    <div
+                      class="annual-price"
+                    >
+                      <div>
+                        <strong>
+                          250 USD
+                        </strong>
+                        <span
+                          class="text-secondary small"
+                        >
+                           / year
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

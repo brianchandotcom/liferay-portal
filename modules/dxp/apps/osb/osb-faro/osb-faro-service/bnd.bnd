@@ -1,0 +1,5 @@
+Bundle-Name: Liferay OSB Faro Service
+Bundle-SymbolicName: com.liferay.osb.faro.service
+Bundle-Version: 1.0.4
+Liferay-Require-SchemaVersion: 16.0.0
+Liferay-Service: true

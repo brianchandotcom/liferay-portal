@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AttributeFilterChip render 1`] = `
+<div>
+  <div
+    class="dropdown"
+  >
+    <div
+      class="attribute-chip-container"
+    >
+      <div
+        class="chip-root d-flex align-items-center justify-content-between attribute-chip-root"
+      >
+        <button
+          class="button-root btn btn-unstyled edit-attribute-button d-flex"
+          type="button"
+        >
+          <div
+            class="sticker"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-text"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+              />
+            </svg>
+          </div>
+          <div>
+            <div
+              class="attribute-label"
+            >
+               | Article View
+            </div>
+            <div
+              class="attribute-value"
+            >
+              is "undefined"
+            </div>
+          </div>
+        </button>
+        <button
+          class="button-root btn btn-unstyled remove-button"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-times-circle"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

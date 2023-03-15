@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dropdown should render 1`] = `
+<div>
+  <div
+    aria-haspopup="true"
+    class="dropdown dropdown-root"
+  >
+    <button
+      class="button-root btn btn-secondary dropdown-toggle show-caret"
+      type="button"
+    >
+      
+      <span
+        class="caret-root"
+      >
+        <svg
+          class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+          viewBox=""
+        >
+          <use
+            xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+          />
+        </svg>
+      </span>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Dropdown should render as active 1`] = `
+<div
+  class="overlay-content-root dropdown dropdown-root"
+  data-testid="overlay"
+  id="overlay4"
+  role="dialog"
+  style="top: 0px; left: 0px; transform: translateY(8px);"
+>
+  <div
+    class="dropdown-menu show"
+  />
+</div>
+`;

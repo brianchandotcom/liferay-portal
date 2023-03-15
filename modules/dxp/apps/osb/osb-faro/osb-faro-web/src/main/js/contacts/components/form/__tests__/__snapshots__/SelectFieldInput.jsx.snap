@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectFieldInput should render 1`] = `
+<div>
+  <div
+    class=""
+  >
+    <div
+      aria-haspopup="true"
+      class="input-group base-select-input-root select-input-root"
+    >
+      <div
+        class="input-group-item"
+      >
+        <input
+          autocomplete="off"
+          class="input-root form-control input-group-inset input-group-inset-after"
+          id="foo"
+          placeholder="Select Field"
+          type="text"
+          value=""
+        />
+        <div
+          class="input-group-inset-item input-group-inset-item-after"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

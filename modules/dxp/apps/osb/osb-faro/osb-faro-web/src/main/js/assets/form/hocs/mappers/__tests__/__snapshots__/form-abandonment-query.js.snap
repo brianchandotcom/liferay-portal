@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormAbandonmentQuery mapper should return a object with empty true when formPageMetrics is not present in parameters 1`] = `
+Object {
+  "error": null,
+  "header": Array [
+    Object {
+      "icon": "document",
+      "label": "0 Form Steps",
+    },
+    Object {
+      "icon": "custom-field",
+      "label": "0 Fields",
+    },
+  ],
+  "items": Array [],
+  "loading": false,
+  "refetch": undefined,
+}
+`;

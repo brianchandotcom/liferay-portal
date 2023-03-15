@@ -1,0 +1,68 @@
+import Button from 'shared/components/Button';
+import React from 'react';
+import Sheet from 'shared/components/Sheet';
+import URLConstants from 'shared/util/url-constants';
+import WorkspacesBasePage from 'shared/components/workspaces/BasePage';
+import {sub} from 'shared/util/lang';
+
+const SuccessDisplay = ({friendlyURL}) => {
+	const link = (
+		<a
+			href={`https://analytics.liferay.com/workspace${friendlyURL}`}
+			key='link'
+		>
+			{`analytics.liferay.com/workspace${friendlyURL}`}
+		</a>
+	);
+
+	return (
+		<WorkspacesBasePage title={Liferay.Language.get('new-workspace')}>
+			<Sheet>
+				<Sheet.Header className='mb-4'>
+					<h3 className='title'>
+						{Liferay.Language.get(
+							'your-workspace-is-being-created'
+						)}
+					</h3>
+				</Sheet.Header>
+				<Sheet.Body>
+					<Sheet.Section>
+						<p>
+							{sub(
+								Liferay.Language.get(
+									'well-send-you-an-email-once-its-ready-to-access-at-this-url-x'
+								),
+								[link],
+								false
+							)}
+						</p>
+						<p>
+							{sub(
+								Liferay.Language.get(
+									'you-can-also-leave-this-page-open-and-well-notify-you-here.it-should-take-around-x-hour'
+								),
+								[1]
+							)}
+						</p>
+						<p>
+							{Liferay.Language.get(
+								'in-the-meantime-check-out-our-documentation-to-get-familiar-with-the-features'
+							)}
+						</p>
+					</Sheet.Section>
+				</Sheet.Body>
+				<Sheet.Footer divider={false}>
+					<Button
+						display='primary'
+						externalLink
+						href={URLConstants.DocumentationAdminLink}
+					>
+						{Liferay.Language.get('check-out-docs')}
+					</Button>
+				</Sheet.Footer>
+			</Sheet>
+		</WorkspacesBasePage>
+	);
+};
+
+export default SuccessDisplay;

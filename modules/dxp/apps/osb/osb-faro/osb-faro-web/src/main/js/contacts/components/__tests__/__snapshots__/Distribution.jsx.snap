@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentDistribution should render 1`] = `
+<div>
+  <div
+    class="body-root"
+  >
+    <span
+      class="children-wrapper"
+    >
+      <div
+        class="card card-root"
+      >
+        <div
+          class="card-header"
+        >
+          <h5
+            class="card-title"
+          >
+            Distribution by attribute
+          </h5>
+          <span
+            class="description-secondary"
+          >
+            Breakdown known members by the top 100 results or the number of bins assigned for a selected attribute. Only results with data will appear.
+          </span>
+        </div>
+        <div
+          class="card-body"
+        >
+          <form
+            class="form-root chart-options"
+          >
+            <label
+              class="form-control-label label-root"
+            >
+              <span
+                class="content-container"
+              >
+                Breakdown By
+              </span>
+            </label>
+            <div
+              class="form-group mt-2 form-group-autofit"
+            >
+              <div
+                class="form-group-item form-group-item-shrink"
+              >
+                <div
+                  class=""
+                >
+                  <div
+                    aria-haspopup="true"
+                    class="input-group base-select-input-root select-input-root"
+                  >
+                    <div
+                      class="input-group-item"
+                    >
+                      <input
+                        autocomplete="off"
+                        class="input-root form-control input-group-inset input-group-inset-after"
+                        id="breakdown"
+                        placeholder="Select Field"
+                        type="text"
+                        value=""
+                      />
+                      <div
+                        class="input-group-inset-item input-group-inset-item-after"
+                      >
+                        <svg
+                          class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                          viewBox=""
+                        >
+                          <use
+                            xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div
+            class="spinner-root spinner-spacer"
+          >
+            <span
+              class="loading-animation loading-animation-dotted"
+            />
+          </div>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+`;

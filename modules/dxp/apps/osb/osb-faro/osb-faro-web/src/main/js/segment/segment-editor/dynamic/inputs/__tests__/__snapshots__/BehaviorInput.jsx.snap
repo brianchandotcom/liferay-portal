@@ -1,0 +1,316 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BehaviorInput AssetItem should render 1`] = `
+<div>
+  <div
+    class="asset-display-root"
+    title=""
+  >
+    <div
+      class="asset-name text-truncate"
+    />
+  </div>
+</div>
+`;
+
+exports[`BehaviorInput should render 1`] = `
+<div>
+  <div
+    class="criteria-statement"
+  >
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+      />
+      <div>
+        test
+      </div>
+      <div
+        class="form-group-item display-value form-group-item-label form-group-item-shrink"
+      >
+        <b />
+      </div>
+      <div
+        class="form-group-item"
+      >
+        <div
+          class="input-group select-entity-group"
+        >
+          <div
+            class="input-group-item"
+          >
+            <div
+              class="input-group select-input-root"
+            >
+              <div
+                class="input-group-item"
+              >
+                <input
+                  class="input-root form-control"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class="selected-item-container"
+              >
+                <div
+                  class="asset-display-root"
+                  title=""
+                >
+                  <div
+                    class="asset-name text-truncate"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="input-group-item input-group-item-shrink input-group-append"
+          >
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Select
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control operator-input"
+        >
+          <option
+            value="ge"
+          >
+            at least
+          </option>
+          <option
+            value="le"
+          >
+            at most
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <input
+          class="input-root form-control number-input"
+          data-testid="occurence-count-input"
+          min="0"
+          type="number"
+          value=""
+        />
+      </div>
+      <div
+        class="form-group-item unit form-group-item-label form-group-item-shrink"
+      >
+        time(s)
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control conjunction-input"
+          data-testid="conjunction-input"
+        >
+          <option
+            value="since"
+          >
+            since
+          </option>
+          <option
+            value="gt"
+          >
+            after
+          </option>
+          <option
+            value="lt"
+          >
+            before
+          </option>
+          <option
+            value="between"
+          >
+            between
+          </option>
+          <option
+            value="ever"
+          >
+            ever
+          </option>
+          <option
+            value="eq"
+          >
+            on
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`BehaviorInput should render w/ data 1`] = `
+<div>
+  <div
+    class="criteria-statement"
+  >
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+      />
+      <div>
+        test
+      </div>
+      <div
+        class="form-group-item display-value form-group-item-label form-group-item-shrink"
+      >
+        <b />
+      </div>
+      <div
+        class="form-group-item"
+      >
+        <div
+          class="input-group select-entity-group"
+        >
+          <div
+            class="input-group-item"
+          >
+            <div
+              class="input-group select-input-root"
+            >
+              <div
+                class="input-group-item"
+              >
+                <input
+                  class="input-root form-control"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class="selected-item-container"
+              >
+                <div
+                  class="asset-display-root"
+                  title=""
+                >
+                  <div
+                    class="asset-name text-truncate"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="input-group-item input-group-item-shrink input-group-append"
+          >
+            <button
+              class="button-root btn btn-secondary"
+              type="button"
+            >
+              Select
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-group form-group-autofit"
+    >
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control operator-input"
+        >
+          <option
+            value="ge"
+          >
+            at least
+          </option>
+          <option
+            value="le"
+          >
+            at most
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <input
+          class="input-root form-control number-input"
+          data-testid="occurence-count-input"
+          min="0"
+          type="number"
+          value="123"
+        />
+      </div>
+      <div
+        class="form-group-item unit form-group-item-label form-group-item-shrink"
+      >
+        time(s)
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      >
+        <select
+          class="form-control conjunction-input"
+          data-testid="conjunction-input"
+        >
+          <option
+            value="since"
+          >
+            since
+          </option>
+          <option
+            value="gt"
+          >
+            after
+          </option>
+          <option
+            value="lt"
+          >
+            before
+          </option>
+          <option
+            value="between"
+          >
+            between
+          </option>
+          <option
+            value="ever"
+          >
+            ever
+          </option>
+          <option
+            value="eq"
+          >
+            on
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group-item form-group-item-shrink"
+      />
+    </div>
+  </div>
+</div>
+`;

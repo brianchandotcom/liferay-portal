@@ -1,0 +1,7 @@
+<mj-spacer height="25px" />
+
+<mj-text mj-class="subtitle-text">[$TITLE_MSG$]</mj-text>
+
+<mj-text padding-top="0">[$NOTIFICATION_MSG$]</mj-text>
+
+<mj-include path="../button.mjml" />

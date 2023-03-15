@@ -1,0 +1,10 @@
+Bundle-Name: Liferay OSB Faro API
+Bundle-SymbolicName: com.liferay.osb.faro.api
+Bundle-Version: 2.0.0
+Export-Package:\
+	com.liferay.osb.faro.constants,\
+	com.liferay.osb.faro.exception,\
+	com.liferay.osb.faro.model,\
+	com.liferay.osb.faro.service,\
+	com.liferay.osb.faro.service.persistence,\
+	com.liferay.osb.faro.util

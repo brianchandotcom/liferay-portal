@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DistributionCard Tabs renders 1`] = `
+<div>
+  <div
+    class="tabs-root d-flex align-items-center justify-content-between"
+  >
+    <div
+      class="scrollable-section-root d-inline-flex"
+    >
+      <div
+        class="scroll-container"
+      >
+        <ul
+          class="d-flex"
+        >
+          <li
+            class="tab-item d-flex align-items-baseline active"
+          >
+            <div
+              class="tab-title active"
+            >
+              Tab 1
+              <button
+                class="button-root btn btn-unstyled remove-tab btn-sm"
+                type="button"
+              >
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-times icon-monospaced icon-size-sm"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                  />
+                </svg>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <button
+      class="button-root btn btn-secondary add-tab btn-monospaced btn-outline-borderless btn-sm"
+      type="button"
+    >
+      <svg
+        class="icon-root lexicon-icon lexicon-icon-plus"
+        viewBox=""
+      >
+        <use
+          xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;

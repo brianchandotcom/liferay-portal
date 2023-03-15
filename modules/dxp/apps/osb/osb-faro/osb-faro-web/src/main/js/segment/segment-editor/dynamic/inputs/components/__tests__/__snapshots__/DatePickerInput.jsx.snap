@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DatePickerInput should render 1`] = `
+<div>
+  <div
+    aria-haspopup="true"
+    class="input-group date-input-root"
+  >
+    <div
+      class="input-group-item"
+    >
+      <input
+        autocomplete="off"
+        class="input-root form-control input-group-inset input-group-inset-after"
+        data-testid="date-input"
+        placeholder="YYYY-MM-DD"
+        readonly=""
+        type="text"
+        value="2020-12-12"
+      />
+      <div
+        class="input-group-inset-item input-group-inset-item-after"
+      >
+        <button
+          class="button-root btn btn-unstyled"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-calendar"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#calendar"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

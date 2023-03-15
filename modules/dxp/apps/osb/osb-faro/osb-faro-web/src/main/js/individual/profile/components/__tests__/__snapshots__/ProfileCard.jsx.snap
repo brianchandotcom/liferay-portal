@@ -1,0 +1,473 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndividualProfileCard should render 1`] = `
+<div>
+  <div
+    class="card-body"
+  >
+    <div
+      class="align-items-center d-flex justify-content-end mt-3"
+    >
+      <div
+        class="input-group search-input mr-3"
+      >
+        <div
+          class="input-group-item"
+        >
+          <input
+            class="input-root form-control input-group-inset input-group-inset-after"
+            placeholder="Search"
+            type="text"
+            value=""
+          />
+          <div
+            class="input-group-inset-item input-group-inset-item-after"
+          >
+            <button
+              class="button-root btn btn-unstyled"
+              type="button"
+            >
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-search"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="interval-selector-root mr-3 btn-group"
+        role="group"
+      >
+        <button
+          class="interval-option text-uppercase active btn btn-sm btn-secondary"
+          type="button"
+        >
+          D
+        </button>
+        <button
+          class="interval-option text-uppercase btn btn-sm btn-secondary"
+          type="button"
+        >
+          W
+        </button>
+        <button
+          class="interval-option text-uppercase btn btn-sm btn-secondary"
+          type="button"
+        >
+          M
+        </button>
+      </div>
+      <div
+        class="dropdown dropdown-range-key-root"
+      >
+        <button
+          class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+          type="button"
+        >
+          Last 24 hours
+          <svg
+            class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-bottom"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div
+      class="individuals-activities-chart"
+    >
+      <div
+        class="recharts-responsive-container"
+        style="width: 100%; height: 340px;"
+      >
+        <div
+          style="position: absolute; width: 0px; height: 0px; visibility: hidden; display: none;"
+        />
+      </div>
+      <div
+        class="selected-info"
+      >
+        <div
+          class="activities-date d-flex align-items-baseline"
+        >
+          <h4>
+            Individual's Events - December 9, 2021 - December 10, 2021
+          </h4>
+        </div>
+        <div
+          class="details"
+        >
+          Events: 
+          <b>
+            0
+          </b>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="toolbar-root"
+  />
+  <div
+    class="vertical-timeline-root"
+  >
+    <ul
+      class="timeline timeline-center"
+    >
+      <li
+        class="timeline-item header"
+      >
+        <div
+          class="timeline-panel"
+        >
+          <div
+            class="timeline-panel-body"
+          >
+            <div
+              class="timeline-panel-body-content"
+            >
+              <div
+                class="timeline-panel-body-content-text"
+              >
+                <span
+                  class="title"
+                >
+                  Dec 6, 2021
+                </span>
+                <svg
+                  class="icon-root lexicon-icon lexicon-icon-ac-event-icon event-icon"
+                  viewBox=""
+                >
+                  <use
+                    xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-event-icon"
+                  />
+                </svg>
+                <span
+                  class="item-count"
+                >
+                  1
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        class="timeline-item"
+      >
+        <div
+          class="timeline-panel"
+        >
+          <div
+            class="timeline-panel-body"
+          >
+            <div
+              class="timeline-line"
+            />
+            <div
+              class="timeline-increment"
+            >
+              <div
+                class="sticker sticker-root sticker-static sticker-circle sticker-point sticker-lg"
+              />
+              <div
+                class="timeline-item-label timeline-time-label label-root"
+              >
+                <span>
+                  5:01pm
+                </span>
+                 - 
+                <span>
+                  6:02pm
+                </span>
+              </div>
+            </div>
+            <div
+              class="timeline-panel-body-content selectable"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="timeline-panel-body-content-text header"
+              >
+                <span
+                  class="title"
+                />
+              </div>
+              <div
+                class="timeline-panel-body-content-details"
+              >
+                <div
+                  class="icon-group"
+                >
+                  <svg
+                    class="icon-root lexicon-icon lexicon-icon-ac-event-icon event-icon"
+                    viewBox=""
+                  >
+                    <use
+                      xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-event-icon"
+                    />
+                  </svg>
+                  <span
+                    class="item-count"
+                  >
+                    1
+                  </span>
+                  <span
+                    class="device-icon"
+                    data-tooltip="true"
+                    data-tooltip-align="bottom"
+                    title="Desktop
+Chrome"
+                  >
+                    <svg
+                      class="icon-root lexicon-icon lexicon-icon-ac-display mainLighten28-color"
+                      viewBox=""
+                    >
+                      <use
+                        xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-display"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <svg
+                class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                viewBox=""
+              >
+                <use
+                  xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="vertical-timeline-root"
+          >
+            <ul
+              class="timeline timeline-center timeline-nested"
+            >
+              <li
+                class="timeline-item"
+              >
+                <div
+                  class="timeline-panel"
+                >
+                  <div
+                    class="timeline-panel-body"
+                  >
+                    <div
+                      class="timeline-line"
+                    />
+                    <div
+                      class="timeline-increment"
+                    >
+                      <div
+                        class="sticker sticker-root sticker-static sticker-circle sticker-point sticker-lg"
+                      />
+                      <div
+                        class="timeline-item-label timeline-time-label label-root"
+                      >
+                        5:28pm
+                      </div>
+                    </div>
+                    <div
+                      class="timeline-panel-body-content selectable"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <div
+                        class="timeline-panel-body-content-text"
+                      >
+                        <span
+                          class="title"
+                        >
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            tabBlurred
+                          </span>
+                        </span>
+                        <span
+                          class="description"
+                        >
+                          Home - Liferay DXP
+                        </span>
+                        <span
+                          class="text-truncate subtitle"
+                          data-tooltip="false"
+                          title=""
+                        >
+                          http://localhost:8080
+                        </span>
+                      </div>
+                      <svg
+                        class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+                        viewBox=""
+                      >
+                        <use
+                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <nav
+    class="navbar navbar-root pagination-bar-root"
+  >
+    <div
+      class="container-fluid"
+    >
+      <div
+        aria-haspopup="true"
+        class="dropdown dropdown-root pagination-items-per-page"
+      >
+        <button
+          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          type="button"
+        >
+          <span
+            class="text-truncate"
+          >
+            50 Items
+          </span>
+          
+          <span
+            class="caret-root"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-caret-bottom"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        class="pagination-results"
+      >
+        Showing 1 to 50 of 14,314 entries.
+      </div>
+      <ul
+        class="pagination pagination-root"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <button
+            class="button-root btn btn-unstyled page-link"
+            disabled=""
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-angle-left"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          class="page-item active"
+        >
+          <button
+            class="button-root btn btn-unstyled page-link"
+            type="button"
+          >
+            1
+          </button>
+        </li>
+        <li
+          class="page-item"
+        >
+          <button
+            class="button-root btn btn-unstyled page-link"
+            type="button"
+          >
+            2
+          </button>
+        </li>
+        <li
+          class="page-item"
+        >
+          <button
+            class="button-root btn btn-unstyled page-link"
+            type="button"
+          >
+            3
+          </button>
+        </li>
+        <li
+          class="page-item"
+        >
+          <div
+            aria-haspopup="true"
+            class="dropdown dropdown-root"
+          >
+            <button
+              class="button-root btn btn-link dropdown-toggle page-link"
+              type="button"
+            >
+              <span
+                class="text-truncate"
+              >
+                ...
+              </span>
+              
+            </button>
+          </div>
+        </li>
+        <li
+          class="page-item"
+        >
+          <button
+            class="button-root btn btn-unstyled page-link"
+            type="button"
+          >
+            287
+          </button>
+        </li>
+        <li
+          class="page-item"
+        >
+          <button
+            class="button-root btn btn-unstyled page-link"
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-angle-right"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+              />
+            </svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+`;

@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterTags should render a list of tags 1`] = `
+<div>
+  <div
+    class="tbar-item"
+  >
+    <div
+      class="tbar-section text-truncate"
+    >
+      <div
+        class="label label-root label-info label-lg label-dismissible"
+      >
+        <span
+          class="label-item"
+        >
+          Foo Label0
+        </span>
+        <span
+          class="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            class="button-root btn btn-secondary close"
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-times"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              />
+            </svg>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    class="tbar-item"
+  >
+    <div
+      class="tbar-section text-truncate"
+    >
+      <div
+        class="label label-root label-info label-lg label-dismissible"
+      >
+        <span
+          class="label-item"
+        >
+          Foo Label1
+        </span>
+        <span
+          class="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            class="button-root btn btn-secondary close"
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-times"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              />
+            </svg>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    class="tbar-item tbar-item-expand"
+  >
+    <div
+      class="tbar-section text-truncate"
+    >
+      <div
+        class="label label-root label-info label-lg label-dismissible"
+      >
+        <span
+          class="label-item"
+        >
+          Foo Label2
+        </span>
+        <span
+          class="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            class="button-root btn btn-secondary close"
+            type="button"
+          >
+            <svg
+              class="icon-root lexicon-icon lexicon-icon-times"
+              viewBox=""
+            >
+              <use
+                xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              />
+            </svg>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

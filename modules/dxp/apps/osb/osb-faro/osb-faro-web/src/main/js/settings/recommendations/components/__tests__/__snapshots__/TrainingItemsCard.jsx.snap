@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TrainingItemsCard should render 1`] = `
+<div>
+  <div
+    class="card card-root training-items-card-root"
+  >
+    <div
+      class="card-header"
+    >
+      <h5
+        class="card-title"
+      >
+        Training Items
+      </h5>
+    </div>
+    <div
+      class="card-body"
+    >
+      <div
+        class="training-item-root d-flex align-items-baseline"
+      >
+        <button
+          class="button-root btn btn-secondary btn-outline-borderless"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-view"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#view"
+            />
+          </svg>
+        </button>
+        <div
+          class="rule-item-root d-flex align-items-baseline"
+        >
+          <b>
+            Include:
+          </b>
+          <div
+            class="label label-root metadata-tag-root label-lg"
+          >
+            <span
+              class="label-item"
+            >
+              url
+            </span>
+          </div>
+          <span
+            class="rule-value"
+          >
+            .*custom-assets
+          </span>
+        </div>
+      </div>
+      <div
+        class="total-training-urls d-flex align-items-center"
+      >
+        <button
+          class="button-root btn btn-secondary btn-outline-borderless"
+          type="button"
+        >
+          <svg
+            class="icon-root lexicon-icon lexicon-icon-view"
+            viewBox=""
+          >
+            <use
+              xlink:href="/o/osb-faro-web/dist/sprite.svg#view"
+            />
+          </svg>
+        </button>
+        Total Training URLs: 
+        0
+      </div>
+    </div>
+  </div>
+</div>
+`;

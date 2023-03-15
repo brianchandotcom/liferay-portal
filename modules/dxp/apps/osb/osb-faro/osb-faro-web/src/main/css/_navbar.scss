@@ -1,0 +1,40 @@
+.navbar-root {
+	&.navbar-dark {
+		background: $mainLighten4;
+	}
+
+	&:not(.navbar-dark) {
+		.nav-link {
+			color: $main;
+		}
+	}
+
+	&.navigation-bar {
+		background: $lightBackground;
+		font-size: $fontSizeSmall;
+		line-height: 20px;
+
+		.nav-item {
+			margin-right: 10px;
+		}
+	}
+
+	.nav-item {
+		margin: auto 0;
+	}
+
+	.nav-link {
+		&.active {
+			font-weight: 600;
+		}
+	}
+
+	.navbar-brand {
+		font-size: 24px;
+		line-height: 28px;
+	}
+
+	.navbar-form {
+		height: 3.9375rem;
+	}
+}

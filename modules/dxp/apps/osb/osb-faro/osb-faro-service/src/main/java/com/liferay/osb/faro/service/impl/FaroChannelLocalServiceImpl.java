@@ -1,0 +1,303 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+
+package com.liferay.osb.faro.service.impl;
+
+import com.liferay.mail.kernel.model.MailMessage;
+import com.liferay.mail.kernel.service.MailService;
+import com.liferay.osb.faro.constants.DocumentationConstants;
+import com.liferay.osb.faro.constants.FaroChannelConstants;
+import com.liferay.osb.faro.model.FaroChannel;
+import com.liferay.osb.faro.model.FaroUser;
+import com.liferay.osb.faro.service.base.FaroChannelLocalServiceBaseImpl;
+import com.liferay.osb.faro.service.persistence.FaroUserFinder;
+import com.liferay.osb.faro.util.EmailUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.mail.internet.InternetAddress;
+
+/**
+ * @author Matthew Kong
+ * @see FaroChannelLocalServiceBaseImpl
+ */
+public class FaroChannelLocalServiceImpl
+	extends FaroChannelLocalServiceBaseImpl {
+
+	@Override
+	public FaroChannel addFaroChannel(
+			long userId, String name, String channelId, long workspaceGroupId)
+		throws PortalException {
+
+		long faroChannelId = counterLocalService.increment();
+
+		Group group = groupLocalService.addGroup(
+			userId, workspaceGroupId, FaroChannel.class.getName(),
+			faroChannelId, 0,
+			Collections.singletonMap(LocaleUtil.getDefault(), name), null,
+			GroupConstants.TYPE_SITE_PRIVATE, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, true, true,
+			null);
+
+		// friendlyURL will be derived from the group name if empty, so it has
+		// to be removed after creation
+
+		group.setFriendlyURL(null);
+
+		groupLocalService.updateGroup(group);
+
+		FaroChannel faroChannel = faroChannelPersistence.create(faroChannelId);
+
+		faroChannel.setGroupId(group.getGroupId());
+		faroChannel.setUserId(userId);
+
+		long now = System.currentTimeMillis();
+
+		faroChannel.setCreateTime(now);
+		faroChannel.setModifiedTime(now);
+
+		faroChannel.setChannelId(channelId);
+		faroChannel.setName(name);
+		faroChannel.setWorkspaceGroupId(workspaceGroupId);
+
+		return faroChannelPersistence.update(faroChannel);
+	}
+
+	@Override
+	public void addUsers(
+			long companyId, String channelId, List<Long> invitedUserIds,
+			long userId, long workspaceGroupId)
+		throws PortalException {
+
+		FaroChannel faroChannel = faroChannelPersistence.findByChannelId(
+			channelId, workspaceGroupId);
+
+		Role role = roleLocalService.getRole(
+			companyId, RoleConstants.SITE_MEMBER);
+
+		for (long invitedUserId : invitedUserIds) {
+			groupLocalService.addUserGroup(
+				invitedUserId, faroChannel.getGroupId());
+
+			userGroupRoleLocalService.deleteUserGroupRoles(
+				invitedUserId, new long[] {faroChannel.getGroupId()});
+
+			userGroupRoleLocalService.addUserGroupRoles(
+				invitedUserId, faroChannel.getGroupId(),
+				new long[] {role.getRoleId()});
+
+			try {
+				_sendEmail(faroChannel, invitedUserId, userId);
+			}
+			catch (Exception exception) {
+				_log.error(exception, exception);
+			}
+		}
+	}
+
+	@Override
+	public int countFaroUsers(
+			String channelId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId)
+		throws PortalException {
+
+		FaroChannel faroChannel = faroChannelPersistence.findByChannelId(
+			channelId, workspaceGroupId);
+
+		return _faroUserFinder.countByChannelKeywords(
+			faroChannel.getGroupId(), available, query, statuses,
+			faroChannel.getWorkspaceGroupId());
+	}
+
+	@Override
+	public FaroChannel deleteFaroChannel(FaroChannel faroChannel)
+		throws PortalException {
+
+		groupLocalService.deleteGroup(faroChannel.getGroupId());
+
+		return faroChannelPersistence.remove(faroChannel);
+	}
+
+	@Override
+	public FaroChannel deleteFaroChannel(
+			String channelId, long workspaceGroupId)
+		throws PortalException {
+
+		return deleteFaroChannel(
+			faroChannelPersistence.findByChannelId(
+				channelId, workspaceGroupId));
+	}
+
+	@Override
+	public void deleteFaroChannels(long workspaceGroupId)
+		throws PortalException {
+
+		for (FaroChannel faroChannel :
+				faroChannelPersistence.findByWorkspaceGroupId(
+					workspaceGroupId)) {
+
+			deleteFaroChannel(faroChannel);
+		}
+	}
+
+	@Override
+	public List<FaroUser> findFaroUsers(
+			String channelId, boolean available, String query,
+			List<Integer> statuses, long workspaceGroupId, int start, int end,
+			OrderByComparator<FaroUser> orderByComparator)
+		throws PortalException {
+
+		FaroChannel faroChannel = faroChannelPersistence.findByChannelId(
+			channelId, workspaceGroupId);
+
+		return _faroUserFinder.findByChannelKeywords(
+			faroChannel.getGroupId(), available, query, statuses,
+			faroChannel.getWorkspaceGroupId(), start, end, orderByComparator);
+	}
+
+	@Override
+	public FaroChannel getFaroChannel(String channelId, long workspaceGroupId)
+		throws PortalException {
+
+		return faroChannelPersistence.findByChannelId(
+			channelId, workspaceGroupId);
+	}
+
+	@Override
+	public void removeUsers(
+			String channelId, List<Long> userIds, long workspaceGroupId)
+		throws PortalException {
+
+		FaroChannel faroChannel = faroChannelPersistence.findByChannelId(
+			channelId, workspaceGroupId);
+
+		for (long userId : userIds) {
+			userGroupRoleLocalService.deleteUserGroupRoles(
+				userId, new long[] {faroChannel.getGroupId()});
+
+			groupLocalService.deleteUserGroup(userId, faroChannel.getGroupId());
+		}
+	}
+
+	@Override
+	public List<FaroChannel> search(
+		long groupId, String query, int start, int end,
+		OrderByComparator<FaroChannel> orderByComparator) {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return faroChannelFinder.findByKeywords(
+			groupId, FaroChannelConstants.PERMISSION_ALL_USERS, query,
+			permissionChecker.getUserId(), start, end, orderByComparator);
+	}
+
+	@Override
+	public int searchCount(long groupId, String query) {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return faroChannelFinder.countByKeywords(
+			groupId, FaroChannelConstants.PERMISSION_ALL_USERS, query,
+			permissionChecker.getUserId());
+	}
+
+	private void _sendEmail(
+			FaroChannel faroChannel, long invitedUserId, long userId)
+		throws Exception {
+
+		User user = userLocalService.getUser(userId);
+
+		InternetAddress from = new InternetAddress(
+			"ac@liferay.com", user.getFullName() + " (Analytics Cloud)");
+
+		User invitedUser = userLocalService.getUser(invitedUserId);
+
+		InternetAddress to = new InternetAddress(
+			invitedUser.getEmailAddress(), invitedUser.getFullName());
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", invitedUser.getLocale(), getClass());
+
+		String subject = _language.get(
+			resourceBundle,
+			"analytics-cloud-you-have-been-added-to-a-property");
+
+		String body = StringUtil.replace(
+			StringUtil.read(
+				getClassLoader(),
+				"com/liferay/osb/faro/dependencies/property-invite.html"),
+			new String[] {
+				"[$BUTTON_TEXT$]", "[$BUTTON_URL$]", "[$EMAIL_TITLE$]",
+				"[$HELP_MSG$]", "[$LOGO_ICON_URL$]", "[$NOTIFICATION_MSG_1$]",
+				"[$NOTIFICATION_MSG_2$]", "[$TITLE_ICON_URL$]", "[$TITLE_MSG$]"
+			},
+			new String[] {
+				_language.get(resourceBundle, "go-to-workspace"),
+				EmailUtil.getWorkspaceURL(
+					groupLocalService.fetchGroup(faroChannel.getGroupId())),
+				subject,
+				_language.format(
+					resourceBundle, "email-need-more-help",
+					new String[] {
+						"<a class=\"body-link\" href=\"" +
+							DocumentationConstants.BASE_URL + "\">",
+						"</a>"
+					}),
+				EmailUtil.getLogoIconURL(),
+				_language.format(
+					resourceBundle, "x-has-been-added-to-your-properties-list",
+					faroChannel.getName()),
+				_language.get(
+					resourceBundle,
+					"log-in-to-your-workspace-to-access-this-property"),
+				EmailUtil.getTitleIconURL(),
+				_language.get(resourceBundle, "you-have-been-added")
+			});
+
+		_mailService.sendEmail(new MailMessage(from, to, subject, body, true));
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FaroChannelLocalServiceImpl.class);
+
+	@BeanReference(type = FaroUserFinder.class)
+	private FaroUserFinder _faroUserFinder;
+
+	@ServiceReference(type = Language.class)
+	private Language _language;
+
+	@ServiceReference(type = MailService.class)
+	private MailService _mailService;
+
+}

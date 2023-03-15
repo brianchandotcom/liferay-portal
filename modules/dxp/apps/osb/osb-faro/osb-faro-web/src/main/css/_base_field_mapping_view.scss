@@ -1,0 +1,11 @@
+.base-field-mapping-view-root {
+	.sheet-section {
+		&.breadcrumb {
+			display: flex;
+		}
+
+		> h4 {
+			font-weight: $fontWeightBold;
+		}
+	}
+}

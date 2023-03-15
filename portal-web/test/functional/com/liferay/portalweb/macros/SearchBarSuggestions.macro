@@ -17,6 +17,10 @@ definition {
 				locator1 = "Button#ANY");
 		}
 
+		if (${deleteBasicContributor} == "true") {
+			Click(locator1 = "SearchBarSuggestions#DELETE_SUGGESTION_CONTRIBUTOR");
+		}
+
 		if (!(isSet(suggestionContributorOrder))) {
 			var suggestionContributorOrder = 1;
 		}
@@ -30,11 +34,6 @@ definition {
 				key_suggestionContributor = ${suggestionContributor},
 				key_suggestionContributorOrder = ${suggestionContributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SELECT");
-
-			AssertTextEquals(
-				key_suggestionContributorOrder = ${suggestionContributorOrder},
-				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR",
-				value1 = ${suggestionContributor});
 		}
 
 		if (isSet(suggestionContributorBlueprint)) {

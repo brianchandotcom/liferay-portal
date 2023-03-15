@@ -435,6 +435,7 @@ definition {
 		Workflow.viewWorkflowStatus(status = "Approved");
 
 		MessageboardsThread.editCP(
+			key_listEntry = "Thread Message Subject",
 			threadBodyEdit = "Thread Message Body Edit",
 			threadSubjectEdit = "Thread Message Subject Edit");
 

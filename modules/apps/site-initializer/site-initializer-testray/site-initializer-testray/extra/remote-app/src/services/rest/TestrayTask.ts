@@ -144,13 +144,10 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 
 		const dispatchTriggerId = dispatchTrigger.liferayDispatchTrigger.id;
 
-		await Promise.allSettled([
-			super.update(task.id, {
-				...data,
-				dispatchTriggerId,
-			}),
-			liferayDispatchTriggerImpl.run(dispatchTriggerId),
-		]);
+		super.update(task.id, {
+			...data,
+			dispatchTriggerId,
+		});
 
 		const body = {
 			dueStatus: DispatchTriggerStatuses.INPROGRESS,

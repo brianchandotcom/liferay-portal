@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.unit;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -102,6 +103,7 @@ public class BatchEngineUnitConfiguration {
 		_version = version;
 	}
 
+	@JsonInclude
 	@JsonProperty("callbackURL")
 	private String _callbackURL;
 

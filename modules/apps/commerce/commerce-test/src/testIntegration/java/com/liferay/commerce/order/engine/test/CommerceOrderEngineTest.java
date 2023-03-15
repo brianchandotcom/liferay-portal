@@ -999,12 +999,12 @@ public class CommerceOrderEngineTest {
 			PendingCommerceOrderStatusImpl.KEY,
 			_commerceOrder.getOrderStatus());
 
-		Assert.assertFalse(
-			ListUtil.isEmpty(
-				ListUtil.filter(
-					_commerceOrderEngine.getNextCommerceOrderStatuses(
-						_commerceOrder),
-					entry -> entry.getPriority() == -1)));
+		Assert.assertTrue(
+			ListUtil.exists(
+				_commerceOrderEngine.getNextCommerceOrderStatuses(
+					_commerceOrder),
+				commerceOrderStatus ->
+					commerceOrderStatus.getPriority() == -1));
 	}
 
 	@Test
@@ -1031,12 +1031,12 @@ public class CommerceOrderEngineTest {
 		Assert.assertEquals(
 			openCommerceOrderStatus.getKey(), OpenCommerceOrderStatusImpl.KEY);
 
-		Assert.assertTrue(
-			ListUtil.isEmpty(
-				ListUtil.filter(
-					_commerceOrderEngine.getNextCommerceOrderStatuses(
-						_commerceOrder),
-					entry -> entry.getPriority() == -1)));
+		for (CommerceOrderStatus commerceOrderStatus :
+				_commerceOrderEngine.getNextCommerceOrderStatuses(
+					_commerceOrder)) {
+
+			Assert.assertNotEquals(-1, commerceOrderStatus.getPriority());
+		}
 	}
 
 	@Test

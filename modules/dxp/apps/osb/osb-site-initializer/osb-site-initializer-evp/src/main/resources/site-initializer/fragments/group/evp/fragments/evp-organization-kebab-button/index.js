@@ -41,9 +41,11 @@ const layerForDendingUpdateStatus = async (message, attribute, key, value) => {
 	return await updateStatus(key, value, message);
 };
 
+const getMessage = () => document.querySelector('#messageDescribed').value;
+const getAttributeHidden = () => document.querySelector('#messageDanger');
+
 const openModal = () => {
-	let message = '';
-	let attributeHidden = '';
+
 	const organizationName = fragmentElement.querySelector('.organizationName')
 		.innerHTML;
 
@@ -56,11 +58,10 @@ const openModal = () => {
 				displayType: 'danger',
 				label: 'Reject',
 				async onClick() {
-					message = document.querySelector('#messageDescribed').value;
-					attributeHidden = document.querySelector('#messageDanger');
+					
 					await layerForDendingUpdateStatus(
-						message,
-						attributeHidden,
+						getMessage(),
+						getAttributeHidden(),
 						'rejected',
 						'Rejected'
 					);
@@ -71,11 +72,10 @@ const openModal = () => {
 				displayType: 'success',
 				label: 'Approve',
 				async onClick() {
-					message = document.querySelector('#messageDescribed').value;
-					attributeHidden = document.querySelector('#messageDanger');
+					
 					await layerForDendingUpdateStatus(
-						message,
-						attributeHidden,
+						getMessage(),
+						getAttributeHidden(),
 						'awaitingFinanceApproval',
 						'Awaiting Finance Approval'
 					);

@@ -13,6 +13,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import {FocusTrap} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useEffect, useRef} from 'react';
@@ -45,47 +46,53 @@ const SearchControls = ({
 				name={searchFormName}
 				showMobile={searchMobile}
 			>
-				<ClayInput.Group>
-					<ClayInput.GroupItem>
-						<ClayInput
-							aria-label={`${Liferay.Language.get('search')}:`}
-							autoFocus={searchInputAutoFocus}
-							className="form-control input-group-inset input-group-inset-after"
-							defaultValue={searchValue}
-							disabled={disabled}
-							name={searchInputName}
-							placeholder={Liferay.Language.get('search-for')}
-							ref={searchInputRef}
-							type="search"
-						/>
+				<FocusTrap active={searchMobile}>
+					<ClayInput.Group>
+						<ClayInput.GroupItem>
+							<ClayInput
+								aria-label={`${Liferay.Language.get(
+									'search'
+								)}:`}
+								autoFocus={searchInputAutoFocus}
+								className="form-control input-group-inset input-group-inset-after"
+								defaultValue={searchValue}
+								disabled={disabled}
+								name={searchInputName}
+								placeholder={Liferay.Language.get('search-for')}
+								ref={searchInputRef}
+								type="search"
+							/>
 
-						<ClayInput.GroupInsetItem after tag="span">
+							<ClayInput.GroupInsetItem after tag="span">
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('search')}
+									disabled={disabled}
+									displayType="unstyled"
+									symbol="search"
+									title={Liferay.Language.get('search-for')}
+									type="submit"
+								/>
+							</ClayInput.GroupInsetItem>
+						</ClayInput.GroupItem>
+
+						<ClayInput.GroupItem
+							className="navbar-breakpoint-d-none"
+							shrink
+						>
 							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('search')}
+								aria-label={Liferay.Language.get(
+									'close-search'
+								)}
 								disabled={disabled}
 								displayType="unstyled"
-								symbol="search"
-								title={Liferay.Language.get('search-for')}
-								type="submit"
+								onClick={() => setSearchMobile(false)}
+								size="sm"
+								symbol="times"
+								title={Liferay.Language.get('close-search')}
 							/>
-						</ClayInput.GroupInsetItem>
-					</ClayInput.GroupItem>
-
-					<ClayInput.GroupItem
-						className="navbar-breakpoint-d-none"
-						shrink
-					>
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('close-search')}
-							disabled={disabled}
-							displayType="unstyled"
-							onClick={() => setSearchMobile(false)}
-							size="sm"
-							symbol="times"
-							title={Liferay.Language.get('close-search')}
-						/>
-					</ClayInput.GroupItem>
-				</ClayInput.Group>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</FocusTrap>
 
 				{searchData &&
 					Object.keys(searchData).map((key) =>

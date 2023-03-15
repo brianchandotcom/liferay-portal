@@ -297,7 +297,7 @@ definition {
 			type = "content");
 
 		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Page Name",
+			pageName = "Page Name",
 			siteName = "Site Test");
 
 		PageEditor.addFragment(
@@ -340,7 +340,7 @@ definition {
 
 		PagesAdmin.viewPageStatus(
 			index = 2,
-			pageName = "Test Page Name",
+			pageName = "Page Name",
 			status = "Pending");
 	}
 

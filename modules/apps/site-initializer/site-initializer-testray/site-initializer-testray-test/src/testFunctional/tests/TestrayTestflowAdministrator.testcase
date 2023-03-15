@@ -177,13 +177,15 @@ definition {
 
 			Button.click(button = "Save");
 
-			WaitForPageLoad();
+			Alert.viewSuccessMessage();
+
+			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.assertTaskDetails(
 				build = ${buildName},
 				project = ${projectName},
 				routine = ${routineName},
-				status = "In Analysis",
+				status = "Processing",
 				taskName = "Task_1");
 		}
 	}
@@ -203,14 +205,18 @@ definition {
 				taskName = "Task_1",
 				userName = "Test Test");
 
-			WaitForPageLoad();
+			Alert.viewSuccessMessage();
+
+			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.assertTaskDetails(
 				build = ${buildName},
 				project = ${projectName},
 				routine = ${routineName},
-				status = "In Analysis",
+				status = "Processing",
 				taskName = "Task_1");
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
 
 			Button.click(button = "Complete");
 		}
@@ -240,14 +246,18 @@ definition {
 				taskName = "Task_1",
 				userName = "Test Test");
 
-			WaitForPageLoad();
+			Alert.viewSuccessMessage();
+
+			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.assertTaskDetails(
 				build = ${buildName},
 				project = ${projectName},
 				routine = ${routineName},
-				status = "In Analysis",
+				status = "Processing",
 				taskName = "Task_1");
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
 
 			Button.click(button = "Complete");
 
@@ -279,17 +289,21 @@ definition {
 				taskName = "Task_1",
 				userName = "Test Test");
 
-			WaitForPageLoad();
+			Alert.viewSuccessMessage();
+
+			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.assertTaskDetails(
 				build = ${buildName},
 				project = ${projectName},
 				routine = ${routineName},
-				status = "In Analysis",
+				status = "Processing",
 				taskName = "Task_1");
 		}
 
 		task ("When the user edit the task") {
+			TestrayTestflow.goToTask(taskName = "Task_2");
+
 			TestrayTestflow.editTask(taskName = "Task_2");
 
 			TestrayTestflow.goToTestflow();
@@ -314,16 +328,16 @@ definition {
 				taskName = "Task_1",
 				userName = "Test Test");
 
-			WaitForPageLoad();
+			Alert.viewSuccessMessage();
+
+			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.assertTaskDetails(
 				build = ${buildName},
 				project = ${projectName},
 				routine = ${routineName},
-				status = "In Analysis",
+				status = "Processing",
 				taskName = "Task_1");
-
-			TestrayTestflow.goToTestflow();
 
 			Click(locator1 = "Button#PLUS");
 
@@ -354,14 +368,18 @@ definition {
 				taskName = "Task_1",
 				userName = "Test Test");
 
-			WaitForPageLoad();
+			Alert.viewSuccessMessage();
+
+			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.assertTaskDetails(
 				build = ${buildName},
 				project = ${projectName},
 				routine = ${routineName},
-				status = "In Analysis",
+				status = "Processing",
 				taskName = "Task_1");
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
 		}
 
 		task ("When the user reanalyze an complete task") {
@@ -395,14 +413,18 @@ definition {
 				taskName = "Task_1",
 				userName = "Test Test");
 
-			WaitForPageLoad();
+			Alert.viewSuccessMessage();
+
+			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.assertTaskDetails(
 				build = ${buildName},
 				project = ${projectName},
 				routine = ${routineName},
-				status = "In Analysis",
+				status = "Processing",
 				taskName = "Task_1");
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
 		}
 
 		task ("When the user update task status to complete") {
@@ -430,19 +452,19 @@ definition {
 				taskName = "Task_1",
 				userName = "Test Test");
 
-			WaitForPageLoad();
+			Alert.viewSuccessMessage();
+
+			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.assertTaskDetails(
 				build = ${buildName},
 				project = ${projectName},
 				routine = ${routineName},
-				status = "In Analysis",
+				status = "Processing",
 				taskName = "Task_1");
 		}
 
 		task ("When the user associates a task with a build") {
-			TestrayTestflow.goToTestflow();
-
 			TestrayContextMenu.clickContextMenuProjects(name = "Task_1");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "View Associated Build");
@@ -522,12 +544,16 @@ definition {
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
 			Button.click(button = "Save");
+
+			Alert.viewSuccessMessage();
+
+			TestrayTestflow.goToTestflow();
 		}
 
 		task ("Then can see the status of the task In Analysis") {
 			TestrayTestflow.assertStatus(
-				label = "Task Details",
-				status = "In Analysis");
+				label = "Tasks",
+				status = "Processing");
 		}
 	}
 

@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>TASK_DETAILS</td>
-	<td>//span[contains(text(),'${key_status}')]//preceding::div[normalize-space()='${key_taskName}']//following::td[normalize-space()='${key_project}']//following::td[normalize-space()='${key_routine}']//following::td[normalize-space()='${key_build}']</td>
+	<td>//span[contains(text(),'${key_status}')]//following::td[normalize-space()='${key_taskName}']//following::td[normalize-space()='${key_project}']//following::td[normalize-space()='${key_routine}']//following::td[normalize-space()='${key_build}']</td>
 	<td></td>
 </tr>
 <tr>

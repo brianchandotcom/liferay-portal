@@ -66,12 +66,14 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 				String value = selLayoutSet.getThemeSetting(name, "regular");
 			%>
 
-				<clay:checkbox
-					checked='<%= value.equals("true") %>'
-					disabled="<%= true %>"
-					label="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>"
-					name="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>"
-				/>
+				<div class="mb-3">
+					<clay:checkbox
+						checked='<%= value.equals("true") %>'
+						disabled="<%= true %>"
+						label="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>"
+						name="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>"
+					/>
+				</div>
 
 			<%
 			}

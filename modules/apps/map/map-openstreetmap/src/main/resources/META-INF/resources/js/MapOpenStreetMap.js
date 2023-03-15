@@ -65,7 +65,12 @@ class MapOpenStreetMap extends MapBase {
 	_createMap(location, controlsConfig) {
 		const mapConfig = {
 			center: location,
-			layers: [L.tileLayer(this.tileURI)],
+			layers: [
+				L.tileLayer(this.tileURI, {
+					attribution:
+						'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+				}),
+			],
 			zoom: this.zoom,
 		};
 

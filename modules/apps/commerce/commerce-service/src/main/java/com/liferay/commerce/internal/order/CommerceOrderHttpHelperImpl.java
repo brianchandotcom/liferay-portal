@@ -389,8 +389,14 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			return null;
 		}
 
-		CommerceOrder commerceOrder = _getCurrentCommerceOrder(
-			commerceContext, httpServletRequest);
+		CommerceOrder commerceOrder =
+			(CommerceOrder)httpServletRequest.getAttribute(
+				CommerceCheckoutWebKeys.COMMERCE_ORDER);
+
+		if (commerceOrder == null) {
+			commerceOrder = _getCurrentCommerceOrder(
+				commerceContext, httpServletRequest);
+		}
 
 		if (commerceOrder != null) {
 			if (commerceOrder.isGuestOrder()) {

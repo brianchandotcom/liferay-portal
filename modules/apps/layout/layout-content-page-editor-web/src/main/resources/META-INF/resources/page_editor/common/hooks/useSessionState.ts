@@ -12,16 +12,18 @@
  * details.
  */
 
+import {COOKIE_TYPES, sessionStorage} from 'frontend-js-web';
 import {useEffect, useState} from 'react';
 
 import isNullOrUndefined from '../../app/utils/isNullOrUndefined';
 
 export function useSessionState<T>(
 	key: string,
-	defaultValue: T | undefined = undefined
+	defaultValue: T | undefined = undefined,
+	type: COOKIE_TYPES = COOKIE_TYPES.PERSONALIZATION
 ) {
 	const [state, setState] = useState(() => {
-		const persistedState = window.sessionStorage.getItem(key) || '';
+		const persistedState = sessionStorage.getItem(key, type) || '';
 
 		try {
 			const deserializedValue = JSON.parse(persistedState);
@@ -37,12 +39,12 @@ export function useSessionState<T>(
 
 	useEffect(() => {
 		if (isNullOrUndefined(state)) {
-			window.sessionStorage.removeItem(key);
+			sessionStorage.removeItem(key);
 		}
 		else {
-			window.sessionStorage.setItem(key, JSON.stringify(state));
+			sessionStorage.setItem(key, JSON.stringify(state), type);
 		}
-	}, [key, state]);
+	}, [key, state, type]);
 
 	return [state, setState] as const;
 }

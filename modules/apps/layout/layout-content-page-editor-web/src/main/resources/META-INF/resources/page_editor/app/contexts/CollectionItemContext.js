@@ -259,6 +259,7 @@ const useGetFieldValue = () => {
 
 			if (isMappedToStructure(editable) && displayPagePreviewItem) {
 				return InfoItemService.getInfoItemFieldValue({
+					...editable,
 					...displayPagePreviewItem.data,
 					fieldId: editable.mappedField,
 					languageId: editable.languageId,

@@ -1759,6 +1759,64 @@ definition {
 		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Custom Object 42");
 	}
 
+	@description = "LPS-151877 - Verify that after the entry of an object definition with account restriction is saved, the account field can not be edited"
+	@priority = 4
+	test CannotEditEntryWithAccountRestriction {
+		task ("Given: An account, a Custom Object and Relationship Account to Custom Object are created (Via API)") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Test Name",
+				accountEntryType = "Business");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 176837",
+				objectName = "CustomObject176837",
+				pluralLabelName = "Custom Objects 176837");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "AccountEntry",
+				objectName_2 = "CustomObject176837",
+				relationshipLabel = "RelationshipAccount",
+				relationshipName = "relationshipAccount",
+				relationshipType = "oneToMany");
+		}
+
+		task ("And given: A layout is created and Account Restriction is enabled") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObject176837");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 176837");
+
+			CreateObject.activeToogleAccountRestriction();
+
+			CreateObject.selectAccountRestrictedField(accountRestrictedField = "RelationshipAccount");
+
+			Button.clickPublish();
+		}
+
+		task ("When: An entry is added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject176837");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Account Test Name");
+
+			Button.clickSave();
+		}
+
+		task ("Then: The entry is read-only and cannot be edited") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject176837");
+
+			ObjectPortlet.viewEntryDetails(entry = "Account Test Name");
+
+			AssertVisible(
+				key_entry = "Account Test Name",
+				locator1 = "ObjectPortlet#RELATIONSHIP_ENTRY_READ_ONLY");
+		}
+	}
+
 	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"
 	@priority = 4
 	test CannotLeaveFieldNameBlank {

@@ -42,9 +42,12 @@ import com.liferay.petra.function.transform.TransformUtil;
 	import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 </#if>
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -65,9 +68,12 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
@@ -91,6 +97,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -149,6 +159,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		<#if configYAML.isGenerateBatch() && freeMarkerTool.isVersionCompatible(configYAML, 2)>
+			ExportTaskResource.Builder exportTaskResourceBuilder = ExportTaskResource.builder();
+
+			exportTaskResource = exportTaskResourceBuilder.authentication(
+				"test@liferay.com", "test"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+		</#if>
 	}
 
 	@After
@@ -246,7 +266,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			parameters = freeMarkerTool.getResourceTestCaseParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, false)
 		/>
 
-		<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "sPageExportBatch")>
+		<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch")>
 			<#continue>
 		</#if>
 
@@ -1375,6 +1395,120 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
+			}
+		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post") && stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "sPageExportBatch")>
+			<#assign getPageMethodName = javaMethodSignature.methodName?replace("post", "get")?remove_ending("ExportBatch") />
+
+			@Test
+			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
+				<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+					${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${getPageMethodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
+					${javaMethodParameter.parameterType} irrelevant${javaMethodParameter.parameterName?cap_first} = test${getPageMethodName?cap_first}_getIrrelevant${javaMethodParameter.parameterName?cap_first}();
+				</#list>
+
+				HttpInvoker.HttpResponse httpResponse = ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
+					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+						<#if stringUtil.equals(javaMethodParameter.parameterName, "search")>
+							null
+						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+							${javaMethodParameter.parameterName}
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
+							RandomTestUtil.randomString()
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "boolean")>
+							RandomTestUtil.randomBoolean()
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "double")>
+							RandomTestUtil.randomDouble()
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "long")>
+							RandomTestUtil.randomLong()
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
+							RandomTestUtil.nextDate()
+						<#else>
+							null
+						</#if>
+
+						<#sep>, </#sep>
+					</#list>
+				);
+
+				ExportTask exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+				${schemaName}[] ${schemaVarName}s = get${schemaName}s(exportTask);
+
+				long totalCount = ${schemaVarName}s.length;
+
+				<#if freeMarkerTool.hasPathParameter(javaMethodSignature)>
+					if (
+					<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+						(irrelevant${javaMethodParameter.parameterName?cap_first} != null)
+
+						<#sep> && </#sep>
+					</#list>) {
+
+						${schemaName} irrelevant${schemaName} = test${getPageMethodName?cap_first}_add${schemaName}(
+							<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+								irrelevant${javaMethodParameter.parameterName?cap_first},
+							</#list>
+
+							randomIrrelevant${schemaName}());
+
+						httpResponse = ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
+							<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+								<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+									irrelevant${javaMethodParameter.parameterName?cap_first}
+								<#else>
+									null
+								</#if>
+
+								<#sep>, </#sep>
+							</#list>
+						);
+
+						exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+						${schemaVarName}s = get${schemaName}s(exportTask);
+
+						Assert.assertEquals(1, ${schemaVarName}s.length);
+
+						assertEquals(irrelevant${schemaName}, ${schemaVarName}s[0]);
+					}
+				</#if>
+
+				${schemaName} ${schemaVarName}1 = test${getPageMethodName?cap_first}_add${schemaName}(
+					<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+						${javaMethodParameter.parameterName},
+					</#list>
+
+					random${schemaName}()
+				);
+
+				${schemaName} ${schemaVarName}2 = test${getPageMethodName?cap_first}_add${schemaName}(
+					<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+						${javaMethodParameter.parameterName},
+					</#list>
+
+					random${schemaName}()
+				);
+
+				httpResponse = ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
+					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+							${javaMethodParameter.parameterName}
+						<#else>
+							null
+						</#if>
+
+						<#sep>, </#sep>
+					</#list>
+				);
+
+				exportTask = ExportTask.toDTO(httpResponse.getContent());
+
+				${schemaVarName}s = get${schemaName}s(exportTask);
+
+				Assert.assertEquals(totalCount + 2, ${schemaVarName}s.length);
+
+				assertContains(${schemaVarName}1, Arrays.asList(${schemaVarName}s));
+				assertContains(${schemaVarName}2, Arrays.asList(${schemaVarName}s));
 			}
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "put") && javaMethodSignature.methodName?contains("Permission")>
 			@Test
@@ -2561,6 +2695,44 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	</#list>
 
+	<#if configYAML.isGenerateBatch() && freeMarkerTool.isVersionCompatible(configYAML, 2)>
+		protected ${schemaName}[] get${schemaName}s(ExportTask exportTask) throws Exception {
+
+			CountDownLatch countDownLatch = new CountDownLatch(100);
+
+			boolean completed = false;
+
+			while ((countDownLatch.getCount() > 0) && (!completed)) {
+				ExportTask updatedExportTask = exportTaskResource.getExportTask(exportTask.getId());
+
+				if (updatedExportTask.getExecuteStatus() == ExportTask.ExecuteStatus.COMPLETED) {
+					completed = true;
+				}
+				else if (updatedExportTask.getExecuteStatus() ==ExportTask.ExecuteStatus.FAILED) {
+					throw new PortalException("The export task failed");
+				}
+				else {
+					countDownLatch.countDown();
+					countDownLatch.await(10, TimeUnit.MILLISECONDS);
+				}
+			}
+
+			Assert.assertTrue("The status of the Export task is not COMPLETED", completed);
+
+			com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse exportTaskHttpResponse = exportTaskResource.getExportTaskContentHttpResponse(exportTask.getId());
+
+			File file = FileUtil.createTempFile(exportTaskHttpResponse.getBinaryContent());
+
+			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+			try {
+				return ${schemaName}SerDes.toDTOs(zipReader.getEntryAsString("export.json"));
+			} finally {
+				zipReader.close();
+			}
+		}
+	</#if>
+
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz) throws Exception {
 		return TransformUtil.transform(
 			ReflectionUtil.getDeclaredFields(clazz),
@@ -2760,6 +2932,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#list>
 
 	protected ${schemaName}Resource ${schemaVarName}Resource;
+
+	<#if configYAML.isGenerateBatch() && freeMarkerTool.isVersionCompatible(configYAML, 2)>
+		protected ExportTaskResource exportTaskResource;
+	</#if>
+
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 

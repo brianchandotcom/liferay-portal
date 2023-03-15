@@ -93,6 +93,55 @@ definition {
 			value1 = "\TAB");
 	}
 
+	@summary = "Fill expense fields on MDF Request activity page"
+	macro fillExpenseFields {
+		var budgetIndex = "0";
+
+		for (var bugdetValues : list "${budgetList}") {
+			var expenseOption = StringUtil.extractFirst("${bugdetValues}", "-");
+			var bugdetValue = StringUtil.extractLast("${bugdetValues}", "-");
+
+			if (!(isSet(activityIndex))) {
+				var activityIndex = "0";
+			}
+
+			Click(
+				key_buttonText = "Add Expense",
+				locator1 = "PRMMDFRequest#ADD_BUTTON");
+
+			Select(
+				key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].expense",
+				locator1 = "PRMMDFRequest#SELECT",
+				value1 = "${expenseOption}");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].cost",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "${bugdetValue}");
+
+			var budgetIndex = ${budgetIndex} + 1;
+		}
+	}
+
+	@summary = "Get the hidden value of 'Total MDF Requested Amount' field using JS script"
+	macro getRequestedAmoundValue {
+		if (!(isSet(activityIndex))) {
+				var activityIndex = "0";
+		}
+
+		var javaScriptCountElement = '''
+        
+        return document.querySelector("input[name='activities[${activityIndex}].mdfRequestAmount']").value;
+
+        ''';
+
+        var value = selenium.getEval(${javaScriptCountElement});
+
+		var value = StringUtil.extractDigits("${value}");
+
+		return ${value};
+	}
+
 	@summary = "Fill the goals page form"
 	macro fillGoalsPage {
 		if (isSet(accountName)) {

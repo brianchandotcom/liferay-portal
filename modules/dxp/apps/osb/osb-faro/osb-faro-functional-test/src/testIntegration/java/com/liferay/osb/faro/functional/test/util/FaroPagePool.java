@@ -17,13 +17,10 @@ package com.liferay.osb.faro.functional.test.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.poshi.runner.util.CharPool;
-import com.liferay.poshi.runner.util.PropsUtil;
+import com.liferay.poshi.core.util.CharPool;
+import com.liferay.poshi.core.util.PropsUtil;
 
 import java.lang.reflect.Field;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 /**
  * @author Cheryl Tang
@@ -104,15 +101,18 @@ public class FaroPagePool {
 	public String getPageTitle(String pageName) throws Exception {
 		Class<?> clazz = getClass();
 
-		Stream<Field> stream = Arrays.stream(clazz.getFields());
-
 		pageName = StringUtil.replace(
 			pageName, CharPool.SPACE, CharPool.UNDERLINE);
 
 		String titleFieldName = StringUtil.toUpperCase(pageName) + "_TITLE";
 
-		boolean matchedField = stream.anyMatch(
-			field -> titleFieldName.equals(field.getName()));
+		boolean matchedField = false;
+
+		for (Field field : clazz.getFields()) {
+			if (titleFieldName.equals(field.getName())) {
+				matchedField = true;
+			}
+		}
 
 		if (!matchedField) {
 			return pageName;

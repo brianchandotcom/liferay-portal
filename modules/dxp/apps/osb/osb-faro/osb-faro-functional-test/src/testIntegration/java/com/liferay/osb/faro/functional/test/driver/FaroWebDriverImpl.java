@@ -18,12 +18,12 @@ import com.liferay.osb.faro.functional.test.steps.GeneralSteps;
 import com.liferay.osb.faro.functional.test.util.FaroRestUtil;
 import com.liferay.osb.faro.functional.test.util.FaroSeleniumUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.runner.selenium.BaseWebDriverImpl;
 import com.liferay.poshi.runner.selenium.WebDriverUtil;
-import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RuntimeVariables;
 
 import java.awt.Rectangle;
@@ -38,14 +38,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
@@ -57,7 +54,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -135,20 +131,26 @@ public class FaroWebDriverImpl
 	public void dragAndDropChrome(String fromElement, String toElement)
 		throws Exception {
 
-		JavascriptExecutor jse =
-			(JavascriptExecutor)WebDriverUtil.getWebDriver();
+		JavascriptExecutor jse = (JavascriptExecutor)WebDriverUtil.getWebDriver(
+			StringPool.BLANK);
 
 		try (BufferedReader bufferedReader = Files.newBufferedReader(
 				Paths.get(
 					"src/testIntegration/resources/drag_and_drop_helper.js"))) {
 
-			Stream<String> stream = bufferedReader.lines();
+			String line = null;
+
+			StringBuilder lines = new StringBuilder();
+
+			while ((line = bufferedReader.readLine()) != null) {
+				lines.append(line);
+				lines.append(" ");
+			}
 
 			jse.executeScript(
 				StringBundler.concat(
-					stream.collect(Collectors.joining(" ")),
-					"DndSimulator.simulate('", fromElement, "', '", toElement,
-					"');"));
+					String.valueOf(lines), "DndSimulator.simulate('",
+					fromElement, "', '", toElement, "');"));
 		}
 	}
 
@@ -174,7 +176,7 @@ public class FaroWebDriverImpl
 	public void forceWindowFocus() {
 		String windowHandle = getWindowHandle();
 
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
+		WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
 
@@ -286,7 +288,7 @@ public class FaroWebDriverImpl
 		Function<FaroSelenium, Boolean> function = faroSelenium -> {
 			FaroRestUtil.clearCache();
 
-			WebDriver webDriver = WebDriverUtil.getWebDriver();
+			WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 			Navigation navigation = webDriver.navigate();
 
@@ -334,7 +336,7 @@ public class FaroWebDriverImpl
 		Function<FaroSelenium, Boolean> function = faroSelenium -> {
 			FaroRestUtil.clearCache();
 
-			WebDriver webDriver = WebDriverUtil.getWebDriver();
+			WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 			Navigation navigation = webDriver.navigate();
 
@@ -379,7 +381,7 @@ public class FaroWebDriverImpl
 		Function<FaroSelenium, Boolean> function = faroSelenium -> {
 			FaroRestUtil.clearCache();
 
-			WebDriver webDriver = WebDriverUtil.getWebDriver();
+			WebDriver webDriver = WebDriverUtil.getWebDriver(StringPool.BLANK);
 
 			Navigation navigation = webDriver.navigate();
 
@@ -408,7 +410,6 @@ public class FaroWebDriverImpl
 	 *
 	 * @throws Exception if an exception occurred
 	 */
-	@Override
 	public void saveScreenshot() throws Exception {
 		if (!PropsValues.SAVE_SCREENSHOT) {
 			return;
@@ -463,9 +464,12 @@ public class FaroWebDriverImpl
 		for (int i = 0; i < value.length(); i++) {
 			webElement.sendKeys(String.valueOf(value.charAt(i)));
 
+			String substring = value.substring(0, i);
+
+			String webElementAttribute = webElement.getAttribute("value");
+
 			webDriverWait.until(
-				ExpectedConditions.attributeContains(
-					webElement, "value", value.substring(0, i)));
+				webDriver -> webElementAttribute.equals(substring));
 		}
 	}
 
@@ -501,18 +505,15 @@ public class FaroWebDriverImpl
 
 		windowHandles.remove(_mainWindowHandle);
 
-		Stream<String> stream = windowHandles.stream();
-
-		Optional<String> handleOptional = stream.reduce(
-			(first, second) -> second);
-
-		if (!handleOptional.isPresent()) {
+		if (windowHandles.isEmpty()) {
 			throw new Exception("There is no other window to switch to");
 		}
 
-		TargetLocator targetLocator = switchTo();
+		for (String windowHandle : windowHandles) {
+			TargetLocator targetLocator = switchTo();
 
-		targetLocator.window(handleOptional.get());
+			targetLocator.window(windowHandle);
+		}
 	}
 
 	@Override
@@ -565,7 +566,7 @@ public class FaroWebDriverImpl
 	@Override
 	public void waitForPageLoadingComplete() {
 		WebDriverWait waitDriverWait = new WebDriverWait(
-			WebDriverUtil.getWebDriver(), 30);
+			WebDriverUtil.getWebDriver(StringPool.BLANK), 30);
 
 		waitDriverWait.until(
 			webDriver -> {

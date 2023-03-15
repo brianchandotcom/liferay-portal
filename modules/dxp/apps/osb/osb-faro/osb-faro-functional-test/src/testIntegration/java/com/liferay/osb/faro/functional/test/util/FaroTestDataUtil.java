@@ -17,7 +17,8 @@ package com.liferay.osb.faro.functional.test.util;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.poshi.runner.util.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.poshi.core.util.StringPool;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -237,11 +238,7 @@ public class FaroTestDataUtil {
 
 		while (retryCount <= maxRetries) {
 			AppResponse appResponse = FaroRestUtil.get(
-				endpointURL.concat(
-					StringPool.FORWARD_SLASH
-				).concat(
-					id
-				),
+				StringBundler.concat(endpointURL, StringPool.FORWARD_SLASH, id),
 				true);
 
 			if ((appResponse.getHttpStatusCode() == 404) ||
@@ -280,11 +277,7 @@ public class FaroTestDataUtil {
 		throws Exception {
 
 		FaroRestUtil.delete(
-			endpointURL.concat(
-				StringPool.FORWARD_SLASH
-			).concat(
-				id
-			),
+			StringBundler.concat(endpointURL, StringPool.FORWARD_SLASH, id),
 			false);
 	}
 

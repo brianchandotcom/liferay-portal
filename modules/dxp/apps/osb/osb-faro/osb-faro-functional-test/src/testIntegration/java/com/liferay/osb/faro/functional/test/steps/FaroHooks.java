@@ -19,9 +19,9 @@ import com.liferay.osb.faro.functional.test.pages.DashboardPage;
 import com.liferay.osb.faro.functional.test.pages.fragments.Table;
 import com.liferay.osb.faro.functional.test.util.FaroSeleniumUtil;
 import com.liferay.osb.faro.functional.test.util.FaroTestDataUtil;
-import com.liferay.poshi.runner.selenium.SeleniumUtil;
-import com.liferay.poshi.runner.util.GetterUtil;
-import com.liferay.poshi.runner.util.PropsUtil;
+import com.liferay.poshi.core.util.GetterUtil;
+import com.liferay.poshi.core.util.PropsUtil;
+import com.liferay.poshi.core.util.StringPool;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -40,7 +40,7 @@ public class FaroHooks {
 
 	@Before
 	public static void setUp() {
-		SeleniumUtil.getSelenium();
+		FaroSeleniumUtil.getFaroSelenium();
 	}
 
 	@After
@@ -50,7 +50,7 @@ public class FaroHooks {
 		faroSelenium.switchToMainWindow();
 
 		if (scenario.isFailed()) {
-			faroSelenium.saveScreenshot();
+			faroSelenium.saveScreenshot(StringPool.BLANK);
 		}
 
 		WebDriver.Options manage = faroSelenium.manage();

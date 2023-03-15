@@ -18,8 +18,9 @@ import com.cucumber.listener.ExtentCucumberFormatter;
 
 import com.liferay.osb.faro.functional.test.driver.FaroSelenium;
 import com.liferay.osb.faro.functional.test.driver.FaroWebDriver;
+import com.liferay.petra.string.StringPool;
+import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.runner.selenium.WebDriverUtil;
-import com.liferay.poshi.runner.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
@@ -95,16 +96,15 @@ public class FaroSeleniumUtil {
 
 	private void _startFaroSelenium() {
 		_faroSelenium = new FaroWebDriver(
-			PropsValues.PORTAL_URL, WebDriverUtil.getWebDriver());
+			PropsValues.PORTAL_URL,
+			WebDriverUtil.getWebDriver(StringPool.BLANK));
 	}
 
 	private void _stopFaroSelenium() {
 		if (_faroSelenium != null) {
-			WebDriverUtil.stopWebDriver();
+			WebDriverUtil.stopWebDriver(StringPool.BLANK);
 
-			_faroSelenium.stop();
-
-			_faroSelenium.stopLogger();
+			_faroSeleniumUtil._stopFaroSelenium();
 		}
 
 		_faroSelenium = null;

@@ -19,9 +19,9 @@ import com.liferay.osb.faro.functional.test.steps.ClickSteps;
 import com.liferay.osb.faro.functional.test.util.FaroSeleniumUtil;
 import com.liferay.osb.faro.functional.test.util.FaroTestDataUtil;
 import com.liferay.osb.faro.functional.test.util.FaroTransformer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.poshi.runner.util.StringPool;
-import com.liferay.poshi.runner.util.StringUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import cucumber.api.DataTable;
 import cucumber.api.Transform;

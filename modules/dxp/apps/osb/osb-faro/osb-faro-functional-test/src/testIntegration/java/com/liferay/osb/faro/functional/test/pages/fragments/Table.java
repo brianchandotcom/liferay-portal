@@ -33,8 +33,6 @@ import cucumber.api.java.en.When;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 
@@ -167,15 +165,13 @@ public class Table {
 		List<WebElement> rowWebElements = _faroSelenium.findElements(
 			sb.toString());
 
-		Stream<WebElement> stream = rowWebElements.stream();
+		List<String> webElementText = new ArrayList<>();
 
-		Assert.assertEquals(
-			dataTable.asList(String.class),
-			stream.map(
-				WebElement::getText
-			).collect(
-				Collectors.toList()
-			));
+		for (WebElement webElement : rowWebElements) {
+			webElementText.add(webElement.getText());
+		}
+
+		Assert.assertEquals(dataTable.asList(String.class), webElementText);
 	}
 
 	@Then("^I should see \"(.*)\" in the card list \"(.*)\"$")
@@ -462,16 +458,14 @@ public class Table {
 		List<WebElement> rowWebElements = _faroSelenium.findElements(
 			sb.toString());
 
-		Stream<WebElement> stream = rowWebElements.stream();
+		List<String> webElementText = new ArrayList<>();
 
-		List<String> rowNames = stream.map(
-			WebElement::getText
-		).collect(
-			Collectors.toList()
-		);
+		for (WebElement webElement : rowWebElements) {
+			webElementText.add(webElement.getText());
+		}
 
 		try {
-			Assert.assertEquals(dataTableNames, rowNames);
+			Assert.assertEquals(dataTableNames, webElementText);
 		}
 		catch (AssertionError ae) {
 			if (!colNum.equals("1")) {
@@ -521,17 +515,15 @@ public class Table {
 		List<WebElement> tableHeaders = _faroSelenium.findElements(
 			"//thead//th");
 
-		Stream<WebElement> stream = tableHeaders.stream();
+		List<String> webElementText = new ArrayList<>();
 
-		List<String> rowNames = stream.map(
-			WebElement::getText
-		).collect(
-			Collectors.toList()
-		);
+		for (WebElement webElement : tableHeaders) {
+			webElementText.add(webElement.getText());
+		}
 
 		int rowTdOffset = 1;
 
-		int index = rowNames.indexOf(headerName) + rowTdOffset;
+		int index = webElementText.indexOf(headerName) + rowTdOffset;
 
 		StringBundler sb = new StringBundler(5);
 

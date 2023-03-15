@@ -15,7 +15,7 @@
 package com.liferay.oauth2.provider.internal.upgrade.registry;
 
 import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.OAuth2ApplicationScopeAliasesUpgradeProcess;
-import com.liferay.oauth2.provider.internal.upgrade.v3_0_0.OAuth2ApplicationClientCredentialUserUpgradeUser;
+import com.liferay.oauth2.provider.internal.upgrade.v3_0_0.OAuth2ApplicationClientCredentialUserUpgradeProcess;
 import com.liferay.oauth2.provider.internal.upgrade.v3_2_0.OAuth2ApplicationFeatureUpgradeProcess;
 import com.liferay.oauth2.provider.internal.upgrade.v4_1_0.OAuth2ApplicationClientAuthenticationMethodUpgradeProcess;
 import com.liferay.oauth2.provider.internal.upgrade.v4_2_1.OAuth2ScopeGrantRemoveCompanyIdFromObjectsRelatedUpgradeProcess;
@@ -68,7 +68,7 @@ public class OAuth2ServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"OAuth2Application",
 				"clientCredentialUserName VARCHAR(75) null"),
-			new OAuth2ApplicationClientCredentialUserUpgradeUser());
+			new OAuth2ApplicationClientCredentialUserUpgradeProcess());
 
 		registry.register(
 			"3.0.0", "3.1.0",

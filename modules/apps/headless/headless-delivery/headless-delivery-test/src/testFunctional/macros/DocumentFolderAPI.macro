@@ -8,7 +8,7 @@ definition {
 				depotName = ${depotName},
 				noSelenium = "true");
 
-			var api = "asset-libraries/${assetLibraryId}";
+			var api = "asset-libraries/${assetLibraryId}/document-folders";
 		}
 		else if (isSet(documentFolderId)) {
 			var api = "document-folders/${documentFolderId}";

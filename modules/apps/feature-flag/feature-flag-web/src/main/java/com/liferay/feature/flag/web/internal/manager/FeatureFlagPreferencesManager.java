@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortalPreferencesWrapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,6 +32,13 @@ import org.osgi.service.component.annotations.Reference;
 public class FeatureFlagPreferencesManager {
 
 	public Boolean isEnabled(long companyId, String key) {
+		if (Validator.isNull(
+				_portalPreferencesLocalService.fetchPortalPreferences(
+					companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY))) {
+
+			return null;
+		}
+
 		PortalPreferences portalPreferences = _getPortalPreferences(companyId);
 
 		String value = portalPreferences.getValue(_NAMESPACE, key);

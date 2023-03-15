@@ -14,6 +14,9 @@
 
 package com.liferay.jethr0.util;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.util.Locale;
 
 /**
@@ -70,6 +73,15 @@ public class StringUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static URL toURL(String urlString) {
+		try {
+			return new URL(urlString);
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 }

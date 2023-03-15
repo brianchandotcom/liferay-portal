@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -503,6 +504,40 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			return webImage;
 		}
 		else if (objectField.getListTypeDefinitionId() != 0) {
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+				List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
+					new ArrayList<>();
+
+				for (String key :
+						StringUtil.split(
+							(String)values.get(objectField.getName()),
+							StringPool.COMMA_AND_SPACE)) {
+
+					ListTypeEntry listTypeEntry =
+						_listTypeEntryLocalService.fetchListTypeEntry(
+							objectField.getListTypeDefinitionId(), key);
+
+					if (listTypeEntry == null) {
+						continue;
+					}
+
+					keyLocalizedLabelPairs.add(
+						new KeyLocalizedLabelPair(
+							listTypeEntry.getName(serviceContext.getLocale()),
+							InfoLocalizedValue.<String>builder(
+							).defaultLocale(
+								serviceContext.getLocale()
+							).values(
+								listTypeEntry.getNameMap()
+							).build()));
+				}
+
+				return keyLocalizedLabelPairs;
+			}
+
 			ListTypeEntry listTypeEntry =
 				_listTypeEntryLocalService.fetchListTypeEntry(
 					objectField.getListTypeDefinitionId(),

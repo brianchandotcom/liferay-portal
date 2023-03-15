@@ -85,7 +85,7 @@ public class KaleoFormsViewRecordsDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_kaleoProcess = (KaleoProcess)_renderRequest.getAttribute(
+		_kaleoProcess = (KaleoProcess)renderRequest.getAttribute(
 			KaleoFormsWebKeys.KALEO_PROCESS);
 
 		_ddlRecordSet = _kaleoProcess.getDDLRecordSet();

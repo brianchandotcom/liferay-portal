@@ -64,6 +64,10 @@ public class BatchEngineUnitConfiguration {
 		this.className = className;
 	}
 
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
+
 	public void setFieldNameMappingMap(
 		Map<String, String> fieldNameMappingMap) {
 
@@ -84,6 +88,10 @@ public class BatchEngineUnitConfiguration {
 
 	public void setTaskItemDelegateName(String taskItemDelegateName) {
 		this.taskItemDelegateName = taskItemDelegateName;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public void setVersion(String version) {

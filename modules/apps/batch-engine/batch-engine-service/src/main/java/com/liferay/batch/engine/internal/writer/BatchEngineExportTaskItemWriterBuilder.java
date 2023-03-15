@@ -71,7 +71,7 @@ public class BatchEngineExportTaskItemWriterBuilder {
 				new BatchEngineUnitConfiguration();
 
 			batchEngineUnitConfiguration.setClassName(_itemClass.getName());
-			batchEngineUnitConfiguration.setVersion("v1.0");
+			batchEngineUnitConfiguration.setCompanyId(_companyId);
 
 			if (_parameters == null) {
 				_parameters = new HashMap<>();
@@ -81,6 +81,8 @@ public class BatchEngineExportTaskItemWriterBuilder {
 			_parameters.computeIfAbsent("updateStrategy", key -> "UPDATE");
 
 			batchEngineUnitConfiguration.setParameters(_parameters);
+			batchEngineUnitConfiguration.setUserId(_userId);
+			batchEngineUnitConfiguration.setVersion("v1.0");
 
 			return new JSONTBatchEngineExportTaskItemWriterImpl(
 				batchEngineUnitConfiguration, _fieldNames, _outputStream);
@@ -89,6 +91,12 @@ public class BatchEngineExportTaskItemWriterBuilder {
 		throw new IllegalArgumentException(
 			"Unknown batch engine task content type " +
 				_batchEngineTaskContentType);
+	}
+
+	public BatchEngineExportTaskItemWriterBuilder companyId(long companyId) {
+		_companyId = companyId;
+
+		return this;
 	}
 
 	public BatchEngineExportTaskItemWriterBuilder csvFileColumnDelimiter(
@@ -131,11 +139,19 @@ public class BatchEngineExportTaskItemWriterBuilder {
 		return this;
 	}
 
+	public BatchEngineExportTaskItemWriterBuilder userId(long userId) {
+		_userId = userId;
+
+		return this;
+	}
+
 	private BatchEngineTaskContentType _batchEngineTaskContentType;
+	private long _companyId;
 	private String _csvFileColumnDelimiter;
 	private List<String> _fieldNames;
 	private Class<?> _itemClass;
 	private OutputStream _outputStream;
 	private Map<String, Serializable> _parameters;
+	private long _userId;
 
 }

@@ -210,6 +210,8 @@ public class BatchEngineExportTaskExecutorImpl
 			batchEngineTaskContentType(
 				BatchEngineTaskContentType.valueOf(
 					batchEngineExportTask.getContentType())
+			).companyId(
+				batchEngineExportTask.getCompanyId()
 			).csvFileColumnDelimiter(
 				GetterUtil.getString(
 					_getCSVFileColumnDelimiter(
@@ -224,6 +226,8 @@ public class BatchEngineExportTaskExecutorImpl
 				outputStream
 			).parameters(
 				batchEngineExportTask.getParameters()
+			).userId(
+				batchEngineExportTask.getUserId()
 			).build();
 	}
 

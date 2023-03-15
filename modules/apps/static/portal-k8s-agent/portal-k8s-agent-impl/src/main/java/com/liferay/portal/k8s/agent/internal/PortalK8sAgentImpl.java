@@ -60,6 +60,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.cm.ConfigurationPlugin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -82,6 +83,10 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 	public PortalK8sAgentImpl(
 			BundleContext bundleContext,
 			@Reference ConfigurationAdmin configurationAdmin,
+			@Reference(
+				target = "(config.plugin.id=org.apache.felix.configadmin.plugin.interpolation)"
+			)
+			ConfigurationPlugin configurationPlugin,
 			@Reference(
 				name = "portalK8sConfigurationPropertiesMutators",
 				policyOption = ReferencePolicyOption.GREEDY

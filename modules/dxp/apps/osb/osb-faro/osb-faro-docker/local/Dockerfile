@@ -1,4 +1,4 @@
-FROM liferay/dxp:7.1.10-dxp-26-d4.1.0-20220613181358
+FROM liferay/dxp:7.1.10-dxp-26
 
 USER root
 
@@ -25,7 +25,6 @@ HEALTHCHECK --interval=3s --timeout=3s CMD curl -f http://localhost:8080 || exit
 RUN mkdir -p $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util && \
     echo "server.info=" > $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util/ServerInfo.properties
 
-COPY --chown=liferay:liferay common/license $LIFERAY_HOME/deploy
 COPY common/resources/portal-ext.properties $LIFERAY_HOME/
 COPY common/resources/setenv.sh $LIFERAY_HOME/tomcat/bin/
 COPY common/resources/system-ext.properties $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/classes

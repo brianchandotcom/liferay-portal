@@ -67,7 +67,7 @@ public class KaleoInstanceModelDocumentContributor
 
 					if ((kaleoNode == null) ||
 						Objects.equals(
-							kaleoNode.getType(), NodeType.FORK.name())) {
+							NodeType.FORK.name(), kaleoNode.getType())) {
 
 						return null;
 					}

@@ -16,20 +16,19 @@ package com.liferay.osb.faro.mock.engine.client.internal;
 
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
+import com.liferay.osb.faro.engine.client.constants.FilterConstants;
 import com.liferay.osb.faro.engine.client.model.Field;
 import com.liferay.osb.faro.engine.client.model.Individual;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.util.FilterBuilder;
-import com.liferay.osb.faro.engine.client.util.FilterConstants;
 import com.liferay.osb.faro.engine.client.util.FilterUtil;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -69,18 +68,17 @@ public class MockContactsEngineClientImpl
 
 		List<Individual> individuals = results.getItems();
 
-		Stream<Individual> stream = individuals.stream();
+		List<Individual> individualsFiltered = new ArrayList<>();
 
-		stream = stream.filter(
-			curIndividual -> {
-				String id = curIndividual.getId();
+		for (Individual curIndividual : individuals) {
+			String id = curIndividual.getId();
 
-				return !id.equals(individual.getId());
-			});
+			if (!id.equals(individual.getId())) {
+				individualsFiltered.add(curIndividual);
+			}
+		}
 
-		individuals = stream.collect(Collectors.toList());
-
-		return new Results<>(individuals, individuals.size());
+		return new Results<>(individualsFiltered, individualsFiltered.size());
 	}
 
 	@Override
@@ -155,18 +153,17 @@ public class MockContactsEngineClientImpl
 
 		List<Individual> individuals = results.getItems();
 
-		Stream<Individual> stream = individuals.stream();
+		List<Individual> individualsFiltered = new ArrayList<>();
 
-		stream = stream.filter(
-			curIndividual -> {
-				String id = curIndividual.getId();
+		for (Individual curIndividual : individuals) {
+			String id = curIndividual.getId();
 
-				return !id.equals(individual.getId());
-			});
+			if (!id.equals(individual.getId())) {
+				individualsFiltered.add(curIndividual);
+			}
+		}
 
-		individuals = stream.collect(Collectors.toList());
-
-		return new Results<>(individuals, individuals.size());
+		return new Results<>(individualsFiltered, individualsFiltered.size());
 	}
 
 	protected Results<Individual> getIndividuals(

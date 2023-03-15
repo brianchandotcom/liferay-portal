@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Matthew Kong
@@ -146,8 +145,7 @@ public class FaroSubscriptionDisplay {
 
 		_pageViewsCount = GetterUtil.getInteger(
 			cerebroEngineClient.getPageViews(
-				faroProject, Optional.ofNullable(_startDate),
-				Optional.of(new Date())));
+				faroProject, _startDate, new Date()));
 
 		_pageViewsStatus = getStatus(_pageViewsCount, _pageViewsLimit);
 	}

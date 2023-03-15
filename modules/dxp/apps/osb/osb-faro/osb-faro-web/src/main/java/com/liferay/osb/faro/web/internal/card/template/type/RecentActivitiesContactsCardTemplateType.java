@@ -18,8 +18,8 @@ import com.liferay.osb.faro.contacts.model.constants.ContactsCardTemplateConstan
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.ContactsCardTemplateDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.RecentActivitiesContactsCardTemplateDisplay;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,13 +54,10 @@ public class RecentActivitiesContactsCardTemplateType
 	private static final String _DEFAULT_NAME = "Recent Activities";
 
 	private static final Map<String, Object> _defaultSettings =
-		new HashMap<String, Object>() {
-			{
-				put(
-					"filterType",
-					ContactsCardTemplateConstants.SETTINGS_FILTER_ALL);
-				put("query", StringPool.BLANK);
-			}
-		};
+		new HashMapBuilder<>().<String, Object>put(
+			"filterType", ContactsCardTemplateConstants.SETTINGS_FILTER_ALL
+		).put(
+			"query", StringPool.BLANK
+		).build();
 
 }

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import {DocumentNode} from 'graphql';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {Filters, getFilters, RawFilters} from 'shared/util/filter';
 import {getSafeRangeSelectors} from 'shared/util/util';
@@ -26,7 +26,7 @@ export const useAssetVariables = (commonVariables: ICommonVariables) => {
 type TMetricQuery = {
 	filters: RawFilters;
 	interval: Interval;
-	Query: typeof gql;
+	Query: DocumentNode;
 	rangeSelectors: RangeSelectors;
 	variables: (commonVariables: ICommonVariables) => any;
 };

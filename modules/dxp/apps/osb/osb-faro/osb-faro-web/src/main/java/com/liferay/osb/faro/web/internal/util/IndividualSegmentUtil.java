@@ -16,6 +16,7 @@ package com.liferay.osb.faro.web.internal.util;
 
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
+import com.liferay.osb.faro.engine.client.constants.FilterConstants;
 import com.liferay.osb.faro.engine.client.model.Field;
 import com.liferay.osb.faro.engine.client.model.FieldMapping;
 import com.liferay.osb.faro.engine.client.model.Individual;
@@ -23,7 +24,6 @@ import com.liferay.osb.faro.engine.client.model.IndividualSegment;
 import com.liferay.osb.faro.engine.client.model.IndividualTransformation;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.util.FilterBuilder;
-import com.liferay.osb.faro.engine.client.util.FilterConstants;
 import com.liferay.osb.faro.engine.client.util.FilterUtil;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
@@ -31,15 +31,12 @@ import com.liferay.osb.faro.web.internal.constants.FaroPaginationConstants;
 import com.liferay.osb.faro.web.internal.exception.FaroException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author Matthew Kong
@@ -194,12 +191,12 @@ public class IndividualSegmentUtil {
 					curFilterBuilder,
 					individualSegment.isIncludeAnonymousUsers(), 1, 1, null);
 
-			Map<String, Object> fieldValueMap = new HashMap<>();
-
-			fieldValueMap.put("count", curResults.getTotal());
-			fieldValueMap.put("values", binRange);
-
-			individualFieldDistribution.add(fieldValueMap);
+			individualFieldDistribution.add(
+				new HashMapBuilder<>().<String, Object>put(
+					"count", curResults.getTotal()
+				).put(
+					"values", binRange
+				).build());
 		}
 
 		return individualFieldDistribution;
@@ -252,20 +249,16 @@ public class IndividualSegmentUtil {
 		for (IndividualTransformation individualTransformation :
 				individualTransformations.getItems()) {
 
-			Map<String, Object> fieldValueMap = new HashMap<>();
-
-			fieldValueMap.put(
-				"count", individualTransformation.getTotalElements());
+			Map<String, Object> fieldValueMap =
+				new HashMapBuilder<>().<String, Object>put(
+					"count", individualTransformation.getTotalElements()
+				).build();
 
 			Map<String, Object> terms = individualTransformation.getTerms();
 
-			Collection<Object> values = terms.values();
+			ArrayList<Object> values = new ArrayList<>(terms.values());
 
-			Stream<Object> stream = values.stream();
-
-			Optional<Object> optionalValue = stream.findFirst();
-
-			fieldValueMap.put("values", new Object[] {optionalValue.get()});
+			fieldValueMap.put("values", new Object[] {values.get(0)});
 
 			individualFieldDistribution.add(fieldValueMap);
 		}

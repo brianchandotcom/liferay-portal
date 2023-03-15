@@ -22,12 +22,10 @@ import com.liferay.osb.faro.web.internal.controller.FaroController;
 import com.liferay.osb.faro.web.internal.model.display.contacts.FaroPreferencesDisplay;
 import com.liferay.osb.faro.web.internal.model.preferences.DistributionCardTabPreferences;
 import com.liferay.osb.faro.web.internal.model.preferences.DistributionCardTabsPreferences;
-import com.liferay.osb.faro.web.internal.model.preferences.EmailReportPreferences;
 import com.liferay.osb.faro.web.internal.model.preferences.IndividualDashboardPreferences;
 import com.liferay.osb.faro.web.internal.model.preferences.IndividualSegmentPreferences;
 import com.liferay.osb.faro.web.internal.model.preferences.WorkspacePreferences;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
-import com.liferay.osb.faro.web.internal.util.EmailReportHelper;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -94,35 +92,6 @@ public class PreferencesController extends BaseFaroController {
 
 		return workspacePreferences.getDistributionCardTabsPreferences(
 			individualSegmentId);
-	}
-
-	@Path("/email_report")
-	@POST
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public EmailReportPreferences addEmailReportPreference(
-			@PathParam("groupId") long groupId,
-			@FormParam("channelId") String channelId,
-			@FormParam("enabled") Boolean enabled,
-			@FormParam("frequency") String frequency,
-			@DefaultValue(FaroPreferencesConstants.SCOPE_USER)
-			@FormParam("scope")
-			String scope)
-		throws Exception {
-
-		long ownerId = _getOwnerId(groupId, scope);
-
-		WorkspacePreferences workspacePreferences = _getWorkspacePreferences(
-			groupId, ownerId);
-
-		Map<String, EmailReportPreferences> emailReportPreferences =
-			workspacePreferences.addEmailReportPreference(
-				channelId, enabled, frequency);
-
-		_faroPreferencesLocalService.savePreferences(
-			getUserId(), groupId, ownerId,
-			JSONUtil.writeValueAsString(workspacePreferences));
-
-		return emailReportPreferences.get(channelId);
 	}
 
 	@GET
@@ -195,22 +164,6 @@ public class PreferencesController extends BaseFaroController {
 
 		return individualSegmentPreferences.
 			getDistributionCardTabsPreferences();
-	}
-
-	@GET
-	@Path("/email_report")
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public Map<String, EmailReportPreferences> getEmailReportPreferences(
-			@PathParam("groupId") long groupId,
-			@DefaultValue(FaroPreferencesConstants.SCOPE_USER)
-			@QueryParam("scope")
-			String scope)
-		throws Exception {
-
-		WorkspacePreferences workspacePreferences = _getWorkspacePreferences(
-			groupId, _getOwnerId(groupId, scope));
-
-		return workspacePreferences.getEmailReportPreferences(null);
 	}
 
 	@GET
@@ -341,21 +294,6 @@ public class PreferencesController extends BaseFaroController {
 		return upgradeModalSeen;
 	}
 
-	@Path("/send_email_report")
-	@POST
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public boolean sendEmailReport(
-			@PathParam("groupId") long groupId,
-			@FormParam("channelId") String channelId,
-			@FormParam("frequency") String frequency,
-			@FormParam("userId") long userId)
-		throws Exception {
-
-		_emailReportHelper.sendEmail(channelId, frequency, groupId, userId);
-
-		return true;
-	}
-
 	private long _getOwnerId(long groupId, String scope) throws Exception {
 		if (StringUtil.equals(scope, FaroPreferencesConstants.SCOPE_GROUP)) {
 			return groupId;
@@ -383,9 +321,6 @@ public class PreferencesController extends BaseFaroController {
 		return JSONUtil.readValue(
 			faroPreferences.getPreferences(), WorkspacePreferences.class);
 	}
-
-	@Reference
-	private EmailReportHelper _emailReportHelper;
 
 	@Reference
 	private FaroPreferencesLocalService _faroPreferencesLocalService;

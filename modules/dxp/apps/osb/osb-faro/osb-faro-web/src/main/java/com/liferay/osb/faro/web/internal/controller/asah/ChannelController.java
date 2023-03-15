@@ -22,7 +22,7 @@ import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.FaroController;
 import com.liferay.osb.faro.web.internal.model.display.asah.FaroChannelDisplay;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import javax.ws.rs.POST;
@@ -50,7 +50,7 @@ public class ChannelController extends BaseFaroController {
 			String body, @PathParam("lcpProjectId") String lcpProjectId)
 		throws PortalException {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(body);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(body);
 
 		FaroProject faroProject =
 			faroProjectLocalService.getFaroProjectByWeDeployKey(
@@ -65,5 +65,8 @@ public class ChannelController extends BaseFaroController {
 
 	@Reference
 	private FaroChannelLocalService _faroChannelLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

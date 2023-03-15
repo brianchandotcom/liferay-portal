@@ -14,7 +14,8 @@
 
 package com.liferay.osb.faro.web.internal.constants;
 
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.util.Map;
 
 /**
@@ -58,23 +59,26 @@ public class FaroConstants {
 	}
 
 	private static final Map<String, String> _applications =
-		new HashMap<String, String>() {
-			{
-				put(APPLICATION_CONTACTS, APPLICATION_CONTACTS);
-				put(APPLICATION_MAIN, APPLICATION_MAIN);
-			}
-		};
+		new HashMapBuilder<>().<String, String>put(
+			APPLICATION_CONTACTS, APPLICATION_CONTACTS
+		).put(
+			APPLICATION_MAIN, APPLICATION_MAIN
+		).build();
 	private static final Map<String, Integer> _types =
-		new HashMap<String, Integer>() {
-			{
-				put("account", TYPE_ACCOUNT);
-				put("accountsSegment", TYPE_SEGMENT_ACCOUNTS);
-				put("asset", TYPE_ASSET);
-				put("dataSource", TYPE_DATA_SOURCE);
-				put("individual", TYPE_INDIVIDUAL);
-				put("individualsSegment", TYPE_SEGMENT_INDIVIDUALS);
-				put("page", TYPE_PAGE);
-			}
-		};
+		new HashMapBuilder<>().<String, Integer>put(
+			"account", TYPE_ACCOUNT
+		).put(
+			"accountsSegment", TYPE_SEGMENT_ACCOUNTS
+		).put(
+			"asset", TYPE_ASSET
+		).put(
+			"dataSource", TYPE_DATA_SOURCE
+		).put(
+			"individual", TYPE_INDIVIDUAL
+		).put(
+			"individualsSegment", TYPE_SEGMENT_INDIVIDUALS
+		).put(
+			"page", TYPE_PAGE
+		).build();
 
 }

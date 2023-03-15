@@ -18,8 +18,12 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.osb.faro.contacts.model.constants.ContactsConstants;
+import com.liferay.osb.faro.engine.client.constants.ActivityConstants;
+import com.liferay.osb.faro.engine.client.constants.AssetConstants;
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
 import com.liferay.osb.faro.engine.client.exception.InvalidFilterException;
+import com.liferay.osb.faro.engine.client.model.Account;
+import com.liferay.osb.faro.engine.client.model.Asset;
 import com.liferay.osb.faro.engine.client.model.Credentials;
 import com.liferay.osb.faro.engine.client.model.DXPGroup;
 import com.liferay.osb.faro.engine.client.model.DXPOrganization;
@@ -67,11 +71,10 @@ import com.liferay.osb.faro.web.internal.util.ContactsCSVHelper;
 import com.liferay.osb.faro.web.internal.util.FieldMappingUtil;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.osb.faro.web.internal.util.OAuthUtil;
-import com.liferay.osb.faro.web.internal.util.StreamUtil;
 import com.liferay.osb.faro.web.internal.util.TokenManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -82,6 +85,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -96,6 +100,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -103,8 +108,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -167,6 +170,12 @@ public class DataSourceController extends BaseFaroController {
 				dataSourceName, portalURL, new LiferayProvider(), null,
 				DataSource.Status.ACTIVE.toString());
 
+			createFieldMappings(
+				faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				dataSource.getId(), FieldMappingConstants.CONTEXT_DEMOGRAPHICS,
+				FieldMappingConstants.OWNER_TYPE_INDIVIDUAL,
+				FieldMappingConstants.getLiferayFieldMappingMaps());
+
 			_tokenManager.setDataSourceId(dataSource.getId(), token);
 		}
 		else {
@@ -178,20 +187,23 @@ public class DataSourceController extends BaseFaroController {
 			_tokenManager.clearToken(token);
 		}
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("liferayAnalyticsDataSourceId", dataSource.getId());
-		properties.put(
-			"liferayAnalyticsEndpointURL",
-			EngineServiceURLUtil.getPublisherExternalURL(faroProject));
-		properties.put(
-			"liferayAnalyticsFaroBackendSecuritySignature",
-			dataSource.getFaroBackendSecuritySignature());
-		properties.put(
-			"liferayAnalyticsFaroBackendURL",
-			EngineServiceURLUtil.getBackendExternalURL(faroProject));
-		properties.put("liferayAnalyticsProjectId", faroProject.getProjectId());
-		properties.put("liferayAnalyticsURL", dataSource.getWorkspaceURL());
+		Map<String, Object> properties =
+			new HashMapBuilder<>().<String, Object>put(
+				"liferayAnalyticsDataSourceId", dataSource.getId()
+			).put(
+				"liferayAnalyticsEndpointURL",
+				EngineServiceURLUtil.getPublisherExternalURL(faroProject)
+			).put(
+				"liferayAnalyticsFaroBackendSecuritySignature",
+				dataSource.getFaroBackendSecuritySignature()
+			).put(
+				"liferayAnalyticsFaroBackendURL",
+				EngineServiceURLUtil.getBackendExternalURL(faroProject)
+			).put(
+				"liferayAnalyticsProjectId", faroProject.getProjectId()
+			).put(
+				"liferayAnalyticsURL", dataSource.getWorkspaceURL()
+			).build();
 
 		TokenCredentials tokenCredentials =
 			(TokenCredentials)dataSource.getCredentials();
@@ -402,7 +414,7 @@ public class DataSourceController extends BaseFaroController {
 			@FormParam("token") String token)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			new String(Base64.decode(token), StandardCharsets.UTF_8));
 
 		String dataSourceId = _tokenManager.getDataSourceId(
@@ -423,10 +435,22 @@ public class DataSourceController extends BaseFaroController {
 			@PathParam("groupId") long groupId, @PathParam("id") String id)
 		throws Exception {
 
-		Map<Integer, Integer> deletePreview = new HashMap<>();
-
 		FaroProject faroProject =
 			faroProjectLocalService.getFaroProjectByGroupId(groupId);
+
+		Results<Account> accountResults = contactsEngineClient.getAccounts(
+			faroProject, id, null, null, null, null, null, 1, 0, null);
+
+		Map<Integer, Integer> deletePreview =
+			new HashMapBuilder<>().<Integer, Integer>put(
+				FaroConstants.TYPE_ACCOUNT, accountResults.getTotal()
+			).build();
+
+		Results<Asset> assetResults = contactsEngineClient.getAssets(
+			faroProject, id, null, ActivityConstants.ACTION_ANY,
+			AssetConstants.TYPE_ASSET, 1, 0, null);
+
+		deletePreview.put(FaroConstants.TYPE_ASSET, assetResults.getTotal());
 
 		Results<Individual> individualResults =
 			contactsEngineClient.getIndividuals(
@@ -444,6 +468,12 @@ public class DataSourceController extends BaseFaroController {
 		deletePreview.put(
 			FaroConstants.TYPE_SEGMENT_INDIVIDUALS,
 			individualSegmentResults.getTotal());
+
+		Results<Asset> pageResults = contactsEngineClient.getAssets(
+			faroProject, id, null, ActivityConstants.ACTION_ANY,
+			Asset.AssetType.Page.name(), 1, 0, null);
+
+		deletePreview.put(FaroConstants.TYPE_PAGE, pageResults.getTotal());
 
 		return deletePreview;
 	}
@@ -505,19 +535,20 @@ public class DataSourceController extends BaseFaroController {
 				faroProject, id, context, count);
 		}
 
-		return StreamUtil.toList(
-			dataSourceFields,
-			dataSourceField -> {
-				if (Validator.isNull(fieldName) ||
-					StringUtil.equals(dataSourceField.getName(), fieldName)) {
+		List<FieldValuesDisplay> fieldValuesDisplays = new ArrayList<>();
 
-					return true;
-				}
+		for (DataSourceField dataSourceField : dataSourceFields) {
+			if (Validator.isNull(fieldName) ||
+				StringUtil.equals(dataSourceField.getName(), fieldName)) {
 
-				return false;
-			},
-			dataSourceField -> new FieldValuesDisplay(
-				dataSourceField.getName(), dataSourceField.getValues()));
+				fieldValuesDisplays.add(
+					new FieldValuesDisplay(
+						dataSourceField.getName(),
+						dataSourceField.getValues()));
+			}
+		}
+
+		return fieldValuesDisplays;
 	}
 
 	@Path("/{id}/groups_by_ids")
@@ -529,11 +560,17 @@ public class DataSourceController extends BaseFaroController {
 				<List<Long>> groupIdsFaroParam)
 		throws Exception {
 
-		return StreamUtil.toList(
-			contactsEngineClient.getDataSourceDXPGroups(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
-				groupIdsFaroParam.getValue()),
-			DXPGroupDisplay::new);
+		List<DXPGroup> dxpGroups = contactsEngineClient.getDataSourceDXPGroups(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
+			groupIdsFaroParam.getValue());
+
+		List<DXPGroupDisplay> dxpGroupDisplays = new ArrayList<>();
+
+		for (DXPGroup dxpGroup : dxpGroups) {
+			dxpGroupDisplays.add(new DXPGroupDisplay(dxpGroup));
+		}
+
+		return dxpGroupDisplays;
 	}
 
 	@GET
@@ -606,37 +643,33 @@ public class DataSourceController extends BaseFaroController {
 			dataSourceFieldValues.add(fieldValuesDisplay.getValues());
 		}
 
-		List<List<String>> fieldNamesList =
-			contactsEngineClient.getFieldNamesList(
-				faroProject, dataSourceFieldNames,
-				FieldMappingConstants.OWNER_TYPE_INDIVIDUAL,
-				dataSourceFieldValues);
+		Set<String> fieldNames = new HashSet<>();
 
-		Stream<List<String>> fieldNamesListStream = fieldNamesList.stream();
+		for (List<String> fieldNameList :
+				contactsEngineClient.getFieldNamesList(
+					faroProject, dataSourceFieldNames,
+					FieldMappingConstants.OWNER_TYPE_INDIVIDUAL,
+					dataSourceFieldValues)) {
 
-		Set<String> fieldNames = fieldNamesListStream.flatMap(
-			List::stream
-		).collect(
-			Collectors.toSet()
-		);
+			fieldNames.addAll(fieldNameList);
+		}
 
 		Results<FieldMapping> fieldMappingResults =
 			contactsEngineClient.getFieldMappings(
 				faroProject, FieldMappingConstants.CONTEXT_DEMOGRAPHICS,
 				new ArrayList<>(fieldNames), 1, 10000, null);
 
-		List<List<Field>> fieldsList = contactsEngineClient.getFieldsList(
-			faroProject, FieldMappingConstants.CONTEXT_DEMOGRAPHICS,
-			new ArrayList<>(fieldNames), 1, 1, null);
+		Map<String, Field> fieldsMap = new HashMap<>();
 
-		Stream<List<Field>> fieldsListStream = fieldsList.stream();
+		for (List<Field> fieldsList :
+				contactsEngineClient.getFieldsList(
+					faroProject, FieldMappingConstants.CONTEXT_DEMOGRAPHICS,
+					new ArrayList<>(fieldNames), 1, 1, null)) {
 
-		Map<String, Field> fieldsMap = fieldsListStream.flatMap(
-			List::stream
-		).distinct(
-		).collect(
-			Collectors.toMap(Field::getName, Function.identity())
-		);
+			for (Field field : fieldsList) {
+				fieldsMap.putIfAbsent(field.getName(), field);
+			}
+		}
 
 		Map<String, FieldMappingValuesDisplay> fieldMappingValuesDisplayMap =
 			new HashMap<>();
@@ -695,6 +728,12 @@ public class DataSourceController extends BaseFaroController {
 				List<FieldMappingValuesDisplay>
 					suggestionFieldMappingValuesDisplays = new ArrayList<>();
 
+				List<List<String>> fieldNamesList =
+					contactsEngineClient.getFieldNamesList(
+						faroProject, dataSourceFieldNames,
+						FieldMappingConstants.OWNER_TYPE_INDIVIDUAL,
+						dataSourceFieldValues);
+
 				for (String fieldName : fieldNamesList.get(i)) {
 					suggestionFieldMappingValuesDisplays.add(
 						fieldMappingValuesDisplayMap.get(fieldName));
@@ -722,10 +761,15 @@ public class DataSourceController extends BaseFaroController {
 			String context)
 		throws Exception {
 
-		Map<String, FieldValuesDisplay> fieldValuesDisplayMap =
-			StreamUtil.toMap(
-				getFieldValues(groupId, id, 0, null, context, 1),
-				FieldValuesDisplay::getName, Function.identity());
+		Map<String, FieldValuesDisplay> fieldValuesDisplayMap = new HashMap<>();
+
+		List<FieldValuesDisplay> fieldValuesDisplays = getFieldValues(
+			groupId, id, 0, null, context, 1);
+
+		for (FieldValuesDisplay fieldValuesDisplay : fieldValuesDisplays) {
+			fieldValuesDisplayMap.put(
+				fieldValuesDisplay.getName(), fieldValuesDisplay);
+		}
 
 		FaroProject faroProject =
 			faroProjectLocalService.getFaroProjectByGroupId(groupId);
@@ -733,42 +777,53 @@ public class DataSourceController extends BaseFaroController {
 		Results<FieldMapping> results = contactsEngineClient.getFieldMappings(
 			faroProject, context, id, null);
 
-		Map<String, List<Field>> fieldsMap = StreamUtil.toMap(
-			contactsEngineClient.getFieldsList(
-				faroProject, context,
-				StreamUtil.toList(
-					results.getItems(), FieldMapping::getFieldName),
-				1, 1, null),
-			ListUtil::isNotNull,
-			fields -> {
+		List<FieldMapping> items = results.getItems();
+
+		List<String> itemsFieldName = new ArrayList<>();
+
+		for (FieldMapping fieldMappingItem : items) {
+			itemsFieldName.add(fieldMappingItem.getFieldName());
+		}
+
+		List<List<Field>> fieldsList = contactsEngineClient.getFieldsList(
+			faroProject, context, itemsFieldName, 1, 1, null);
+
+		Map<String, List<Field>> fieldsMap = new HashMap<>();
+
+		for (List<Field> fields : fieldsList) {
+			if (ListUtil.isNotNull(fields)) {
 				Field field = fields.get(0);
 
-				return field.getName();
-			},
-			Function.identity());
+				fieldsMap.put(field.getName(), fields);
+			}
+		}
 
-		return StreamUtil.toList(
-			results.getItems(),
-			fieldMapping -> {
-				String dataSourceFieldName =
-					fieldMapping.getDataSourceFieldName(id);
+		List<DataSourceMappingDisplay> dataSourceMappingDisplays =
+			new ArrayList<>();
 
-				List<String> fieldValues = new ArrayList<>();
+		for (FieldMapping fieldMappingItem : items) {
+			String dataSourceFieldName =
+				fieldMappingItem.getDataSourceFieldName(id);
 
-				FieldValuesDisplay fieldValuesDisplay =
-					fieldValuesDisplayMap.get(dataSourceFieldName);
+			List<String> fieldValues = new ArrayList<>();
 
-				if (fieldValuesDisplay != null) {
-					fieldValues = fieldValuesDisplay.getValues();
-				}
+			FieldValuesDisplay fieldValuesDisplay = fieldValuesDisplayMap.get(
+				dataSourceFieldName);
 
-				return new DataSourceMappingDisplay(
+			if (fieldValuesDisplay != null) {
+				fieldValues = fieldValuesDisplay.getValues();
+			}
+
+			dataSourceMappingDisplays.add(
+				new DataSourceMappingDisplay(
 					dataSourceFieldName, fieldValues,
 					new FieldMappingValuesDisplay(
-						fieldMapping,
-						fieldsMap.get(fieldMapping.getFieldName())),
-					Collections.emptyList());
-			});
+						fieldMappingItem,
+						fieldsMap.get(fieldMappingItem.getFieldName())),
+					Collections.emptyList()));
+		}
+
+		return dataSourceMappingDisplays;
 	}
 
 	@GET
@@ -809,11 +864,19 @@ public class DataSourceController extends BaseFaroController {
 				FaroParam<List<Long>> organizationIdsFaroParam)
 		throws Exception {
 
-		return StreamUtil.toList(
+		List<DXPOrganization> dxpOrganizations =
 			contactsEngineClient.getDataSourceDXPOrganizations(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
-				organizationIdsFaroParam.getValue()),
-			DXPOrganizationDisplay::new);
+				organizationIdsFaroParam.getValue());
+		List<DXPOrganizationDisplay> dxpOrganizationDisplays =
+			new ArrayList<>();
+
+		for (DXPOrganization dxpOrganization : dxpOrganizations) {
+			dxpOrganizationDisplays.add(
+				new DXPOrganizationDisplay(dxpOrganization));
+		}
+
+		return dxpOrganizationDisplays;
 	}
 
 	@GET
@@ -895,11 +958,18 @@ public class DataSourceController extends BaseFaroController {
 				<List<Long>> userGroupIdsFaroParam)
 		throws Exception {
 
-		return StreamUtil.toList(
+		List<DXPUserGroup> dxpUserGroups =
 			contactsEngineClient.getDataSourceDXPUserGroups(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
-				userGroupIdsFaroParam.getValue()),
-			DXPUserGroupDisplay::new);
+				userGroupIdsFaroParam.getValue());
+
+		List<DXPUserGroupDisplay> dxpUserGroupDisplays = new ArrayList<>();
+
+		for (DXPUserGroup dxpUserGroup : dxpUserGroups) {
+			dxpUserGroupDisplays.add(new DXPUserGroupDisplay(dxpUserGroup));
+		}
+
+		return dxpUserGroupDisplays;
 	}
 
 	@GET
@@ -1311,11 +1381,6 @@ public class DataSourceController extends BaseFaroController {
 			UriInfo uriInfo, String dataSourceId, long faroProjectId)
 		throws Exception {
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
-			"token", _tokenManager.getToken(dataSourceId, faroProjectId));
-
 		String url = StringUtil.replaceFirst(
 			String.valueOf(uriInfo.getRequestUri()), "/token", "/connect");
 
@@ -1324,9 +1389,12 @@ public class DataSourceController extends BaseFaroController {
 				url, StringPool.SLASH + dataSourceId, StringPool.BLANK);
 		}
 
-		properties.put("url", url);
-
-		String json = JSONUtil.writeValueAsString(properties);
+		String json = JSONUtil.writeValueAsString(
+			new HashMapBuilder<>().<String, Object>put(
+				"token", _tokenManager.getToken(dataSourceId, faroProjectId)
+			).put(
+				"url", url
+			));
 
 		return Base64.encode(json.getBytes(StandardCharsets.UTF_8));
 	}
@@ -1588,6 +1656,9 @@ public class DataSourceController extends BaseFaroController {
 
 	@Reference
 	private FieldMappingController _fieldMappingController;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

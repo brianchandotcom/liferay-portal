@@ -16,15 +16,13 @@ package com.liferay.osb.faro.web.internal.util.comparator;
 
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroUser;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Matthew Kong
@@ -42,39 +40,41 @@ public class FaroUserComparator extends OrderByComparator<FaroUser> {
 
 	@Override
 	public String getOrderBy() {
-		Stream<OrderByField> stream = _orderByFields.stream();
+		List<String> formatFieldNames = new ArrayList<>();
 
-		return stream.map(
-			orderByField -> {
-				String format = null;
+		for (OrderByField orderByField : _orderByFields) {
+			String format = null;
 
-				if (StringUtil.equals(orderByField.getFieldName(), "status")) {
-					format = "%s %s";
-				}
-				else {
-					format = "lower(%s) %s";
-				}
-
-				return String.format(
-					format, _fieldNames.get(orderByField.getFieldName()),
-					orderByField.getOrderBy());
+			if (StringUtil.equals(orderByField.getFieldName(), "status")) {
+				format = "%s %s";
 			}
-		).collect(
-			Collectors.joining(StringPool.COMMA)
-		);
+			else {
+				format = "lower(%s) %s";
+			}
+
+			formatFieldNames.add(
+				String.format(
+					format, _fieldNames.get(orderByField.getFieldName()),
+					orderByField.getOrderBy()));
+		}
+
+		return StringUtil.merge(formatFieldNames, ", ");
 	}
 
 	private static final Map<String, String> _fieldNames =
-		new HashMap<String, String>() {
-			{
-				put("emailAddress", "OSBFaro_FaroUser.emailAddress");
-				put("firstName", "User_.firstName");
-				put("lastLoginDate", "User_.lastLoginDate");
-				put("lastName", "User_.lastName");
-				put("roleName", "Role_.name");
-				put("status", "OSBFaro_FaroUser.status");
-			}
-		};
+		new HashMapBuilder<>().<String, String>put(
+			"emailAddress", "OSBFaro_FaroUser.emailAddress"
+		).put(
+			"firstName", "User_.firstName"
+		).put(
+			"lastLoginDate", "User_.lastLoginDate"
+		).put(
+			"lastName", "User_.lastName"
+		).put(
+			"roleName", "Role_.name"
+		).put(
+			"status", "OSBFaro_FaroUser.status"
+		).build();
 
 	private final List<OrderByField> _orderByFields;
 

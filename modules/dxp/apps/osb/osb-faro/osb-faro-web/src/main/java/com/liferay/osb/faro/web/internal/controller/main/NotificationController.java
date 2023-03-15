@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -104,13 +103,13 @@ public class NotificationController extends BaseFaroController {
 			_faroNotificationLocalService.findFaroNotificationsLast30Days(
 				groupId, type, getUserId());
 
-		Stream<FaroNotification> stream = faroNotifications.stream();
+		List<NotificationDisplay> notificationDisplay = new ArrayList<>();
 
-		return stream.map(
-			NotificationDisplay::new
-		).collect(
-			Collectors.toList()
-		);
+		for (FaroNotification faroNotification : faroNotifications) {
+			notificationDisplay.add(new NotificationDisplay(faroNotification));
+		}
+
+		return notificationDisplay;
 	}
 
 	@Path("/{id}/read")

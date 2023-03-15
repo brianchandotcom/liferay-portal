@@ -6,12 +6,12 @@ import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import TrendComponent from 'shared/components/Trend';
 import withCurrentUser from 'shared/hoc/WithCurrentUser';
 import {ApolloError} from 'apollo-client';
+import {DocumentNode} from 'graphql';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
 import {
 	getRangeSelectorsFromQuery,
 	getSafeRangeSelectors
 } from 'shared/util/util';
-import {gql} from 'apollo-boost';
 import {RangeSelectors, RawRangeSelectors} from 'shared/types';
 import {sub} from 'shared/util/lang';
 import {toRounded} from 'shared/util/numbers';
@@ -32,7 +32,7 @@ interface ICommerceMetricCardProps<TGraphQlData>
 	emptyTitle: string;
 	label: string;
 	mapper: (result: TGraphQlData) => Currency[];
-	Query: typeof gql;
+	Query: DocumentNode;
 	currentUser: User;
 }
 

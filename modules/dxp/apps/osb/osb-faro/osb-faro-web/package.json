@@ -53,6 +53,7 @@
 		"moment": "2.29.4",
 		"moment-duration-format": "^2.2.1",
 		"moment-timezone": "^0.5.31",
+		"node-sass": "^8.0.0",
 		"normalizr": "^3.2.4",
 		"odata-v4-parser": "^0.1.29",
 		"path-to-regexp": "^2.1.0",

@@ -31,6 +31,7 @@ import com.liferay.osb.faro.web.internal.controller.api.ReportController;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -44,14 +45,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -122,7 +121,9 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 	}
 
 	@Override
-	public void portalInstanceUnregistered(Company company) {
+	public void portalInstanceUnregistered(Company company)
+		throws PortalException {
+
 		_deleteSAPEntries(company.getCompanyId());
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
@@ -131,8 +132,7 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 				OAuth2Authorization.class.getName()),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-		_expandoColumnLocalService.deleteColumn(
-			expandoTable.getTableId(), "groupId");
+		_expandoColumnLocalService.deleteColumn(expandoTable.getTableId(), "");
 
 		List<ExpandoColumn> expandoColumns =
 			_expandoColumnLocalService.getColumns(expandoTable.getTableId());
@@ -144,14 +144,15 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 
 	@Activate
 	protected void activate() {
-		Stream<String[]> stream = Arrays.stream(_SAP_ENTRY_OBJECT_ARRAYS);
+		List<String> sapEntriesObjects = new ArrayList<>();
 
-		_scopeAliasesList = stream.map(
-			sapEntryObjectArray -> StringUtil.replaceFirst(
-				sapEntryObjectArray[0], "OAUTH2_", StringPool.BLANK)
-		).collect(
-			Collectors.toList()
-		);
+		for (String[] sapEntryObject : _SAP_ENTRY_OBJECT_ARRAYS) {
+			sapEntriesObjects.add(
+				StringUtil.replaceFirst(
+					sapEntryObject[0], "OAUTH2_", StringPool.BLANK));
+		}
+
+		_scopeAliasesList = sapEntriesObjects;
 	}
 
 	protected void addExpandoColumn(
@@ -204,7 +205,7 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 				}
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}

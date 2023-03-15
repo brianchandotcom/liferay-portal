@@ -24,13 +24,12 @@ import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.IndividualDisplay;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroEntityDisplay;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Matthew Kong
@@ -57,8 +56,6 @@ public class SimilarContactsCardTemplateDisplay
 		FaroProject faroProject, FaroEntityDisplay faroEntityDisplay,
 		ContactsEngineClient contactsEngineClient) {
 
-		Map<String, Object> contactsCardData = new HashMap<>();
-
 		FaroResultsDisplay faroResultsDisplay = null;
 
 		if (faroEntityDisplay.getType() == FaroConstants.TYPE_INDIVIDUAL) {
@@ -69,20 +66,19 @@ public class SimilarContactsCardTemplateDisplay
 
 			List<Individual> individuals = results.getItems();
 
-			Stream<Individual> stream = individuals.stream();
+			List<IndividualDisplay> individualDisplay = new ArrayList<>();
+
+			for (Individual individual : individuals) {
+				individualDisplay.add(new IndividualDisplay(individual));
+			}
 
 			faroResultsDisplay = new FaroResultsDisplay(
-				stream.map(
-					IndividualDisplay::new
-				).collect(
-					Collectors.toList()
-				),
-				results.getTotal());
+				individualDisplay, results.getTotal());
 		}
 
-		contactsCardData.put("contactsEntityResults", faroResultsDisplay);
-
-		return contactsCardData;
+		return new HashMapBuilder<>().<String, Object>put(
+			"contactsEntityResults", faroResultsDisplay
+		).build();
 	}
 
 	private static final int _ITEMS_PER_COLUMN = 6;

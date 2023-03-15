@@ -39,8 +39,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -202,16 +200,15 @@ public class FieldMappingController extends BaseFaroController {
 
 		List<FieldMapping> fieldMappings = results.getItems();
 
-		Stream<FieldMapping> stream = fieldMappings.stream();
+		ArrayList<String> fieldMappingsName = new ArrayList<>();
+
+		for (FieldMapping fieldMapping : fieldMappings) {
+			fieldMappingsName.add(fieldMapping.getFieldName());
+		}
 
 		List<List<Field>> fieldsList = contactsEngineClient.getFieldsList(
 			faroProject, FieldMappingConstants.CONTEXT_DEMOGRAPHICS,
-			stream.map(
-				FieldMapping::getFieldName
-			).collect(
-				Collectors.toList()
-			),
-			1, 1, null);
+			fieldMappingsName, 1, 1, null);
 
 		for (int i = 0; i < fieldMappings.size(); i++) {
 			fieldMappingValuesDisplays.add(

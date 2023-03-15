@@ -22,11 +22,12 @@ import com.liferay.osb.faro.contacts.service.ContactsCardTemplateLocalService;
 import com.liferay.osb.faro.contacts.service.ContactsLayoutTemplateLocalService;
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.engine.client.WorkspaceEngineClient;
+import com.liferay.osb.faro.engine.client.model.LCPProject;
 import com.liferay.osb.faro.engine.client.model.Workspace;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
 import com.liferay.osb.faro.exception.EmailAddressDomainException;
 import com.liferay.osb.faro.model.FaroProject;
-import com.liferay.osb.faro.model.FaroProjectEmailAddressDomain;
+import com.liferay.osb.faro.model.FaroProjectEmailDomain;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.provisioning.client.ProvisioningClient;
 import com.liferay.osb.faro.provisioning.client.constants.CorpProjectConstants;
@@ -34,7 +35,7 @@ import com.liferay.osb.faro.provisioning.client.constants.ProductConstants;
 import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
 import com.liferay.osb.faro.provisioning.client.model.OSBOfferingEntry;
 import com.liferay.osb.faro.service.FaroNotificationLocalService;
-import com.liferay.osb.faro.service.FaroProjectEmailAddressDomainLocalService;
+import com.liferay.osb.faro.service.FaroProjectEmailDomainLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.web.internal.annotations.Unauthenticated;
@@ -62,11 +63,13 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -76,8 +79,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -136,13 +137,15 @@ public class ProjectController extends BaseFaroController {
 		@FormParam("startDate") Date startDate,
 		@FormParam("endDate") Date endDate) {
 
-		Map<String, Object> stateMap = new HashMap<>();
-
-		stateMap.put("endDate", endDate);
-		stateMap.put("startDate", startDate);
-		stateMap.put("state", state);
-
-		projectHelper.addGlobalState(keysFaroParam.getValue(), stateMap);
+		projectHelper.addGlobalState(
+			keysFaroParam.getValue(),
+			new HashMapBuilder<>().<String, Object>put(
+				"endDate", endDate
+			).put(
+				"startDate", startDate
+			).put(
+				"state", state
+			).build());
 	}
 
 	@Path("/{groupId}/ip_addresses")
@@ -254,8 +257,8 @@ public class ProjectController extends BaseFaroController {
 
 	@Path("/trial")
 	@POST
-	@RolesAllowed(StringPool.BLANK)
 	public ProjectDisplay createTrial(
+			@FormParam("name") String name,
 			@DefaultValue(JSONConstants.NULL_JSON_ARRAY)
 			@FormParam("emailAddressDomains")
 			FaroParam
@@ -265,23 +268,28 @@ public class ProjectController extends BaseFaroController {
 			@FormParam("incidentReportEmailAddresses")
 			FaroParam
 				<List<String>> incidentReportEmailAddressesFaroParam,
-			@FormParam("name") String name,
-			@FormParam("ownerEmailAddress") String ownerEmailAddress,
 			@FormParam("serverLocation") String serverLocation,
-			@DefaultValue("UTC") @FormParam("timeZoneId") String timeZoneId)
+			@FormParam("timeZoneId") String timeZoneId)
 		throws Exception {
+
+		if (!_isCreateTrialAllowed(serverLocation)) {
+			throw new FaroValidationException(
+				null,
+				getLocalizedMessage("this-user-already-owns-a-trial-project"));
+		}
 
 		return _createUnprovisioned(
 			name, null, null, null, null,
 			emailAddressDomainsFaroParam.getValue(), friendlyURL,
-			incidentReportEmailAddressesFaroParam.getValue(), ownerEmailAddress,
-			serverLocation, timeZoneId, true);
+			incidentReportEmailAddressesFaroParam.getValue(), serverLocation,
+			timeZoneId, true);
 	}
 
 	@Path("/unprovisioned")
 	@POST
 	@RolesAllowed(StringPool.BLANK)
 	public ProjectDisplay createUnprovisioned(
+			@FormParam("name") String name,
 			@FormParam("accountKey") String accountKey,
 			@FormParam("accountName") String accountName,
 			@FormParam("corpProjectName") String corpProjectName,
@@ -295,10 +303,8 @@ public class ProjectController extends BaseFaroController {
 			@FormParam("incidentReportEmailAddresses")
 			FaroParam
 				<List<String>> incidentReportEmailAddressesFaroParam,
-			@FormParam("name") String name,
-			@FormParam("ownerEmailAddress") String ownerEmailAddress,
 			@FormParam("serverLocation") String serverLocation,
-			@DefaultValue("UTC") @FormParam("timeZoneId") String timeZoneId,
+			@FormParam("timeZoneId") String timeZoneId,
 			@FormParam("trial") boolean trial)
 		throws Exception {
 
@@ -315,25 +321,19 @@ public class ProjectController extends BaseFaroController {
 		return _createUnprovisioned(
 			name, accountKey, accountName, corpProjectName, corpProjectUuid,
 			emailAddressDomainsFaroParam.getValue(), friendlyURL,
-			incidentReportEmailAddressesFaroParam.getValue(), ownerEmailAddress,
-			serverLocation, timeZoneId, trial);
+			incidentReportEmailAddressesFaroParam.getValue(), serverLocation,
+			timeZoneId, trial);
 	}
 
 	@DELETE
 	@Path("/{groupId}")
 	@RolesAllowed(StringPool.BLANK)
-	public ProjectDisplay delete(
-			@PathParam("groupId") long groupId,
-			@DefaultValue("true") @QueryParam("deleteData") boolean deleteData)
+	public ProjectDisplay delete(@PathParam("groupId") long groupId)
 		throws Exception {
 
 		_contactsCardTemplateLocalService.deleteContactsCardTemplates(groupId);
 		_contactsLayoutTemplateLocalService.deleteContactsLayoutTemplates(
 			groupId);
-
-		contactsEngineClient.deleteProject(
-			_faroProjectLocalService.fetchFaroProjectByGroupId(groupId),
-			deleteData);
 
 		return new ProjectDisplay(
 			_faroProjectLocalService.deleteFaroProjectByGroupId(groupId));
@@ -440,18 +440,19 @@ public class ProjectController extends BaseFaroController {
 	public List<String> getEmailAddressDomains(
 		@PathParam("groupId") long groupId) {
 
-		List<FaroProjectEmailAddressDomain> faroProjectEmailAddressDomains =
-			_faroProjectEmailAddressDomainLocalService.
-				getFaroProjectEmailAddressDomainsByGroupId(groupId);
+		List<FaroProjectEmailDomain> faroProjectEmailDomains =
+			_faroProjectEmailDomainLocalService.
+				getFaroProjectEmailDomainsByGroupId(groupId);
 
-		Stream<FaroProjectEmailAddressDomain> emailAddressDomainStream =
-			faroProjectEmailAddressDomains.stream();
+		List<String> emailAddressDomain = new ArrayList<>();
 
-		return emailAddressDomainStream.map(
-			FaroProjectEmailAddressDomain::getEmailAddressDomain
-		).collect(
-			Collectors.toList()
-		);
+		for (FaroProjectEmailDomain faroProjectEmailDomain :
+				faroProjectEmailDomains) {
+
+			emailAddressDomain.add(faroProjectEmailDomain.getEmailDomain());
+		}
+
+		return emailAddressDomain;
 	}
 
 	@GET
@@ -489,17 +490,18 @@ public class ProjectController extends BaseFaroController {
 		List<FaroProject> faroProjects =
 			_faroProjectLocalService.getJoinableFaroProjects(getUser());
 
-		Stream<FaroProject> faroProjectsStream = faroProjects.stream();
+		List<JoinableProjectDisplay> joinableProjectDisplay = new ArrayList<>();
 
-		return faroProjectsStream.map(
-			faroProject -> new JoinableProjectDisplay(
-				faroProject.getGroupId(), faroProject.getName(),
-				Objects.nonNull(
-					_faroUserLocalService.fetchFaroUser(
-						faroProject.getGroupId(), getUserId())))
-		).collect(
-			Collectors.toList()
-		);
+		for (FaroProject faroProject : faroProjects) {
+			joinableProjectDisplay.add(
+				new JoinableProjectDisplay(
+					faroProject.getGroupId(), faroProject.getName(),
+					Objects.nonNull(
+						_faroUserLocalService.fetchFaroUser(
+							faroProject.getGroupId(), getUserId()))));
+		}
+
+		return joinableProjectDisplay;
 	}
 
 	@GET
@@ -508,37 +510,30 @@ public class ProjectController extends BaseFaroController {
 			_faroUserLocalService.getFaroUsersByLiveUserId(
 				getUserId(), FaroUserConstants.STATUS_APPROVED);
 
-		Stream<FaroUser> faroUsersStream = faroUsers.stream();
+		List<ProjectDisplay> projectDisplays = new ArrayList<>();
 
-		return faroUsersStream.map(
-			FaroUser::getGroupId
-		).map(
-			_faroProjectLocalService::fetchFaroProjectByGroupId
-		).map(
-			faroProject -> {
-				try {
-					return _getProjectDisplay(faroProject);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						String project = "";
+		for (FaroUser faroUser : faroUsers) {
+			FaroProject faroProject =
+				_faroProjectLocalService.fetchFaroProjectByGroupId(
+					faroUser.getGroupId());
 
-						if (faroProject != null) {
-							project = faroProject.getName();
-						}
+			try {
+				projectDisplays.add(_getProjectDisplay(faroProject));
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					String project = "";
 
-						_log.warn(
-							"Could not load project " + project, exception);
+					if (faroProject != null) {
+						project = faroProject.getName();
 					}
 
-					return null;
+					_log.warn("Could not load project " + project, exception);
 				}
 			}
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
+		}
+
+		return projectDisplays;
 	}
 
 	@GET
@@ -618,8 +613,7 @@ public class ProjectController extends BaseFaroController {
 				_groupLocalService.updateFriendlyURL(groupId, friendlyURL);
 			}
 			catch (GroupFriendlyURLException groupFriendlyURLException) {
-				_log.error(
-					groupFriendlyURLException, groupFriendlyURLException);
+				_log.error(groupFriendlyURLException);
 
 				throw new FaroValidationException(
 					"friendlyURL",
@@ -656,10 +650,9 @@ public class ProjectController extends BaseFaroController {
 		}
 
 		try {
-			_faroProjectEmailAddressDomainLocalService.
-				addFaroProjectEmailAddressDomains(
-					groupId, faroProject.getFaroProjectId(),
-					emailAddressDomainsFaroParam.getValue());
+			_faroProjectEmailDomainLocalService.addFaroProjectEmailDomains(
+				groupId, faroProject.getFaroProjectId(),
+				emailAddressDomainsFaroParam.getValue());
 		}
 		catch (EmailAddressDomainException emailAddressDomainException) {
 			throw new FaroValidationException(
@@ -703,9 +696,7 @@ public class ProjectController extends BaseFaroController {
 			String state, String timeZoneId)
 		throws Exception {
 
-		_validateFriendlyURL(friendlyURL);
 		_validateIncidentReportEmailAddresses(incidentReportEmailAddresses);
-		_validateTimeZoneId(timeZoneId);
 
 		OSBAccountEntry osbAccountEntry =
 			_provisioningClient.getOSBAccountEntry(corpProjectUuid);
@@ -735,7 +726,7 @@ public class ProjectController extends BaseFaroController {
 						getInvalidEmailAddressDomains()));
 		}
 		catch (GroupFriendlyURLException groupFriendlyURLException) {
-			_log.error(groupFriendlyURLException, groupFriendlyURLException);
+			_log.error(groupFriendlyURLException);
 
 			throw new FaroValidationException(
 				"friendlyURL",
@@ -759,8 +750,8 @@ public class ProjectController extends BaseFaroController {
 			String name, String accountKey, String accountName,
 			String corpProjectName, String corpProjectUuid,
 			List<String> emailAddressDomains, String friendlyURL,
-			List<String> incidentReportEmailAddresses, String ownerEmailAddress,
-			String serverLocation, String timeZoneId, boolean trial)
+			List<String> incidentReportEmailAddresses, String serverLocation,
+			String timeZoneId, boolean trial)
 		throws Exception {
 
 		_validateFriendlyURL(friendlyURL);
@@ -790,7 +781,7 @@ public class ProjectController extends BaseFaroController {
 						getInvalidEmailAddressDomains()));
 		}
 		catch (GroupFriendlyURLException groupFriendlyURLException) {
-			_log.error(groupFriendlyURLException, groupFriendlyURLException);
+			_log.error(groupFriendlyURLException);
 
 			throw new FaroValidationException(
 				"friendlyURL",
@@ -803,13 +794,10 @@ public class ProjectController extends BaseFaroController {
 		Role role = _roleLocalService.getRole(
 			user.getCompanyId(), RoleConstants.SITE_OWNER);
 
-		if (Validator.isNull(ownerEmailAddress)) {
-			ownerEmailAddress = user.getEmailAddress();
-		}
-
 		_faroUserLocalService.addFaroUser(
-			user.getUserId(), faroProject.getGroupId(), 0, role.getRoleId(),
-			ownerEmailAddress, FaroUserConstants.STATUS_PENDING, false);
+			user.getUserId(), faroProject.getGroupId(), user.getUserId(),
+			role.getRoleId(), user.getEmailAddress(),
+			FaroUserConstants.STATUS_APPROVED, false);
 
 		faroProject.setWeDeployKey(
 			contactsEngineClient.addProject(faroProject) + ".lfr.cloud");
@@ -1027,13 +1015,34 @@ public class ProjectController extends BaseFaroController {
 		}
 	}
 
+	private boolean _isCreateTrialAllowed(String serverLocation) {
+		if (StringUtil.equals(
+				serverLocation, LCPProject.Cluster.DEV.toString()) ||
+			StringUtil.equals(
+				serverLocation, LCPProject.Cluster.UAT.toString())) {
+
+			return true;
+		}
+
+		List<FaroProject> faroProjects =
+			_faroProjectLocalService.getFaroProjectsByUserId(getUserId());
+
+		for (FaroProject faroProject : faroProjects) {
+			if (faroProject.isTrial()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isWorkspaceHealthy(FaroProject faroProject) {
 		try {
 			contactsEngineClient.getIndividuals(
 				faroProject, (String)null, false, 1, 0, null);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return false;
 		}
@@ -1182,8 +1191,8 @@ public class ProjectController extends BaseFaroController {
 	private FaroNotificationLocalService _faroNotificationLocalService;
 
 	@Reference
-	private FaroProjectEmailAddressDomainLocalService
-		_faroProjectEmailAddressDomainLocalService;
+	private FaroProjectEmailDomainLocalService
+		_faroProjectEmailDomainLocalService;
 
 	@Reference
 	private FaroProjectLocalService _faroProjectLocalService;

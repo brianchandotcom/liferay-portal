@@ -18,6 +18,7 @@ import com.liferay.osb.faro.web.internal.constants.FaroConstants;
 import com.liferay.osb.faro.web.internal.controller.contacts.AccountController;
 import com.liferay.osb.faro.web.internal.controller.contacts.ActivityController;
 import com.liferay.osb.faro.web.internal.controller.contacts.ActivityGroupController;
+import com.liferay.osb.faro.web.internal.controller.contacts.AssetController;
 import com.liferay.osb.faro.web.internal.controller.contacts.ContactsCardController;
 import com.liferay.osb.faro.web.internal.controller.contacts.ContactsCardTemplateController;
 import com.liferay.osb.faro.web.internal.controller.contacts.ContactsLayoutController;
@@ -57,6 +58,7 @@ public class ContactsApplication extends BaseApplication {
 		controllers.add(_accountController);
 		controllers.add(_activityController);
 		controllers.add(_activityGroupController);
+		controllers.add(_assetController);
 		controllers.add(_contactsCardController);
 		controllers.add(_contactsCardTemplateController);
 		controllers.add(_contactsLayoutController);
@@ -81,6 +83,9 @@ public class ContactsApplication extends BaseApplication {
 
 	@Reference
 	private ActivityGroupController _activityGroupController;
+
+	@Reference
+	private AssetController _assetController;
 
 	@Reference
 	private ContactsCardController _contactsCardController;

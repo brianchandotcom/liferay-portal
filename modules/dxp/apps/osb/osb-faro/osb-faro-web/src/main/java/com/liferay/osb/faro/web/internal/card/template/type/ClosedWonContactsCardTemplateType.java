@@ -17,8 +17,8 @@ package com.liferay.osb.faro.web.internal.card.template.type;
 import com.liferay.osb.faro.contacts.model.constants.ContactsCardTemplateConstants;
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.ClosedWonContactsCardTemplateDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.ContactsCardTemplateDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,11 +53,10 @@ public class ClosedWonContactsCardTemplateType
 	private static final String _DEFAULT_NAME = "Closed Won";
 
 	private static final Map<String, Object> _defaultSettings =
-		new HashMap<String, Object>() {
-			{
-				put("endDateTime", 0);
-				put("startDateTime", 0);
-			}
-		};
+		new HashMapBuilder<>().<String, Object>put(
+			"endDateTime", 0
+		).put(
+			"startDateTime", 0
+		).build();
 
 }

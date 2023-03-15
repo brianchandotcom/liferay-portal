@@ -99,7 +99,7 @@ public class GraphQLAsahServlet extends BaseAsahServlet {
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(uriSyntaxException, uriSyntaxException);
+				_log.debug(uriSyntaxException);
 			}
 		}
 	}
@@ -149,7 +149,7 @@ public class GraphQLAsahServlet extends BaseAsahServlet {
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(uriSyntaxException, uriSyntaxException);
+				_log.debug(uriSyntaxException);
 			}
 		}
 	}
@@ -203,11 +203,9 @@ public class GraphQLAsahServlet extends BaseAsahServlet {
 				}
 			}
 
-			if (FaroPermissionChecker.isGroupMember(faroProject.getGroupId())) {
-				return true;
-			}
+			if (FaroPermissionChecker.isGroupMember(faroProject.getGroupId()) ||
+				!query.contains("mutation")) {
 
-			if (!query.contains("mutation")) {
 				return true;
 			}
 
@@ -223,7 +221,7 @@ public class GraphQLAsahServlet extends BaseAsahServlet {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Invalid request: " + body);
+				_log.debug("Invalid request: " + body, exception);
 			}
 
 			return false;

@@ -23,11 +23,12 @@ import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.model.display.contacts.ActivityGroupDisplay;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroEntityDisplay;
-import com.liferay.osb.faro.web.internal.util.StreamUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -57,8 +58,6 @@ public class RecentActivitiesContactsCardTemplateDisplay
 		FaroProject faroProject, FaroEntityDisplay faroEntityDisplay,
 		ContactsEngineClient contactsEngineClient) {
 
-		Map<String, Object> contactsCardData = new HashMap<>();
-
 		OrderByField orderByField = new OrderByField("startTime", "desc");
 
 		Results<ActivityGroup> results = contactsEngineClient.getActivityGroups(
@@ -69,10 +68,15 @@ public class RecentActivitiesContactsCardTemplateDisplay
 		Function<ActivityGroup, ActivityGroupDisplay> function =
 			ActivityGroupDisplay::new;
 
-		contactsCardData.put(
-			"activityGroups", StreamUtil.toList(results.getItems(), function));
+		List<ActivityGroupDisplay> activityGroupDisplay = new ArrayList<>();
 
-		return contactsCardData;
+		for (ActivityGroup activityGroup : results.getItems()) {
+			activityGroupDisplay.add(function.apply(activityGroup));
+		}
+
+		return new HashMapBuilder<>().<String, Object>put(
+			"activityGroups", activityGroupDisplay
+		).build();
 	}
 
 	private static final int[] _SUPPORTED_SIZES = {2};

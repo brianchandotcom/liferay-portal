@@ -20,8 +20,6 @@ import com.liferay.osb.faro.engine.client.model.FieldMapping;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Matthew Kong
@@ -51,13 +49,9 @@ public class FieldMappingValuesDisplay extends FieldMappingDisplay {
 			return;
 		}
 
-		Stream<Field> stream = fields.stream();
-
-		_values = stream.map(
-			Field::getValue
-		).collect(
-			Collectors.toList()
-		);
+		for (Field field : fields) {
+			_values.add(field.getValue());
+		}
 	}
 
 	private List<String> _values = new ArrayList<>();

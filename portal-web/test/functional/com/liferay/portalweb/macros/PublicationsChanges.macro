@@ -167,10 +167,18 @@ definition {
 			key_text = "Move",
 			locator1 = "Button#ANY");
 
-		AssertElementPresent(
-			key_alertBold = "The changes were moved successfully.",
-			key_alertType = "inline alert-success",
-			locator1 = "ClayAlert#ALERT_STATIC_BOLD");
+		if (${moveFailed} == "true") {
+			AssertElementPresent(
+				key_alertBold = "The changes could not be moved.",
+				key_alertType = "inline alert-danger",
+				locator1 = "ClayAlert#ALERT_STATIC_BOLD");
+		}
+		else {
+			AssertElementPresent(
+				key_alertBold = "The changes were moved successfully.",
+				key_alertType = "inline alert-success",
+				locator1 = "ClayAlert#ALERT_STATIC_BOLD");
+		}
 
 		IFrame.closeFrame();
 	}

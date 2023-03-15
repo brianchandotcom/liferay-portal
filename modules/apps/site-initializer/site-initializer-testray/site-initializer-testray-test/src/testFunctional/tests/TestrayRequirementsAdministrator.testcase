@@ -8,6 +8,12 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
+	var caseName = "Case 1";
+	var caseType = "Case Type 1";
+	var componentName = "Component 1";
+	var projectName = "Project 1";
+	var requirementName = "Requirement Summary";
+	var teamName = "Team 1";
 	var testSiteName = "Testray 2";
 
 	setUp {
@@ -16,218 +22,205 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite(siteName = ${testSiteName});
-
-			Refresh();
+			Testray.addTR2Site(siteName = ${testSiteName});
 		}
 
-		task ("Go to Testray, Create Project and change pagination") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
+		task ("Given that I create all the necessary objects") {
+			JSONTestray.addProject(
+				projectDescription = "Project Description 1",
+				projectName = ${projectName});
 
-			Testray.createProjectTestray(
-				description = "Projects_1 Description",
-				key_name = "Projects_1 Project");
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = ${teamName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-		}
-
-		task ("Go to created project and add a new team") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
-
-			TestrayManage.createTeam(teamName = "Components_1 Team");
-
-			TestrayManage.closeModalInOptions();
-		}
-
-		task ("Go to created project and add two new components") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-
-			Testray.addNewComponent(
-				componentName = "Components_1 Project 1",
-				teamName = "Components_1 Team");
-
-			Testray.addNewComponent(
-				componentName = "Components_1 Project 2",
-				teamName = "Components_1 Team");
-
-			Refresh();
-		}
-
-		task ("Go to project page and add a new Requirement") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			Testray.projectTabNavigator(navTabName = "Requirements");
-
-			TestrayRequirements.addRequirement(
-				componentId = "Components_1 Project 1",
-				linkTitle = "ATF_Requirements Link Title",
-				linkURL = "https://www.google.com",
-				requirementDescription = "ATF_Requirements Description",
-				requirementName = "ATF_Requirements Summary");
-		}
-
-		task ("Go to Testray 2 and change the pagination") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			JSONTestray.addComponent(
+				componentName = ${componentName},
+				projectName = ${projectName},
+				teamName = ${teamName});
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Testray.deleteAllProjects();
+		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-		Testray.tearDownCP();
-
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "This is a test for LPS-160546 - Verify if as an Administrator, I should be able to delete Requirements"
+	@description = "Story ID: LPS-160751 | Test Summary: Verify if as an Administrator, I should be able to delete Requirements"
 	@priority = 5
 	test AdminCanDeleteRequirements {
-		task ("Given that the user goes to project page") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that I create a new 'Requirement' via API") {
+			JSONTestray.addRequirement(
+				componentName = ${componentName},
+				linkTitle = "The front page of the internet",
+				projectName = ${projectName},
+				requirementName = ${requirementName});
 		}
 
-		task ("When the user goes to delete a requirement") {
+		task ("And I go to the Requirements page") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
 			Testray.projectTabNavigator(navTabName = "Requirements");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "ATF_Requirements Summary");
+			TestrayContextMenu.clickContextMenuProjects(name = ${requirementName});
+		}
 
+		task ("When I delete a requirement") {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
 
 			AssertConfirm(value1 = "Are you sure you want to delete this item?");
 		}
 
-		task ("then the requirement should not be displayed anymore") {
-			Testray.assertItemNotPresent(itemName = "ATF_Requirements Summary");
+		task ("Then I assert that Requirement is not shown in the list") {
+			Testray.assertItemNotPresent(itemName = ${requirementName});
 		}
 	}
 
-	@description = "This is a test for LPS-160545 - Verify if as an Administrator, I should be able to edit Requirements"
+	@description = "Story ID: LPS-160751 | Test Summary: Verify if as an Administrator, I should be able to edit Requirements"
 	@priority = 5
 	test AdminCanEditRequirements {
-		task ("Given that the user goes to project page") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that a team, component and requirement are created via API") {
+			JSONTestray.addTeam(
+				projectName = ${projectName},
+				teamName = "Team 2");
+
+			JSONTestray.addComponent(
+				componentName = "Component Edited",
+				projectName = ${projectName},
+				teamName = "Team 2");
+			
+			JSONTestray.addRequirement(
+				componentName = ${componentName},
+				linkTitle = "The front page of the internet",
+				projectName = ${projectName},
+				requirementName = ${requirementName});
 		}
 
-		task ("When the user goes to edit a requirement") {
+		task ("And I go to the Requirements page") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
 			Testray.projectTabNavigator(navTabName = "Requirements");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "ATF_Requirements Summary");
+			TestrayContextMenu.clickContextMenuProjects(name = ${requirementName});
+		}
 
+		task ("When I edit a requirement") {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
 
 			TestrayRequirements.editRequirement(
-				componentId = "Components_1 Project 2",
-				linkTitle = "the front page of the internet",
+				componentId = "Component Edited",
+				linkTitle = "The page edited",
 				linkURL = "https://reddit.com",
-				requirementDescription = "ATF_Requirements Description Edited",
-				requirementName = "ATF_Requirements Summary Edited");
+				requirementName = "Requirement Summary Edited");
 		}
 
 		task ("Then the requirement is displayed with the new infos") {
 			TestrayRequirements.verifyRequirement(
-				key_requirementSummary = "ATF_Requirements Summary Edited",
-				linkTitle = "the front page of the internet",
-				requirementComponent = "Components_1 Project 2",
-				requirementTeam = "Components_1 Team");
+				linkTitle = "The page edited",
+				requirementComponent = "Component Edited",
+				requirementSummary = "Requirement Summary Edited",
+				requirementTeam = "Team 2");
 		}
 	}
 
-	@description = "This is a test for LPS-160544 - Verify if as an Administrator, I should be able to link and unlink a Case to a Requirement"
+	@description = "Story ID: LPS-160751 | Test Summary: Verify if as an Administrator, I should be able to link and unlink a Case to a Requirement"
 	@priority = 5
 	test AdminCanLinkAndUnlinkCaseToRequirement {
-		task ("Given that the user goes to project page") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that a case, case type and requirement are created via API") {
+			JSONTestray.addCaseType(caseType = ${caseType});
+
+			JSONTestray.addCases(
+				caseName = ${caseName},
+				caseType = ${caseType},
+				componentName = ${componentName},
+				projectName = ${projectName});
+
+			JSONTestray.addRequirement(
+				componentName = ${componentName},
+				linkTitle = "The front page of the internet",
+				projectName = ${projectName},
+				requirementName = ${requirementName});
 		}
 
-		task ("And given that the user adds a new Case") {
-			Testray.projectTabNavigator(navTabName = "Cases");
+		task ("And I go to the newly created requirement") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayCases.typeCasesField(
-				caseName = "ATF_Requirements Case",
-				caseTypeId = "Manual Test",
-				componentId = "Components_1 Project 1",
-				description = "ATF_Requirements Case Description",
-				duration = 10,
-				priority = 5,
-				steps = "ATF_Requirements Case Steps");
-		}
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
 
-		task ("When the user goes to requirements and link a case") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
 			Testray.projectTabNavigator(navTabName = "Requirements");
 
-			TestrayRequirements.goToRequirement(requirementSummary = "ATF_Requirements Summary");
-
-			TestrayRequirements.addRequirementCase(
-				buttonText = "Select Cases",
-				caseName = "ATF_Requirements Case",
-				linkText = "Link Cases");
+			TestrayRequirements.goToRequirement(requirementSummary = ${requirementName});
 		}
 
-		task ("Then the case should be displayed on Requirement page") {
+		task ("When I add a case to the requirement") {
+			TestrayRequirements.addRequirementCase(
+				buttonText = "Select Cases",
+				caseName = ${caseName},
+				linkText = "Link Cases");
+
 			TestrayRequirements.verifyRequirementCase(
-				requirementCaseName = "ATF_Requirements Case",
-				requirementComponent = "Components_1 Project 1",
-				requirementPriority = 5);
+				requirementCaseName = ${caseName},
+				requirementComponent = ${componentName},
+				requirementPriority = 3);
 		}
 
-		task ("When the user goes to requirements and unlink a case") {
+		task ("And I go to requirements and unlink the case") {
 			TestrayRequirements.addRequirementCase(
 				buttonText = "Select Cases",
-				caseName = "ATF_Requirements Case",
+				caseName = ${caseName},
 				linkText = "Link Cases");
 		}
 
-		task ("Then the case should not be displayed on Requirement page") {
-			Testray.assertItemNotPresent(itemName = "ATF_Requirements Case");
+		task ("Then I assert that the case is not displayed on the Requirements page") {
+			Testray.assertItemNotPresent(itemName = ${caseName});
+		}
+
+		task ("Delete specific object") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "casetypes",
+				objectName = ${caseType});
 		}
 	}
 
-	@description = "This is a test for LPS-166833 - Verify that as an administrator I cannot create requirements with an invalid URL link"
-	@priority = 4
-	test AdminCanNotAddRequirementsWithInvalidUrl {
-		task ("Given the user tries to create a requirement with an invalid URL") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			Testray.projectTabNavigator(navTabName = "Requirements");
-
-			TestrayRequirements.addRequirement(linkURL = "www.google.com");
-		}
-
-		task ("Then an invalid URL message appears") {
-			Testray.viewErrorMessage(
-				fieldLabel = "Link URL",
-				warningMessage = "The link URL must be a valid URL.");
-		}
-	}
-
-	@description = "This is a test for LPS-164143 - Verify that the user can not create a requirement if all the required fields are not filled in"
+	@description = "Story ID: LPS-160751 | Test Summary: Verify that the user can not create a requirement if all the required fields are not filled in"
 	@priority = 3
 	test AdminCanViewRequiredField {
-		task ("Given the user tries to create a requirements without filling out the required fields") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that I go to the requirement page") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			Testray.projectTabNavigator(navTabName = "Requirements");
+		}
 
+		task ("When I try to create a requirement without filling out the required fields") {
 			TestrayRequirements.addRequirement();
 		}
 

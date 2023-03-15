@@ -280,13 +280,13 @@ definition {
 		}
 
 		task ("Check the row counts references") {
-			if (!(contains(${reportFileContent}, "Initial rows"))) {
+			if (!(contains(${reportFileContent}, "Initial Rows"))) {
 				echo(${reportFileContent});
 
 				fail("Initial rows numbers column not present in upgrade report.");
 			}
 
-			if (!(contains(${reportFileContent}, "Final rows"))) {
+			if (!(contains(${reportFileContent}, "Final Rows"))) {
 				echo(${reportFileContent});
 
 				fail("Final rows numbers column not present in upgrade report.");
@@ -425,13 +425,13 @@ definition {
 		}
 
 		task ("Read the row counts references") {
-			if (!(contains(${fileContent}, "Initial rows"))) {
+			if (!(contains(${fileContent}, "Initial Rows"))) {
 				echo(${fileContent});
 
 				fail("Initial rows numbers column not present in upgrade report.");
 			}
 
-			if (!(contains(${fileContent}, "Final rows"))) {
+			if (!(contains(${fileContent}, "Final Rows"))) {
 				echo(${fileContent});
 
 				fail("Final rows numbers column not present in upgrade report.");

@@ -18,14 +18,20 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerFactory;
 import com.liferay.site.initializer.SiteInitializerRegistry;
@@ -33,6 +39,8 @@ import com.liferay.site.initializer.extender.web.internal.constants.SiteInitiali
 
 import java.io.File;
 import java.io.InputStream;
+
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -62,42 +70,19 @@ public class SynchronizeSiteInitializerMVCActionCommand
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Callable<Group> groupCallable = new GroupCallable(actionRequest);
 
-		Group group = _groupLocalService.getGroup(
-			themeDisplay.getScopeGroupId());
-
-		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
-
-		String siteInitializerKey = unicodeProperties.get("siteInitializerKey");
-
-		if (Validator.isNull(siteInitializerKey)) {
-			return;
+		try {
+			TransactionInvokerUtil.invoke(_transactionConfig, groupCallable);
+			SessionMessages.add(actionRequest, "synchronizerSiteSuccess");
 		}
-
-		UploadPortletRequest uploadPortletRequest =
-			_portal.getUploadPortletRequest(actionRequest);
-
-		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				"siteInitializerFile")) {
-
-			if (inputStream != null) {
-				_initialize(
-					group.getGroupId(), inputStream, siteInitializerKey);
-
-				return;
-			}
+		catch (Exception exception) {
+			SessionErrors.add(
+				actionRequest, "synchronizerSiteFailException", exception);
 		}
-
-		SiteInitializer siteInitializer =
-			_siteInitializerRegistry.getSiteInitializer(siteInitializerKey);
-
-		if (siteInitializer == null) {
-			return;
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
 		}
-
-		siteInitializer.initialize(group.getGroupId());
 	}
 
 	private void _initialize(
@@ -125,8 +110,52 @@ public class SynchronizeSiteInitializerMVCActionCommand
 		}
 	}
 
+	private Group _updateGroup(ActionRequest actionRequest) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = _groupService.getGroup(themeDisplay.getSiteGroupId());
+
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+
+		String siteInitializerKey = unicodeProperties.get("siteInitializerKey");
+
+		if (Validator.isNull(siteInitializerKey)) {
+			return null;
+		}
+
+		UploadPortletRequest uploadPortletRequest =
+			_portal.getUploadPortletRequest(actionRequest);
+
+		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				"siteInitializerFile")) {
+
+			if (inputStream != null) {
+				_initialize(
+					group.getGroupId(), inputStream, siteInitializerKey);
+
+				return _groupService.getGroup(themeDisplay.getSiteGroupId());
+			}
+		}
+
+		SiteInitializer siteInitializer =
+			_siteInitializerRegistry.getSiteInitializer(siteInitializerKey);
+
+		if (siteInitializer == null) {
+			return null;
+		}
+
+		siteInitializer.initialize(group.getGroupId());
+
+		return _groupService.getGroup(themeDisplay.getSiteGroupId());
+	}
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
 	@Reference
-	private GroupLocalService _groupLocalService;
+	private GroupService _groupService;
 
 	@Reference
 	private Portal _portal;
@@ -136,5 +165,28 @@ public class SynchronizeSiteInitializerMVCActionCommand
 
 	@Reference
 	private SiteInitializerRegistry _siteInitializerRegistry;
+
+	private class GroupCallable implements Callable<Group> {
+
+		@Override
+		public Group call() throws Exception {
+			try {
+				return _updateGroup(_actionRequest);
+			}
+			catch (Exception exception) {
+				PermissionCacheUtil.clearCache(
+					_portal.getUserId(_actionRequest));
+
+				throw exception;
+			}
+		}
+
+		private GroupCallable(ActionRequest actionRequest) {
+			_actionRequest = actionRequest;
+		}
+
+		private final ActionRequest _actionRequest;
+
+	}
 
 }

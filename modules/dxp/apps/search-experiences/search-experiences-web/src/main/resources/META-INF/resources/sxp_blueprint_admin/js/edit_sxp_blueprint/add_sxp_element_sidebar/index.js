@@ -37,7 +37,10 @@ import {
 } from '../../utils/data';
 import addParams from '../../utils/fetch/add_params';
 import fetchData from '../../utils/fetch/fetch_data';
-import {setStorageAddSXPElementSidebar} from '../../utils/sessionStorage';
+import {
+	SIDEBAR_STATE,
+	setStorageAddSXPElementSidebar,
+} from '../../utils/sessionStorage';
 import getSXPElementTitleAndDescription from '../../utils/sxp_element/get_sxp_element_title_and_description';
 import isElementInactiveFromNonCompanyIndex from '../../utils/sxp_element/is_element_inactive_from_noncompany_index';
 
@@ -343,7 +346,7 @@ function AddSXPElementSidebar({
 	}
 
 	const _handleClose = () => {
-		setStorageAddSXPElementSidebar('closed');
+		setStorageAddSXPElementSidebar(SIDEBAR_STATE.CLOSED);
 
 		onClose();
 	};

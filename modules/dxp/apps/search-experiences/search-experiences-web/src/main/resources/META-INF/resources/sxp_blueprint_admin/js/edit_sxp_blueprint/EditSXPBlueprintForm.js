@@ -40,7 +40,10 @@ import getResultsError from '../utils/functions/get_results_error';
 import isDefined from '../utils/functions/is_defined';
 import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
 import renameKeys from '../utils/language/rename_keys';
-import {setStorageAddSXPElementSidebar} from '../utils/sessionStorage';
+import {
+	SIDEBAR_STATE,
+	setStorageAddSXPElementSidebar,
+} from '../utils/sessionStorage';
 import cleanUIConfiguration from '../utils/sxp_element/clean_ui_configuration';
 import getUIConfigurationValues from '../utils/sxp_element/get_ui_configuration_values';
 import isCustomJSONSXPElement from '../utils/sxp_element/is_custom_json_sxp_element';
@@ -448,7 +451,7 @@ function EditSXPBlueprintForm({
 			setSearchIndexes([]);
 		}
 
-		setStorageAddSXPElementSidebar('open');
+		setStorageAddSXPElementSidebar(SIDEBAR_STATE.OPEN);
 	}, []); //eslint-disable-line
 
 	/**
@@ -850,7 +853,7 @@ function EditSXPBlueprintForm({
 
 	const _handleToggleSidebar = (type) => () => {
 		if (type === SIDEBAR_TYPES.PREVIEW) {
-			setStorageAddSXPElementSidebar('closed');
+			setStorageAddSXPElementSidebar(SIDEBAR_STATE.CLOSED);
 		}
 
 		setOpenSidebar(openSidebar === type ? '' : type);

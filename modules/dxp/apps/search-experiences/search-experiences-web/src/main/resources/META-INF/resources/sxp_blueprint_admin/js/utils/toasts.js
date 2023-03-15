@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {openToast} from 'frontend-js-web';
+import {openToast, sessionStorage} from 'frontend-js-web';
 
 import {SESSION_IDS} from './sessionStorage';
 
@@ -36,7 +36,10 @@ export function openSuccessToast(config) {
  * when a new blueprint is created and redirected to the edit page.
  */
 export function openInitialSuccessToast() {
-	const successMessage = sessionStorage.getItem(SESSION_IDS.SUCCESS_MESSAGE);
+	const successMessage = sessionStorage.getItem(
+		SESSION_IDS.SUCCESS_MESSAGE,
+		sessionStorage.TYPES.NECESSARY
+	);
 
 	if (successMessage) {
 		openSuccessToast({message: successMessage});
@@ -51,5 +54,9 @@ export function openInitialSuccessToast() {
  * @param {String} message The success message to display in the toast.
  */
 export function setInitialSuccessToast(message) {
-	return sessionStorage.setItem(SESSION_IDS.SUCCESS_MESSAGE, message);
+	return sessionStorage.setItem(
+		SESSION_IDS.SUCCESS_MESSAGE,
+		message,
+		sessionStorage.TYPES.NECESSARY
+	);
 }

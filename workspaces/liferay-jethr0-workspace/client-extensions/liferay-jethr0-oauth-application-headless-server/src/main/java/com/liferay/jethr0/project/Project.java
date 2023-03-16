@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.project;
 
+import com.liferay.jethr0.builds.Build;
 import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.testsuite.TestSuite;
 
@@ -29,6 +30,10 @@ import org.json.JSONObject;
  */
 public interface Project {
 
+	public void addBuild(Build build);
+
+	public void addBuilds(List<Build> builds);
+
 	public void addGitBranch(GitBranch gitBranch);
 
 	public void addGitBranches(List<GitBranch> gitBranches);
@@ -36,6 +41,8 @@ public interface Project {
 	public void addTestSuite(TestSuite testSuite);
 
 	public void addTestSuites(List<TestSuite> testSuites);
+
+	public List<Build> getBuilds();
 
 	public Date getCreatedDate();
 
@@ -54,6 +61,10 @@ public interface Project {
 	public List<TestSuite> getTestSuites();
 
 	public Type getType();
+
+	public void removeBuild(Build build);
+
+	public void removeBuilds(List<Build> builds);
 
 	public void removeGitBranch(GitBranch gitBranch);
 

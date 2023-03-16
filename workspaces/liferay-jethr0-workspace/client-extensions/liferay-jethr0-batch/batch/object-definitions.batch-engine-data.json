@@ -779,39 +779,19 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Job Name"
+						"en_US": "Build Name"
 					},
-					"name": "jobName",
+					"name": "buildName",
 					"required": true,
 					"type": "String"
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"label": {
-						"en_US": "Max Slaves Per Node"
-					},
-					"name": "maxSlavesPerNode",
-					"required": true,
-					"type": "Integer"
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"label": {
-						"en_US": "Min Slave RAM"
-					},
-					"name": "minSlaveRAM",
-					"required": true,
-					"type": "Integer"
 				},
 				{
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Name"
+						"en_US": "Job Name"
 					},
-					"name": "name",
+					"name": "jobName",
 					"required": true,
 					"type": "String"
 				},

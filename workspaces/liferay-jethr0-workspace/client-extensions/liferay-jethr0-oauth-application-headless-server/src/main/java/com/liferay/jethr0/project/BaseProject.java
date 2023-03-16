@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.project;
 
+import com.liferay.jethr0.builds.Build;
 import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.testsuite.TestSuite;
 
@@ -31,6 +32,22 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BaseProject implements Project {
+
+	@Override
+	public void addBuild(Build build) {
+		addBuilds(Arrays.asList(build));
+	}
+
+	@Override
+	public void addBuilds(List<Build> builds) {
+		for (Build build : builds) {
+			if (_builds.contains(build)) {
+				continue;
+			}
+
+			_builds.add(build);
+		}
+	}
 
 	@Override
 	public void addGitBranch(GitBranch gitBranch) {
@@ -62,6 +79,11 @@ public abstract class BaseProject implements Project {
 
 			_testSuites.add(testSuite);
 		}
+	}
+
+	@Override
+	public List<Build> getBuilds() {
+		return _builds;
 	}
 
 	@Override
@@ -129,6 +151,16 @@ public abstract class BaseProject implements Project {
 	}
 
 	@Override
+	public void removeBuild(Build build) {
+		_builds.remove(build);
+	}
+
+	@Override
+	public void removeBuilds(List<Build> builds) {
+		_builds.remove(builds);
+	}
+
+	@Override
 	public void removeGitBranch(GitBranch gitBranch) {
 		_gitBranches.remove(gitBranch);
 	}
@@ -187,6 +219,7 @@ public abstract class BaseProject implements Project {
 	private static final SimpleDateFormat _simpleDateFormat =
 		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+	private final List<Build> _builds = new ArrayList<>();
 	private final Date _createdDate;
 	private final List<GitBranch> _gitBranches = new ArrayList<>();
 	private final long _id;

@@ -99,34 +99,6 @@ public class UserNotification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
-	@Schema(description = "The user notification's comment.")
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	@JsonIgnore
-	public void setComment(
-		UnsafeSupplier<String, Exception> commentUnsafeSupplier) {
-
-		try {
-			comment = commentUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The user notification's comment.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String comment;
-
 	@Schema(description = "The user notification's creation date.")
 	public Date getDateCreated() {
 		return dateCreated;
@@ -303,20 +275,6 @@ public class UserNotification implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
-		}
-
-		if (comment != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"comment\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(comment));
-
-			sb.append("\"");
 		}
 
 		if (dateCreated != null) {

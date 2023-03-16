@@ -186,7 +186,6 @@ public abstract class BaseUserNotificationResourceTestCase {
 
 		UserNotification userNotification = randomUserNotification();
 
-		userNotification.setComment(regex);
 		userNotification.setMessage(regex);
 
 		String json = UserNotificationSerDes.toJSON(userNotification);
@@ -195,7 +194,6 @@ public abstract class BaseUserNotificationResourceTestCase {
 
 		userNotification = UserNotificationSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, userNotification.getComment());
 		Assert.assertEquals(regex, userNotification.getMessage());
 	}
 
@@ -1157,14 +1155,6 @@ public abstract class BaseUserNotificationResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("comment", additionalAssertFieldName)) {
-				if (userNotification.getComment() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("message", additionalAssertFieldName)) {
 				if (userNotification.getMessage() == null) {
 					valid = false;
@@ -1309,17 +1299,6 @@ public abstract class BaseUserNotificationResourceTestCase {
 				if (!equals(
 						(Map)userNotification1.getActions(),
 						(Map)userNotification2.getActions())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("comment", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						userNotification1.getComment(),
-						userNotification2.getComment())) {
 
 					return false;
 				}
@@ -1488,14 +1467,6 @@ public abstract class BaseUserNotificationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("comment")) {
-			sb.append("'");
-			sb.append(String.valueOf(userNotification.getComment()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -1598,7 +1569,6 @@ public abstract class BaseUserNotificationResourceTestCase {
 	protected UserNotification randomUserNotification() throws Exception {
 		return new UserNotification() {
 			{
-				comment = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				message = StringUtil.toLowerCase(RandomTestUtil.randomString());

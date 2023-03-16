@@ -71,20 +71,6 @@ public class UserNotificationSerDes {
 			sb.append(_toJSON(userNotification.getActions()));
 		}
 
-		if (userNotification.getComment() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"comment\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(userNotification.getComment()));
-
-			sb.append("\"");
-		}
-
 		if (userNotification.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -174,13 +160,6 @@ public class UserNotificationSerDes {
 			map.put("actions", String.valueOf(userNotification.getActions()));
 		}
 
-		if (userNotification.getComment() == null) {
-			map.put("comment", null);
-		}
-		else {
-			map.put("comment", String.valueOf(userNotification.getComment()));
-		}
-
 		if (userNotification.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -245,11 +224,6 @@ public class UserNotificationSerDes {
 					userNotification.setActions(
 						(Map)UserNotificationSerDes.toMap(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "comment")) {
-				if (jsonParserFieldValue != null) {
-					userNotification.setComment((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

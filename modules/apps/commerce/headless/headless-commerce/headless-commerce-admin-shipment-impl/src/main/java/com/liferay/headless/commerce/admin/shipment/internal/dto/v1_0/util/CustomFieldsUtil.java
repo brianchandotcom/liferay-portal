@@ -151,13 +151,13 @@ public class CustomFieldsUtil {
 	private static Map<String, String> _getLocalizedValues(
 		boolean acceptAllLanguages, int attributeType, Object value) {
 
-		if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
-			Map<Locale, String> map = (Map<Locale, String>)value;
-
-			return LocalizedMapUtil.getI18nMap(acceptAllLanguages, map);
+		if (ExpandoColumnConstants.STRING_LOCALIZED != attributeType) {
+			return null;
 		}
 
-		return null;
+		Map<Locale, String> map = (Map<Locale, String>)value;
+
+		return LocalizedMapUtil.getI18nMap(acceptAllLanguages, map);
 	}
 
 	private static Object _getValue(

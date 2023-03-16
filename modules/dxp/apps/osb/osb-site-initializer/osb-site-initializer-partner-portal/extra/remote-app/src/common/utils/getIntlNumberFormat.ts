@@ -9,11 +9,12 @@
  * distribution rights of the Software.
  */
 
+import LiferayPicklist from '../interfaces/liferayPicklist';
 import {Liferay} from '../services/liferay';
 
-export default function getIntlNumberFormat() {
+export default function getIntlNumberFormat(currency?: LiferayPicklist) {
 	return new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
-		currency: 'USD',
+		currency: currency?.key || 'USD',
 		style: 'currency',
 	});
 }

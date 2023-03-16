@@ -14,16 +14,19 @@ import {useEffect, useState} from 'react';
 import LiferayAccountBrief from '../interfaces/liferayAccountBrief';
 import LiferayPicklist from '../interfaces/liferayPicklist';
 import useGetCompanyExtenderByAccountEntryId from '../services/liferay/object/company-extenders/useGetCompanyExtenderByAccountEntryId';
+import isObjectEmpty from '../utils/isObjectEmpty';
 
 export default function useCompanyOptions(
 	companyOptions: React.OptionHTMLAttributes<HTMLOptionElement>[],
 	handleSelected: (
 		country: LiferayPicklist,
 		company: LiferayAccountBrief,
+		currency: LiferayPicklist,
 		accountExternalReferenceCodeSF?: string
 	) => void,
 	currentCompany?: LiferayAccountBrief,
-	currentCountry?: LiferayPicklist
+	currentCountry?: LiferayPicklist,
+	currentCurrency?: LiferayPicklist
 ) {
 	const [selectedAccountBrief, setSelectedAccountBrief] = useState<
 		LiferayAccountBrief | undefined
@@ -34,16 +37,29 @@ export default function useCompanyOptions(
 	);
 
 	useEffect(() => {
-		if (selectedAccountBrief) {
+		if (
+			companyExtender &&
+			!isObjectEmpty(selectedAccountBrief) &&
+			selectedAccountBrief
+		) {
 			handleSelected(
-				currentCountry
+				currentCountry && !isObjectEmpty(currentCountry)
 					? currentCountry
-					: companyExtender?.country || {},
+					: companyExtender.country,
 				selectedAccountBrief,
+				currentCurrency && !isObjectEmpty(currentCurrency)
+					? currentCurrency
+					: companyExtender.currency,
 				companyExtender?.accountExternalReferenceCodeSF
 			);
 		}
-	}, [companyExtender, currentCountry, handleSelected, selectedAccountBrief]);
+	}, [
+		companyExtender,
+		currentCountry,
+		currentCurrency,
+		handleSelected,
+		selectedAccountBrief,
+	]);
 
 	const onCompanySelected = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const optionSelected = companyOptions.find(

@@ -9,6 +9,6 @@
  * distribution rights of the Software.
  */
 
-export default function isObjectEmpty(object: Object) {
+export default function isObjectEmpty(object: Object | undefined) {
 	return !object || !Object.keys(object).length;
 }

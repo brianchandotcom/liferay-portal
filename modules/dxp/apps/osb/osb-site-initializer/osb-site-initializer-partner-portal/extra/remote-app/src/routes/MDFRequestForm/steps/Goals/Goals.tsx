@@ -51,9 +51,10 @@ const Goals = ({
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		companiesEntries,
 		useCallback(
-			(country, company, accountExternalReferenceCodeSF) => {
+			(country, company, currency, accountExternalReferenceCodeSF) => {
 				setFieldValue('company', company);
 				setFieldValue('country', country);
+				setFieldValue('currency', currency);
 				setFieldValue(
 					'accountExternalReferenceCodeSF',
 					accountExternalReferenceCodeSF
@@ -62,7 +63,8 @@ const Goals = ({
 			[setFieldValue]
 		),
 		values.company,
-		values.country
+		values.country,
+		values.currency
 	);
 
 	const {

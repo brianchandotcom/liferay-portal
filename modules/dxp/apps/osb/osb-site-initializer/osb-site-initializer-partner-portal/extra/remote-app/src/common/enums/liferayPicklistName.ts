@@ -12,6 +12,7 @@
 export enum LiferayPicklistName {
 	ADDITIONAL_OPTIONS = 'MDF Request: Additional Options',
 	BUDGET_EXPENSES = 'Budget Expenses',
+	CURRENCIES = 'Currencies',
 	COUNTRIES = 'Countries',
 	LEAD_FOLLOW_UP_STRATEGIES = 'Lead Follow Up Strategies',
 	LIFERAY_BUSINESS_SALES_GOALS = 'Liferay Business/Sales Goals',

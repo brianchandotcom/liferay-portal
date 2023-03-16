@@ -25,6 +25,7 @@ export function getDTOFromMDFRequest(
 		additionalOption: mdfRequest.additionalOption,
 		companyName: mdfRequest.company?.name,
 		country: mdfRequest.country,
+		currency: mdfRequest.currency,
 		emailAddress: Liferay.ThemeDisplay.getUserEmailAddress(),
 		externalReferenceCodeSF,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.join(

@@ -20,6 +20,7 @@ import liferayFetcher from '../../common/utils/fetcher';
 interface CompanyExtender {
 	accountExternalReferenceCodeSF: string;
 	country: LiferayPicklist;
+	currency: LiferayPicklist;
 	id: number;
 	r_accToCoExts_accountEntryId: number;
 }

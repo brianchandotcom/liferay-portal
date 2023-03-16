@@ -11,16 +11,20 @@
 
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import MDFClaimDTO from '../../../common/interfaces/dto/mdfClaimDTO';
+import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 import getTotalAmountClaimed from './getTotalAmountClaimed';
 import getTotalAmountPaid from './getTotalAmountPaid';
 
-export default function getSummaryMDFClaims(MdfClaims?: MDFClaimDTO[]) {
+export default function getSummaryMDFClaims(
+	currency?: LiferayPicklist,
+	MdfClaims?: MDFClaimDTO[]
+) {
 	if (MdfClaims?.length) {
-		const amountClaimed = getIntlNumberFormat().format(
+		const amountClaimed = getIntlNumberFormat(currency).format(
 			getTotalAmountClaimed(MdfClaims)
 		);
-		const amountPaid = getIntlNumberFormat().format(
+		const amountPaid = getIntlNumberFormat(currency).format(
 			getTotalAmountPaid(MdfClaims)
 		);
 

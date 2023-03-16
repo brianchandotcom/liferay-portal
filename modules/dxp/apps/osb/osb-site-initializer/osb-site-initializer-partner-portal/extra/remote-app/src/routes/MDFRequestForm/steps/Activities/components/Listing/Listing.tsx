@@ -14,12 +14,15 @@ import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {ArrayHelpers} from 'formik';
 
+import LiferayPicklist from '../../../../../../common/interfaces/liferayPicklist';
 import MDFRequestActivity from '../../../../../../common/interfaces/mdfRequestActivity';
 import ActivityPanel from '../../../../components/ActivityPanel';
 import getNewActivity from '../../utils/getNewActivity';
 
 interface IProps {
 	activities: MDFRequestActivity[];
+	currency: LiferayPicklist;
+
 	hasActivityErrorsByIndex: (index: number) => boolean;
 	onAdd: () => void;
 	onEdit: (index: number) => void;
@@ -29,6 +32,7 @@ interface IProps {
 
 const Listing = ({
 	activities,
+	currency,
 	hasActivityErrorsByIndex,
 	onAdd,
 	onEdit,
@@ -37,7 +41,7 @@ const Listing = ({
 	push,
 }: IProps & ArrayHelpers) => {
 	const handleOnAdd = () => {
-		push(getNewActivity());
+		push(getNewActivity(currency));
 
 		onAdd();
 	};

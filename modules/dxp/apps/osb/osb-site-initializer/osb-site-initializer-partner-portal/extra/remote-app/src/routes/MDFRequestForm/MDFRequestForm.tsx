@@ -37,6 +37,7 @@ const initialFormValues: MDFRequest = {
 	additionalOption: {},
 	company: {},
 	country: {},
+	currency: {},
 	liferayBusinessSalesGoals: [],
 	mdfRequestStatus: Status.DRAFT,
 	overallCampaignDescription: '',

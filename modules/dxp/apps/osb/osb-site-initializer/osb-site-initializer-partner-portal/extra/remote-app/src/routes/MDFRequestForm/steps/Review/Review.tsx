@@ -80,9 +80,9 @@ const Review = ({
 					<div className="my-3">
 						<ResumeCard
 							leftContent="Total Budget"
-							rightContent={getIntlNumberFormat().format(
-								totalBudget
-							)}
+							rightContent={getIntlNumberFormat(
+								values.currency
+							).format(totalBudget)}
 						/>
 
 						<ResumeCard
@@ -94,9 +94,9 @@ const Review = ({
 						<ResumeCard
 							className="mt-3"
 							leftContent="Total MDF Requested Amount"
-							rightContent={getIntlNumberFormat().format(
-								totalMDFRequest
-							)}
+							rightContent={getIntlNumberFormat(
+								values.currency
+							).format(totalMDFRequest)}
 						/>
 					</div>
 

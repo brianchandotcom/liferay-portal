@@ -20,6 +20,7 @@ export default interface MDFRequest extends Partial<LiferayObject> {
 	additionalOption: LiferayPicklist;
 	company?: LiferayAccountBrief;
 	country: LiferayPicklist;
+	currency: LiferayPicklist;
 	liferayBusinessSalesGoals?: string[];
 	maxDateActivity?: string;
 	mdfRequestStatus?: LiferayPicklist;

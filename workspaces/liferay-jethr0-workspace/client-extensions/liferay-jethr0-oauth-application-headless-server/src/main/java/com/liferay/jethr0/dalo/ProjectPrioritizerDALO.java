@@ -67,8 +67,8 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 					responseJSONObject);
 
 			projectPrioritizer.addProjectComparators(
-				_projectPrioritizerComparatorDALO.retrieveProjectComparators(
-					projectPrioritizer));
+				_projectPrioritizerToProjectComparatorsDALO.
+					retrieveProjectComparators(projectPrioritizer));
 
 			projectPrioritizers.add(projectPrioritizer);
 		}
@@ -79,7 +79,7 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 	public ProjectPrioritizer updateProjectPrioritizer(
 		ProjectPrioritizer projectPrioritizer) {
 
-		_projectPrioritizerComparatorDALO.updateRelationships(
+		_projectPrioritizerToProjectComparatorsDALO.updateRelationships(
 			projectPrioritizer);
 
 		JSONObject responseJSONObject = update(
@@ -101,6 +101,7 @@ public class ProjectPrioritizerDALO extends BaseDALO {
 	private ProjectComparatorDALO _projectComparatorDALO;
 
 	@Autowired
-	private ProjectPrioritizerComparatorDALO _projectPrioritizerComparatorDALO;
+	private ProjectPrioritizerToProjectComparatorsDALO
+		_projectPrioritizerToProjectComparatorsDALO;
 
 }

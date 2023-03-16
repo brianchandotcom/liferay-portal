@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectGitBranchDALO extends BaseRelationshipDALO {
+public class ProjectsToGitBranchesDALO extends BaseRelationshipDALO {
 
 	public JSONObject createRelationship(Project project, GitBranch gitBranch) {
 		return create("/o/c/projects", project.getId(), gitBranch.getId());

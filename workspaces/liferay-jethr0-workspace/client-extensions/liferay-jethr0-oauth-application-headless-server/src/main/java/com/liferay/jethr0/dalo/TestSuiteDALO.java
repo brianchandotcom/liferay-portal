@@ -62,7 +62,7 @@ public class TestSuiteDALO extends BaseDALO {
 			TestSuite testSuite = TestSuiteFactory.newTestSuite(jsonObject);
 
 			testSuite.addProjects(
-				_projectTestSuiteDALO.retrieveProjects(testSuite));
+				_projectsToTestSuitesDALO.retrieveProjects(testSuite));
 
 			testSuites.add(testSuite);
 		}
@@ -71,7 +71,7 @@ public class TestSuiteDALO extends BaseDALO {
 	}
 
 	public TestSuite updateTestSuite(TestSuite testSuite) {
-		_projectTestSuiteDALO.updateRelationships(testSuite);
+		_projectsToTestSuitesDALO.updateRelationships(testSuite);
 
 		JSONObject responseJSONObject = update(testSuite.getJSONObject());
 
@@ -88,6 +88,6 @@ public class TestSuiteDALO extends BaseDALO {
 	}
 
 	@Autowired
-	private ProjectTestSuiteDALO _projectTestSuiteDALO;
+	private ProjectsToTestSuitesDALO _projectsToTestSuitesDALO;
 
 }

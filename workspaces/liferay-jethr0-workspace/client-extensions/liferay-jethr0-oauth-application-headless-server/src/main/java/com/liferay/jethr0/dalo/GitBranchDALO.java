@@ -83,7 +83,7 @@ public class GitBranchDALO extends BaseDALO {
 				responseJSONObject);
 
 			gitBranch.addProjects(
-				_projectGitBranchDALO.retrieveProjects(gitBranch));
+				_projectsToGitBranchesDALO.retrieveProjects(gitBranch));
 
 			gitBranches.add(gitBranch);
 		}
@@ -92,7 +92,7 @@ public class GitBranchDALO extends BaseDALO {
 	}
 
 	public GitBranch updateGitBranch(GitBranch gitBranch) {
-		_projectGitBranchDALO.updateRelationships(gitBranch);
+		_projectsToGitBranchesDALO.updateRelationships(gitBranch);
 
 		JSONObject responseJSONObject = update(gitBranch.getJSONObject());
 
@@ -117,6 +117,6 @@ public class GitBranchDALO extends BaseDALO {
 	private ProjectDALO _projectDALO;
 
 	@Autowired
-	private ProjectGitBranchDALO _projectGitBranchDALO;
+	private ProjectsToGitBranchesDALO _projectsToGitBranchesDALO;
 
 }

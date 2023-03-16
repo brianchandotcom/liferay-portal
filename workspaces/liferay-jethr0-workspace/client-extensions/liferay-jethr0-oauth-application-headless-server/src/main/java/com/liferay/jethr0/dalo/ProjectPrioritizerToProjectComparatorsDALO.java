@@ -30,7 +30,8 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectPrioritizerComparatorDALO extends BaseRelationshipDALO {
+public class ProjectPrioritizerToProjectComparatorsDALO
+	extends BaseRelationshipDALO {
 
 	public JSONObject createRelationship(
 		ProjectPrioritizer projectPrioritizer,

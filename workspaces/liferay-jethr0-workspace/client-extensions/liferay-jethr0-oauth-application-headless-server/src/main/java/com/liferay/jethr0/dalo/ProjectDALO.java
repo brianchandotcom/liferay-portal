@@ -72,9 +72,9 @@ public class ProjectDALO extends BaseDALO {
 			Project project = ProjectFactory.newProject(jsonObject);
 
 			project.addGitBranches(
-				_projectGitBranchDALO.retrieveGitBranches(project));
+				_projectsToGitBranchesDALO.retrieveGitBranches(project));
 			project.addTestSuites(
-				_projectTestSuiteDALO.retrieveTestSuites(project));
+				_projectsToTestSuitesDALO.retrieveTestSuites(project));
 
 			projects.add(project);
 		}
@@ -83,8 +83,8 @@ public class ProjectDALO extends BaseDALO {
 	}
 
 	public Project updateProject(Project project) {
-		_projectGitBranchDALO.updateRelationships(project);
-		_projectTestSuiteDALO.updateRelationships(project);
+		_projectsToGitBranchesDALO.updateRelationships(project);
+		_projectsToTestSuitesDALO.updateRelationships(project);
 
 		JSONObject responseJSONObject = update(project.getJSONObject());
 
@@ -100,12 +100,9 @@ public class ProjectDALO extends BaseDALO {
 	}
 
 	@Autowired
-	private ProjectBuildDALO _projectBuildDALO;
+	private ProjectsToGitBranchesDALO _projectsToGitBranchesDALO;
 
 	@Autowired
-	private ProjectGitBranchDALO _projectGitBranchDALO;
-
-	@Autowired
-	private ProjectTestSuiteDALO _projectTestSuiteDALO;
+	private ProjectsToTestSuitesDALO _projectsToTestSuitesDALO;
 
 }

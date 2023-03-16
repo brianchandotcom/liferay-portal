@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectTestSuiteDALO extends BaseRelationshipDALO {
+public class ProjectsToTestSuitesDALO extends BaseRelationshipDALO {
 
 	public JSONObject createRelationship(Project project, TestSuite testSuite) {
 		return create("/o/c/projects", project.getId(), testSuite.getId());

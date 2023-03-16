@@ -44,6 +44,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -315,6 +316,21 @@ public class FragmentCollectionContributorTest {
 			}
 
 			return Collections.emptyList();
+		}
+
+		@Override
+		public List<FragmentEntry> getFragmentEntries(int[] types) {
+			List<FragmentEntry> fragmentEntries = new ArrayList<>();
+
+			for (int type : types) {
+				FragmentEntry fragmentEntry = _fragmentEntriesMap.get(type);
+
+				if (fragmentEntry != null) {
+					fragmentEntries.add(fragmentEntry);
+				}
+			}
+
+			return fragmentEntries;
 		}
 
 		@Override

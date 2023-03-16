@@ -1503,8 +1503,6 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition objectDefinition, boolean active)
 		throws PortalException {
 
-		// TODO Add an integration test
-
 		if (active && !objectDefinition.isApproved()) {
 			throw new ObjectDefinitionActiveException(
 				"Object definitions must be published before being activated");
